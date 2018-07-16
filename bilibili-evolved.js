@@ -54,6 +54,12 @@
             // auto expand danmaku list
             expandDanmakuList: true,
             // [New Styles]
+            // set theme color (must in #rrggbb format, not compatible with Edge)
+            customStyleColor: colors.pink,
+            // [New Styles]
+            // set background blur opacity of nav bar
+            blurBackgroundOpacity: 0.382,
+            // [New Styles]
             // (Experimental) use new nav bar in old sites
             overrideNavBar: true,
             // [New Styles -> Override Nav Bar]
@@ -63,13 +69,7 @@
             // (Not Implemented) use dark mode
             useDarkStyle: true,
             // use new styles for nav bar and player
-            useNewStyle: true,
-            // [New Styles]
-            // set theme color (must in #rrggbb format, not compatible with Edge)
-            customStyleColor: colors.pink,
-            // [New Styles]
-            // set background blur opacity of nav bar
-            blurBackgroundOpacity: 0.382
+            useNewStyle: true
         };
         for (const key in userSettings)
         {
@@ -126,7 +126,6 @@
                     useNewStyle: "style/new-styles.min.js",
                     touchNavBar: "style/dark-styles.min.js",
                     touchVideoPlayer: "touch/touch-player.min.js",
-                    common: "utils/common.min.js",
                     expandDanmakuList: "utils/expand-danmaku.min.js",
                     removeAds: "utils/remove-ads.min.js",
                     watchLaterRedirect: "utils/watchlater.min.js"
