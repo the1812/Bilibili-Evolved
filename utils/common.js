@@ -25,7 +25,7 @@ const userSettings = {
     showBanner: false,
     useDarkMode: true
 };
-const settings = {
+settings = {
     // remove ads
     removeAds: true,
     // max retry count used for query elements
