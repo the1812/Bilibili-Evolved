@@ -1,4 +1,4 @@
-function newStyle()
+function newStyle(settings)
 {
     waitForQuery()(
         () => $(".nav-search-keyword"),
@@ -19,11 +19,11 @@ function newStyle()
     let styles = "";
     if (stardustStyles)
     {
-        styles = getStyle("style");
+        styles = getStyle("style", settings);
     }
     else
     {
-        styles = getStyle("oldStyle");
+        styles = getStyle("oldStyle", settings);
     }
     styles = `<style id='bilibili-new-style'>${styles}</style>`;
     $("#bilibili-new-style").remove();

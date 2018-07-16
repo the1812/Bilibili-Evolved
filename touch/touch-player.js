@@ -248,7 +248,7 @@ class SwipeAction
         }
     }
 }
-function touchVideoPlayer()
+function touchVideoPlayer(settings)
 {
     waitForQuery()(
         () => $(".bilibili-player-video-web-fullscreen"),
@@ -483,7 +483,7 @@ function touchVideoPlayer()
 
     if ($("#bilibili-touch-video-player").length === 0)
     {
-        const style = getStyle("touchPlayerStyle");
+        const style = getStyle("touchPlayerStyle", settings);
         const videoPlayerStyles = `<style id='bilibili-touch-video-player'>${style}</style>`;
         $("body").after(videoPlayerStyles);
     }

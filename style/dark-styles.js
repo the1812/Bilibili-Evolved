@@ -1,6 +1,7 @@
-function darkStyle()
+function darkStyle(settings)
 {
-    const styles = `<style id='bilibili-new-style-dark'>${getStyle("darkStyle")}</style>`;
+    const styles = `<style id='bilibili-new-style-dark'>
+    ${getStyle("darkStyle", settings)}</style>`;
     $("#bilibili-new-style-dark").remove();
-    $("body").after(darkStyles);
+    $("body").after(styles);
 }
