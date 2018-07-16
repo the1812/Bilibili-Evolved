@@ -181,8 +181,10 @@
                 for (const key in urls)
                 {
                     const url = urls[key];
-                    $.ajax(url).done(data =>
+                    const xhr = new XMLHttpRequest();
+                    xhr.addEventListener("load", () =>
                     {
+                        const data = xhr.responseText;
                         if (url.indexOf(".scss") !== -1)
                         {
                             this.data[key] = replaceCustomColor(data);
@@ -197,6 +199,8 @@
                             this.callback();
                         }
                     });
+                    xhr.open("GET", url);
+                    xhr.send();
                 }
             }
             ready(callback)
