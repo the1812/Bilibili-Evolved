@@ -12,7 +12,7 @@
 // @resource     touchPlayerStyle https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-touch-player.scss
 // @resource     oldStyle https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-old.scss
 // @resource     darkStyle https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-dark.scss
-// @require      https://static.hdslb.com/js/jquery.js
+// @require      https://static.hdslb.com/js/jquery.min.js
 // @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/common.js
 // @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/remove-ads.js
 // @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/watchlater.js
@@ -121,13 +121,13 @@ var $ = unsafeWindow.$;
                 expandDanmakuList(settings);
             });
         }
-        if (settings.useNewStyles)
-        {
-            newStyle(settings);
-        }
         if (settings.useDarkMode)
         {
             darkStyle(settings);
+        }
+        if (settings.useNewStyles)
+        {
+            newStyle(settings);
         }
     });
 })(window.jQuery.noConflict(true));

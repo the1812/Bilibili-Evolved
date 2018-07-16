@@ -57,6 +57,7 @@ function getStyle(key, settings)
                 return "#fff";
             }
         })();
+        settings.foreground = foreground;
         settings.brightness = `${foreground === "#000" ? "100" : "0"}%`;
         settings.filterBrightness = foreground === "#000" ? "0" : "100";
         for (key of Object.keys(settings))
