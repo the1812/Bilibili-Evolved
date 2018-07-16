@@ -127,7 +127,7 @@
                     touchNavBar: "style/dark-styles.min.js",
                     touchVideoPlayer: "touch/touch-player.min.js",
                     expandDanmakuList: "utils/expand-danmaku.min.js",
-                    removeAds: "utils/remove-ads.min.js",
+                    removeAds: "utils/remove-promotions.min.js",
                     watchLaterRedirect: "utils/watchlater.min.js"
                 };
                 for (const key in urls)
