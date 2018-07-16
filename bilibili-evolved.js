@@ -89,11 +89,6 @@
         settings[key] = userSettings[key];
     }
     const $ = unsafeWindow.$ || self$;
-    const getEventHandler = (element, event) =>
-    {
-        return element.data("events")[event][0].handler;
-    };
-
 
     $(document).ready(() =>
     {

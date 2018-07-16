@@ -1,3 +1,7 @@
+const getEventHandler = (element, event) =>
+{
+    return element.data("events")[event][0].handler;
+};
 const getPosition = element =>
 {
     let x = 0;
@@ -244,7 +248,7 @@ class SwipeAction
         }
     }
 }
-const touchVideoPlayer = () =>
+function touchVideoPlayer()
 {
     waitForQuery()(
         () => $(".bilibili-player-video-web-fullscreen"),
@@ -483,4 +487,4 @@ const touchVideoPlayer = () =>
         const videoPlayerStyles = `<style id='bilibili-touch-video-player'>${style}</style>`;
         $("body").after(videoPlayerStyles);
     }
-};
+}
