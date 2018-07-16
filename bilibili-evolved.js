@@ -12,21 +12,20 @@
 // @resource     touchPlayerStyle https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-touch-player.scss
 // @resource     oldStyle https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-old.scss
 // @resource     darkStyle https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-dark.scss
-// @require      https://static.hdslb.com/js/jquery.min.js
-// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/common.min.js
-// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/remove-ads.min.js
-// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/watchlater.min.js
-// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/expand-danmaku.min.js
-// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/touch/touch-navbar.min.js
-// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/touch/touch-player.min.js
-// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/new-styles.min.js
-// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/dark-styles.min.js
+// @require      https://static.hdslb.com/js/jquery.js
+// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/common.js
+// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/remove-ads.js
+// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/watchlater.js
+// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/expand-danmaku.js
+// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/touch/touch-navbar.js
+// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/touch/touch-player.js
+// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/new-styles.js
+// @require      https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/dark-styles.js
 // ==/UserScript==
-
+var $ = unsafeWindow.$;
 (self$ =>
 {
-    const $ = unsafeWindow.$ || self$;
-
+    $ = unsafeWindow.$ || self$;
     $(document).ready(() =>
     {
         const colors = {

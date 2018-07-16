@@ -27,10 +27,10 @@ function waitForQuery()
     };
     return tryQuery;
 }
-function getStyle(name, settings)
+function getStyle(key, settings)
 {
-    const style = GM_getResourceText(name);
-    function replaceCustomColor(style, settings)
+    const style = GM_getResourceText(key);
+    const replaceCustomColor = (style, settings) =>
     {
         const foreground = (() =>
         {
@@ -59,11 +59,11 @@ function getStyle(name, settings)
         })();
         settings.brightness = `${foreground === "#000" ? "100" : "0"}%`;
         settings.filterBrightness = foreground === "#000" ? "0" : "100";
-        for (name of settings)
+        for (key of Object.keys(settings))
         {
-            style = style.replace(`$${name}`, settings[name]);
+            style = style.replace(`$${key}`, settings[key]);
         }
         return style;
-    }
+    };
     return replaceCustomColor(style, settings);
 }

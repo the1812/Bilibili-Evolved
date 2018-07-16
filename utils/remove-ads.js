@@ -15,4 +15,4 @@ function removeAds()
         it => it.length > 0,
         it => it.css("display", "none")
     );
-};
+}
