@@ -7,6 +7,7 @@
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
 // @grant        unsafeWindow
+// @grant        GM_getResourceText
 // @resource     style https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style.scss
 // @resource     touchPlayerStyle https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-touch-player.scss
 // @resource     oldStyle https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-old.scss
