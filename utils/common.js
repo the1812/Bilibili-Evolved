@@ -61,7 +61,7 @@ function getStyle(key, settings)
         settings.filterBrightness = foreground === "#000" ? "0" : "100";
         for (key of Object.keys(settings))
         {
-            style = style.replace(`$${key}`, settings[key]);
+            style = style.replace(new RegExp("\\$" + key, "g"), settings[key]);
         }
         return style;
     };
