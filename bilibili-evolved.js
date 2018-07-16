@@ -217,13 +217,16 @@
                 if (settings[key] === true)
                 {
                     const func = eval(resources.data[key]);
-                    func(settings, resources);
-                    if (ajaxReload.indexOf(key) !== -1)
+                    if (func)
                     {
-                        $(document).ajaxComplete(() =>
+                        func(settings, resources);
+                        if (ajaxReload.indexOf(key) !== -1)
                         {
-                            func(settings, resources);
-                        });
+                            $(document).ajaxComplete(() =>
+                            {
+                                func(settings, resources);
+                            });
+                        }
                     }
                 }
             }
