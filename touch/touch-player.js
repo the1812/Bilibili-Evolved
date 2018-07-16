@@ -244,3 +244,243 @@ class SwipeAction
         }
     }
 }
+const touchVideoPlayer = () =>
+{
+    waitForQuery()(
+        () => $(".bilibili-player-video-web-fullscreen"),
+        it => it.length > 0,
+        fullscreenButton =>
+        {
+            if (!fullscreenButton.hasClass("bilibili-player-video-btn") &&
+                $(".bilibili-player-video-btn-fullscreen").data("events"))
+            {
+                const clickHandler = getEventHandler(
+                    $(".bilibili-player-video-btn-fullscreen"), "click");
+                fullscreenButton
+                    .detach()
+                    .insertAfter(".bilibili-player-video-btn-widescreen")
+                    .addClass("bilibili-player-video-btn")
+                    .on("click", clickHandler);
+            }
+        }
+    );
+    waitForQuery()(
+        () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
+        it => it.length > 0,
+        icons => icons.unbind("click")
+    );
+    waitForQuery()(
+        () => $(".bilibili-player-video"),
+        it => it.length > 0 && $("video").length > 0,
+        player =>
+        {
+            if ($(".touch-video-box").length === 0)
+            {
+                $(".bilibili-player-video-subtitle").before(`<div class='touch-video-box-wrapper'>
+                            <div class='touch-video-box'>
+                                <div class='touch-video-info'></div>
+                            </div>
+                        </div>`);
+                const swiper = new Swiper(player.get(0));
+                const text = document.getElementsByClassName("touch-video-info")[0];
+                const box = document.getElementsByClassName("touch-video-box")[0];
+                swiper.action.speedCancel = () =>
+                {
+                    text.innerHTML = `松开手指,取消进退`;
+                };
+                swiper.action.volumeCancel = () =>
+                {
+                    text.innerHTML = `松开手指,取消调整`;
+                };
+                swiper.action.onActionStart = () =>
+                {
+                    box.style.display = "flex";
+                    text.innerHTML = "";
+                };
+
+                const fixed = (number, precision = 1) =>
+                {
+                    const str = number.toString();
+                    const index = str.indexOf(".");
+                    if (index !== -1)
+                    {
+                        if (str.length - index > precision + 1)
+                        {
+                            return str.substring(0, index + precision + 1);
+                        }
+                        else
+                        {
+                            return str;
+                        }
+                    }
+                    else
+                    {
+                        return str + ".0";
+                    }
+                };
+                const secondsToTime = sec =>
+                {
+                    sec = Math.abs(sec);
+                    const hours = Math.floor(sec / 3600);
+                    const minutes = Math.floor((sec - hours * 3600) / 60);
+                    const seconds = sec - hours * 3600 - minutes * 60;
+
+                    let result = fixed(seconds) + "秒";
+                    if (minutes > 0)
+                    {
+                        result = minutes + "分" + result;
+                    }
+                    if (hours > 0)
+                    {
+                        result = hours + "小时" + result;
+                    }
+
+                    return result;
+                };
+                const secondsToHms = sec =>
+                {
+                    sec = Math.abs(sec);
+                    const hours = Math.floor(sec / 3600);
+                    const minutes = Math.floor((sec - hours * 3600) / 60);
+                    const seconds = sec - hours * 3600 - minutes * 60;
+
+                    let result = (seconds < 10 ? "0" : "") + fixed(seconds);
+                    result = (minutes < 10 ? "0" : "") + minutes + ":" + result;
+                    result = (hours < 10 ? "0" : "") + hours + ":" + result;
+
+                    return result;
+                };
+
+                const video = $("video");
+                const videoDuration = video.prop("duration");
+                //const videoshot = new VideoShot(videoDuration);
+                const speedChange = speed =>
+                {
+                    return sec =>
+                    {
+                        const current = video.prop("currentTime");
+                        let info = `<div class='touch-row'><span class='touch-speed'>${speed}速</span><span class='touch-info'>进度: ${sec > 0 ? "+" : "-"}`;
+                        const commonInfoPart = `</span></div><div class='touch-row'><div class='videoshot'></div><span class='touch-result'>`;
+                        const finalTime = current + sec;
+                        if (finalTime > videoDuration)
+                        {
+                            info += `${secondsToTime(videoDuration - current)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(videoDuration)} (100%)`;
+                        }
+                        else if (finalTime < 0)
+                        {
+                            info += `${secondsToTime(current)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(0)} (0%)`;
+                        }
+                        else
+                        {
+                            info += `${secondsToTime(sec)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(finalTime)} (${fixed(100 * finalTime / videoDuration)}%)`;
+                        }
+                        text.innerHTML = info + `</span></div>`;
+                        //$(".videoshot").css(videoshot.getStyle(finalTime));
+                    };
+                };
+                swiper.action.lowSpeedBackward = speedChange("低");
+                swiper.action.lowSpeedForward = speedChange("低");
+                swiper.action.mediumSpeedBackward = speedChange("中");
+                swiper.action.mediumSpeedForward = speedChange("中");
+                swiper.action.highSpeedBackward = speedChange("高");
+                swiper.action.highSpeedForward = speedChange("高");
+
+                const volumeChange = speed =>
+                {
+                    return volume =>
+                    {
+                        const current = Math.round(video.prop("volume") * 100);
+                        let info = `<div class='touch-row'><span class='touch-speed'>${speed}速</span><span class='touch-info'>音量: ${volume > 0 ? "+" : "-"}`;
+                        const commonInfoPart = `</span></div><div class='touch-row'><span class='touch-result'>`;
+                        const finalVolume = current + volume;
+                        if (finalVolume > 100)
+                        {
+                            info += `${100 - current}${commonInfoPart}${current} → 100`;
+                        }
+                        else if (finalVolume < 0)
+                        {
+                            info += `${current}${commonInfoPart}${current} → 0`;
+                        }
+                        else
+                        {
+                            info += `${Math.abs(volume)}${commonInfoPart}${current} → ${finalVolume}`;
+                        }
+                        text.innerHTML = info + `</span></div>`;
+                    };
+                };
+                swiper.action.lowVolumeUp = volumeChange("低");
+                swiper.action.lowVolumeDown = volumeChange("低");
+                swiper.action.mediumVolumeUp = volumeChange("中");
+                swiper.action.mediumVolumeDown = volumeChange("中");
+                swiper.action.highVolumeUp = volumeChange("高");
+                swiper.action.highVolumeDown = volumeChange("高");
+
+                swiper.action.onActionEnd = action =>
+                {
+                    box.style.display = "none";
+                    text.innerHTML = "";
+                    if (action)
+                    {
+                        if (action.type === "volume")
+                        {
+                            let volume = video.prop("volume");
+                            volume += action.volume / 100;
+                            if (volume < 0)
+                            {
+                                volume = 0;
+                            }
+                            else if (volume > 1)
+                            {
+                                volume = 1;
+                            }
+                            video.prop("volume", volume);
+                            $(".bilibili-player-video-volume-num").text(Math.round(volume * 100));
+                            $(".bpui-slider-progress").css("height", volume * 100 + "%");
+                            $(".bpui-slider-handle").css("bottom", (35 + volume * 230) / 3 + "%");
+
+                            if (volume === 0)
+                            {
+                                $(".icon-24soundoff").show();
+                                $(".icon-24soundlarge").hide();
+                                $(".icon-24soundsmall").hide();
+                            }
+                            else if (volume >= 0.5)
+                            {
+                                $(".icon-24soundoff").hide();
+                                $(".icon-24soundlarge").show();
+                                $(".icon-24soundsmall").hide();
+                            }
+                            else
+                            {
+                                $(".icon-24soundoff").hide();
+                                $(".icon-24soundlarge").hide();
+                                $(".icon-24soundsmall").show();
+                            }
+                        }
+                        else if (action.type === "playback")
+                        {
+                            let time = video.prop("currentTime");
+                            time += action.seconds;
+                            if (time < 0)
+                            {
+                                time = 0;
+                            }
+                            else if (time > videoDuration)
+                            {
+                                time = videoDuration;
+                            }
+                            video.prop("currentTime", time);
+                        }
+                    }
+                };
+            }
+        }
+    );
+
+    if ($("#bilibili-touch-video-player").length === 0)
+    {
+        const style = getStyle("touchPlayerStyle");
+        const videoPlayerStyles = `<style id='bilibili-touch-video-player'>${style}</style>`;
+        $("body").after(videoPlayerStyles);
+    }
+};
