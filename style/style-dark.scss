@@ -278,7 +278,8 @@ li.context-menu-descipline a,
 }
 .bilibili-player-video-inputbar,
 #app,
-.wrapper .modal-header
+.wrapper .modal-header,
+.large-item .cover
 {
     background-image: none !important;
 }
@@ -1082,7 +1083,8 @@ input[type=text]:focus,
 .btn.primary,
 .wrapper .modal-body .choice-wrp.selected .elec-input,
 .wrapper .modal-body .choice-wrp.selected .battery,
-.be-pager-item-active
+.be-pager-item-active,
+.top-title .concern
 {
     border-color: $customStyleColor !important;
 }
@@ -1155,7 +1157,8 @@ a.s-btn:hover,
 .be-pager-item-active,
 #page-channel-index .channel-option.no-channel .create-channel,
 .be-switch-container.is-checked .be-switch,
-#page-setting #setting-new-tag-btn
+#page-setting #setting-new-tag-btn,
+.top-title .concern
 {
     background-color: $customStyleColor !important;
 }
@@ -1340,7 +1343,8 @@ a.s-btn:hover,
 .contribution-item.cur a,
 .be-pager-item-active a,
 .contribution-sidenav .contribution-item.cur .text:hover,
-.be-pager-item.be-pager-item-active:hover a
+.be-pager-item.be-pager-item-active:hover a,
+.top-title .concern
 {
     color: $foreground !important;
 }

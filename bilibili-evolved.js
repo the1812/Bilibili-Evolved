@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Bilibili Evolved
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0
+// @version      0.9.0
 // @description  Powerful tools for bilibili.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
 // @grant        unsafeWindow
 // @require      https://static.hdslb.com/js/jquery.min.js
-// @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/logo.png
+// @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo.png
 // ==/UserScript==
 (self$ =>
 {
@@ -40,7 +40,7 @@
         const userSettings = {
             customStyleColor: colors.pink,
             showBanner: false,
-            useDarkMode: true
+            useDarkStyle: true
         };
         const settings = {
             // remove ads
@@ -108,6 +108,14 @@
                 }
             };
             return tryQuery;
+        }
+        // $.ajax will be modified by bilibili, so I have to use my own implementation.
+        function ajax(url, done)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener("load", () => done(xhr.responseText));
+            xhr.open("GET", url);
+            xhr.send();
         }
 
         class ExternalResource
@@ -181,10 +189,8 @@
                 for (const key in urls)
                 {
                     const url = urls[key];
-                    const xhr = new XMLHttpRequest();
-                    xhr.addEventListener("load", () =>
+                    ajax(url, data =>
                     {
-                        const data = xhr.responseText;
                         if (url.indexOf(".scss") !== -1)
                         {
                             this.data[key] = replaceCustomColor(data);
@@ -199,8 +205,6 @@
                             this.callback();
                         }
                     });
-                    xhr.open("GET", url);
-                    xhr.send();
                 }
             }
             ready(callback)
