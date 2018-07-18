@@ -78,5 +78,5 @@
 ## 稍后再看重定向
 将稍后再看的链接重定向为普通播放网址,以使用新版播放页面.
 # 安装
-- [正式版](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/bilibili-evolved.user.js)
-- [预览版](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preivew/bilibili-evolved.preview.user.js)
+- [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
+- [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
