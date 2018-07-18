@@ -1,8 +1,7 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @namespace    http://tampermonkey.net/
 // @version      0.9.0
-// @description  Powerful tools for bilibili.
+// @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
