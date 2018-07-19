@@ -1,16 +1,19 @@
 (() =>
 {
-    return () =>
+    return (settings) =>
     {
         waitForQuery()(
             () => $(".bui-collapse-header"),
             it => it.length > 0,
             button =>
             {
-                if (parseInt($(".bui-collapse-body").css("height")) === 0 &&
-                    $(".bui-collapse-arrow-text").text() === "展开")
+                if (settings.expandDanmakuList)
                 {
-                    button.click();
+                    if (parseInt($(".bui-collapse-body").css("height")) === 0 &&
+                        $(".bui-collapse-arrow-text").text() === "展开")
+                    {
+                        button.click();
+                    }
                 }
             }
         );
