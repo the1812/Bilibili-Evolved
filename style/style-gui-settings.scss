@@ -21,6 +21,10 @@
     left: 0;
     transform: rotate(120deg);
 }
+.gui-settings svg path
+{
+    fill: #eee4;
+}
 .gui-settings:hover svg path
 {
     fill: #eee8;
@@ -161,7 +165,7 @@ button.save
 {
     padding: 0.5rem 2rem;
     border: none;
-    background: $customStyleColor80;
+    background: $customStyleColor;
     color: $foreground;
     border-radius: 4px;
     font-size: 1rem;

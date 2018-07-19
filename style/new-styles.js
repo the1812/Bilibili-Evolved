@@ -47,11 +47,13 @@
                 textBox => textBox.attr("placeholder", "搜索")
             );
             const navBarStyles = resources.getStyle("navbarOverrideStyle", "bilibili-nav-bar-override");
+            $("#bilibili-nav-bar-override").remove();
             $("body").after(navBarStyles);
 
             if (!settings.showBanner)
             {
                 const bannerStyles = resources.getStyle("noBannerStyle", "bilibili-banner-override");
+                $("#bilibili-banner-override").remove();
                 $("body").after(bannerStyles);
             }
         }
