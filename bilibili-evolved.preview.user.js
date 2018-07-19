@@ -264,6 +264,10 @@
                     if (settingsBox)
                     {
                         $("body").append(settingsBox);
+                        $(".gui-settings-header .gui-settings-close").on("click", () =>
+                        {
+                            $(".gui-settings-panel").css("display", "none");
+                        });
 
                         $(".gui-settings-close path").attr("d", "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z");
                         $(".gui-settings-ok path").attr("d", "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z");
@@ -276,15 +280,23 @@
                             {
                                 dependencies[$(element).attr("key")] = $(element).attr("dependencies");
                             });
-                            $(`input[type='checkbox']`).on("change", () =>
+                            $(`input[type='checkbox']`).on("change", e =>
                             {
-                                const self = $(this);
+                                const self = $(e.srcElement);
+                                const checked = self.prop("checked");
                                 for (const key in dependencies)
                                 {
-                                    if (dependencies[key].indexOf(self.attr("key")) !== -1)
+                                    const dependency = dependencies[key].split(" ");
+                                    if (dependency.indexOf(self.attr("key")) !== -1)
                                     {
-                                        $(`input[key='${key}']`).prop("disabled", self.prop("checked"));
+                                        let value = true;
+                                        if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
+                                        {
+                                            value = false;
+                                        }
+                                        $(`input[key='${key}']`).prop("disabled", value);
                                     }
+
                                 }
                             });
                         }

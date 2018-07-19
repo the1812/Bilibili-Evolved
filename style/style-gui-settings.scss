@@ -17,6 +17,7 @@
 .gui-settings:hover
 {
     left: 0;
+    transform: rotate(120deg);
 }
 .gui-settings:hover svg path
 {
@@ -58,8 +59,8 @@
 }
 .gui-settings-content ul li
 {
-    font-size: 1.5rem;
-    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    margin: 1rem 0;
     display: flex;
 }
 .gui-settings-content ul li.indent-0
@@ -69,6 +70,10 @@
 .gui-settings-content ul li.indent-1
 {
     margin-left: 5rem;
+}
+.gui-settings-content ul li.indent-2
+{
+    margin-left: 9rem;
 }
 .gui-settings-title
 {
@@ -80,7 +85,16 @@
 {
     width: 24px;
     height: 24px;
-    margin: 1rem;
+    padding: 1rem;
+}
+.gui-settings-header .gui-settings-close
+{
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.gui-settings-header .gui-settings-close:hover path
+{
+    fill: $customStyleColor !important;
 }
 .gui-settings-close path
 {
@@ -110,6 +124,7 @@
     height: 24px;
     border-radius: 4px;
     margin-right: 1rem;
+    transition: all 0.2s;
 }
 .gui-settings-checkbox-container svg path
 {

@@ -16,7 +16,7 @@
             <svg class="gui-settings-ok" viewBox="0 0 24 24">
               <path />
             </svg>
-            <span>样式</span>
+            <span>新样式</span>
           </label>
         </li>
         <li class="indent-1">
@@ -26,6 +26,24 @@
               <path />
             </svg>
             <span>夜间模式</span>
+          </label>
+        </li>
+        <li class="indent-1">
+          <label class="gui-settings-checkbox-container">
+            <input key="overrideNavBar" dependencies="useNewStyle" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>搜索栏位置调整</span>
+          </label>
+        </li>
+        <li class="indent-2">
+          <label class="gui-settings-checkbox-container">
+            <input key="showBanner" dependencies="useNewStyle overrideNavBar" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>显示顶部横幅</span>
           </label>
         </li>
       </ul>
