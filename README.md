@@ -1,7 +1,7 @@
 # Bilibili-Evolved
 增强哔哩哔哩Web端体验的油猴脚本.
 
-作为[原脚本](bilibili-touch.js)的工程化形式,目前尚未完成,在完成之前可以先使用[原脚本](bilibili-touch.js).
+**注: 作为[原脚本](bilibili-touch.js)的工程化形式,目前尚未完成,在完成之前可以先使用[原脚本](bilibili-touch.js).**
 
 # 功能概览
 ## 新样式
@@ -19,6 +19,16 @@
 ![暗蓝色](images/new-navbar-blueGrey.png)
 ### 夜间主题
 夜间主题更适合光线暗的环境,并会大量应用自定义颜色.
+
+目前支持的页面有:
+- 主站
+- 动态
+- 新版视频
+- 稍后再看
+- 观看历史
+- 专栏阅读
+
+之后会陆续添加其他页面.
 #### 启用前
 ![日间](images/light-style.png)
 #### 启用后
@@ -45,24 +55,28 @@
 - 进度调整可在左上角和右上角取消
 - 在不同位置滑动,可以使用3档不同的灵敏度.
 
+![进度调整](images/adjust-playback.png)
+![音量调整](images/adjust-volume.png)
+
 已知问题: 滑动调整的音量不会保存,下次打开视频将恢复原音量.
-![进度调整]()
-![音量调整]()
 #### 外置网页全屏
 因为触屏设备很难做出"鼠标悬停",`网页全屏`将从`全屏`的鼠标悬停菜单中移动到外部.
 #### 放大按钮
-
-![放大前]()
-![放大后]()
+放大控制栏的按钮及间距,使触摸操作更准确.
+##### 启用前
+![放大前](images/player-buttons-original.png)
+##### 启用后
+![放大后](images/player-buttons-large.png)
 ## 展开弹幕列表
 新版播放页面中,弹幕列表默认收起以显示推荐的其他视频.启用此功能可在每次加载视频时自动展开弹幕列表.
 ## 删除广告
 删除嵌于页面中的推广横幅.
 ### 删除前
-![删除前]()
+![删除前](images/remove-ads-before.png)
 ### 删除后
-![删除后]()
+![删除后](images/remove-ads-after.png)
 ## 稍后再看重定向
 将稍后再看的链接重定向为普通播放网址,以使用新版播放页面.
 # 安装
-点击[此处](),或将[主脚本](bilibili-evolved.js)复制到油猴中保存.
+- [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
+- [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
