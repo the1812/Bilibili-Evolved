@@ -10,6 +10,7 @@
     cursor: pointer;
 }
 .gui-settings,
+.gui-settings-header .gui-settings-close path,
 .gui-settings svg path
 {
     transition: all 0.2s;
@@ -38,8 +39,8 @@
 }
 .gui-settings-box
 {
-    width: 800px;
-    height: 600px;
+    width: 400px;
+    height: 650px;
     background: white;
     border-radius: 8px;
     box-shadow: 0px 3px 20px 2px #0004;
@@ -90,7 +91,6 @@
 .gui-settings-header .gui-settings-close
 {
     cursor: pointer;
-    transition: all 0.2s;
 }
 .gui-settings-header .gui-settings-close:hover path
 {
