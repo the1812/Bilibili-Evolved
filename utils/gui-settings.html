@@ -10,18 +10,23 @@
     </div>
     <div class="gui-settings-content">
       <ul>
-        <li>
-          <input type="checkbox" />
+        <li class="indent-0">
+          <input key="useNewStyle" type="checkbox" />
           <label class="gui-settings-checkbox-container">
-            <svg class="gui-settings-ok"
-              viewBox="0 0 24 24">
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
               <path />
             </svg>
             <span>样式</span>
           </label>
-          <ul>
-            <li></li>
-          </ul>
+        </li>
+        <li class="indent-1">
+          <input key="useDarkStyle" dependencies="useNewStyle" type="checkbox" />
+          <label class="gui-settings-checkbox-container">
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>夜间模式</span>
+          </label>
         </li>
       </ul>
     </div>

@@ -46,8 +46,16 @@
 .gui-settings-content ul li
 {
     font-size: 1.5rem;
-    margin: 2rem;
+    margin: 0.5rem 0;
     display: flex;
+}
+.indent-0
+{
+    margin-left: 1rem;
+}
+.indent-1
+{
+    margin-left: 5rem;
 }
 .gui-settings-title
 {
