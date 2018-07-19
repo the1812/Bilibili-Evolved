@@ -3,6 +3,7 @@
     float: left;
     padding-left: 20px;
     color: #000;
+    cursor: pointer;
 }
 .gui-settings:hover
 {
@@ -17,7 +18,7 @@
     left: 0;
     top: 0;
     z-index: 10000;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
 }
@@ -74,26 +75,40 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 1rem;
+    -webkit-tap-highlight-color: transparent;
 }
 .gui-settings-checkbox-container input
 {
     opacity: 0;
+    width: 0;
 }
 .gui-settings-checkbox-container svg
 {
     width: 24px;
     height: 24px;
     border-radius: 4px;
+    margin-right: 1rem;
 }
-.gui-settings-checkbox-container input ~svg
+.gui-settings-checkbox-container svg path
 {
-    background-color: #0002;
+    transform: scale(0.9);
+    transform-origin: center;
 }
-.gui-settings-checkbox-container input:checked ~svg
+.gui-settings-checkbox-container input ~ svg
+{
+    background-color: #8884;
+}
+.gui-settings-checkbox-container input:checked ~ svg
 {
     background-color: $customStyleColor;
 }
-.gui-settings-checkbox-container input:checked ~svg path
+.gui-settings-checkbox-container input:checked ~ svg path
 {
     fill: $foreground;
+}
+.gui-settings-checkbox-container input:disabled ~ svg,
+.gui-settings-checkbox-container input:disabled ~ span
+{
+    opacity: 0.5;
 }
