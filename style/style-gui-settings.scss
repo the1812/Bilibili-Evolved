@@ -8,6 +8,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 .gui-settings,
 .gui-settings-header .gui-settings-close path,
@@ -40,13 +41,14 @@
 .gui-settings-box
 {
     width: 400px;
-    height: 650px;
+    height: 90%;
     background: white;
     border-radius: 8px;
     box-shadow: 0px 3px 20px 2px #0004;
     display: flex;
     flex-direction: column;
 }
+.gui-settings-footer,
 .gui-settings-header
 {
     flex-grow: 0;
@@ -54,13 +56,19 @@
     display: flex;
     align-items: center;
 }
+.gui-settings-footer
+{
+    height: 80px;
+    justify-content: center;
+}
 .gui-settings-content
 {
     flex-grow: 1;
+    overflow: scroll;
 }
 .gui-settings-content ul li
 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 1rem 0;
     display: flex;
 }
@@ -91,6 +99,7 @@
 .gui-settings-header .gui-settings-close
 {
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 .gui-settings-header .gui-settings-close:hover path
 {
@@ -128,7 +137,7 @@
 }
 .gui-settings-checkbox-container svg path
 {
-    transform: scale(0.9);
+    transform: scale(0.8);
     transform-origin: center;
 }
 .gui-settings-checkbox-container input ~ svg
@@ -147,4 +156,33 @@
 .gui-settings-checkbox-container input:disabled ~ span
 {
     opacity: 0.5;
+}
+button.save
+{
+    padding: 0.5rem 2rem;
+    border: none;
+    background: $customStyleColor80;
+    color: $foreground;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-shadow: 0px 1px 15px 1px $customStyleColor80;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+button.save:hover
+{
+    box-shadow: 0px 3px 20px 3px $customStyleColor80;
+    transform: translateY(-2px);
+}
+.gui-settings-footer svg
+{
+    width: 0;
+    height: 30px;
+    margin-left: 0;
+    transition: all 0.2s;
+}
+.gui-settings-footer svg path
+{
+    fill: $customStyleColor;
 }
