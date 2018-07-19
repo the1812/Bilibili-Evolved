@@ -1,0 +1,99 @@
+.gui-settings
+{
+    float: left;
+    padding-left: 20px;
+    color: #000;
+}
+.gui-settings:hover
+{
+    color: $customStyleColor !important;
+}
+.gui-settings-panel
+{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gui-settings-box
+{
+    width: 800px;
+    height: 600px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 3px 20px 2px #0004;
+    display: flex;
+    flex-direction: column;
+}
+.gui-settings-header
+{
+    flex-grow: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+.gui-settings-content
+{
+    flex-grow: 1;
+}
+.gui-settings-content ul li
+{
+    font-size: 1.5rem;
+    margin: 2rem;
+    display: flex;
+}
+.gui-settings-title
+{
+    flex-grow: 1;
+    font-size: 1rem;
+    margin: 1rem;
+}
+.gui-settings-close
+{
+    width: 24px;
+    height: 24px;
+    margin: 1rem;
+}
+.gui-settings-close path
+{
+    fill: #222;
+}
+.gui-settings-ok path
+{
+    fill: transparent;
+}
+.gui-settings-checkbox-container
+{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gui-settings-checkbox-container input
+{
+    opacity: 0;
+}
+.gui-settings-checkbox-container svg
+{
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+.gui-settings-checkbox-container input ~svg
+{
+    background-color: #0002;
+}
+.gui-settings-checkbox-container input:checked ~svg
+{
+    background-color: $customStyleColor;
+}
+.gui-settings-checkbox-container input:checked ~svg path
+{
+    fill: $foreground;
+}

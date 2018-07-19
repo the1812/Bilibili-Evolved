@@ -129,6 +129,9 @@
                     touchPlayerStyle: "style/style-touch-player.scss",
                     navbarOverrideStyle: "style/style-navbar-override.css",
                     noBannerStyle: "style/style-no-banner.css",
+                    guiSettingsStyle: "style/style-gui-settings.scss",
+                    guiSettingsDom: "utils/gui-settings.html",
+                    guiSettings: "utils/gui-settings.js",
                     useDarkStyle: "style/dark-styles.min.js",
                     useNewStyle: "style/new-styles.min.js",
                     touchNavBar: "touch/touch-navbar.min.js",
@@ -219,6 +222,7 @@
         const resources = new ExternalResource();
         resources.ready(() =>
         {
+            settings.guiSettings = true;
             for (const key in settings)
             {
                 if (settings[key] === true)
