@@ -1,7 +1,7 @@
 # Bilibili-Evolved
 增强哔哩哔哩Web端体验的油猴脚本.
 
-作为[原脚本](bilibili-touch.js)的工程化形式,目前尚未完成,在完成之前可以先使用[原脚本](bilibili-touch.js).
+**注: 作为[原脚本](bilibili-touch.js)的工程化形式,目前尚未完成,在完成之前可以先使用[原脚本](bilibili-touch.js).**
 
 # 功能概览
 ## 新样式
