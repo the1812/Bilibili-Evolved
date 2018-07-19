@@ -1,13 +1,26 @@
 .gui-settings
 {
-    float: left;
-    padding-left: 20px;
-    color: #000;
+    position: absolute;
+    top: 0;
+    left: -12px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+}
+.gui-settings,
+.gui-settings svg path
+{
+    transition: all 0.2s;
 }
 .gui-settings:hover
 {
-    color: $customStyleColor !important;
+    left: 0;
+}
+.gui-settings:hover svg path
+{
+    fill: #eee8;
 }
 .gui-settings-panel
 {
@@ -49,11 +62,11 @@
     margin: 0.5rem 0;
     display: flex;
 }
-.indent-0
+.gui-settings-content ul li.indent-0
 {
     margin-left: 1rem;
 }
-.indent-1
+.gui-settings-content ul li.indent-1
 {
     margin-left: 5rem;
 }
