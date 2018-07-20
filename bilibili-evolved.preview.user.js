@@ -1,19 +1,18 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      0.9.0
+// @version      0.9.1
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
-// @grant        unsafeWindow
 // @grant        GM_getValue
 // @grant        GM_setValue
-// @require      https://static.hdslb.com/js/jquery.min.js
+// @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
-(self$ =>
+($ =>
 {
-    const $ = unsafeWindow.$ || self$;
+    //const $ = unsafeWindow.$ || self$;
     $(document).ready(() =>
     {
         const colors = {
@@ -290,7 +289,6 @@
                                 settings[$(element).attr("key")] = $(element).prop("checked");
                             });
                             saveSettings();
-                            reload(resources);
                             const svg = $(".gui-settings-footer svg.gui-settings-ok");
                             if (parseInt(svg.css("width")) === 0)
                             {

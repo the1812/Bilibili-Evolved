@@ -252,24 +252,24 @@
                 }
             }
         }
-        waitForQuery()(
-            () => $(".bilibili-player-video-web-fullscreen"),
-            it => it.length > 0,
-            fullscreenButton =>
-            {
-                if (!fullscreenButton.hasClass("bilibili-player-video-btn") &&
-                    $(".bilibili-player-video-btn-fullscreen").data("events"))
-                {
-                    const clickHandler = getEventHandler(
-                        $(".bilibili-player-video-btn-fullscreen"), "click");
-                    fullscreenButton
-                        .detach()
-                        .insertAfter(".bilibili-player-video-btn-widescreen")
-                        .addClass("bilibili-player-video-btn")
-                        .on("click", clickHandler);
-                }
-            }
-        );
+        // waitForQuery()(
+        //     () => $(".bilibili-player-video-web-fullscreen"),
+        //     it => it.length > 0,
+        //     fullscreenButton =>
+        //     {
+        //         if (!fullscreenButton.hasClass("bilibili-player-video-btn") &&
+        //             $(".bilibili-player-video-btn-fullscreen").data("events"))
+        //         {
+        //             const clickHandler = getEventHandler(
+        //                 $(".bilibili-player-video-btn-fullscreen"), "click");
+        //             fullscreenButton
+        //                 .detach()
+        //                 .insertAfter(".bilibili-player-video-btn-widescreen")
+        //                 .addClass("bilibili-player-video-btn")
+        //                 .on("click", clickHandler);
+        //         }
+        //     }
+        // );
         waitForQuery()(
             () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
             it => it.length > 0,
