@@ -1,9 +1,15 @@
+.gui-settings-icon-panel
+{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .gui-settings
 {
     position: absolute;
     top: 0;
     left: -12px;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,14 +22,19 @@
 {
     transition: all 0.2s;
 }
+.gui-settings svg path
+{
+    fill: #8884;
+    opacity: 0.5;
+}
 .gui-settings:hover
 {
     left: 0;
-    transform: rotate(120deg);
 }
 .gui-settings:hover svg path
 {
-    fill: #eee8;
+    opacity: 1;
+    transform: rotate(120deg);
 }
 .gui-settings-panel
 {
@@ -64,37 +75,37 @@
 .gui-settings-content
 {
     flex-grow: 1;
-    overflow: scroll;
+    overflow: auto;
 }
 .gui-settings-content ul li
 {
-    font-size: 1rem;
-    margin: 1rem 0;
+    font-size: 16px;
+    margin: 16px 0;
     display: flex;
 }
 .gui-settings-content ul li.indent-0
 {
-    margin-left: 1rem;
+    margin-left: 16px;
 }
 .gui-settings-content ul li.indent-1
 {
-    margin-left: 5rem;
+    margin-left: 80px;
 }
 .gui-settings-content ul li.indent-2
 {
-    margin-left: 9rem;
+    margin-left: 144px;
 }
 .gui-settings-title
 {
     flex-grow: 1;
-    font-size: 1rem;
-    margin: 1rem;
+    font-size: 16px;
+    margin: 16px;
 }
 .gui-settings-close
 {
     width: 24px;
     height: 24px;
-    padding: 1rem;
+    padding: 16px;
 }
 .gui-settings-header .gui-settings-close
 {
@@ -119,7 +130,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 1rem;
+    padding: 0 16px;
     -webkit-tap-highlight-color: transparent;
 }
 .gui-settings-checkbox-container input
@@ -132,7 +143,7 @@
     width: 24px;
     height: 24px;
     border-radius: 4px;
-    margin-right: 1rem;
+    margin-right: 16px;
     transition: all 0.2s;
 }
 .gui-settings-checkbox-container svg path
@@ -159,12 +170,12 @@
 }
 button.save
 {
-    padding: 0.5rem 2rem;
+    padding: 8px 32px;
     border: none;
-    background: $customStyleColor80;
+    background: $customStyleColor;
     color: $foreground;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 16px;
     box-shadow: 0px 1px 15px 1px $customStyleColor80;
     cursor: pointer;
     transition: all 0.2s;
@@ -174,6 +185,10 @@ button.save:hover
 {
     box-shadow: 0px 3px 20px 3px $customStyleColor80;
     transform: translateY(-2px);
+}
+button.save:focus
+{
+    border: none;
 }
 .gui-settings-footer svg
 {

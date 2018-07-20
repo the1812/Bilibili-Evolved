@@ -256,17 +256,17 @@
                 ok: "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"
             };
             waitForQuery()(
-                () => $("div.nav-menu"),
+                () => $("body"),
                 it => it.length > 0,
                 it =>
                 {
                     if ($(".gui-settings").length === 0)
                     {
-                        it.append(`<div class='gui-settings'>
+                        it.append(`<div class='gui-settings-icon-panel'><div class='gui-settings'>
                             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
                                 <path/>
                             </svg>
-                        </div>`);
+                        </div></div>`);
                         $(".gui-settings").on("click", () =>
                         {
                             $(".gui-settings-panel").css("display", "flex");
