@@ -4,17 +4,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
 }
 .gui-settings
 {
-    position: absolute;
-    top: 0;
-    left: -12px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    transform: translateX(-12px);
 }
 .gui-settings,
 .gui-settings-header .gui-settings-close path,
@@ -29,7 +31,7 @@
 }
 .gui-settings:hover
 {
-    left: 0;
+    transform: translateX(0px);
 }
 .gui-settings:hover svg path
 {

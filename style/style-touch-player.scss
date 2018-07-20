@@ -141,3 +141,58 @@ div.bilibili-player-video-control
 {
     left: unset !important;
 }
+.bilibili-player-video-control-wrap
+{
+    padding: 0 !important;
+    background: #222d !important;
+}
+.bilibili-player-video-control-bottom
+{
+    align-items: center !important;
+}
+.bilibili-player-video-control-bottom-left
+{
+    display: flex;
+    align-items: center;
+}
+.bilibili-player-video-btn-danmaku
+{
+    flex-grow: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-right
+{
+    flex-grow: 1 !important;
+}
+@media screen and (min-width: 750px)
+{
+    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-center .bilibili-player-video-sendbar .bilibili-player-video-inputbar,
+    .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-center .bilibili-player-video-sendbar .bilibili-player-video-inputbar
+    {
+        background: #fff1 !important;
+    }
+    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap, .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control,
+     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap, .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control
+    {
+        height: 100% !important;
+        margin: 0 !important;
+    }
+    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-left,
+     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-left
+    {
+        height: 100% !important;
+    }
+    .bilibili-player-video-btn.bilibili-player-video-btn-start.video-state-pause
+    {
+        flex-grow: 0.5 !important;
+    }
+    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control .bilibili-player-video-btn,
+    .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control .bilibili-player-video-btn
+    {
+        width: unset !important;
+    }
+}
