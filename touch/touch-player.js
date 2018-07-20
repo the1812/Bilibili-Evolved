@@ -2,10 +2,10 @@
 {
     return (_, resources) =>
     {
-        const getEventHandler = (element, event) =>
-        {
-            return element.data("events")[event][0].handler;
-        };
+        // const getEventHandler = (element, event) =>
+        // {
+        //     return element.data("events")[event][0].handler;
+        // };
         const getPosition = element =>
         {
             let x = 0;
