@@ -28,6 +28,7 @@
 {
     fill: #8884;
     opacity: 0.5;
+    transform-origin: center;
 }
 .gui-settings:hover
 {
@@ -37,7 +38,6 @@
 {
     opacity: 1;
     transform: rotate(120deg);
-    transform-origin: center;
 }
 .gui-settings-panel
 {
