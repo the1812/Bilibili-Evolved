@@ -649,7 +649,9 @@ div.con header,
 .btn.ghost,
 .gui-settings,
 .bui-button.bui-button-transparent,
-.gui-settings-box
+.gui-settings-box,
+.pop-live .pl__head,
+.pop-live .pl__title
 {
     color: #eee !important;
 }
@@ -1307,7 +1309,8 @@ a.up-name:hover,
 #page-subs .action .sub-action,
 #page-channel-index .no-channel-container em,
 .bui-switch .bui-checkbox:checked+.bui-body .bui-dot,
-.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label
+.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
+.bui-select.bui-select-quality-menu .bui-select-item.bui-select-item-active
 {
     color: $customStyleColor !important;
 }
