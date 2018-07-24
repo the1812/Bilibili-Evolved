@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      0.9.2
+// @version      0.9.3
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -137,11 +137,11 @@
                 settings[key] = GM_getValue(key, settings[key]);
             }
         }
-        function saveSettings()
+        function saveSettings(newSettings)
         {
             for (const key in settings)
             {
-                GM_setValue(key, settings[key]);
+                GM_setValue(key, newSettings[key]);
             }
         }
         class ExternalResource
@@ -341,7 +341,7 @@
                                     const value = $(element).val();
                                     settings[key] = textValidate[key](value);
                                 });
-                            saveSettings();
+                            saveSettings(settings);
                             const svg = $(".gui-settings-footer svg.gui-settings-ok");
                             if (parseInt(svg.css("width")) === 0)
                             {
