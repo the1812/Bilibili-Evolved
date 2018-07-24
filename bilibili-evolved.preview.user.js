@@ -323,6 +323,7 @@
                             for (const key in settings)
                             {
                                 $(`input[type='checkbox'][key='${key}']`).prop("checked", settings[key]);
+                                $(`input[type='text'][key='${key}']`).val(settings[key]);
                             }
                         };
                         $("body").append(settingsBox);
@@ -369,32 +370,28 @@
 
                         reloadGuiSettings();
                         const dependencies = {};
-                        for (const key in settings)
+                        $(`input[dependencies]`).each((_, element) =>
                         {
-                            $(`input[dependencies]`).each((_, element) =>
+                            dependencies[$(element).attr("key")] = $(element).attr("dependencies");
+                        });
+                        $(`input[type='checkbox']`).on("change", e =>
+                        {
+                            const self = $(e.srcElement);
+                            const checked = self.prop("checked");
+                            for (const key in dependencies)
                             {
-                                dependencies[$(element).attr("key")] = $(element).attr("dependencies");
-                            });
-                            $(`input[type='checkbox']`).on("change", e =>
-                            {
-                                const self = $(e.srcElement);
-                                const checked = self.prop("checked");
-                                for (const key in dependencies)
+                                const dependency = dependencies[key].split(" ");
+                                if (dependency.indexOf(self.attr("key")) !== -1)
                                 {
-                                    const dependency = dependencies[key].split(" ");
-                                    if (dependency.indexOf(self.attr("key")) !== -1)
+                                    let value = true;
+                                    if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
                                     {
-                                        let value = true;
-                                        if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
-                                        {
-                                            value = false;
-                                        }
-                                        $(`input[key='${key}']`).prop("disabled", value);
+                                        value = false;
                                     }
-
+                                    $(`input[key='${key}']`).prop("disabled", value);
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
                 }
             );
