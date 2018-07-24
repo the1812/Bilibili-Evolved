@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      0.9.0
+// @version      0.9.2
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
 // @grant        unsafeWindow
-// @require      https://static.hdslb.com/js/jquery.min.js
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo.png
 // ==/UserScript==
 (self$ =>
@@ -35,19 +37,13 @@
             grey: "#757575",
             blueGrey: "#607D8B"
         };
-        // User settings will overwrite default settings below
-        const userSettings = {
-            customStyleColor: colors.pink,
-            showBanner: false,
-            useDarkStyle: true
-        };
         const settings = {
             // remove ads
             removeAds: true,
             // max retry count used for query elements
-            touchNavBar: true,
+            touchNavBar: false,
             // (Experimental) touch support for video player
-            touchVideoPlayer: true,
+            touchVideoPlayer: false,
             // redirect to original sites in watchlater list
             watchLaterRedirect: true,
             // auto expand danmaku list
@@ -65,15 +61,11 @@
             // show top banner
             showBanner: true,
             // [New Styles]
-            // (Not Implemented) use dark mode
-            useDarkStyle: true,
+            // (Experimental) use dark mode
+            useDarkStyle: false,
             // use new styles for nav bar and player
             useNewStyle: true
         };
-        for (const key in userSettings)
-        {
-            settings[key] = userSettings[key];
-        }
         const ajaxReload = [
             "touchVideoPlayer",
             "watchLaterRedirect",
@@ -116,7 +108,42 @@
             xhr.open("GET", url);
             xhr.send();
         }
-
+        function reload(resources)
+        {
+            settings.guiSettings = true;
+            for (const key in settings)
+            {
+                if (settings[key] === true)
+                {
+                    const func = eval(resources.data[key]);
+                    if (func)
+                    {
+                        func(settings, resources);
+                        if (ajaxReload.indexOf(key) !== -1)
+                        {
+                            $(document).ajaxComplete(() =>
+                            {
+                                func(settings, resources);
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        function loadSettings()
+        {
+            for (const key in settings)
+            {
+                settings[key] = GM_getValue(key, settings[key]);
+            }
+        }
+        function saveSettings()
+        {
+            for (const key in settings)
+            {
+                GM_setValue(key, settings[key]);
+            }
+        }
         class ExternalResource
         {
             static get resourceUrls()
@@ -219,28 +246,11 @@
             }
         }
 
+        loadSettings();
         const resources = new ExternalResource();
         resources.ready(() =>
         {
-            settings.guiSettings = true;
-            for (const key in settings)
-            {
-                if (settings[key] === true)
-                {
-                    const func = eval(resources.data[key]);
-                    if (func)
-                    {
-                        func(settings, resources);
-                        if (ajaxReload.indexOf(key) !== -1)
-                        {
-                            $(document).ajaxComplete(() =>
-                            {
-                                func(settings, resources);
-                            });
-                        }
-                    }
-                }
-            }
+            reload(resources);
         });
     });
 })(window.jQuery.noConflict(true));

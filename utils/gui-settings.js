@@ -7,8 +7,42 @@
             close: "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z",
             ok: "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"
         };
+        const textValidate = {
+            "customStyleColor": text =>
+            {
+                const match = text.match(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);
+                if (match)
+                {
+                    if (text.length < 7)
+                    {
+                        return `#${text[0]}${text[0]}${text[1]}${text[1]}${text[2]}${text[2]}`;
+                    }
+                    else
+                    {
+                        return text;
+                    }
+                }
+                else
+                {
+                    return settings.customStyleColor;
+                }
+            },
+            "blurBackgroundOpacity": text =>
+            {
+                const match = text.match(/^([-\+]?\d+)(\.\d+)?$/);
+                if (match)
+                {
+                    const value = parseFloat(text);
+                    if (value >= 0 && value <= 1)
+                    {
+                        return text;
+                    }
+                }
+                return settings.blurBackgroundOpacity;
+            }
+        };
         waitForQuery()(
-            () => $("body"),
+            () => $(".gr__bilibili_com>body"),
             it => it.length > 0,
             it =>
             {
@@ -29,6 +63,14 @@
                 const settingsBox = resources.data.guiSettingsDom;
                 if (settingsBox)
                 {
+                    const reloadGuiSettings = () =>
+                    {
+                        for (const key in settings)
+                        {
+                            $(`input[type='checkbox'][key='${key}']`).prop("checked", settings[key]);
+                            $(`input[type='text'][key='${key}']`).val(settings[key]);
+                        }
+                    };
                     $("body").append(settingsBox);
                     $(".gui-settings-header .gui-settings-close").on("click", () =>
                     {
@@ -36,10 +78,18 @@
                     });
                     $("button.save").on("click", () =>
                     {
-                        $("input[type='checkbox'][key]").each((_, element) =>
-                        {
-                            settings[$(element).attr("key")] = $(element).prop("checked");
-                        });
+                        $("input[type='checkbox'][key]")
+                            .each((_, element) =>
+                            {
+                                settings[$(element).attr("key")] = $(element).prop("checked");
+                            });
+                        $("input[type='text'][key]")
+                            .each((_, element) =>
+                            {
+                                const key = $(element).attr("key");
+                                const value = $(element).val();
+                                settings[key] = textValidate[key](value);
+                            });
                         saveSettings();
                         const svg = $(".gui-settings-footer svg.gui-settings-ok");
                         if (parseInt(svg.css("width")) === 0)
@@ -56,40 +106,45 @@
                                 });
                             }, 3000);
                         }
+                        reloadGuiSettings();
                     });
 
                     $(".gui-settings-close path").attr("d", svgData.close);
                     $(".gui-settings-ok path").attr("d", svgData.ok);
                     $(".gui-settings svg path").attr("d", svgData.settings);
 
+                    reloadGuiSettings();
                     const dependencies = {};
-                    for (const key in settings)
+                    $(`input[dependencies]`).each((_, element) =>
                     {
-                        $(`input[type='checkbox'][key='${key}']`).prop("checked", settings[key]);
-                        $(`input[dependencies]`).each((_, element) =>
+                        dependencies[$(element).attr("key")] = $(element).attr("dependencies");
+                    });
+                    $(`input[type='checkbox']`).on("change", e =>
+                    {
+                        const self = $(e.srcElement);
+                        const checked = self.prop("checked");
+                        for (const key in dependencies)
                         {
-                            dependencies[$(element).attr("key")] = $(element).attr("dependencies");
-                        });
-                        $(`input[type='checkbox']`).on("change", e =>
-                        {
-                            const self = $(e.srcElement);
-                            const checked = self.prop("checked");
-                            for (const key in dependencies)
+                            const dependency = dependencies[key].split(" ");
+                            if (dependency.indexOf(self.attr("key")) !== -1)
                             {
-                                const dependency = dependencies[key].split(" ");
-                                if (dependency.indexOf(self.attr("key")) !== -1)
+                                let value = true;
+                                if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
                                 {
-                                    let value = true;
-                                    if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
-                                    {
-                                        value = false;
-                                    }
-                                    $(`input[key='${key}']`).prop("disabled", value);
+                                    value = false;
                                 }
-
+                                $(`input[key='${key}']`).prop("disabled", value);
+                                if (value)
+                                {
+                                    $(`input[key='${key}'][type='text']`).parent().addClass("disabled");
+                                }
+                                else
+                                {
+                                    $(`input[key='${key}'][type='text']`).parent().removeClass("disabled");
+                                }
                             }
-                        });
-                    }
+                        }
+                    });
                 }
             }
         );
