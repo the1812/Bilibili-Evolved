@@ -90,7 +90,7 @@
                                 const value = $(element).val();
                                 settings[key] = textValidate[key](value);
                             });
-                        saveSettings();
+                        saveSettings(settings);
                         const svg = $(".gui-settings-footer svg.gui-settings-ok");
                         if (parseInt(svg.css("width")) === 0)
                         {
