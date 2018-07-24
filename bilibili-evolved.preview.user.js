@@ -385,6 +385,14 @@
                                         value = false;
                                     }
                                     $(`input[key='${key}']`).prop("disabled", value);
+                                    if (value)
+                                    {
+                                        $(`input[key='${key}'][type='text']`).parent().addClass("disabled");
+                                    }
+                                    else
+                                    {
+                                        $(`input[key='${key}'][type='text']`).parent().removeClass("disabled");
+                                    }
                                 }
                             }
                         });

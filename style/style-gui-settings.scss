@@ -54,7 +54,7 @@
 }
 .gui-settings-box
 {
-    width: 450px;
+    width: 400px;
     height: 90%;
     background: white;
     border-radius: 8px;
@@ -143,12 +143,12 @@
     border-radius: 4px;
     border: none;
     height: 100%;
-    max-width: 100px;
+    max-width: 70px;
     padding: 2px 8px;
     background: #8884;
 }
 .gui-settings-textbox-container input:disabled,
-.gui-settings-textbox-container input:disabled ~ span
+.gui-settings-textbox-container.disabled span
 {
     opacity: 0.5;
 }
