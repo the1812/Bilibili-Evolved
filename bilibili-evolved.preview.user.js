@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      0.9.1
+// @version      0.9.2
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*

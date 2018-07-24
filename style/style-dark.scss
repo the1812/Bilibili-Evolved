@@ -124,7 +124,8 @@ div.con,
 #page-setting #setting-new-tag,
 #page-setting #setting-new-tag-btn,
 .imagesbox .boost-img,
-.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
+.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap,
+.gui-settings-box
 {
     background-color: #222 !important;
 }
@@ -647,7 +648,8 @@ div.con header,
 #page-setting #setting-new-tag,
 .btn.ghost,
 .gui-settings,
-.bui-button.bui-button-transparent
+.bui-button.bui-button-transparent,
+.gui-settings-box
 {
     color: #eee !important;
 }
@@ -999,10 +1001,6 @@ div.desc-tips>span.arrow-left,
 .bilibili-player-video-progress-buffer-range
 {
     opacity: 0.5 !important;
-}
-.bui-slider .bui-track.bui-track-autohide-thumb .bui-thumb .bui-thumb-dot
-{
-    transform: scale(1) !important;
 }
 .bilibili-player-block-label,
 .advanced-danmaku-group .content-span
@@ -1379,6 +1377,10 @@ a.s-btn:hover,
  .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span:hover
 {
     fill: $customStyleColor !important;
+}
+.gui-settings-close path
+{
+    fill: #eee;
 }
 
 .history-wrap .active:before,

@@ -179,14 +179,14 @@ button.save
     color: $foreground;
     border-radius: 4px;
     font-size: 16px;
-    box-shadow: 0px 1px 15px 1px $customStyleColor80;
+    /*box-shadow: 0px 1px 15px 1px $customStyleColor80;*/
     cursor: pointer;
     transition: all 0.2s;
     -webkit-tap-highlight-color: transparent;
 }
 button.save:hover
 {
-    box-shadow: 0px 3px 20px 3px $customStyleColor80;
+    /*box-shadow: 0px 3px 20px 3px $customStyleColor80;*/
     transform: translateY(-2px);
 }
 button.save:focus
