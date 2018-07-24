@@ -178,8 +178,10 @@ div.bilibili-player-video-control
 }
 .bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-start
 {
-    margin: 0 4px !important;
+    padding-left: 0 !important;
     flex-grow: 1.2 !important;
+    margin-right: 4px !important;
+    margin-left: 0 !important;
 }
 .bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn
 {
