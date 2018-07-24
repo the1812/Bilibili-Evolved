@@ -54,7 +54,7 @@
 }
 .gui-settings-box
 {
-    width: 400px;
+    width: 450px;
     height: 90%;
     background: white;
     border-radius: 8px;
@@ -126,6 +126,31 @@
 .gui-settings-ok path
 {
     fill: transparent;
+}
+.gui-settings-textbox-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+}
+.gui-settings-textbox-container span
+{
+    margin: 0 16px;
+}
+.gui-settings-textbox-container input
+{
+    border-radius: 4px;
+    border: none;
+    height: 100%;
+    max-width: 100px;
+    padding: 2px 8px;
+    background: #8884;
+}
+.gui-settings-textbox-container input:disabled,
+.gui-settings-textbox-container input:disabled ~ span
+{
+    opacity: 0.5;
 }
 .gui-settings-checkbox-container
 {
