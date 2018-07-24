@@ -134,11 +134,7 @@
         {
             for (const key in settings)
             {
-                const value = GM_getValue(key, settings[key]);
-                if (value !== undefined)
-                {
-                    settings[key] = value;
-                }
+                settings[key] = GM_getValue(key, settings[key]);
             }
         }
         function saveSettings()
@@ -250,10 +246,10 @@
             }
         }
 
+        loadSettings();
         const resources = new ExternalResource();
         resources.ready(() =>
         {
-            loadSettings();
             reload(resources);
 
             // gui-settings.js
