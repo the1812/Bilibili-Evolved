@@ -80,3 +80,9 @@
 # 安装
 - [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
 - [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
+# 兼容性
+浏览器 | 兼容性 | 注释
+------|-------|-----
+Chrome | 兼容 |  |
+FireFox | 未知 | 滚动条样式无效. |
+Edge | 部分兼容 | 自定义颜色与滚动条样式无效,图片锯齿严重,顶栏触摸体验不佳. |
