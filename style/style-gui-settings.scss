@@ -137,6 +137,7 @@
 .gui-settings-textbox-container span
 {
     margin: 0 16px;
+    transition: all 0.2s;
 }
 .gui-settings-textbox-container input
 {
@@ -146,6 +147,7 @@
     max-width: 70px;
     padding: 2px 8px;
     background: #8884;
+    transition: all 0.2s;
 }
 .gui-settings-textbox-container input:disabled,
 .gui-settings-textbox-container.disabled span
@@ -165,6 +167,7 @@
 {
     opacity: 0;
     width: 0;
+    transition: all 0.2s;
 }
 .gui-settings-checkbox-container svg
 {
