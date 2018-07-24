@@ -4,7 +4,7 @@
     {
         waitForQuery()(
             () => $(".nav-search-keyword"),
-            it => it.length > 0,
+            it => it.length > 0 && it.attr("placeholder").length > 0,
             textBox => textBox.attr("placeholder", "搜索")
         );
         waitForQuery()(

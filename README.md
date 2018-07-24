@@ -1,7 +1,7 @@
 # Bilibili-Evolved
 增强哔哩哔哩Web端体验的油猴脚本.
 
-**注: 作为[原脚本](bilibili-touch.js)的工程化形式,目前尚未完成,在完成之前可以先使用[原脚本](bilibili-touch.js).**
+**注: 作为[原脚本](bilibili-touch.user.js)的工程化形式,目前尚未完成,在完成之前可以先使用[原脚本](bilibili-touch.user.js).([安装原脚本](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-touch.user.js))**
 
 # 功能概览
 ## 新样式
@@ -67,7 +67,7 @@
 ![放大前](images/player-buttons-original.png)
 ##### 启用后
 ![放大后](images/player-buttons-large.png)
-## 展开弹幕列表
+## 自动展开弹幕列表
 新版播放页面中,弹幕列表默认收起以显示推荐的其他视频.启用此功能可在每次加载视频时自动展开弹幕列表.
 ## 删除广告
 删除嵌于页面中的推广横幅.
@@ -80,3 +80,9 @@
 # 安装
 - [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
 - [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
+# 兼容性
+浏览器 | 兼容性 | 注释
+------|-------|-----
+Chrome | 兼容 |  |
+FireFox | 未知 | 滚动条样式无效. |
+Edge | 部分兼容 | 自定义颜色与滚动条样式无效,图片锯齿严重,顶栏触摸体验不佳. |

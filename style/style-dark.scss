@@ -123,7 +123,9 @@ div.con,
 .my-album .tab-list,
 #page-setting #setting-new-tag,
 #page-setting #setting-new-tag-btn,
-.imagesbox .boost-img
+.imagesbox .boost-img,
+.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap,
+.gui-settings-box
 {
     background-color: #222 !important;
 }
@@ -173,7 +175,6 @@ li.suggest-item:hover,
 div.drag-bar,
 .bpui-slider-tracker,
 .bilibili-player-video-progress-buffer,
-.bilibili-player-video-btn:hover,
 .bilibili-player-setting-menu-wrap,
 .bilibili-player-setting-menu-list,
 .opera-list,
@@ -238,7 +239,8 @@ a.more.tc-slate:hover,
 #page-setting .setting-index-module,
 .btn.ghost,
 .bili-header-m .profile-m .grade .bar,
-.video-page-card .card-box .info .pre-mask
+.video-page-card .card-box .info .pre-mask,
+.bui-button.bui-button-transparent
 {
     background-color: #444 !important;
 }
@@ -290,6 +292,10 @@ li.context-menu-descipline a,
 .elevator-module .nav-bg
 {
     background-color: #222e !important;
+}
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar
+{
+    background: #fff1 !important;
 }
 
 .bili-footer a,
@@ -640,7 +646,13 @@ div.con header,
 #page-channel-index .channel-item .channel-name,
 #page-setting .setting-privacy-item .setting-privacy-name,
 #page-setting #setting-new-tag,
-.btn.ghost
+.btn.ghost,
+.gui-settings,
+.bui-button.bui-button-transparent,
+.gui-settings-box,
+.pop-live .pl__head,
+.pop-live .pl__title,
+.gui-settings-textbox-container input
 {
     color: #eee !important;
 }
@@ -836,7 +848,9 @@ div.con header,
 .elec .elec-avatar,
 .contribution-sidenav~.main-content,
 .contribution-sidenav,
-#page-myalbum .album-content
+#page-myalbum .album-content,
+.v-wrap .s_tag,
+.bui-button.bui-button-transparent
 {
     border-color: #444 !important
 }
@@ -986,6 +1000,7 @@ div.desc-tips>span.arrow-left,
 {
     opacity: 0 !important;
 }
+.bui-bar.bui-bar-buffer,
 .bilibili-player-video-progress-buffer-range
 {
     opacity: 0.5 !important;
@@ -1086,7 +1101,8 @@ input[type=text]:focus,
 .wrapper .modal-body .choice-wrp.selected .elec-input,
 .wrapper .modal-body .choice-wrp.selected .battery,
 .be-pager-item-active,
-.top-title .concern
+.top-title .concern,
+.bui-button.bui-button-transparent:hover
 {
     border-color: $customStyleColor !important;
 }
@@ -1160,7 +1176,8 @@ a.s-btn:hover,
 #page-channel-index .channel-option.no-channel .create-channel,
 .be-switch-container.is-checked .be-switch,
 #page-setting #setting-new-tag-btn,
-.top-title .concern
+.top-title .concern,
+.bui-button.bui-button-transparent:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -1291,7 +1308,10 @@ a.up-name:hover,
 .tabs a:hover,
 #page-subs .detail a:hover,
 #page-subs .action .sub-action,
-#page-channel-index .no-channel-container em
+#page-channel-index .no-channel-container em,
+.bui-switch .bui-checkbox:checked+.bui-body .bui-dot,
+.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
+.bui-select.bui-select-quality-menu .bui-select-item.bui-select-item-active
 {
     color: $customStyleColor !important;
 }
@@ -1346,14 +1366,25 @@ a.s-btn:hover,
 .be-pager-item-active a,
 .contribution-sidenav .contribution-item.cur .text:hover,
 .be-pager-item.be-pager-item-active:hover a,
-.top-title .concern
+.top-title .concern,
+.bui-button.bui-button-transparent:hover
 {
     color: $foreground !important;
 }
 .bui-checkbox .bui-checkbox-input:checked+.bui-checkbox-label .bui-checkbox-icon svg,
-.bui-checkbox:hover .bui-checkbox-icon svg
+.bui-checkbox:hover .bui-checkbox-icon svg,
+.bui-switch .bui-checkbox:checked+.bui-body .bui-dot,
+.bilibili-player-block-filter-type:hover .bilibili-player-block-filter-image,
+.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image,
+.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active,
+ .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active:hover,
+ .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span:hover
 {
     fill: $customStyleColor !important;
+}
+.gui-settings-close path
+{
+    fill: #eee;
 }
 
 .history-wrap .active:before,

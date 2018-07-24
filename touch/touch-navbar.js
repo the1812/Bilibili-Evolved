@@ -7,14 +7,14 @@
             it => it.length === 6,
             navItems =>
             {
-                const navTouch = (_, nav) =>
+                const enableTouch = (_, nav) =>
                 {
                     const $nav = $(nav);
                     $nav.css("cursor", "pointer");
                     const a = $nav.find("a.t");
                     a.removeAttr("href");
                 };
-                navItems.each(navTouch);
+                navItems.each(enableTouch);
             }
         );
     };

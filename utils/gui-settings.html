@@ -1,0 +1,115 @@
+<div class="gui-settings-panel">
+  <div class="gui-settings-box">
+    <div class="gui-settings-header">
+      <span class="gui-settings-title">设置</span>
+      <svg
+        class="gui-settings-close"
+        viewBox="0 0 24 24">
+        <path />
+      </svg>
+    </div>
+    <div class="gui-settings-content">
+      <ul>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="useNewStyle" type="checkbox" checked/>
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>新样式</span>
+          </label>
+        </li>
+        <li class="indent-1">
+          <label class="gui-settings-textbox-container">
+            <span>自定义颜色</span>
+            <input key="customStyleColor" dependencies="useNewStyle" spellcheck="false" type="text" />
+          </label>
+        </li>
+        <li class="indent-1">
+          <label class="gui-settings-textbox-container">
+            <span>顶栏(对横幅)透明度</span>
+            <input key="blurBackgroundOpacity" dependencies="useNewStyle" spellcheck="false" type="text" />
+          </label>
+        </li>
+        <li class="indent-1">
+          <label class="gui-settings-checkbox-container">
+            <input key="useDarkStyle" dependencies="useNewStyle" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>夜间模式</span>
+          </label>
+        </li>
+        <li class="indent-1">
+          <label class="gui-settings-checkbox-container">
+            <input key="overrideNavBar" dependencies="useNewStyle" type="checkbox"  checked />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>搜索栏位置调整</span>
+          </label>
+        </li>
+        <li class="indent-2">
+          <label class="gui-settings-checkbox-container">
+            <input key="showBanner" dependencies="useNewStyle overrideNavBar" type="checkbox" checked/>
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>显示顶部横幅</span>
+          </label>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="touchNavBar" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>顶栏触摸优化</span>
+          </label>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="touchVideoPlayer" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>播放器触摸支持</span>
+          </label>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="expandDanmakuList" type="checkbox" checked />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>自动展开弹幕列表</span>
+          </label>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="removeAds" type="checkbox" checked />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>删除广告</span>
+          </label>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="watchLaterRedirect" type="checkbox" checked />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>稍后再看重定向</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+    <div class="gui-settings-footer">
+      <button class="save">保存</button>
+      <svg class="gui-settings-ok" viewBox="0 0 24 24">
+        <path/>
+      </svg>
+    </div>
+  </div>
+</div>

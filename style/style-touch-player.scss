@@ -74,7 +74,7 @@
 }
 .videoshot
 {
-    display:none;
+    display: none;
 
     background-image: none;
     flex-grow: 0;
@@ -93,7 +93,7 @@ div.bilibili-player-video-control
 .bilibili-player-video-btn
 {
     flex-grow: 1 !important;
-    height: 38px !important;
+    height: 100% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -140,4 +140,98 @@ div.bilibili-player-video-control
 .bilibili-player-video-volumebar-wrp
 {
     left: unset !important;
+}
+.bilibili-player-video-control-wrap
+{
+    padding: 0 !important;
+    background: #222d !important;
+}
+.bilibili-player-video-control-bottom
+{
+    align-items: center !important;
+}
+.bilibili-player-video-control-bottom-left
+{
+    display: flex;
+    align-items: center;
+}
+.bilibili-player-video-btn-danmaku
+{
+    flex-grow: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-right
+{
+    flex-grow: 1 !important;
+}
+.bilibili-player.mode-fullscreen .bilibili-player-video-sendbar
+{
+    bottom: 0 !important;
+}
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen
+{
+    margin-right: 0 !important;
+}
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-start
+{
+    padding-left: 0 !important;
+    flex-grow: 1.2 !important;
+    margin-right: 4px !important;
+    margin-left: 0 !important;
+}
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn
+{
+    padding: 0 3px !important;
+}
+.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
+{
+    background: #666;
+}
+.bilibili-player .bilibili-player-area .bilibili-player-video-control-bottom,
+.bilibili-player-video-control-bottom-left,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control-bottom-right
+{
+    height: 100% !important;
+    margin: 0 !important;
+}
+.bilibili-player-video-btn-setting-panel-hover-bridge
+{
+    display: none !important;
+}
+@media screen and (min-width: 750px)
+{
+    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-center .bilibili-player-video-sendbar .bilibili-player-video-inputbar,
+    .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-center .bilibili-player-video-sendbar .bilibili-player-video-inputbar
+    {
+        background: #fff1 !important;
+    }
+    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control,
+     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control
+    {
+        height: 100% !important;
+        margin: 0 !important;
+    }
+    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom,
+     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom
+    {
+        margin: 0 !important;
+    }
+    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-left,
+     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-left
+    {
+        height: 100% !important;
+    }
+    .bilibili-player-video-btn.bilibili-player-video-btn-start
+    {
+        flex-grow: 0.5 !important;
+    }
+    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top
+     {
+         bottom: 48px !important;
+     }
 }
