@@ -5,14 +5,15 @@
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
+// @grant        unsafeWindow
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
-($ =>
+(self$ =>
 {
-    //const $ = unsafeWindow.$ || self$;
+    const $ = unsafeWindow.$ || self$;
     $(document).ready(() =>
     {
         const colors = {
