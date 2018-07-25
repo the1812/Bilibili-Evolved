@@ -76,6 +76,11 @@
                     {
                         $(".gui-settings-panel").css("display", "none");
                     });
+                    $("input[key='customStyleColor']").on("change", () =>
+                    {
+                        const color = textValidate.customStyleColor($(this).val());
+                        $("div.custom-color-preview").css("background", color);
+                    });
                     $("button.save").on("click", () =>
                     {
                         $("input[type='checkbox'][key]")

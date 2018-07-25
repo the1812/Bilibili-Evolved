@@ -232,3 +232,12 @@ button.save:focus
 {
     fill: $customStyleColor;
 }
+.custom-color-preview
+{
+    width: 40px;
+    height: 100%;
+    border-radius: 4px;
+    background: $customStyleColor;
+    margin-right: 16px;
+    border: 1px solid #8884;
+}
