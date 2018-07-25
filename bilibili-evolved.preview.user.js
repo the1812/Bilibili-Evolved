@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      0.9.3
+// @version      0.9.4
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -137,7 +137,7 @@
                     noBannerStyle: "style/style-no-banner.css",
                     guiSettingsStyle: "style/style-gui-settings.scss",
                     guiSettingsDom: "utils/gui-settings.html",
-                    guiSettings: "utils/gui-settings.js",
+                    guiSettings: "utils/gui-settings.min.js",
                     useDarkStyle: "style/dark-styles.min.js",
                     useNewStyle: "style/new-styles.min.js",
                     touchNavBar: "touch/touch-navbar.min.js",
