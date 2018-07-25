@@ -78,6 +78,8 @@
 # 安装
 - [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
 - [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
+
+需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.
 # 兼容性
 浏览器 | 兼容性 | 注释
 ------|-------|-----

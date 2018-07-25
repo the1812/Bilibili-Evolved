@@ -42,17 +42,17 @@
             }
         };
         waitForQuery()(
-            () => $(".gr__bilibili_com>body"),
+            () => $("html[class]>body"),
             it => it.length > 0,
             it =>
             {
                 if ($(".gui-settings").length === 0)
                 {
                     it.append(`<div class='gui-settings-icon-panel'><div class='gui-settings'>
-                            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                                <path/>
-                            </svg>
-                        </div></div>`);
+                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                            <path/>
+                        </svg>
+                    </div></div>`);
                     $(".gui-settings").on("click", () =>
                     {
                         $(".gui-settings-panel").css("display", "flex");
@@ -108,11 +108,11 @@
                         }
                         reloadGuiSettings();
                     });
-
+        
                     $(".gui-settings-close path").attr("d", svgData.close);
                     $(".gui-settings-ok path").attr("d", svgData.ok);
                     $(".gui-settings svg path").attr("d", svgData.settings);
-
+        
                     reloadGuiSettings();
                     const dependencies = {};
                     $(`input[dependencies]`).each((_, element) =>
