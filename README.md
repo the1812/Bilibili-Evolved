@@ -78,6 +78,13 @@
 # 安装
 - [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
 - [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
+
+(需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.)
+# 设置
+脚本启用后,在网页左侧中央会有一个齿轮图标,点击即可打开设置.
+
+**设置保存后,需要刷新网页才能生效.**
+![设置](images/gui-settings.png)
 # 兼容性
 浏览器 | 兼容性 | 注释
 ------|-------|-----

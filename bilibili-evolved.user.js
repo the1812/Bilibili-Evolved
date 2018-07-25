@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      0.9.3
+// @version      0.9.4
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -16,27 +16,6 @@
     const $ = unsafeWindow.$ || self$;
     $(document).ready(() =>
     {
-        const colors = {
-            red: "#E53935",
-            pink: "#F06292",
-            purple: "#AB47BC",
-            deepPurple: "#7E57C2",
-            indigo: "#7986CB",
-            blue: "#1E88E5",
-            lightBlue: "#00A0D8",
-            cyan: "#00ACC1",
-            teal: "#26A69A",
-            green: "#66BB6A",
-            lightGreen: "#8BC34A",
-            lime: "#CDDC39",
-            yellow: "#FFEB3B",
-            amber: "#FFC107",
-            orange: "#FF9800",
-            deepOrange: "#FF5722",
-            brown: "#795548",
-            grey: "#757575",
-            blueGrey: "#607D8B"
-        };
         const settings = {
             // remove ads
             removeAds: true,
@@ -50,7 +29,7 @@
             expandDanmakuList: true,
             // [New Styles]
             // set theme color (must in #rrggbb format, not compatible with Edge)
-            customStyleColor: colors.pink,
+            customStyleColor: "#F06292",
             // [New Styles]
             // set background blur opacity of nav bar
             blurBackgroundOpacity: 0.382,
@@ -158,7 +137,7 @@
                     noBannerStyle: "style/style-no-banner.css",
                     guiSettingsStyle: "style/style-gui-settings.scss",
                     guiSettingsDom: "utils/gui-settings.html",
-                    guiSettings: "utils/gui-settings.js",
+                    guiSettings: "utils/gui-settings.min.js",
                     useDarkStyle: "style/dark-styles.min.js",
                     useNewStyle: "style/new-styles.min.js",
                     touchNavBar: "touch/touch-navbar.min.js",
