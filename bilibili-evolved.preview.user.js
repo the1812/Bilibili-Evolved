@@ -301,7 +301,7 @@
             {
                 $(".gui-settings-header .gui-settings-close").on("click", () =>
                 {
-                    $(".gui-settings-panel").css("display", "none");
+                    $(".gui-settings-panel").removeClass("opened");
                 });
                 $("input[key='customStyleColor']").on("input", () =>
                 {
@@ -401,7 +401,7 @@
                         </div></div>`);
                     $(".gui-settings").on("click", () =>
                     {
-                        $(".gui-settings-panel").css("display", "flex");
+                        $(".gui-settings-panel").addClass("opened");
                     });
                 }
 

@@ -72,7 +72,7 @@
         {
             $(".gui-settings-header .gui-settings-close").on("click", () =>
             {
-                $(".gui-settings-panel").css("display", "none");
+                $(".gui-settings-panel").removeClass("opened");
             });
             $("input[key='customStyleColor']").on("input", () =>
             {
@@ -86,20 +86,7 @@
             $("div.custom-color-preview").on("click", () =>
             {
                 const box = $(".predefined-colors");
-                if (box.css("display") === "none")
-                {
-                    box.css({
-                        display: "visible",
-                        opacity: 1
-                    });
-                }
-                else
-                {
-                    box.css({
-                        display: "none",
-                        opacity: 0
-                    });
-                }
+                box.toggleClass("opened");
             });
             $("button.save").on("click", () =>
             {
@@ -185,7 +172,7 @@
                     </div></div>`);
                 $(".gui-settings").on("click", () =>
                 {
-                    $(".gui-settings-panel").css("display", "flex");
+                    $(".gui-settings-panel").addClass("opened");
                 });
             }
         
@@ -195,15 +182,18 @@
         function addPredefinedColors()
         {
             const grid = $(".predefined-colors-grid");
-            for (const color of colors)
+            for (const color of Object.values(colors))
             {
                 $(`<div class='predefined-colors-grid-block'></div>`)
                     .appendTo(grid)
                     .css("background", color)
-                    .on("click", (_, element) =>
+                    .attr("data-color", color)
+                    .on("click", e =>
                     {
-                        $(`input[key='customStyleColor']`).val($(element).css("background"));
-                        $(".custom-color-preview").click();
+                        $(`input[key='customStyleColor']`)
+                            .val($(e.srcElement).attr("data-color"))
+                            .trigger("input");
+                        $("div.custom-color-preview").on("click");
                     });
             }
         }
