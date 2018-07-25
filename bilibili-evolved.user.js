@@ -230,7 +230,6 @@
         resources.ready(() =>
         {
             reload(resources);
-            
         });
     });
 })(window.jQuery.noConflict(true));
