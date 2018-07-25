@@ -315,20 +315,7 @@
                 $("div.custom-color-preview").on("click", () =>
                 {
                     const box = $(".predefined-colors");
-                    if (box.css("display") === "none")
-                    {
-                        box.css({
-                            display: "flex",
-                            opacity: 1
-                        });
-                    }
-                    else
-                    {
-                        box.css({
-                            display: "none",
-                            opacity: 0
-                        });
-                    }
+                    box.toggleClass("opened");
                 });
                 $("button.save").on("click", () =>
                 {
@@ -432,7 +419,9 @@
                         .attr("data-color", color)
                         .on("click", e =>
                         {
-                            $(`input[key='customStyleColor']`).val($(e.srcElement).attr("data-color")).on("input");
+                            $(`input[key='customStyleColor']`)
+                                .val($(e.srcElement).attr("data-color"))
+                                .trigger("input");
                             $("div.custom-color-preview").on("click");
                         });
                 }

@@ -8,6 +8,7 @@
     top: 0;
     left: 0;
     width: 24px;
+    z-index: 10000;
 }
 .gui-settings
 {
@@ -47,7 +48,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 10000;
+    z-index: 10001;
     display: none;
     align-items: center;
     justify-content: center;
@@ -69,6 +70,7 @@
     height: 50px;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
 }
 .gui-settings-footer
 {
@@ -148,6 +150,7 @@
     padding: 2px 8px;
     background: #8884;
     transition: all 0.2s;
+    font-size: 16px;
 }
 .gui-settings-textbox-container input:disabled,
 .gui-settings-textbox-container.disabled span,
@@ -252,6 +255,11 @@ button.save:focus
     top: 32px;
     left: -64px;
 }
+.predefined-colors.opened
+{
+    display: flex;
+    opacity: 1;
+}
 .predefined-colors-grid
 {
     display: grid;
@@ -267,4 +275,8 @@ button.save:focus
     justify-self: center;
     align-self: center;
     cursor: pointer;
+}
+input[key]:focus
+{
+    outline: none;
 }
