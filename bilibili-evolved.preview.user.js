@@ -17,32 +17,16 @@
     $(document).ready(() =>
     {
         const settings = {
-            // remove ads
             removeAds: true,
-            // max retry count used for query elements
             touchNavBar: false,
-            // (Experimental) touch support for video player
             touchVideoPlayer: false,
-            // redirect to original sites in watchlater list
             watchLaterRedirect: true,
-            // auto expand danmaku list
             expandDanmakuList: true,
-            // [New Styles]
-            // set theme color (must in #rrggbb format, not compatible with Edge)
             customStyleColor: "#F06292",
-            // [New Styles]
-            // set background blur opacity of nav bar
             blurBackgroundOpacity: 0.382,
-            // [New Styles]
-            // (Experimental) use new nav bar in old sites
             overrideNavBar: true,
-            // [New Styles -> Override Nav Bar]
-            // show top banner
             showBanner: true,
-            // [New Styles]
-            // (Experimental) use dark mode
             useDarkStyle: false,
-            // use new styles for nav bar and player
             useNewStyle: true
         };
         const ajaxReload = [
