@@ -150,7 +150,8 @@
     transition: all 0.2s;
 }
 .gui-settings-textbox-container input:disabled,
-.gui-settings-textbox-container.disabled span
+.gui-settings-textbox-container.disabled span,
+.gui-settings-textbox-container.disabled div
 {
     opacity: 0.5;
 }
@@ -207,15 +208,9 @@ button.save
     color: $foreground;
     border-radius: 4px;
     font-size: 16px;
-    /*box-shadow: 0px 1px 15px 1px $customStyleColor80;*/
     cursor: pointer;
     transition: all 0.2s;
     -webkit-tap-highlight-color: transparent;
-}
-button.save:hover
-{
-    /*box-shadow: 0px 3px 20px 3px $customStyleColor80;*/
-    transform: translateY(-2px);
 }
 button.save:focus
 {
@@ -240,4 +235,37 @@ button.save:focus
     background: $customStyleColor;
     margin-right: 16px;
     border: 1px solid #8884;
+    position: relative;
+    cursor: pointer;
+}
+.predefined-colors
+{
+    transition: all 0.2s;
+    display: none;
+    opacity: 0;
+    background: white;
+    width: 168px;
+    height: 168px;
+    position: absolute;
+    box-shadow: 0px 3px 20px 2px #0004;
+    border-radius: 4px;
+    top: 32px;
+    left: -64px;
+    display: flex;
+}
+.predefined-colors-grid
+{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    margin: 4px;
+    flex-grow: 1;
+}
+.predefined-colors-grid-block
+{
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    justify-self: center;
+    align-self: center;
+    cursor: pointer;
 }

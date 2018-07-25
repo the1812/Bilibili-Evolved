@@ -16,27 +16,6 @@
     const $ = unsafeWindow.$ || self$;
     $(document).ready(() =>
     {
-        const colors = {
-            red: "#E53935",
-            pink: "#F06292",
-            purple: "#AB47BC",
-            deepPurple: "#7E57C2",
-            indigo: "#7986CB",
-            blue: "#1E88E5",
-            lightBlue: "#00A0D8",
-            cyan: "#00ACC1",
-            teal: "#26A69A",
-            green: "#66BB6A",
-            lightGreen: "#8BC34A",
-            lime: "#CDDC39",
-            yellow: "#FFEB3B",
-            amber: "#FFC107",
-            orange: "#FF9800",
-            deepOrange: "#FF5722",
-            brown: "#795548",
-            grey: "#757575",
-            blueGrey: "#607D8B"
-        };
         const settings = {
             // remove ads
             removeAds: true,
@@ -50,7 +29,7 @@
             expandDanmakuList: true,
             // [New Styles]
             // set theme color (must in #rrggbb format, not compatible with Edge)
-            customStyleColor: colors.pink,
+            customStyleColor: "#F06292",
             // [New Styles]
             // set background blur opacity of nav bar
             blurBackgroundOpacity: 0.382,
