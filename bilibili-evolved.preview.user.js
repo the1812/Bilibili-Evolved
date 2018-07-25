@@ -318,7 +318,7 @@
                     if (box.css("display") === "none")
                     {
                         box.css({
-                            display: "visible",
+                            display: "flex",
                             opacity: 1
                         });
                     }
@@ -424,15 +424,16 @@
             function addPredefinedColors()
             {
                 const grid = $(".predefined-colors-grid");
-                for (const color of colors)
+                for (const color of Object.values(colors))
                 {
                     $(`<div class='predefined-colors-grid-block'></div>`)
                         .appendTo(grid)
                         .css("background", color)
-                        .on("click", (_, element) =>
+                        .attr("data-color", color)
+                        .on("click", e =>
                         {
-                            $(`input[key='customStyleColor']`).val($(element).css("background"));
-                            $(".custom-color-preview").click();
+                            $(`input[key='customStyleColor']`).val($(e.srcElement).attr("data-color")).on("input");
+                            $("div.custom-color-preview").on("click");
                         });
                 }
             }
