@@ -1,10 +1,14 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      0.9.4
+// @version      0.9.5
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
+// @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js
+// @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js
+// @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
+// @homepage     https://github.com/the1812/Bilibili-Evolved
 // @grant        unsafeWindow
 // @grant        GM_getValue
 // @grant        GM_setValue
