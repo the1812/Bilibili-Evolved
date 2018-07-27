@@ -27,6 +27,7 @@
 }
 .gui-settings svg path
 {
+    fill: #ddd;
     fill: #8884;
     opacity: 0.75;
     transform-origin: center !important;
@@ -68,6 +69,7 @@
     height: 90%;
     background: white;
     border-radius: 8px;
+    box-shadow: 0px 3px 20px 2px #aaa;
     box-shadow: 0px 3px 20px 2px #0004;
     display: flex;
     flex-direction: column;
@@ -157,6 +159,7 @@
     height: 100%;
     max-width: 70px;
     padding: 2px 8px;
+    background: #ddd;
     background: #8884;
     transition: all 0.2s;
     font-size: 16px;
@@ -197,6 +200,7 @@
 }
 .gui-settings-checkbox-container input ~ svg
 {
+    background-color: #ddd;
     background-color: #8884;
 }
 .gui-settings-checkbox-container input:checked ~ svg
@@ -246,6 +250,7 @@ button.save:focus
     border-radius: 4px;
     background: $customStyleColor;
     margin-right: 16px;
+    border: 1px solid #ddd;
     border: 1px solid #8884;
     position: relative;
     cursor: pointer;
@@ -259,6 +264,7 @@ button.save:focus
     width: 168px;
     height: 168px;
     position: absolute;
+    box-shadow: 0px 3px 20px 2px #aaa;
     box-shadow: 0px 3px 20px 2px #0004;
     border-radius: 4px;
     top: 32px;
