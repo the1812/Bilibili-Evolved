@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      0.9.5
+// @version      0.9.6.1
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -26,7 +26,7 @@
             touchVideoPlayer: false,
             watchLaterRedirect: true,
             expandDanmakuList: true,
-            customStyleColor: "#F06292",
+            customStyleColor: "#00A0D8",
             blurBackgroundOpacity: 0.382,
             overrideNavBar: true,
             showBanner: true,
@@ -77,7 +77,6 @@
         }
         function reload(resources)
         {
-            settings.guiSettings = true;
             for (const key in settings)
             {
                 if (settings[key] === true)
@@ -103,6 +102,8 @@
             {
                 settings[key] = GM_getValue(key, settings[key]);
             }
+            settings.guiSettings = true;
+            settings.debug = false;
         }
         function saveSettings(newSettings)
         {
@@ -206,7 +207,7 @@
             ready(callback)
             {
                 this.callback = callback;
-            }
+            }k
             getStyle(key, id)
             {
                 return `<style id='${id}'>${this.data[key]}</style>`;

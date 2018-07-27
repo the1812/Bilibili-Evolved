@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      0.9.6
+// @version      0.9.6.1
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -102,7 +102,8 @@
             {
                 settings[key] = GM_getValue(key, settings[key]);
             }
-            settings.guiSettings = true;
+            // settings.guiSettings = true;
+            settings.debug = true;
         }
         function saveSettings(newSettings)
         {
@@ -206,7 +207,7 @@
             ready(callback)
             {
                 this.callback = callback;
-            }
+            }k
             getStyle(key, id)
             {
                 return `<style id='${id}'>${this.data[key]}</style>`;
