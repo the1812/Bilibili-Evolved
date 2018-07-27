@@ -59,7 +59,7 @@
                 return settings.blurBackgroundOpacity;
             }
         };
-        
+
         function reloadGuiSettings()
         {
             for (const key in settings)
@@ -166,16 +166,16 @@
             if ($(".gui-settings").length === 0)
             {
                 body.append(`<div class='gui-settings-icon-panel'><div class='gui-settings'>
-                        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                            <path/>
-                        </svg>
-                    </div></div>`);
+                    <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path/>
+                    </svg>
+                </div></div>`);
                 $(".gui-settings").on("click", () =>
                 {
                     $(".gui-settings-panel").addClass("opened");
                 });
             }
-        
+
             const style = resources.getStyle("guiSettingsStyle", "gui-settings-style");
             $("body").after(style);
         }
@@ -198,8 +198,8 @@
             }
         }
         waitForQuery()(
-            () => $("html[class]>body"),
-            it => it.length > 0,
+            () => $("body"),
+            it => it.length > 0 && unsafeWindow.$,
             it =>
             {
                 addSettingsIcon(it);

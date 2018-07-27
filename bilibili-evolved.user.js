@@ -1,10 +1,14 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      0.9.4
+// @version      0.9.7
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
+// @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js
+// @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js
+// @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
+// @homepage     https://github.com/the1812/Bilibili-Evolved
 // @grant        unsafeWindow
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -17,32 +21,16 @@
     $(document).ready(() =>
     {
         const settings = {
-            // remove ads
             removeAds: true,
-            // max retry count used for query elements
             touchNavBar: false,
-            // (Experimental) touch support for video player
             touchVideoPlayer: false,
-            // redirect to original sites in watchlater list
             watchLaterRedirect: true,
-            // auto expand danmaku list
             expandDanmakuList: true,
-            // [New Styles]
-            // set theme color (must in #rrggbb format, not compatible with Edge)
-            customStyleColor: "#F06292",
-            // [New Styles]
-            // set background blur opacity of nav bar
+            customStyleColor: "#00A0D8",
             blurBackgroundOpacity: 0.382,
-            // [New Styles]
-            // (Experimental) use new nav bar in old sites
             overrideNavBar: true,
-            // [New Styles -> Override Nav Bar]
-            // show top banner
             showBanner: true,
-            // [New Styles]
-            // (Experimental) use dark mode
             useDarkStyle: false,
-            // use new styles for nav bar and player
             useNewStyle: true
         };
         const ajaxReload = [
@@ -89,7 +77,6 @@
         }
         function reload(resources)
         {
-            settings.guiSettings = true;
             for (const key in settings)
             {
                 if (settings[key] === true)
@@ -115,6 +102,7 @@
             {
                 settings[key] = GM_getValue(key, settings[key]);
             }
+            settings.guiSettings = true;
         }
         function saveSettings(newSettings)
         {
@@ -218,7 +206,7 @@
             ready(callback)
             {
                 this.callback = callback;
-            }
+            }k
             getStyle(key, id)
             {
                 return `<style id='${id}'>${this.data[key]}</style>`;

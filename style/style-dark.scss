@@ -1103,7 +1103,9 @@ input[type=text]:focus,
 .wrapper .modal-body .choice-wrp.selected .battery,
 .be-pager-item-active,
 .top-title .concern,
-.bui-button.bui-button-transparent:hover
+.bui-button.bui-button-transparent:hover,
+.bb-comment .stick,
+.bb-comment .stick.assist
 {
     border-color: $customStyleColor !important;
 }
@@ -1312,7 +1314,9 @@ a.up-name:hover,
 #page-channel-index .no-channel-container em,
 .bui-switch .bui-checkbox:checked+.bui-body .bui-dot,
 .bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
-.bui-select.bui-select-quality-menu .bui-select-item.bui-select-item-active
+.bui-select.bui-select-quality-menu .bui-select-item.bui-select-item-active,
+.bb-comment .stick,
+.bb-comment .stick.assist
 {
     color: $customStyleColor !important;
 }
