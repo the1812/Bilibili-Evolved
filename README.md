@@ -76,11 +76,11 @@
 ## 稍后再看重定向
 将稍后再看的链接重定向为普通播放网址,以使用新版播放页面.
 # 安装
-版本&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|说明
+版本|说明
 ---|---
-[正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)|正式发布的版本,最稳定,更新频率较慢.
-[预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)|新增内容测试的地方,更新频率快,但功能不稳定.
-[离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)|内置所有依赖项以提高加载速度,体积较大,可以不受GitHub服务器不稳定的影响. 由于任何依赖项更新后此脚本也需更新,所以更新频率会高于正式版.
+[![正式版](https://img.shields.io/badge/正式版-0.9.7-green.svg?style=for-the-badge&colorB=009688)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)|正式发布的版本,最稳定,更新频率较慢.
+[![预览版](https://img.shields.io/badge/预览版-0.9.7-yellow.svg?style=for-the-badge&colorB=607D8B)](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)|新增内容测试的地方,更新频率快,但功能不稳定.
+[![离线版](https://img.shields.io/badge/离线版-11.33-blue.svg?style=for-the-badge)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)|内置所有依赖项以提高加载速度,体积较大,可以不受GitHub服务器不稳定的影响. 由于任何依赖项更新后此脚本也需更新,所以更新频率会高于正式版.
 
 (需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.)
 # 设置
