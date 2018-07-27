@@ -67,7 +67,6 @@
             };
             return tryQuery;
         }
-        // $.ajax will be modified by bilibili, so I have to use my own implementation.
         function ajax(url, done)
         {
             const xhr = new XMLHttpRequest();
@@ -171,6 +170,10 @@
                 settings.foreground = foreground;
                 settings.brightness = `${foreground === "#000" ? "100" : "0"}%`;
                 settings.filterBrightness = foreground === "#000" ? "0" : "100";
+            }
+            ready(callback)
+            {
+                this.callback = callback;
                 const replaceCustomColor = (style) =>
                 {
                     for (const key of Object.keys(settings))
@@ -202,10 +205,6 @@
                         }
                     });
                 }
-            }
-            ready(callback)
-            {
-                this.callback = callback;
             }
             getStyle(key, id)
             {
