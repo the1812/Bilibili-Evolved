@@ -206,7 +206,7 @@
             ready(callback)
             {
                 this.callback = callback;
-            }k
+            }
             getStyle(key, id)
             {
                 return `<style id='${id}'>${this.data[key]}</style>`;
