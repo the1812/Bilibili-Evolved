@@ -76,8 +76,11 @@
 ## 稍后再看重定向
 将稍后再看的链接重定向为普通播放网址,以使用新版播放页面.
 # 安装
-- [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
-- [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
+版本&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|说明
+---|---
+[正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)|正式发布的版本,最稳定,更新频率较慢.
+[预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)|新增内容测试的地方,更新频率快,但功能不稳定.
+[离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)|内置所有依赖项以提高加载速度,体积较大,可以不受GitHub服务器不稳定的影响. 由于任何依赖项更新后此脚本也需更新,所以更新频率会高于正式版.
 
 (需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.)
 # 设置
@@ -89,9 +92,9 @@
 # 兼容性
 浏览器 | 兼容性 | 注释
 ------|-------|-----
-Chrome | 兼容 |  |
-FireFox | 部分兼容 | 滚动条样式无效,滤镜效果不仅无抗锯齿,还会使部分布局错位. |
-Edge | 部分兼容 | 自定义颜色与滚动条样式无效,滤镜效果无抗锯齿,半透明颜色(`#rrggbbaa`)无效*,顶栏触摸体验不佳. |
-Safari | 未知 | |
+Chrome | 兼容 |
+FireFox | 部分兼容 | 滚动条样式无效,滤镜效果不仅无抗锯齿,还会使部分布局错位.
+Edge | 部分兼容 | 自定义颜色与滚动条样式无效,滤镜效果无抗锯齿,半透明颜色(`#rrggbbaa`)无效*,顶栏触摸体验不佳.
+Safari | 未知 |
 
 *Edge将考虑用rgba()实现半透明颜色.
