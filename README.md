@@ -4,11 +4,11 @@
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.
 
-## [![正式版](https://img.shields.io/badge/正式版-v0.9.7-green.svg?style=flat-square&colorB=009688)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
+## [![正式版](https://img.shields.io/badge/正式版-🌸-green.svg?style=flat-square&colorB=009688)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
 正式发布的版本,最稳定,更新频率较慢.
-## [![预览版](https://img.shields.io/badge/预览版-v0.9.7-yellow.svg?style=flat-square&colorB=607D8B)](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
+## [![预览版](https://img.shields.io/badge/预览版-🍺-yellow.svg?style=flat-square&colorB=607D8B)](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
 新增内容测试的地方,更新频率快,但功能不稳定.
-## [![离线版](https://img.shields.io/badge/离线版-v11.33-blue.svg?style=flat-square)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)
+## [![离线版](https://img.shields.io/badge/离线版-👻-blue.svg?style=flat-square)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)
 内置所有依赖项以提高加载速度,体积较大,可以不受GitHub服务器不稳定的影响. 由于任何依赖项更新后此脚本也需更新,所以更新频率会高于正式版.
 
 # 功能概览
