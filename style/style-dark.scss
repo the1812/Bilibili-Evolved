@@ -129,7 +129,17 @@ div.con,
 .predefined-colors,
 #page-fav .fav-sidenav .fav-item:hover,
 #page-fav .fav-sidenav .icon-cursor,
-.modal-wrapper
+.space-right,
+.modal-wrapper,
+.bottom .content,
+.action-menu .menu-list,
+.action-menu .menu-list:before,
+.list-item:hover,
+.list-item.active,
+.fans-medal-item .level,
+.emoji-box:after,
+.emotion-box,
+.emotion-box:after
 {
     background-color: #222 !important;
 }
@@ -247,7 +257,14 @@ a.more.tc-slate:hover,
 .bui-button.bui-button-transparent,
 .bb-comment .comment-list .quote,
 .wrapper .edit-video-modal .target-favlist .target-favitem:hover,
-#page-fav .fav-main .search-input input
+#page-fav .fav-main .search-input input,
+.space-left,
+.space-right .space-right-top .title,
+.card .box,
+.message-list,
+.send-box,
+.emoji-box .emoji-item:hover,
+.emotion-item:hover .img
 {
     background-color: #444 !important;
 }
@@ -289,6 +306,7 @@ li.context-menu-descipline a,
 }
 .bilibili-player-video-inputbar,
 #app,
+body,
 .wrapper .modal-header,
 .large-item .cover
 {
@@ -432,7 +450,12 @@ blockquote .color-yellow-04,
 #page-fav .fav-main .filter-item .filter-type .be-dropdown-item i,
 .wrapper .edit-video-modal .edit-video-subtitle,
 .wrapper .edit-video-modal .target-favlist .target-favitem.disabled span,
-.wrapper .edit-video-modal .target-favlist .target-fav-count
+.wrapper .edit-video-modal .target-favlist .target-fav-count,
+.side-bar .list .item,
+.top .time,
+.bottom .text,
+.list .list-title,
+.medal-box
 {
     color: #aaa !important;
 }
@@ -673,7 +696,17 @@ div.con header,
 .modal-wrapper .modal-header-close,
 .wrapper .edit-video-modal .target-favlist .target-fav-name,
 #page-fav .fav-main .search-types,
-#page-fav .fav-main .search-input input
+#page-fav .fav-main .search-input input,
+.side-bar .title,
+.setting.item a,
+.space-right .space-right-top .title,
+.top .title,
+.action-menu .menu-list a,
+.card .config,
+.dialog .title,
+.list-item .name,
+.message .message-content.not-img,
+.emoji-box .emoji-item
 {
     color: #eee !important;
 }
@@ -685,6 +718,10 @@ div.con header,
 .nav-tab-bar .tab-item.on span
 {
     color: #00a1d6 !important
+}
+.fans-medal-item .label
+{
+    color: #222 !important;
 }
 
 li.tag,
@@ -733,7 +770,9 @@ ul.bilibili-suggest,
 #id-card .idc-avatar,
 .be-pager-options-elevator input[type=text],
 #page-setting #setting-new-tag,
-#page-setting #setting-new-tag-btn
+#page-setting #setting-new-tag-btn,
+.action-menu .menu-list,
+.action-menu .menu-list:before
 {
     border-color: #222 !important;
 }
@@ -791,7 +830,13 @@ div.bar>div.num,
 #page-fav .fav-sidenav .nav-container,
 #page-fav .fav-main .fav-header.fav-header-info,
 #page-fav .fav-main .small-item,
-#page-fav .fav-main .search-types
+#page-fav .fav-main .search-types,
+.divided-line,
+.dialog .title,
+.list .list-title,
+.list-item,
+.whisper .list,
+.send-box
 {
     border-color: transparent !important;
 }
@@ -935,7 +980,9 @@ i.btn-del,
 .i-live-icon,
 .i-live-arrow,
 .i-m-v-icon,
-.icon-arrow
+.icon-arrow,
+.side-bar .icon,
+.setting:before
 {
     filter: grayscale(100) brightness(100) saturate(0) !important;
 }
@@ -965,6 +1012,14 @@ ul.up-nav li
 {
     background-position: -716px -332px !important;
 }
+.bp-svg-icon.radio-default
+{
+    background-position: 0em -9.376em !important;
+}
+.bp-svg-icon.radio-Selected
+{
+    background-position: 0em -8.376em !important;
+}
 .multi-page .cur-list ul
 {
     max-height: none !important;
@@ -984,7 +1039,10 @@ div.im-list-box,
 .mini-item .cover img,
 .i-pin-c,
 .elec .elec-trigger,
-.col-full
+.col-full,
+.space-right .space-right-top .title,
+.card,
+.action-menu .menu-list
 {
     box-shadow: none !important;
 }
@@ -1003,7 +1061,8 @@ div.drag-bar,
 .user-card,
 .emoji-box,
 .userinfo-wrapper,
-.audio-info-module
+.audio-info-module,
+.emotion-box
 {
     box-shadow: 0px 1px 20px 2px $customStyleColor30 !important;
 }
@@ -1021,7 +1080,9 @@ div.desc-tips>span.arrow-left,
 .up-info-holder .fixed-box .more .link .icon,
 .up-info-holder .fixed-box .more .help .icon,
 .g-search .search-btn,
-.wrapper .elec-message-wrp .elec-triangle
+.wrapper .elec-message-wrp .elec-triangle,
+img.source-img,
+canvas.cliper.is-img
 {
     display: none !important;
 }
@@ -1080,6 +1141,10 @@ div.desc-tips>span.arrow-left,
 #page-fav .fav-main .filter-item .filter-type .be-dropdown-item
 {
     padding: 0 16px !important;
+}
+.cliper
+{
+    filter: brightness(16%) !important;
 }
 
 .c-clink:hover,
@@ -1142,7 +1207,8 @@ input[type=text]:focus,
 .top-title .concern,
 .bui-button.bui-button-transparent:hover,
 .bb-comment .stick,
-.bb-comment .stick.assist
+.bb-comment .stick.assist,
+.send-btn
 {
     border-color: $customStyleColor !important;
 }
@@ -1219,7 +1285,9 @@ a.s-btn:hover,
 .top-title .concern,
 .bui-button.bui-button-transparent:hover,
 #page-fav .fav-sidenav .fav-item.cur,
-.wrapper .edit-video-modal .target-favlist .target-favitem.selected
+.wrapper .edit-video-modal .target-favlist .target-favitem.selected,
+.notify,
+.send-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -1361,7 +1429,13 @@ a.up-name:hover,
 #page-fav .fav-main .filter-item .filter-type .be-dropdown-item:hover i,
 #page-fav .fav-main .filter-item .filter-type .be-dropdown-item:hover span,
 .modal-wrapper .modal-header-close:hover,
-#page-fav .fav-main .search-types:hover
+#page-fav .fav-main .search-types:hover,
+.list .item.active:before,
+.list .item.active a,
+.list .item:hover a,
+.list .item:hover:before,
+.bottom .link,
+.action-menu .menu-list a:hover
 {
     color: $customStyleColor !important;
 }
@@ -1418,7 +1492,8 @@ a.s-btn:hover,
 .be-pager-item.be-pager-item-active:hover a,
 .top-title .concern,
 .bui-button.bui-button-transparent:hover,
-.bb-comment .comment-list .quote
+.bb-comment .comment-list .quote,
+.send-btn
 {
     color: $foreground !important;
 }
