@@ -126,7 +126,10 @@ div.con,
 .imagesbox .boost-img,
 .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap,
 .gui-settings-box,
-.predefined-colors
+.predefined-colors,
+#page-fav .fav-sidenav .fav-item:hover,
+#page-fav .fav-sidenav .icon-cursor,
+.modal-wrapper
 {
     background-color: #222 !important;
 }
@@ -241,7 +244,10 @@ a.more.tc-slate:hover,
 .btn.ghost,
 .bili-header-m .profile-m .grade .bar,
 .video-page-card .card-box .info .pre-mask,
-.bui-button.bui-button-transparent
+.bui-button.bui-button-transparent,
+.bb-comment .comment-list .quote,
+.wrapper .edit-video-modal .target-favlist .target-favitem:hover,
+#page-fav .fav-main .search-input input
 {
     background-color: #444 !important;
 }
@@ -420,7 +426,13 @@ blockquote .color-yellow-04,
 .be-pager-options-elevator,
 .be-pager-total,
 .tabs a,
-#id-card .idc-auth-description
+#id-card .idc-auth-description,
+#page-fav .fav-sidenav .nav-title .text,
+#page-fav .fav-main .fav-meta,
+#page-fav .fav-main .filter-item .filter-type .be-dropdown-item i,
+.wrapper .edit-video-modal .edit-video-subtitle,
+.wrapper .edit-video-modal .target-favlist .target-favitem.disabled span,
+.wrapper .edit-video-modal .target-favlist .target-fav-count
 {
     color: #aaa !important;
 }
@@ -653,7 +665,15 @@ div.con header,
 .gui-settings-box,
 .pop-live .pl__head,
 .pop-live .pl__title,
-.gui-settings-textbox-container input
+.gui-settings-textbox-container input,
+#page-fav .fav-sidenav .text,
+#page-fav .fav-main .filter-item,
+#page-fav .fav-main .filter-item .filter-type .be-dropdown-item span,
+.wrapper .edit-video-modal .edit-video-title,
+.modal-wrapper .modal-header-close,
+.wrapper .edit-video-modal .target-favlist .target-fav-name,
+#page-fav .fav-main .search-types,
+#page-fav .fav-main .search-input input
 {
     color: #eee !important;
 }
@@ -767,7 +787,11 @@ div.bar>div.num,
 #page-setting .setting-index-container,
 #page-setting .setting-index-module,
 .btn.ghost,
-.be-dropdown-item.be-dropdown-item-delimiter
+.be-dropdown-item.be-dropdown-item-delimiter,
+#page-fav .fav-sidenav .nav-container,
+#page-fav .fav-main .fav-header.fav-header-info,
+#page-fav .fav-main .small-item,
+#page-fav .fav-main .search-types
 {
     border-color: transparent !important;
 }
@@ -851,7 +875,10 @@ div.con header,
 .contribution-sidenav,
 #page-myalbum .album-content,
 .v-wrap .s_tag,
-.bui-button.bui-button-transparent
+.bui-button.bui-button-transparent,
+.bb-comment .comment-list .quote,
+.modal-wrapper .modal-title,
+.wrapper .edit-video-modal .modal-body
 {
     border-color: #444 !important
 }
@@ -907,7 +934,8 @@ i.btn-del,
 .i-m-u-icon,
 .i-live-icon,
 .i-live-arrow,
-.i-m-v-icon
+.i-m-v-icon,
+.icon-arrow
 {
     filter: grayscale(100) brightness(100) saturate(0) !important;
 }
@@ -1043,6 +1071,15 @@ div.desc-tips>span.arrow-left,
 .g-search input
 {
     padding: 0 8px !important;
+}
+.up-info-holder .fixed-box .more .help,
+.up-info-holder .fixed-box .more .link
+{
+    padding: 0 !important;
+}
+#page-fav .fav-main .filter-item .filter-type .be-dropdown-item
+{
+    padding: 0 16px !important;
 }
 
 .c-clink:hover,
@@ -1180,7 +1217,9 @@ a.s-btn:hover,
 .be-switch-container.is-checked .be-switch,
 #page-setting #setting-new-tag-btn,
 .top-title .concern,
-.bui-button.bui-button-transparent:hover
+.bui-button.bui-button-transparent:hover,
+#page-fav .fav-sidenav .fav-item.cur,
+.wrapper .edit-video-modal .target-favlist .target-favitem.selected
 {
     background-color: $customStyleColor !important;
 }
@@ -1316,7 +1355,13 @@ a.up-name:hover,
 .bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
 .bui-select.bui-select-quality-menu .bui-select-item.bui-select-item-active,
 .bb-comment .stick,
-.bb-comment .stick.assist
+.bb-comment .stick.assist,
+.article-holder a,
+#page-fav .fav-main .filter-item .text:hover,
+#page-fav .fav-main .filter-item .filter-type .be-dropdown-item:hover i,
+#page-fav .fav-main .filter-item .filter-type .be-dropdown-item:hover span,
+.modal-wrapper .modal-header-close:hover,
+#page-fav .fav-main .search-types:hover
 {
     color: $customStyleColor !important;
 }
@@ -1372,7 +1417,8 @@ a.s-btn:hover,
 .contribution-sidenav .contribution-item.cur .text:hover,
 .be-pager-item.be-pager-item-active:hover a,
 .top-title .concern,
-.bui-button.bui-button-transparent:hover
+.bui-button.bui-button-transparent:hover,
+.bb-comment .comment-list .quote
 {
     color: $foreground !important;
 }
