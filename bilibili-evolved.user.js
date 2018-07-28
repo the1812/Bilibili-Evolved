@@ -116,13 +116,13 @@
             {
                 const root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
                 const urls = {
-                    style: "style/style.scss",
-                    oldStyle: "style/style-old.scss",
-                    darkStyle: "style/style-dark.scss",
-                    touchPlayerStyle: "style/style-touch-player.scss",
-                    navbarOverrideStyle: "style/style-navbar-override.css",
-                    noBannerStyle: "style/style-no-banner.css",
-                    guiSettingsStyle: "style/style-gui-settings.scss",
+                    style: "style/style.min.scss",
+                    oldStyle: "style/style-old.min.scss",
+                    darkStyle: "style/style-dark.min.scss",
+                    touchPlayerStyle: "style/style-touch-player.min.scss",
+                    navbarOverrideStyle: "style/style-navbar-override.min.css",
+                    noBannerStyle: "style/style-no-banner.min.css",
+                    guiSettingsStyle: "style/style-gui-settings.min.scss",
                     guiSettingsDom: "utils/gui-settings.html",
                     guiSettings: "utils/gui-settings.min.js",
                     useDarkStyle: "style/dark-styles.min.js",
