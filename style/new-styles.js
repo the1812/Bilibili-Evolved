@@ -33,7 +33,7 @@
         if (settings.overrideNavBar)
         {
             waitForQuery()(
-                () => $(".search"),
+                () => $(".search").not(".filter-item"),
                 it => it.length > 0 && $(".nav-con.fr").length > 0,
                 textBox =>
                 {

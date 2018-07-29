@@ -7,9 +7,20 @@
             if (items.attr("href").indexOf("watchlater") !== 0)
             {
                 const watchlaterList = items
-                    .map((_, it) => "https://www.bilibili.com/" + $(it)
-                        .attr("href")
-                        .match(/av[\d]+/)[0]);
+                    .map((_, it) =>
+                    {
+                        const match = $(it)
+                            .attr("href")
+                            .match(/av[\d]+/);
+                        if (match && match[0])
+                        {
+                            return "https://www.bilibili.com/" + match[0];
+                        }
+                        else
+                        {
+                            return "javascript:;";
+                        }
+                    });
                 items.each((index, it) => $(it).attr("href", watchlaterList[index]).attr("target", "_blank"));
             }
         };
