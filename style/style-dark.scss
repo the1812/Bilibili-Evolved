@@ -266,7 +266,14 @@ a.more.tc-slate:hover,
 .message-list,
 .send-box,
 .emoji-box .emoji-item:hover,
-.emotion-item:hover .img
+.emotion-item:hover .img,
+.link-progress-tv,
+.ps.ps--in-scrolling.ps--y>.ps__scrollbar-y-rail,
+.ps.ps--in-scrolling.ps--x>.ps__scrollbar-x-rail,
+.ps:hover.ps--in-scrolling.ps--y>.ps__scrollbar-y-rail,
+.ps:hover.ps--in-scrolling.ps--x>.ps__scrollbar-x-rail,
+.ps:hover>.ps__scrollbar-y-rail:hover,
+.ps:hover>.ps__scrollbar-x-rail:hover
 {
     background-color: #444 !important;
 }
@@ -298,7 +305,9 @@ li.context-menu-descipline a,
 }
 .btn-add span,
 .bui-bar-wrap,
-.bui-step-dot
+.bui-step-dot,
+.ps>.ps__scrollbar-y-rail>.ps__scrollbar-y,
+.ps>.ps__scrollbar-x-rail>.ps__scrollbar-x
 {
     background-color: #aaa !important;
 }
@@ -457,7 +466,9 @@ blockquote .color-yellow-04,
 .top .time,
 .bottom .text,
 .list .list-title,
-.medal-box
+.medal-box,
+.no-more,
+.msg-more
 {
     color: #aaa !important;
 }
@@ -704,7 +715,7 @@ div.con header,
 .space-right .space-right-top .title,
 .top .title,
 .action-menu .menu-list a,
-.card .config,
+.card.config,
 .dialog .title,
 .list-item .name,
 .message .message-content.not-img,
@@ -926,7 +937,8 @@ div.con header,
 .bui-button.bui-button-transparent,
 .bb-comment .comment-list .quote,
 .modal-wrapper .modal-title,
-.wrapper .edit-video-modal .modal-body
+.wrapper .edit-video-modal .modal-body,
+.up-info:before
 {
     border-color: #444 !important
 }
@@ -1085,7 +1097,9 @@ div.desc-tips>span.arrow-left,
 .g-search .search-btn,
 .wrapper .elec-message-wrp .elec-triangle,
 img.source-img,
-canvas.cliper.is-img
+canvas.cliper.is-img,
+.loading .icon,
+.load-more .icon
 {
     display: none !important;
 }
