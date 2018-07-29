@@ -163,6 +163,15 @@ div.nav-gif,
     top: 37px !important;
 }
 
+.filter-item.search
+{
+    margin: 0 !important;
+}
+.input-box textarea
+{
+    padding: 8px !important;
+}
+
 @media only screen and (min-width: 1291px)
 {
     .bilibili-suggest.nav,

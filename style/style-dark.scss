@@ -139,7 +139,9 @@ div.con,
 .fans-medal-item .level,
 .emoji-box:after,
 .emotion-box,
-.emotion-box:after
+.emotion-box:after,
+.live-container,
+.img-content
 {
     background-color: #222 !important;
 }
@@ -772,7 +774,8 @@ ul.bilibili-suggest,
 #page-setting #setting-new-tag,
 #page-setting #setting-new-tag-btn,
 .action-menu .menu-list,
-.action-menu .menu-list:before
+.action-menu .menu-list:before,
+.live-container
 {
     border-color: #222 !important;
 }
@@ -1287,7 +1290,10 @@ a.s-btn:hover,
 #page-fav .fav-sidenav .fav-item.cur,
 .wrapper .edit-video-modal .target-favlist .target-favitem.selected,
 .notify,
-.send-btn
+.send-btn,
+.live-container .status,
+.video-container .types,
+.type-label
 {
     background-color: $customStyleColor !important;
 }
@@ -1493,7 +1499,10 @@ a.s-btn:hover,
 .top-title .concern,
 .bui-button.bui-button-transparent:hover,
 .bb-comment .comment-list .quote,
-.send-btn
+.send-btn,
+.live-container .status,
+.video-container .types,
+.type-label
 {
     color: $foreground !important;
 }
