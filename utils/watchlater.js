@@ -30,6 +30,11 @@
             items => redirectLinks(items)
         );
         waitForQuery()(
+            () => $(".av-about>a"),
+            it => it.length > 0,
+            items => redirectLinks(items)
+        );
+        waitForQuery()(
             () => $("div.watch-later-m>ul>div>li>a"),
             it => it.length > 0,
             items => redirectLinks(items)
@@ -47,13 +52,17 @@
                 width: "auto"
             })
         );
-        if (document.URL.indexOf("watchlater") !== -1 && document.URL.match(/av[\d]+/))
-        {
-            const av = document.URL.match(/av[\d]+/)[0];
-            if (av)
+        waitForQuery()(
+            () => document.URL.match(/av[\d]+/),
+            it => it && document.URL.indexOf("watchlater") !== -1,
+            it =>
             {
-                document.URL.replace(`https://www.bilibili.com/${av}`);
+                const id = it[0];
+                if (id)
+                {
+                    window.location.replace(`https://www.bilibili.com/${id}`);
+                }
             }
-        }
+        );
     };
 })();
