@@ -122,7 +122,6 @@ div.con,
 .contribution-sidenav .contribution-item:hover,
 .my-album .tab-list,
 #page-setting #setting-new-tag,
-#page-setting #setting-new-tag-btn,
 .imagesbox .boost-img,
 .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap,
 .gui-settings-box,
@@ -143,7 +142,9 @@ div.con,
 .img-content,
 .follow-sidenav .follow-list-container .follow-item:hover,
 .fans-action-follow,
-.fans-action-btn
+.fans-action-btn,
+#page-setting .setting-tag-list a,
+#pin-wrapper #pin-layer
 {
     background-color: #222 !important;
 }
@@ -278,7 +279,9 @@ a.more.tc-slate:hover,
 .ps:hover>.ps__scrollbar-x-rail:hover,
 .fans-medal-item .level,
 .article-holder img,
-#page-follows .follow-main .follow-action-bottom .follow-action-fixtop
+#page-follows .follow-main .follow-action-bottom .follow-action-fixtop,
+#pin-wrapper #pin-layer-search,
+.be-input_inner
 {
     background-color: #444 !important;
 }
@@ -477,11 +480,12 @@ blockquote .color-yellow-04,
 .i-pin-meta,
 .i-pin-desc,
 .article-con,
-#page-follows .follow-sidenav .num,
-#page-follows .list-item .desc,
+.follow-sidenav .num,
+.list-item .desc,
 .fans-action-follow,
-#page-follows .list-item .auth-description,
-#page-follows .follow-main .follow-action-bottom .select-counter
+.list-item .auth-description,
+.follow-main .follow-action-bottom .select-counter,
+.n .n-num
 {
     color: #aaa !important;
 }
@@ -734,7 +738,6 @@ div.con header,
 .message .message-content.not-img,
 .emoji-box .emoji-item,
 .i-live .i-live-text,
-.tags .content .tag-list a,
 .section-right-options .operation,
 .article-title,
 .follow-sidenav .follow-list-container .follow-item,
@@ -743,7 +746,14 @@ div.con header,
 .follow-main .follow-action-top .back-to-info,
 .follow-main .follow-action-bottom li,
 .modal-container li,
-.fans-action-btn
+.fans-action-btn,
+.tag-list a,
+#pin-wrapper .pin-layer-header,
+#pin-wrapper .pin-layer-order-tip,
+#pin-wrapper #pin-layer-search,
+.modal-wrapper .modal-title,
+.be-input_inner,
+.follow-sidenav .follow-list-container .follow-item.cur .num
 {
     color: #eee !important;
 }
@@ -810,7 +820,8 @@ ul.bilibili-suggest,
 #page-setting #setting-new-tag-btn,
 .action-menu .menu-list,
 .action-menu .menu-list:before,
-.live-container
+.live-container,
+#page-setting .setting-tag-list a
 {
     border-color: #222 !important;
 }
@@ -886,7 +897,9 @@ div.bar>div.num,
 .follow-main .follow-action-top .back-to-info,
 .follow-main .follow-action-top,
 .modal-container .modal-body .target-followlist,
-.fans-action-btn
+.fans-action-btn,
+#pin-wrapper .pin-layer-header,
+.modal-wrapper .modal-title
 {
     border-color: transparent !important;
 }
@@ -974,7 +987,9 @@ div.con header,
 .bb-comment .comment-list .quote,
 .modal-wrapper .modal-title,
 .wrapper .edit-video-modal .modal-body,
-.up-info:before
+.up-info:before,
+#pin-wrapper #pin-layer-search,
+.be-input_inner
 {
     border-color: #444 !important
 }
@@ -1200,6 +1215,10 @@ canvas.cliper.is-img,
 .cliper
 {
     filter: brightness(16%) !important;
+}
+#page-setting #setting-new-tag-btn
+{
+    background: $customStyleColor !important;
 }
 
 .c-clink:hover,
@@ -1559,9 +1578,10 @@ a.s-btn:hover,
 .video-container .types,
 .type-label,
 .section-right-options .operation:hover,
-.follow-sidenav .follow-list-container .follow-item.cur,
 .follow-sidenav .follow-list-container .follow-item.cur .num,
-.follow-sidenav .follow-list-container .follow-item.cur .text
+.follow-sidenav .follow-list-container .follow-item.cur .text,
+.follow-sidenav .follow-list-container .follow-item.cur,
+#page-setting #setting-new-tag-btn
 {
     color: $foreground !important;
 }
