@@ -148,7 +148,7 @@
             settings.brightness = `${foreground === "#000" ? "100" : "0"}%`;
             settings.filterBrightness = foreground === "#000" ? "0" : "100";
         }
-        ready(callback)
+        fetch(callback)
         {
             this.callback = callback;
             const replaceCustomColor = (style) =>
@@ -176,9 +176,13 @@
                         this.data[key] = data;
                     }
                     downloadedCount++;
-                    if (downloadedCount >= resourceCount && this.callback)
+                    if (downloadedCount >= resourceCount)
                     {
-                        this.callback();
+                        this.apply();
+                        if (this.callback)
+                        {
+                            this.callback();
+                        }
                     }
                 });
             }
@@ -212,5 +216,5 @@
 
     loadSettings();
     const resources = new ExternalResource();
-    resources.ready(resources.apply);
+    resources.fetch();
 })(window.jQuery.noConflict(true));
