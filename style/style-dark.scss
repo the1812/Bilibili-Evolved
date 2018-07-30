@@ -136,7 +136,6 @@ div.con,
 .action-menu .menu-list:before,
 .list-item:hover,
 .list-item.active,
-.fans-medal-item .level,
 .emoji-box:after,
 .emotion-box,
 .emotion-box:after,
@@ -273,7 +272,8 @@ a.more.tc-slate:hover,
 .ps:hover.ps--in-scrolling.ps--y>.ps__scrollbar-y-rail,
 .ps:hover.ps--in-scrolling.ps--x>.ps__scrollbar-x-rail,
 .ps:hover>.ps__scrollbar-y-rail:hover,
-.ps:hover>.ps__scrollbar-x-rail:hover
+.ps:hover>.ps__scrollbar-x-rail:hover,
+.fans-medal-item .level
 {
     background-color: #444 !important;
 }
@@ -468,7 +468,10 @@ blockquote .color-yellow-04,
 .list .list-title,
 .medal-box,
 .no-more,
-.msg-more
+.msg-more,
+.i-pin-meta,
+.i-pin-desc,
+.article-con
 {
     color: #aaa !important;
 }
@@ -719,7 +722,11 @@ div.con header,
 .dialog .title,
 .list-item .name,
 .message .message-content.not-img,
-.emoji-box .emoji-item
+.emoji-box .emoji-item,
+.i-live .i-live-text,
+.tags .content .tag-list a,
+.section-right-options .operation,
+.article-title
 {
     color: #eee !important;
 }
@@ -850,7 +857,11 @@ div.bar>div.num,
 .list .list-title,
 .list-item,
 .whisper .list,
-.send-box
+.send-box,
+#page-index .channel .channel-item,
+.user .tags,
+.article-content,
+.s-content
 {
     border-color: transparent !important;
 }
@@ -1455,7 +1466,8 @@ a.up-name:hover,
 .list .item:hover a,
 .list .item:hover:before,
 .bottom .link,
-.action-menu .menu-list a:hover
+.action-menu .menu-list a:hover,
+.article-title a:hover
 {
     color: $customStyleColor !important;
 }
@@ -1516,7 +1528,8 @@ a.s-btn:hover,
 .send-btn,
 .live-container .status,
 .video-container .types,
-.type-label
+.type-label,
+.section-right-options .operation:hover
 {
     color: $foreground !important;
 }
