@@ -9,19 +9,20 @@
                 const watchlaterList = items
                     .map((_, it) =>
                     {
-                        const match = $(it)
-                            .attr("href")
-                            .match(/av[\d]+/);
-                        if (match && match[0])
+                        const href = $(it).attr("href");
+                        if (href)
                         {
-                            return "https://www.bilibili.com/" + match[0];
+                            const match = href.match(/av[\d]+/);
+                            if (match && match[0])
+                            {
+                                return "https://www.bilibili.com/" + match[0];
+                            }
                         }
-                        else
-                        {
-                            return "javascript:;";
-                        }
+                        return "javascript:;";
                     });
-                items.each((index, it) => $(it).attr("href", watchlaterList[index]).attr("target", "_blank"));
+                items.each((index, it) => $(it)
+                    .attr("href", watchlaterList[index])
+                    .attr("target", "_blank"));
             }
         };
         waitForQuery()(
