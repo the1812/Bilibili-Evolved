@@ -122,7 +122,6 @@ div.con,
 .contribution-sidenav .contribution-item:hover,
 .my-album .tab-list,
 #page-setting #setting-new-tag,
-#page-setting #setting-new-tag-btn,
 .imagesbox .boost-img,
 .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap,
 .gui-settings-box,
@@ -136,12 +135,16 @@ div.con,
 .action-menu .menu-list:before,
 .list-item:hover,
 .list-item.active,
-.fans-medal-item .level,
 .emoji-box:after,
 .emotion-box,
 .emotion-box:after,
 .live-container,
-.img-content
+.img-content,
+.follow-sidenav .follow-list-container .follow-item:hover,
+.fans-action-follow,
+.fans-action-btn,
+#page-setting .setting-tag-list a,
+#pin-wrapper #pin-layer
 {
     background-color: #222 !important;
 }
@@ -266,7 +269,19 @@ a.more.tc-slate:hover,
 .message-list,
 .send-box,
 .emoji-box .emoji-item:hover,
-.emotion-item:hover .img
+.emotion-item:hover .img,
+.link-progress-tv,
+.ps.ps--in-scrolling.ps--y>.ps__scrollbar-y-rail,
+.ps.ps--in-scrolling.ps--x>.ps__scrollbar-x-rail,
+.ps:hover.ps--in-scrolling.ps--y>.ps__scrollbar-y-rail,
+.ps:hover.ps--in-scrolling.ps--x>.ps__scrollbar-x-rail,
+.ps:hover>.ps__scrollbar-y-rail:hover,
+.ps:hover>.ps__scrollbar-x-rail:hover,
+.fans-medal-item .level,
+.article-holder img,
+#page-follows .follow-main .follow-action-bottom .follow-action-fixtop,
+#pin-wrapper #pin-layer-search,
+.be-input_inner
 {
     background-color: #444 !important;
 }
@@ -298,7 +313,9 @@ li.context-menu-descipline a,
 }
 .btn-add span,
 .bui-bar-wrap,
-.bui-step-dot
+.bui-step-dot,
+.ps>.ps__scrollbar-y-rail>.ps__scrollbar-y,
+.ps>.ps__scrollbar-x-rail>.ps__scrollbar-x
 {
     background-color: #aaa !important;
 }
@@ -457,7 +474,18 @@ blockquote .color-yellow-04,
 .top .time,
 .bottom .text,
 .list .list-title,
-.medal-box
+.medal-box,
+.no-more,
+.msg-more,
+.i-pin-meta,
+.i-pin-desc,
+.article-con,
+.follow-sidenav .num,
+.list-item .desc,
+.fans-action-follow,
+.list-item .auth-description,
+.follow-main .follow-action-bottom .select-counter,
+.n .n-num
 {
     color: #aaa !important;
 }
@@ -704,11 +732,28 @@ div.con header,
 .space-right .space-right-top .title,
 .top .title,
 .action-menu .menu-list a,
-.card .config,
+.card.config,
 .dialog .title,
 .list-item .name,
 .message .message-content.not-img,
-.emoji-box .emoji-item
+.emoji-box .emoji-item,
+.i-live .i-live-text,
+.section-right-options .operation,
+.article-title,
+.follow-sidenav .follow-list-container .follow-item,
+.follow-sidenav .nav-title .text,
+.breadcrumb .batch,
+.follow-main .follow-action-top .back-to-info,
+.follow-main .follow-action-bottom li,
+.modal-container li,
+.fans-action-btn,
+.tag-list a,
+#pin-wrapper .pin-layer-header,
+#pin-wrapper .pin-layer-order-tip,
+#pin-wrapper #pin-layer-search,
+.modal-wrapper .modal-title,
+.be-input_inner,
+.follow-sidenav .follow-list-container .follow-item.cur .num
 {
     color: #eee !important;
 }
@@ -775,7 +820,8 @@ ul.bilibili-suggest,
 #page-setting #setting-new-tag-btn,
 .action-menu .menu-list,
 .action-menu .menu-list:before,
-.live-container
+.live-container,
+#page-setting .setting-tag-list a
 {
     border-color: #222 !important;
 }
@@ -839,7 +885,21 @@ div.bar>div.num,
 .list .list-title,
 .list-item,
 .whisper .list,
-.send-box
+.send-box,
+#page-index .channel .channel-item,
+.user .tags,
+.article-content,
+.s-content,
+.follow-sidenav,
+.follow-sidenav .nav-container.follow-container,
+.follow-main,
+.follow-main .follow-header.follow-header-info,
+.follow-main .follow-action-top .back-to-info,
+.follow-main .follow-action-top,
+.modal-container .modal-body .target-followlist,
+.fans-action-btn,
+#pin-wrapper .pin-layer-header,
+.modal-wrapper .modal-title
 {
     border-color: transparent !important;
 }
@@ -926,7 +986,10 @@ div.con header,
 .bui-button.bui-button-transparent,
 .bb-comment .comment-list .quote,
 .modal-wrapper .modal-title,
-.wrapper .edit-video-modal .modal-body
+.wrapper .edit-video-modal .modal-body,
+.up-info:before,
+#pin-wrapper #pin-layer-search,
+.be-input_inner
 {
     border-color: #444 !important
 }
@@ -996,7 +1059,8 @@ ul.up-nav li
 #page-index .col-1 .section .more,
 .elec .elec-status,
 .elec .elec-status-bg,
-.small-item .cover
+.small-item .cover,
+#page-follows .follow-main .follow-action-top .back-to-info
 {
     background-image: none !important;
 }
@@ -1045,7 +1109,8 @@ div.im-list-box,
 .col-full,
 .space-right .space-right-top .title,
 .card,
-.action-menu .menu-list
+.action-menu .menu-list,
+.list-item .cover img
 {
     box-shadow: none !important;
 }
@@ -1085,7 +1150,9 @@ div.desc-tips>span.arrow-left,
 .g-search .search-btn,
 .wrapper .elec-message-wrp .elec-triangle,
 img.source-img,
-canvas.cliper.is-img
+canvas.cliper.is-img,
+.loading .icon,
+.load-more .icon
 {
     display: none !important;
 }
@@ -1148,6 +1215,10 @@ canvas.cliper.is-img
 .cliper
 {
     filter: brightness(16%) !important;
+}
+#page-setting #setting-new-tag-btn
+{
+    background: $customStyleColor !important;
 }
 
 .c-clink:hover,
@@ -1293,7 +1364,8 @@ a.s-btn:hover,
 .send-btn,
 .live-container .status,
 .video-container .types,
-.type-label
+.type-label,
+.follow-sidenav .follow-list-container .follow-item.cur
 {
     background-color: $customStyleColor !important;
 }
@@ -1441,7 +1513,9 @@ a.up-name:hover,
 .list .item:hover a,
 .list .item:hover:before,
 .bottom .link,
-.action-menu .menu-list a:hover
+.action-menu .menu-list a:hover,
+.article-title a:hover,
+#page-follows .follow-main .follow-action-bottom .select-cancel
 {
     color: $customStyleColor !important;
 }
@@ -1502,7 +1576,12 @@ a.s-btn:hover,
 .send-btn,
 .live-container .status,
 .video-container .types,
-.type-label
+.type-label,
+.section-right-options .operation:hover,
+.follow-sidenav .follow-list-container .follow-item.cur .num,
+.follow-sidenav .follow-list-container .follow-item.cur .text,
+.follow-sidenav .follow-list-container .follow-item.cur,
+#page-setting #setting-new-tag-btn
 {
     color: $foreground !important;
 }
@@ -1513,7 +1592,8 @@ a.s-btn:hover,
 .bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image,
 .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active,
  .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active:hover,
- .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span:hover
+ .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span:hover,
+ #page-follows .follow-main .follow-action-top .back-to-info:hover
 {
     fill: $customStyleColor !important;
 }

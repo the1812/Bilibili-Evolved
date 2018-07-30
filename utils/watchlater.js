@@ -9,23 +9,29 @@
                 const watchlaterList = items
                     .map((_, it) =>
                     {
-                        const match = $(it)
-                            .attr("href")
-                            .match(/av[\d]+/);
-                        if (match && match[0])
+                        const href = $(it).attr("href");
+                        if (href)
                         {
-                            return "https://www.bilibili.com/" + match[0];
+                            const match = href.match(/av[\d]+/);
+                            if (match && match[0])
+                            {
+                                return "https://www.bilibili.com/" + match[0];
+                            }
                         }
-                        else
-                        {
-                            return "javascript:;";
-                        }
+                        return "javascript:;";
                     });
-                items.each((index, it) => $(it).attr("href", watchlaterList[index]).attr("target", "_blank"));
+                items.each((index, it) => $(it)
+                    .attr("href", watchlaterList[index])
+                    .attr("target", "_blank"));
             }
         };
         waitForQuery()(
             () => $(".av-item>a"),
+            it => it.length > 0,
+            items => redirectLinks(items)
+        );
+        waitForQuery()(
+            () => $(".av-about>a"),
             it => it.length > 0,
             items => redirectLinks(items)
         );
@@ -47,13 +53,17 @@
                 width: "auto"
             })
         );
-        if (document.URL.indexOf("watchlater") !== -1 && document.URL.match(/av[\d]+/))
-        {
-            const av = document.URL.match(/av[\d]+/)[0];
-            if (av)
+        waitForQuery()(
+            () => document.URL.match(/av[\d]+/),
+            it => it && document.URL.indexOf("watchlater") !== -1,
+            it =>
             {
-                document.URL.replace(`https://www.bilibili.com/${av}`);
+                const id = it[0];
+                if (id)
+                {
+                    window.location.replace(`https://www.bilibili.com/${id}`);
+                }
             }
-        }
+        );
     };
 })();
