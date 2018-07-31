@@ -411,7 +411,7 @@
                             else
                             {
                                 percent = fixed(100 * finalTime / videoDuration) + "%";
-                                info += `${secondsToTime(sec)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(finalTime)} (${percent}%)`;
+                                info += `${secondsToTime(sec)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(finalTime)} (${percent})`;
                             }
                             text.innerHTML = info + `</span></div><div class='touch-progress'></div>`;
                             $(".touch-progress").css("width", percent);
