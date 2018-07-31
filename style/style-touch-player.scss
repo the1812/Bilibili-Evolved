@@ -22,6 +22,7 @@
     background: #000;
     background: #000A;
     backdrop-filter: blur(30px);
+    position: relative;
 }
 .touch-video-info
 {
@@ -71,6 +72,19 @@
     border-radius: 4px;
     margin-right: 0.2em;
     max-width: 5em;
+}
+.touch-progress
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: $customStyleColor;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    width: 0%;
+    height: 4px;
+    transition: all 0.2s;
 }
 .videoshot
 {

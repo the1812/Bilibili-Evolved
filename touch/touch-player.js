@@ -337,6 +337,7 @@
                     $(".bilibili-player-video-subtitle").before(`<div class='touch-video-box-wrapper'>
                             <div class='touch-video-box'>
                                 <div class='touch-video-info'></div>
+                                <div class='touch-progress'></div>
                             </div>
                         </div>`);
                     const video = $("video");
@@ -396,19 +397,24 @@
                             let info = `<div class='touch-row'><span class='touch-speed'>${speed}速</span><span class='touch-info'>进度: ${sec > 0 ? "+" : "-"}`;
                             const commonInfoPart = `</span></div><div class='touch-row'><div class='videoshot'></div><span class='touch-result'>`;
                             const finalTime = current + sec;
+                            let percent = "0%";
                             if (finalTime > videoDuration)
                             {
-                                info += `${secondsToTime(videoDuration - current)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(videoDuration)} (100%)`;
+                                percent = "100%";
+                                info += `${secondsToTime(videoDuration - current)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(videoDuration)} (${percent})`;
                             }
                             else if (finalTime < 0)
                             {
-                                info += `${secondsToTime(current)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(0)} (0%)`;
+                                percent = "0%";
+                                info += `${secondsToTime(current)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(0)} (${percent})`;
                             }
                             else
                             {
-                                info += `${secondsToTime(sec)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(finalTime)} (${fixed(100 * finalTime / videoDuration)}%)`;
+                                percent = fixed(100 * finalTime / videoDuration) + "%";
+                                info += `${secondsToTime(sec)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(finalTime)} (${percent}%)`;
                             }
-                            text.innerHTML = info + `</span></div>`;
+                            text.innerHTML = info + `</span></div><div class='touch-progress'></div>`;
+                            $(".touch-progress").css("width", percent);
                             //$(".videoshot").css(videoshot.getStyle(finalTime));
                         };
                     };
@@ -430,18 +436,21 @@
                             {
                                 info += `${100 - originalVolume}${commonInfoPart}${originalVolume} → 100`;
                                 setVolume(100);
+                                $(".touch-progress").css("width", "100%");
                             }
                             else if (finalVolume < 0)
                             {
                                 info += `${originalVolume}${commonInfoPart}${originalVolume} → 0`;
                                 setVolume(0);
+                                $(".touch-progress").css("width", "0%");
                             }
                             else
                             {
                                 info += `${Math.abs(volume)}${commonInfoPart}${originalVolume} → ${finalVolume}`;
                                 setVolume(finalVolume);
+                                $(".touch-progress").css("width", finalVolume + "%");
                             }
-                            text.innerHTML = info + `</span></div>`;
+                            text.innerHTML = info + `</span></div><div class='touch-progress'></div>`;
                         };
                     };
                     swiper.action.lowVolumeUp = volumeChange("低");
