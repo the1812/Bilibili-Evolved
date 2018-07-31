@@ -18,6 +18,58 @@
             }
             return { x: x, y: y };
         };
+        const fixed = (number, precision = 1) =>
+        {
+            const str = number.toString();
+            const index = str.indexOf(".");
+            if (index !== -1)
+            {
+                if (str.length - index > precision + 1)
+                {
+                    return str.substring(0, index + precision + 1);
+                }
+                else
+                {
+                    return str;
+                }
+            }
+            else
+            {
+                return str + ".0";
+            }
+        };
+        const secondsToTime = sec =>
+        {
+            sec = Math.abs(sec);
+            const hours = Math.floor(sec / 3600);
+            const minutes = Math.floor((sec - hours * 3600) / 60);
+            const seconds = sec - hours * 3600 - minutes * 60;
+
+            let result = fixed(seconds) + "秒";
+            if (minutes > 0)
+            {
+                result = minutes + "分" + result;
+            }
+            if (hours > 0)
+            {
+                result = hours + "小时" + result;
+            }
+
+            return result;
+        };
+        const secondsToHms = sec =>
+        {
+            sec = Math.abs(sec);
+            const hours = Math.floor(sec / 3600);
+            const minutes = Math.floor((sec - hours * 3600) / 60);
+            const seconds = sec - hours * 3600 - minutes * 60;
+
+            let result = (seconds < 10 ? "0" : "") + fixed(seconds);
+            result = (minutes < 10 ? "0" : "") + minutes + ":" + result;
+            result = (hours < 10 ? "0" : "") + hours + ":" + result;
+
+            return result;
+        };
         class Swiper
         {
             constructor(element)
@@ -287,78 +339,54 @@
                                 <div class='touch-video-info'></div>
                             </div>
                         </div>`);
+                    const video = $("video");
+                    const videoDuration = video.prop("duration");
                     const swiper = new Swiper(player.get(0));
                     const text = document.getElementsByClassName("touch-video-info")[0];
                     const box = document.getElementsByClassName("touch-video-box")[0];
-                    swiper.action.speedCancel = () =>
+                    let originalVolume = Math.round(video.prop("volume") * 100);
+                    const setVolume = volume =>
                     {
-                        text.innerHTML = `松开手指,取消进退`;
+                        volume /= 100;
+                        if (volume < 0)
+                        {
+                            volume = 0;
+                        }
+                        else if (volume > 1)
+                        {
+                            volume = 1;
+                        }
+                        video.prop("volume", volume);
+                        $(".bilibili-player-video-volume-num").text(Math.round(volume * 100));
+                        $(".bpui-slider-progress").css("height", volume * 100 + "%");
+                        $(".bpui-slider-handle").css("bottom", (35 + volume * 230) / 3 + "%");
+
+                        if (volume === 0)
+                        {
+                            $(".icon-24soundoff").show();
+                            $(".icon-24soundlarge").hide();
+                            $(".icon-24soundsmall").hide();
+                        }
+                        else if (volume >= 0.5)
+                        {
+                            $(".icon-24soundoff").hide();
+                            $(".icon-24soundlarge").show();
+                            $(".icon-24soundsmall").hide();
+                        }
+                        else
+                        {
+                            $(".icon-24soundoff").hide();
+                            $(".icon-24soundlarge").hide();
+                            $(".icon-24soundsmall").show();
+                        }
                     };
-                    swiper.action.volumeCancel = () =>
-                    {
-                        text.innerHTML = `松开手指,取消调整`;
-                    };
+
                     swiper.action.onActionStart = () =>
                     {
                         box.style.display = "flex";
                         text.innerHTML = "";
+                        originalVolume = Math.round(video.prop("volume") * 100);
                     };
-
-                    const fixed = (number, precision = 1) =>
-                    {
-                        const str = number.toString();
-                        const index = str.indexOf(".");
-                        if (index !== -1)
-                        {
-                            if (str.length - index > precision + 1)
-                            {
-                                return str.substring(0, index + precision + 1);
-                            }
-                            else
-                            {
-                                return str;
-                            }
-                        }
-                        else
-                        {
-                            return str + ".0";
-                        }
-                    };
-                    const secondsToTime = sec =>
-                    {
-                        sec = Math.abs(sec);
-                        const hours = Math.floor(sec / 3600);
-                        const minutes = Math.floor((sec - hours * 3600) / 60);
-                        const seconds = sec - hours * 3600 - minutes * 60;
-
-                        let result = fixed(seconds) + "秒";
-                        if (minutes > 0)
-                        {
-                            result = minutes + "分" + result;
-                        }
-                        if (hours > 0)
-                        {
-                            result = hours + "小时" + result;
-                        }
-
-                        return result;
-                    };
-                    const secondsToHms = sec =>
-                    {
-                        sec = Math.abs(sec);
-                        const hours = Math.floor(sec / 3600);
-                        const minutes = Math.floor((sec - hours * 3600) / 60);
-                        const seconds = sec - hours * 3600 - minutes * 60;
-
-                        let result = (seconds < 10 ? "0" : "") + fixed(seconds);
-                        result = (minutes < 10 ? "0" : "") + minutes + ":" + result;
-                        result = (hours < 10 ? "0" : "") + hours + ":" + result;
-
-                        return result;
-                    };
-
-                    const video = $("video");
-                    const videoDuration = video.prop("duration");
                     //const videoshot = new VideoShot(videoDuration);
                     const speedChange = speed =>
                     {
@@ -395,21 +423,23 @@
                     {
                         return volume =>
                         {
-                            const current = Math.round(video.prop("volume") * 100);
                             let info = `<div class='touch-row'><span class='touch-speed'>${speed}速</span><span class='touch-info'>音量: ${volume > 0 ? "+" : "-"}`;
                             const commonInfoPart = `</span></div><div class='touch-row'><span class='touch-result'>`;
-                            const finalVolume = current + volume;
+                            const finalVolume = originalVolume + volume;
                             if (finalVolume > 100)
                             {
-                                info += `${100 - current}${commonInfoPart}${current} → 100`;
+                                info += `${100 - originalVolume}${commonInfoPart}${originalVolume} → 100`;
+                                setVolume(100);
                             }
                             else if (finalVolume < 0)
                             {
-                                info += `${current}${commonInfoPart}${current} → 0`;
+                                info += `${originalVolume}${commonInfoPart}${originalVolume} → 0`;
+                                setVolume(0);
                             }
                             else
                             {
-                                info += `${Math.abs(volume)}${commonInfoPart}${current} → ${finalVolume}`;
+                                info += `${Math.abs(volume)}${commonInfoPart}${originalVolume} → ${finalVolume}`;
+                                setVolume(finalVolume);
                             }
                             text.innerHTML = info + `</span></div>`;
                         };
@@ -421,49 +451,22 @@
                     swiper.action.highVolumeUp = volumeChange("高");
                     swiper.action.highVolumeDown = volumeChange("高");
 
+                    swiper.action.speedCancel = () =>
+                    {
+                        text.innerHTML = `松开手指,取消进退`;
+                    };
+                    swiper.action.volumeCancel = () =>
+                    {
+                        text.innerHTML = `松开手指,取消调整`;
+                        setVolume(originalVolume);
+                    };
                     swiper.action.onActionEnd = action =>
                     {
                         box.style.display = "none";
                         text.innerHTML = "";
                         if (action)
                         {
-                            if (action.type === "volume")
-                            {
-                                let volume = video.prop("volume");
-                                volume += action.volume / 100;
-                                if (volume < 0)
-                                {
-                                    volume = 0;
-                                }
-                                else if (volume > 1)
-                                {
-                                    volume = 1;
-                                }
-                                video.prop("volume", volume);
-                                $(".bilibili-player-video-volume-num").text(Math.round(volume * 100));
-                                $(".bpui-slider-progress").css("height", volume * 100 + "%");
-                                $(".bpui-slider-handle").css("bottom", (35 + volume * 230) / 3 + "%");
-
-                                if (volume === 0)
-                                {
-                                    $(".icon-24soundoff").show();
-                                    $(".icon-24soundlarge").hide();
-                                    $(".icon-24soundsmall").hide();
-                                }
-                                else if (volume >= 0.5)
-                                {
-                                    $(".icon-24soundoff").hide();
-                                    $(".icon-24soundlarge").show();
-                                    $(".icon-24soundsmall").hide();
-                                }
-                                else
-                                {
-                                    $(".icon-24soundoff").hide();
-                                    $(".icon-24soundlarge").hide();
-                                    $(".icon-24soundsmall").show();
-                                }
-                            }
-                            else if (action.type === "playback")
+                            if (action.type === "playback")
                             {
                                 let time = video.prop("currentTime");
                                 time += action.seconds;
