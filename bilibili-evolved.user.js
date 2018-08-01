@@ -147,6 +147,7 @@
                 touchPlayerStyle: "style/style-touch-player.min.scss",
                 navbarOverrideStyle: "style/style-navbar-override.min.css",
                 noBannerStyle: "style/style-no-banner.min.css",
+                removeAdsStyle: "style/style-remove-promotions.min.css",
                 guiSettingsStyle: "style/style-gui-settings.min.scss",
                 guiSettingsDom: "utils/gui-settings.html",
                 guiSettings: "utils/gui-settings.min.js",
