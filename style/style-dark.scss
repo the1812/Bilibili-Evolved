@@ -146,7 +146,10 @@ div.con,
 #page-setting .setting-tag-list a,
 #pin-wrapper #pin-layer,
 .select-wrap .select-txt,
-.select-wrap .select-option
+.select-wrap .select-option,
+.card .more-panel,
+.card .more-panel:after,
+.bl-button--ghost
 {
     background-color: #222 !important;
 }
@@ -498,7 +501,8 @@ blockquote .color-yellow-04,
 .bangumi-rank-list .rank-item .ri-total,
 .pub-list .info .type .bk-title,
 .pub-list .info dl dt,
-.pub-list .info .comment
+.pub-list .info .comment,
+.report-con dl dt
 {
     color: #aaa !important;
 }
@@ -770,7 +774,15 @@ div.con header,
 .pub-list .info .name,
 .select-wrap .select-txt,
 .select-wrap .select-option,
-.select-wrap .select-option p:hover
+.select-wrap .select-option p:hover,
+.card .more-panel,
+.card .more-panel .child-button:hover,
+.report-popup .content-text,
+.im-popup .bp-popup-panel .title-ctnr .popup-title,
+.selector-box,
+.bl-button--ghost,
+.report-con dl dd,
+.report-other
 {
     color: #eee !important;
 }
@@ -797,7 +809,8 @@ form.ipt,
 .tag-container .tag-item .tag-content,
 .up-info-holder .fixed-box .rightside-article-list-btn .label,
 .up-info-holder .fixed-box .up-article-list-block .block-title,
-.pub-list .info dl
+.pub-list .info dl,
+.report-con label:before
 {
     border-color: #aaa !important;
 }
@@ -840,7 +853,10 @@ ul.bilibili-suggest,
 .action-menu .menu-list:before,
 .live-container,
 #page-setting .setting-tag-list a,
-.select-wrap .select-option
+.select-wrap .select-option,
+.card .more-panel,
+.card .more-panel:after,
+.bl-button--ghost
 {
     border-color: #222 !important;
 }
@@ -918,7 +934,8 @@ div.bar>div.num,
 .modal-container .modal-body .target-followlist,
 .fans-action-btn,
 #pin-wrapper .pin-layer-header,
-.modal-wrapper .modal-title
+.modal-wrapper .modal-title,
+.report-con
 {
     border-color: transparent !important;
 }
@@ -1302,7 +1319,9 @@ input[type=text]:focus,
 .bui-button.bui-button-transparent:hover,
 .bb-comment .stick,
 .bb-comment .stick.assist,
-.send-btn
+.send-btn,
+.bl-button--primary,
+.report-con input[type=radio]:checked+label:before
 {
     border-color: $customStyleColor !important;
 }
@@ -1385,7 +1404,9 @@ a.s-btn:hover,
 .live-container .status,
 .video-container .types,
 .type-label,
-.follow-sidenav .follow-list-container .follow-item.cur
+.follow-sidenav .follow-list-container .follow-item.cur,
+.bl-button--primary,
+.report-con label:after
 {
     background-color: $customStyleColor !important;
 }
@@ -1601,7 +1622,8 @@ a.s-btn:hover,
 .follow-sidenav .follow-list-container .follow-item.cur .num,
 .follow-sidenav .follow-list-container .follow-item.cur .text,
 .follow-sidenav .follow-list-container .follow-item.cur,
-#page-setting #setting-new-tag-btn
+#page-setting #setting-new-tag-btn,
+.bl-button--primary
 {
     color: $foreground !important;
 }
