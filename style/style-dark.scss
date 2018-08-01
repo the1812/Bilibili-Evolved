@@ -149,7 +149,9 @@ div.con,
 .select-wrap .select-option,
 .card .more-panel,
 .card .more-panel:after,
-.bl-button--ghost
+.bl-button--ghost,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
+.wrapper .content
 {
     background-color: #222 !important;
 }
@@ -289,7 +291,9 @@ a.more.tc-slate:hover,
 .be-input_inner,
 .ban-modal,
 .ban-modal-h5,
-.select-wrap .select-option p:hover
+.select-wrap .select-option p:hover,
+.wrapper .elec-btn.disabled,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active
 {
     background-color: #444 !important;
 }
@@ -502,7 +506,12 @@ blockquote .color-yellow-04,
 .pub-list .info .type .bk-title,
 .pub-list .info dl dt,
 .pub-list .info .comment,
-.report-con dl dt
+.report-con dl dt,
+.wrapper .modal-body .elec-bcoin,
+.wrapper .modal-body .elec-protocol,
+.wrapper .modal-body .elec-protocol a,
+.wrapper .pay-qrcode-wrp .refresh-btn,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn
 {
     color: #aaa !important;
 }
@@ -782,7 +791,9 @@ div.con header,
 .selector-box,
 .bl-button--ghost,
 .report-con dl dd,
-.report-other
+.report-other,
+.wrapper .modal-body .pay-info,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active
 {
     color: #eee !important;
 }
@@ -935,7 +946,10 @@ div.bar>div.num,
 .fans-action-btn,
 #pin-wrapper .pin-layer-header,
 .modal-wrapper .modal-title,
-.report-con
+.report-con,
+.wrapper .pay-qrcode-wrp,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active
 {
     border-color: transparent !important;
 }
@@ -1321,7 +1335,8 @@ input[type=text]:focus,
 .bb-comment .stick.assist,
 .send-btn,
 .bl-button--primary,
-.report-con input[type=radio]:checked+label:before
+.report-con input[type=radio]:checked+label:before,
+.wrapper .modal-back:hover
 {
     border-color: $customStyleColor !important;
 }
@@ -1406,7 +1421,8 @@ a.s-btn:hover,
 .type-label,
 .follow-sidenav .follow-list-container .follow-item.cur,
 .bl-button--primary,
-.report-con label:after
+.report-con label:after,
+.wrapper .elec-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -1556,7 +1572,14 @@ a.up-name:hover,
 .bottom .link,
 .action-menu .menu-list a:hover,
 .article-title a:hover,
-#page-follows .follow-main .follow-action-bottom .select-cancel
+#page-follows .follow-main .follow-action-bottom .select-cancel,
+.wrapper .modal-body .elec-pay .elec-coin,
+.wrapper .modal-body .elec-pay .elec-count,
+.wrapper .modal-body .elec-pay .elec-exp,
+.wrapper .modal-body .elec-protocol a:hover,
+.wrapper .modal-body .pay-info .balance,
+.wrapper .modal-body .pay-info .pay-tip .em-text,
+.wrapper .modal-back
 {
     color: $customStyleColor !important;
 }
@@ -1623,7 +1646,8 @@ a.s-btn:hover,
 .follow-sidenav .follow-list-container .follow-item.cur .text,
 .follow-sidenav .follow-list-container .follow-item.cur,
 #page-setting #setting-new-tag-btn,
-.bl-button--primary
+.bl-button--primary,
+.wrapper .elec-btn
 {
     color: $foreground !important;
 }
