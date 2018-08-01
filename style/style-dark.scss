@@ -144,7 +144,9 @@ div.con,
 .fans-action-follow,
 .fans-action-btn,
 #page-setting .setting-tag-list a,
-#pin-wrapper #pin-layer
+#pin-wrapper #pin-layer,
+.select-wrap .select-txt,
+.select-wrap .select-option
 {
     background-color: #222 !important;
 }
@@ -281,7 +283,10 @@ a.more.tc-slate:hover,
 .article-holder img,
 #page-follows .follow-main .follow-action-bottom .follow-action-fixtop,
 #pin-wrapper #pin-layer-search,
-.be-input_inner
+.be-input_inner,
+.ban-modal,
+.ban-modal-h5,
+.select-wrap .select-option p:hover
 {
     background-color: #444 !important;
 }
@@ -336,6 +341,10 @@ body,
 .elevator-module .nav-bg
 {
     background-color: #222e !important;
+}
+.my-info .info-modal .integral li .num
+{
+    background-color: transparent !important;
 }
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar
 {
@@ -486,7 +495,10 @@ blockquote .color-yellow-04,
 .list-item .auth-description,
 .follow-main .follow-action-bottom .select-counter,
 .n .n-num,
-.bangumi-rank-list .rank-item .ri-total
+.bangumi-rank-list .rank-item .ri-total,
+.pub-list .info .type .bk-title,
+.pub-list .info dl dt,
+.pub-list .info .comment
 {
     color: #aaa !important;
 }
@@ -754,7 +766,11 @@ div.con header,
 #pin-wrapper #pin-layer-search,
 .modal-wrapper .modal-title,
 .be-input_inner,
-.follow-sidenav .follow-list-container .follow-item.cur .num
+.follow-sidenav .follow-list-container .follow-item.cur .num,
+.pub-list .info .name,
+.select-wrap .select-txt,
+.select-wrap .select-option,
+.select-wrap .select-option p:hover
 {
     color: #eee !important;
 }
@@ -780,7 +796,8 @@ form.ipt,
 .up-info-holder .fixed-box .more .top-bar,
 .tag-container .tag-item .tag-content,
 .up-info-holder .fixed-box .rightside-article-list-btn .label,
-.up-info-holder .fixed-box .up-article-list-block .block-title
+.up-info-holder .fixed-box .up-article-list-block .block-title,
+.pub-list .info dl
 {
     border-color: #aaa !important;
 }
@@ -822,7 +839,8 @@ ul.bilibili-suggest,
 .action-menu .menu-list,
 .action-menu .menu-list:before,
 .live-container,
-#page-setting .setting-tag-list a
+#page-setting .setting-tag-list a,
+.select-wrap .select-option
 {
     border-color: #222 !important;
 }
@@ -1049,7 +1067,8 @@ i.btn-del,
 .i-m-v-icon,
 .icon-arrow,
 .side-bar .icon,
-.setting:before
+.setting:before,
+.select-wrap .select-txt i
 {
     filter: grayscale(100) brightness(100) saturate(0) !important;
 }
