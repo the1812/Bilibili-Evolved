@@ -2,14 +2,13 @@
 {
     return (settings, resources) =>
     {
-        waitForQuery()(
+        new SpinQuery(
             () => $(".nav-search-keyword"),
             it => it.length > 0 && it.attr("placeholder").length > 0,
             textBox => textBox.attr("placeholder", "搜索")
-        );
-        waitForQuery()(
+        ).start();
+        SpinQuery.any(
             () => $(".custom-scrollbar"),
-            it => it.length > 0,
             it => it.removeClass("custom-scrollbar")
         );
         const navbar = document.getElementsByClassName("bili-wrapper")[0];
@@ -32,7 +31,7 @@
 
         if (settings.overrideNavBar)
         {
-            waitForQuery()(
+            new SpinQuery(
                 () => $(".search").not(".filter-item"),
                 it => it.length > 0 && $(".nav-con.fr").length > 0,
                 textBox =>
@@ -40,10 +39,9 @@
                     textBox.detach()
                         .insertAfter(".nav-con.fr");
                 }
-            );
-            waitForQuery()(
+            ).start();
+            SpinQuery.any(
                 () => $("input.search-keyword"),
-                it => it.length > 0,
                 textBox => textBox.attr("placeholder", "搜索")
             );
             const navBarStyles = resources.getStyle("navbarOverrideStyle", "bilibili-nav-bar-override");

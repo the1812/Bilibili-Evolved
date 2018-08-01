@@ -304,9 +304,8 @@
                 }
             }
         }
-        waitForQuery()(
+        SpinQuery.any(
             () => $(".bilibili-player-video-web-fullscreen"),
-            it => it.length > 0,
             fullscreenButton =>
             {
                 if (!fullscreenButton.hasClass("bilibili-player-video-btn") &&
@@ -322,14 +321,13 @@
                 }
             }
         );
-        waitForQuery()(
+        SpinQuery.any(
             () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
-            it => it.length > 0,
             icons => icons.unbind("click")
         );
-        waitForQuery()(
-            () => $(".bilibili-player-video"),
-            it => it.length > 0 && $("video").length > 0,
+        SpinQuery.count(
+            () => $(".bilibili-player-video,video"),
+            2,
             player =>
             {
                 if ($(".touch-video-box").length === 0)

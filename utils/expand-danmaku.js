@@ -2,9 +2,8 @@
 {
     return () =>
     {
-        waitForQuery()(
+        SpinQuery.any(
             () => $(".bui-collapse-header"),
-            it => it.length > 0,
             button =>
             {
                 if (parseInt($(".bui-collapse-body").css("height")) === 0 &&

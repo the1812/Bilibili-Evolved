@@ -36,6 +36,54 @@
         "watchLaterRedirect",
         "expandDanmakuList"
     ];
+    class SpinQuery
+    {
+        constructor(query, condition, action, onFailed)
+        {
+            this.maxRetry = 30;
+            this.retry = 0;
+            this.queryInterval = 500;
+            this.query = query;
+            this.condition = condition;
+            this.action = action;
+            this.onFailed = onFailed;
+        }
+        start()
+        {
+            this.tryQuery(this.query, this.condition, this.action, this.onFailed);
+        }
+        tryQuery(query, condition, action, onFailed)
+        {
+            if (this.retry >= this.maxRetry)
+            {
+                if (onFailed)
+                {
+                    onFailed();
+                }
+            }
+            else
+            {
+                const result = query();
+                if (condition(result))
+                {
+                    action(result);
+                }
+                else
+                {
+                    this.retry++;
+                    setTimeout(() => this.tryQuery(query, condition, action, onFailed), this.queryInterval);
+                }
+            }
+        }
+        static any(query, action)
+        {
+            new SpinQuery(query, it => it.length > 0, action).start();
+        }
+        static count(query, count, action)
+        {
+            new SpinQuery(query, it => it.length === count, action).start();
+        }
+    }
     function waitForQuery()
     {
         const MaxRetry = 30;

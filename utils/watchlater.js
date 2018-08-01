@@ -25,35 +25,30 @@
                     .attr("target", "_blank"));
             }
         };
-        waitForQuery()(
+        SpinQuery.any(
             () => $(".av-item>a"),
-            it => it.length > 0,
             items => redirectLinks(items)
         );
-        waitForQuery()(
+        SpinQuery.any(
             () => $(".av-about>a"),
-            it => it.length > 0,
             items => redirectLinks(items)
         );
-        waitForQuery()(
+        SpinQuery.any(
             () => $("div.watch-later-m>ul>div>li>a"),
-            it => it.length > 0,
             items => redirectLinks(items)
         );
-        waitForQuery()(
+        SpinQuery.any(
             () => $(".read-more.mr"),
-            it => it.length > 0,
             it => it.remove()
         );
-        waitForQuery()(
+        SpinQuery.any(
             () => $(".read-more-grp>.read-more"),
-            it => it.length > 0,
             it => it.css({
                 float: "none",
                 width: "auto"
             })
         );
-        waitForQuery()(
+        new SpinQuery(
             () => document.URL.match(/av[\d]+/),
             it => it && document.URL.indexOf("watchlater") !== -1,
             it =>
@@ -64,6 +59,6 @@
                     window.location.replace(`https://www.bilibili.com/${id}`);
                 }
             }
-        );
+        ).start();
     };
 })();

@@ -197,7 +197,7 @@
                     });
             }
         }
-        waitForQuery()(
+        new SpinQuery(
             () => $("body"),
             it => it.length > 0 && unsafeWindow.$,
             it =>
@@ -214,6 +214,6 @@
                     addPredefinedColors();
                 }
             }
-        );
+        ).start();
     };
 })();
