@@ -75,8 +75,8 @@
             constructor(element)
             {
                 this.action = new SwipeAction(element);
-                this.onTouchStart = undefined;
-                this.onTouchEnd = undefined;
+                this.onTouchStart = null;
+                this.onTouchEnd = null;
                 this._direction = null;
 
                 element.addEventListener("touchstart", e =>
@@ -151,25 +151,25 @@
         {
             constructor(element)
             {
-                this.lowSpeedForward = undefined;
-                this.lowSpeedBackward = undefined;
-                this.mediumSpeedForward = undefined;
-                this.mediumSpeedBackward = undefined;
-                this.highSpeedForward = undefined;
-                this.highSpeedBackward = undefined;
+                this.lowSpeedForward = null;
+                this.lowSpeedBackward = null;
+                this.mediumSpeedForward = null;
+                this.mediumSpeedBackward = null;
+                this.highSpeedForward = null;
+                this.highSpeedBackward = null;
 
-                this.lowVolumeUp = undefined;
-                this.lowVolumeDown = undefined;
-                this.mediumVolumeUp = undefined;
-                this.mediumVolumeDown = undefined;
-                this.highVolumeUp = undefined;
-                this.highVolumeDown = undefined;
+                this.lowVolumeUp = null;
+                this.lowVolumeDown = null;
+                this.mediumVolumeUp = null;
+                this.mediumVolumeDown = null;
+                this.highVolumeUp = null;
+                this.highVolumeDown = null;
 
-                this.speedCancel = undefined;
-                this.volumeCancel = undefined;
+                this.speedCancel = null;
+                this.volumeCancel = null;
                 this.minSwipeDistance = 20;
-                this.onActionStart = undefined;
-                this.onActionEnd = undefined;
+                this.onActionStart = null;
+                this.onActionEnd = null;
 
                 this._element = element;
                 this._touchStart = false;
@@ -357,9 +357,34 @@
                         }
                         video.prop("volume", volume);
                         $(".bilibili-player-video-volume-num").text(Math.round(volume * 100));
+
+                        // new version
+                        $(".bui-thumb").css("transform", `translateY(-${48 * volume}px)`);
+                        $(".bui-track-vertical .bui-bar").css("transform", `scaleY(${volume})`);
+                        // new version
+                        if (volume === 0)
+                        {
+                            $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");
+                            $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
+                            video.prop("muted", true);
+                        }
+                        else if (volume === 1)
+                        {
+                            $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
+                            $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-max");
+                            video.prop("muted", false);
+                        }
+                        else
+                        {
+                            $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
+                            $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
+                            video.prop("muted", false);
+                        }
+
+                        // old version
                         $(".bpui-slider-progress").css("height", volume * 100 + "%");
                         $(".bpui-slider-handle").css("bottom", (35 + volume * 230) / 3 + "%");
-
+                        // old version
                         if (volume === 0)
                         {
                             $(".icon-24soundoff").show();
