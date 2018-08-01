@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.0.1
+// @version      1.0.2
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -31,11 +31,22 @@
         useDarkStyle: false,
         useNewStyle: true
     };
-    const ajaxReload = [
-        "touchVideoPlayer",
-        "watchLaterRedirect",
-        "expandDanmakuList"
-    ];
+    function loadSettings()
+    {
+        for (const key in settings)
+        {
+            settings[key] = GM_getValue(key, settings[key]);
+        }
+        settings.guiSettings = true;
+    }
+    function saveSettings(newSettings)
+    {
+        for (const key in settings)
+        {
+            GM_setValue(key, newSettings[key]);
+        }
+    }
+
     class SpinQuery
     {
         constructor(query, condition, action, onFailed)
@@ -84,28 +95,6 @@
             new SpinQuery(query, it => it.length === count, action).start();
         }
     }
-    function ajax(url, done)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener("load", () => done(xhr.responseText));
-        xhr.open("GET", url);
-        xhr.send();
-    }
-    function loadSettings()
-    {
-        for (const key in settings)
-        {
-            settings[key] = GM_getValue(key, settings[key]);
-        }
-        settings.guiSettings = true;
-    }
-    function saveSettings(newSettings)
-    {
-        for (const key in settings)
-        {
-            GM_setValue(key, newSettings[key]);
-        }
-    }
     class ExternalResource
     {
         static get resourceUrls()
@@ -139,6 +128,11 @@
         constructor()
         {
             this.data = {};
+            this.ajaxReload = [
+                "touchVideoPlayer",
+                "watchLaterRedirect",
+                "expandDanmakuList"
+            ];
             const foreground = (() =>
             {
                 const regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(settings.customStyleColor);
@@ -168,6 +162,13 @@
             settings.brightness = `${foreground === "#000" ? "100" : "0"}%`;
             settings.filterBrightness = foreground === "#000" ? "0" : "100";
         }
+        ajax(url, done)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener("load", () => done(xhr.responseText));
+            xhr.open("GET", url);
+            xhr.send();
+        }
         fetch(callback)
         {
             this.callback = callback;
@@ -185,7 +186,7 @@
             for (const key in urls)
             {
                 const url = urls[key];
-                ajax(url, data =>
+                this.ajax(url, data =>
                 {
                     if (url.indexOf(".scss") !== -1)
                     {
@@ -221,7 +222,7 @@
                     if (func)
                     {
                         func(settings, this);
-                        if (ajaxReload.indexOf(key) !== -1)
+                        if (this.ajaxReload.indexOf(key) !== -1)
                         {
                             $(document).ajaxComplete(() =>
                             {
