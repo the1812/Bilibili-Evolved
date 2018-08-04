@@ -110,7 +110,7 @@
                 removeAdsStyle: "style/style-remove-promotions.min.css",
                 guiSettingsStyle: "style/style-gui-settings.min.scss",
                 guiSettingsDom: "utils/gui-settings.html",
-                guiSettings: "utils/gui-settings.js",
+                guiSettings: "utils/gui-settings.min.js",
                 useDarkStyle: "style/dark-styles.min.js",
                 useNewStyle: "style/new-styles.min.js",
                 touchNavBar: "touch/touch-navbar.min.js",

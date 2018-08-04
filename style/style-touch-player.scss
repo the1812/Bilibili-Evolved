@@ -13,13 +13,13 @@
 }
 .touch-video-box
 {
-    border-radius: 4px;
+    border-radius: 0px;
     display: none;
     align-items: center;
     justify-content: center;
     width: 50%;
     height: 40%;
-    background: #000;
+    background: rgba(0,0,0,0.625);
     background: #000A;
     backdrop-filter: blur(30px);
     position: relative;
@@ -79,10 +79,9 @@
     bottom: 0;
     left: 0;
     background: $customStyleColor;
-    border-radius: 4px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    width: 0%;
+    width: 100%;
+    transform-origin: left;
+    transform: scaleX(0%);
     height: 4px;
     transition: all 0.2s;
 }
