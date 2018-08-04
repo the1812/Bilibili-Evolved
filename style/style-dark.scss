@@ -151,7 +151,8 @@ div.con,
 .card .more-panel:after,
 .bl-button--ghost,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
-.wrapper .content
+.wrapper .content,
+.comment-bilibili-con
 {
     background-color: #222 !important;
 }
@@ -294,7 +295,8 @@ a.more.tc-slate:hover,
 .wrapper .elec-btn.disabled,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
 .up-article-list-block .more-article,
-.slim-video-card .video-info
+.slim-video-card .video-info,
+.dyn_list li .preview
 {
     background-color: #444 !important;
 }
@@ -517,7 +519,8 @@ blockquote .color-yellow-04,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
 .bilibili-player-video-info,
 .slim-video-card .video-info .col,
-.slim-video-card .video-info .col-2
+.slim-video-card .video-info .col-2,
+.comment-bilibili-con .reason-box dl dt
 {
     color: #aaa !important;
 }
@@ -803,7 +806,10 @@ div.con header,
 .article-info-container .title,
 .article-info-container .desc,
 .slim-video-card .video-info .title,
-.up-article-list-block .more-article
+.up-article-list-block .more-article,
+.comment-bilibili-con .t,
+.comment-bilibili-con .reason-box dl dd,
+.comment-bilibili-con .other p
 {
     color: #eee !important;
 }
@@ -961,7 +967,8 @@ div.bar>div.num,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
 .bilibili-player-video-inputbar .bilibili-player-video-inputbar-wrap,
-.article-holder .slim-video-card
+.article-holder .slim-video-card,
+.comment-bilibili-con .t
 {
     border-color: transparent !important;
 }
