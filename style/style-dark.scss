@@ -285,7 +285,6 @@ a.more.tc-slate:hover,
 .ps:hover>.ps__scrollbar-y-rail:hover,
 .ps:hover>.ps__scrollbar-x-rail:hover,
 .fans-medal-item .level,
-.article-holder img,
 #page-follows .follow-main .follow-action-bottom .follow-action-fixtop,
 #pin-wrapper #pin-layer-search,
 .be-input_inner,
@@ -293,7 +292,9 @@ a.more.tc-slate:hover,
 .ban-modal-h5,
 .select-wrap .select-option p:hover,
 .wrapper .elec-btn.disabled,
-.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
+.up-article-list-block .more-article,
+.slim-video-card .video-info
 {
     background-color: #444 !important;
 }
@@ -349,7 +350,9 @@ body,
 {
     background-color: #222e !important;
 }
-.my-info .info-modal .integral li .num
+.my-info .info-modal .integral li .num,
+.article-holder img,
+.article-holder .cover-default
 {
     background-color: transparent !important;
 }
@@ -512,7 +515,9 @@ blockquote .color-yellow-04,
 .wrapper .modal-body .elec-protocol a,
 .wrapper .pay-qrcode-wrp .refresh-btn,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
-.bilibili-player-video-info
+.bilibili-player-video-info,
+.slim-video-card .video-info .col,
+.slim-video-card .video-info .col-2
 {
     color: #aaa !important;
 }
@@ -794,7 +799,11 @@ div.con header,
 .report-con dl dd,
 .report-other,
 .wrapper .modal-body .pay-info,
-.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
+.article-info-container .title,
+.article-info-container .desc,
+.slim-video-card .video-info .title,
+.up-article-list-block .more-article
 {
     color: #eee !important;
 }
@@ -951,7 +960,8 @@ div.bar>div.num,
 .wrapper .pay-qrcode-wrp,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
-.bilibili-player-video-inputbar .bilibili-player-video-inputbar-wrap
+.bilibili-player-video-inputbar .bilibili-player-video-inputbar-wrap,
+.article-holder .slim-video-card
 {
     border-color: transparent !important;
 }
@@ -1113,7 +1123,8 @@ ul.up-nav li
 .elec .elec-status,
 .elec .elec-status-bg,
 .small-item .cover,
-#page-follows .follow-main .follow-action-top .back-to-info
+#page-follows .follow-main .follow-action-top .back-to-info,
+.article-holder .slim-video-card-error
 {
     background-image: none !important;
 }
