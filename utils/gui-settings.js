@@ -136,7 +136,7 @@
             });
             $(`input[type='checkbox']`).on("change", e =>
             {
-                const self = $(e.srcElement);
+                const self = $(e.target);
                 const checked = self.prop("checked");
                 for (const key in dependencies)
                 {
