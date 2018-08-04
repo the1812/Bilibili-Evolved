@@ -438,7 +438,6 @@
                             }
                             text.innerHTML = info + `</span></div><div class='touch-progress'></div>`;
                             $(".touch-progress").css("width", percent);
-                            //$(".videoshot").css(videoshot.getStyle(finalTime));
                         };
                     };
                     swiper.action.lowSpeedBackward = speedChange("低");
@@ -518,10 +517,6 @@
             }
         );
 
-        if ($("#bilibili-touch-video-player").length === 0)
-        {
-            const style = resources.getStyle("touchPlayerStyle", "bilibili-touch-video-player");
-            $("body").after(style);
-        }
+        resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
     };
 })();

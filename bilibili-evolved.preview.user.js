@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.0.2
+// @version      1.0.3
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -211,6 +211,13 @@
         getStyle(key, id)
         {
             return `<style id='${id}'>${this.data[key]}</style>`;
+        }
+        applyStyle(key, id)
+        {
+            if ($(`#${id}`).length === 0)
+            {
+                $("html").prepend(this.getStyle(key, id));
+            }
         }
         apply()
         {

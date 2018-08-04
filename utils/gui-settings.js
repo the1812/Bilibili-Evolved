@@ -175,9 +175,7 @@
                     $(".gui-settings-panel").addClass("opened");
                 });
             }
-
-            const style = resources.getStyle("guiSettingsStyle", "gui-settings-style");
-            $("body").after(style);
+            resources.applyStyle("guiSettingsStyle", "gui-settings-style");
         }
         function addPredefinedColors()
         {

@@ -17,17 +17,15 @@
         {
             stardustStyles = parseInt(window.getComputedStyle(navbar).height) === 50;
         }
-        let styles = "";
+
         if (stardustStyles)
         {
-            styles = resources.getStyle("style", "bilibili-new-style");
+            resources.applyStyle("style", "bilibili-new-style");
         }
         else
         {
-            styles = resources.getStyle("oldStyle", "bilibili-new-style");
+            resources.applyStyle("oldStyle", "bilibili-new-style");
         }
-        $("#bilibili-new-style").remove();
-        $("body").after(styles);
 
         if (settings.overrideNavBar)
         {
@@ -44,13 +42,11 @@
                 () => $("input.search-keyword"),
                 textBox => textBox.attr("placeholder", "搜索")
             );
-            const navBarStyles = resources.getStyle("navbarOverrideStyle", "bilibili-nav-bar-override");
-            $("body").after(navBarStyles);
+            resources.applyStyle("navbarOverrideStyle", "bilibili-nav-bar-override");
 
             if (!settings.showBanner)
             {
-                const bannerStyles = resources.getStyle("noBannerStyle", "bilibili-banner-override");
-                $("body").after(bannerStyles);
+                resources.applyStyle("noBannerStyle", "bilibili-banner-override");
             }
         }
     };
