@@ -591,28 +591,28 @@
                             $(".touch-progress").css("transform", "scaleX(0)");
                             setVolume(originalVolume);
                         };
-                        // swiper.action.onActionEnd = action =>
-                        // {
-                        //     box.style.display = "none";
-                        //     text.innerHTML = "";
-                        //     if (action)
-                        //     {
-                        //         if (action.type === "playback")
-                        //         {
-                        //             let time = video.prop("currentTime");
-                        //             time += action.seconds;
-                        //             if (time < 0)
-                        //             {
-                        //                 time = 0;
-                        //             }
-                        //             else if (time > videoDuration)
-                        //             {
-                        //                 time = videoDuration;
-                        //             }
-                        //             video.prop("currentTime", time);
-                        //         }
-                        //     }
-                        // };
+                        swiper.action.onActionEnd = action =>
+                        {
+                            box.style.display = "none";
+                            text.innerHTML = "";
+                            if (action)
+                            {
+                                if (action.type === "playback")
+                                {
+                                    let time = video.prop("currentTime");
+                                    time += action.seconds;
+                                    if (time < 0)
+                                    {
+                                        time = 0;
+                                    }
+                                    else if (time > videoDuration)
+                                    {
+                                        time = videoDuration;
+                                    }
+                                    video.prop("currentTime", time);
+                                }
+                            }
+                        };
                     });
                 }
             }

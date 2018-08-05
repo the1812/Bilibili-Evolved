@@ -93,6 +93,8 @@
     flex-grow: 0;
     flex-shrink: 0;
     margin-left: 1em;
+    transform-origin: center;
+    transform: scale(0.9);
 }
 div.bilibili-player-video-control
 {

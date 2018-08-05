@@ -121,7 +121,7 @@
                 useDarkStyle: "style/dark-styles.min.js",
                 useNewStyle: "style/new-styles.min.js",
                 touchNavBar: "touch/touch-navbar.min.js",
-                touchVideoPlayer: "touch/touch-player.js",
+                touchVideoPlayer: "touch/touch-player.min.js",
                 expandDanmakuList: "utils/expand-danmaku.min.js",
                 removeAds: "utils/remove-promotions.min.js",
                 watchLaterRedirect: "utils/watchlater.min.js"
