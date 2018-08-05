@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.0.4
+// @version      1.0.5
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -167,7 +167,7 @@
             })();
             settings.foreground = foreground;
             settings.brightness = `${foreground === "#000" ? "100" : "0"}%`;
-            settings.filterBrightness = foreground === "#000" ? "0" : "100";
+            settings.filterInvert = foreground === "#000" ? "" : "invert(1)";
         }
         ajax(url, done)
         {

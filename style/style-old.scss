@@ -32,7 +32,7 @@ li.nav-item:hover
 
 a.t>i.bili-icon
 {
-    filter: grayscale(100) brightness($filterBrightness) saturate(0) !important;
+    filter: brightness(0) $filterInvert !important;
     background-image: url(https://www.bilibili.com/favicon.ico) !important;
     background-size: cover !important;
     background-position: inherit !important;

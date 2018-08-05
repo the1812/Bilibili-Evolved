@@ -1120,7 +1120,7 @@ i.btn-del,
 .setting:before,
 .select-wrap .select-txt i
 {
-    filter: grayscale(100) brightness(100) saturate(0) !important;
+    filter: brightness(0) invert(1) !important;
 }
 ul.up-nav li
 {
