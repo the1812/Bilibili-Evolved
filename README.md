@@ -101,6 +101,10 @@
 **设置保存后,需要刷新网页才能生效.**
 
 ![设置](images/gui-settings.png)
+# 关于新版播放器
+目前新版播放器在b站不是默认开启的,可在旧版播放页面右侧找到入口.
+
+如果没有找到入口,也可以手动在浏览器开发者工具(快捷键通常为`F12`)中的控制台运行[脚本](utils/enable-new-player.js)开启.
 
 # 兼容性
 ## ![Chrome](https://img.shields.io/badge/Chrome-兼容-brightgreen.svg?style=flat-square&colorB=009688)
