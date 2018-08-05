@@ -305,6 +305,104 @@
                 }
             }
         }
+        class VideoShot
+        {
+            constructor()
+            {
+                const url = window.location.href;
+                const aidMatch = url.match(/av([\d]+)/);
+                this.aid = aidMatch[1];
+                const pageMatch = url.match(/p=([\d]+)/);
+                this.page = pageMatch ? pageMatch[1] : 1;
+
+                this.pagesData = null;
+                this.cidMap = {};
+                this.cidData = {};
+                this.supportWebp = VideoShot.supportWebp;
+
+                downloadText(url, html => this.findCid(html));
+            }
+            findCid(html)
+            {
+                const match = html.match(/"pages":(\[[^\0]*\]),"embedPlayer"/);
+                if (match)
+                {
+                    this.pagesData = JSON.parse(match[1]);
+                    this.pagesData.forEach(pageData =>
+                    {
+                        this.cidMap[pageData.page] = pageData.cid;
+                    });
+                }
+            }
+            getVideoshot(currentTime, done)
+            {
+                if (!this.cidData[this.page])
+                {
+                    downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cidMap[this.page]}&index=1`, response =>
+                    {
+                        this.cidData[this.page] = JSON.parse(response).data;
+                        this.getVideoshot(currentTime, done);
+                    });
+                }
+                else
+                {
+                    const data = this.cidData[this.page];
+
+                    const indexData = data.index;
+                    let shotIndex = 0;
+                    for (let index = 0; index < indexData.length - 2; index++)
+                    {
+                        if (currentTime >= indexData[index] &&
+                            currentTime < indexData[index + 1])
+                        {
+                            shotIndex = index;
+                            break;
+                        }
+                    }
+
+                    let imageData = data.image;
+                    if (this.supportWebp)
+                    {
+                        imageData = imageData.map(url => url.replace(".jpg", ".jpg@.webp"));
+                    }
+                    const xLength = parseInt(data.pv_x_len) || 10;
+                    const yLength = parseInt(data.pv_y_len) || 10;
+                    const xSize = parseInt(data.pv_x_size) || 160;
+                    const ySize = parseInt(data.pv_y_size) || 90;
+                    const x = -(shotIndex % 100 % xLength) * xSize;
+                    const y = -Math.floor(shotIndex % 100 / yLength) * ySize;
+                    done({
+                        display: "block",
+                        width: xSize,
+                        height: ySize,
+                        backgroundImage: `url(${imageData[Math.floor(shotIndex / 100)]})`,
+                        backgroundPosition: `${x}px ${y}px`
+                    });
+                }
+            }
+            static get supportWebp()
+            {
+                try
+                {
+                    const canvas = document.createElement("canvas");
+                    if (canvas.getContext && canvas.getContext("2d"))
+                        try
+                        {
+                            return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
+                        }
+                        catch (ex)
+                        {
+                            return false;
+                        }
+                    else
+                        return false;
+                }
+                catch (ex)
+                {
+                    return false;
+                }
+            }
+        }
         SpinQuery.any(
             () => $(".bilibili-player-video-web-fullscreen"),
             fullscreenButton =>
@@ -414,7 +512,7 @@
                             text.innerHTML = "";
                             originalVolume = Math.round(video.prop("volume") * 100);
                         };
-                        //const videoshot = new VideoShot(videoDuration);
+                        const videoshot = new VideoShot();
                         const speedChange = speed =>
                         {
                             return sec =>
@@ -422,24 +520,24 @@
                                 const current = video.prop("currentTime");
                                 let info = `<div class='touch-row'><span class='touch-speed'>${speed}速</span><span class='touch-info'>进度: ${sec > 0 ? "+" : "-"}`;
                                 const commonInfoPart = `</span></div><div class='touch-row'><div class='videoshot'></div><span class='touch-result'>`;
-                                const finalTime = current + sec;
-                                let percent = 0;
+                                let finalTime = current + sec;
+                                let percent = fixed(100 * finalTime / videoDuration);
+                                let change = sec;
                                 if (finalTime > videoDuration)
                                 {
+                                    finalTime = videoDuration;
                                     percent = 100;
-                                    info += `${secondsToTime(videoDuration - current)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(videoDuration)} (${percent}%)`;
+                                    change = videoDuration - current;
                                 }
                                 else if (finalTime < 0)
                                 {
+                                    finalTime = 0;
                                     percent = 0;
-                                    info += `${secondsToTime(current)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(0)} (${percent}%)`;
+                                    change = current;
                                 }
-                                else
-                                {
-                                    percent = fixed(100 * finalTime / videoDuration);
-                                    info += `${secondsToTime(sec)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(finalTime)} (${percent}%)`;
-                                }
-                                text.innerHTML = info + `</span></div><div class='touch-progress'></div>`;
+                                info += `${secondsToTime(change)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(finalTime)} (${percent}%)`;
+                                text.innerHTML = info + `</span></div>`;
+                                videoshot.getVideoshot(finalTime, style => $(".videoshot").css(style));
                                 $(".touch-progress").css("transform", `scaleX(${percent / 100})`);
                             };
                         };
@@ -456,26 +554,22 @@
                             {
                                 let info = `<div class='touch-row'><span class='touch-speed'>${speed}速</span><span class='touch-info'>音量: ${volume > 0 ? "+" : "-"}`;
                                 const commonInfoPart = `</span></div><div class='touch-row'><span class='touch-result'>`;
-                                const finalVolume = originalVolume + volume;
+                                let finalVolume = originalVolume + volume;
+                                let change = Math.abs(volume);
                                 if (finalVolume > 100)
                                 {
-                                    info += `${100 - originalVolume}${commonInfoPart}${originalVolume} → 100`;
-                                    setVolume(100);
-                                    $(".touch-progress").css("transform", "scaleX(1)");
+                                    finalVolume = 100;
+                                    change = 100 - originalVolume;
                                 }
                                 else if (finalVolume < 0)
                                 {
-                                    info += `${originalVolume}${commonInfoPart}${originalVolume} → 0`;
-                                    setVolume(0);
-                                    $(".touch-progress").css("transform", "scaleX(0)");
+                                    finalVolume = 0;
+                                    change = originalVolume;
                                 }
-                                else
-                                {
-                                    info += `${Math.abs(volume)}${commonInfoPart}${originalVolume} → ${finalVolume}`;
-                                    setVolume(finalVolume);
-                                    $(".touch-progress").css("transform", `scaleX(${finalVolume / 100})`);
-                                }
-                                text.innerHTML = info + `</span></div><div class='touch-progress'></div>`;
+                                info += `${change}${commonInfoPart}${originalVolume} → ${finalVolume}`;
+                                setVolume(finalVolume);
+                                text.innerHTML = info + `</span></div>`;
+                                $(".touch-progress").css("transform", `scaleX(${finalVolume / 100})`);
                             };
                         };
                         swiper.action.lowVolumeUp = volumeChange("低");
@@ -488,6 +582,7 @@
                         swiper.action.speedCancel = () =>
                         {
                             text.innerHTML = `松开手指,取消进退`;
+                            $(".videoshot").css("display", "none");
                             $(".touch-progress").css("transform", "scaleX(0)");
                         };
                         swiper.action.volumeCancel = () =>
@@ -496,28 +591,28 @@
                             $(".touch-progress").css("transform", "scaleX(0)");
                             setVolume(originalVolume);
                         };
-                        swiper.action.onActionEnd = action =>
-                        {
-                            box.style.display = "none";
-                            text.innerHTML = "";
-                            if (action)
-                            {
-                                if (action.type === "playback")
-                                {
-                                    let time = video.prop("currentTime");
-                                    time += action.seconds;
-                                    if (time < 0)
-                                    {
-                                        time = 0;
-                                    }
-                                    else if (time > videoDuration)
-                                    {
-                                        time = videoDuration;
-                                    }
-                                    video.prop("currentTime", time);
-                                }
-                            }
-                        };
+                        // swiper.action.onActionEnd = action =>
+                        // {
+                        //     box.style.display = "none";
+                        //     text.innerHTML = "";
+                        //     if (action)
+                        //     {
+                        //         if (action.type === "playback")
+                        //         {
+                        //             let time = video.prop("currentTime");
+                        //             time += action.seconds;
+                        //             if (time < 0)
+                        //             {
+                        //                 time = 0;
+                        //             }
+                        //             else if (time > videoDuration)
+                        //             {
+                        //                 time = videoDuration;
+                        //             }
+                        //             video.prop("currentTime", time);
+                        //         }
+                        //     }
+                        // };
                     });
                 }
             }

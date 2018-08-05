@@ -17,8 +17,8 @@
     display: none;
     align-items: center;
     justify-content: center;
-    width: 50%;
-    height: 40%;
+    width: 60%;
+    height: 50%;
     background: rgba(0,0,0,0.625);
     background: #000A;
     backdrop-filter: blur(30px);
@@ -66,9 +66,9 @@
     display: block;
     flex-grow: 2;
     flex-shrink: 0;
-    background: #444A;
+    background: #3338;
     padding: 0.5em;
-    margin-left: 1em;
+    margin-left: 1.3em;
     border-radius: 4px;
     margin-right: 0.2em;
     max-width: 5em;
@@ -81,21 +81,17 @@
     background: $customStyleColor;
     width: 100%;
     transform-origin: left;
-    transform: scaleX(0%);
+    transform: scaleX(0);
     height: 4px;
     transition: all 0.2s;
 }
 .videoshot
 {
     display: none;
-
+    background-color: transparent;
     background-image: none;
     flex-grow: 0;
     flex-shrink: 0;
-    border-radius: 4px;
-    width: 80px;
-    height: 45px;
-    background-size: 1000%;
     margin-left: 1em;
 }
 div.bilibili-player-video-control

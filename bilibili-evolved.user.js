@@ -46,6 +46,13 @@
             GM_setValue(key, newSettings[key]);
         }
     }
+    function downloadText(url, done)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", () => done(xhr.responseText));
+        xhr.open("GET", url);
+        xhr.send();
+    }
 
     class SpinQuery
     {
@@ -114,7 +121,7 @@
                 useDarkStyle: "style/dark-styles.min.js",
                 useNewStyle: "style/new-styles.min.js",
                 touchNavBar: "touch/touch-navbar.min.js",
-                touchVideoPlayer: "touch/touch-player.min.js",
+                touchVideoPlayer: "touch/touch-player.js",
                 expandDanmakuList: "utils/expand-danmaku.min.js",
                 removeAds: "utils/remove-promotions.min.js",
                 watchLaterRedirect: "utils/watchlater.min.js"
@@ -164,10 +171,7 @@
         }
         ajax(url, done)
         {
-            const xhr = new XMLHttpRequest();
-            xhr.addEventListener("load", () => done(xhr.responseText));
-            xhr.open("GET", url);
-            xhr.send();
+            downloadText(url, done);
         }
         fetch(callback)
         {
