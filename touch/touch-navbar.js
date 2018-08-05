@@ -2,9 +2,9 @@
 {
     return () =>
     {
-        waitForQuery()(
+        SpinQuery.count(
             () => $("ul.fr>li.nav-item").not(".profile-info"),
-            it => it.length === 6,
+            6,
             navItems =>
             {
                 const enableTouch = (_, nav) =>

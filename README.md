@@ -76,8 +76,10 @@
 已知问题: 滑动调整的音量不会保存,下次打开视频将恢复原音量.
 #### 外置网页全屏
 因为触屏设备很难做出"鼠标悬停",`网页全屏`将从`全屏`的鼠标悬停菜单中移动到外部.
+
+(只对旧版播放器生效,新版播放器已经默认外置)
 #### 放大按钮
-放大控制栏的按钮及间距,使触摸操作更准确.
+增大控制栏的按钮间距,使触摸操作更准确.
 ##### 启用前
 ![放大前](images/player-buttons-original.png)
 ##### 启用后
@@ -102,11 +104,17 @@
 
 # 兼容性
 ## ![Chrome](https://img.shields.io/badge/Chrome-兼容-brightgreen.svg?style=flat-square&colorB=009688)
-Chrome能够完美支持所有功能.
+- 触摸调整框的背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
 ## ![Firfox](https://img.shields.io/badge/FireFox-部分兼容-yellow.svg?style=flat-square&colorB=FF6F00)
-滚动条样式无效,滤镜效果不仅无抗锯齿,还会使部分布局错位.
+- 滚动条样式无效.
+- 滤镜效果不仅无抗锯齿,还会使部分布局错位.
+- 触摸调整框的背景模糊效果无效.
 ## ![Edge](https://img.shields.io/badge/Edge-部分兼容-yellow.svg?style=flat-square&colorB=FF6F00)
-自定义颜色与滚动条样式无效,滤镜效果无抗锯齿,半透明颜色(`#rrggbbaa`)无效*,顶栏触摸体验不佳. 触摸功能需要手动在`about:flags`页面中开启.
+- 自定义颜色与滚动条样式无效.
+- 滤镜效果无抗锯齿.
+- 半透明颜色(`#rrggbbaa`)无效*.
+- 顶栏触摸体验不佳.
+- 触摸功能需要手动在`about:flags`中开启.
 
 *Edge将考虑用rgba()实现半透明颜色.
 ## ![Safari](https://img.shields.io/badge/Safari-未知-lightgrey.svg?style=flat-square&colorB=323232)

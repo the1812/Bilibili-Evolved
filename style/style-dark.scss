@@ -144,7 +144,16 @@ div.con,
 .fans-action-follow,
 .fans-action-btn,
 #page-setting .setting-tag-list a,
-#pin-wrapper #pin-layer
+#pin-wrapper #pin-layer,
+.select-wrap .select-txt,
+.select-wrap .select-option,
+.card .more-panel,
+.card .more-panel:after,
+.bl-button--ghost,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
+.wrapper .content,
+.comment-bilibili-con,
+.bilibili-player-video-panel
 {
     background-color: #222 !important;
 }
@@ -278,10 +287,17 @@ a.more.tc-slate:hover,
 .ps:hover>.ps__scrollbar-y-rail:hover,
 .ps:hover>.ps__scrollbar-x-rail:hover,
 .fans-medal-item .level,
-.article-holder img,
 #page-follows .follow-main .follow-action-bottom .follow-action-fixtop,
 #pin-wrapper #pin-layer-search,
-.be-input_inner
+.be-input_inner,
+.ban-modal,
+.ban-modal-h5,
+.select-wrap .select-option p:hover,
+.wrapper .elec-btn.disabled,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
+.up-article-list-block .more-article,
+.slim-video-card .video-info,
+.dyn_list li .preview
 {
     background-color: #444 !important;
 }
@@ -336,6 +352,12 @@ body,
 .elevator-module .nav-bg
 {
     background-color: #222e !important;
+}
+.my-info .info-modal .integral li .num,
+.article-holder img,
+.article-holder .cover-default
+{
+    background-color: transparent !important;
 }
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar
 {
@@ -485,7 +507,21 @@ blockquote .color-yellow-04,
 .fans-action-follow,
 .list-item .auth-description,
 .follow-main .follow-action-bottom .select-counter,
-.n .n-num
+.n .n-num,
+.bangumi-rank-list .rank-item .ri-total,
+.pub-list .info .type .bk-title,
+.pub-list .info dl dt,
+.pub-list .info .comment,
+.report-con dl dt,
+.wrapper .modal-body .elec-bcoin,
+.wrapper .modal-body .elec-protocol,
+.wrapper .modal-body .elec-protocol a,
+.wrapper .pay-qrcode-wrp .refresh-btn,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
+.bilibili-player-video-info,
+.slim-video-card .video-info .col,
+.slim-video-card .video-info .col-2,
+.comment-bilibili-con .reason-box dl dt
 {
     color: #aaa !important;
 }
@@ -753,7 +789,28 @@ div.con header,
 #pin-wrapper #pin-layer-search,
 .modal-wrapper .modal-title,
 .be-input_inner,
-.follow-sidenav .follow-list-container .follow-item.cur .num
+.follow-sidenav .follow-list-container .follow-item.cur .num,
+.pub-list .info .name,
+.select-wrap .select-txt,
+.select-wrap .select-option,
+.select-wrap .select-option p:hover,
+.card .more-panel,
+.card .more-panel .child-button:hover,
+.report-popup .content-text,
+.im-popup .bp-popup-panel .title-ctnr .popup-title,
+.selector-box,
+.bl-button--ghost,
+.report-con dl dd,
+.report-other,
+.wrapper .modal-body .pay-info,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
+.article-info-container .title,
+.article-info-container .desc,
+.slim-video-card .video-info .title,
+.up-article-list-block .more-article,
+.comment-bilibili-con .t,
+.comment-bilibili-con .reason-box dl dd,
+.comment-bilibili-con .other p
 {
     color: #eee !important;
 }
@@ -779,7 +836,9 @@ form.ipt,
 .up-info-holder .fixed-box .more .top-bar,
 .tag-container .tag-item .tag-content,
 .up-info-holder .fixed-box .rightside-article-list-btn .label,
-.up-info-holder .fixed-box .up-article-list-block .block-title
+.up-info-holder .fixed-box .up-article-list-block .block-title,
+.pub-list .info dl,
+.report-con label:before
 {
     border-color: #aaa !important;
 }
@@ -821,7 +880,11 @@ ul.bilibili-suggest,
 .action-menu .menu-list,
 .action-menu .menu-list:before,
 .live-container,
-#page-setting .setting-tag-list a
+#page-setting .setting-tag-list a,
+.select-wrap .select-option,
+.card .more-panel,
+.card .more-panel:after,
+.bl-button--ghost
 {
     border-color: #222 !important;
 }
@@ -899,7 +962,14 @@ div.bar>div.num,
 .modal-container .modal-body .target-followlist,
 .fans-action-btn,
 #pin-wrapper .pin-layer-header,
-.modal-wrapper .modal-title
+.modal-wrapper .modal-title,
+.report-con,
+.wrapper .pay-qrcode-wrp,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
+.wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
+.bilibili-player-video-inputbar .bilibili-player-video-inputbar-wrap,
+.article-holder .slim-video-card,
+.comment-bilibili-con .t
 {
     border-color: transparent !important;
 }
@@ -1048,7 +1118,8 @@ i.btn-del,
 .i-m-v-icon,
 .icon-arrow,
 .side-bar .icon,
-.setting:before
+.setting:before,
+.select-wrap .select-txt i
 {
     filter: grayscale(100) brightness(100) saturate(0) !important;
 }
@@ -1060,7 +1131,8 @@ ul.up-nav li
 .elec .elec-status,
 .elec .elec-status-bg,
 .small-item .cover,
-#page-follows .follow-main .follow-action-top .back-to-info
+#page-follows .follow-main .follow-action-top .back-to-info,
+.article-holder .slim-video-card-error
 {
     background-image: none !important;
 }
@@ -1282,7 +1354,10 @@ input[type=text]:focus,
 .bui-button.bui-button-transparent:hover,
 .bb-comment .stick,
 .bb-comment .stick.assist,
-.send-btn
+.send-btn,
+.bl-button--primary,
+.report-con input[type=radio]:checked+label:before,
+.wrapper .modal-back:hover
 {
     border-color: $customStyleColor !important;
 }
@@ -1365,7 +1440,10 @@ a.s-btn:hover,
 .live-container .status,
 .video-container .types,
 .type-label,
-.follow-sidenav .follow-list-container .follow-item.cur
+.follow-sidenav .follow-list-container .follow-item.cur,
+.bl-button--primary,
+.report-con label:after,
+.wrapper .elec-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -1515,7 +1593,14 @@ a.up-name:hover,
 .bottom .link,
 .action-menu .menu-list a:hover,
 .article-title a:hover,
-#page-follows .follow-main .follow-action-bottom .select-cancel
+#page-follows .follow-main .follow-action-bottom .select-cancel,
+.wrapper .modal-body .elec-pay .elec-coin,
+.wrapper .modal-body .elec-pay .elec-count,
+.wrapper .modal-body .elec-pay .elec-exp,
+.wrapper .modal-body .elec-protocol a:hover,
+.wrapper .modal-body .pay-info .balance,
+.wrapper .modal-body .pay-info .pay-tip .em-text,
+.wrapper .modal-back
 {
     color: $customStyleColor !important;
 }
@@ -1581,7 +1666,9 @@ a.s-btn:hover,
 .follow-sidenav .follow-list-container .follow-item.cur .num,
 .follow-sidenav .follow-list-container .follow-item.cur .text,
 .follow-sidenav .follow-list-container .follow-item.cur,
-#page-setting #setting-new-tag-btn
+#page-setting #setting-new-tag-btn,
+.bl-button--primary,
+.wrapper .elec-btn
 {
     color: $foreground !important;
 }

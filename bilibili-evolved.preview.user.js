@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.0.0
+// @version      1.0.4
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -31,47 +31,6 @@
         useDarkStyle: false,
         useNewStyle: true
     };
-    const ajaxReload = [
-        "touchVideoPlayer",
-        "watchLaterRedirect",
-        "expandDanmakuList"
-    ];
-    function waitForQuery()
-    {
-        const MaxRetry = 30;
-        let retry = 0;
-        const tryQuery = (query, condition, action, failed) =>
-        {
-            if (retry >= MaxRetry)
-            {
-                if (failed)
-                {
-                    failed();
-                }
-            }
-            else
-            {
-                const result = query();
-                if (condition(result))
-                {
-                    action(result);
-                }
-                else
-                {
-                    retry++;
-                    setTimeout(() => tryQuery(query, condition, action, failed), 500);
-                }
-            }
-        };
-        return tryQuery;
-    }
-    function ajax(url, done)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener("load", () => done(xhr.responseText));
-        xhr.open("GET", url);
-        xhr.send();
-    }
     function loadSettings()
     {
         for (const key in settings)
@@ -87,6 +46,62 @@
             GM_setValue(key, newSettings[key]);
         }
     }
+    function downloadText(url, done)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener("load", () => done(xhr.responseText));
+        xhr.open("GET", url);
+        xhr.send();
+    }
+
+    class SpinQuery
+    {
+        constructor(query, condition, action, onFailed)
+        {
+            this.maxRetry = 30;
+            this.retry = 0;
+            this.queryInterval = 500;
+            this.query = query;
+            this.condition = condition;
+            this.action = action;
+            this.onFailed = onFailed;
+        }
+        start()
+        {
+            this.tryQuery(this.query, this.condition, this.action, this.onFailed);
+        }
+        tryQuery(query, condition, action, onFailed)
+        {
+            if (this.retry >= this.maxRetry)
+            {
+                if (onFailed)
+                {
+                    onFailed();
+                }
+            }
+            else
+            {
+                const result = query();
+                if (condition(result))
+                {
+                    action(result);
+                }
+                else
+                {
+                    this.retry++;
+                    setTimeout(() => this.tryQuery(query, condition, action, onFailed), this.queryInterval);
+                }
+            }
+        }
+        static any(query, action)
+        {
+            new SpinQuery(query, it => it.length > 0, action).start();
+        }
+        static count(query, count, action)
+        {
+            new SpinQuery(query, it => it.length === count, action).start();
+        }
+    }
     class ExternalResource
     {
         static get resourceUrls()
@@ -99,6 +114,7 @@
                 touchPlayerStyle: "style/style-touch-player.min.scss",
                 navbarOverrideStyle: "style/style-navbar-override.min.css",
                 noBannerStyle: "style/style-no-banner.min.css",
+                removeAdsStyle: "style/style-remove-promotions.min.css",
                 guiSettingsStyle: "style/style-gui-settings.min.scss",
                 guiSettingsDom: "utils/gui-settings.html",
                 guiSettings: "utils/gui-settings.min.js",
@@ -119,6 +135,11 @@
         constructor()
         {
             this.data = {};
+            this.ajaxReload = [
+                "touchVideoPlayer",
+                "watchLaterRedirect",
+                "expandDanmakuList"
+            ];
             const foreground = (() =>
             {
                 const regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(settings.customStyleColor);
@@ -148,7 +169,11 @@
             settings.brightness = `${foreground === "#000" ? "100" : "0"}%`;
             settings.filterBrightness = foreground === "#000" ? "0" : "100";
         }
-        ready(callback)
+        ajax(url, done)
+        {
+            downloadText(url, done);
+        }
+        fetch(callback)
         {
             this.callback = callback;
             const replaceCustomColor = (style) =>
@@ -165,7 +190,7 @@
             for (const key in urls)
             {
                 const url = urls[key];
-                ajax(url, data =>
+                this.ajax(url, data =>
                 {
                     if (url.indexOf(".scss") !== -1)
                     {
@@ -176,9 +201,13 @@
                         this.data[key] = data;
                     }
                     downloadedCount++;
-                    if (downloadedCount >= resourceCount && this.callback)
+                    if (downloadedCount >= resourceCount)
                     {
-                        this.callback();
+                        this.apply();
+                        if (this.callback)
+                        {
+                            this.callback();
+                        }
                     }
                 });
             }
@@ -186,6 +215,13 @@
         getStyle(key, id)
         {
             return `<style id='${id}'>${this.data[key]}</style>`;
+        }
+        applyStyle(key, id)
+        {
+            if ($(`#${id}`).length === 0)
+            {
+                $("html").prepend(this.getStyle(key, id));
+            }
         }
         apply()
         {
@@ -197,7 +233,7 @@
                     if (func)
                     {
                         func(settings, this);
-                        if (ajaxReload.indexOf(key) !== -1)
+                        if (this.ajaxReload.indexOf(key) !== -1)
                         {
                             $(document).ajaxComplete(() =>
                             {
@@ -212,5 +248,5 @@
 
     loadSettings();
     const resources = new ExternalResource();
-    resources.ready(resources.apply);
+    resources.fetch();
 })(window.jQuery.noConflict(true));

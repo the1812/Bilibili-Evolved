@@ -1,21 +1,7 @@
 (() =>
 {
-    return () =>
+    return (_, resources) =>
     {
-        waitForQuery()(
-            () => $("#slide_ad"),
-            it => it.length > 0,
-            it => it.css("display", "none")
-        );
-        waitForQuery()(
-            () => $("#home_popularize"),
-            it => it.length > 0,
-            it => it.css("display", "none")
-        );
-        waitForQuery()(
-            () => $(".gg-floor-module"),
-            it => it.length > 0,
-            it => it.css("display", "none")
-        );
+        resources.applyStyle("removeAdsStyle", "remove-promotions-style");
     };
 })();
