@@ -21,6 +21,7 @@
     height: 50%;
     background: rgba(0,0,0,0.625);
     background: #000A;
+    -webkit-backdrop-filter: blur(30px);
     backdrop-filter: blur(30px);
     position: relative;
 }
@@ -69,7 +70,6 @@
     background: #3338;
     padding: 0.5em;
     margin-left: 1.3em;
-    border-radius: 4px;
     margin-right: 0.2em;
     max-width: 5em;
 }
