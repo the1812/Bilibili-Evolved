@@ -102,11 +102,17 @@
 
 # 兼容性
 ## ![Chrome](https://img.shields.io/badge/Chrome-兼容-brightgreen.svg?style=flat-square&colorB=009688)
-Chrome支持所有功能,其中触摸调整框的背景模糊效果(`backdrop-filter`)需要手动在[Flags](chrome://flags/#enable-experimental-web-platform-features)中开启.
+- 触摸调整框的背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
 ## ![Firfox](https://img.shields.io/badge/FireFox-部分兼容-yellow.svg?style=flat-square&colorB=FF6F00)
-滚动条样式无效,滤镜效果不仅无抗锯齿,还会使部分布局错位,触摸调整框的背景模糊效果无效.
+- 滚动条样式无效.
+- 滤镜效果不仅无抗锯齿,还会使部分布局错位.
+- 触摸调整框的背景模糊效果无效.
 ## ![Edge](https://img.shields.io/badge/Edge-部分兼容-yellow.svg?style=flat-square&colorB=FF6F00)
-自定义颜色与滚动条样式无效,滤镜效果无抗锯齿,半透明颜色(`#rrggbbaa`)无效*,顶栏触摸体验不佳. 触摸功能需要手动在[Flags](about:flags)中开启.
+- 自定义颜色与滚动条样式无效.
+- 滤镜效果无抗锯齿.
+- 半透明颜色(`#rrggbbaa`)无效*.
+- 顶栏触摸体验不佳.
+- 触摸功能需要手动在`about:flags`中开启.
 
 *Edge将考虑用rgba()实现半透明颜色.
 ## ![Safari](https://img.shields.io/badge/Safari-未知-lightgrey.svg?style=flat-square&colorB=323232)
