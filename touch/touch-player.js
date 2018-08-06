@@ -421,9 +421,9 @@
             () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
             icons => icons.unbind("click")
         );
-        SpinQuery.count(
-            () => $(".bilibili-player-video,video"),
-            2,
+        new SpinQuery(
+            () => $(".bilibili-player-video"),
+            it => it.length > 0 && $("video").length > 0,
             player =>
             {
                 if ($(".touch-video-box").length === 0)
@@ -609,7 +609,6 @@
                         swiper.action.speedCancel = () =>
                         {
                             text.innerHTML = `松开手指,取消进退`;
-                            $(".videoshot-wrapper").css("display", "none");
                             $(".touch-progress").css("transform", "scaleX(0)");
                         };
                         swiper.action.volumeCancel = () =>
@@ -643,7 +642,7 @@
                     });
                 }
             }
-        );
+        ).start();
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
     };
