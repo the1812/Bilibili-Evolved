@@ -153,7 +153,13 @@ div.con,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
 .wrapper .content,
 .comment-bilibili-con,
-.bilibili-player-video-panel
+.bilibili-player-video-panel,
+.vote-container,
+.vote-container .image-area .share-img,
+.backdrop .title-box,
+.result .row,
+.image-box,
+.vote-user-face
 {
     background-color: #222 !important;
 }
@@ -297,7 +303,8 @@ a.more.tc-slate:hover,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
 .up-article-list-block .more-article,
 .slim-video-card .video-info,
-.dyn_list li .preview
+.dyn_list li .preview,
+.checkbox
 {
     background-color: #444 !important;
 }
@@ -525,7 +532,10 @@ blockquote .color-yellow-04,
 .comment-bilibili-con .reason-box dl dt,
 .comment-list .list-item .reply-box .view-more,
 .comment-m .b-head .del-log,
-.emoji-box .emoji-title
+.emoji-box .emoji-title,
+.vote-user-name,
+.anonymous,
+.share-to-dynamic
 {
     color: #aaa !important;
 }
@@ -814,7 +824,9 @@ div.con header,
 .up-article-list-block .more-article,
 .comment-bilibili-con .t,
 .comment-bilibili-con .reason-box dl dd,
-.comment-bilibili-con .other p
+.comment-bilibili-con .other p,
+.vote-title,
+.desc-title
 {
     color: #eee !important;
 }
@@ -973,7 +985,11 @@ div.bar>div.num,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
 .bilibili-player-video-inputbar .bilibili-player-video-inputbar-wrap,
 .article-holder .slim-video-card,
-.comment-bilibili-con .t
+.comment-bilibili-con .t,
+.vote-container,
+.vote-number,
+.image-box,
+.checkbox
 {
     border-color: transparent !important;
 }
@@ -1063,7 +1079,11 @@ div.con header,
 .wrapper .edit-video-modal .modal-body,
 .up-info:before,
 #pin-wrapper #pin-layer-search,
-.be-input_inner
+.be-input_inner,
+.backdrop .title-box,
+.option-li,
+.result .row.top-border:before,
+.result .row:first-child:before
 {
     border-color: #444 !important
 }
@@ -1188,7 +1208,8 @@ div.im-list-box,
 .space-right .space-right-top .title,
 .card,
 .action-menu .menu-list,
-.list-item .cover img
+.list-item .cover img,
+.vote-container:hover .text-area
 {
     box-shadow: none !important;
 }
@@ -1230,7 +1251,8 @@ div.desc-tips>span.arrow-left,
 img.source-img,
 canvas.cliper.is-img,
 .loading .icon,
-.load-more .icon
+.load-more .icon,
+.bp-svg-icon.vote-btn
 {
     display: none !important;
 }
@@ -1242,6 +1264,10 @@ canvas.cliper.is-img,
 .bilibili-player-video-progress-buffer-range
 {
     opacity: 0.5 !important;
+}
+.vote-user-face.opacity
+{
+    opacity: 1 !important;
 }
 .bilibili-player-block-label,
 .advanced-danmaku-group .content-span
@@ -1454,7 +1480,9 @@ a.s-btn:hover,
 .bl-button--primary,
 .report-con label:after,
 .wrapper .elec-btn,
-.video-info .video-title .activity
+.video-info .video-title .activity,
+.vote-btn-box .vote-btn,
+.submit-button
 {
     background-color: $customStyleColor !important;
 }
@@ -1620,7 +1648,8 @@ a.up-name:hover,
 .video-toolbar .share .share-btn:hover,
 .video-toolbar .share .share-btn:hover i,
 .bilibili-player-video-danmaku-setting:hover,
-.bilibili-player-video-toast-item-close:hover i
+.bilibili-player-video-toast-item-close:hover i,
+.joined-number
 {
     color: $customStyleColor !important;
 }
@@ -1690,7 +1719,9 @@ a.s-btn:hover,
 #page-setting #setting-new-tag-btn,
 .bl-button--primary,
 .wrapper .elec-btn,
-.video-info .video-title .activity
+.video-info .video-title .activity,
+.vote-btn-box .vote-btn,
+.submit-button
 {
     color: $foreground !important;
 }
