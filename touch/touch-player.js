@@ -70,14 +70,10 @@
 
             return result;
         };
-        console.log("define swiper");
         class Swiper
         {
             constructor(element)
             {
-                console.log("create swiper:");
-                console.log(element);
-
                 this.action = new SwipeAction(element);
                 this.onTouchStart = null;
                 this.onTouchEnd = null;
@@ -148,7 +144,6 @@
                         this.onTouchEnd(e);
                     }
                 });
-                console.log("events attached.");
             }
         }
         class SwipeAction
@@ -431,8 +426,6 @@
             it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
             player =>
             {
-                console.log("found player box:");
-                console.log(player);
                 if ($(".touch-video-box").length === 0)
                 {
                     $(".bilibili-player-video-subtitle").before(`<div class='touch-video-box-wrapper'>
@@ -443,7 +436,6 @@
                         </div>`);
                     const video = $("video");
                     const videoDuration = video.prop("duration");
-                    console.log("video duration: "+videoDuration);
                     const swiper = new Swiper(player.get(0));
                     const text = document.getElementsByClassName("touch-video-info")[0];
                     const box = document.getElementsByClassName("touch-video-box")[0];
@@ -645,12 +637,10 @@
                             }
                         }
                     };
-                    console.log("swpier action loaded.");
                 }
             }
         ).start();
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
-        console.log("style loaded.");
     };
 })();
