@@ -121,7 +121,7 @@
                 useDarkStyle: "style/dark-styles.min.js",
                 useNewStyle: "style/new-styles.min.js",
                 touchNavBar: "touch/touch-navbar.min.js",
-                touchVideoPlayer: "touch/touch-player.min.js",
+                touchVideoPlayer: "touch/touch-player.js",
                 expandDanmakuList: "utils/expand-danmaku.min.js",
                 removeAds: "utils/remove-promotions.min.js",
                 watchLaterRedirect: "utils/watchlater.min.js"
@@ -276,7 +276,660 @@ this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/mas
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/dark-styles.min.js"] = (()=>{return(e,l)=>{if(e.useNewStyle){l.applyStyle("darkStyle","bilibili-new-style-dark")}}})();
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/new-styles.min.js"] = (()=>{return(e,l)=>{new SpinQuery(()=>$(".nav-search-keyword"),e=>e.length>0&&e.attr("placeholder").length>0,e=>e.attr("placeholder","搜索")).start();SpinQuery.any(()=>$(".custom-scrollbar"),e=>e.removeClass("custom-scrollbar"));const r=document.getElementsByClassName("bili-wrapper")[0];let t=false;if(r instanceof Element){t=parseInt(window.getComputedStyle(r).height)===50}if(t){l.applyStyle("style","bilibili-new-style")}else{l.applyStyle("oldStyle","bilibili-new-style")}if(e.overrideNavBar){new SpinQuery(()=>$(".search").not(".filter-item"),e=>e.length>0&&$(".nav-con.fr").length>0,e=>{e.detach().insertAfter(".nav-con.fr")}).start();SpinQuery.any(()=>$("input.search-keyword"),e=>e.attr("placeholder","搜索"));l.applyStyle("navbarOverrideStyle","bilibili-nav-bar-override");if(!e.showBanner){l.applyStyle("noBannerStyle","bilibili-banner-override")}}}})();
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/touch/touch-navbar.min.js"] = (()=>{return()=>{SpinQuery.count(()=>$("ul.fr>li.nav-item").not(".profile-info"),6,n=>{const r=(n,r)=>{const t=$(r);t.css("cursor","pointer");const o=t.find("a.t");o.removeAttr("href")};n.each(r)})}})();
-this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/touch/touch-player.min.js"] = (()=>{return(t,i)=>{const e=(t,i)=>{return t.data("events")[i][0].handler};const s=t=>{let i=0;let e=0;while(t&&!isNaN(t.offsetLeft)&&!isNaN(t.offsetTop)){i+=t.offsetLeft-t.scrollLeft;e+=t.offsetTop-t.scrollTop;t=t.offsetParent}return{x:i,y:e}};const o=(t,i=1)=>{const e=t.toString();const s=e.indexOf(".");if(s!==-1){if(e.length-s>i+1){return e.substring(0,s+i+1)}else{return e}}else{return e+".0"}};const n=t=>{t=Math.abs(t);const i=Math.floor(t/3600);const e=Math.floor((t-i*3600)/60);const s=t-i*3600-e*60;let n=o(s)+"秒";if(e>0){n=e+"分"+n}if(i>0){n=i+"时"+n}return n};const l=t=>{t=Math.abs(t);const i=Math.floor(t/3600);const e=Math.floor((t-i*3600)/60);const s=t-i*3600-e*60;let n=(s<10?"0":"")+o(s);n=(e<10?"0":"")+e+":"+n;n=(i<10?"0":"")+i+":"+n;return n};class a{constructor(t){this.action=new c(t);this.onTouchStart=null;this.onTouchEnd=null;this._direction=null;t.addEventListener("touchstart",t=>{this._xDown=t.touches[0].clientX;this._yDown=t.touches[0].clientY;if(this.onTouchStart){this.onTouchStart(t)}});t.addEventListener("touchmove",i=>{if(!this._xDown||!this._yDown){return}const e=i.touches[0].clientX;const o=i.touches[0].clientY;const n=s(t);const l={x:(i.touches[0].pageX-n.x)/t.clientWidth,y:(i.touches[0].pageY-n.y)/t.clientHeight,width:t.clientWidth,height:t.clientHeight};const a=this._xDown-e;const c=this._yDown-o;if(!this._direction){let t="";if(Math.abs(a)>Math.abs(c)){t="horizontal"}else{t="vertical"}this._direction=t;i.preventDefault()}else{if(this._direction==="vertical"){this.action.startAction(this._direction,c,l)}else if(this._direction==="horizontal"){this.action.startAction(this._direction,-a,l)}i.preventDefault()}});t.addEventListener("touchend",t=>{this._xDown=null;this._yDown=null;this._direction=null;if(this.onTouchEnd){this.onTouchEnd(t)}});console.log("events attached.")}}class c{constructor(t){this.lowSpeedForward=null;this.lowSpeedBackward=null;this.mediumSpeedForward=null;this.mediumSpeedBackward=null;this.highSpeedForward=null;this.highSpeedBackward=null;this.lowVolumeUp=null;this.lowVolumeDown=null;this.mediumVolumeUp=null;this.mediumVolumeDown=null;this.highVolumeUp=null;this.highVolumeDown=null;this.speedCancel=null;this.volumeCancel=null;this.minSwipeDistance=20;this.onActionStart=null;this.onActionEnd=null;this._element=t;this._touchStart=false;this._startPosition=null;this._lastAction=null;t.addEventListener("touchstart",t=>{this._touchStart=true});t.addEventListener("touchend",t=>{this._startPosition=null;this.onActionEnd&&this.onActionEnd(this._lastAction);this._lastAction=null})}startAction(t,i,e){if(this._touchStart){this.onActionStart&&this.onActionStart();this._startPosition=e;this._touchStart=false}if(t==="vertical"){if(Math.abs(i)<this.minSwipeDistance){this.volumeCancel&&this.volumeCancel();this._lastAction=null}else{let t=0;let s=undefined;let o=undefined;if(this._startPosition.x<1/3){t=.4;s=this.lowVolumeUp;o=this.lowVolumeDown}else if(this._startPosition.x>=1/3&&this._startPosition.x<=2/3){t=1;s=this.mediumVolumeUp;o=this.mediumVolumeDown}else{t=2;s=this.highVolumeUp;o=this.highVolumeDown}if(i>0){const o=Math.round(t*100*(i-this.minSwipeDistance)/(1.5*e.height));s&&s(o);this._lastAction={type:"volume",volume:o}}else{const s=Math.round(t*100*(i+this.minSwipeDistance)/(1.5*e.height));o&&o(s);this._lastAction={type:"volume",volume:s}}}}else if(t==="horizontal"){if(e.y<1/3&&(e.x<.1||e.x>.9)||Math.abs(i)<this.minSwipeDistance){this.speedCancel&&this.speedCancel();this._lastAction=null}else{let t=0;let e=undefined;let s=undefined;if(this._startPosition.y<1/3){t=.05;e=this.lowSpeedForward;s=this.lowSpeedBackward}else if(this._startPosition.y>=1/3&&this._startPosition.y<=2/3){t=.2;e=this.mediumSpeedForward;s=this.mediumSpeedBackward}else{t=1;e=this.highSpeedForward;s=this.highSpeedBackward}if(i>0){const s=(i-this.minSwipeDistance)*t;e&&e(s);this._lastAction={type:"playback",seconds:s}}else{const e=(i+this.minSwipeDistance)*t;s&&s(e);this._lastAction={type:"playback",seconds:e}}}}}}class h{constructor(){const t=window.location.href;const i=t.match(/av([\d]+)/);this.aid=i[1];const e=t.match(/p=([\d]+)/);this.page=e?e[1]:1;this.pagesData=null;this.cidMap={};this.cidData={};this.supportWebp=h.supportWebp;downloadText(t,t=>this.findCid(t))}findCid(t){const i=t.match(/"pages":(\[[^\0]*\]),"embedPlayer"/);if(i){this.pagesData=JSON.parse(i[1]);this.pagesData.forEach(t=>{this.cidMap[t.page]=t.cid})}}getVideoshot(t,i){if(!this.cidData[this.page]){downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cidMap[this.page]}&index=1`,e=>{this.cidData[this.page]=JSON.parse(e).data;this.getVideoshot(t,i)})}else{const e=this.cidData[this.page];const s=e.index;let o=0;for(let i=0;i<s.length-2;i++){if(t>=s[i]&&t<s[i+1]){o=i;break}}let n=e.image;if(this.supportWebp){n=n.map(t=>t.replace(".jpg",".jpg@.webp"))}const l=parseInt(e.pv_x_len)||10;const a=parseInt(e.pv_y_len)||10;const c=parseInt(e.pv_x_size)||160;const h=parseInt(e.pv_y_size)||90;const r=-(o%100%l)*c;const d=-Math.floor(o%100/a)*h;i({width:c,height:h,backgroundImage:`url(${n[Math.floor(o/100)]})`,backgroundPosition:`${r}px ${d}px`})}}static get supportWebp(){try{const t=document.createElement("canvas");if(t.getContext&&t.getContext("2d"))try{return t.toDataURL("image/webp").indexOf("data:image/webp")===0}catch(t){return false}else return false}catch(t){return false}}}SpinQuery.any(()=>$(".bilibili-player-video-web-fullscreen"),t=>{if(!t.hasClass("bilibili-player-video-btn")&&$(".bilibili-player-video-btn-fullscreen").data("events")){const i=e($(".bilibili-player-video-btn-fullscreen"),"click");t.detach().insertAfter(".bilibili-player-video-btn-widescreen").addClass("bilibili-player-video-btn").on("click",i)}});SpinQuery.any(()=>$(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),t=>t.unbind("click"));new SpinQuery(()=>$(".bilibili-player-video"),t=>t.length>0&&$("video").length>0,t=>{if($(".touch-video-box").length===0){$(".bilibili-player-video-subtitle").before(`<div class='touch-video-box-wrapper'>\n                            <div class='touch-video-box'>\n                                <div class='touch-video-info'></div>\n                                <div class='touch-progress'></div>\n                            </div>\n                        </div>`);const i=$("video");i.on("loadedmetadata",()=>{const e=i.prop("duration");const s=new a(t.get(0));const c=document.getElementsByClassName("touch-video-info")[0];const r=document.getElementsByClassName("touch-video-box")[0];let d=Math.round(i.prop("volume")*100);const u=t=>{t/=100;if(t<0){t=0}else if(t>1){t=1}i.prop("volume",t);$(".bilibili-player-video-volume-num").text(Math.round(t*100));$(".bui-thumb").css("transform",`translateY(-${48*t}px)`);$(".bui-track-vertical .bui-bar").css("transform",`scaleY(${t})`);if(t===0){$(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");i.prop("muted",true)}else if(t===1){$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").addClass(".video-state-volume-max");i.prop("muted",false)}else{$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");i.prop("muted",false)}$(".bpui-slider-progress").css("height",t*100+"%");$(".bpui-slider-handle").css("bottom",(35+t*230)/3+"%");if(t===0){$(".icon-24soundoff").show();$(".icon-24soundlarge").hide();$(".icon-24soundsmall").hide()}else if(t>=.5){$(".icon-24soundoff").hide();$(".icon-24soundlarge").show();$(".icon-24soundsmall").hide()}else{$(".icon-24soundoff").hide();$(".icon-24soundlarge").hide();$(".icon-24soundsmall").show()}};s.action.onActionStart=(()=>{r.style.display="flex";c.innerHTML="";d=Math.round(i.prop("volume")*100)});const p=new h;const m=t=>{return s=>{const a=i.prop("currentTime");let h=a+s;let r=o(100*h/e);let d=s;if(h>e){h=e;r=100;d=e-a}else if(h<0){h=0;r=0;d=a}const u=`${l(a)} →<br/>${l(h)} (${r}%)`;const m=`\n                                <div class='touch-row'>\n                                    <div class='touch-row-item'>\n                                        <span class='touch-speed'>${t}速</span>\n                                    </div>\n                                    <div class='touch-row-item-wide'>\n                                        <span class='touch-info'>进度: ${s>0?"+":"-"}${n(d)}</span>\n                                    </div>\n                                </div>\n                                <div class='touch-row'>\n                                    <div class='videoshot-wrapper touch-row-item'>\n                                        <div class='videoshot'></div>\n                                    </div>\n                                    <div class='touch-row-item-wide'>\n                                        <span class='touch-result'>${u}</span>\n                                    </div>\n                                </div>\n                                `;c.innerHTML=m;p.getVideoshot(h,t=>$(".videoshot").css(t));$(".videoshot-wrapper").css("display","flex");$(".touch-progress").css("transform",`scaleX(${r/100})`)}};s.action.lowSpeedBackward=m("低");s.action.lowSpeedForward=m("低");s.action.mediumSpeedBackward=m("中");s.action.mediumSpeedForward=m("中");s.action.highSpeedBackward=m("高");s.action.highSpeedForward=m("高");const v=t=>{return i=>{let e=d+i;let s=Math.abs(i);if(e>100){e=100;s=100-d}else if(e<0){e=0;s=d}const o=`${d} → ${e}`;u(e);const n=`\n                                <div class='touch-row'>\n                                    <div class='touch-row-item'>\n                                        <span class='touch-speed'>${t}速</span>\n                                    </div>\n                                    <div class='touch-row-item-wide'>\n                                        <span class='touch-info'>音量: ${i>0?"+":"-"}${s}</span>\n                                    </div>\n                                </div>\n                                <div class='touch-row'>\n                                    <div class='touch-row-item'>\n                                        <span class='touch-result'>${o}</span>\n                                    </div>\n                                </div>\n                                `;c.innerHTML=n;$(".touch-progress").css("transform",`scaleX(${e/100})`)}};s.action.lowVolumeUp=v("低");s.action.lowVolumeDown=v("低");s.action.mediumVolumeUp=v("中");s.action.mediumVolumeDown=v("中");s.action.highVolumeUp=v("高");s.action.highVolumeDown=v("高");s.action.speedCancel=(()=>{c.innerHTML=`松开手指,取消进退`;$(".touch-progress").css("transform","scaleX(0)")});s.action.volumeCancel=(()=>{c.innerHTML=`松开手指,取消调整`;$(".touch-progress").css("transform","scaleX(0)");u(d)});s.action.onActionEnd=(t=>{r.style.display="none";c.innerHTML="";if(t){if(t.type==="playback"){let s=i.prop("currentTime");s+=t.seconds;if(s<0){s=0}else if(s>e){s=e}i.prop("currentTime",s)}}});unsafeWindow.touchSwiper=s})}}).start();i.applyStyle("touchPlayerStyle","bilibili-touch-video-player")}})();
+this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/touch/touch-player.js"] = (() =>
+{
+    return (_, resources) =>
+    {
+        const getEventHandler = (element, event) =>
+        {
+            return element.data("events")[event][0].handler;
+        };
+        const getPosition = element =>
+        {
+            let x = 0;
+            let y = 0;
+            while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop))
+            {
+                x += element.offsetLeft - element.scrollLeft;
+                y += element.offsetTop - element.scrollTop;
+                element = element.offsetParent;
+            }
+            return { x: x, y: y };
+        };
+        const fixed = (number, precision = 1) =>
+        {
+            const str = number.toString();
+            const index = str.indexOf(".");
+            if (index !== -1)
+            {
+                if (str.length - index > precision + 1)
+                {
+                    return str.substring(0, index + precision + 1);
+                }
+                else
+                {
+                    return str;
+                }
+            }
+            else
+            {
+                return str + ".0";
+            }
+        };
+        const secondsToTime = sec =>
+        {
+            sec = Math.abs(sec);
+            const hours = Math.floor(sec / 3600);
+            const minutes = Math.floor((sec - hours * 3600) / 60);
+            const seconds = sec - hours * 3600 - minutes * 60;
+
+            let result = fixed(seconds) + "秒";
+            if (minutes > 0)
+            {
+                result = minutes + "分" + result;
+            }
+            if (hours > 0)
+            {
+                result = hours + "时" + result;
+            }
+
+            return result;
+        };
+        const secondsToHms = sec =>
+        {
+            sec = Math.abs(sec);
+            const hours = Math.floor(sec / 3600);
+            const minutes = Math.floor((sec - hours * 3600) / 60);
+            const seconds = sec - hours * 3600 - minutes * 60;
+
+            let result = (seconds < 10 ? "0" : "") + fixed(seconds);
+            result = (minutes < 10 ? "0" : "") + minutes + ":" + result;
+            result = (hours < 10 ? "0" : "") + hours + ":" + result;
+
+            return result;
+        };
+        class Swiper
+        {
+            constructor(element)
+            {
+                this.action = new SwipeAction(element);
+                this.onTouchStart = null;
+                this.onTouchEnd = null;
+                this._direction = null;
+
+                element.addEventListener("touchstart", e =>
+                {
+                    this._xDown = e.touches[0].clientX;
+                    this._yDown = e.touches[0].clientY;
+                    if (this.onTouchStart)
+                    {
+                        this.onTouchStart(e);
+                    }
+                });
+                element.addEventListener("touchmove", e =>
+                {
+                    if (!this._xDown || !this._yDown)
+                    {
+                        return;
+                    }
+                    const xUp = e.touches[0].clientX;
+                    const yUp = e.touches[0].clientY;
+                    const elementPosition = getPosition(element);
+                    const position = {
+                        x: (e.touches[0].pageX - elementPosition.x) / element.clientWidth,
+                        y: (e.touches[0].pageY - elementPosition.y) / element.clientHeight,
+                        width: element.clientWidth,
+                        height: element.clientHeight
+                    };
+
+                    const xDiff = this._xDown - xUp;
+                    const yDiff = this._yDown - yUp;
+
+                    if (!this._direction)
+                    {
+                        let direction = "";
+                        if (Math.abs(xDiff) > Math.abs(yDiff))
+                        {
+                            direction = "horizontal";
+                        }
+                        else
+                        {
+                            direction = "vertical";
+                        }
+                        this._direction = direction;
+                        e.preventDefault();
+                    }
+                    else
+                    {
+                        if (this._direction === "vertical")
+                        {
+                            this.action.startAction(this._direction, yDiff, position);
+                        }
+                        else if (this._direction === "horizontal")
+                        {
+                            this.action.startAction(this._direction, -xDiff, position);
+                        }
+                        e.preventDefault();
+                    }
+                });
+                element.addEventListener("touchend", e =>
+                {
+                    this._xDown = null;
+                    this._yDown = null;
+                    this._direction = null;
+                    if (this.onTouchEnd)
+                    {
+                        this.onTouchEnd(e);
+                    }
+                });
+                console.log("events attached.");
+            }
+        }
+        class SwipeAction
+        {
+            constructor(element)
+            {
+                this.lowSpeedForward = null;
+                this.lowSpeedBackward = null;
+                this.mediumSpeedForward = null;
+                this.mediumSpeedBackward = null;
+                this.highSpeedForward = null;
+                this.highSpeedBackward = null;
+
+                this.lowVolumeUp = null;
+                this.lowVolumeDown = null;
+                this.mediumVolumeUp = null;
+                this.mediumVolumeDown = null;
+                this.highVolumeUp = null;
+                this.highVolumeDown = null;
+
+                this.speedCancel = null;
+                this.volumeCancel = null;
+                this.minSwipeDistance = 20;
+                this.onActionStart = null;
+                this.onActionEnd = null;
+
+                this._element = element;
+                this._touchStart = false;
+                this._startPosition = null;
+                this._lastAction = null;
+                element.addEventListener("touchstart", e =>
+                {
+                    this._touchStart = true;
+                });
+                element.addEventListener("touchend", e =>
+                {
+                    this._startPosition = null;
+                    this.onActionEnd && this.onActionEnd(this._lastAction);
+                    this._lastAction = null;
+                });
+            }
+
+            startAction(direction, distance, position)
+            {
+                if (this._touchStart)
+                {
+                    this.onActionStart && this.onActionStart();
+                    this._startPosition = position;
+                    this._touchStart = false;
+                }
+                if (direction === "vertical")
+                {
+                    if (Math.abs(distance) < this.minSwipeDistance)
+                    {
+                        this.volumeCancel && this.volumeCancel();
+                        this._lastAction = null;
+                    }
+                    else
+                    {
+                        let volumeFactor = 0;
+                        let upHandler = undefined;
+                        let downHandler = undefined;
+                        if (this._startPosition.x < 1 / 3)
+                        {
+                            volumeFactor = 0.4;
+                            upHandler = this.lowVolumeUp;
+                            downHandler = this.lowVolumeDown;
+                        }
+                        else if (this._startPosition.x >= 1 / 3 && this._startPosition.x <= 2 / 3)
+                        {
+                            volumeFactor = 1;
+                            upHandler = this.mediumVolumeUp;
+                            downHandler = this.mediumVolumeDown;
+                        }
+                        else
+                        {
+                            volumeFactor = 2;
+                            upHandler = this.highVolumeUp;
+                            downHandler = this.highVolumeDown;
+                        }
+
+                        if (distance > 0)
+                        {
+                            const volumeChange = Math.round(
+                                volumeFactor * 100 * (distance - this.minSwipeDistance) / (1.5 * position.height)
+                            );
+                            upHandler && upHandler(volumeChange);
+                            this._lastAction = {
+                                type: "volume",
+                                volume: volumeChange
+                            };
+                        }
+                        else
+                        {
+                            const volumeChange = Math.round(
+                                volumeFactor * 100 * (distance + this.minSwipeDistance) / (1.5 * position.height)
+                            );
+                            downHandler && downHandler(volumeChange);
+                            this._lastAction = {
+                                type: "volume",
+                                volume: volumeChange
+                            };
+                        }
+                    }
+                }
+                else if (direction === "horizontal")
+                {
+                    if (position.y < 1 / 3 && (position.x < 0.1 || position.x > 0.9) ||
+                        Math.abs(distance) < this.minSwipeDistance)
+                    {
+                        this.speedCancel && this.speedCancel();
+                        this._lastAction = null;
+                    }
+                    else
+                    {
+                        let speedFactor = 0;
+                        let forwardHandler = undefined;
+                        let backwardHandler = undefined;
+                        if (this._startPosition.y < 1 / 3)
+                        {
+                            speedFactor = 0.05;
+                            forwardHandler = this.lowSpeedForward;
+                            backwardHandler = this.lowSpeedBackward;
+                        }
+                        else if (this._startPosition.y >= 1 / 3 && this._startPosition.y <= 2 / 3)
+                        {
+                            speedFactor = 0.2;
+                            forwardHandler = this.mediumSpeedForward;
+                            backwardHandler = this.mediumSpeedBackward;
+                        }
+                        else
+                        {
+                            speedFactor = 1;
+                            forwardHandler = this.highSpeedForward;
+                            backwardHandler = this.highSpeedBackward;
+                        }
+
+                        if (distance > 0)
+                        {
+                            const seconds = (distance - this.minSwipeDistance) * speedFactor;
+                            forwardHandler && forwardHandler(seconds);
+                            this._lastAction = {
+                                type: "playback",
+                                seconds: seconds
+                            };
+                        }
+                        else
+                        {
+                            const seconds = (distance + this.minSwipeDistance) * speedFactor;
+                            backwardHandler && backwardHandler(seconds);
+                            this._lastAction = {
+                                type: "playback",
+                                seconds: seconds
+                            };
+                        }
+                    }
+                }
+            }
+        }
+        class VideoShot
+        {
+            constructor()
+            {
+                const url = window.location.href;
+                const aidMatch = url.match(/av([\d]+)/);
+                this.aid = aidMatch[1];
+                const pageMatch = url.match(/p=([\d]+)/);
+                this.page = pageMatch ? pageMatch[1] : 1;
+
+                this.pagesData = null;
+                this.cidMap = {};
+                this.cidData = {};
+                this.supportWebp = VideoShot.supportWebp;
+
+                downloadText(url, html => this.findCid(html));
+            }
+            findCid(html)
+            {
+                const match = html.match(/"pages":(\[[^\0]*\]),"embedPlayer"/);
+                if (match)
+                {
+                    this.pagesData = JSON.parse(match[1]);
+                    this.pagesData.forEach(pageData =>
+                    {
+                        this.cidMap[pageData.page] = pageData.cid;
+                    });
+                }
+            }
+            getVideoshot(currentTime, done)
+            {
+                if (!this.cidData[this.page])
+                {
+                    downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cidMap[this.page]}&index=1`, response =>
+                    {
+                        this.cidData[this.page] = JSON.parse(response).data;
+                        this.getVideoshot(currentTime, done);
+                    });
+                }
+                else
+                {
+                    const data = this.cidData[this.page];
+
+                    const indexData = data.index;
+                    let shotIndex = 0;
+                    for (let index = 0; index < indexData.length - 2; index++)
+                    {
+                        if (currentTime >= indexData[index] &&
+                            currentTime < indexData[index + 1])
+                        {
+                            shotIndex = index;
+                            break;
+                        }
+                    }
+
+                    let imageData = data.image;
+                    if (this.supportWebp)
+                    {
+                        imageData = imageData.map(url => url.replace(".jpg", ".jpg@.webp"));
+                    }
+                    const xLength = parseInt(data.pv_x_len) || 10;
+                    const yLength = parseInt(data.pv_y_len) || 10;
+                    const xSize = parseInt(data.pv_x_size) || 160;
+                    const ySize = parseInt(data.pv_y_size) || 90;
+                    const x = -(shotIndex % 100 % xLength) * xSize;
+                    const y = -Math.floor(shotIndex % 100 / yLength) * ySize;
+                    done({
+                        width: xSize,
+                        height: ySize,
+                        backgroundImage: `url(${imageData[Math.floor(shotIndex / 100)]})`,
+                        backgroundPosition: `${x}px ${y}px`
+                    });
+                }
+            }
+            static get supportWebp()
+            {
+                try
+                {
+                    const canvas = document.createElement("canvas");
+                    if (canvas.getContext && canvas.getContext("2d"))
+                        try
+                        {
+                            return canvas.toDataURL("image/webp").indexOf("data:image/webp") === 0;
+                        }
+                        catch (ex)
+                        {
+                            return false;
+                        }
+                    else
+                        return false;
+                }
+                catch (ex)
+                {
+                    return false;
+                }
+            }
+        }
+        SpinQuery.any(
+            () => $(".bilibili-player-video-web-fullscreen"),
+            fullscreenButton =>
+            {
+                if (!fullscreenButton.hasClass("bilibili-player-video-btn") &&
+                    $(".bilibili-player-video-btn-fullscreen").data("events"))
+                {
+                    const clickHandler = getEventHandler(
+                        $(".bilibili-player-video-btn-fullscreen"), "click");
+                    fullscreenButton
+                        .detach()
+                        .insertAfter(".bilibili-player-video-btn-widescreen")
+                        .addClass("bilibili-player-video-btn")
+                        .on("click", clickHandler);
+                }
+            }
+        );
+        SpinQuery.any(
+            () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
+            icons => icons.unbind("click")
+        );
+        new SpinQuery(
+            () => $(".bilibili-player-video"),
+            it => it.length > 0 && $("video").length > 0,
+            player =>
+            {
+                if ($(".touch-video-box").length === 0)
+                {
+                    $(".bilibili-player-video-subtitle").before(`<div class='touch-video-box-wrapper'>
+                            <div class='touch-video-box'>
+                                <div class='touch-video-info'></div>
+                                <div class='touch-progress'></div>
+                            </div>
+                        </div>`);
+                    const video = $("video");
+                    video.on("loadedmetadata", () =>
+                    {
+                        const videoDuration = video.prop("duration");
+                        const swiper = new Swiper(player.get(0));
+                        const text = document.getElementsByClassName("touch-video-info")[0];
+                        const box = document.getElementsByClassName("touch-video-box")[0];
+                        let originalVolume = Math.round(video.prop("volume") * 100);
+                        const setVolume = volume =>
+                        {
+                            volume /= 100;
+                            if (volume < 0)
+                            {
+                                volume = 0;
+                            }
+                            else if (volume > 1)
+                            {
+                                volume = 1;
+                            }
+                            video.prop("volume", volume);
+                            $(".bilibili-player-video-volume-num").text(Math.round(volume * 100));
+
+                            // new version
+                            $(".bui-thumb").css("transform", `translateY(-${48 * volume}px)`);
+                            $(".bui-track-vertical .bui-bar").css("transform", `scaleY(${volume})`);
+                            // new version
+                            if (volume === 0)
+                            {
+                                $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");
+                                $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
+                                video.prop("muted", true);
+                            }
+                            else if (volume === 1)
+                            {
+                                $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
+                                $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-max");
+                                video.prop("muted", false);
+                            }
+                            else
+                            {
+                                $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
+                                $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
+                                video.prop("muted", false);
+                            }
+
+                            // old version
+                            $(".bpui-slider-progress").css("height", volume * 100 + "%");
+                            $(".bpui-slider-handle").css("bottom", (35 + volume * 230) / 3 + "%");
+                            // old version
+                            if (volume === 0)
+                            {
+                                $(".icon-24soundoff").show();
+                                $(".icon-24soundlarge").hide();
+                                $(".icon-24soundsmall").hide();
+                            }
+                            else if (volume >= 0.5)
+                            {
+                                $(".icon-24soundoff").hide();
+                                $(".icon-24soundlarge").show();
+                                $(".icon-24soundsmall").hide();
+                            }
+                            else
+                            {
+                                $(".icon-24soundoff").hide();
+                                $(".icon-24soundlarge").hide();
+                                $(".icon-24soundsmall").show();
+                            }
+                        };
+
+                        swiper.action.onActionStart = () =>
+                        {
+                            box.style.display = "flex";
+                            text.innerHTML = "";
+                            originalVolume = Math.round(video.prop("volume") * 100);
+                        };
+                        const videoshot = new VideoShot();
+                        const speedChange = speed =>
+                        {
+                            return sec =>
+                            {
+                                const current = video.prop("currentTime");
+                                let finalTime = current + sec;
+                                let percent = fixed(100 * finalTime / videoDuration);
+                                let change = sec;
+                                if (finalTime > videoDuration)
+                                {
+                                    finalTime = videoDuration;
+                                    percent = 100;
+                                    change = videoDuration - current;
+                                }
+                                else if (finalTime < 0)
+                                {
+                                    finalTime = 0;
+                                    percent = 0;
+                                    change = current;
+                                }
+                                const result = `${secondsToHms(current)} →<br/>${secondsToHms(finalTime)} (${percent}%)`;
+                                const html = `
+                                <div class='touch-row'>
+                                    <div class='touch-row-item'>
+                                        <span class='touch-speed'>${speed}速</span>
+                                    </div>
+                                    <div class='touch-row-item-wide'>
+                                        <span class='touch-info'>进度: ${sec > 0 ? "+" : "-"}${secondsToTime(change)}</span>
+                                    </div>
+                                </div>
+                                <div class='touch-row'>
+                                    <div class='videoshot-wrapper touch-row-item'>
+                                        <div class='videoshot'></div>
+                                    </div>
+                                    <div class='touch-row-item-wide'>
+                                        <span class='touch-result'>${result}</span>
+                                    </div>
+                                </div>
+                                `;
+                                text.innerHTML = html;
+                                videoshot.getVideoshot(finalTime, style => $(".videoshot").css(style));
+                                $(".videoshot-wrapper").css("display", "flex");
+                                $(".touch-progress").css("transform", `scaleX(${percent / 100})`);
+                            };
+                        };
+                        swiper.action.lowSpeedBackward = speedChange("低");
+                        swiper.action.lowSpeedForward = speedChange("低");
+                        swiper.action.mediumSpeedBackward = speedChange("中");
+                        swiper.action.mediumSpeedForward = speedChange("中");
+                        swiper.action.highSpeedBackward = speedChange("高");
+                        swiper.action.highSpeedForward = speedChange("高");
+
+                        const volumeChange = speed =>
+                        {
+                            return volume =>
+                            {
+                                let finalVolume = originalVolume + volume;
+                                let change = Math.abs(volume);
+                                if (finalVolume > 100)
+                                {
+                                    finalVolume = 100;
+                                    change = 100 - originalVolume;
+                                }
+                                else if (finalVolume < 0)
+                                {
+                                    finalVolume = 0;
+                                    change = originalVolume;
+                                }
+                                const result = `${originalVolume} → ${finalVolume}`;
+                                setVolume(finalVolume);
+                                const html = `
+                                <div class='touch-row'>
+                                    <div class='touch-row-item'>
+                                        <span class='touch-speed'>${speed}速</span>
+                                    </div>
+                                    <div class='touch-row-item-wide'>
+                                        <span class='touch-info'>音量: ${volume > 0 ? "+" : "-"}${change}</span>
+                                    </div>
+                                </div>
+                                <div class='touch-row'>
+                                    <div class='touch-row-item'>
+                                        <span class='touch-result'>${result}</span>
+                                    </div>
+                                </div>
+                                `;
+                                text.innerHTML = html;
+                                $(".touch-progress").css("transform", `scaleX(${finalVolume / 100})`);
+                            };
+                        };
+                        swiper.action.lowVolumeUp = volumeChange("低");
+                        swiper.action.lowVolumeDown = volumeChange("低");
+                        swiper.action.mediumVolumeUp = volumeChange("中");
+                        swiper.action.mediumVolumeDown = volumeChange("中");
+                        swiper.action.highVolumeUp = volumeChange("高");
+                        swiper.action.highVolumeDown = volumeChange("高");
+
+                        swiper.action.speedCancel = () =>
+                        {
+                            text.innerHTML = `松开手指,取消进退`;
+                            $(".touch-progress").css("transform", "scaleX(0)");
+                        };
+                        swiper.action.volumeCancel = () =>
+                        {
+                            text.innerHTML = `松开手指,取消调整`;
+                            $(".touch-progress").css("transform", "scaleX(0)");
+                            setVolume(originalVolume);
+                        };
+                        swiper.action.onActionEnd = action =>
+                        {
+                            box.style.display = "none";
+                            text.innerHTML = "";
+                            if (action)
+                            {
+                                if (action.type === "playback")
+                                {
+                                    let time = video.prop("currentTime");
+                                    time += action.seconds;
+                                    if (time < 0)
+                                    {
+                                        time = 0;
+                                    }
+                                    else if (time > videoDuration)
+                                    {
+                                        time = videoDuration;
+                                    }
+                                    video.prop("currentTime", time);
+                                }
+                            }
+                        };
+                        window.touchSwiper = swiper;
+                        unsafeWindow.touchSwiper = swiper;
+                    });
+                }
+            },
+            () => console.log("touch player failed!")
+        ).start();
+
+        resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
+    };
+})();
+
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/expand-danmaku.min.js"] = (()=>{return()=>{SpinQuery.any(()=>$(".bui-collapse-header"),e=>{if(parseInt($(".bui-collapse-body").css("height"))===0&&$(".bui-collapse-arrow-text").text()==="展开"){e.click()}})}})();
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/remove-promotions.min.js"] = (()=>{return(e,o)=>{o.applyStyle("removeAdsStyle","remove-promotions-style")}})();
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/watchlater.min.js"] = (()=>{return()=>{const t=t=>{if(t.attr("href").indexOf("watchlater")!==0){const a=t.map((t,a)=>{const r=$(a).attr("href");if(r){const t=r.match(/av[\d]+/);if(t&&t[0]){return"https://www.bilibili.com/"+t[0]}}return"javascript:;"});t.each((t,r)=>$(r).attr("href",a[t]).attr("target","_blank"))}};SpinQuery.any(()=>$(".av-item>a"),a=>t(a));SpinQuery.any(()=>$(".av-about>a"),a=>t(a));SpinQuery.any(()=>$("div.watch-later-m>ul>div>li>a"),a=>t(a));SpinQuery.any(()=>$(".read-more.mr"),t=>t.remove());SpinQuery.any(()=>$(".read-more-grp>.read-more"),t=>t.css({float:"none",width:"auto"}));new SpinQuery(()=>document.URL.match(/av[\d]+/),t=>t&&document.URL.indexOf("watchlater")!==-1,t=>{const a=t[0];if(a){window.location.replace(`https://www.bilibili.com/${a}`)}}).start()}})();
