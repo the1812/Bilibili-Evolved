@@ -52,7 +52,7 @@
             }
             if (hours > 0)
             {
-                result = hours + "小时" + result;
+                result = hours + "时" + result;
             }
 
             return result;
@@ -119,8 +119,9 @@
                             direction = "vertical";
                         }
                         this._direction = direction;
+                        e.preventDefault();
                     }
-                    else if (!this._deplayProcess)
+                    else
                     {
                         if (this._direction === "vertical")
                         {
@@ -130,9 +131,6 @@
                         {
                             this.action.startAction(this._direction, -xDiff, position);
                         }
-                    }
-                    if (e.cancelable)
-                    {
                         e.preventDefault();
                     }
                 });
@@ -372,7 +370,6 @@
                     const x = -(shotIndex % 100 % xLength) * xSize;
                     const y = -Math.floor(shotIndex % 100 / yLength) * ySize;
                     done({
-                        display: "block",
                         width: xSize,
                         height: ySize,
                         backgroundImage: `url(${imageData[Math.floor(shotIndex / 100)]})`,
@@ -518,8 +515,6 @@
                             return sec =>
                             {
                                 const current = video.prop("currentTime");
-                                let info = `<div class='touch-row'><span class='touch-speed'>${speed}速</span><span class='touch-info'>进度: ${sec > 0 ? "+" : "-"}`;
-                                const commonInfoPart = `</span></div><div class='touch-row'><div class='videoshot'></div><span class='touch-result'>`;
                                 let finalTime = current + sec;
                                 let percent = fixed(100 * finalTime / videoDuration);
                                 let change = sec;
@@ -535,9 +530,28 @@
                                     percent = 0;
                                     change = current;
                                 }
-                                info += `${secondsToTime(change)}${commonInfoPart}${secondsToHms(current)} → ${secondsToHms(finalTime)} (${percent}%)`;
-                                text.innerHTML = info + `</span></div>`;
+                                const result = `${secondsToHms(current)} →<br/>${secondsToHms(finalTime)} (${percent}%)`;
+                                const html = `
+                                <div class='touch-row'>
+                                    <div class='touch-row-item'>
+                                        <span class='touch-speed'>${speed}速</span>
+                                    </div>
+                                    <div class='touch-row-item-wide'>
+                                        <span class='touch-info'>进度: ${sec > 0 ? "+" : "-"}${secondsToTime(change)}</span>
+                                    </div>
+                                </div>
+                                <div class='touch-row'>
+                                    <div class='videoshot-wrapper touch-row-item'>
+                                        <div class='videoshot'></div>
+                                    </div>
+                                    <div class='touch-row-item-wide'>
+                                        <span class='touch-result'>${result}</span>
+                                    </div>
+                                </div>
+                                `;
+                                text.innerHTML = html;
                                 videoshot.getVideoshot(finalTime, style => $(".videoshot").css(style));
+                                $(".videoshot-wrapper").css("display", "flex");
                                 $(".touch-progress").css("transform", `scaleX(${percent / 100})`);
                             };
                         };
@@ -552,8 +566,6 @@
                         {
                             return volume =>
                             {
-                                let info = `<div class='touch-row'><span class='touch-speed'>${speed}速</span><span class='touch-info'>音量: ${volume > 0 ? "+" : "-"}`;
-                                const commonInfoPart = `</span></div><div class='touch-row'><span class='touch-result'>`;
                                 let finalVolume = originalVolume + volume;
                                 let change = Math.abs(volume);
                                 if (finalVolume > 100)
@@ -566,9 +578,24 @@
                                     finalVolume = 0;
                                     change = originalVolume;
                                 }
-                                info += `${change}${commonInfoPart}${originalVolume} → ${finalVolume}`;
+                                const result = `${originalVolume} → ${finalVolume}`;
                                 setVolume(finalVolume);
-                                text.innerHTML = info + `</span></div>`;
+                                const html = `
+                                <div class='touch-row'>
+                                    <div class='touch-row-item'>
+                                        <span class='touch-speed'>${speed}速</span>
+                                    </div>
+                                    <div class='touch-row-item-wide'>
+                                        <span class='touch-info'>音量: ${volume > 0 ? "+" : "-"}${change}</span>
+                                    </div>
+                                </div>
+                                <div class='touch-row'>
+                                    <div class='touch-row-item'>
+                                        <span class='touch-result'>${result}</span>
+                                    </div>
+                                </div>
+                                `;
+                                text.innerHTML = html;
                                 $(".touch-progress").css("transform", `scaleX(${finalVolume / 100})`);
                             };
                         };
@@ -582,7 +609,7 @@
                         swiper.action.speedCancel = () =>
                         {
                             text.innerHTML = `松开手指,取消进退`;
-                            $(".videoshot").css("display", "none");
+                            $(".videoshot-wrapper").css("display", "none");
                             $(".touch-progress").css("transform", "scaleX(0)");
                         };
                         swiper.action.volumeCancel = () =>

@@ -1445,7 +1445,8 @@ a.s-btn:hover,
 .follow-sidenav .follow-list-container .follow-item.cur,
 .bl-button--primary,
 .report-con label:after,
-.wrapper .elec-btn
+.wrapper .elec-btn,
+.video-info .video-title .activity
 {
     background-color: $customStyleColor !important;
 }
@@ -1670,7 +1671,8 @@ a.s-btn:hover,
 .follow-sidenav .follow-list-container .follow-item.cur,
 #page-setting #setting-new-tag-btn,
 .bl-button--primary,
-.wrapper .elec-btn
+.wrapper .elec-btn,
+.video-info .video-title .activity
 {
     color: $foreground !important;
 }
