@@ -19,13 +19,20 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.618);
-    -webkit-backdrop-filter: blur(60px);
-    backdrop-filter: blur(60px);
+    background: rgba(0,0,0,0.85);
     position: relative;
     max-width: 520px;
     max-height: 240px;
     border: 4px solid transparent;
+}
+@supports (backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px))
+{
+    .touch-video-box
+    {
+        background: rgba(0,0,0,0.618);
+        -webkit-backdrop-filter: blur(60px);
+        backdrop-filter: blur(60px);
+    }
 }
 .touch-video-info
 {
