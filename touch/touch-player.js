@@ -428,7 +428,7 @@
         );
         new SpinQuery(
             () => $(".bilibili-player-video"),
-            it => it.length > 0 && $("video").length > 0,
+            it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
             player =>
             {
                 console.log("found player box:");
@@ -442,104 +442,102 @@
                             </div>
                         </div>`);
                     const video = $("video");
-                    video.on("loadedmetadata", () =>
+                    const videoDuration = video.prop("duration");
+                    console.log("video duration: "+videoDuration);
+                    const swiper = new Swiper(player.get(0));
+                    const text = document.getElementsByClassName("touch-video-info")[0];
+                    const box = document.getElementsByClassName("touch-video-box")[0];
+                    let originalVolume = Math.round(video.prop("volume") * 100);
+                    const setVolume = volume =>
                     {
-                        console.log("video metadata loaded.");
-                        const videoDuration = video.prop("duration");
-                        const swiper = new Swiper(player.get(0));
-                        const text = document.getElementsByClassName("touch-video-info")[0];
-                        const box = document.getElementsByClassName("touch-video-box")[0];
-                        let originalVolume = Math.round(video.prop("volume") * 100);
-                        const setVolume = volume =>
+                        volume /= 100;
+                        if (volume < 0)
                         {
-                            volume /= 100;
-                            if (volume < 0)
-                            {
-                                volume = 0;
-                            }
-                            else if (volume > 1)
-                            {
-                                volume = 1;
-                            }
-                            video.prop("volume", volume);
-                            $(".bilibili-player-video-volume-num").text(Math.round(volume * 100));
-
-                            // new version
-                            $(".bui-thumb").css("transform", `translateY(-${48 * volume}px)`);
-                            $(".bui-track-vertical .bui-bar").css("transform", `scaleY(${volume})`);
-                            // new version
-                            if (volume === 0)
-                            {
-                                $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");
-                                $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
-                                video.prop("muted", true);
-                            }
-                            else if (volume === 1)
-                            {
-                                $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
-                                $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-max");
-                                video.prop("muted", false);
-                            }
-                            else
-                            {
-                                $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
-                                $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
-                                video.prop("muted", false);
-                            }
-
-                            // old version
-                            $(".bpui-slider-progress").css("height", volume * 100 + "%");
-                            $(".bpui-slider-handle").css("bottom", (35 + volume * 230) / 3 + "%");
-                            // old version
-                            if (volume === 0)
-                            {
-                                $(".icon-24soundoff").show();
-                                $(".icon-24soundlarge").hide();
-                                $(".icon-24soundsmall").hide();
-                            }
-                            else if (volume >= 0.5)
-                            {
-                                $(".icon-24soundoff").hide();
-                                $(".icon-24soundlarge").show();
-                                $(".icon-24soundsmall").hide();
-                            }
-                            else
-                            {
-                                $(".icon-24soundoff").hide();
-                                $(".icon-24soundlarge").hide();
-                                $(".icon-24soundsmall").show();
-                            }
-                        };
-
-                        swiper.action.onActionStart = () =>
+                            volume = 0;
+                        }
+                        else if (volume > 1)
                         {
-                            box.style.display = "flex";
-                            text.innerHTML = "";
-                            originalVolume = Math.round(video.prop("volume") * 100);
-                        };
-                        const videoshot = new VideoShot();
-                        const speedChange = speed =>
+                            volume = 1;
+                        }
+                        video.prop("volume", volume);
+                        $(".bilibili-player-video-volume-num").text(Math.round(volume * 100));
+
+                        // new version
+                        $(".bui-thumb").css("transform", `translateY(-${48 * volume}px)`);
+                        $(".bui-track-vertical .bui-bar").css("transform", `scaleY(${volume})`);
+                        // new version
+                        if (volume === 0)
                         {
-                            return sec =>
+                            $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");
+                            $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
+                            video.prop("muted", true);
+                        }
+                        else if (volume === 1)
+                        {
+                            $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
+                            $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-max");
+                            video.prop("muted", false);
+                        }
+                        else
+                        {
+                            $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
+                            $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
+                            video.prop("muted", false);
+                        }
+
+                        // old version
+                        $(".bpui-slider-progress").css("height", volume * 100 + "%");
+                        $(".bpui-slider-handle").css("bottom", (35 + volume * 230) / 3 + "%");
+                        // old version
+                        if (volume === 0)
+                        {
+                            $(".icon-24soundoff").show();
+                            $(".icon-24soundlarge").hide();
+                            $(".icon-24soundsmall").hide();
+                        }
+                        else if (volume >= 0.5)
+                        {
+                            $(".icon-24soundoff").hide();
+                            $(".icon-24soundlarge").show();
+                            $(".icon-24soundsmall").hide();
+                        }
+                        else
+                        {
+                            $(".icon-24soundoff").hide();
+                            $(".icon-24soundlarge").hide();
+                            $(".icon-24soundsmall").show();
+                        }
+                    };
+
+                    swiper.action.onActionStart = () =>
+                    {
+                        box.style.display = "flex";
+                        text.innerHTML = "";
+                        originalVolume = Math.round(video.prop("volume") * 100);
+                    };
+                    const videoshot = new VideoShot();
+                    const speedChange = speed =>
+                    {
+                        return sec =>
+                        {
+                            const current = video.prop("currentTime");
+                            let finalTime = current + sec;
+                            let percent = fixed(100 * finalTime / videoDuration);
+                            let change = sec;
+                            if (finalTime > videoDuration)
                             {
-                                const current = video.prop("currentTime");
-                                let finalTime = current + sec;
-                                let percent = fixed(100 * finalTime / videoDuration);
-                                let change = sec;
-                                if (finalTime > videoDuration)
-                                {
-                                    finalTime = videoDuration;
-                                    percent = 100;
-                                    change = videoDuration - current;
-                                }
-                                else if (finalTime < 0)
-                                {
-                                    finalTime = 0;
-                                    percent = 0;
-                                    change = current;
-                                }
-                                const result = `${secondsToHms(current)} →<br/>${secondsToHms(finalTime)} (${percent}%)`;
-                                const html = `
+                                finalTime = videoDuration;
+                                percent = 100;
+                                change = videoDuration - current;
+                            }
+                            else if (finalTime < 0)
+                            {
+                                finalTime = 0;
+                                percent = 0;
+                                change = current;
+                            }
+                            const result = `${secondsToHms(current)} →<br/>${secondsToHms(finalTime)} (${percent}%)`;
+                            const html = `
                                 <div class='touch-row'>
                                     <div class='touch-row-item'>
                                         <span class='touch-speed'>${speed}速</span>
@@ -557,38 +555,38 @@
                                     </div>
                                 </div>
                                 `;
-                                text.innerHTML = html;
-                                videoshot.getVideoshot(finalTime, style => $(".videoshot").css(style));
-                                $(".videoshot-wrapper").css("display", "flex");
-                                $(".touch-progress").css("transform", `scaleX(${percent / 100})`);
-                            };
+                            text.innerHTML = html;
+                            videoshot.getVideoshot(finalTime, style => $(".videoshot").css(style));
+                            $(".videoshot-wrapper").css("display", "flex");
+                            $(".touch-progress").css("transform", `scaleX(${percent / 100})`);
                         };
-                        swiper.action.lowSpeedBackward = speedChange("低");
-                        swiper.action.lowSpeedForward = speedChange("低");
-                        swiper.action.mediumSpeedBackward = speedChange("中");
-                        swiper.action.mediumSpeedForward = speedChange("中");
-                        swiper.action.highSpeedBackward = speedChange("高");
-                        swiper.action.highSpeedForward = speedChange("高");
+                    };
+                    swiper.action.lowSpeedBackward = speedChange("低");
+                    swiper.action.lowSpeedForward = speedChange("低");
+                    swiper.action.mediumSpeedBackward = speedChange("中");
+                    swiper.action.mediumSpeedForward = speedChange("中");
+                    swiper.action.highSpeedBackward = speedChange("高");
+                    swiper.action.highSpeedForward = speedChange("高");
 
-                        const volumeChange = speed =>
+                    const volumeChange = speed =>
+                    {
+                        return volume =>
                         {
-                            return volume =>
+                            let finalVolume = originalVolume + volume;
+                            let change = Math.abs(volume);
+                            if (finalVolume > 100)
                             {
-                                let finalVolume = originalVolume + volume;
-                                let change = Math.abs(volume);
-                                if (finalVolume > 100)
-                                {
-                                    finalVolume = 100;
-                                    change = 100 - originalVolume;
-                                }
-                                else if (finalVolume < 0)
-                                {
-                                    finalVolume = 0;
-                                    change = originalVolume;
-                                }
-                                const result = `${originalVolume} → ${finalVolume}`;
-                                setVolume(finalVolume);
-                                const html = `
+                                finalVolume = 100;
+                                change = 100 - originalVolume;
+                            }
+                            else if (finalVolume < 0)
+                            {
+                                finalVolume = 0;
+                                change = originalVolume;
+                            }
+                            const result = `${originalVolume} → ${finalVolume}`;
+                            setVolume(finalVolume);
+                            const html = `
                                 <div class='touch-row'>
                                     <div class='touch-row-item'>
                                         <span class='touch-speed'>${speed}速</span>
@@ -603,52 +601,51 @@
                                     </div>
                                 </div>
                                 `;
-                                text.innerHTML = html;
-                                $(".touch-progress").css("transform", `scaleX(${finalVolume / 100})`);
-                            };
+                            text.innerHTML = html;
+                            $(".touch-progress").css("transform", `scaleX(${finalVolume / 100})`);
                         };
-                        swiper.action.lowVolumeUp = volumeChange("低");
-                        swiper.action.lowVolumeDown = volumeChange("低");
-                        swiper.action.mediumVolumeUp = volumeChange("中");
-                        swiper.action.mediumVolumeDown = volumeChange("中");
-                        swiper.action.highVolumeUp = volumeChange("高");
-                        swiper.action.highVolumeDown = volumeChange("高");
+                    };
+                    swiper.action.lowVolumeUp = volumeChange("低");
+                    swiper.action.lowVolumeDown = volumeChange("低");
+                    swiper.action.mediumVolumeUp = volumeChange("中");
+                    swiper.action.mediumVolumeDown = volumeChange("中");
+                    swiper.action.highVolumeUp = volumeChange("高");
+                    swiper.action.highVolumeDown = volumeChange("高");
 
-                        swiper.action.speedCancel = () =>
+                    swiper.action.speedCancel = () =>
+                    {
+                        text.innerHTML = `松开手指,取消进退`;
+                        $(".touch-progress").css("transform", "scaleX(0)");
+                    };
+                    swiper.action.volumeCancel = () =>
+                    {
+                        text.innerHTML = `松开手指,取消调整`;
+                        $(".touch-progress").css("transform", "scaleX(0)");
+                        setVolume(originalVolume);
+                    };
+                    swiper.action.onActionEnd = action =>
+                    {
+                        box.style.display = "none";
+                        text.innerHTML = "";
+                        if (action)
                         {
-                            text.innerHTML = `松开手指,取消进退`;
-                            $(".touch-progress").css("transform", "scaleX(0)");
-                        };
-                        swiper.action.volumeCancel = () =>
-                        {
-                            text.innerHTML = `松开手指,取消调整`;
-                            $(".touch-progress").css("transform", "scaleX(0)");
-                            setVolume(originalVolume);
-                        };
-                        swiper.action.onActionEnd = action =>
-                        {
-                            box.style.display = "none";
-                            text.innerHTML = "";
-                            if (action)
+                            if (action.type === "playback")
                             {
-                                if (action.type === "playback")
+                                let time = video.prop("currentTime");
+                                time += action.seconds;
+                                if (time < 0)
                                 {
-                                    let time = video.prop("currentTime");
-                                    time += action.seconds;
-                                    if (time < 0)
-                                    {
-                                        time = 0;
-                                    }
-                                    else if (time > videoDuration)
-                                    {
-                                        time = videoDuration;
-                                    }
-                                    video.prop("currentTime", time);
+                                    time = 0;
                                 }
+                                else if (time > videoDuration)
+                                {
+                                    time = videoDuration;
+                                }
+                                video.prop("currentTime", time);
                             }
-                        };
-                        console.log("swpier action loaded.");
-                    });
+                        }
+                    };
+                    console.log("swpier action loaded.");
                 }
             }
         ).start();
