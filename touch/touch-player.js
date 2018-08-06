@@ -74,6 +74,10 @@
         {
             constructor(element)
             {
+                if (!element)
+                {
+                    throw new ReferenceError("element error");
+                }
                 this.action = new SwipeAction(element);
                 this.onTouchStart = null;
                 this.onTouchEnd = null;
