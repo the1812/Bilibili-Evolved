@@ -524,7 +524,8 @@ blockquote .color-yellow-04,
 .slim-video-card .video-info .col-2,
 .comment-bilibili-con .reason-box dl dt,
 .comment-list .list-item .reply-box .view-more,
-.comment-m .b-head .del-log
+.comment-m .b-head .del-log,
+.emoji-box .emoji-title
 {
     color: #aaa !important;
 }
@@ -1123,7 +1124,8 @@ i.btn-del,
 .side-bar .icon,
 .setting:before,
 .select-wrap .select-txt i,
-.primary-menu .nav-menu li.home>a
+.primary-menu .nav-menu li.home>a,
+img[src^='//static.hdslb.com/images/base']
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -1585,7 +1587,7 @@ a.up-name:hover,
 #page-subs .action .sub-action,
 #page-channel-index .no-channel-container em,
 .bui-switch .bui-checkbox:checked+.bui-body .bui-dot,
-.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
+.bilibili-player-video-danmaku-setting-left-block .bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
 .bui-select.bui-select-quality-menu .bui-select-item.bui-select-item-active,
 .bb-comment .stick,
 .bb-comment .stick.assist,
@@ -1618,8 +1620,7 @@ a.up-name:hover,
 .video-toolbar .share .share-btn:hover,
 .video-toolbar .share .share-btn:hover i,
 .bilibili-player-video-danmaku-setting:hover,
-.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image,
-.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label
+.bilibili-player-video-toast-item-close:hover i
 {
     color: $customStyleColor !important;
 }
@@ -1697,13 +1698,12 @@ a.s-btn:hover,
 .bui-checkbox:hover .bui-checkbox-icon svg,
 .bui-switch .bui-checkbox:checked+.bui-body .bui-dot,
 .bilibili-player-block-filter-type:hover .bilibili-player-block-filter-image,
-.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image,
+.bilibili-player-video-danmaku-setting-left-block .bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image,
 .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active,
  .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active:hover,
  .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span:hover,
  #page-follows .follow-main .follow-action-top .back-to-info:hover,
-.bilibili-player-video-danmaku-setting:hover,
-.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image
+.bilibili-player-video-danmaku-setting:hover
 {
     fill: $customStyleColor !important;
 }
