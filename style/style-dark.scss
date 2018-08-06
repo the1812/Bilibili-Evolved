@@ -1294,6 +1294,10 @@ canvas.cliper.is-img,
 {
     background: $customStyleColor !important;
 }
+.bilibili-player-video-panel-image-detail
+{
+    filter: invert(70%) !important;
+}
 
 .c-clink:hover,
 .bili-tab-item.on,
@@ -1603,7 +1607,8 @@ a.up-name:hover,
 .wrapper .modal-body .elec-protocol a:hover,
 .wrapper .modal-body .pay-info .balance,
 .wrapper .modal-body .pay-info .pay-tip .em-text,
-.wrapper .modal-back
+.wrapper .modal-back,
+.bilibili-player-video-toast-item-jump
 {
     color: $customStyleColor !important;
 }
