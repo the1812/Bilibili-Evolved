@@ -154,12 +154,13 @@ div.con,
 .wrapper .content,
 .comment-bilibili-con,
 .bilibili-player-video-panel,
-.vote-container,
+.vote-container.pointer,
 .vote-container .image-area .share-img,
 .backdrop .title-box,
 .result .row,
 .image-box,
-.vote-user-face
+.vote-user-face,
+.backdrop iframe
 {
     background-color: #222 !important;
 }
@@ -304,7 +305,8 @@ a.more.tc-slate:hover,
 .up-article-list-block .more-article,
 .slim-video-card .video-info,
 .dyn_list li .preview,
-.checkbox
+.checkbox,
+.submit-button.disabled
 {
     background-color: #444 !important;
 }
@@ -535,7 +537,8 @@ blockquote .color-yellow-04,
 .emoji-box .emoji-title,
 .vote-user-name,
 .anonymous,
-.share-to-dynamic
+.share-to-dynamic,
+.submit-button.disabled
 {
     color: #aaa !important;
 }
@@ -987,7 +990,6 @@ div.bar>div.num,
 .article-holder .slim-video-card,
 .comment-bilibili-con .t,
 .vote-container,
-.vote-number,
 .image-box,
 .checkbox
 {
@@ -1083,7 +1085,8 @@ div.con header,
 .backdrop .title-box,
 .option-li,
 .result .row.top-border:before,
-.result .row:first-child:before
+.result .row:first-child:before,
+.vote-number
 {
     border-color: #444 !important
 }
