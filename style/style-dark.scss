@@ -522,7 +522,9 @@ blockquote .color-yellow-04,
 .bilibili-player-video-info,
 .slim-video-card .video-info .col,
 .slim-video-card .video-info .col-2,
-.comment-bilibili-con .reason-box dl dt
+.comment-bilibili-con .reason-box dl dt,
+.comment-list .list-item .reply-box .view-more,
+.comment-m .b-head .del-log
 {
     color: #aaa !important;
 }
@@ -1608,7 +1610,16 @@ a.up-name:hover,
 .wrapper .modal-body .pay-info .balance,
 .wrapper .modal-body .pay-info .pay-tip .em-text,
 .wrapper .modal-back,
-.bilibili-player-video-toast-item-jump
+.bilibili-player-video-toast-item-jump,
+.video-toolbar .ops span.on,
+.video-toolbar .ops span.on i,
+.video-toolbar .ops span:hover,
+.video-toolbar .ops span:hover i,
+.video-toolbar .share .share-btn:hover,
+.video-toolbar .share .share-btn:hover i,
+.bilibili-player-video-danmaku-setting:hover,
+.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image,
+.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label
 {
     color: $customStyleColor !important;
 }
@@ -1619,6 +1630,7 @@ a.up-name:hover,
 .dropdown-item:hover,
 .more-link:hover,
 a.more:hover,
+div.title a.more:hover,
 .dynamic-m .dyn_menu li,
 .bili-header-m .mini-wnd-nav a:hover,
 .up-info .btn .b-cd:hover,
@@ -1689,7 +1701,9 @@ a.s-btn:hover,
 .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active,
  .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active:hover,
  .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span:hover,
- #page-follows .follow-main .follow-action-top .back-to-info:hover
+ #page-follows .follow-main .follow-action-top .back-to-info:hover,
+.bilibili-player-video-danmaku-setting:hover,
+.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image
 {
     fill: $customStyleColor !important;
 }
