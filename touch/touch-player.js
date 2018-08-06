@@ -144,7 +144,6 @@
                         this.onTouchEnd(e);
                     }
                 });
-                console.log("events attached.");
             }
         }
         class SwipeAction
@@ -640,12 +639,9 @@
                                 }
                             }
                         };
-                        window.touchSwiper = swiper;
-                        unsafeWindow.touchSwiper = swiper;
                     });
                 }
-            },
-            () => console.log("touch player failed!")
+            }
         ).start();
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");

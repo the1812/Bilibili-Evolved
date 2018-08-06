@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.0.5
+// @version      1.0.6
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
+// @run-at       document-end
 // @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
 // @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
 // @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
@@ -121,7 +122,7 @@
                 useDarkStyle: "style/dark-styles.min.js",
                 useNewStyle: "style/new-styles.min.js",
                 touchNavBar: "touch/touch-navbar.min.js",
-                touchVideoPlayer: "touch/touch-player.js",
+                touchVideoPlayer: "touch/touch-player.min.js",
                 expandDanmakuList: "utils/expand-danmaku.min.js",
                 removeAds: "utils/remove-promotions.min.js",
                 watchLaterRedirect: "utils/watchlater.min.js"
