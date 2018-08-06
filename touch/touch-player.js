@@ -503,7 +503,7 @@
 
                     swiper.action.onActionStart = () =>
                     {
-                        box.style.display = "flex";
+                        box.style.transform = "rotateY(0deg)";
                         text.innerHTML = "";
                         originalVolume = Math.round(video.prop("volume") * 100);
                     };
@@ -549,7 +549,6 @@
                                 `;
                             text.innerHTML = html;
                             videoshot.getVideoshot(finalTime, style => $(".videoshot").css(style));
-                            $(".videoshot-wrapper").css("display", "flex");
                             $(".touch-progress").css("transform", `scaleX(${percent / 100})`);
                         };
                     };
@@ -617,7 +616,7 @@
                     };
                     swiper.action.onActionEnd = action =>
                     {
-                        box.style.display = "none";
+                        box.style.transform = "rotateY(90deg)";
                         text.innerHTML = "";
                         if (action)
                         {

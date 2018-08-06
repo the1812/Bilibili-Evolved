@@ -14,7 +14,7 @@
 .touch-video-box
 {
     border-radius: 0px;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -24,6 +24,9 @@
     max-width: 520px;
     max-height: 240px;
     border: 4px solid transparent;
+    transition: all 0.2s;
+    transform-origin: center;
+    transform: rotateY(90deg);
 }
 @supports (backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px))
 {
