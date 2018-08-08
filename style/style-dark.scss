@@ -306,7 +306,7 @@ a.more.tc-slate:hover,
 .slim-video-card .video-info,
 .dyn_list li .preview,
 .checkbox,
-.submit-button.disabled
+button.submit-button.disabled
 {
     background-color: #444 !important;
 }
@@ -538,7 +538,8 @@ blockquote .color-yellow-04,
 .vote-user-name,
 .anonymous,
 .share-to-dynamic,
-.submit-button.disabled
+.submit-button.disabled,
+.vote-introduction
 {
     color: #aaa !important;
 }
