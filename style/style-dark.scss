@@ -330,7 +330,8 @@ button.submit-button.disabled,
 .user-list .up-item .attention-btn.followed,
 .user-list .up-item .attention-btn.followed:hover,
 .photo-list .photo,
-.play-btn
+.play-btn,
+.percentage-bar
 {
     background-color: #444 !important;
 }
@@ -1260,9 +1261,24 @@ ul.up-nav li
 .live-wrap .live-room .headline .filter .cover-btn.active .icon-live-face,
 .live-wrap .live-room .headline .filter .cover-btn:hover .icon-live-face,
 .live-wrap .live-room .headline .filter .frame-btn.active .icon-live-frame,
-.live-wrap .live-room .headline .filter .frame-btn:hover .icon-live-frame
+.live-wrap .live-room .headline .filter .frame-btn:hover .icon-live-frame,
+.dynamic-liked i,
+.dynamic-liked:hover i,
+.dynamic-like:hover i,
+.dynamic-hated i,
+.dynamic-hated:hover i,
+.dynamic-hate:hover i,
+.is-web .checked,
+.is-web .is-max .percentage-bar,
+.video-container .image-area .see-later.done
 {
     filter: $blueImageFilter !important;
+}
+.single-button .text-bar.selected,
+.vote-options .checked,
+.is-max .percentage-bar
+{
+    filter: $pinkImageFilter !important;
 }
 .switch-wrap i.icon-aver,
 .switch-wrap i.icon-imgleft

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.0.7
+// @version      1.0.8
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -200,6 +200,15 @@
             };
             return this.makeImageFilter(blueColor);
         }
+        get pinkImageFilter()
+        {
+            const pinkColor = {
+                r: 251,
+                g: 113,
+                b: 152
+            };
+            return this.makeImageFilter(pinkColor);
+        }
         get brightness()
         {
             return `${this.foreground === "#000" ? "100" : "0"}%`;
@@ -250,6 +259,7 @@
             this.color = new ColorProcessor(settings.customStyleColor);
             settings.foreground = this.color.foreground;
             settings.blueImageFilter = this.color.blueImageFilter;
+            settings.pinkImageFilter = this.color.pinkImageFilter;
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
         }
