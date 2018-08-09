@@ -111,7 +111,7 @@
         }
         get rgb()
         {
-            return this.hexToRgb(this.hex)
+            return this.hexToRgb(this.hex);
         }
         hexToRgb(hex)
         {
