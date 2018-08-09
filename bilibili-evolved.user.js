@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.0.6
+// @version      1.0.7
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -103,6 +103,112 @@
             new SpinQuery(query, it => it.length === count, action).start();
         }
     }
+    class ColorProcessor
+    {
+        constructor(hex)
+        {
+            this.hex = hex;
+        }
+        get rgb()
+        {
+            return this.hexToRgb(this.hex)
+        }
+        hexToRgb(hex)
+        {
+            const regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            const color = regex ? {
+                r: parseInt(regex[1], 16),
+                g: parseInt(regex[2], 16),
+                b: parseInt(regex[3], 16)
+            } : undefined;
+            return color;
+        }
+        rgbToHsb(rgb)
+        {
+            const { r, g, b } = rgb;
+            let h, s, v;
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            const delta = max - min;
+            if (delta === 0)
+            {
+                h = 0;
+            }
+            else if (r === max)
+            {
+                h = (g - b) / delta % 6;
+            }
+            else if (g === max)
+            {
+                h = (b - r) / delta + 2;
+            }
+            else if (b === max)
+            {
+                h = (r - g) / delta + 4;
+            }
+            h = Math.round(h * 60);
+            if (h < 0)
+            {
+                h += 360;
+            }
+            s = Math.round((max === 0 ? 0 : delta / max) * 100);
+            v = Math.round(max / 255 * 100);
+
+            return { h: h, s: s, b: v };
+        }
+        get hsb()
+        {
+            return this.rgbToHsb(this.rgb);
+        }
+        get foreground()
+        {
+            const color = this.rgb;
+            if (color)
+            {
+                const grey = 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
+                if (grey < 0.35)
+                {
+                    return "#000";
+                }
+                else
+                {
+                    return "#fff";
+                }
+            }
+            else
+            {
+                return "#fff";
+            }
+        }
+        makeImageFilter(originalRgb)
+        {
+            const { h, s, b } = this.rgbToHsb(originalRgb);
+            const targetColor = this.hsb;
+
+            const hue = targetColor.h - h;
+            const saturate = (s - targetColor.s) / 100 + 100;
+            const brightness = (b - targetColor.b) / 100 + 100;
+            const filter = `hue-rotate(${hue}deg) saturate(${saturate}%) brightness(${brightness}%)`;
+            return filter;
+        }
+        get blueImageFilter()
+        {
+            const blueColor = {
+                r: 0,
+                g: 160,
+                b: 213
+            };
+            return this.makeImageFilter(blueColor);
+        }
+        get brightness()
+        {
+            return `${this.foreground === "#000" ? "100" : "0"}%`;
+        }
+        get filterInvert()
+        {
+            return this.foreground === "#000" ? "" : "invert(1)";
+        }
+    }
     class ExternalResource
     {
         static get resourceUrls()
@@ -141,34 +247,11 @@
                 "watchLaterRedirect",
                 "expandDanmakuList"
             ];
-            const foreground = (() =>
-            {
-                const regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(settings.customStyleColor);
-                const color = regex ? {
-                    r: parseInt(regex[1], 16),
-                    g: parseInt(regex[2], 16),
-                    b: parseInt(regex[3], 16)
-                } : undefined;
-                if (color)
-                {
-                    const grey = 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
-                    if (grey < 0.35)
-                    {
-                        return "#000";
-                    }
-                    else
-                    {
-                        return "#fff";
-                    }
-                }
-                else
-                {
-                    return "#fff";
-                }
-            })();
-            settings.foreground = foreground;
-            settings.brightness = `${foreground === "#000" ? "100" : "0"}%`;
-            settings.filterInvert = foreground === "#000" ? "" : "invert(1)";
+            this.color = new ColorProcessor(settings.customStyleColor);
+            settings.foreground = this.color.foreground;
+            settings.blueImageFilter = this.color.blueImageFilter;
+            settings.brightness = this.color.brightness;
+            settings.filterInvert = this.color.filterInvert;
         }
         ajax(url, done)
         {

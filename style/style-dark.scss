@@ -167,7 +167,8 @@ div.con,
 .home-wrap .home-suggest .hotlist .num,
 .fixed-top,
 .page-wrap .pager,
-.fixed-top .search-block .input-wrap
+.fixed-top .search-block .input-wrap,
+.error-wrap
 {
     background-color: #222 !important;
 }
@@ -324,7 +325,12 @@ button.submit-button.disabled,
 .search-wrap .search-block .input-wrap input,
 .search-wrap .search-block .input-wrap,
 .video.matrix,
-.pager .pages .page-item button
+.pager .pages .page-item button,
+.video.list .type,
+.user-list .up-item .attention-btn.followed,
+.user-list .up-item .attention-btn.followed:hover,
+.photo-list .photo,
+.play-btn
 {
     background-color: #444 !important;
 }
@@ -561,7 +567,17 @@ blockquote .color-yellow-04,
 .suggest-wrap .title span,
 .nav-wrap .wrap>.sub>span,
 .filter-wrap .fold,
-.so-icon
+.so-icon,
+.video.list .des,
+.bili-footer,
+.total-wrap .total-text,
+.article-wrap .article .desc,
+.synthetical .des,
+.user-list .up-item .attention-btn.followed,
+.user-list .up-item .attention-btn.followed:hover,
+.user-list .up-item .up-videos .ptime,
+.pgc-list .synthetical .score .user-count,
+.live-wrap .headline .user-more
 {
     color: #aaa !important;
 }
@@ -865,7 +881,23 @@ div.con header,
 .nav-wrap .wrap>.sub,
 .filter-wrap .filter-item a,
 .video.matrix .title,
-.pager .pages .page-item button
+.pager .pages .page-item button,
+.video.list .type,
+.video.list .title,
+.error-wrap,
+.live-wrap .live-tabs a,
+.article-wrap .article .title,
+.synthetical .title,
+.user-wrap .dropdown-wrap .select-wrap .bili-dropdown .selected,
+.user-list .up-item .up-videos .video-item .video-desc,
+.user-list .up-item .title,
+.photo-list .photo .title,
+.bangumi-list .synthetical .des .type-s,
+.play-btn,
+.pgc-list .synthetical .des .type-s,
+.live-user .user-item .item-right .uname,
+.live-room-list .room-item .item-title,
+.live-wrap .live-room .headline .filter a
 {
     color: #eee !important;
 }
@@ -1042,7 +1074,11 @@ div.bar>div.num,
 .nav-wrap,
 .filter-wrap,
 .video.matrix,
-.pager .pages .page-item button
+.pager .pages .page-item button,
+.video.list .type,
+.error-wrap,
+.photo-list .photo,
+.play-btn
 {
     border-color: transparent !important;
 }
@@ -1138,7 +1174,13 @@ div.con header,
 .result .row.top-border:before,
 .result .row:first-child:before,
 .vote-number,
-.fixed-top .search-block .input-wrap input
+.fixed-top .search-block .input-wrap input,
+.video.list,
+.article-wrap .article,
+.synthetical,
+.user-wrap .dropdown-wrap .select-wrap,
+.user-list .up-item,
+.all-class
 {
     border-color: #444 !important
 }
@@ -1212,6 +1254,21 @@ ul.up-nav li
 {
     filter: grayscale(1) brightness(1.3) !important;
 }
+.search-wrap .search-logo,
+.type.active .icon-aver,
+.type.active .icon-imgleft,
+.live-wrap .live-room .headline .filter .cover-btn.active .icon-live-face,
+.live-wrap .live-room .headline .filter .cover-btn:hover .icon-live-face,
+.live-wrap .live-room .headline .filter .frame-btn.active .icon-live-frame,
+.live-wrap .live-room .headline .filter .frame-btn:hover .icon-live-frame
+{
+    filter: $blueImageFilter !important;
+}
+.switch-wrap i.icon-aver,
+.switch-wrap i.icon-imgleft
+{
+    filter: grayscale(1) !important;
+}
 #page-index .col-1 .section .more,
 .elec .elec-status,
 .elec .elec-status-bg,
@@ -1243,6 +1300,14 @@ ul.up-nav li
 .bp-svg-icon.radio-Selected
 {
     background-position: 0em -8.376em !important;
+}
+.switch-wrap .imgleft:hover i
+{
+    background-position: -148px -376px !important;
+}
+.switch-wrap .aver:hover i
+{
+    background-position: -194px -376px !important;
 }
 .multi-page .cur-list ul
 {
@@ -1393,6 +1458,11 @@ canvas.cliper.is-img,
     outline: none !important;
     outline-offset: 0 !important;
 }
+.bangumi-list .synthetical .cardBangumibox .modal-box .lazy-img,
+.pgc-list .synthetical .cardPgcbox .modal-box .lazy-img
+{
+    z-index: inherit !important;
+}
 
 .c-clink:hover,
 .bili-tab-item.on,
@@ -1461,7 +1531,8 @@ input[type=text]:focus,
 .wrapper .modal-back:hover,
 .home-wrap .home-input .searchBtn,
 .suggest-wrap .horizontal .hz-text:hover,
-.filter-wrap .filter-item.active a
+.filter-wrap .filter-item.active a,
+.live-wrap .live-tabs a.active
 {
     border-color: $customStyleColor !important;
 }
@@ -1558,7 +1629,9 @@ a.s-btn:hover,
 .filter-wrap .fold:hover,
 .pager .pages .page-item.active button,
 .pager .pages .page-item button:hover,
-.filter-wrap .filter-item.active
+.filter-wrap .filter-item.active,
+.user-list .up-item .attention-btn,
+.play-btn:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -1731,7 +1804,13 @@ a.up-name:hover,
 .nav-wrap .wrap>.sub.active, .nav-wrap .wrap>.sub:hover,
 .filter-wrap .filter-item a:hover,
 .keyword,
-.suggest-wrap .keyword-wrap .keyword .suggest_high_light
+.suggest-wrap .keyword-wrap .keyword .suggest_high_light,
+.live-wrap .live-tabs a.active,
+.live-wrap .live-tabs a:hover,
+.user-list .up-item .up-videos .video-item .video-desc:hover,
+.user-list .up-item .up-videos .video-more,
+.live-wrap .live-room .headline .filter a.active,
+.live-wrap .live-room .headline .filter a:hover
 {
     color: $customStyleColor !important;
 }
@@ -1811,7 +1890,9 @@ a.s-btn:hover,
 .filter-wrap .fold:hover,
 .pager .pages .page-item.active button,
 .pager .pages .page-item button:hover,
-.filter-wrap .filter-item.active
+.filter-wrap .filter-item.active,
+.user-list .up-item .attention-btn,
+.play-btn:hover
 {
     color: $foreground !important;
 }
