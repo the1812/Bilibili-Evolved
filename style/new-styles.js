@@ -2,11 +2,6 @@
 {
     return (settings, resources) =>
     {
-        new SpinQuery(
-            () => $(".nav-search-keyword"),
-            it => it.length > 0 && it.attr("placeholder").length > 0,
-            textBox => textBox.attr("placeholder", "搜索")
-        ).start();
         SpinQuery.any(
             () => $(".custom-scrollbar"),
             it => it.removeClass("custom-scrollbar")
@@ -37,11 +32,6 @@
                     textBox.detach()
                         .insertAfter(".nav-con.fr");
                 }
-            ).start();
-            new SpinQuery(
-                () => $(".search-keyword"),
-                it => it.length > 0 && it.attr("placeholder").length > 0,
-                textBox => textBox.attr("placeholder", "搜索")
             ).start();
             resources.applyStyle("navbarOverrideStyle", "bilibili-nav-bar-override");
 

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.0.8
+// @version      1.1.0
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -21,6 +21,7 @@
     const $ = unsafeWindow.$ || self$;
     const settings = {
         removeAds: true,
+        hideTopSearch: false,
         touchNavBar: false,
         touchVideoPlayer: false,
         watchLaterRedirect: true,
@@ -240,7 +241,8 @@
                 touchVideoPlayer: "touch/touch-player.min.js",
                 expandDanmakuList: "utils/expand-danmaku.min.js",
                 removeAds: "utils/remove-promotions.min.js",
-                watchLaterRedirect: "utils/watchlater.min.js"
+                watchLaterRedirect: "utils/watchlater.min.js",
+                hideTopSearch: "utils/hide-top-search.min.js"
             };
             for (const key in urls)
             {
