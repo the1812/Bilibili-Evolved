@@ -577,7 +577,11 @@ blockquote .color-yellow-04,
 .user-list .up-item .attention-btn.followed:hover,
 .user-list .up-item .up-videos .ptime,
 .pgc-list .synthetical .score .user-count,
-.live-wrap .headline .user-more
+.live-wrap .headline .user-more,
+.spread-module .num,
+.card-live-module .num,
+.live-module .zone-title .headline .online,
+.live-module .zone-title .headline .fire
 {
     color: #aaa !important;
 }
@@ -896,7 +900,8 @@ div.con header,
 .pgc-list .synthetical .des .type-s,
 .live-user .user-item .item-right .uname,
 .live-room-list .room-item .item-title,
-.live-wrap .live-room .headline .filter a
+.live-wrap .live-room .headline .filter a,
+.special-module .user a
 {
     color: #eee !important;
 }
@@ -1278,7 +1283,11 @@ ul.up-nav li
 .comment-list .list-item .info .like.liked i,
 .comment-list .list-item .info .hate:hover i,
 .comment-list .list-item .info .hate.hated:hover i,
-.comment-list .list-item .info .hate.hated i
+.comment-list .list-item .info .hate.hated i,
+.carousel-box .carousel-module .panel .trig span.on,
+.carousel-box .carousel-module .panel .trig span:hover,
+.emoji-tab-slider .next.on:hover,
+.emoji-tab-slider .prev.on:hover
 {
     filter: $blueImageFilter !important;
 }
@@ -1289,7 +1298,10 @@ ul.up-nav li
     filter: $pinkImageFilter !important;
 }
 .switch-wrap i.icon-aver,
-.switch-wrap i.icon-imgleft
+.switch-wrap i.icon-imgleft,
+.elevator-module .nav-list .customize .icon,
+.spread-module .num .play .icon,
+.spread-module .num .danmu .icon
 {
     filter: grayscale(1) !important;
 }
@@ -1656,7 +1668,8 @@ a.s-btn:hover,
 .filter-wrap .filter-item.active,
 .user-list .up-item .attention-btn,
 .synthetical .play-btn:hover,
-.collection-m .bottom .btn
+.collection-m .bottom .btn,
+.carousel-module .panel .trig span.on
 {
     background-color: $customStyleColor !important;
 }
@@ -1835,7 +1848,10 @@ a.up-name:hover,
 .user-list .up-item .up-videos .video-item .video-desc:hover,
 .user-list .up-item .up-videos .video-more,
 .live-wrap .live-room .headline .filter a.active,
-.live-wrap .live-room .headline .filter a:hover
+.live-wrap .live-room .headline .filter a:hover,
+.card-live-module .num,
+.live-module .zone-title .headline .fire:hover,
+.special-module .user a:hover
 {
     color: $customStyleColor !important;
 }
