@@ -38,10 +38,11 @@
                         .insertAfter(".nav-con.fr");
                 }
             ).start();
-            SpinQuery.any(
-                () => $("input.search-keyword"),
+            new SpinQuery(
+                () => $(".search-keyword"),
+                it => it.length > 0 && it.attr("placeholder").length > 0,
                 textBox => textBox.attr("placeholder", "搜索")
-            );
+            ).start();
             resources.applyStyle("navbarOverrideStyle", "bilibili-nav-bar-override");
 
             if (!settings.showBanner)

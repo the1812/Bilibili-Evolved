@@ -75,7 +75,6 @@ textarea,
 .collection-m,
 .coin-operated-m,
 .follow-dialog-window,
-form.searchform:hover,
 #app,
 .home-page .back-top,
 .repost,
@@ -330,7 +329,7 @@ button.submit-button.disabled,
 .user-list .up-item .attention-btn.followed,
 .user-list .up-item .attention-btn.followed:hover,
 .photo-list .photo,
-.play-btn,
+.synthetical .play-btn,
 .percentage-bar
 {
     background-color: #444 !important;
@@ -712,7 +711,6 @@ a.router-link-exact-active,
 .watch-later-list .list-box .av-item .av-about .t,
 a.s-btn,
 span.key,
-form.searchform:hover input,
 .tc-black,
 .history-wrap  .b-head .b-head-t,
 .history-btn>.btn,
@@ -894,7 +892,7 @@ div.con header,
 .user-list .up-item .title,
 .photo-list .photo .title,
 .bangumi-list .synthetical .des .type-s,
-.play-btn,
+.synthetical .play-btn,
 .pgc-list .synthetical .des .type-s,
 .live-user .user-item .item-right .uname,
 .live-room-list .room-item .item-title,
@@ -1079,7 +1077,7 @@ div.bar>div.num,
 .video.list .type,
 .error-wrap,
 .photo-list .photo,
-.play-btn
+.synthetical .play-btn
 {
     border-color: transparent !important;
 }
@@ -1270,7 +1268,17 @@ ul.up-nav li
 .dynamic-hate:hover i,
 .is-web .checked,
 .is-web .is-max .percentage-bar,
-.video-container .image-area .see-later.done
+.video-container .image-area .see-later.done,
+.watch-later-trigger.added,
+.group-list li input[type=checkbox]:hover+i,
+.group-list li input[type=checkbox]:checked:hover+i,
+.group-list li input[type=checkbox]:checked+i,
+.comment-list .list-item .info .like:hover i,
+.comment-list .list-item .info .like.liked:hover i,
+.comment-list .list-item .info .like.liked i,
+.comment-list .list-item .info .hate:hover i,
+.comment-list .list-item .info .hate.hated:hover i,
+.comment-list .list-item .info .hate.hated i
 {
     filter: $blueImageFilter !important;
 }
@@ -1647,7 +1655,8 @@ a.s-btn:hover,
 .pager .pages .page-item button:hover,
 .filter-wrap .filter-item.active,
 .user-list .up-item .attention-btn,
-.play-btn:hover
+.synthetical .play-btn:hover,
+.collection-m .bottom .btn
 {
     background-color: $customStyleColor !important;
 }
@@ -1908,7 +1917,8 @@ a.s-btn:hover,
 .pager .pages .page-item button:hover,
 .filter-wrap .filter-item.active,
 .user-list .up-item .attention-btn,
-.play-btn:hover
+.synthetical .play-btn:hover,
+.collection-m .bottom .btn
 {
     color: $foreground !important;
 }
