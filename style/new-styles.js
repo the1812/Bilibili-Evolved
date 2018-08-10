@@ -40,5 +40,8 @@
                 resources.applyStyle("noBannerStyle", "bilibili-banner-override");
             }
         }
+        return {
+            ajaxReload: false
+        };
     };
 })();

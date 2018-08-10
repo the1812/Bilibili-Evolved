@@ -641,5 +641,8 @@
         ).start();
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
+        return {
+            ajaxReload: true
+        };
     };
 })();

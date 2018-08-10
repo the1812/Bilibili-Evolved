@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.1.0
+// @version      1.1.1
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -127,10 +127,13 @@
         rgbToHsb(rgb)
         {
             const { r, g, b } = rgb;
-            let h, s, v;
             const max = Math.max(r, g, b);
             const min = Math.min(r, g, b);
             const delta = max - min;
+            const s = Math.round((max === 0 ? 0 : delta / max) * 100);
+            const v = Math.round(max / 255 * 100);
+
+            let h;
             if (delta === 0)
             {
                 h = 0;
@@ -152,8 +155,6 @@
             {
                 h += 360;
             }
-            s = Math.round((max === 0 ? 0 : delta / max) * 100);
-            v = Math.round(max / 255 * 100);
 
             return { h: h, s: s, b: v };
         }
@@ -161,25 +162,19 @@
         {
             return this.rgbToHsb(this.rgb);
         }
+        get grey()
+        {
+            const color = this.rgb;
+            return 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
+        }
         get foreground()
         {
             const color = this.rgb;
-            if (color)
+            if (color && this.grey < 0.35)
             {
-                const grey = 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
-                if (grey < 0.35)
-                {
-                    return "#000";
-                }
-                else
-                {
-                    return "#fff";
-                }
+                return "#000";
             }
-            else
-            {
-                return "#fff";
-            }
+            return "#fff";
         }
         makeImageFilter(originalRgb)
         {
@@ -221,6 +216,18 @@
     }
     class ExternalResource
     {
+        constructor()
+        {
+            // Offline build placeholder
+            this.data = {};
+            this.attributes = {};
+            this.color = new ColorProcessor(settings.customStyleColor);
+            settings.foreground = this.color.foreground;
+            settings.blueImageFilter = this.color.blueImageFilter;
+            settings.pinkImageFilter = this.color.pinkImageFilter;
+            settings.brightness = this.color.brightness;
+            settings.filterInvert = this.color.filterInvert;
+        }
         static get resourceUrls()
         {
             const root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
@@ -249,21 +256,6 @@
                 urls[key] = root + urls[key];
             }
             return urls;
-        }
-        constructor()
-        {
-            this.data = {};
-            this.ajaxReload = [
-                "touchVideoPlayer",
-                "watchLaterRedirect",
-                "expandDanmakuList"
-            ];
-            this.color = new ColorProcessor(settings.customStyleColor);
-            settings.foreground = this.color.foreground;
-            settings.blueImageFilter = this.color.blueImageFilter;
-            settings.pinkImageFilter = this.color.pinkImageFilter;
-            settings.brightness = this.color.brightness;
-            settings.filterInvert = this.color.filterInvert;
         }
         ajax(url, done)
         {
@@ -328,8 +320,9 @@
                     const func = eval(this.data[key]);
                     if (func)
                     {
-                        func(settings, this);
-                        if (this.ajaxReload.indexOf(key) !== -1)
+                        const attribute = func(settings, this);
+                        this.attributes[key] = attribute;
+                        if (attribute.ajaxReload)
                         {
                             $(document).ajaxComplete(() =>
                             {

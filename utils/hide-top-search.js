@@ -14,5 +14,8 @@
                 textBox => textBox.attr("placeholder", "搜索")
             ).start();
         }
+        return {
+            ajaxReload: false
+        };
     };
 })();
