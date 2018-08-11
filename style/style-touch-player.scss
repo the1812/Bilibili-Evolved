@@ -14,16 +14,27 @@
 .touch-video-box
 {
     border-radius: 0px;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 60%;
-    height: 50%;
-    background: rgba(0,0,0,0.625);
-    background: #000A;
-    -webkit-backdrop-filter: blur(30px);
-    backdrop-filter: blur(30px);
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
     position: relative;
+    max-width: 520px;
+    max-height: 240px;
+    border: 4px solid transparent;
+    transition: all 0.2s;
+    transform-origin: center;
+}
+@supports (backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px))
+{
+    .touch-video-box
+    {
+        background: rgba(0,0,0,0.618);
+        -webkit-backdrop-filter: blur(60px);
+        backdrop-filter: blur(60px);
+    }
 }
 .touch-video-info
 {
@@ -48,30 +59,18 @@
 .touch-info
 {
     display: block;
-    flex-grow: 1;
-    flex-shrink: 0;
-    margin-right: 1em;
-    margin-left: 0.2em;
     color: $customStyleColor;
-    max-width: 15em;
 }
 .touch-result
 {
     display: block;
-    flex-grow: 1;
-    flex-shrink: 0;
     font-size: 1.5rem;
 }
 .touch-speed
 {
     display: block;
-    flex-grow: 2;
-    flex-shrink: 0;
-    background: #3338;
+    background: rgba(0,0,0,0.1);
     padding: 0.5em;
-    margin-left: 1.3em;
-    margin-right: 0.2em;
-    max-width: 5em;
 }
 .touch-progress
 {
@@ -85,17 +84,37 @@
     height: 4px;
     transition: all 0.2s;
 }
+.touch-row-item
+{
+    flex: 1 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.touch-row-item-wide
+{
+    flex: 1.5 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .videoshot
 {
-    display: none;
     background-color: transparent;
     background-image: none;
-    flex-grow: 0;
-    flex-shrink: 0;
-    margin-left: 1em;
     transform-origin: center;
     transform: scale(0.9);
 }
+.adjust-closed
+{
+    transform: rotateX(90deg) rotateY(90deg) scale(0.5);
+}
+.adjust-opened
+{
+    transform: rotateX(0deg) rotateY(0deg) scale(1);
+}
+
+
 div.bilibili-player-video-control
 {
     height: 38px !important;

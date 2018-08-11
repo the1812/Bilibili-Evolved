@@ -75,7 +75,6 @@ textarea,
 .collection-m,
 .coin-operated-m,
 .follow-dialog-window,
-form.searchform:hover,
 #app,
 .home-page .back-top,
 .repost,
@@ -153,7 +152,22 @@ div.con,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn,
 .wrapper .content,
 .comment-bilibili-con,
-.bilibili-player-video-panel
+.bilibili-player-video-panel,
+.vote-container.pointer,
+.vote-container .image-area .share-img,
+.backdrop .title-box,
+.result .row,
+.image-box,
+.vote-user-face,
+.backdrop iframe,
+.home-wrap .home-input .list li:hover,
+.suggest-wrap .horizontal .hz-text,
+.suggest-wrap .vt-text:hover,
+.home-wrap .home-suggest .hotlist .num,
+.fixed-top,
+.page-wrap .pager,
+.fixed-top .search-block .input-wrap,
+.error-wrap
 {
     background-color: #222 !important;
 }
@@ -297,7 +311,26 @@ a.more.tc-slate:hover,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
 .up-article-list-block .more-article,
 .slim-video-card .video-info,
-.dyn_list li .preview
+.dyn_list li .preview,
+.checkbox,
+button.submit-button.disabled,
+.home-wrap .home-input .type,
+.home-wrap .home-input .list,
+.home-wrap .home-input .content,
+.suggest-wrap,
+.suggest-wrap .title span,
+.home-wrap .home-suggest .hot-search,
+.home-wrap .home-suggest .history,
+.search-wrap .search-block .input-wrap input,
+.search-wrap .search-block .input-wrap,
+.video.matrix,
+.pager .pages .page-item button,
+.video.list .type,
+.user-list .up-item .attention-btn.followed,
+.user-list .up-item .attention-btn.followed:hover,
+.photo-list .photo,
+.synthetical .play-btn,
+.percentage-bar
 {
     background-color: #444 !important;
 }
@@ -355,7 +388,8 @@ body,
 }
 .my-info .info-modal .integral li .num,
 .article-holder img,
-.article-holder .cover-default
+.article-holder .cover-default,
+.wrapper.clearfix .content
 {
     background-color: transparent !important;
 }
@@ -521,7 +555,33 @@ blockquote .color-yellow-04,
 .bilibili-player-video-info,
 .slim-video-card .video-info .col,
 .slim-video-card .video-info .col-2,
-.comment-bilibili-con .reason-box dl dt
+.comment-bilibili-con .reason-box dl dt,
+.comment-list .list-item .reply-box .view-more,
+.comment-m .b-head .del-log,
+.emoji-box .emoji-title,
+.vote-user-name,
+.anonymous,
+.share-to-dynamic,
+.submit-button.disabled,
+.vote-introduction,
+.suggest-wrap .title span,
+.nav-wrap .wrap>.sub>span,
+.filter-wrap .fold,
+.so-icon,
+.video.list .des,
+.bili-footer,
+.total-wrap .total-text,
+.article-wrap .article .desc,
+.synthetical .des,
+.user-list .up-item .attention-btn.followed,
+.user-list .up-item .attention-btn.followed:hover,
+.user-list .up-item .up-videos .ptime,
+.pgc-list .synthetical .score .user-count,
+.live-wrap .headline .user-more,
+.spread-module .num,
+.card-live-module .num,
+.live-module .zone-title .headline .online,
+.live-module .zone-title .headline .fire
 {
     color: #aaa !important;
 }
@@ -655,7 +715,6 @@ a.router-link-exact-active,
 .watch-later-list .list-box .av-item .av-about .t,
 a.s-btn,
 span.key,
-form.searchform:hover input,
 .tc-black,
 .history-wrap  .b-head .b-head-t,
 .history-btn>.btn,
@@ -810,7 +869,39 @@ div.con header,
 .up-article-list-block .more-article,
 .comment-bilibili-con .t,
 .comment-bilibili-con .reason-box dl dd,
-.comment-bilibili-con .other p
+.comment-bilibili-con .other p,
+.vote-title,
+.desc-title,
+.home-wrap .home-input .type,
+.home-wrap .home-input .list,
+.suggest-wrap .horizontal .hz-text,
+.suggest-wrap .vt-text,
+.home-wrap .home-suggest .hot-search,
+.home-wrap .home-suggest .history,
+.home-wrap .home-suggest .history .list .item a,
+.search-wrap .search-block .input-wrap input,
+.nav-wrap .wrap,
+.nav-wrap .wrap>.sub,
+.filter-wrap .filter-item a,
+.video.matrix .title,
+.pager .pages .page-item button,
+.video.list .type,
+.video.list .title,
+.error-wrap,
+.live-wrap .live-tabs a,
+.article-wrap .article .title,
+.synthetical .title,
+.user-wrap .dropdown-wrap .select-wrap .bili-dropdown .selected,
+.user-list .up-item .up-videos .video-item .video-desc,
+.user-list .up-item .title,
+.photo-list .photo .title,
+.bangumi-list .synthetical .des .type-s,
+.synthetical .play-btn,
+.pgc-list .synthetical .des .type-s,
+.live-user .user-item .item-right .uname,
+.live-room-list .room-item .item-title,
+.live-wrap .live-room .headline .filter a,
+.special-module .user a
 {
     color: #eee !important;
 }
@@ -838,7 +929,10 @@ form.ipt,
 .up-info-holder .fixed-box .rightside-article-list-btn .label,
 .up-info-holder .fixed-box .up-article-list-block .block-title,
 .pub-list .info dl,
-.report-con label:before
+.report-con label:before,
+.suggest-wrap .title,
+.home-wrap .home-suggest .hotlist .item,
+.home-wrap .home-suggest .history .list .item
 {
     border-color: #aaa !important;
 }
@@ -969,7 +1063,26 @@ div.bar>div.num,
 .wrapper .pay-qrcode-wrp .pay-way-wrp .pay-btn.active,
 .bilibili-player-video-inputbar .bilibili-player-video-inputbar-wrap,
 .article-holder .slim-video-card,
-.comment-bilibili-con .t
+.comment-bilibili-con .t,
+.vote-container,
+.image-box,
+.checkbox,
+.home-wrap .home-input .type,
+.home-wrap .home-input .list,
+.suggest-wrap,
+.suggest-wrap .horizontal .hz-text,
+.home-wrap .home-suggest .hot-search,
+.home-wrap .home-suggest .history,
+.home-wrap .home-input .content,
+.search-wrap .search-block .input-wrap input,
+.nav-wrap,
+.filter-wrap,
+.video.matrix,
+.pager .pages .page-item button,
+.video.list .type,
+.error-wrap,
+.photo-list .photo,
+.synthetical .play-btn
 {
     border-color: transparent !important;
 }
@@ -1059,7 +1172,19 @@ div.con header,
 .wrapper .edit-video-modal .modal-body,
 .up-info:before,
 #pin-wrapper #pin-layer-search,
-.be-input_inner
+.be-input_inner,
+.backdrop .title-box,
+.option-li,
+.result .row.top-border:before,
+.result .row:first-child:before,
+.vote-number,
+.fixed-top .search-block .input-wrap input,
+.video.list,
+.article-wrap .article,
+.synthetical,
+.user-wrap .dropdown-wrap .select-wrap,
+.user-list .up-item,
+.all-class
 {
     border-color: #444 !important
 }
@@ -1097,7 +1222,6 @@ li.tag,
 .read-push>.icon,
 .link-more>.icon,
 .bili-dropdown>.icon,
-.home>a,
 .c-clink>.icon,
 a.more>.b-icon,
 .member-menu i,
@@ -1107,6 +1231,7 @@ form.ipt>a,
 .icon-notice,
 .icon-close-notice,
 i.face,
+img[src$='0a399ff.png'],
 img[src$='0a399ff.png@22w_22h.webp'],
 i.btn-del,
 .up-info-holder .fixed-box .rightside-article-list-btn .icon-list,
@@ -1119,13 +1244,66 @@ i.btn-del,
 .icon-arrow,
 .side-bar .icon,
 .setting:before,
-.select-wrap .select-txt i
+.select-wrap .select-txt i,
+.primary-menu .nav-menu li.home>a,
+img[src^='//static.hdslb.com/images/base'],
+.home-wrap .home-input .type .arrow-down,
+.filter-wrap .fold .arrow-down,
+.filter-wrap .fold .arrow-up,
+.fixed-top .search-block .search-loupe .icon-loupe
 {
-    filter: grayscale(100) brightness(100) saturate(0) !important;
+    filter: brightness(0) invert(1) !important;
 }
 ul.up-nav li
 {
     filter: grayscale(1) brightness(1.3) !important;
+}
+.search-wrap .search-logo,
+.type.active .icon-aver,
+.type.active .icon-imgleft,
+.live-wrap .live-room .headline .filter .cover-btn.active .icon-live-face,
+.live-wrap .live-room .headline .filter .cover-btn:hover .icon-live-face,
+.live-wrap .live-room .headline .filter .frame-btn.active .icon-live-frame,
+.live-wrap .live-room .headline .filter .frame-btn:hover .icon-live-frame,
+.dynamic-liked i,
+.dynamic-liked:hover i,
+.dynamic-like:hover i,
+.dynamic-hated i,
+.dynamic-hated:hover i,
+.dynamic-hate:hover i,
+.is-web .checked,
+.is-web .is-max .percentage-bar,
+.video-container .image-area .see-later.done,
+.watch-later-trigger.added,
+.group-list li input[type=checkbox]:hover+i,
+.group-list li input[type=checkbox]:checked:hover+i,
+.group-list li input[type=checkbox]:checked+i,
+.comment-list .list-item .info .like:hover i,
+.comment-list .list-item .info .like.liked:hover i,
+.comment-list .list-item .info .like.liked i,
+.comment-list .list-item .info .hate:hover i,
+.comment-list .list-item .info .hate.hated:hover i,
+.comment-list .list-item .info .hate.hated i,
+.carousel-box .carousel-module .panel .trig span.on,
+.carousel-box .carousel-module .panel .trig span:hover,
+.emoji-tab-slider .next.on:hover,
+.emoji-tab-slider .prev.on:hover
+{
+    filter: $blueImageFilter !important;
+}
+.single-button .text-bar.selected,
+.vote-options .checked,
+.is-max .percentage-bar
+{
+    filter: $pinkImageFilter !important;
+}
+.switch-wrap i.icon-aver,
+.switch-wrap i.icon-imgleft,
+.elevator-module .nav-list .customize .icon,
+.spread-module .num .play .icon,
+.spread-module .num .danmu .icon
+{
+    filter: grayscale(1) !important;
 }
 #page-index .col-1 .section .more,
 .elec .elec-status,
@@ -1159,6 +1337,14 @@ ul.up-nav li
 {
     background-position: 0em -8.376em !important;
 }
+.switch-wrap .imgleft:hover i
+{
+    background-position: -148px -376px !important;
+}
+.switch-wrap .aver:hover i
+{
+    background-position: -194px -376px !important;
+}
 .multi-page .cur-list ul
 {
     max-height: none !important;
@@ -1182,7 +1368,8 @@ div.im-list-box,
 .space-right .space-right-top .title,
 .card,
 .action-menu .menu-list,
-.list-item .cover img
+.list-item .cover img,
+.vote-container:hover .text-area
 {
     box-shadow: none !important;
 }
@@ -1224,7 +1411,8 @@ div.desc-tips>span.arrow-left,
 img.source-img,
 canvas.cliper.is-img,
 .loading .icon,
-.load-more .icon
+.load-more .icon,
+.bp-svg-icon.vote-btn
 {
     display: none !important;
 }
@@ -1236,6 +1424,10 @@ canvas.cliper.is-img,
 .bilibili-player-video-progress-buffer-range
 {
     opacity: 0.5 !important;
+}
+.vote-user-face.opacity
+{
+    opacity: 1 !important;
 }
 .bilibili-player-block-label,
 .advanced-danmaku-group .content-span
@@ -1291,6 +1483,21 @@ canvas.cliper.is-img,
 #page-setting #setting-new-tag-btn
 {
     background: $customStyleColor !important;
+}
+.bilibili-player-video-panel-image-detail
+{
+    filter: invert(70%) !important;
+}
+.home-wrap .home-input .content:focus,
+.search-wrap .search-block .input-wrap input
+{
+    outline: none !important;
+    outline-offset: 0 !important;
+}
+.bangumi-list .synthetical .cardBangumibox .modal-box .lazy-img,
+.pgc-list .synthetical .cardPgcbox .modal-box .lazy-img
+{
+    z-index: inherit !important;
 }
 
 .c-clink:hover,
@@ -1357,7 +1564,11 @@ input[type=text]:focus,
 .send-btn,
 .bl-button--primary,
 .report-con input[type=radio]:checked+label:before,
-.wrapper .modal-back:hover
+.wrapper .modal-back:hover,
+.home-wrap .home-input .searchBtn,
+.suggest-wrap .horizontal .hz-text:hover,
+.filter-wrap .filter-item.active a,
+.live-wrap .live-tabs a.active
 {
     border-color: $customStyleColor !important;
 }
@@ -1443,7 +1654,22 @@ a.s-btn:hover,
 .follow-sidenav .follow-list-container .follow-item.cur,
 .bl-button--primary,
 .report-con label:after,
-.wrapper .elec-btn
+.wrapper .elec-btn,
+.video-info .video-title .activity,
+.vote-btn-box .vote-btn,
+.submit-button,
+.home-wrap .home-input .searchBtn,
+.home-wrap .home-suggest .hot-search .item .num.special,
+.search-wrap .search-block .search-button,
+.nav-wrap .hover-bar,
+.filter-wrap .fold:hover,
+.pager .pages .page-item.active button,
+.pager .pages .page-item button:hover,
+.filter-wrap .filter-item.active,
+.user-list .up-item .attention-btn,
+.synthetical .play-btn:hover,
+.collection-m .bottom .btn,
+.carousel-module .panel .trig span.on
 {
     background-color: $customStyleColor !important;
 }
@@ -1576,7 +1802,7 @@ a.up-name:hover,
 #page-subs .action .sub-action,
 #page-channel-index .no-channel-container em,
 .bui-switch .bui-checkbox:checked+.bui-body .bui-dot,
-.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
+.bilibili-player-video-danmaku-setting-left-block .bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
 .bui-select.bui-select-quality-menu .bui-select-item.bui-select-item-active,
 .bb-comment .stick,
 .bb-comment .stick.assist,
@@ -1600,7 +1826,32 @@ a.up-name:hover,
 .wrapper .modal-body .elec-protocol a:hover,
 .wrapper .modal-body .pay-info .balance,
 .wrapper .modal-body .pay-info .pay-tip .em-text,
-.wrapper .modal-back
+.wrapper .modal-back,
+.bilibili-player-video-toast-item-jump,
+.video-toolbar .ops span.on,
+.video-toolbar .ops span.on i,
+.video-toolbar .ops span:hover,
+.video-toolbar .ops span:hover i,
+.video-toolbar .share .share-btn:hover,
+.video-toolbar .share .share-btn:hover i,
+.bilibili-player-video-danmaku-setting:hover,
+.bilibili-player-video-toast-item-close:hover i,
+.joined-number,
+.suggest-wrap .horizontal .hz-text:hover,
+.clearall a,
+.nav-wrap .wrap>.sub.active, .nav-wrap .wrap>.sub:hover,
+.filter-wrap .filter-item a:hover,
+.keyword,
+.suggest-wrap .keyword-wrap .keyword .suggest_high_light,
+.live-wrap .live-tabs a.active,
+.live-wrap .live-tabs a:hover,
+.user-list .up-item .up-videos .video-item .video-desc:hover,
+.user-list .up-item .up-videos .video-more,
+.live-wrap .live-room .headline .filter a.active,
+.live-wrap .live-room .headline .filter a:hover,
+.card-live-module .num,
+.live-module .zone-title .headline .fire:hover,
+.special-module .user a:hover
 {
     color: $customStyleColor !important;
 }
@@ -1611,6 +1862,7 @@ a.up-name:hover,
 .dropdown-item:hover,
 .more-link:hover,
 a.more:hover,
+div.title a.more:hover,
 .dynamic-m .dyn_menu li,
 .bili-header-m .mini-wnd-nav a:hover,
 .up-info .btn .b-cd:hover,
@@ -1668,7 +1920,21 @@ a.s-btn:hover,
 .follow-sidenav .follow-list-container .follow-item.cur,
 #page-setting #setting-new-tag-btn,
 .bl-button--primary,
-.wrapper .elec-btn
+.wrapper .elec-btn,
+.video-info .video-title .activity,
+.vote-btn-box .vote-btn,
+.submit-button,
+.home-wrap .home-input .searchBtn,
+.home-wrap .home-suggest .hot-search .item .num.special,
+.search-wrap .search-block .search-button,
+.filter-wrap .filter-item.active a,
+.filter-wrap .fold:hover,
+.pager .pages .page-item.active button,
+.pager .pages .page-item button:hover,
+.filter-wrap .filter-item.active,
+.user-list .up-item .attention-btn,
+.synthetical .play-btn:hover,
+.collection-m .bottom .btn
 {
     color: $foreground !important;
 }
@@ -1676,11 +1942,13 @@ a.s-btn:hover,
 .bui-checkbox:hover .bui-checkbox-icon svg,
 .bui-switch .bui-checkbox:checked+.bui-body .bui-dot,
 .bilibili-player-block-filter-type:hover .bilibili-player-block-filter-image,
-.bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image,
+.bilibili-player-video-danmaku-setting-left-block .bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-image,
 .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active,
  .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span.active:hover,
  .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row.mode .selection-span:hover,
- #page-follows .follow-main .follow-action-top .back-to-info:hover
+ #page-follows .follow-main .follow-action-top .back-to-info:hover,
+.bilibili-player-video-danmaku-setting:hover,
+.bilibili-player-video-sendbar .bilibili-player-video-btn:hover
 {
     fill: $customStyleColor !important;
 }

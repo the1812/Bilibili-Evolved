@@ -13,5 +13,8 @@
                 }
             }
         );
+        return {
+            ajaxReload: true
+        };
     };
 })();

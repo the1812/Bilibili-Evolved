@@ -64,7 +64,7 @@ li.nav-item.home:hover
 a.t>i.bili-icon-logo,
 a.t>i.bili-icon
 {
-    filter: grayscale(100) brightness($filterBrightness) saturate(0) !important;
+    filter: brightness(0) $filterInvert !important;
     width: 50px !important;
     left: -60px !important;
     top: 0px !important;

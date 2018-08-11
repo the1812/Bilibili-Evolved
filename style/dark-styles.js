@@ -6,5 +6,8 @@
         {
             resources.applyStyle("darkStyle", "bilibili-new-style-dark");
         }
+        return {
+            ajaxReload: false
+        };
     };
 })();

@@ -93,6 +93,10 @@
     flex-grow: 1;
     overflow: auto;
 }
+.gui-settings-content ul
+{
+    padding: 0;
+}
 .gui-settings-content ul li
 {
     font-size: 16px;
@@ -254,6 +258,7 @@ button.save:focus
     border: 1px solid #8884;
     position: relative;
     cursor: pointer;
+    box-sizing: border-box;
 }
 .predefined-colors
 {
@@ -296,4 +301,10 @@ button.save:focus
 input[key]:focus
 {
     outline: none;
+}
+input[type='text'][key]
+{
+    height: auto;
+    border: none;
+    border-radius: 4px;
 }

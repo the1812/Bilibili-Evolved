@@ -213,5 +213,8 @@
                 }
             }
         ).start();
+        return {
+            ajaxReload: false
+        };
     };
 })();

@@ -2,11 +2,6 @@
 {
     return (settings, resources) =>
     {
-        new SpinQuery(
-            () => $(".nav-search-keyword"),
-            it => it.length > 0 && it.attr("placeholder").length > 0,
-            textBox => textBox.attr("placeholder", "搜索")
-        ).start();
         SpinQuery.any(
             () => $(".custom-scrollbar"),
             it => it.removeClass("custom-scrollbar")
@@ -38,10 +33,6 @@
                         .insertAfter(".nav-con.fr");
                 }
             ).start();
-            SpinQuery.any(
-                () => $("input.search-keyword"),
-                textBox => textBox.attr("placeholder", "搜索")
-            );
             resources.applyStyle("navbarOverrideStyle", "bilibili-nav-bar-override");
 
             if (!settings.showBanner)
@@ -49,5 +40,8 @@
                 resources.applyStyle("noBannerStyle", "bilibili-banner-override");
             }
         }
+        return {
+            ajaxReload: false
+        };
     };
 })();
