@@ -6,3 +6,7 @@
 {
     display: none !important;
 }
+.carousel-module .panel .pic li[data-id='0']
+{
+    visibility: hidden !important;
+}

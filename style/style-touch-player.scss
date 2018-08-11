@@ -26,7 +26,6 @@
     border: 4px solid transparent;
     transition: all 0.2s;
     transform-origin: center;
-    transform: rotateY(90deg);
 }
 @supports (backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px))
 {
@@ -106,6 +105,16 @@
     transform-origin: center;
     transform: scale(0.9);
 }
+.adjust-closed
+{
+    transform: rotateX(90deg) rotateY(90deg) scale(0.5);
+}
+.adjust-opened
+{
+    transform: rotateX(0deg) rotateY(0deg) scale(1);
+}
+
+
 div.bilibili-player-video-control
 {
     height: 38px !important;

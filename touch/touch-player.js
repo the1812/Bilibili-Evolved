@@ -190,7 +190,7 @@
             {
                 if (this._touchStart)
                 {
-                    this.onActionStart && this.onActionStart();
+                    this.onActionStart && this.onActionStart(direction);
                     this._startPosition = position;
                     this._touchStart = false;
                 }
@@ -429,7 +429,7 @@
                 if ($(".touch-video-box").length === 0)
                 {
                     $(".bilibili-player-video-subtitle").before(`<div class='touch-video-box-wrapper'>
-                            <div class='touch-video-box'>
+                            <div class='touch-video-box adjust-closed'>
                                 <div class='touch-video-info'></div>
                                 <div class='touch-progress'></div>
                             </div>
@@ -501,9 +501,21 @@
                         }
                     };
 
-                    swiper.action.onActionStart = () =>
+                    swiper.action.onActionStart = direction =>
                     {
-                        box.style.transform = "rotateY(0deg)";
+                        // if (direction === "vertical")
+                        // {
+                        //     box.classList.add("volume-adjust");
+                        //     box.classList.remove("playback-adjust");
+                        //     box.classList.add("adjust-opened");
+                        // }
+                        // else if (direction === "horizontal")
+                        // {
+                        //     box.classList.add("playback-adjust");
+                        //     box.classList.remove("volume-adjust");
+                        //     box.classList.add("adjust-opened");
+                        // }
+                        box.classList.add("adjust-opened");
                         text.innerHTML = "";
                         originalVolume = Math.round(video.prop("volume") * 100);
                     };
@@ -616,7 +628,6 @@
                     };
                     swiper.action.onActionEnd = action =>
                     {
-                        box.style.transform = "rotateY(90deg)";
                         text.innerHTML = "";
                         if (action)
                         {
@@ -635,6 +646,7 @@
                                 video.prop("currentTime", time);
                             }
                         }
+                        box.classList.remove("adjust-opened");
                     };
                 }
             }
