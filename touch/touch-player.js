@@ -400,23 +400,24 @@
                 }
             }
         }
-        SpinQuery.any(
-            () => $(".bilibili-player-video-web-fullscreen"),
-            fullscreenButton =>
-            {
-                if (!fullscreenButton.hasClass("bilibili-player-video-btn") &&
-                    $(".bilibili-player-video-btn-fullscreen").data("events"))
-                {
-                    const clickHandler = getEventHandler(
-                        $(".bilibili-player-video-btn-fullscreen"), "click");
-                    fullscreenButton
-                        .detach()
-                        .insertAfter(".bilibili-player-video-btn-widescreen")
-                        .addClass("bilibili-player-video-btn")
-                        .on("click", clickHandler);
-                }
-            }
-        );
+        // SpinQuery.any(
+        //     () => $(".bilibili-player-video-web-fullscreen"),
+        //     fullscreenButton =>
+        //     {
+        //         if (!fullscreenButton.hasClass("bilibili-player-video-btn") &&
+        //             $(".bilibili-player-video-btn-fullscreen").data("events"))
+        //         {
+        //             const clickHandler = getEventHandler(
+        //                 $(".bilibili-player-video-btn-fullscreen"), "click");
+        //             fullscreenButton
+        //                 .detach()
+        //                 .insertAfter(".bilibili-player-video-btn-widescreen")
+        //                 .addClass("bilibili-player-video-btn")
+        //                 .on("click", clickHandler);
+        //         }
+        //     }
+        // );
+        unsafeWindow.Element.ALLOW_KEYBOARD_INPUT = {};
         SpinQuery.any(
             () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
             icons => icons.unbind("click")
@@ -454,10 +455,8 @@
                         video.prop("volume", volume);
                         $(".bilibili-player-video-volume-num").text(Math.round(volume * 100));
 
-                        // new version
                         $(".bui-thumb").css("transform", `translateY(-${48 * volume}px)`);
                         $(".bui-track-vertical .bui-bar").css("transform", `scaleY(${volume})`);
-                        // new version
                         if (volume === 0)
                         {
                             $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");
@@ -476,45 +475,10 @@
                             $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
                             video.prop("muted", false);
                         }
-
-                        // old version
-                        $(".bpui-slider-progress").css("height", volume * 100 + "%");
-                        $(".bpui-slider-handle").css("bottom", (35 + volume * 230) / 3 + "%");
-                        // old version
-                        if (volume === 0)
-                        {
-                            $(".icon-24soundoff").show();
-                            $(".icon-24soundlarge").hide();
-                            $(".icon-24soundsmall").hide();
-                        }
-                        else if (volume >= 0.5)
-                        {
-                            $(".icon-24soundoff").hide();
-                            $(".icon-24soundlarge").show();
-                            $(".icon-24soundsmall").hide();
-                        }
-                        else
-                        {
-                            $(".icon-24soundoff").hide();
-                            $(".icon-24soundlarge").hide();
-                            $(".icon-24soundsmall").show();
-                        }
                     };
 
                     swiper.action.onActionStart = direction =>
                     {
-                        // if (direction === "vertical")
-                        // {
-                        //     box.classList.add("volume-adjust");
-                        //     box.classList.remove("playback-adjust");
-                        //     box.classList.add("adjust-opened");
-                        // }
-                        // else if (direction === "horizontal")
-                        // {
-                        //     box.classList.add("playback-adjust");
-                        //     box.classList.remove("volume-adjust");
-                        //     box.classList.add("adjust-opened");
-                        // }
                         box.classList.add("adjust-opened");
                         text.innerHTML = "";
                         originalVolume = Math.round(video.prop("volume") * 100);
