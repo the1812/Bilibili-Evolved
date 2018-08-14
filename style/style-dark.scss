@@ -167,7 +167,11 @@ div.con,
 .fixed-top,
 .page-wrap .pager,
 .fixed-top .search-block .input-wrap,
-.error-wrap
+.error-wrap,
+#sections-vm .section-block,
+.link-footer,
+.base-bubble,
+.base-bubble .content-ctnr:before
 {
     background-color: #222 !important;
 }
@@ -331,7 +335,16 @@ button.submit-button.disabled,
 .photo-list .photo,
 .synthetical .play-btn,
 .percentage-bar,
-.s-space .wrapper .content
+.s-space .wrapper .content,
+.ema-wishing,
+.room-info-ctnr .content-wrapper,
+.activity-pushing-out,
+.left-container .head-info-section,
+.left-container .gift-control-section,
+.rank-list-ctnr,
+.rank-list-ctnr .tab,
+.player-and-aside-area .aside-area,
+.player-and-aside-area .aside-area .rank-list-section
 {
     background-color: #444 !important;
 }
@@ -390,7 +403,11 @@ body,
 .my-info .info-modal .integral li .num,
 .article-holder img,
 .article-holder .cover-default,
-.wrapper.clearfix .content
+.wrapper.clearfix .content,
+.right-part .user-panel,
+.room-bg::after,
+.side-bar-cntr,
+.shortcut-item .list-item:hover
 {
     background-color: transparent !important;
 }
@@ -582,7 +599,11 @@ blockquote .color-yellow-04,
 .spread-module .num,
 .card-live-module .num,
 .live-module .zone-title .headline .online,
-.live-module .zone-title .headline .fire
+.live-module .zone-title .headline .fire,
+.tab-candidate,
+.room-feed .tabs .item,
+.live-status-label.preparing,
+.area-link
 {
     color: #aaa !important;
 }
@@ -902,7 +923,14 @@ div.con header,
 .live-user .user-item .item-right .uname,
 .live-room-list .room-item .item-title,
 .live-wrap .live-room .headline .filter a,
-.special-module .user a
+.special-module .user a,
+.ema-wishing .title,
+.room-introduction-tags .room-introduction-tag,
+.room-introduction-scroll-wrapper,
+.no-glory,
+.base-bubble,
+.icon-bls2018-rank.side-bar-icon+.size-bar-text,
+.room-title
 {
     color: #eee !important;
 }
@@ -933,7 +961,8 @@ form.ipt,
 .report-con label:before,
 .suggest-wrap .title,
 .home-wrap .home-suggest .hotlist .item,
-.home-wrap .home-suggest .history .list .item
+.home-wrap .home-suggest .history .list .item,
+.live-status-label.preparing
 {
     border-color: #aaa !important;
 }
@@ -1083,7 +1112,16 @@ div.bar>div.num,
 .video.list .type,
 .error-wrap,
 .photo-list .photo,
-.synthetical .play-btn
+.synthetical .play-btn,
+.ema-wishing,
+.link-footer,
+.room-info-ctnr .content-wrapper,
+.room-introduction-tags,
+.side-bar-cntr,
+.base-bubble,
+.base-bubble .content-ctnr:before,
+.player-and-aside-area .aside-area,
+.rank-list-ctnr
 {
     border-color: transparent !important;
 }
@@ -1309,6 +1347,10 @@ ul.filter-disable .icon-copy
 {
     filter: grayscale(1) !important;
 }
+.room-bg
+{
+    filter: brightness(0.382) blur(10px) !important;
+}
 #page-index .col-1 .section .more,
 .elec .elec-status,
 .elec .elec-status-bg,
@@ -1373,7 +1415,8 @@ div.im-list-box,
 .card,
 .action-menu .menu-list,
 .list-item .cover img,
-.vote-container:hover .text-area
+.vote-container:hover .text-area,
+.side-bar-cntr
 {
     box-shadow: none !important;
 }
@@ -1673,7 +1716,9 @@ a.s-btn:hover,
 .user-list .up-item .attention-btn,
 .synthetical .play-btn:hover,
 .collection-m .bottom .btn,
-.carousel-module .panel .trig span.on
+.carousel-module .panel .trig span.on,
+.area-link:active,
+.hour-rank
 {
     background-color: $customStyleColor !important;
 }
@@ -1858,7 +1903,14 @@ a.up-name:hover,
 .special-module .user a:hover,
 .be-dropdown-item a:hover,
 .list-item a.title:hover,
-.follow-sidenav .text:hover
+.follow-sidenav .text:hover,
+.tab-candidate.active,
+.tab-candidate:hover,
+.tab-candidate>span:after,
+.room-introduction-tags .room-introduction-tag:hover .icon-label,
+.room-introduction-tags .room-introduction-tag:hover,
+.room-introduction-tags .room-introduction-tag a:hover,
+.area-link:hover
 {
     color: $customStyleColor !important;
 }
@@ -1941,7 +1993,9 @@ a.s-btn:hover,
 .filter-wrap .filter-item.active,
 .user-list .up-item .attention-btn,
 .synthetical .play-btn:hover,
-.collection-m .bottom .btn
+.collection-m .bottom .btn,
+.area-link:active,
+.hour-rank .hour-rank-content
 {
     color: $foreground !important;
 }

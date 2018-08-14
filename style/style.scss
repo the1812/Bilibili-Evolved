@@ -117,7 +117,6 @@ div.up-load
 {
     background-image: none !important;
     background-color: #D5E3F2 !important;
-    border: 1px solid #effbff !important;
     color: #effbff !important;
 
     background: transparent !important;
@@ -125,8 +124,14 @@ div.up-load
     border-radius: 4px !important;
     line-height: 30px !important;
     height: 30px !important;
-    border: 1px solid $foregroundb !important;
     transition: background-color .2s !important;
+}
+.u-link,
+.shortcuts-ctnr .shortcut-item .hinter,
+.shortcuts-ctnr .shortcut-item .num-hinter
+{
+    border: 1px solid #effbff !important;
+    border: 1px solid $foregroundb !important;
 }
 
 .u-link:hover
