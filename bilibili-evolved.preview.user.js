@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.1.1
+// @version      1.1.2
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -22,6 +22,7 @@
     const settings = {
         removeAds: true,
         hideTopSearch: false,
+        touchVideoPlayerAnimation: false,
         touchNavBar: false,
         touchVideoPlayer: false,
         watchLaterRedirect: true,
