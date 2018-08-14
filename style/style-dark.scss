@@ -330,7 +330,8 @@ button.submit-button.disabled,
 .user-list .up-item .attention-btn.followed:hover,
 .photo-list .photo,
 .synthetical .play-btn,
-.percentage-bar
+.percentage-bar,
+.s-space .wrapper .content
 {
     background-color: #444 !important;
 }
@@ -1287,7 +1288,9 @@ ul.up-nav li
 .carousel-box .carousel-module .panel .trig span.on,
 .carousel-box .carousel-module .panel .trig span:hover,
 .emoji-tab-slider .next.on:hover,
-.emoji-tab-slider .prev.on:hover
+.emoji-tab-slider .prev.on:hover,
+.follow-main .follow-action-bottom .icon-copy,
+.follow-select .icon-follow-selected
 {
     filter: $blueImageFilter !important;
 }
@@ -1301,7 +1304,8 @@ ul.up-nav li
 .switch-wrap i.icon-imgleft,
 .elevator-module .nav-list .customize .icon,
 .spread-module .num .play .icon,
-.spread-module .num .danmu .icon
+.spread-module .num .danmu .icon,
+ul.filter-disable .icon-copy
 {
     filter: grayscale(1) !important;
 }
@@ -1851,7 +1855,10 @@ a.up-name:hover,
 .live-wrap .live-room .headline .filter a:hover,
 .card-live-module .num,
 .live-module .zone-title .headline .fire:hover,
-.special-module .user a:hover
+.special-module .user a:hover,
+.be-dropdown-item a:hover,
+.list-item a.title:hover,
+.follow-sidenav .text:hover
 {
     color: $customStyleColor !important;
 }
