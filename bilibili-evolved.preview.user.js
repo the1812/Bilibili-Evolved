@@ -20,6 +20,8 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        removeLiveWatermark: true,
+        harunaScale: true,
         removeAds: true,
         hideTopSearch: false,
         touchVideoPlayerAnimation: false,
@@ -250,7 +252,9 @@
                 expandDanmakuList: "utils/expand-danmaku.min.js",
                 removeAds: "utils/remove-promotions.min.js",
                 watchLaterRedirect: "utils/watchlater.min.js",
-                hideTopSearch: "utils/hide-top-search.min.js"
+                hideTopSearch: "utils/hide-top-search.min.js",
+                harunaScale: "live/haruna-scale.min.js",
+                removeLiveWatermark: "live/remove-watermark.min.js"
             };
             for (const key in urls)
             {

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      29.31
+// @version      29.84
 // @description  增强哔哩哔哩Web端体验.(离线版)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -20,6 +20,8 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        removeLiveWatermark: true,
+        harunaScale: true,
         removeAds: true,
         hideTopSearch: false,
         touchVideoPlayerAnimation: false,
@@ -358,6 +360,24 @@ this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/mas
             <span>隐藏热搜词</span>
           </label>
         </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="harunaScale" type="checkbox" checked/>
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>缩放看板娘</span>
+          </label>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="removeLiveWatermark" type="checkbox" checked/>
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>删除直播水印</span>
+          </label>
+        </li>
       </ul>
     </div>
     <div class="gui-settings-footer">
@@ -378,6 +398,8 @@ this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/mas
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/remove-promotions.min.js"] = (()=>{return(e,a)=>{a.applyStyle("removeAdsStyle","remove-promotions-style");SpinQuery.any(()=>$(".gg-pic").parent("a"),e=>e.css("display","none"));return{ajaxReload:false}}})();
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/watchlater.min.js"] = (()=>{return()=>{const t=t=>{if(t.attr("href").indexOf("watchlater")!==0){const a=t.map((t,a)=>{const r=$(a).attr("href");if(r){const t=r.match(/av[\d]+/);if(t&&t[0]){return"https://www.bilibili.com/"+t[0]}}return"javascript:;"});t.each((t,r)=>$(r).attr("href",a[t]).attr("target","_blank"))}};SpinQuery.any(()=>$(".av-item>a"),a=>t(a));SpinQuery.any(()=>$(".av-about>a"),a=>t(a));SpinQuery.any(()=>$("div.watch-later-m>ul>div>li>a"),a=>t(a));SpinQuery.any(()=>$(".read-more.mr"),t=>t.remove());SpinQuery.any(()=>$(".read-more-grp>.read-more"),t=>t.css({float:"none",width:"auto"}));new SpinQuery(()=>document.URL.match(/av[\d]+/),t=>t&&document.URL.indexOf("watchlater")!==-1,t=>{const a=t[0];if(a){window.location.replace(`https://www.bilibili.com/${a}`)}}).start();return{ajaxReload:true}}})();
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/hide-top-search.min.js"] = (()=>{return()=>{const e=[".nav-search-keyword",".search-keyword"];for(const r of e){new SpinQuery(()=>$(r),e=>e.length>0&&e.attr("placeholder").length>0,e=>e.attr("placeholder","搜索")).start()}return{ajaxReload:false}}})();
+this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/live/haruna-scale.min.js"] = (()=>{return()=>{const n="bilibili-haruna-scale";if($(n).length===0){$("html").prepend(`\n            <style id='${n}'>\n                .haruna-ctnr,\n                .avatar-btn\n                {\n                    transform: scale(${1/window.devicePixelRatio}) !important;\n                }\n            </style>\n            `)}return{ajaxReload:false}}})();
+this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/live/remove-watermark.min.js"] = (()=>{return()=>{const e="bilibili-live-watermark";if($(e).length===0){$("html").prepend(`\n            <style id='${e}'>\n                .bilibili-live-player-video-logo\n                {\n                    display: none !important;\n                }\n            </style>\n            `)}return{ajaxReload:false}}})();
 
             this.data = {};
             this.attributes = {};
@@ -409,7 +431,9 @@ this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/mas
                 expandDanmakuList: "utils/expand-danmaku.min.js",
                 removeAds: "utils/remove-promotions.min.js",
                 watchLaterRedirect: "utils/watchlater.min.js",
-                hideTopSearch: "utils/hide-top-search.min.js"
+                hideTopSearch: "utils/hide-top-search.min.js",
+                harunaScale: "live/haruna-scale.min.js",
+                removeLiveWatermark: "live/remove-watermark.min.js"
             };
             for (const key in urls)
             {
