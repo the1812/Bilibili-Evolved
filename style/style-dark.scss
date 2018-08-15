@@ -176,7 +176,16 @@ div.con,
 .gift-item.buy.hover,
 .gift-presets .gift-panel-switch,
 .chat-history-panel .chat-history-list .chat-item.system-msg,
-.chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon
+.chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon,
+.bilibili-live-player-loading-panel,
+.guard-rank-cntr .rank-cntr .btn-box .buy:hover,
+.rank.rank-4,
+.rank.rank-5,
+.rank.rank-6,
+.rank.rank-7,
+.rank.rank-8,
+.rank.rank-9,
+.rank.rank-10
 {
     background-color: #222 !important;
 }
@@ -350,7 +359,10 @@ button.submit-button.disabled,
 .rank-list-ctnr .tabs,
 .player-and-aside-area .aside-area,
 .player-and-aside-area .aside-area .rank-list-section,
-.gift-presets .gift-panel-box
+.gift-presets .gift-panel-box,
+.bilibili-live-player-ending-panel-recommend-card-pic,
+.rank-list-ctnr .own,
+.rank-cntr .item.own
 {
     background-color: #444 !important;
 }
@@ -626,7 +638,7 @@ blockquote .color-yellow-04,
 .right-action-ctnr,
 .attention-btn-ctnr .right-part,
 .rank-list-ctnr .tabs .item,
-.guard-rank-cntr .rank-cntr .tip,
+.rank-cntr .tip,
 .chat-item.danmaku-item .user-name
 {
     color: #aaa !important;
@@ -961,7 +973,9 @@ div.con header,
 .guard-rank-cntr .rank-cntr .rank-list-box a,
 .t-over-hidden,
 .guard-rank-cntr .rank-cntr .page-box,
-.chat-history-list .chat-item.danmaku-item
+.chat-history-list .chat-item.danmaku-item,
+.activity-rank-cntr .rank-cntr .item,
+.rank-list-ctnr .normal-list .item
 {
     color: #eee !important;
 }
@@ -1149,8 +1163,6 @@ div.bar>div.num,
 .room-info-ctnr .content-wrapper,
 .room-introduction-tags,
 .side-bar-cntr,
-.base-bubble,
-.base-bubble .content-ctnr:before,
 .player-and-aside-area .aside-area,
 .rank-list-ctnr,
 .left-container .head-info-section,
@@ -1158,7 +1170,8 @@ div.bar>div.num,
 .attention-btn-ctnr .right-part,
 .gift-presets .gift-panel-switch,
 .rank-list-ctnr .tabs .item,
-.chat-history-panel .chat-history-list .chat-item.system-msg
+.chat-history-panel .chat-history-list .chat-item.system-msg,
+.guard-rank-cntr .rank-cntr .btn-box
 {
     border-color: transparent !important;
 }
@@ -1659,7 +1672,9 @@ input[type=text]:focus,
 .home-wrap .home-input .searchBtn,
 .suggest-wrap .horizontal .hz-text:hover,
 .filter-wrap .filter-item.active a,
-.live-wrap .live-tabs a.active
+.live-wrap .live-tabs a.active,
+.base-bubble,
+.base-bubble .content-ctnr:before
 {
     border-color: $customStyleColor !important;
 }
@@ -1766,7 +1781,10 @@ a.s-btn:hover,
 .hour-rank,
 .attention-btn-ctnr .left-part,
 .gift-item .corner-mark,
-.gift-package
+.gift-package,
+.rank.rank-1,
+.rank.rank-2,
+.rank.rank-3
 {
     background-color: $customStyleColor !important;
 }
@@ -1962,7 +1980,8 @@ a.up-name:hover,
 .right-action-ctnr:hover,
 .seeds-wrap>.item.btn,
 .guard-rank-cntr .rank-cntr .rank-list-box a:hover,
-.chat-item.danmaku-item .danmaku-content:hover
+.chat-item.danmaku-item .danmaku-content:hover,
+.guard-rank-cntr .rank-cntr .btn-box .buy
 {
     color: $customStyleColor !important;
 }
@@ -2051,7 +2070,10 @@ a.s-btn:hover,
 .attention-btn-ctnr .left-part,
 .gift-item .corner-mark,
 .gift-package,
-.gift-package>span
+.gift-package>span,
+.rank.rank-1,
+.rank.rank-2,
+.rank.rank-3
 {
     color: $foreground !important;
 }
