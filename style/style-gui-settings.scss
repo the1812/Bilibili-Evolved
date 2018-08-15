@@ -94,25 +94,24 @@
     overflow: auto;
     position: relative;
 }
-.gui-settings-content-top-mask
+.gui-settings-content-top-mask,
+.gui-settings-content-bottom-mask
 {
-    background: linear-gradient(to bottom, white, transparent);
-    height: 20px;
+    height: 10px;
     position: sticky;
-    top: 0px;
     left: 0px;
     width: 100%;
     z-index: 10;
 }
+.gui-settings-content-top-mask
+{
+    background: linear-gradient(to bottom, white, transparent);
+    top: 0px;
+}
 .gui-settings-content-bottom-mask
 {
     background: linear-gradient(to top, white, transparent);
-    height: 20px;
-    position: sticky;
     bottom: 0px;
-    left: 0px;
-    width: 100%;
-    z-index: 10;
 }
 .gui-settings-content ul
 {
