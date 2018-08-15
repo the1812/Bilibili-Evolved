@@ -171,7 +171,12 @@ div.con,
 #sections-vm .section-block,
 .link-footer,
 .base-bubble,
-.base-bubble .content-ctnr:before
+.base-bubble .content-ctnr:before,
+.attention-btn-ctnr .right-part,
+.gift-item.buy.hover,
+.gift-presets .gift-panel-switch,
+.chat-history-panel .chat-history-list .chat-item.system-msg,
+.chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon
 {
     background-color: #222 !important;
 }
@@ -342,9 +347,10 @@ button.submit-button.disabled,
 .left-container .head-info-section,
 .left-container .gift-control-section,
 .rank-list-ctnr,
-.rank-list-ctnr .tab,
+.rank-list-ctnr .tabs,
 .player-and-aside-area .aside-area,
-.player-and-aside-area .aside-area .rank-list-section
+.player-and-aside-area .aside-area .rank-list-section,
+.gift-presets .gift-panel-box
 {
     background-color: #444 !important;
 }
@@ -405,7 +411,6 @@ body,
 .article-holder .cover-default,
 .wrapper.clearfix .content,
 .right-part .user-panel,
-.room-bg::after,
 .side-bar-cntr,
 .shortcut-item .list-item:hover
 {
@@ -422,6 +427,10 @@ body,
 .gui-settings-content-bottom-mask
 {
     background: linear-gradient(to top, #222, transparent);
+}
+.room-bg::after
+{
+    background: transparent !important;
 }
 
 .bili-footer a,
@@ -611,7 +620,14 @@ blockquote .color-yellow-04,
 .tab-candidate,
 .room-feed .tabs .item,
 .live-status-label.preparing,
-.area-link
+.area-link,
+.room-owner-username,
+.room-info-down-row .icon-label,
+.right-action-ctnr,
+.attention-btn-ctnr .right-part,
+.rank-list-ctnr .tabs .item,
+.guard-rank-cntr .rank-cntr .tip,
+.chat-item.danmaku-item .user-name
 {
     color: #aaa !important;
 }
@@ -938,7 +954,14 @@ div.con header,
 .no-glory,
 .base-bubble,
 .icon-bls2018-rank.side-bar-icon+.size-bar-text,
-.room-title
+.room-title,
+.gift-item .label,
+.seeds-wrap,
+.rank-list-ctnr .tabs .item.active,
+.guard-rank-cntr .rank-cntr .rank-list-box a,
+.t-over-hidden,
+.guard-rank-cntr .rank-cntr .page-box,
+.chat-history-list .chat-item.danmaku-item
 {
     color: #eee !important;
 }
@@ -1129,7 +1152,13 @@ div.bar>div.num,
 .base-bubble,
 .base-bubble .content-ctnr:before,
 .player-and-aside-area .aside-area,
-.rank-list-ctnr
+.rank-list-ctnr,
+.left-container .head-info-section,
+.left-container .gift-control-section,
+.attention-btn-ctnr .right-part,
+.gift-presets .gift-panel-switch,
+.rank-list-ctnr .tabs .item,
+.chat-history-panel .chat-history-list .chat-item.system-msg
 {
     border-color: transparent !important;
 }
@@ -1297,7 +1326,8 @@ img[src^='//static.hdslb.com/images/base'],
 .home-wrap .home-input .type .arrow-down,
 .filter-wrap .fold .arrow-down,
 .filter-wrap .fold .arrow-up,
-.fixed-top .search-block .search-loupe .icon-loupe
+.fixed-top .search-block .search-loupe .icon-loupe,
+.gift-presets .gift-panel-switch>.arrow
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -1359,6 +1389,11 @@ ul.filter-disable .icon-copy
 {
     filter: brightness(0.382) blur(10px) !important;
 }
+.bottom-actions .left-action
+{
+    filter: brightness(0.8) !important;
+}
+
 #page-index .col-1 .section .more,
 .elec .elec-status,
 .elec .elec-status-bg,
@@ -1510,7 +1545,8 @@ canvas.cliper.is-img,
 {
     border-style: solid !important;
 }
-.go-top-m .go-top
+.go-top-m .go-top,
+.page-box .num
 {
     border: none !important;
 }
@@ -1726,7 +1762,11 @@ a.s-btn:hover,
 .collection-m .bottom .btn,
 .carousel-module .panel .trig span.on,
 .area-link:active,
-.hour-rank
+.tab-candidate>span:after,
+.hour-rank,
+.attention-btn-ctnr .left-part,
+.gift-item .corner-mark,
+.gift-package
 {
     background-color: $customStyleColor !important;
 }
@@ -1914,11 +1954,15 @@ a.up-name:hover,
 .follow-sidenav .text:hover,
 .tab-candidate.active,
 .tab-candidate:hover,
-.tab-candidate>span:after,
 .room-introduction-tags .room-introduction-tag:hover .icon-label,
 .room-introduction-tags .room-introduction-tag:hover,
 .room-introduction-tags .room-introduction-tag a:hover,
-.area-link:hover
+.area-link:hover,
+.room-owner-username:hover,
+.right-action-ctnr:hover,
+.seeds-wrap>.item.btn,
+.guard-rank-cntr .rank-cntr .rank-list-box a:hover,
+.chat-item.danmaku-item .danmaku-content:hover
 {
     color: $customStyleColor !important;
 }
@@ -2003,7 +2047,11 @@ a.s-btn:hover,
 .synthetical .play-btn:hover,
 .collection-m .bottom .btn,
 .area-link:active,
-.hour-rank .hour-rank-content
+.hour-rank .hour-rank-content,
+.attention-btn-ctnr .left-part,
+.gift-item .corner-mark,
+.gift-package,
+.gift-package>span
 {
     color: $foreground !important;
 }
@@ -2047,16 +2095,19 @@ a.s-btn:hover,
     border-left-color: transparent !important;
     border-right-color: transparent !important;
 }
-
-.multi-page .cur-list ul::-webkit-scrollbar-track {
+.chat-history-panel .chat-history-list::-webkit-scrollbar-track,
+.multi-page .cur-list ul::-webkit-scrollbar-track
+{
     background: #444 !important;
 }
-
-.multi-page .cur-list ul::-webkit-scrollbar-thumb {
+.chat-history-panel .chat-history-list::-webkit-scrollbar-thumb,
+.multi-page .cur-list ul::-webkit-scrollbar-thumb
+{
     background: #222 !important;
 }
-
-.multi-page .cur-list ul::-webkit-scrollbar-thumb:hover {
+.chat-history-panel .chat-history-list::-webkit-scrollbar-thumb:hover,
+.multi-page .cur-list ul::-webkit-scrollbar-thumb:hover
+{
     background: #333 !important;
 }
 

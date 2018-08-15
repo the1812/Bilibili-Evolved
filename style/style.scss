@@ -6,7 +6,8 @@
     height: 50px !important;
 }
 .bili-header-m>.nav-menu,
-.link-navbar
+.link-navbar,
+.link-navbar .main-ctnr .nav-items-ctnr
 {
     background: rgb(162, 197, 235) !important;
     background: $customStyleColorff !important;
@@ -46,7 +47,8 @@ div.stardust-player
 .link-navbar .main-ctnr .nav-logo,
 .link-navbar .nav-item,
 .shortcuts-ctnr,
-.link-navbar .nav-item:hover
+.link-navbar .nav-item:hover,
+.link-navbar .main-ctnr .nav-switcher
 {
     color: #effbff !important;
 
@@ -231,6 +233,19 @@ div.nav-gif,
 .bili-header-m .nav-search .nav-search-keyword
 {
     color: #222 !important;
+}
+.link-navbar .main-ctnr .nav-switcher.open-btn
+{
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.8 !important;
+}
+.guard-rank-cntr.open .tip.rank-desc
+{
+    visibility: visible !important;
+}
+.guard-rank-cntr .rank-cntr .tip
+{
+    visibility: hidden !important;
 }
 
 @media only screen and (min-width: 1291px)
