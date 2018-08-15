@@ -415,6 +415,14 @@ body,
 {
     background: #fff1 !important;
 }
+.gui-settings-content-top-mask
+{
+    background: linear-gradient(to bottom, #222, transparent);
+}
+.gui-settings-content-bottom-mask
+{
+    background: linear-gradient(to top, #222, transparent);
+}
 
 .bili-footer a,
 a.pic>p.title,
