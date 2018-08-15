@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      29.96
+// @version      29.98
 // @description  增强哔哩哔哩Web端体验.(离线版)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -229,7 +229,7 @@ this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/mas
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-navbar-override.min.css"] = `div.nav-menu{width:unset!important;}div.nav-menu>div.bili-wrapper{width:1018px;margin:0 auto!important;}.search{position:relative!important;float:right!important;margin:30px 12px 5px 0!important;margin:26px 12px 5px 0!important;width:130px!important;height:30px!important;background-color:transparent!important;padding:0!important;}form.searchform{background-color:#fff!important;background-color:#fffb!important;box-shadow:0px 2px 10px 1px #0002!important;height:30px!important;}form.searchform:hover{background-color:#fff!important;}button.search-submit,a.link-ranking{display:none!important;}input.search-keyword{width:110px!important;height:30px!important;padding:0 10px!important;}@media only screen and (min-width: 1291px){div.nav-menu>div.bili-wrapper{width:1234px!important;}.search{width:250px!important;margin:30px 72px 5px 0!important;margin:26px 72px 5px 0!important;}input.search-keyword{width:230px!important;}}`;
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-no-banner.min.css"] = `#banner_link{display:none!important;}div.blur-bg{opacity:0!important;}`;
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-remove-promotions.min.css"] = `#slide_ad,#home_popularize,.gg-floor-module,.home-app-download,.activity-m{display:none!important;}.carousel-module .panel .pic li[data-id='0']{visibility:hidden!important;}`;
-this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-gui-settings.min.scss"] = `.gui-settings-icon-panel{height:100%;display:flex;justify-content:center;align-items:center;position:fixed;top:0;left:0;width:24px;z-index:10000;}.gui-settings{display:flex;justify-content:center;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transform:translateX(-12px);}.gui-settings,.gui-settings-header .gui-settings-close path,.gui-settings svg path{transition:all 0.2s;}.gui-settings svg path{fill:rgba(0,0,0,0.2);fill:#8884;opacity:0.75;transform-origin:center!important;}.gui-settings:hover{transform:translateX(0px);}.gui-settings:hover svg path{opacity:1;transform:rotate(120deg);}.gui-settings-panel{transition:all 0.2s;width:100%;height:100%;background:transparent;position:fixed;left:0;top:0;z-index:10001;display:flex;opacity:0;transform:scale(0);transform-origin:center;align-items:center;justify-content:center;}.gui-settings-panel.opened{opacity:1;transform:scale(1);}.gui-settings-box{width:400px;height:90%;background:white;border-radius:8px;box-shadow:0px 3px 20px 2px rgba(0,0,0,0.2);box-shadow:0px 3px 20px 2px #0004;display:flex;flex-direction:column;}.gui-settings-footer,.gui-settings-header{flex-grow:0;height:50px;display:flex;align-items:center;flex-shrink:0;}.gui-settings-footer{height:80px;justify-content:center;}.gui-settings-content{flex-grow:1;overflow:auto;position:relative;}.gui-settings-content-top-mask,.gui-settings-content-bottom-mask{height:10px;position:sticky;left:0px;width:100%;z-index:10;}.gui-settings-content-top-mask{background:linear-gradient(to bottom,white,transparent);top:0px;}.gui-settings-content-bottom-mask{background:linear-gradient(to top,white,transparent);bottom:0px;}.gui-settings-content ul{padding:0;}.gui-settings-content ul li{font-size:16px;margin:16px 0;display:flex;}.gui-settings-content ul li.indent-0{margin-left:16px;}.gui-settings-content ul li.indent-1{margin-left:80px;}.gui-settings-content ul li.indent-2{margin-left:144px;}.gui-settings-title{flex-grow:1;font-size:16px;margin:16px;}.gui-settings-close{width:24px;height:24px;padding:16px;}.gui-settings-header .gui-settings-close{cursor:pointer;-webkit-tap-highlight-color:transparent;}.gui-settings-header .gui-settings-close:hover path{fill:$customStyleColor!important;}.gui-settings-close path{fill:#222;}.gui-settings-ok path{fill:transparent;}.gui-settings-textbox-container{display:flex;justify-content:center;align-items:center;-webkit-tap-highlight-color:transparent;}.gui-settings-textbox-container span{margin:0 16px;transition:all 0.2s;}.gui-settings-textbox-container input{border-radius:4px;border:none;height:100%;max-width:70px;padding:2px 8px;background:rgba(0,0,0,0.2);background:#8884;transition:all 0.2s;font-size:16px;}.gui-settings-textbox-container input:disabled,.gui-settings-textbox-container.disabled span,.gui-settings-textbox-container.disabled div{opacity:0.5;}.gui-settings-checkbox-container{cursor:pointer;display:flex;justify-content:center;align-items:center;padding:0 16px;-webkit-tap-highlight-color:transparent;}.gui-settings-checkbox-container input{opacity:0;width:0;transition:all 0.2s;}.gui-settings-checkbox-container svg{width:24px;height:24px;border-radius:4px;margin-right:16px;transition:all 0.2s;}.gui-settings-checkbox-container svg path{transform:scale(0.8);transform-origin:center;}.gui-settings-checkbox-container input ~ svg{background-color:rgba(0,0,0,0.2);background-color:#8884;}.gui-settings-checkbox-container input:checked ~ svg{background-color:$customStyleColor;}.gui-settings-checkbox-container input:checked ~ svg path{fill:$foreground;}.gui-settings-checkbox-container input:disabled ~ svg,.gui-settings-checkbox-container input:disabled ~ span{opacity:0.5;}button.save{padding:8px 32px;border:none;background:$customStyleColor;color:$foreground;border-radius:4px;font-size:16px;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}button.save:focus{outline:none;}.gui-settings-footer svg{width:0;height:30px;margin-left:0;transition:all 0.2s;}.gui-settings-footer svg path{fill:$customStyleColor;}.custom-color-preview{width:40px;height:100%;border-radius:4px;background:$customStyleColor;margin-right:16px;border:1px solid rgba(0,0,0,0.2);border:1px solid #8884;position:relative;cursor:pointer;box-sizing:border-box;}.predefined-colors{transition:all 0.2s;display:flex;opacity:0;background:white;width:168px;height:168px;position:absolute;box-shadow:0px 3px 20px 2px rgba(0,0,0,0.2);box-shadow:0px 3px 20px 2px #0004;border-radius:4px;top:32px;left:-64px;transform:scale(0);transform-origin:top;}.predefined-colors.opened{opacity:1;transform:scale(1);}.predefined-colors-grid{display:grid;grid-template-columns:auto auto auto auto;margin:4px;flex-grow:1;}.predefined-colors-grid-block{width:32px;height:32px;border-radius:4px;justify-self:center;align-self:center;cursor:pointer;}input[key]:focus{outline:none;}input[type='text'][key]{height:auto;border:none;border-radius:4px;}`;
+this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-gui-settings.min.scss"] = `.gui-settings-icon-panel{height:100%;display:flex;justify-content:center;align-items:center;position:fixed;top:0;left:0;width:24px;z-index:10000;}.gui-settings{display:flex;justify-content:center;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transform:translateX(-12px);}.gui-settings,.gui-settings-header .gui-settings-close path,.gui-settings svg path{transition:all 0.2s;}.gui-settings svg path{fill:rgba(0,0,0,0.2);fill:#8884;opacity:0.75;transform-origin:center!important;}.gui-settings:hover{transform:translateX(0px);}.gui-settings:hover svg path{opacity:1;transform:rotate(120deg);}.gui-settings-panel{transition:all 0.2s;width:100%;height:100%;background:transparent;position:fixed;left:0;top:0;z-index:10001;display:flex;opacity:0;transform:scale(0);transform-origin:center;align-items:center;justify-content:center;}.gui-settings-panel.opened{opacity:1;transform:scale(1);}.gui-settings-box{width:400px;height:90%;background:white;border-radius:8px;box-shadow:0px 3px 20px 2px rgba(0,0,0,0.2);box-shadow:0px 3px 20px 2px #0004;display:flex;flex-direction:column;}.gui-settings-footer,.gui-settings-header{flex-grow:0;height:50px;display:flex;align-items:center;flex-shrink:0;}.gui-settings-footer{height:80px;justify-content:center;}.gui-settings-content{flex-grow:1;overflow:auto;position:relative;}.gui-settings-content-top-mask,.gui-settings-content-bottom-mask{height:10px;position:sticky;left:0px;width:100%;z-index:10;}.gui-settings-content-top-mask{background:linear-gradient(to bottom,white,transparent);top:0px;}.gui-settings-content-bottom-mask{background:linear-gradient(to top,white,transparent);bottom:0px;}.gui-settings-content ul{padding:0;}.gui-settings-content ul li{font-size:16px;margin:12px 0;display:flex;}.gui-settings-content ul li.indent-0{margin-left:16px;}.gui-settings-content ul li.indent-1{margin-left:80px;}.gui-settings-content ul li.indent-2{margin-left:144px;}.gui-settings-content ul li.indent-center{align-items:center;justify-content:center;padding:8px 0;margin:0;border-top:1px dashed rgba(0,0,0,0.2);border-bottom:1px dashed rgba(0,0,0,0.2);border-top:1px dashed #8884;border-bottom:1px dashed #8884;}span.settings-category{opacity:0.6;}.gui-settings-title{flex-grow:1;font-size:16px;margin:16px;}.gui-settings-close{width:24px;height:24px;padding:16px;}.gui-settings-header .gui-settings-close{cursor:pointer;-webkit-tap-highlight-color:transparent;}.gui-settings-header .gui-settings-close:hover path{fill:$customStyleColor!important;}.gui-settings-close path{fill:#222;}.gui-settings-ok path{fill:transparent;}.gui-settings-textbox-container{display:flex;justify-content:center;align-items:center;-webkit-tap-highlight-color:transparent;}.gui-settings-textbox-container span{margin:0 16px;transition:all 0.2s;}.gui-settings-textbox-container input{border-radius:4px;border:none;height:100%;max-width:70px;padding:2px 8px;background:rgba(0,0,0,0.2);background:#8884;transition:all 0.2s;font-size:16px;}.gui-settings-textbox-container input:disabled,.gui-settings-textbox-container.disabled span,.gui-settings-textbox-container.disabled div{opacity:0.5;}.gui-settings-checkbox-container{cursor:pointer;display:flex;justify-content:center;align-items:center;padding:0 16px;-webkit-tap-highlight-color:transparent;}.gui-settings-checkbox-container input{opacity:0;width:0;transition:all 0.2s;}.gui-settings-checkbox-container svg{width:24px;height:24px;border-radius:4px;margin-right:16px;transition:all 0.2s;}.gui-settings-checkbox-container svg path{transform:scale(0.8);transform-origin:center;}.gui-settings-checkbox-container input ~ svg{background-color:rgba(0,0,0,0.2);background-color:#8884;}.gui-settings-checkbox-container input:checked ~ svg{background-color:$customStyleColor;}.gui-settings-checkbox-container input:checked ~ svg path{fill:$foreground;}.gui-settings-checkbox-container input:disabled ~ svg,.gui-settings-checkbox-container input:disabled ~ span{opacity:0.5;}button.save{padding:8px 32px;border:none;background:$customStyleColor;color:$foreground;border-radius:4px;font-size:16px;cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}button.save:focus{outline:none;}.gui-settings-footer svg{width:0;height:30px;margin-left:0;transition:all 0.2s;}.gui-settings-footer svg path{fill:$customStyleColor;}.custom-color-preview{width:40px;height:100%;border-radius:4px;background:$customStyleColor;margin-right:16px;border:1px solid rgba(0,0,0,0.2);border:1px solid #8884;position:relative;cursor:pointer;box-sizing:border-box;}.predefined-colors{transition:all 0.2s;display:flex;opacity:0;background:white;width:168px;height:168px;position:absolute;box-shadow:0px 3px 20px 2px rgba(0,0,0,0.2);box-shadow:0px 3px 20px 2px #0004;border-radius:4px;top:32px;left:-64px;transform:scale(0);transform-origin:top;}.predefined-colors.opened{opacity:1;transform:scale(1);}.predefined-colors-grid{display:grid;grid-template-columns:auto auto auto auto;margin:4px;flex-grow:1;}.predefined-colors-grid-block{width:32px;height:32px;border-radius:4px;justify-self:center;align-self:center;cursor:pointer;}input[key]:focus{outline:none;}input[type='text'][key]{height:auto;border:none;border-radius:4px;}`;
 this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/gui-settings.html"] = `<div class="gui-settings-panel">
   <div class="gui-settings-box">
     <div class="gui-settings-header">
@@ -241,8 +241,11 @@ this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/mas
       </svg>
     </div>
     <div class="gui-settings-content">
-      <div class="gui-settings-content-top-mask"></div>
+      <!-- <div class="gui-settings-content-top-mask"></div> -->
       <ul>
+        <li class="indent-center">
+          <span class="settings-category">样式</span>
+        </li>
         <li class="indent-0">
           <label class="gui-settings-checkbox-container">
             <input key="useNewStyle" type="checkbox" checked/>
@@ -298,32 +301,8 @@ this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/mas
             <span>显示顶部横幅</span>
           </label>
         </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="touchNavBar" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>顶栏触摸优化</span>
-          </label>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="touchVideoPlayer" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>播放器触摸支持</span>
-          </label>
-        </li>
-        <li class="indent-1">
-          <label class="gui-settings-checkbox-container">
-            <input key="touchVideoPlayerAnimation" dependencies="touchVideoPlayer" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>启用实验性动画效果</span>
-          </label>
+        <li class="indent-center">
+          <span class="settings-category">工具</span>
         </li>
         <li class="indent-0">
           <label class="gui-settings-checkbox-container">
@@ -361,6 +340,9 @@ this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/mas
             <span>隐藏热搜词</span>
           </label>
         </li>
+        <li class="indent-center">
+          <span class="settings-category">直播间</span>
+        </li>
         <li class="indent-0">
           <label class="gui-settings-checkbox-container">
             <input key="harunaScale" type="checkbox" checked/>
@@ -379,8 +361,38 @@ this.offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/mas
             <span>删除直播水印</span>
           </label>
         </li>
+        <li class="indent-center">
+          <span class="settings-category">触摸优化</span>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="touchNavBar" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>顶栏触摸优化</span>
+          </label>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="touchVideoPlayer" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>播放器触摸支持</span>
+          </label>
+        </li>
+        <li class="indent-1">
+          <label class="gui-settings-checkbox-container">
+            <input key="touchVideoPlayerAnimation" dependencies="touchVideoPlayer" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>启用实验性动画效果</span>
+          </label>
+        </li>
       </ul>
-      <div class="gui-settings-content-bottom-mask"></div>
+      <!-- <div class="gui-settings-content-bottom-mask"></div> -->
     </div>
     <div class="gui-settings-footer">
       <button class="save">保存</button>

@@ -120,7 +120,7 @@
 .gui-settings-content ul li
 {
     font-size: 16px;
-    margin: 16px 0;
+    margin: 12px 0;
     display: flex;
 }
 .gui-settings-content ul li.indent-0
@@ -134,6 +134,21 @@
 .gui-settings-content ul li.indent-2
 {
     margin-left: 144px;
+}
+.gui-settings-content ul li.indent-center
+{
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+    margin: 0;
+    border-top: 1px dashed rgba(0,0,0,0.2);
+    border-bottom: 1px dashed rgba(0,0,0,0.2);
+    border-top: 1px dashed #8884;
+    border-bottom: 1px dashed #8884;
+}
+span.settings-category
+{
+    opacity: 0.6;
 }
 .gui-settings-title
 {

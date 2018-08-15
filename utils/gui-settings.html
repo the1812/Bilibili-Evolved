@@ -9,8 +9,11 @@
       </svg>
     </div>
     <div class="gui-settings-content">
-      <div class="gui-settings-content-top-mask"></div>
+      <!-- <div class="gui-settings-content-top-mask"></div> -->
       <ul>
+        <li class="indent-center">
+          <span class="settings-category">样式</span>
+        </li>
         <li class="indent-0">
           <label class="gui-settings-checkbox-container">
             <input key="useNewStyle" type="checkbox" checked/>
@@ -66,32 +69,8 @@
             <span>显示顶部横幅</span>
           </label>
         </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="touchNavBar" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>顶栏触摸优化</span>
-          </label>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="touchVideoPlayer" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>播放器触摸支持</span>
-          </label>
-        </li>
-        <li class="indent-1">
-          <label class="gui-settings-checkbox-container">
-            <input key="touchVideoPlayerAnimation" dependencies="touchVideoPlayer" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>启用实验性动画效果</span>
-          </label>
+        <li class="indent-center">
+          <span class="settings-category">工具</span>
         </li>
         <li class="indent-0">
           <label class="gui-settings-checkbox-container">
@@ -129,6 +108,9 @@
             <span>隐藏热搜词</span>
           </label>
         </li>
+        <li class="indent-center">
+          <span class="settings-category">直播间</span>
+        </li>
         <li class="indent-0">
           <label class="gui-settings-checkbox-container">
             <input key="harunaScale" type="checkbox" checked/>
@@ -147,8 +129,38 @@
             <span>删除直播水印</span>
           </label>
         </li>
+        <li class="indent-center">
+          <span class="settings-category">触摸优化</span>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="touchNavBar" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>顶栏触摸优化</span>
+          </label>
+        </li>
+        <li class="indent-0">
+          <label class="gui-settings-checkbox-container">
+            <input key="touchVideoPlayer" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>播放器触摸支持</span>
+          </label>
+        </li>
+        <li class="indent-1">
+          <label class="gui-settings-checkbox-container">
+            <input key="touchVideoPlayerAnimation" dependencies="touchVideoPlayer" type="checkbox" />
+            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+              <path />
+            </svg>
+            <span>启用实验性动画效果</span>
+          </label>
+        </li>
       </ul>
-      <div class="gui-settings-content-bottom-mask"></div>
+      <!-- <div class="gui-settings-content-bottom-mask"></div> -->
     </div>
     <div class="gui-settings-footer">
       <button class="save">保存</button>
