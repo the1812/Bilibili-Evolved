@@ -1682,7 +1682,8 @@ input[type=text]:focus,
 .filter-wrap .filter-item.active a,
 .live-wrap .live-tabs a.active,
 .base-bubble,
-.base-bubble .content-ctnr:before
+.base-bubble .content-ctnr:before,
+.tag-container .tag-item .tag-border .tag-border-inner
 {
     border-color: $customStyleColor !important;
 }
@@ -1989,7 +1990,8 @@ a.up-name:hover,
 .guard-rank-cntr .rank-cntr .rank-list-box a:hover,
 .chat-item.danmaku-item .danmaku-content:hover,
 .guard-rank-cntr .rank-cntr .btn-box .buy,
-.clock-time
+.clock-time,
+.tag-container .tag-item:hover .tag-content
 {
     color: $customStyleColor !important;
 }
