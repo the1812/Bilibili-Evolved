@@ -1386,7 +1386,10 @@ ul.up-nav li
 .follow-select .icon-follow-selected,
 .bp-svg-icon.vote-btn,
 .bp-svg-icon.lottery-btn,
-.vote-container .image-area .share-img
+.vote-container .image-area .share-img,
+.dynamic-comm-icon,
+.nav-tab-bar .logo,
+.nav-tab-bar .tab-item.on
 {
     filter: $blueImageFilter !important;
 }
@@ -1780,7 +1783,6 @@ a.s-btn:hover,
 .user-list .up-item .attention-btn,
 .synthetical .play-btn:hover,
 .collection-m .bottom .btn,
-.carousel-module .panel .trig span.on,
 .area-link:active,
 .tab-candidate>span:after,
 .hour-rank,
