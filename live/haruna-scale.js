@@ -5,7 +5,7 @@
         const id = "bilibili-haruna-scale";
         if ($(id).length === 0)
         {
-            $("html").prepend(`
+            $("head").prepend(`
             <style id='${id}'>
                 .haruna-ctnr,
                 .avatar-btn

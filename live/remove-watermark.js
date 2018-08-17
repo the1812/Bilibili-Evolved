@@ -5,7 +5,7 @@
         const id = "bilibili-live-watermark";
         if ($(id).length === 0)
         {
-            $("html").prepend(`
+            $("head").prepend(`
             <style id='${id}'>
                 .bilibili-live-player-video-logo
                 {
