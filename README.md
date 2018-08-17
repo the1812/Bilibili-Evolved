@@ -138,11 +138,9 @@
 - 触摸调整框的背景模糊效果无效.
 - 触摸调整的进度预览有弹跳现象.(来自`transition: all 0.2s;`. 短时间内总是从原数值开始变化,而不是当前数值)
 ## ![Edge:部分兼容](https://img.shields.io/badge/Edge-部分兼容-yellow.svg?style=flat-square&colorB=1976D2)
-- 自定义颜色与滚动条样式无效.
-- 部分半透明颜色(`#rrggbbaa`)无效*.
+- 滚动条样式无效.
+- 由于Edge的CSS渲染bug(主要集中在`filter`), 部分自定义颜色错乱.
 - 顶栏触摸体验不佳.
 - 触摸功能需要手动在`about:flags`中开启.
-
-*Edge将考虑用`rgba()`实现半透明颜色.
 ## ![Safari:未知](https://img.shields.io/badge/Safari-未知-lightgrey.svg?style=flat-square&colorB=323232)
 尚未在Safari中测试.

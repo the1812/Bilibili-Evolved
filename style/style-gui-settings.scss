@@ -27,7 +27,6 @@
 }
 .gui-settings svg path
 {
-    fill: rgba(0,0,0,0.2);
     fill: #8884;
     opacity: 0.75;
     transform-origin: center !important;
@@ -69,7 +68,6 @@
     height: 90%;
     background: white;
     border-radius: 8px;
-    box-shadow: 0px 3px 20px 2px rgba(0,0,0,0.2);
     box-shadow: 0px 3px 20px 2px #0004;
     display: flex;
     flex-direction: column;
@@ -142,8 +140,6 @@
     justify-content: center;
     padding: 8px 0;
     margin: 0;
-    border-top: 1px dashed rgba(0,0,0,0.2);
-    border-bottom: 1px dashed rgba(0,0,0,0.2);
     border-top: 1px dashed #8884;
     border-bottom: 1px dashed #8884;
 }
@@ -199,7 +195,6 @@ span.settings-category
     height: 100%;
     max-width: 70px;
     padding: 2px 8px;
-    background: rgba(0,0,0,0.2);
     background: #8884;
     transition: all 0.2s;
     font-size: 16px;
@@ -240,7 +235,6 @@ span.settings-category
 }
 .gui-settings-checkbox-container input ~ svg
 {
-    background-color: rgba(0,0,0,0.2);
     background-color: #8884;
 }
 .gui-settings-checkbox-container input:checked ~ svg
@@ -290,7 +284,6 @@ button.save:focus
     border-radius: 4px;
     background: $customStyleColor;
     margin-right: 16px;
-    border: 1px solid rgba(0,0,0,0.2);
     border: 1px solid #8884;
     position: relative;
     cursor: pointer;
@@ -305,7 +298,6 @@ button.save:focus
     width: 168px;
     height: 168px;
     position: absolute;
-    box-shadow: 0px 3px 20px 2px rgba(0,0,0,0.2);
     box-shadow: 0px 3px 20px 2px #0004;
     border-radius: 4px;
     top: 32px;

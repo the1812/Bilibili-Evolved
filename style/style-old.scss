@@ -1,8 +1,5 @@
 .bili-header-m>.nav-menu
 {
-    background: rgb(0, 86, 177) !important;
-    box-shadow: rgba(17, 81, 150, 0.48) 0px 2px 10px 1px !important;
-
     background: $customStyleColorff !important;
     box-shadow: $customStyleColor70 0px 2px 10px 1px !important;
 }
@@ -15,8 +12,6 @@
 
 .bili-header-m .nav-menu .nav-con .nav-item .t
 {
-    color: #effbff !important;
-
     color: $foregroundd !important;
 }
 
@@ -51,7 +46,6 @@ a.t>i.bili-icon
 
 .i-face>.face
 {
-    border: 1.5px solid #fff !important;
     border: 1.5px solid #fff3 !important;
     margin-top: -1px !important;
 }
@@ -63,11 +57,6 @@ div.up-load
 }
 .u-link
 {
-    background-image: none !important;
-    background-color: #D5E3F2 !important;
-    border: 1px solid #effbff !important;
-    color: #effbff !important;
-
     background: transparent !important;
     color: $foregroundd !important;
     border-radius: 4px !important;
@@ -95,9 +84,6 @@ div.up-load
 
 #nav_searchform
 {
-    background-image: none !important;
-    background-color: #D5E3F2 !important;
-
     margin-top: 0.1rem !important;
     border-radius: 4px !important;
     background: #fffb !important;
@@ -113,8 +99,6 @@ div.up-load
 
 #bilibiliPlayer
 {
-    box-shadow: 0px 10px 30px 5px #D0E4EC !important;
-
     box-shadow: 0px 10px 30px 5px $customStyleColor40 !important;
 }
 
