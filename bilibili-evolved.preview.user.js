@@ -221,7 +221,7 @@
     {
         constructor()
         {
-            // Offline build placeholder
+            // [Offline build placeholder]
             this.data = {};
             this.attributes = {};
             this.color = new ColorProcessor(settings.customStyleColor);

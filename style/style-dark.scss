@@ -185,7 +185,8 @@ div.con,
 .rank.rank-7,
 .rank.rank-8,
 .rank.rank-9,
-.rank.rank-10
+.rank.rank-10,
+.result
 {
     background-color: #222 !important;
 }
@@ -975,7 +976,8 @@ div.con header,
 .guard-rank-cntr .rank-cntr .page-box,
 .chat-history-list .chat-item.danmaku-item,
 .activity-rank-cntr .rank-cntr .item,
-.rank-list-ctnr .normal-list .item
+.rank-list-ctnr .normal-list .item,
+.config-row
 {
     color: #eee !important;
 }
@@ -1171,7 +1173,8 @@ div.bar>div.num,
 .gift-presets .gift-panel-switch,
 .rank-list-ctnr .tabs .item,
 .chat-history-panel .chat-history-list .chat-item.system-msg,
-.guard-rank-cntr .rank-cntr .btn-box
+.guard-rank-cntr .rank-cntr .btn-box,
+.prize-item .prize-img
 {
     border-color: transparent !important;
 }
@@ -1273,7 +1276,8 @@ div.con header,
 .synthetical,
 .user-wrap .dropdown-wrap .select-wrap,
 .user-list .up-item,
-.all-class
+.all-class,
+.result .row:after
 {
     border-color: #444 !important
 }
@@ -1379,12 +1383,14 @@ ul.up-nav li
 .emoji-tab-slider .next.on:hover,
 .emoji-tab-slider .prev.on:hover,
 .follow-main .follow-action-bottom .icon-copy,
-.follow-select .icon-follow-selected
+.follow-select .icon-follow-selected,
+.bp-svg-icon.vote-btn,
+.bp-svg-icon.lottery-btn,
+.vote-container .image-area .share-img
 {
     filter: $blueImageFilter !important;
 }
 .single-button .text-bar.selected,
-.vote-options .checked,
 .is-max .percentage-bar
 {
     filter: $pinkImageFilter !important;
@@ -1400,7 +1406,7 @@ ul.filter-disable .icon-copy
 }
 .room-bg
 {
-    filter: brightness(0.382) blur(10px) !important;
+    filter: brightness(0.16) blur(10px) !important;
 }
 .bottom-actions .left-action
 {
@@ -1514,8 +1520,7 @@ div.desc-tips>span.arrow-left,
 img.source-img,
 canvas.cliper.is-img,
 .loading .icon,
-.load-more .icon,
-.bp-svg-icon.vote-btn
+.load-more .icon
 {
     display: none !important;
 }
@@ -1981,7 +1986,8 @@ a.up-name:hover,
 .seeds-wrap>.item.btn,
 .guard-rank-cntr .rank-cntr .rank-list-box a:hover,
 .chat-item.danmaku-item .danmaku-content:hover,
-.guard-rank-cntr .rank-cntr .btn-box .buy
+.guard-rank-cntr .rank-cntr .btn-box .buy,
+.clock-time
 {
     color: $customStyleColor !important;
 }
