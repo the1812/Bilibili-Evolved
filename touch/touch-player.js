@@ -594,10 +594,6 @@
                 };
             }
         }
-
-        // Fix fullscreen not work @2018-08-12
-        unsafeWindow.Element.ALLOW_KEYBOARD_INPUT = {};
-
         SpinQuery.any(
             () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
             icons => icons.unbind("click")

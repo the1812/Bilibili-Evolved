@@ -188,7 +188,6 @@ div.con,
 .rank.rank-10,
 .result,
 .user-panel .level-progress,
-.calendar-checkin .checkin-btn,
 .download-panel-ctnr .download-item:hover,
 .user-item-loading .username,
 .user-item-loading .avatar,
@@ -196,7 +195,18 @@ div.con,
 .user-panel .logout-btn:active,
 .user-level-detail .detail-link:hover,
 .user-level-detail .detail-link:active,
-.common-popup-wrap
+.common-popup-wrap,
+.hover-panel,
+.awarding-panel,
+.link-input,
+.gift-sender-panel,
+.count-choice,
+.choice-item.active,
+.choice-item:hover,
+.choice-item,
+.radio-icon.selected,
+.activity-item-ctnr .user-avatar,
+.live-player-ctnr.minimal
 {
     background-color: #222 !important;
 }
@@ -329,7 +339,6 @@ a.more.tc-slate:hover,
 .ps:hover.ps--in-scrolling.ps--x>.ps__scrollbar-x-rail,
 .ps:hover>.ps__scrollbar-y-rail:hover,
 .ps:hover>.ps__scrollbar-x-rail:hover,
-.fans-medal-item .level,
 #page-follows .follow-main .follow-action-bottom .follow-action-fixtop,
 #pin-wrapper #pin-layer-search,
 .be-input_inner,
@@ -380,6 +389,7 @@ button.submit-button.disabled,
 .calendar-checkin .calendar-wrapper,
 .calendar-checkin .content-ctnr.ie-fix,
 .calendar-checkin,
+.calendar-checkin .checkin-btn,
 .calendar-checkin:hover,
 .calendar-checkin .checkin-rewards,
 .calendar-checkin .checkin-rewards .query,
@@ -393,7 +403,11 @@ button.submit-button.disabled,
 .process-bar,
 .selector .data-list,
 .selector,
-.selector .data-list>li:hover
+.selector .data-list>li:hover,
+.fans-info .fans-progress,
+.score-progress-bar,
+.radio-icon,
+.bl-switch
 {
     background-color: #444 !important;
 }
@@ -456,6 +470,7 @@ body,
 .right-part .user-panel,
 .side-bar-cntr,
 .shortcut-item .list-item:hover,
+.fans-medal-item .level,
 .divider
 {
     background-color: transparent !important;
@@ -675,7 +690,13 @@ blockquote .color-yellow-04,
 .chat-item.danmaku-item .user-name,
 .section-title h2,
 .user-panel .ctrl-btn,
-.lightgray
+.lightgray,
+.gift-info-expScore,
+.gift-info-desc,
+.block-setting-ctnr .sub-title,
+.list-content-candidate,
+.pophover>p:last-child,
+.live-player-ctnr.minimal::before
 {
     color: #aaa !important;
 }
@@ -1023,7 +1044,33 @@ div.con header,
 .user-level-detail .detail-link,
 .hover-description,
 .selector .data-list>li,
-.selector .data-list>li:hover
+.selector .data-list>li:hover,
+.welcome-msg .action,
+.welcome-msg .username,
+.welcome-msg .vip-icon,
+.selector .current,
+.hover-panel,
+.awarding-panel,
+.link-input,
+.gift-info-title,
+.choice-item,
+.yan-item,
+.danmaku-position-item .icon-font,
+.danmaku-position-item .danmaku-position-text,
+.rank-text-ctnr,
+.up-level-icon, .user-level-icon,
+.link-radio-button-label,
+.danmaku-adjust-label,
+.danmaku-adjust-value,
+.block-setting-row .setting-label,
+.block-setting-row .setting-value,
+.level-hint-text,
+.user-type-hint,
+.list-content-candidate.active,
+.block-content,
+.chat-history-panel .gift-item,
+.chat-history-panel .penury-gift-msg,
+.pophover>p:first-child
 {
     color: #eee !important;
 }
@@ -1057,7 +1104,8 @@ form.ipt,
 .suggest-wrap .title,
 .home-wrap .home-suggest .hotlist .item,
 .home-wrap .home-suggest .history .list .item,
-.live-status-label.preparing
+.live-status-label.preparing,
+.radio-icon
 {
     border-color: #aaa !important;
 }
@@ -1103,7 +1151,8 @@ ul.bilibili-suggest,
 .select-wrap .select-option,
 .card .more-panel,
 .card .more-panel:after,
-.bl-button--ghost
+.bl-button--ghost,
+.common-popup-wrap .arrow
 {
     border-color: #222 !important;
 }
@@ -1234,7 +1283,13 @@ div.bar>div.num,
 .user-level-detail::after,
 .btn-send,
 .selector .data-list,
-.selector
+.selector,
+.hover-panel,
+.hover-panel:before,
+.awarding-panel,
+.gift-sender-panel::before,
+.count-choice,
+.choice-item
 {
     border-color: transparent !important;
 }
@@ -1450,7 +1505,12 @@ ul.up-nav li
 .dynamic-comm-icon,
 .nav-tab-bar .logo,
 .nav-tab-bar .tab-item.on,
-.calendar .day-item.checked
+.calendar .day-item.checked,
+.link-range-ctnr,
+.check-icon,
+.user-type-icon .svg-icon.phone-1,
+.user-type-icon .svg-icon.not-memeber-1,
+.link-footer .footer-linker .footer-linker-bili .logo
 {
     filter: $blueImageFilter !important;
 }
@@ -1476,6 +1536,13 @@ ul.filter-disable .icon-copy
 .bottom-actions .left-action
 {
     filter: brightness(0.8) !important;
+}
+.user-type-icon .svg-icon.phone-2,
+.user-type-icon .svg-icon.not-memeber-2,
+.box-slide-item.expired .box-img,
+.box-slide-item:not(.in-countdown) .box-img
+{
+    filter: brightness(0.3) !important;
 }
 
 #page-index .col-1 .section .more,
@@ -1566,7 +1633,11 @@ div.drag-bar,
 .emotion-box,
 .link-navbar .panel-shadow,
 .user-panel-ctnr .user-avatar.active,
-.user-level-detail
+.user-level-detail,
+.gift-sender-panel,
+.common-popup-wrap,
+.blpui-slider-container .slider-handle,
+.live-player-ctnr.minimal
 {
     box-shadow: 0px 1px 20px 2px $customStyleColor30 !important;
 }
@@ -1753,7 +1824,12 @@ input[type=text]:focus,
 .calendar-checkin .title .month:hover.cur-month:before,
 .calendar-checkin .title .month:hover.last-month:after,
 .calendar-checkin .title .month:hover.last-month:before,
-.calendar-checkin .checkin-rewards .query:hover
+.calendar-checkin .checkin-rewards .query:hover,
+.choice-item.active,
+.choice-item:hover,
+.count-choice .count-input:focus,
+.radio-icon.selected,
+.live-status-label
 {
     border-color: $customStyleColor !important;
 }
@@ -1866,7 +1942,17 @@ a.s-btn:hover,
 .user-panel .level-progress .progress-bar,
 .user-panel-ctnr .user-avatar.active::before,
 .process-bar .process-receive,
-.btn-send
+.btn-send,
+.count-choice .send-button,
+.yan-item:active,
+.dyn_list span.sp,
+.radio-icon:after,
+.bl-switch-checked,
+.close-icon,
+.blpui-slider-span.slider-span-active:after,
+.blpui-slider-span>span,
+.blpui-slider-container .slider-process,
+.blpui-slider-container .slider-handle
 {
     background-color: $customStyleColor !important;
 }
@@ -2072,7 +2158,7 @@ a.up-name:hover,
 .calendar-checkin .checkin-btn:hover,
 .download-panel-ctnr .download-item:hover,
 .info-ctnr .time .blue,
-.content-ctnr .activity-item-ctnr:hover .username,
+.content-ctnr .activity-item-ctnr:hover .username.f-left,
 .load-more-btn:hover,
 .user-panel .ctrl-btn.colored,
 .user-panel .ctrl-btn:hover,
@@ -2081,7 +2167,31 @@ a.up-name:hover,
 .user-panel .logout-btn:hover,
 .user-level-detail .detail-link:hover,
 .user-level-detail .detail-link:active,
-.wish-box-cntr .title
+.wish-box-cntr .title,
+.welcome-msg .close-vip-hint,
+.bili-link,
+.awarding-panel .info-section .slide-btn:hover,
+.box-slide-item.box-open,
+.box-slide-item.in-countdown,
+.captcha-widget .refresh-captcha:hover,
+.awarding-panel .countdown-text .with-color,
+.choice-item.active,
+.choice-item:hover,
+.control-panel-icon-row .icon-item.active,
+.control-panel-icon-row .icon-item:hover,
+.yan-item:hover,
+.section-title,
+.player-setting-ctnr .title,
+.block-setting-ctnr .title,
+.block-user-type.active .user-type-hint,
+.awarding-panel .title,
+header,
+.live-status-label,
+.blpui-btn.icon-btn:hover>i,
+.blpui-btn.text-btn.active,
+.blpui-btn.text-btn:hover,
+.chat-history-panel .penury-gift-msg .penury-gift-item .username,
+.minimal-control-panel .control-btn .btn-icon:hover
 {
     color: $customStyleColor !important;
 }
@@ -2175,7 +2285,10 @@ a.s-btn:hover,
 .rank.rank-2,
 .rank.rank-3,
 .calendar .day-item.checked,
-.btn-send
+.btn-send,
+.count-choice .send-button,
+.yan-item:active,
+.dyn_list span.sp
 {
     color: $foreground !important;
 }
@@ -2216,6 +2329,12 @@ a.s-btn:hover,
 .be-tab-cursor:after
 {
     border-color: $customStyleColor !important;
+}
+.bili-tab-item:before,
+.dynamic-m .dyn_menu .line:before,
+.be-tab-cursor:after,
+.common-popup-wrap .arrow
+{
     border-left-color: transparent !important;
     border-right-color: transparent !important;
 }

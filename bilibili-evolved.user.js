@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.1.3
+// @version      1.1.4
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -408,6 +408,9 @@
             }
         }
     }
+
+    // Fix fullscreen not work @2018-08-12
+    unsafeWindow.Element.ALLOW_KEYBOARD_INPUT = {};
 
     loadSettings();
     const resources = new ExternalResource();
