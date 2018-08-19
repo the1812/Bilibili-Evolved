@@ -24,8 +24,11 @@
     max-width: 520px;
     max-height: 240px;
     border: 4px solid transparent;
-    transition: all 0.2s;
     transform-origin: center;
+}
+.touch-video-box.animation
+{
+    transition: all 0.2s;
 }
 @supports (backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px))
 {

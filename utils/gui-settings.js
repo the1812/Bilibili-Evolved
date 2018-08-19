@@ -85,8 +85,11 @@
             });
             $("div.custom-color-preview").on("click", () =>
             {
-                const box = $(".predefined-colors");
-                box.toggleClass("opened");
+                if ($("input[key='useNewStyle']").prop("checked"))
+                {
+                    const box = $(".predefined-colors");
+                    box.toggleClass("opened");
+                }
             });
             $("button.save").on("click", () =>
             {
@@ -158,6 +161,11 @@
                             $(`input[key='${key}'][type='text']`).parent().removeClass("disabled");
                         }
                     }
+                }
+                const box = $(".predefined-colors");
+                if (box.hasClass("opened"))
+                {
+                    box.removeClass("opened");
                 }
             });
         }

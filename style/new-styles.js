@@ -6,7 +6,9 @@
             () => $(".custom-scrollbar"),
             it => it.removeClass("custom-scrollbar")
         );
-        const navbar = document.getElementsByClassName("bili-wrapper")[0];
+        const navbar =
+            document.getElementsByClassName("bili-wrapper")[0] ||
+            document.getElementById("link-navbar-vm");
         let stardustStyles = false;
         if (navbar instanceof Element)
         {

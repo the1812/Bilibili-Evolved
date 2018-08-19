@@ -8,7 +8,7 @@
     top: 0;
     left: 0;
     width: 24px;
-    z-index: 10000;
+    z-index: 100000;
 }
 .gui-settings
 {
@@ -27,7 +27,6 @@
 }
 .gui-settings svg path
 {
-    fill: rgba(0,0,0,0.2);
     fill: #8884;
     opacity: 0.75;
     transform-origin: center !important;
@@ -69,7 +68,6 @@
     height: 90%;
     background: white;
     border-radius: 8px;
-    box-shadow: 0px 3px 20px 2px rgba(0,0,0,0.2);
     box-shadow: 0px 3px 20px 2px #0004;
     display: flex;
     flex-direction: column;
@@ -92,15 +90,36 @@
 {
     flex-grow: 1;
     overflow: auto;
+    position: relative;
+}
+.gui-settings-content-top-mask,
+.gui-settings-content-bottom-mask
+{
+    height: 10px;
+    position: sticky;
+    left: 0px;
+    width: 100%;
+    z-index: 10;
+}
+.gui-settings-content-top-mask
+{
+    background: linear-gradient(to bottom, white, transparent);
+    top: 0px;
+}
+.gui-settings-content-bottom-mask
+{
+    background: linear-gradient(to top, white, transparent);
+    bottom: 0px;
 }
 .gui-settings-content ul
 {
     padding: 0;
+    margin: 0;
 }
 .gui-settings-content ul li
 {
     font-size: 16px;
-    margin: 16px 0;
+    margin: 12px 0;
     display: flex;
 }
 .gui-settings-content ul li.indent-0
@@ -114,6 +133,19 @@
 .gui-settings-content ul li.indent-2
 {
     margin-left: 144px;
+}
+.gui-settings-content ul li.indent-center
+{
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+    margin: 0;
+    border-top: 1px dashed #8884;
+    border-bottom: 1px dashed #8884;
+}
+span.settings-category
+{
+    opacity: 0.6;
 }
 .gui-settings-title
 {
@@ -163,7 +195,6 @@
     height: 100%;
     max-width: 70px;
     padding: 2px 8px;
-    background: rgba(0,0,0,0.2);
     background: #8884;
     transition: all 0.2s;
     font-size: 16px;
@@ -204,7 +235,6 @@
 }
 .gui-settings-checkbox-container input ~ svg
 {
-    background-color: rgba(0,0,0,0.2);
     background-color: #8884;
 }
 .gui-settings-checkbox-container input:checked ~ svg
@@ -254,7 +284,6 @@ button.save:focus
     border-radius: 4px;
     background: $customStyleColor;
     margin-right: 16px;
-    border: 1px solid rgba(0,0,0,0.2);
     border: 1px solid #8884;
     position: relative;
     cursor: pointer;
@@ -269,13 +298,13 @@ button.save:focus
     width: 168px;
     height: 168px;
     position: absolute;
-    box-shadow: 0px 3px 20px 2px rgba(0,0,0,0.2);
     box-shadow: 0px 3px 20px 2px #0004;
     border-radius: 4px;
     top: 32px;
     left: -64px;
     transform: scale(0);
     transform-origin: top;
+    z-index: 100;
 }
 .predefined-colors.opened
 {

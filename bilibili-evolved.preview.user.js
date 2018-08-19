@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.1.1
+// @version      1.1.5
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -20,8 +20,12 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        fixFullscreen: false,
+        removeLiveWatermark: true,
+        harunaScale: true,
         removeAds: true,
         hideTopSearch: false,
+        touchVideoPlayerAnimation: false,
         touchNavBar: false,
         touchVideoPlayer: false,
         watchLaterRedirect: true,
@@ -114,15 +118,66 @@
         {
             return this.hexToRgb(this.hex);
         }
+        getHexRegex(alpha, shorthand)
+        {
+            const repeat = shorthand ? "" : "{2}";
+            const part = `([a-f\\d]${repeat})`;
+            const count = alpha ? 4 : 3;
+            const pattern = `#?${part.repeat(count)}`;
+            return new RegExp(pattern, "ig");
+        }
+        _hexToRgb(hex, alpha)
+        {
+            const isShortHand = hex.length < 6;
+            if (isShortHand)
+            {
+                const shorthandRegex = this.getHexRegex(alpha, true);
+                hex = hex.replace(shorthandRegex, function ()
+                {
+                    let result = "";
+                    let i = 1;
+                    while (arguments[i])
+                    {
+                        result += arguments[i].repeat(2);
+                        i++;
+                    }
+                    return result;
+                });
+            }
+
+            const regex = this.getHexRegex(alpha, false);
+            const regexResult = regex.exec(hex);
+            if (regexResult)
+            {
+                const color = {
+                    r: parseInt(regexResult[1], 16),
+                    g: parseInt(regexResult[2], 16),
+                    b: parseInt(regexResult[3], 16)
+                };
+                if (regexResult[4])
+                {
+                    color.a = parseInt(regexResult[4], 16) / 255;
+                }
+                return color;
+            }
+            else if (alpha)
+            {
+                const rgb = this._hexToRgb(hex, false);
+                if (rgb)
+                {
+                    rgb.a = 1;
+                    return rgb;
+                }
+            }
+            return null;
+        }
         hexToRgb(hex)
         {
-            const regex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            const color = regex ? {
-                r: parseInt(regex[1], 16),
-                g: parseInt(regex[2], 16),
-                b: parseInt(regex[3], 16)
-            } : undefined;
-            return color;
+            return this._hexToRgb(hex, false);
+        }
+        hexToRgba(hex)
+        {
+            return this._hexToRgb(hex, true);
         }
         rgbToHsb(rgb)
         {
@@ -218,7 +273,7 @@
     {
         constructor()
         {
-            // Offline build placeholder
+            // [Offline build placeholder]
             this.data = {};
             this.attributes = {};
             this.color = new ColorProcessor(settings.customStyleColor);
@@ -249,7 +304,10 @@
                 expandDanmakuList: "utils/expand-danmaku.min.js",
                 removeAds: "utils/remove-promotions.min.js",
                 watchLaterRedirect: "utils/watchlater.min.js",
-                hideTopSearch: "utils/hide-top-search.min.js"
+                hideTopSearch: "utils/hide-top-search.min.js",
+                harunaScale: "live/haruna-scale.min.js",
+                removeLiveWatermark: "live/remove-watermark.min.js",
+                fixFullscreen: "utils/fix-fullscreen.min.js"
             };
             for (const key in urls)
             {
@@ -264,11 +322,36 @@
         fetch(callback)
         {
             this.callback = callback;
-            const replaceCustomColor = (style) =>
+            const replaceCustomColor = (url, style) =>
             {
-                for (const key of Object.keys(settings))
+                if (url.indexOf(".scss") !== -1 || url.indexOf(".css") !== -1)
                 {
-                    style = style.replace(new RegExp("\\$" + key, "g"), settings[key]);
+                    const hexToRgba = text =>
+                    {
+                        const replaceColor = (text, shorthand) =>
+                        {
+                            const part = `([a-f\\d]${shorthand ? "" : "{2}"})`.repeat(4);
+                            return text.replace(new RegExp(`(#${part})[^a-f\\d]`, "ig"), (original, it) =>
+                            {
+                                const rgba = this.color.hexToRgba(it);
+                                if (rgba)
+                                {
+                                    return `rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})${original.slice(-1)}`;
+                                }
+                                else
+                                {
+                                    return original;
+                                }
+                            });
+                        };
+                        return replaceColor(replaceColor(text, false), true);
+                    };
+                    for (const key of Object.keys(settings))
+                    {
+                        style = style
+                            .replace(new RegExp("\\$" + key, "g"), settings[key]);
+                    }
+                    style = hexToRgba(style);
                 }
                 return style;
             };
@@ -280,14 +363,7 @@
                 const url = urls[key];
                 this.ajax(url, data =>
                 {
-                    if (url.indexOf(".scss") !== -1)
-                    {
-                        this.data[key] = replaceCustomColor(data);
-                    }
-                    else
-                    {
-                        this.data[key] = data;
-                    }
+                    this.data[key] = replaceCustomColor(url, data);
                     downloadedCount++;
                     if (downloadedCount >= resourceCount)
                     {
@@ -308,7 +384,7 @@
         {
             if ($(`#${id}`).length === 0)
             {
-                $("html").prepend(this.getStyle(key, id));
+                $("head").prepend(this.getStyle(key, id));
             }
         }
         apply()
