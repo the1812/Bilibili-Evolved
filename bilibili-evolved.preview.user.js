@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.1.4
+// @version      1.1.5
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -20,6 +20,7 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        fixFullscreen: false,
         removeLiveWatermark: true,
         harunaScale: true,
         removeAds: true,
@@ -305,7 +306,8 @@
                 watchLaterRedirect: "utils/watchlater.min.js",
                 hideTopSearch: "utils/hide-top-search.min.js",
                 harunaScale: "live/haruna-scale.min.js",
-                removeLiveWatermark: "live/remove-watermark.min.js"
+                removeLiveWatermark: "live/remove-watermark.min.js",
+                fixFullscreen: "utils/fix-fullscreen.min.js"
             };
             for (const key in urls)
             {
@@ -408,9 +410,6 @@
             }
         }
     }
-
-    // Fix fullscreen not work @2018-08-12
-    unsafeWindow.Element.ALLOW_KEYBOARD_INPUT = {};
 
     loadSettings();
     const resources = new ExternalResource();

@@ -96,6 +96,42 @@
 将稍后再看的链接重定向为普通播放网址,以使用新版播放页面.
 ## 隐藏热搜词
 将搜索框的热搜词替换为`搜索`.
+## 全屏修复
+修复点击全屏按钮无响应的问题.
+
+点击全屏时, b站的源代码中会检查浏览器是否为`Chrome XX.X.XXX5.1`和`window.Element`是否包含`ALLOW_KEYBOARD_INPUT`属性, 然后向`requsetFullscreen`传递不同的参数. 而部分浏览器不允许向此API传参数, 全屏操作就会失败.
+
+附:视频全屏代码
+```js
+request: function(c) {
+    var f = d.requestFullscreen;
+    c = c || document.documentElement;
+    if (/5\.1[\.\d]* Safari/.test(navigator.userAgent))
+        c[f]();
+    else
+        try {
+            var b = Element;
+            c[f](g && b.ALLOW_KEYBOARD_INPUT)
+        } catch (e) {
+            c[f]()
+        }
+},
+```
+直播间全屏代码
+```js
+b.request = function(b) {
+    var a = c.requestFullscreen;
+    b = b || document.documentElement;
+    if (/5\.1[\.\d]* Safari/.test(window.navigator.userAgent))
+        b[a]();
+    else {
+        var g = Element
+            , d = !1;
+        g && "ALLOW_KEYBOARD_INPUT"in g && g.ALLOW_KEYBOARD_INPUT && (d = !0);
+        b[a](d)
+    }
+}
+```
 ## 直播间
 ### 缩放看板娘
 根据屏幕DPI缩放看板娘的大小以提高像素的清晰度.
@@ -120,6 +156,7 @@
 - 删除广告: `开启`
 - 稍后再看重定向: `开启`
 - 隐藏热搜词: `关闭`
+- 全屏修复: `关闭`
 ### 直播间
 - 缩放看板娘: `开启`
 - 删除直播水印: `开启`

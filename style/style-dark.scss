@@ -206,7 +206,10 @@ div.con,
 .choice-item,
 .radio-icon.selected,
 .activity-item-ctnr .user-avatar,
-.live-player-ctnr.minimal
+.live-player-ctnr.minimal,
+.activity-item-loading-ctnr .user-avatar,
+.activity-item-loading-ctnr .info-ctnr .first-line,
+.activity-item-loading-ctnr .info-ctnr .second-line
 {
     background-color: #222 !important;
 }
