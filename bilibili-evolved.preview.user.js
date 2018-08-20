@@ -52,10 +52,11 @@
             GM_setValue(key, newSettings[key]);
         }
     }
-    function downloadText(url, done)
+    function downloadText(url, load, error)
     {
         const xhr = new XMLHttpRequest();
-        xhr.addEventListener("load", () => done(xhr.responseText));
+        xhr.addEventListener("load", () => load && load(xhr.responseText));
+        xhr.addEventListener("error", () => error && error(xhr.responseText));
         xhr.open("GET", url);
         xhr.send();
     }
@@ -339,6 +340,45 @@
         static get unknown()
         {
             return new ResourceType("unknown");
+        }
+    }
+    class Resource
+    {
+        static get root()
+        {
+            return "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
+        }
+        get downloaded()
+        {
+            return this.text !== null;
+        }
+        constructor(key, url, dependencies)
+        {
+            this.key = key;
+            this.url = this.root + url;
+            this.dependencies = dependencies || [];
+            this.text = null;
+        }
+        download()
+        {
+            return new Promise((resolve, reject) =>
+            {
+                if (this.download)
+                {
+                    resolve(this.text);
+                }
+                else
+                {
+                    Promise.all(this.dependencies.map(r => r.download())).then(() =>
+                    {
+                        downloadText(this.url, text =>
+                        {
+                            this.text = text;
+                            resolve(this.text);
+                        }, error => reject(error));
+                    });
+                }
+            });
         }
     }
     class ResourceManager
