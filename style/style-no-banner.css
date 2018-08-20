@@ -1,4 +1,5 @@
-#banner_link
+#banner_link,
+.ban-banner
 {
     display: none !important;
 }

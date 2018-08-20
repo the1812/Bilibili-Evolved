@@ -209,7 +209,8 @@ div.con,
 .live-player-ctnr.minimal,
 .activity-item-loading-ctnr .user-avatar,
 .activity-item-loading-ctnr .info-ctnr .first-line,
-.activity-item-loading-ctnr .info-ctnr .second-line
+.activity-item-loading-ctnr .info-ctnr .second-line,
+.comment-wrap
 {
     background-color: #222 !important;
 }
@@ -410,7 +411,9 @@ button.submit-button.disabled,
 .fans-info .fans-progress,
 .score-progress-bar,
 .radio-icon,
-.bl-switch
+.bl-switch,
+.ban-detail .content-box .info-wrap,
+.what-ban .text-con
 {
     background-color: #444 !important;
 }
@@ -699,7 +702,12 @@ blockquote .color-yellow-04,
 .block-setting-ctnr .sub-title,
 .list-content-candidate,
 .pophover>p:last-child,
-.live-player-ctnr.minimal::before
+.live-player-ctnr.minimal::before,
+.ban-detail .content-box .bk-user-info .time,
+.ban-detail .content-box .link-box,
+.what-ban .text-con .txt,
+.ban-detail .content-box .link-box .box-right .origin-text,
+.ban-detail .content-box .link-box .box-rule .origin-text
 {
     color: #aaa !important;
 }
@@ -1073,7 +1081,11 @@ div.con header,
 .block-content,
 .chat-history-panel .gift-item,
 .chat-history-panel .penury-gift-msg,
-.pophover>p:first-child
+.pophover>p:first-child,
+.ban-detail .content-box .bk-user-info .name,
+.ban-detail .content-box .punish-title,
+.ban-detail .content-box .bk-text-con,
+.what-ban .text-con .title
 {
     color: #eee !important;
 }
@@ -1108,7 +1120,9 @@ form.ipt,
 .home-wrap .home-suggest .hotlist .item,
 .home-wrap .home-suggest .history .list .item,
 .live-status-label.preparing,
-.radio-icon
+.radio-icon,
+.ban-detail .content-box .bk-text-con,
+.ban-detail .content-box .link-box
 {
     border-color: #aaa !important;
 }
@@ -1513,7 +1527,8 @@ ul.up-nav li
 .check-icon,
 .user-type-icon .svg-icon.phone-1,
 .user-type-icon .svg-icon.not-memeber-1,
-.link-footer .footer-linker .footer-linker-bili .logo
+.link-footer .footer-linker .footer-linker-bili .logo,
+.comment-wrap .header .title-h2 .head-icon
 {
     filter: $blueImageFilter !important;
 }
@@ -1613,7 +1628,9 @@ div.im-list-box,
 .action-menu .menu-list,
 .list-item .cover img,
 .vote-container:hover .text-area,
-.side-bar-cntr
+.side-bar-cntr,
+.ban-detail .content-box .info-wrap,
+.comment-wrap
 {
     box-shadow: none !important;
 }
@@ -1955,7 +1972,8 @@ a.s-btn:hover,
 .blpui-slider-span.slider-span-active:after,
 .blpui-slider-span>span,
 .blpui-slider-container .slider-process,
-.blpui-slider-container .slider-handle
+.blpui-slider-container .slider-handle,
+.what-ban .text-con .title i
 {
     background-color: $customStyleColor !important;
 }
@@ -2194,7 +2212,8 @@ header,
 .blpui-btn.text-btn.active,
 .blpui-btn.text-btn:hover,
 .chat-history-panel .penury-gift-msg .penury-gift-item .username,
-.minimal-control-panel .control-btn .btn-icon:hover
+.minimal-control-panel .control-btn .btn-icon:hover,
+.ban-detail .content-box .link-box .box-right a
 {
     color: $customStyleColor !important;
 }
