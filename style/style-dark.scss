@@ -216,7 +216,8 @@ div.con,
 .video-model,
 .ban-detail .content-box .watermark-wrap .watermark,
 .media-tab-detail-wrp .media-tab-detail,
-.media-tab-detail-wrp .media-tab-detail-l
+.media-tab-detail-wrp .media-tab-detail-l,
+.case-list .voted-result
 {
     background-color: #222 !important;
 }
@@ -656,7 +657,9 @@ blockquote .color-yellow-04,
 .n .n-num,
 .bangumi-rank-list .rank-item .ri-total,
 .pub-list .info .type .bk-title,
+.case-list .info .type .bk-title,
 .pub-list .info dl dt,
+.case-list .info dl dt,
 .pub-list .info .comment,
 .report-con dl dt,
 .wrapper .modal-body .elec-bcoin,
@@ -1104,11 +1107,12 @@ div.con header,
 .jury-graph-wrap .graph-status .illegal,
 .jury-graph-wrap .graph-status .legal,
 .ban-vote .ban-detail .content-box .watermark-wrap .bk-text-con,
-.case-list .info dl dt,
-.case-list .info .type .bk-title,
 .case-list .voted-user-info .name,
 .slide-item-wrp .slide-item-info .slide-item-title,
-.sponsor-rank .sponsor-rank-header .show-sponsor-rank
+.sponsor-rank .sponsor-rank-header .show-sponsor-rank,
+.case-list .info .type .jc-black,
+.case-list .voted-result,
+.crumbs a
 {
     color: #eee !important;
 }
@@ -1138,6 +1142,7 @@ form.ipt,
 .up-info-holder .fixed-box .rightside-article-list-btn .label,
 .up-info-holder .fixed-box .up-article-list-block .block-title,
 .pub-list .info dl,
+.case-list .info dl,
 .report-con label:before,
 .suggest-wrap .title,
 .home-wrap .home-suggest .hotlist .item,
@@ -1556,7 +1561,8 @@ ul.up-nav li
 .user-type-icon .svg-icon.not-memeber-1,
 .link-footer .footer-linker .footer-linker-bili .logo,
 .comment-wrap .header .title-h2 .head-icon,
-.fjw-point header h2 .head-icon
+.fjw-point header h2 .head-icon,
+.bb-comment .comment-list .list-item .info .operation .spot
 {
     filter: $blueImageFilter !important;
 }
@@ -2006,7 +2012,8 @@ a.s-btn:hover,
 .blpui-slider-container .slider-process,
 .blpui-slider-container .slider-handle,
 .what-ban .text-con .title i,
-.fjw-point .focus-btn
+.fjw-point .focus-btn,
+.cases-wrap .fjw-user .b-right button
 {
     background-color: $customStyleColor !important;
 }
@@ -2344,7 +2351,8 @@ a.s-btn:hover,
 .count-choice .send-button,
 .yan-item:active,
 .dyn_list span.sp,
-.fjw-point .focus-btn
+.fjw-point .focus-btn,
+.cases-wrap .fjw-user .b-right button
 {
     color: $foreground !important;
 }
