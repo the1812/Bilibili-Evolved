@@ -214,10 +214,10 @@ div.con,
 .ban-app,
 .bb-comment .nameplate .nameplate-card,
 .video-model,
-.ban-detail .content-box .watermark-wrap .watermark,
 .media-tab-detail-wrp .media-tab-detail,
 .media-tab-detail-wrp .media-tab-detail-l,
-.case-list .voted-result
+.voted-result,
+.info-model
 {
     background-color: #222 !important;
 }
@@ -423,8 +423,10 @@ button.submit-button.disabled,
 .what-ban .text-con,
 .fjw-point,
 .paginator .paging-box .result,
-.ban-vote .ban-detail .content-box .vote-cnt,
-.media-tab-wrp
+.ban-detail .content-box .vote-cnt,
+.media-tab-wrp,
+.content-box .watermark-wrap .watermark,
+.ban-detail .content-box .major-content
 {
     background-color: #444 !important;
 }
@@ -489,7 +491,8 @@ body,
 .shortcut-item .list-item:hover,
 .fans-medal-item .level,
 .divider,
-.fjw-point .line
+.fjw-point .line,
+font>span
 {
     background-color: transparent !important;
 }
@@ -720,11 +723,14 @@ blockquote .color-yellow-04,
 .ban-detail .content-box .bk-user-info .time,
 .ban-detail .content-box .link-box,
 .what-ban .text-con .txt,
-.ban-detail .content-box .link-box .box-right .origin-text,
-.ban-detail .content-box .link-box .box-rule .origin-text,
+.content-box .origin-text,
 .jury-graph-wrap .canvas-txt h4,
 .fjw-point .point-wrap .user-point .info .usr-zan-cai span,
-.bb-comment .nameplate .nameplate-card .nameplate-text .n-type
+.bb-comment .nameplate .nameplate-card .nameplate-text .n-type,
+.content-box .punish-title .rule-content,
+.cm-model .report-detail .detail .name,
+.jury-graph-wrap .graph-status .illegal b,
+.jury-graph-wrap .graph-status .legal b
 {
     color: #aaa !important;
 }
@@ -1106,13 +1112,16 @@ div.con header,
 .jury-graph-wrap .canvas-txt p,
 .jury-graph-wrap .graph-status .illegal,
 .jury-graph-wrap .graph-status .legal,
-.ban-vote .ban-detail .content-box .watermark-wrap .bk-text-con,
+.content-box .watermark-wrap .bk-text-con,
 .case-list .voted-user-info .name,
 .slide-item-wrp .slide-item-info .slide-item-title,
 .sponsor-rank .sponsor-rank-header .show-sponsor-rank,
 .case-list .info .type .jc-black,
-.case-list .voted-result,
-.crumbs a
+.voted-result,
+.crumbs a,
+.content-box .origin-text a,
+.cm-model .report-detail .detail .report-cnt,
+font
 {
     color: #eee !important;
 }
@@ -1127,7 +1136,8 @@ div.con header,
 }
 .fans-medal-item .label,
 .calendar .day-item,
-.calendar .day-item.cur-day
+.calendar .day-item.cur-day,
+.content-box .watermark-wrap .watermark
 {
     color: #222 !important;
 }
@@ -1338,7 +1348,8 @@ div.bar>div.num,
 .fjw-point header,
 .bb-comment .nameplate .nameplate-card,
 .bb-comment .nameplate .nameplate-card .nameplate-text,
-.border-b
+.border-b,
+.fjw-case-detail .ban-detail .content-box .jury-status
 {
     border-color: transparent !important;
 }
@@ -2011,7 +2022,7 @@ a.s-btn:hover,
 .blpui-slider-span>span,
 .blpui-slider-container .slider-process,
 .blpui-slider-container .slider-handle,
-.what-ban .text-con .title i,
+.text-con .title i,
 .fjw-point .focus-btn,
 .cases-wrap .fjw-user .b-right button
 {
