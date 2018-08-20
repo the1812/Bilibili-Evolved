@@ -492,7 +492,8 @@ body,
 .fans-medal-item .level,
 .divider,
 .fjw-point .line,
-font>span
+font>span,
+.list-item .close .close-icon
 {
     background-color: transparent !important;
 }
@@ -1122,7 +1123,8 @@ div.con header,
 .content-box .origin-text a,
 .cm-model .report-detail .detail .report-cnt,
 font,
-.crumbs
+.crumbs,
+.comment-content .link
 {
     color: #eee !important;
 }
@@ -1574,7 +1576,15 @@ ul.up-nav li
 .link-footer .footer-linker .footer-linker-bili .logo,
 .comment-wrap .header .title-h2 .head-icon,
 .fjw-point header h2 .head-icon,
-.bb-comment .comment-list .list-item .info .operation .spot
+.bb-comment .comment-list .list-item .info .operation .spot,
+.primary-menu .nav-menu .sub-nav li>a,
+.primary-menu .nav-menu .sub-nav li>a span::after,
+.bp-svg-icon.radio-Selected,
+.bp-svg-icon.radio-default,
+.emotion-btn-box.opened,
+.emotion-btn-box:hover,
+.emoji-btn-box.opened,
+.emoji-btn-box:hover
 {
     filter: $blueImageFilter !important;
 }
@@ -1634,14 +1644,6 @@ ul.filter-disable .icon-copy,
 .list-create:hover .icon
 {
     background-position: -716px -332px !important;
-}
-.bp-svg-icon.radio-default
-{
-    background-position: 0em -9.376em !important;
-}
-.bp-svg-icon.radio-Selected
-{
-    background-position: 0em -8.376em !important;
 }
 .switch-wrap .imgleft:hover i
 {
