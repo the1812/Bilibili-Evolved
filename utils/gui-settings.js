@@ -209,7 +209,7 @@
             it =>
             {
                 addSettingsIcon(it);
-                const settingsBox = resources.data.guiSettingsDom;
+                const settingsBox = resources.data.guiSettingsDom.text;
                 if (settingsBox)
                 {
                     $("body").append(settingsBox);

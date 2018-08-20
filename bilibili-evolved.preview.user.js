@@ -270,6 +270,7 @@
             return this.foreground === "#000" ? "" : "invert(1)";
         }
     }
+    // [Offline build placeholder]
     class ResourceType
     {
         constructor(name, preprocessor)
@@ -326,7 +327,7 @@
                     style = style
                         .replace(new RegExp("\\$" + key, "g"), settings[key]);
                 }
-                style = hexToRgba(style);
+                return hexToRgba(style);
             });
         }
         static get html()
@@ -344,26 +345,22 @@
     }
     class Resource
     {
-        static get root()
-        {
-            return "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
-        }
         get downloaded()
         {
             return this.text !== null;
         }
-        constructor(key, url, dependencies)
+        constructor(url, dependencies)
         {
-            this.key = key;
-            this.url = this.root + url;
+            this.url = Resource.root + url;
             this.dependencies = dependencies || [];
             this.text = null;
+            this.type = ResourceType.fromUrl(url);
         }
         download()
         {
             return new Promise((resolve, reject) =>
             {
-                if (this.download)
+                if (this.downloaded)
                 {
                     resolve(this.text);
                 }
@@ -373,7 +370,7 @@
                     {
                         downloadText(this.url, text =>
                         {
-                            this.text = text;
+                            this.text = this.type.preprocessor(text);
                             resolve(this.text);
                         }, error => reject(error));
                     });
@@ -381,30 +378,31 @@
             });
         }
     }
+    Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
     Resource.all = {
-        style: new Resource(style, "style/style.min.scss"),
-        oldStyle: new Resource(oldStyle, "style/style-old.min.scss"),
-        darkStyle: new Resource(darkStyle, "style/style-dark.min.scss"),
-        touchPlayerStyle: new Resource(touchPlayerStyle, "style/style-touch-player.min.scss"),
-        navbarOverrideStyle: new Resource(navbarOverrideStyle, "style/style-navbar-override.min.css"),
-        noBannerStyle: new Resource(noBannerStyle, "style/style-no-banner.min.css"),
-        removeAdsStyle: new Resource(removeAdsStyle, "style/style-remove-promotions.min.css"),
-        guiSettingsStyle: new Resource(guiSettingsStyle, "style/style-gui-settings.min.scss"),
-        guiSettingsDom: new Resource(guiSettingsDom, "utils/gui-settings.html"),
-        guiSettings: new Resource(guiSettings, "utils/gui-settings.min.js"),
-        useDarkStyle: new Resource(useDarkStyle, "style/dark-styles.min.js"),
-        useNewStyle: new Resource(useNewStyle, "style/new-styles.min.js"),
-        touchNavBar: new Resource(touchNavBar, "touch/touch-navbar.min.js"),
-        touchVideoPlayer: new Resource(touchVideoPlayer, "touch/touch-player.min.js"),
-        expandDanmakuList: new Resource(expandDanmakuList, "utils/expand-danmaku.min.js"),
-        removeAds: new Resource(removeAds, "utils/remove-promotions.min.js"),
-        watchLaterRedirect: new Resource(watchLaterRedirect, "utils/watchlater.min.js"),
-        hideTopSearch: new Resource(hideTopSearch, "utils/hide-top-search.min.js"),
-        harunaScale: new Resource(harunaScale, "live/haruna-scale.min.js"),
-        removeLiveWatermark: new Resource(removeLiveWatermark, "live/remove-watermark.min.js"),
-        fixFullscreen: new Resource(fixFullscreen, "utils/fix-fullscreen.min.js"),
+        style: new Resource("style/style.min.scss"),
+        oldStyle: new Resource("style/style-old.min.scss"),
+        darkStyle: new Resource("style/style-dark.min.scss"),
+        touchPlayerStyle: new Resource("style/style-touch-player.min.scss"),
+        navbarOverrideStyle: new Resource("style/style-navbar-override.min.css"),
+        noBannerStyle: new Resource("style/style-no-banner.min.css"),
+        removeAdsStyle: new Resource("style/style-remove-promotions.min.css"),
+        guiSettingsStyle: new Resource("style/style-gui-settings.min.scss"),
+        guiSettingsDom: new Resource("utils/gui-settings.html"),
+        guiSettings: new Resource("utils/gui-settings.min.js"),
+        useDarkStyle: new Resource("style/dark-styles.min.js"),
+        useNewStyle: new Resource("style/new-styles.min.js"),
+        touchNavBar: new Resource("touch/touch-navbar.min.js"),
+        touchVideoPlayer: new Resource("touch/touch-player.min.js"),
+        expandDanmakuList: new Resource("utils/expand-danmaku.min.js"),
+        removeAds: new Resource("utils/remove-promotions.min.js"),
+        watchLaterRedirect: new Resource("utils/watchlater.min.js"),
+        hideTopSearch: new Resource("utils/hide-top-search.min.js"),
+        harunaScale: new Resource("live/haruna-scale.min.js"),
+        removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
+        fixFullscreen: new Resource("utils/fix-fullscreen.min.js")
     };
-    (() =>
+    (function ()
     {
         this.guiSettings.dependencies = [
             this.guiSettingsDom,
@@ -422,15 +420,15 @@
         this.touchVideoPlayer.dependencies = [
             this.touchPlayerStyle
         ];
-        this.removeAds, dependencies = [
+        this.removeAds.dependencies = [
             this.removeAdsStyle
         ];
-    }).call(Resource.all);
+    }).apply(Resource.all);
     class ResourceManager
     {
         constructor()
         {
-            // [Offline build placeholder]
+            this.data = Resource.all;
             this.attributes = {};
             this.setupColors();
         }
@@ -452,7 +450,12 @@
                 {
                     if (settings[key] === true)
                     {
-                        const promise = Resource.all[key].download();
+                        const resource = Resource.all[key];
+                        if (!resource)
+                        {
+                            continue;
+                        }
+                        const promise = resource.download();
                         promise.then(text =>
                         {
                             const func = eval(text);
