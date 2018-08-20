@@ -209,7 +209,15 @@ div.con,
 .live-player-ctnr.minimal,
 .activity-item-loading-ctnr .user-avatar,
 .activity-item-loading-ctnr .info-ctnr .first-line,
-.activity-item-loading-ctnr .info-ctnr .second-line
+.activity-item-loading-ctnr .info-ctnr .second-line,
+.comment-wrap,
+.ban-app,
+.bb-comment .nameplate .nameplate-card,
+.video-model,
+.media-tab-detail-wrp .media-tab-detail,
+.media-tab-detail-wrp .media-tab-detail-l,
+.voted-result,
+.info-model
 {
     background-color: #222 !important;
 }
@@ -410,7 +418,15 @@ button.submit-button.disabled,
 .fans-info .fans-progress,
 .score-progress-bar,
 .radio-icon,
-.bl-switch
+.bl-switch,
+.ban-detail .content-box .info-wrap,
+.what-ban .text-con,
+.fjw-point,
+.paginator .paging-box .result,
+.ban-detail .content-box .vote-cnt,
+.media-tab-wrp,
+.content-box .watermark-wrap .watermark,
+.ban-detail .content-box .major-content
 {
     background-color: #444 !important;
 }
@@ -474,7 +490,9 @@ body,
 .side-bar-cntr,
 .shortcut-item .list-item:hover,
 .fans-medal-item .level,
-.divider
+.divider,
+.fjw-point .line,
+font>span
 {
     background-color: transparent !important;
 }
@@ -642,7 +660,9 @@ blockquote .color-yellow-04,
 .n .n-num,
 .bangumi-rank-list .rank-item .ri-total,
 .pub-list .info .type .bk-title,
+.case-list .info .type .bk-title,
 .pub-list .info dl dt,
+.case-list .info dl dt,
 .pub-list .info .comment,
 .report-con dl dt,
 .wrapper .modal-body .elec-bcoin,
@@ -699,7 +719,18 @@ blockquote .color-yellow-04,
 .block-setting-ctnr .sub-title,
 .list-content-candidate,
 .pophover>p:last-child,
-.live-player-ctnr.minimal::before
+.live-player-ctnr.minimal::before,
+.ban-detail .content-box .bk-user-info .time,
+.ban-detail .content-box .link-box,
+.what-ban .text-con .txt,
+.content-box .origin-text,
+.jury-graph-wrap .canvas-txt h4,
+.fjw-point .point-wrap .user-point .info .usr-zan-cai span,
+.bb-comment .nameplate .nameplate-card .nameplate-text .n-type,
+.content-box .punish-title .rule-content,
+.cm-model .report-detail .detail .name,
+.jury-graph-wrap .graph-status .illegal b,
+.jury-graph-wrap .graph-status .legal b
 {
     color: #aaa !important;
 }
@@ -1073,7 +1104,25 @@ div.con header,
 .block-content,
 .chat-history-panel .gift-item,
 .chat-history-panel .penury-gift-msg,
-.pophover>p:first-child
+.pophover>p:first-child,
+.ban-detail .content-box .bk-user-info .name,
+.ban-detail .content-box .punish-title,
+.ban-detail .content-box .bk-text-con,
+.what-ban .text-con .title,
+.jury-graph-wrap .canvas-txt p,
+.jury-graph-wrap .graph-status .illegal,
+.jury-graph-wrap .graph-status .legal,
+.content-box .watermark-wrap .bk-text-con,
+.case-list .voted-user-info .name,
+.slide-item-wrp .slide-item-info .slide-item-title,
+.sponsor-rank .sponsor-rank-header .show-sponsor-rank,
+.case-list .info .type .jc-black,
+.voted-result,
+.crumbs a,
+.content-box .origin-text a,
+.cm-model .report-detail .detail .report-cnt,
+font,
+.crumbs
 {
     color: #eee !important;
 }
@@ -1088,7 +1137,8 @@ div.con header,
 }
 .fans-medal-item .label,
 .calendar .day-item,
-.calendar .day-item.cur-day
+.calendar .day-item.cur-day,
+.content-box .watermark-wrap .watermark
 {
     color: #222 !important;
 }
@@ -1103,12 +1153,15 @@ form.ipt,
 .up-info-holder .fixed-box .rightside-article-list-btn .label,
 .up-info-holder .fixed-box .up-article-list-block .block-title,
 .pub-list .info dl,
+.case-list .info dl,
 .report-con label:before,
 .suggest-wrap .title,
 .home-wrap .home-suggest .hotlist .item,
 .home-wrap .home-suggest .history .list .item,
 .live-status-label.preparing,
-.radio-icon
+.radio-icon,
+.ban-detail .content-box .bk-text-con,
+.ban-detail .content-box .link-box
 {
     border-color: #aaa !important;
 }
@@ -1292,7 +1345,12 @@ div.bar>div.num,
 .awarding-panel,
 .gift-sender-panel::before,
 .count-choice,
-.choice-item
+.choice-item,
+.fjw-point header,
+.bb-comment .nameplate .nameplate-card,
+.bb-comment .nameplate .nameplate-card .nameplate-text,
+.border-b,
+.fjw-case-detail .ban-detail .content-box .jury-status
 {
     border-color: transparent !important;
 }
@@ -1513,7 +1571,10 @@ ul.up-nav li
 .check-icon,
 .user-type-icon .svg-icon.phone-1,
 .user-type-icon .svg-icon.not-memeber-1,
-.link-footer .footer-linker .footer-linker-bili .logo
+.link-footer .footer-linker .footer-linker-bili .logo,
+.comment-wrap .header .title-h2 .head-icon,
+.fjw-point header h2 .head-icon,
+.bb-comment .comment-list .list-item .info .operation .spot
 {
     filter: $blueImageFilter !important;
 }
@@ -1528,7 +1589,9 @@ ul.up-nav li
 .elevator-module .nav-list .customize .icon,
 .spread-module .num .play .icon,
 .spread-module .num .danmu .icon,
-ul.filter-disable .icon-copy
+ul.filter-disable .icon-copy,
+.fjw-point .point-wrap .user-point .info .usr-zan-cai .zan,
+.fjw-point .point-wrap .user-point .info .usr-zan-cai .cai
 {
     filter: grayscale(1) !important;
 }
@@ -1613,7 +1676,9 @@ div.im-list-box,
 .action-menu .menu-list,
 .list-item .cover img,
 .vote-container:hover .text-area,
-.side-bar-cntr
+.side-bar-cntr,
+.ban-detail .content-box .info-wrap,
+.comment-wrap
 {
     box-shadow: none !important;
 }
@@ -1640,7 +1705,8 @@ div.drag-bar,
 .gift-sender-panel,
 .common-popup-wrap,
 .blpui-slider-container .slider-handle,
-.live-player-ctnr.minimal
+.live-player-ctnr.minimal,
+.bb-comment .nameplate .nameplate-card
 {
     box-shadow: 0px 1px 20px 2px $customStyleColor30 !important;
 }
@@ -1662,7 +1728,8 @@ div.desc-tips>span.arrow-left,
 img.source-img,
 canvas.cliper.is-img,
 .loading .icon,
-.load-more .icon
+.load-more .icon,
+.bb-comment .nameplate .nameplate-card .nameplate-arrow
 {
     display: none !important;
 }
@@ -1955,7 +2022,10 @@ a.s-btn:hover,
 .blpui-slider-span.slider-span-active:after,
 .blpui-slider-span>span,
 .blpui-slider-container .slider-process,
-.blpui-slider-container .slider-handle
+.blpui-slider-container .slider-handle,
+.text-con .title i,
+.fjw-point .focus-btn,
+.cases-wrap .fjw-user .b-right button
 {
     background-color: $customStyleColor !important;
 }
@@ -2194,7 +2264,8 @@ header,
 .blpui-btn.text-btn.active,
 .blpui-btn.text-btn:hover,
 .chat-history-panel .penury-gift-msg .penury-gift-item .username,
-.minimal-control-panel .control-btn .btn-icon:hover
+.minimal-control-panel .control-btn .btn-icon:hover,
+.ban-detail .content-box .link-box .box-right a
 {
     color: $customStyleColor !important;
 }
@@ -2291,7 +2362,9 @@ a.s-btn:hover,
 .btn-send,
 .count-choice .send-button,
 .yan-item:active,
-.dyn_list span.sp
+.dyn_list span.sp,
+.fjw-point .focus-btn,
+.cases-wrap .fjw-user .b-right button
 {
     color: $foreground !important;
 }
