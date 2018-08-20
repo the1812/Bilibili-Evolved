@@ -431,8 +431,11 @@
         constructor()
         {
             // [Offline build placeholder]
-            this.data = {};
             this.attributes = {};
+            this.setupColors();
+        }
+        setupColors()
+        {
             this.color = new ColorProcessor(settings.customStyleColor);
             settings.foreground = this.color.foreground;
             settings.blueImageFilter = this.color.blueImageFilter;
@@ -440,130 +443,52 @@
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
         }
-        static get resourceUrls()
+        fetch()
         {
-            const root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
-            const urls = {
-                style: "style/style.min.scss",
-                oldStyle: "style/style-old.min.scss",
-                darkStyle: "style/style-dark.min.scss",
-                touchPlayerStyle: "style/style-touch-player.min.scss",
-                navbarOverrideStyle: "style/style-navbar-override.min.css",
-                noBannerStyle: "style/style-no-banner.min.css",
-                removeAdsStyle: "style/style-remove-promotions.min.css",
-                guiSettingsStyle: "style/style-gui-settings.min.scss",
-                guiSettingsDom: "utils/gui-settings.html",
-                guiSettings: "utils/gui-settings.min.js",
-                useDarkStyle: "style/dark-styles.min.js",
-                useNewStyle: "style/new-styles.min.js",
-                touchNavBar: "touch/touch-navbar.min.js",
-                touchVideoPlayer: "touch/touch-player.min.js",
-                expandDanmakuList: "utils/expand-danmaku.min.js",
-                removeAds: "utils/remove-promotions.min.js",
-                watchLaterRedirect: "utils/watchlater.min.js",
-                hideTopSearch: "utils/hide-top-search.min.js",
-                harunaScale: "live/haruna-scale.min.js",
-                removeLiveWatermark: "live/remove-watermark.min.js",
-                fixFullscreen: "utils/fix-fullscreen.min.js"
-            };
-            for (const key in urls)
+            return new Promise(resolve =>
             {
-                urls[key] = root + urls[key];
-            }
-            return urls;
-        }
-        ajax(url, done)
-        {
-            downloadText(url, done);
-        }
-        fetch(callback)
-        {
-            this.callback = callback;
-            const replaceCustomColor = (url, style) =>
-            {
-                if (url.indexOf(".scss") !== -1 || url.indexOf(".css") !== -1)
+                const promises = [];
+                for (const key in settings)
                 {
-                    const hexToRgba = text =>
+                    if (settings[key] === true)
                     {
-                        const replaceColor = (text, shorthand) =>
+                        const promise = Resource.all[key].download();
+                        promise.then(text =>
                         {
-                            const part = `([a-f\\d]${shorthand ? "" : "{2}"})`.repeat(4);
-                            return text.replace(new RegExp(`(#${part})[^a-f\\d]`, "ig"), (original, it) =>
+                            const func = eval(text);
+                            if (func)
                             {
-                                const rgba = this.color.hexToRgba(it);
-                                if (rgba)
+                                const attribute = func(settings, this);
+                                this.attributes[key] = attribute;
+                                if (attribute.ajaxReload)
                                 {
-                                    return `rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})${original.slice(-1)}`;
+                                    $(document).ajaxComplete(() =>
+                                    {
+                                        func(settings, this);
+                                    });
                                 }
-                                else
-                                {
-                                    return original;
-                                }
-                            });
-                        };
-                        return replaceColor(replaceColor(text, false), true);
-                    };
-                    for (const key of Object.keys(settings))
-                    {
-                        style = style
-                            .replace(new RegExp("\\$" + key, "g"), settings[key]);
+                            }
+                        });
+                        promises.push(promise);
                     }
-                    style = hexToRgba(style);
                 }
-                return style;
-            };
-            const urls = ResourceManager.resourceUrls;
-            const resourceCount = Object.keys(urls).length;
-            let downloadedCount = 0;
-            for (const key in urls)
-            {
-                const url = urls[key];
-                this.ajax(url, data =>
-                {
-                    this.data[key] = replaceCustomColor(url, data);
-                    downloadedCount++;
-                    if (downloadedCount >= resourceCount)
-                    {
-                        this.apply();
-                        if (this.callback)
-                        {
-                            this.callback();
-                        }
-                    }
-                });
-            }
+                Promise.all(promises).then(() => resolve());
+            });
         }
         getStyle(key, id)
         {
-            return `<style id='${id}'>${this.data[key]}</style>`;
+            const style = Resource.all[key].text;
+            if (!style)
+            {
+                console.error("Attempt to get style which is not downloaded.");
+            }
+            return `<style id='${id}'>${style}</style>`;
         }
         applyStyle(key, id)
         {
             if ($(`#${id}`).length === 0)
             {
                 $("head").prepend(this.getStyle(key, id));
-            }
-        }
-        apply()
-        {
-            for (const key in settings)
-            {
-                if (settings[key] === true)
-                {
-                    const func = eval(this.data[key]);
-                    if (func)
-                    {
-                        const attribute = func(settings, this);
-                        this.attributes[key] = attribute;
-                        if (attribute.ajaxReload)
-                        {
-                            $(document).ajaxComplete(() =>
-                            {
-                                func(settings, this);
-                            });
-                        }
-                    }
-                }
             }
         }
     }
