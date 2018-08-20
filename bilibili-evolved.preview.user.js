@@ -381,29 +381,51 @@
             });
         }
     }
-    Resource.all = [
-        new Resource(style, "style/style.min.scss"),
-        new Resource(oldStyle, "style/style-old.min.scss"),
-        new Resource(darkStyle, "style/style-dark.min.scss"),
-        new Resource(touchPlayerStyle, "style/style-touch-player.min.scss"),
-        new Resource(navbarOverrideStyle, "style/style-navbar-override.min.css"),
-        new Resource(noBannerStyle, "style/style-no-banner.min.css"),
-        new Resource(removeAdsStyle, "style/style-remove-promotions.min.css"),
-        new Resource(guiSettingsStyle, "style/style-gui-settings.min.scss"),
-        new Resource(guiSettingsDom, "utils/gui-settings.html"),
-        new Resource(guiSettings, "utils/gui-settings.min.js"),
-        new Resource(useDarkStyle, "style/dark-styles.min.js"),
-        new Resource(useNewStyle, "style/new-styles.min.js"),
-        new Resource(touchNavBar, "touch/touch-navbar.min.js"),
-        new Resource(touchVideoPlayer, "touch/touch-player.min.js"),
-        new Resource(expandDanmakuList, "utils/expand-danmaku.min.js"),
-        new Resource(removeAds, "utils/remove-promotions.min.js"),
-        new Resource(watchLaterRedirect, "utils/watchlater.min.js"),
-        new Resource(hideTopSearch, "utils/hide-top-search.min.js"),
-        new Resource(harunaScale, "live/haruna-scale.min.js"),
-        new Resource(removeLiveWatermark, "live/remove-watermark.min.js"),
-        new Resource(fixFullscreen, "utils/fix-fullscreen.min.js")
-    ];
+    Resource.all = {
+        style: new Resource(style, "style/style.min.scss"),
+        oldStyle: new Resource(oldStyle, "style/style-old.min.scss"),
+        darkStyle: new Resource(darkStyle, "style/style-dark.min.scss"),
+        touchPlayerStyle: new Resource(touchPlayerStyle, "style/style-touch-player.min.scss"),
+        navbarOverrideStyle: new Resource(navbarOverrideStyle, "style/style-navbar-override.min.css"),
+        noBannerStyle: new Resource(noBannerStyle, "style/style-no-banner.min.css"),
+        removeAdsStyle: new Resource(removeAdsStyle, "style/style-remove-promotions.min.css"),
+        guiSettingsStyle: new Resource(guiSettingsStyle, "style/style-gui-settings.min.scss"),
+        guiSettingsDom: new Resource(guiSettingsDom, "utils/gui-settings.html"),
+        guiSettings: new Resource(guiSettings, "utils/gui-settings.min.js"),
+        useDarkStyle: new Resource(useDarkStyle, "style/dark-styles.min.js"),
+        useNewStyle: new Resource(useNewStyle, "style/new-styles.min.js"),
+        touchNavBar: new Resource(touchNavBar, "touch/touch-navbar.min.js"),
+        touchVideoPlayer: new Resource(touchVideoPlayer, "touch/touch-player.min.js"),
+        expandDanmakuList: new Resource(expandDanmakuList, "utils/expand-danmaku.min.js"),
+        removeAds: new Resource(removeAds, "utils/remove-promotions.min.js"),
+        watchLaterRedirect: new Resource(watchLaterRedirect, "utils/watchlater.min.js"),
+        hideTopSearch: new Resource(hideTopSearch, "utils/hide-top-search.min.js"),
+        harunaScale: new Resource(harunaScale, "live/haruna-scale.min.js"),
+        removeLiveWatermark: new Resource(removeLiveWatermark, "live/remove-watermark.min.js"),
+        fixFullscreen: new Resource(fixFullscreen, "utils/fix-fullscreen.min.js"),
+    };
+    (() =>
+    {
+        this.guiSettings.dependencies = [
+            this.guiSettingsDom,
+            this.guiSettingsStyle
+        ];
+        this.useDarkStyle.dependencies = [
+            this.darkStyle
+        ];
+        this.useNewStyle.dependencies = [
+            this.style,
+            this.oldStyle,
+            this.navbarOverrideStyle,
+            this.noBannerStyle
+        ];
+        this.touchVideoPlayer.dependencies = [
+            this.touchPlayerStyle
+        ];
+        this.removeAds, dependencies = [
+            this.removeAdsStyle
+        ];
+    }).call(Resource.all);
     class ResourceManager
     {
         constructor()
