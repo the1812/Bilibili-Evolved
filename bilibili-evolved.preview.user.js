@@ -269,7 +269,79 @@
             return this.foreground === "#000" ? "" : "invert(1)";
         }
     }
-    class ExternalResource
+    class ResourceType
+    {
+        constructor(name, preprocessor)
+        {
+            this.name = name;
+            this.preprocessor = preprocessor || (text => text);
+        }
+        static fromUrl(url)
+        {
+            if (url.indexOf(".scss") !== -1 || url.indexOf(".css") !== -1)
+            {
+                return this.style;
+            }
+            else if (url.indexOf(".html") !== -1 || url.indexOf(".htm") !== -1)
+            {
+                return this.html;
+            }
+            else if (url.indexOf(".js") !== -1)
+            {
+                return this.script;
+            }
+            else
+            {
+                return this.unknown;
+            }
+        }
+        static get style()
+        {
+            return new ResourceType("style", style =>
+            {
+                const color = new ColorProcessor(settings.customStyleColor);
+                const hexToRgba = text =>
+                {
+                    const replaceColor = (text, shorthand) =>
+                    {
+                        const part = `([a-f\\d]${shorthand ? "" : "{2}"})`.repeat(4);
+                        return text.replace(new RegExp(`(#${part})[^a-f\\d]`, "ig"), (original, it) =>
+                        {
+                            const rgba = color.hexToRgba(it);
+                            if (rgba)
+                            {
+                                return `rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})${original.slice(-1)}`;
+                            }
+                            else
+                            {
+                                return original;
+                            }
+                        });
+                    };
+                    return replaceColor(replaceColor(text, false), true);
+                };
+                for (const key of Object.keys(settings))
+                {
+                    style = style
+                        .replace(new RegExp("\\$" + key, "g"), settings[key]);
+                }
+                style = hexToRgba(style);
+            });
+        }
+        static get html()
+        {
+            return new ResourceType("html");
+        }
+        static get script()
+        {
+            return new ResourceType("script");
+        }
+        static get unknown()
+        {
+            return new ResourceType("unknown");
+        }
+    }
+    class ResourceManager
     {
         constructor()
         {
@@ -355,7 +427,7 @@
                 }
                 return style;
             };
-            const urls = ExternalResource.resourceUrls;
+            const urls = ResourceManager.resourceUrls;
             const resourceCount = Object.keys(urls).length;
             let downloadedCount = 0;
             for (const key in urls)
@@ -412,6 +484,6 @@
     }
 
     loadSettings();
-    const resources = new ExternalResource();
+    const resources = new ResourceManager();
     resources.fetch();
 })(window.jQuery.noConflict(true));
