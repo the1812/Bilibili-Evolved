@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      35.26
+// @version      35.30
 // @description  增强哔哩哔哩Web端体验.(离线版)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -552,10 +552,11 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
         {
             return this.text !== null;
         }
-        constructor(url, dependencies)
+        constructor(url, priority, dependencies)
         {
             this.url = Resource.root + url;
             this.dependencies = dependencies || [];
+            this.priority = priority;
             this.text = null;
             this.type = ResourceType.fromUrl(url);
         }
@@ -576,18 +577,59 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
                 }
             });
         }
+        applyStyle(id)
+        {
+            if ($(`#${id}`).length === 0)
+            {
+                const style = this.text;
+                if (!style)
+                {
+                    console.error("Attempt to get style which is not downloaded.");
+                }
+                let attributes = `id='${id}'`;
+                if (this.priority !== undefined)
+                {
+                    attributes += ` priority='${this.priority}'`;
+                }
+                const element = `<style ${attributes}>${style}</style>`;
+                if (this.priority !== undefined)
+                {
+                    let insertPosition = this.priority - 1;
+                    let formerStyle = $(`style[priority='${insertPosition}']`);
+                    while (insertPosition >= 0 && formerStyle.length === 0)
+                    {
+                        formerStyle = $(`style[priority='${insertPosition}']`);
+                        insertPosition--;
+                    }
+                    if (insertPosition < 0)
+                    {
+                        $("head").prepend(element);
+                    }
+                    else
+                    {
+                        formerStyle.after(element);
+                    }
+                }
+                else
+                {
+                    $("head").prepend(element);
+                }
+            }
+        }
     }
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
     Resource.all = {
-        style: new Resource("style/style.min.scss"),
-        oldStyle: new Resource("style/style-old.min.scss"),
-        darkStyle: new Resource("style/style-dark.min.scss"),
-        touchPlayerStyle: new Resource("style/style-touch-player.min.scss"),
-        navbarOverrideStyle: new Resource("style/style-navbar-override.min.css"),
-        noBannerStyle: new Resource("style/style-no-banner.min.css"),
-        removeAdsStyle: new Resource("style/style-remove-promotions.min.css"),
-        guiSettingsStyle: new Resource("style/style-gui-settings.min.scss"),
+        style: new Resource("style/style.min.scss", 1),
+        oldStyle: new Resource("style/style-old.min.scss", 1),
+        darkStyle: new Resource("style/style-dark.min.scss", 2),
+        touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
+        navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
+        noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
+        removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
+        guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
+
         guiSettingsDom: new Resource("utils/gui-settings.html"),
+
         guiSettings: new Resource("utils/gui-settings.min.js"),
         useDarkStyle: new Resource("style/dark-styles.min.js"),
         useNewStyle: new Resource("style/new-styles.min.js"),
@@ -677,21 +719,9 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
                 Promise.all(promises).then(() => resolve());
             });
         }
-        getStyle(key, id)
-        {
-            const style = Resource.all[key].text;
-            if (!style)
-            {
-                console.error("Attempt to get style which is not downloaded.");
-            }
-            return `<style id='${id}'>${style}</style>`;
-        }
         applyStyle(key, id)
         {
-            if ($(`#${id}`).length === 0)
-            {
-                $("head").prepend(this.getStyle(key, id));
-            }
+            Resource.all[key].applyStyle(id);
         }
     }
 
