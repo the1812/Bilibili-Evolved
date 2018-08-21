@@ -731,7 +731,8 @@ blockquote .color-yellow-04,
 .content-box .punish-title .rule-content,
 .cm-model .report-detail .detail .name,
 .jury-graph-wrap .graph-status .illegal b,
-.jury-graph-wrap .graph-status .legal b
+.jury-graph-wrap .graph-status .legal b,
+.is-max .option-vote
 {
     color: #aaa !important;
 }
@@ -1124,7 +1125,8 @@ div.con header,
 .cm-model .report-detail .detail .report-cnt,
 font,
 .crumbs,
-.comment-content .link
+.comment-content .link,
+.is-max .option-text
 {
     color: #eee !important;
 }

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.2.1
+// @version      1.2.2
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -332,7 +332,25 @@
         }
         static get html()
         {
-            return new ResourceType("html");
+            return new ResourceType("html", html =>
+            {
+                return html
+                    .replace(/<category>([^\0]*?)<\/category>/g, `
+                    <li class="indent-center">
+                        <span class="settings-category">$1</span>
+                    </li>
+                `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
+                    <li class="indent-$1">
+                        <label class="gui-settings-checkbox-container">
+                            <input key="$2" type="checkbox" dependencies="$3"/>
+                            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+                                <path />
+                            </svg>
+                            <span>$4</span>
+                        </label>
+                    </li>
+                `);
+            });
         }
         static get script()
         {

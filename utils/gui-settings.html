@@ -11,18 +11,10 @@
     <div class="gui-settings-content">
       <!-- <div class="gui-settings-content-top-mask"></div> -->
       <ul>
-        <li class="indent-center">
-          <span class="settings-category">样式</span>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="useNewStyle" type="checkbox" checked/>
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>新样式</span>
-          </label>
-        </li>
+        <category>样式</category>
+        <checkbox indent="0" key="useNewStyle" dependencies="">
+           新样式
+        </checkbox>
         <li class="indent-1">
           <label class="gui-settings-textbox-container">
             <span>自定义颜色</span>
@@ -42,132 +34,54 @@
             <input key="blurBackgroundOpacity" dependencies="useNewStyle" spellcheck="false" type="text" />
           </label>
         </li>
-        <li class="indent-1">
-          <label class="gui-settings-checkbox-container">
-            <input key="useDarkStyle" dependencies="useNewStyle" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>夜间模式</span>
-          </label>
-        </li>
-        <li class="indent-1">
-          <label class="gui-settings-checkbox-container">
-            <input key="overrideNavBar" dependencies="useNewStyle" type="checkbox"  checked />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>搜索栏位置调整</span>
-          </label>
-        </li>
-        <li class="indent-2">
-          <label class="gui-settings-checkbox-container">
-            <input key="showBanner" dependencies="useNewStyle overrideNavBar" type="checkbox" checked/>
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>显示顶部横幅</span>
-          </label>
-        </li>
-        <li class="indent-center">
-          <span class="settings-category">工具</span>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="expandDanmakuList" type="checkbox" checked />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>自动展开弹幕列表</span>
-          </label>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="removeAds" type="checkbox" checked />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>删除广告</span>
-          </label>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="watchLaterRedirect" type="checkbox" checked />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>稍后再看重定向</span>
-          </label>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="hideTopSearch" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>隐藏热搜词</span>
-          </label>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="fixFullscreen" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>全屏修复</span>
-          </label>
-        </li>
-        <li class="indent-center">
-          <span class="settings-category">直播间</span>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="harunaScale" type="checkbox" checked/>
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>缩放看板娘</span>
-          </label>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="removeLiveWatermark" type="checkbox" checked/>
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>删除直播水印</span>
-          </label>
-        </li>
-        <li class="indent-center">
-          <span class="settings-category">触摸优化</span>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="touchNavBar" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>顶栏触摸优化</span>
-          </label>
-        </li>
-        <li class="indent-0">
-          <label class="gui-settings-checkbox-container">
-            <input key="touchVideoPlayer" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>播放器触摸支持</span>
-          </label>
-        </li>
-        <li class="indent-1">
-          <label class="gui-settings-checkbox-container">
-            <input key="touchVideoPlayerAnimation" dependencies="touchVideoPlayer" type="checkbox" />
-            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-              <path />
-            </svg>
-            <span>启用实验性动画效果</span>
-          </label>
-        </li>
+        <checkbox indent="1" key="useDarkStyle" dependencies="useNewStyle">
+           夜间模式
+        </checkbox>
+        <checkbox indent="1" key="overrideNavBar" dependencies="useNewStyle">
+           搜索栏位置调整
+        </checkbox>
+        <checkbox
+          indent="2"
+          key="showBanner"
+          dependencies="useNewStyle overrideNavBar">
+           显示顶部横幅
+        </checkbox>
+        <category>工具</category>
+        <checkbox indent="0" key="expandDanmakuList" dependencies="">
+           自动展开弹幕列表
+        </checkbox>
+        <checkbox indent="0" key="removeAds" dependencies="">
+           删除广告
+        </checkbox>
+        <checkbox indent="0" key="watchLaterRedirect" dependencies="">
+           稍后再看重定向
+        </checkbox>
+        <checkbox indent="0" key="hideTopSearch" dependencies="">
+           隐藏热搜词
+        </checkbox>
+        <checkbox indent="0" key="fixFullscreen" dependencies="">
+           全屏修复
+        </checkbox>
+        <category>直播间</category>
+        <checkbox indent="0" key="harunaScale" dependencies="">
+           缩放看板娘
+        </checkbox>
+        <checkbox indent="0" key="removeLiveWatermark" dependencies="">
+           删除直播水印
+        </checkbox>
+        <category>触摸优化</category>
+        <checkbox indent="0" key="touchNavBar" dependencies="">
+           顶栏触摸优化
+        </checkbox>
+        <checkbox indent="0" key="touchVideoPlayer" dependencies="">
+           播放器触摸支持
+        </checkbox>
+        <checkbox
+          indent="1"
+          key="touchVideoPlayerAnimation"
+          dependencies="touchVideoPlayer">
+           启用实验性动画效果
+        </checkbox>
       </ul>
       <!-- <div class="gui-settings-content-bottom-mask"></div> -->
     </div>
