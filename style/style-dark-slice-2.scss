@@ -1,7 +1,7 @@
-// a
-// {
-//     background-color: #222 !important;
-// }
+.recom-wrap .no-result
+{
+    background-color: #222 !important;
+}
 // a
 // {
 //     background-color: #444 !important;
@@ -43,7 +43,8 @@
 // {
 //     color: #aaa !important;
 // }
-.section-title>a.t
+.section-title>a.t,
+.section>.section-title
 {
     color: #eee !important;
 }
