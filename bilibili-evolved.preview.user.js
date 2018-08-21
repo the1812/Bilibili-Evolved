@@ -301,7 +301,7 @@
         {
             return new ResourceType("style", style =>
             {
-                const color = new ColorProcessor(settings.customStyleColor);
+                const color = new ColorProcessor();
                 const hexToRgba = text =>
                 {
                     const replaceColor = (text, shorthand) =>

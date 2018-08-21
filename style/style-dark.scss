@@ -217,7 +217,11 @@ div.con,
 .media-tab-detail-wrp .media-tab-detail,
 .media-tab-detail-wrp .media-tab-detail-l,
 .voted-result,
-.info-model
+.info-model,
+.app-watch,
+#app .header,
+#app .submit,
+.appeal-box
 {
     background-color: #222 !important;
 }
@@ -426,7 +430,10 @@ button.submit-button.disabled,
 .ban-detail .content-box .vote-cnt,
 .media-tab-wrp,
 .content-box .watermark-wrap .watermark,
-.ban-detail .content-box .major-content
+.ban-detail .content-box .major-content,
+#app .submit .cancel,
+.home-wrap .home-input .type.selected,
+.home-wrap .home-input .type:hover
 {
     background-color: #444 !important;
 }
@@ -530,7 +537,7 @@ span.copyright,
 .bilibili-player-danmaku-date-picker-header,
 .bilibili-player-danmaku-date-picker-btn,
 .day-span,
-.video-toolbar .ops span,
+.video-toolbar .ops>span,
 .video-toolbar .share .share-btn,
 .video-toolbar,
 li.tag,
@@ -732,7 +739,10 @@ blockquote .color-yellow-04,
 .cm-model .report-detail .detail .name,
 .jury-graph-wrap .graph-status .illegal b,
 .jury-graph-wrap .graph-status .legal b,
-.is-max .option-vote
+.is-max .option-vote,
+.video-toolbar .ops .share-pos,
+.video-toolbar .ops .share-btn i,
+#page-index .section.empty:after
 {
     color: #aaa !important;
 }
@@ -1126,7 +1136,12 @@ div.con header,
 font,
 .crumbs,
 .comment-content .link,
-.is-max .option-text
+.is-max .option-text,
+.video-page-card .card-box .info .title,
+.app-watch .title,
+#app .container,
+#app .submit .cancel,
+#app .header
 {
     color: #eee !important;
 }
@@ -1354,7 +1369,13 @@ div.bar>div.num,
 .bb-comment .nameplate .nameplate-card,
 .bb-comment .nameplate .nameplate-card .nameplate-text,
 .border-b,
-.fjw-case-detail .ban-detail .content-box .jury-status
+.fjw-case-detail .ban-detail .content-box .jury-status,
+.app-watch,
+.app-watch .title,
+#app .header,
+.iScrollIndicator,
+#app .submit,
+#app .submit .cancel
 {
     border-color: transparent !important;
 }
@@ -1586,13 +1607,17 @@ ul.up-nav li
 .emotion-btn-box.opened,
 .emotion-btn-box:hover,
 .emoji-btn-box.opened,
-.emoji-btn-box:hover
+.emoji-btn-box:hover,
+#app .container .options .option img,
+.home-wrap .home-logo,
+.home-wrap .home-tips .tips-link .tip-item>a
 {
     filter: $blueImageFilter !important;
 }
 .single-button .text-bar.selected,
 .is-max .percentage-bar,
-.calendar .day-item.gift-checked
+.calendar .day-item.gift-checked,
+.home-wrap .home-tips .tips-link .tip-item>a:hover
 {
     filter: $pinkImageFilter !important;
 }
@@ -1811,7 +1836,8 @@ canvas.cliper.is-img,
     filter: invert(70%) !important;
 }
 .home-wrap .home-input .content:focus,
-.search-wrap .search-block .input-wrap input
+.search-wrap .search-block .input-wrap input,
+textarea:focus
 {
     outline: none !important;
     outline-offset: 0 !important;
@@ -2029,7 +2055,8 @@ a.s-btn:hover,
 .blpui-slider-container .slider-handle,
 .text-con .title i,
 .fjw-point .focus-btn,
-.cases-wrap .fjw-user .b-right button
+.cases-wrap .fjw-user .b-right button,
+#app .submit .confirm
 {
     background-color: $customStyleColor !important;
 }
@@ -2058,9 +2085,8 @@ div.info>a,
 .bilibili-player-danmaku-btn-history.bpui-state-hover,
 .day-span.day-enable.active,
 .day-span.day-enable:hover,
-.video-toolbar .ops span:hover,
 .video-toolbar .ops .app .app-look .foot-txt a,
-.video-toolbar .ops span.on,
+.video-toolbar .ops>span.on,
 li.tag>a:hover,
 .video-desc .btn span:hover,
 .tag-info-pane .tag-header .btn-unsubscribe:hover,
@@ -2188,12 +2214,8 @@ a.up-name:hover,
 .wrapper .modal-body .pay-info .pay-tip .em-text,
 .wrapper .modal-back,
 .bilibili-player-video-toast-item-jump,
-.video-toolbar .ops span.on,
-.video-toolbar .ops span.on i,
-.video-toolbar .ops span:hover,
-.video-toolbar .ops span:hover i,
-.video-toolbar .share .share-btn:hover,
-.video-toolbar .share .share-btn:hover i,
+.video-toolbar .share-btn:hover,
+.video-toolbar .share-btn:hover i,
 .bilibili-player-video-danmaku-setting:hover,
 .bilibili-player-video-toast-item-close:hover i,
 .joined-number,
@@ -2269,7 +2291,13 @@ header,
 .blpui-btn.text-btn:hover,
 .chat-history-panel .penury-gift-msg .penury-gift-item .username,
 .minimal-control-panel .control-btn .btn-icon:hover,
-.ban-detail .content-box .link-box .box-right a
+.ban-detail .content-box .link-box .box-right a,
+.video-toolbar .ops>span.on,
+.video-toolbar .ops>span.on>i,
+.video-toolbar .ops>span:hover,
+.video-toolbar .ops>span:hover>i,
+.app-watch .app-look .foot-txt a,
+#app .header .close:hover
 {
     color: $customStyleColor !important;
 }
@@ -2368,7 +2396,8 @@ a.s-btn:hover,
 .yan-item:active,
 .dyn_list span.sp,
 .fjw-point .focus-btn,
-.cases-wrap .fjw-user .b-right button
+.cases-wrap .fjw-user .b-right button,
+#app .submit .confirm
 {
     color: $foreground !important;
 }
