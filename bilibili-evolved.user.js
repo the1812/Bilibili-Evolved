@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.2.2
+// @version      1.2.3
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -440,7 +440,8 @@
     Resource.all = {
         style: new Resource("style/style.min.scss", 1),
         oldStyle: new Resource("style/style-old.min.scss", 1),
-        darkStyle: new Resource("style/style-dark.min.scss", 2),
+        darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
+        darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
         touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
         navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
         noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
@@ -469,7 +470,8 @@
             this.guiSettingsStyle
         ];
         this.useDarkStyle.dependencies = [
-            this.darkStyle
+            this.darkStyleSlice1,
+            this.darkStyleSlice2
         ];
         this.useNewStyle.dependencies = [
             this.style,
