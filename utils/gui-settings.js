@@ -135,7 +135,11 @@
             const dependencies = {};
             $(`input[dependencies]`).each((_, element) =>
             {
-                dependencies[$(element).attr("key")] = $(element).attr("dependencies");
+                const dep = $(element).attr("dependencies");
+                if (dep)
+                {
+                    dependencies[$(element).attr("key")] = dep;
+                }
             });
             $(`input[type='checkbox']`).on("change", e =>
             {
@@ -209,7 +213,7 @@
             it =>
             {
                 addSettingsIcon(it);
-                const settingsBox = resources.data.guiSettingsDom;
+                const settingsBox = resources.data.guiSettingsDom.text;
                 if (settingsBox)
                 {
                     $("body").append(settingsBox);

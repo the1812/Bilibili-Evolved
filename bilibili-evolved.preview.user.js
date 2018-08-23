@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.1.5
+// @version      1.2.3
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -52,10 +52,11 @@
             GM_setValue(key, newSettings[key]);
         }
     }
-    function downloadText(url, done)
+    function downloadText(url, load, error)
     {
         const xhr = new XMLHttpRequest();
-        xhr.addEventListener("load", () => done(xhr.responseText));
+        xhr.addEventListener("load", () => load && load(xhr.responseText));
+        xhr.addEventListener("error", () => error && error(xhr.responseText));
         xhr.open("GET", url);
         xhr.send();
     }
@@ -269,13 +270,232 @@
             return this.foreground === "#000" ? "" : "invert(1)";
         }
     }
-    class ExternalResource
+    // [Offline build placeholder]
+    class ResourceType
+    {
+        constructor(name, preprocessor)
+        {
+            this.name = name;
+            this.preprocessor = preprocessor || (text => text);
+        }
+        static fromUrl(url)
+        {
+            if (url.indexOf(".scss") !== -1 || url.indexOf(".css") !== -1)
+            {
+                return this.style;
+            }
+            else if (url.indexOf(".html") !== -1 || url.indexOf(".htm") !== -1)
+            {
+                return this.html;
+            }
+            else if (url.indexOf(".js") !== -1)
+            {
+                return this.script;
+            }
+            else
+            {
+                return this.unknown;
+            }
+        }
+        static get style()
+        {
+            return new ResourceType("style", style =>
+            {
+                const color = new ColorProcessor();
+                const hexToRgba = text =>
+                {
+                    const replaceColor = (text, shorthand) =>
+                    {
+                        const part = `([a-f\\d]${shorthand ? "" : "{2}"})`.repeat(4);
+                        return text.replace(new RegExp(`(#${part})[^a-f\\d]`, "ig"), (original, it) =>
+                        {
+                            const rgba = color.hexToRgba(it);
+                            if (rgba)
+                            {
+                                return `rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})${original.slice(-1)}`;
+                            }
+                            else
+                            {
+                                return original;
+                            }
+                        });
+                    };
+                    return replaceColor(replaceColor(text, false), true);
+                };
+                for (const key of Object.keys(settings))
+                {
+                    style = style
+                        .replace(new RegExp("\\$" + key, "g"), settings[key]);
+                }
+                return hexToRgba(style);
+            });
+        }
+        static get html()
+        {
+            return new ResourceType("html", html =>
+            {
+                return html
+                    .replace(/<category>([^\0]*?)<\/category>/g, `
+                    <li class="indent-center">
+                        <span class="settings-category">$1</span>
+                    </li>
+                `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
+                    <li class="indent-$1">
+                        <label class="gui-settings-checkbox-container">
+                            <input key="$2" type="checkbox" dependencies="$3"/>
+                            <svg class="gui-settings-ok" viewBox="0 0 24 24">
+                                <path />
+                            </svg>
+                            <span>$4</span>
+                        </label>
+                    </li>
+                `);
+            });
+        }
+        static get script()
+        {
+            return new ResourceType("script");
+        }
+        static get unknown()
+        {
+            return new ResourceType("unknown");
+        }
+    }
+    class Resource
+    {
+        get downloaded()
+        {
+            return this.text !== null;
+        }
+        constructor(url, priority, dependencies)
+        {
+            this.url = Resource.root + url;
+            this.dependencies = dependencies || [];
+            this.priority = priority;
+            this.text = null;
+            this.type = ResourceType.fromUrl(url);
+        }
+        download()
+        {
+            return new Promise((resolve, reject) =>
+            {
+                if (this.downloaded)
+                {
+                    resolve(this.text);
+                }
+                else
+                {
+                    Promise.all(this.dependencies.map(r => r.download())).then(() =>
+                    {
+                        downloadText(this.url, text =>
+                        {
+                            this.text = this.type.preprocessor(text);
+                            resolve(this.text);
+                        }, error => reject(error));
+                    });
+                }
+            });
+        }
+        applyStyle(id)
+        {
+            if ($(`#${id}`).length === 0)
+            {
+                const style = this.text;
+                if (!style)
+                {
+                    console.error("Attempt to get style which is not downloaded.");
+                }
+                let attributes = `id='${id}'`;
+                if (this.priority !== undefined)
+                {
+                    attributes += ` priority='${this.priority}'`;
+                }
+                const element = `<style ${attributes}>${style}</style>`;
+                if (this.priority !== undefined)
+                {
+                    let insertPosition = this.priority - 1;
+                    let formerStyle = $(`style[priority='${insertPosition}']`);
+                    while (insertPosition >= 0 && formerStyle.length === 0)
+                    {
+                        formerStyle = $(`style[priority='${insertPosition}']`);
+                        insertPosition--;
+                    }
+                    if (insertPosition < 0)
+                    {
+                        $("head").prepend(element);
+                    }
+                    else
+                    {
+                        formerStyle.after(element);
+                    }
+                }
+                else
+                {
+                    $("head").prepend(element);
+                }
+            }
+        }
+    }
+    Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
+    Resource.all = {
+        style: new Resource("style/style.min.scss", 1),
+        oldStyle: new Resource("style/style-old.min.scss", 1),
+        darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
+        darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
+        touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
+        navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
+        noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
+        removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
+        guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
+
+        guiSettingsDom: new Resource("utils/gui-settings.html"),
+
+        guiSettings: new Resource("utils/gui-settings.min.js"),
+        useDarkStyle: new Resource("style/dark-styles.min.js"),
+        useNewStyle: new Resource("style/new-styles.min.js"),
+        touchNavBar: new Resource("touch/touch-navbar.min.js"),
+        touchVideoPlayer: new Resource("touch/touch-player.min.js"),
+        expandDanmakuList: new Resource("utils/expand-danmaku.min.js"),
+        removeAds: new Resource("utils/remove-promotions.min.js"),
+        watchLaterRedirect: new Resource("utils/watchlater.min.js"),
+        hideTopSearch: new Resource("utils/hide-top-search.min.js"),
+        harunaScale: new Resource("live/haruna-scale.min.js"),
+        removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
+        fixFullscreen: new Resource("utils/fix-fullscreen.min.js")
+    };
+    (function ()
+    {
+        this.guiSettings.dependencies = [
+            this.guiSettingsDom,
+            this.guiSettingsStyle
+        ];
+        this.useDarkStyle.dependencies = [
+            this.darkStyleSlice1,
+            this.darkStyleSlice2
+        ];
+        this.useNewStyle.dependencies = [
+            this.style,
+            this.oldStyle,
+            this.navbarOverrideStyle,
+            this.noBannerStyle
+        ];
+        this.touchVideoPlayer.dependencies = [
+            this.touchPlayerStyle
+        ];
+        this.removeAds.dependencies = [
+            this.removeAdsStyle
+        ];
+    }).apply(Resource.all);
+    class ResourceManager
     {
         constructor()
         {
-            // [Offline build placeholder]
-            this.data = {};
+            this.data = Resource.all;
             this.attributes = {};
+            this.setupColors();
+        }
+        setupColors()
+        {
             this.color = new ColorProcessor(settings.customStyleColor);
             settings.foreground = this.color.foreground;
             settings.blueImageFilter = this.color.blueImageFilter;
@@ -283,135 +503,50 @@
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
         }
-        static get resourceUrls()
+        fetch()
         {
-            const root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
-            const urls = {
-                style: "style/style.min.scss",
-                oldStyle: "style/style-old.min.scss",
-                darkStyle: "style/style-dark.min.scss",
-                touchPlayerStyle: "style/style-touch-player.min.scss",
-                navbarOverrideStyle: "style/style-navbar-override.min.css",
-                noBannerStyle: "style/style-no-banner.min.css",
-                removeAdsStyle: "style/style-remove-promotions.min.css",
-                guiSettingsStyle: "style/style-gui-settings.min.scss",
-                guiSettingsDom: "utils/gui-settings.html",
-                guiSettings: "utils/gui-settings.min.js",
-                useDarkStyle: "style/dark-styles.min.js",
-                useNewStyle: "style/new-styles.min.js",
-                touchNavBar: "touch/touch-navbar.min.js",
-                touchVideoPlayer: "touch/touch-player.min.js",
-                expandDanmakuList: "utils/expand-danmaku.min.js",
-                removeAds: "utils/remove-promotions.min.js",
-                watchLaterRedirect: "utils/watchlater.min.js",
-                hideTopSearch: "utils/hide-top-search.min.js",
-                harunaScale: "live/haruna-scale.min.js",
-                removeLiveWatermark: "live/remove-watermark.min.js",
-                fixFullscreen: "utils/fix-fullscreen.min.js"
-            };
-            for (const key in urls)
+            return new Promise(resolve =>
             {
-                urls[key] = root + urls[key];
-            }
-            return urls;
-        }
-        ajax(url, done)
-        {
-            downloadText(url, done);
-        }
-        fetch(callback)
-        {
-            this.callback = callback;
-            const replaceCustomColor = (url, style) =>
-            {
-                if (url.indexOf(".scss") !== -1 || url.indexOf(".css") !== -1)
+                const promises = [];
+                for (const key in settings)
                 {
-                    const hexToRgba = text =>
+                    if (settings[key] === true)
                     {
-                        const replaceColor = (text, shorthand) =>
+                        const resource = Resource.all[key];
+                        if (!resource)
                         {
-                            const part = `([a-f\\d]${shorthand ? "" : "{2}"})`.repeat(4);
-                            return text.replace(new RegExp(`(#${part})[^a-f\\d]`, "ig"), (original, it) =>
-                            {
-                                const rgba = this.color.hexToRgba(it);
-                                if (rgba)
-                                {
-                                    return `rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})${original.slice(-1)}`;
-                                }
-                                else
-                                {
-                                    return original;
-                                }
-                            });
-                        };
-                        return replaceColor(replaceColor(text, false), true);
-                    };
-                    for (const key of Object.keys(settings))
-                    {
-                        style = style
-                            .replace(new RegExp("\\$" + key, "g"), settings[key]);
-                    }
-                    style = hexToRgba(style);
-                }
-                return style;
-            };
-            const urls = ExternalResource.resourceUrls;
-            const resourceCount = Object.keys(urls).length;
-            let downloadedCount = 0;
-            for (const key in urls)
-            {
-                const url = urls[key];
-                this.ajax(url, data =>
-                {
-                    this.data[key] = replaceCustomColor(url, data);
-                    downloadedCount++;
-                    if (downloadedCount >= resourceCount)
-                    {
-                        this.apply();
-                        if (this.callback)
-                        {
-                            this.callback();
+                            continue;
                         }
+                        const promise = resource.download();
+                        promise.then(text =>
+                        {
+                            const func = eval(text);
+                            if (func)
+                            {
+                                const attribute = func(settings, this);
+                                this.attributes[key] = attribute;
+                                if (attribute.ajaxReload)
+                                {
+                                    $(document).ajaxComplete(() =>
+                                    {
+                                        func(settings, this);
+                                    });
+                                }
+                            }
+                        });
+                        promises.push(promise);
                     }
-                });
-            }
-        }
-        getStyle(key, id)
-        {
-            return `<style id='${id}'>${this.data[key]}</style>`;
+                }
+                Promise.all(promises).then(() => resolve());
+            });
         }
         applyStyle(key, id)
         {
-            if ($(`#${id}`).length === 0)
-            {
-                $("head").prepend(this.getStyle(key, id));
-            }
-        }
-        apply()
-        {
-            for (const key in settings)
-            {
-                if (settings[key] === true)
-                {
-                    const func = eval(this.data[key]);
-                    if (func)
-                    {
-                        const attribute = func(settings, this);
-                        this.attributes[key] = attribute;
-                        if (attribute.ajaxReload)
-                        {
-                            $(document).ajaxComplete(() =>
-                            {
-                                func(settings, this);
-                            });
-                        }
-                    }
-                }
-            }
+            Resource.all[key].applyStyle(id);
         }
     }
 
     loadSettings();
-    const resources = new ExternalResource();
+    const resources = new ResourceManager();
     resources.fetch();
 })(window.jQuery.noConflict(true));
