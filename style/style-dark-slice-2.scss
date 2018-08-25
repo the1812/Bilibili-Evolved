@@ -6,14 +6,28 @@
 .tl-head .tl-day,
 li.season-item .season-body .season-title span.follow,
 .season-timer .current-timer:before,
-.bili-header-m .i_menu_login
+.bili-header-m .i_menu_login,
+.slot-ctnr .panel,
+.news-list .news-item:hover,
+.publish-panel .publish-list .publish-item:hover,
+#canvas-detail-comment-ctnr,
+.comment-ctnr
 {
     background-color: #222 !important;
 }
 .progress-bar-body,
 .more-btn-cntr,
 .timer-wrap,
-.fjw-random
+.fjw-random,
+.slot-ctnr .panel li:hover,
+.user-panel-ctnr .exit-btn,
+.news-notice-panel,
+.news-list .news-item,
+.article-content-ctnr,
+.works-ctnr,
+.author-info,
+.dashboard,
+.sidebar-canvas
 {
     background-color: #444 !important;
 }
@@ -38,10 +52,13 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background-color: #222e !important;
 // }
-// a
-// {
-//     background-color: transparent !important;
-// }
+.news-list .news-item .date,
+.empty-hint,
+.article-content-ctnr>hr,
+.author-info .communicate-btn
+{
+    background-color: transparent !important;
+}
 // a
 // {
 //     background: #fff1 !important;
@@ -56,7 +73,8 @@ li.season-item .season-body .season-title span.follow,
 .bread-crumb ul li a,
 .sub-nav-m ul li a,
 .up-info .up-info-tip,
-.bili-header-m .i_menu_login .reg
+.bili-header-m .i_menu_login .reg,
+.live-ctn .live-attch .host
 {
     color: #aaa !important;
 }
@@ -72,7 +90,17 @@ li.season-item .season-body .season-title,
 .channel-m,
 .hot-box li .txt,
 .bili-header-m .i_menu_login .tip,
-.user-info-name
+.user-info-name,
+.slot-ctnr a,
+.user-panel-ctnr .exit-btn,
+.more:hover .text,
+.more .icon-font,
+.empty-hint .hint-text,
+.live-ctn .live-attch .title,
+button.button.more,
+.dashboard li .text,
+.dashboard li.collection .text,
+.dashboard li.share .text
 {
     color: #eee !important;
 }
@@ -84,7 +112,14 @@ li.season-item .season-body .season-title,
 .gift-item-wrap .num,
 .side-bar-popup-cntr,
 .timeline-header .tl-weeks:after,
-.bili-header-m .i_menu_login
+.bili-header-m .i_menu_login,
+.article-content-ctnr,
+.works-ctnr,
+.comment-ctnr,
+.author-info,
+.dashboard,
+button.button.more,
+.dashboard li.like
 {
     border-color: transparent !important;
 }
@@ -111,7 +146,8 @@ li.season-item .season-body .season-title,
 //     transition: all .2s !important;
 // }
 
-.tl-head .today .day-of-week
+.tl-head .today .day-of-week,
+.svg-icon.top1
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -120,7 +156,9 @@ li.season-item .season-body .season-title,
 //     filter: $blueImageFilter !important;
 // }
 .season-timer .current-timer:before,
-li.season-item .season-body .season-title span.follow
+li.season-item .season-body .season-title span.follow,
+.user-panel-ctnr .ctrl-btn .svg-icon,
+.publish-panel .publish-list .publish-item a
 {
     filter: $pinkImageFilter !important;
 }
@@ -149,7 +187,8 @@ li.season-item .season-body .season-title span.follow
 {
     box-shadow: 0px 1px 20px 2px $customStyleColor30 !important;
 }
-.side-bar-popup-cntr>.arrow
+.side-bar-popup-cntr>.arrow,
+.empty-hint .hint-img
 {
     display: none !important;
 }
@@ -174,7 +213,11 @@ li.season-item .season-body .season-title span.follow
 .tl-head .tl-day.today .indicator,
 .primary-menu .nav-menu .channel.on::after,
 .hot-box li .tag-type,
-.bili-header-m .i_menu_login .login-btn
+.bili-header-m .i_menu_login .login-btn,
+.news-list .news-item .type,
+.author-info .favourite-btn,
+.live-status.on-live,
+.live-status.on-live:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -192,13 +235,24 @@ li.season-item .season-body .season-desc.published,
 .sub-nav-m ul li a:hover,
 .hot-box li:hover .txt,
 .live-module .zone-title .headline .online span,
-.bilibili-player-video-sendbar .bilibili-player-video-danmaku-wrap a
+.bilibili-player-video-sendbar .bilibili-player-video-danmaku-wrap a,
+.slot-ctnr .panel li:hover,
+.user-panel-ctnr .exit-btn:hover,
+.author-info .communicate-btn,
+.live-ctn .live-attch .title:hover,
+.live-ctn .live-attch .host:hover,
+button.button.more:hover,
+.author-info .link-pink:hover,
+.link-footer a:hover
 {
     color: $customStyleColor !important;
 }
 .hot-box li .tag-type,
 .bili-header-m .i_menu_login .login-btn,
-.bili-header-m .i_menu_login .reg a
+.bili-header-m .i_menu_login .reg a,
+.news-list .news-item .type,
+.author-info .favourite-btn,
+.live-status.on-live
 {
     color: $foreground !important;
 }

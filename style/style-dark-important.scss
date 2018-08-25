@@ -1,6 +1,16 @@
+.link-footer
+{
+    background-color: #222 !important;
+}
+
 .home-page .sticky-bar .bar-content .message
 {
     color: #eee !important;
+}
+
+.link-footer
+{
+    border-color: transparent !important;
 }
 
 .home-page .sticky-bar .bar-content .message:hover
@@ -9,7 +19,8 @@
 }
 
 .season-timeline .season-group.today,
-.season-timeline .season-group.today .group-time::before
+.season-timeline .season-group.today .group-time::before,
+.aside-ctnr .author-info .communicate-btn
 {
     border-color: $customStyleColor !important;
 }
