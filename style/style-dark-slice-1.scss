@@ -76,7 +76,7 @@ textarea,
 .coin-operated-m,
 .follow-dialog-window,
 #app,
-.home-page .back-top,
+.back-top,
 .repost,
 .not-support,
 .deleted,
@@ -225,7 +225,7 @@ div.con,
 {
     background-color: #222 !important;
 }
-.back-top,
+.back-top.icon,
 .sortable,
 .nav-list,
 .more-link,
@@ -1379,7 +1379,7 @@ div.bar>div.num,
 {
     border-color: transparent !important;
 }
-.back-top,
+.back-top.icon,
 .more-link,
 .read-push,
 .link-more,
@@ -1663,7 +1663,7 @@ ul.filter-disable .icon-copy,
 {
     border-radius: 4px !important;
 }
-.back-top:hover,
+.back-top.icon:hover,
 .go-top:hover
 {
     background-position: -713px -72px !important;

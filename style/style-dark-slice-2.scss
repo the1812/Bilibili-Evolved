@@ -1,6 +1,11 @@
 .recom-wrap .no-result,
 .side-bar-popup-cntr,
-.link-popup-panel
+.link-popup-panel,
+.timeline-header,
+.timeline-wrapper,
+.tl-head .tl-day,
+li.season-item .season-body .season-title span.follow,
+.season-timer .current-timer:before
 {
     background-color: #222 !important;
 }
@@ -15,10 +20,11 @@
 // {
 //     background-color: #555 !important;
 // }
-// a
-// {
-//     background-color: #aaa !important;
-// }
+.tl-head .tl-day .indicator,
+.season-timeline .season-group .group-time:before
+{
+    background-color: #aaa !important;
+}
 // a
 // {
 //     background-color: #eee !important;
@@ -44,7 +50,9 @@
 //     background: transparent !important;
 // }
 
-.introduction-text
+.introduction-text,
+.vote-percentage,
+.bread-crumb ul li a
 {
     color: #aaa !important;
 }
@@ -53,7 +61,10 @@
 .link-popup-panel,
 .more-btn-text,
 .chat-history-panel .gift-item .gift-count,
-.chat-history-panel .hover-panel>span
+.chat-history-panel .hover-panel>span,
+.is-max .vote-percentage,
+.tl-head .tl-day.today span,
+li.season-item .season-body .season-title
 {
     color: #eee !important;
 }
@@ -63,9 +74,15 @@
 // }
 
 .gift-item-wrap .num,
-.side-bar-popup-cntr
+.side-bar-popup-cntr,
+.timeline-header .tl-weeks:after
 {
     border-color: transparent !important;
+}
+.season-timeline .season-group,
+.season-timeline .season-group .group-time:before
+{
+    border-color: #aaa !important;
 }
 // a
 // {
@@ -85,18 +102,19 @@
 //     transition: all .2s !important;
 // }
 
-// a
-// {
-//     filter: brightness(0) invert(1) !important;
-// }
+.tl-head .today .day-of-week
+{
+    filter: brightness(0) invert(1) !important;
+}
 // a
 // {
 //     filter: $blueImageFilter !important;
 // }
-// a
-// {
-//     filter: $pinkImageFilter !important;
-// }
+.season-timer .current-timer:before,
+li.season-item .season-body .season-title span.follow
+{
+    filter: $pinkImageFilter !important;
+}
 // a
 // {
 //     filter: grayscale(1) !important;
@@ -110,10 +128,12 @@
 // {
 //     border-radius: 4px !important;
 // }
-// a
-// {
-//     box-shadow: none !important;
-// }
+.timeline-header,
+.timeline-wrapper,
+.timeline-header .tl-weeks
+{
+    box-shadow: none !important;
+}
 .side-bar-popup-cntr,
 .link-popup-panel
 {
@@ -136,18 +156,28 @@
 //     opacity: 1 !important;
 // }
 
-// a
-// {
-//     border-color: $customStyleColor !important;
-// }
-.progress-bar-inner
+.timeline-wrapper .season-timeline .season-group.today,
+.timeline-wrapper .season-timeline .season-group.today .group-time::before
+{
+    border-color: $customStyleColor !important;
+}
+.progress-bar-inner,
+.tl-head .tl-day.today .indicator,
+.timeline-wrapper .season-timeline .season-group.today.is-published .group-time::before,
+.primary-menu .nav-menu .channel.on::after
 {
     background-color: $customStyleColor !important;
 }
 .union-cntr a,
 .title-link,
 .link-popup-panel .title-ctnr .popup-title,
-.user-info-name.active
+.user-info-name.active,
+.bread-crumb ul li.on a,
+.bread-crumb ul li:hover a,
+li.season-item .season-body .season-title:hover,
+li.season-item .season-body .season-desc.published,
+.season-timer .season-label,
+.season-timer .current-timer
 {
     color: $customStyleColor !important;
 }
