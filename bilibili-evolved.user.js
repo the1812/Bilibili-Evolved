@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.2.3
+// @version      1.2.4
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -396,21 +396,25 @@
                 }
             });
         }
+        getStyle(id)
+        {
+            const style = this.text;
+            if (!style)
+            {
+                console.error("Attempt to get style which is not downloaded.");
+            }
+            let attributes = `id='${id}'`;
+            if (this.priority !== undefined)
+            {
+                attributes += ` priority='${this.priority}'`;
+            }
+            return `<style ${attributes}>${style}</style>`;
+        }
         applyStyle(id)
         {
             if ($(`#${id}`).length === 0)
             {
-                const style = this.text;
-                if (!style)
-                {
-                    console.error("Attempt to get style which is not downloaded.");
-                }
-                let attributes = `id='${id}'`;
-                if (this.priority !== undefined)
-                {
-                    attributes += ` priority='${this.priority}'`;
-                }
-                const element = `<style ${attributes}>${style}</style>`;
+                const element = this.getStyle(id);
                 if (this.priority !== undefined)
                 {
                     let insertPosition = this.priority - 1;
@@ -442,6 +446,7 @@
         oldStyle: new Resource("style/style-old.min.scss", 1),
         darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
         darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
+        darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
         touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
         navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
         noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
@@ -471,7 +476,8 @@
         ];
         this.useDarkStyle.dependencies = [
             this.darkStyleSlice1,
-            this.darkStyleSlice2
+            this.darkStyleSlice2,
+            this.darkStyleImportant
         ];
         this.useNewStyle.dependencies = [
             this.style,
@@ -543,6 +549,10 @@
         applyStyle(key, id)
         {
             Resource.all[key].applyStyle(id);
+        }
+        getStyle(key, id)
+        {
+            Resource.all[key].getStyle(id);
         }
     }
 
