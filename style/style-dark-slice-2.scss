@@ -11,7 +11,8 @@ li.season-item .season-body .season-title span.follow,
 .news-list .news-item:hover,
 .publish-panel .publish-list .publish-item:hover,
 #canvas-detail-comment-ctnr,
-.comment-ctnr
+.comment-ctnr,
+.bili-header-m .nav-menu .nav-con .nav-item .bml-box
 {
     background-color: #222 !important;
 }
@@ -100,7 +101,8 @@ li.season-item .season-body .season-title,
 button.button.more,
 .dashboard li .text,
 .dashboard li.collection .text,
-.dashboard li.share .text
+.dashboard li.share .text,
+.room-list .list-item .uname
 {
     color: #eee !important;
 }
@@ -132,10 +134,10 @@ button.button.more,
 // {
 //     border-color: #222 !important;
 // }
-// a
-// {
-//     border-color: #444 !important
-// }
+.hot-live .room-list
+{
+    border-color: #444 !important
+}
 // a
 // {
 //     border-color: #99a2aa !important;
