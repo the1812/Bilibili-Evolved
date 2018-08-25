@@ -21,7 +21,8 @@ li.season-item .season-body .season-title span.follow,
 //     background-color: #555 !important;
 // }
 .tl-head .tl-day .indicator,
-.season-timeline .season-group .group-time:before
+.season-timeline .season-group .group-time:before,
+.up-info .up-info-tip
 {
     background-color: #aaa !important;
 }
@@ -52,7 +53,8 @@ li.season-item .season-body .season-title span.follow,
 
 .introduction-text,
 .vote-percentage,
-.bread-crumb ul li a
+.bread-crumb ul li a,
+.sub-nav-m ul li a
 {
     color: #aaa !important;
 }
@@ -64,7 +66,9 @@ li.season-item .season-body .season-title span.follow,
 .chat-history-panel .hover-panel>span,
 .is-max .vote-percentage,
 .tl-head .tl-day.today span,
-li.season-item .season-body .season-title
+li.season-item .season-body .season-title,
+.channel-m,
+.hot-box li .txt
 {
     color: #eee !important;
 }
@@ -164,7 +168,8 @@ li.season-item .season-body .season-title span.follow
 .progress-bar-inner,
 .tl-head .tl-day.today .indicator,
 .timeline-wrapper .season-timeline .season-group.today.is-published .group-time::before,
-.primary-menu .nav-menu .channel.on::after
+.primary-menu .nav-menu .channel.on::after,
+.hot-box li .tag-type
 {
     background-color: $customStyleColor !important;
 }
@@ -177,14 +182,17 @@ li.season-item .season-body .season-title span.follow
 li.season-item .season-body .season-title:hover,
 li.season-item .season-body .season-desc.published,
 .season-timer .season-label,
-.season-timer .current-timer
+.season-timer .current-timer,
+.sub-nav-m ul li.on a,
+.sub-nav-m ul li a:hover,
+.hot-box li:hover .txt
 {
     color: $customStyleColor !important;
 }
-// a
-// {
-//     color: $foreground !important;
-// }
+.hot-box li .tag-type
+{
+    color: $foreground !important;
+}
 // a
 // {
 //     fill: $customStyleColor !important;
