@@ -8,8 +8,8 @@
             {
                 resources.applyStyle(`darkStyleSlice${i}`, `bilibili-new-style-dark-slice-${i}`);
             }
+            $("body").after(resources.getStyle("darkStyleImportant", "bilibili-new-style-dark-important"));
         }
-        $("body").after(resources.getStyle("bilibili-new-style-dark-important"));
         return {
             ajaxReload: false
         };

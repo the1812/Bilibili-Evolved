@@ -552,7 +552,7 @@
         }
         getStyle(key, id)
         {
-            Resource.all[key].getStyle(id);
+            return Resource.all[key].getStyle(id);
         }
     }
 
