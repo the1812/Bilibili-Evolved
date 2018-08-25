@@ -46,19 +46,26 @@ div.stardust-player
 .link-navbar .nav-item,
 .shortcuts-ctnr,
 .link-navbar .nav-item:hover,
-.link-navbar .main-ctnr .nav-switcher
+.link-navbar .main-ctnr .nav-switcher,
+.my-link-btn
 {
     color: $foregroundd !important;
 }
 
 li.nav-item:hover,
 .link-navbar .nav-item:hover,
-.shortcuts-ctnr .shortcut-item:hover
+.shortcuts-ctnr .shortcut-item:hover,
+.my-link-btn:hover,
+.publish-btn:hover
 {
     background-color: hsla(0,0%,$brightness,.2) !important;
 }
 
-li.nav-item.home:hover
+li.nav-item.home:hover,
+.link-navbar .nav-item:hover .nav-link .label,
+.shortcuts-ctnr .shortcut-item .label-wrapper .text:hover,
+.publish-btn:hover::after,
+.my-link-btn .label:hover
 {
     background: transparent !important;
 }
@@ -79,7 +86,8 @@ a.t>i.bili-icon
 }
 a.t>i.bili-icon-logo,
 a.t>i.bili-icon,
-.main-ctnr .nav-logo:before
+.main-ctnr .nav-logo:before,
+.link-navbar .nav-item:first-child::before
 {
     filter: brightness(0) $filterInvert !important;
     opacity: 0.81 !important;
@@ -110,6 +118,29 @@ div.up-load
     order: 4 !important;
     flex-grow: 0;
     flex-shrink: 0;
+}
+.publish-btn
+{
+    height: 40px !important;
+    line-height: 40px !important;
+    background: $customStyleColor !important;
+    border: 1px solid $foregroundd !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+    top: calc(50% - 20px) !important;
+    transition: all 0.2s !important;
+}
+.publish-panel
+{
+    margin-top: 7px !important;
+}
+.my-link-btn
+{
+    border-radius: 0 !important;
+}
+.slot-ctnr a
+{
+    color: #222 !important;
 }
 .u-link
 {

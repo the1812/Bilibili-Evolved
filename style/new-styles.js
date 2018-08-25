@@ -8,11 +8,15 @@
         );
         const navbar =
             document.getElementsByClassName("bili-wrapper")[0] ||
-            document.getElementById("link-navbar-vm");
+            document.getElementById("link-navbar-vm") ||
+            document.getElementsByClassName("link-navbar")[0];
         let stardustStyles = false;
         if (navbar instanceof Element)
         {
-            stardustStyles = parseInt(window.getComputedStyle(navbar).height) === 50;
+            const height = parseInt(window.getComputedStyle(navbar).height);
+            stardustStyles =
+                height === 50 /* stardust player & live room */ ||
+                height === 56;/* photos */
         }
 
         if (stardustStyles)
