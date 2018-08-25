@@ -5,7 +5,8 @@
 .timeline-wrapper,
 .tl-head .tl-day,
 li.season-item .season-body .season-title span.follow,
-.season-timer .current-timer:before
+.season-timer .current-timer:before,
+.bili-header-m .i_menu_login
 {
     background-color: #222 !important;
 }
@@ -21,8 +22,7 @@ li.season-item .season-body .season-title span.follow,
 //     background-color: #555 !important;
 // }
 .tl-head .tl-day .indicator,
-.season-timeline .season-group .group-time:before,
-.up-info .up-info-tip
+.season-timeline .season-group .group-time:before
 {
     background-color: #aaa !important;
 }
@@ -54,7 +54,9 @@ li.season-item .season-body .season-title span.follow,
 .introduction-text,
 .vote-percentage,
 .bread-crumb ul li a,
-.sub-nav-m ul li a
+.sub-nav-m ul li a,
+.up-info .up-info-tip,
+.bili-header-m .i_menu_login .reg
 {
     color: #aaa !important;
 }
@@ -68,7 +70,8 @@ li.season-item .season-body .season-title span.follow,
 .tl-head .tl-day.today span,
 li.season-item .season-body .season-title,
 .channel-m,
-.hot-box li .txt
+.hot-box li .txt,
+.bili-header-m .i_menu_login .tip
 {
     color: #eee !important;
 }
@@ -79,7 +82,8 @@ li.season-item .season-body .season-title,
 
 .gift-item-wrap .num,
 .side-bar-popup-cntr,
-.timeline-header .tl-weeks:after
+.timeline-header .tl-weeks:after,
+.bili-header-m .i_menu_login
 {
     border-color: transparent !important;
 }
@@ -139,7 +143,8 @@ li.season-item .season-body .season-title span.follow
     box-shadow: none !important;
 }
 .side-bar-popup-cntr,
-.link-popup-panel
+.link-popup-panel,
+.bili-header-m .i_menu_login
 {
     box-shadow: 0px 1px 20px 2px $customStyleColor30 !important;
 }
@@ -167,7 +172,8 @@ li.season-item .season-body .season-title span.follow
 .progress-bar-inner,
 .tl-head .tl-day.today .indicator,
 .primary-menu .nav-menu .channel.on::after,
-.hot-box li .tag-type
+.hot-box li .tag-type,
+.bili-header-m .i_menu_login .login-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -183,11 +189,15 @@ li.season-item .season-body .season-desc.published,
 .season-timer .current-timer,
 .sub-nav-m ul li.on a,
 .sub-nav-m ul li a:hover,
-.hot-box li:hover .txt
+.hot-box li:hover .txt,
+.live-module .zone-title .headline .online span,
+.bilibili-player-video-sendbar .bilibili-player-video-danmaku-wrap a
 {
     color: $customStyleColor !important;
 }
-.hot-box li .tag-type
+.hot-box li .tag-type,
+.bili-header-m .i_menu_login .login-btn,
+.bili-header-m .i_menu_login .reg a
 {
     color: $foreground !important;
 }
