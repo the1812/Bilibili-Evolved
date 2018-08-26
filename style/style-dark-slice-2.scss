@@ -103,7 +103,8 @@ button.button.more,
 .dashboard li .text,
 .dashboard li.collection .text,
 .dashboard li.share .text,
-.room-list .list-item .uname
+.room-list .list-item .uname,
+.chat-history-panel .chat-item
 {
     color: #eee !important;
 }
@@ -246,7 +247,8 @@ li.season-item .season-body .season-desc.published,
 .live-ctn .live-attch .host:hover,
 button.button.more:hover,
 .author-info .link-pink:hover,
-.link-footer a:hover
+.link-footer a:hover,
+.chat-history-panel .chat-item.welcome-guard .username
 {
     color: $customStyleColor !important;
 }
