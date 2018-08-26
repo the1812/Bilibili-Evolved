@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.2.5
+// @version      1.2.6
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -20,6 +20,7 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        fullTweetsTitle: false,
         fixFullscreen: false,
         removeLiveWatermark: true,
         harunaScale: true,
@@ -452,6 +453,7 @@
         noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
         removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
         guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
+        fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
 
         guiSettingsDom: new Resource("utils/gui-settings.html"),
 
@@ -466,7 +468,8 @@
         hideTopSearch: new Resource("utils/hide-top-search.min.js"),
         harunaScale: new Resource("live/haruna-scale.min.js"),
         removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
-        fixFullscreen: new Resource("utils/fix-fullscreen.min.js")
+        fixFullscreen: new Resource("utils/fix-fullscreen.min.js"),
+        fullTweetsTitle: new Resource("utils/full-tweets-title.min.js")
     };
     (function ()
     {
@@ -490,6 +493,9 @@
         ];
         this.removeAds.dependencies = [
             this.removeAdsStyle
+        ];
+        this.fullTweetsTitle.dependencies = [
+            this.fullTweetsTitleStyle
         ];
     }).apply(Resource.all);
     class ResourceManager
