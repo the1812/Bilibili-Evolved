@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.2.4
+// @version      1.2.5
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -529,16 +529,26 @@
                             const func = eval(text);
                             if (func)
                             {
-                                const attribute = func(settings, this);
-                                this.attributes[key] = attribute;
-                                if (attribute.ajaxReload)
+                                try
                                 {
-                                    $(document).ajaxComplete(() =>
+                                    const attribute = func(settings, this);
+                                    this.attributes[key] = attribute;
+                                    if (attribute.ajaxReload)
                                     {
-                                        func(settings, this);
-                                    });
+                                        $(document).ajaxComplete(() =>
+                                        {
+                                            func(settings, this);
+                                        });
+                                    }
+                                }
+                                catch (error) // execution error
+                                {
+                                    console.error(`Failed to apply feature "${key}": ${error}`);
                                 }
                             }
+                        }).catch(reason =>
+                        {   // download error
+                            console.error(`Download error, XHR status: ${reason}`);
                         });
                         promises.push(promise);
                     }

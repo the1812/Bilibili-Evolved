@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      41.20
+// @version      41.22
 // @description  增强哔哩哔哩Web端体验.(离线版)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -644,16 +644,26 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
                             const func = text;
                             if (func)
                             {
-                                const attribute = func(settings, this);
-                                this.attributes[key] = attribute;
-                                if (attribute.ajaxReload)
+                                try
                                 {
-                                    $(document).ajaxComplete(() =>
+                                    const attribute = func(settings, this);
+                                    this.attributes[key] = attribute;
+                                    if (attribute.ajaxReload)
                                     {
-                                        func(settings, this);
-                                    });
+                                        $(document).ajaxComplete(() =>
+                                        {
+                                            func(settings, this);
+                                        });
+                                    }
+                                }
+                                catch (error) // execution error
+                                {
+                                    console.error(`Failed to apply feature "${key}": ${error}`);
                                 }
                             }
+                        }).catch(reason =>
+                        {   // download error
+                            console.error(`Download error, XHR status: ${reason}`);
                         });
                         promises.push(promise);
                     }
