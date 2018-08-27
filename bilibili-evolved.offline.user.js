@@ -287,9 +287,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
   <div class="gui-settings-box">
     <div class="gui-settings-header">
       <span class="gui-settings-title">设置</span>
-      <svg
-        class="gui-settings-close"
-        viewBox="0 0 24 24">
+      <svg class="gui-settings-close" viewBox="0 0 24 24">
         <path />
       </svg>
     </div>
@@ -298,7 +296,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
       <ul>
         <category>样式</category>
         <checkbox indent="0" key="useNewStyle" dependencies="">
-           新样式
+          新样式
         </checkbox>
         <li class="indent-1">
           <label class="gui-settings-textbox-container">
@@ -320,55 +318,50 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
           </label>
         </li>
         <checkbox indent="1" key="useDarkStyle" dependencies="useNewStyle">
-           夜间模式
+          夜间模式
         </checkbox>
         <checkbox indent="1" key="overrideNavBar" dependencies="useNewStyle">
-           搜索栏位置调整
+          搜索栏位置调整
         </checkbox>
-        <checkbox
-          indent="2"
-          key="showBanner"
-          dependencies="useNewStyle overrideNavBar">
-           显示顶部横幅
+        <checkbox indent="2" key="showBanner" dependencies="useNewStyle overrideNavBar">
+          显示顶部横幅
         </checkbox>
         <category>工具</category>
-        <checkbox indent="0" key="expandDanmakuList" dependencies="">
-           自动展开弹幕列表
-        </checkbox>
         <checkbox indent="0" key="removeAds" dependencies="">
-           删除广告
+          删除广告
         </checkbox>
         <checkbox indent="0" key="watchLaterRedirect" dependencies="">
-           稍后再看重定向
+          稍后再看重定向
         </checkbox>
         <checkbox indent="0" key="hideTopSearch" dependencies="">
-           隐藏热搜词
-        </checkbox>
-        <checkbox indent="0" key="fixFullscreen" dependencies="">
-           全屏修复
+          隐藏热搜词
         </checkbox>
         <checkbox indent="0" key="fullTweetsTitle" dependencies="">
-           展开动态标题
+          展开动态标题
+        </checkbox>
+        <category>视频</category>
+        <checkbox indent="0" key="expandDanmakuList" dependencies="">
+          自动展开弹幕列表
+        </checkbox>
+        <checkbox indent="0" key="fixFullscreen" dependencies="">
+          全屏修复
         </checkbox>
         <category>直播间</category>
         <checkbox indent="0" key="harunaScale" dependencies="">
-           缩放看板娘
+          缩放看板娘
         </checkbox>
         <checkbox indent="0" key="removeLiveWatermark" dependencies="">
-           删除直播水印
+          删除直播水印
         </checkbox>
         <category>触摸优化</category>
         <checkbox indent="0" key="touchNavBar" dependencies="">
-           顶栏触摸优化
+          顶栏触摸优化
         </checkbox>
         <checkbox indent="0" key="touchVideoPlayer" dependencies="">
-           播放器触摸支持
+          播放器触摸支持
         </checkbox>
-        <checkbox
-          indent="1"
-          key="touchVideoPlayerAnimation"
-          dependencies="touchVideoPlayer">
-           启用实验性动画效果
+        <checkbox indent="1" key="touchVideoPlayerAnimation" dependencies="touchVideoPlayer">
+          启用实验性动画效果
         </checkbox>
       </ul>
       <!-- <div class="gui-settings-content-bottom-mask"></div> -->
@@ -387,13 +380,13 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/s
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/new-styles.min.js"] = (()=>{return(e,l)=>{SpinQuery.any(()=>$(".custom-scrollbar"),e=>e.removeClass("custom-scrollbar"));const t=document.getElementsByClassName("bili-wrapper")[0]||document.getElementById("link-navbar-vm")||document.getElementsByClassName("link-navbar")[0];let n=false;if(t instanceof Element){const e=parseInt(window.getComputedStyle(t).height);n=e===50||e===56}if(n){l.applyStyle("style","bilibili-new-style")}else{l.applyStyle("oldStyle","bilibili-new-style")}if(e.overrideNavBar){new SpinQuery(()=>$(".search").not(".filter-item"),e=>e.length>0&&$(".nav-con.fr").length>0,e=>{e.detach().insertAfter(".nav-con.fr")}).start();l.applyStyle("navbarOverrideStyle","bilibili-nav-bar-override");if(!e.showBanner){l.applyStyle("noBannerStyle","bilibili-banner-override")}}return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/touch/touch-navbar.min.js"] = (()=>{return()=>{SpinQuery.count(()=>$("ul.fr>li.nav-item").not(".profile-info"),6,r=>{const e=(r,e)=>{const n=$(e);n.css("cursor","pointer");const t=n.find("a.t");t.removeAttr("href")};r.each(e)});return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/touch/touch-player.min.js"] = (()=>{return(t,i)=>{const e=t=>{let i=0;let e=0;while(t&&!isNaN(t.offsetLeft)&&!isNaN(t.offsetTop)){i+=t.offsetLeft-t.scrollLeft;e+=t.offsetTop-t.scrollTop;t=t.offsetParent}return{x:i,y:e}};const s=(t,i=1)=>{const e=t.toString();const s=e.indexOf(".");if(s!==-1){if(e.length-s>i+1){return e.substring(0,s+i+1)}else{return e}}else{return e+".0"}};const o=t=>{t=Math.abs(t);const i=Math.floor(t/3600);const e=Math.floor((t-i*3600)/60);const o=t-i*3600-e*60;let n=s(o)+"秒";if(e>0){n=e+"分"+n}if(i>0){n=i+"时"+n}return n};const n=t=>{t=Math.abs(t);const i=Math.floor(t/3600);const e=Math.floor((t-i*3600)/60);const o=t-i*3600-e*60;let n=(o<10?"0":"")+s(o);n=(e<10?"0":"")+e+":"+n;n=(i<10?"0":"")+i+":"+n;return n};class a{constructor(t){this.action=new l(t);this.onTouchStart=null;this.onTouchEnd=null;this._direction=null;t.addEventListener("touchstart",t=>{this._xDown=t.touches[0].clientX;this._yDown=t.touches[0].clientY;if(this.onTouchStart){this.onTouchStart(t)}});t.addEventListener("touchmove",i=>{if(!this._xDown||!this._yDown){return}const s=i.touches[0].clientX;const o=i.touches[0].clientY;const n=e(t);const a={x:(i.touches[0].pageX-n.x)/t.clientWidth,y:(i.touches[0].pageY-n.y)/t.clientHeight,width:t.clientWidth,height:t.clientHeight};const l=this._xDown-s;const c=this._yDown-o;if(!this._direction){let t="";if(Math.abs(l)>Math.abs(c)){t="horizontal"}else{t="vertical"}this._direction=t;i.preventDefault()}else{if(this._direction==="vertical"){this.action.startAction(this._direction,c,a)}else if(this._direction==="horizontal"){this.action.startAction(this._direction,-l,a)}i.preventDefault()}});t.addEventListener("touchend",t=>{this._xDown=null;this._yDown=null;this._direction=null;if(this.onTouchEnd){this.onTouchEnd(t)}})}}class l{constructor(t){this.lowSpeedForward=null;this.lowSpeedBackward=null;this.mediumSpeedForward=null;this.mediumSpeedBackward=null;this.highSpeedForward=null;this.highSpeedBackward=null;this.lowVolumeUp=null;this.lowVolumeDown=null;this.mediumVolumeUp=null;this.mediumVolumeDown=null;this.highVolumeUp=null;this.highVolumeDown=null;this.speedCancel=null;this.volumeCancel=null;this.minSwipeDistance=20;this.onActionStart=null;this.onActionEnd=null;this._element=t;this._touchStart=false;this._startPosition=null;this._lastAction=null;t.addEventListener("touchstart",t=>{this._touchStart=true});t.addEventListener("touchend",t=>{this._startPosition=null;this.onActionEnd&&this.onActionEnd(this._lastAction);this._lastAction=null})}startAction(t,i,e){if(this._touchStart){this.onActionStart&&this.onActionStart(t);this._startPosition=e;this._touchStart=false}if(t==="vertical"){if(Math.abs(i)<this.minSwipeDistance){this.volumeCancel&&this.volumeCancel();this._lastAction=null}else{let t=0;let s=undefined;let o=undefined;if(this._startPosition.x<1/3){t=.4;s=this.lowVolumeUp;o=this.lowVolumeDown}else if(this._startPosition.x>=1/3&&this._startPosition.x<=2/3){t=1;s=this.mediumVolumeUp;o=this.mediumVolumeDown}else{t=2;s=this.highVolumeUp;o=this.highVolumeDown}if(i>0){const o=Math.round(t*100*(i-this.minSwipeDistance)/(1.5*e.height));s&&s(o);this._lastAction={type:"volume",volume:o}}else{const s=Math.round(t*100*(i+this.minSwipeDistance)/(1.5*e.height));o&&o(s);this._lastAction={type:"volume",volume:s}}}}else if(t==="horizontal"){if(e.y<1/3&&(e.x<.1||e.x>.9)||Math.abs(i)<this.minSwipeDistance){this.speedCancel&&this.speedCancel();this._lastAction=null}else{let t=0;let e=undefined;let s=undefined;if(this._startPosition.y<1/3){t=.05;e=this.lowSpeedForward;s=this.lowSpeedBackward}else if(this._startPosition.y>=1/3&&this._startPosition.y<=2/3){t=.2;e=this.mediumSpeedForward;s=this.mediumSpeedBackward}else{t=1;e=this.highSpeedForward;s=this.highSpeedBackward}if(i>0){const s=(i-this.minSwipeDistance)*t;e&&e(s);this._lastAction={type:"playback",seconds:s}}else{const e=(i+this.minSwipeDistance)*t;s&&s(e);this._lastAction={type:"playback",seconds:e}}}}}}class c{constructor(){const t=window.location.href;const i=t.match(/av([\d]+)/);this.aid=i[1];const e=t.match(/p=([\d]+)/);this.page=e?e[1]:1;this.pagesData=null;this.cidMap={};this.cidData={};this.supportWebp=c.supportWebp;downloadText(t,t=>this.findCid(t))}findCid(t){const i=t.match(/"pages":(\[[^\0]*\]),"embedPlayer"/);if(i){this.pagesData=JSON.parse(i[1]);this.pagesData.forEach(t=>{this.cidMap[t.page]=t.cid})}}getVideoshot(t,i){if(!this.cidData[this.page]){downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cidMap[this.page]}&index=1`,e=>{this.cidData[this.page]=JSON.parse(e).data;this.getVideoshot(t,i)})}else{const e=this.cidData[this.page];const s=e.index;let o=0;for(let i=0;i<s.length-2;i++){if(t>=s[i]&&t<s[i+1]){o=i;break}}let n=e.image;if(this.supportWebp){n=n.map(t=>t.replace(".jpg",".jpg@.webp"))}const a=parseInt(e.pv_x_len)||10;const l=parseInt(e.pv_y_len)||10;const c=parseInt(e.pv_x_size)||160;const h=parseInt(e.pv_y_size)||90;const r=-(o%100%a)*c;const d=-Math.floor(o%100/l)*h;i({width:c,height:h,backgroundImage:`url(${n[Math.floor(o/100)]})`,backgroundPosition:`${r}px ${d}px`})}}static get supportWebp(){try{const t=document.createElement("canvas");if(t.getContext&&t.getContext("2d"))try{return t.toDataURL("image/webp").indexOf("data:image/webp")===0}catch(t){return false}else return false}catch(t){return false}}}function h(t){if($(".touch-video-box").length!==0){return}$(".bilibili-player-video-subtitle").before(`\n                <div class='touch-video-box-wrapper'>\n                    <div class='touch-video-box adjust-closed'>\n                        <div class='touch-video-info'></div>\n                        <div class='touch-progress'></div>\n                    </div>\n                </div>`);const i=$("video");const e=i.prop("duration");const l=new a(t.get(0));const h=document.getElementsByClassName("touch-video-info")[0];const r=document.getElementsByClassName("touch-video-box")[0];let d=Math.round(i.prop("volume")*100);const u=t=>{t/=100;if(t<0){t=0}else if(t>1){t=1}i.prop("volume",t);$(".bilibili-player-video-volume-num").text(Math.round(t*100));$(".bui-thumb").css("transform",`translateY(-${48*t}px)`);$(".bui-track-vertical .bui-bar").css("transform",`scaleY(${t})`);if(t===0){$(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");i.prop("muted",true)}else if(t===1){$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").addClass(".video-state-volume-max");i.prop("muted",false)}else{$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");i.prop("muted",false)}};if(settings.touchVideoPlayerAnimation){r.classList.add("animation")}l.action.onActionStart=(t=>{r.classList.add("adjust-opened");h.innerHTML="";d=Math.round(i.prop("volume")*100)});const p=new c;const m=t=>{return a=>{const l=i.prop("currentTime");let c=l+a;let r=s(100*c/e);let d=a;if(c>e){c=e;r=100;d=e-l}else if(c<0){c=0;r=0;d=l}const u=`${n(l)} →<br/>${n(c)} (${r}%)`;const m=`\n                        <div class='touch-row'>\n                            <div class='touch-row-item'>\n                                <span class='touch-speed'>${t}速</span>\n                            </div>\n                            <div class='touch-row-item-wide'>\n                                <span class='touch-info'>进度: ${a>0?"+":"-"}${o(d)}</span>\n                            </div>\n                        </div>\n                        <div class='touch-row'>\n                            <div class='videoshot-wrapper touch-row-item'>\n                                <div class='videoshot'></div>\n                            </div>\n                            <div class='touch-row-item-wide'>\n                                <span class='touch-result'>${u}</span>\n                            </div>\n                        </div>\n                        `;h.innerHTML=m;p.getVideoshot(c,t=>$(".videoshot").css(t));$(".touch-progress").css("transform",`scaleX(${r/100})`)}};l.action.lowSpeedBackward=m("低");l.action.lowSpeedForward=m("低");l.action.mediumSpeedBackward=m("中");l.action.mediumSpeedForward=m("中");l.action.highSpeedBackward=m("高");l.action.highSpeedForward=m("高");const v=t=>{return i=>{let e=d+i;let s=Math.abs(i);if(e>100){e=100;s=100-d}else if(e<0){e=0;s=d}const o=`${d} → ${e}`;u(e);const n=`\n                        <div class='touch-row'>\n                            <div class='touch-row-item'>\n                                <span class='touch-speed'>${t}速</span>\n                            </div>\n                            <div class='touch-row-item-wide'>\n                                <span class='touch-info'>音量: ${i>0?"+":"-"}${s}</span>\n                            </div>\n                        </div>\n                        <div class='touch-row'>\n                            <div class='touch-row-item'>\n                                <span class='touch-result'>${o}</span>\n                            </div>\n                        </div>\n                        `;h.innerHTML=n;$(".touch-progress").css("transform",`scaleX(${e/100})`)}};l.action.lowVolumeUp=v("低");l.action.lowVolumeDown=v("低");l.action.mediumVolumeUp=v("中");l.action.mediumVolumeDown=v("中");l.action.highVolumeUp=v("高");l.action.highVolumeDown=v("高");l.action.speedCancel=(()=>{h.innerHTML=`松开手指,取消进退`;$(".touch-progress").css("transform","scaleX(0)")});l.action.volumeCancel=(()=>{h.innerHTML=`松开手指,取消调整`;$(".touch-progress").css("transform","scaleX(0)");u(d)});if(!unsafeWindow.TOUCH_PLAYER_DEBUG){l.action.onActionEnd=(t=>{h.innerHTML="";if(t){if(t.type==="playback"){let s=i.prop("currentTime");s+=t.seconds;if(s<0){s=0}else if(s>e){s=e}i.prop("currentTime",s)}}r.classList.remove("adjust-opened")})}}SpinQuery.any(()=>$(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),t=>t.unbind("click"));new SpinQuery(()=>$(".bilibili-player-video"),t=>t.length>0&&$("video").length>0&&$("video").prop("duration"),h).start();i.applyStyle("touchPlayerStyle","bilibili-touch-video-player");return{ajaxReload:true}}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/expand-danmaku.min.js"] = (()=>{return()=>{SpinQuery.any(()=>$(".bui-collapse-header"),e=>{if(parseInt($(".bui-collapse-body").css("height"))===0&&$(".bui-collapse-arrow-text").text()==="展开"){e.click()}});return{ajaxReload:true}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/video/expand-danmaku.min.js"] = (()=>{return()=>{SpinQuery.any(()=>$(".bui-collapse-header"),e=>{if(parseInt($(".bui-collapse-body").css("height"))===0&&$(".bui-collapse-arrow-text").text()==="展开"){e.click()}});return{ajaxReload:true}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/remove-promotions.min.js"] = (()=>{return(e,a)=>{a.applyStyle("removeAdsStyle","remove-promotions-style");SpinQuery.any(()=>$(".gg-pic").parent("a"),e=>e.css("display","none"));return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/watchlater.min.js"] = (()=>{return()=>{const t=t=>{if(t.attr("href").indexOf("watchlater")!==0){const a=t.map((t,a)=>{const r=$(a).attr("href");if(r){const t=r.match(/av[\d]+/);if(t&&t[0]){return"https://www.bilibili.com/"+t[0]}}return"javascript:;"});t.each((t,r)=>$(r).attr("href",a[t]).attr("target","_blank"))}};SpinQuery.any(()=>$(".av-item>a"),a=>t(a));SpinQuery.any(()=>$(".av-about>a"),a=>t(a));SpinQuery.any(()=>$("div.watch-later-m>ul>div>li>a"),a=>t(a));SpinQuery.any(()=>$(".read-more.mr"),t=>t.remove());SpinQuery.any(()=>$(".read-more-grp>.read-more"),t=>t.css({float:"none",width:"auto"}));new SpinQuery(()=>document.URL.match(/av[\d]+/),t=>t&&document.URL.indexOf("watchlater")!==-1,t=>{const a=t[0];if(a){window.location.replace(`https://www.bilibili.com/${a}`)}}).start();return{ajaxReload:true}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/hide-top-search.min.js"] = (()=>{return()=>{const e=[".nav-search-keyword",".search-keyword"];for(const r of e){new SpinQuery(()=>$(r),e=>e.length>0&&e.attr("placeholder").length>0,e=>e.attr("placeholder","搜索")).start()}return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/live/haruna-scale.min.js"] = (()=>{return()=>{const n="bilibili-haruna-scale";if($(n).length===0){$("head").prepend(`\n            <style id='${n}'>\n                .haruna-ctnr,\n                .avatar-btn\n                {\n                    transform: scale(${1/window.devicePixelRatio}) !important;\n                }\n            </style>\n            `)}return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/live/remove-watermark.min.js"] = (()=>{return()=>{const e="bilibili-live-watermark";if($(e).length===0){$("head").prepend(`\n            <style id='${e}'>\n                .bilibili-live-player-video-logo\n                {\n                    display: none !important;\n                }\n            </style>\n            `)}return{ajaxReload:false}}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/fix-fullscreen.min.js"] = (()=>{return()=>{unsafeWindow.Element.ALLOW_KEYBOARD_INPUT={};const e=unsafeWindow.Element.prototype.requestFullscreen;unsafeWindow.Element.prototype.requestFullscreen=function(){e.call(this)};return{ajaxReload:false}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/video/fix-fullscreen.min.js"] = (()=>{return()=>{unsafeWindow.Element.ALLOW_KEYBOARD_INPUT={};const e=unsafeWindow.Element.prototype.requestFullscreen;unsafeWindow.Element.prototype.requestFullscreen=function(){e.call(this)};return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/full-tweets-title.min.js"] = (()=>{return(e,l)=>{l.applyStyle("fullTweetsTitleStyle","full-tweets-title-style");return{ajaxReload:false}}})();
 
     class ResourceType
@@ -582,13 +575,13 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
         useNewStyle: new Resource("style/new-styles.min.js"),
         touchNavBar: new Resource("touch/touch-navbar.min.js"),
         touchVideoPlayer: new Resource("touch/touch-player.min.js"),
-        expandDanmakuList: new Resource("utils/expand-danmaku.min.js"),
+        expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
         removeAds: new Resource("utils/remove-promotions.min.js"),
         watchLaterRedirect: new Resource("utils/watchlater.min.js"),
         hideTopSearch: new Resource("utils/hide-top-search.min.js"),
         harunaScale: new Resource("live/haruna-scale.min.js"),
         removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
-        fixFullscreen: new Resource("utils/fix-fullscreen.min.js"),
+        fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
         fullTweetsTitle: new Resource("utils/full-tweets-title.min.js")
     };
     (function ()

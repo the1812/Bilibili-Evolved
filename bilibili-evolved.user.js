@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.2.6
+// @version      1.2.7
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -462,13 +462,13 @@
         useNewStyle: new Resource("style/new-styles.min.js"),
         touchNavBar: new Resource("touch/touch-navbar.min.js"),
         touchVideoPlayer: new Resource("touch/touch-player.min.js"),
-        expandDanmakuList: new Resource("utils/expand-danmaku.min.js"),
+        expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
         removeAds: new Resource("utils/remove-promotions.min.js"),
         watchLaterRedirect: new Resource("utils/watchlater.min.js"),
         hideTopSearch: new Resource("utils/hide-top-search.min.js"),
         harunaScale: new Resource("live/haruna-scale.min.js"),
         removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
-        fixFullscreen: new Resource("utils/fix-fullscreen.min.js"),
+        fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
         fullTweetsTitle: new Resource("utils/full-tweets-title.min.js")
     };
     (function ()

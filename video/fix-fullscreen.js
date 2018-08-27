@@ -11,5 +11,5 @@
         return {
             ajaxReload: false
         };
-    }
+    };
 })();
