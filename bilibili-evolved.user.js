@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.2.7
+// @version      1.2.8
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -45,6 +45,7 @@
             settings[key] = GM_getValue(key, settings[key]);
         }
         settings.guiSettings = true;
+        settings.viewCover = true;
     }
     function saveSettings(newSettings)
     {
@@ -337,7 +338,7 @@
             {
                 return html
                     .replace(/<category>([^\0]*?)<\/category>/g, `
-                    <li class="indent-center">
+                    <li class="indent-center category">
                         <span class="settings-category">$1</span>
                     </li>
                 `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
@@ -469,7 +470,8 @@
         harunaScale: new Resource("live/haruna-scale.min.js"),
         removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
         fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
-        fullTweetsTitle: new Resource("utils/full-tweets-title.min.js")
+        fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
+        viewCover: new Resource("video/view-cover.min.js")
     };
     (function ()
     {

@@ -138,6 +138,9 @@
 {
     align-items: center;
     justify-content: center;
+}
+.gui-settings-content ul li.category
+{
     padding: 8px 0;
     margin: 0;
     border-top: 1px dashed #8884;
@@ -250,21 +253,27 @@ span.settings-category
 {
     opacity: 0.5;
 }
-button.save
+button.gui-settings-button
 {
-    padding: 8px 32px;
+    padding: 4px 24px;
     border: none;
-    background: $customStyleColor;
-    color: $foreground;
+    background: #8884;
+    color: #eee;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.2s;
     -webkit-tap-highlight-color: transparent;
 }
-button.save:focus
+button.gui-settings-button:focus
 {
     outline: none;
+}
+button.save
+{
+    padding: 8px 32px;
+    background: $customStyleColor;
+    color: $foreground;
 }
 .gui-settings-footer svg
 {
