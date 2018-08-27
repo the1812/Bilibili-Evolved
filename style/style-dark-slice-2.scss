@@ -29,7 +29,10 @@ li.season-item .season-body .season-title span.follow,
 .works-ctnr,
 .author-info,
 .dashboard,
-.sidebar-canvas
+.sidebar-canvas,
+.paging-box-big .next,
+.paging-box-big .prev,
+.bilibili-player-ending-panel-box-functions .bui-button.bui-button-disabled
 {
     background-color: #444 !important;
 }
@@ -79,7 +82,10 @@ li.season-item .season-body .season-title span.follow,
 .live-ctn .live-attch .host,
 .dynamic-m .title span:not(.sp),
 .history-tag,
-li.no-data
+li.no-data,
+.bilibili-player-ending-panel-box-functions .bui-button.bui-button-disabled,
+.paging-box-big .page-jump,
+.coin-operated-m .coin-bottom .tips
 {
     color: #aaa !important;
 }
@@ -107,7 +113,9 @@ button.button.more,
 .dashboard li.collection .text,
 .dashboard li.share .text,
 .room-list .list-item .uname,
-.chat-history-panel .chat-item
+.chat-history-panel .chat-item,
+.paging-box-big .next,
+.paging-box-big .prev
 {
     color: #eee !important;
 }
@@ -126,7 +134,10 @@ button.button.more,
 .author-info,
 .dashboard,
 button.button.more,
-.dashboard li.like
+.dashboard li.like,
+.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric,
+.paging-box-big .next,
+.paging-box-big .prev
 {
     border-color: transparent !important;
 }
@@ -159,10 +170,11 @@ li.history
 {
     filter: brightness(0) invert(1) !important;
 }
-// a
-// {
-//     filter: $blueImageFilter !important;
-// }
+.wrapper .modal-close:hover,
+.coin-operated-m .close:hover
+{
+    filter: $blueImageFilter !important;
+}
 .season-timer .current-timer:before,
 li.season-item .season-body .season-title span.follow,
 .user-panel-ctnr .ctrl-btn .svg-icon,
@@ -170,10 +182,12 @@ li.season-item .season-body .season-title span.follow,
 {
     filter: $pinkImageFilter !important;
 }
-// a
-// {
-//     filter: grayscale(1) !important;
-// }
+.wrapper .modal-body .elec-protocol .checkbox.checked,
+.wrapper .modal-close,
+.coin-operated-m .close
+{
+    filter: grayscale(1) !important;
+}
 
 // a
 // {
@@ -225,7 +239,12 @@ li.season-item .season-body .season-title span.follow,
 .news-list .news-item .type,
 .author-info .favourite-btn,
 .live-status.on-live,
-.live-status.on-live:hover
+.live-status.on-live:hover,
+.paging-box-big .next:hover,
+.paging-box-big .prev:hover,
+.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric,
+.bui-button.bui-button-blue,
+.bui-button.bui-button-gray3:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -252,7 +271,11 @@ li.season-item .season-body .season-desc.published,
 button.button.more:hover,
 .author-info .link-pink:hover,
 .link-footer a:hover,
-.chat-history-panel .chat-item.welcome-guard .username
+.chat-history-panel .chat-item.welcome-guard .username,
+.bilibili-player-ending-panel-box-functions div.active,
+.bilibili-player-ending-panel-box-functions div.active:hover,
+.bilibili-player-ending-panel-box-recommend-add-watchlater .icon-22wait-choice,
+.coin-operated-m .mc-box.on .c-num
 {
     color: $customStyleColor !important;
 }
@@ -261,14 +284,19 @@ button.button.more:hover,
 .bili-header-m .i_menu_login .reg a,
 .news-list .news-item .type,
 .author-info .favourite-btn,
-.live-status.on-live
+.live-status.on-live,
+.paging-box-big .next:hover,
+.paging-box-big .prev:hover,
+.bui-button.bui-button-blue,
+.bui-button.bui-button-gray3:hover
 {
     color: $foreground !important;
 }
-// a
-// {
-//     fill: $customStyleColor !important;
-// }
+.bilibili-player-ending-panel-box-functions div.active .bp-svgicon,
+.bilibili-player-ending-panel-box-functions div.active:hover .bp-svgicon
+{
+    fill: $customStyleColor !important;
+}
 
 // a
 // {
