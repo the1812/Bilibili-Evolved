@@ -97,7 +97,8 @@ li.no-data,
 .paging-box-big .page-jump,
 .coin-operated-m .coin-bottom .tips,
 .select-month .tip,
-.act-info
+.act-info,
+.i-live .i-live-off-guest
 {
     color: #aaa !important;
 }
@@ -161,7 +162,8 @@ button.button.more,
 }
 .season-timeline .season-group,
 .season-timeline .season-group .group-time:before,
-li.history
+li.history,
+.elec .elec-monthly-count
 {
     border-color: #aaa !important;
 }
@@ -202,7 +204,10 @@ li.season-item .season-body .season-title span.follow,
 }
 .wrapper .modal-body .elec-protocol .checkbox.checked,
 .wrapper .modal-close,
-.coin-operated-m .close
+.coin-operated-m .close,
+.i-live .i-live-m,
+.tag-list .tag-icon,
+.i-live .i-live-off-guest a .i-live-arrow
 {
     filter: grayscale(1) !important;
 }
@@ -211,10 +216,10 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background-image: none !important;
 // }
-// a
-// {
-//     border-radius: 4px !important;
-// }
+.i-live .i-live-fo-btn, .i-live .i-live-unfo-btn
+{
+    border-radius: 4px !important;
+}
 .timeline-header,
 .timeline-wrapper,
 .timeline-header .tl-weeks
@@ -263,7 +268,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric,
 .bui-button.bui-button-blue,
 .bui-button.bui-button-gray3:hover,
-.intimacy-bar>span
+.intimacy-bar>span,
+.h .h-follow
 {
     background-color: $customStyleColor !important;
 }
@@ -297,7 +303,9 @@ button.button.more:hover,
 .coin-operated-m .mc-box.on .c-num,
 .bilibili-player-context-menu-container span.bppl-state-selected,
 .control-panel-ctnr .title,
-.buy-detail .rights
+.buy-detail .rights,
+.i-live:hover .i-live-title,
+.i-live .i-live-fo-btn
 {
     color: $customStyleColor !important;
 }
@@ -310,7 +318,8 @@ button.button.more:hover,
 .paging-box-big .next:hover,
 .paging-box-big .prev:hover,
 .bui-button.bui-button-blue,
-.bui-button.bui-button-gray3:hover
+.bui-button.bui-button-gray3:hover,
+.h .h-follow
 {
     color: $foreground !important;
 }
