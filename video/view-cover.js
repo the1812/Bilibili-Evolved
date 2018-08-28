@@ -1,7 +1,53 @@
 (() =>
 {
-    return () =>
+    return (_, resources) =>
     {
+        class ImageViewer
+        {
+            constructor(url)
+            {
+                this.url = url;
+                if ($(".image-viewer").length === 0)
+                {
+                    this.createDom();
+                }
+                this.viewer = $(".image-viewer-container");
+                this.downloadImage();
+            }
+            createDom()
+            {
+                $("body").append(resources.data.imageViewerDom.text);
+                resources.applyStyle("imageViewerStyle", "image-viewer-style");
+                $(".image-viewer-container .close").on("click", () => this.hide());
+            }
+            downloadImage()
+            {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", this.url.replace("http:", "https:"), true);
+                xhr.responseType = "blob";
+                xhr.onload = () =>
+                {
+                    const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+                    const data = URL.createObjectURL(xhr.response);
+                    this.imageData = data;
+                    this.viewer.find(".download")
+                        .attr("href", data)
+                        .attr("download", title);
+                    this.viewer.find(".image")
+                        .prop("src", data);
+                };
+                xhr.send();
+            }
+            show()
+            {
+                this.viewer.addClass("opened");
+            }
+            hide()
+            {
+                this.viewer.removeClass("opened");
+            }
+        }
+
         SpinQuery.any(() => $("span.settings-category"), settingsCategories =>
         {
             SpinQuery.any(() => $("meta[itemprop='image']"), metaData =>
@@ -20,9 +66,10 @@
                         查看封面
                     </button>
                     </li>`);
+                    const imageViewer = new ImageViewer(metaData.prop("content"));
                     $("#view-video-cover").on("click", () =>
                     {
-                        open(metaData.prop("content"));
+                        imageViewer.show();
                     });
                 }
             });
@@ -53,9 +100,10 @@
                                 查看封面
                             </button>
                             </li>`);
+                        const imageViewer = new ImageViewer(coverUrl);
                         $("#view-live-cover").on("click", () =>
                         {
-                            open(coverUrl);
+                            imageViewer.show();
                         });
                     });
                 }

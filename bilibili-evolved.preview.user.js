@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.2.8
+// @version      1.2.9
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -455,8 +455,10 @@
         removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
         guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
         fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
+        imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
 
         guiSettingsDom: new Resource("utils/gui-settings.html"),
+        imageViewerDom: new Resource("utils/image-viewer.html"),
 
         guiSettings: new Resource("utils/gui-settings.min.js"),
         useDarkStyle: new Resource("style/dark-styles.min.js"),
@@ -498,6 +500,10 @@
         ];
         this.fullTweetsTitle.dependencies = [
             this.fullTweetsTitleStyle
+        ];
+        this.viewCover.dependencies = [
+            this.imageViewerDom,
+            this.imageViewerStyle
         ];
     }).apply(Resource.all);
     class ResourceManager
