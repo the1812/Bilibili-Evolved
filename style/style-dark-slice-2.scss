@@ -15,7 +15,11 @@ li.season-item .season-body .season-title span.follow,
 .bili-header-m .nav-menu .nav-con .nav-item .bml-box,
 .danmaku-menu,
 .bilibili-player-context-menu-container.black,
-.bilibili-player-contextmenu-subwrapp>span.hover
+.bilibili-player-contextmenu-subwrapp>span.hover,
+.tab-box .item.active::after,
+.tab-box .item.active::before,
+.guard-desc-box,
+.buy-info-box
 {
     background-color: #222 !important;
 }
@@ -36,7 +40,9 @@ li.season-item .season-body .season-title span.follow,
 .paging-box-big .prev,
 .bilibili-player-ending-panel-box-functions .bui-button.bui-button-disabled,
 .bilibili-player-context-menu-container.black ul>li.hover,
-.bilibili-player-context-menu-container.black ul>li a:hover
+.bilibili-player-context-menu-container.black ul>li a:hover,
+.intimacy-bar,
+.tab-box
 {
     background-color: #444 !important;
 }
@@ -89,7 +95,9 @@ li.season-item .season-body .season-title span.follow,
 li.no-data,
 .bilibili-player-ending-panel-box-functions .bui-button.bui-button-disabled,
 .paging-box-big .page-jump,
-.coin-operated-m .coin-bottom .tips
+.coin-operated-m .coin-bottom .tips,
+.select-month .tip,
+.act-info
 {
     color: #aaa !important;
 }
@@ -119,7 +127,12 @@ button.button.more,
 .room-list .list-item .uname,
 .chat-history-panel .chat-item,
 .paging-box-big .next,
-.paging-box-big .prev
+.paging-box-big .prev,
+.tab-box .item.active,
+.tab-box .item,
+.tab-box .item .title,
+.tab-box .item .desc,
+.buy-info-box .left-part
 {
     color: #eee !important;
 }
@@ -141,7 +154,8 @@ button.button.more,
 .dashboard li.like,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric,
 .paging-box-big .next,
-.paging-box-big .prev
+.paging-box-big .prev,
+.buy-info-box
 {
     border-color: transparent !important;
 }
@@ -231,10 +245,10 @@ li.season-item .season-body .season-title span.follow,
 //     opacity: 1 !important;
 // }
 
-// a
-// {
-//     border-color: $customStyleColor !important;
-// }
+.link-input:focus
+{
+    border-color: $customStyleColor !important;
+}
 .progress-bar-inner,
 .tl-head .tl-day.today .indicator,
 .primary-menu .nav-menu .channel.on::after,
@@ -248,7 +262,8 @@ li.season-item .season-body .season-title span.follow,
 .paging-box-big .prev:hover,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric,
 .bui-button.bui-button-blue,
-.bui-button.bui-button-gray3:hover
+.bui-button.bui-button-gray3:hover,
+.intimacy-bar>span
 {
     background-color: $customStyleColor !important;
 }
@@ -280,7 +295,9 @@ button.button.more:hover,
 .bilibili-player-ending-panel-box-functions div.active:hover,
 .bilibili-player-ending-panel-box-recommend-add-watchlater .icon-22wait-choice,
 .coin-operated-m .mc-box.on .c-num,
-.bilibili-player-context-menu-container span.bppl-state-selected
+.bilibili-player-context-menu-container span.bppl-state-selected,
+.control-panel-ctnr .title,
+.buy-detail .rights
 {
     color: $customStyleColor !important;
 }
