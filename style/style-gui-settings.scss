@@ -255,7 +255,8 @@ span.settings-category
 }
 button.gui-settings-button
 {
-    padding: 4px 24px;
+    padding: 6px 24px;
+    max-height: 34px;
     border: none;
     background: #8884;
     color: #eee;
@@ -263,6 +264,7 @@ button.gui-settings-button
     font-size: 16px;
     cursor: pointer;
     transition: all 0.2s;
+    font-family: inherit;
     -webkit-tap-highlight-color: transparent;
 }
 button.gui-settings-button:focus
@@ -271,7 +273,8 @@ button.gui-settings-button:focus
 }
 button.save
 {
-    padding: 8px 32px;
+    padding: 8px 38px;
+    max-height: 38px;
     background: $customStyleColor;
     color: $foreground;
 }
