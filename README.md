@@ -108,9 +108,9 @@
 ## 隐藏搜索推荐
 将搜索框的推荐词替换为`搜索`.
 ## 全屏修复
-修复点击全屏按钮无响应的问题.
+修复Chrome中点击全屏按钮无响应的问题.
 
-点击全屏时, b站的源代码中会检查浏览器是否为`Chrome XX.X.XXX5.1`和`window.Element`是否包含`ALLOW_KEYBOARD_INPUT`属性, 然后向`requsetFullscreen`传递不同的参数. 而部分浏览器不允许向此API传参数, 全屏操作就会失败.
+点击全屏时, b站的源代码中会检查浏览器是否为`Chrome XX.X.XXX5.1`和`window.Element`是否包含`ALLOW_KEYBOARD_INPUT`属性, 然后向`requsetFullscreen`传递不同的参数. 而Chrome不允许向此API传参数, 全屏操作就会失败.
 
 附:视频全屏代码
 ```js
