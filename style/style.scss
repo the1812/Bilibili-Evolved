@@ -46,19 +46,26 @@ div.stardust-player
 .link-navbar .nav-item,
 .shortcuts-ctnr,
 .link-navbar .nav-item:hover,
-.link-navbar .main-ctnr .nav-switcher
+.link-navbar .main-ctnr .nav-switcher,
+.my-link-btn
 {
     color: $foregroundd !important;
 }
 
 li.nav-item:hover,
 .link-navbar .nav-item:hover,
-.shortcuts-ctnr .shortcut-item:hover
+.shortcuts-ctnr .shortcut-item:hover,
+.my-link-btn:hover,
+.publish-btn:hover
 {
     background-color: hsla(0,0%,$brightness,.2) !important;
 }
 
-li.nav-item.home:hover
+li.nav-item.home:hover,
+.link-navbar .nav-item:hover .nav-link .label,
+.shortcuts-ctnr .shortcut-item .label-wrapper .text:hover,
+.publish-btn:hover::after,
+.my-link-btn .label:hover
 {
     background: transparent !important;
 }
@@ -79,7 +86,8 @@ a.t>i.bili-icon
 }
 a.t>i.bili-icon-logo,
 a.t>i.bili-icon,
-.main-ctnr .nav-logo:before
+.main-ctnr .nav-logo:before,
+.link-navbar .nav-item:first-child::before
 {
     filter: brightness(0) $filterInvert !important;
     opacity: 0.81 !important;
@@ -111,6 +119,29 @@ div.up-load
     flex-grow: 0;
     flex-shrink: 0;
 }
+.publish-btn
+{
+    height: 40px !important;
+    line-height: 40px !important;
+    background: $customStyleColor !important;
+    border: 1px solid $foregroundd !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+    top: calc(50% - 20px) !important;
+    transition: all 0.2s !important;
+}
+.publish-panel
+{
+    margin-top: 7px !important;
+}
+.my-link-btn
+{
+    border-radius: 0 !important;
+}
+.slot-ctnr a
+{
+    color: #222 !important;
+}
 .u-link
 {
     background: transparent !important;
@@ -133,17 +164,18 @@ div.up-load
     background-color: hsla(0,0%,$brightness,.2) !important;
 }
 
-.nav-search
+.stardust-video .nav-con .nav-search
 {
     width: 130px !important;
 }
 
-.nav-search-keyword
+.stardust-video .nav-con .nav-search .nav-search-keyword
 {
+    color: #222 !important;
     width: 120px !important;
 }
 
-#nav_searchform
+.stardust-video .nav-con #nav_searchform
 {
     margin-top: 0.1rem !important;
     border-radius: 4px !important;
@@ -158,14 +190,14 @@ div.up-load
     transition: all 0.2s !important;
 }
 .search-bar-ctnr .search-bar:hover,
-#nav_searchform:hover
+.stardust-video .nav-con #nav_searchform:hover
 {
     background-color: #fff !important;
 }
 
 #bilibiliPlayer
 {
-    box-shadow: 0px 10px 30px 5px $customStyleColor40 !important;
+    box-shadow: 0px 4px 16px 0px $customStyleColor40 !important;
 }
 
 .blur-bg
@@ -179,7 +211,7 @@ div.up-load
     width: 28px !important;
 }
 
-ul.bilibili-suggest
+.stardust-video .nav-con ul.bilibili-suggest
 {
     margin-left: -35px !important;
     width: 200px !important;
@@ -216,10 +248,6 @@ div.nav-gif,
 {
     padding: 8px !important;
 }
-.bili-header-m .nav-search .nav-search-keyword
-{
-    color: #222 !important;
-}
 .link-navbar .main-ctnr .nav-switcher.open-btn
 {
     filter: brightness(0) invert(1) !important;
@@ -245,45 +273,25 @@ div.nav-gif,
         margin: 0 1em !important;
     }
 
-    .bilibili-suggest.nav,
-    .nav-search
+    .stardust-video .nav-con .bilibili-suggest.nav,
+    .stardust-video .nav-con .nav-search
     {
         width: 250px !important;
     }
 
-    .nav-search-keyword
+    .stardust-video .nav-con .nav-search .nav-search-keyword
     {
         width: 240px !important;
     }
 
-    ul.bilibili-suggest
+    .stardust-video .nav-con ul.bilibili-suggest
     {
         margin-left: 0px !important;
         width: 250px !important;
     }
 
-    li.suggest-item>a
+    .stardust-video .nav-con li.suggest-item>a
     {
         max-width: 205px !important;
     }
-}
-
-::-webkit-scrollbar
-{
-    width: 5px !important;
-    height: 5px !important;
-}
-::-webkit-scrollbar-corner,
-::-webkit-scrollbar-track
-{
-    background: transparent !important;
-}
-::-webkit-resizer,
-::-webkit-scrollbar-thumb
-{
-    background: #aaa !important;
-}
-::-webkit-scrollbar-thumb:hover
-{
-    background: #888 !important;
 }

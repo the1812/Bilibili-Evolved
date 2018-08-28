@@ -2,9 +2,7 @@
   <div class="gui-settings-box">
     <div class="gui-settings-header">
       <span class="gui-settings-title">设置</span>
-      <svg
-        class="gui-settings-close"
-        viewBox="0 0 24 24">
+      <svg class="gui-settings-close" viewBox="0 0 24 24">
         <path />
       </svg>
     </div>
@@ -13,7 +11,7 @@
       <ul>
         <category>样式</category>
         <checkbox indent="0" key="useNewStyle" dependencies="">
-           新样式
+          新样式
         </checkbox>
         <li class="indent-1">
           <label class="gui-settings-textbox-container">
@@ -35,58 +33,56 @@
           </label>
         </li>
         <checkbox indent="1" key="useDarkStyle" dependencies="useNewStyle">
-           夜间模式
+          夜间模式
         </checkbox>
         <checkbox indent="1" key="overrideNavBar" dependencies="useNewStyle">
-           搜索栏位置调整
+          搜索栏位置调整
         </checkbox>
-        <checkbox
-          indent="2"
-          key="showBanner"
-          dependencies="useNewStyle overrideNavBar">
-           显示顶部横幅
+        <checkbox indent="2" key="showBanner" dependencies="useNewStyle overrideNavBar">
+          显示顶部横幅
         </checkbox>
         <category>工具</category>
-        <checkbox indent="0" key="expandDanmakuList" dependencies="">
-           自动展开弹幕列表
-        </checkbox>
         <checkbox indent="0" key="removeAds" dependencies="">
-           删除广告
+          删除广告
         </checkbox>
         <checkbox indent="0" key="watchLaterRedirect" dependencies="">
-           稍后再看重定向
+          稍后再看重定向
         </checkbox>
         <checkbox indent="0" key="hideTopSearch" dependencies="">
-           隐藏热搜词
+          隐藏搜索推荐
+        </checkbox>
+        <checkbox indent="0" key="fullTweetsTitle" dependencies="">
+          展开动态标题
+        </checkbox>
+        <category>视频</category>
+        <checkbox indent="0" key="expandDanmakuList" dependencies="">
+          自动展开弹幕列表
         </checkbox>
         <checkbox indent="0" key="fixFullscreen" dependencies="">
-           全屏修复
+          全屏修复
         </checkbox>
         <category>直播间</category>
         <checkbox indent="0" key="harunaScale" dependencies="">
-           缩放看板娘
+          缩放看板娘
         </checkbox>
         <checkbox indent="0" key="removeLiveWatermark" dependencies="">
-           删除直播水印
+          删除直播水印
         </checkbox>
         <category>触摸优化</category>
         <checkbox indent="0" key="touchNavBar" dependencies="">
-           顶栏触摸优化
+          顶栏触摸优化
         </checkbox>
         <checkbox indent="0" key="touchVideoPlayer" dependencies="">
-           播放器触摸支持
+          播放器触摸支持
         </checkbox>
-        <checkbox
-          indent="1"
-          key="touchVideoPlayerAnimation"
-          dependencies="touchVideoPlayer">
-           启用实验性动画效果
+        <checkbox indent="1" key="touchVideoPlayerAnimation" dependencies="touchVideoPlayer">
+          启用实验性动画效果
         </checkbox>
       </ul>
       <!-- <div class="gui-settings-content-bottom-mask"></div> -->
     </div>
     <div class="gui-settings-footer">
-      <button class="save">保存</button>
+      <button class="gui-settings-button save">保存</button>
       <svg class="gui-settings-ok" viewBox="0 0 24 24">
         <path/>
       </svg>

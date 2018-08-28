@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.2.3
+// @version      1.3.0
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -20,6 +20,7 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        fullTweetsTitle: false,
         fixFullscreen: false,
         removeLiveWatermark: true,
         harunaScale: true,
@@ -44,6 +45,7 @@
             settings[key] = GM_getValue(key, settings[key]);
         }
         settings.guiSettings = true;
+        settings.viewCover = true;
     }
     function saveSettings(newSettings)
     {
@@ -336,7 +338,7 @@
             {
                 return html
                     .replace(/<category>([^\0]*?)<\/category>/g, `
-                    <li class="indent-center">
+                    <li class="indent-center category">
                         <span class="settings-category">$1</span>
                     </li>
                 `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
@@ -396,21 +398,25 @@
                 }
             });
         }
+        getStyle(id)
+        {
+            const style = this.text;
+            if (!style)
+            {
+                console.error("Attempt to get style which is not downloaded.");
+            }
+            let attributes = `id='${id}'`;
+            if (this.priority !== undefined)
+            {
+                attributes += ` priority='${this.priority}'`;
+            }
+            return `<style ${attributes}>${style}</style>`;
+        }
         applyStyle(id)
         {
             if ($(`#${id}`).length === 0)
             {
-                const style = this.text;
-                if (!style)
-                {
-                    console.error("Attempt to get style which is not downloaded.");
-                }
-                let attributes = `id='${id}'`;
-                if (this.priority !== undefined)
-                {
-                    attributes += ` priority='${this.priority}'`;
-                }
-                const element = `<style ${attributes}>${style}</style>`;
+                const element = this.getStyle(id);
                 if (this.priority !== undefined)
                 {
                     let insertPosition = this.priority - 1;
@@ -440,28 +446,35 @@
     Resource.all = {
         style: new Resource("style/style.min.scss", 1),
         oldStyle: new Resource("style/style-old.min.scss", 1),
+        scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
         darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
         darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
+        darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
         touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
         navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
         noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
         removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
         guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
+        fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
+        imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
 
         guiSettingsDom: new Resource("utils/gui-settings.html"),
+        imageViewerDom: new Resource("utils/image-viewer.html"),
 
         guiSettings: new Resource("utils/gui-settings.min.js"),
         useDarkStyle: new Resource("style/dark-styles.min.js"),
         useNewStyle: new Resource("style/new-styles.min.js"),
         touchNavBar: new Resource("touch/touch-navbar.min.js"),
         touchVideoPlayer: new Resource("touch/touch-player.min.js"),
-        expandDanmakuList: new Resource("utils/expand-danmaku.min.js"),
+        expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
         removeAds: new Resource("utils/remove-promotions.min.js"),
         watchLaterRedirect: new Resource("utils/watchlater.min.js"),
         hideTopSearch: new Resource("utils/hide-top-search.min.js"),
         harunaScale: new Resource("live/haruna-scale.min.js"),
         removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
-        fixFullscreen: new Resource("utils/fix-fullscreen.min.js")
+        fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
+        fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
+        viewCover: new Resource("video/view-cover.min.js")
     };
     (function ()
     {
@@ -471,19 +484,28 @@
         ];
         this.useDarkStyle.dependencies = [
             this.darkStyleSlice1,
-            this.darkStyleSlice2
+            this.darkStyleSlice2,
+            this.darkStyleImportant
         ];
         this.useNewStyle.dependencies = [
             this.style,
             this.oldStyle,
             this.navbarOverrideStyle,
-            this.noBannerStyle
+            this.noBannerStyle,
+            this.scrollbarStyle
         ];
         this.touchVideoPlayer.dependencies = [
             this.touchPlayerStyle
         ];
         this.removeAds.dependencies = [
             this.removeAdsStyle
+        ];
+        this.fullTweetsTitle.dependencies = [
+            this.fullTweetsTitleStyle
+        ];
+        this.viewCover.dependencies = [
+            this.imageViewerDom,
+            this.imageViewerStyle
         ];
     }).apply(Resource.all);
     class ResourceManager
@@ -523,16 +545,26 @@
                             const func = eval(text);
                             if (func)
                             {
-                                const attribute = func(settings, this);
-                                this.attributes[key] = attribute;
-                                if (attribute.ajaxReload)
+                                try
                                 {
-                                    $(document).ajaxComplete(() =>
+                                    const attribute = func(settings, this);
+                                    this.attributes[key] = attribute;
+                                    if (attribute.ajaxReload)
                                     {
-                                        func(settings, this);
-                                    });
+                                        $(document).ajaxComplete(() =>
+                                        {
+                                            func(settings, this);
+                                        });
+                                    }
+                                }
+                                catch (error) // execution error
+                                {
+                                    console.error(`Failed to apply feature "${key}": ${error}`);
                                 }
                             }
+                        }).catch(reason =>
+                        {   // download error
+                            console.error(`Download error, XHR status: ${reason}`);
                         });
                         promises.push(promise);
                     }
@@ -543,6 +575,10 @@
         applyStyle(key, id)
         {
             Resource.all[key].applyStyle(id);
+        }
+        getStyle(key, id)
+        {
+            return Resource.all[key].getStyle(id);
         }
     }
 
