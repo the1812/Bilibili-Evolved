@@ -43,7 +43,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-context-menu-container.black ul>li.hover,
 .bilibili-player-context-menu-container.black ul>li a:hover,
 .intimacy-bar,
-.tab-box
+.tab-box,
+.live-module .tab-item .r-item .number
 {
     background-color: #444 !important;
 }
@@ -99,7 +100,9 @@ li.no-data,
 .coin-operated-m .coin-bottom .tips,
 .select-month .tip,
 .act-info,
-.i-live .i-live-off-guest
+.i-live .i-live-off-guest,
+.live-module .tab-item .r-item .r-i-t .u-online,
+.live-module .tab-item .r-item .r-i-st
 {
     color: #aaa !important;
 }
@@ -137,7 +140,8 @@ button.button.more,
 .buy-info-box .left-part,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric.little,
 .pk-rank.side-bar-icon+.size-bar-text,
-.gui-settings-button:not(.save)
+.gui-settings-button:not(.save),
+.live-module .tab-item .r-item .r-i-t .u-name
 {
     color: #eee !important;
 }
@@ -216,6 +220,10 @@ li.season-item .season-body .season-title span.follow,
 {
     filter: grayscale(1) !important;
 }
+.live-module .tab-item .r-item .r-i-t .u-online i
+{
+    filter: brightness(0.72) !important;
+}
 
 // a
 // {
@@ -274,7 +282,11 @@ li.season-item .season-body .season-title span.follow,
 .bui-button.bui-button-blue,
 .bui-button.bui-button-gray3:hover,
 .intimacy-bar>span,
-.h .h-follow
+.h .h-follow,
+.carousel-module .panel .trig span.on,
+.live-module .tab-item .r-item:first-child .number,
+.live-module .tab-item .r-item:nth-child(2) .number,
+.live-module .tab-item .r-item:nth-child(3) .number
 {
     background-color: $customStyleColor !important;
 }
@@ -311,7 +323,8 @@ button.button.more:hover,
 .buy-detail .rights,
 .i-live:hover .i-live-title,
 .i-live .i-live-fo-btn,
-.room-introduction-content a
+.room-introduction-content a,
+.live-module .tab-item .r-item a:hover .u-name
 {
     color: $customStyleColor !important;
 }
@@ -325,7 +338,11 @@ button.button.more:hover,
 .paging-box-big .prev:hover,
 .bui-button.bui-button-blue,
 .bui-button.bui-button-gray3:hover,
-.h .h-follow
+.h .h-follow,
+.live-module .tab-item .r-item:first-child .number,
+.live-module .tab-item .r-item:nth-child(2) .number,
+.live-module .tab-item .r-item:nth-child(3) .number,
+.live-module .tab-item .r-item .number
 {
     color: $foreground !important;
 }
