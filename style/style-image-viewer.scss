@@ -55,13 +55,25 @@
 {
     grid-area: download;
 }
-.icon
+.image-viewer-icon
 {
     cursor: pointer;
     width: 100%;
     height: 100%;
 }
-.icon path
+.image-viewer-icon svg
+{
+    max-width: 48px;
+    max-height: 48px;
+}
+.image-viewer-icon path
 {
     fill: #eee;
+    transition: all 0.2s;
+    transform-origin: center;
+}
+.image-viewer-icon:hover path
+{
+    fill: $customStyleColor;
+    transform: scale(1.2);
 }

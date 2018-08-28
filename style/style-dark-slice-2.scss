@@ -195,7 +195,8 @@ li.history,
     filter: brightness(0) invert(1) !important;
 }
 .wrapper .modal-close:hover,
-.coin-operated-m .close:hover
+.coin-operated-m .close:hover,
+.bili-header-m .bilibili-suggest .cancel:hover
 {
     filter: $blueImageFilter !important;
 }
