@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.2.9
+// @version      1.3.0
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -446,6 +446,7 @@
     Resource.all = {
         style: new Resource("style/style.min.scss", 1),
         oldStyle: new Resource("style/style-old.min.scss", 1),
+        scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
         darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
         darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
         darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
@@ -490,7 +491,8 @@
             this.style,
             this.oldStyle,
             this.navbarOverrideStyle,
-            this.noBannerStyle
+            this.noBannerStyle,
+            this.scrollbarStyle
         ];
         this.touchVideoPlayer.dependencies = [
             this.touchPlayerStyle
