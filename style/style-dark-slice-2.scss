@@ -65,14 +65,20 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background-image: none !important;
 // }
-// a
-// {
-//     background-color: #222e !important;
-// }
+.bilibili-player-video-control
+{
+    background-color: #2226 !important;
+}
+.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
+{
+    background-color: #222d !important;
+}
+
 .news-list .news-item .date,
 .empty-hint,
 .article-content-ctnr>hr,
-.author-info .communicate-btn
+.author-info .communicate-btn,
+.bui-select.bui-select-quality-menu .bui-select-border
 {
     background-color: transparent !important;
 }
@@ -141,7 +147,8 @@ button.button.more,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric.little,
 .pk-rank.side-bar-icon+.size-bar-text,
 .gui-settings-button:not(.save),
-.live-module .tab-item .r-item .r-i-t .u-name
+.live-module .tab-item .r-item .r-i-t .u-name,
+.bb-comment .nameplate .nameplate-card .nameplate-text
 {
     color: #eee !important;
 }
@@ -263,7 +270,8 @@ li.season-item .season-body .season-title span.follow,
 //     opacity: 1 !important;
 // }
 
-.link-input:focus
+.link-input:focus,
+.dynamic-list-item-wrap .item-user a.stick
 {
     border-color: $customStyleColor !important;
 }
@@ -324,7 +332,8 @@ button.button.more:hover,
 .i-live:hover .i-live-title,
 .i-live .i-live-fo-btn,
 .room-introduction-content a,
-.live-module .tab-item .r-item a:hover .u-name
+.live-module .tab-item .r-item a:hover .u-name,
+.dynamic-list-item-wrap .item-user a.stick
 {
     color: $customStyleColor !important;
 }
