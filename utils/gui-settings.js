@@ -60,12 +60,16 @@
             }
         };
 
-        function reloadGuiSettings()
+        function settingsChange(key, _, newValue)
+        {
+            $(`input[type='checkbox'][key='${key}']`).prop("checked", newValue);
+            $(`input[type='text'][key='${key}']`).val(newValue);
+        }
+        function syncGui()
         {
             for (const key in settings)
             {
-                $(`input[type='checkbox'][key='${key}']`).prop("checked", settings[key]);
-                $(`input[type='text'][key='${key}']`).val(settings[key]);
+                settingsChange(key, undefined, settings[key]);
             }
         }
         function setupEvents()
@@ -121,8 +125,8 @@
                         });
                     }, 3000);
                 }
-                reloadGuiSettings();
             });
+            onSettingsChange(settingsChange);
         }
         function fillSvgData()
         {
@@ -219,7 +223,7 @@
                     $("body").append(settingsBox);
                     setupEvents();
                     fillSvgData();
-                    reloadGuiSettings();
+                    syncGui();
                     listenDependencies();
                     addPredefinedColors();
                 }

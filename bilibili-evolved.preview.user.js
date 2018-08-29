@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.3.0
+// @version      1.3.1
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -13,6 +13,7 @@
 // @grant        unsafeWindow
 // @grant        GM_getValue
 // @grant        GM_setValue
+// @grant        GM_addValueChangeListener
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
@@ -52,6 +53,13 @@
         for (const key in settings)
         {
             GM_setValue(key, newSettings[key]);
+        }
+    }
+    function onSettingsChange(change)
+    {
+        for (const key in settings)
+        {
+            GM_addValueChangeListener(key, change);
         }
     }
     function downloadText(url, load, error)
