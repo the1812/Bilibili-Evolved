@@ -565,13 +565,15 @@
                                         });
                                     }
                                 }
-                                catch (error) // execution error
+                                catch (error)
                                 {
+                                    // execution error
                                     console.error(`Failed to apply feature "${key}": ${error}`);
                                 }
                             }
                         }).catch(reason =>
-                        {   // download error
+                        {
+                            // download error
                             console.error(`Download error, XHR status: ${reason}`);
                         });
                         promises.push(promise);
