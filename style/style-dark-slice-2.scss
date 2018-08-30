@@ -78,7 +78,8 @@ li.season-item .season-body .season-title span.follow,
 .empty-hint,
 .article-content-ctnr>hr,
 .author-info .communicate-btn,
-.bui-select.bui-select-quality-menu .bui-select-border
+.bui-select.bui-select-quality-menu .bui-select-border,
+.chief-recommend-module .carousel-box .carousel-module .panel .trig span.on
 {
     background-color: transparent !important;
 }
@@ -108,7 +109,9 @@ li.no-data,
 .act-info,
 .i-live .i-live-off-guest,
 .live-module .tab-item .r-item .r-i-t .u-online,
-.live-module .tab-item .r-item .r-i-st
+.live-module .tab-item .r-item .r-i-st,
+.season-timeline .season-group.is-published .group-time,
+.season-timeline .season-group .group-time
 {
     color: #aaa !important;
 }
@@ -231,6 +234,10 @@ li.season-item .season-body .season-title span.follow,
 {
     filter: brightness(0.72) !important;
 }
+.primary-menu .nav-menu .sub-nav li>a span:after
+{
+    filter: none !important;
+}
 
 // a
 // {
@@ -250,7 +257,7 @@ li.season-item .season-body .season-title span.follow,
 .link-popup-panel,
 .bili-header-m .i_menu_login
 {
-    box-shadow: 0px 1px 20px 2px $customStyleColor30 !important;
+    box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
 .side-bar-popup-cntr>.arrow,
 .empty-hint .hint-img
@@ -294,7 +301,8 @@ li.season-item .season-body .season-title span.follow,
 .carousel-module .panel .trig span.on,
 .live-module .tab-item .r-item:first-child .number,
 .live-module .tab-item .r-item:nth-child(2) .number,
-.live-module .tab-item .r-item:nth-child(3) .number
+.live-module .tab-item .r-item:nth-child(3) .number,
+.season-timeline .season-group.today .group-time:before
 {
     background-color: $customStyleColor !important;
 }
@@ -333,7 +341,8 @@ button.button.more:hover,
 .i-live .i-live-fo-btn,
 .room-introduction-content a,
 .live-module .tab-item .r-item a:hover .u-name,
-.dynamic-list-item-wrap .item-user a.stick
+.dynamic-list-item-wrap .item-user a.stick,
+.season-timeline .season-group.today .group-time
 {
     color: $customStyleColor !important;
 }
