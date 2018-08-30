@@ -110,6 +110,7 @@
                         settings[key] = textValidate[key](value);
                     });
                 saveSettings(settings);
+                syncGui();
                 const svg = $(".gui-settings-footer svg.gui-settings-ok");
                 if (parseInt(svg.css("width")) === 0)
                 {
