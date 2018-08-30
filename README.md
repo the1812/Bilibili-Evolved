@@ -108,41 +108,9 @@
 ## 隐藏搜索推荐
 将搜索框的推荐词替换为`搜索`.
 ## 全屏修复
+**[2018-08-30]现在此问题已被官方修复, 后续版本将移除此功能.**
+
 修复Chrome中点击全屏按钮无响应的问题.
-
-点击全屏时, b站的源代码中会检查浏览器是否为`Chrome XX.X.XXX5.1`和`window.Element`是否包含`ALLOW_KEYBOARD_INPUT`属性, 然后向`requsetFullscreen`传递不同的参数. 而Chrome不允许向此API传参数, 全屏操作就会失败.
-
-附:视频全屏代码
-```js
-request: function(c) {
-    var f = d.requestFullscreen;
-    c = c || document.documentElement;
-    if (/5\.1[\.\d]* Safari/.test(navigator.userAgent))
-        c[f]();
-    else
-        try {
-            var b = Element;
-            c[f](g && b.ALLOW_KEYBOARD_INPUT)
-        } catch (e) {
-            c[f]()
-        }
-},
-```
-直播间全屏代码
-```js
-b.request = function(b) {
-    var a = c.requestFullscreen;
-    b = b || document.documentElement;
-    if (/5\.1[\.\d]* Safari/.test(window.navigator.userAgent))
-        b[a]();
-    else {
-        var g = Element
-            , d = !1;
-        g && "ALLOW_KEYBOARD_INPUT"in g && g.ALLOW_KEYBOARD_INPUT && (d = !0);
-        b[a](d)
-    }
-}
-```
 ### 展开动态标题
 在顶栏的动态预览框中:
 - 关闭时, 长名称的后半部分会用`...`代替.
