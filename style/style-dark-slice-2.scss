@@ -20,7 +20,13 @@ li.season-item .season-body .season-title span.follow,
 .tab-box .item.active::before,
 .guard-desc-box,
 .buy-info-box,
-.live-module .tab-box
+.media-tab-wrp,
+.live-module .tab-box,
+.media-tab-nav,
+.misl-ep-item,
+.bangumi-review-item,
+.sort-type-wrp ul,
+.slide-item-wrp .slide-item-img
 {
     background-color: #222 !important;
 }
@@ -46,8 +52,13 @@ li.season-item .season-body .season-title span.follow,
 .tab-box,
 .live-module .tab-item .r-item .number,
 .fav-main .fav-action-bottom .fav-action-fixtop,
+.media-tab-detail-wrp .media-tab-detail,
+.media-tab-detail-wrp .media-tab-detail-l,
 #page-fav .fav-main .fav-video-list.is-batch .small-item.selected,
-#page-fav .fav-main .fav-video-list.is-batch .small-item:hover
+#page-fav .fav-main .fav-video-list.is-batch .small-item:hover,
+.sort-type-wrp ul li:hover,
+.media-tab-module-content .spread-module .num,
+.media-info-card
 {
     background-color: #444 !important;
 }
@@ -119,7 +130,17 @@ li.no-data,
 .live-module .tab-item .r-item .r-i-st,
 .season-timeline .season-group.is-published .group-time,
 .season-timeline .season-group .group-time,
-.fav-main .fav-action-bottom .select-counter
+.fav-main .fav-action-bottom .select-counter,
+.misl-ep-item .misl-ep-text .misl-ep-title,
+.bangumi-media .bangumi-media-header .btn-more-review,
+.bangumi-review-item .item-header .author-name,
+.bangumi-review-item .item-header .media-name,
+.icon-star:not(.icon-star-light)::before,
+.bangumi-review-item .review-content.long,
+.sort-type-wrp div i,
+.sort-type-wrp div,
+.media-tab-module-wrp .media-tab-module-more,
+.media-info-card .mic-expand
 {
     color: #aaa !important;
 }
@@ -163,7 +184,18 @@ button.button.more,
 .fav-main .fav-action-top .back-to-info,
 .fav-main .fav-action-bottom li,
 .fav-main .fav-action-bottom li:hover,
-.fav-main .fav-action-bottom ul.filter-disable li:hover
+.fav-main .fav-action-bottom ul.filter-disable li:hover,
+.media-tab-nav ul li,
+.media-tab-module-wrp .media-tab-module-content .sl-ep-nav .sl-ep-nav-list,
+.misl-ep-item .misl-ep-text .misl-ep-index,
+.misl-ep-item .misl-ep-text .misl-ep-title,
+.bangumi-media .bangumi-media-header h4,
+.bangumi-media .bangumi-media-header .rate-wrapper .btn-go-write,
+.bangumi-review-item .long-title,
+.media-tab-module-wrp .media-tab-module-title,
+.sort-type-wrp ul li,
+.media-info-card,
+.media-info-card .mic-evaluate
 {
     color: #eee !important;
 }
@@ -190,7 +222,16 @@ button.button.more,
 .fav-main .fav-action-top .back-to-info,
 .fav-main .fav-action-top,
 #page-fav .fav-main .fav-video-list.is-batch .small-item.selected,
-#page-fav .fav-main .fav-video-list.is-batch .small-item:hover
+#page-fav .fav-main .fav-video-list.is-batch .small-item:hover,
+.media-tab-module-wrp .media-tab-module-content .sl-ep-nav,
+.misl-ep-item,
+.media-tab-module-wrp .media-tab-module-content .sl-ep-nav .mode-select,
+.bangumi-media,
+.bangumi-media .bangumi-media-header .btn-more-review,
+.media-tab-detail-wrp .media-tab-detail-l .media-tab-module-wrp,
+.media-tab-detail-wrp .media-tab-detail .media-tab-module-wrp,
+.sort-type-wrp ul,
+.media-tab-module-wrp .media-tab-module-more
 {
     border-color: transparent !important;
 }
@@ -228,7 +269,11 @@ li.history,
 .coin-operated-m .close:hover,
 .bili-header-m .bilibili-suggest .cancel:hover,
 #page-fav .fav-main .fav-action-bottom .icon,
-#page-fav .fav-main .small-item.selected .video-check
+#page-fav .fav-main .small-item.selected .video-check,
+.sl-ep-nav .mode-select li.detail-mode.selected,
+.sl-ep-nav .mode-select li.detail-mode:hover,
+.sl-ep-nav .mode-select li.simple-mode.selected,
+.sl-ep-nav .mode-select li.simple-mode:hover
 {
     filter: $blueImageFilter !important;
 }
@@ -297,7 +342,11 @@ li.season-item .season-body .season-title span.follow,
 
 .link-input:focus,
 .dynamic-list-item-wrap .item-user a.stick,
-#page-fav .fav-main .filter-item.search.focus
+#page-fav .fav-main .filter-item.search.focus,
+.media-tab-nav ul li.on,
+.media-tab-nav ul li:hover,
+.sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on,
+.sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after
 {
     border-color: $customStyleColor !important;
 }
@@ -361,7 +410,19 @@ button.button.more:hover,
 .room-introduction-content a,
 .live-module .tab-item .r-item a:hover .u-name,
 .dynamic-list-item-wrap .item-user a.stick,
-.season-timeline .season-group.today .group-time
+.season-timeline .season-group.today .group-time,
+.media-tab-nav ul li.on,
+.media-tab-nav ul li:hover,
+.sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item:hover,
+.sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on,
+.misl-ep-item:hover .misl-ep-text .misl-ep-index,
+.misl-ep-item:hover .misl-ep-text .misl-ep-title,
+.bangumi-media .bangumi-media-header .rate-wrapper .btn-go-write:hover,
+.bangumi-media .bangumi-media-header .btn-more-review:hover,
+.bangumi-review-item>a:hover .long-title,
+.sort-type-wrp ul li:hover,
+.media-tab-module-wrp .media-tab-module-more:hover,
+.media-info-card .mic-expand:hover
 {
     color: $customStyleColor !important;
 }
@@ -400,11 +461,11 @@ button.button.more:hover,
 //     border-top-color: transparent !important;
 //     border-right-color: transparent !important;
 // }
-// a
-// {
-//     border-left-color: transparent !important;
-//     border-right-color: transparent !important;
-// }
+.sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after
+{
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+}
 
 // .chat-history-panel .chat-history-list::-webkit-scrollbar-track,
 // .multi-page .cur-list ul::-webkit-scrollbar-track
