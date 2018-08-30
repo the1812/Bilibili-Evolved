@@ -2,7 +2,7 @@ div.nav-menu
 {
     width: unset !important;
 }
-div.nav-menu>div.bili-wrapper
+body .bili-header-m .nav-menu div.bili-wrapper
 {
     width: 1018px;
     margin: 0 auto !important;
@@ -42,7 +42,7 @@ input.search-keyword
 
 @media only screen and (min-width: 1291px)
 {
-    div.nav-menu>div.bili-wrapper
+    body .bili-header-m .nav-menu div.bili-wrapper
     {
         width: 1234px !important;
     }
