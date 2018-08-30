@@ -44,7 +44,10 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-context-menu-container.black ul>li a:hover,
 .intimacy-bar,
 .tab-box,
-.live-module .tab-item .r-item .number
+.live-module .tab-item .r-item .number,
+.fav-main .fav-action-bottom .fav-action-fixtop,
+#page-fav .fav-main .fav-video-list.is-batch .small-item.selected,
+#page-fav .fav-main .fav-video-list.is-batch .small-item:hover
 {
     background-color: #444 !important;
 }
@@ -87,10 +90,10 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background: #fff1 !important;
 // }
-// a
-// {
-//     background: transparent !important;
-// }
+.fav-main .fav-action-top .back-to-info
+{
+    background: transparent !important;
+}
 
 .introduction-text,
 .vote-percentage,
@@ -111,7 +114,8 @@ li.no-data,
 .live-module .tab-item .r-item .r-i-t .u-online,
 .live-module .tab-item .r-item .r-i-st,
 .season-timeline .season-group.is-published .group-time,
-.season-timeline .season-group .group-time
+.season-timeline .season-group .group-time,
+.fav-main .fav-action-bottom .select-counter
 {
     color: #aaa !important;
 }
@@ -151,7 +155,11 @@ button.button.more,
 .pk-rank.side-bar-icon+.size-bar-text,
 .gui-settings-button:not(.save),
 .live-module .tab-item .r-item .r-i-t .u-name,
-.bb-comment .nameplate .nameplate-card .nameplate-text
+.bb-comment .nameplate .nameplate-card .nameplate-text,
+.fav-main .fav-action-top .back-to-info,
+.fav-main .fav-action-bottom li,
+.fav-main .fav-action-bottom li:hover,
+.fav-main .fav-action-bottom ul.filter-disable li:hover
 {
     color: #eee !important;
 }
@@ -174,7 +182,11 @@ button.button.more,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric,
 .paging-box-big .next,
 .paging-box-big .prev,
-.buy-info-box
+.buy-info-box,
+.fav-main .fav-action-top .back-to-info,
+.fav-main .fav-action-top,
+#page-fav .fav-main .fav-video-list.is-batch .small-item.selected,
+#page-fav .fav-main .fav-video-list.is-batch .small-item:hover
 {
     border-color: transparent !important;
 }
@@ -210,7 +222,9 @@ li.history,
 }
 .wrapper .modal-close:hover,
 .coin-operated-m .close:hover,
-.bili-header-m .bilibili-suggest .cancel:hover
+.bili-header-m .bilibili-suggest .cancel:hover,
+#page-fav .fav-main .fav-action-bottom .icon,
+#page-fav .fav-main .small-item.selected .video-check
 {
     filter: $blueImageFilter !important;
 }
@@ -278,7 +292,8 @@ li.season-item .season-body .season-title span.follow,
 // }
 
 .link-input:focus,
-.dynamic-list-item-wrap .item-user a.stick
+.dynamic-list-item-wrap .item-user a.stick,
+#page-fav .fav-main .filter-item.search.focus
 {
     border-color: $customStyleColor !important;
 }
@@ -360,7 +375,8 @@ button.button.more:hover,
 .live-module .tab-item .r-item:first-child .number,
 .live-module .tab-item .r-item:nth-child(2) .number,
 .live-module .tab-item .r-item:nth-child(3) .number,
-.live-module .tab-item .r-item .number
+.live-module .tab-item .r-item .number,
+.fav-main .fav-action-bottom .select-cancel
 {
     color: $foreground !important;
 }
