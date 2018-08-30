@@ -1,6 +1,6 @@
-html, body
+html.image-viewer-opened, body.image-viewer-opened
 {
-    overflow: auto !important;
+    overflow: hidden !important;
 }
 .image-viewer-container
 {
