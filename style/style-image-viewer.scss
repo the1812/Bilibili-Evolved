@@ -1,3 +1,7 @@
+html, body
+{
+    overflow: auto !important;
+}
 .image-viewer-container
 {
     background: rgba(0,0,0,0.85);
@@ -11,6 +15,7 @@
     justify-content: center;
     align-items: center;
 }
+/*
 @supports (backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))
 {
     .image-viewer-container
@@ -20,7 +25,7 @@
         backdrop-filter: blur(20px);
     }
 }
-
+*/
 .image-viewer-container.opened
 {
     display: flex;
