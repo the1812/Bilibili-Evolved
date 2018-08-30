@@ -41,12 +41,12 @@
             show()
             {
                 this.viewer.addClass("opened");
-                $("html,body").addClass("image-viewer.opened");
+                $("html,body").addClass("image-viewer-opened");
             }
             hide()
             {
                 this.viewer.removeClass("opened");
-                $("html,body").removeClass("image-viewer.opened");
+                $("html,body").removeClass("image-viewer-opened");
             }
         }
 
