@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.3.1
+// @version      1.3.2
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -39,14 +39,23 @@
         useDarkStyle: false,
         useNewStyle: true
     };
+    const fixedSettings = [
+        "guiSettings",
+        "viewCover",
+        "notifyNewVersion"
+    ];
+    const currentVersion = "1.3.2";
     function loadSettings()
     {
         for (const key in settings)
         {
             settings[key] = GM_getValue(key, settings[key]);
         }
-        settings.guiSettings = true;
-        settings.viewCover = true;
+        for (const key in fixedSettings)
+        {
+            settings[key] = true;
+        }
+        settings.currentVersion = currentVersion;
     }
     function saveSettings(newSettings)
     {
@@ -468,6 +477,7 @@
 
         guiSettingsDom: new Resource("utils/gui-settings.html"),
         imageViewerDom: new Resource("utils/image-viewer.html"),
+        latestVersion: new Resource("version.txt"),
 
         guiSettings: new Resource("utils/gui-settings.min.js"),
         useDarkStyle: new Resource("style/dark-styles.min.js"),
@@ -482,7 +492,8 @@
         removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
         fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
         fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
-        viewCover: new Resource("video/view-cover.min.js")
+        viewCover: new Resource("video/view-cover.min.js"),
+        notifyNewVersion: new Resource("utils/notify-new-version.min.js")
     };
     (function ()
     {

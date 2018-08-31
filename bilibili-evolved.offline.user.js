@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      45.85
+// @version      45.96
 // @description  增强哔哩哔哩Web端体验.(离线版)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -39,14 +39,23 @@
         useDarkStyle: false,
         useNewStyle: true
     };
+    const fixedSettings = [
+        "guiSettings",
+        "viewCover",
+        "notifyNewVersion"
+    ];
+    const currentVersion = "1.3.2";
     function loadSettings()
     {
         for (const key in settings)
         {
             settings[key] = GM_getValue(key, settings[key]);
         }
-        settings.guiSettings = true;
-        settings.viewCover = true;
+        for (const key in fixedSettings)
+        {
+            settings[key] = true;
+        }
+        settings.currentVersion = currentVersion;
     }
     function saveSettings(newSettings)
     {
@@ -403,6 +412,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
     </div>
 </div>
 `;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/version.txt"] = `1.3.2`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/gui-settings.min.js"] = (()=>{return(e,t)=>{const n={red:"#e57373",pink:"#F06292",purple:"#BA68C8",deepPurple:"#9575CD",indigo:"#7986CB",blue:"#2196F3",lightBlue:"#00A0D8",cyan:"#00ACC1",teal:"#26A69A",green:"#81C784",lightGreen:"#9CCC65",orange:"#FF9800",deepOrange:"#FF7043",brown:"#A1887F",grey:"#757575",blueGrey:"#78909C"};const s={settings:"M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z",close:"M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z",ok:"M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"};const o={customStyleColor:t=>{const n=t.match(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);if(n){if(t.length<7){return`#${t[1]}${t[1]}${t[2]}${t[2]}${t[3]}${t[3]}`}else{return t}}else{return e.customStyleColor}},blurBackgroundOpacity:t=>{const n=t.match(/^([-\+]?\d+)(\.\d+)?$/);if(n){const e=parseFloat(t);if(e>=0&&e<=1){return t}}return e.blurBackgroundOpacity}};function i(e,t,n){$(`input[type='checkbox'][key='${e}']`).prop("checked",n);$(`input[type='text'][key='${e}']`).val(n)}function c(){for(const t in e){i(t,undefined,e[t])}}function r(){$(".gui-settings-header .gui-settings-close").on("click",()=>{$(".gui-settings-panel").removeClass("opened")});$("input[key='customStyleColor']").on("input",()=>{const e=o.customStyleColor($("input[key='customStyleColor']").val());$("div.custom-color-preview").css("background",e)});$("input[type='text'][key]").each((t,n)=>{$(n).attr("placeholder",e[$(n).attr("key")])});$("div.custom-color-preview").on("click",()=>{if($("input[key='useNewStyle']").prop("checked")){const e=$(".predefined-colors");e.toggleClass("opened")}});$("button.save").on("click",()=>{$("input[type='checkbox'][key]").each((t,n)=>{e[$(n).attr("key")]=$(n).prop("checked")});$("input[type='text'][key]").each((t,n)=>{const s=$(n).attr("key");const i=$(n).val();e[s]=o[s](i)});saveSettings(e);c();const t=$(".gui-settings-footer svg.gui-settings-ok");if(parseInt(t.css("width"))===0){t.css({width:"30px",marginLeft:"3rem"});setTimeout(()=>{t.css({width:"0",marginLeft:"0"})},3e3)}});onSettingsChange(i)}function a(){$(".gui-settings-close path").attr("d",s.close);$(".gui-settings-ok path").attr("d",s.ok);$(".gui-settings svg path").attr("d",s.settings)}function l(){const e={};$(`input[dependencies]`).each((t,n)=>{const s=$(n).attr("dependencies");if(s){e[$(n).attr("key")]=s}});$(`input[type='checkbox']`).on("change",t=>{const n=$(t.target);const s=n.prop("checked");for(const t in e){const o=e[t].split(" ");if(o.indexOf(n.attr("key"))!==-1){let e=true;if(s&&o.every(e=>$(`input[key='${e}']`).prop("checked"))){e=false}$(`input[key='${t}']`).prop("disabled",e);if(e){$(`input[key='${t}'][type='text']`).parent().addClass("disabled")}else{$(`input[key='${t}'][type='text']`).parent().removeClass("disabled")}}}const o=$(".predefined-colors");if(o.hasClass("opened")){o.removeClass("opened")}})}function p(e){if($(".gui-settings").length===0){e.append(`<div class='gui-settings-icon-panel'><div class='gui-settings'>\n                    <svg style='width:24px;height:24px' viewBox='0 0 24 24'>\n                        <path/>\n                    </svg>\n                </div></div>`);$(".gui-settings").on("click",()=>{$(".gui-settings-panel").addClass("opened")})}t.applyStyle("guiSettingsStyle","gui-settings-style")}function d(){const e=$(".predefined-colors-grid");for(const t of Object.values(n)){$(`<div class='predefined-colors-grid-block'></div>`).appendTo(e).css("background",t).attr("data-color",t).on("click",e=>{$(`input[key='customStyleColor']`).val($(e.target).attr("data-color")).trigger("input");$("div.custom-color-preview").on("click")})}}new SpinQuery(()=>$("body"),e=>e.length>0&&unsafeWindow.$,e=>{p(e);const n=t.data.guiSettingsDom.text;if(n){$("body").append(n);r();a();c();l();d()}}).start();return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/dark-styles.min.js"] = (()=>{return(e,t)=>{if(e.useNewStyle){const e=Object.keys(t.data).filter(e=>e.indexOf("darkStyleSlice")!==-1).length;for(let l=e;l>0;l--){t.applyStyle(`darkStyleSlice${l}`,`bilibili-new-style-dark-slice-${l}`)}$("body").after(t.getStyle("darkStyleImportant","bilibili-new-style-dark-important"))}return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/new-styles.min.js"] = (()=>{return(e,l)=>{l.applyStyle("scrollbarStyle","bilibili-scrollbar-style");SpinQuery.any(()=>$(".custom-scrollbar"),e=>e.removeClass("custom-scrollbar"));SpinQuery.any(()=>$(".bili-wrapper,#link-navbar-vm,.link-navbar"),()=>{const e=document.getElementsByClassName("bili-wrapper")[0]||document.getElementById("link-navbar-vm")||document.getElementsByClassName("link-navbar")[0];let n=false;if(e instanceof Element){const l=parseInt(window.getComputedStyle(e).height);n=l===50||l===56}if(n){l.applyStyle("style","bilibili-new-style")}else{l.applyStyle("oldStyle","bilibili-new-style")}});if(e.overrideNavBar){new SpinQuery(()=>$(".search").not(".filter-item"),e=>e.length>0&&$(".nav-con.fr").length>0,e=>{e.detach().insertAfter(".nav-con.fr")}).start();l.applyStyle("navbarOverrideStyle","bilibili-nav-bar-override");if(!e.showBanner){l.applyStyle("noBannerStyle","bilibili-banner-override")}}return{ajaxReload:false}}})();
@@ -417,6 +427,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/l
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/video/fix-fullscreen.min.js"] = (()=>{return()=>{unsafeWindow.Element.ALLOW_KEYBOARD_INPUT={};const e=unsafeWindow.Element.prototype.requestFullscreen;unsafeWindow.Element.prototype.requestFullscreen=function(){e.call(this)};return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/full-tweets-title.min.js"] = (()=>{return(e,l)=>{l.applyStyle("fullTweetsTitleStyle","full-tweets-title-style");return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/video/view-cover.min.js"] = (()=>{return(e,t)=>{class i{constructor(e){this.url=e;if($(".image-viewer").length===0){this.createDom()}this.viewer=$(".image-viewer-container");this.downloadImage()}createDom(){$("body").append(t.data.imageViewerDom.text);t.applyStyle("imageViewerStyle","image-viewer-style");$(".image-viewer-container .close").on("click",()=>this.hide())}downloadImage(){const e=new XMLHttpRequest;e.open("GET",this.url.replace("http:","https:"),true);e.responseType="blob";e.onload=(()=>{const t=document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili","");const i=URL.createObjectURL(e.response);this.imageData=i;this.viewer.find(".download").attr("href",i).attr("download",t);this.viewer.find(".image").prop("src",i)});e.send()}show(){this.viewer.addClass("opened");$("html,body").addClass("image-viewer-opened")}hide(){this.viewer.removeClass("opened");$("html,body").removeClass("image-viewer-opened")}}SpinQuery.any(()=>$("span.settings-category"),e=>{SpinQuery.any(()=>$("meta[itemprop='image']"),t=>{if(t.length>0){$(e.filter((e,t)=>t.innerHTML==="视频")).parent().after(`\n                    <li class="indent-center">\n                    <button\n                        class="gui-settings-button"\n                        title="查看当前视频的封面"\n                        id="view-video-cover">\n                        查看封面\n                    </button>\n                    </li>`);const n=new i(t.prop("content"));$("#view-video-cover").on("click",()=>{n.show()})}});SpinQuery.any(()=>$(".header-info-ctnr .room-cover"),t=>{const n=t.attr("href").match(/space\.bilibili\.com\/([\d]+)/);if(n&&n[1]){const t=n[1];const o=`https://api.live.bilibili.com/bili/getRoomInfo/${t}`;downloadText(o,t=>{const n=t.slice(1,-2);const o=JSON.parse(n).data.cover;$(e.filter((e,t)=>t.innerHTML==="直播间")).parent().after(`\n                            <li class="indent-center">\n                            <button\n                                class="gui-settings-button"\n                                title="查看当前直播的封面"\n                                id="view-live-cover">\n                                查看封面\n                            </button>\n                            </li>`);const a=new i(o);$("#view-live-cover").on("click",()=>{a.show()})})}})});return{ajaxReload:false}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/notify-new-version.min.js"] = (()=>{return(r,e)=>{const t={less:-1,equal:0,greater:1,incomparable:NaN};class s{constructor(r){this.parts=r.split(".")}isPositiveInteger(r){return/^\d+$/.test(r)}validateParts(){for(var r=0;r<parts.length;++r){if(!this.isPositiveInteger(parts[r])){return false}}return true}compareTo(r){if(!this.validateParts()||!r.validateParts()){return t.incomparable}for(const e=0;e<this.parts.length;++e){if(r.parts.length===e){return t.greater}if(this.parts[e]===r.parts[e]){continue}if(this.parts[e]>r.parts[e]){return t.greater}return t.less}if(this.parts.length!==r.parts.length){return t.less}return t.equal}greaterThan(r){return this.compareTo(r)===t.greater}lessThan(r){return this.compareTo(r)===t.less}equals(r){return this.compareTo(r)===t.equal}}const a=new s(r.latestVersion);const n=new s(r.currentVersion);if(a.greaterThan(n)){console.log("new version!")}return{ajaxReload:false}}})();
 
     class ResourceType
     {
@@ -601,6 +612,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/v
 
         guiSettingsDom: new Resource("utils/gui-settings.html"),
         imageViewerDom: new Resource("utils/image-viewer.html"),
+        latestVersion: new Resource("version.txt"),
 
         guiSettings: new Resource("utils/gui-settings.min.js"),
         useDarkStyle: new Resource("style/dark-styles.min.js"),
@@ -615,7 +627,8 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/v
         removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
         fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
         fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
-        viewCover: new Resource("video/view-cover.min.js")
+        viewCover: new Resource("video/view-cover.min.js"),
+        notifyNewVersion: new Resource("utils/notify-new-version.min.js")
     };
     (function ()
     {
