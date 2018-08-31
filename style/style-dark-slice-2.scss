@@ -26,7 +26,9 @@ li.season-item .season-body .season-title span.follow,
 .misl-ep-item,
 .bangumi-review-item,
 .sort-type-wrp ul,
-.slide-item-wrp .slide-item-img
+.slide-item-wrp .slide-item-img,
+.pagelistbox .p,
+.sponsor-rank-item.special .sp-right .sp-msg
 {
     background-color: #222 !important;
 }
@@ -58,7 +60,10 @@ li.season-item .season-body .season-title span.follow,
 #page-fav .fav-main .fav-video-list.is-batch .small-item:hover,
 .sort-type-wrp ul li:hover,
 .media-tab-module-content .spread-module .num,
-.media-info-card
+.media-info-card,
+.review-feed-wrapper,
+.pagelistbox .custom-right .custom-right-inner,
+.season-slider-wrapper .slider-wrapper .season-slider-list li:after
 {
     background-color: #444 !important;
 }
@@ -75,10 +80,10 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background-color: #eee !important;
 // }
-// a
-// {
-//     background-image: none !important;
-// }
+.sponsor-rank-item.normal .sp-left .face-wrap
+{
+    background-image: none !important;
+}
 .bilibili-player-video-control
 {
     background-color: #2226 !important;
@@ -140,7 +145,27 @@ li.no-data,
 .sort-type-wrp div i,
 .sort-type-wrp div,
 .media-tab-module-wrp .media-tab-module-more,
-.media-info-card .mic-expand
+.media-info-card .mic-expand,
+.count-wrapper div,
+.info-second span,
+.info-second .info-sec-av,
+.media-tab-module-wrp .media-tab-module-write.type-btn,
+.review-list-wrp li .review-author-info div.review-author-name,
+.review-list-wrp li .review-author-info div.review-author-time,
+.review-list-wrp li .review-data div,
+.review-list-wrp li .review-data div .icon-zan::before,
+.review-list-wrp li .review-contro div,
+.review-feed-wrapper .feed-header span,
+.review-feed-wrapper .feed-header span .icon-refresh::before,
+.review-feed-item .feed-left .review-about,
+.review-feed-item .feed-left .review-about .author-info,
+.review-feed-item .feed-left .review-about .media-title,
+.review-feed-item .feed-right .likes,
+.pagelistbox .p,
+.pagelistbox strong,
+.sponsor-rank-item.normal .sp-left .sp-rank,
+.media-sponsor-wrapper .sponsor-rank-header .show-sponsor-rank,
+.media-sponsor-wrapper .sponsor-right-area .sponsor-count-info
 {
     color: #aaa !important;
 }
@@ -195,7 +220,20 @@ button.button.more,
 .media-tab-module-wrp .media-tab-module-title,
 .sort-type-wrp ul li,
 .media-info-card,
-.media-info-card .mic-evaluate
+.media-info-card .mic-evaluate,
+.bangumi-header .header-info h1,
+.review-list-wrp .review-detail .review-content,
+.review-list-wrp .review-detail .review-title,
+.review-feed-wrapper .feed-header h4,
+.review-feed-item .feed-left .review-info .review-title,
+.review-feed-item .feed-left .review-info .review-content,
+.pagelistbox .custom-right .custom-right-inner,
+.sponsor-rank-tab li,
+.sponsor-rank-item.special .sp-right .sp-msg,
+.sponsor-rank-item.normal .sp-right .sp-msg,
+.media-sponsor-wrapper .sponsor-right-area .sponsor-count-info span,
+.bangumi-review-item .review-content,
+.sponsor-rank-item.special .sp-right .sp-user:not(.vip) .sp-name
 {
     color: #eee !important;
 }
@@ -231,7 +269,14 @@ button.button.more,
 .media-tab-detail-wrp .media-tab-detail-l .media-tab-module-wrp,
 .media-tab-detail-wrp .media-tab-detail .media-tab-module-wrp,
 .sort-type-wrp ul,
-.media-tab-module-wrp .media-tab-module-more
+.media-tab-module-wrp .media-tab-module-more,
+.media-tab-module-wrp .media-tab-module-write.type-btn,
+.review-list-wrp li,
+.review-feed-item,
+.pagelistbox .p,
+.media-sponsor-wrapper,
+.media-sponsor-wrapper .sponsor-rank-header .show-sponsor-rank,
+.sponsor-rank-item.special .sp-right .sp-msg
 {
     border-color: transparent !important;
 }
@@ -273,7 +318,8 @@ li.history,
 .sl-ep-nav .mode-select li.detail-mode.selected,
 .sl-ep-nav .mode-select li.detail-mode:hover,
 .sl-ep-nav .mode-select li.simple-mode.selected,
-.sl-ep-nav .mode-select li.simple-mode:hover
+.sl-ep-nav .mode-select li.simple-mode:hover,
+.season-slider-wrapper .slider-wrapper .season-slider-list li.cur
 {
     filter: $blueImageFilter !important;
 }
@@ -289,7 +335,9 @@ li.season-item .season-body .season-title span.follow,
 .coin-operated-m .close,
 .i-live .i-live-m,
 .tag-list .tag-icon,
-.i-live .i-live-off-guest a .i-live-arrow
+.i-live .i-live-off-guest a .i-live-arrow,
+.review-list-wrp li .review-data div.review-data-comment embed,
+.review-list-wrp li .review-data div.review-data-comment i
 {
     filter: grayscale(1) !important;
 }
@@ -323,7 +371,9 @@ li.season-item .season-body .season-title span.follow,
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
 .side-bar-popup-cntr>.arrow,
-.empty-hint .hint-img
+.empty-hint .hint-img,
+.sponsor-rank-item.special .sp-right .sp-msg>span,
+.sponsor-rank-item.special .sp-right .sp-msg>span:before
 {
     display: none !important;
 }
@@ -346,7 +396,12 @@ li.season-item .season-body .season-title span.follow,
 .media-tab-nav ul li.on,
 .media-tab-nav ul li:hover,
 .sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on,
-.sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after
+.sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after,
+.review-list-wrp li .review-title .review-spoiler,
+.pagelistbox .p.active,
+.pagelistbox .p:hover,
+.sponsor-rank-tab .indicator,
+.sponsor-rank-tab .indicator:after
 {
     border-color: $customStyleColor !important;
 }
@@ -370,7 +425,9 @@ li.season-item .season-body .season-title span.follow,
 .live-module .tab-item .r-item:first-child .number,
 .live-module .tab-item .r-item:nth-child(2) .number,
 .live-module .tab-item .r-item:nth-child(3) .number,
-.season-timeline .season-group.today .group-time:before
+.season-timeline .season-group.today .group-time:before,
+.pagelistbox .p.active,
+.pagelistbox .p:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -422,7 +479,15 @@ button.button.more:hover,
 .bangumi-review-item>a:hover .long-title,
 .sort-type-wrp ul li:hover,
 .media-tab-module-wrp .media-tab-module-more:hover,
-.media-info-card .mic-expand:hover
+.media-info-card .mic-expand:hover,
+.review-list-wrp li .review-author-info div.review-author-name:hover,
+.review-list-wrp .review-detail:hover .review-title,
+.review-list-wrp li .review-title .review-spoiler,
+.review-feed-item .feed-left .review-info:hover .review-title,
+.review-feed-item .feed-left .review-about .author-info:hover,
+.review-feed-item .feed-left .review-about .media-title:hover,
+.sponsor-rank-tab li.active,
+.sponsor-rank-tab li:hover
 {
     color: $customStyleColor !important;
 }
@@ -441,7 +506,9 @@ button.button.more:hover,
 .live-module .tab-item .r-item:nth-child(2) .number,
 .live-module .tab-item .r-item:nth-child(3) .number,
 .live-module .tab-item .r-item .number,
-.fav-main .fav-action-bottom .select-cancel
+.fav-main .fav-action-bottom .select-cancel,
+.pagelistbox .p.active,
+.pagelistbox .p:hover
 {
     color: $foreground !important;
 }
@@ -461,7 +528,8 @@ button.button.more:hover,
 //     border-top-color: transparent !important;
 //     border-right-color: transparent !important;
 // }
-.sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after
+.sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after,
+.sponsor-rank-tab .indicator:after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
