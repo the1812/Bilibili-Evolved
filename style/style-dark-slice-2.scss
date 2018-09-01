@@ -165,7 +165,8 @@ li.no-data,
 .pagelistbox strong,
 .sponsor-rank-item.normal .sp-left .sp-rank,
 .media-sponsor-wrapper .sponsor-rank-header .show-sponsor-rank,
-.media-sponsor-wrapper .sponsor-right-area .sponsor-count-info
+.media-sponsor-wrapper .sponsor-right-area .sponsor-count-info,
+.wrapper .modal-body .pay-info-wrp
 {
     color: #aaa !important;
 }
@@ -427,7 +428,8 @@ li.season-item .season-body .season-title span.follow,
 .live-module .tab-item .r-item:nth-child(3) .number,
 .season-timeline .season-group.today .group-time:before,
 .pagelistbox .p.active,
-.pagelistbox .p:hover
+.pagelistbox .p:hover,
+.wrapper .elec-message-wrp .elec-msg-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -487,7 +489,9 @@ button.button.more:hover,
 .review-feed-item .feed-left .review-about .author-info:hover,
 .review-feed-item .feed-left .review-about .media-title:hover,
 .sponsor-rank-tab li.active,
-.sponsor-rank-tab li:hover
+.sponsor-rank-tab li:hover,
+.wrapper .elec-sub-title .exp,
+.wrapper .elec-sub-title .vip-point
 {
     color: $customStyleColor !important;
 }
@@ -508,7 +512,8 @@ button.button.more:hover,
 .live-module .tab-item .r-item .number,
 .fav-main .fav-action-bottom .select-cancel,
 .pagelistbox .p.active,
-.pagelistbox .p:hover
+.pagelistbox .p:hover,
+.wrapper .elec-message-wrp .elec-msg-btn
 {
     color: $foreground !important;
 }
