@@ -14,6 +14,7 @@
             constructor(versionString)
             {
                 this.parts = versionString.split('.');
+                this.versionString = versionString;
             }
             isPositiveInteger(x)
             {
@@ -22,9 +23,9 @@
             }
             validateParts()
             {
-                for (var i = 0; i < parts.length; ++i)
+                for (var i = 0; i < this.parts.length; ++i)
                 {
-                    if (!this.isPositiveInteger(parts[i]))
+                    if (!this.isPositiveInteger(this.parts[i]))
                     {
                         return false;
                     }
@@ -37,7 +38,7 @@
                 {
                     return CompareResult.incomparable;
                 }
-                for (const i = 0; i < this.parts.length; ++i)
+                for (let i = 0; i < this.parts.length; ++i)
                 {
                     if (other.parts.length === i)
                     {
@@ -73,12 +74,27 @@
             }
         }
 
-        const latestVersion = new Version(settings.latestVersion);
+        const latestVersion = new Version(resources.data.latestVersion.text);
         const currentVersion = new Version(settings.currentVersion);
         if (latestVersion.greaterThan(currentVersion))
         {
-            // TODO: Notify user about new version
-            console.log("new version!");
+            SpinQuery.any(() => $(".gui-settings"), it =>
+            {
+                it.addClass("gui-settings-notification");
+                const footer = $(".gui-settings-footer");
+                footer.before(`
+                <div class="gui-settings-footer">
+                    <span class="gui-settings-label">新版本${latestVersion.versionString}已发布.</span>
+                    <a target="_blank">
+                        <button
+                            class="gui-settings-button"
+                            id="new-version-update">
+                            更新
+                        </button>
+                    </a>
+                </div>`);
+                $("#new-version-update").parent().attr("href", settings.latestVersionLink);
+            });
         }
 
         return {

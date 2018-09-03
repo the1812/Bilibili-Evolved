@@ -19,6 +19,17 @@
     -webkit-tap-highlight-color: transparent;
     transform: translateX(-12px);
 }
+.gui-settings.gui-settings-notification::before
+{
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: $customStyleColor;
+    position: fixed;
+    right: 0;
+    top: 0;
+    border-radius: 50%;
+}
 .gui-settings,
 .gui-settings-header .gui-settings-close path,
 .gui-settings svg path
@@ -347,4 +358,9 @@ input[type='text'][key]
     height: auto;
     border: none;
     border-radius: 4px;
+}
+.gui-settings-label
+{
+    margin: 0 16px;
+    font-size: 16px;
 }

@@ -39,12 +39,13 @@
         useDarkStyle: false,
         useNewStyle: true
     };
-    const fixedSettings = [
-        "guiSettings",
-        "viewCover",
-        "notifyNewVersion"
-    ];
-    const currentVersion = "1.3.2";
+    const fixedSettings = {
+        guiSettings: true,
+        viewCover: true,
+        notifyNewVersion: true,
+        latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
+        currentVersion: "1.3.2"
+    };
     function loadSettings()
     {
         for (const key in settings)
@@ -53,9 +54,8 @@
         }
         for (const key in fixedSettings)
         {
-            settings[key] = true;
+            settings[key] = fixedSettings[key];
         }
-        settings.currentVersion = currentVersion;
     }
     function saveSettings(newSettings)
     {
@@ -311,6 +311,10 @@
             {
                 return this.script;
             }
+            else if (url.indexOf(".txt") !== -1)
+            {
+                return this.text;
+            }
             else
             {
                 return this.unknown;
@@ -374,6 +378,10 @@
         static get script()
         {
             return new ResourceType("script");
+        }
+        static get text()
+        {
+            return new ResourceType("text");
         }
         static get unknown()
         {
@@ -525,6 +533,9 @@
         this.viewCover.dependencies = [
             this.imageViewerDom,
             this.imageViewerStyle
+        ];
+        this.notifyNewVersion.dependencies = [
+            this.latestVersion
         ];
     }).apply(Resource.all);
     class ResourceManager
