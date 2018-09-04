@@ -85,7 +85,7 @@
                 footer.before(`
                 <div class="gui-settings-footer">
                     <span class="gui-settings-label">新版本${latestVersion.versionString}已发布.</span>
-                    <a target="_blank">
+                    <a>
                         <button
                             class="gui-settings-button"
                             id="new-version-update">
