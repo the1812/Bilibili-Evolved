@@ -1,11 +1,11 @@
 (() =>
 {
-    return () =>
+    return (_, resources) =>
     {
         const id = "bilibili-live-watermark";
         if ($(id).length === 0)
         {
-            $("head").prepend(`
+            resources.applyStyleFromText(`
             <style id='${id}'>
                 .bilibili-live-player-video-logo
                 {

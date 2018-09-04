@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.3.2
+// @version      1.3.3
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -437,32 +437,52 @@
             }
             return `<style ${attributes}>${style}</style>`;
         }
-        applyStyle(id)
+        getPriorStyle(root)
+        {
+            if (this.priority !== undefined)
+            {
+                let insertPosition = this.priority - 1;
+                let formerStyle = root.find(`style[priority='${insertPosition}']`);
+                while (insertPosition >= 0 && formerStyle.length === 0)
+                {
+                    formerStyle = root.find(`style[priority='${insertPosition}']`);
+                    insertPosition--;
+                }
+                if (insertPosition < 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return formerStyle;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+        applyStyle(id, important)
         {
             if ($(`#${id}`).length === 0)
             {
                 const element = this.getStyle(id);
-                if (this.priority !== undefined)
+                const root = important ? $("body") : $("head");
+                const priorStyle = this.getPriorStyle(root);
+                if (priorStyle === null)
                 {
-                    let insertPosition = this.priority - 1;
-                    let formerStyle = $(`style[priority='${insertPosition}']`);
-                    while (insertPosition >= 0 && formerStyle.length === 0)
+                    if (important)
                     {
-                        formerStyle = $(`style[priority='${insertPosition}']`);
-                        insertPosition--;
-                    }
-                    if (insertPosition < 0)
-                    {
-                        $("head").prepend(element);
+                        root.after(element);
                     }
                     else
                     {
-                        formerStyle.after(element);
+                        root.prepend(element);
                     }
                 }
                 else
                 {
-                    $("head").prepend(element);
+                    priorStyle.after(element);
                 }
             }
         }
@@ -606,7 +626,19 @@
         }
         applyStyle(key, id)
         {
-            Resource.all[key].applyStyle(id);
+            Resource.all[key].applyStyle(id, false);
+        }
+        applyImportantStyle(key, id)
+        {
+            Resource.all[key].applyStyle(id, true);
+        }
+        applyStyleFromText(text)
+        {
+            $("head").prepend(text);
+        }
+        applyImportantStyleFromText(text)
+        {
+            $("body").after(text);
         }
         getStyle(key, id)
         {
