@@ -44,7 +44,7 @@
         viewCover: true,
         notifyNewVersion: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.3.2"
+        currentVersion: "1.3.3"
     };
     function loadSettings()
     {
