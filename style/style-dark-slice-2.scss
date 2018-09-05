@@ -28,7 +28,9 @@ li.season-item .season-body .season-title span.follow,
 .sort-type-wrp ul,
 .slide-item-wrp .slide-item-img,
 .pagelistbox .p,
-.sponsor-rank-item.special .sp-right .sp-msg
+.sponsor-rank-item.special .sp-right .sp-msg,
+.player-auxiliary-danmaku-date-picker-container,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list:hover
 {
     background-color: #222 !important;
 }
@@ -66,16 +68,26 @@ li.season-item .season-body .season-title span.follow,
 .season-slider-wrapper .slider-wrapper .season-slider-list li:after,
 .project-list .project-list-item,
 .ban-app .case-tip,
-.groom-module
+.groom-module,
+.player-auxiliary-auxiliary-area .player-auxiliary-danmaku .player-auxiliary-danmaku-function,
+.player-auxiliary-auxiliary-area .player-auxiliary-danmaku .player-auxiliary-danmaku-function [class*=player-auxiliary-danmaku-btn-],
+.danmaku-wrap .player-auxiliary-auxiliary-area .player-auxiliary-danmaku-wrap,
+.bui-button.bui-button-gray2,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap,
+.player-auxiliary-auxiliary-area .player-auxiliary-collapse .player-auxiliary-wraplist
 {
     background-color: #444 !important;
 }
-// a
-// {
-//     background-color: #555 !important;
-// }
+.player-auxiliary-auxiliary-area .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+.player-auxiliary-auxiliary-area .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar
+{
+    background-color: #555 !important;
+}
 .tl-head .tl-day .indicator,
-.season-timeline .season-group .group-time:before
+.season-timeline .season-group .group-time:before,
+.player-auxiliary-auxiliary-area .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover,
+.player-auxiliary-auxiliary-area .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover
 {
     background-color: #aaa !important;
 }
@@ -105,7 +117,9 @@ li.season-item .season-body .season-title span.follow,
 .article-content-ctnr>hr,
 .author-info .communicate-btn,
 .bui-select.bui-select-quality-menu .bui-select-border,
-.chief-recommend-module .carousel-box .carousel-module .panel .trig span.on
+.chief-recommend-module .carousel-box .carousel-module .panel .trig span.on,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter,
+.player-auxiliary-auxiliary-area
 {
     background-color: transparent !important;
 }
@@ -170,7 +184,11 @@ li.no-data,
 .media-sponsor-wrapper .sponsor-rank-header .show-sponsor-rank,
 .media-sponsor-wrapper .sponsor-right-area .sponsor-count-info,
 .wrapper .modal-body .pay-info-wrp,
-.rank-list-container .title
+.rank-list-container .title,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter-menu,
+.player-auxiliary-auxiliary-area .player-auxiliary-danmaku .player-auxiliary-danmaku-function [class*=player-auxiliary-danmaku-btn-],
+.player-auxiliary-danmaku-date-picker-container .player-auxiliary-danmaku-date-picker-header .player-auxiliary-danmaku-date-picker-btn,
+.player-auxiliary-danmaku-date-picker-container .player-auxiliary-danmaku-date-picker-header
 {
     color: #aaa !important;
 }
@@ -238,7 +256,11 @@ button.button.more,
 .sponsor-rank-item.normal .sp-right .sp-msg,
 .media-sponsor-wrapper .sponsor-right-area .sponsor-count-info span,
 .bangumi-review-item .review-content,
-.sponsor-rank-item.special .sp-right .sp-user:not(.vip) .sp-name
+.sponsor-rank-item.special .sp-right .sp-user:not(.vip) .sp-name,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter-title,
+.bui-button.bui-button-gray2,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list,
+.danmaku-wrap .player-auxiliary-block .player-auxiliary-block-tabpanel .player-auxiliary-block-tabpanel-row.special-title .player-auxiliary-block-label
 {
     color: #eee !important;
 }
@@ -281,7 +303,9 @@ button.button.more,
 .pagelistbox .p,
 .media-sponsor-wrapper,
 .media-sponsor-wrapper .sponsor-rank-header .show-sponsor-rank,
-.sponsor-rank-item.special .sp-right .sp-msg
+.sponsor-rank-item.special .sp-right .sp-msg,
+.player-auxiliary-danmaku-date-picker-container,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap
 {
     border-color: transparent !important;
 }
@@ -296,7 +320,8 @@ li.history,
 // {
 //     border-color: #222 !important;
 // }
-.hot-live .room-list
+.hot-live .room-list,
+.player-auxiliary-danmaku-date-picker-container .player-auxiliary-danmaku-date-picker-header
 {
     border-color: #444 !important
 }
@@ -309,6 +334,10 @@ li.history,
 // {
 //     transition: all .2s !important;
 // }
+.player-auxiliary-danmaku-date-picker-container .player-auxiliary-danmaku-date-picker-header .player-auxiliary-danmaku-date-picker-btn
+{
+    fill: #aaa !important;
+}
 
 .tl-head .today .day-of-week,
 .svg-icon.top1
@@ -495,7 +524,10 @@ button.button.more:hover,
 .sponsor-rank-tab li.active,
 .sponsor-rank-tab li:hover,
 .wrapper .elec-sub-title .exp,
-.wrapper .elec-sub-title .vip-point
+.wrapper .elec-sub-title .vip-point,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter-menu:hover,
+.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list:hover,
+.bui-button.bui-button-text
 {
     color: $customStyleColor !important;
 }
