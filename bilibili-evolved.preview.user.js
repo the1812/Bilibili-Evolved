@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.3.3
+// @version      1.3.4
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -44,7 +44,7 @@
         viewCover: true,
         notifyNewVersion: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.3.3"
+        currentVersion: "1.3.4"
     };
     function loadSettings()
     {
@@ -516,8 +516,8 @@
         removeAds: new Resource("utils/remove-promotions.min.js"),
         watchLaterRedirect: new Resource("utils/watchlater.min.js"),
         hideTopSearch: new Resource("utils/hide-top-search.min.js"),
-        harunaScale: new Resource("live/haruna-scale.min.js"),
-        removeLiveWatermark: new Resource("live/remove-watermark.min.js"),
+        harunaScale: new Resource("video/haruna-scale.min.js"),
+        removeLiveWatermark: new Resource("video/remove-watermark.min.js"),
         fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
         fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
         viewCover: new Resource("video/view-cover.min.js"),
