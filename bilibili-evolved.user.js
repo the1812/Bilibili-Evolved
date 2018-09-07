@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.3.5
+// @version      1.3.6
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -21,6 +21,7 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        toast: false,
         fullTweetsTitle: false,
         fixFullscreen: false,
         removeLiveWatermark: true,
@@ -44,7 +45,7 @@
         viewCover: true,
         notifyNewVersion: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.3.5"
+        currentVersion: "1.3.6"
     };
     function loadSettings()
     {
@@ -88,6 +89,7 @@
             guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
             fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
             imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
+            toastStyle: new Resource("style/style-toast.min.scss", 9),
 
             guiSettingsDom: new Resource("utils/gui-settings.html"),
             imageViewerDom: new Resource("utils/image-viewer.html"),
@@ -107,7 +109,8 @@
             fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
             fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
             viewCover: new Resource("video/view-cover.min.js"),
-            notifyNewVersion: new Resource("utils/notify-new-version.min.js")
+            notifyNewVersion: new Resource("utils/notify-new-version.min.js"),
+            toast: new Resource("utils/toast.min.js")
         };
         (function ()
         {
@@ -143,6 +146,9 @@
             this.notifyNewVersion.dependencies = [
                 this.latestVersion
             ];
+            this.toast.dependencies = [
+                this.toastStyle
+            ];
         }).apply(Resource.all);
         (function ()
         {
@@ -161,6 +167,7 @@
             this.fullTweetsTitle.displayName = "展开动态标题";
             this.viewCover.displayName = "查看封面";
             this.notifyNewVersion.displayName = "新版本提醒";
+            this.toast.displayName = "显示消息";
         }).apply(Resource.all);
     }
     function downloadText(url, load, error)
