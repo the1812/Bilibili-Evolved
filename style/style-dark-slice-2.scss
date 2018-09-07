@@ -30,7 +30,11 @@ li.season-item .season-body .season-title span.follow,
 .pagelistbox .p,
 .sponsor-rank-item.special .sp-right .sp-msg,
 .player-auxiliary-danmaku-date-picker-container,
-.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list:hover
+.player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list:hover,
+.player-auxiliary-block-tabpanel-row.player-auxiliary-border,
+.player-auxiliary-block-list .player-auxiliary-block-line,
+.player-auxiliary-context-menu-container,
+.player-auxiliary-modal-container
 {
     background-color: #222 !important;
 }
@@ -69,13 +73,21 @@ li.season-item .season-body .season-title span.follow,
 .project-list .project-list-item,
 .ban-app .case-tip,
 .groom-module,
-.player-auxiliary-auxiliary-area .player-auxiliary-danmaku .player-auxiliary-danmaku-function,
-.player-auxiliary-auxiliary-area .player-auxiliary-danmaku .player-auxiliary-danmaku-function [class*=player-auxiliary-danmaku-btn-],
+.player-auxiliary-danmaku-function,
+.player-auxiliary-danmaku-function [class*=player-auxiliary-danmaku-btn-],
 .danmaku-wrap .player-auxiliary-auxiliary-area .player-auxiliary-danmaku-wrap,
 .bui-button.bui-button-gray2,
-.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list,
-.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap,
-.player-auxiliary-auxiliary-area .player-auxiliary-collapse .player-auxiliary-wraplist
+.player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list,
+.player-auxiliary-setting-menu-wrap,
+.player-auxiliary-collapse .player-auxiliary-wraplist,
+.player-auxiliary-block-string,
+.player-auxiliary-block-string-short,
+.bui-button.bui-button-gray,
+.player-auxiliary-block-list .player-auxiliary-block-line.block-state-selected,
+.player-auxiliary-block-list .player-auxiliary-block-line:hover,
+.player-auxiliary-modal-btns .bpm-btn,
+.player-auxiliary-auxiliary-area .player-auxiliary-adv-danmaku,
+.player-auxiliary-auxiliary-area .player-auxiliary-setting
 {
     background-color: #444 !important;
 }
@@ -86,8 +98,8 @@ li.season-item .season-body .season-title span.follow,
 }
 .tl-head .tl-day .indicator,
 .season-timeline .season-group .group-time:before,
-.player-auxiliary-auxiliary-area .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover,
-.player-auxiliary-auxiliary-area .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover,
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover
 {
     background-color: #aaa !important;
 }
@@ -111,6 +123,10 @@ li.season-item .season-body .season-title span.follow,
 {
     background-color: #2229 !important;
 }
+.mask::after
+{
+    background-color: hsla(0,0%,0%,.7) !important;
+}
 
 .news-list .news-item .date,
 .empty-hint,
@@ -119,7 +135,8 @@ li.season-item .season-body .season-title span.follow,
 .bui-select.bui-select-quality-menu .bui-select-border,
 .chief-recommend-module .carousel-box .carousel-module .panel .trig span.on,
 .player-auxiliary-auxiliary-area .player-auxiliary-filter,
-.player-auxiliary-auxiliary-area
+.player-auxiliary-auxiliary-area,
+.player-auxiliary-adv-danmaku
 {
     background-color: transparent !important;
 }
@@ -186,10 +203,15 @@ li.no-data,
 .wrapper .modal-body .pay-info-wrp,
 .rank-list-container .title,
 .player-auxiliary-auxiliary-area .player-auxiliary-filter-menu,
-.player-auxiliary-auxiliary-area .player-auxiliary-danmaku .player-auxiliary-danmaku-function [class*=player-auxiliary-danmaku-btn-],
-.player-auxiliary-danmaku-date-picker-container .player-auxiliary-danmaku-date-picker-header .player-auxiliary-danmaku-date-picker-btn,
-.player-auxiliary-danmaku-date-picker-container .player-auxiliary-danmaku-date-picker-header,
-.danmaku-wrap .player-auxiliary-auxiliary-area .player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-load-status.disabled
+.player-auxiliary-danmaku-function [class*=player-auxiliary-danmaku-btn-],
+.player-auxiliary-danmaku-date-picker-header .player-auxiliary-danmaku-date-picker-btn,
+.player-auxiliary-danmaku-date-picker-header,
+.player-auxiliary-danmaku-load-status.disabled,
+.player-auxiliary-block-list-function>div,
+.player-auxiliary-block-list-wrap .player-auxiliary-block-empty,
+.player-auxiliary-block-line.block-state-disabled,
+.player-auxiliary-block-list .player-auxiliary-block-line-delete,
+.player-auxiliary-block-list .player-auxiliary-block-line-sync
 {
     color: #aaa !important;
 }
@@ -260,8 +282,16 @@ button.button.more,
 .sponsor-rank-item.special .sp-right .sp-user:not(.vip) .sp-name,
 .player-auxiliary-auxiliary-area .player-auxiliary-filter-title,
 .bui-button.bui-button-gray2,
-.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list,
-.danmaku-wrap .player-auxiliary-block .player-auxiliary-block-tabpanel .player-auxiliary-block-tabpanel-row.special-title .player-auxiliary-block-label
+.player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list,
+.player-auxiliary-block-tabpanel-row.special-title .player-auxiliary-block-label,
+.player-auxiliary-block-string,
+.player-auxiliary-block-string-short,
+.bui-button.bui-button-gray,
+.bui-tabs .bui-tabs-header .bui-tabs-header-item,
+.player-auxiliary-block-list .player-auxiliary-block-line,
+.player-auxiliary-modal-title,
+.player-auxiliary-modal-info,
+.player-auxiliary-modal-btns .bpm-btn
 {
     color: #eee !important;
 }
@@ -306,14 +336,21 @@ button.button.more,
 .media-sponsor-wrapper .sponsor-rank-header .show-sponsor-rank,
 .sponsor-rank-item.special .sp-right .sp-msg,
 .player-auxiliary-danmaku-date-picker-container,
-.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap
+.player-auxiliary-setting-menu-wrap,
+.danmaku-wrap .player-auxiliary-block-wrap,
+.player-auxiliary-context-menu-container,
+.player-auxiliary-modal-container,
+.player-auxiliary-modal-btns .bpm-btn
 {
     border-color: transparent !important;
 }
 .season-timeline .season-group,
 .season-timeline .season-group .group-time:before,
 li.history,
-.elec .elec-monthly-count
+.elec .elec-monthly-count,
+.player-auxiliary-block-tabpanel .player-auxiliary-block-string:not(:focus),
+.player-auxiliary-block-tabpanel .player-auxiliary-block-string-short:not(:focus),
+.player-auxiliary-modal-header
 {
     border-color: #aaa !important;
 }
@@ -322,7 +359,7 @@ li.history,
 //     border-color: #222 !important;
 // }
 .hot-live .room-list,
-.player-auxiliary-danmaku-date-picker-container .player-auxiliary-danmaku-date-picker-header
+.player-auxiliary-danmaku-date-picker-header
 {
     border-color: #444 !important
 }
@@ -335,7 +372,7 @@ li.history,
 // {
 //     transition: all .2s !important;
 // }
-.player-auxiliary-danmaku-date-picker-container .player-auxiliary-danmaku-date-picker-header .player-auxiliary-danmaku-date-picker-btn
+.player-auxiliary-danmaku-date-picker-btn
 {
     fill: #aaa !important;
 }
@@ -401,7 +438,8 @@ li.season-item .season-body .season-title span.follow,
 }
 .side-bar-popup-cntr,
 .link-popup-panel,
-.bili-header-m .i_menu_login
+.bili-header-m .i_menu_login,
+.player-auxiliary-context-menu-container
 {
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
@@ -436,7 +474,8 @@ li.season-item .season-body .season-title span.follow,
 .pagelistbox .p.active,
 .pagelistbox .p:hover,
 .sponsor-rank-tab .indicator,
-.sponsor-rank-tab .indicator:after
+.sponsor-rank-tab .indicator:after,
+.bui-tabs .bui-tabs-header .bui-tabs-header-item.bui-tabs-header-item-active
 {
     border-color: $customStyleColor !important;
 }
@@ -527,8 +566,10 @@ button.button.more:hover,
 .wrapper .elec-sub-title .exp,
 .wrapper .elec-sub-title .vip-point,
 .player-auxiliary-auxiliary-area .player-auxiliary-filter-menu:hover,
-.player-auxiliary-auxiliary-area .player-auxiliary-filter .player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list:hover,
-.bui-button.bui-button-text
+.player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list:hover,
+.bui-button.bui-button-text,
+.bui-tabs .bui-tabs-header .bui-tabs-header-item.bui-tabs-header-item-active,
+.player-auxiliary-block-list .player-auxiliary-block-line-state
 {
     color: $customStyleColor !important;
 }
