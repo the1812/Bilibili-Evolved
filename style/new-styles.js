@@ -31,6 +31,10 @@
                 resources.applyStyle("oldStyle", "bilibili-new-style");
             }
         });
+        SpinQuery.count(() => $(".player-wrap,.danmaku-box"), 2, box =>
+        {
+            box.css("height", $("#bofqi").css("height"));
+        });
 
         if (settings.overrideNavBar)
         {
