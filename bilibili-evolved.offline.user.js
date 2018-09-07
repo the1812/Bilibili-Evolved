@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      53.01
+// @version      53.04
 // @description  增强哔哩哔哩Web端体验.(离线版)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -44,7 +44,7 @@
         viewCover: true,
         notifyNewVersion: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js",
-        currentVersion: "1.3.4"
+        currentVersion: "1.3.5"
     };
     function loadSettings()
     {
@@ -70,6 +70,98 @@
         {
             GM_addValueChangeListener(key, change);
         }
+    }
+    function loadResources()
+    {
+        Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
+        Resource.all = {
+            style: new Resource("style/style.min.scss", 1),
+            oldStyle: new Resource("style/style-old.min.scss", 1),
+            scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
+            darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
+            darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
+            darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
+            touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
+            navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
+            noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
+            removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
+            guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
+            fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
+            imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
+
+            guiSettingsDom: new Resource("utils/gui-settings.html"),
+            imageViewerDom: new Resource("utils/image-viewer.html"),
+            latestVersion: new Resource("version.txt"),
+
+            guiSettings: new Resource("utils/gui-settings.min.js"),
+            useDarkStyle: new Resource("style/dark-styles.min.js"),
+            useNewStyle: new Resource("style/new-styles.min.js"),
+            touchNavBar: new Resource("touch/touch-navbar.min.js"),
+            touchVideoPlayer: new Resource("touch/touch-player.min.js"),
+            expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
+            removeAds: new Resource("utils/remove-promotions.min.js"),
+            watchLaterRedirect: new Resource("utils/watchlater.min.js"),
+            hideTopSearch: new Resource("utils/hide-top-search.min.js"),
+            harunaScale: new Resource("video/haruna-scale.min.js"),
+            removeLiveWatermark: new Resource("video/remove-watermark.min.js"),
+            fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
+            fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
+            viewCover: new Resource("video/view-cover.min.js"),
+            notifyNewVersion: new Resource("utils/notify-new-version.min.js")
+        };
+        (function ()
+        {
+            this.guiSettings.dependencies = [
+                this.guiSettingsDom,
+                this.guiSettingsStyle
+            ];
+            this.useDarkStyle.dependencies = [
+                this.darkStyleSlice1,
+                this.darkStyleSlice2,
+                this.darkStyleImportant
+            ];
+            this.useNewStyle.dependencies = [
+                this.style,
+                this.oldStyle,
+                this.navbarOverrideStyle,
+                this.noBannerStyle,
+                this.scrollbarStyle
+            ];
+            this.touchVideoPlayer.dependencies = [
+                this.touchPlayerStyle
+            ];
+            this.removeAds.dependencies = [
+                this.removeAdsStyle
+            ];
+            this.fullTweetsTitle.dependencies = [
+                this.fullTweetsTitleStyle
+            ];
+            this.viewCover.dependencies = [
+                this.imageViewerDom,
+                this.imageViewerStyle
+            ];
+            this.notifyNewVersion.dependencies = [
+                this.latestVersion
+            ];
+        }).apply(Resource.all);
+        (function ()
+        {
+            this.guiSettings.displayName = "设置";
+            this.useDarkStyle.displayName = "夜间模式";
+            this.useNewStyle.displayName = "新样式";
+            this.touchNavBar.displayName = "顶栏触摸优化";
+            this.touchVideoPlayer.displayName = "播放器触摸支持";
+            this.expandDanmakuList.displayName = "自动展开弹幕列表";
+            this.removeAds.displayName = "删除广告";
+            this.watchLaterRedirect.displayName = "稍后再看重定向";
+            this.hideTopSearch.displayName = "隐藏搜索推荐";
+            this.harunaScale.displayName = "缩放看板娘";
+            this.removeLiveWatermark.displayName = "删除直播水印";
+            this.fixFullscreen.displayName = "全屏修复";
+            this.fullTweetsTitle.displayName = "展开动态标题";
+            this.viewCover.displayName = "查看封面";
+            this.notifyNewVersion.displayName = "新版本提醒";
+        }).apply(Resource.all);
     }
     function downloadText(url, load, error)
     {
@@ -312,20 +404,15 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
       </svg>
     </div>
     <div class="gui-settings-content">
-      <!-- <div class="gui-settings-content-top-mask"></div> -->
       <ul>
         <category>样式</category>
-        <checkbox indent="0" key="useNewStyle" dependencies="">
-          新样式
-        </checkbox>
+        <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox>
         <li class="indent-1">
           <label class="gui-settings-textbox-container">
             <span>自定义颜色</span>
             <div class="custom-color-preview">
               <div class="predefined-colors">
-                <div class="predefined-colors-grid">
-
-                </div>
+                <div class="predefined-colors-grid"></div>
               </div>
             </div>
             <input key="customStyleColor" dependencies="useNewStyle" spellcheck="false" type="text" />
@@ -337,9 +424,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
             <input key="blurBackgroundOpacity" dependencies="useNewStyle" spellcheck="false" type="text" />
           </label>
         </li>
-        <checkbox indent="1" key="useDarkStyle" dependencies="useNewStyle">
-          夜间模式
-        </checkbox>
+        <checkbox indent="1" key="useDarkStyle" dependencies="useNewStyle"></checkbox>
         <checkbox indent="1" key="overrideNavBar" dependencies="useNewStyle">
           搜索栏位置调整
         </checkbox>
@@ -347,43 +432,22 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
           显示顶部横幅
         </checkbox>
         <category>工具</category>
-        <checkbox indent="0" key="removeAds" dependencies="">
-          删除广告
-        </checkbox>
-        <checkbox indent="0" key="watchLaterRedirect" dependencies="">
-          稍后再看重定向
-        </checkbox>
-        <checkbox indent="0" key="hideTopSearch" dependencies="">
-          隐藏搜索推荐
-        </checkbox>
-        <checkbox indent="0" key="fullTweetsTitle" dependencies="">
-          展开动态标题
-        </checkbox>
+        <checkbox indent="0" key="removeAds" dependencies=""></checkbox>
+        <checkbox indent="0" key="watchLaterRedirect" dependencies=""></checkbox>
+        <checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox>
+        <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
         <category>视频与直播</category>
-        <checkbox indent="0" key="expandDanmakuList" dependencies="">
-          自动展开弹幕列表
-        </checkbox>
-        <checkbox indent="0" key="fixFullscreen" dependencies="">
-          全屏修复
-        </checkbox>
-        <checkbox indent="0" key="harunaScale" dependencies="">
-          缩放看板娘
-        </checkbox>
-        <checkbox indent="0" key="removeLiveWatermark" dependencies="">
-          删除直播水印
-        </checkbox>
+        <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
+        <checkbox indent="0" key="fixFullscreen" dependencies=""></checkbox>
+        <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
+        <checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox>
         <category>触摸优化</category>
-        <checkbox indent="0" key="touchNavBar" dependencies="">
-          顶栏触摸优化
-        </checkbox>
-        <checkbox indent="0" key="touchVideoPlayer" dependencies="">
-          播放器触摸支持
-        </checkbox>
+        <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
+        <checkbox indent="0" key="touchVideoPlayer" dependencies=""></checkbox>
         <checkbox indent="1" key="touchVideoPlayerAnimation" dependencies="touchVideoPlayer">
           启用实验性动画效果
         </checkbox>
       </ul>
-      <!-- <div class="gui-settings-content-bottom-mask"></div> -->
     </div>
     <div class="gui-settings-footer">
       <button class="gui-settings-button save">保存</button>
@@ -411,7 +475,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
     </div>
 </div>
 `;
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/version.txt"] = `1.3.4`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/version.txt"] = `1.3.5`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/gui-settings.min.js"] = (()=>{return(e,t)=>{const n={red:"#e57373",pink:"#F06292",purple:"#BA68C8",deepPurple:"#9575CD",indigo:"#7986CB",blue:"#2196F3",lightBlue:"#00A0D8",cyan:"#00ACC1",teal:"#26A69A",green:"#81C784",lightGreen:"#9CCC65",orange:"#FF9800",deepOrange:"#FF7043",brown:"#A1887F",grey:"#757575",blueGrey:"#78909C"};const s={settings:"M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z",close:"M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z",ok:"M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"};const o={customStyleColor:t=>{const n=t.match(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);if(n){if(t.length<7){return`#${t[1]}${t[1]}${t[2]}${t[2]}${t[3]}${t[3]}`}else{return t}}else{return e.customStyleColor}},blurBackgroundOpacity:t=>{const n=t.match(/^([-\+]?\d+)(\.\d+)?$/);if(n){const e=parseFloat(t);if(e>=0&&e<=1){return t}}return e.blurBackgroundOpacity}};function i(e,t,n){$(`input[type='checkbox'][key='${e}']`).prop("checked",n);$(`input[type='text'][key='${e}']`).val(n)}function c(){for(const t in e){i(t,undefined,e[t])}}function a(){$(".gui-settings-header .gui-settings-close").on("click",()=>{$(".gui-settings-panel").removeClass("opened")});$("input[key='customStyleColor']").on("input",()=>{const e=o.customStyleColor($("input[key='customStyleColor']").val());$("div.custom-color-preview").css("background",e)});$("input[type='text'][key]").each((t,n)=>{$(n).attr("placeholder",e[$(n).attr("key")])});$("div.custom-color-preview").on("click",()=>{if($("input[key='useNewStyle']").prop("checked")){const e=$(".predefined-colors");e.toggleClass("opened")}});const t=document.querySelector("button.save");const n=document.querySelector(".gui-settings-footer svg.gui-settings-ok");const s="save-complete";const a=()=>{n.classList.remove(s);t.classList.remove(s)};t.addEventListener("animationend",a);n.addEventListener("animationend",a);t.addEventListener("click",()=>{$("input[type='checkbox'][key]").each((t,n)=>{e[$(n).attr("key")]=$(n).prop("checked")});$("input[type='text'][key]").each((t,n)=>{const s=$(n).attr("key");const i=$(n).val();e[s]=o[s](i)});saveSettings(e);if([n,t].every(e=>!e.classList.contains(s))){t.classList.add(s);n.classList.add(s)}c()});onSettingsChange(i)}function r(){$(".gui-settings-close path").attr("d",s.close);$(".gui-settings-ok path").attr("d",s.ok);$(".gui-settings svg path").attr("d",s.settings)}function l(){const e={};$(`input[dependencies]`).each((t,n)=>{const s=$(n).attr("dependencies");if(s){e[$(n).attr("key")]=s}});$(`input[type='checkbox']`).on("change",t=>{const n=$(t.target);const s=n.prop("checked");for(const t in e){const o=e[t].split(" ");if(o.indexOf(n.attr("key"))!==-1){let e=true;if(s&&o.every(e=>$(`input[key='${e}']`).prop("checked"))){e=false}$(`input[key='${t}']`).prop("disabled",e);if(e){$(`input[key='${t}'][type='text']`).parent().addClass("disabled")}else{$(`input[key='${t}'][type='text']`).parent().removeClass("disabled")}}}const o=$(".predefined-colors");if(o.hasClass("opened")){o.removeClass("opened")}})}function d(e){if($(".gui-settings").length===0){e.append(`<div class='gui-settings-icon-panel'><div class='gui-settings'>\n                    <svg style='width:24px;height:24px' viewBox='0 0 24 24'>\n                        <path/>\n                    </svg>\n                </div></div>`);$(".gui-settings").on("click",()=>{$(".gui-settings-panel").addClass("opened")})}t.applyStyle("guiSettingsStyle","gui-settings-style")}function p(){const e=$(".predefined-colors-grid");for(const t of Object.values(n)){$(`<div class='predefined-colors-grid-block'></div>`).appendTo(e).css("background",t).attr("data-color",t).on("click",e=>{$(`input[key='customStyleColor']`).val($(e.target).attr("data-color")).trigger("input");$("div.custom-color-preview").on("click")})}}new SpinQuery(()=>$("body"),e=>e.length>0&&unsafeWindow.$,e=>{d(e);const n=t.data.guiSettingsDom.text;if(n){$("body").append(n);a();r();c();l();p()}}).start();return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/dark-styles.min.js"] = (()=>{return(e,l)=>{if(e.useNewStyle){const e=Object.keys(l.data).filter(e=>e.indexOf("darkStyleSlice")!==-1).length;for(let t=e;t>0;t--){l.applyStyle(`darkStyleSlice${t}`,`bilibili-new-style-dark-slice-${t}`)}l.applyImportantStyle("darkStyleImportant","bilibili-new-style-dark-important")}return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/new-styles.min.js"] = (()=>{return(e,l)=>{l.applyStyle("scrollbarStyle","bilibili-scrollbar-style");SpinQuery.any(()=>$(".custom-scrollbar"),e=>e.removeClass("custom-scrollbar"));SpinQuery.any(()=>$(".bili-wrapper,#link-navbar-vm,.link-navbar"),()=>{const e=document.getElementsByClassName("bili-wrapper")[0]||document.getElementById("link-navbar-vm")||document.getElementsByClassName("link-navbar")[0];let a=false;if(e instanceof Element){const l=parseInt(window.getComputedStyle(e).height);a=l===50||l===56}if(a){l.applyStyle("style","bilibili-new-style")}else{l.applyStyle("oldStyle","bilibili-new-style")}});SpinQuery.count(()=>$(".player-wrap,.danmaku-box"),2,e=>{e.css("height",$("#bofqi").css("height"))});if(e.overrideNavBar){new SpinQuery(()=>$(".search").not(".filter-item"),e=>e.length>0&&$(".nav-con.fr").length>0,e=>{e.detach().insertAfter(".nav-con.fr")}).start();l.applyStyle("navbarOverrideStyle","bilibili-nav-bar-override");if(!e.showBanner){l.applyStyle("noBannerStyle","bilibili-banner-override")}}return{ajaxReload:false}}})();
@@ -495,6 +559,13 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
         {
             return new ResourceType("html", html =>
             {
+                const keys = Object.keys(Resource.all).filter(key => Resource.all[key].displayName);
+                for (const key of keys)
+                {
+                    html = html
+                        .replace(new RegExp(`(<checkbox\\s*indent=".+"\\s*key="${key}"\\s*dependencies=".*">)[^\\0]*?(</checkbox>)`, "g"),
+                            `$1${Resource.all[key].displayName}$2`);
+                }
                 return html
                     .replace(/<category>([^\0]*?)<\/category>/g, `
                     <li class="indent-center category">
@@ -532,13 +603,14 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
         {
             return this.text !== null;
         }
-        constructor(url, priority, dependencies)
+        constructor(url, priority)
         {
             this.url = Resource.root + url;
-            this.dependencies = dependencies || [];
+            this.dependencies = [];
             this.priority = priority;
             this.text = null;
             this.type = ResourceType.fromUrl(url);
+            this.displayName = "";
         }
         download()
         {
@@ -621,77 +693,6 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
             }
         }
     }
-    Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
-    Resource.all = {
-        style: new Resource("style/style.min.scss", 1),
-        oldStyle: new Resource("style/style-old.min.scss", 1),
-        scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
-        darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
-        darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
-        darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
-        touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
-        navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
-        noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
-        removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
-        guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
-        fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
-        imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
-
-        guiSettingsDom: new Resource("utils/gui-settings.html"),
-        imageViewerDom: new Resource("utils/image-viewer.html"),
-        latestVersion: new Resource("version.txt"),
-
-        guiSettings: new Resource("utils/gui-settings.min.js"),
-        useDarkStyle: new Resource("style/dark-styles.min.js"),
-        useNewStyle: new Resource("style/new-styles.min.js"),
-        touchNavBar: new Resource("touch/touch-navbar.min.js"),
-        touchVideoPlayer: new Resource("touch/touch-player.min.js"),
-        expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
-        removeAds: new Resource("utils/remove-promotions.min.js"),
-        watchLaterRedirect: new Resource("utils/watchlater.min.js"),
-        hideTopSearch: new Resource("utils/hide-top-search.min.js"),
-        harunaScale: new Resource("video/haruna-scale.min.js"),
-        removeLiveWatermark: new Resource("video/remove-watermark.min.js"),
-        fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
-        fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
-        viewCover: new Resource("video/view-cover.min.js"),
-        notifyNewVersion: new Resource("utils/notify-new-version.min.js")
-    };
-    (function ()
-    {
-        this.guiSettings.dependencies = [
-            this.guiSettingsDom,
-            this.guiSettingsStyle
-        ];
-        this.useDarkStyle.dependencies = [
-            this.darkStyleSlice1,
-            this.darkStyleSlice2,
-            this.darkStyleImportant
-        ];
-        this.useNewStyle.dependencies = [
-            this.style,
-            this.oldStyle,
-            this.navbarOverrideStyle,
-            this.noBannerStyle,
-            this.scrollbarStyle
-        ];
-        this.touchVideoPlayer.dependencies = [
-            this.touchPlayerStyle
-        ];
-        this.removeAds.dependencies = [
-            this.removeAdsStyle
-        ];
-        this.fullTweetsTitle.dependencies = [
-            this.fullTweetsTitleStyle
-        ];
-        this.viewCover.dependencies = [
-            this.imageViewerDom,
-            this.imageViewerStyle
-        ];
-        this.notifyNewVersion.dependencies = [
-            this.latestVersion
-        ];
-    }).apply(Resource.all);
     class ResourceManager
     {
         constructor()
@@ -780,6 +781,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
         }
     }
 
+    loadResources();
     loadSettings();
     const resources = new ResourceManager();
     resources.fetch();

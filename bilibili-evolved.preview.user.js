@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.3.4
+// @version      1.3.5
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -44,7 +44,7 @@
         viewCover: true,
         notifyNewVersion: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.3.4"
+        currentVersion: "1.3.5"
     };
     function loadSettings()
     {
@@ -70,6 +70,98 @@
         {
             GM_addValueChangeListener(key, change);
         }
+    }
+    function loadResources()
+    {
+        Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
+        Resource.all = {
+            style: new Resource("style/style.min.scss", 1),
+            oldStyle: new Resource("style/style-old.min.scss", 1),
+            scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
+            darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
+            darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
+            darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
+            touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
+            navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
+            noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
+            removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
+            guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
+            fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
+            imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
+
+            guiSettingsDom: new Resource("utils/gui-settings.html"),
+            imageViewerDom: new Resource("utils/image-viewer.html"),
+            latestVersion: new Resource("version.txt"),
+
+            guiSettings: new Resource("utils/gui-settings.min.js"),
+            useDarkStyle: new Resource("style/dark-styles.min.js"),
+            useNewStyle: new Resource("style/new-styles.min.js"),
+            touchNavBar: new Resource("touch/touch-navbar.min.js"),
+            touchVideoPlayer: new Resource("touch/touch-player.min.js"),
+            expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
+            removeAds: new Resource("utils/remove-promotions.min.js"),
+            watchLaterRedirect: new Resource("utils/watchlater.min.js"),
+            hideTopSearch: new Resource("utils/hide-top-search.min.js"),
+            harunaScale: new Resource("video/haruna-scale.min.js"),
+            removeLiveWatermark: new Resource("video/remove-watermark.min.js"),
+            fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
+            fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
+            viewCover: new Resource("video/view-cover.min.js"),
+            notifyNewVersion: new Resource("utils/notify-new-version.min.js")
+        };
+        (function ()
+        {
+            this.guiSettings.dependencies = [
+                this.guiSettingsDom,
+                this.guiSettingsStyle
+            ];
+            this.useDarkStyle.dependencies = [
+                this.darkStyleSlice1,
+                this.darkStyleSlice2,
+                this.darkStyleImportant
+            ];
+            this.useNewStyle.dependencies = [
+                this.style,
+                this.oldStyle,
+                this.navbarOverrideStyle,
+                this.noBannerStyle,
+                this.scrollbarStyle
+            ];
+            this.touchVideoPlayer.dependencies = [
+                this.touchPlayerStyle
+            ];
+            this.removeAds.dependencies = [
+                this.removeAdsStyle
+            ];
+            this.fullTweetsTitle.dependencies = [
+                this.fullTweetsTitleStyle
+            ];
+            this.viewCover.dependencies = [
+                this.imageViewerDom,
+                this.imageViewerStyle
+            ];
+            this.notifyNewVersion.dependencies = [
+                this.latestVersion
+            ];
+        }).apply(Resource.all);
+        (function ()
+        {
+            this.guiSettings.displayName = "设置";
+            this.useDarkStyle.displayName = "夜间模式";
+            this.useNewStyle.displayName = "新样式";
+            this.touchNavBar.displayName = "顶栏触摸优化";
+            this.touchVideoPlayer.displayName = "播放器触摸支持";
+            this.expandDanmakuList.displayName = "自动展开弹幕列表";
+            this.removeAds.displayName = "删除广告";
+            this.watchLaterRedirect.displayName = "稍后再看重定向";
+            this.hideTopSearch.displayName = "隐藏搜索推荐";
+            this.harunaScale.displayName = "缩放看板娘";
+            this.removeLiveWatermark.displayName = "删除直播水印";
+            this.fixFullscreen.displayName = "全屏修复";
+            this.fullTweetsTitle.displayName = "展开动态标题";
+            this.viewCover.displayName = "查看封面";
+            this.notifyNewVersion.displayName = "新版本提醒";
+        }).apply(Resource.all);
     }
     function downloadText(url, load, error)
     {
@@ -357,6 +449,13 @@
         {
             return new ResourceType("html", html =>
             {
+                const keys = Object.keys(Resource.all).filter(key => Resource.all[key].displayName);
+                for (const key of keys)
+                {
+                    html = html
+                        .replace(new RegExp(`(<checkbox\\s*indent=".+"\\s*key="${key}"\\s*dependencies=".*">)[^\\0]*?(</checkbox>)`, "g"),
+                            `$1${Resource.all[key].displayName}$2`);
+                }
                 return html
                     .replace(/<category>([^\0]*?)<\/category>/g, `
                     <li class="indent-center category">
@@ -394,13 +493,14 @@
         {
             return this.text !== null;
         }
-        constructor(url, priority, dependencies)
+        constructor(url, priority)
         {
             this.url = Resource.root + url;
-            this.dependencies = dependencies || [];
+            this.dependencies = [];
             this.priority = priority;
             this.text = null;
             this.type = ResourceType.fromUrl(url);
+            this.displayName = "";
         }
         download()
         {
@@ -487,77 +587,6 @@
             }
         }
     }
-    Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
-    Resource.all = {
-        style: new Resource("style/style.min.scss", 1),
-        oldStyle: new Resource("style/style-old.min.scss", 1),
-        scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
-        darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
-        darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
-        darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
-        touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
-        navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
-        noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
-        removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
-        guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
-        fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
-        imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
-
-        guiSettingsDom: new Resource("utils/gui-settings.html"),
-        imageViewerDom: new Resource("utils/image-viewer.html"),
-        latestVersion: new Resource("version.txt"),
-
-        guiSettings: new Resource("utils/gui-settings.min.js"),
-        useDarkStyle: new Resource("style/dark-styles.min.js"),
-        useNewStyle: new Resource("style/new-styles.min.js"),
-        touchNavBar: new Resource("touch/touch-navbar.min.js"),
-        touchVideoPlayer: new Resource("touch/touch-player.min.js"),
-        expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
-        removeAds: new Resource("utils/remove-promotions.min.js"),
-        watchLaterRedirect: new Resource("utils/watchlater.min.js"),
-        hideTopSearch: new Resource("utils/hide-top-search.min.js"),
-        harunaScale: new Resource("video/haruna-scale.min.js"),
-        removeLiveWatermark: new Resource("video/remove-watermark.min.js"),
-        fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
-        fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
-        viewCover: new Resource("video/view-cover.min.js"),
-        notifyNewVersion: new Resource("utils/notify-new-version.min.js")
-    };
-    (function ()
-    {
-        this.guiSettings.dependencies = [
-            this.guiSettingsDom,
-            this.guiSettingsStyle
-        ];
-        this.useDarkStyle.dependencies = [
-            this.darkStyleSlice1,
-            this.darkStyleSlice2,
-            this.darkStyleImportant
-        ];
-        this.useNewStyle.dependencies = [
-            this.style,
-            this.oldStyle,
-            this.navbarOverrideStyle,
-            this.noBannerStyle,
-            this.scrollbarStyle
-        ];
-        this.touchVideoPlayer.dependencies = [
-            this.touchPlayerStyle
-        ];
-        this.removeAds.dependencies = [
-            this.removeAdsStyle
-        ];
-        this.fullTweetsTitle.dependencies = [
-            this.fullTweetsTitleStyle
-        ];
-        this.viewCover.dependencies = [
-            this.imageViewerDom,
-            this.imageViewerStyle
-        ];
-        this.notifyNewVersion.dependencies = [
-            this.latestVersion
-        ];
-    }).apply(Resource.all);
     class ResourceManager
     {
         constructor()
@@ -646,6 +675,7 @@
         }
     }
 
+    loadResources();
     loadSettings();
     const resources = new ResourceManager();
     resources.fetch();
