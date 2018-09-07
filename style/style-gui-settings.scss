@@ -96,6 +96,7 @@
 {
     height: 80px;
     justify-content: center;
+    position: relative;
 }
 .gui-settings-content
 {
@@ -287,13 +288,47 @@ button.save
     max-height: 38px;
     background: $customStyleColor;
     color: $foreground;
+    transform-origin: center;
+}
+button.save.save-complete
+{
+    animation: hide-a-moment 3.8s;
+}
+@keyframes hide-a-moment
+{
+    0%, 100%
+    {
+        transform: scale(1);
+    }
+    5%, 95%
+    {
+        transform: scale(0);
+    }
 }
 .gui-settings-footer svg
 {
-    width: 0;
+    width: 30px;
     height: 30px;
     margin-left: 0;
     transition: all 0.2s;
+    position: absolute;
+    transform-origin: center;
+    transform: scale(0);
+}
+.gui-settings-footer svg.save-complete
+{
+    animation: show-a-moment 3.8s;
+}
+@keyframes show-a-moment
+{
+    0%, 5%, 95%, 100%
+    {
+        transform: scale(0);
+    }
+    10%, 90%
+    {
+        transform: scale(1);
+    }
 }
 .gui-settings-footer svg path
 {
