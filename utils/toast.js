@@ -27,15 +27,15 @@
             {
                 if (this.element.classList.contains("visible"))
                 {
-                    this.$element.on("transitionend", () => element.remove());
+                    this.$element.on("transitionend", () => this.$element.remove());
                     this.element.classList.remove("visible");
                 }
             }
             get cardHtml()
             {
                 return `
-                <div class="toast-card">
-                <div class="toast-card-header toast-${this.type}">
+                <div class="toast-card toast-${this.type}">
+                <div class="toast-card-header">
                     <h1 class="toast-card-title">${this.title}</h1>
                     <svg class="toast-card-dismiss" viewbox="0 0 24 24">
                     <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z">
@@ -57,14 +57,35 @@
                     $("body").append(`<div class="toast-card-container"></div>`);
                 }
             }
+            static _show(message, title, duration, type)
+            {
+                const toast = new Toast(message, title, type);
+                toast.duration = duration;
+                toast.show();
+            }
+            static show(message, title, duration = 3000)
+            {
+                this._show(message, title, duration, "default");
+            }
+            static info(message, title, duration)
+            {
+                this._show(message, title, duration, "info");
+            }
+            static success(message, title, duration)
+            {
+                this._show(message, title, duration, "success");
+            }
+            static error(message, title, duration)
+            {
+                this._show(message, title, duration, "error");
+            }
         }
 
         resources.applyStyle("toastStyle", "toast-style");
         Toast.createToastContainer();
 
-        const toast = new Toast("Toast feature works!", "Info");
-        toast.duration = null;
-        toast.show();
+        Toast.error("Something wrong!", "Error");
+        Toast.info("New update!", "Check for updates");
 
         return {
             ajaxReload: false

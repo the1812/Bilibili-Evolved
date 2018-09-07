@@ -7,10 +7,6 @@
     flex-direction: column;
     align-items: start;
 }
-.toast-card:not(:last-child)
-{
-    margin: 16px 0;
-}
 .toast-card
 {
     background: #444;
@@ -31,6 +27,7 @@
     height: 96px;
     transform: scale(1) translateY(0);
     opacity: 0.95;
+    margin-top: 16px;
 }
 .toast-card-header
 {
