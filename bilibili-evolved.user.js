@@ -611,6 +611,52 @@
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
         }
+        fetchByKey(key)
+        {
+            const resource = Resource.all[key];
+            if (!resource)
+            {
+                return null;
+            }
+            const promise = resource.download();
+            promise.then(text =>
+            {
+                const func = eval(text);
+                if (func)
+                {
+                    try
+                    {
+                        const attribute = func(settings, this);
+                        this.attributes[key] = attribute;
+                        if (attribute.ajaxReload)
+                        {
+                            $(document).ajaxComplete(() =>
+                            {
+                                func(settings, this);
+                            });
+                        }
+                    }
+                    catch (error)
+                    {
+                        // execution error
+                        console.error(`Failed to apply feature "${key}": ${error}`);
+                        if (Toast)
+                        {
+                            Toast.error(`加载组件"${Resource.all[key].displayName}"失败.`, "错误");
+                        }
+                    }
+                }
+            }).catch(reason =>
+            {
+                // download error
+                console.error(`Download error, XHR status: ${reason}`);
+                if (Toast)
+                {
+                    Toast.error(`无法下载"${Resource.all[key].displayName}"组件.`, "错误");
+                }
+            });
+            return promise;
+        }
         fetch()
         {
             return new Promise(resolve =>
@@ -618,43 +664,9 @@
                 const promises = [];
                 for (const key in settings)
                 {
-                    if (settings[key] === true)
+                    if (settings[key] === true && key !== "toast")
                     {
-                        const resource = Resource.all[key];
-                        if (!resource)
-                        {
-                            continue;
-                        }
-                        const promise = resource.download();
-                        promise.then(text =>
-                        {
-                            const func = eval(text);
-                            if (func)
-                            {
-                                try
-                                {
-                                    const attribute = func(settings, this);
-                                    this.attributes[key] = attribute;
-                                    if (attribute.ajaxReload)
-                                    {
-                                        $(document).ajaxComplete(() =>
-                                        {
-                                            func(settings, this);
-                                        });
-                                    }
-                                }
-                                catch (error)
-                                {
-                                    // execution error
-                                    console.error(`Failed to apply feature "${key}": ${error}`);
-                                }
-                            }
-                        }).catch(reason =>
-                        {
-                            // download error
-                            console.error(`Download error, XHR status: ${reason}`);
-                        });
-                        promises.push(promise);
+                        promises.push(this.fetchByKey(key));
                     }
                 }
                 Promise.all(promises).then(() => resolve());
@@ -685,5 +697,17 @@
     loadResources();
     loadSettings();
     const resources = new ResourceManager();
-    resources.fetch();
+    if (settings.toast)
+    {
+        resources.fetchByKey("toast").then(() =>
+        {
+            Toast = resources.attributes.toast.export;
+            resources.fetch();
+        });
+    }
+    else
+    {
+        resources.fetch();
+    }
+
 })(window.jQuery.noConflict(true));

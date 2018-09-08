@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      53.34
+// @version      53.79
 // @description  增强哔哩哔哩Web端体验.(离线版)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -501,7 +501,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/v
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/full-tweets-title.min.js"] = (()=>{return(e,l)=>{l.applyStyle("fullTweetsTitleStyle","full-tweets-title-style");return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/video/view-cover.min.js"] = (()=>{return(e,t)=>{class i{constructor(e){this.url=e;if($(".image-viewer").length===0){this.createDom()}this.viewer=$(".image-viewer-container");this.downloadImage()}createDom(){$("body").append(t.data.imageViewerDom.text);t.applyStyle("imageViewerStyle","image-viewer-style");$(".image-viewer-container .close").on("click",()=>this.hide())}downloadImage(){const e=new XMLHttpRequest;e.open("GET",this.url.replace("http:","https:"),true);e.responseType="blob";e.onload=(()=>{const t=document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili","");const i=URL.createObjectURL(e.response);this.imageData=i;this.viewer.find(".download").attr("href",i).attr("download",t);this.viewer.find(".image").prop("src",i)});e.send()}show(){this.viewer.addClass("opened");$("html,body").addClass("image-viewer-opened")}hide(){this.viewer.removeClass("opened");$("html,body").removeClass("image-viewer-opened")}}SpinQuery.any(()=>$("span.settings-category"),e=>{SpinQuery.any(()=>$("meta[itemprop='image']"),t=>{if(t.length>0){$(e.filter((e,t)=>t.innerHTML==="视频与直播")).parent().after(`\n                    <li class="indent-center">\n                    <button\n                        class="gui-settings-button"\n                        title="查看当前视频的封面"\n                        id="view-video-cover">\n                        查看封面\n                    </button>\n                    </li>`);const n=new i(t.prop("content"));$("#view-video-cover").on("click",()=>{n.show()})}});SpinQuery.any(()=>$(".header-info-ctnr .room-cover"),t=>{const n=t.attr("href").match(/space\.bilibili\.com\/([\d]+)/);if(n&&n[1]){const t=n[1];const o=`https://api.live.bilibili.com/bili/getRoomInfo/${t}`;downloadText(o,t=>{const n=t.slice(1,-2);const o=JSON.parse(n).data.cover;$(e.filter((e,t)=>t.innerHTML==="视频与直播")).parent().after(`\n                            <li class="indent-center">\n                            <button\n                                class="gui-settings-button"\n                                title="查看当前直播的封面"\n                                id="view-live-cover">\n                                查看封面\n                            </button>\n                            </li>`);const a=new i(o);$("#view-live-cover").on("click",()=>{a.show()})})}})});return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/notify-new-version.min.js"] = (()=>{return(t,e)=>{const r={less:-1,equal:0,greater:1,incomparable:NaN};class s{constructor(t){this.parts=t.split(".");this.versionString=t}isPositiveInteger(t){return/^\d+$/.test(t)}validateParts(){for(var t=0;t<this.parts.length;++t){if(!this.isPositiveInteger(this.parts[t])){return false}}return true}compareTo(t){if(!this.validateParts()||!t.validateParts()){return r.incomparable}for(let e=0;e<this.parts.length;++e){if(t.parts.length===e){return r.greater}if(this.parts[e]===t.parts[e]){continue}if(this.parts[e]>t.parts[e]){return r.greater}return r.less}if(this.parts.length!==t.parts.length){return r.less}return r.equal}greaterThan(t){return this.compareTo(t)===r.greater}lessThan(t){return this.compareTo(t)===r.less}equals(t){return this.compareTo(t)===r.equal}}const n=new s(e.data.latestVersion.text);const a=new s(t.currentVersion);if(n.greaterThan(a)){SpinQuery.any(()=>$(".gui-settings"),e=>{e.addClass("gui-settings-notification");const r=$(".gui-settings-footer");r.before(`\n                <div class="gui-settings-footer">\n                    <span class="gui-settings-label">新版本${n.versionString}已发布.</span>\n                    <a>\n                        <button\n                            class="gui-settings-button"\n                            id="new-version-update">\n                            更新\n                        </button>\n                    </a>\n                </div>`);$("#new-version-update").parent().attr("href",t.latestVersionLink)})}return{ajaxReload:false}}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/toast.min.js"] = (()=>{return(t,s)=>{class e{constructor(t="",s="",e="default"){this.type=e;this.message=t;this.title=s;this.duration=3e3;this.element=$(this.cardHtml)[0];this.$element=$(this.element);$(".toast-card-container").append(this.$element)}show(){this.element.classList.add("visible");this.$element.find(".toast-card-dismiss").on("click",()=>this.dismiss());if(this.duration){setTimeout(()=>this.dismiss(),this.duration)}}dismiss(){if(this.element.classList.contains("visible")){this.$element.on("transitionend",()=>this.$element.remove());this.element.classList.remove("visible")}}get cardHtml(){return`\n                <div class="toast-card toast-${this.type}">\n                <div class="toast-card-header">\n                    <h1 class="toast-card-title">${this.title}</h1>\n                    <svg class="toast-card-dismiss" viewbox="0 0 24 24">\n                    <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z">\n                    </path>\n                    </svg>\n                </div>\n                <p class="toast-card-message">${this.message}</p>\n                </div>\n                `}static get container(){return $(".toast-card-container")}static createToastContainer(){if($(".toast-card-container").length===0){$("body").append(`<div class="toast-card-container"></div>`)}}static _show(t,s,i,a){const n=new e(t,s,a);n.duration=i;n.show()}static show(t,s,e=3e3){this._show(t,s,e,"default")}static info(t,s,e){this._show(t,s,e,"info")}static success(t,s,e){this._show(t,s,e,"success")}static error(t,s,e){this._show(t,s,e,"error")}}s.applyStyle("toastStyle","toast-style");e.createToastContainer();e.error("Something wrong!","Error");e.info("New update!","Check for updates");return{ajaxReload:false}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/toast.min.js"] = (()=>{return(t,s)=>{class e{constructor(t="",s="",e="default"){this.type=e;this.message=t;this.title=s;this.duration=3e3;this.element=$(this.cardHtml)[0];this.$element=$(this.element);$(".toast-card-container").append(this.$element)}show(){this.element.classList.add("visible");this.$element.find(".toast-card-dismiss").on("click",()=>this.dismiss());if(this.duration){setTimeout(()=>this.dismiss(),this.duration)}}dismiss(){if(this.element.classList.contains("visible")){this.$element.on("transitionend",()=>this.$element.remove());this.element.classList.remove("visible")}}get cardHtml(){return`\n                <div class="toast-card toast-${this.type}">\n                <div class="toast-card-header">\n                    <h1 class="toast-card-title">${this.title}</h1>\n                    <svg class="toast-card-dismiss" viewbox="0 0 24 24">\n                    <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z">\n                    </path>\n                    </svg>\n                </div>\n                <p class="toast-card-message">${this.message}</p>\n                </div>\n                `}static get container(){return $(".toast-card-container")}static createToastContainer(){if($(".toast-card-container").length===0){$("body").append(`<div class="toast-card-container"></div>`)}}static _show(t,s,i,a){const n=new e(t,s,a);n.duration=i;n.show()}static show(t,s,e=3e3){this._show(t,s,e,"default")}static info(t,s,e){this._show(t,s,e,"info")}static success(t,s,e){this._show(t,s,e,"success")}static error(t,s,e){this._show(t,s,e,"error")}}s.applyStyle("toastStyle","toast-style");e.createToastContainer();return{ajaxReload:false,export:e}}})();
 
     class ResourceType
     {
@@ -721,6 +721,52 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
         }
+        fetchByKey(key)
+        {
+            const resource = Resource.all[key];
+            if (!resource)
+            {
+                return null;
+            }
+            const promise = resource.download();
+            promise.then(text =>
+            {
+                const func = text;
+                if (func)
+                {
+                    try
+                    {
+                        const attribute = func(settings, this);
+                        this.attributes[key] = attribute;
+                        if (attribute.ajaxReload)
+                        {
+                            $(document).ajaxComplete(() =>
+                            {
+                                func(settings, this);
+                            });
+                        }
+                    }
+                    catch (error)
+                    {
+                        // execution error
+                        console.error(`Failed to apply feature "${key}": ${error}`);
+                        if (Toast)
+                        {
+                            Toast.error(`加载组件"${Resource.all[key].displayName}"失败.`, "错误");
+                        }
+                    }
+                }
+            }).catch(reason =>
+            {
+                // download error
+                console.error(`Download error, XHR status: ${reason}`);
+                if (Toast)
+                {
+                    Toast.error(`无法下载"${Resource.all[key].displayName}"组件.`, "错误");
+                }
+            });
+            return promise;
+        }
         fetch()
         {
             return new Promise(resolve =>
@@ -728,43 +774,9 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
                 const promises = [];
                 for (const key in settings)
                 {
-                    if (settings[key] === true)
+                    if (settings[key] === true && key !== "toast")
                     {
-                        const resource = Resource.all[key];
-                        if (!resource)
-                        {
-                            continue;
-                        }
-                        const promise = resource.download();
-                        promise.then(text =>
-                        {
-                            const func = text;
-                            if (func)
-                            {
-                                try
-                                {
-                                    const attribute = func(settings, this);
-                                    this.attributes[key] = attribute;
-                                    if (attribute.ajaxReload)
-                                    {
-                                        $(document).ajaxComplete(() =>
-                                        {
-                                            func(settings, this);
-                                        });
-                                    }
-                                }
-                                catch (error)
-                                {
-                                    // execution error
-                                    console.error(`Failed to apply feature "${key}": ${error}`);
-                                }
-                            }
-                        }).catch(reason =>
-                        {
-                            // download error
-                            console.error(`Download error, XHR status: ${reason}`);
-                        });
-                        promises.push(promise);
+                        promises.push(this.fetchByKey(key));
                     }
                 }
                 Promise.all(promises).then(() => resolve());
@@ -795,5 +807,17 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
     loadResources();
     loadSettings();
     const resources = new ResourceManager();
-    resources.fetch();
+    if (settings.toast)
+    {
+        resources.fetchByKey("toast").then(() =>
+        {
+            Toast = resources.attributes.toast.export;
+            resources.fetch();
+        });
+    }
+    else
+    {
+        resources.fetch();
+    }
+
 })(window.jQuery.noConflict(true));

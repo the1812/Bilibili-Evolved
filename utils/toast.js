@@ -84,11 +84,10 @@
         resources.applyStyle("toastStyle", "toast-style");
         Toast.createToastContainer();
 
-        Toast.error("Something wrong!", "Error");
-        Toast.info("New update!", "Check for updates");
 
         return {
-            ajaxReload: false
+            ajaxReload: false,
+            export: Toast
         };
     };
 })();
