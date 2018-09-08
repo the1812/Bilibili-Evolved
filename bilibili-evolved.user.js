@@ -178,7 +178,17 @@
         xhr.open("GET", url);
         xhr.send();
     }
-
+    // Placeholder class for Toast
+    class Toast
+    {
+        constructor() { }
+        show() { }
+        dismiss() { }
+        static show() { }
+        static info() { }
+        static success() { }
+        static error() { }
+    }
     class SpinQuery
     {
         constructor(query, condition, action, onFailed)
@@ -640,20 +650,14 @@
                     {
                         // execution error
                         console.error(`Failed to apply feature "${key}": ${error}`);
-                        if (Toast)
-                        {
-                            Toast.error(`加载组件"${Resource.all[key].displayName}"失败.`, "错误");
-                        }
+                        Toast.error(`加载组件"${Resource.all[key].displayName}"失败.`, "错误");
                     }
                 }
             }).catch(reason =>
             {
                 // download error
                 console.error(`Download error, XHR status: ${reason}`);
-                if (Toast)
-                {
-                    Toast.error(`无法下载"${Resource.all[key].displayName}"组件.`, "错误");
-                }
+                Toast.error(`无法下载"${Resource.all[key].displayName}"组件.`, "错误");
             });
             return promise;
         }
