@@ -95,7 +95,7 @@
                     </a>
                 </div>`);
                 $("#new-version-update").parent().attr("href", settings.latestVersionLink);
-                Toast.show(message, "检查更新", 5000);
+                Toast.show(message, "检查更新", 10000);
             });
         }
 
