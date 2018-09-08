@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.3.6
+// @version      1.3.7
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -23,7 +23,6 @@
     const settings = {
         toast: false,
         fullTweetsTitle: false,
-        fixFullscreen: false,
         removeLiveWatermark: true,
         harunaScale: true,
         removeAds: true,
@@ -44,8 +43,9 @@
         guiSettings: true,
         viewCover: true,
         notifyNewVersion: true,
+        fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.3.6"
+        currentVersion: "1.3.7"
     };
     function loadSettings()
     {
@@ -106,7 +106,6 @@
             hideTopSearch: new Resource("utils/hide-top-search.min.js"),
             harunaScale: new Resource("video/haruna-scale.min.js"),
             removeLiveWatermark: new Resource("video/remove-watermark.min.js"),
-            fixFullscreen: new Resource("video/fix-fullscreen.min.js"),
             fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
             viewCover: new Resource("video/view-cover.min.js"),
             notifyNewVersion: new Resource("utils/notify-new-version.min.js"),
@@ -163,7 +162,6 @@
             this.hideTopSearch.displayName = "隐藏搜索推荐";
             this.harunaScale.displayName = "缩放看板娘";
             this.removeLiveWatermark.displayName = "删除直播水印";
-            this.fixFullscreen.displayName = "全屏修复";
             this.fullTweetsTitle.displayName = "展开动态标题";
             this.viewCover.displayName = "查看封面";
             this.notifyNewVersion.displayName = "新版本提醒";
