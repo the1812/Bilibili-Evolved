@@ -15,7 +15,7 @@ li.season-item .season-body .season-title span.follow,
 .bili-header-m .nav-menu .nav-con .nav-item .bml-box,
 .danmaku-menu,
 .bilibili-player-context-menu-container.black,
-.bilibili-player-contextmenu-subwrapp>span.hover,
+.bilibili-player-contextmenu-subwrapp > span.hover,
 .tab-box .item.active::after,
 .tab-box .item.active::before,
 .guard-desc-box,
@@ -35,7 +35,9 @@ li.season-item .season-body .season-title span.follow,
 .player-auxiliary-block-list .player-auxiliary-block-line,
 .player-auxiliary-context-menu-container,
 .player-auxiliary-modal-container,
-.gui-settings-content ul li.category
+.gui-settings-content ul li.category,
+.main-container .player-wrapper,
+.big-gift-btn-home
 {
     background-color: #222 !important;
 }
@@ -55,8 +57,8 @@ li.season-item .season-body .season-title span.follow,
 .paging-box-big .next,
 .paging-box-big .prev,
 .bilibili-player-ending-panel-box-functions .bui-button.bui-button-disabled,
-.bilibili-player-context-menu-container.black ul>li.hover,
-.bilibili-player-context-menu-container.black ul>li a:hover,
+.bilibili-player-context-menu-container.black ul > li.hover,
+.bilibili-player-context-menu-container.black ul > li a:hover,
 .intimacy-bar,
 .tab-box,
 .live-module .tab-item .r-item .number,
@@ -88,7 +90,21 @@ li.season-item .season-body .season-title span.follow,
 .player-auxiliary-block-list .player-auxiliary-block-line:hover,
 .player-auxiliary-modal-btns .bpm-btn,
 .player-auxiliary-auxiliary-area .player-auxiliary-adv-danmaku,
-.player-auxiliary-auxiliary-area .player-auxiliary-setting
+.player-auxiliary-auxiliary-area .player-auxiliary-setting,
+.btn-pay-wrapper.is-vip a, .btn-pay-wrapper.is-vip a:hover,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow.followed,
+.episode-item,
+.bangumi-list-wrapper .bottom-block .slider-contro span,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info,
+.bangumi-player.mini-player .mini-player-move,
+.selector-wrapper,
+.selector-wrapper .wrapper,
+#announcement-area .popular-section-ctnr,
+#announcement-area .news-ctnr,
+#announcement-area .rank-ctnr,
+.announcement-cntr,
+.security-right,
+.security_content
 {
     background-color: #444 !important;
 }
@@ -131,13 +147,14 @@ li.season-item .season-body .season-title span.follow,
 
 .news-list .news-item .date,
 .empty-hint,
-.article-content-ctnr>hr,
+.article-content-ctnr > hr,
 .author-info .communicate-btn,
 .bui-select.bui-select-quality-menu .bui-select-border,
 .chief-recommend-module .carousel-box .carousel-module .panel .trig span.on,
 .player-auxiliary-auxiliary-area .player-auxiliary-filter,
 .player-auxiliary-auxiliary-area,
-.player-auxiliary-adv-danmaku
+.player-auxiliary-adv-danmaku,
+.container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-mask
 {
     background-color: transparent !important;
 }
@@ -208,20 +225,24 @@ li.no-data,
 .player-auxiliary-danmaku-date-picker-header .player-auxiliary-danmaku-date-picker-btn,
 .player-auxiliary-danmaku-date-picker-header,
 .player-auxiliary-danmaku-load-status.disabled,
-.player-auxiliary-block-list-function>div,
+.player-auxiliary-block-list-function > div,
 .player-auxiliary-block-list-wrap .player-auxiliary-block-empty,
 .player-auxiliary-block-line.block-state-disabled,
 .player-auxiliary-block-list .player-auxiliary-block-line-delete,
-.player-auxiliary-block-list .player-auxiliary-block-line-sync
+.player-auxiliary-block-list .player-auxiliary-block-line-sync,
+.bangumi-info .info-right .info-title h2,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching .bilibili-player-watching-number,
+.recom-item a .recom-info .info-title,
+.s-imgUnit .s-imgUnit-text a 
 {
     color: #aaa !important;
 }
-.section-title>a.t,
-.section>.section-title,
+.section-title > a.t,
+.section > .section-title,
 .link-popup-panel,
 .more-btn-text,
 .chat-history-panel .gift-item .gift-count,
-.chat-history-panel .hover-panel>span,
+.chat-history-panel .hover-panel > span,
 .is-max .vote-percentage,
 .tl-head .tl-day.today span,
 li.season-item .season-body .season-title,
@@ -249,7 +270,7 @@ button.button.more,
 .tab-box .item .desc,
 .buy-info-box .left-part,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric.little,
-.pk-rank.side-bar-icon+.size-bar-text,
+.pk-rank.side-bar-icon + .size-bar-text,
 .gui-settings-button:not(.save),
 .live-module .tab-item .r-item .r-i-t .u-name,
 .bb-comment .nameplate .nameplate-card .nameplate-text,
@@ -292,7 +313,31 @@ button.button.more,
 .player-auxiliary-block-list .player-auxiliary-block-line,
 .player-auxiliary-modal-title,
 .player-auxiliary-modal-info,
-.player-auxiliary-modal-btns .bpm-btn
+.player-auxiliary-modal-btns .bpm-btn,
+.title .s-iconText-text,
+.project-list .project-list-item .project-list-item-detail .project-list-item-title,
+.nav-bar .nav-wrapper .main-tab.active,
+#app > .main .title,
+#announcement-area .popular-section-ctnr .title-row,
+#announcement-area .popular-section-ctnr .area-name,
+#announcement-area .news-ctnr .news-item,
+#announcement-area .news-ctnr .title-row,
+#announcement-area .rank-ctnr .title-row,
+.rank-menu li html,
+.member-list-item-text,
+.privilege-text,
+.big-watch-title,
+.big-game-gift-text,
+.coin-reward-info,
+.coin-time,
+.big-pendant-test,
+.coin-next-day,
+.big-gift-btn-home,
+.container .song-list .song-li .content .text a,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .song-title,
+.container .middle-tip,
+.container .all-hot-list-warp .all-hot-list .hot-list-content .list-name,
+.container .middle-tip .change-song
 {
     color: #eee !important;
 }
@@ -341,7 +386,8 @@ button.button.more,
 .danmaku-wrap .player-auxiliary-block-wrap,
 .player-auxiliary-context-menu-container,
 .player-auxiliary-modal-container,
-.player-auxiliary-modal-btns .bpm-btn
+.player-auxiliary-modal-btns .bpm-btn,
+.announcement-cntr
 {
     border-color: transparent !important;
 }
@@ -351,7 +397,8 @@ li.history,
 .elec .elec-monthly-count,
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string:not(:focus),
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string-short:not(:focus),
-.player-auxiliary-modal-header
+.player-auxiliary-modal-header,
+.container .host-list-layout .hot-list-wrap .hot-song-list
 {
     border-color: #aaa !important;
 }
@@ -494,7 +541,7 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric,
 .bui-button.bui-button-blue,
 .bui-button.bui-button-gray3:hover,
-.intimacy-bar>span,
+.intimacy-bar > span,
 .h .h-follow,
 .carousel-module .panel .trig span.on,
 .live-module .tab-item .r-item:first-child .number,
@@ -503,7 +550,8 @@ li.season-item .season-body .season-title span.follow,
 .season-timeline .season-group.today .group-time:before,
 .pagelistbox .p.active,
 .pagelistbox .p:hover,
-.wrapper .elec-message-wrp .elec-msg-btn
+.wrapper .elec-message-wrp .elec-msg-btn,
+.big-member-btn 
 {
     background-color: $customStyleColor !important;
 }
@@ -592,7 +640,8 @@ button.button.more:hover,
 .fav-main .fav-action-bottom .select-cancel,
 .pagelistbox .p.active,
 .pagelistbox .p:hover,
-.wrapper .elec-message-wrp .elec-msg-btn
+.wrapper .elec-message-wrp .elec-msg-btn,
+.big-member-btn 
 {
     color: $foreground !important;
 }
@@ -613,7 +662,8 @@ button.button.more:hover,
 //     border-right-color: transparent !important;
 // }
 .sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after,
-.sponsor-rank-tab .indicator:after
+.sponsor-rank-tab .indicator:after,
+.security-right 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
