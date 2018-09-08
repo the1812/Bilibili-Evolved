@@ -106,7 +106,9 @@ li.season-item .season-body .season-title span.follow,
 .security-right,
 .security_content,
 .side-bar,
-.favourite-card
+.favourite-card,
+.containe,
+.security_content 
 {
     background-color: #444 !important;
 }
@@ -347,7 +349,11 @@ button.button.more,
 .page-title,
 .main-container .title,
 .content-panel .title,
-.list-filter-bar .sort-box 
+.list-filter-bar .sort-box,
+.security-nav-name,
+.security-list-link-jump,
+.head-wrap,
+.btn-confirm.disabled
 {
     color: #eee !important;
 }
@@ -398,7 +404,8 @@ button.button.more,
 .player-auxiliary-modal-container,
 .player-auxiliary-modal-btns .bpm-btn,
 .announcement-cntr,
-.side-bar 
+.side-bar,
+.btn-confirm.disabled
 {
     border-color: transparent !important;
 }
@@ -411,7 +418,10 @@ li.history,
 .player-auxiliary-modal-header,
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .favourite-card .anchor-info,
-.favourite-card
+.favourite-card,
+.modal-head,
+.security_content,
+.security-ul
 {
     border-color: #aaa !important;
 }
@@ -564,7 +574,7 @@ li.season-item .season-body .season-title span.follow,
 .pagelistbox .p.active,
 .pagelistbox .p:hover,
 .wrapper .elec-message-wrp .elec-msg-btn,
-.big-member-btn 
+.big-member-btn .btn-confirm.disabled
 {
     background-color: $customStyleColor !important;
 }
