@@ -60,12 +60,16 @@
             }
         };
 
-        function reloadGuiSettings()
+        function settingsChange(key, _, newValue)
+        {
+            $(`input[type='checkbox'][key='${key}']`).prop("checked", newValue);
+            $(`input[type='text'][key='${key}']`).val(newValue);
+        }
+        function syncGui()
         {
             for (const key in settings)
             {
-                $(`input[type='checkbox'][key='${key}']`).prop("checked", settings[key]);
-                $(`input[type='text'][key='${key}']`).val(settings[key]);
+                settingsChange(key, undefined, settings[key]);
             }
         }
         function setupEvents()
@@ -91,7 +95,18 @@
                     box.toggleClass("opened");
                 }
             });
-            $("button.save").on("click", () =>
+
+            const button = document.querySelector("button.save");
+            const svg = document.querySelector(".gui-settings-footer svg.gui-settings-ok");
+            const saveCompleteClass = "save-complete";
+            const animationend = () =>
+            {
+                svg.classList.remove(saveCompleteClass);
+                button.classList.remove(saveCompleteClass);
+            };
+            button.addEventListener("animationend", animationend);
+            svg.addEventListener("animationend", animationend);
+            button.addEventListener("click", () =>
             {
                 $("input[type='checkbox'][key]")
                     .each((_, element) =>
@@ -106,23 +121,15 @@
                         settings[key] = textValidate[key](value);
                     });
                 saveSettings(settings);
-                const svg = $(".gui-settings-footer svg.gui-settings-ok");
-                if (parseInt(svg.css("width")) === 0)
+                if ([svg, button].every(it =>
+                    !it.classList.contains(saveCompleteClass)))
                 {
-                    svg.css({
-                        width: "30px",
-                        marginLeft: "3rem"
-                    });
-                    setTimeout(() =>
-                    {
-                        svg.css({
-                            width: "0",
-                            marginLeft: "0"
-                        });
-                    }, 3000);
+                    button.classList.add(saveCompleteClass);
+                    svg.classList.add(saveCompleteClass);
                 }
-                reloadGuiSettings();
+                syncGui();
             });
+            onSettingsChange(settingsChange);
         }
         function fillSvgData()
         {
@@ -219,7 +226,7 @@
                     $("body").append(settingsBox);
                     setupEvents();
                     fillSvgData();
-                    reloadGuiSettings();
+                    syncGui();
                     listenDependencies();
                     addPredefinedColors();
                 }

@@ -41,10 +41,12 @@
             show()
             {
                 this.viewer.addClass("opened");
+                $("html,body").addClass("image-viewer-opened");
             }
             hide()
             {
                 this.viewer.removeClass("opened");
+                $("html,body").removeClass("image-viewer-opened");
             }
         }
 
@@ -55,7 +57,7 @@
                 if (metaData.length > 0)
                 {
                     $(settingsCategories
-                        .filter((_, e) => e.innerHTML === "视频"))
+                        .filter((_, e) => e.innerHTML === "视频与直播"))
                         .parent()
                         .after(`
                     <li class="indent-center">
@@ -89,7 +91,7 @@
                         const jsonText = text.slice(1, -2);
                         const coverUrl = JSON.parse(jsonText).data.cover;
                         $(settingsCategories
-                            .filter((_, e) => e.innerHTML === "直播间"))
+                            .filter((_, e) => e.innerHTML === "视频与直播"))
                             .parent()
                             .after(`
                             <li class="indent-center">

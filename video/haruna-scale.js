@@ -1,11 +1,11 @@
 (() =>
 {
-    return () =>
+    return (_, resources) =>
     {
         const id = "bilibili-haruna-scale";
         if ($(id).length === 0)
         {
-            $("head").prepend(`
+            resources.applyStyleFromText(`
             <style id='${id}'>
                 .haruna-ctnr,
                 .avatar-btn

@@ -19,6 +19,17 @@
     -webkit-tap-highlight-color: transparent;
     transform: translateX(-12px);
 }
+.gui-settings.gui-settings-notification::before
+{
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: $customStyleColor;
+    position: fixed;
+    right: 0;
+    top: 0;
+    border-radius: 50%;
+}
 .gui-settings,
 .gui-settings-header .gui-settings-close path,
 .gui-settings svg path
@@ -85,12 +96,14 @@
 {
     height: 80px;
     justify-content: center;
+    position: relative;
 }
 .gui-settings-content
 {
     flex-grow: 1;
     overflow: auto;
     position: relative;
+    overscroll-behavior: contain;
 }
 .gui-settings-content-top-mask,
 .gui-settings-content-bottom-mask
@@ -145,6 +158,10 @@
     margin: 0;
     border-top: 1px dashed #8884;
     border-bottom: 1px dashed #8884;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 span.settings-category
 {
@@ -276,13 +293,47 @@ button.save
     max-height: 38px;
     background: $customStyleColor;
     color: $foreground;
+    transform-origin: center;
+}
+button.save.save-complete
+{
+    animation: hide-a-moment 3.8s;
+}
+@keyframes hide-a-moment
+{
+    0%, 100%
+    {
+        transform: scale(1);
+    }
+    5%, 95%
+    {
+        transform: scale(0);
+    }
 }
 .gui-settings-footer svg
 {
-    width: 0;
+    width: 30px;
     height: 30px;
     margin-left: 0;
     transition: all 0.2s;
+    position: absolute;
+    transform-origin: center;
+    transform: scale(0);
+}
+.gui-settings-footer svg.save-complete
+{
+    animation: show-a-moment 3.8s;
+}
+@keyframes show-a-moment
+{
+    0%, 5%, 95%, 100%
+    {
+        transform: scale(0);
+    }
+    10%, 90%
+    {
+        transform: scale(1);
+    }
 }
 .gui-settings-footer svg path
 {
@@ -347,4 +398,9 @@ input[type='text'][key]
     height: auto;
     border: none;
     border-radius: 4px;
+}
+.gui-settings-label
+{
+    margin: 0 16px;
+    font-size: 16px;
 }

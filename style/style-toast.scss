@@ -1,0 +1,78 @@
+.toast-card-container
+{
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.toast-card
+{
+    background: #444;
+    min-width: 240px;
+    border-radius: 8px;
+    box-shadow: 0 1px 20px rgba(0,0,0,.1);
+    height: 0;
+    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    transform: translateY(16px);
+    transform-origin: bottom;
+    opacity: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.toast-card.visible
+{
+    height: 96px;
+    transform: scale(1) translateY(0);
+    opacity: 0.95;
+    margin-top: 16px;
+}
+.toast-card-header
+{
+    display: flex;
+    align-items: center;
+}
+.toast-card-title
+{
+    font-size: 18px;
+    color: #fff6;
+    margin: 16px;
+    font-weight: bold;
+    flex: 1 1 auto;
+}
+svg.toast-card-dismiss
+{
+    height: 24px;
+    width: 24px;
+    flex: 0 0 auto;
+    padding: 16px;
+    cursor: pointer;
+}
+svg.toast-card-dismiss path
+{
+    fill: #fff6;
+}
+.toast-card-message {
+    color: #eeed;
+    font-size: 14px;
+    margin: 16px;
+    margin-top: 0;
+}
+.toast-card.toast-default
+{
+    background: #444;
+}
+.toast-card.toast-error
+{
+    background: #652020;
+}
+.toast-card.toast-info
+{
+    background: #303d61;
+}
+.toast-card.toast-success
+{
+    background: #274227;
+}
