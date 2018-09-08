@@ -104,7 +104,9 @@ li.season-item .season-body .season-title span.follow,
 #announcement-area .rank-ctnr,
 .announcement-cntr,
 .security-right,
-.security_content
+.security_content,
+.side-bar,
+.favourite-card
 {
     background-color: #444 !important;
 }
@@ -337,7 +339,11 @@ button.button.more,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .song-title,
 .container .middle-tip,
 .container .all-hot-list-warp .all-hot-list .hot-list-content .list-name,
-.container .middle-tip .change-song
+.container .middle-tip .change-song,
+.sub-pages-item,
+.nav-item,
+.favourite-card .anchor-info .anchor-name,
+.page-title
 {
     color: #eee !important;
 }
@@ -387,7 +393,8 @@ button.button.more,
 .player-auxiliary-context-menu-container,
 .player-auxiliary-modal-container,
 .player-auxiliary-modal-btns .bpm-btn,
-.announcement-cntr
+.announcement-cntr,
+.side-bar 
 {
     border-color: transparent !important;
 }
@@ -398,7 +405,9 @@ li.history,
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string:not(:focus),
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string-short:not(:focus),
 .player-auxiliary-modal-header,
-.container .host-list-layout .hot-list-wrap .hot-song-list
+.container .host-list-layout .hot-list-wrap .hot-song-list,
+.favourite-card .anchor-info,
+.favourite-card
 {
     border-color: #aaa !important;
 }
