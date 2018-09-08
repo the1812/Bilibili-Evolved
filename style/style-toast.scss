@@ -49,6 +49,7 @@ svg.toast-card-dismiss
     flex: 0 0 auto;
     padding: 16px;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 svg.toast-card-dismiss path
 {
