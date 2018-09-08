@@ -103,6 +103,7 @@
     flex-grow: 1;
     overflow: auto;
     position: relative;
+    overscroll-behavior: contain;
 }
 .gui-settings-content-top-mask,
 .gui-settings-content-bottom-mask
@@ -157,6 +158,10 @@
     margin: 0;
     border-top: 1px dashed #8884;
     border-bottom: 1px dashed #8884;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 span.settings-category
 {
