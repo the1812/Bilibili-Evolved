@@ -37,7 +37,10 @@ li.season-item .season-body .season-title span.follow,
 .player-auxiliary-modal-container,
 .gui-settings-content ul li.category,
 .main-container .player-wrapper,
-.big-gift-btn-home
+.big-gift-btn-home,
+.h-safe-nobtn,
+.home-top-level-mask-warp,
+.home-top-level-up
 {
     background-color: #222 !important;
 }
@@ -108,7 +111,8 @@ li.season-item .season-body .season-title span.follow,
 .side-bar,
 .favourite-card,
 .containe,
-.container
+.container,
+.security-list:hover 
 {
     background-color: #444 !important;
 }
@@ -245,7 +249,11 @@ li.no-data,
 .first-change-lb span,
 .descript,
 .pre-info,
-.security-title
+.security-title,
+.h-safe-desc,
+.re-exp-none,
+.h-list-desc,
+.gotoSpace 
 {
     color: #aaa !important;
 }
@@ -360,7 +368,23 @@ button.button.more,
 .security-nav-name,
 .security-list-link-jump,
 .head-wrap,
-.btn-confirm.disabled
+.btn-confirm.disabled,
+.h-safe-title,
+.h-safe-nobtn,
+.h-reward-info,
+.curren-b-num,
+.now-num,
+.home-top-level-number,
+.home-userstatus,
+.home-dialy-task-title,
+.re-exp-info,
+.h-list-name,
+.h-mp-space,
+.go-secuirty,
+.home-to-space,
+.home-to-update,
+.home-top-level-mask-warp,
+.home-level-tips 
 {
     color: #eee !important;
 }
@@ -417,7 +441,12 @@ button.button.more,
 .security_content,
 .security-ul,
 .modal-head,
-.security-list-jump
+.security-list-jump,
+.index-info,
+.home-daily-task-warp,
+.home-mp,
+.h-list-icon,
+.home-top-level-mask-warp 
 {
     border-color: transparent !important;
 }
@@ -431,7 +460,13 @@ li.history,
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .favourite-card .anchor-info,
 .favourite-card,
-.first-change-lb
+.first-change-lb,
+.h-list-item,
+.h-mp-space,
+.go-secuirty,
+.home-to-space,
+.home-to-update,
+.home-userstatus 
 {
     border-color: #aaa !important;
 }
@@ -524,10 +559,11 @@ li.season-item .season-body .season-title span.follow,
 {
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
-.side-bar-popup-cntr>.arrow,
+.side-bar-popup-cntr > .arrow,
 .empty-hint .hint-img,
-.sponsor-rank-item.special .sp-right .sp-msg>span,
-.sponsor-rank-item.special .sp-right .sp-msg>span:before
+.sponsor-rank-item.special .sp-right .sp-msg > span,
+.sponsor-rank-item.special .sp-right .sp-msg > span:before,
+.home-level-mask-icon
 {
     display: none !important;
 }
@@ -698,7 +734,8 @@ button.button.more:hover,
 .sponsor-rank-tab .indicator:after,
 .security-right,
 .container,
-.bili-footer .boston-postcards li 
+.bili-footer .boston-postcards li,
+.h-line 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
