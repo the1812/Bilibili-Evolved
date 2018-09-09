@@ -50,7 +50,10 @@ li.season-item .season-body .season-title span.follow,
 .go-movie,
 .viptable tr th,
 .viptable tr:nth-child(odd) td,
-.viptable tr:nth-child(2n) td 
+.viptable tr:nth-child(2n) td,
+.el-input__inner,
+.user-my-sex .el-radio-button__inner,
+.el-picker-panel 
 {
     background-color: #222 !important;
 }
@@ -183,7 +186,8 @@ li.season-item .season-body .season-title span.follow,
 .player-auxiliary-adv-danmaku,
 .container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-mask,
 .live-sidebar-ctnr,
-.line-circle 
+.line-circle,
+.el-date-table td.available:hover 
 {
     background-color: transparent !important;
 }
@@ -280,7 +284,10 @@ li.no-data,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-click, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-danmaku, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-scores, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-stow,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn > span,
 .points-faq-line body,
-.points-text 
+.points-text,
+.el-input__icon,
+.el-date-table th,
+.el-picker-panel__icon-btn 
 {
     color: #aaa !important;
 }
@@ -434,7 +441,13 @@ button.button.more,
 .el-pagination,
 .viptable,
 .el-pagination button.disabled,
-.el-pager li.active 
+.el-pager li.active,
+.el-form-item__label,
+.userinfo-username,
+.el-input__inner,
+.user-my-sex .el-radio-button__inner,
+.el-radio-button__orig-radio:checked + .el-radio-button__inner,
+.el-picker-panel 
 {
     color: #eee !important;
 }
@@ -527,7 +540,12 @@ button.button.more,
 .viptable tr th, table.viptable td,
 .el-pagination .btn-next, .el-pagination .btn-prev,
 .el-pagination button.disabled,
-.el-pager li.active 
+.el-pager li.active,
+.el-input__inner,
+.user-my-sex .el-radio-button__inner,
+.user-setting-warp .padding-dom,
+.el-textarea__inner,
+.el-input__inner:hover 
 {
     border-color: transparent !important;
 }
@@ -855,7 +873,8 @@ button.button.more:hover,
 .security-right,
 .container,
 .bili-footer .boston-postcards li,
-.h-line
+.h-line,
+.el-radio-button:first-child .el-radio-button__inner 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
