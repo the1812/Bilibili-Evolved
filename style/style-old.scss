@@ -163,6 +163,10 @@ div.nav-gif,
 {
     width: 100% !important;
 }
+input.nav-search-keyword::placeholder
+{
+    color: #888 !important;
+}
 
 @media only screen and (min-width: 1291px)
 {
