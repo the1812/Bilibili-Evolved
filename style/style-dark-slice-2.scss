@@ -112,7 +112,9 @@ li.season-item .season-body .season-title span.follow,
 .favourite-card,
 .containe,
 .container,
-.security-list:hover 
+.security-list:hover,
+.bgray-btn,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-recommend 
 {
     background-color: #444 !important;
 }
@@ -257,7 +259,10 @@ li.no-data,
 .big-nane-bottom p,
 .member-list-item-subtext,
 .big-game-gift-money,
-.big-more-tool-item 
+.big-more-tool-item,
+.bgray-btn,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-click, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-danmaku, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-scores, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-stow,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn > span 
 {
     color: #aaa !important;
 }
@@ -390,7 +395,11 @@ button.button.more,
 .home-top-level-mask-warp,
 .home-level-tips,
 .big-privilege-title,
-.right-more-btn 
+.right-more-btn,
+.bgray-btn:hover,
+.episode-item .ep-index,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-title,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-time-wrap 
 {
     color: #eee !important;
 }
@@ -461,7 +470,16 @@ button.button.more,
 .coin-calendar-wrap,
 .big-pendant-warp,
 .big-gift-btn-home,
-.big-more-tool-btn 
+.big-more-tool-btn,
+.btn-pay-wrapper.is-vip a,
+.bgray-btn,
+.bgray-btn:hover,
+.main-container .player-wrapper,
+.bilibili-player .bilibili-player-auxiliary-area,
+.episode-item,
+.bangumi-list-wrapper .top-block,
+.main-container .bangumi-info-wrapper,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter 
 {
     border-color: transparent !important;
 }
@@ -579,7 +597,9 @@ li.season-item .season-body .season-title span.follow,
 .empty-hint .hint-img,
 .sponsor-rank-item.special .sp-right .sp-msg > span,
 .sponsor-rank-item.special .sp-right .sp-msg > span:before,
-.home-level-mask-icon
+.home-level-mask-icon,
+.bangumi-coin-wrap .bangumi-coin, .bangumi-coin-wrap .bangumi-coin-d,
+.bangumi-collection-wrap .bangumi-order, .bangumi-collection-wrap .bangumi-order-d, .bangumi-order-wrap .bangumi-order, .bangumi-order-wrap .bangumi-order-d 
 {
     display: none !important;
 }
