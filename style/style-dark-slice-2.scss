@@ -41,7 +41,9 @@ li.season-item .season-body .season-title span.follow,
 .h-safe-nobtn,
 .home-top-level-mask-warp,
 .home-top-level-up,
-.re-exp-getexp
+.re-exp-getexp,
+.big-more-item-item,
+.big-more-item-list
 {
     background-color: #222 !important;
 }
@@ -114,7 +116,8 @@ li.season-item .season-body .season-title span.follow,
 .containe,
 .container,
 .security-list:hover,
-.security-list-jump:hover
+.security-list-jump:hover,
+.big-more-item-item:hover .big-more-item-txt
 {
     background-color: #444 !important;
 }
@@ -393,7 +396,9 @@ button.button.more,
 .home-level-tips,
 .big-privilege-title,
 .right-more-btn,
-.re-exp-getexp
+.re-exp-getexp,
+.big-more-item-item,
+.big-more-item-list
 {
     color: #eee !important;
 }
@@ -464,7 +469,8 @@ button.button.more,
 .coin-calendar-wrap,
 .big-pendant-warp,
 .big-gift-btn-home,
-.big-more-tool-btn
+.big-more-tool-btn,
+.big-more-item-list
 {
     border-color: transparent !important;
 }
@@ -517,7 +523,8 @@ li.history,
 .security-list-jump-icon,
 .home-to-space .m-arrow,
 .h-mp-space .m-arrow,
-.go-secuirty .m-arrow
+.go-secuirty .m-arrow,
+.right-more-btn .m-arrow
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -530,7 +537,10 @@ li.history,
 .sl-ep-nav .mode-select li.detail-mode:hover,
 .sl-ep-nav .mode-select li.simple-mode.selected,
 .sl-ep-nav .mode-select li.simple-mode:hover,
-.season-slider-wrapper .slider-wrapper .season-slider-list li.cur
+.season-slider-wrapper .slider-wrapper .season-slider-list li.cur,
+.swiper-button-next:hover,
+.swiper-button-prev:hover,
+.big-banner-warp .swiper-pagination-bullet-active
 {
     filter: $blueImageFilter !important;
 }
@@ -560,7 +570,8 @@ li.season-item .season-body .season-title span.follow,
 {
     filter: none !important;
 }
-.h-safe-icon[class$=no]
+.h-safe-icon[class$=no],
+.coin-icon-done
 {
     filter: brightness(0.5) !important;
 }
@@ -650,7 +661,9 @@ li.season-item .season-body .season-title span.follow,
 .wrapper .elec-message-wrp .elec-msg-btn,
 .big-member-btn .btn-confirm.disabled,
 .security-left .security-ul .security-list.on,
-.h-safe-btn
+.h-safe-btn,
+.security-right-title-icon,
+.big-member-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -719,7 +732,10 @@ button.button.more:hover,
 .bui-tabs .bui-tabs-header .bui-tabs-header-item.bui-tabs-header-item-active,
 .player-auxiliary-block-list .player-auxiliary-block-line-state,
 .home-top-level-mask-warp a,
-.h-safe-a
+.h-safe-a,
+.security-right-title-text,
+.bottom-help a,
+.big-more-item-item:hover .big-more-item-txt
 {
     color: $customStyleColor !important;
 }
@@ -743,7 +759,8 @@ button.button.more:hover,
 .pagelistbox .p:hover,
 .wrapper .elec-message-wrp .elec-msg-btn,
 .big-member-btn,
-.h-safe-btn
+.h-safe-btn,
+.big-member-btn
 {
     color: $foreground !important;
 }
