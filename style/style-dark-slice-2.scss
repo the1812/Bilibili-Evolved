@@ -46,7 +46,11 @@ li.season-item .season-body .season-title span.follow,
 .big-more-item-list,
 .first-change-lb,
 .btn-confirm.disabled,
-.first-change-lb:hover
+.first-change-lb:hover,
+.go-movie,
+.viptable tr th,
+.viptable tr:nth-child(odd) td,
+.viptable tr:nth-child(2n) td 
 {
     background-color: #222 !important;
 }
@@ -178,7 +182,8 @@ li.season-item .season-body .season-title span.follow,
 .player-auxiliary-auxiliary-area,
 .player-auxiliary-adv-danmaku,
 .container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-mask,
-.live-sidebar-ctnr
+.live-sidebar-ctnr,
+.line-circle 
 {
     background-color: transparent !important;
 }
@@ -273,7 +278,9 @@ li.no-data,
 .big-more-tool-item,
 .bgray-btn,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-click, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-danmaku, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-scores, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-stow,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn > span 
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn > span,
+.points-faq-line body,
+.points-text 
 {
     color: #aaa !important;
 }
@@ -413,7 +420,21 @@ button.button.more,
 .bgray-btn:hover,
 .episode-item .ep-index,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-panel-scrollbar .bilibili-player-recommend-video .bilibili-player-recommend-right .bilibili-player-recommend-title,
-.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-time-wrap 
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-time-wrap,
+.tabs-nav-item,
+.points-exchange-title,
+.points-info p,
+.points-pendant-title p,
+.pendant-name,
+.points-how-title,
+.points-faq-info-list,
+.go-movie:hover,
+.points-btn,
+.points-record-title,
+.el-pagination,
+.viptable,
+.el-pagination button.disabled,
+.el-pager li.active 
 {
     color: #eee !important;
 }
@@ -495,7 +516,18 @@ button.button.more,
 .episode-item,
 .bangumi-list-wrapper .top-block,
 .main-container .bangumi-info-wrapper,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter 
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter,
+.tabs-nav,
+.points-box,
+.points-pendant-warp,
+.points-faq-line,
+.points-how-warp,
+.points-record-warp,
+.el-pagination__editor,
+.viptable tr th, table.viptable td,
+.el-pagination .btn-next, .el-pagination .btn-prev,
+.el-pagination button.disabled,
+.el-pager li.active 
 {
     border-color: transparent !important;
 }
@@ -515,7 +547,8 @@ li.history,
 .home-to-space,
 .home-to-update,
 .home-userstatus,
-.right-more-btn
+.right-more-btn,
+.points-pendant-item 
 {
     border-color: #aaa !important;
 }
@@ -659,7 +692,9 @@ li.season-item .season-body .season-title span.follow,
 .sponsor-rank-tab .indicator,
 .sponsor-rank-tab .indicator:after,
 .bui-tabs .bui-tabs-header .bui-tabs-header-item.bui-tabs-header-item-active,
-.btn-confirm
+.btn-confirm,
+.go-movie,
+.points-btn 
 {
     border-color: $customStyleColor !important;
 }
@@ -690,9 +725,12 @@ li.season-item .season-body .season-title span.follow,
 .big-member-btn .btn-confirm.disabled,
 .security-left .security-ul .security-list.on,
 .h-safe-btn,
-.security-right-title-icon,
+-icon,
 .big-member-btn,
-.btn-confirm
+.btn-confirm,
+.go-movie:hover,
+.points-btn,
+.el-pager li.active 
 {
     background-color: $customStyleColor !important;
 }
@@ -741,7 +779,7 @@ button.button.more:hover,
 .misl-ep-item:hover .misl-ep-text .misl-ep-title,
 .bangumi-media .bangumi-media-header .rate-wrapper .btn-go-write:hover,
 .bangumi-media .bangumi-media-header .btn-more-review:hover,
-.bangumi-review-item>a:hover .long-title,
+.bangumi-review-item > a:hover .long-title,
 .sort-type-wrp ul li:hover,
 .media-tab-module-wrp .media-tab-module-more:hover,
 .media-info-card .mic-expand:hover,
@@ -764,7 +802,9 @@ button.button.more:hover,
 .h-safe-a,
 .security-right-title-text,
 .bottom-help a,
-.big-more-item-item:hover .big-more-item-txt
+.big-more-item-item:hover .big-more-item-txt,
+.go-movie,
+.points-num 
 {
     color: $customStyleColor !important;
 }
