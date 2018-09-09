@@ -163,6 +163,16 @@
     top: 0;
     z-index: 10;
 }
+@supports (backdrop-filter: blur(24px)) or (-webkit-backdrop-filter: blur(24px))
+{
+    .gui-settings-content ul li.category.blur
+    {
+        -webkit-backdrop-filter: blur(24px);
+        backdrop-filter: blur(24px);
+        background: #fff7;
+    }
+}
+
 span.settings-category
 {
     opacity: 0.6;
