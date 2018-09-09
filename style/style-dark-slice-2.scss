@@ -108,7 +108,7 @@ li.season-item .season-body .season-title span.follow,
 .side-bar,
 .favourite-card,
 .containe,
-.security_content 
+.container
 {
     background-color: #444 !important;
 }
@@ -120,7 +120,9 @@ li.season-item .season-body .season-title span.follow,
 .tl-head .tl-day .indicator,
 .season-timeline .season-group .group-time:before,
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover,
-.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover,
+.border-line,
+.first-change-lb
 {
     background-color: #aaa !important;
 }
@@ -238,7 +240,12 @@ li.no-data,
 .bangumi-info .info-right .info-title h2,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching .bilibili-player-watching-number,
 .recom-item a .recom-info .info-title,
-.s-imgUnit .s-imgUnit-text a 
+.s-imgUnit .s-imgUnit-text a,
+.modal-head a,
+.first-change-lb span,
+.descript,
+.pre-info,
+.security-title
 {
     color: #aaa !important;
 }
@@ -405,7 +412,12 @@ button.button.more,
 .player-auxiliary-modal-btns .bpm-btn,
 .announcement-cntr,
 .side-bar,
-.btn-confirm.disabled
+.btn-confirm.disabled,
+.security-title,
+.security_content,
+.security-ul,
+.modal-head,
+.security-list-jump
 {
     border-color: transparent !important;
 }
@@ -419,9 +431,7 @@ li.history,
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .favourite-card .anchor-info,
 .favourite-card,
-.modal-head,
-.security_content,
-.security-ul
+.first-change-lb
 {
     border-color: #aaa !important;
 }
@@ -686,7 +696,9 @@ button.button.more:hover,
 // }
 .sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after,
 .sponsor-rank-tab .indicator:after,
-.security-right 
+.security-right,
+.container,
+.bili-footer .boston-postcards li 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
