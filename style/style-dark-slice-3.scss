@@ -23,10 +23,11 @@
 //     background-image: none !important;
 // }
 
-// a
-// {
-//     background-color: transparent !important;
-// }
+.bilibili-player-video-sendbar,
+.bilibili-player-video-bottom-area::before
+{
+    background-color: transparent !important;
+}
 // a
 // {
 //     background: #fff1 !important;
