@@ -129,7 +129,10 @@ li.season-item .season-body .season-title span.follow,
 .security-list-jump:hover,
 .big-more-item-item:hover .big-more-item-txt,
 .bgray-btn,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-recommend
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-recommend,
+.bangumi-nav-right .nav-goto-top,
+.bangumi-nav-right .nav-mini-switch,
+.share-module .share-list .weixin-share-modal 
 {
     background-color: #444 !important;
 }
@@ -263,7 +266,6 @@ li.no-data,
 .player-auxiliary-block-line.block-state-disabled,
 .player-auxiliary-block-list .player-auxiliary-block-line-delete,
 .player-auxiliary-block-list .player-auxiliary-block-line-sync,
-.bangumi-info .info-right .info-title h2,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching .bilibili-player-watching-number,
 .recom-item a .recom-info .info-title,
 .s-imgUnit .s-imgUnit-text a,
@@ -287,7 +289,11 @@ li.no-data,
 .points-text,
 .el-input__icon,
 .el-date-table th,
-.el-picker-panel__icon-btn
+.el-picker-panel__icon-btn,
+.season-item,
+.bangumi-nav-right .nav-mini-switch,
+.share-module .share-list li.share-btn.btn-app,
+.sponsor-rank-v1 .sponsor-rank-header .show-sponsor-rank 
 {
     color: #aaa !important;
 }
@@ -447,7 +453,13 @@ button.button.more,
 .el-input__inner,
 .user-my-sex .el-radio-button__inner,
 .el-radio-button__orig-radio:checked + .el-radio-button__inner,
-.el-picker-panel
+.el-picker-panel,
+.bangumi-info .info-right .info-title h2,
+.share-module .share-list .weixin-share-modal .share-name,
+.share-module .share-list .weixin-share-modal .share-tips,
+.main-container .sponsor-wrapper .sponsor-right-area .sponsor-count-info span,
+.bangumi-recom .recom-title,
+.btn-sponsor-wrapper .sponsor-count span 
 {
     color: #eee !important;
 }
@@ -545,7 +557,14 @@ button.button.more,
 .user-my-sex .el-radio-button__inner,
 .user-setting-warp .padding-dom,
 .el-textarea__inner,
-.el-input__inner:hover
+.el-input__inner:hover,
+.bangumi-nav-right .nav-goto-top,
+.bangumi-nav-right .nav-mini-switch,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow.followed,
+.share-module .share-list li.share-btn.btn-app,
+.share-module .share-list .weixin-share-modal,
+.sponsor-rank-v1 .sponsor-rank-header .show-sponsor-rank,
+.main-container .sponsor-wrapper 
 {
     border-color: transparent !important;
 }
