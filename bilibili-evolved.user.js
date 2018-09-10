@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.3.7
+// @version      1.3.8
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -45,7 +45,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.3.7"
+        currentVersion: "1.3.8"
     };
     function loadSettings()
     {
@@ -81,6 +81,7 @@
             scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
             darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
             darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
+            darkStyleSlice3: new Resource("style/style-dark-slice-3.min.scss", 2),
             darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
             touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
             navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
@@ -120,6 +121,7 @@
             this.useDarkStyle.dependencies = [
                 this.darkStyleSlice1,
                 this.darkStyleSlice2,
+                this.darkStyleSlice3,
                 this.darkStyleImportant
             ];
             this.useNewStyle.dependencies = [
@@ -541,7 +543,7 @@
         getStyle(id)
         {
             const style = this.text;
-            if (!style)
+            if (style === null)
             {
                 console.error("Attempt to get style which is not downloaded.");
             }
