@@ -101,10 +101,11 @@
 //     filter: none !important;
 // }
 
-// a
-// {
-//     background-image: none !important;
-// }
+.tab-mk2.active,
+.face-g-more
+{
+    background-image: none !important;
+}
 // a
 // {
 //     border-radius: 4px !important;
@@ -142,10 +143,10 @@
 // {
 //     background-color: $customStyleColor !important;
 // }
-// a
-// {
-//     color: $customStyleColor !important;
-// }
+.face-g-more
+{
+    color: $customStyleColor !important;
+}
 // a
 // {
 //     color: $foreground !important;
