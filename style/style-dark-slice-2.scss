@@ -54,7 +54,7 @@ li.season-item .season-body .season-title span.follow,
 .el-input__inner,
 .user-my-sex .el-radio-button__inner,
 .el-picker-panel,
-.face-g-action 
+.face-g-action
 {
     background-color: #222 !important;
 }
@@ -141,7 +141,7 @@ li.season-item .season-body .season-title span.follow,
 .info-model .border-b,
 .video-model .border-b,
 .info-model header,
-.video-model header 
+.video-model header
 {
     background-color: #444 !important;
 }
@@ -201,7 +201,7 @@ li.season-item .season-body .season-title span.follow,
 .line-circle,
 .el-date-table td.available:hover,
 .security-list .child-list li a:hover,
-.f-list-hover:hover 
+.f-list-hover:hover
 {
     background-color: transparent !important;
 }
@@ -308,7 +308,7 @@ li.no-data,
 .timer-wrap .vote-dialog-new .header h2,
 .timer-wrap .vote-dialog-new .main h4,
 .timer-wrap .vote-dialog-new .main .main-txt-2,
-.tab-btn-link 
+.tab-btn-link
 {
     color: #aaa !important;
 }
@@ -485,7 +485,7 @@ button.button.more,
 .face-g-name,
 .face-g-title,
 .security-list .first-level,
-.face-g-action 
+.face-g-action
 {
     color: #eee !important;
 }
@@ -601,7 +601,7 @@ button.button.more,
 .face-g-item,
 .face-g-action,
 .face-g-preview,
-#face-g-change 
+.face-g-action[id=face-g-change]
 {
     border-color: transparent !important;
 }
@@ -673,7 +673,7 @@ li.history,
 .swiper-button-prev:hover,
 .big-banner-warp .swiper-pagination-bullet-active,
 .video-model header h2 .head-icon,
-.info-model header h2 .head-icon 
+.info-model header h2 .head-icon
 {
     filter: $blueImageFilter !important;
 }
@@ -738,7 +738,9 @@ li.season-item .season-body .season-title span.follow,
 .home-level-mask-icon,
 .top-header,
 .bangumi-coin-wrap .bangumi-coin, .bangumi-coin-wrap .bangumi-coin-d,
-.bangumi-collection-wrap .bangumi-order, .bangumi-collection-wrap .bangumi-order-d, .bangumi-order-wrap .bangumi-order, .bangumi-order-wrap .bangumi-order-d
+.bangumi-collection-wrap .bangumi-order, .bangumi-collection-wrap .bangumi-order-d,
+.bangumi-order-wrap .bangumi-order, .bangumi-order-wrap .bangumi-order-d,
+.top_bg
 {
     display: none !important;
 }
@@ -772,7 +774,7 @@ li.season-item .season-body .season-title span.follow,
 .go-movie,
 .points-btn,
 .tab-mk2.active,
-.face-g-item:hover 
+.face-g-item:hover
 {
     border-color: $customStyleColor !important;
 }
@@ -812,7 +814,7 @@ li.season-item .season-body .season-title span.follow,
 .bg-blue,
 .face-g-tab li.current,
 .tit-b,
-#face-g-change 
+.face-g-action[id=face-g-change]
 {
     background-color: $customStyleColor !important;
 }
@@ -890,7 +892,7 @@ button.button.more:hover,
 .tab-mk2.active,
 .acc-sec,
 .tab-mk2.tab-mk2-r,
-.tab-mk2:hover 
+.tab-mk2:hover
 {
     color: $customStyleColor !important;
 }
