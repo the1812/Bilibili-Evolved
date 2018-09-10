@@ -132,7 +132,15 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-recommend,
 .bangumi-nav-right .nav-goto-top,
 .bangumi-nav-right .nav-mini-switch,
-.share-module .share-list .weixin-share-modal 
+.share-module .share-list .weixin-share-modal,
+.dialog .content-outer,
+.word-limit-h5 textarea,
+.timer-wrap .vote-dialog-new .footer .b-disable,
+.cm-model,
+.info-model .border-b,
+.video-model .border-b,
+.info-model header,
+.video-model header 
 {
     background-color: #444 !important;
 }
@@ -293,7 +301,10 @@ li.no-data,
 .season-item,
 .bangumi-nav-right .nav-mini-switch,
 .share-module .share-list li.share-btn.btn-app,
-.sponsor-rank-v1 .sponsor-rank-header .show-sponsor-rank 
+.sponsor-rank-v1 .sponsor-rank-header .show-sponsor-rank,
+.timer-wrap .vote-dialog-new .header h2,
+.timer-wrap .vote-dialog-new .main h4,
+.timer-wrap .vote-dialog-new .main .main-txt-2 
 {
     color: #aaa !important;
 }
@@ -459,7 +470,12 @@ button.button.more,
 .share-module .share-list .weixin-share-modal .share-tips,
 .main-container .sponsor-wrapper .sponsor-right-area .sponsor-count-info span,
 .bangumi-recom .recom-title,
-.btn-sponsor-wrapper .sponsor-count span 
+.btn-sponsor-wrapper .sponsor-count span,
+.timer-wrap .vote-dialog-new .main .main-txt-1 label,
+.timer-wrap .vote-dialog-new .footer .b-disable,
+.fjw-case-detail .ban-detail .content-box .jury-status .status-left .voted .voted-tips p span,
+.cm-model h4,
+.fjw-case-detail .ban-detail .content-box .jury-status .status-right .vote-success .success-txt p 
 {
     color: #eee !important;
 }
@@ -564,7 +580,11 @@ button.button.more,
 .share-module .share-list li.share-btn.btn-app,
 .share-module .share-list .weixin-share-modal,
 .sponsor-rank-v1 .sponsor-rank-header .show-sponsor-rank,
-.main-container .sponsor-wrapper 
+.main-container .sponsor-wrapper,
+.timer-wrap .vote-dialog-new .header,
+.word-limit-h5 textarea,
+.info-model .border-b,
+.video-model .border-b 
 {
     border-color: transparent !important;
 }
@@ -634,7 +654,9 @@ li.history,
 .season-slider-wrapper .slider-wrapper .season-slider-list li.cur,
 .swiper-button-next:hover,
 .swiper-button-prev:hover,
-.big-banner-warp .swiper-pagination-bullet-active
+.big-banner-warp .swiper-pagination-bullet-active,
+.video-model header h2 .head-icon,
+.info-model header h2 .head-icon 
 {
     filter: $blueImageFilter !important;
 }
