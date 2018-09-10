@@ -1,6 +1,6 @@
 (() =>
 {
-    return (_, resources) =>
+    return (settings, resources) =>
     {
         const getPosition = element =>
         {
@@ -645,11 +645,15 @@
             it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
             setupTouchPlayer
         ).start();
-        new SpinQuery(
-            () => $(".bilibili-player-area"),
-            it => it.length > 0 && $(".bilibili-player-video").data("events"),
-            overrideClickHandler
-        ).start();
+
+        if (settings.touchVideoPlayerDoubleTapControl)
+        {
+            new SpinQuery(
+                () => $(".bilibili-player-area"),
+                it => it.length > 0 && $(".bilibili-player-video").data("events"),
+                overrideClickHandler
+            ).start();
+        }
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
         return {

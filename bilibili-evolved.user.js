@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.3.8
+// @version      1.3.9
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -27,6 +27,7 @@
         harunaScale: true,
         removeAds: true,
         hideTopSearch: false,
+        touchVideoPlayerDoubleTapControl: false,
         touchVideoPlayerAnimation: false,
         touchNavBar: false,
         touchVideoPlayer: false,
@@ -45,7 +46,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.3.8"
+        currentVersion: "1.3.9"
     };
     function loadSettings()
     {
