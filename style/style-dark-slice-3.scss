@@ -1,7 +1,7 @@
-// a
-// {
-//     background-color: #222 !important;
-// }
+.bilibili-player-video-sendbar
+{
+    background-color: #222 !important;
+}
 // a
 // {
 //     background-color: #444 !important;
@@ -23,7 +23,8 @@
 //     background-image: none !important;
 // }
 
-.bilibili-player-video-sendbar,
+.mode-webfullscreen .bilibili-player-video-sendbar,
+.mode-fullscreen .bilibili-player-video-sendbar,
 .bilibili-player-video-bottom-area::before
 {
     background-color: transparent !important;
