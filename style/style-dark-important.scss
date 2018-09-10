@@ -61,7 +61,15 @@ blockquote .color-yellow-04
 {
     border-color: $customStyleColor !important;
 }
-.season-timeline .season-group.today.is-published .group-time::before
+.season-timeline .season-group.today.is-published .group-time::before,
+.bg-blue,
+.security-list .child-list li a.bg-blue:hover,
+.face-g-tab li.current
 {
     background-color: $customStyleColor !important;
+}
+.face-g-tab li.current,
+.current .tab-btn-link
+{
+    color: $foreground !important;
 }
