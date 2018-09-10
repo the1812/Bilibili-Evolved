@@ -54,7 +54,9 @@ li.season-item .season-body .season-title span.follow,
 .el-input__inner,
 .user-my-sex .el-radio-button__inner,
 .el-picker-panel,
-.face-g-action
+.face-g-action,
+.bangumi-list-wrapper .bottom-block .slider-contro i.slider-prev-mask,
+.bangumi-list-wrapper .bottom-block .slider-contro i.slider-next-mask 
 {
     background-color: #222 !important;
 }
@@ -141,7 +143,9 @@ li.season-item .season-body .season-title span.follow,
 .info-model .border-b,
 .video-model .border-b,
 .info-model header,
-.video-model header
+.video-model header,
+.bangumi-player.mini-player .mini-player-move span,
+.bangumi-player.mini-player .mini-player-move i
 {
     background-color: #444 !important;
 }
@@ -154,7 +158,8 @@ li.season-item .season-body .season-title span.follow,
 .season-timeline .season-group .group-time:before,
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover,
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover,
-.border-line
+.border-line,
+.count-wrapper div.danmu-count:after 
 {
     background-color: #aaa !important;
 }
@@ -774,7 +779,8 @@ li.season-item .season-body .season-title span.follow,
 .go-movie,
 .points-btn,
 .tab-mk2.active,
-.face-g-item:hover
+.face-g-item:hover,
+.season-item.on 
 {
     border-color: $customStyleColor !important;
 }
