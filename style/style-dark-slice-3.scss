@@ -1,7 +1,7 @@
-// a
-// {
-//     background-color: #222 !important;
-// }
+.bilibili-player-video-sendbar
+{
+    background-color: #222 !important;
+}
 // a
 // {
 //     background-color: #444 !important;
@@ -23,10 +23,13 @@
 //     background-image: none !important;
 // }
 
-// a
-// {
-//     background-color: transparent !important;
-// }
+.mode-fullscreen .bilibili-player-video-btn-widescreen,
+.mode-webfullscreen .bilibili-player-video-sendbar,
+.mode-fullscreen .bilibili-player-video-sendbar,
+.bilibili-player-video-bottom-area::before
+{
+    background-color: transparent !important;
+}
 // a
 // {
 //     background: #fff1 !important;
