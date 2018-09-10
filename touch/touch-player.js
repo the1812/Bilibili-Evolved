@@ -594,6 +594,48 @@
                 };
             }
         }
+        function overrideClickHandler(playerArea)
+        {
+            const video = $(".bilibili-player-video");
+            const hoverClassName = "touch-video-control-show";
+            const originalClickHandler = video.data("events").click[0].handler;
+            console.log(originalClickHandler);
+            video.unbind("click");
+
+            let clickedOnce = false;
+            const clickHandler = (double, e) =>
+            {
+                if (double)
+                {
+                    console.log(originalClickHandler);
+                    originalClickHandler(e);
+                }
+                else
+                {
+                    playerArea.toggleClass(hoverClassName);
+                }
+            };
+            video.on("click", e =>
+            {
+                if (!clickedOnce)
+                {
+                    clickedOnce = true;
+                    setTimeout(() =>
+                    {
+                        if (clickedOnce)
+                        {
+                            clickedOnce = false;
+                            clickHandler(false, e);
+                        }
+                    }, 400);
+                }
+                else
+                {
+                    clickedOnce = false;
+                    clickHandler(true, e);
+                }
+            });
+        }
         SpinQuery.any(
             () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
             icons => icons.unbind("click")
@@ -603,10 +645,15 @@
             it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
             setupTouchPlayer
         ).start();
+        new SpinQuery(
+            () => $(".bilibili-player-area"),
+            it => it.length > 0 && $(".bilibili-player-video").data("events"),
+            overrideClickHandler
+        ).start();
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
         return {
-            ajaxReload: true
+            ajaxReload: false
         };
     };
 })();

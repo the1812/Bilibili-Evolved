@@ -116,6 +116,11 @@
 {
     transform: rotateX(0deg) rotateY(0deg) scale(1);
 }
+.touch-video-control-show .bilibili-player-video-control-wrap
+{
+    opacity: 1 !important;
+    visibility: visible !important;
+}
 
 
 div.bilibili-player-video-control
