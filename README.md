@@ -43,6 +43,7 @@
 - 缩放看板娘: `开启`
 - 删除直播水印: `开启`
 - 删除视频标题层: `开启`
+- 模糊视频控制栏背景: `关闭`
 ### 触摸
 - 顶栏触摸优化: `关闭`
 - 播放器触摸支持: `关闭`
@@ -134,6 +135,12 @@
 
 标题覆盖层的位置:
 ![标题覆盖层](images/remove-top-mask.png)
+### 模糊视频控制栏背景
+此功能需要浏览器支持背景模糊效果, 详情见兼容性一节.
+#### 启用前
+![不模糊背景](images/blur-video-control-disabled.png)
+#### 启用后
+![模糊背景](images/blur-video-control.png)
 
 ## 触摸支持
 ### 顶栏
@@ -165,10 +172,10 @@
 
 # 兼容性
 ## ![Chrome:兼容](https://img.shields.io/badge/Chrome-兼容-brightgreen.svg?style=flat-square&colorB=009688)
-- 触摸调整框的背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
+- 背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
 ## ![Firfox:部分兼容](https://img.shields.io/badge/FireFox-部分兼容-yellow.svg?style=flat-square&colorB=1976D2)
 - 滚动条样式无效.
-- 触摸调整框的背景模糊效果无效.
+- 背景模糊效果无效.
 - 触摸调整的进度预览有弹跳现象.(来自`transition: all 0.2s;`. 短时间内总是从原数值开始变化,而不是当前数值)
 ## ![Edge:部分兼容](https://img.shields.io/badge/Edge-部分兼容-yellow.svg?style=flat-square&colorB=1976D2)
 - 滚动条样式无效.
