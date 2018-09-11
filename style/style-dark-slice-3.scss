@@ -135,6 +135,13 @@
 // {
 //     opacity: 1 !important;
 // }
+@supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
+{
+    .gui-settings-content
+    {
+        background: #222d !important;
+    }
+}
 
 // a
 // {
