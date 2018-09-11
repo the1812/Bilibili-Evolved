@@ -220,7 +220,10 @@ li.season-item .season-body .season-title span.follow,
 .security-list .child-list li a:hover,
 .f-list-hover:hover,
 .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-1 .bilibili-player-block-type-keyword, .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-2 .bilibili-player-block-type-user,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-btn:hover, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-btn:hover, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn:hover,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover ,
 {
     background-color: transparent !important;
 }
@@ -335,7 +338,11 @@ li.no-data,
 .face-g-list .mp-block .right ul li.base .tips,
 .face-g-list .mp-block .right ul li p.reach-tips,
 .fans-number,
-.bb-comment .no-more-reply 
+.bb-comment .no-more-reply,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn,
+.bangumi-review-item .item-header .pub-time,
+.bangumi-media .bangumi-media-header .rate-wrapper .rate-info .info-wrapper,
+.recom-item a .recom-info .info-count > div span 
 {
     color: #aaa !important;
 }
@@ -845,7 +852,9 @@ li.season-item .season-body .season-title span.follow,
 .season-item.on,
 .bpui-selectmenu,
 .face-g-list .mp-block .right ul li.base .round,
-.face-g-list .mp-block .right ul li.base.reach .round {
+.face-g-list .mp-block .right ul li.base.reach .round,
+.bpui-tab-list-type-button .bpui-tab-list-row.bpui-state-selected 
+{
     border-color: $customStyleColor !important;
 }
 .progress-bar-inner,
@@ -968,7 +977,8 @@ button.button.more:hover,
 .tab-mk2.tab-mk2-r,
 .tab-mk2:hover,
 .lh12 a,
-.cm-model .report-detail .more-list a 
+.cm-model .report-detail .more-list a,
+.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round 
 {
     color: $customStyleColor !important;
 }
