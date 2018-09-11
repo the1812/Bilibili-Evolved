@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.3.10
+// @version      1.3.11
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -21,6 +21,7 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        blurVideoControl: false,
         toast: false,
         fullTweetsTitle: false,
         removeVideoTopMask: true,
@@ -47,7 +48,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.3.10"
+        currentVersion: "1.3.11"
     };
     function loadSettings()
     {
@@ -93,6 +94,7 @@
             fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
             imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
             toastStyle: new Resource("style/style-toast.min.scss", 9),
+            blurVideoControlStyle: new Resource("style/style-blur-video-control.min.css", 10),
 
             guiSettingsDom: new Resource("utils/gui-settings.html"),
             imageViewerDom: new Resource("utils/image-viewer.html"),
@@ -113,7 +115,8 @@
             viewCover: new Resource("video/view-cover.min.js"),
             notifyNewVersion: new Resource("utils/notify-new-version.min.js"),
             toast: new Resource("utils/toast.min.js"),
-            removeVideoTopMask: new Resource("video/remove-top-mask.min.js")
+            removeVideoTopMask: new Resource("video/remove-top-mask.min.js"),
+            blurVideoControl: new Resource("video/blur-video-control.min.js")
         };
         (function ()
         {
@@ -153,6 +156,9 @@
             this.toast.dependencies = [
                 this.toastStyle
             ];
+            this.blurVideoControl.dependencies = [
+                this.blurVideoControlStyle
+            ];
         }).apply(Resource.all);
         (function ()
         {
@@ -172,6 +178,7 @@
             this.notifyNewVersion.displayName = "新版本提醒";
             this.toast.displayName = "显示消息";
             this.removeVideoTopMask.displayName = "删除视频标题层";
+            this.blurVideoControl.displayName = "模糊视频控制栏背景";
         }).apply(Resource.all);
     }
     function downloadText(url, load, error)

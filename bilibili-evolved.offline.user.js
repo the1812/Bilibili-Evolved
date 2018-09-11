@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      57.01
+// @version      57.09
 // @description  增强哔哩哔哩Web端体验.(离线版)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -21,6 +21,7 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        blurVideoControl: false,
         toast: false,
         fullTweetsTitle: false,
         removeVideoTopMask: true,
@@ -47,7 +48,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js",
-        currentVersion: "1.3.10"
+        currentVersion: "1.3.11"
     };
     function loadSettings()
     {
@@ -93,6 +94,7 @@
             fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
             imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
             toastStyle: new Resource("style/style-toast.min.scss", 9),
+            blurVideoControlStyle: new Resource("style/style-blur-video-control.min.css", 10),
 
             guiSettingsDom: new Resource("utils/gui-settings.html"),
             imageViewerDom: new Resource("utils/image-viewer.html"),
@@ -113,7 +115,8 @@
             viewCover: new Resource("video/view-cover.min.js"),
             notifyNewVersion: new Resource("utils/notify-new-version.min.js"),
             toast: new Resource("utils/toast.min.js"),
-            removeVideoTopMask: new Resource("video/remove-top-mask.min.js")
+            removeVideoTopMask: new Resource("video/remove-top-mask.min.js"),
+            blurVideoControl: new Resource("video/blur-video-control.min.js")
         };
         (function ()
         {
@@ -153,6 +156,9 @@
             this.toast.dependencies = [
                 this.toastStyle
             ];
+            this.blurVideoControl.dependencies = [
+                this.blurVideoControlStyle
+            ];
         }).apply(Resource.all);
         (function ()
         {
@@ -172,6 +178,7 @@
             this.notifyNewVersion.displayName = "新版本提醒";
             this.toast.displayName = "显示消息";
             this.removeVideoTopMask.displayName = "删除视频标题层";
+            this.blurVideoControl.displayName = "模糊视频控制栏背景";
         }).apply(Resource.all);
     }
     function downloadText(url, load, error)
@@ -418,6 +425,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/s
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-full-tweets-title.min.css"] = `.dynamic-m .info,.dynamic-m .title{height:auto!important;}.dynamic-m .info a,.dynamic-m .title a,.dynamic-m .title span{white-space:normal!important;}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-image-viewer.min.scss"] = `html.image-viewer-opened,body.image-viewer-opened{overflow:hidden!important;}.image-viewer-container{background:rgba(0,0,0,0.85);width:100%;height:100%;position:fixed;top:0;left:0;z-index:100000;display:none;justify-content:center;align-items:center;}.image-viewer-container.opened{display:flex;}.image-viewer{width:90%;height:90%;display:grid;grid-template-columns:auto 48px;grid-template-rows:48px auto 48px;grid-template-areas:"image close" "image ." "image download";grid-column-gap:12px;justify-items:center;justify-content:stretch;align-items:center;align-content:stretch;}.image-viewer .image{grid-area:image;width:auto;height:auto;max-width:100%;max-height:100%;}.image-viewer .close{grid-area:close;}.image-viewer .download{grid-area:download;}.image-viewer-icon{cursor:pointer;width:100%;height:100%;}.image-viewer-icon svg{max-width:48px;max-height:48px;}.image-viewer-icon path{fill:#eee;transition:all 0.2s;transform-origin:center;}.image-viewer-icon:hover path{fill:$customStyleColor;transform:scale(1.2);}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-toast.min.scss"] = `.toast-card-container{position:fixed;left:16px;bottom:16px;display:flex;flex-direction:column;align-items:start;z-index:9999;}.toast-card{background:#444;min-width:240px;border-radius:8px;box-shadow:0 1px 20px rgba(0,0,0,.1);height:0;transition:all 0.3s cubic-bezier(0.18,0.89,0.32,1.28);transform:translateY(16px);transform-origin:bottom;opacity:0;overflow:hidden;display:flex;flex-direction:column;}.toast-card.visible{height:96px;transform:scale(1) translateY(0);opacity:0.95;margin-top:16px;}.toast-card-header{display:flex;align-items:center;}.toast-card-title{font-size:18px;color:#fff6;margin:16px;font-weight:bold;flex:1 1 auto;}svg.toast-card-dismiss{height:24px;width:24px;flex:0 0 auto;padding:16px;cursor:pointer;-webkit-tap-highlight-color:transparent;}svg.toast-card-dismiss path{fill:#fff6;}.toast-card-message{color:#eeed;font-size:14px;margin:16px;margin-top:0;}.toast-card.toast-default{background:#444;}.toast-card.toast-error{background:#652020;}.toast-card.toast-info{background:#303d61;}.toast-card.toast-success{background:#274227;}`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/style-blur-video-control.min.css"] = `@supports (backdrop-filter: blur(48px)) or (-webkit-backdrop-filter: blur(48px)){.video-control-blur-layer{width:100%;height:100%;position:absolute;-webkit-backdrop-filter:blur(48px);backdrop-filter:blur(48px);z-index:-1;}.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap{background-color:transparent!important;}.bilibili-player-area .bilibili-player-video-control-wrap{transition:none!important;}}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/gui-settings.html"] = `<div class="gui-settings-panel">
   <div class="gui-settings-box">
     <div class="gui-settings-header">
@@ -464,6 +472,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
         <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
         <checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox>
         <checkbox indent="0" key="removeVideoTopMask" dependencies=""></checkbox>
+        <checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox>
         <category>触摸优化</category>
         <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
         <checkbox indent="0" key="touchVideoPlayer" dependencies=""></checkbox>
@@ -503,7 +512,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/u
     </div>
 </div>
 `;
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/version.txt"] = `1.3.10`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/version.txt"] = `1.3.11`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/gui-settings.min.js"] = (()=>{return(e,t)=>{const n={red:"#e57373",pink:"#F06292",purple:"#BA68C8",deepPurple:"#9575CD",indigo:"#7986CB",blue:"#2196F3",lightBlue:"#00A0D8",cyan:"#00ACC1",teal:"#26A69A",green:"#81C784",lightGreen:"#9CCC65",orange:"#FF9800",deepOrange:"#FF7043",brown:"#A1887F",grey:"#757575",blueGrey:"#78909C"};const s={settings:"M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z",close:"M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z",ok:"M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"};const o={customStyleColor:t=>{const n=t.match(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);if(n){if(t.length<7){return`#${t[1]}${t[1]}${t[2]}${t[2]}${t[3]}${t[3]}`}else{return t}}else{return e.customStyleColor}},blurBackgroundOpacity:t=>{const n=t.match(/^([-\+]?\d+)(\.\d+)?$/);if(n){const e=parseFloat(t);if(e>=0&&e<=1){return t}}return e.blurBackgroundOpacity}};function i(e,t,n){$(`input[type='checkbox'][key='${e}']`).prop("checked",n).change();$(`input[type='text'][key='${e}']`).val(n)}function c(){for(const t in e){i(t,undefined,e[t])}}function a(){$(".gui-settings-header .gui-settings-close").on("click",()=>{$(".gui-settings-panel").removeClass("opened")});$("input[key='customStyleColor']").on("input",()=>{const e=o.customStyleColor($("input[key='customStyleColor']").val());$("div.custom-color-preview").css("background",e)});$("input[type='text'][key]").each((t,n)=>{$(n).attr("placeholder",e[$(n).attr("key")])});$("div.custom-color-preview").on("click",()=>{if($("input[key='useNewStyle']").prop("checked")){const e=$(".predefined-colors");e.toggleClass("opened")}});const t=document.querySelector("button.save");const n=document.querySelector(".gui-settings-footer svg.gui-settings-ok");const s="save-complete";const a=()=>{n.classList.remove(s);t.classList.remove(s)};t.addEventListener("animationend",a);n.addEventListener("animationend",a);t.addEventListener("click",()=>{$("input[type='checkbox'][key]").each((t,n)=>{e[$(n).attr("key")]=$(n).prop("checked")});$("input[type='text'][key]").each((t,n)=>{const s=$(n).attr("key");const i=$(n).val();e[s]=o[s](i)});saveSettings(e);if([n,t].every(e=>!e.classList.contains(s))){t.classList.add(s);n.classList.add(s)}c()});onSettingsChange(i)}function r(){$(".gui-settings-close path").attr("d",s.close);$(".gui-settings-ok path").attr("d",s.ok);$(".gui-settings svg path").attr("d",s.settings)}function l(){const e={};$(`input[dependencies]`).each((t,n)=>{const s=$(n).attr("dependencies");if(s){e[$(n).attr("key")]=s}});$(`input[type='checkbox'][key]`).on("change",t=>{const n=$(t.target);const s=n.prop("checked");for(const t in e){const o=e[t].split(" ");if(o.indexOf(n.attr("key"))!==-1){let e=true;if(s&&o.every(e=>$(`input[key='${e}']`).prop("checked"))){e=false}$(`input[key='${t}']`).prop("disabled",e);if(e){$(`input[key='${t}'][type='text']`).parent().addClass("disabled")}else{$(`input[key='${t}'][type='text']`).parent().removeClass("disabled")}}}const o=$(".predefined-colors");if(o.hasClass("opened")){o.removeClass("opened")}})}function d(e){if($(".gui-settings").length===0){e.append(`<div class='gui-settings-icon-panel'><div class='gui-settings'>\n                    <svg style='width:24px;height:24px' viewBox='0 0 24 24'>\n                        <path/>\n                    </svg>\n                </div></div>`);$(".gui-settings").on("click",()=>{$(".gui-settings-panel").addClass("opened")})}t.applyStyle("guiSettingsStyle","gui-settings-style")}function p(){const e=$(".predefined-colors-grid");for(const t of Object.values(n)){$(`<div class='predefined-colors-grid-block'></div>`).appendTo(e).css("background",t).attr("data-color",t).on("click",e=>{$(`input[key='customStyleColor']`).val($(e.target).attr("data-color")).trigger("input");$("div.custom-color-preview").on("click")})}}function u(){$(".gui-settings-content ul li.category, .gui-settings-content").addClass("blur")}new SpinQuery(()=>$("body"),e=>e.length>0&&unsafeWindow.$,e=>{d(e);const n=t.data.guiSettingsDom.text;if(n){$("body").append(n);a();r();l();c();p();u()}}).start();return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/dark-styles.min.js"] = (()=>{return(e,l)=>{if(e.useNewStyle){const e=Object.keys(l.data).filter(e=>e.indexOf("darkStyleSlice")!==-1).length;for(let t=e;t>0;t--){l.applyStyle(`darkStyleSlice${t}`,`bilibili-new-style-dark-slice-${t}`)}l.applyImportantStyle("darkStyleImportant","bilibili-new-style-dark-important")}return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/style/new-styles.min.js"] = (()=>{return(e,l)=>{l.applyStyle("scrollbarStyle","bilibili-scrollbar-style");SpinQuery.any(()=>$(".custom-scrollbar"),e=>e.removeClass("custom-scrollbar"));SpinQuery.any(()=>$(".bili-wrapper,#link-navbar-vm,.link-navbar"),()=>{const e=document.getElementsByClassName("bili-wrapper")[0]||document.getElementById("link-navbar-vm")||document.getElementsByClassName("link-navbar")[0];let n=false;if(e instanceof Element){const l=parseInt(window.getComputedStyle(e).height);n=l===50||l===56}if(n){l.applyStyle("style","bilibili-new-style")}else{l.applyStyle("oldStyle","bilibili-new-style")}});if(e.overrideNavBar){new SpinQuery(()=>$(".search").not(".filter-item"),e=>e.length>0&&$(".nav-con.fr").length>0,e=>{e.detach().insertAfter(".nav-con.fr")}).start();l.applyStyle("navbarOverrideStyle","bilibili-nav-bar-override");if(!e.showBanner){l.applyStyle("noBannerStyle","bilibili-banner-override")}}return{ajaxReload:false}}})();
@@ -520,6 +529,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/v
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/notify-new-version.min.js"] = (()=>{return(t,e)=>{const s={less:-1,equal:0,greater:1,incomparable:NaN};class r{constructor(t){this.parts=t.split(".");this.versionString=t}isPositiveInteger(t){return/^\d+$/.test(t)}validateParts(){for(var t=0;t<this.parts.length;++t){if(!this.isPositiveInteger(this.parts[t])){return false}}return true}compareTo(t){if(!this.validateParts()||!t.validateParts()){return s.incomparable}for(let e=0;e<this.parts.length;++e){if(t.parts.length===e){return s.greater}if(this.parts[e]===t.parts[e]){continue}if(this.parts[e]>t.parts[e]){return s.greater}return s.less}if(this.parts.length!==t.parts.length){return s.less}return s.equal}greaterThan(t){return this.compareTo(t)===s.greater}lessThan(t){return this.compareTo(t)===s.less}equals(t){return this.compareTo(t)===s.equal}}const n=new r(e.data.latestVersion.text);const a=new r(t.currentVersion);if(n.greaterThan(a)){SpinQuery.any(()=>$(".gui-settings"),e=>{e.addClass("gui-settings-notification");const s=$(".gui-settings-footer");const r=`新版本${n.versionString}已发布.`;s.after(`\n                <div class="gui-settings-footer">\n                    <span class="gui-settings-label">${r}</span>\n                    <a>\n                        <button\n                            class="gui-settings-button"\n                            id="new-version-update">\n                            更新\n                        </button>\n                    </a>\n                </div>`);$("#new-version-update").parent().attr("href",t.latestVersionLink);Toast.show(r,"检查更新",1e4)})}return{ajaxReload:false}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/utils/toast.min.js"] = (()=>{return(t,s)=>{class e{constructor(t="",s="",e="default"){this.type=e;this.message=t;this.title=s;this.duration=3e3;this.element=$(this.cardHtml)[0];this.$element=$(this.element);$(".toast-card-container").append(this.$element)}show(){this.element.classList.add("visible");this.$element.find(".toast-card-dismiss").on("click",()=>this.dismiss());if(this.duration){setTimeout(()=>this.dismiss(),this.duration)}}dismiss(){if(this.element.classList.contains("visible")){this.$element.on("transitionend",()=>this.$element.remove());this.element.classList.remove("visible")}}get cardHtml(){return`\n                <div class="toast-card toast-${this.type}">\n                <div class="toast-card-header">\n                    <h1 class="toast-card-title">${this.title}</h1>\n                    <svg class="toast-card-dismiss" viewbox="0 0 24 24">\n                    <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z">\n                    </path>\n                    </svg>\n                </div>\n                <p class="toast-card-message">${this.message}</p>\n                </div>\n                `}static get container(){return $(".toast-card-container")}static createToastContainer(){if($(".toast-card-container").length===0){$("body").append(`<div class="toast-card-container"></div>`)}}static _show(t,s,i,a){const n=new e(t,s,a);n.duration=i;n.show()}static show(t,s,e=3e3){this._show(t,s,e,"default")}static info(t,s,e){this._show(t,s,e,"info")}static success(t,s,e){this._show(t,s,e,"success")}static error(t,s,e){this._show(t,s,e,"error")}}s.applyStyle("toastStyle","toast-style");e.createToastContainer();return{ajaxReload:false,export:e}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/video/remove-top-mask.min.js"] = (()=>{return(i,n)=>{const e="bilibili-video-top-mask";if($(`#${e}`).length===0){n.applyStyleFromText(`\n            <style id='${e}'>\n                .bilibili-player-video-top\n                {\n                    display: none !important;\n                }\n            </style>\n            `)}return{ajaxReload:false}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/video/blur-video-control.min.js"] = (()=>{return(i,l)=>{SpinQuery.count(()=>$(".bui-slider .bui-track.bui-track-video-progress,.bilibili-player-area .bilibili-player-video-control"),2,i=>{i.prepend(`<div class="video-control-blur-layer"></div>`);l.applyStyle("blurVideoControlStyle","bilibili-blur-video-control")});return{ajaxReload:false}}})();
 
     class ResourceType
     {
