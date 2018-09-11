@@ -102,7 +102,8 @@
 // }
 
 .tab-mk2.active,
-.face-g-more
+.face-g-more,
+.bangumi-player
 {
     background-image: none !important;
 }
@@ -110,10 +111,10 @@
 // {
 //     border-radius: 4px !important;
 // }
-// a
-// {
-//     box-shadow: none !important;
-// }
+.bangumi-player
+{
+    box-shadow: none !important;
+}
 // a
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
