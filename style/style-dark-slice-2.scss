@@ -344,7 +344,8 @@ li.no-data,
 .bangumi-media .bangumi-media-header .rate-wrapper .rate-info .info-wrapper,
 .recom-item a .recom-info .info-count > div span,
 .history-list .r-info .subtitle,
-.history-list .r-info .history-mark 
+.history-list .r-info .history-mark,
+.rank-list .rank-item .ri-detail .ri-point 
 {
     color: #aaa !important;
 }
@@ -697,7 +698,8 @@ li.history,
 .right-more-btn,
 .points-pendant-item,
 .history-list .l-info .lastplay-time .history-red-round,
-.history-list .r-info .r-txt 
+.history-list .r-info .r-txt,
+.container .tag
 {
     border-color: #aaa !important;
 }
@@ -983,7 +985,8 @@ button.button.more:hover,
 .tab-mk2:hover,
 .lh12 a,
 .cm-model .report-detail .more-list a,
-.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round 
+.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round,
+.container .tag .item-btn
 {
     color: $customStyleColor !important;
 }
