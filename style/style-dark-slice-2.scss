@@ -58,7 +58,8 @@ li.season-item .season-body .season-title span.follow,
 .bpui-selectmenu.selectmenu-mode-absolute .bpui-selectmenu-list-row,
 .face-g-item-inner,
 .face-g-list[id=face-g-log] td,
-.face-g-list[id=face-g-log] th 
+.face-g-list[id=face-g-log] th,
+.face-g-list .mp-block .right ul li .strip 
 {
     background-color: #222 !important;
 }
@@ -174,6 +175,11 @@ li.season-item .season-body .season-title span.follow,
 .sponsor-rank-item.normal .sp-left .face-wrap
 {
     background-image: none !important;
+}
+.bilibili-player-video-control,
+.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
+{
+    background-color: #222c !important;
 }
 .disabled-cover
 {
@@ -314,7 +320,10 @@ li.no-data,
 .tab-btn-link,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-btn:hover, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover,
 .bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-label,
-.face-g-expire-at 
+.face-g-expire-at,
+.face-g-list .mp-block .left .mp-info label,
+.face-g-list .mp-block .right ul li.base .tips,
+.face-g-list .mp-block .right ul li p.reach-tips 
 {
     color: #aaa !important;
 }
@@ -500,7 +509,11 @@ button.button.more,
 .bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt,
 .face-g-takedown, .face-g-use, .face-g-xf,
 .face-g-list[id=face-g-log] td,
-.face-g-list[id=face-g-log] th 
+.face-g-list[id=face-g-log] th,
+.mp-mine-takedown,
+.face-g-list .mp-block .left .mp-info .mp-title,
+.face-g-list .mp-block .left .mp-info .mp-descr,
+.face-g-list .mp-block .right ul li p.title 
 {
     color: #eee !important;
 }
@@ -621,7 +634,11 @@ button.button.more,
 .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.bilibili-player-border,
 .bilibili-player .bilibili-player-panel-title,
 .face-g-item-inner,
-.face-g-list[id=face-g-log] td 
+.face-g-list[id=face-g-log] td,
+.mp-mine-avatar,
+.mp-mine-takedown,
+.face-g-list .mp-block .left .mp-img,
+.face-g-list .face-g-block 
 {
     border-color: transparent !important;
 }
@@ -798,8 +815,9 @@ li.season-item .season-body .season-title span.follow,
 .tab-mk2.active,
 .face-g-item:hover,
 .season-item.on,
-.bpui-selectmenu
-{
+.bpui-selectmenu,
+.face-g-list .mp-block .right ul li.base .round,
+.face-g-list .mp-block .right ul li.base.reach .round {
     border-color: $customStyleColor !important;
 }
 .progress-bar-inner,
@@ -838,7 +856,9 @@ li.season-item .season-body .season-title span.follow,
 .tit-b,
 .face-g-action[id=face-g-change],
 .face-g-takedown, .face-g-use,
-.face-g-takedown:hover, .face-g-use:hover 
+.face-g-takedown:hover, .face-g-use:hover,
+.mp-mine-takedown,
+.face-g-list .mp-block .right ul li.reach .strip 
 {
     background-color: $customStyleColor !important;
 }
