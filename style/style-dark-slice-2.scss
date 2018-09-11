@@ -342,7 +342,9 @@ li.no-data,
 .bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn,
 .bangumi-review-item .item-header .pub-time,
 .bangumi-media .bangumi-media-header .rate-wrapper .rate-info .info-wrapper,
-.recom-item a .recom-info .info-count > div span 
+.recom-item a .recom-info .info-count > div span,
+.history-list .r-info .subtitle,
+.history-list .r-info .history-mark 
 {
     color: #aaa !important;
 }
@@ -535,7 +537,8 @@ button.button.more,
 .face-g-list .mp-block .right ul li p.title,
 .medal-message,
 .btn-dufault,
-.emoji-box 
+.emoji-box,
+.history-list .cover-contain .label 
 {
     color: #eee !important;
 }
@@ -692,7 +695,9 @@ li.history,
 .home-to-update,
 .home-userstatus,
 .right-more-btn,
-.points-pendant-item
+.points-pendant-item,
+.history-list .l-info .lastplay-time .history-red-round,
+.history-list .r-info .r-txt 
 {
     border-color: #aaa !important;
 }
@@ -1030,7 +1035,9 @@ button.button.more:hover,
 .container,
 .bili-footer .boston-postcards li,
 .h-line,
-.el-radio-button:first-child .el-radio-button__inner
+.el-radio-button:first-child .el-radio-button__inner,
+.history-list .l-info,
+.history-list .r-info .history-mark 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
