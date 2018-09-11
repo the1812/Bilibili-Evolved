@@ -146,7 +146,8 @@ li.season-item .season-body .season-title span.follow,
 .bangumi-player.mini-player .mini-player-move span,
 .bangumi-player.mini-player .mini-player-move i,
 .bilibili-player .bilibili-player-panel,
-.bilibili-player .bilibili-player-panel-title 
+.bilibili-player .bilibili-player-panel-title,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-adv-danmaku, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-setting 
 {
     background-color: #444 !important;
 }
@@ -501,7 +502,8 @@ button.button.more,
 .bilibili-player .bilibili-player-panel-title,
 .bilibili-player .bilibili-player-panel-area .bilibili-player-panel-area-title,
 .bpui-tab-list-type-button .bpui-tab-list-row,
-.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt 
+.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt,
+.bilibili-player * 
 {
     color: #eee !important;
 }
@@ -620,7 +622,9 @@ button.button.more,
 .face-g-action[id=face-g-change],
 .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel,
 .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.bilibili-player-border,
-.bilibili-player .bilibili-player-panel-title 
+.bilibili-player .bilibili-player-panel-title,
+.bpui-slider-tracker .bpui-slider-handle .bpui-slider-hint,
+.bilibili-player .bilibili-player-area-separator 
 {
     border-color: transparent !important;
 }
@@ -797,7 +801,9 @@ li.season-item .season-body .season-title span.follow,
 .tab-mk2.active,
 .face-g-item:hover,
 .season-item.on,
-.bpui-selectmenu 
+.bpui-selectmenu,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-1 .bilibili-player-block-type-keyword, .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-2 .bilibili-player-block-type-user,
+.bpui-tab-list-type-button .bpui-tab-list-row.bpui-state-selected 
 {
     border-color: $customStyleColor !important;
 }
@@ -913,7 +919,8 @@ button.button.more:hover,
 .tab-mk2.active,
 .acc-sec,
 .tab-mk2.tab-mk2-r,
-.tab-mk2:hover
+.tab-mk2:hover,
+.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round 
 {
     color: $customStyleColor !important;
 }
