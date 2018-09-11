@@ -84,10 +84,10 @@
 // {
 //     filter: brightness(0) invert(1) !important;
 // }
-// a
-// {
-//     filter: $blueImageFilter !important;
-// }
+.bp-svg-icon.link
+{
+    filter: $blueImageFilter !important;
+}
 // a
 // {
 //     filter: $pinkImageFilter !important;
