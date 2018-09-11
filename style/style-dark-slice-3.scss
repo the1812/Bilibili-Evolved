@@ -137,7 +137,7 @@
 // }
 @supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
 {
-    .gui-settings-content
+    .gui-settings-content.blur
     {
         background: #222d !important;
     }

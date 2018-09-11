@@ -485,7 +485,7 @@
                 `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
-                            <input key="$2" type="checkbox" dependencies="$3"/>
+                            <input key="$2" type="checkbox" dependencies="$3" checked/>
                             <svg class="gui-settings-ok" viewBox="0 0 24 24">
                                 <path />
                             </svg>
