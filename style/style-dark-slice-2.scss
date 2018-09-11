@@ -59,7 +59,9 @@ li.season-item .season-body .season-title span.follow,
 .face-g-item-inner,
 .face-g-list[id=face-g-log] td,
 .face-g-list[id=face-g-log] th,
-.face-g-list .mp-block .right ul li .strip 
+.face-g-list .mp-block .right ul li .strip,
+.wear-list li,
+.hold-list 
 {
     background-color: #222 !important;
 }
@@ -150,7 +152,9 @@ li.season-item .season-body .season-title span.follow,
 .bangumi-player.mini-player .mini-player-move span,
 .bangumi-player.mini-player .mini-player-move i,
 .bilibili-player .bilibili-player-panel,
-.bilibili-player .bilibili-player-panel-title
+.bilibili-player .bilibili-player-panel-title,
+.medal-progress,
+.btn-disabled:hover 
 {
     background-color: #444 !important;
 }
@@ -323,7 +327,8 @@ li.no-data,
 .face-g-expire-at,
 .face-g-list .mp-block .left .mp-info label,
 .face-g-list .mp-block .right ul li.base .tips,
-.face-g-list .mp-block .right ul li p.reach-tips 
+.face-g-list .mp-block .right ul li p.reach-tips,
+.fans-number 
 {
     color: #aaa !important;
 }
@@ -513,7 +518,9 @@ button.button.more,
 .mp-mine-takedown,
 .face-g-list .mp-block .left .mp-info .mp-title,
 .face-g-list .mp-block .left .mp-info .mp-descr,
-.face-g-list .mp-block .right ul li p.title 
+.face-g-list .mp-block .right ul li p.title,
+.medal-message,
+.btn-dufault 
 {
     color: #eee !important;
 }
@@ -638,7 +645,14 @@ button.button.more,
 .mp-mine-avatar,
 .mp-mine-takedown,
 .face-g-list .mp-block .left .mp-img,
-.face-g-list .face-g-block 
+.face-g-list .face-g-block,
+.wear-list li,
+.hold-list-width.details-list-t,
+.hold-list,
+.btn-disabled,
+.btn-disabled:hover,
+.btn-dufault,
+.medal-up-trueLove 
 {
     border-color: transparent !important;
 }
@@ -710,7 +724,8 @@ li.history,
 .swiper-button-prev:hover,
 .big-banner-warp .swiper-pagination-bullet-active,
 .video-model header h2 .head-icon,
-.info-model header h2 .head-icon
+.info-model header h2 .head-icon,
+.fans-question 
 {
     filter: $blueImageFilter !important;
 }
@@ -858,7 +873,9 @@ li.season-item .season-body .season-title span.follow,
 .face-g-takedown, .face-g-use,
 .face-g-takedown:hover, .face-g-use:hover,
 .mp-mine-takedown,
-.face-g-list .mp-block .right ul li.reach .strip 
+.face-g-list .mp-block .right ul li.reach .strip,
+.btn-disabled,
+.btn-dufault 
 {
     background-color: $customStyleColor !important;
 }
