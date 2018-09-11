@@ -600,7 +600,6 @@
             const video = $(".bilibili-player-video");
             const hoverClassName = "touch-video-control-show";
             const originalClickHandler = video.data("events").click[0].handler;
-            console.log(originalClickHandler);
             video.unbind("click");
 
             let clickedOnce = false;
@@ -608,7 +607,6 @@
             {
                 if (double)
                 {
-                    console.log(originalClickHandler);
                     originalClickHandler(e);
                 }
                 else
