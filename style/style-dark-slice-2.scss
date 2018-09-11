@@ -55,7 +55,10 @@ li.season-item .season-body .season-title span.follow,
 .user-my-sex .el-radio-button__inner,
 .el-picker-panel,
 .face-g-action,
-.bpui-selectmenu.selectmenu-mode-absolute .bpui-selectmenu-list-row
+.bpui-selectmenu.selectmenu-mode-absolute .bpui-selectmenu-list-row,
+.face-g-item-inner,
+.face-g-list[id=face-g-log] td,
+.face-g-list[id=face-g-log] th 
 {
     background-color: #222 !important;
 }
@@ -315,7 +318,8 @@ li.no-data,
 .timer-wrap .vote-dialog-new .main .main-txt-2,
 .tab-btn-link,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-btn:hover, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover,
-.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-label
+.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-label,
+.face-g-expire-at 
 {
     color: #aaa !important;
 }
@@ -498,7 +502,10 @@ button.button.more,
 .bilibili-player .bilibili-player-panel-title,
 .bilibili-player .bilibili-player-panel-area .bilibili-player-panel-area-title,
 .bpui-tab-list-type-button .bpui-tab-list-row,
-.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt
+.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt,
+.face-g-takedown, .face-g-use, .face-g-xf,
+.face-g-list[id=face-g-log] td,
+.face-g-list[id=face-g-log] th 
 {
     color: #eee !important;
 }
@@ -617,7 +624,9 @@ button.button.more,
 .face-g-action[id=face-g-change],
 .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel,
 .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.bilibili-player-border,
-.bilibili-player .bilibili-player-panel-title
+.bilibili-player .bilibili-player-panel-title,
+.face-g-item-inner,
+.face-g-list[id=face-g-log] td 
 {
     border-color: transparent !important;
 }
@@ -832,7 +841,9 @@ li.season-item .season-body .season-title span.follow,
 .points-btn,
 .el-pager li.active,
 .tit-b,
-.face-g-action[id=face-g-change]
+.face-g-action[id=face-g-change],
+.face-g-takedown, .face-g-use,
+.face-g-takedown:hover, .face-g-use:hover 
 {
     background-color: $customStyleColor !important;
 }
@@ -910,7 +921,8 @@ button.button.more:hover,
 .tab-mk2.active,
 .acc-sec,
 .tab-mk2.tab-mk2-r,
-.tab-mk2:hover
+.tab-mk2:hover,
+.lh12 a 
 {
     color: $customStyleColor !important;
 }
