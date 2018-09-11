@@ -106,6 +106,15 @@
     position: relative;
     overscroll-behavior: contain;
 }
+@supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
+{
+    .gui-settings-content.blur
+    {
+        background: #fff8;
+        -webkit-backdrop-filter: blur(64px);
+        backdrop-filter: blur(64px);
+    }
+}
 .gui-settings-content-top-mask,
 .gui-settings-content-bottom-mask
 {

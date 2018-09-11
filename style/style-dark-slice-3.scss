@@ -135,6 +135,13 @@
 // {
 //     opacity: 1 !important;
 // }
+@supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
+{
+    .gui-settings-content.blur
+    {
+        background: #222d !important;
+    }
+}
 
 // a
 // {
@@ -152,10 +159,11 @@
 // {
 //     color: $foreground !important;
 // }
-// a
-// {
-//     fill: $customStyleColor !important;
-// }
+.bilibili-player-video-danmaku-setting-left-more:hover .bp-svgicon,
+.bilibili-player-video-danmaku-setting-right-more:hover .bp-svgicon
+{
+    fill: $customStyleColor !important;
+}
 
 // a
 // {

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.3.9
+// @version      1.3.10
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -23,6 +23,7 @@
     const settings = {
         toast: false,
         fullTweetsTitle: false,
+        removeVideoTopMask: true,
         removeLiveWatermark: true,
         harunaScale: true,
         removeAds: true,
@@ -46,7 +47,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.3.9"
+        currentVersion: "1.3.10"
     };
     function loadSettings()
     {
@@ -111,7 +112,8 @@
             fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
             viewCover: new Resource("video/view-cover.min.js"),
             notifyNewVersion: new Resource("utils/notify-new-version.min.js"),
-            toast: new Resource("utils/toast.min.js")
+            toast: new Resource("utils/toast.min.js"),
+            removeVideoTopMask: new Resource("video/remove-top-mask.min.js")
         };
         (function ()
         {
@@ -169,6 +171,7 @@
             this.viewCover.displayName = "查看封面";
             this.notifyNewVersion.displayName = "新版本提醒";
             this.toast.displayName = "显示消息";
+            this.removeVideoTopMask.displayName = "删除视频标题层";
         }).apply(Resource.all);
     }
     function downloadText(url, load, error)
@@ -482,7 +485,7 @@
                 `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
-                            <input key="$2" type="checkbox" dependencies="$3"/>
+                            <input key="$2" type="checkbox" dependencies="$3" checked/>
                             <svg class="gui-settings-ok" viewBox="0 0 24 24">
                                 <path />
                             </svg>
