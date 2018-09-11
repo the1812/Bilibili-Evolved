@@ -626,7 +626,7 @@
                             clickedOnce = false;
                             clickHandler(false, e);
                         }
-                    }, 200);
+                    }, 160);
                 }
                 else
                 {
