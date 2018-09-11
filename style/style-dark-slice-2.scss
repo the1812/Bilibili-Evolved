@@ -65,7 +65,10 @@ li.season-item .season-body .season-title span.follow,
 .bb-comment .comment-send .textarea-container textarea,
 .comment-wrap,
 .emoji-box,
-.emoji-box .emoji-tabs 
+.emoji-box .emoji-tabs,
+.page-content .right-side .search-module .search-block .search-word-panel,
+.page-content .right-side .search-module .search-block input,
+.page-content .right-side .search-module .search-block .search-word-panel .panel-title p span 
 {
     background-color: #222 !important;
 }
@@ -160,7 +163,13 @@ li.season-item .season-body .season-title span.follow,
 .medal-progress,
 .btn-disabled:hover,
 .info-model,
-.bb-comment 
+.bb-comment,
+.page-content .left-side .article-list .article-list-holder .article-item .item-holder,
+.page-content .right-side .rank-module .rank-list .item,
+.page-content .right-side .rank-module .complete-rank,
+.page-content .right-side .rank-module .rank-tabs-bar,
+.page-content .right-side .search-module .search-block,
+.to-top.launch, .to-top.on 
 {
     background-color: #444 !important;
 }
@@ -231,7 +240,8 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background: #fff1 !important;
 // }
-.fav-main .fav-action-top .back-to-info
+.fav-main .fav-action-top .back-to-info,
+.page-content .right-side .rank-module .rank-list .item .rank-index 
 {
     background: transparent !important;
 }
@@ -345,7 +355,12 @@ li.no-data,
 .recom-item a .recom-info .info-count > div span,
 .history-list .r-info .subtitle,
 .history-list .r-info .history-mark,
-.rank-list .rank-item .ri-detail .ri-point 
+.rank-list .rank-item .ri-detail .ri-point,
+.page-content .left-side .article-list .article-list-holder .article-item .item-holder .article-desc,
+.page-content .left-side .article-list .article-list-holder .article-item .item-holder .article-info-bar .category,
+.page-content .left-side .article-list .article-list-holder .article-item .item-holder .article-info-bar .like, .page-content .left-side .article-list .article-list-holder .article-item .item-holder .article-info-bar .reply, .page-content .left-side .article-list .article-list-holder .article-item .item-holder .article-info-bar .view,
+.page-content .right-side .more .help .info, .page-content .right-side .more .link .info,
+.page-content .right-side .search-module .search-block .search-word-panel .panel-title p span 
 {
     color: #aaa !important;
 }
@@ -539,7 +554,14 @@ button.button.more,
 .medal-message,
 .btn-dufault,
 .emoji-box,
-.history-list .cover-contain .label 
+.history-list .cover-contain .label,
+.page-content .right-side .rank-module .rank-tabs-bar label,
+.page-content .right-side .rank-module .rank-tabs-bar .rank-tabs-list li,
+.page-content .right-side .rank-module .rank-list .item a,
+.page-content .right-side .rank-module .rank-list .item .rank-index,
+.page-content .right-side .rank-module .complete-rank,
+.page-content .right-side .more .help .title, .page-content .right-side .more .link .title,
+.page-content .right-side .search-module .search-block input 
 {
     color: #eee !important;
 }
@@ -675,7 +697,15 @@ button.button.more,
 .bb-comment .comment-header,
 .bb-comment .comment-send .textarea-container textarea,
 .bb-comment .comment-send .comment-emoji,
-.emoji-box 
+.emoji-box,
+.page-content .left-side .article-list .article-list-holder .article-item,
+.page-content .right-side .search-module .search-block .search-word-panel,
+.page-content .right-side .rank-module .rank-tabs-bar .rank-tabs-list li.on,
+.page-content .right-side .rank-module .rank-tabs-bar,
+.page-content .right-side .more .top-bar,
+.page-content .right-side .search-module .search-block,
+.page-content .right-side .search-module .search-block .search-word-panel .panel-title .split-line,
+.to-top.launch, .to-top.on 
 {
     border-color: transparent !important;
 }
@@ -986,7 +1016,8 @@ button.button.more:hover,
 .lh12 a,
 .cm-model .report-detail .more-list a,
 .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round,
-.container .tag .item-btn
+.container .tag .item-btn,
+.page-content .right-side .rank-module .rank-tabs-bar .rank-tabs-list li.on 
 {
     color: $customStyleColor !important;
 }
