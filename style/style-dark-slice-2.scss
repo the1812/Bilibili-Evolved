@@ -55,8 +55,7 @@ li.season-item .season-body .season-title span.follow,
 .user-my-sex .el-radio-button__inner,
 .el-picker-panel,
 .face-g-action,
-.bangumi-list-wrapper .bottom-block .slider-contro i.slider-prev-mask,
-.bangumi-list-wrapper .bottom-block .slider-contro i.slider-next-mask 
+.bpui-selectmenu.selectmenu-mode-absolute .bpui-selectmenu-list-row 
 {
     background-color: #222 !important;
 }
@@ -145,7 +144,9 @@ li.season-item .season-body .season-title span.follow,
 .info-model header,
 .video-model header,
 .bangumi-player.mini-player .mini-player-move span,
-.bangumi-player.mini-player .mini-player-move i
+.bangumi-player.mini-player .mini-player-move i,
+.bilibili-player .bilibili-player-panel,
+.bilibili-player .bilibili-player-panel-title 
 {
     background-color: #444 !important;
 }
@@ -206,7 +207,9 @@ li.season-item .season-body .season-title span.follow,
 .line-circle,
 .el-date-table td.available:hover,
 .security-list .child-list li a:hover,
-.f-list-hover:hover
+.f-list-hover:hover,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-1 .bilibili-player-block-type-keyword, .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-2 .bilibili-player-block-type-user,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-btn:hover, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover 
 {
     background-color: transparent !important;
 }
@@ -313,7 +316,9 @@ li.no-data,
 .timer-wrap .vote-dialog-new .header h2,
 .timer-wrap .vote-dialog-new .main h4,
 .timer-wrap .vote-dialog-new .main .main-txt-2,
-.tab-btn-link
+.tab-btn-link,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-btn:hover, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover,
+.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-label 
 {
     color: #aaa !important;
 }
@@ -490,7 +495,14 @@ button.button.more,
 .face-g-name,
 .face-g-title,
 .security-list .first-level,
-.face-g-action
+.face-g-action,
+.bpui-button-text-only[for],
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-string-type,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-title,
+.bilibili-player .bilibili-player-panel-title,
+.bilibili-player .bilibili-player-panel-area .bilibili-player-panel-area-title,
+.bpui-tab-list-type-button .bpui-tab-list-row,
+.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt 
 {
     color: #eee !important;
 }
@@ -606,7 +618,10 @@ button.button.more,
 .face-g-item,
 .face-g-action,
 .face-g-preview,
-.face-g-action[id=face-g-change]
+.face-g-action[id=face-g-change],
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.bilibili-player-border,
+.bilibili-player .bilibili-player-panel-title 
 {
     border-color: transparent !important;
 }
@@ -745,7 +760,9 @@ li.season-item .season-body .season-title span.follow,
 .bangumi-coin-wrap .bangumi-coin, .bangumi-coin-wrap .bangumi-coin-d,
 .bangumi-collection-wrap .bangumi-order, .bangumi-collection-wrap .bangumi-order-d,
 .bangumi-order-wrap .bangumi-order, .bangumi-order-wrap .bangumi-order-d,
-.top_bg
+.top_bg,
+.bangumi-list-wrapper .bottom-block .slider-contro i.slider-prev-mask,
+.bangumi-list-wrapper .bottom-block .slider-contro i.slider-next-mask 
 {
     display: none !important;
 }
@@ -780,7 +797,8 @@ li.season-item .season-body .season-title span.follow,
 .points-btn,
 .tab-mk2.active,
 .face-g-item:hover,
-.season-item.on 
+.season-item.on,
+.bpui-selectmenu 
 {
     border-color: $customStyleColor !important;
 }
