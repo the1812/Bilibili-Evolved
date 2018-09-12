@@ -64,7 +64,9 @@ li.season-item .season-body .season-title span.follow,
 .hold-list,
 .comment-wrap,
 .emoji-box,
-.emoji-box .emoji-tabs
+.emoji-box .emoji-tabs,
+.table-normal tbody tr:nth-child(odd),
+.coin-record .table-normal tbody tr:nth-child(odd) 
 {
     background-color: #222 !important;
 }
@@ -158,7 +160,10 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player .bilibili-player-panel-title,
 .medal-progress,
 .info-model,
-.btn-disabled
+.btn-disabled,
+.coin-inner,
+.table-normal thead tr td,
+.coin-record .table-normal thead tr td
 {
     background-color: #444 !important;
 }
@@ -225,8 +230,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
-.bilibili-player-video-sendbar .bilibili-player-video-btn > i 
-{
+.bilibili-player-video-sendbar .bilibili-player-video-btn > i,
+.get-coin-more:hover {
     background-color: transparent !important;
 }
 // a
@@ -356,7 +361,9 @@ li.no-data,
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a,
 .bilibili-player-video-sendbar .bilibili-player-video-btn,
 .nav-list li .list-description p,
-.no-data-txt 
+.no-data-txt,
+.coin-text-p,
+.get-coin-more
 {
     color: #aaa !important;
 }
@@ -553,7 +560,13 @@ button.button.more,
 .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=fontsize].active .selection-name, .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=pool].active .selection-name,
 .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span .selection-name:hover,
 .safe-tips p,
-.nav-list li .list-title .list-title-text p 
+.nav-list li .list-title .list-title-text p,
+.coin-nav-item,
+.coin-rest-p,
+.coin-rest-info,
+.coin-index-right-title,
+.get-coin-more:hover,
+.coin-record .coin-title 
 {
     color: #eee !important;
 }
@@ -689,7 +702,15 @@ button.button.more,
 .container .tag,
 .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=fontsize].active .selection-name, .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=pool].active .selection-name,
 .bilibili-player-color-picker-container .bilibili-player-color-picker-input-group .bilibili-player-color-picker-color-current,
-.bilibili-player-color-picker-container .bilibili-player-color-picker-input-group .bilibili-player-color-picker-color-code 
+.bilibili-player-color-picker-container .bilibili-player-color-picker-input-group .bilibili-player-color-picker-color-code,
+.get-coin-more,
+.table-wrapper,
+.get-coin-more:hover,
+.table-normal tbody tr,
+.table-normal thead tr td,
+.coin-record .table-normal thead tr td,
+.coin-record .table-wrapper,
+.coin-record .table-normal tbody tr 
 {
     border-color: transparent !important;
 }
@@ -876,7 +897,9 @@ li.season-item .season-body .season-title span.follow,
 .face-g-list .mp-block .right ul li.base.reach .round,
 .bpui-tab-list-type-button .bpui-tab-list-row.bpui-state-selected,
 .bangumi-list-wrapper .top-block .ss-list-wrapper .slider-contro,
-.season-item.on:after 
+.season-item.on:after,
+.coin-nav .on,
+.coin-nav
 {
     border-color: $customStyleColor !important;
 }
@@ -920,7 +943,8 @@ li.season-item .season-body .season-title span.follow,
 .mp-mine-takedown,
 .face-g-list .mp-block .right ul li.reach .strip,
 .btn-dufault:not(.btn-disabled),
-.history-list .cover-contain .label
+.history-list .cover-contain .label,
+.coin-text-p .coin-i 
 {
     background-color: $customStyleColor !important;
 }
@@ -1003,7 +1027,10 @@ button.button.more:hover,
 .cm-model .report-detail .more-list a,
 .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round,
 .container .tag .item-btn,
-.episode-item.on .ep-index, .episode-item.on .ep-title, .episode-item.on:hover .ep-index, .episode-item.on:hover .ep-title 
+.episode-item.on .ep-index, .episode-item.on .ep-title, .episode-item.on:hover .ep-index, .episode-item.on:hover .ep-title,
+.coin-nav .on,
+.out-link,
+.coin-num 
 {
     color: $customStyleColor !important;
 }
@@ -1057,7 +1084,9 @@ button.button.more:hover,
 .container,
 .bili-footer .boston-postcards li,
 .h-line,
-.el-radio-button:first-child .el-radio-button__inner
+.el-radio-button:first-child .el-radio-button__inner,
+.coin-record .table-normal tbody tr td,
+.coin-record .table-normal thead tr td 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
