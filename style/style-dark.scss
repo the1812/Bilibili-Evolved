@@ -1128,10 +1128,8 @@ form.ipt,
 .bilibili-player-color-picker-color-code,
 .history-list .l-info .lastplay-time .history-red-round,
 .history-list .l-info,
-.up-info-holder .fixed-box .more .top-bar,
 .tag-container .tag-item .tag-content,
 .up-info-holder .fixed-box .rightside-article-list-btn .label,
-.up-info-holder .fixed-box .up-article-list-block .block-title,
 .pub-list .info dl,
 .case-list .info dl,
 .report-con label:before,
@@ -2496,7 +2494,6 @@ li.season-item .season-body .season-title span.follow,
 .face-g-list .mp-block .right ul li .strip,
 .wear-list li,
 .hold-list,
-.bb-comment .comment-send .textarea-container textarea,
 .comment-wrap,
 .emoji-box,
 .emoji-box .emoji-tabs
@@ -2593,8 +2590,7 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player .bilibili-player-panel-title,
 .medal-progress,
 .info-model,
-.btn-disabled,
-.bb-comment
+.btn-disabled
 {
     background-color: #444 !important;
 }
@@ -3110,9 +3106,6 @@ button.button.more,
 .btn-disabled,
 .btn-dufault,
 .medal-up-trueLove,
-.bb-comment .comment-header,
-.bb-comment .comment-send .textarea-container textarea,
-.bb-comment .comment-send .comment-emoji,
 .emoji-box,
 .container .tag
 {
@@ -3579,10 +3572,11 @@ button.button.more:hover,
 // {
 //     border-color: #222 !important;
 // }
-// a
-// {
-//     border-color: #444 !important
-// }
+.up-info-holder .fixed-box .up-article-list-block .block-title,
+.up-info-holder .fixed-box .more .top-bar
+{
+    border-color: #444 !important
+}
 // a
 // {
 //     border-color: #99a2aa !important;
