@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.3.12
+// @version      1.3.13
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -49,7 +49,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.3.12"
+        currentVersion: "1.3.13"
     };
     function loadSettings()
     {
@@ -83,9 +83,7 @@
             style: new Resource("style/style.min.scss", 1),
             oldStyle: new Resource("style/style-old.min.scss", 1),
             scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
-            darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
-            darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
-            darkStyleSlice3: new Resource("style/style-dark-slice-3.min.scss", 2),
+            darkStyle: new Resource("style/style-dark.min.scss", 2),
             darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
             touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
             navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
@@ -126,9 +124,7 @@
                 this.guiSettingsStyle
             ];
             this.useDarkStyle.dependencies = [
-                this.darkStyleSlice1,
-                this.darkStyleSlice2,
-                this.darkStyleSlice3,
+                this.darkStyle,
                 this.darkStyleImportant
             ];
             this.useNewStyle.dependencies = [
