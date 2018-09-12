@@ -61,7 +61,11 @@ li.season-item .season-body .season-title span.follow,
 .face-g-list[id=face-g-log] th,
 .face-g-list .mp-block .right ul li .strip,
 .wear-list li,
-.hold-list 
+.hold-list,
+.bb-comment .comment-send .textarea-container textarea,
+.comment-wrap,
+.emoji-box,
+.emoji-box .emoji-tabs 
 {
     background-color: #222 !important;
 }
@@ -154,7 +158,9 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player .bilibili-player-panel,
 .bilibili-player .bilibili-player-panel-title,
 .medal-progress,
-.btn-disabled:hover 
+.btn-disabled:hover,
+.info-model,
+.bb-comment 
 {
     background-color: #444 !important;
 }
@@ -214,7 +220,10 @@ li.season-item .season-body .season-title span.follow,
 .security-list .child-list li a:hover,
 .f-list-hover:hover,
 .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-1 .bilibili-player-block-type-keyword, .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-2 .bilibili-player-block-type-user,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-btn:hover, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-btn:hover, .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn:hover,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover ,
 {
     background-color: transparent !important;
 }
@@ -328,7 +337,15 @@ li.no-data,
 .face-g-list .mp-block .left .mp-info label,
 .face-g-list .mp-block .right ul li.base .tips,
 .face-g-list .mp-block .right ul li p.reach-tips,
-.fans-number 
+.fans-number,
+.bb-comment .no-more-reply,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn,
+.bangumi-review-item .item-header .pub-time,
+.bangumi-media .bangumi-media-header .rate-wrapper .rate-info .info-wrapper,
+.recom-item a .recom-info .info-count > div span,
+.history-list .r-info .subtitle,
+.history-list .r-info .history-mark,
+.rank-list .rank-item .ri-detail .ri-point 
 {
     color: #aaa !important;
 }
@@ -520,7 +537,9 @@ button.button.more,
 .face-g-list .mp-block .left .mp-info .mp-descr,
 .face-g-list .mp-block .right ul li p.title,
 .medal-message,
-.btn-dufault 
+.btn-dufault,
+.emoji-box,
+.history-list .cover-contain .label 
 {
     color: #eee !important;
 }
@@ -652,7 +671,11 @@ button.button.more,
 .btn-disabled,
 .btn-disabled:hover,
 .btn-dufault,
-.medal-up-trueLove 
+.medal-up-trueLove,
+.bb-comment .comment-header,
+.bb-comment .comment-send .textarea-container textarea,
+.bb-comment .comment-send .comment-emoji,
+.emoji-box 
 {
     border-color: transparent !important;
 }
@@ -673,7 +696,10 @@ li.history,
 .home-to-update,
 .home-userstatus,
 .right-more-btn,
-.points-pendant-item
+.points-pendant-item,
+.history-list .l-info .lastplay-time .history-red-round,
+.history-list .r-info .r-txt,
+.container .tag
 {
     border-color: #aaa !important;
 }
@@ -725,7 +751,8 @@ li.history,
 .big-banner-warp .swiper-pagination-bullet-active,
 .video-model header h2 .head-icon,
 .info-model header h2 .head-icon,
-.fans-question 
+.fans-question,
+.comment-wrap header h2 .head-icon 
 {
     filter: $blueImageFilter !important;
 }
@@ -832,7 +859,9 @@ li.season-item .season-body .season-title span.follow,
 .season-item.on,
 .bpui-selectmenu,
 .face-g-list .mp-block .right ul li.base .round,
-.face-g-list .mp-block .right ul li.base.reach .round {
+.face-g-list .mp-block .right ul li.base.reach .round,
+.bpui-tab-list-type-button .bpui-tab-list-row.bpui-state-selected 
+{
     border-color: $customStyleColor !important;
 }
 .progress-bar-inner,
@@ -954,7 +983,10 @@ button.button.more:hover,
 .acc-sec,
 .tab-mk2.tab-mk2-r,
 .tab-mk2:hover,
-.lh12 a 
+.lh12 a,
+.cm-model .report-detail .more-list a,
+.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round,
+.container .tag .item-btn
 {
     color: $customStyleColor !important;
 }
@@ -1006,7 +1038,9 @@ button.button.more:hover,
 .container,
 .bili-footer .boston-postcards li,
 .h-line,
-.el-radio-button:first-child .el-radio-button__inner
+.el-radio-button:first-child .el-radio-button__inner,
+.history-list .l-info,
+.history-list .r-info .history-mark 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
