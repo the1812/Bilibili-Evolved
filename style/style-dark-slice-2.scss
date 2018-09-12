@@ -354,7 +354,8 @@ li.no-data,
 .rank-list .rank-item .ri-detail .ri-point,
 .bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-volume .bilibili-player-video-volumebar-wrp .bilibili-player-video-volume-num,
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a,
-.bilibili-player-video-sendbar .bilibili-player-video-btn 
+.bilibili-player-video-sendbar .bilibili-player-video-btn,
+.nav-list li .list-description p 
 {
     color: #aaa !important;
 }
@@ -549,7 +550,9 @@ button.button.more,
 .emoji-box,
 .btn-disabled,
 .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=fontsize].active .selection-name, .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=pool].active .selection-name,
-.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span .selection-name:hover 
+.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span .selection-name:hover,
+.safe-tips p,
+.nav-list li .list-title .list-title-text p 
 {
     color: #eee !important;
 }
@@ -706,7 +709,8 @@ li.history,
 .home-to-update,
 .home-userstatus,
 .right-more-btn,
-.points-pendant-item
+.points-pendant-item,
+.nav-list li 
 {
     border-color: #aaa !important;
 }
