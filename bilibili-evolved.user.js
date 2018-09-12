@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.3.11
+// @version      1.3.12
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -21,6 +21,7 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        blurSettingsPanel: false,
         blurVideoControl: false,
         toast: false,
         fullTweetsTitle: false,
@@ -48,7 +49,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.3.11"
+        currentVersion: "1.3.12"
     };
     function loadSettings()
     {
@@ -681,7 +682,11 @@
                 {
                     if (settings[key] === true && key !== "toast")
                     {
-                        promises.push(this.fetchByKey(key));
+                        const promise = this.fetchByKey(key);
+                        if (promise)
+                        {
+                            promises.push(promise);
+                        }
                     }
                 }
                 Promise.all(promises).then(() => resolve());
