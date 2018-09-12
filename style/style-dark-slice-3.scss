@@ -168,7 +168,8 @@
 {
     border-color: $customStyleColor !important;
 }
-.medal-progress>i
+.medal-progress>i,
+.gift-item-wrap .expiration
 {
     background-color: $customStyleColor !important;
 }
@@ -184,10 +185,10 @@
 {
     color: $customStyleColor !important;
 }
-// a
-// {
-//     color: $foreground !important;
-// }
+.gift-item-wrap .expiration
+{
+    color: $foreground !important;
+}
 .bilibili-player-video-danmaku-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-danmaku-setting-right-more:hover .bp-svgicon
 {
