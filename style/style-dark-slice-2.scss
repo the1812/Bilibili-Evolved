@@ -66,7 +66,9 @@ li.season-item .season-body .season-title span.follow,
 .emoji-box,
 .emoji-box .emoji-tabs,
 .table-normal tbody tr:nth-child(odd),
-.coin-record .table-normal tbody tr:nth-child(odd) 
+.coin-record .table-normal tbody tr:nth-child(odd),
+.identmagTop,
+.identmagBot 
 {
     background-color: #222 !important;
 }
@@ -363,7 +365,8 @@ li.no-data,
 .nav-list li .list-description p,
 .no-data-txt,
 .coin-text-p,
-.get-coin-more
+.get-coin-more,
+.identmagBot span
 {
     color: #aaa !important;
 }
@@ -566,7 +569,8 @@ button.button.more,
 .coin-rest-info,
 .coin-index-right-title,
 .get-coin-more:hover,
-.coin-record .coin-title 
+.coin-record .coin-title,
+.identmagTop 
 {
     color: #eee !important;
 }
@@ -710,7 +714,8 @@ button.button.more,
 .table-normal thead tr td,
 .coin-record .table-normal thead tr td,
 .coin-record .table-wrapper,
-.coin-record .table-normal tbody tr 
+.coin-record .table-normal tbody tr,
+.identmagTop 
 {
     border-color: transparent !important;
 }
