@@ -1,9 +1,11 @@
-.bilibili-player-video-sendbar
+.bilibili-player-video-sendbar,
+.medal-up-trueLove
 {
     background-color: #222 !important;
 }
 .main-container .title>span,
-.content-panel .title span
+.content-panel .title span,
+.face-g-list .mp-block .right ul li.base .round
 {
     background-color: #444 !important;
 }
@@ -19,10 +21,12 @@
 // {
 //     background-color: #eee !important;
 // }
-// a
-// {
-//     background-image: none !important;
-// }
+#mp-mine-header,
+#mp-mine-header.active,
+.fans-icon
+{
+    background-image: none !important;
+}
 
 .mode-fullscreen .bilibili-player-video-btn-widescreen,
 .mode-webfullscreen .bilibili-player-video-sendbar,
@@ -47,7 +51,9 @@
     color: #aaa !important;
 }
 .main-container .title>span,
-.content-panel .title span em
+.content-panel .title span em,
+.medal-up-trueLove,
+.u-info .u-name
 {
     color: #eee !important;
 }
@@ -55,7 +61,8 @@
 // {
 //     color: #222 !important;
 // }
-.content-panel .title span
+.content-panel .title span,
+.medal-up-trueLove
 {
     border-color: transparent !important;
 }
@@ -88,7 +95,8 @@
 // {
 //     filter: brightness(0) invert(1) !important;
 // }
-.bp-svg-icon.link
+.bp-svg-icon.link,
+.face-g-list .mp-block .right ul li.reach::after
 {
     filter: $blueImageFilter !important;
 }
@@ -146,6 +154,10 @@
     {
         background: #222d !important;
     }
+}
+.face-g-list .mp-block .right ul li.base .round
+{
+    z-index: 100 !important;
 }
 
 .list-filter-bar .sort-box .item.active,
