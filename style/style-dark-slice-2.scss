@@ -223,7 +223,9 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn:hover,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen,
-.bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover
+.bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover,
+.bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
+.bilibili-player-video-sendbar .bilibili-player-video-btn > i 
 {
     background-color: transparent !important;
 }
@@ -349,7 +351,10 @@ li.no-data,
 .recom-item a .recom-info .info-count > div span,
 .history-list .r-info .subtitle,
 .history-list .r-info .history-mark,
-.rank-list .rank-item .ri-detail .ri-point
+.rank-list .rank-item .ri-detail .ri-point,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-volume .bilibili-player-video-volumebar-wrp .bilibili-player-video-volume-num,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a,
+.bilibili-player-video-sendbar .bilibili-player-video-btn 
 {
     color: #aaa !important;
 }
@@ -542,7 +547,9 @@ button.button.more,
 .face-g-list .mp-block .right ul li p.title,
 .medal-message,
 .emoji-box,
-.btn-disabled
+.btn-disabled,
+.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=fontsize].active .selection-name, .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=pool].active .selection-name,
+.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span .selection-name:hover 
 {
     color: #eee !important;
 }
@@ -675,7 +682,10 @@ button.button.more,
 .btn-dufault,
 .medal-up-trueLove,
 .emoji-box,
-.container .tag
+.container .tag,
+.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=fontsize].active .selection-name, .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=pool].active .selection-name,
+.bilibili-player-color-picker-container .bilibili-player-color-picker-input-group .bilibili-player-color-picker-color-current,
+.bilibili-player-color-picker-container .bilibili-player-color-picker-input-group .bilibili-player-color-picker-color-code 
 {
     border-color: transparent !important;
 }
@@ -859,7 +869,9 @@ li.season-item .season-body .season-title span.follow,
 .bpui-selectmenu,
 .face-g-list .mp-block .right ul li.base .round,
 .face-g-list .mp-block .right ul li.base.reach .round,
-.bpui-tab-list-type-button .bpui-tab-list-row.bpui-state-selected
+.bpui-tab-list-type-button .bpui-tab-list-row.bpui-state-selected,
+.bangumi-list-wrapper .top-block .ss-list-wrapper .slider-contro,
+.season-item.on:after 
 {
     border-color: $customStyleColor !important;
 }
@@ -985,7 +997,8 @@ button.button.more:hover,
 .lh12 a,
 .cm-model .report-detail .more-list a,
 .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round,
-.container .tag .item-btn
+.container .tag .item-btn,
+.episode-item.on .ep-index, .episode-item.on .ep-title, .episode-item.on:hover .ep-index, .episode-item.on:hover .ep-title 
 {
     color: $customStyleColor !important;
 }
