@@ -235,7 +235,10 @@
                     listenDependencies();
                     syncGui();
                     addPredefinedColors();
-                    addEffects();
+                    if (settings.blurSettingsPanel)
+                    {
+                        addEffects();
+                    }
                 }
             }
         ).start();

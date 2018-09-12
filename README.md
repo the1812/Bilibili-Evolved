@@ -22,6 +22,7 @@
 
 # 设置
 脚本启用后,在网页左侧中央会有一个齿轮图标,点击即可打开设置.
+设置项的说明见功能概览一节.
 
 **设置保存后,需要刷新网页才能生效.**
 ![设置](images/gui-settings.png)
@@ -43,6 +44,7 @@
 - 缩放看板娘: `开启`
 - 删除直播水印: `开启`
 - 删除视频标题层: `开启`
+- 模糊视频控制栏背景: `关闭`
 ### 触摸
 - 顶栏触摸优化: `关闭`
 - 播放器触摸支持: `关闭`
@@ -51,6 +53,7 @@
     - 启用双击控制: `关闭`
 ### 其他
 - 显示消息: `关闭`
+- 模糊设置面板背景: `关闭`
 
 # 功能概览
 为保证最佳体验,设备分辨率建议在1080P及以上,并且已登录哔哩哔哩账户.
@@ -134,6 +137,12 @@
 
 标题覆盖层的位置:
 ![标题覆盖层](images/remove-top-mask.png)
+### 模糊视频控制栏背景
+此功能需要浏览器支持背景模糊效果, 详情见兼容性一节.
+#### 启用前
+![不模糊背景](images/blur-video-control-disabled.png)
+#### 启用后
+![模糊背景](images/blur-video-control.png)
 
 ## 触摸支持
 ### 顶栏
@@ -159,16 +168,19 @@
 ##### 启用后
 ![放大后](images/player-buttons-large.png)
 ## 其他
+关于脚本自身的一些设定.
 ### 显示消息
 允许在网页左下角显示来自本脚本的消息,如更新提醒,错误提示等.
 ![消息](images/toast.png)
+### 模糊设置面板背景
+使设置面板的内容区半透明并模糊后方图像.
 
 # 兼容性
 ## ![Chrome:兼容](https://img.shields.io/badge/Chrome-兼容-brightgreen.svg?style=flat-square&colorB=009688)
-- 触摸调整框的背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
+- 背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
 ## ![Firfox:部分兼容](https://img.shields.io/badge/FireFox-部分兼容-yellow.svg?style=flat-square&colorB=1976D2)
 - 滚动条样式无效.
-- 触摸调整框的背景模糊效果无效.
+- 背景模糊效果无效.
 - 触摸调整的进度预览有弹跳现象.(来自`transition: all 0.2s;`. 短时间内总是从原数值开始变化,而不是当前数值)
 ## ![Edge:部分兼容](https://img.shields.io/badge/Edge-部分兼容-yellow.svg?style=flat-square&colorB=1976D2)
 - 滚动条样式无效.

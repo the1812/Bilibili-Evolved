@@ -27,6 +27,10 @@ div.stardust-player
 .nav-mask
 {
     background-color: transparent !important;
+}
+.nav-mask,
+.link-navbar
+{
     box-shadow: none !important;
 }
 
@@ -275,6 +279,11 @@ div.nav-gif,
 .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
 {
     background-color: #222c !important;
+}
+.search-bar-ctnr .search-bar input::placeholder,
+.search-bar-ctnr .search-bar .search-btn
+{
+    color: #888 !important;
 }
 
 @media only screen and (min-width: 1291px)

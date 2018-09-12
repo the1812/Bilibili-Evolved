@@ -1,11 +1,15 @@
-.bilibili-player-video-sendbar
+.bilibili-player-video-sendbar,
+.medal-up-trueLove
 {
     background-color: #222 !important;
 }
-// a
-// {
-//     background-color: #444 !important;
-// }
+.main-container .title>span,
+.content-panel .title span,
+.face-g-list .mp-block .right ul li.base .round,
+.security-list .child-list li a:hover
+{
+    background-color: #444 !important;
+}
 // a
 // {
 //     background-color: #555 !important;
@@ -18,15 +22,18 @@
 // {
 //     background-color: #eee !important;
 // }
-// a
-// {
-//     background-image: none !important;
-// }
+#mp-mine-header,
+#mp-mine-header.active,
+.fans-icon
+{
+    background-image: none !important;
+}
 
 .mode-fullscreen .bilibili-player-video-btn-widescreen,
 .mode-webfullscreen .bilibili-player-video-sendbar,
 .mode-fullscreen .bilibili-player-video-sendbar,
-.bilibili-player-video-bottom-area::before
+.bilibili-player-video-bottom-area::before,
+.live-sidebar-ctnr
 {
     background-color: transparent !important;
 }
@@ -39,22 +46,30 @@
 //     background: transparent !important;
 // }
 
-// a
-// {
-//     color: #aaa !important;
-// }
-// a
-// {
-//     color: #eee !important;
-// }
+.scroll-loading,
+.room-card-item .info .s-info,
+.fans-no-data::after,
+.fans-no-data-wear::after
+{
+    color: #aaa !important;
+}
+.main-container .title>span,
+.content-panel .title span em,
+.medal-up-trueLove,
+.u-info .u-name,
+.bottom-actions .action-item
+{
+    color: #eee !important;
+}
 // a
 // {
 //     color: #222 !important;
 // }
-// a
-// {
-//     border-color: transparent !important;
-// }
+.content-panel .title span,
+.medal-up-trueLove
+{
+    border-color: transparent !important;
+}
 // a
 // {
 //     border-color: #aaa !important;
@@ -63,10 +78,11 @@
 // {
 //     border-color: #222 !important;
 // }
-// a
-// {
-//     border-color: #444 !important
-// }
+.up-info-holder .fixed-box .up-article-list-block .block-title,
+.up-info-holder .fixed-box .more .top-bar
+{
+    border-color: #444 !important
+}
 // a
 // {
 //     border-color: #99a2aa !important;
@@ -80,11 +96,12 @@
 // {
 //     fill: #aaa !important;
 // }
-// a
-// {
-//     filter: brightness(0) invert(1) !important;
-// }
-.bp-svg-icon.link
+.security-list .first-level .m-arrow
+{
+    filter: brightness(0) invert(1) !important;
+}
+.bp-svg-icon.link,
+.face-g-list .mp-block .right ul li.reach::after
 {
     filter: $blueImageFilter !important;
 }
@@ -111,7 +128,8 @@
 // {
 //     border-radius: 4px !important;
 // }
-.bangumi-player
+.bangumi-player,
+.live-sidebar-ctnr
 {
     box-shadow: none !important;
 }
@@ -119,10 +137,10 @@
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 // }
-// a
-// {
-//     display: none !important;
-// }
+.main-container .title span::before
+{
+    display: none !important;
+}
 // a
 // {
 //     opacity: 0 !important;
@@ -139,26 +157,40 @@
 {
     .gui-settings-content.blur
     {
-        background: #222d !important;
+        background: #222c !important;
     }
 }
+.face-g-list .mp-block .right ul li.base .round
+{
+    z-index: 100 !important;
+}
 
-// a
-// {
-//     border-color: $customStyleColor !important;
-// }
-// a
-// {
-//     background-color: $customStyleColor !important;
-// }
-.face-g-more
+.list-filter-bar .sort-box .item.active,
+.list-filter-bar .sort-box .item:hover
+{
+    border-color: $customStyleColor !important;
+}
+.medal-progress>i,
+.gift-item-wrap .expiration
+{
+    background-color: $customStyleColor !important;
+}
+.face-g-more,
+.room-card-item:hover .room-name,
+.content-panel .title span:hover,
+.list-filter-bar .sort-box .item.active,
+.list-filter-bar .sort-box .item:hover,
+.list-filter-bar .pic-type-box .item.active,
+.list-filter-bar .pic-type-box .item:hover,
+.content-panel .title span:hover em,
+.medal-up-name>a
 {
     color: $customStyleColor !important;
 }
-// a
-// {
-//     color: $foreground !important;
-// }
+.gift-item-wrap .expiration
+{
+    color: $foreground !important;
+}
 .bilibili-player-video-danmaku-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-danmaku-setting-right-more:hover .bp-svgicon
 {
