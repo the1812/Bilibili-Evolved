@@ -2,10 +2,11 @@
 {
     background-color: #222 !important;
 }
-// a
-// {
-//     background-color: #444 !important;
-// }
+.main-container .title>span,
+.content-panel .title span
+{
+    background-color: #444 !important;
+}
 // a
 // {
 //     background-color: #555 !important;
@@ -26,7 +27,8 @@
 .mode-fullscreen .bilibili-player-video-btn-widescreen,
 .mode-webfullscreen .bilibili-player-video-sendbar,
 .mode-fullscreen .bilibili-player-video-sendbar,
-.bilibili-player-video-bottom-area::before
+.bilibili-player-video-bottom-area::before,
+.live-sidebar-ctnr
 {
     background-color: transparent !important;
 }
@@ -39,22 +41,24 @@
 //     background: transparent !important;
 // }
 
-// a
-// {
-//     color: #aaa !important;
-// }
-// a
-// {
-//     color: #eee !important;
-// }
+.scroll-loading,
+.room-card-item .info .s-info
+{
+    color: #aaa !important;
+}
+.main-container .title>span,
+.content-panel .title span em
+{
+    color: #eee !important;
+}
 // a
 // {
 //     color: #222 !important;
 // }
-// a
-// {
-//     border-color: transparent !important;
-// }
+.content-panel .title span
+{
+    border-color: transparent !important;
+}
 // a
 // {
 //     border-color: #aaa !important;
@@ -111,7 +115,8 @@
 // {
 //     border-radius: 4px !important;
 // }
-.bangumi-player
+.bangumi-player,
+.live-sidebar-ctnr
 {
     box-shadow: none !important;
 }
@@ -119,10 +124,10 @@
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 // }
-// a
-// {
-//     display: none !important;
-// }
+.main-container .title span::before
+{
+    display: none !important;
+}
 // a
 // {
 //     opacity: 0 !important;
@@ -143,15 +148,23 @@
     }
 }
 
-// a
-// {
-//     border-color: $customStyleColor !important;
-// }
+.list-filter-bar .sort-box .item.active,
+.list-filter-bar .sort-box .item:hover
+{
+    border-color: $customStyleColor !important;
+}
 // a
 // {
 //     background-color: $customStyleColor !important;
 // }
-.face-g-more
+.face-g-more,
+.room-card-item:hover .room-name,
+.content-panel .title span:hover,
+.list-filter-bar .sort-box .item.active,
+.list-filter-bar .sort-box .item:hover,
+.list-filter-bar .pic-type-box .item.active,
+.list-filter-bar .pic-type-box .item:hover,
+.content-panel .title span:hover em
 {
     color: $customStyleColor !important;
 }
