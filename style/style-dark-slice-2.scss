@@ -68,7 +68,8 @@ li.season-item .season-body .season-title span.follow,
 .table-normal tbody tr:nth-child(odd),
 .coin-record .table-normal tbody tr:nth-child(odd),
 .identmagTop,
-.identmagBot 
+.get-coin-more,
+.identmagBot
 {
     background-color: #222 !important;
 }
@@ -164,8 +165,7 @@ li.season-item .season-body .season-title span.follow,
 .info-model,
 .btn-disabled,
 .coin-inner,
-.table-normal thead tr td,
-.coin-record .table-normal thead tr td
+.table-normal thead tr td
 {
     background-color: #444 !important;
 }
@@ -187,7 +187,8 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background-color: #eee !important;
 // }
-.sponsor-rank-item.normal .sp-left .face-wrap
+.sponsor-rank-item.normal .sp-left .face-wrap,
+.coin-nav .on
 {
     background-image: none !important;
 }
@@ -232,8 +233,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
-.bilibili-player-video-sendbar .bilibili-player-video-btn > i,
-.get-coin-more:hover {
+.bilibili-player-video-sendbar .bilibili-player-video-btn > i
+{
     background-color: transparent !important;
 }
 // a
@@ -365,12 +366,12 @@ li.no-data,
 .nav-list li .list-description p,
 .no-data-txt,
 .coin-text-p,
-.get-coin-more,
 .identmagBot span,
 .main-content-title span.i,
 .record-group,
 .record-login-descript,
-.table-normal tbody tr 
+.table-normal thead tr td,
+.coin-left-nodata
 {
     color: #aaa !important;
 }
@@ -548,12 +549,12 @@ button.button.more,
 .security-list .first-level,
 .face-g-action,
 .bpui-button-text-only[for],
-.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-string-type,
-.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-title,
-.bilibili-player .bilibili-player-panel-title,
-.bilibili-player .bilibili-player-panel-area .bilibili-player-panel-area-title,
+.bilibili-player-block-tabpanel .bilibili-player-block-string-type,
+.bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-title,
+.bilibili-player-panel-title,
+.bilibili-player-panel-area .bilibili-player-panel-area-title,
 .bpui-tab-list-type-button .bpui-tab-list-row,
-.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt,
+.bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt,
 .face-g-takedown, .face-g-use, .face-g-xf,
 .face-g-list[id=face-g-log] td,
 .face-g-list[id=face-g-log] th,
@@ -564,20 +565,20 @@ button.button.more,
 .medal-message,
 .emoji-box,
 .btn-disabled,
-.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=fontsize].active .selection-name, .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=pool].active .selection-name,
-.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span .selection-name:hover,
+.bilibili-player-mode-selection-row .selection-span.active .selection-name,
+.bilibili-player-mode-selection-row .selection-span .selection-name:hover,
 .safe-tips p,
 .nav-list li .list-title .list-title-text p,
 .coin-nav-item,
 .coin-rest-p,
 .coin-rest-info,
 .coin-index-right-title,
-.get-coin-more:hover,
 .coin-record .coin-title,
 .identmagTop,
 .record-nav-item,
 .main-content-title span.t,
-.table-normal thead tr td 
+.get-coin-more,
+.table-normal tbody tr td
 {
     color: #eee !important;
 }
@@ -711,20 +712,17 @@ button.button.more,
 .medal-up-trueLove,
 .emoji-box,
 .container .tag,
-.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=fontsize].active .selection-name, .bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span[data-type=pool].active .selection-name,
+.bilibili-player-mode-selection-row .row-selection .selection-span.active .selection-name,
 .bilibili-player-color-picker-container .bilibili-player-color-picker-input-group .bilibili-player-color-picker-color-current,
 .bilibili-player-color-picker-container .bilibili-player-color-picker-input-group .bilibili-player-color-picker-color-code,
 .get-coin-more,
 .table-wrapper,
-.get-coin-more:hover,
 .table-normal tbody tr,
 .table-normal thead tr td,
-.coin-record .table-normal thead tr td,
 .coin-record .table-wrapper,
-.coin-record .table-normal tbody tr,
 .identmagTop,
 .record-nav,
-.main-content-title 
+.main-content-title
 {
     border-color: transparent !important;
 }
@@ -746,7 +744,7 @@ li.history,
 .home-userstatus,
 .right-more-btn,
 .points-pendant-item,
-.nav-list li 
+.nav-list li
 {
     border-color: #aaa !important;
 }
@@ -755,9 +753,11 @@ li.history,
 //     border-color: #222 !important;
 // }
 .hot-live .room-list,
-.player-auxiliary-danmaku-date-picker-header
+.player-auxiliary-danmaku-date-picker-header,
+.table-normal tbody tr td,
+.table-normal thead tr td
 {
-    border-color: #444 !important
+    border-color: #444 !important;
 }
 // a
 // {
@@ -958,7 +958,7 @@ li.season-item .season-body .season-title span.follow,
 .face-g-list .mp-block .right ul li.reach .strip,
 .btn-dufault:not(.btn-disabled),
 .history-list .cover-contain .label,
-.coin-text-p .coin-i 
+.coin-text-p .coin-i
 {
     background-color: $customStyleColor !important;
 }
@@ -1039,12 +1039,14 @@ button.button.more:hover,
 .tab-mk2:hover,
 .lh12 a,
 .cm-model .report-detail .more-list a,
-.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round,
+.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select,
+.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round,
 .container .tag .item-btn,
-.episode-item.on .ep-index, .episode-item.on .ep-title, .episode-item.on:hover .ep-index, .episode-item.on:hover .ep-title,
+.episode-item.on .ep-index, .episode-item.on .ep-title,
+.episode-item.on:hover .ep-index, .episode-item.on:hover .ep-title,
 .coin-nav .on,
 .out-link,
-.coin-num 
+.coin-num
 {
     color: $customStyleColor !important;
 }
@@ -1098,9 +1100,7 @@ button.button.more:hover,
 .container,
 .bili-footer .boston-postcards li,
 .h-line,
-.el-radio-button:first-child .el-radio-button__inner,
-.coin-record .table-normal tbody tr td,
-.coin-record .table-normal thead tr td 
+.el-radio-button:first-child .el-radio-button__inner
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;

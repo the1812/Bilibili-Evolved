@@ -2496,7 +2496,12 @@ li.season-item .season-body .season-title span.follow,
 .hold-list,
 .comment-wrap,
 .emoji-box,
-.emoji-box .emoji-tabs
+.emoji-box .emoji-tabs,
+.table-normal tbody tr:nth-child(odd),
+.coin-record .table-normal tbody tr:nth-child(odd),
+.identmagTop,
+.get-coin-more,
+.identmagBot
 {
     background-color: #222 !important;
 }
@@ -2590,7 +2595,9 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player .bilibili-player-panel-title,
 .medal-progress,
 .info-model,
-.btn-disabled
+.btn-disabled,
+.coin-inner,
+.table-normal thead tr td
 {
     background-color: #444 !important;
 }
@@ -2612,7 +2619,8 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background-color: #eee !important;
 // }
-.sponsor-rank-item.normal .sp-left .face-wrap
+.sponsor-rank-item.normal .sp-left .face-wrap,
+.coin-nav .on
 {
     background-image: none !important;
 }
@@ -2655,7 +2663,9 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn:hover,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen,
-.bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover
+.bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover,
+.bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
+.bilibili-player-video-sendbar .bilibili-player-video-btn > i
 {
     background-color: transparent !important;
 }
@@ -2781,7 +2791,19 @@ li.no-data,
 .recom-item a .recom-info .info-count > div span,
 .history-list .r-info .subtitle,
 .history-list .r-info .history-mark,
-.rank-list .rank-item .ri-detail .ri-point
+.rank-list .rank-item .ri-detail .ri-point,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-volume .bilibili-player-video-volumebar-wrp .bilibili-player-video-volume-num,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a,
+.bilibili-player-video-sendbar .bilibili-player-video-btn,
+.nav-list li .list-description p,
+.no-data-txt,
+.coin-text-p,
+.identmagBot span,
+.main-content-title span.i,
+.record-group,
+.record-login-descript,
+.table-normal thead tr td,
+.coin-left-nodata
 {
     color: #aaa !important;
 }
@@ -2959,12 +2981,12 @@ button.button.more,
 .security-list .first-level,
 .face-g-action,
 .bpui-button-text-only[for],
-.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-string-type,
-.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-title,
-.bilibili-player .bilibili-player-panel-title,
-.bilibili-player .bilibili-player-panel-area .bilibili-player-panel-area-title,
+.bilibili-player-block-tabpanel .bilibili-player-block-string-type,
+.bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-title,
+.bilibili-player-panel-title,
+.bilibili-player-panel-area .bilibili-player-panel-area-title,
 .bpui-tab-list-type-button .bpui-tab-list-row,
-.bilibili-player .bilibili-player-panel .bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt,
+.bilibili-player-panel-content .bilibili-player-panel-setting .selectmenu-mode-absolute .bpui-selectmenu-txt,
 .face-g-takedown, .face-g-use, .face-g-xf,
 .face-g-list[id=face-g-log] td,
 .face-g-list[id=face-g-log] th,
@@ -2974,7 +2996,21 @@ button.button.more,
 .face-g-list .mp-block .right ul li p.title,
 .medal-message,
 .emoji-box,
-.btn-disabled
+.btn-disabled,
+.bilibili-player-mode-selection-row .selection-span.active .selection-name,
+.bilibili-player-mode-selection-row .selection-span .selection-name:hover,
+.safe-tips p,
+.nav-list li .list-title .list-title-text p,
+.coin-nav-item,
+.coin-rest-p,
+.coin-rest-info,
+.coin-index-right-title,
+.coin-record .coin-title,
+.identmagTop,
+.record-nav-item,
+.main-content-title span.t,
+.get-coin-more,
+.table-normal tbody tr td
 {
     color: #eee !important;
 }
@@ -3107,7 +3143,18 @@ button.button.more,
 .btn-dufault,
 .medal-up-trueLove,
 .emoji-box,
-.container .tag
+.container .tag,
+.bilibili-player-mode-selection-row .row-selection .selection-span.active .selection-name,
+.bilibili-player-color-picker-container .bilibili-player-color-picker-input-group .bilibili-player-color-picker-color-current,
+.bilibili-player-color-picker-container .bilibili-player-color-picker-input-group .bilibili-player-color-picker-color-code,
+.get-coin-more,
+.table-wrapper,
+.table-normal tbody tr,
+.table-normal thead tr td,
+.coin-record .table-wrapper,
+.identmagTop,
+.record-nav,
+.main-content-title
 {
     border-color: transparent !important;
 }
@@ -3128,7 +3175,8 @@ li.history,
 .home-to-update,
 .home-userstatus,
 .right-more-btn,
-.points-pendant-item
+.points-pendant-item,
+.nav-list li
 {
     border-color: #aaa !important;
 }
@@ -3137,9 +3185,11 @@ li.history,
 //     border-color: #222 !important;
 // }
 .hot-live .room-list,
-.player-auxiliary-danmaku-date-picker-header
+.player-auxiliary-danmaku-date-picker-header,
+.table-normal tbody tr td,
+.table-normal thead tr td
 {
-    border-color: #444 !important
+    border-color: #444 !important;
 }
 // a
 // {
@@ -3291,7 +3341,11 @@ li.season-item .season-body .season-title span.follow,
 .bpui-selectmenu,
 .face-g-list .mp-block .right ul li.base .round,
 .face-g-list .mp-block .right ul li.base.reach .round,
-.bpui-tab-list-type-button .bpui-tab-list-row.bpui-state-selected
+.bpui-tab-list-type-button .bpui-tab-list-row.bpui-state-selected,
+.bangumi-list-wrapper .top-block .ss-list-wrapper .slider-contro,
+.season-item.on:after,
+.coin-nav .on,
+.coin-nav
 {
     border-color: $customStyleColor !important;
 }
@@ -3335,7 +3389,8 @@ li.season-item .season-body .season-title span.follow,
 .mp-mine-takedown,
 .face-g-list .mp-block .right ul li.reach .strip,
 .btn-dufault:not(.btn-disabled),
-.history-list .cover-contain .label
+.history-list .cover-contain .label,
+.coin-text-p .coin-i
 {
     background-color: $customStyleColor !important;
 }
@@ -3416,8 +3471,14 @@ button.button.more:hover,
 .tab-mk2:hover,
 .lh12 a,
 .cm-model .report-detail .more-list a,
-.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select, .bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round,
-.container .tag .item-btn
+.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select,
+.bpui-button-text-only.bpui-state-active .bpui-icon-checkbox.icon-12select-round,
+.container .tag .item-btn,
+.episode-item.on .ep-index, .episode-item.on .ep-title,
+.episode-item.on:hover .ep-index, .episode-item.on:hover .ep-title,
+.coin-nav .on,
+.out-link,
+.coin-num
 {
     color: $customStyleColor !important;
 }
