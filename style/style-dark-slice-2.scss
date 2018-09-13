@@ -168,7 +168,8 @@ li.season-item .season-body .season-title span.follow,
 .info-model,
 .btn-disabled,
 .coin-inner,
-.table-normal thead tr td
+.table-normal thead tr td,
+.invtable tr th 
 {
     background-color: #444 !important;
 }
@@ -378,10 +379,11 @@ li.no-data,
 .coin-left-nodata,
 .m-tips,
 .record-exp-title .i,
-.comment-floor, .comment-location, .comment-time, .good,
 .el-pager li.active + li,
 .btn-delete,
-.el-select-dropdown__item 
+.el-select-dropdown__item,
+.invitation-normal,
+.inv-record-right 
 {
     color: #aaa !important;
 }
@@ -595,7 +597,11 @@ button.button.more,
 .comment-title,
 .comment-con,
 .user-jump,
-.el-picker-panel__shortcut
+.el-picker-panel__shortcut,
+.invitation-info-title,
+.inv-record-title,
+.invtable tr th,
+.invitation-btn 
 {
     color: #eee !important;
 }
@@ -747,7 +753,10 @@ button.button.more,
 .record-exp-title,
 .record-exp-table-wrapper,
 .record-item,
-.el-select-dropdown 
+.el-select-dropdown,
+.invitation-top-warp,
+.invtable tr th, 
+table.invtable td 
 {
     border-color: transparent !important;
 }
@@ -823,7 +832,8 @@ li.history,
 .video-model header h2 .head-icon,
 .info-model header h2 .head-icon,
 .fans-question,
-.comment-wrap header h2 .head-icon
+.comment-wrap header h2 .head-icon,
+.coin-icon 
 {
     filter: $blueImageFilter !important;
 }
@@ -983,7 +993,9 @@ li.season-item .season-body .season-title span.follow,
 .face-g-list .mp-block .right ul li.reach .strip,
 .btn-dufault:not(.btn-disabled),
 .history-list .cover-contain .label,
-.coin-text-p .coin-i
+.coin-text-p .coin-i,
+.invitation-btn,
+.invitation-btn:hover 
 {
     background-color: $customStyleColor !important;
 }
