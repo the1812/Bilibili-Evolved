@@ -74,7 +74,8 @@ li.season-item .season-body .season-title span.follow,
 .el-picker-panel__sidebar,
 .el-select-dropdown,
 .cc-nav-wrp,
-.nav-upload-container 
+.nav-upload-container,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-danmaku .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite 
 {
     background-color: #222 !important;
 }
@@ -632,7 +633,10 @@ button.button.more,
 .cc-nav-wrp .nav-upload-btn > a,
 .data-card .data-box .tab .bili-btn,
 .data-card .fans-box .tab .bili-btn,
-.confirm-content 
+.confirm-content,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-danmaku .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-danmaku .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite .bilibili-player-danmaku-setting-lite-row .bilibili-player-danmaku-setting-lite-title,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-danmaku .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite .bilibili-player-danmaku-setting-lite-row .bpui-checkbox-text 
 {
     color: #eee !important;
 }
@@ -795,7 +799,8 @@ table.invtable td,
 .bili-btn.plain,
 .footer-content .menu-item,
 .footer-content,
-.footer-content .qrcode-wrp 
+.footer-content .qrcode-wrp,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-danmaku .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite 
 {
     border-color: transparent !important;
 }
@@ -1138,7 +1143,8 @@ button.button.more:hover,
 .btn-delete:hover,
 .data-card .tab .data-tab.current,
 .section-item .text-content,
-.nav-upload-container .nav-upload-item > p 
+.nav-upload-container .nav-upload-item > p,
+.share-module .share-list .weixin-share-modal .share-tips a 
 {
     color: $customStyleColor !important;
 }
