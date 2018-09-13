@@ -72,7 +72,9 @@ li.season-item .season-body .season-title span.follow,
 .identmagBot,
 .el-picker-panel [slot=sidebar],
 .el-picker-panel__sidebar,
-.el-select-dropdown 
+.el-select-dropdown,
+.cc-nav-wrp,
+.nav-upload-container 
 {
     background-color: #222 !important;
 }
@@ -169,7 +171,11 @@ li.season-item .season-body .season-title span.follow,
 .btn-disabled,
 .coin-inner,
 .table-normal thead tr td,
-.invtable tr th 
+.invtable tr th,
+.section-item,
+.side-utils .utils-box,
+.bili-btn.plain,
+.footer-content .qrcode-wrp 
 {
     background-color: #444 !important;
 }
@@ -238,7 +244,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn > i,
-.el-date-table td.in-range 
+.el-date-table td.in-range,
+.nav-upload-container .nav-upload-item:hover 
 {
     background-color: transparent !important;
 }
@@ -383,7 +390,16 @@ li.no-data,
 .btn-delete,
 .el-select-dropdown__item,
 .invitation-normal,
-.inv-record-right 
+.inv-record-right,
+.notice-card .notice-list .notice-item .notice-title,
+.income-card .income-box .empty-data p,
+.income-card .income-box .empty-data span,
+.data-card .data-box .tip p,
+.data-card .fans-box .tip p,
+.cc-nav-wrp .nav-item i:first-child,
+.footer-content .menu-item,
+.data-card .data-box .total, 
+.data-card .fans-box .total 
 {
     color: #aaa !important;
 }
@@ -601,7 +617,19 @@ button.button.more,
 .invitation-info-title,
 .inv-record-title,
 .invtable tr th,
-.invitation-btn 
+.invitation-btn,
+.home-wrap .card .title,
+.data-card .tab .data-tab,
+.academy-card .academy-box .academy-item .academy-title,
+.guide-card .title p,
+.section-item .data-name,
+.section-item .diff-wrp,
+.data-card .data-box .title,
+.data-card .fans-box .title,
+.side-utils .utils-item .item-desc,
+.cc-nav-wrp .nav-upload-btn > a,
+.data-card .data-box .tab .bili-btn,
+.data-card .fans-box .tab .bili-btn 
 {
     color: #eee !important;
 }
@@ -755,8 +783,16 @@ button.button.more,
 .record-item,
 .el-select-dropdown,
 .invitation-top-warp,
-.invtable tr th, 
-table.invtable td 
+.invtable tr th,
+table.invtable td,
+.cc-nav-wrp,
+.notice-card .title,
+.data-card .tab .data-tab,
+.income-card .income-box .empty-data,
+.bili-btn.plain,
+.footer-content .menu-item,
+.footer-content,
+.footer-content .qrcode-wrp 
 {
     border-color: transparent !important;
 }
@@ -904,7 +940,9 @@ li.season-item .season-body .season-title span.follow,
 .bangumi-order-wrap .bangumi-order, .bangumi-order-wrap .bangumi-order-d,
 .top_bg,
 .bangumi-list-wrapper .bottom-block .slider-contro i.slider-prev-mask,
-.bangumi-list-wrapper .bottom-block .slider-contro i.slider-next-mask
+.bangumi-list-wrapper .bottom-block .slider-contro i.slider-next-mask,
+.side-utils .utils-item .item-icon.feedback-entrance,
+.side-utils .utils-item .item-icon.back-totop 
 {
     display: none !important;
 }
@@ -948,7 +986,10 @@ li.season-item .season-body .season-title span.follow,
 .season-item.on:after,
 .coin-nav .on,
 .coin-nav,
-.record-nav .on 
+.record-nav .on,
+.data-card .tab .data-tab.current,
+.data-card .data-box .total .incr-num:before,
+.data-card .fans-box .total .incr-num:before 
 {
     border-color: $customStyleColor !important;
 }
@@ -995,7 +1036,10 @@ li.season-item .season-body .season-title span.follow,
 .history-list .cover-contain .label,
 .coin-text-p .coin-i,
 .invitation-btn,
-.invitation-btn:hover 
+.invitation-btn:hover,
+.notice-card .academy-entry,
+.section-item .diff-wrp .no-improve,
+.cc-nav-wrp .nav-upload-btn > a 
 {
     background-color: $customStyleColor !important;
 }
@@ -1088,7 +1132,10 @@ button.button.more:hover,
 .main-content-title a,
 .main-content-title a:hover,
 .record-exp-title .s,
-.btn-delete:hover 
+.btn-delete:hover,
+.data-card .tab .data-tab.current,
+.section-item .text-content,
+.nav-upload-container .nav-upload-item > p 
 {
     color: $customStyleColor !important;
 }
