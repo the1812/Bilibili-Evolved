@@ -137,7 +137,8 @@
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 // }
-.main-container .title span::before
+.main-container .title span::before,
+.top-banner
 {
     display: none !important;
 }
@@ -183,7 +184,8 @@
 .list-filter-bar .pic-type-box .item.active,
 .list-filter-bar .pic-type-box .item:hover,
 .content-panel .title span:hover em,
-.medal-up-name>a
+.medal-up-name>a,
+.list-link a
 {
     color: $customStyleColor !important;
 }
