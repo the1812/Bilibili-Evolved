@@ -366,7 +366,11 @@ li.no-data,
 .no-data-txt,
 .coin-text-p,
 .get-coin-more,
-.identmagBot span
+.identmagBot span,
+.main-content-title span.i,
+.record-group,
+.record-login-descript,
+.table-normal tbody tr 
 {
     color: #aaa !important;
 }
@@ -570,7 +574,10 @@ button.button.more,
 .coin-index-right-title,
 .get-coin-more:hover,
 .coin-record .coin-title,
-.identmagTop 
+.identmagTop,
+.record-nav-item,
+.main-content-title span.t,
+.table-normal thead tr td 
 {
     color: #eee !important;
 }
@@ -715,7 +722,9 @@ button.button.more,
 .coin-record .table-normal thead tr td,
 .coin-record .table-wrapper,
 .coin-record .table-normal tbody tr,
-.identmagTop 
+.identmagTop,
+.record-nav,
+.main-content-title 
 {
     border-color: transparent !important;
 }
