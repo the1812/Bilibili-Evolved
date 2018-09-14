@@ -1,12 +1,27 @@
 .bilibili-player-video-sendbar,
-.medal-up-trueLove
+.medal-up-trueLove,
+.el-date-table td,
+.el-date-table td.in-range:hover,
+.el-pagination__editor,
+.el-pagination button.disabled,
+.el-pagination .btn-next,
+.el-pagination .btn-prev,
+.el-pager li
 {
     background-color: #222 !important;
 }
 .main-container .title>span,
 .content-panel .title span,
 .face-g-list .mp-block .right ul li.base .round,
-.security-list .child-list li a:hover
+.security-list .child-list li a:hover,
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover,
+.el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover,
+.el-picker-panel__shortcut:hover,
+.el-date-table td:hover,
+.el-date-table td.in-range,
+.el-date-table td.next-month:hover,
+.el-date-table td.prev-month:hover
 {
     background-color: #444 !important;
 }
@@ -49,7 +64,12 @@
 .scroll-loading,
 .room-card-item .info .s-info,
 .fans-no-data::after,
-.fans-no-data-wear::after
+.fans-no-data-wear::after,
+.record-item-line .comment-floor,
+.record-item-line .comment-location,
+.record-item-line .comment-time,
+.record-item-line .good,
+.no-data-integrity
 {
     color: #aaa !important;
 }
@@ -57,7 +77,12 @@
 .content-panel .title span em,
 .medal-up-trueLove,
 .u-info .u-name,
-.bottom-actions .action-item
+.bottom-actions .action-item,
+.el-pagination__editor,
+.el-pagination .btn-next,
+.el-pagination .btn-prev,
+.el-pager li.btn-quicknext,
+.el-pager li.btn-quickprev
 {
     color: #eee !important;
 }
@@ -66,7 +91,12 @@
 //     color: #222 !important;
 // }
 .content-panel .title span,
-.medal-up-trueLove
+.medal-up-trueLove,
+.el-picker-panel,
+.el-time-range-picker__body,
+.el-autocomplete-suggestion__wrap,
+.el-pager li,
+.el-pager li:last-child
 {
     border-color: transparent !important;
 }
@@ -79,7 +109,10 @@
 //     border-color: #222 !important;
 // }
 .up-info-holder .fixed-box .up-article-list-block .block-title,
-.up-info-holder .fixed-box .more .top-bar
+.up-info-holder .fixed-box .more .top-bar,
+.el-date-range-picker__content.is-left,
+.el-picker-panel [slot=sidebar],
+.el-picker-panel__sidebar
 {
     border-color: #444 !important
 }
@@ -120,7 +153,9 @@
 
 .tab-mk2.active,
 .face-g-more,
-.bangumi-player
+.bangumi-player,
+.record-nav .on,
+.m-help .m-arrow
 {
     background-image: none !important;
 }
@@ -129,7 +164,8 @@
 //     border-radius: 4px !important;
 // }
 .bangumi-player,
-.live-sidebar-ctnr
+.live-sidebar-ctnr,
+.el-picker-panel
 {
     box-shadow: none !important;
 }
@@ -172,7 +208,11 @@
     border-color: $customStyleColor !important;
 }
 .medal-progress>i,
-.gift-item-wrap .expiration
+.gift-item-wrap .expiration,
+.el-date-table td.in-range.start-date:hover,
+.el-date-table td.in-range.end-date:hover,
+.el-date-table td.in-range.start-date,
+.el-date-table td.in-range.end-date
 {
     background-color: $customStyleColor !important;
 }
@@ -185,11 +225,20 @@
 .list-filter-bar .pic-type-box .item:hover,
 .content-panel .title span:hover em,
 .medal-up-name>a,
-.list-link a
+.list-link a,
+.record-nav .on,
+.noHover-link,
+.my-moral i,
+.viphelp span,
+.el-pager li:hover
 {
     color: $customStyleColor !important;
 }
-.gift-item-wrap .expiration
+.gift-item-wrap .expiration,
+.el-date-table td.in-range.start-date:hover,
+.el-date-table td.in-range.end-date:hover,
+.el-date-table td.in-range.start-date,
+.el-date-table td.in-range.end-date
 {
     color: $foreground !important;
 }

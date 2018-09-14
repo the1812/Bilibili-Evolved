@@ -2501,7 +2501,17 @@ li.season-item .season-body .season-title span.follow,
 .coin-record .table-normal tbody tr:nth-child(odd),
 .identmagTop,
 .get-coin-more,
-.identmagBot
+.identmagBot,
+.el-picker-panel [slot=sidebar],
+.el-picker-panel__sidebar,
+.el-select-dropdown,
+.cc-nav-wrp,
+.nav-upload-container,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-danmaku .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
+.row,
+.audioplayer .ap-controller .ap-controller-right .ap-volume-bar-wrap,
+.audioplayer .ap-controller .ap-controller-center .ap-play-bar-wrap,
+.audioplayer
 {
     background-color: #222 !important;
 }
@@ -2597,7 +2607,13 @@ li.season-item .season-body .season-title span.follow,
 .info-model,
 .btn-disabled,
 .coin-inner,
-.table-normal thead tr td
+.table-normal thead tr td,
+.invtable tr th,
+.section-item,
+.side-utils .utils-box,
+.bili-btn.plain,
+.footer-content .qrcode-wrp,
+.confirm-content
 {
     background-color: #444 !important;
 }
@@ -2654,7 +2670,6 @@ li.season-item .season-body .season-title span.follow,
 .container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-mask,
 .live-sidebar-ctnr,
 .line-circle,
-.el-date-table td.available:hover,
 .security-list .child-list li a:hover,
 .f-list-hover:hover,
 .bilibili-player-block-tabpanel-row.active-1 .bilibili-player-block-type-keyword,
@@ -2665,7 +2680,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
-.bilibili-player-video-sendbar .bilibili-player-video-btn > i
+.bilibili-player-video-sendbar .bilibili-player-video-btn > i,
+.nav-upload-container .nav-upload-item:hover
 {
     background-color: transparent !important;
 }
@@ -2803,7 +2819,38 @@ li.no-data,
 .record-group,
 .record-login-descript,
 .table-normal thead tr td,
-.coin-left-nodata
+.coin-left-nodata,
+.m-tips,
+.record-exp-title .i,
+.btn-delete,
+.el-select-dropdown__item,
+.invitation-normal,
+.inv-record-right,
+.notice-card .notice-list .notice-item .notice-title,
+.income-card .income-box .empty-data p,
+.income-card .income-box .empty-data span,
+.data-card .data-box .tip p,
+.data-card .fans-box .tip p,
+.cc-nav-wrp .nav-item i:first-child,
+.footer-content .menu-item,
+.data-card .data-box .total,
+.data-card .fans-box .total,
+.modal-wrapper .modal-body,
+.follow-container .follow-right .follow-intro .follow-content,
+.follow-container .follow-right .follow-num,
+.hotsong-li .hotsong-upname,
+.song-lrc,
+.song-li .song-right .song-playnum,
+.song-type,
+.song-time,
+.song-play-num,
+.song-info .song-info-content .song-info-theme,
+.font24,
+.share-board .song-share div,
+.hotsong-li .font24,
+.song-content,
+.b-head-string,
+.results
 {
     color: #aaa !important;
 }
@@ -2959,7 +3006,6 @@ button.button.more,
 .el-pager li.active,
 .el-form-item__label,
 .userinfo-username,
-.el-input__inner,
 .user-my-sex .el-radio-button__inner,
 .el-radio-button__orig-radio:checked + .el-radio-button__inner,
 .el-picker-panel,
@@ -3010,7 +3056,46 @@ button.button.more,
 .record-nav-item,
 .main-content-title span.t,
 .get-coin-more,
-.table-normal tbody tr td
+.table-normal tbody tr td,
+.my-moral,
+.m-help,
+.record-exp-title .t,
+.comment-title,
+.comment-con,
+.user-jump,
+.el-picker-panel__shortcut,
+.invitation-info-title,
+.inv-record-title,
+.invtable tr th,
+.invitation-btn,
+.home-wrap .card .title,
+.data-card .tab .data-tab,
+.academy-card .academy-box .academy-item .academy-title,
+.guide-card .title p,
+.section-item .data-name,
+.section-item .diff-wrp,
+.data-card .data-box .title,
+.data-card .fans-box .title,
+.side-utils .utils-item .item-desc,
+.cc-nav-wrp .nav-upload-btn > a,
+.data-card .data-box .tab .bili-btn,
+.data-card .fans-box .tab .bili-btn,
+.confirm-content,
+.bilibili-player-video-btn-danmaku .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
+.bilibili-player-danmaku-setting-lite-row .bilibili-player-danmaku-setting-lite-title,
+.bilibili-player-danmaku-setting-lite .bilibili-player-danmaku-setting-lite-row .bpui-checkbox-text,
+.song-title,
+.follow-container .follow-right .follow-up,
+.song-play-num span,
+.song-info .song-info-content .song-info-detail,
+.song-playbtn,
+.hotsong-li .hotsong-title a,
+.song-li .song-right .song-intro a,
+.audioplayer .ap-controller .ap-controller-center .ap-current-time,
+.audioplayer .ap-controller .ap-controller-center .ap-name,
+.audioplayer .ap-controller .ap-controller-center .ap-playlist-button-amount,
+.audioplayer .ap-controller .ap-controller-center .ap-time,
+.audioplayer .ap-controller .ap-controller-center .ap-artist
 {
     color: #eee !important;
 }
@@ -3104,11 +3189,9 @@ button.button.more,
 .el-pagination .btn-next, .el-pagination .btn-prev,
 .el-pagination button.disabled,
 .el-pager li.active,
-.el-input__inner,
 .user-my-sex .el-radio-button__inner,
 .user-setting-warp .padding-dom,
 .el-textarea__inner,
-.el-input__inner:hover,
 .bangumi-nav-right .nav-goto-top,
 .bangumi-nav-right .nav-mini-switch,
 .bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow.followed,
@@ -3127,8 +3210,8 @@ button.button.more,
 .face-g-action,
 .face-g-preview,
 .face-g-action[id=face-g-change],
-.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel,
-.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.bilibili-player-border,
+.bilibili-player-block-tabpanel,
+.bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.bilibili-player-border,
 .bilibili-player .bilibili-player-panel-title,
 .face-g-item-inner,
 .face-g-list[id=face-g-log] td,
@@ -3155,7 +3238,28 @@ button.button.more,
 .identmagTop,
 .record-nav,
 .main-content-title,
-.nav-list li
+.nav-list li,
+.m-help,
+.m-help:hover,
+.integrity-table-wrapper,
+.record-exp-title,
+.record-exp-table-wrapper,
+.record-item,
+.el-select-dropdown,
+.invitation-top-warp,
+.invtable tr th,
+table.invtable td,
+.cc-nav-wrp,
+.notice-card .title,
+.data-card .tab .data-tab,
+.income-card .income-box .empty-data,
+.bili-btn.plain,
+.footer-content .menu-item,
+.footer-content,
+.footer-content .qrcode-wrp,
+.bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
+.song-comment,
+.song-title
 {
     border-color: transparent !important;
 }
@@ -3200,7 +3304,9 @@ li.history,
 // {
 //     transition: all .2s !important;
 // }
-.player-auxiliary-danmaku-date-picker-btn
+.player-auxiliary-danmaku-date-picker-btn,
+.audioplayer svg:not(.ap-svg-exclude) path,
+.audioplayer svg:not(.ap-svg-exclude) polygon
 {
     fill: #aaa !important;
 }
@@ -3231,14 +3337,20 @@ li.history,
 .video-model header h2 .head-icon,
 .info-model header h2 .head-icon,
 .fans-question,
-.comment-wrap header h2 .head-icon
+.comment-wrap header h2 .head-icon,
+.coin-icon,
+.bangumi-list-wrapper .top-block .mode-select li.detail-mode.selected,
+.bangumi-list-wrapper .top-block .mode-select li.detail-mode:hover,
+.bangumi-list-wrapper .top-block .mode-select li.simple-mode.selected,
+.bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover
 {
     filter: $blueImageFilter !important;
 }
 .season-timer .current-timer:before,
 li.season-item .season-body .season-title span.follow,
 .user-panel-ctnr .ctrl-btn .svg-icon,
-.publish-panel .publish-list .publish-item a
+.publish-panel .publish-list .publish-item a,
+.episode-item .mark-icon.badge-pink-vip
 {
     filter: $pinkImageFilter !important;
 }
@@ -3302,7 +3414,9 @@ li.season-item .season-body .season-title span.follow,
 .bangumi-order-wrap .bangumi-order, .bangumi-order-wrap .bangumi-order-d,
 .top_bg,
 .bangumi-list-wrapper .bottom-block .slider-contro i.slider-prev-mask,
-.bangumi-list-wrapper .bottom-block .slider-contro i.slider-next-mask
+.bangumi-list-wrapper .bottom-block .slider-contro i.slider-next-mask,
+.side-utils .utils-item .item-icon.feedback-entrance,
+.side-utils .utils-item .item-icon.back-totop
 {
     display: none !important;
 }
@@ -3345,7 +3459,11 @@ li.season-item .season-body .season-title span.follow,
 .bangumi-list-wrapper .top-block .ss-list-wrapper .slider-contro,
 .season-item.on:after,
 .coin-nav .on,
-.coin-nav
+.coin-nav,
+.record-nav .on,
+.data-card .tab .data-tab.current,
+.data-card .data-box .total .incr-num:before,
+.data-card .fans-box .total .incr-num:before
 {
     border-color: $customStyleColor !important;
 }
@@ -3390,7 +3508,15 @@ li.season-item .season-body .season-title span.follow,
 .face-g-list .mp-block .right ul li.reach .strip,
 .btn-dufault:not(.btn-disabled),
 .history-list .cover-contain .label,
-.coin-text-p .coin-i
+.coin-text-p .coin-i,
+.invitation-btn,
+.invitation-btn:hover,
+.notice-card .academy-entry,
+.section-item .diff-wrp .no-improve,
+.cc-nav-wrp .nav-upload-btn > a,
+.song-playbtn,
+.song-playbtn:hover,
+.audioplayer .ap-controller .ap-controller-right .ap-volume-thumb-dot
 {
     background-color: $customStyleColor !important;
 }
@@ -3478,7 +3604,25 @@ button.button.more:hover,
 .episode-item.on:hover .ep-index, .episode-item.on:hover .ep-title,
 .coin-nav .on,
 .out-link,
-.coin-num
+.coin-num,
+.m-help:hover,
+.main-content-title a,
+.main-content-title a:hover,
+.record-exp-title .s,
+.btn-delete:hover,
+.data-card .tab .data-tab.current,
+.section-item .text-content,
+.nav-upload-container .nav-upload-item > p,
+.share-module .share-list .weixin-share-modal .share-tips a,
+.song-infoFold,
+.song-introText,
+.song-lrcFold,
+.song-title .font18,
+.song-title .font18:hover,
+.hotsong-li .font24:hover,
+.hotsong-li .hotsong-title a:hover,
+.song-li .song-right .song-intro a:hover,
+.audioplayer .ap-controller .ap-controller-right .ap-playlist-button:hover .ap-playlist-button-amount
 {
     color: $customStyleColor !important;
 }
@@ -3506,7 +3650,8 @@ button.button.more:hover,
 .big-member-btn,
 .btn-confirm,
 .btn-dufault:not(.btn-disabled),
-.history-list .cover-contain .label
+.history-list .cover-contain .label,
+.comment-video
 {
     color: $foreground !important;
 }
@@ -3532,7 +3677,8 @@ button.button.more:hover,
 .container,
 .bili-footer .boston-postcards li,
 .h-line,
-.el-radio-button:first-child .el-radio-button__inner
+.el-radio-button:first-child .el-radio-button__inner,
+.el-picker-panel [slot=sidebar]
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
@@ -3554,14 +3700,29 @@ button.button.more:hover,
 //     background: #333 !important;
 // }
 .bilibili-player-video-sendbar,
-.medal-up-trueLove
+.medal-up-trueLove,
+.el-date-table td,
+.el-date-table td.in-range:hover,
+.el-pagination__editor,
+.el-pagination button.disabled,
+.el-pagination .btn-next,
+.el-pagination .btn-prev,
+.el-pager li
 {
     background-color: #222 !important;
 }
 .main-container .title>span,
 .content-panel .title span,
 .face-g-list .mp-block .right ul li.base .round,
-.security-list .child-list li a:hover
+.security-list .child-list li a:hover,
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover,
+.el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover,
+.el-picker-panel__shortcut:hover,
+.el-date-table td:hover,
+.el-date-table td.in-range,
+.el-date-table td.next-month:hover,
+.el-date-table td.prev-month:hover
 {
     background-color: #444 !important;
 }
@@ -3604,7 +3765,12 @@ button.button.more:hover,
 .scroll-loading,
 .room-card-item .info .s-info,
 .fans-no-data::after,
-.fans-no-data-wear::after
+.fans-no-data-wear::after,
+.record-item-line .comment-floor,
+.record-item-line .comment-location,
+.record-item-line .comment-time,
+.record-item-line .good,
+.no-data-integrity
 {
     color: #aaa !important;
 }
@@ -3612,7 +3778,12 @@ button.button.more:hover,
 .content-panel .title span em,
 .medal-up-trueLove,
 .u-info .u-name,
-.bottom-actions .action-item
+.bottom-actions .action-item,
+.el-pagination__editor,
+.el-pagination .btn-next,
+.el-pagination .btn-prev,
+.el-pager li.btn-quicknext,
+.el-pager li.btn-quickprev
 {
     color: #eee !important;
 }
@@ -3621,7 +3792,12 @@ button.button.more:hover,
 //     color: #222 !important;
 // }
 .content-panel .title span,
-.medal-up-trueLove
+.medal-up-trueLove,
+.el-picker-panel,
+.el-time-range-picker__body,
+.el-autocomplete-suggestion__wrap,
+.el-pager li,
+.el-pager li:last-child
 {
     border-color: transparent !important;
 }
@@ -3634,7 +3810,10 @@ button.button.more:hover,
 //     border-color: #222 !important;
 // }
 .up-info-holder .fixed-box .up-article-list-block .block-title,
-.up-info-holder .fixed-box .more .top-bar
+.up-info-holder .fixed-box .more .top-bar,
+.el-date-range-picker__content.is-left,
+.el-picker-panel [slot=sidebar],
+.el-picker-panel__sidebar
 {
     border-color: #444 !important
 }
@@ -3675,7 +3854,9 @@ button.button.more:hover,
 
 .tab-mk2.active,
 .face-g-more,
-.bangumi-player
+.bangumi-player,
+.record-nav .on,
+.m-help .m-arrow
 {
     background-image: none !important;
 }
@@ -3684,7 +3865,8 @@ button.button.more:hover,
 //     border-radius: 4px !important;
 // }
 .bangumi-player,
-.live-sidebar-ctnr
+.live-sidebar-ctnr,
+.el-picker-panel
 {
     box-shadow: none !important;
 }
@@ -3727,7 +3909,11 @@ button.button.more:hover,
     border-color: $customStyleColor !important;
 }
 .medal-progress>i,
-.gift-item-wrap .expiration
+.gift-item-wrap .expiration,
+.el-date-table td.in-range.start-date:hover,
+.el-date-table td.in-range.end-date:hover,
+.el-date-table td.in-range.start-date,
+.el-date-table td.in-range.end-date
 {
     background-color: $customStyleColor !important;
 }
@@ -3740,11 +3926,20 @@ button.button.more:hover,
 .list-filter-bar .pic-type-box .item:hover,
 .content-panel .title span:hover em,
 .medal-up-name>a,
-.list-link a
+.list-link a,
+.record-nav .on,
+.noHover-link,
+.my-moral i,
+.viphelp span,
+.el-pager li:hover
 {
     color: $customStyleColor !important;
 }
-.gift-item-wrap .expiration
+.gift-item-wrap .expiration,
+.el-date-table td.in-range.start-date:hover,
+.el-date-table td.in-range.end-date:hover,
+.el-date-table td.in-range.start-date,
+.el-date-table td.in-range.end-date
 {
     color: $foreground !important;
 }

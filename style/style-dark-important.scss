@@ -41,12 +41,16 @@ blockquote .color-yellow-04
     color: #aaa !important;
 }
 .home-page .sticky-bar .bar-content .message,
-.cover .disabled-cover
+.cover .disabled-cover,
+.el-input__inner,
+.commnent-screen-wrap .el-input__inner
 {
     color: #eee !important;
 }
 
-.link-footer
+.link-footer,
+.el-input__inner,
+.commnent-screen-wrap .el-input__inner
 {
     border-color: transparent !important;
 }
@@ -66,12 +70,18 @@ blockquote .color-yellow-04
 .season-timeline .season-group.today.is-published .group-time::before,
 .bg-blue,
 .security-list .child-list li a.bg-blue:hover,
-.face-g-tab li.current
+.face-g-tab li.current,
+.el-date-table td.current:not(.disabled),
+.el-date-table td.end-date,
+.el-date-table td.start-date
 {
     background-color: $customStyleColor !important;
 }
 .face-g-tab li.current,
-.current .tab-btn-link
+.current .tab-btn-link,
+.el-date-table td.current:not(.disabled),
+.el-date-table td.end-date,
+.el-date-table td.start-date
 {
     color: $foreground !important;
 }
