@@ -3414,9 +3414,7 @@ li.season-item .season-body .season-title span.follow,
 .bangumi-order-wrap .bangumi-order, .bangumi-order-wrap .bangumi-order-d,
 .top_bg,
 .bangumi-list-wrapper .bottom-block .slider-contro i.slider-prev-mask,
-.bangumi-list-wrapper .bottom-block .slider-contro i.slider-next-mask,
-.side-utils .utils-item .item-icon.feedback-entrance,
-.side-utils .utils-item .item-icon.back-totop
+.bangumi-list-wrapper .bottom-block .slider-contro i.slider-next-mask
 {
     display: none !important;
 }
@@ -3707,7 +3705,14 @@ button.button.more:hover,
 .el-pagination button.disabled,
 .el-pagination .btn-next,
 .el-pagination .btn-prev,
-.el-pager li
+.el-pager li,
+.nav-guide-container .nav-guide-tip,
+.guide-card.card,
+.data-card.card,
+.notice-card.card,
+.notice-card .notice-list .notice-item,
+.income-card.card,
+.academy-card.card
 {
     background-color: #222 !important;
 }
@@ -3722,7 +3727,10 @@ button.button.more:hover,
 .el-date-table td:hover,
 .el-date-table td.in-range,
 .el-date-table td.next-month:hover,
-.el-date-table td.prev-month:hover
+.el-date-table td.prev-month:hover,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-right,
+.guide-card .guide-box a,
+.footer-content .social-item
 {
     background-color: #444 !important;
 }
@@ -3740,7 +3748,8 @@ button.button.more:hover,
 // }
 #mp-mine-header,
 #mp-mine-header.active,
-.fans-icon
+.fans-icon,
+.guide-card .guide-box a
 {
     background-image: none !important;
 }
@@ -3770,7 +3779,10 @@ button.button.more:hover,
 .record-item-line .comment-location,
 .record-item-line .comment-time,
 .record-item-line .good,
-.no-data-integrity
+.no-data-integrity,
+.nav-guide-container .nav-guide-tip .guide-tip-content-main p,
+.nav-guide-container .nav-guide-tip .guide-tip-content-main h3 span,
+.footer-content .social-item
 {
     color: #aaa !important;
 }
@@ -3783,7 +3795,9 @@ button.button.more:hover,
 .el-pagination .btn-next,
 .el-pagination .btn-prev,
 .el-pager li.btn-quicknext,
-.el-pager li.btn-quickprev
+.el-pager li.btn-quickprev,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-right,
+.guide-card .guide-box a
 {
     color: #eee !important;
 }
@@ -3797,7 +3811,8 @@ button.button.more:hover,
 .el-time-range-picker__body,
 .el-autocomplete-suggestion__wrap,
 .el-pager li,
-.el-pager li:last-child
+.el-pager li:last-child,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-right
 {
     border-color: transparent !important;
 }
@@ -3835,7 +3850,8 @@ button.button.more:hover,
     filter: brightness(0) invert(1) !important;
 }
 .bp-svg-icon.link,
-.face-g-list .mp-block .right ul li.reach::after
+.face-g-list .mp-block .right ul li.reach::after,
+.cc-nav-wrp .logo
 {
     filter: $blueImageFilter !important;
 }
@@ -3875,7 +3891,8 @@ button.button.more:hover,
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 // }
 .main-container .title span::before,
-.top-banner
+.top-banner,
+.nav-guide-container .nav-guide-tip .guide-tip-triangle
 {
     display: none !important;
 }
@@ -3904,7 +3921,8 @@ button.button.more:hover,
 }
 
 .list-filter-bar .sort-box .item.active,
-.list-filter-bar .sort-box .item:hover
+.list-filter-bar .sort-box .item:hover,
+.data-card .tab .data-tab.current:after
 {
     border-color: $customStyleColor !important;
 }
@@ -3913,7 +3931,8 @@ button.button.more:hover,
 .el-date-table td.in-range.start-date:hover,
 .el-date-table td.in-range.end-date:hover,
 .el-date-table td.in-range.start-date,
-.el-date-table td.in-range.end-date
+.el-date-table td.in-range.end-date,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-left
 {
     background-color: $customStyleColor !important;
 }
@@ -3939,7 +3958,8 @@ button.button.more:hover,
 .el-date-table td.in-range.start-date:hover,
 .el-date-table td.in-range.end-date:hover,
 .el-date-table td.in-range.start-date,
-.el-date-table td.in-range.end-date
+.el-date-table td.in-range.end-date,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-left
 {
     color: $foreground !important;
 }
@@ -3959,8 +3979,8 @@ button.button.more:hover,
 //     border-top-color: transparent !important;
 //     border-right-color: transparent !important;
 // }
-// a
-// {
-//     border-left-color: transparent !important;
-//     border-right-color: transparent !important;
-// }
+.data-card .tab .data-tab.current:after
+{
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+}
