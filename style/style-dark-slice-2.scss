@@ -80,7 +80,9 @@ li.season-item .season-body .season-title span.follow,
 .audioplayer,
 .log-empty,
 .follow-container .follow-right .follow-intro .follow-fold,
-.follow-container .follow-right .follow-intro .follow-fold:hover 
+.follow-container .follow-right .follow-intro .follow-fold:hover,
+.link-top-container,
+.audios-wrap #audios-box 
 {
     background-color: #222 !important;
 }
@@ -183,7 +185,9 @@ li.season-item .season-body .season-title span.follow,
 .bili-btn.plain,
 .footer-content .qrcode-wrp,
 .confirm-content,
-.follow-container .follow-right .unfollow-btn 
+.follow-container .follow-right .unfollow-btn,
+.contri-condition .contri-search,
+.contri-condition .contri-sort .contri-sort-type 
 {
     background-color: #444 !important;
 }
@@ -251,7 +255,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn > i,
-.nav-upload-container .nav-upload-item:hover
+.nav-upload-container .nav-upload-item:hover,
+.contri-condition .contri-sort .contri-sort-type li:hover 
 {
     background-color: transparent !important;
 }
@@ -259,7 +264,8 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background: #fff1 !important;
 // }
-.fav-main .fav-action-top .back-to-info
+.fav-main .fav-action-top .back-to-info,
+.cc-nav-wrp .nav-cut-off-line 
 {
     background: transparent !important;
 }
@@ -423,7 +429,11 @@ li.no-data,
 .results,
 .bread-crumbs a,
 .bread-crumbs,
-.log-empty p 
+.log-empty p,
+.compila-not-find .compila-not-find-tips,
+.contri-not-find .contri-not-find-tips,
+.contri-condition .contri-right i,
+.contri-condition .contri-sort 
 {
     color: #aaa !important;
 }
@@ -672,7 +682,16 @@ button.button.more,
 .bread-crumbs span,
 .b-head-t,
 .b-head,
-.follow-container .follow-right .unfollow-btn 
+.follow-container .follow-right .unfollow-btn,
+.cc-btn.is-main,
+.link-top-container .link-top-item,
+.cc-album-manage .info-wrp .cc-btn,
+.contri-condition .contri-select,
+.compila-condition .compila-type,
+.compila-condition .compila-right .compila-add.single,
+.compila-not-find .compila-not-find-ime,
+.contri-not-find .contri-not-find-ime,
+.contri-condition .contri-sort .contri-sort-type li 
 {
     color: #eee !important;
 }
@@ -837,7 +856,9 @@ table.invtable td,
 .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
 .song-comment,
 .song-title,
-.follow-container .follow-right .unfollow-btn 
+.follow-container .follow-right .unfollow-btn,
+.link-top-container,
+.contri-condition .contri-search
 {
     border-color: transparent !important;
 }
@@ -947,7 +968,12 @@ li.season-item .season-body .season-title span.follow,
     filter: grayscale(1) !important;
 }
 .live-module .tab-item .r-item .r-i-t .u-online i,
-.log-empty img 
+.log-empty img,
+.cc-article-wrp .info-wrp .img,
+.text-article-wrp .info-wrp .img,
+.cc-album-manage .info-wrp .no-img,
+.compila-not-find .compila-not-find-image,
+.contri-not-find .contri-not-find-image
 {
     filter: brightness(0.72) !important;
 }
@@ -1041,7 +1067,9 @@ li.season-item .season-body .season-title span.follow,
 .data-card .tab .data-tab.current,
 .data-card .data-box .total .incr-num:before,
 .data-card .fans-box .total .incr-num:before,
-.song-li .song-left .song-shadow 
+.song-li .song-left .song-shadow,
+.link-top-container .link-top-item.active,
+.contri-condition .contri-select.active 
 {
     border-color: $customStyleColor !important;
 }
@@ -1094,7 +1122,14 @@ li.season-item .season-body .season-title span.follow,
 .cc-nav-wrp .nav-upload-btn > a,
 .song-playbtn,
 .song-playbtn:hover,
-.audioplayer .ap-controller .ap-controller-right .ap-volume-thumb-dot
+.audioplayer .ap-controller .ap-controller-right .ap-volume-thumb-dot,
+.cc-btn.is-main,
+.cc-btn.is-main:hover,
+.cc-album-manage .info-wrp .cc-btn,
+.cc-album-manage .info-wrp .cc-btn:hover,
+.compila-condition .compila-right .compila-add.single,
+.compila-not-find .compila-not-find-ime,
+.contri-not-find .contri-not-find-ime 
 {
     background-color: $customStyleColor !important;
 }
@@ -1203,7 +1238,9 @@ button.button.more:hover,
 .audioplayer .ap-controller .ap-controller-right .ap-playlist-button:hover .ap-playlist-button-amount,
 .follow-container .follow-right .follow-intro .follow-fold,
 .song-info .song-info-content a,
-.song-info .song-info-content a:hover 
+.song-info .song-info-content a:hover,
+.contri-condition .contri-select.active,
+.contri-condition .contri-sort .contri-sort-type li:hover 
 {
     color: $customStyleColor !important;
 }
