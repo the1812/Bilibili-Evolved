@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.3.7
+// @version      1.3.13
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -21,12 +21,16 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        blurSettingsPanel: false,
+        blurVideoControl: false,
         toast: false,
         fullTweetsTitle: false,
+        removeVideoTopMask: true,
         removeLiveWatermark: true,
         harunaScale: true,
         removeAds: true,
         hideTopSearch: false,
+        touchVideoPlayerDoubleTapControl: false,
         touchVideoPlayerAnimation: false,
         touchNavBar: false,
         touchVideoPlayer: false,
@@ -45,7 +49,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.3.7"
+        currentVersion: "1.3.13"
     };
     function loadSettings()
     {
@@ -79,8 +83,7 @@
             style: new Resource("style/style.min.scss", 1),
             oldStyle: new Resource("style/style-old.min.scss", 1),
             scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
-            darkStyleSlice1: new Resource("style/style-dark-slice-1.min.scss", 2),
-            darkStyleSlice2: new Resource("style/style-dark-slice-2.min.scss", 2),
+            darkStyle: new Resource("style/style-dark.min.scss", 2),
             darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
             touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
             navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
@@ -90,6 +93,7 @@
             fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
             imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
             toastStyle: new Resource("style/style-toast.min.scss", 9),
+            blurVideoControlStyle: new Resource("style/style-blur-video-control.min.css", 10),
 
             guiSettingsDom: new Resource("utils/gui-settings.html"),
             imageViewerDom: new Resource("utils/image-viewer.html"),
@@ -109,7 +113,9 @@
             fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
             viewCover: new Resource("video/view-cover.min.js"),
             notifyNewVersion: new Resource("utils/notify-new-version.min.js"),
-            toast: new Resource("utils/toast.min.js")
+            toast: new Resource("utils/toast.min.js"),
+            removeVideoTopMask: new Resource("video/remove-top-mask.min.js"),
+            blurVideoControl: new Resource("video/blur-video-control.min.js")
         };
         (function ()
         {
@@ -118,8 +124,7 @@
                 this.guiSettingsStyle
             ];
             this.useDarkStyle.dependencies = [
-                this.darkStyleSlice1,
-                this.darkStyleSlice2,
+                this.darkStyle,
                 this.darkStyleImportant
             ];
             this.useNewStyle.dependencies = [
@@ -148,6 +153,9 @@
             this.toast.dependencies = [
                 this.toastStyle
             ];
+            this.blurVideoControl.dependencies = [
+                this.blurVideoControlStyle
+            ];
         }).apply(Resource.all);
         (function ()
         {
@@ -166,6 +174,8 @@
             this.viewCover.displayName = "查看封面";
             this.notifyNewVersion.displayName = "新版本提醒";
             this.toast.displayName = "显示消息";
+            this.removeVideoTopMask.displayName = "删除视频标题层";
+            this.blurVideoControl.displayName = "模糊视频控制栏背景";
         }).apply(Resource.all);
     }
     function downloadText(url, load, error)
@@ -479,7 +489,7 @@
                 `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
-                            <input key="$2" type="checkbox" dependencies="$3"/>
+                            <input key="$2" type="checkbox" dependencies="$3" checked/>
                             <svg class="gui-settings-ok" viewBox="0 0 24 24">
                                 <path />
                             </svg>
@@ -541,7 +551,7 @@
         getStyle(id)
         {
             const style = this.text;
-            if (!style)
+            if (style === null)
             {
                 console.error("Attempt to get style which is not downloaded.");
             }
@@ -668,7 +678,11 @@
                 {
                     if (settings[key] === true && key !== "toast")
                     {
-                        promises.push(this.fetchByKey(key));
+                        const promise = this.fetchByKey(key);
+                        if (promise)
+                        {
+                            promises.push(promise);
+                        }
                     }
                 }
                 Promise.all(promises).then(() => resolve());

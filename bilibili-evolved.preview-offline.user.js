@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name         Bilibili Evolved (Offline)
+// @name         Bilibili Evolved (Preview Offline)
 // @version      60.25
-// @description  增强哔哩哔哩Web端体验.(离线版)
+// @description  增强哔哩哔哩Web端体验.(预览离线版)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
 // @run-at       document-end
-// @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js
-// @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js
+// @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js
+// @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js
 // @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
 // @homepage     https://github.com/the1812/Bilibili-Evolved
 // @grant        unsafeWindow
@@ -48,7 +48,7 @@
         viewCover: true,
         notifyNewVersion: true,
         fixFullscreen: false,
-        latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js",
+        latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js",
         currentVersion: "1.3.13"
     };
     function loadSettings()

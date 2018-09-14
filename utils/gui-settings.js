@@ -62,7 +62,9 @@
 
         function settingsChange(key, _, newValue)
         {
-            $(`input[type='checkbox'][key='${key}']`).prop("checked", newValue);
+            $(`input[type='checkbox'][key='${key}']`)
+                .prop("checked", newValue)
+                .change();
             $(`input[type='text'][key='${key}']`).val(newValue);
         }
         function syncGui()
@@ -148,7 +150,7 @@
                     dependencies[$(element).attr("key")] = dep;
                 }
             });
-            $(`input[type='checkbox']`).on("change", e =>
+            $(`input[type='checkbox'][key]`).on("change", e =>
             {
                 const self = $(e.target);
                 const checked = self.prop("checked");
@@ -214,6 +216,10 @@
                     });
             }
         }
+        function addEffects()
+        {
+            $(".gui-settings-content ul li.category, .gui-settings-content").addClass("blur");
+        }
         new SpinQuery(
             () => $("body"),
             it => it.length > 0 && unsafeWindow.$,
@@ -226,9 +232,13 @@
                     $("body").append(settingsBox);
                     setupEvents();
                     fillSvgData();
-                    syncGui();
                     listenDependencies();
+                    syncGui();
                     addPredefinedColors();
+                    if (settings.blurSettingsPanel)
+                    {
+                        addEffects();
+                    }
                 }
             }
         ).start();

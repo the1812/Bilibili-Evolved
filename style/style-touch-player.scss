@@ -117,6 +117,17 @@
     transform: rotateX(0deg) rotateY(0deg) scale(1);
 }
 
+.disable-original-hover.video-control-show .bilibili-player-video-control-wrap
+{
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-control-wrap
+{
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
 
 div.bilibili-player-video-control
 {
@@ -177,7 +188,7 @@ div.bilibili-player-video-control
 .bilibili-player-video-control-wrap
 {
     padding: 0 !important;
-    background: #222d !important;
+    // background: #222d !important;
 }
 .bilibili-player-video-control-bottom
 {

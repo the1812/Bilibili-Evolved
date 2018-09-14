@@ -16,8 +16,13 @@
 
 内置所有依赖项以提高加载速度,体积较大,可以不受GitHub服务器不稳定的影响. 由于任何依赖项更新后此脚本也需更新,所以更新频率会高于正式版.
 
+[![预览离线版](https://img.shields.io/badge/预览离线版-🌟-blue.svg?style=flat-square&colorB=F06292)](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)
+
+兼备预览版和离线版的特点.
+
 # 设置
 脚本启用后,在网页左侧中央会有一个齿轮图标,点击即可打开设置.
+设置项的说明见功能概览一节.
 
 **设置保存后,需要刷新网页才能生效.**
 ![设置](images/gui-settings.png)
@@ -38,13 +43,17 @@
 - 自动展开弹幕列表: `开启`
 - 缩放看板娘: `开启`
 - 删除直播水印: `开启`
+- 删除视频标题层: `开启`
+- 模糊视频控制栏背景: `关闭`
 ### 触摸
 - 顶栏触摸优化: `关闭`
 - 播放器触摸支持: `关闭`
     - 启用实验性动画效果: `关闭`
     > 因为部分浏览器对包含实验性效果的动画没有优化会很卡, 所以开放此选项.
+    - 启用双击控制: `关闭`
 ### 其他
 - 显示消息: `关闭`
+- 模糊设置面板背景: `关闭`
 
 # 功能概览
 为保证最佳体验,设备分辨率建议在1080P及以上,并且已登录哔哩哔哩账户.
@@ -95,8 +104,6 @@
 ![移除](images/no-banner.png)
 
 ## 工具
-### 查看封面
-在视频播放页面/直播间中,`设置`→`视频`/`直播间`下会出现查看封面按钮,点击可以查看或保存封面.
 ### 删除广告
 删除嵌于页面中的推广横幅.
 #### 删除前
@@ -110,15 +117,32 @@
 ### 展开动态标题
 在顶栏的动态预览框中:
 - 关闭时, 长名称的后半部分会用`...`代替.
+![关闭时](images/full-tweets-title-off.png)
 - 启用时, 不管名称多长, 总是完全展开up主和视频的标题.
+![启用时](images/full-tweets-title-on.png)
+
 
 ## 视频与直播
+### 查看封面
+在视频播放页面/直播间中,`设置`→`视频`/`直播间`下会出现查看封面按钮,点击可以查看或保存封面.
+![查看封面按钮](images/view-cover-button.png)
 ### 自动展开弹幕列表
 新版播放页面中,弹幕列表默认收起以显示推荐的其他视频.启用此功能可在每次加载视频时自动展开弹幕列表.
 ### 缩放看板娘
 根据屏幕DPI缩放看板娘的大小以提高像素的清晰度.
 ### 删除直播水印
 删除观看直播时角落的水印.
+### 删除视频标题层
+删除视频里鼠标经过时出现在顶端的标题覆盖层.
+
+标题覆盖层的位置:
+![标题覆盖层](images/remove-top-mask.png)
+### 模糊视频控制栏背景
+此功能需要浏览器支持背景模糊效果, 详情见兼容性一节.
+#### 启用前
+![不模糊背景](images/blur-video-control-disabled.png)
+#### 启用后
+![模糊背景](images/blur-video-control.png)
 
 ## 触摸支持
 ### 顶栏
@@ -134,27 +158,29 @@
 ![音量调整](images/adjust-volume.png)
 
 已知问题: 滑动调整的音量不会保存,下次打开视频将恢复原音量.
-#### 放大按钮
+
+#### 启用双击控制
+将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.
+#### 增大间距
 增大控制栏的按钮间距,使触摸操作更准确.
 ##### 启用前
 ![放大前](images/player-buttons-original.png)
 ##### 启用后
 ![放大后](images/player-buttons-large.png)
 ## 其他
+关于脚本自身的一些设定.
 ### 显示消息
 允许在网页左下角显示来自本脚本的消息,如更新提醒,错误提示等.
-
-# 关于新版播放器
-目前新版播放器不是默认开启的,可在旧版播放页面右侧找到入口.
-
-如果没有找到入口,也可以手动在浏览器开发者工具(快捷键通常为`F12`)中的控制台运行[脚本](video/enable-new-player.js)开启.
+![消息](images/toast.png)
+### 模糊设置面板背景
+使设置面板的内容区半透明并模糊后方图像.
 
 # 兼容性
 ## ![Chrome:兼容](https://img.shields.io/badge/Chrome-兼容-brightgreen.svg?style=flat-square&colorB=009688)
-- 触摸调整框的背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
+- 背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
 ## ![Firfox:部分兼容](https://img.shields.io/badge/FireFox-部分兼容-yellow.svg?style=flat-square&colorB=1976D2)
 - 滚动条样式无效.
-- 触摸调整框的背景模糊效果无效.
+- 背景模糊效果无效.
 - 触摸调整的进度预览有弹跳现象.(来自`transition: all 0.2s;`. 短时间内总是从原数值开始变化,而不是当前数值)
 ## ![Edge:部分兼容](https://img.shields.io/badge/Edge-部分兼容-yellow.svg?style=flat-square&colorB=1976D2)
 - 滚动条样式无效.
