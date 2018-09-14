@@ -78,7 +78,9 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
 .row,
 .audioplayer,
-.log-empty 
+.log-empty,
+.follow-container .follow-right .follow-intro .follow-fold,
+.follow-container .follow-right .follow-intro .follow-fold:hover 
 {
     background-color: #222 !important;
 }
@@ -180,7 +182,8 @@ li.season-item .season-body .season-title span.follow,
 .side-utils .utils-box,
 .bili-btn.plain,
 .footer-content .qrcode-wrp,
-.confirm-content
+.confirm-content,
+.follow-container .follow-right .unfollow-btn 
 {
     background-color: #444 !important;
 }
@@ -666,7 +669,10 @@ button.button.more,
 .audioplayer .ap-controller .ap-controller-center .ap-playlist-button-amount,
 .audioplayer .ap-controller .ap-controller-center .ap-time,
 .audioplayer .ap-controller .ap-controller-center .ap-artist,
-.bread-crumbs span 
+.bread-crumbs span,
+.b-head-t,
+.b-head,
+.follow-container .follow-right .unfollow-btn 
 {
     color: #eee !important;
 }
@@ -830,7 +836,8 @@ table.invtable td,
 .footer-content .qrcode-wrp,
 .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
 .song-comment,
-.song-title
+.song-title,
+.follow-container .follow-right .unfollow-btn 
 {
     border-color: transparent !important;
 }
@@ -1033,7 +1040,8 @@ li.season-item .season-body .season-title span.follow,
 .record-nav .on,
 .data-card .tab .data-tab.current,
 .data-card .data-box .total .incr-num:before,
-.data-card .fans-box .total .incr-num:before
+.data-card .fans-box .total .incr-num:before,
+.song-li .song-left .song-shadow 
 {
     border-color: $customStyleColor !important;
 }
@@ -1192,7 +1200,10 @@ button.button.more:hover,
 .hotsong-li .font24:hover,
 .hotsong-li .hotsong-title a:hover,
 .song-li .song-right .song-intro a:hover,
-.audioplayer .ap-controller .ap-controller-right .ap-playlist-button:hover .ap-playlist-button-amount
+.audioplayer .ap-controller .ap-controller-right .ap-playlist-button:hover .ap-playlist-button-amount,
+.follow-container .follow-right .follow-intro .follow-fold,
+.song-info .song-info-content a,
+.song-info .song-info-content a:hover 
 {
     color: $customStyleColor !important;
 }
