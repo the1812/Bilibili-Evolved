@@ -912,14 +912,19 @@ li.history,
 .info-model header h2 .head-icon,
 .fans-question,
 .comment-wrap header h2 .head-icon,
-.coin-icon 
+.coin-icon,
+.bangumi-list-wrapper .top-block .mode-select li.detail-mode.selected,
+.bangumi-list-wrapper .top-block .mode-select li.detail-mode:hover,
+.bangumi-list-wrapper .top-block .mode-select li.simple-mode.selected,
+.bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover 
 {
     filter: $blueImageFilter !important;
 }
 .season-timer .current-timer:before,
 li.season-item .season-body .season-title span.follow,
 .user-panel-ctnr .ctrl-btn .svg-icon,
-.publish-panel .publish-list .publish-item a
+.publish-panel .publish-list .publish-item a,
+.episode-item .mark-icon.badge-pink-vip 
 {
     filter: $pinkImageFilter !important;
 }
