@@ -77,7 +77,8 @@ li.season-item .season-body .season-title span.follow,
 .nav-upload-container,
 .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
 .row,
-.audioplayer
+.audioplayer,
+.log-empty 
 {
     background-color: #222 !important;
 }
@@ -416,7 +417,10 @@ li.no-data,
 .hotsong-li .font24,
 .song-content,
 .b-head-string,
-.results
+.results,
+.bread-crumbs a,
+.bread-crumbs,
+.log-empty p 
 {
     color: #aaa !important;
 }
@@ -661,7 +665,8 @@ button.button.more,
 .audioplayer .ap-controller .ap-controller-center .ap-name,
 .audioplayer .ap-controller .ap-controller-center .ap-playlist-button-amount,
 .audioplayer .ap-controller .ap-controller-center .ap-time,
-.audioplayer .ap-controller .ap-controller-center .ap-artist
+.audioplayer .ap-controller .ap-controller-center .ap-artist,
+.bread-crumbs span 
 {
     color: #eee !important;
 }
@@ -934,7 +939,8 @@ li.season-item .season-body .season-title span.follow,
 {
     filter: grayscale(1) !important;
 }
-.live-module .tab-item .r-item .r-i-t .u-online i
+.live-module .tab-item .r-item .r-i-t .u-online i,
+.log-empty img 
 {
     filter: brightness(0.72) !important;
 }
