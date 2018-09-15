@@ -44,7 +44,6 @@ textarea,
 .bilibili-player-video-volumebar-wrp,
 .bpui-selectmenu-list,
 .bpui-selectmenu-list-row[data-selected],
-.bilibili-player-video-time-seek,
 .user-card,
 .emoji-box,
 .emoji-tabs,
@@ -3907,10 +3906,10 @@ button.button.more:hover,
 // {
 //     background-color: #aaa !important;
 // }
-// a
-// {
-//     background-color: #eee !important;
-// }
+.bilibili-player-video-time-seek
+{
+    background-color: #fff1 !important;
+}
 #mp-mine-header,
 #mp-mine-header.active,
 .fans-icon,
