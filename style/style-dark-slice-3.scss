@@ -279,7 +279,11 @@
 .el-pager li:hover,
 .audioplayer .ap-playlist .ap-playlist-body li.ap-playlist-line-active,
 .audioplayer .ap-playlist .ap-playlist-body li:hover,
-.audioplayer .ap-button:hover
+.audioplayer .ap-button:hover,
+.bilibili-player-video-subtitle-setting-left-more:hover,
+.bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
+.bilibili-player-video-subtitle-setting-right-more:hover,
+.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon
 {
     color: $customStyleColor !important;
 }
@@ -295,7 +299,11 @@
 .bilibili-player-video-danmaku-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-danmaku-setting-right-more:hover .bp-svgicon,
 .audioplayer .ap-progress-thumb svg path:first-child,
-.audioplayer .ap-progress-thumb svg path:nth-child(2)
+.audioplayer .ap-progress-thumb svg path:nth-child(2),
+.bilibili-player-video-subtitle-setting-left-more:hover,
+.bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
+.bilibili-player-video-subtitle-setting-right-more:hover,
+.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon
 {
     fill: $customStyleColor !important;
 }
