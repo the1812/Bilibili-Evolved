@@ -2509,7 +2509,19 @@ li.season-item .season-body .season-title span.follow,
 .nav-upload-container,
 .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
 .row,
-.audioplayer
+.audioplayer,
+.log-empty,
+.follow-container .follow-right .follow-intro .follow-fold,
+.follow-container .follow-right .follow-intro .follow-fold:hover,
+.link-top-container,
+.audios-wrap #audios-box,
+.link-top-container,
+.medal,
+.ui-btn.grey-radius,
+.ui-btn.grey-radius:hover,
+.sponsor-rank-item.simple .sp-msg,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
 {
     background-color: #222 !important;
 }
@@ -2563,7 +2575,8 @@ li.season-item .season-body .season-title span.follow,
 .player-auxiliary-modal-btns .bpm-btn,
 .player-auxiliary-auxiliary-area .player-auxiliary-adv-danmaku,
 .player-auxiliary-auxiliary-area .player-auxiliary-setting,
-.btn-pay-wrapper.is-vip a, .btn-pay-wrapper.is-vip a:hover,
+.btn-pay-wrapper.is-vip a,
+.btn-pay-wrapper.is-vip a:hover,
 .bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow.followed,
 .episode-item,
 .bangumi-list-wrapper .bottom-block .slider-contro span,
@@ -2611,7 +2624,20 @@ li.season-item .season-body .season-title span.follow,
 .side-utils .utils-box,
 .bili-btn.plain,
 .footer-content .qrcode-wrp,
-.confirm-content
+.confirm-content,
+.follow-container .follow-right .unfollow-btn,
+.contri-condition .contri-search,
+.contri-condition .contri-sort .contri-sort-type,
+.bili-btn.ok,
+.danmu-container,
+.danmu-container .empty-danmu:hover,
+.ui-input,
+.ui-calendar .calendar-wrap .flatpickr-calendar.static,
+.ui-calendar .main-wrap .shortmenus,
+.ui-calendar .main-wrap,
+.sponsor-rank-dialog .sp-rank-body,
+.sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-list-nav,
+.sponsor-pay-dialog-v2 .sp-pay-index 
 {
     background-color: #444 !important;
 }
@@ -2625,7 +2651,8 @@ li.season-item .season-body .season-title span.follow,
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover,
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover,
 .border-line,
-.count-wrapper div.danmu-count:after
+.count-wrapper div.danmu-count:after,
+.ui-calendar .flatpickr-day.inRange 
 {
     background-color: #aaa !important;
 }
@@ -2679,7 +2706,9 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn > i,
-.nav-upload-container .nav-upload-item:hover
+.nav-upload-container .nav-upload-item:hover,
+.contri-condition .contri-sort .contri-sort-type li:hover,
+.share-module 
 {
     background-color: transparent !important;
 }
@@ -2687,7 +2716,8 @@ li.season-item .season-body .season-title span.follow,
 // {
 //     background: #fff1 !important;
 // }
-.fav-main .fav-action-top .back-to-info
+.fav-main .fav-action-top .back-to-info,
+.cc-nav-wrp .nav-cut-off-line 
 {
     background: transparent !important;
 }
@@ -2848,7 +2878,28 @@ li.no-data,
 .hotsong-li .font24,
 .song-content,
 .b-head-string,
-.results
+.results,
+.bread-crumbs a,
+.bread-crumbs,
+.log-empty p,
+.compila-not-find .compila-not-find-tips,
+.contri-not-find .contri-not-find-tips,
+.contri-condition .contri-right i,
+.contri-condition .contri-sort,
+.medal header p,
+.medal .medal-form .section .mini,
+.medal .medal-form .page-tip,
+.empty-wrp .text,
+.ui-serch .run-serch,
+.container .iconfont,
+.container .song-list .song-li .content .num,
+.container .host-list-layout .hot-list-wrap .show-more-song,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-num,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont,
+.container .musician-recommend .recommend-item .recommend-info .recommend-text,
+.audioplayer .ap-playlist .ap-playlist-header .ap-playlist-amount,
+.sponsor-rank-item.simple .sp-msg,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint .sponsor-point 
 {
     color: #aaa !important;
 }
@@ -3093,7 +3144,53 @@ button.button.more,
 .audioplayer .ap-controller .ap-controller-center .ap-name,
 .audioplayer .ap-controller .ap-controller-center .ap-playlist-button-amount,
 .audioplayer .ap-controller .ap-controller-center .ap-time,
-.audioplayer .ap-controller .ap-controller-center .ap-artist
+.audioplayer .ap-controller .ap-controller-center .ap-artist,
+.bread-crumbs span,
+.b-head-t,
+.b-head,
+.follow-container .follow-right .unfollow-btn,
+.cc-btn.is-main,
+.link-top-container .link-top-item,
+.cc-album-manage .info-wrp .cc-btn,
+.contri-condition .contri-select,
+.compila-condition .compila-type,
+.compila-condition .compila-right .compila-add.single,
+.compila-not-find .compila-not-find-ime,
+.contri-not-find .contri-not-find-ime,
+.contri-condition .contri-sort .contri-sort-type li,
+.medal .medal-form .section .title-tip,
+.medal .medal-form .section,
+h2.title,
+.medal .medal-form .page-tip a,
+.bili-btn.ok,
+.danmu-container .empty-danmu,
+.assist-wrap .assist-log header .tools .ui-calendar input[type=text],
+.ui-calendar .flatpickr-day,
+.ui-calendar .flatpickr-month,
+.ui-calendar .flatpickr-day.inRange,
+.ui-btn.grey-radius,
+.rangeMode .flatpickr-day,
+.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn .text,
+.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn .iconfont,
+.container .all-hot-list-warp .all-hot-list .hot-list-content .hover-mask .iconfont,
+.container .musician-recommend .recommend-item .recommend-info .name,
+.to-review-btn,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-title .media-info-title-t,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-title .media-tag,
+.media-info-count .media-info-count-item *,
+.btn-pay-wrapper.is-vip a,
+.btn-pay-wrapper.is-vip a:hover,
+.sponsor-rank-item.normal .sp-right .sp-user .sp-name,
+.sponsor-rank-item.simple .sp-user,
+.sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-rank-title,
+.sponsor-rank-item.simple .sp-rank i,
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.sponsor-pay-dialog-v2 .sponsor-pay-header.border .title,
+.sponsor-pay-dialog-v2 .sp-pay-index ul.sponsor-choice li span,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
 {
     color: #eee !important;
 }
@@ -3257,7 +3354,29 @@ table.invtable td,
 .footer-content .qrcode-wrp,
 .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
 .song-comment,
-.song-title
+.song-title,
+.follow-container .follow-right .unfollow-btn,
+.link-top-container,
+.contri-condition .contri-search,
+.medal header,
+.medal-list .part .content,
+.danmu-container,
+.ui-serch input[type=text].ui-input,
+.assist-wrap .assist-log header .tools .ui-calendar input[type=text],
+.ui-calendar .flatpickr-day.inRange,
+.ui-calendar .main-wrap .shortmenus,
+.container .middle-tip .change-song,
+.container .host-list-layout .hot-list-wrap .show-more-song,
+.container .host-list-layout .hot-list-wrap .hot-song-list,
+.container .musician-recommend .recommend-item,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-title .media-tag,
+.sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-list-nav,
+.sponsor-rank-item.simple .sp-msg,
+.sponsor-rank-item.simple .sp-rank i,
+.sponsor-pay-dialog-v2 .sponsor-pay-header.border,
+.sponsor-pay-dialog-v2 .sp-pay-index ul.sponsor-choice li input,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
 {
     border-color: transparent !important;
 }
@@ -3268,7 +3387,6 @@ li.history,
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string:not(:focus),
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string-short:not(:focus),
 .player-auxiliary-modal-header,
-.container .host-list-layout .hot-list-wrap .hot-song-list,
 .favourite-card .anchor-info,
 .favourite-card,
 .h-list-item,
@@ -3278,7 +3396,8 @@ li.history,
 .home-to-update,
 .home-userstatus,
 .right-more-btn,
-.points-pendant-item
+.points-pendant-item,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont 
 {
     border-color: #aaa !important;
 }
@@ -3366,7 +3485,13 @@ li.season-item .season-body .season-title span.follow,
 {
     filter: grayscale(1) !important;
 }
-.live-module .tab-item .r-item .r-i-t .u-online i
+.live-module .tab-item .r-item .r-i-t .u-online i,
+.log-empty img,
+.cc-article-wrp .info-wrp .img,
+.text-article-wrp .info-wrp .img,
+.cc-album-manage .info-wrp .no-img,
+.compila-not-find .compila-not-find-image,
+.contri-not-find .contri-not-find-image
 {
     filter: brightness(0.72) !important;
 }
@@ -3390,7 +3515,8 @@ li.season-item .season-body .season-title span.follow,
 }
 .timeline-header,
 .timeline-wrapper,
-.timeline-header .tl-weeks
+.timeline-header .tl-weeks,
+.danmu-container 
 {
     box-shadow: none !important;
 }
@@ -3459,7 +3585,13 @@ li.season-item .season-body .season-title span.follow,
 .record-nav .on,
 .data-card .tab .data-tab.current,
 .data-card .data-box .total .incr-num:before,
-.data-card .fans-box .total .incr-num:before
+.data-card .fans-box .total .incr-num:before,
+.song-li .song-left .song-shadow,
+.link-top-container .link-top-item.active,
+.contri-condition .contri-select.active,
+.container .song-list .song-li .song-shadow,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont:hover,
+.container .musician-recommend .recommend-item .recommend-info .listen-btn 
 {
     border-color: $customStyleColor !important;
 }
@@ -3512,7 +3644,19 @@ li.season-item .season-body .season-title span.follow,
 .cc-nav-wrp .nav-upload-btn > a,
 .song-playbtn,
 .song-playbtn:hover,
-.audioplayer .ap-controller .ap-controller-right .ap-volume-thumb-dot
+.audioplayer .ap-controller .ap-controller-right .ap-volume-thumb-dot,
+.cc-btn.is-main,
+.cc-btn.is-main:hover,
+.cc-album-manage .info-wrp .cc-btn,
+.cc-album-manage .info-wrp .cc-btn:hover,
+.compila-condition .compila-right .compila-add.single,
+.compila-not-find .compila-not-find-ime,
+.contri-not-find .contri-not-find-ime,
+.bili-btn.ok,
+.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn,
+.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn:hover,
+.sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-rank-title,
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn 
 {
     background-color: $customStyleColor !important;
 }
@@ -3618,7 +3762,20 @@ button.button.more:hover,
 .hotsong-li .font24:hover,
 .hotsong-li .hotsong-title a:hover,
 .song-li .song-right .song-intro a:hover,
-.audioplayer .ap-controller .ap-controller-right .ap-playlist-button:hover .ap-playlist-button-amount
+.audioplayer .ap-controller .ap-controller-right .ap-playlist-button:hover .ap-playlist-button-amount,
+.follow-container .follow-right .follow-intro .follow-fold,
+.song-info .song-info-content a,
+.song-info .song-info-content a:hover,
+.contri-condition .contri-select.active,
+.contri-condition .contri-sort .contri-sort-type li:hover,
+.medal .medal-form .page-tip a:hover,
+.danmu-container .empty-danmu a,
+.danmu-container .empty-danmu a:hover,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont:hover,
+.container .host-list-layout .hot-list-wrap .show-more-song:hover .iconfont,
+.container .host-list-layout .hot-list-wrap .show-more-song:hover,
+.container .musician-recommend .recommend-item .recommend-info .listen-btn,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a:hover 
 {
     color: $customStyleColor !important;
 }
@@ -3674,7 +3831,9 @@ button.button.more:hover,
 .bili-footer .boston-postcards li,
 .h-line,
 .el-radio-button:first-child .el-radio-button__inner,
-.el-picker-panel [slot=sidebar]
+.el-picker-panel [slot=sidebar],
+.danmu-container,
+.media-info-count .media-info-count-item 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
