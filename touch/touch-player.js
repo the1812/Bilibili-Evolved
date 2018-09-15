@@ -597,7 +597,7 @@
         function overrideClickHandler(playerArea)
         {
             playerArea.addClass("disable-original-hover");
-            const video = $(".bilibili-player-video");
+            const video = unsafeWindow.$(".bilibili-player-video");
             const hoverClassName = "touch-video-control-show";
             const originalClickHandler = video.data("events").click[0].handler;
             video.unbind("click");
@@ -649,7 +649,9 @@
         {
             new SpinQuery(
                 () => $(".bilibili-player-area"),
-                it => it.length > 0 && $(".bilibili-player-video").data("events"),
+                it => it.length > 0 &&
+                    unsafeWindow.$ &&
+                    unsafeWindow.$(".bilibili-player-video").data("events"),
                 overrideClickHandler
             ).start();
         }
