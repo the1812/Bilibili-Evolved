@@ -219,12 +219,13 @@ div.bilibili-player-video-control
 .bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen
 {
     margin-right: 0 !important;
+    padding-right: 8px !important;
 }
 .bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-start
 {
-    padding-left: 0 !important;
+    padding-left: 8px !important;
     flex-grow: 1.2 !important;
-    margin-right: 4px !important;
+    margin-right: 0px !important;
     margin-left: 0 !important;
 }
 .bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn

@@ -233,7 +233,12 @@ div.num
 }
 
 #primary_menu,
-#primary_menu>ul.nav-menu
+#primary_menu>ul.nav-menu,
+.bilibili-player-iconfont-setting,
+.video-state-volume-max .bilibili-player-iconfont-volume-max,
+.video-state-volume-min .bilibili-player-iconfont-volume-min,
+.bilibili-player-video-btn-volume:not(.video-state-volume-max):not(.video-state-volume-min) .bilibili-player-iconfont-volume,
+.bilibili-player-iconfont-next
 {
     display: flex !important;
     align-items: center !important;
