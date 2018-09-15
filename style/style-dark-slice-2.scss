@@ -86,7 +86,10 @@ li.season-item .season-body .season-title span.follow,
 .link-top-container,
 .medal,
 .ui-btn.grey-radius,
-.ui-btn.grey-radius:hover 
+.ui-btn.grey-radius:hover,
+.sponsor-rank-item.simple .sp-msg,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
 {
     background-color: #222 !important;
 }
@@ -140,7 +143,8 @@ li.season-item .season-body .season-title span.follow,
 .player-auxiliary-modal-btns .bpm-btn,
 .player-auxiliary-auxiliary-area .player-auxiliary-adv-danmaku,
 .player-auxiliary-auxiliary-area .player-auxiliary-setting,
-.btn-pay-wrapper.is-vip a, .btn-pay-wrapper.is-vip a:hover,
+.btn-pay-wrapper.is-vip a,
+.btn-pay-wrapper.is-vip a:hover,
 .bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow.followed,
 .episode-item,
 .bangumi-list-wrapper .bottom-block .slider-contro span,
@@ -198,7 +202,10 @@ li.season-item .season-body .season-title span.follow,
 .ui-input,
 .ui-calendar .calendar-wrap .flatpickr-calendar.static,
 .ui-calendar .main-wrap .shortmenus,
-.ui-calendar .main-wrap 
+.ui-calendar .main-wrap,
+.sponsor-rank-dialog .sp-rank-body,
+.sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-list-nav,
+.sponsor-pay-dialog-v2 .sp-pay-index 
 {
     background-color: #444 !important;
 }
@@ -268,7 +275,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn > i,
 .nav-upload-container .nav-upload-item:hover,
-.contri-condition .contri-sort .contri-sort-type li:hover 
+.contri-condition .contri-sort .contri-sort-type li:hover,
+.share-module 
 {
     background-color: transparent !important;
 }
@@ -457,7 +465,9 @@ li.no-data,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-num,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont,
 .container .musician-recommend .recommend-item .recommend-info .recommend-text,
-.audioplayer .ap-playlist .ap-playlist-header .ap-playlist-amount 
+.audioplayer .ap-playlist .ap-playlist-header .ap-playlist-amount,
+.sponsor-rank-item.simple .sp-msg,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint .sponsor-point 
 {
     color: #aaa !important;
 }
@@ -731,7 +741,24 @@ h2.title,
 .container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn .text,
 .container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn .iconfont,
 .container .all-hot-list-warp .all-hot-list .hot-list-content .hover-mask .iconfont,
-.container .musician-recommend .recommend-item .recommend-info .name 
+.container .musician-recommend .recommend-item .recommend-info .name,
+.to-review-btn,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-title .media-info-title-t,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-title .media-tag,
+.media-info-count .media-info-count-item *,
+.btn-pay-wrapper.is-vip a,
+.btn-pay-wrapper.is-vip a:hover,
+.sponsor-rank-item.normal .sp-right .sp-user .sp-name,
+.sponsor-rank-item.simple .sp-user,
+.sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-rank-title,
+.sponsor-rank-item.simple .sp-rank i,
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.sponsor-pay-dialog-v2 .sponsor-pay-header.border .title,
+.sponsor-pay-dialog-v2 .sp-pay-index ul.sponsor-choice li span,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
 {
     color: #eee !important;
 }
@@ -909,7 +936,15 @@ table.invtable td,
 .container .middle-tip .change-song,
 .container .host-list-layout .hot-list-wrap .show-more-song,
 .container .host-list-layout .hot-list-wrap .hot-song-list,
-.container .musician-recommend .recommend-item 
+.container .musician-recommend .recommend-item,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-title .media-tag,
+.sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-list-nav,
+.sponsor-rank-item.simple .sp-msg,
+.sponsor-rank-item.simple .sp-rank i,
+.sponsor-pay-dialog-v2 .sponsor-pay-header.border,
+.sponsor-pay-dialog-v2 .sp-pay-index ul.sponsor-choice li input,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
 {
     border-color: transparent !important;
 }
@@ -1187,7 +1222,9 @@ li.season-item .season-body .season-title span.follow,
 .contri-not-find .contri-not-find-ime,
 .bili-btn.ok,
 .container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn,
-.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn:hover 
+.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn:hover,
+.sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-rank-title,
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn 
 {
     background-color: $customStyleColor !important;
 }
@@ -1305,7 +1342,8 @@ button.button.more:hover,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont:hover,
 .container .host-list-layout .hot-list-wrap .show-more-song:hover .iconfont,
 .container .host-list-layout .hot-list-wrap .show-more-song:hover,
-.container .musician-recommend .recommend-item .recommend-info .listen-btn 
+.container .musician-recommend .recommend-item .recommend-info .listen-btn,
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a:hover 
 {
     color: $customStyleColor !important;
 }
@@ -1362,7 +1400,8 @@ button.button.more:hover,
 .h-line,
 .el-radio-button:first-child .el-radio-button__inner,
 .el-picker-panel [slot=sidebar],
-.danmu-container 
+.danmu-container,
+.media-info-count .media-info-count-item 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
