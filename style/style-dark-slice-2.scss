@@ -450,7 +450,14 @@ li.no-data,
 .medal .medal-form .section .mini,
 .medal .medal-form .page-tip,
 .empty-wrp .text,
-.ui-serch .run-serch 
+.ui-serch .run-serch,
+.container .iconfont,
+.container .song-list .song-li .content .num,
+.container .host-list-layout .hot-list-wrap .show-more-song,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-num,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont,
+.container .musician-recommend .recommend-item .recommend-info .recommend-text,
+.audioplayer .ap-playlist .ap-playlist-header .ap-playlist-amount 
 {
     color: #aaa !important;
 }
@@ -720,7 +727,11 @@ h2.title,
 .ui-calendar .flatpickr-month,
 .ui-calendar .flatpickr-day.inRange,
 .ui-btn.grey-radius,
-.rangeMode .flatpickr-day 
+.rangeMode .flatpickr-day,
+.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn .text,
+.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn .iconfont,
+.container .all-hot-list-warp .all-hot-list .hot-list-content .hover-mask .iconfont,
+.container .musician-recommend .recommend-item .recommend-info .name 
 {
     color: #eee !important;
 }
@@ -894,7 +905,11 @@ table.invtable td,
 .ui-serch input[type=text].ui-input,
 .assist-wrap .assist-log header .tools .ui-calendar input[type=text],
 .ui-calendar .flatpickr-day.inRange,
-.ui-calendar .main-wrap .shortmenus 
+.ui-calendar .main-wrap .shortmenus,
+.container .middle-tip .change-song,
+.container .host-list-layout .hot-list-wrap .show-more-song,
+.container .host-list-layout .hot-list-wrap .hot-song-list,
+.container .musician-recommend .recommend-item 
 {
     border-color: transparent !important;
 }
@@ -905,7 +920,6 @@ li.history,
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string:not(:focus),
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string-short:not(:focus),
 .player-auxiliary-modal-header,
-.container .host-list-layout .hot-list-wrap .hot-song-list,
 .favourite-card .anchor-info,
 .favourite-card,
 .h-list-item,
@@ -915,7 +929,8 @@ li.history,
 .home-to-update,
 .home-userstatus,
 .right-more-btn,
-.points-pendant-item
+.points-pendant-item,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont 
 {
     border-color: #aaa !important;
 }
@@ -1106,7 +1121,10 @@ li.season-item .season-body .season-title span.follow,
 .data-card .fans-box .total .incr-num:before,
 .song-li .song-left .song-shadow,
 .link-top-container .link-top-item.active,
-.contri-condition .contri-select.active 
+.contri-condition .contri-select.active,
+.container .song-list .song-li .song-shadow,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont:hover,
+.container .musician-recommend .recommend-item .recommend-info .listen-btn 
 {
     border-color: $customStyleColor !important;
 }
@@ -1167,7 +1185,9 @@ li.season-item .season-body .season-title span.follow,
 .compila-condition .compila-right .compila-add.single,
 .compila-not-find .compila-not-find-ime,
 .contri-not-find .contri-not-find-ime,
-.bili-btn.ok 
+.bili-btn.ok,
+.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn,
+.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn:hover 
 {
     background-color: $customStyleColor !important;
 }
@@ -1281,7 +1301,11 @@ button.button.more:hover,
 .contri-condition .contri-sort .contri-sort-type li:hover,
 .medal .medal-form .page-tip a:hover,
 .danmu-container .empty-danmu a,
-.danmu-container .empty-danmu a:hover 
+.danmu-container .empty-danmu a:hover,
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont:hover,
+.container .host-list-layout .hot-list-wrap .show-more-song:hover .iconfont,
+.container .host-list-layout .hot-list-wrap .show-more-song:hover,
+.container .musician-recommend .recommend-item .recommend-info .listen-btn 
 {
     color: $customStyleColor !important;
 }
