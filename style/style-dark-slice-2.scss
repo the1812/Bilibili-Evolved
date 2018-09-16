@@ -217,7 +217,8 @@ li.season-item .season-body .season-title span.follow,
 .cc-nav-wrp .down-link:hover,
 .dc-section-item,
 .dc-section-body,
-.item-in-row 
+.item-in-row,
+.ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon 
 {
     background-color: #444 !important;
 }
@@ -500,7 +501,8 @@ li.no-data,
 .growup-participate .status_box .limited,
 .announce li span,
 .announce h3.title span,
-.announce h3.title span .fontvt 
+.announce h3.title span .fontvt,
+.ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon 
 {
     color: #aaa !important;
 }
@@ -1055,7 +1057,8 @@ li.history,
 .home-to-space .m-arrow,
 .h-mp-space .m-arrow,
 .go-secuirty .m-arrow,
-.right-more-btn .m-arrow
+.right-more-btn .m-arrow,
+.growup-participate .status_box img 
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -1418,7 +1421,8 @@ span.flatpickr-weekday,
 .ui-calendar .main-wrap .shortmenus a:hover,
 .bili-tab.current,
 #audience-page .version-switch-section .bili-tab.current,
-.announce li > div span 
+.announce li > div span,
+.announce li .fontvt 
 {
     color: $customStyleColor !important;
 }
