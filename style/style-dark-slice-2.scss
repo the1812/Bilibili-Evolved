@@ -496,7 +496,11 @@ li.no-data,
 .cc-nav-wrp .down-link .version,
 .dc-section .section-tip,
 .dc-section-item_title_name small,
-.normal-empty 
+.normal-empty,
+.growup-participate .status_box .limited,
+.announce li span,
+.announce h3.title span,
+.announce h3.title span .fontvt 
 {
     color: #aaa !important;
 }
@@ -801,7 +805,8 @@ h2.title,
 .dc-section-title,
 #audience-page .version-switch-section .bili-tab,
 .dc-section-item_title_name p,
-.pie-empty-wrapper 
+.pie-empty-wrapper,
+.announce li > div a 
 {
     color: #eee !important;
 }
@@ -988,8 +993,10 @@ table.invtable td,
 .sponsor-pay-dialog-v2 .sp-pay-index ul.sponsor-choice li input,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover,
-.bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled, 
-.bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled 
+.bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.announce li > div span,
+.announce li 
 {
     border-color: transparent !important;
 }
@@ -1410,7 +1417,8 @@ button.button.more:hover,
 span.flatpickr-weekday,
 .ui-calendar .main-wrap .shortmenus a:hover,
 .bili-tab.current,
-#audience-page .version-switch-section .bili-tab.current 
+#audience-page .version-switch-section .bili-tab.current,
+.announce li > div span 
 {
     color: $customStyleColor !important;
 }
