@@ -94,7 +94,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-danmaku-input,
 .bilibili-player-video-sendbar > div.bilibili-player-video-btn,
 .bilibili-player-video-sendbar > div.bilibili-player-video-inputbar,
-.timer-wrap .quit 
+.timer-wrap .quit,
+.pie-empty-wrapper 
 {
     background-color: #222 !important;
 }
@@ -213,7 +214,10 @@ li.season-item .season-body .season-title span.follow,
 .sponsor-pay-dialog-v2 .sp-pay-index,
 .bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
 .bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
-.cc-nav-wrp .down-link:hover 
+.cc-nav-wrp .down-link:hover,
+.dc-section-item,
+.dc-section-body,
+.item-in-row 
 {
     background-color: #444 !important;
 }
@@ -489,7 +493,10 @@ li.no-data,
 .data-card .fans-box .tab .fan-tab,
 .notice-card .notice-list .notice-item .notice-time,
 .cc-nav-wrp .nav-item i:last-child,
-.cc-nav-wrp .down-link .version
+.cc-nav-wrp .down-link .version,
+.dc-section .section-tip,
+.dc-section-item_title_name small,
+.normal-empty 
 {
     color: #aaa !important;
 }
@@ -789,7 +796,12 @@ h2.title,
 .contri-condition .contri-search,
 .cc-nav-wrp .down-link .title,
 .ui-calendar .main-wrap .shortmenus a,
-.assist-wrap .assist-log header .tools .search-wrp input[type=text] 
+.assist-wrap .assist-log header .tools .search-wrp input[type=text],
+.bili-tab,
+.dc-section-title,
+#audience-page .version-switch-section .bili-tab,
+.dc-section-item_title_name p,
+.pie-empty-wrapper 
 {
     color: #eee !important;
 }
@@ -1201,7 +1213,10 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-2 .bilibili-player-block-type-user,
 .bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-wrap,
 .data-card .data-box .tab .fan-tab.current,
-.data-card .fans-box .tab .fan-tab.current 
+.data-card .fans-box .tab .fan-tab.current,
+.bili-tab.current,
+.bili-tab.current:after,
+#audience-page .version-switch-section .bili-tab.current 
 {
     border-color: $customStyleColor !important;
 }
@@ -1393,7 +1408,10 @@ button.button.more:hover,
 .data-card .data-box .tab .fan-tab.current,
 .data-card .fans-box .tab .fan-tab.current,
 span.flatpickr-weekday,
-.ui-calendar .main-wrap .shortmenus a:hover {
+.ui-calendar .main-wrap .shortmenus a:hover,
+.bili-tab.current,
+#audience-page .version-switch-section .bili-tab.current 
+{
     color: $customStyleColor !important;
 }
 .hot-box li .tag-type,
