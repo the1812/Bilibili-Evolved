@@ -89,7 +89,11 @@ li.season-item .season-body .season-title span.follow,
 .ui-btn.grey-radius:hover,
 .sponsor-rank-item.simple .sp-msg,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-danmaku-input,
+.bilibili-player-video-sendbar > div.bilibili-player-video-btn, 
+.bilibili-player-video-sendbar > div.bilibili-player-video-inputbar 
 {
     background-color: #222 !important;
 }
@@ -205,7 +209,9 @@ li.season-item .season-body .season-title span.follow,
 .ui-calendar .main-wrap,
 .sponsor-rank-dialog .sp-rank-body,
 .sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-list-nav,
-.sponsor-pay-dialog-v2 .sp-pay-index 
+.sponsor-pay-dialog-v2 .sp-pay-index,
+.bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled, 
+.bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled 
 {
     background-color: #444 !important;
 }
@@ -467,7 +473,11 @@ li.no-data,
 .container .musician-recommend .recommend-item .recommend-info .recommend-text,
 .audioplayer .ap-playlist .ap-playlist-header .ap-playlist-amount,
 .sponsor-rank-item.simple .sp-msg,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint .sponsor-point 
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint .sponsor-point,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint,
+.episode-item .ep-title,
+.bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled 
 {
     color: #aaa !important;
 }
@@ -758,7 +768,8 @@ h2.title,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover,
+.bilibili-player * 
 {
     color: #eee !important;
 }
@@ -944,7 +955,9 @@ table.invtable td,
 .sponsor-pay-dialog-v2 .sponsor-pay-header.border,
 .sponsor-pay-dialog-v2 .sp-pay-index ul.sponsor-choice li input,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover,
+.bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled, 
+.bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled 
 {
     border-color: transparent !important;
 }
@@ -965,7 +978,8 @@ li.history,
 .home-userstatus,
 .right-more-btn,
 .points-pendant-item,
-.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont 
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont,
+.bpui-button-text-only .bpui-button-text .bpui-flex-wrap 
 {
     border-color: #aaa !important;
 }
@@ -1035,7 +1049,8 @@ li.history,
 li.season-item .season-body .season-title span.follow,
 .user-panel-ctnr .ctrl-btn .svg-icon,
 .publish-panel .publish-list .publish-item a,
-.episode-item .mark-icon.badge-pink-vip
+.episode-item .mark-icon.badge-pink-vip,
+.episode-item .mark-icon.badge-pink-first 
 {
     filter: $pinkImageFilter !important;
 }
@@ -1159,7 +1174,10 @@ li.season-item .season-body .season-title span.follow,
 .contri-condition .contri-select.active,
 .container .song-list .song-li .song-shadow,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont:hover,
-.container .musician-recommend .recommend-item .recommend-info .listen-btn 
+.container .musician-recommend .recommend-item .recommend-info .listen-btn,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-1 .bilibili-player-block-type-keyword,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-2 .bilibili-player-block-type-user,
+.bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-wrap 
 {
     border-color: $customStyleColor !important;
 }
@@ -1224,7 +1242,8 @@ li.season-item .season-body .season-title span.follow,
 .container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn,
 .container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn:hover,
 .sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-rank-title,
-.media-sponsor-wrapper .sponsor-right-area .sponsor-btn 
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.bilibili-player-ending-panel-box-functions .bilibili-player-pgcinfo-follow-binge-watching 
 {
     background-color: $customStyleColor !important;
 }
