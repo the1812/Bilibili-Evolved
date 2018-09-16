@@ -218,7 +218,8 @@ li.season-item .season-body .season-title span.follow,
 .dc-section-item,
 .dc-section-body,
 .item-in-row,
-.ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon 
+.ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
+.setting 
 {
     background-color: #444 !important;
 }
@@ -808,7 +809,8 @@ h2.title,
 #audience-page .version-switch-section .bili-tab,
 .dc-section-item_title_name p,
 .pie-empty-wrapper,
-.announce li > div a 
+.announce li > div a,
+.setting .setting-title 
 {
     color: #eee !important;
 }
@@ -998,7 +1000,8 @@ table.invtable td,
 .bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
 .bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
 .announce li > div span,
-.announce li 
+.announce li,
+.setting .watermark-setting 
 {
     border-color: transparent !important;
 }
@@ -1422,7 +1425,8 @@ span.flatpickr-weekday,
 .bili-tab.current,
 #audience-page .version-switch-section .bili-tab.current,
 .announce li > div span,
-.announce li .fontvt 
+.announce li .fontvt,
+.setting .section-edit 
 {
     color: $customStyleColor !important;
 }
