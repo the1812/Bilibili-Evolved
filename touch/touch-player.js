@@ -596,46 +596,46 @@
         }
         function overrideClickHandler(playerArea)
         {
-            playerArea.addClass("disable-original-hover");
+            if (playerArea.hasClass("disable-original-hover"))
+            {
+                playerArea.addClass("disable-original-hover");
 
-            let clickedOnce = false;
-            const handleTap = (double, e) =>
-            {
-                if (double)
+                let clickedOnce = false;
+                const handleTap = (double, e) =>
                 {
-                    originalClickHandler(e);
-                }
-                else
-                {
-                    playerArea.toggleClass(hoverClassName);
-                }
-            };
-            const clickHandler = e =>
-            {
-                if (!clickedOnce)
-                {
-                    clickedOnce = true;
-                    setTimeout(() =>
+                    if (double)
                     {
-                        if (clickedOnce)
-                        {
-                            clickedOnce = false;
-                            handleTap(false, e);
-                        }
-                    }, 160);
-                }
-                else
+                        originalClickHandler(e);
+                    }
+                    else
+                    {
+                        playerArea.toggleClass(hoverClassName);
+                    }
+                };
+                const clickHandler = e =>
                 {
-                    clickedOnce = false;
-                    handleTap(true, e);
-                }
-            };
+                    if (!clickedOnce)
+                    {
+                        clickedOnce = true;
+                        setTimeout(() =>
+                        {
+                            if (clickedOnce)
+                            {
+                                clickedOnce = false;
+                                handleTap(false, e);
+                            }
+                        }, 160);
+                    }
+                    else
+                    {
+                        clickedOnce = false;
+                        handleTap(true, e);
+                    }
+                };
 
-            const video = unsafeWindow.$(".bilibili-player-video");
-            const hoverClassName = "touch-video-control-show";
-            const originalClickHandler = video.data("events").click[0].handler;
-            if (originalClickHandler !== clickHandler)
-            {
+                const video = unsafeWindow.$(".bilibili-player-video");
+                const hoverClassName = "touch-video-control-show";
+                const originalClickHandler = video.data("events").click[0].handler;
                 video.unbind("click");
                 video.on("click", clickHandler);
             }
