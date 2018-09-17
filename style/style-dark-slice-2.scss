@@ -92,7 +92,9 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-video-sendbar > div.bilibili-player-video-inputbar,
 .timer-wrap .quit,
 .pie-empty-wrapper,
-a.bp_box_bot_click 
+a.bp_box_bot_click,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow li,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow 
 {
     background-color: #222 !important;
 }
@@ -513,7 +515,11 @@ li.no-data,
 .bp-user-box-bottom p,
 .b-info .info-tip,
 .b-info .balance-footer,
-.bb-intro-top .b-question .b-question-title 
+.bb-intro-top .b-question .b-question-title,
+.bangumi-collection-wrapper .bangumi-collection-count,
+.bangumi-collection-card .bangumi-info .type-and-area,
+.bangumi-collection-card .bangumi-info .bangumi-state,
+.bangumi-collection-card .bangumi-info .watch-state 
 {
     color: #aaa !important;
 }
@@ -828,7 +834,10 @@ h2.title,
 .b-info .balance-footer .balance-part .part-balance-price,
 .b-info .bb-quan,
 .b-info .button,
-.level-dia 
+.level-dia,
+.bangumi-collection-wrapper .bangumi-collection-title,
+.bangumi-collection-card .bangumi-info .bangumi-title,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow 
 {
     color: #eee !important;
 }
@@ -1023,7 +1032,9 @@ table.invtable td,
 .bp_box,
 .bp_box_top,
 .b-info,
-.bb-intro-top 
+.bb-intro-top,
+.bangumi-collection-wrapper .bangumi-collection-count,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow 
 {
     border-color: transparent !important;
 }
