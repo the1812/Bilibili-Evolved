@@ -88,7 +88,13 @@ li.season-item .season-body .season-title span.follow,
 .ui-btn.grey-radius:hover,
 .sponsor-rank-item.simple .sp-msg,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-danmaku-input,
+.bilibili-player-video-sendbar > div.bilibili-player-video-btn,
+.bilibili-player-video-sendbar > div.bilibili-player-video-inputbar,
+.timer-wrap .quit,
+.pie-empty-wrapper
 {
     background-color: #222 !important;
 }
@@ -204,7 +210,17 @@ li.season-item .season-body .season-title span.follow,
 .ui-calendar .main-wrap,
 .sponsor-rank-dialog .sp-rank-body,
 .sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-list-nav,
-.sponsor-pay-dialog-v2 .sp-pay-index
+.sponsor-pay-dialog-v2 .sp-pay-index,
+.bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.cc-nav-wrp .down-link:hover,
+.dc-section-item,
+.dc-section-body,
+.item-in-row,
+.ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
+.setting,
+.charge-participate,
+#article-list-index
 {
     background-color: #444 !important;
 }
@@ -466,7 +482,31 @@ li.no-data,
 .container .musician-recommend .recommend-item .recommend-info .recommend-text,
 .audioplayer .ap-playlist .ap-playlist-header .ap-playlist-amount,
 .sponsor-rank-item.simple .sp-msg,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint .sponsor-point
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint .sponsor-point,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint,
+.episode-item .ep-title,
+.bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.timer-wrap .canvas-wrap .canvas-title,
+.fjw-case-detail .ban-detail .content-box .jury-status .status-left .voted .graph .txt,
+.cm-model .report-detail .child-comment .child-list .detail .report-cnt .rep-name,
+.cm-model .report-detail .detail .date,
+.cm-model .report-detail .more-list,
+.data-card .data-box .tab .fan-tab,
+.data-card .fans-box .tab .fan-tab,
+.notice-card .notice-list .notice-item .notice-time,
+.cc-nav-wrp .nav-item i:last-child,
+.cc-nav-wrp .down-link .version,
+.dc-section .section-tip,
+.dc-section-item_title_name small,
+.normal-empty,
+.growup-participate .status_box .limited,
+.announce li span,
+.announce h3.title span,
+.announce h3.title span .fontvt,
+.ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
+.charge-participate .benefit-item .long-desc,
+.title-container .info span
 {
     color: #aaa !important;
 }
@@ -757,7 +797,25 @@ h2.title,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover,
+.bilibili-player *,
+.timer-wrap .quit p,
+.fjw-random .point-wrap .cnt .no-data .title,
+.fjw-case-detail .ban-detail .content-box .jury-status .status-left .voted .graph .people,
+.timer-wrap .vote-dialog-new .footer .b-able,
+.contri-condition .contri-search,
+.cc-nav-wrp .down-link .title,
+.ui-calendar .main-wrap .shortmenus a,
+.assist-wrap .assist-log header .tools .search-wrp input[type=text],
+.bili-tab,
+.dc-section-title,
+#audience-page .version-switch-section .bili-tab,
+.dc-section-item_title_name p,
+.pie-empty-wrapper,
+.announce li > div a,
+.setting .setting-title,
+.charge-participate .benefit-item .short-desc,
+.charge-participate .part-btn
 {
     color: #eee !important;
 }
@@ -943,7 +1001,12 @@ table.invtable td,
 .sponsor-pay-dialog-v2 .sponsor-pay-header.border,
 .sponsor-pay-dialog-v2 .sp-pay-index ul.sponsor-choice li input,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover,
+.bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.announce li > div span,
+.announce li,
+.setting .watermark-setting
 {
     border-color: transparent !important;
 }
@@ -964,7 +1027,8 @@ li.history,
 .home-userstatus,
 .right-more-btn,
 .points-pendant-item,
-.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont,
+.bpui-button-text-only .bpui-button-text .bpui-flex-wrap
 {
     border-color: #aaa !important;
 }
@@ -1001,7 +1065,8 @@ li.history,
 .home-to-space .m-arrow,
 .h-mp-space .m-arrow,
 .go-secuirty .m-arrow,
-.right-more-btn .m-arrow
+.right-more-btn .m-arrow,
+.growup-participate .status_box img
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -1026,7 +1091,9 @@ li.history,
 .bangumi-list-wrapper .top-block .mode-select li.detail-mode.selected,
 .bangumi-list-wrapper .top-block .mode-select li.detail-mode:hover,
 .bangumi-list-wrapper .top-block .mode-select li.simple-mode.selected,
-.bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover
+.bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover,
+.fjw-random header h2 .head-icon,
+.timer-wrap .timer-top h2 .head-icon
 {
     filter: $blueImageFilter !important;
 }
@@ -1034,7 +1101,8 @@ li.history,
 li.season-item .season-body .season-title span.follow,
 .user-panel-ctnr .ctrl-btn .svg-icon,
 .publish-panel .publish-list .publish-item a,
-.episode-item .mark-icon.badge-pink-vip
+.episode-item .mark-icon.badge-pink-vip,
+.episode-item .mark-icon.badge-pink-first
 {
     filter: $pinkImageFilter !important;
 }
@@ -1058,7 +1126,8 @@ li.season-item .season-body .season-title span.follow,
 .text-article-wrp .info-wrp .img,
 .cc-album-manage .info-wrp .no-img,
 .compila-not-find .compila-not-find-image,
-.contri-not-find .contri-not-find-image
+.contri-not-find .contri-not-find-image,
+.charge-participate .benefit-item .pic
 {
     filter: brightness(0.72) !important;
 }
@@ -1158,7 +1227,15 @@ li.season-item .season-body .season-title span.follow,
 .contri-condition .contri-select.active,
 .container .song-list .song-li .song-shadow,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont:hover,
-.container .musician-recommend .recommend-item .recommend-info .listen-btn
+.container .musician-recommend .recommend-item .recommend-info .listen-btn,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-1 .bilibili-player-block-type-keyword,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-2 .bilibili-player-block-type-user,
+.bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-wrap,
+.data-card .data-box .tab .fan-tab.current,
+.data-card .fans-box .tab .fan-tab.current,
+.bili-tab.current,
+.bili-tab.current:after,
+#audience-page .version-switch-section .bili-tab.current
 {
     border-color: $customStyleColor !important;
 }
@@ -1223,7 +1300,13 @@ li.season-item .season-body .season-title span.follow,
 .container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn,
 .container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn:hover,
 .sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-rank-title,
-.media-sponsor-wrapper .sponsor-right-area .sponsor-btn
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.bilibili-player-ending-panel-box-functions .bilibili-player-pgcinfo-follow-binge-watching,
+.fjw-case-detail .ban-detail .content-box .jury-status .status-right .vote-success .success-txt button,
+.fjw-case-detail .ban-detail .content-box .jury-status .status-right .vote-success .success-txt button:hover,
+.timer-wrap .vote-dialog-new .footer .b-able,
+.charge-participate .part-btn,
+.charge-participate .part-btn:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -1342,7 +1425,17 @@ button.button.more:hover,
 .container .host-list-layout .hot-list-wrap .show-more-song:hover .iconfont,
 .container .host-list-layout .hot-list-wrap .show-more-song:hover,
 .container .musician-recommend .recommend-item .recommend-info .listen-btn,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a:hover
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a:hover,
+.data-card .data-box .tab .fan-tab.current,
+.data-card .fans-box .tab .fan-tab.current,
+span.flatpickr-weekday,
+.ui-calendar .main-wrap .shortmenus a:hover,
+.bili-tab.current,
+#audience-page .version-switch-section .bili-tab.current,
+.announce li > div span,
+.announce li .fontvt,
+.setting .section-edit,
+.charge-participate h1
 {
     color: $customStyleColor !important;
 }
