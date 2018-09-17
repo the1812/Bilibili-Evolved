@@ -597,13 +597,9 @@
         function overrideClickHandler(playerArea)
         {
             playerArea.addClass("disable-original-hover");
-            const video = unsafeWindow.$(".bilibili-player-video");
-            const hoverClassName = "touch-video-control-show";
-            const originalClickHandler = video.data("events").click[0].handler;
-            video.unbind("click");
 
             let clickedOnce = false;
-            const clickHandler = (double, e) =>
+            const handleTap = (double, e) =>
             {
                 if (double)
                 {
@@ -614,7 +610,7 @@
                     playerArea.toggleClass(hoverClassName);
                 }
             };
-            video.on("click", e =>
+            const clickHandler = e =>
             {
                 if (!clickedOnce)
                 {
@@ -624,16 +620,25 @@
                         if (clickedOnce)
                         {
                             clickedOnce = false;
-                            clickHandler(false, e);
+                            handleTap(false, e);
                         }
                     }, 160);
                 }
                 else
                 {
                     clickedOnce = false;
-                    clickHandler(true, e);
+                    handleTap(true, e);
                 }
-            });
+            };
+
+            const video = unsafeWindow.$(".bilibili-player-video");
+            const hoverClassName = "touch-video-control-show";
+            const originalClickHandler = video.data("events").click[0].handler;
+            if (originalClickHandler !== clickHandler)
+            {
+                video.unbind("click");
+                video.on("click", clickHandler);
+            }
         }
         SpinQuery.any(
             () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
@@ -658,7 +663,7 @@
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
         return {
-            ajaxReload: false
+            ajaxReload: true
         };
     };
 })();
