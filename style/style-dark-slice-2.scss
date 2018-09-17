@@ -91,7 +91,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-video-sendbar > div.bilibili-player-video-btn,
 .bilibili-player-video-sendbar > div.bilibili-player-video-inputbar,
 .timer-wrap .quit,
-.pie-empty-wrapper
+.pie-empty-wrapper,
+a.bp_box_bot_click 
 {
     background-color: #222 !important;
 }
@@ -216,7 +217,12 @@ li.season-item .season-body .season-title span.follow,
 .ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
 .setting,
 .charge-participate,
-#article-list-index
+#article-list-index,
+#bp_user_box,
+.bb_box,
+.bp_box,
+.b-info,
+.bb-intro-top 
 {
     background-color: #444 !important;
 }
@@ -501,7 +507,13 @@ li.no-data,
 .announce h3.title span .fontvt,
 .ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
 .charge-participate .benefit-item .long-desc,
-.title-container .info span
+.title-container .info span,
+.bp-user-box .bp-user-box-bb,
+.bp-user-box .bp-user-box-bk,
+.bp-user-box-bottom p,
+.b-info .info-tip,
+.b-info .balance-footer,
+.bb-intro-top .b-question .b-question-title 
 {
     color: #aaa !important;
 }
@@ -807,7 +819,16 @@ h2.title,
 .announce li > div a,
 .setting .setting-title,
 .charge-participate .benefit-item .short-desc,
-.charge-participate .part-btn
+.charge-participate .part-btn,
+.bp-user-box-top p,
+.bp-user-box i,
+.bp_box_top p,
+.bp_box_bot a,
+.bb-intro-top .b-icon-title,
+.b-info .balance-footer .balance-part .part-balance-price,
+.b-info .bb-quan,
+.b-info .button,
+.level-dia 
 {
     color: #eee !important;
 }
@@ -995,7 +1016,14 @@ table.invtable td,
 .bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
 .announce li > div span,
 .announce li,
-.setting .watermark-setting
+.setting .watermark-setting,
+#bp_user_box,
+.bp-user-box-top,
+.bb_box,
+.bp_box,
+.bp_box_top,
+.b-info,
+.bb-intro-top 
 {
     border-color: transparent !important;
 }
@@ -1017,7 +1045,8 @@ li.history,
 .right-more-btn,
 .points-pendant-item,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont,
-.bpui-button-text-only .bpui-button-text .bpui-flex-wrap
+.bpui-button-text-only .bpui-button-text .bpui-flex-wrap,
+.bp-user-box-bb 
 {
     border-color: #aaa !important;
 }
@@ -1287,7 +1316,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-ending-panel-box-functions .bilibili-player-pgcinfo-follow-binge-watching,
 .ban-detail .content-box .vote-success .success-txt button,
 .timer-wrap .vote-dialog-new .footer .b-able,
-.charge-participate .part-btn
+.charge-participate .part-btn,
+.b-info .button 
 {
     background-color: $customStyleColor !important;
 }
@@ -1411,7 +1441,11 @@ span.flatpickr-weekday,
 .announce li > div span,
 .announce li .fontvt,
 .setting .section-edit,
-.charge-participate h1
+.charge-participate h1,
+a.bp_box_bot_click,
+.b-info .balance-name,
+.bb-intro-top .b-question .b-question-title:hover,
+.bp_box_bot a:hover 
 {
     color: $customStyleColor !important;
 }
@@ -1469,7 +1503,10 @@ span.flatpickr-weekday,
 .el-radio-button:first-child .el-radio-button__inner,
 .el-picker-panel [slot=sidebar],
 .danmu-container,
-.media-info-count .media-info-count-item
+.media-info-count .media-info-count-item,
+a.bp_box_bot_click,
+.b-info,
+.bb-intro-top 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
