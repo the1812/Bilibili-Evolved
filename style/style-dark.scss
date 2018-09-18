@@ -2056,7 +2056,6 @@ a.tcd-number:hover,
 .bb-comment .comment-list .list-item .info .plad a:hover,
 a.more-hot,
 a.btn-more,
-.bilibili-player-video-hint>a:hover,
 .bpui-selectmenu-list-row[data-selected],
 .bui-checkbox:hover .bui-checkbox-name,
 .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
@@ -2522,7 +2521,7 @@ li.season-item .season-body .season-title span.follow,
 a.bp_box_bot_click,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow li,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow,
-.section .count 
+.section .count
 {
     background-color: #222 !important;
 }
@@ -2654,7 +2653,7 @@ a.bp_box_bot_click,
 .b-info,
 .bb-intro-top,
 .tag-list li.tag-item,
-.pager .jump-pager input[type=text] 
+.pager .jump-pager input[type=text]
 {
     background-color: #444 !important;
 }
@@ -2735,7 +2734,7 @@ a.bp_box_bot_click,
 .fav-main .fav-action-top .back-to-info,
 .cc-nav-wrp .nav-cut-off-line,
 .section .count:before,
-.tag-more .b-toggle-btn 
+.tag-more .b-toggle-btn
 {
     background: transparent !important;
 }
@@ -2963,7 +2962,7 @@ li.no-data,
 .mod-1 .r .up-info .v-author,
 .mod-1 .r .v-info .v-info-i,
 .mod-3 .r .v-info .v-info-i,
-.mod-3 .r .up-info .v-author 
+.mod-3 .r .up-info .v-author
 {
     color: #aaa !important;
 }
@@ -3252,7 +3251,6 @@ h2.title,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.bilibili-player *,
 .timer-wrap .quit p,
 .fjw-random .point-wrap .cnt .no-data .title,
 .fjw-case-detail .ban-detail .content-box .jury-status .status-left .voted .graph .people,
@@ -3289,7 +3287,7 @@ h2.title,
 .video-list .vl-hd .tab-list li,
 .pager .jump-pager input[type=text],
 .mod-1 .r .title,
-.mod-3 .r .title 
+.mod-3 .r .title
 {
     color: #eee !important;
 }
@@ -3494,7 +3492,7 @@ table.invtable td,
 .pager .jump-pager input[type=text],
 .mod-1 .r .up-info .v-date,
 .mod-1 .r,
-.mod-3 .l-item 
+.mod-3 .l-item
 {
     border-color: transparent !important;
 }
@@ -3517,7 +3515,7 @@ li.history,
 .points-pendant-item,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont,
 .bpui-button-text-only .bpui-button-text .bpui-flex-wrap,
-.bp-user-box-bb 
+.bp-user-box-bb
 {
     border-color: #aaa !important;
 }
@@ -3558,7 +3556,7 @@ li.history,
 .growup-participate .status_box img,
 .i-m-title .icon-i-title,
 .tag-more .b-toggle-btn .b-icon-toggle-down,
-.tag-more .b-toggle-btn .b-icon-toggle-up 
+.tag-more .b-toggle-btn .b-icon-toggle-up
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -3595,7 +3593,7 @@ li.season-item .season-body .season-title span.follow,
 .publish-panel .publish-list .publish-item a,
 .episode-item .mark-icon.badge-pink-vip,
 .episode-item .mark-icon.badge-pink-first,
-.tag-list li.tag-item .hot 
+.tag-list li.tag-item .hot
 {
     filter: $pinkImageFilter !important;
 }
@@ -3730,7 +3728,7 @@ li.season-item .season-body .season-title span.follow,
 .bili-tab.current:after,
 #audience-page .version-switch-section .bili-tab.current,
 .contri-condition .contri-select.active:after,
-.video-list .vl-hd .order-tab li.on 
+.video-list .vl-hd .order-tab li.on
 {
     border-color: $customStyleColor !important;
 }
@@ -3794,7 +3792,7 @@ li.season-item .season-body .season-title span.follow,
 .ban-detail .content-box .vote-success .success-txt button,
 .timer-wrap .vote-dialog-new .footer .b-able,
 .charge-participate .part-btn,
-.b-info .button 
+.b-info .button
 {
     background-color: $customStyleColor !important;
 }
@@ -3932,7 +3930,8 @@ a.bp_box_bot_click,
 .mod-3 .r .title:hover,
 .mod-3 .r .up-info .v-author:hover,
 .mod-2 li .r .up-info .v-author:hover,
-.mod-1 .r .title:hover 
+.mod-1 .r .title:hover,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover
 {
     color: $customStyleColor !important;
 }
@@ -3995,7 +3994,7 @@ a.bp_box_bot_click,
 .b-info,
 .bb-intro-top,
 .mod-2 li .l-item,
-.video-list .vl-hd .s-line 
+.video-list .vl-hd .s-line
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
@@ -4168,10 +4167,10 @@ a.bp_box_bot_click,
 // {
 //     transition: all .2s !important;
 // }
-// a
-// {
-//     fill: #aaa !important;
-// }
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a
+{
+    fill: #aaa !important;
+}
 .security-list .first-level .m-arrow
 {
     filter: brightness(0) invert(1) !important;
@@ -4322,7 +4321,8 @@ a.bp_box_bot_click,
 .bilibili-player-video-subtitle-setting-left-more:hover,
 .bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-subtitle-setting-right-more:hover,
-.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon
+.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover
 {
     fill: $customStyleColor !important;
 }

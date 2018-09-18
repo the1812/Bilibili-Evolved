@@ -150,10 +150,10 @@
 // {
 //     transition: all .2s !important;
 // }
-// a
-// {
-//     fill: #aaa !important;
-// }
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a
+{
+    fill: #aaa !important;
+}
 .security-list .first-level .m-arrow
 {
     filter: brightness(0) invert(1) !important;
@@ -304,7 +304,8 @@
 .bilibili-player-video-subtitle-setting-left-more:hover,
 .bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-subtitle-setting-right-more:hover,
-.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon
+.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover
 {
     fill: $customStyleColor !important;
 }
