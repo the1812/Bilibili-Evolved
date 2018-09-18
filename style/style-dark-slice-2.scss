@@ -90,7 +90,8 @@ li.season-item .season-body .season-title span.follow,
 .pie-empty-wrapper,
 a.bp_box_bot_click,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow li,
-.bangumi-collection-card .bangumi-funcs .btn-unfollow 
+.bangumi-collection-card .bangumi-funcs .btn-unfollow,
+.section .count 
 {
     background-color: #222 !important;
 }
@@ -299,7 +300,8 @@ a.bp_box_bot_click,
 //     background: #fff1 !important;
 // }
 .fav-main .fav-action-top .back-to-info,
-.cc-nav-wrp .nav-cut-off-line
+.cc-nav-wrp .nav-cut-off-line,
+.section .count:before 
 {
     background: transparent !important;
 }
@@ -515,7 +517,10 @@ li.no-data,
 .bangumi-collection-wrapper .bangumi-collection-count,
 .bangumi-collection-card .bangumi-info .type-and-area,
 .bangumi-collection-card .bangumi-info .bangumi-state,
-.bangumi-collection-card .bangumi-info .watch-state 
+.bangumi-collection-card .bangumi-info .watch-state,
+.be-input-word-counter,
+#page-index .fav-item .state,
+.section .count 
 {
     color: #aaa !important;
 }
@@ -1030,7 +1035,8 @@ table.invtable td,
 .b-info,
 .bb-intro-top,
 .bangumi-collection-wrapper .bangumi-collection-count,
-.bangumi-collection-card .bangumi-funcs .btn-unfollow 
+.bangumi-collection-card .bangumi-funcs .btn-unfollow,
+.section .count 
 {
     border-color: transparent !important;
 }
@@ -1091,7 +1097,8 @@ li.history,
 .h-mp-space .m-arrow,
 .go-secuirty .m-arrow,
 .right-more-btn .m-arrow,
-.growup-participate .status_box img
+.growup-participate .status_box img,
+.i-m-title .icon-i-title 
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -1260,7 +1267,8 @@ li.season-item .season-body .season-title span.follow,
 .data-card .fans-box .tab .fan-tab.current,
 .bili-tab.current,
 .bili-tab.current:after,
-#audience-page .version-switch-section .bili-tab.current
+#audience-page .version-switch-section .bili-tab.current,
+.contri-condition .contri-select.active:after 
 {
     border-color: $customStyleColor !important;
 }
@@ -1452,7 +1460,8 @@ span.flatpickr-weekday,
 a.bp_box_bot_click,
 .b-info .balance-name,
 .bb-intro-top .b-question .b-question-title:hover,
-.bp_box_bot a:hover 
+.bp_box_bot a:hover,
+.mini-item .detail a:hover 
 {
     color: $customStyleColor !important;
 }
