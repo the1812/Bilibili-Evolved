@@ -596,9 +596,12 @@
         }
         function overrideClickHandler(playerArea)
         {
-            if (playerArea.hasClass("disable-original-hover"))
+            if (!playerArea.hasClass("disable-original-hover"))
             {
                 playerArea.addClass("disable-original-hover");
+                const video = unsafeWindow.$(".bilibili-player-video");
+                const hoverClassName = "touch-video-control-show";
+                const originalClickHandler = video.data("events").click[0].handler;
 
                 let clickedOnce = false;
                 const handleTap = (double, e) =>
@@ -633,9 +636,6 @@
                     }
                 };
 
-                const video = unsafeWindow.$(".bilibili-player-video");
-                const hoverClassName = "touch-video-control-show";
-                const originalClickHandler = video.data("events").click[0].handler;
                 video.unbind("click");
                 video.on("click", clickHandler);
             }

@@ -2518,7 +2518,11 @@ li.season-item .season-body .season-title span.follow,
 .sponsor-rank-item.simple .sp-msg,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
 .timer-wrap .quit,
-.pie-empty-wrapper
+.pie-empty-wrapper,
+a.bp_box_bot_click,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow li,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow,
+.section .count 
 {
     background-color: #222 !important;
 }
@@ -2643,7 +2647,14 @@ li.season-item .season-body .season-title span.follow,
 .ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
 .setting,
 .charge-participate,
-#article-list-index
+#article-list-index,
+#bp_user_box,
+.bb_box,
+.bp_box,
+.b-info,
+.bb-intro-top,
+.tag-list li.tag-item,
+.pager .jump-pager input[type=text] 
 {
     background-color: #444 !important;
 }
@@ -2722,7 +2733,9 @@ li.season-item .season-body .season-title span.follow,
 //     background: #fff1 !important;
 // }
 .fav-main .fav-action-top .back-to-info,
-.cc-nav-wrp .nav-cut-off-line
+.cc-nav-wrp .nav-cut-off-line,
+.section .count:before,
+.tag-more .b-toggle-btn 
 {
     background: transparent !important;
 }
@@ -2928,7 +2941,29 @@ li.no-data,
 .announce h3.title span .fontvt,
 .ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
 .charge-participate .benefit-item .long-desc,
-.title-container .info span
+.title-container .info span,
+.bp-user-box .bp-user-box-bb,
+.bp-user-box .bp-user-box-bk,
+.bp-user-box-bottom p,
+.b-info .info-tip,
+.b-info .balance-footer,
+.bb-intro-top .b-question .b-question-title,
+.bangumi-collection-wrapper .bangumi-collection-count,
+.bangumi-collection-card .bangumi-info .type-and-area,
+.bangumi-collection-card .bangumi-info .bangumi-state,
+.bangumi-collection-card .bangumi-info .watch-state,
+.be-input-word-counter,
+#page-index .fav-item .state,
+.section .count,
+.tag-list-wrp .title .small,
+.mod-2 li .r .up-info .v-author,
+.mod-2 li .r .v-info .v-info-i,
+.mod-1 .r .v-desc,
+.mod-1 .r .up-info .v-date,
+.mod-1 .r .up-info .v-author,
+.mod-1 .r .v-info .v-info-i,
+.mod-3 .r .v-info .v-info-i,
+.mod-3 .r .up-info .v-author 
 {
     color: #aaa !important;
 }
@@ -3234,7 +3269,27 @@ h2.title,
 .announce li > div a,
 .setting .setting-title,
 .charge-participate .benefit-item .short-desc,
-.charge-participate .part-btn
+.charge-participate .part-btn,
+.bp-user-box-top p,
+.bp-user-box i,
+.bp_box_top p,
+.bp_box_bot a,
+.bb-intro-top .b-icon-title,
+.b-info .balance-footer .balance-part .part-balance-price,
+.b-info .bb-quan,
+.b-info .button,
+.level-dia,
+.bangumi-collection-wrapper .bangumi-collection-title,
+.bangumi-collection-card .bangumi-info .bangumi-title,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow,
+.tag-list-wrp .title .name,
+.tag-more .b-toggle-btn,
+.video-floor-m .dynamic-title .title .name,
+.mod-2 li .r .title,
+.video-list .vl-hd .tab-list li,
+.pager .jump-pager input[type=text],
+.mod-1 .r .title,
+.mod-3 .r .title 
 {
     color: #eee !important;
 }
@@ -3422,7 +3477,24 @@ table.invtable td,
 .bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
 .announce li > div span,
 .announce li,
-.setting .watermark-setting
+.setting .watermark-setting,
+#bp_user_box,
+.bp-user-box-top,
+.bb_box,
+.bp_box,
+.bp_box_top,
+.b-info,
+.bb-intro-top,
+.bangumi-collection-wrapper .bangumi-collection-count,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow,
+.section .count,
+.tag-list li.tag-item,
+.mod-2 li,
+.video-list .vl-hd,
+.pager .jump-pager input[type=text],
+.mod-1 .r .up-info .v-date,
+.mod-1 .r,
+.mod-3 .l-item 
 {
     border-color: transparent !important;
 }
@@ -3444,7 +3516,8 @@ li.history,
 .right-more-btn,
 .points-pendant-item,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont,
-.bpui-button-text-only .bpui-button-text .bpui-flex-wrap
+.bpui-button-text-only .bpui-button-text .bpui-flex-wrap,
+.bp-user-box-bb 
 {
     border-color: #aaa !important;
 }
@@ -3482,7 +3555,10 @@ li.history,
 .h-mp-space .m-arrow,
 .go-secuirty .m-arrow,
 .right-more-btn .m-arrow,
-.growup-participate .status_box img
+.growup-participate .status_box img,
+.i-m-title .icon-i-title,
+.tag-more .b-toggle-btn .b-icon-toggle-down,
+.tag-more .b-toggle-btn .b-icon-toggle-up 
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -3518,7 +3594,8 @@ li.season-item .season-body .season-title span.follow,
 .user-panel-ctnr .ctrl-btn .svg-icon,
 .publish-panel .publish-list .publish-item a,
 .episode-item .mark-icon.badge-pink-vip,
-.episode-item .mark-icon.badge-pink-first
+.episode-item .mark-icon.badge-pink-first,
+.tag-list li.tag-item .hot 
 {
     filter: $pinkImageFilter !important;
 }
@@ -3651,7 +3728,9 @@ li.season-item .season-body .season-title span.follow,
 .data-card .fans-box .tab .fan-tab.current,
 .bili-tab.current,
 .bili-tab.current:after,
-#audience-page .version-switch-section .bili-tab.current
+#audience-page .version-switch-section .bili-tab.current,
+.contri-condition .contri-select.active:after,
+.video-list .vl-hd .order-tab li.on 
 {
     border-color: $customStyleColor !important;
 }
@@ -3714,7 +3793,8 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-ending-panel-box-functions .bilibili-player-pgcinfo-follow-binge-watching,
 .ban-detail .content-box .vote-success .success-txt button,
 .timer-wrap .vote-dialog-new .footer .b-able,
-.charge-participate .part-btn
+.charge-participate .part-btn,
+.b-info .button 
 {
     background-color: $customStyleColor !important;
 }
@@ -3838,7 +3918,21 @@ span.flatpickr-weekday,
 .announce li > div span,
 .announce li .fontvt,
 .setting .section-edit,
-.charge-participate h1
+.charge-participate h1,
+a.bp_box_bot_click,
+.b-info .balance-name,
+.bb-intro-top .b-question .b-question-title:hover,
+.bp_box_bot a:hover,
+.mini-item .detail a:hover,
+.tag-more .b-toggle-btn:hover,
+.mod-2 li .r .title:hover,
+.video-list .vl-hd .type-tab li.on,
+.video-list .vl-hd .order-tab li.on,
+.mod-1 .r .up-info .v-author:hover,
+.mod-3 .r .title:hover,
+.mod-3 .r .up-info .v-author:hover,
+.mod-2 li .r .up-info .v-author:hover,
+.mod-1 .r .title:hover 
 {
     color: $customStyleColor !important;
 }
@@ -3896,7 +3990,12 @@ span.flatpickr-weekday,
 .el-radio-button:first-child .el-radio-button__inner,
 .el-picker-panel [slot=sidebar],
 .danmu-container,
-.media-info-count .media-info-count-item
+.media-info-count .media-info-count-item,
+a.bp_box_bot_click,
+.b-info,
+.bb-intro-top,
+.mod-2 li .l-item,
+.video-list .vl-hd .s-line 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
@@ -4110,7 +4209,8 @@ span.flatpickr-weekday,
 // }
 .bangumi-player,
 .live-sidebar-ctnr,
-.el-picker-panel
+.el-picker-panel,
+.cc-article-wrp .info-wrp .cc-btn
 {
     box-shadow: none !important;
 }

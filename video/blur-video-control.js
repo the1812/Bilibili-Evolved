@@ -7,12 +7,16 @@
             2,
             containers =>
             {
-                containers.prepend(`<div class="video-control-blur-layer"></div>`);
-                resources.applyStyle("blurVideoControlStyle", "bilibili-blur-video-control");
+                if (!containers.hasClass("video-control-blur-container"))
+                {
+                    containers.addClass("video-control-blur-container");
+                    containers.prepend(`<div class="video-control-blur-layer"></div>`);
+                    resources.applyStyle("blurVideoControlStyle", "bilibili-blur-video-control");
+                }
             });
 
         return {
-            ajaxReload: false
+            ajaxReload: true
         };
     };
 })();
