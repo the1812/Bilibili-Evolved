@@ -221,7 +221,9 @@ a.bp_box_bot_click,
 .bb_box,
 .bp_box,
 .b-info,
-.bb-intro-top 
+.bb-intro-top,
+.tag-list li.tag-item,
+.pager .jump-pager input[type=text] 
 {
     background-color: #444 !important;
 }
@@ -301,7 +303,8 @@ a.bp_box_bot_click,
 // }
 .fav-main .fav-action-top .back-to-info,
 .cc-nav-wrp .nav-cut-off-line,
-.section .count:before 
+.section .count:before,
+.tag-more .b-toggle-btn 
 {
     background: transparent !important;
 }
@@ -520,7 +523,16 @@ li.no-data,
 .bangumi-collection-card .bangumi-info .watch-state,
 .be-input-word-counter,
 #page-index .fav-item .state,
-.section .count 
+.section .count,
+.tag-list-wrp .title .small,
+.mod-2 li .r .up-info .v-author,
+.mod-2 li .r .v-info .v-info-i,
+.mod-1 .r .v-desc,
+.mod-1 .r .up-info .v-date,
+.mod-1 .r .up-info .v-author,
+.mod-1 .r .v-info .v-info-i,
+.mod-3 .r .v-info .v-info-i,
+.mod-3 .r .up-info .v-author 
 {
     color: #aaa !important;
 }
@@ -838,7 +850,15 @@ h2.title,
 .level-dia,
 .bangumi-collection-wrapper .bangumi-collection-title,
 .bangumi-collection-card .bangumi-info .bangumi-title,
-.bangumi-collection-card .bangumi-funcs .btn-unfollow 
+.bangumi-collection-card .bangumi-funcs .btn-unfollow,
+.tag-list-wrp .title .name,
+.tag-more .b-toggle-btn,
+.video-floor-m .dynamic-title .title .name,
+.mod-2 li .r .title,
+.video-list .vl-hd .tab-list li,
+.pager .jump-pager input[type=text],
+.mod-1 .r .title,
+.mod-3 .r .title 
 {
     color: #eee !important;
 }
@@ -1036,7 +1056,14 @@ table.invtable td,
 .bb-intro-top,
 .bangumi-collection-wrapper .bangumi-collection-count,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow,
-.section .count 
+.section .count,
+.tag-list li.tag-item,
+.mod-2 li,
+.video-list .vl-hd,
+.pager .jump-pager input[type=text],
+.mod-1 .r .up-info .v-date,
+.mod-1 .r,
+.mod-3 .l-item 
 {
     border-color: transparent !important;
 }
@@ -1098,7 +1125,9 @@ li.history,
 .go-secuirty .m-arrow,
 .right-more-btn .m-arrow,
 .growup-participate .status_box img,
-.i-m-title .icon-i-title 
+.i-m-title .icon-i-title,
+.tag-more .b-toggle-btn .b-icon-toggle-down,
+.tag-more .b-toggle-btn .b-icon-toggle-up 
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -1134,7 +1163,8 @@ li.season-item .season-body .season-title span.follow,
 .user-panel-ctnr .ctrl-btn .svg-icon,
 .publish-panel .publish-list .publish-item a,
 .episode-item .mark-icon.badge-pink-vip,
-.episode-item .mark-icon.badge-pink-first
+.episode-item .mark-icon.badge-pink-first,
+.tag-list li.tag-item .hot 
 {
     filter: $pinkImageFilter !important;
 }
@@ -1268,7 +1298,8 @@ li.season-item .season-body .season-title span.follow,
 .bili-tab.current,
 .bili-tab.current:after,
 #audience-page .version-switch-section .bili-tab.current,
-.contri-condition .contri-select.active:after 
+.contri-condition .contri-select.active:after,
+.video-list .vl-hd .order-tab li.on 
 {
     border-color: $customStyleColor !important;
 }
@@ -1461,7 +1492,16 @@ a.bp_box_bot_click,
 .b-info .balance-name,
 .bb-intro-top .b-question .b-question-title:hover,
 .bp_box_bot a:hover,
-.mini-item .detail a:hover 
+.mini-item .detail a:hover,
+.tag-more .b-toggle-btn:hover,
+.mod-2 li .r .title:hover,
+.video-list .vl-hd .type-tab li.on,
+.video-list .vl-hd .order-tab li.on,
+.mod-1 .r .up-info .v-author:hover,
+.mod-3 .r .title:hover,
+.mod-3 .r .up-info .v-author:hover,
+.mod-2 li .r .up-info .v-author:hover,
+.mod-1 .r .title:hover 
 {
     color: $customStyleColor !important;
 }
@@ -1522,7 +1562,9 @@ a.bp_box_bot_click,
 .media-info-count .media-info-count-item,
 a.bp_box_bot_click,
 .b-info,
-.bb-intro-top 
+.bb-intro-top,
+.mod-2 li .l-item,
+.video-list .vl-hd .s-line 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
