@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.3.13
+// @version      1.3.14
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -49,7 +49,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.3.13"
+        currentVersion: "1.3.14"
     };
     function loadSettings()
     {
@@ -75,6 +75,12 @@
         {
             GM_addValueChangeListener(key, change);
         }
+    }
+    function reloadOnDomMutation(selector, callback)
+    {
+        const element = document.querySelectorAll(selector);
+        const observer = new MutationObserver(callback);
+        observer.observe(element);
     }
     function loadResources()
     {
