@@ -293,7 +293,8 @@ a.bp_box_bot_click,
 .bilibili-player-video-sendbar .bilibili-player-video-btn > i,
 .nav-upload-container .nav-upload-item:hover,
 .contri-condition .contri-sort .contri-sort-type li:hover,
-.share-module
+.share-module,
+.sponsor-rank-item.simple .sp-rank i 
 {
     background-color: transparent !important;
 }
@@ -857,7 +858,9 @@ h2.title,
 .video-list .vl-hd .tab-list li,
 .pager .jump-pager input[type=text],
 .mod-1 .r .title,
-.mod-3 .r .title
+.mod-3 .r .title,
+.season-slider-wrapper .slider-wrapper .season-slider-list li.cur,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow 
 {
     color: #eee !important;
 }
@@ -1062,7 +1065,8 @@ table.invtable td,
 .pager .jump-pager input[type=text],
 .mod-1 .r .up-info .v-date,
 .mod-1 .r,
-.mod-3 .l-item
+.mod-3 .l-item,
+.sponsor-rank-item.simple .sp-msg 
 {
     border-color: transparent !important;
 }
