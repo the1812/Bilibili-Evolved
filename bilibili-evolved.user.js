@@ -76,7 +76,7 @@
             GM_addValueChangeListener(key, change);
         }
     }
-    function reloadOnDomMutation(selector, callback)
+    function runAndObserveDomMutation(selector, callback)
     {
         const element = document.querySelector(selector);
         const observer = new MutationObserver(callback);

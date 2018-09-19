@@ -669,8 +669,7 @@
             }
         }
 
-        main();
-        reloadOnDomMutation("#bofqi", () => main());
+        runAndObserveDomMutation("#bofqi", () => main());
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
         return {
