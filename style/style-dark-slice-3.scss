@@ -17,7 +17,10 @@
 .dc-section-body,
 .audioplayer .ap-playlist,
 .audioplayer .ap-playlist .ap-playlist-body,
-.audioplayer .ap-controller
+.audioplayer .ap-controller,
+.setting,
+.setting .watermark-setting .watermark-wrp .watermark-modal,
+.bili-switcher
 {
     background-color: #222 !important;
 }
@@ -94,7 +97,10 @@
 .nav-guide-container .nav-guide-tip .guide-tip-content-main p,
 .nav-guide-container .nav-guide-tip .guide-tip-content-main h3 span,
 .footer-content .social-item,
-.dc-section-item_title_time
+.dc-section-item_title_time,
+.setting .watermark-switcher .switcher-tip,
+.setting .section-title span,
+.setting .watermark-setting .tooltip
 {
     color: #aaa !important;
 }
@@ -109,7 +115,9 @@
 .el-pager li.btn-quicknext,
 .el-pager li.btn-quickprev,
 .nav-guide-container .guide-tip-btn .guide-tip-btn-right,
-.guide-card .guide-box a
+.guide-card .guide-box a,
+.setting .watermark-switcher span,
+.bili-btn.plain
 {
     color: #eee !important;
 }
@@ -140,7 +148,8 @@
 .up-info-holder .fixed-box .more .top-bar,
 .el-date-range-picker__content.is-left,
 .el-picker-panel [slot=sidebar],
-.el-picker-panel__sidebar
+.el-picker-panel__sidebar,
+.bili-switcher
 {
     border-color: #444 !important
 }
@@ -237,7 +246,8 @@
 .list-filter-bar .sort-box .item.active,
 .list-filter-bar .sort-box .item:hover,
 .data-card .tab .data-tab.current:after,
-.audioplayer .ap-playlist .ap-playlist-body .ap-playlist-column-name-value:hover
+.audioplayer .ap-playlist .ap-playlist-body .ap-playlist-column-name-value:hover,
+.bili-switcher.checked
 {
     border-color: $customStyleColor !important;
 }
@@ -254,7 +264,8 @@
 .el-date-table td.in-range.end-date,
 .nav-guide-container .guide-tip-btn .guide-tip-btn-left,
 .audioplayer .ap-controller .ap-controller-center .ap-progress-bar,
-.audioplayer .ap-controller .ap-controller-right .ap-volume-bar
+.audioplayer .ap-controller .ap-controller-right .ap-volume-bar,
+.bili-switcher.checked
 {
     background-color: $customStyleColor !important;
 }
@@ -288,7 +299,8 @@
 .bilibili-player-video-subtitle-setting-left-more:hover,
 .bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-subtitle-setting-right-more:hover,
-.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon
+.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
+.setting .watermark-setting .watermark-wrp .is-selected
 {
     color: $customStyleColor !important;
 }
