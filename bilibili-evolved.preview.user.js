@@ -78,9 +78,9 @@
     }
     function reloadOnDomMutation(selector, callback)
     {
-        const element = document.querySelectorAll(selector);
+        const element = document.querySelector(selector);
         const observer = new MutationObserver(callback);
-        observer.observe(element);
+        observer.observe(element, { childList: true, subtree: true });
     }
     function loadResources()
     {

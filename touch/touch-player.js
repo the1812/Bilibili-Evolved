@@ -396,6 +396,11 @@
                 }
             }
         }
+
+        function unbindIconsClick(icons)
+        {
+            icons.unbind("click");
+        }
         function setupTouchPlayer(player)
         {
             if ($(".touch-video-box").length !== 0)
@@ -640,30 +645,36 @@
                 video.on("click", clickHandler);
             }
         }
-        SpinQuery.any(
-            () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
-            icons => icons.unbind("click")
-        );
-        new SpinQuery(
-            () => $(".bilibili-player-video"),
-            it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
-            setupTouchPlayer
-        ).start();
 
-        if (settings.touchVideoPlayerDoubleTapControl)
+        function main()
         {
+            SpinQuery.any(
+                () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
+                unbindIconsClick
+            );
             new SpinQuery(
-                () => $(".bilibili-player-area"),
-                it => it.length > 0 &&
-                    unsafeWindow.$ &&
-                    unsafeWindow.$(".bilibili-player-video").data("events"),
-                overrideClickHandler
+                () => $(".bilibili-player-video"),
+                it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
+                setupTouchPlayer
             ).start();
+            if (settings.touchVideoPlayerDoubleTapControl)
+            {
+                new SpinQuery(
+                    () => $(".bilibili-player-area"),
+                    it => it.length > 0 &&
+                        unsafeWindow.$ &&
+                        unsafeWindow.$(".bilibili-player-video").data("events"),
+                    overrideClickHandler
+                ).start();
+            }
         }
+
+        main();
+        reloadOnDomMutation("#bofqi", () => main());
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
         return {
-            ajaxReload: true
+            ajaxReload: false
         };
     };
 })();
