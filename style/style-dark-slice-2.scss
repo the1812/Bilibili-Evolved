@@ -91,7 +91,9 @@ li.season-item .season-body .season-title span.follow,
 a.bp_box_bot_click,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow li,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow,
-.section .count
+.section .count,
+.progress-bar-ctnr .bar-body,
+.user-info > .tag-flag 
 {
     background-color: #222 !important;
 }
@@ -223,7 +225,9 @@ a.bp_box_bot_click,
 .b-info,
 .bb-intro-top,
 .tag-list li.tag-item,
-.pager .jump-pager input[type=text]
+.pager .jump-pager input[type=text],
+.no-data,
+.tabnav 
 {
     background-color: #444 !important;
 }
@@ -533,7 +537,12 @@ li.no-data,
 .mod-1 .r .up-info .v-author,
 .mod-1 .r .v-info .v-info-i,
 .mod-3 .r .v-info .v-info-i,
-.mod-3 .r .up-info .v-author
+.mod-3 .r .up-info .v-author,
+.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span .selection-icon,
+.user-box,
+.user-box .grade-dec,
+.tabnav-item,
+.user-info > .user-uid 
 {
     color: #aaa !important;
 }
@@ -860,7 +869,9 @@ h2.title,
 .mod-1 .r .title,
 .mod-3 .r .title,
 .season-slider-wrapper .slider-wrapper .season-slider-list li.cur,
-.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow 
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow,
+.user-info > .user-name,
+.user-box .num 
 {
     color: #eee !important;
 }
@@ -1066,7 +1077,14 @@ table.invtable td,
 .mod-1 .r .up-info .v-date,
 .mod-1 .r,
 .mod-3 .l-item,
-.sponsor-rank-item.simple .sp-msg 
+.sponsor-rank-item.simple .sp-msg,
+.nav-item-ctnr.expanded .nav-item,
+.nav-item-ctnr.expanded .sub-pages-item-ctnr,
+.user,
+.app-body .section-block.with-radius,
+.user-hd,
+.tabnav,
+.app-body .section-block.with-bottom-radius 
 {
     border-color: transparent !important;
 }
@@ -1192,7 +1210,8 @@ li.season-item .season-body .season-title span.follow,
 .cc-album-manage .info-wrp .no-img,
 .compila-not-find .compila-not-find-image,
 .contri-not-find .contri-not-find-image,
-.charge-participate .benefit-item .pic
+.charge-participate .benefit-item .pic,
+.no-data 
 {
     filter: brightness(0.72) !important;
 }
@@ -1302,7 +1321,9 @@ li.season-item .season-body .season-title span.follow,
 .bili-tab.current:after,
 #audience-page .version-switch-section .bili-tab.current,
 .contri-condition .contri-select.active:after,
-.video-list .vl-hd .order-tab li.on
+.video-list .vl-hd .order-tab li.on,
+.user-info > .tag-flag,
+.tabnav-item.current .tabnav-content 
 {
     border-color: $customStyleColor !important;
 }
@@ -1366,7 +1387,8 @@ li.season-item .season-body .season-title span.follow,
 .ban-detail .content-box .vote-success .success-txt button,
 .timer-wrap .vote-dialog-new .footer .b-able,
 .charge-participate .part-btn,
-.b-info .button
+.b-info .button,
+.bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-button 
 {
     background-color: $customStyleColor !important;
 }
@@ -1505,7 +1527,13 @@ a.bp_box_bot_click,
 .mod-3 .r .up-info .v-author:hover,
 .mod-2 li .r .up-info .v-author:hover,
 .mod-1 .r .title:hover,
-.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover,
+.user-box .vip-btn,
+.user-box .btn:active,
+.user-box .btn,
+.icon-edit,
+.user-info > .tag-flag,
+.tabnav-item.current 
 {
     color: $customStyleColor !important;
 }
