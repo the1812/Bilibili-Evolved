@@ -93,7 +93,8 @@ a.bp_box_bot_click,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow,
 .section .count,
 .progress-bar-ctnr .bar-body,
-.user-info > .tag-flag 
+.user-info > .tag-flag,
+.selector-wrapper .more-type-wrapper 
 {
     background-color: #222 !important;
 }
@@ -227,7 +228,8 @@ a.bp_box_bot_click,
 .tag-list li.tag-item,
 .pager .jump-pager input[type=text],
 .no-data,
-.tabnav 
+.tabnav,
+.toolbar-wrapper 
 {
     background-color: #444 !important;
 }
@@ -542,7 +544,13 @@ li.no-data,
 .user-box,
 .user-box .grade-dec,
 .tabnav-item,
-.user-info > .user-uid 
+.user-info > .user-uid,
+.selector-wrapper .city-list,
+.selector-wrapper .order-list,
+.selector-wrapper .type-list,
+.selector-wrapper .more-city-wrapper,
+.pagination-wrapper .pagination .pageNum,
+.footer a 
 {
     color: #aaa !important;
 }
@@ -871,7 +879,8 @@ h2.title,
 .season-slider-wrapper .slider-wrapper .season-slider-list li.cur,
 .media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow,
 .user-info > .user-name,
-.user-box .num 
+.user-box .num,
+.selector-wrapper .title 
 {
     color: #eee !important;
 }
@@ -1084,7 +1093,13 @@ table.invtable td,
 .app-body .section-block.with-radius,
 .user-hd,
 .tabnav,
-.app-body .section-block.with-bottom-radius 
+.app-body .section-block.with-bottom-radius,
+.selector-wrapper .city-selector-wrapper,
+.selector-wrapper .type-selector-wrapper,
+.selector-wrapper .more-type-wrapper,
+.selector-wrapper .more-city-letter-list,
+.footer .boston-postcards li,
+.footer .border 
 {
     border-color: transparent !important;
 }
