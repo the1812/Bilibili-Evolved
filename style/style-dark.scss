@@ -2522,7 +2522,9 @@ a.bp_box_bot_click,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow,
 .section .count,
 .progress-bar-ctnr .bar-body,
-.user-info > .tag-flag
+.user-info > .tag-flag,
+.result.is-web,
+.has-prize 
 {
     background-color: #222 !important;
 }
@@ -2723,7 +2725,8 @@ a.bp_box_bot_click,
 .nav-upload-container .nav-upload-item:hover,
 .contri-condition .contri-sort .contri-sort-type li:hover,
 .share-module,
-.sponsor-rank-item.simple .sp-rank i
+.sponsor-rank-item.simple .sp-rank i,
+.prize-winner-block 
 {
     background-color: transparent !important;
 }
@@ -2967,7 +2970,9 @@ li.no-data,
 .user-box,
 .user-box .grade-dec,
 .tabnav-item,
-.user-info > .user-uid
+.user-info > .user-uid,
+.user-name,
+.backdrop .title-box .close-button 
 {
     color: #aaa !important;
 }
@@ -3509,7 +3514,9 @@ table.invtable td,
 .app-body .section-block.with-radius,
 .user-hd,
 .tabnav,
-.app-body .section-block.with-bottom-radius
+.app-body .section-block.with-bottom-radius,
+.backdrop .title-box,
+.prize-img 
 {
     border-color: transparent !important;
 }
@@ -3600,7 +3607,8 @@ li.history,
 .bangumi-list-wrapper .top-block .mode-select li.simple-mode.selected,
 .bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover,
 .fjw-random header h2 .head-icon,
-.timer-wrap .timer-top h2 .head-icon
+.timer-wrap .timer-top h2 .head-icon,
+.bp-svg-icon 
 {
     filter: $blueImageFilter !important;
 }
@@ -4216,7 +4224,8 @@ a.bp_box_bot_click,
 }
 .bp-svg-icon.link,
 .face-g-list .mp-block .right ul li.reach::after,
-.cc-nav-wrp .logo
+.cc-nav-wrp .logo,
+.prize-item .prize-img
 {
     filter: $blueImageFilter !important;
 }
