@@ -2517,11 +2517,12 @@ li.season-item .season-body .season-title span.follow,
 .sponsor-rank-item.simple .sp-msg,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
 .timer-wrap .quit,
-.pie-empty-wrapper,
 a.bp_box_bot_click,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow li,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow,
-.section .count
+.section .count,
+.progress-bar-ctnr .bar-body,
+.user-info > .tag-flag
 {
     background-color: #222 !important;
 }
@@ -2640,11 +2641,7 @@ a.bp_box_bot_click,
 .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
 .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
 .cc-nav-wrp .down-link:hover,
-.dc-section-item,
-.dc-section-body,
-.item-in-row,
 .ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
-.setting,
 .charge-participate,
 #article-list-index,
 #bp_user_box,
@@ -2653,7 +2650,9 @@ a.bp_box_bot_click,
 .b-info,
 .bb-intro-top,
 .tag-list li.tag-item,
-.pager .jump-pager input[type=text]
+.pager .jump-pager input[type=text],
+.no-data,
+.tabnav
 {
     background-color: #444 !important;
 }
@@ -2723,7 +2722,8 @@ a.bp_box_bot_click,
 .bilibili-player-video-sendbar .bilibili-player-video-btn > i,
 .nav-upload-container .nav-upload-item:hover,
 .contri-condition .contri-sort .contri-sort-type li:hover,
-.share-module
+.share-module,
+.sponsor-rank-item.simple .sp-rank i
 {
     background-color: transparent !important;
 }
@@ -2962,7 +2962,12 @@ li.no-data,
 .mod-1 .r .up-info .v-author,
 .mod-1 .r .v-info .v-info-i,
 .mod-3 .r .v-info .v-info-i,
-.mod-3 .r .up-info .v-author
+.mod-3 .r .up-info .v-author,
+.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span .selection-icon,
+.user-box,
+.user-box .grade-dec,
+.tabnav-item,
+.user-info > .user-uid
 {
     color: #aaa !important;
 }
@@ -3287,7 +3292,11 @@ h2.title,
 .video-list .vl-hd .tab-list li,
 .pager .jump-pager input[type=text],
 .mod-1 .r .title,
-.mod-3 .r .title
+.mod-3 .r .title,
+.season-slider-wrapper .slider-wrapper .season-slider-list li.cur,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow,
+.user-info > .user-name,
+.user-box .num
 {
     color: #eee !important;
 }
@@ -3492,7 +3501,15 @@ table.invtable td,
 .pager .jump-pager input[type=text],
 .mod-1 .r .up-info .v-date,
 .mod-1 .r,
-.mod-3 .l-item
+.mod-3 .l-item,
+.sponsor-rank-item.simple .sp-msg,
+.nav-item-ctnr.expanded .nav-item,
+.nav-item-ctnr.expanded .sub-pages-item-ctnr,
+.user,
+.app-body .section-block.with-radius,
+.user-hd,
+.tabnav,
+.app-body .section-block.with-bottom-radius
 {
     border-color: transparent !important;
 }
@@ -3618,7 +3635,8 @@ li.season-item .season-body .season-title span.follow,
 .cc-album-manage .info-wrp .no-img,
 .compila-not-find .compila-not-find-image,
 .contri-not-find .contri-not-find-image,
-.charge-participate .benefit-item .pic
+.charge-participate .benefit-item .pic,
+.no-data
 {
     filter: brightness(0.72) !important;
 }
@@ -3728,7 +3746,9 @@ li.season-item .season-body .season-title span.follow,
 .bili-tab.current:after,
 #audience-page .version-switch-section .bili-tab.current,
 .contri-condition .contri-select.active:after,
-.video-list .vl-hd .order-tab li.on
+.video-list .vl-hd .order-tab li.on,
+.user-info > .tag-flag,
+.tabnav-item.current .tabnav-content
 {
     border-color: $customStyleColor !important;
 }
@@ -3792,7 +3812,8 @@ li.season-item .season-body .season-title span.follow,
 .ban-detail .content-box .vote-success .success-txt button,
 .timer-wrap .vote-dialog-new .footer .b-able,
 .charge-participate .part-btn,
-.b-info .button
+.b-info .button,
+.bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-button
 {
     background-color: $customStyleColor !important;
 }
@@ -3931,7 +3952,13 @@ a.bp_box_bot_click,
 .mod-3 .r .up-info .v-author:hover,
 .mod-2 li .r .up-info .v-author:hover,
 .mod-1 .r .title:hover,
-.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover,
+.user-box .vip-btn,
+.user-box .btn:active,
+.user-box .btn,
+.icon-edit,
+.user-info > .tag-flag,
+.tabnav-item.current
 {
     color: $customStyleColor !important;
 }
@@ -4031,9 +4058,13 @@ a.bp_box_bot_click,
 .notice-card .notice-list .notice-item,
 .income-card.card,
 .academy-card.card,
+.dc-section-body,
 .audioplayer .ap-playlist,
 .audioplayer .ap-playlist .ap-playlist-body,
-.audioplayer .ap-controller
+.audioplayer .ap-controller,
+.setting,
+.setting .watermark-setting .watermark-wrp .watermark-modal,
+.bili-switcher
 {
     background-color: #222 !important;
 }
@@ -4055,6 +4086,7 @@ a.bp_box_bot_click,
 .audioplayer .ap-controller .ap-controller-right .ap-volume-bar-wrap,
 .audioplayer .ap-controller .ap-controller-center .ap-play-bar-wrap,
 .audioplayer .ap-controller .ap-controller-right .ap-playlist-button-bg,
+.pie-empty-wrapper,
 .audioplayer .ap-playlist .ap-playlist-body li.ap-playlist-line-active,
 .audioplayer .ap-playlist .ap-playlist-body li:hover
 {
@@ -4108,7 +4140,11 @@ a.bp_box_bot_click,
 .no-data-integrity,
 .nav-guide-container .nav-guide-tip .guide-tip-content-main p,
 .nav-guide-container .nav-guide-tip .guide-tip-content-main h3 span,
-.footer-content .social-item
+.footer-content .social-item,
+.dc-section-item_title_time,
+.setting .watermark-switcher .switcher-tip,
+.setting .section-title span,
+.setting .watermark-setting .tooltip
 {
     color: #aaa !important;
 }
@@ -4123,7 +4159,9 @@ a.bp_box_bot_click,
 .el-pager li.btn-quicknext,
 .el-pager li.btn-quickprev,
 .nav-guide-container .guide-tip-btn .guide-tip-btn-right,
-.guide-card .guide-box a
+.guide-card .guide-box a,
+.setting .watermark-switcher span,
+.bili-btn.plain
 {
     color: #eee !important;
 }
@@ -4154,7 +4192,8 @@ a.bp_box_bot_click,
 .up-info-holder .fixed-box .more .top-bar,
 .el-date-range-picker__content.is-left,
 .el-picker-panel [slot=sidebar],
-.el-picker-panel__sidebar
+.el-picker-panel__sidebar,
+.bili-switcher
 {
     border-color: #444 !important
 }
@@ -4209,7 +4248,8 @@ a.bp_box_bot_click,
 .bangumi-player,
 .live-sidebar-ctnr,
 .el-picker-panel,
-.cc-article-wrp .info-wrp .cc-btn
+.cc-article-wrp .info-wrp .cc-btn,
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn
 {
     box-shadow: none !important;
 }
@@ -4250,7 +4290,8 @@ a.bp_box_bot_click,
 .list-filter-bar .sort-box .item.active,
 .list-filter-bar .sort-box .item:hover,
 .data-card .tab .data-tab.current:after,
-.audioplayer .ap-playlist .ap-playlist-body .ap-playlist-column-name-value:hover
+.audioplayer .ap-playlist .ap-playlist-body .ap-playlist-column-name-value:hover,
+.bili-switcher.checked
 {
     border-color: $customStyleColor !important;
 }
@@ -4267,7 +4308,8 @@ a.bp_box_bot_click,
 .el-date-table td.in-range.end-date,
 .nav-guide-container .guide-tip-btn .guide-tip-btn-left,
 .audioplayer .ap-controller .ap-controller-center .ap-progress-bar,
-.audioplayer .ap-controller .ap-controller-right .ap-volume-bar
+.audioplayer .ap-controller .ap-controller-right .ap-volume-bar,
+.bili-switcher.checked
 {
     background-color: $customStyleColor !important;
 }
@@ -4301,7 +4343,8 @@ a.bp_box_bot_click,
 .bilibili-player-video-subtitle-setting-left-more:hover,
 .bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-subtitle-setting-right-more:hover,
-.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon
+.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
+.setting .watermark-setting .watermark-wrp .is-selected
 {
     color: $customStyleColor !important;
 }
