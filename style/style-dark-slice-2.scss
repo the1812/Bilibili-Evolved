@@ -226,7 +226,12 @@ a.bp_box_bot_click,
 .pager .jump-pager input[type=text],
 .no-data,
 .tabnav,
-.toolbar-wrapper 
+.toolbar-wrapper,
+.timeline-box .timeline-item .item-right p.num a,
+.timeline-box .timeline-item .item-right p.num span,
+.new-stat-module .zone-title .headline .new-stat-more,
+.pgc-rank-dropdown,
+.block-area .timeline-title .headline .timeline-more 
 {
     background-color: #444 !important;
 }
@@ -309,7 +314,8 @@ a.bp_box_bot_click,
 .fav-main .fav-action-top .back-to-info,
 .cc-nav-wrp .nav-cut-off-line,
 .section .count:before,
-.tag-more .b-toggle-btn
+.tag-more .b-toggle-btn,
+.block-area .timeline-toggle-block .timeline-toggle-btn 
 {
     background: transparent !important;
 }
@@ -551,7 +557,10 @@ li.no-data,
 .selector-wrapper .order-list,
 .selector-wrapper .type-list,
 .selector-wrapper .more-type-wrapper,
-.selector-wrapper .more-type-list .more-type-item 
+.selector-wrapper .more-type-list .more-type-item,
+.bangumi-home-crumb .fcname ul.n_num li a,
+.bangumi-home-crumb .fcname ul.n_num li,
+.pgc-rank-list .rank-item .ri-detail .ri-point 
 {
     color: #aaa !important;
 }
@@ -881,7 +890,17 @@ h2.title,
 .media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow,
 .user-info > .user-name,
 .user-box .num,
-.selector-wrapper .title 
+.selector-wrapper .title,
+.video-item-biref .biref-info .biref-title,
+.block-area .timeline-title .headline .name,
+.new-stat-module .zone-title .headline .name,
+.carousel-wrapper .carou-info span a,
+.new-stat-module .zone-title .headline .new-stat-more,
+.block-area .timeline-title .headline .timeline-more,
+.block-area .timeline-title .headline .timeline-more:hover,
+.block-area .timeline-toggle-block .timeline-toggle-btn,
+.timeline-box .timeline-item .item-right p.num a, 
+.timeline-box .timeline-item .item-right p.num span 
 {
     color: #eee !important;
 }
@@ -1101,7 +1120,10 @@ table.invtable td,
 .selector-wrapper .more-city-letter-list,
 .footer .border,
 .selector-wrapper .city-selector-wrapper,
-.selector-wrapper .type-selector-wrapper 
+.selector-wrapper .type-selector-wrapper,
+.new-stat-module .zone-title .headline .new-stat-more,
+.pgc-rank-dropdown,
+.block-area .timeline-title .headline .timeline-more 
 {
     border-color: transparent !important;
 }
@@ -1165,7 +1187,11 @@ li.history,
 .growup-participate .status_box img,
 .i-m-title .icon-i-title,
 .tag-more .b-toggle-btn .b-icon-toggle-down,
-.tag-more .b-toggle-btn .b-icon-toggle-up
+.tag-more .b-toggle-btn .b-icon-toggle-up,
+.new-stat-module .zone-title .headline .new-stat-more .icon,
+.pgc-rank-dropdown .icon-arrow-down,
+.sec-rank .more-link .icon-arrow-r,
+.block-area .timeline-toggle-block .timeline-toggle-btn i 
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -1205,7 +1231,8 @@ li.season-item .season-body .season-title span.follow,
 .episode-item .mark-icon.badge-pink-first,
 .tag-list li.tag-item .hot,
 .toolbar-wrapper .service-icon,
-.toolbar-wrapper .scroll-icon 
+.toolbar-wrapper .scroll-icon,
+.block-area .timeline-title .headline .timeline-more i 
 {
     filter: $pinkImageFilter !important;
 }
@@ -1344,7 +1371,8 @@ li.season-item .season-body .season-title span.follow,
 .video-list .vl-hd .order-tab li.on,
 .user-info > .tag-flag,
 .tabnav-item.current .tabnav-content,
-.project-list .project-list-item .promo-item 
+.project-list .project-list-item .promo-item,
+.carousel-wrapper .carou-mini .thumb-cursor 
 {
     border-color: $customStyleColor !important;
 }
@@ -1410,7 +1438,10 @@ li.season-item .season-body .season-title span.follow,
 .charge-participate .part-btn,
 .b-info .button,
 .bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-button,
-.selector-wrapper .more-city-letter-list .more-city-letter-item .letter-item.active:after 
+.selector-wrapper .more-city-letter-list .more-city-letter-item .letter-item.active:after,
+.timeline-box .timeline-item.new p.num a,
+.new-stat-module .zone-title .headline .new-stat-more:hover,
+.block-area .timeline-title .headline .timeline-more:hover 
 {
     background-color: $customStyleColor !important;
 }
@@ -1566,7 +1597,10 @@ a.bp_box_bot_click,
 .project-list .project-list-item .promo-item,
 .toolbar-wrapper .toolbar-title,
 .pagination-wrapper .pagination .pageNum.active,
-.pagination-wrapper .pagination .pageNum:hover 
+.pagination-wrapper .pagination .pageNum:hover,
+.bangumi-home-crumb .fcname ul.n_num li.on a,
+.timeline-box .timeline-item .item-right a:hover,
+.block-area .timeline-toggle-block .timeline-toggle-btn:hover 
 {
     color: $customStyleColor !important;
 }
