@@ -94,7 +94,7 @@ a.bp_box_bot_click,
 .progress-bar-ctnr .bar-body,
 .user-info > .tag-flag,
 .result.is-web,
-.has-prize 
+.has-prize
 {
     background-color: #222 !important;
 }
@@ -223,7 +223,6 @@ a.bp_box_bot_click,
 .bb-intro-top,
 .tag-list li.tag-item,
 .pager .jump-pager input[type=text],
-.no-data,
 .tabnav
 {
     background-color: #444 !important;
@@ -296,7 +295,7 @@ a.bp_box_bot_click,
 .contri-condition .contri-sort .contri-sort-type li:hover,
 .share-module,
 .sponsor-rank-item.simple .sp-rank i,
-.prize-winner-block 
+.prize-winner-block
 {
     background-color: transparent !important;
 }
@@ -307,7 +306,8 @@ a.bp_box_bot_click,
 .fav-main .fav-action-top .back-to-info,
 .cc-nav-wrp .nav-cut-off-line,
 .section .count:before,
-.tag-more .b-toggle-btn
+.tag-more .b-toggle-btn,
+.no-data
 {
     background: transparent !important;
 }
@@ -321,7 +321,7 @@ a.bp_box_bot_click,
 .live-ctn .live-attch .host,
 .dynamic-m .title span:not(.sp),
 .history-tag,
-li.no-data,
+.no-data,
 .bilibili-player-ending-panel-box-functions .bui-button.bui-button-disabled,
 .paging-box-big .page-jump,
 .coin-operated-m .coin-bottom .tips,
@@ -542,7 +542,7 @@ li.no-data,
 .tabnav-item,
 .user-info > .user-uid,
 .user-name,
-.backdrop .title-box .close-button 
+.backdrop .title-box .close-button
 {
     color: #aaa !important;
 }
@@ -1086,7 +1086,7 @@ table.invtable td,
 .tabnav,
 .app-body .section-block.with-bottom-radius,
 .backdrop .title-box,
-.prize-img 
+.prize-img
 {
     border-color: transparent !important;
 }
@@ -1178,7 +1178,7 @@ li.history,
 .bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover,
 .fjw-random header h2 .head-icon,
 .timer-wrap .timer-top h2 .head-icon,
-.bp-svg-icon 
+.bp-svg-icon
 {
     filter: $blueImageFilter !important;
 }
@@ -1213,8 +1213,7 @@ li.season-item .season-body .season-title span.follow,
 .cc-album-manage .info-wrp .no-img,
 .compila-not-find .compila-not-find-image,
 .contri-not-find .contri-not-find-image,
-.charge-participate .benefit-item .pic,
-.no-data
+.charge-participate .benefit-item .pic
 {
     filter: brightness(0.72) !important;
 }
