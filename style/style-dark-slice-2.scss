@@ -94,7 +94,8 @@ a.bp_box_bot_click,
 .progress-bar-ctnr .bar-body,
 .user-info > .tag-flag,
 .result.is-web,
-.has-prize 
+.has-prize,
+.selector-wrapper .more-type-wrapper 
 {
     background-color: #222 !important;
 }
@@ -224,7 +225,8 @@ a.bp_box_bot_click,
 .tag-list li.tag-item,
 .pager .jump-pager input[type=text],
 .no-data,
-.tabnav
+.tabnav,
+.toolbar-wrapper 
 {
     background-color: #444 !important;
 }
@@ -542,7 +544,14 @@ li.no-data,
 .tabnav-item,
 .user-info > .user-uid,
 .user-name,
-.backdrop .title-box .close-button 
+.backdrop .title-box .close-button,
+.footer a,
+.pagination-wrapper .pagination .pageNum,
+.selector-wrapper .city-list,
+.selector-wrapper .order-list,
+.selector-wrapper .type-list,
+.selector-wrapper .more-type-wrapper,
+.selector-wrapper .more-type-list .more-type-item 
 {
     color: #aaa !important;
 }
@@ -871,7 +880,8 @@ h2.title,
 .season-slider-wrapper .slider-wrapper .season-slider-list li.cur,
 .media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow,
 .user-info > .user-name,
-.user-box .num
+.user-box .num,
+.selector-wrapper .title 
 {
     color: #eee !important;
 }
@@ -1086,7 +1096,12 @@ table.invtable td,
 .tabnav,
 .app-body .section-block.with-bottom-radius,
 .backdrop .title-box,
-.prize-img 
+.prize-img,
+.selector-wrapper .more-type-wrapper,
+.selector-wrapper .more-city-letter-list,
+.footer .border,
+.selector-wrapper .city-selector-wrapper,
+.selector-wrapper .type-selector-wrapper 
 {
     border-color: transparent !important;
 }
@@ -1188,7 +1203,9 @@ li.season-item .season-body .season-title span.follow,
 .publish-panel .publish-list .publish-item a,
 .episode-item .mark-icon.badge-pink-vip,
 .episode-item .mark-icon.badge-pink-first,
-.tag-list li.tag-item .hot
+.tag-list li.tag-item .hot,
+.toolbar-wrapper .service-icon,
+.toolbar-wrapper .scroll-icon 
 {
     filter: $pinkImageFilter !important;
 }
@@ -1326,7 +1343,8 @@ li.season-item .season-body .season-title span.follow,
 .contri-condition .contri-select.active:after,
 .video-list .vl-hd .order-tab li.on,
 .user-info > .tag-flag,
-.tabnav-item.current .tabnav-content
+.tabnav-item.current .tabnav-content,
+.project-list .project-list-item .promo-item 
 {
     border-color: $customStyleColor !important;
 }
@@ -1391,7 +1409,8 @@ li.season-item .season-body .season-title span.follow,
 .timer-wrap .vote-dialog-new .footer .b-able,
 .charge-participate .part-btn,
 .b-info .button,
-.bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-button
+.bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-button,
+.selector-wrapper .more-city-letter-list .more-city-letter-item .letter-item.active:after 
 {
     background-color: $customStyleColor !important;
 }
@@ -1536,7 +1555,18 @@ a.bp_box_bot_click,
 .user-box .btn,
 .icon-edit,
 .user-info > .tag-flag,
-.tabnav-item.current
+.tabnav-item.current,
+.selector-wrapper .city-list .city-item.active,
+.selector-wrapper .city-list .city-item:hover,
+.selector-wrapper .order-list .city-item.active,
+.selector-wrapper .order-list .city-item:hover,
+.selector-wrapper .li-more .active,
+.selector-wrapper .more-city-list .more-city-item:hover,
+.toolbar-wrapper,
+.project-list .project-list-item .promo-item,
+.toolbar-wrapper .toolbar-title,
+.pagination-wrapper .pagination .pageNum.active,
+.pagination-wrapper .pagination .pageNum:hover 
 {
     color: $customStyleColor !important;
 }
