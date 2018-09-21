@@ -46,7 +46,10 @@ background-color: #222 !important;
 .canvas-card dd h4 .user-container a,
 .nav-bar .sub-nav .sub-tab,
 ul.navigation li span,
-.activity-card dd span
+.activity-card dd span,
+.sort-item,
+.filter-block .filter-item-wrapper,
+.bangumi-index-crumb ul li a 
 {
     color: #aaa !important;
 }
@@ -61,7 +64,10 @@ ul.navigation li.activated span,
 .activity-card dd h4,
 .link-panigation .panigation,
 .link-panigation .panigation.selected,
-.activity-card .category-tab
+.activity-card .category-tab,
+.filter-block .filter-name,
+.bangumi-item .bangumi-title,
+.filter-wrapper .filter-title 
 {
     color: #eee !important;
 }
@@ -167,7 +173,10 @@ ul.navigation li:after,
 .rank-item .detail .work-name:hover,
 ul.navigation li:hover,
 .activity-card dd h4 a:hover,
-.link-panigation .panigation:hover 
+.link-panigation .panigation:hover,
+.filter-block .filter-item-wrapper .filter-item.on,
+.bangumi-index-crumb ul li.on a,
+.bangumi-index-crumb ul li:hover a 
 {
     color: $customStyleColor !important;
 }
