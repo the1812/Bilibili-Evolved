@@ -50,7 +50,9 @@ ul.navigation li span,
 .sort-item,
 .filter-block .filter-item-wrapper,
 .bangumi-index-crumb ul li a,
-.bangumi-item .pub-info 
+.bangumi-item .pub-info,
+.icon-font,
+.link-footer .footer-img-linker .footer-img-text
 {
     color: #aaa !important;
 }
@@ -84,7 +86,7 @@ ul.navigation li.activated span,
 .canvas-card dd .icon-contain .support,
 .link-panigation .panigation
 {
-        border-color: transparent !important;
+    border-color: transparent !important;
 }
 // a
 // {
@@ -184,7 +186,8 @@ ul.navigation li:hover,
 .bangumi-index-crumb ul li.on a,
 .bangumi-index-crumb ul li:hover a,
 .sort-item.on,
-.bangumi-item .bangumi-title:hover 
+.bangumi-item .bangumi-title:hover,
+.link-panigation .panigation:hover 
 {
     color: $customStyleColor !important;
 }
