@@ -1,6 +1,10 @@
-.canvas-card dd .icon-contain .support
+.canvas-card dd .icon-contain .support,
+#page .game,
+.game-more,
+#page .game .game-box h4,
+#footer
 {
-    background-color: #222 !important;
+       background-color: #222 !important;
 }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
@@ -9,9 +13,12 @@
 .rank-item-first,
 .canvas-card,
 .activity-card,
-.link-panigation .panigation
+.link-panigation .panigation,
+.banner-text,
+.bui-sns-info,
+.nav-notice li a
 {
-    background-color: #444 !important;
+        background-color: #444 !important;
 }
 // a
 // {
@@ -29,9 +36,11 @@
 // {
 //     background-image: none !important;
 // }
-.link-footer .footer-linker .footer-linker-line
+.link-footer .footer-linker .footer-linker-line,
+.nav-notice li,
+.nav-notice li.hover
 {
-    background-color: transparent !important;
+        background-color: transparent !important;
 }
 // a
 // {
@@ -46,9 +55,22 @@
 .canvas-card dd h4 .user-container a,
 .nav-bar .sub-nav .sub-tab,
 ul.navigation li span,
-.activity-card dd span
+.activity-card dd span,
+.sort-item,
+.filter-block .filter-item-wrapper,
+.bangumi-index-crumb ul li a,
+.bangumi-item .pub-info,
+.icon-font,
+.link-footer .footer-img-linker .footer-img-text,
+.cinema-home-crumb ul li a,
+.video-item-biref .biref-info .biref-title-sec,
+.banner-p a,
+.banner-p p,
+#page .game .game-box dl a,
+.footer-text p,
+.footer-text .record
 {
-    color: #aaa !important;
+     color: #aaa !important;
 }
 
 .rank-item .detail .work-name,
@@ -62,9 +84,22 @@ ul.navigation li.activated span,
 .link-panigation .panigation,
 .link-panigation .panigation.selected,
 .panigation .arrow-right i,
-.activity-card .category-tab
+.activity-card .category-tab,
+.filter-block .filter-name,
+.bangumi-item .bangumi-title,
+.filter-wrapper .filter-title,
+.bangumi-item .cover-wrapper .shadow,
+.bangumi-item .cover-wrapper .corner-tag,
+.block-area .block-left .block-header .block-title,
+#mangoTv .mango-rank .text-list a,
+#page .game .game-box h4,
+.nav-notice li a,
+.nav-notice li.hover,
+.game-more,
+.bui-sns-info a,
+.footer-box a
 {
-    color: #eee !important;
+       color: #eee !important;
 }
 // a
 // {
@@ -73,14 +108,18 @@ ul.navigation li.activated span,
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd .icon-contain .support,
-.link-panigation .panigation
+.link-panigation .panigation,
+.cinema-home-crumb ul li,
+.banner,
+.nav-notice li,
+.nav-notice li.hover
 {
-    border-color: transparent !important;
+        border-color: transparent !important;
 }
-// a
-// {
-//     border-color: #aaa !important;
-// }
+.banner-p a
+{
+        border-color: #aaa !important;
+}
 // a
 // {
 //     border-color: #222 !important;
@@ -101,10 +140,11 @@ ul.navigation li.activated span,
 // {
 //     fill: #aaa !important;
 // }
-// a
-// {
-//     filter: brightness(0) invert(1) !important;
-// }
+.mainmenu ul.grid li a.yxzx,
+.footer-logo
+{
+        filter: brightness(0) invert(1) !important;
+}
 // a
 // {
 //     filter: $blueImageFilter !important;
@@ -137,9 +177,12 @@ ul.navigation li.activated span,
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 // }
-.bili-header-m .nav-menu .nav-con .nav-item .text-red
+.bili-header-m .nav-menu .nav-con .nav-item .text-red,
+.icon-hot,
+.icon-new,
+.icon-home
 {
-    display: none !important;
+        display: none !important;
 }
 // a
 // {
@@ -153,16 +196,22 @@ ul.navigation li.activated span,
 // {
 //     opacity: 1 !important;
 // }
-// a
-// {
-//     border-color: $customStyleColor !important;
-// }
+.sort-item.on i.active,
+.banner-p h3,
+.banner-p a:hover,
+#page .game .game-box h4 span
+{
+       border-color: $customStyleColor !important;
+}
+
 .nav-bar .nav-wrapper .slide-block,
 ul.navigation li:after,
-.link-panigation .panigation.selected
+.link-panigation .panigation.selected,
+.bangumi-item .cover-wrapper .corner-tag.badge_0
 {
-    background-color: $customStyleColor !important;
+       background-color: $customStyleColor !important;
 }
+
 .canvas-card dd h4 .user-container a:hover,
 .nav-bar .sub-nav .sub-tab.active,
 .rank-item .detail .work-name:hover,
@@ -170,9 +219,22 @@ ul.navigation li:hover,
 .activity-card dd h4 a:hover,
 .link-panigation .panigation:not(.selected):hover,
 .panigation .arrow-right:hover i,
-.gift-box:hover>.num
+.gift-box:hover>.num,
+.filter-block .filter-item-wrapper .filter-item.on,
+.bangumi-index-crumb ul li.on a,
+.bangumi-index-crumb ul li:hover a,
+.sort-item.on,
+.bangumi-item .bangumi-title:hover,
+.link-panigation .panigation:hover,
+.cinema-home-crumb ul li.on a,
+.cinema-home-crumb ul li:hover a,
+.banner .slides-pagination li a:hover,
+#page .game .game-box dl a:hover,
+.banner-p a:hover,
+#page .game .game-box dl dt,
+.footer-box .footer-text a:hover
 {
-    color: $customStyleColor !important;
+        color: $customStyleColor !important;
 }
 // a
 // {
@@ -182,18 +244,21 @@ ul.navigation li:hover,
 // {
 //     fill: $customStyleColor !important;
 // }
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-bottom-color: transparent !important;
-// }
+#page .game .game-box
+{
+        border-top-color: transparent !important;
+        border-bottom-color: transparent !important;
+}
 // a
 // {
 //     border-top-color: transparent !important;
 //     border-right-color: transparent !important;
 // }
-// a
-// {
-//     border-left-color: transparent !important;
-//     border-right-color: transparent !important;
-// }
+#page .game .game-box-1,
+#page .game .game-box-3,
+.game-box-all,
+.footer-logo
+{
+       border-left-color: transparent !important;
+       border-right-color: transparent !important;
+}
