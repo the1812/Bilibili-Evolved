@@ -2,10 +2,14 @@
 // {
 //     background-color: #222 !important;
 // }
-.container .host-list-layout .hot-list-wrap .hot-song-list
+.container .host-list-layout .hot-list-wrap .hot-song-list,
+.rank-list-container .rank-list-wrapper .rank-list,
+.rank-list-container .rank-list-wrapper,
+.rank-item-first .detail,
+.rank-item-first 
 {
-background-color: #444 !important;
-}
+        background-color: #444 !important;
+} 
 // a
 // {
 //     background-color: #555 !important;
@@ -22,10 +26,10 @@ background-color: #444 !important;
 // {
 //     background-image: none !important;
 // }
-// a
-// {
-//     background-color: transparent !important;
-// }
+.link-footer .footer-linker .footer-linker-line
+{
+        background-color: transparent !important;
+}
 // a
 // {
 //     background: #fff1 !important;
@@ -34,22 +38,24 @@ background-color: #444 !important;
 // {
 //     background: transparent !important;
 // }
-// a
-// {
-//     color: #aaa !important;
-// }
-// a
-// {
-//     color: #eee !important;
-// }
+.link-footer .footer-img-linker .footer-img-item 
+{
+        color: #aaa !important;
+}
+.rank-item .detail .work-name,
+.rank-list-container .more .text 
+{
+        color: #eee !important;
+}
 // a
 // {
 //     color: #222 !important;
 // }
-.container .host-list-layout .hot-list-wrap .hot-song-list
+.container .host-list-layout .hot-list-wrap .hot-song-list,
+.link-footer .footer-img-linker .footer-img-item
 {
-border-color: transparent !important;
- }
+        border-color: transparent !important;
+}
 // a
 // {
 //     border-color: #aaa !important;
