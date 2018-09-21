@@ -44,7 +44,8 @@
 .audioplayer .ap-controller .ap-controller-right .ap-playlist-button-bg,
 .pie-empty-wrapper,
 .audioplayer .ap-playlist .ap-playlist-body li.ap-playlist-line-active,
-.audioplayer .ap-playlist .ap-playlist-body li:hover
+.audioplayer .ap-playlist .ap-playlist-body li:hover,
+.canvas-card dt .img-contain
 {
     background-color: #444 !important;
 }
@@ -63,16 +64,17 @@
 #mp-mine-header,
 #mp-mine-header.active,
 .fans-icon,
-.guide-card .guide-box a
+.guide-card .guide-box a,
+.rank-list .canvas-card:nth-child(-n+3)::after
 {
     background-image: none !important;
 }
-
 .mode-fullscreen .bilibili-player-video-btn-widescreen,
 .mode-webfullscreen .bilibili-player-video-sendbar,
 .mode-fullscreen .bilibili-player-video-sendbar,
 .bilibili-player-video-bottom-area::before,
-.live-sidebar-ctnr
+.live-sidebar-ctnr,
+#app>div>.container
 {
     background-color: transparent !important;
 }
@@ -173,14 +175,15 @@
 .bp-svg-icon.link,
 .face-g-list .mp-block .right ul li.reach::after,
 .cc-nav-wrp .logo,
-.prize-item .prize-img
+.prize-item .prize-img,
+.el-carousel .el-carousel__indicators .el-carousel__indicator.is-active
 {
     filter: $blueImageFilter !important;
 }
-// a
-// {
-//     filter: $pinkImageFilter !important;
-// }
+.svg-icon.good-6-click
+{
+    filter: $pinkImageFilter !important;
+}
 // a
 // {
 //     filter: grayscale(1) !important;
@@ -206,7 +209,8 @@
 .live-sidebar-ctnr,
 .el-picker-panel,
 .cc-article-wrp .info-wrp .cc-btn,
-.media-sponsor-wrapper .sponsor-right-area .sponsor-btn
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.canvas-card dd .icon-contain .support
 {
     box-shadow: none !important;
 }
@@ -216,7 +220,9 @@
 // }
 .main-container .title span::before,
 .top-banner,
-.nav-guide-container .nav-guide-tip .guide-tip-triangle
+.nav-guide-container .nav-guide-tip .guide-tip-triangle,
+.canvas-card dd .icon-contain .support::after,
+.nav-bar .sub-nav::after
 {
     display: none !important;
 }
@@ -266,7 +272,8 @@
 .nav-guide-container .guide-tip-btn .guide-tip-btn-left,
 .audioplayer .ap-controller .ap-controller-center .ap-progress-bar,
 .audioplayer .ap-controller .ap-controller-right .ap-volume-bar,
-.bili-switcher.checked
+.bili-switcher.checked,
+.rank-list .canvas-card:nth-child(-n+3)::after
 {
     background-color: $customStyleColor !important;
 }
