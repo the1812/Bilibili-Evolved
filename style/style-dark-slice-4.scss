@@ -137,10 +137,10 @@ ul.navigation li.activated span,
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 // }
-// a
-// {
-//     display: none !important;
-// }
+.bili-header-m .nav-menu .nav-con .nav-item .text-red
+{
+    display: none !important;
+}
 // a
 // {
 //     opacity: 0 !important;
@@ -169,7 +169,8 @@ ul.navigation li:after,
 ul.navigation li:hover,
 .activity-card dd h4 a:hover,
 .link-panigation .panigation:not(.selected):hover,
-.panigation .arrow-right:hover i
+.panigation .arrow-right:hover i,
+.gift-box:hover>.num
 {
     color: $customStyleColor !important;
 }
