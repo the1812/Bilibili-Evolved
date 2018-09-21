@@ -2596,7 +2596,6 @@ a.bp_box_bot_click,
 .security_content,
 .side-bar,
 .favourite-card,
-.containe,
 .container,
 .security-list:hover,
 .security-list-jump:hover,
@@ -4119,12 +4118,12 @@ a.bp_box_bot_click,
 {
     background-image: none !important;
 }
-
 .mode-fullscreen .bilibili-player-video-btn-widescreen,
 .mode-webfullscreen .bilibili-player-video-sendbar,
 .mode-fullscreen .bilibili-player-video-sendbar,
 .bilibili-player-video-bottom-area::before,
-.live-sidebar-ctnr
+.live-sidebar-ctnr,
+#app>div>.container
 {
     background-color: transparent !important;
 }
@@ -4225,7 +4224,8 @@ a.bp_box_bot_click,
 .bp-svg-icon.link,
 .face-g-list .mp-block .right ul li.reach::after,
 .cc-nav-wrp .logo,
-.prize-item .prize-img
+.prize-item .prize-img,
+.el-carousel .el-carousel__indicators .el-carousel__indicator.is-active
 {
     filter: $blueImageFilter !important;
 }
@@ -4270,7 +4270,8 @@ a.bp_box_bot_click,
 .main-container .title span::before,
 .top-banner,
 .nav-guide-container .nav-guide-tip .guide-tip-triangle,
-.canvas-card dd .icon-contain .support::after
+.canvas-card dd .icon-contain .support::after,
+.nav-bar .sub-nav::after
 {
     display: none !important;
 }
