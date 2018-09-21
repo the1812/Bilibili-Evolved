@@ -52,7 +52,9 @@ ul.navigation li span,
 .bangumi-index-crumb ul li a,
 .bangumi-item .pub-info,
 .icon-font,
-.link-footer .footer-img-linker .footer-img-text
+.link-footer .footer-img-linker .footer-img-text,
+.cinema-home-crumb ul li a,
+.video-item-biref .biref-info .biref-title-sec 
 {
     color: #aaa !important;
 }
@@ -73,7 +75,8 @@ ul.navigation li.activated span,
 .bangumi-item .bangumi-title,
 .filter-wrapper .filter-title,
 .bangumi-item .cover-wrapper .shadow,
-.bangumi-item .cover-wrapper .corner-tag 
+.bangumi-item .cover-wrapper .corner-tag,
+.block-area .block-left .block-header .block-title 
 {
     color: #eee !important;
 }
@@ -84,7 +87,8 @@ ul.navigation li.activated span,
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd .icon-contain .support,
-.link-panigation .panigation
+.link-panigation .panigation,
+.cinema-home-crumb ul li 
 {
     border-color: transparent !important;
 }
@@ -187,7 +191,9 @@ ul.navigation li:hover,
 .bangumi-index-crumb ul li:hover a,
 .sort-item.on,
 .bangumi-item .bangumi-title:hover,
-.link-panigation .panigation:hover 
+.link-panigation .panigation:hover,
+.cinema-home-crumb ul li.on a,
+.cinema-home-crumb ul li:hover a 
 {
     color: $customStyleColor !important;
 }
