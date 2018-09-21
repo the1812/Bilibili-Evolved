@@ -1,6 +1,6 @@
 .canvas-card dd .icon-contain .support
 {
-background-color: #222 !important;
+    background-color: #222 !important;
 }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
@@ -61,6 +61,7 @@ ul.navigation li.activated span,
 .activity-card dd h4,
 .link-panigation .panigation,
 .link-panigation .panigation.selected,
+.panigation .arrow-right i,
 .activity-card .category-tab
 {
     color: #eee !important;
@@ -167,7 +168,8 @@ ul.navigation li:after,
 .rank-item .detail .work-name:hover,
 ul.navigation li:hover,
 .activity-card dd h4 a:hover,
-.link-panigation .panigation:hover 
+.link-panigation .panigation:not(.selected):hover,
+.panigation .arrow-right:hover i
 {
     color: $customStyleColor !important;
 }
