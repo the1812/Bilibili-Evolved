@@ -41,9 +41,10 @@ background-color: #222 !important;
 // }
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd h4 .user-container span,
-.canvas-card dd h4 .user-container a
+.canvas-card dd h4 .user-container a,
+.nav-bar .sub-nav .sub-tab
 {
-color: #aaa !important;
+    color: #aaa !important;
 }
 
 .rank-item .detail .work-name,
@@ -145,11 +146,13 @@ color: #aaa !important;
 // {
 //     border-color: $customStyleColor !important;
 // }
-// a
-// {
-//     background-color: $customStyleColor !important;
-// }
-.canvas-card dd h4 .user-container a:hover
+.nav-bar .nav-wrapper .slide-block
+{
+    background-color: $customStyleColor !important;
+}
+.canvas-card dd h4 .user-container a:hover,
+.nav-bar .sub-nav .sub-tab.active,
+.rank-item .detail .work-name:hover 
 {
     color: $customStyleColor !important;
 }
