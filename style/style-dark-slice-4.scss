@@ -1,4 +1,8 @@
-.canvas-card dd .icon-contain .support
+.canvas-card dd .icon-contain .support,
+#page .game,
+.game-more,
+#page .game .game-box h4,
+#footer 
 {
        background-color: #222 !important;
 }
@@ -9,7 +13,10 @@
 .rank-item-first,
 .canvas-card,
 .activity-card,
-.link-panigation .panigation
+.link-panigation .panigation,
+.banner-text,
+.bui-sns-info,
+.nav-notice li a 
 {
         background-color: #444 !important;
 }
@@ -29,7 +36,9 @@
 // {
 //     background-image: none !important;
 // }
-.link-footer .footer-linker .footer-linker-line
+.link-footer .footer-linker .footer-linker-line,
+.nav-notice li,
+.nav-notice li.hover
 {
         background-color: transparent !important;
 }
@@ -54,9 +63,14 @@ ul.navigation li span,
 .icon-font,
 .link-footer .footer-img-linker .footer-img-text,
 .cinema-home-crumb ul li a,
-.video-item-biref .biref-info .biref-title-sec 
+.video-item-biref .biref-info .biref-title-sec,
+.banner-p a,
+.banner-p p,
+#page .game .game-box dl a,
+.footer-text p,
+.footer-text .record 
 {
-    color: #aaa !important;
+     color: #aaa !important;
 }
 
 .rank-item .detail .work-name,
@@ -76,9 +90,16 @@ ul.navigation li.activated span,
 .filter-wrapper .filter-title,
 .bangumi-item .cover-wrapper .shadow,
 .bangumi-item .cover-wrapper .corner-tag,
-.block-area .block-left .block-header .block-title 
+.block-area .block-left .block-header .block-title,
+#mangoTv .mango-rank .text-list a,
+#page .game .game-box h4,
+.nav-notice li a,
+.nav-notice li.hover,
+.game-more,
+.bui-sns-info a,
+.footer-box a 
 {
-    color: #eee !important;
+       color: #eee !important;
 }
 // a
 // {
@@ -88,14 +109,17 @@ ul.navigation li.activated span,
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd .icon-contain .support,
 .link-panigation .panigation,
-.cinema-home-crumb ul li 
+.cinema-home-crumb ul li,
+.banner,
+.nav-notice li,
+.nav-notice li.hover
 {
-    border-color: transparent !important;
+        border-color: transparent !important;
 }
-// a
-// {
-//     border-color: #aaa !important;
-// }
+.banner-p a
+{
+        border-color: #aaa !important;
+}
 // a
 // {
 //     border-color: #222 !important;
@@ -116,10 +140,11 @@ ul.navigation li.activated span,
 // {
 //     fill: #aaa !important;
 // }
-// a
-// {
-//     filter: brightness(0) invert(1) !important;
-// }
+.mainmenu ul.grid li a.yxzx,
+.footer-logo 
+{
+        filter: brightness(0) invert(1) !important;
+}
 // a
 // {
 //     filter: $blueImageFilter !important;
@@ -152,10 +177,12 @@ ul.navigation li.activated span,
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 // }
-// a
-// {
-//     display: none !important;
-// }
+.icon-hot, 
+.icon-new, 
+.icon-home
+{
+        display: none !important;
+}
 // a
 // {
 //     opacity: 0 !important;
@@ -168,17 +195,22 @@ ul.navigation li.activated span,
 // {
 //     opacity: 1 !important;
 // }
-.sort-item.on i.active
+.sort-item.on i.active,
+.banner-p h3,
+.banner-p a:hover,
+#page .game .game-box h4 span 
 {
-        border-color: $customStyleColor !important;
+       border-color: $customStyleColor !important;
 }
+
 .nav-bar .nav-wrapper .slide-block,
 ul.navigation li:after,
 .link-panigation .panigation.selected,
-.bangumi-item .cover-wrapper .corner-tag.badge_0 
+.bangumi-item .cover-wrapper .corner-tag.badge_0
 {
-    background-color: $customStyleColor !important;
+       background-color: $customStyleColor !important;
 }
+
 .canvas-card dd h4 .user-container a:hover,
 .nav-bar .sub-nav .sub-tab.active,
 .rank-item .detail .work-name:hover,
@@ -193,9 +225,14 @@ ul.navigation li:hover,
 .bangumi-item .bangumi-title:hover,
 .link-panigation .panigation:hover,
 .cinema-home-crumb ul li.on a,
-.cinema-home-crumb ul li:hover a 
+.cinema-home-crumb ul li:hover a,
+.banner .slides-pagination li a:hover,
+#page .game .game-box dl a:hover,
+.banner-p a:hover,
+#page .game .game-box dl dt,
+.footer-box .footer-text a:hover
 {
-    color: $customStyleColor !important;
+        color: $customStyleColor !important;
 }
 // a
 // {
@@ -205,18 +242,21 @@ ul.navigation li:hover,
 // {
 //     fill: $customStyleColor !important;
 // }
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-bottom-color: transparent !important;
-// }
+#page .game .game-box 
+{
+        border-top-color: transparent !important;
+        border-bottom-color: transparent !important;
+}
 // a
 // {
 //     border-top-color: transparent !important;
 //     border-right-color: transparent !important;
 // }
-// a
-// {
-//     border-left-color: transparent !important;
-//     border-right-color: transparent !important;
-// }
+#page .game .game-box-1,
+#page .game .game-box-3,
+.game-box-all,
+.footer-logo 
+{
+       border-left-color: transparent !important;
+       border-right-color: transparent !important;
+}
