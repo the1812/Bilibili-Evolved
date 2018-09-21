@@ -7,7 +7,9 @@ background-color: #222 !important;
 .rank-list-container .rank-list-wrapper,
 .rank-item-first .detail,
 .rank-item-first,
-.canvas-card 
+.canvas-card,
+.activity-card,
+.link-panigation .panigation
 {
     background-color: #444 !important;
 }
@@ -42,7 +44,9 @@ background-color: #222 !important;
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd h4 .user-container span,
 .canvas-card dd h4 .user-container a,
-.nav-bar .sub-nav .sub-tab
+.nav-bar .sub-nav .sub-tab,
+ul.navigation li span,
+.activity-card dd span
 {
     color: #aaa !important;
 }
@@ -52,7 +56,12 @@ background-color: #222 !important;
 .canvas-card dd h3 a,
 .canvas-card dd .icon-contain .support,
 .rank-list .canvas-card:after,
-.rank-list .canvas-card:nth-child(-n+3):after 
+.rank-list .canvas-card:nth-child(-n+3):after,
+ul.navigation li.activated span,
+.activity-card dd h4,
+.link-panigation .panigation,
+.link-panigation .panigation.selected,
+.activity-card .category-tab
 {
     color: #eee !important;
 }
@@ -62,7 +71,8 @@ background-color: #222 !important;
 // }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .link-footer .footer-img-linker .footer-img-item,
-.canvas-card dd .icon-contain .support 
+.canvas-card dd .icon-contain .support,
+.link-panigation .panigation
 {
     border-color: transparent !important;
 }
@@ -146,13 +156,18 @@ background-color: #222 !important;
 // {
 //     border-color: $customStyleColor !important;
 // }
-.nav-bar .nav-wrapper .slide-block
+.nav-bar .nav-wrapper .slide-block,
+ul.navigation li:after,
+.link-panigation .panigation.selected
 {
     background-color: $customStyleColor !important;
 }
 .canvas-card dd h4 .user-container a:hover,
 .nav-bar .sub-nav .sub-tab.active,
-.rank-item .detail .work-name:hover 
+.rank-item .detail .work-name:hover,
+ul.navigation li:hover,
+.activity-card dd h4 a:hover,
+.link-panigation .panigation:hover 
 {
     color: $customStyleColor !important;
 }
