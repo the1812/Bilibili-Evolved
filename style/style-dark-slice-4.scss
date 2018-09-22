@@ -2,9 +2,10 @@
 #page .game,
 .game-more,
 #page .game .game-box h4,
-#footer 
+#footer,
+.dc-option:hover 
 {
-       background-color: #222 !important;
+    background-color: #222 !important;
 }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
@@ -17,7 +18,8 @@
 .banner-text,
 .bui-sns-info,
 .nav-notice li a,
-.container .host-list-layout .hot-list-wrap .show-more-song
+.container .host-list-layout .hot-list-wrap .show-more-song,
+.dc-select .dc-option-group 
 {
     background-color: #444 !important;
 }
@@ -71,7 +73,16 @@ ul.navigation li span,
 .footer-text p,
 .footer-text .record,
 .dc-radio-button,
-#dc-section_summary .follow-tool-box .follow-line-legend .legend-item .legend-text 
+#dc-section_summary .follow-tool-box .follow-line-legend .legend-item .legend-text,
+.info-item-active p,
+.info-item-charge p,
+.info-item-medal p,
+.info-item-total p,
+.rank-active-target,
+.rank-fans-medal,
+.rank-vedio-target,
+.rank-vedio-view,
+.dc-radio-button_inner 
 {
     color: #aaa !important;
 }
@@ -101,7 +112,10 @@ ul.navigation li.activated span,
 .game-more,
 .bui-sns-info a,
 .footer-box a,
-.dc-section-item_title_custom .sectionTitle 
+.dc-section-item_title_custom .sectionTitle,
+.ellipsis,
+.dc-option,
+.dc-section-item_title 
 {
     color: #eee !important;
 }
@@ -116,9 +130,15 @@ ul.navigation li.activated span,
 .cinema-home-crumb ul li,
 .banner,
 .nav-notice li,
-.nav-notice li.hover
+.nav-notice li.hover,
+.rank-active-target,
+.rank-fans-medal,
+.rank-vedio-target,
+.rank-vedio-view,
+.dc-select-label,
+.dc-select .dc-option-group 
 {
-        border-color: transparent !important;
+    border-color: transparent !important;
 }
 .banner-p a
 {
@@ -206,7 +226,7 @@ ul.navigation li.activated span,
 .dc-radio-button.is-active,
 .dc-radio-button.is-active:after 
 {
-    border-color: $customStyleColor !important;
+       border-color: $customStyleColor !important;
 }
 
 .nav-bar .nav-wrapper .slide-block,
@@ -237,9 +257,10 @@ ul.navigation li:hover,
 .banner-p a:hover,
 #page .game .game-box dl dt,
 .footer-box .footer-text a:hover,
-.dc-radio-button.is-active 
+.dc-radio-button.is-active,
+.dc-option:hover 
 {
-    color: $customStyleColor !important;
+         color: $customStyleColor !important;
 }
 // a
 // {
