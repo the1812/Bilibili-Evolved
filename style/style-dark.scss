@@ -4069,7 +4069,9 @@ a.bp_box_bot_click,
 .audioplayer .ap-controller,
 .setting,
 .setting .watermark-setting .watermark-wrp .watermark-modal,
-.bili-switcher
+.bili-switcher,
+.grid .banner,
+.bui-sns-info a .bd
 {
     background-color: #222 !important;
 }
@@ -4183,7 +4185,8 @@ a.bp_box_bot_click,
 .el-autocomplete-suggestion__wrap,
 .el-pager li,
 .el-pager li:last-child,
-.nav-guide-container .guide-tip-btn .guide-tip-btn-right
+.nav-guide-container .guide-tip-btn .guide-tip-btn-right,
+.grid .banner
 {
     border-color: transparent !important;
 }
@@ -4200,7 +4203,8 @@ a.bp_box_bot_click,
 .el-date-range-picker__content.is-left,
 .el-picker-panel [slot=sidebar],
 .el-picker-panel__sidebar,
-.bili-switcher
+.bili-switcher,
+.bui-sns-info a .bd
 {
     border-color: #444 !important
 }
@@ -4225,7 +4229,16 @@ a.bp_box_bot_click,
 .face-g-list .mp-block .right ul li.reach::after,
 .cc-nav-wrp .logo,
 .prize-item .prize-img,
-.el-carousel .el-carousel__indicators .el-carousel__indicator.is-active
+.el-carousel .el-carousel__indicators .el-carousel__indicator.is-active,
+.banner .slides-pagination li.selected,
+.bui-sns-info>a>img,
+.slideshow .slides-next:hover,
+.slideshow .slides-prev:hover,
+.slideshow .slides-pagination li.selected,
+.mainmenu ul.grid li a.yxlb:hover,
+.mainmenu ul.grid li.hover a.yxlb,
+.mainmenu ul.grid li a.lbzx:hover,
+.mainmenu ul.grid li.hover a.lbzx
 {
     filter: $blueImageFilter !important;
 }
@@ -4259,7 +4272,8 @@ a.bp_box_bot_click,
 .el-picker-panel,
 .cc-article-wrp .info-wrp .cc-btn,
 .media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
-.canvas-card dd .icon-contain .support
+.canvas-card dd .icon-contain .support,
+.bui-sns-info a .bd
 {
     box-shadow: none !important;
 }
@@ -4271,7 +4285,8 @@ a.bp_box_bot_click,
 .top-banner,
 .nav-guide-container .nav-guide-tip .guide-tip-triangle,
 .canvas-card dd .icon-contain .support::after,
-.nav-bar .sub-nav::after
+.nav-bar .sub-nav::after,
+.bui-sns-info a .bd::after
 {
     display: none !important;
 }
