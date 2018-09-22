@@ -4069,7 +4069,9 @@ a.bp_box_bot_click,
 .setting .watermark-setting .watermark-wrp .watermark-modal,
 .bili-switcher,
 .grid .banner,
-.bui-sns-info a .bd
+.bui-sns-info a .bd,
+.search-module .search-block .search-word-panel,
+.search-module .search-block .search-word-panel .panel-title p span
 {
     background-color: #222 !important;
 }
@@ -4094,7 +4096,14 @@ a.bp_box_bot_click,
 .pie-empty-wrapper,
 .audioplayer .ap-playlist .ap-playlist-body li.ap-playlist-line-active,
 .audioplayer .ap-playlist .ap-playlist-body li:hover,
-.canvas-card dt .img-contain
+.canvas-card dt .img-contain,
+.article-item .item-holder .article-title-holder .list-mark,
+.search-module .search-block .search-word-panel .history-item:hover,
+.search-module .search-block .search-word-panel .suggest-item:hover,
+.rank-module .rank-list .item .rank-index,
+.page-content .right-side .rank-module .complete-rank,
+.page-content .right-side .up-list .fresh-btn,
+body>div.to-top.on
 {
     background-color: #444 !important;
 }
@@ -4124,7 +4133,11 @@ a.bp_box_bot_click,
 .bilibili-player-video-bottom-area::before,
 .live-sidebar-ctnr,
 .pagelistbox .custom-right .custom-right-inner,
-#app>div>.container
+#app>div>.container,
+.article-list-holder .article-item,
+.search-module .search-block input,
+.rank-module .rank-list .item,
+.page-content .right-side .up-list
 {
     background-color: transparent !important;
 }
@@ -4152,7 +4165,18 @@ a.bp_box_bot_click,
 .dc-section-item_title_time,
 .setting .watermark-switcher .switcher-tip,
 .setting .section-title span,
-.setting .watermark-setting .tooltip
+.setting .watermark-setting .tooltip,
+.article-item .item-holder .article-desc,
+.article-item .item-holder .article-info-bar .up-content .nick-name,
+.article-item .item-holder .article-info-bar .category,
+.article-item .item-holder .article-info-bar .like,
+.article-item .item-holder .article-info-bar .reply,
+.article-item .item-holder .article-info-bar .view,
+.search-module .search-block .search-word-panel .panel-title p span,
+.rank-module .rank-tabs-bar .rank-tabs-list li,
+.up-list .up-item .info-holder .dynamic,
+.more .help .info,
+.more .link .info
 {
     color: #aaa !important;
 }
@@ -4170,7 +4194,20 @@ a.bp_box_bot_click,
 .guide-card .guide-box a,
 .setting .watermark-switcher span,
 .bili-btn.plain,
-.pgc-rank-dropdown .selected
+.pgc-rank-dropdown .selected,
+.article-item .item-holder .article-title-holder .list-mark,
+.search-module .search-block input,
+.rank-module .rank-tabs-bar label,
+.rank-module .rank-list .item .rank-index,
+.rank-module .rank-list .item a,
+.rank-module .complete-rank,
+.up-list .title,
+.up-list .fresh-btn,
+.up-list .up-item .info-holder .head .nick-name,
+.up-list .up-item .info-holder .dynamic .arc-title,
+.more .top-bar,
+.more .help .title,
+.more .link .title
 {
     color: #eee !important;
 }
@@ -4186,7 +4223,14 @@ a.bp_box_bot_click,
 .el-pager li,
 .el-pager li:last-child,
 .nav-guide-container .guide-tip-btn .guide-tip-btn-right,
-.grid .banner
+.grid .banner,
+.article-item .item-holder .article-title-holder .list-mark,
+.search-module .search-block .search-word-panel,
+.rank-module .rank-tabs-bar,
+.up-list .title,
+.up-list .fresh-btn,
+.more .top-bar,
+body>div.to-top.on
 {
     border-color: transparent !important;
 }
@@ -4205,7 +4249,10 @@ a.bp_box_bot_click,
 .el-picker-panel__sidebar,
 .bili-switcher,
 .bui-sns-info a .bd,
-.pagelistbox .custom-right .custom-right-inner.custompage
+.pagelistbox .custom-right .custom-right-inner.custompage,
+.article-list-holder .article-item,
+.search-module .search-block,
+.search-module .search-block .search-word-panel .panel-title .split-line
 {
     border-color: #444 !important
 }
@@ -4222,7 +4269,8 @@ a.bp_box_bot_click,
 {
     fill: #aaa !important;
 }
-.security-list .first-level .m-arrow
+.security-list .first-level .m-arrow,
+.page-content .right-side .up-list .fresh-btn:before
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -4239,7 +4287,8 @@ a.bp_box_bot_click,
 .mainmenu ul.grid li a.yxlb:hover,
 .mainmenu ul.grid li.hover a.yxlb,
 .mainmenu ul.grid li a.lbzx:hover,
-.mainmenu ul.grid li.hover a.lbzx
+.mainmenu ul.grid li.hover a.lbzx,
+.carousel .indicator .indicator-btn-holder .indicator-btn.on
 {
     filter: $blueImageFilter !important;
 }
@@ -4247,10 +4296,16 @@ a.bp_box_bot_click,
 {
     filter: $pinkImageFilter !important;
 }
-// a
-// {
-//     filter: grayscale(1) !important;
-// }
+.article-item .item-holder .article-info-bar .like:before,
+.article-item .item-holder .article-info-bar .reply:before,
+.article-item .item-holder .article-info-bar .view:before,
+.search-module .search-block .search-icon,
+.search-module .search-block .search-word-panel .history-item .cancel,
+.rank-module .complete-rank::after,
+body>div.to-top.on
+{
+    filter: grayscale(1) !important;
+}
 // a
 // {
 //     filter: none !important;
@@ -4287,7 +4342,9 @@ a.bp_box_bot_click,
 .nav-guide-container .nav-guide-tip .guide-tip-triangle,
 .canvas-card dd .icon-contain .support::after,
 .nav-bar .sub-nav::after,
-.bui-sns-info a .bd::after
+.bui-sns-info a .bd::after,
+.more .help .icon,
+.more .link .icon
 {
     display: none !important;
 }
@@ -4314,6 +4371,15 @@ a.bp_box_bot_click,
 {
     z-index: 100 !important;
 }
+.more .help,
+.more .link
+{
+    padding-left: 0 !important;
+}
+body>div.to-top.on
+{
+    background-repeat: no-repeat !important;
+}
 
 .list-filter-bar .sort-box .item.active,
 .list-filter-bar .sort-box .item:hover,
@@ -4321,7 +4387,9 @@ a.bp_box_bot_click,
 .audioplayer .ap-playlist .ap-playlist-body .ap-playlist-column-name-value:hover,
 .bili-switcher.checked,
 .pagelistbox .custom-right .custom-right-inner.custompage:focus,
-.sort-item.on i.active
+.sort-item.on i.active,
+.rank-module .rank-tabs-bar .rank-tabs-list li.on,
+.up-list .up-item .info-holder .head .follow
 {
     border-color: $customStyleColor !important;
 }
@@ -4340,7 +4408,8 @@ a.bp_box_bot_click,
 .audioplayer .ap-controller .ap-controller-center .ap-progress-bar,
 .audioplayer .ap-controller .ap-controller-right .ap-volume-bar,
 .bili-switcher.checked,
-.rank-list .canvas-card:nth-child(-n+3)::after
+.rank-list .canvas-card:nth-child(-n+3)::after,
+.rank-list .item:nth-child(-n+3) .rank-index
 {
     background-color: $customStyleColor !important;
 }
@@ -4375,7 +4444,15 @@ a.bp_box_bot_click,
 .bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-subtitle-setting-right-more:hover,
 .bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
-.setting .watermark-setting .watermark-wrp .is-selected
+.setting .watermark-setting .watermark-wrp .is-selected,
+.search-module .search-block .search-word-panel .suggest_high_light,
+.rank-module .rank-tabs-bar .rank-tabs-list li.on,
+.rank-module .rank-list .item:hover a,
+.rank-module .complete-rank:hover,
+.up-list .up-item .info-holder .head .follow,
+.up-list .up-item .info-holder .head .nick-name:hover,
+.more .help .title:hover,
+.more .link .title:hover
 {
     color: $customStyleColor !important;
 }
@@ -4384,7 +4461,8 @@ a.bp_box_bot_click,
 .el-date-table td.in-range.end-date:hover,
 .el-date-table td.in-range.start-date,
 .el-date-table td.in-range.end-date,
-.nav-guide-container .guide-tip-btn .guide-tip-btn-left
+.nav-guide-container .guide-tip-btn .guide-tip-btn-left,
+.rank-list .item:nth-child(-n+3) .rank-index
 {
     color: $foreground !important;
 }
