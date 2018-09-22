@@ -29,7 +29,9 @@
 .comment-manage-wrap .dropdown .dropdown-btn:hover,
 .dropdown .dropdown-menu,
 .comment-manage-wrap .dropdown.open .dropdown-btn,
-.comment-manage-wrap .head .dropdown-btn .text 
+.comment-manage-wrap .head .dropdown-btn .text,
+.recent-danmu-wrp .danmu-filter .left .delete .option-wrp .act-btn,
+.recent-danmu-wrp .head .dropdown-btn 
 {
     background-color: #444 !important;
 }
@@ -59,10 +61,10 @@
 // {
 //     background: #fff1 !important;
 // }
-// a
-// {
-//     background: transparent !important;
-// }
+.recent-danmu-wrp .danmu-filter .left .line
+ {
+background: transparent !important;
+ }
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd h4 .user-container span,
 .canvas-card dd h4 .user-container a,
@@ -96,7 +98,10 @@ ul.navigation li span,
 .comment-manage-wrap .content .action-bar .dropdown .sort-btn,
 .comment-manage-wrap .search .fontvt,
 .comment-manage-wrap .dropdown .dropdown-menu li,
-.comment-manage-wrap .head .dropdown-menu .article-list .ac-link
+.comment-manage-wrap .head .dropdown-menu .article-list .ac-link,
+.recent-danmu-wrp .danmu-filter .left .delete .option-wrp .act-btn,
+.recent-danmu-wrp .head .dropdown-menu .article-list li,
+.recent-danmu-wrp .tips 
 {
     color: #aaa !important;
 }
@@ -133,7 +138,9 @@ ul.navigation li.activated span,
 .comment-manage-wrap .content .action-bar .action-btn span,
 .comment-manage-wrap .search input,
 .comment-manage-wrap .dropdown .dropdown-btn,
-.comment-manage-wrap .head .search .bili-input 
+.comment-manage-wrap .head .search .bili-input,
+.recent-danmu-wrp .dropdown .dropdown-btn,
+.danmu-wrp .section .title 
 {
     color: #eee !important;
 }
@@ -160,7 +167,12 @@ ul.navigation li.activated span,
 .comment-manage-wrap .content .check-box.checked,
 .comment-manage-wrap .search input,
 .comment-manage-wrap .dropdown .dropdown-btn,
-.comment-manage-wrap .head .dropdown-btn .text 
+.comment-manage-wrap .head .dropdown-btn .text,
+.recent-danmu-wrp .danmu-filter .left .danmu-type,
+.recent-danmu-wrp .danmu-filter .left .protect,
+.recent-danmu-wrp .danmu-filter .left .refresh,
+.recent-danmu-wrp .danmu-filter .left .delete,
+.recent-danmu-wrp .dropdown .dropdown-btn 
 {
     border-color: transparent !important;
 }
