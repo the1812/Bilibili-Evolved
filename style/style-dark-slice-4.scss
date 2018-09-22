@@ -4,7 +4,9 @@
 #page .game .game-box h4,
 #footer,
 .dc-option:hover,
-.medal 
+.medal,
+.comment-manage-wrap .search input,
+.comment-manage-wrap .head .search .bili-input 
 {
     background-color: #222 !important;
 }
@@ -20,7 +22,14 @@
 .bui-sns-info,
 .nav-notice li a,
 .container .host-list-layout .hot-list-wrap .show-more-song,
-.dc-select .dc-option-group 
+.dc-select .dc-option-group,
+.comment-manage-wrap .content .action-bar,
+.comment-manage-wrap .no-content,
+.comment-manage-wrap .head .dropdown-btn,
+.comment-manage-wrap .dropdown .dropdown-btn:hover,
+.dropdown .dropdown-menu,
+.comment-manage-wrap .dropdown.open .dropdown-btn,
+.comment-manage-wrap .head .dropdown-btn .text 
 {
     background-color: #444 !important;
 }
@@ -83,7 +92,11 @@ ul.navigation li span,
 .rank-fans-medal,
 .rank-vedio-target,
 .rank-vedio-view,
-.dc-radio-button_inner 
+.dc-radio-button_inner,
+.comment-manage-wrap .content .action-bar .dropdown .sort-btn,
+.comment-manage-wrap .search .fontvt,
+.comment-manage-wrap .dropdown .dropdown-menu li,
+.comment-manage-wrap .head .dropdown-menu .article-list .ac-link
 {
     color: #aaa !important;
 }
@@ -116,7 +129,11 @@ ul.navigation li.activated span,
 .dc-section-item_title_custom .sectionTitle,
 .ellipsis,
 .dc-option,
-.dc-section-item_title 
+.dc-section-item_title,
+.comment-manage-wrap .content .action-bar .action-btn span,
+.comment-manage-wrap .search input,
+.comment-manage-wrap .dropdown .dropdown-btn,
+.comment-manage-wrap .head .search .bili-input 
 {
     color: #eee !important;
 }
@@ -137,7 +154,13 @@ ul.navigation li.activated span,
 .rank-vedio-target,
 .rank-vedio-view,
 .dc-select-label,
-.dc-select .dc-option-group 
+.dc-select .dc-option-group,
+.comment-manage-wrap .no-content,
+.comment-manage-wrap .content .action-bar .action-btn span,
+.comment-manage-wrap .content .check-box.checked,
+.comment-manage-wrap .search input,
+.comment-manage-wrap .dropdown .dropdown-btn,
+.comment-manage-wrap .head .dropdown-btn .text 
 {
     border-color: transparent !important;
 }
@@ -233,9 +256,10 @@ ul.navigation li.activated span,
 .nav-bar .nav-wrapper .slide-block,
 ul.navigation li:after,
 .link-panigation .panigation.selected,
-.bangumi-item .cover-wrapper .corner-tag.badge_0
+.bangumi-item .cover-wrapper .corner-tag.badge_0,
+.comment-manage-wrap .content .check-box.checked 
 {
-       background-color: $customStyleColor !important;
+    background-color: $customStyleColor !important;
 }
 
 .canvas-card dd h4 .user-container a:hover,
@@ -259,9 +283,11 @@ ul.navigation li:hover,
 #page .game .game-box dl dt,
 .footer-box .footer-text a:hover,
 .dc-radio-button.is-active,
-.dc-option:hover 
+.dc-option:hover,
+.comment-manage-wrap .dropdown .dropdown-menu .selected,
+.comment-manage-wrap .content .action-bar .dropdown .sort-btn:hover 
 {
-         color: $customStyleColor !important;
+    color: $customStyleColor !important;
 }
 // a
 // {
@@ -271,10 +297,11 @@ ul.navigation li:hover,
 // {
 //     fill: $customStyleColor !important;
 // }
-#page .game .game-box 
+#page .game .game-box,
+.comment-manage-wrap .head .dropdown-menu .article-list 
 {
-        border-top-color: transparent !important;
-        border-bottom-color: transparent !important;
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
 }
 // a
 // {
