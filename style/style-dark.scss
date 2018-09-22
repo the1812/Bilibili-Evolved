@@ -2240,7 +2240,6 @@ a.up-name:hover,
 .block-setting-ctnr .title,
 .block-user-type.active .user-type-hint,
 .awarding-panel .title,
-header,
 .live-status-label,
 .blpui-btn.icon-btn:hover>i,
 .blpui-btn.text-btn.active,
@@ -2560,7 +2559,6 @@ a.bp_box_bot_click,
 .media-tab-module-content .spread-module .num,
 .media-info-card,
 .review-feed-wrapper,
-.pagelistbox .custom-right .custom-right-inner,
 .season-slider-wrapper .slider-wrapper .season-slider-list li:after,
 .project-list .project-list-item,
 .ban-app .case-tip,
@@ -4125,6 +4123,7 @@ a.bp_box_bot_click,
 .mode-fullscreen .bilibili-player-video-sendbar,
 .bilibili-player-video-bottom-area::before,
 .live-sidebar-ctnr,
+.pagelistbox .custom-right .custom-right-inner,
 #app>div>.container
 {
     background-color: transparent !important;
@@ -4170,7 +4169,8 @@ a.bp_box_bot_click,
 .nav-guide-container .guide-tip-btn .guide-tip-btn-right,
 .guide-card .guide-box a,
 .setting .watermark-switcher span,
-.bili-btn.plain
+.bili-btn.plain,
+.pgc-rank-dropdown .selected
 {
     color: #eee !important;
 }
@@ -4204,7 +4204,8 @@ a.bp_box_bot_click,
 .el-picker-panel [slot=sidebar],
 .el-picker-panel__sidebar,
 .bili-switcher,
-.bui-sns-info a .bd
+.bui-sns-info a .bd,
+.pagelistbox .custom-right .custom-right-inner.custompage
 {
     border-color: #444 !important
 }
@@ -4318,7 +4319,9 @@ a.bp_box_bot_click,
 .list-filter-bar .sort-box .item:hover,
 .data-card .tab .data-tab.current:after,
 .audioplayer .ap-playlist .ap-playlist-body .ap-playlist-column-name-value:hover,
-.bili-switcher.checked
+.bili-switcher.checked,
+.pagelistbox .custom-right .custom-right-inner.custompage:focus,
+.sort-item.on i.active
 {
     border-color: $customStyleColor !important;
 }
@@ -4408,7 +4411,8 @@ a.bp_box_bot_click,
 //     border-top-color: transparent !important;
 //     border-right-color: transparent !important;
 // }
-.data-card .tab .data-tab.current:after
+.data-card .tab .data-tab.current:after,
+.sort-item.on i.active
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
@@ -4611,7 +4615,6 @@ ul.navigation li.activated span,
 // {
 //     opacity: 1 !important;
 // }
-.sort-item.on i.active,
 .banner-p h3,
 .banner-p a:hover,
 #page .game .game-box h4 span

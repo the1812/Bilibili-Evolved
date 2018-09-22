@@ -76,6 +76,7 @@
 .mode-fullscreen .bilibili-player-video-sendbar,
 .bilibili-player-video-bottom-area::before,
 .live-sidebar-ctnr,
+.pagelistbox .custom-right .custom-right-inner,
 #app>div>.container
 {
     background-color: transparent !important;
@@ -121,7 +122,8 @@
 .nav-guide-container .guide-tip-btn .guide-tip-btn-right,
 .guide-card .guide-box a,
 .setting .watermark-switcher span,
-.bili-btn.plain
+.bili-btn.plain,
+.pgc-rank-dropdown .selected
 {
     color: #eee !important;
 }
@@ -155,7 +157,8 @@
 .el-picker-panel [slot=sidebar],
 .el-picker-panel__sidebar,
 .bili-switcher,
-.bui-sns-info a .bd
+.bui-sns-info a .bd,
+.pagelistbox .custom-right .custom-right-inner.custompage
 {
     border-color: #444 !important
 }
@@ -269,7 +272,9 @@
 .list-filter-bar .sort-box .item:hover,
 .data-card .tab .data-tab.current:after,
 .audioplayer .ap-playlist .ap-playlist-body .ap-playlist-column-name-value:hover,
-.bili-switcher.checked
+.bili-switcher.checked,
+.pagelistbox .custom-right .custom-right-inner.custompage:focus,
+.sort-item.on i.active
 {
     border-color: $customStyleColor !important;
 }
@@ -359,7 +364,8 @@
 //     border-top-color: transparent !important;
 //     border-right-color: transparent !important;
 // }
-.data-card .tab .data-tab.current:after
+.data-card .tab .data-tab.current:after,
+.sort-item.on i.active
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
