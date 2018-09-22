@@ -69,9 +69,11 @@ ul.navigation li span,
 .banner-p p,
 #page .game .game-box dl a,
 .footer-text p,
-.footer-text .record 
+.footer-text .record,
+.dc-radio-button,
+#dc-section_summary .follow-tool-box .follow-line-legend .legend-item .legend-text 
 {
-     color: #aaa !important;
+    color: #aaa !important;
 }
 
 .rank-item .detail .work-name,
@@ -98,9 +100,10 @@ ul.navigation li.activated span,
 .nav-notice li.hover,
 .game-more,
 .bui-sns-info a,
-.footer-box a 
+.footer-box a,
+.dc-section-item_title_custom .sectionTitle 
 {
-       color: #eee !important;
+    color: #eee !important;
 }
 // a
 // {
@@ -199,9 +202,11 @@ ul.navigation li.activated span,
 .sort-item.on i.active,
 .banner-p h3,
 .banner-p a:hover,
-#page .game .game-box h4 span 
+#page .game .game-box h4 span,
+.dc-radio-button.is-active,
+.dc-radio-button.is-active:after 
 {
-       border-color: $customStyleColor !important;
+    border-color: $customStyleColor !important;
 }
 
 .nav-bar .nav-wrapper .slide-block,
@@ -231,9 +236,10 @@ ul.navigation li:hover,
 #page .game .game-box dl a:hover,
 .banner-p a:hover,
 #page .game .game-box dl dt,
-.footer-box .footer-text a:hover
+.footer-box .footer-text a:hover,
+.dc-radio-button.is-active 
 {
-        color: $customStyleColor !important;
+    color: $customStyleColor !important;
 }
 // a
 // {
