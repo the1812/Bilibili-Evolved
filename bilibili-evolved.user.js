@@ -48,7 +48,7 @@
         viewCover: true,
         notifyNewVersion: true,
         fixFullscreen: false,
-        latestVersionLink: "min/bilibili-evolved.user.js",
+        latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
         currentVersion: "1.4.0"
     };
     function loadSettings()
@@ -494,18 +494,18 @@
                 for (const key of keys)
                 {
                     html = html
-                        .replace(new RegExp(`(<checkbox\\s*indent="min/checkbox>)`, "g"),
+                        .replace(new RegExp(`(<checkbox\\s*indent=".+"\\s*key="${key}"\\s*dependencies=".*">)[^\\0]*?(</checkbox>)`, "g"),
                             `$1${Resource.all[key].displayName}$2`);
                 }
                 return html
                     .replace(/<category>([^\0]*?)<\/category>/g, `
                     <li class="indent-center category">
-                        <span class="min/span>
+                        <span class="settings-category">$1</span>
                     </li>
-                `).replace(/<checkbox\s*indent="min/g, `
+                `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
-                            <input key="min/>
+                            <input key="$2" type="checkbox" dependencies="$3" checked/>
                             <svg class="gui-settings-ok" viewBox="0 0 24 24">
                                 <path />
                             </svg>
