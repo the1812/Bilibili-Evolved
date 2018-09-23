@@ -137,7 +137,8 @@
             this.useDarkStyle.dependencies = [
                 this.darkStyle,
                 this.darkStyleImportant,
-                this.darkStyleNavBar
+                this.darkStyleNavBar,
+                this.scrollbarStyle
             ];
             this.useNewStyle.dependencies = [
                 this.style,

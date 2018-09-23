@@ -2,6 +2,11 @@
 {
     return (settings, resources) =>
     {
+        resources.applyStyle("scrollbarStyle", "bilibili-scrollbar-style");
+        SpinQuery.any(
+            () => $(".custom-scrollbar"),
+            it => it.removeClass("custom-scrollbar")
+        );
         if (settings.overrideNavBar && !settings.showBanner)
         {
             resources.applyImportantStyle("darkStyleNavBar", "bilibili-new-style-dark-nav-bar");
