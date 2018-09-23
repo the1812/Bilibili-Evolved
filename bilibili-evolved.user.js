@@ -112,7 +112,7 @@
             guiSettings: new Resource("utils/gui-settings.min.js"),
             useDarkStyle: new Resource("style/dark-styles.min.js"),
             useNewStyle: new Resource("style/new-styles.min.js"),
-            overrideNavBar: new Resource("style/override-nav-bar.min.js"),
+            overrideNavBar: new Resource("style/override-navbar.min.js"),
             touchNavBar: new Resource("touch/touch-navbar.min.js"),
             touchVideoPlayer: new Resource("touch/touch-player.min.js"),
             expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
