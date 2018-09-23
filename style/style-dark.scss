@@ -170,7 +170,6 @@ div.con,
 .gift-item.buy.hover,
 .gift-presets .gift-panel-switch,
 .chat-history-panel .chat-history-list .chat-item.system-msg,
-.chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon,
 .bilibili-live-player-loading-panel,
 .guard-rank-cntr .rank-cntr .btn-box .buy:hover,
 .rank.rank-4,
@@ -2805,7 +2804,6 @@ a.bp_box_bot_click,
 .player-auxiliary-block-list .player-auxiliary-block-line-sync,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching .bilibili-player-watching-number,
 .recom-item a .recom-info .info-title,
-.s-imgUnit .s-imgUnit-text a,
 .modal-head a,
 .first-change-lb span,
 .descript,
@@ -4071,7 +4069,9 @@ a.bp_box_bot_click,
 .grid .banner,
 .bui-sns-info a .bd,
 .search-module .search-block .search-word-panel,
-.search-module .search-block .search-word-panel .panel-title p span
+.search-module .search-block .search-word-panel .panel-title p span,
+div#square.container,
+#rankList .list-wrap .list .switch-day .switch-list:hover
 {
     background-color: #222 !important;
 }
@@ -4103,7 +4103,13 @@ a.bp_box_bot_click,
 .rank-module .rank-list .item .rank-index,
 .page-content .right-side .rank-module .complete-rank,
 .page-content .right-side .up-list .fresh-btn,
-body>div.to-top.on
+body>div.to-top.on,
+.s-lineMore-more,
+.slide-controller .slide-btn,
+.s-rank.gray,
+#rankList .list-wrap .list .switch-day,
+.index-nav .n-i.gotop .btn_gotop,
+.list-wrap .s-showMore
 {
     background-color: #444 !important;
 }
@@ -4137,7 +4143,10 @@ body>div.to-top.on
 .article-list-holder .article-item,
 .search-module .search-block input,
 .rank-module .rank-list .item,
-.page-content .right-side .up-list
+.chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon,
+.page-content .right-side .up-list,
+#rankList .list-wrap .list .switch-day .switch-list,
+.index-nav .n-i .name:hover
 {
     background-color: transparent !important;
 }
@@ -4176,7 +4185,8 @@ body>div.to-top.on
 .rank-module .rank-tabs-bar .rank-tabs-list li,
 .up-list .up-item .info-holder .dynamic,
 .more .help .info,
-.more .link .info
+.more .link .info,
+.s-imgUnit-text p
 {
     color: #aaa !important;
 }
@@ -4208,7 +4218,16 @@ body>div.to-top.on
 .more .top-bar,
 .more .help .title,
 .more .link .title,
-.page-content .left-side .partitio-name
+.page-content .left-side .partitio-name,
+.s-lineMore-more,
+#mangoTv .mango-rank .text-list a,
+.s-imgUnit-text a,
+.s-rank.gray,
+#rankList .list-wrap .text-list a:hover,
+#rankList .list-wrap .list .bar .text,
+#rankList .list-wrap .list .switch-day,
+.list-wrap .s-showMore,
+.footer .boston-postcards li .tips
 {
     color: #eee !important;
 }
@@ -4231,7 +4250,12 @@ body>div.to-top.on
 .up-list .title,
 .up-list .fresh-btn,
 .more .top-bar,
-body>div.to-top.on
+body>div.to-top.on,
+.s-lineMore-more,
+#rankList .list-wrap .list,
+#rankList .list-wrap .list .switch-day,
+.index-nav .n-i.gotop .btn_gotop,
+.list-wrap .s-showMore
 {
     border-color: transparent !important;
 }
@@ -4271,7 +4295,11 @@ body>div.to-top.on
     fill: #aaa !important;
 }
 .security-list .first-level .m-arrow,
-.page-content .right-side .up-list .fresh-btn:before
+.page-content .right-side .up-list .fresh-btn:before,
+.s-lineMore-more .icon-right,
+.slide-controller .slide-btn .icon,
+#rankList .list-wrap .list .switch-day .icon-bottom,
+.list-wrap .s-showMore .icon-right
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -4390,7 +4418,11 @@ body>div.to-top.on
 .pagelistbox .custom-right .custom-right-inner.custompage:focus,
 .sort-item.on i.active,
 .rank-module .rank-tabs-bar .rank-tabs-list li.on,
-.up-list .up-item .info-holder .head .follow
+.up-list .up-item .info-holder .head .follow,
+#rankList .list-wrap .list .switch.active,
+#rankList .list-wrap .list .switch:hover,
+#rankList .list-wrap .list .switch.active.active:after,
+#rankList .list-wrap .list .switch:hover.active:after
 {
     border-color: $customStyleColor !important;
 }
@@ -4410,7 +4442,10 @@ body>div.to-top.on
 .audioplayer .ap-controller .ap-controller-right .ap-volume-bar,
 .bili-switcher.checked,
 .rank-list .canvas-card:nth-child(-n+3)::after,
-.rank-list .item:nth-child(-n+3) .rank-index
+.rank-list .item:nth-child(-n+3) .rank-index,
+.s-lineMore-more:hover,
+.s-rank.pink,
+.index-nav .n-i.gotop .btn_gotop:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -4453,7 +4488,14 @@ body>div.to-top.on
 .up-list .up-item .info-holder .head .follow,
 .up-list .up-item .info-holder .head .nick-name:hover,
 .more .help .title:hover,
-.more .link .title:hover
+.more .link .title:hover,
+.s-imgUnit-text a:hover,
+#mangoTv .mango-rank .text-list a:hover,
+#rankList .list-wrap .list .bar .text:hover,
+#rankList .list-wrap .list .switch.active,
+#rankList .list-wrap .list .switch:hover,
+#rankList .list-wrap .text-list a:hover,
+.list-wrap .s-showMore:hover
 {
     color: $customStyleColor !important;
 }
@@ -4463,7 +4505,10 @@ body>div.to-top.on
 .el-date-table td.in-range.start-date,
 .el-date-table td.in-range.end-date,
 .nav-guide-container .guide-tip-btn .guide-tip-btn-left,
-.rank-list .item:nth-child(-n+3) .rank-index
+.rank-list .item:nth-child(-n+3) .rank-index,
+.s-lineMore-more:hover,
+.s-rank.pink,
+.index-nav .n-i .name:hover
 {
     color: $foreground !important;
 }
@@ -4491,7 +4536,9 @@ body>div.to-top.on
 //     border-right-color: transparent !important;
 // }
 .data-card .tab .data-tab.current:after,
-.sort-item.on i.active
+.sort-item.on i.active,
+#rankList .list-wrap .list .switch.active.active:after,
+#rankList .list-wrap .list .switch:hover.active:after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
@@ -4506,7 +4553,7 @@ body>div.to-top.on
 .comment-manage-wrap .search input,
 .comment-manage-wrap .head .search .bili-input
 {
-    background-color: #222 !important;
+background-color: #222 !important;
 }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
@@ -4529,7 +4576,10 @@ body>div.to-top.on
 .comment-manage-wrap .dropdown.open .dropdown-btn,
 .comment-manage-wrap .head .dropdown-btn .text,
 .recent-danmu-wrp .danmu-filter .left .delete .option-wrp .act-btn,
-.recent-danmu-wrp .head .dropdown-btn
+.recent-danmu-wrp .head .dropdown-btn,
+.rank-item .content,
+.rank-tab-wrap,
+.rank-list-head .rank_tips
 {
     background-color: #444 !important;
 }
@@ -4553,16 +4603,16 @@ body>div.to-top.on
 .nav-notice li,
 .nav-notice li.hover
 {
-        background-color: transparent !important;
+    background-color: transparent !important;
 }
 // a
 // {
 //     background: #fff1 !important;
 // }
 .recent-danmu-wrp .danmu-filter .left .line
- {
+{
 background: transparent !important;
- }
+}
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd h4 .user-container span,
 .canvas-card dd h4 .user-container a,
@@ -4573,7 +4623,6 @@ ul.navigation li span,
 .filter-block .filter-item-wrapper,
 .bangumi-index-crumb ul li a,
 .bangumi-item .pub-info,
-.icon-font,
 .link-footer .footer-img-linker .footer-img-text,
 .cinema-home-crumb ul li a,
 .video-item-biref .biref-info .biref-title-sec,
@@ -4602,7 +4651,15 @@ ul.navigation li span,
 .recent-danmu-wrp .tips,
 .danmu-wrp .section .title-tip .sub,
 .danmu-wrp .section .title-tip,
-.danmu-wrp .black-tip
+.danmu-wrp .black-tip,
+.rank-menu li,
+.rank-item .content .info .pts,
+.rank-item .content .info .detail a,
+.rank-item .content .info .detail,
+.rank-tab-wrap,
+.rank-list-head .rank_tips,
+.more-data,
+.other span
 {
     color: #aaa !important;
 }
@@ -4625,7 +4682,6 @@ ul.navigation li.activated span,
 .bangumi-item .cover-wrapper .shadow,
 .bangumi-item .cover-wrapper .corner-tag,
 .block-area .block-left .block-header .block-title,
-#mangoTv .mango-rank .text-list a,
 #page .game .game-box h4,
 .nav-notice li a,
 .nav-notice li.hover,
@@ -4642,7 +4698,13 @@ ul.navigation li.activated span,
 .comment-manage-wrap .head .search .bili-input,
 .recent-danmu-wrp .dropdown .dropdown-btn,
 .danmu-wrp .section .title,
-.danmu-wrp .input-group
+.danmu-wrp .input-group,
+.btn-sponsor-wrapper a.sponsor-btn,
+.main-container .sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.rank-item .num,
+.rank-item .content .info .pts div,
+.other a,
+.other strong
 {
     color: #eee !important;
 }
@@ -4674,13 +4736,17 @@ ul.navigation li.activated span,
 .recent-danmu-wrp .danmu-filter .left .protect,
 .recent-danmu-wrp .danmu-filter .left .refresh,
 .recent-danmu-wrp .danmu-filter .left .delete,
-.recent-danmu-wrp .dropdown .dropdown-btn
+.recent-danmu-wrp .dropdown .dropdown-btn,
+.bilibili-player .bilibili-player-area-separator,
+div.num,
+.rank-item,
+.other
 {
     border-color: transparent !important;
 }
 .banner-p a
 {
-        border-color: #aaa !important;
+    border-color: #aaa !important;
 }
 // a
 // {
@@ -4703,18 +4769,19 @@ ul.navigation li.activated span,
 //     fill: #aaa !important;
 // }
 .mainmenu ul.grid li a.yxzx,
-.footer-logo
+.footer-logo,
+.more-data i
 {
-        filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
 }
 // a
 // {
 //     filter: $blueImageFilter !important;
 // }
-// a
-// {
-//     filter: $pinkImageFilter !important;
-// }
+.episode-item .mark-icon
+{
+filter: $pinkImageFilter !important;
+}
 // a
 // {
 //     filter: grayscale(1) !important;
@@ -4743,7 +4810,7 @@ ul.navigation li.activated span,
 .icon-new,
 .icon-home
 {
-        display: none !important;
+    display: none !important;
 }
 // a
 // {
@@ -4762,16 +4829,20 @@ ul.navigation li.activated span,
 .banner-p a:hover,
 #page .game .game-box h4 span,
 .dc-radio-button.is-active,
-.dc-radio-button.is-active:after
+.dc-radio-button.is-active:after,
+.rank-menu li.active
 {
-       border-color: $customStyleColor !important;
+    border-color: $customStyleColor !important;
 }
 
 .nav-bar .nav-wrapper .slide-block,
 ul.navigation li:after,
 .link-panigation .panigation.selected,
 .bangumi-item .cover-wrapper .corner-tag.badge_0,
-.comment-manage-wrap .content .check-box.checked
+.comment-manage-wrap .content .check-box.checked,
+.btn-sponsor-wrapper a.sponsor-btn,
+.main-container .sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu-wrap .bilibili-player-setting-menu-list .active-point
 {
     background-color: $customStyleColor !important;
 }
@@ -4799,7 +4870,9 @@ ul.navigation li:hover,
 .dc-radio-button.is-active,
 .dc-option:hover,
 .comment-manage-wrap .dropdown .dropdown-menu .selected,
-.comment-manage-wrap .content .action-bar .dropdown .sort-btn:hover
+.comment-manage-wrap .content .action-bar .dropdown .sort-btn:hover,
+.rank-menu li.active,
+.rank-tab-wrap .rank-tab .active
 {
     color: $customStyleColor !important;
 }
@@ -4814,8 +4887,8 @@ ul.navigation li:hover,
 #page .game .game-box,
 .comment-manage-wrap .head .dropdown-menu .article-list
 {
-    border-top-color: transparent !important;
-    border-bottom-color: transparent !important;
+border-top-color: transparent !important;
+border-bottom-color: transparent !important;
 }
 // a
 // {
@@ -4827,6 +4900,6 @@ ul.navigation li:hover,
 .game-box-all,
 .footer-logo
 {
-       border-left-color: transparent !important;
-       border-right-color: transparent !important;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
 }

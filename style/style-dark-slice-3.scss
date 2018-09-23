@@ -24,7 +24,9 @@
 .grid .banner,
 .bui-sns-info a .bd,
 .search-module .search-block .search-word-panel,
-.search-module .search-block .search-word-panel .panel-title p span
+.search-module .search-block .search-word-panel .panel-title p span,
+div#square.container,
+#rankList .list-wrap .list .switch-day .switch-list:hover
 {
     background-color: #222 !important;
 }
@@ -56,7 +58,13 @@
 .rank-module .rank-list .item .rank-index,
 .page-content .right-side .rank-module .complete-rank,
 .page-content .right-side .up-list .fresh-btn,
-body>div.to-top.on
+body>div.to-top.on,
+.s-lineMore-more,
+.slide-controller .slide-btn,
+.s-rank.gray,
+#rankList .list-wrap .list .switch-day,
+.index-nav .n-i.gotop .btn_gotop,
+.list-wrap .s-showMore
 {
     background-color: #444 !important;
 }
@@ -91,7 +99,9 @@ body>div.to-top.on
 .search-module .search-block input,
 .rank-module .rank-list .item,
 .chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon,
-.page-content .right-side .up-list
+.page-content .right-side .up-list,
+#rankList .list-wrap .list .switch-day .switch-list,
+.index-nav .n-i .name:hover
 {
     background-color: transparent !important;
 }
@@ -130,7 +140,8 @@ body>div.to-top.on
 .rank-module .rank-tabs-bar .rank-tabs-list li,
 .up-list .up-item .info-holder .dynamic,
 .more .help .info,
-.more .link .info
+.more .link .info,
+.s-imgUnit-text p
 {
     color: #aaa !important;
 }
@@ -162,7 +173,16 @@ body>div.to-top.on
 .more .top-bar,
 .more .help .title,
 .more .link .title,
-.page-content .left-side .partitio-name
+.page-content .left-side .partitio-name,
+.s-lineMore-more,
+#mangoTv .mango-rank .text-list a,
+.s-imgUnit-text a,
+.s-rank.gray,
+#rankList .list-wrap .text-list a:hover,
+#rankList .list-wrap .list .bar .text,
+#rankList .list-wrap .list .switch-day,
+.list-wrap .s-showMore,
+.footer .boston-postcards li .tips
 {
     color: #eee !important;
 }
@@ -185,7 +205,12 @@ body>div.to-top.on
 .up-list .title,
 .up-list .fresh-btn,
 .more .top-bar,
-body>div.to-top.on
+body>div.to-top.on,
+.s-lineMore-more,
+#rankList .list-wrap .list,
+#rankList .list-wrap .list .switch-day,
+.index-nav .n-i.gotop .btn_gotop,
+.list-wrap .s-showMore
 {
     border-color: transparent !important;
 }
@@ -225,7 +250,11 @@ body>div.to-top.on
     fill: #aaa !important;
 }
 .security-list .first-level .m-arrow,
-.page-content .right-side .up-list .fresh-btn:before
+.page-content .right-side .up-list .fresh-btn:before,
+.s-lineMore-more .icon-right,
+.slide-controller .slide-btn .icon,
+#rankList .list-wrap .list .switch-day .icon-bottom,
+.list-wrap .s-showMore .icon-right
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -344,7 +373,11 @@ body>div.to-top.on
 .pagelistbox .custom-right .custom-right-inner.custompage:focus,
 .sort-item.on i.active,
 .rank-module .rank-tabs-bar .rank-tabs-list li.on,
-.up-list .up-item .info-holder .head .follow
+.up-list .up-item .info-holder .head .follow,
+#rankList .list-wrap .list .switch.active,
+#rankList .list-wrap .list .switch:hover,
+#rankList .list-wrap .list .switch.active.active:after,
+#rankList .list-wrap .list .switch:hover.active:after
 {
     border-color: $customStyleColor !important;
 }
@@ -364,7 +397,10 @@ body>div.to-top.on
 .audioplayer .ap-controller .ap-controller-right .ap-volume-bar,
 .bili-switcher.checked,
 .rank-list .canvas-card:nth-child(-n+3)::after,
-.rank-list .item:nth-child(-n+3) .rank-index
+.rank-list .item:nth-child(-n+3) .rank-index,
+.s-lineMore-more:hover,
+.s-rank.pink,
+.index-nav .n-i.gotop .btn_gotop:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -407,7 +443,14 @@ body>div.to-top.on
 .up-list .up-item .info-holder .head .follow,
 .up-list .up-item .info-holder .head .nick-name:hover,
 .more .help .title:hover,
-.more .link .title:hover
+.more .link .title:hover,
+.s-imgUnit-text a:hover,
+#mangoTv .mango-rank .text-list a:hover,
+#rankList .list-wrap .list .bar .text:hover,
+#rankList .list-wrap .list .switch.active,
+#rankList .list-wrap .list .switch:hover,
+#rankList .list-wrap .text-list a:hover,
+.list-wrap .s-showMore:hover
 {
     color: $customStyleColor !important;
 }
@@ -417,7 +460,10 @@ body>div.to-top.on
 .el-date-table td.in-range.start-date,
 .el-date-table td.in-range.end-date,
 .nav-guide-container .guide-tip-btn .guide-tip-btn-left,
-.rank-list .item:nth-child(-n+3) .rank-index
+.rank-list .item:nth-child(-n+3) .rank-index,
+.s-lineMore-more:hover,
+.s-rank.pink,
+.index-nav .n-i .name:hover
 {
     color: $foreground !important;
 }
@@ -445,7 +491,9 @@ body>div.to-top.on
 //     border-right-color: transparent !important;
 // }
 .data-card .tab .data-tab.current:after,
-.sort-item.on i.active
+.sort-item.on i.active,
+#rankList .list-wrap .list .switch.active.active:after,
+#rankList .list-wrap .list .switch:hover.active:after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
