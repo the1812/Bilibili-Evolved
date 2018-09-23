@@ -48,7 +48,7 @@
         viewCover: true,
         notifyNewVersion: true,
         fixFullscreen: false,
-        latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
+        latestVersionLink: "min/bilibili-evolved.preview.user.js",
         currentVersion: "1.4.0"
     };
     function loadSettings()
@@ -89,44 +89,44 @@
     {
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {
-            style: new Resource("style/style.min.scss", 1),
-            oldStyle: new Resource("style/old.min.scss", 1),
-            scrollbarStyle: new Resource("style/scrollbar.min.css", 1),
-            darkStyle: new Resource("style/dark/dark.min.scss", 2),
-            darkStyleImportant: new Resource("style/dark/dark-important.min.scss"),
-            darkStyleNavBar: new Resource("style/dark/dark-navbar.min.scss"),
-            touchPlayerStyle: new Resource("style/touch-player.min.scss", 3),
-            navbarOverrideStyle: new Resource("style/navbar-override.min.css", 4),
-            noBannerStyle: new Resource("style/no-banner.min.css", 5),
-            removeAdsStyle: new Resource("style/remove-promotions.min.css", 6),
-            guiSettingsStyle: new Resource("style/gui-settings.min.scss", 0),
-            fullTweetsTitleStyle: new Resource("style/full-tweets-title.min.css", 7),
-            imageViewerStyle: new Resource("style/image-viewer.min.scss", 8),
-            toastStyle: new Resource("style/toast.min.scss", 9),
-            blurVideoControlStyle: new Resource("style/blur-video-control.min.css", 10),
+            style: new Resource("min/style.min.scss", 1),
+            oldStyle: new Resource("min/old.min.scss", 1),
+            scrollbarStyle: new Resource("min/scrollbar.min.css", 1),
+            darkStyle: new Resource("min/dark.min.scss", 2),
+            darkStyleImportant: new Resource("min/dark-important.min.scss"),
+            darkStyleNavBar: new Resource("min/dark-navbar.min.scss"),
+            touchPlayerStyle: new Resource("min/touch-player.min.scss", 3),
+            navbarOverrideStyle: new Resource("min/navbar-override.min.css", 4),
+            noBannerStyle: new Resource("min/no-banner.min.css", 5),
+            removeAdsStyle: new Resource("min/remove-promotions.min.css", 6),
+            guiSettingsStyle: new Resource("min/gui-settings.min.scss", 0),
+            fullTweetsTitleStyle: new Resource("min/full-tweets-title.min.css", 7),
+            imageViewerStyle: new Resource("min/image-viewer.min.scss", 8),
+            toastStyle: new Resource("min/toast.min.scss", 9),
+            blurVideoControlStyle: new Resource("min/blur-video-control.min.css", 10),
 
             guiSettingsDom: new Resource("utils/gui-settings.html"),
             imageViewerDom: new Resource("utils/image-viewer.html"),
             latestVersion: new Resource("version.txt"),
 
-            guiSettings: new Resource("utils/gui-settings.min.js"),
-            useDarkStyle: new Resource("style/dark/dark-styles.min.js"),
-            useNewStyle: new Resource("style/new-styles.min.js"),
-            overrideNavBar: new Resource("style/override-navbar.min.js"),
-            touchNavBar: new Resource("touch/touch-navbar.min.js"),
-            touchVideoPlayer: new Resource("touch/touch-player.min.js"),
-            expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
-            removeAds: new Resource("utils/remove-promotions.min.js"),
-            watchLaterRedirect: new Resource("utils/watchlater.min.js"),
-            hideTopSearch: new Resource("utils/hide-top-search.min.js"),
-            harunaScale: new Resource("video/haruna-scale.min.js"),
-            removeLiveWatermark: new Resource("video/remove-watermark.min.js"),
-            fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
-            viewCover: new Resource("video/view-cover.min.js"),
-            notifyNewVersion: new Resource("utils/notify-new-version.min.js"),
-            toast: new Resource("utils/toast.min.js"),
-            removeVideoTopMask: new Resource("video/remove-top-mask.min.js"),
-            blurVideoControl: new Resource("video/blur-video-control.min.js")
+            guiSettings: new Resource("min/gui-settings.min.js"),
+            useDarkStyle: new Resource("min/dark-styles.min.js"),
+            useNewStyle: new Resource("min/new-styles.min.js"),
+            overrideNavBar: new Resource("min/override-navbar.min.js"),
+            touchNavBar: new Resource("min/touch-navbar.min.js"),
+            touchVideoPlayer: new Resource("min/touch-player.min.js"),
+            expandDanmakuList: new Resource("min/expand-danmaku.min.js"),
+            removeAds: new Resource("min/remove-promotions.min.js"),
+            watchLaterRedirect: new Resource("min/watchlater.min.js"),
+            hideTopSearch: new Resource("min/hide-top-search.min.js"),
+            harunaScale: new Resource("min/haruna-scale.min.js"),
+            removeLiveWatermark: new Resource("min/remove-watermark.min.js"),
+            fullTweetsTitle: new Resource("min/full-tweets-title.min.js"),
+            viewCover: new Resource("min/view-cover.min.js"),
+            notifyNewVersion: new Resource("min/notify-new-version.min.js"),
+            toast: new Resource("min/toast.min.js"),
+            removeVideoTopMask: new Resource("min/remove-top-mask.min.js"),
+            blurVideoControl: new Resource("min/blur-video-control.min.js")
         };
         (function ()
         {
@@ -494,18 +494,18 @@
                 for (const key of keys)
                 {
                     html = html
-                        .replace(new RegExp(`(<checkbox\\s*indent=".+"\\s*key="${key}"\\s*dependencies=".*">)[^\\0]*?(</checkbox>)`, "g"),
+                        .replace(new RegExp(`(<checkbox\\s*indent="min/checkbox>)`, "g"),
                             `$1${Resource.all[key].displayName}$2`);
                 }
                 return html
                     .replace(/<category>([^\0]*?)<\/category>/g, `
                     <li class="indent-center category">
-                        <span class="settings-category">$1</span>
+                        <span class="min/span>
                     </li>
-                `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
+                `).replace(/<checkbox\s*indent="min/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
-                            <input key="$2" type="checkbox" dependencies="$3" checked/>
+                            <input key="min/>
                             <svg class="gui-settings-ok" viewBox="0 0 24 24">
                                 <path />
                             </svg>
