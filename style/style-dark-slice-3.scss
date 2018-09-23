@@ -143,7 +143,8 @@ body>div.to-top.on,
 .up-list .up-item .info-holder .dynamic,
 .more .help .info,
 .more .link .info,
-.s-imgUnit-text p
+.s-imgUnit-text p,
+.box .content .item
 {
     color: #aaa !important;
 }
@@ -185,7 +186,8 @@ body>div.to-top.on,
 #rankList .list-wrap .list .switch-day,
 .list-wrap .s-showMore,
 .footer .boston-postcards li .tips,
-.guide .old-btn a
+.guide .old-btn a,
+.gift-box>.num
 {
     color: #eee !important;
 }
@@ -411,7 +413,8 @@ body>div.to-top.on
 .s-lineMore-more:hover,
 .s-rank.pink,
 .index-nav .n-i.gotop .btn_gotop:hover,
-.guide .feedback-btn a
+.guide .feedback-btn a,
+.gift>.expires
 {
     background-color: $customStyleColor !important;
 }
@@ -462,7 +465,9 @@ body>div.to-top.on
 #rankList .list-wrap .list .switch:hover,
 #rankList .list-wrap .text-list a:hover,
 .list-wrap .s-showMore:hover,
-#activeCenter .s-imgUnit-img .overlay .des
+#activeCenter .s-imgUnit-img .overlay .des,
+.common-popup-wrap header,
+.gift-box:hover>.num
 {
     color: $customStyleColor !important;
 }
@@ -476,7 +481,8 @@ body>div.to-top.on
 .s-lineMore-more:hover,
 .s-rank.pink,
 .index-nav .n-i .name:hover,
-.guide .feedback-btn a
+.guide .feedback-btn a,
+.gift>.expires
 {
     color: $foreground !important;
 }
