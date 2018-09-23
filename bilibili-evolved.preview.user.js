@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.4.0
+// @version      1.4.1
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -23,9 +23,9 @@
     const settings = {
         blurSettingsPanel: false,
         blurVideoControl: false,
-        toast: false,
-        fullTweetsTitle: false,
-        removeVideoTopMask: true,
+        toast: true,
+        fullTweetsTitle: true,
+        removeVideoTopMask: false,
         removeLiveWatermark: true,
         harunaScale: true,
         removeAds: true,
@@ -49,7 +49,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.4.0"
+        currentVersion: "1.4.1"
     };
     function loadSettings()
     {
