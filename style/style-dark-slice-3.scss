@@ -26,7 +26,9 @@
 .search-module .search-block .search-word-panel,
 .search-module .search-block .search-word-panel .panel-title p span,
 div#square.container,
-#rankList .list-wrap .list .switch-day .switch-list:hover
+#rankList .list-wrap .list .switch-day .switch-list:hover,
+.bili-header-m .head-banner,
+.link-navbar-ctnr
 {
     background-color: #222 !important;
 }
@@ -321,7 +323,8 @@ body>div.to-top.on
 .media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
 .canvas-card dd .icon-contain .support,
 .bui-sns-info a .bd,
-.guide .old-btn a
+.guide .old-btn a,
+.link-navbar-ctnr
 {
     box-shadow: none !important;
 }

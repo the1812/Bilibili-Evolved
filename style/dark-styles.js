@@ -7,7 +7,10 @@
             () => $(".custom-scrollbar"),
             it => it.removeClass("custom-scrollbar")
         );
-        if (settings.overrideNavBar && !settings.showBanner)
+        if ($("#banner_link").length === 0 ||
+            $("#banner_link").length > 0 &&
+            settings.overrideNavBar &&
+            !settings.showBanner)
         {
             resources.applyImportantStyle("darkStyleNavBar", "bilibili-new-style-dark-nav-bar");
         }
