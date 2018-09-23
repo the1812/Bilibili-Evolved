@@ -8,7 +8,7 @@
 .comment-manage-wrap .search input,
 .comment-manage-wrap .head .search .bili-input
 {
-    background-color: #222 !important;
+background-color: #222 !important;
 }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
@@ -31,7 +31,10 @@
 .comment-manage-wrap .dropdown.open .dropdown-btn,
 .comment-manage-wrap .head .dropdown-btn .text,
 .recent-danmu-wrp .danmu-filter .left .delete .option-wrp .act-btn,
-.recent-danmu-wrp .head .dropdown-btn
+.recent-danmu-wrp .head .dropdown-btn,
+.rank-item .content,
+.rank-tab-wrap,
+.rank-list-head .rank_tips 
 {
     background-color: #444 !important;
 }
@@ -55,16 +58,16 @@
 .nav-notice li,
 .nav-notice li.hover
 {
-        background-color: transparent !important;
+    background-color: transparent !important;
 }
 // a
 // {
 //     background: #fff1 !important;
 // }
 .recent-danmu-wrp .danmu-filter .left .line
- {
+{
 background: transparent !important;
- }
+}
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd h4 .user-container span,
 .canvas-card dd h4 .user-container a,
@@ -103,7 +106,15 @@ ul.navigation li span,
 .recent-danmu-wrp .tips,
 .danmu-wrp .section .title-tip .sub,
 .danmu-wrp .section .title-tip,
-.danmu-wrp .black-tip
+.danmu-wrp .black-tip,
+.rank-menu li,
+.rank-item .content .info .pts,
+.rank-item .content .info .detail a,
+.rank-item .content .info .detail,
+.rank-tab-wrap,
+.rank-list-head .rank_tips,
+.more-data,
+.other span 
 {
     color: #aaa !important;
 }
@@ -143,7 +154,13 @@ ul.navigation li.activated span,
 .comment-manage-wrap .head .search .bili-input,
 .recent-danmu-wrp .dropdown .dropdown-btn,
 .danmu-wrp .section .title,
-.danmu-wrp .input-group
+.danmu-wrp .input-group,
+.btn-sponsor-wrapper a.sponsor-btn,
+.main-container .sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.rank-item .num,
+.rank-item .content .info .pts div,
+.other a,
+.other strong 
 {
     color: #eee !important;
 }
@@ -175,13 +192,17 @@ ul.navigation li.activated span,
 .recent-danmu-wrp .danmu-filter .left .protect,
 .recent-danmu-wrp .danmu-filter .left .refresh,
 .recent-danmu-wrp .danmu-filter .left .delete,
-.recent-danmu-wrp .dropdown .dropdown-btn
+.recent-danmu-wrp .dropdown .dropdown-btn,
+.bilibili-player .bilibili-player-area-separator,
+div.num,
+.rank-item,
+.other 
 {
     border-color: transparent !important;
 }
 .banner-p a
 {
-        border-color: #aaa !important;
+    border-color: #aaa !important;
 }
 // a
 // {
@@ -204,18 +225,19 @@ ul.navigation li.activated span,
 //     fill: #aaa !important;
 // }
 .mainmenu ul.grid li a.yxzx,
-.footer-logo
+.footer-logo,
+.more-data i 
 {
-        filter: brightness(0) invert(1) !important;
+    filter: brightness(0) invert(1) !important;
 }
 // a
 // {
 //     filter: $blueImageFilter !important;
 // }
-// a
-// {
-//     filter: $pinkImageFilter !important;
-// }
+.episode-item .mark-icon
+{
+filter: $pinkImageFilter !important;
+}
 // a
 // {
 //     filter: grayscale(1) !important;
@@ -244,7 +266,7 @@ ul.navigation li.activated span,
 .icon-new,
 .icon-home
 {
-        display: none !important;
+    display: none !important;
 }
 // a
 // {
@@ -263,16 +285,20 @@ ul.navigation li.activated span,
 .banner-p a:hover,
 #page .game .game-box h4 span,
 .dc-radio-button.is-active,
-.dc-radio-button.is-active:after
+.dc-radio-button.is-active:after,
+.rank-menu li.active 
 {
-       border-color: $customStyleColor !important;
+    border-color: $customStyleColor !important;
 }
 
 .nav-bar .nav-wrapper .slide-block,
 ul.navigation li:after,
 .link-panigation .panigation.selected,
 .bangumi-item .cover-wrapper .corner-tag.badge_0,
-.comment-manage-wrap .content .check-box.checked
+.comment-manage-wrap .content .check-box.checked,
+.btn-sponsor-wrapper a.sponsor-btn,
+.main-container .sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu-wrap .bilibili-player-setting-menu-list .active-point 
 {
     background-color: $customStyleColor !important;
 }
@@ -300,7 +326,9 @@ ul.navigation li:hover,
 .dc-radio-button.is-active,
 .dc-option:hover,
 .comment-manage-wrap .dropdown .dropdown-menu .selected,
-.comment-manage-wrap .content .action-bar .dropdown .sort-btn:hover
+.comment-manage-wrap .content .action-bar .dropdown .sort-btn:hover,
+.rank-menu li.active,
+.rank-tab-wrap .rank-tab .active 
 {
     color: $customStyleColor !important;
 }
@@ -315,8 +343,8 @@ ul.navigation li:hover,
 #page .game .game-box,
 .comment-manage-wrap .head .dropdown-menu .article-list
 {
-    border-top-color: transparent !important;
-    border-bottom-color: transparent !important;
+border-top-color: transparent !important;
+border-bottom-color: transparent !important;
 }
 // a
 // {
@@ -328,6 +356,6 @@ ul.navigation li:hover,
 .game-box-all,
 .footer-logo
 {
-       border-left-color: transparent !important;
-       border-right-color: transparent !important;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
 }
