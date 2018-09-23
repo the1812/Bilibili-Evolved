@@ -57,17 +57,19 @@
 
 # 功能概览
 为保证最佳体验,设备分辨率建议在1080P及以上,并且已登录哔哩哔哩账户.
-## 新样式
-改变顶栏的样式,并有一些界面微调.
-### 效果
-![主站](images/new-navbar.png)
-![播放](images/new-navbar-stardust.png)
+## 样式
 ### 自定义颜色
+设定顶栏(新样式启用时)和夜间模式使用的主题色.
 ![粉色](images/new-navbar-stardust.png)
 ![紫色](images/new-navbar-purple.png)
 ![蓝色](images/new-navbar-lightBlue.png)
 ![绿色](images/new-navbar-teal.png)
 ![暗蓝色](images/new-navbar-blueGrey.png)
+### 新样式
+改变顶栏的样式,并有一些界面微调.
+#### 效果
+![主站](images/new-navbar.png)
+![播放](images/new-navbar-stardust.png)
 ### 夜间模式(实验性)
 夜间模式更适合光线暗的环境,并会大量应用自定义颜色.
 
@@ -82,11 +84,11 @@
 ![不调整](images/original-navbar.png)
 #### 启用后
 ![调整](images/override-navbar.png)
-### 移除横幅
+#### 移除横幅
 在搜索框位置调整启用的时候,还可以使用此功能移除顶部横幅.
-#### 启用前
+##### 启用前
 ![不移除](images/override-navbar.png)
-#### 启用后
+##### 启用后
 ![移除](images/no-banner.png)
 
 ## 工具
