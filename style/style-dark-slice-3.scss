@@ -64,7 +64,8 @@ body>div.to-top.on,
 .s-rank.gray,
 #rankList .list-wrap .list .switch-day,
 .index-nav .n-i.gotop .btn_gotop,
-.list-wrap .s-showMore
+.list-wrap .s-showMore,
+#activeCenter .s-imgUnit .s-imgUnit-img
 {
     background-color: #444 !important;
 }
@@ -178,7 +179,7 @@ body>div.to-top.on,
 #mangoTv .mango-rank .text-list a,
 .s-imgUnit-text a,
 .s-rank.gray,
-#rankList .list-wrap .text-list a:hover,
+#rankList .list-wrap .text-list a,
 #rankList .list-wrap .list .bar .text,
 #rankList .list-wrap .list .switch-day,
 .list-wrap .s-showMore,
@@ -450,7 +451,8 @@ body>div.to-top.on
 #rankList .list-wrap .list .switch.active,
 #rankList .list-wrap .list .switch:hover,
 #rankList .list-wrap .text-list a:hover,
-.list-wrap .s-showMore:hover
+.list-wrap .s-showMore:hover,
+#activeCenter .s-imgUnit-img .overlay .des
 {
     color: $customStyleColor !important;
 }
