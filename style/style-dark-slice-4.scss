@@ -161,7 +161,13 @@ ul.navigation li.activated span,
 .rank-item .num,
 .rank-item .content .info .pts div,
 .other a,
-.other strong 
+.other strong,
+.video-model header h2,
+.info-model header h2,
+.fjw-random header h2,
+.timer-wrap .timer-top h2,
+.fjw-point header h2,
+.comment-wrap header h2 
 {
     color: #eee !important;
 }
@@ -201,7 +207,9 @@ div.num,
 {
     border-color: transparent !important;
 }
-.banner-p a
+.banner-p a,
+.fjw-random .point-wrap .cnt,
+.fjw-random .point-wrap .cnt .list 
 {
     border-color: #aaa !important;
 }
