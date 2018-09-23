@@ -4110,7 +4110,8 @@ body>div.to-top.on,
 #rankList .list-wrap .list .switch-day,
 .index-nav .n-i.gotop .btn_gotop,
 .list-wrap .s-showMore,
-#activeCenter .s-imgUnit .s-imgUnit-img
+#activeCenter .s-imgUnit .s-imgUnit-img,
+.guide .old-btn a
 {
     background-color: #444 !important;
 }
@@ -4228,7 +4229,8 @@ body>div.to-top.on,
 #rankList .list-wrap .list .bar .text,
 #rankList .list-wrap .list .switch-day,
 .list-wrap .s-showMore,
-.footer .boston-postcards li .tips
+.footer .boston-postcards li .tips,
+.guide .old-btn a
 {
     color: #eee !important;
 }
@@ -4256,7 +4258,9 @@ body>div.to-top.on,
 #rankList .list-wrap .list,
 #rankList .list-wrap .list .switch-day,
 .index-nav .n-i.gotop .btn_gotop,
-.list-wrap .s-showMore
+.list-wrap .s-showMore,
+.guide .old-btn a,
+.guide .feedback-btn a
 {
     border-color: transparent !important;
 }
@@ -4359,7 +4363,8 @@ body>div.to-top.on
 .cc-article-wrp .info-wrp .cc-btn,
 .media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
 .canvas-card dd .icon-contain .support,
-.bui-sns-info a .bd
+.bui-sns-info a .bd,
+.guide .old-btn a
 {
     box-shadow: none !important;
 }
@@ -4367,10 +4372,10 @@ body>div.to-top.on
 {
     box-shadow: 0px 4px 16px 0px $customStyleColor40 !important;
 }
-// a
-// {
-//     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
-// }
+.guide .feedback-btn a
+{
+    box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
+}
 .main-container .title span::before,
 .top-banner,
 .nav-guide-container .nav-guide-tip .guide-tip-triangle,
@@ -4450,7 +4455,8 @@ body>div.to-top.on
 .rank-list .item:nth-child(-n+3) .rank-index,
 .s-lineMore-more:hover,
 .s-rank.pink,
-.index-nav .n-i.gotop .btn_gotop:hover
+.index-nav .n-i.gotop .btn_gotop:hover,
+.guide .feedback-btn a
 {
     background-color: $customStyleColor !important;
 }
@@ -4514,7 +4520,8 @@ body>div.to-top.on
 .rank-list .item:nth-child(-n+3) .rank-index,
 .s-lineMore-more:hover,
 .s-rank.pink,
-.index-nav .n-i .name:hover
+.index-nav .n-i .name:hover,
+.guide .feedback-btn a
 {
     color: $foreground !important;
 }
