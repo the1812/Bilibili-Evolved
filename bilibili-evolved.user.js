@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.3.15
+// @version      1.4.0
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard
 // @match        *://*.bilibili.com/*
@@ -49,7 +49,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.3.15"
+        currentVersion: "1.4.0"
     };
     function loadSettings()
     {
@@ -94,6 +94,7 @@
             scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
             darkStyle: new Resource("style/style-dark.min.scss", 2),
             darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
+            darkStyleNavBar: new Resource("style/style-dark-navbar.min.scss"),
             touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
             navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
             noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
@@ -111,6 +112,7 @@
             guiSettings: new Resource("utils/gui-settings.min.js"),
             useDarkStyle: new Resource("style/dark-styles.min.js"),
             useNewStyle: new Resource("style/new-styles.min.js"),
+            overrideNavBar: new Resource("style/override-nav-bar.min.js"),
             touchNavBar: new Resource("touch/touch-navbar.min.js"),
             touchVideoPlayer: new Resource("touch/touch-player.min.js"),
             expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
@@ -134,14 +136,17 @@
             ];
             this.useDarkStyle.dependencies = [
                 this.darkStyle,
-                this.darkStyleImportant
+                this.darkStyleImportant,
+                this.darkStyleNavBar
             ];
             this.useNewStyle.dependencies = [
                 this.style,
                 this.oldStyle,
-                this.navbarOverrideStyle,
-                this.noBannerStyle,
                 this.scrollbarStyle
+            ];
+            this.overrideNavBar.dependencies = [
+                this.navbarOverrideStyle,
+                this.noBannerStyle
             ];
             this.touchVideoPlayer.dependencies = [
                 this.touchPlayerStyle
@@ -171,6 +176,7 @@
             this.guiSettings.displayName = "设置";
             this.useDarkStyle.displayName = "夜间模式";
             this.useNewStyle.displayName = "新样式";
+            this.overrideNavBar.displayName = "搜索栏位置调整";
             this.touchNavBar.displayName = "顶栏触摸优化";
             this.touchVideoPlayer.displayName = "播放器触摸支持";
             this.expandDanmakuList.displayName = "自动展开弹幕列表";
