@@ -5,7 +5,8 @@
     background-color: #222;
 }
 .bili-header-m .nav-menu .nav-mask,
-#link-navbar-vm>.link-navbar
+#link-navbar-vm>.link-navbar,
+#navbar-vm>.link-navbar
 {
     background-color: #444;
 }
@@ -13,7 +14,8 @@
 #link-navbar-vm>.link-navbar .main-ctnr .nav-logo,
 .right-part>.shortcuts-ctnr,
 .right-part>.shortcuts-ctnr .shortcut-item:hover,
-#link-navbar-vm>.link-navbar .nav-item:hover
+#link-navbar-vm>.link-navbar .nav-item:hover,
+.my-link-btn .label
 {
     color: #eee;
 }
