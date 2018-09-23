@@ -1,12 +1,23 @@
-.bili-header-m .nav-menu .nav-con .nav-item:hover
+.bili-header-m .nav-menu .nav-con .nav-item:hover,
+.shortcuts-ctnr .shortcut-item:hover,
+.link-navbar .nav-item:hover
 {
     background-color: #222;
 }
-.bili-header-m .nav-menu .nav-mask
+.bili-header-m .nav-menu .nav-mask,
+.link-navbar
 {
     background-color: #444;
 }
-.bili-header-m .nav-menu .nav-con .nav-item .t
+.bili-header-m .nav-menu .nav-con .nav-item .t,
+.link-navbar .main-ctnr .nav-logo,
+.shortcuts-ctnr,
+.shortcuts-ctnr .shortcut-item:hover,
+.link-navbar .nav-item:hover
 {
     color: #eee;
+}
+.link-navbar-ctnr
+{
+    box-shadow: none;
 }
