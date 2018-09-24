@@ -46,7 +46,8 @@ blockquote .color-yellow-04,
 .cover .disabled-cover,
 .el-input__inner,
 .commnent-screen-wrap .el-input__inner,
-.tag-list li.tag-item.on
+.tag-list li.tag-item.on,
+.bp-popup-panel .title-ctnr .popup-title
 {
     color: #eee !important;
 }
@@ -62,7 +63,7 @@ blockquote .color-yellow-04,
 .home-page .sticky-bar .bar-content .message:hover,
 .other a a:hover,
 .more-data a:hover,
-.rank-item .content .info .detail a a:hover 
+.rank-item .content .info .detail a a:hover
 {
     color: $customStyleColor !important;
 }
@@ -82,7 +83,7 @@ blockquote .color-yellow-04,
 .el-date-table td.end-date,
 .el-date-table td.start-date,
 .tag-list li.tag-item.on,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white 
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white
 {
     background-color: $customStyleColor !important;
 }

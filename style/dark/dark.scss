@@ -845,7 +845,6 @@ span.key,
 .content,
 .video-container .text-area .title,
 .sticky-bar .bar-content .title,
-.bp-popup-panel .title-ctnr .popup-title,
 .comment-area .comm-main .comm-tabs >ul >li,
 .card .focus-btn .unfocus .unfocus-text,
 .bangumi-container .text-area .title,
@@ -3620,8 +3619,7 @@ li.history,
 .bangumi-list-wrapper .top-block .mode-select li.simple-mode.selected,
 .bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover,
 .fjw-random header h2 .head-icon,
-.timer-wrap .timer-top h2 .head-icon,
-.bp-svg-icon
+.timer-wrap .timer-top h2 .head-icon
 {
     filter: $blueImageFilter !important;
 }
@@ -4129,6 +4127,10 @@ body>div.to-top.on,
 {
     background-color: #fff1 !important;
 }
+.blp-ui-slider-container
+{
+    background-color: rgba(0,0,0,0.1) !important;
+}
 #mp-mine-header,
 #mp-mine-header.active,
 .fans-icon,
@@ -4441,6 +4443,14 @@ body>div.to-top.on
 {
     border-color: $customStyleColor !important;
 }
+.blp-ui-slider-hover-container::before
+{
+    border-top-color: $customStyleColor !important;
+}
+.blp-ui-slider-hover-container::after
+{
+    border-bottom-color: $customStyleColor !important;
+}
 .audioplayer .ap-controller,
 .audioplayer .ap-playlist
 {
@@ -4462,12 +4472,14 @@ body>div.to-top.on
 .s-rank.pink,
 .index-nav .n-i.gotop .btn_gotop:hover,
 .guide .feedback-btn a,
-.gift>.expires
+.gift>.expires,
+.blp-ui-slider-process
 {
     background-color: $customStyleColor !important;
 }
 .audioplayer .ap-play-button svg,
-.audioplayer .ap-controller .ap-controller-center .ap-buffer-bar
+.audioplayer .ap-controller .ap-controller-center .ap-buffer-bar,
+.blp-ui-slider-buffer-container
 {
     background-color: $customStyleColor60 !important;
 }
@@ -4515,7 +4527,8 @@ body>div.to-top.on
 .list-wrap .s-showMore:hover,
 #activeCenter .s-imgUnit-img .overlay .des,
 .common-popup-wrap header,
-.gift-box:hover>.num
+.gift-box:hover>.num,
+.blp-ui-button:hover > i
 {
     color: $customStyleColor !important;
 }
