@@ -28,7 +28,10 @@
 div#square.container,
 #rankList .list-wrap .list .switch-day .switch-list:hover,
 .bili-header-m .head-banner,
-.link-navbar-ctnr
+.link-navbar-ctnr,
+.uploader-info .info .follow .num,
+.app .module-card.comment,
+.area-item-ctnr .area-item:hover
 {
     background-color: #222 !important;
 }
@@ -68,7 +71,9 @@ body>div.to-top.on,
 .index-nav .n-i.gotop .btn_gotop,
 .list-wrap .s-showMore,
 #activeCenter .s-imgUnit .s-imgUnit-img,
-.guide .old-btn a
+.guide .old-btn a,
+.app .module-card,
+.nav-panel-vc
 {
     background-color: #444 !important;
 }
@@ -150,7 +155,10 @@ body>div.to-top.on,
 .more .help .info,
 .more .link .info,
 .s-imgUnit-text p,
-.box .content .item
+.box .content .item,
+.uploader-info .info .follow .num,
+.video-list-wrapper .title .text .num,
+.danmu-hot .tab-list .tab
 {
     color: #aaa !important;
 }
@@ -193,7 +201,12 @@ body>div.to-top.on,
 .list-wrap .s-showMore,
 .footer .boston-postcards li .tips,
 .guide .old-btn a,
-.gift-box>.num
+.gift-box>.num,
+.base-info .btn-wrapper,
+.video-list-wrapper .title .text,
+.video-list-wrapper .title .more .text,
+.danmu-hot .video-list .video-wrapper .video .title,
+.blink-qrcode .title
 {
     color: #eee !important;
 }
@@ -223,7 +236,10 @@ body>div.to-top.on,
 .index-nav .n-i.gotop .btn_gotop,
 .list-wrap .s-showMore,
 .guide .old-btn a,
-.guide .feedback-btn a
+.guide .feedback-btn a,
+.app .module-card,
+.uploader-info .info .follow .num,
+.danmu-hot .tab-list
 {
     border-color: transparent !important;
 }
@@ -396,7 +412,8 @@ body>div.to-top.on
 #rankList .list-wrap .list .switch.active,
 #rankList .list-wrap .list .switch:hover,
 #rankList .list-wrap .list .switch.active.active:after,
-#rankList .list-wrap .list .switch:hover.active:after
+#rankList .list-wrap .list .switch:hover.active:after,
+.danmu-hot .tab-list .tab.active
 {
     border-color: $customStyleColor !important;
 }
@@ -430,7 +447,8 @@ body>div.to-top.on
 .index-nav .n-i.gotop .btn_gotop:hover,
 .guide .feedback-btn a,
 .gift>.expires,
-.blp-ui-slider-process
+.blp-ui-slider-process,
+.uploader-info .info .follow .btn
 {
     background-color: $customStyleColor !important;
 }
@@ -485,7 +503,15 @@ body>div.to-top.on
 #activeCenter .s-imgUnit-img .overlay .des,
 .common-popup-wrap header,
 .gift-box:hover>.num,
-.blp-ui-button:hover > i
+.blp-ui-button:hover > i,
+.base-info .desc .tag,
+.base-info .btn-wrapper .btn:active .icon-font,
+.base-info .btn-wrapper .btn:active,
+.base-info .btn-wrapper .btn:hover .icon-font,
+.base-info .btn-wrapper .btn:hover,
+.video-list-wrapper .video-list .icon-font:hover,
+.danmu-hot .tab-list .tab.active,
+.danmu-hot .video-list .video-wrapper .video:hover .title
 {
     color: $customStyleColor !important;
 }
@@ -500,7 +526,8 @@ body>div.to-top.on
 .s-rank.pink,
 .index-nav .n-i .name:hover,
 .guide .feedback-btn a,
-.gift>.expires
+.gift>.expires,
+.uploader-info .info .follow .btn
 {
     color: $foreground !important;
 }
