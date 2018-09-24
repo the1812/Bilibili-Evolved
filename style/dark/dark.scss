@@ -4074,6 +4074,8 @@ div#square.container,
 .link-navbar-ctnr,
 .uploader-info .info .follow .num,
 .app .module-card.comment,
+.rank-item .content,
+.rank-tab-wrap,
 .area-item-ctnr .area-item:hover
 {
     background-color: #222 !important;
@@ -4249,7 +4251,8 @@ body>div.to-top.on,
 .video-list-wrapper .title .text,
 .video-list-wrapper .title .more .text,
 .danmu-hot .video-list .video-wrapper .video .title,
-.blink-qrcode .title
+.blink-qrcode .title,
+.rank-item .content .info .title
 {
     color: #eee !important;
 }
@@ -4358,7 +4361,9 @@ body>div.to-top.on,
 .search-module .search-block .search-icon,
 .search-module .search-block .search-word-panel .history-item .cancel,
 .rank-module .complete-rank::after,
-body>div.to-top.on
+body>div.to-top.on,
+.rank-item .content .info .detail .b-icon.view,
+.rank-item .content .info .detail .b-icon.author
 {
     filter: grayscale(1) !important;
 }
@@ -4387,7 +4392,8 @@ body>div.to-top.on
 .canvas-card dd .icon-contain .support,
 .bui-sns-info a .bd,
 .guide .old-btn a,
-.link-navbar-ctnr
+.link-navbar-ctnr,
+.rank-item:hover
 {
     box-shadow: none !important;
 }
@@ -4554,7 +4560,8 @@ body>div.to-top.on
 .base-info .btn-wrapper .btn:hover,
 .video-list-wrapper .video-list .icon-font:hover,
 .danmu-hot .tab-list .tab.active,
-.danmu-hot .video-list .video-wrapper .video:hover .title
+.danmu-hot .video-list .video-wrapper .video:hover .title,
+.rank-item .content .info .title:hover
 {
     color: $customStyleColor !important;
 }
@@ -4639,8 +4646,6 @@ background-color: #222 !important;
 .comment-manage-wrap .head .dropdown-btn .text,
 .recent-danmu-wrp .danmu-filter .left .delete .option-wrp .act-btn,
 .recent-danmu-wrp .head .dropdown-btn,
-.rank-item .content,
-.rank-tab-wrap,
 .rank-list-head .rank_tips
 {
     background-color: #444 !important;
@@ -4811,7 +4816,7 @@ ul.navigation li.activated span,
 .recent-danmu-wrp .danmu-filter .left .delete,
 .recent-danmu-wrp .dropdown .dropdown-btn,
 .bilibili-player .bilibili-player-area-separator,
-div.num,
+.rank-item div.num,
 .rank-item,
 .other,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info,

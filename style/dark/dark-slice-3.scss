@@ -31,6 +31,8 @@ div#square.container,
 .link-navbar-ctnr,
 .uploader-info .info .follow .num,
 .app .module-card.comment,
+.rank-item .content,
+.rank-tab-wrap,
 .area-item-ctnr .area-item:hover
 {
     background-color: #222 !important;
@@ -206,7 +208,8 @@ body>div.to-top.on,
 .video-list-wrapper .title .text,
 .video-list-wrapper .title .more .text,
 .danmu-hot .video-list .video-wrapper .video .title,
-.blink-qrcode .title
+.blink-qrcode .title,
+.rank-item .content .info .title
 {
     color: #eee !important;
 }
@@ -315,7 +318,9 @@ body>div.to-top.on,
 .search-module .search-block .search-icon,
 .search-module .search-block .search-word-panel .history-item .cancel,
 .rank-module .complete-rank::after,
-body>div.to-top.on
+body>div.to-top.on,
+.rank-item .content .info .detail .b-icon.view,
+.rank-item .content .info .detail .b-icon.author
 {
     filter: grayscale(1) !important;
 }
@@ -344,7 +349,8 @@ body>div.to-top.on
 .canvas-card dd .icon-contain .support,
 .bui-sns-info a .bd,
 .guide .old-btn a,
-.link-navbar-ctnr
+.link-navbar-ctnr,
+.rank-item:hover
 {
     box-shadow: none !important;
 }
@@ -511,7 +517,8 @@ body>div.to-top.on
 .base-info .btn-wrapper .btn:hover,
 .video-list-wrapper .video-list .icon-font:hover,
 .danmu-hot .tab-list .tab.active,
-.danmu-hot .video-list .video-wrapper .video:hover .title
+.danmu-hot .video-list .video-wrapper .video:hover .title,
+.rank-item .content .info .title:hover
 {
     color: $customStyleColor !important;
 }
