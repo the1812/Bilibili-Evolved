@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      69.18
+// @version      69.77
 // @description  增强哔哩哔哩Web端体验.(预览离线版)
-// @author       Grant Howard
+// @author       Grant Howard / Coulomb-G
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
 // @run-at       document-end

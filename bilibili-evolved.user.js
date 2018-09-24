@@ -2,7 +2,7 @@
 // @name         Bilibili Evolved
 // @version      1.4.1
 // @description  增强哔哩哔哩Web端体验.
-// @author       Grant Howard
+// @author       Grant Howard / Coulomb-G
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
 // @run-at       document-end
