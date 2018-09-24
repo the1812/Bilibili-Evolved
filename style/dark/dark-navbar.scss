@@ -28,3 +28,8 @@
 {
     box-shadow: none;
 }
+#link-navbar-vm>.link-navbar .main-ctnr .nav-logo::before,
+#app>.link-navbar .main-ctnr .nav-logo::before
+{
+    filter: $blueImageFileter !important;
+}
