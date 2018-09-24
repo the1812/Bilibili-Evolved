@@ -3,7 +3,8 @@
 .gg-floor-module,
 .home-app-download,
 .activity-m,
-.bilibili-player-promote-wrap
+.bilibili-player-promote-wrap,
+.bili-header-m .nav-menu .nav-con .nav-item .text-red
 {
     display: none !important;
 }

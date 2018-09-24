@@ -3,7 +3,8 @@
     background-color: #222 !important;
 }
 .wrapper .elec-btn.disabled,
-.f-list-hover:hover
+.f-list-hover:hover,
+.status_box .status_btn.disabled
 {
     background-color: #444 !important;
 }
@@ -36,14 +37,16 @@ blockquote .color-purple-04,
 blockquote .color-yellow-01,
 blockquote .color-yellow-02,
 blockquote .color-yellow-03,
-blockquote .color-yellow-04
+blockquote .color-yellow-04,
+.status_box .status_btn.disabled
 {
     color: #aaa !important;
 }
 .home-page .sticky-bar .bar-content .message,
 .cover .disabled-cover,
 .el-input__inner,
-.commnent-screen-wrap .el-input__inner
+.commnent-screen-wrap .el-input__inner,
+.tag-list li.tag-item.on
 {
     color: #eee !important;
 }
@@ -56,14 +59,18 @@ blockquote .color-yellow-04
 }
 
 
-.home-page .sticky-bar .bar-content .message:hover
+.home-page .sticky-bar .bar-content .message:hover,
+.other a a:hover,
+.more-data a:hover,
+.rank-item .content .info .detail a a:hover 
 {
     color: $customStyleColor !important;
 }
 
 .season-timeline .season-group.today,
 .season-timeline .season-group.today .group-time::before,
-.aside-ctnr .author-info .communicate-btn
+.aside-ctnr .author-info .communicate-btn,
+.tag-list li.tag-item.on
 {
     border-color: $customStyleColor !important;
 }
@@ -73,7 +80,9 @@ blockquote .color-yellow-04
 .face-g-tab li.current,
 .el-date-table td.current:not(.disabled),
 .el-date-table td.end-date,
-.el-date-table td.start-date
+.el-date-table td.start-date,
+.tag-list li.tag-item.on,
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white 
 {
     background-color: $customStyleColor !important;
 }

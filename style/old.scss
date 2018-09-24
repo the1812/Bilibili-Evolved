@@ -163,7 +163,8 @@ div.nav-gif,
 {
     width: 100% !important;
 }
-input.nav-search-keyword::placeholder
+input.nav-search-keyword::placeholder,
+.search-module .search-block input::placeholder
 {
     color: #888 !important;
 }

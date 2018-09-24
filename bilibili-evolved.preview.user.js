@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.3.13
+// @version      1.4.1
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
-// @author       Grant Howard
+// @author       Grant Howard / Coulomb-G
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
 // @run-at       document-end
@@ -23,9 +23,9 @@
     const settings = {
         blurSettingsPanel: false,
         blurVideoControl: false,
-        toast: false,
-        fullTweetsTitle: false,
-        removeVideoTopMask: true,
+        toast: true,
+        fullTweetsTitle: true,
+        removeVideoTopMask: false,
         removeLiveWatermark: true,
         harunaScale: true,
         removeAds: true,
@@ -49,7 +49,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.3.13"
+        currentVersion: "1.4.1"
     };
     function loadSettings()
     {
@@ -76,46 +76,57 @@
             GM_addValueChangeListener(key, change);
         }
     }
+    function runAndObserveDomMutation(selector, callback)
+    {
+        const element = document.querySelector(selector);
+        if (element)
+        {
+            const observer = new MutationObserver(callback);
+            observer.observe(element, { childList: true, subtree: true });
+        }
+    }
     function loadResources()
     {
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {
-            style: new Resource("style/style.min.scss", 1),
-            oldStyle: new Resource("style/style-old.min.scss", 1),
-            scrollbarStyle: new Resource("style/style-scrollbar.min.css", 1),
-            darkStyle: new Resource("style/style-dark.min.scss", 2),
-            darkStyleImportant: new Resource("style/style-dark-important.min.scss"),
-            touchPlayerStyle: new Resource("style/style-touch-player.min.scss", 3),
-            navbarOverrideStyle: new Resource("style/style-navbar-override.min.css", 4),
-            noBannerStyle: new Resource("style/style-no-banner.min.css", 5),
-            removeAdsStyle: new Resource("style/style-remove-promotions.min.css", 6),
-            guiSettingsStyle: new Resource("style/style-gui-settings.min.scss", 0),
-            fullTweetsTitleStyle: new Resource("style/style-full-tweets-title.min.css", 7),
-            imageViewerStyle: new Resource("style/style-image-viewer.min.scss", 8),
-            toastStyle: new Resource("style/style-toast.min.scss", 9),
-            blurVideoControlStyle: new Resource("style/style-blur-video-control.min.css", 10),
+            style: new Resource("min/style.min.scss", 1),
+            oldStyle: new Resource("min/old.min.scss", 1),
+            scrollbarStyle: new Resource("min/scrollbar.min.css", 1),
+            darkStyle: new Resource("min/dark.min.scss", 2),
+            darkStyleImportant: new Resource("min/dark-important.min.scss"),
+            darkStyleNavBar: new Resource("min/dark-navbar.min.scss"),
+            touchPlayerStyle: new Resource("min/touch-player.min.scss", 3),
+            navbarOverrideStyle: new Resource("min/navbar-override.min.css", 4),
+            noBannerStyle: new Resource("min/no-banner.min.css", 5),
+            removeAdsStyle: new Resource("min/remove-promotions.min.css", 6),
+            guiSettingsStyle: new Resource("min/gui-settings.min.scss", 0),
+            fullTweetsTitleStyle: new Resource("min/full-tweets-title.min.css", 7),
+            imageViewerStyle: new Resource("min/image-viewer.min.scss", 8),
+            toastStyle: new Resource("min/toast.min.scss", 9),
+            blurVideoControlStyle: new Resource("min/blur-video-control.min.css", 10),
 
             guiSettingsDom: new Resource("utils/gui-settings.html"),
             imageViewerDom: new Resource("utils/image-viewer.html"),
             latestVersion: new Resource("version.txt"),
 
-            guiSettings: new Resource("utils/gui-settings.min.js"),
-            useDarkStyle: new Resource("style/dark-styles.min.js"),
-            useNewStyle: new Resource("style/new-styles.min.js"),
-            touchNavBar: new Resource("touch/touch-navbar.min.js"),
-            touchVideoPlayer: new Resource("touch/touch-player.min.js"),
-            expandDanmakuList: new Resource("video/expand-danmaku.min.js"),
-            removeAds: new Resource("utils/remove-promotions.min.js"),
-            watchLaterRedirect: new Resource("utils/watchlater.min.js"),
-            hideTopSearch: new Resource("utils/hide-top-search.min.js"),
-            harunaScale: new Resource("video/haruna-scale.min.js"),
-            removeLiveWatermark: new Resource("video/remove-watermark.min.js"),
-            fullTweetsTitle: new Resource("utils/full-tweets-title.min.js"),
-            viewCover: new Resource("video/view-cover.min.js"),
-            notifyNewVersion: new Resource("utils/notify-new-version.min.js"),
-            toast: new Resource("utils/toast.min.js"),
-            removeVideoTopMask: new Resource("video/remove-top-mask.min.js"),
-            blurVideoControl: new Resource("video/blur-video-control.min.js")
+            guiSettings: new Resource("min/gui-settings.min.js"),
+            useDarkStyle: new Resource("min/dark-styles.min.js"),
+            useNewStyle: new Resource("min/new-styles.min.js"),
+            overrideNavBar: new Resource("min/override-navbar.min.js"),
+            touchNavBar: new Resource("min/touch-navbar.min.js"),
+            touchVideoPlayer: new Resource("min/touch-player.min.js"),
+            expandDanmakuList: new Resource("min/expand-danmaku.min.js"),
+            removeAds: new Resource("min/remove-promotions.min.js"),
+            watchLaterRedirect: new Resource("min/watchlater.min.js"),
+            hideTopSearch: new Resource("min/hide-top-search.min.js"),
+            harunaScale: new Resource("min/haruna-scale.min.js"),
+            removeLiveWatermark: new Resource("min/remove-watermark.min.js"),
+            fullTweetsTitle: new Resource("min/full-tweets-title.min.js"),
+            viewCover: new Resource("min/view-cover.min.js"),
+            notifyNewVersion: new Resource("min/notify-new-version.min.js"),
+            toast: new Resource("min/toast.min.js"),
+            removeVideoTopMask: new Resource("min/remove-top-mask.min.js"),
+            blurVideoControl: new Resource("min/blur-video-control.min.js")
         };
         (function ()
         {
@@ -125,14 +136,18 @@
             ];
             this.useDarkStyle.dependencies = [
                 this.darkStyle,
-                this.darkStyleImportant
+                this.darkStyleImportant,
+                this.darkStyleNavBar,
+                this.scrollbarStyle
             ];
             this.useNewStyle.dependencies = [
                 this.style,
                 this.oldStyle,
-                this.navbarOverrideStyle,
-                this.noBannerStyle,
                 this.scrollbarStyle
+            ];
+            this.overrideNavBar.dependencies = [
+                this.navbarOverrideStyle,
+                this.noBannerStyle
             ];
             this.touchVideoPlayer.dependencies = [
                 this.touchPlayerStyle
@@ -162,6 +177,7 @@
             this.guiSettings.displayName = "设置";
             this.useDarkStyle.displayName = "夜间模式";
             this.useNewStyle.displayName = "新样式";
+            this.overrideNavBar.displayName = "搜索栏位置调整";
             this.touchNavBar.displayName = "顶栏触摸优化";
             this.touchVideoPlayer.displayName = "播放器触摸支持";
             this.expandDanmakuList.displayName = "自动展开弹幕列表";

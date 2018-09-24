@@ -80,16 +80,22 @@ li.season-item .season-body .season-title span.follow,
 .audioplayer,
 .log-empty,
 .follow-container .follow-right .follow-intro .follow-fold,
-.follow-container .follow-right .follow-intro .follow-fold:hover,
 .link-top-container,
 .audios-wrap #audios-box,
 .link-top-container,
-.medal,
 .ui-btn.grey-radius,
-.ui-btn.grey-radius:hover,
 .sponsor-rank-item.simple .sp-msg,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
+.timer-wrap .quit,
+a.bp_box_bot_click,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow li,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow,
+.section .count,
+.progress-bar-ctnr .bar-body,
+.user-info > .tag-flag,
+.result.is-web,
+.has-prize,
+.selector-wrapper .more-type-wrapper
 {
     background-color: #222 !important;
 }
@@ -123,7 +129,6 @@ li.season-item .season-body .season-title span.follow,
 .media-tab-module-content .spread-module .num,
 .media-info-card,
 .review-feed-wrapper,
-.pagelistbox .custom-right .custom-right-inner,
 .season-slider-wrapper .slider-wrapper .season-slider-list li:after,
 .project-list .project-list-item,
 .ban-app .case-tip,
@@ -144,7 +149,6 @@ li.season-item .season-body .season-title span.follow,
 .player-auxiliary-auxiliary-area .player-auxiliary-adv-danmaku,
 .player-auxiliary-auxiliary-area .player-auxiliary-setting,
 .btn-pay-wrapper.is-vip a,
-.btn-pay-wrapper.is-vip a:hover,
 .bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow.followed,
 .episode-item,
 .bangumi-list-wrapper .bottom-block .slider-contro span,
@@ -160,7 +164,6 @@ li.season-item .season-body .season-title span.follow,
 .security_content,
 .side-bar,
 .favourite-card,
-.containe,
 .container,
 .security-list:hover,
 .security-list-jump:hover,
@@ -205,7 +208,27 @@ li.season-item .season-body .season-title span.follow,
 .ui-calendar .main-wrap,
 .sponsor-rank-dialog .sp-rank-body,
 .sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-list-nav,
-.sponsor-pay-dialog-v2 .sp-pay-index 
+.sponsor-pay-dialog-v2 .sp-pay-index,
+.bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.cc-nav-wrp .down-link:hover,
+.ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
+.charge-participate,
+#article-list-index,
+#bp_user_box,
+.bb_box,
+.bp_box,
+.b-info,
+.bb-intro-top,
+.tag-list li.tag-item,
+.pager .jump-pager input[type=text],
+.tabnav,
+.toolbar-wrapper,
+.timeline-box .timeline-item .item-right p.num a,
+.timeline-box .timeline-item .item-right p.num span,
+.new-stat-module .zone-title .headline .new-stat-more,
+.pgc-rank-dropdown,
+.block-area .timeline-title .headline .timeline-more
 {
     background-color: #444 !important;
 }
@@ -220,14 +243,10 @@ li.season-item .season-body .season-title span.follow,
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover,
 .border-line,
 .count-wrapper div.danmu-count:after,
-.ui-calendar .flatpickr-day.inRange 
+.ui-calendar .flatpickr-day.inRange
 {
     background-color: #aaa !important;
 }
-// a
-// {
-//     background-color: #eee !important;
-// }
 .sponsor-rank-item.normal .sp-left .face-wrap,
 .coin-nav .on
 {
@@ -271,21 +290,22 @@ li.season-item .season-body .season-title span.follow,
 .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu:hover,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn:hover,
 .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen,
-.bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn.bilibili-player-video-btn-fullscreen .bilibili-player-video-web-fullscreen:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn > i,
 .nav-upload-container .nav-upload-item:hover,
 .contri-condition .contri-sort .contri-sort-type li:hover,
-.share-module 
+.share-module,
+.sponsor-rank-item.simple .sp-rank i,
+.prize-winner-block
 {
     background-color: transparent !important;
 }
-// a
-// {
-//     background: #fff1 !important;
-// }
 .fav-main .fav-action-top .back-to-info,
-.cc-nav-wrp .nav-cut-off-line 
+.cc-nav-wrp .nav-cut-off-line,
+.section .count:before,
+.tag-more .b-toggle-btn,
+.no-data,
+.block-area .timeline-toggle-block .timeline-toggle-btn
 {
     background: transparent !important;
 }
@@ -299,7 +319,7 @@ li.season-item .season-body .season-title span.follow,
 .live-ctn .live-attch .host,
 .dynamic-m .title span:not(.sp),
 .history-tag,
-li.no-data,
+.no-data,
 .bilibili-player-ending-panel-box-functions .bui-button.bui-button-disabled,
 .paging-box-big .page-jump,
 .coin-operated-m .coin-bottom .tips,
@@ -355,7 +375,6 @@ li.no-data,
 .player-auxiliary-block-list .player-auxiliary-block-line-sync,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching .bilibili-player-watching-number,
 .recom-item a .recom-info .info-title,
-.s-imgUnit .s-imgUnit-text a,
 .modal-head a,
 .first-change-lb span,
 .descript,
@@ -467,7 +486,70 @@ li.no-data,
 .container .musician-recommend .recommend-item .recommend-info .recommend-text,
 .audioplayer .ap-playlist .ap-playlist-header .ap-playlist-amount,
 .sponsor-rank-item.simple .sp-msg,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint .sponsor-point 
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint .sponsor-point,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint,
+.episode-item .ep-title,
+.bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.timer-wrap .canvas-wrap .canvas-title,
+.fjw-case-detail .ban-detail .content-box .jury-status .status-left .voted .graph .txt,
+.cm-model .report-detail .child-comment .child-list .detail .report-cnt .rep-name,
+.cm-model .report-detail .detail .date,
+.cm-model .report-detail .more-list,
+.data-card .data-box .tab .fan-tab,
+.data-card .fans-box .tab .fan-tab,
+.notice-card .notice-list .notice-item .notice-time,
+.cc-nav-wrp .nav-item i:last-child,
+.cc-nav-wrp .down-link .version,
+.dc-section .section-tip,
+.dc-section-item_title_name small,
+.normal-empty,
+.growup-participate .status_box .limited,
+.announce li span,
+.announce h3.title span,
+.announce h3.title span .fontvt,
+.ui-checkbox input[type=checkbox]:disabled + .ui-checkbox-icon,
+.charge-participate .benefit-item .long-desc,
+.title-container .info span,
+.bp-user-box .bp-user-box-bb,
+.bp-user-box .bp-user-box-bk,
+.bp-user-box-bottom p,
+.b-info .info-tip,
+.b-info .balance-footer,
+.bb-intro-top .b-question .b-question-title,
+.bangumi-collection-wrapper .bangumi-collection-count,
+.bangumi-collection-card .bangumi-info .type-and-area,
+.bangumi-collection-card .bangumi-info .bangumi-state,
+.bangumi-collection-card .bangumi-info .watch-state,
+.be-input-word-counter,
+#page-index .fav-item .state,
+.section .count,
+.tag-list-wrp .title .small,
+.mod-2 li .r .up-info .v-author,
+.mod-2 li .r .v-info .v-info-i,
+.mod-1 .r .v-desc,
+.mod-1 .r .up-info .v-date,
+.mod-1 .r .up-info .v-author,
+.mod-1 .r .v-info .v-info-i,
+.mod-3 .r .v-info .v-info-i,
+.mod-3 .r .up-info .v-author,
+.bilibili-player-mode-selection-container .bilibili-player-mode-selection-panel .bilibili-player-mode-selection-row .row-selection .selection-span .selection-icon,
+.user-box,
+.user-box .grade-dec,
+.tabnav-item,
+.user-info > .user-uid,
+.user-name,
+.backdrop .title-box .close-button,
+.footer a,
+.pagination-wrapper .pagination .pageNum,
+.selector-wrapper .city-list,
+.selector-wrapper .order-list,
+.selector-wrapper .type-list,
+.selector-wrapper .more-type-wrapper,
+.selector-wrapper .more-type-list .more-type-item,
+.bangumi-home-crumb .fcname ul.n_num li a,
+.bangumi-home-crumb .fcname ul.n_num li,
+.pgc-rank-list .rank-item .ri-detail .ri-point
 {
     color: #aaa !important;
 }
@@ -510,7 +592,6 @@ button.button.more,
 .bb-comment .nameplate .nameplate-card .nameplate-text,
 .fav-main .fav-action-top .back-to-info,
 .fav-main .fav-action-bottom li,
-.fav-main .fav-action-bottom li:hover,
 .fav-main .fav-action-bottom ul.filter-disable li:hover,
 .media-tab-nav ul li,
 .media-tab-module-wrp .media-tab-module-content .sl-ep-nav .sl-ep-nav-list,
@@ -747,7 +828,6 @@ h2.title,
 .media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-title .media-tag,
 .media-info-count .media-info-count-item *,
 .btn-pay-wrapper.is-vip a,
-.btn-pay-wrapper.is-vip a:hover,
 .sponsor-rank-item.normal .sp-right .sp-user .sp-name,
 .sponsor-rank-item.simple .sp-user,
 .sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-rank-title,
@@ -758,14 +838,61 @@ h2.title,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-hint,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
+.timer-wrap .quit p,
+.fjw-random .point-wrap .cnt .no-data .title,
+.fjw-case-detail .ban-detail .content-box .jury-status .status-left .voted .graph .people,
+.timer-wrap .vote-dialog-new .footer .b-able,
+.contri-condition .contri-search,
+.cc-nav-wrp .down-link .title,
+.ui-calendar .main-wrap .shortmenus a,
+.assist-wrap .assist-log header .tools .search-wrp input[type=text],
+.bili-tab,
+.dc-section-title,
+#audience-page .version-switch-section .bili-tab,
+.dc-section-item_title_name p,
+.pie-empty-wrapper,
+.announce li > div a,
+.setting .setting-title,
+.charge-participate .benefit-item .short-desc,
+.charge-participate .part-btn,
+.bp-user-box-top p,
+.bp-user-box i,
+.bp_box_top p,
+.bp_box_bot a,
+.bb-intro-top .b-icon-title,
+.b-info .balance-footer .balance-part .part-balance-price,
+.b-info .bb-quan,
+.b-info .button,
+.level-dia,
+.bangumi-collection-wrapper .bangumi-collection-title,
+.bangumi-collection-card .bangumi-info .bangumi-title,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow,
+.tag-list-wrp .title .name,
+.tag-more .b-toggle-btn,
+.video-floor-m .dynamic-title .title .name,
+.mod-2 li .r .title,
+.video-list .vl-hd .tab-list li,
+.pager .jump-pager input[type=text],
+.mod-1 .r .title,
+.mod-3 .r .title,
+.season-slider-wrapper .slider-wrapper .season-slider-list li.cur,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow,
+.user-info > .user-name,
+.user-box .num,
+.selector-wrapper .title,
+.video-item-biref .biref-info .biref-title,
+.block-area .timeline-title .headline .name,
+.new-stat-module .zone-title .headline .name,
+.carousel-wrapper .carou-info span a,
+.new-stat-module .zone-title .headline .new-stat-more,
+.block-area .timeline-title .headline .timeline-more,
+.block-area .timeline-title .headline .timeline-more:hover,
+.block-area .timeline-toggle-block .timeline-toggle-btn,
+.timeline-box .timeline-item .item-right p.num a,
+.timeline-box .timeline-item .item-right p.num span
 {
     color: #eee !important;
 }
-// a
-// {
-//     color: #222 !important;
-// }
 
 .gift-item-wrap .num,
 .side-bar-popup-cntr,
@@ -834,7 +961,6 @@ button.button.more,
 .first-change-lb,
 .btn-pay-wrapper.is-vip a,
 .bgray-btn,
-.bgray-btn:hover,
 .main-container .player-wrapper,
 .bilibili-player .bilibili-player-auxiliary-area,
 .episode-item,
@@ -903,7 +1029,6 @@ button.button.more,
 .main-content-title,
 .nav-list li,
 .m-help,
-.m-help:hover,
 .integrity-table-wrapper,
 .record-exp-title,
 .record-exp-table-wrapper,
@@ -944,7 +1069,46 @@ table.invtable td,
 .sponsor-pay-dialog-v2 .sponsor-pay-header.border,
 .sponsor-pay-dialog-v2 .sp-pay-index ul.sponsor-choice li input,
 .sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-btn-primary.disabled:hover 
+.bilibili-player .bilibili-player-block-filter-function .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.bilibili-player .bilibili-player-block-filter-type .bilibili-player-block-filter-image .bilibili-player-block-filter-disabled,
+.announce li > div span,
+.announce li,
+.setting .watermark-setting,
+#bp_user_box,
+.bp-user-box-top,
+.bb_box,
+.bp_box,
+.bp_box_top,
+.b-info,
+.bb-intro-top,
+.bangumi-collection-wrapper .bangumi-collection-count,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow,
+.section .count,
+.tag-list li.tag-item,
+.mod-2 li,
+.video-list .vl-hd,
+.pager .jump-pager input[type=text],
+.mod-1 .r .up-info .v-date,
+.mod-1 .r,
+.mod-3 .l-item,
+.sponsor-rank-item.simple .sp-msg,
+.nav-item-ctnr.expanded .nav-item,
+.nav-item-ctnr.expanded .sub-pages-item-ctnr,
+.user,
+.app-body .section-block.with-radius,
+.user-hd,
+.tabnav,
+.app-body .section-block.with-bottom-radius,
+.backdrop .title-box,
+.prize-img,
+.selector-wrapper .more-type-wrapper,
+.selector-wrapper .more-city-letter-list,
+.footer .border,
+.selector-wrapper .city-selector-wrapper,
+.selector-wrapper .type-selector-wrapper,
+.new-stat-module .zone-title .headline .new-stat-more,
+.pgc-rank-dropdown,
+.block-area .timeline-title .headline .timeline-more
 {
     border-color: transparent !important;
 }
@@ -965,14 +1129,12 @@ li.history,
 .home-userstatus,
 .right-more-btn,
 .points-pendant-item,
-.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont 
+.container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont,
+.bpui-button-text-only .bpui-button-text .bpui-flex-wrap,
+.bp-user-box-bb
 {
     border-color: #aaa !important;
 }
-// a
-// {
-//     border-color: #222 !important;
-// }
 .hot-live .room-list,
 .player-auxiliary-danmaku-date-picker-header,
 .table-normal tbody tr td,
@@ -980,15 +1142,7 @@ li.history,
 {
     border-color: #444 !important;
 }
-// a
-// {
-//     border-color: #99a2aa !important;
-// }
 
-// a
-// {
-//     transition: all .2s !important;
-// }
 .player-auxiliary-danmaku-date-picker-btn,
 .audioplayer svg:not(.ap-svg-exclude) path,
 .audioplayer svg:not(.ap-svg-exclude) polygon
@@ -1002,7 +1156,15 @@ li.history,
 .home-to-space .m-arrow,
 .h-mp-space .m-arrow,
 .go-secuirty .m-arrow,
-.right-more-btn .m-arrow
+.right-more-btn .m-arrow,
+.growup-participate .status_box img,
+.i-m-title .icon-i-title,
+.tag-more .b-toggle-btn .b-icon-toggle-down,
+.tag-more .b-toggle-btn .b-icon-toggle-up,
+.new-stat-module .zone-title .headline .new-stat-more .icon,
+.pgc-rank-dropdown .icon-arrow-down,
+.sec-rank .more-link .icon-arrow-r,
+.block-area .timeline-toggle-block .timeline-toggle-btn i
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -1027,7 +1189,10 @@ li.history,
 .bangumi-list-wrapper .top-block .mode-select li.detail-mode.selected,
 .bangumi-list-wrapper .top-block .mode-select li.detail-mode:hover,
 .bangumi-list-wrapper .top-block .mode-select li.simple-mode.selected,
-.bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover
+.bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover,
+.fjw-random header h2 .head-icon,
+.timer-wrap .timer-top h2 .head-icon,
+.bp-svg-icon
 {
     filter: $blueImageFilter !important;
 }
@@ -1035,7 +1200,12 @@ li.history,
 li.season-item .season-body .season-title span.follow,
 .user-panel-ctnr .ctrl-btn .svg-icon,
 .publish-panel .publish-list .publish-item a,
-.episode-item .mark-icon.badge-pink-vip
+.episode-item .mark-icon.badge-pink-vip,
+.episode-item .mark-icon.badge-pink-first,
+.tag-list li.tag-item .hot,
+.toolbar-wrapper .service-icon,
+.toolbar-wrapper .scroll-icon,
+.block-area .timeline-title .headline .timeline-more i
 {
     filter: $pinkImageFilter !important;
 }
@@ -1059,7 +1229,8 @@ li.season-item .season-body .season-title span.follow,
 .text-article-wrp .info-wrp .img,
 .cc-album-manage .info-wrp .no-img,
 .compila-not-find .compila-not-find-image,
-.contri-not-find .contri-not-find-image
+.contri-not-find .contri-not-find-image,
+.charge-participate .benefit-item .pic
 {
     filter: brightness(0.72) !important;
 }
@@ -1073,10 +1244,6 @@ li.season-item .season-body .season-title span.follow,
     filter: brightness(0.5) !important;
 }
 
-// a
-// {
-//     background-image: none !important;
-// }
 .i-live .i-live-fo-btn, .i-live .i-live-unfo-btn
 {
     border-radius: 4px !important;
@@ -1084,7 +1251,7 @@ li.season-item .season-body .season-title span.follow,
 .timeline-header,
 .timeline-wrapper,
 .timeline-header .tl-weeks,
-.danmu-container 
+.danmu-container
 {
     box-shadow: none !important;
 }
@@ -1110,18 +1277,6 @@ li.season-item .season-body .season-title span.follow,
 {
     display: none !important;
 }
-// a
-// {
-//     opacity: 0 !important;
-// }
-// a
-// {
-//     opacity: 0.5 !important;
-// }
-// a
-// {
-//     opacity: 1 !important;
-// }
 
 .link-input:focus,
 .dynamic-list-item-wrap .item-user a.stick,
@@ -1159,7 +1314,21 @@ li.season-item .season-body .season-title span.follow,
 .contri-condition .contri-select.active,
 .container .song-list .song-li .song-shadow,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont:hover,
-.container .musician-recommend .recommend-item .recommend-info .listen-btn 
+.container .musician-recommend .recommend-item .recommend-info .listen-btn,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-1 .bilibili-player-block-type-keyword,
+.bilibili-player .bilibili-player-block .bilibili-player-block-tabpanel .bilibili-player-block-tabpanel-row.active-2 .bilibili-player-block-type-user,
+.bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-wrap,
+.data-card .data-box .tab .fan-tab.current,
+.data-card .fans-box .tab .fan-tab.current,
+.bili-tab.current,
+.bili-tab.current:after,
+#audience-page .version-switch-section .bili-tab.current,
+.contri-condition .contri-select.active:after,
+.video-list .vl-hd .order-tab li.on,
+.user-info > .tag-flag,
+.tabnav-item.current .tabnav-content,
+.project-list .project-list-item .promo-item,
+.carousel-wrapper .carou-mini .thumb-cursor
 {
     border-color: $customStyleColor !important;
 }
@@ -1171,7 +1340,6 @@ li.season-item .season-body .season-title span.follow,
 .news-list .news-item .type,
 .author-info .favourite-btn,
 .live-status.on-live,
-.live-status.on-live:hover,
 .paging-box-big .next:hover,
 .paging-box-big .prev:hover,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric,
@@ -1206,25 +1374,30 @@ li.season-item .season-body .season-title span.follow,
 .history-list .cover-contain .label,
 .coin-text-p .coin-i,
 .invitation-btn,
-.invitation-btn:hover,
 .notice-card .academy-entry,
 .section-item .diff-wrp .no-improve,
 .cc-nav-wrp .nav-upload-btn > a,
 .song-playbtn,
-.song-playbtn:hover,
 .audioplayer .ap-controller .ap-controller-right .ap-volume-thumb-dot,
 .cc-btn.is-main,
-.cc-btn.is-main:hover,
 .cc-album-manage .info-wrp .cc-btn,
-.cc-album-manage .info-wrp .cc-btn:hover,
 .compila-condition .compila-right .compila-add.single,
 .compila-not-find .compila-not-find-ime,
 .contri-not-find .contri-not-find-ime,
 .bili-btn.ok,
-.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn,
-.container .host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn:hover,
+.host-list-layout .hot-list-wrap .bg-wrap .top-info-content .right-info .right-btn,
 .sponsor-rank-dialog .sponsor-rank-content .sp-rank-header .sp-rank-title,
-.media-sponsor-wrapper .sponsor-right-area .sponsor-btn 
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.bilibili-player-ending-panel-box-functions .bilibili-player-pgcinfo-follow-binge-watching,
+.ban-detail .content-box .vote-success .success-txt button,
+.timer-wrap .vote-dialog-new .footer .b-able,
+.charge-participate .part-btn,
+.b-info .button,
+.bpui-button-text-only.bpui-state-active .bpui-button-text .bpui-flex-button,
+.selector-wrapper .more-city-letter-list .more-city-letter-item .letter-item.active:after,
+.timeline-box .timeline-item.new p.num a,
+.new-stat-module .zone-title .headline .new-stat-more:hover,
+.block-area .timeline-title .headline .timeline-more:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -1253,7 +1426,6 @@ button.button.more:hover,
 .link-footer a:hover,
 .chat-history-panel .chat-item.welcome-guard .username,
 .bilibili-player-ending-panel-box-functions div.active,
-.bilibili-player-ending-panel-box-functions div.active:hover,
 .bilibili-player-ending-panel-box-recommend-add-watchlater .icon-22wait-choice,
 .coin-operated-m .mc-box.on .c-num,
 .bilibili-player-context-menu-container span.bppl-state-selected,
@@ -1315,7 +1487,6 @@ button.button.more:hover,
 .coin-num,
 .m-help:hover,
 .main-content-title a,
-.main-content-title a:hover,
 .record-exp-title .s,
 .btn-delete:hover,
 .data-card .tab .data-tab.current,
@@ -1326,24 +1497,66 @@ button.button.more:hover,
 .song-introText,
 .song-lrcFold,
 .song-title .font18,
-.song-title .font18:hover,
 .hotsong-li .font24:hover,
 .hotsong-li .hotsong-title a:hover,
 .song-li .song-right .song-intro a:hover,
 .audioplayer .ap-controller .ap-controller-right .ap-playlist-button:hover .ap-playlist-button-amount,
 .follow-container .follow-right .follow-intro .follow-fold,
 .song-info .song-info-content a,
-.song-info .song-info-content a:hover,
 .contri-condition .contri-select.active,
 .contri-condition .contri-sort .contri-sort-type li:hover,
 .medal .medal-form .page-tip a:hover,
 .danmu-container .empty-danmu a,
-.danmu-container .empty-danmu a:hover,
 .container .host-list-layout .hot-list-wrap .hot-song-list .song-info .song-content .iconfont:hover,
 .container .host-list-layout .hot-list-wrap .show-more-song:hover .iconfont,
 .container .host-list-layout .hot-list-wrap .show-more-song:hover,
 .container .musician-recommend .recommend-item .recommend-info .listen-btn,
-.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a:hover 
+.sponsor-pay-dialog-v2 .sp-pay-index .sponsor-agree a:hover,
+.data-card .data-box .tab .fan-tab.current,
+.data-card .fans-box .tab .fan-tab.current,
+span.flatpickr-weekday,
+.ui-calendar .main-wrap .shortmenus a:hover,
+.bili-tab.current,
+#audience-page .version-switch-section .bili-tab.current,
+.announce li > div span,
+.announce li .fontvt,
+.setting .section-edit,
+.charge-participate h1,
+a.bp_box_bot_click,
+.b-info .balance-name,
+.bb-intro-top .b-question .b-question-title:hover,
+.bp_box_bot a:hover,
+.mini-item .detail a:hover,
+.tag-more .b-toggle-btn:hover,
+.mod-2 li .r .title:hover,
+.video-list .vl-hd .type-tab li.on,
+.video-list .vl-hd .order-tab li.on,
+.mod-1 .r .up-info .v-author:hover,
+.mod-3 .r .title:hover,
+.mod-3 .r .up-info .v-author:hover,
+.mod-2 li .r .up-info .v-author:hover,
+.mod-1 .r .title:hover,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover,
+.user-box .vip-btn,
+.user-box .btn:active,
+.user-box .btn,
+.icon-edit,
+.user-info > .tag-flag,
+.tabnav-item.current,
+.selector-wrapper .city-list .city-item.active,
+.selector-wrapper .city-list .city-item:hover,
+.selector-wrapper .order-list .city-item.active,
+.selector-wrapper .order-list .city-item:hover,
+.selector-wrapper .li-more .active,
+.selector-wrapper .more-city-list .more-city-item:hover,
+.toolbar-wrapper,
+.project-list .project-list-item .promo-item,
+.toolbar-wrapper .toolbar-title,
+.pagination-wrapper .pagination .pageNum.active,
+.pagination-wrapper .pagination .pageNum:hover,
+.bangumi-home-crumb .fcname ul.n_num li.on a,
+.timeline-box .timeline-item .item-right a:hover,
+.block-area .timeline-toggle-block .timeline-toggle-btn:hover
 {
     color: $customStyleColor !important;
 }
@@ -1382,16 +1595,6 @@ button.button.more:hover,
     fill: $customStyleColor !important;
 }
 
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-bottom-color: transparent !important;
-// }
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-right-color: transparent !important;
-// }
 .sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after,
 .sponsor-rank-tab .indicator:after,
 .security-right,
@@ -1401,24 +1604,13 @@ button.button.more:hover,
 .el-radio-button:first-child .el-radio-button__inner,
 .el-picker-panel [slot=sidebar],
 .danmu-container,
-.media-info-count .media-info-count-item 
+.media-info-count .media-info-count-item,
+a.bp_box_bot_click,
+.b-info,
+.bb-intro-top,
+.mod-2 li .l-item,
+.video-list .vl-hd .s-line
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
 }
-
-// .chat-history-panel .chat-history-list::-webkit-scrollbar-track,
-// .multi-page .cur-list ul::-webkit-scrollbar-track
-// {
-//     background: #444 !important;
-// }
-// .chat-history-panel .chat-history-list::-webkit-scrollbar-thumb,
-// .multi-page .cur-list ul::-webkit-scrollbar-thumb
-// {
-//     background: #222 !important;
-// }
-// .chat-history-panel .chat-history-list::-webkit-scrollbar-thumb:hover,
-// .multi-page .cur-list ul::-webkit-scrollbar-thumb:hover
-// {
-//     background: #333 !important;
-// }

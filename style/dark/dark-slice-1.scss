@@ -170,7 +170,6 @@ div.con,
 .gift-item.buy.hover,
 .gift-presets .gift-panel-switch,
 .chat-history-panel .chat-history-list .chat-item.system-msg,
-.chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon,
 .bilibili-live-player-loading-panel,
 .guard-rank-cntr .rank-cntr .btn-box .buy:hover,
 .rank.rank-4,
@@ -1727,7 +1726,7 @@ canvas.cliper.is-img,
 .bui-bar.bui-bar-buffer,
 .bilibili-player-video-progress-buffer-range
 {
-    opacity: 0.5 !important;
+    opacity: 0.382 !important;
 }
 .vote-user-face.opacity
 {
@@ -2056,7 +2055,6 @@ a.tcd-number:hover,
 .bb-comment .comment-list .list-item .info .plad a:hover,
 a.more-hot,
 a.btn-more,
-.bilibili-player-video-hint>a:hover,
 .bpui-selectmenu-list-row[data-selected],
 .bui-checkbox:hover .bui-checkbox-name,
 .bilibili-player-block-filter-type.disabled .bilibili-player-block-filter-label,
@@ -2241,7 +2239,6 @@ a.up-name:hover,
 .block-setting-ctnr .title,
 .block-user-type.active .user-type-hint,
 .awarding-panel .title,
-header,
 .live-status-label,
 .blpui-btn.icon-btn:hover>i,
 .blpui-btn.text-btn.active,

@@ -51,7 +51,8 @@ div.stardust-player
 .shortcuts-ctnr,
 .link-navbar .nav-item:hover,
 .link-navbar .main-ctnr .nav-switcher,
-.my-link-btn
+.my-link-btn,
+.link-navbar .nav-item.selected .label
 {
     color: $foregroundd !important;
 }

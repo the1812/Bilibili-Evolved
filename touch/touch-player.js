@@ -396,6 +396,11 @@
                 }
             }
         }
+
+        function unbindIconsClick(icons)
+        {
+            icons.unbind("click");
+        }
         function setupTouchPlayer(player)
         {
             if ($(".touch-video-box").length !== 0)
@@ -596,65 +601,75 @@
         }
         function overrideClickHandler(playerArea)
         {
-            playerArea.addClass("disable-original-hover");
-            const video = unsafeWindow.$(".bilibili-player-video");
-            const hoverClassName = "touch-video-control-show";
-            const originalClickHandler = video.data("events").click[0].handler;
-            video.unbind("click");
+            if (!playerArea.hasClass("disable-original-hover"))
+            {
+                playerArea.addClass("disable-original-hover");
+                const video = unsafeWindow.$(".bilibili-player-video");
+                const hoverClassName = "touch-video-control-show";
+                const originalClickHandler = video.data("events").click[0].handler;
 
-            let clickedOnce = false;
-            const clickHandler = (double, e) =>
-            {
-                if (double)
+                let clickedOnce = false;
+                const handleTap = (double, e) =>
                 {
-                    originalClickHandler(e);
-                }
-                else
-                {
-                    playerArea.toggleClass(hoverClassName);
-                }
-            };
-            video.on("click", e =>
-            {
-                if (!clickedOnce)
-                {
-                    clickedOnce = true;
-                    setTimeout(() =>
+                    if (double)
                     {
-                        if (clickedOnce)
-                        {
-                            clickedOnce = false;
-                            clickHandler(false, e);
-                        }
-                    }, 160);
-                }
-                else
+                        originalClickHandler(e);
+                    }
+                    else
+                    {
+                        playerArea.toggleClass(hoverClassName);
+                    }
+                };
+                const clickHandler = e =>
                 {
-                    clickedOnce = false;
-                    clickHandler(true, e);
-                }
-            });
-        }
-        SpinQuery.any(
-            () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
-            icons => icons.unbind("click")
-        );
-        new SpinQuery(
-            () => $(".bilibili-player-video"),
-            it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
-            setupTouchPlayer
-        ).start();
+                    if (!clickedOnce)
+                    {
+                        clickedOnce = true;
+                        setTimeout(() =>
+                        {
+                            if (clickedOnce)
+                            {
+                                clickedOnce = false;
+                                handleTap(false, e);
+                            }
+                        }, 160);
+                    }
+                    else
+                    {
+                        clickedOnce = false;
+                        handleTap(true, e);
+                    }
+                };
 
-        if (settings.touchVideoPlayerDoubleTapControl)
-        {
-            new SpinQuery(
-                () => $(".bilibili-player-area"),
-                it => it.length > 0 &&
-                    unsafeWindow.$ &&
-                    unsafeWindow.$(".bilibili-player-video").data("events"),
-                overrideClickHandler
-            ).start();
+                video.unbind("click");
+                video.on("click", clickHandler);
+            }
         }
+
+        function main()
+        {
+            SpinQuery.any(
+                () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
+                unbindIconsClick
+            );
+            new SpinQuery(
+                () => $(".bilibili-player-video"),
+                it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
+                setupTouchPlayer
+            ).start();
+            if (settings.touchVideoPlayerDoubleTapControl)
+            {
+                new SpinQuery(
+                    () => $(".bilibili-player-area"),
+                    it => it.length > 0 &&
+                        unsafeWindow.$ &&
+                        unsafeWindow.$(".bilibili-player-video").data("events"),
+                    overrideClickHandler
+                ).start();
+            }
+        }
+
+        runAndObserveDomMutation("#bofqi", () => main());
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
         return {

@@ -9,8 +9,7 @@
     <div class="gui-settings-content">
       <ul>
         <category>样式</category>
-        <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox>
-        <li class="indent-1">
+        <li class="indent-0">
           <label class="gui-settings-textbox-container">
             <span>自定义颜色</span>
             <div class="custom-color-preview">
@@ -18,20 +17,19 @@
                 <div class="predefined-colors-grid"></div>
               </div>
             </div>
-            <input key="customStyleColor" dependencies="useNewStyle" spellcheck="false" type="text" />
+            <input key="customStyleColor" dependencies="" spellcheck="false" type="text" />
           </label>
         </li>
+        <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox>
         <li class="indent-1">
           <label class="gui-settings-textbox-container">
             <span>顶栏(对横幅)不透明度</span>
             <input key="blurBackgroundOpacity" dependencies="useNewStyle" spellcheck="false" type="text" />
           </label>
         </li>
-        <checkbox indent="1" key="useDarkStyle" dependencies="useNewStyle"></checkbox>
-        <checkbox indent="1" key="overrideNavBar" dependencies="useNewStyle">
-          搜索栏位置调整
-        </checkbox>
-        <checkbox indent="2" key="showBanner" dependencies="useNewStyle overrideNavBar">
+        <checkbox indent="0" key="useDarkStyle" dependencies=""></checkbox>
+        <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox>
+        <checkbox indent="1" key="showBanner" dependencies="overrideNavBar">
           显示顶部横幅
         </checkbox>
         <category>工具</category>

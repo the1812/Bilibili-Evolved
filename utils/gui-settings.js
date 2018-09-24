@@ -91,11 +91,8 @@
             });
             $("div.custom-color-preview").on("click", () =>
             {
-                if ($("input[key='useNewStyle']").prop("checked"))
-                {
-                    const box = $(".predefined-colors");
-                    box.toggleClass("opened");
-                }
+                const box = $(".predefined-colors");
+                box.toggleClass("opened");
             });
 
             const button = document.querySelector("button.save");
