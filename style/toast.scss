@@ -84,4 +84,15 @@ svg.toast-card-dismiss path
     padding: 4px 8px;
     background-color: rgba(0,0,0,.1);
     border-radius: 4px;
+    text-decoration: none;
+    color: #eeed;
+    transition: all .2s ease-out;
+}
+.toast-card .link:hover
+{
+    background-color: rgba(0,0,0,.2);
+}
+.toast-card .link:active
+{
+    background-color: rgba(0,0,0,.1);
 }

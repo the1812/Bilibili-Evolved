@@ -84,7 +84,7 @@
                 const footer = $(".gui-settings-footer");
                 footer.after(`
                 <div class="gui-settings-footer">
-                    <span class="gui-settings-label">${message}</span>
+                    <span class="gui-settings-label">新版本${latestVersion.versionString}已发布.</span>
                     <a>
                         <button
                             class="gui-settings-button"
@@ -96,7 +96,7 @@
                 $("#new-version-update").parent().attr("href", settings.latestVersionLink);
             });
             const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">更新</a>`;
-            Toast.show(message, "检查更新", 10000);
+            Toast.show(message, "检查更新");
         }
 
         return {

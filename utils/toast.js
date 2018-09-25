@@ -63,7 +63,7 @@
                 toast.duration = duration;
                 toast.show();
             }
-            static show(message, title, duration = 3000)
+            static show(message, title, duration)
             {
                 this._show(message, title, duration, "default");
             }
