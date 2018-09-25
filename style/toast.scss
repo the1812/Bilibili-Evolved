@@ -51,6 +51,16 @@ svg.toast-card-dismiss
     padding: 16px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    transition: all .2s ease-out;
+    transform-origin: center;
+}
+svg.toast-card-dismiss:hover
+{
+    transform: scale(1.2);
+}
+svg.toast-card-dismiss:active
+{
+    transform: scale(1.1);
 }
 svg.toast-card-dismiss path
 {
