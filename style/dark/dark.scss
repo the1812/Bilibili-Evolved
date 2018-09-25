@@ -4203,7 +4203,8 @@ body>div.to-top.on,
 .box .content .item,
 .uploader-info .info .follow .num,
 .video-list-wrapper .title .text .num,
-.danmu-hot .tab-list .tab
+.danmu-hot .tab-list .tab,
+.rank-item .content .info .bangumi-info
 {
     color: #aaa !important;
 }
@@ -4561,7 +4562,8 @@ body>div.to-top.on
 .video-list-wrapper .video-list .icon-font:hover,
 .danmu-hot .tab-list .tab.active,
 .danmu-hot .video-list .video-wrapper .video:hover .title,
-.rank-item .content .info .title:hover
+.rank-item .content .info .title:hover,
+.rank-item .content .info .bangumi-num
 {
     color: $customStyleColor !important;
 }

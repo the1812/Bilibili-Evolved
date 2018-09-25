@@ -82,7 +82,6 @@
             {
                 it.addClass("gui-settings-notification");
                 const footer = $(".gui-settings-footer");
-                const message = `新版本${latestVersion.versionString}已发布.`;
                 footer.after(`
                 <div class="gui-settings-footer">
                     <span class="gui-settings-label">${message}</span>
@@ -95,8 +94,9 @@
                     </a>
                 </div>`);
                 $("#new-version-update").parent().attr("href", settings.latestVersionLink);
-                Toast.show(message, "检查更新", 10000);
             });
+            const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">更新</a>`;
+            Toast.show(message, "检查更新", 10000);
         }
 
         return {

@@ -78,3 +78,10 @@ svg.toast-card-dismiss path
 {
     background: #274227;
 }
+.toast-card .link
+{
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: rgba(0,0,0,.1);
+    border-radius: 4px;
+}
