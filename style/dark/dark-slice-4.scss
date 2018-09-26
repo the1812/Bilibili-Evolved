@@ -340,7 +340,9 @@ filter: $pinkImageFilter !important;
 #page .game .game-box h4 span,
 .dc-radio-button.is-active,
 .dc-radio-button.is-active:after,
-.rank-menu li.active
+.rank-menu li.active,
+.ui-tabs .ui-tabs-head .tab-head-item.current a,
+.ui-tabs .ui-tabs-head .tab-head-item.current a:after 
 {
     border-color: $customStyleColor !important;
 }
@@ -386,8 +388,9 @@ ul.navigation li:hover,
 .rank-menu li.active,
 .rank-tab-wrap .rank-tab .active,
 .check-warp a,
-.ui-select .ul-select-list .select-item.active, 
-.ui-select .ul-select-list .select-item:hover 
+.ui-select .ul-select-list .select-item.active,
+.ui-select .ul-select-list .select-item:hover,
+.ui-tabs .ui-tabs-head .tab-head-item.current a 
 {
     color: $customStyleColor !important;
 }
