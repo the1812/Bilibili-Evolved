@@ -4207,7 +4207,10 @@ body>div.to-top.on,
 .video-list-wrapper .title .text .num,
 .danmu-hot .tab-list .tab,
 .rank-item .content .info .bangumi-info,
-.container .hot-list .music-menu-list .menu-type
+.container .hot-list .music-menu-list .menu-type,
+.elec .elec-monthly-count,
+.announcement-cntr .header p .icon-edit,
+.announcement-cntr .header p span
 {
     color: #aaa !important;
 }
@@ -4257,7 +4260,8 @@ body>div.to-top.on,
 .danmu-hot .video-list .video-wrapper .video .title,
 .blink-qrcode .title,
 .rank-item .content .info .title,
-.container .hot-list .menu-title
+.container .hot-list .menu-title,
+.announcement-cntr .header p
 {
     color: #eee !important;
 }
@@ -4290,7 +4294,8 @@ body>div.to-top.on,
 .guide .feedback-btn a,
 .app .module-card,
 .uploader-info .info .follow .num,
-.danmu-hot .tab-list
+.danmu-hot .tab-list,
+.announcement-cntr .content
 {
     border-color: transparent !important;
 }
