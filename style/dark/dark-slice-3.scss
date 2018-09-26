@@ -429,7 +429,9 @@ body>div.to-top.on
 #rankList .list-wrap .list .switch:hover,
 #rankList .list-wrap .list .switch.active.active:after,
 #rankList .list-wrap .list .switch:hover.active:after,
-.danmu-hot .tab-list .tab.active
+.danmu-hot .tab-list .tab.active,
+.container .hot-list .music-menu-list .choose-menu,
+.container .hot-list .music-menu-list .menu-type .type-triangle
 {
     border-color: $customStyleColor !important;
 }
@@ -575,7 +577,8 @@ body>div.to-top.on
 .data-card .tab .data-tab.current:after,
 .sort-item.on i.active,
 #rankList .list-wrap .list .switch.active.active:after,
-#rankList .list-wrap .list .switch:hover.active:after
+#rankList .list-wrap .list .switch:hover.active:after,
+.container .hot-list .music-menu-list .menu-type .type-triangle
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;

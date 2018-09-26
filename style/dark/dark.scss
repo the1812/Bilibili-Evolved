@@ -4119,7 +4119,8 @@ body>div.to-top.on,
 .app .module-card,
 .nav-panel-vc,
 .container .song-list .song-li .song-img,
-.audioplayer .ap-controller .ap-controller-left .ap-cover
+.audioplayer .ap-controller .ap-controller-left .ap-cover,
+.container .host-list-layout .hot-list-wrap .bg-wrap
 {
     background-color: #444 !important;
 }
@@ -4205,7 +4206,8 @@ body>div.to-top.on,
 .uploader-info .info .follow .num,
 .video-list-wrapper .title .text .num,
 .danmu-hot .tab-list .tab,
-.rank-item .content .info .bangumi-info
+.rank-item .content .info .bangumi-info,
+.container .hot-list .music-menu-list .menu-type
 {
     color: #aaa !important;
 }
@@ -4254,7 +4256,8 @@ body>div.to-top.on,
 .video-list-wrapper .title .more .text,
 .danmu-hot .video-list .video-wrapper .video .title,
 .blink-qrcode .title,
-.rank-item .content .info .title
+.rank-item .content .info .title,
+.container .hot-list .menu-title
 {
     color: #eee !important;
 }
@@ -4369,6 +4372,10 @@ body>div.to-top.on,
 {
     filter: grayscale(1) !important;
 }
+.container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-title
+{
+    filter: brightness(0.7) !important;
+}
 // a
 // {
 //     filter: none !important;
@@ -4464,7 +4471,9 @@ body>div.to-top.on
 #rankList .list-wrap .list .switch:hover,
 #rankList .list-wrap .list .switch.active.active:after,
 #rankList .list-wrap .list .switch:hover.active:after,
-.danmu-hot .tab-list .tab.active
+.danmu-hot .tab-list .tab.active,
+.container .hot-list .music-menu-list .choose-menu,
+.container .hot-list .music-menu-list .menu-type .type-triangle
 {
     border-color: $customStyleColor !important;
 }
@@ -4610,7 +4619,8 @@ body>div.to-top.on
 .data-card .tab .data-tab.current:after,
 .sort-item.on i.active,
 #rankList .list-wrap .list .switch.active.active:after,
-#rankList .list-wrap .list .switch:hover.active:after
+#rankList .list-wrap .list .switch:hover.active:after,
+.container .hot-list .music-menu-list .menu-type .type-triangle
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
