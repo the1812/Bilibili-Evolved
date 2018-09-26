@@ -137,7 +137,13 @@ ul.navigation li span,
 .preview-avatar-con:after,
 .preview-title:after,
 .upload-txt,
-.value-length
+.value-length,
+.cc-album-create .info-wrp p,
+.upload-v2-step1-container .upload-agreement .reg-2,
+.tool-box-v2-container .tool-title,
+.tool-box-v2-container .tool-xiaowan-bilibili a,
+.tool-box-v2-container .tool-xiaowan a,
+.upload-v2-step1-container .upload-agreement .reg-1 > div a
 {
     color: #aaa !important;
 }
@@ -204,7 +210,8 @@ ul.navigation li.activated span,
 .check-warp .el-checkbox,
 .preview-title-line1,
 .ui-select .ui-select-show-box,
-.danmu-wrp .section .bili-input 
+.danmu-wrp .section .bili-input,
+.upload-v2-step1-container .video-jam .video-jam-pretext
 {
     color: #eee !important;
 }
@@ -390,7 +397,9 @@ ul.navigation li:hover,
 .check-warp a,
 .ui-select .ul-select-list .select-item.active,
 .ui-select .ul-select-list .select-item:hover,
-.ui-tabs .ui-tabs-head .tab-head-item.current a 
+.ui-tabs .ui-tabs-head .tab-head-item.current a,
+.tool-box-v2-container .tool-xiaowan-bilibili a:hover,
+.tool-box-v2-container .tool-xiaowan a:hover 
 {
     color: $customStyleColor !important;
 }
