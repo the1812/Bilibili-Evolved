@@ -33,7 +33,10 @@ background-color: #222 !important;
 .recent-danmu-wrp .danmu-filter .left .delete .option-wrp .act-btn,
 .recent-danmu-wrp .head .dropdown-btn,
 .rank-list-head .rank_tips,
-.condition-btn-disable 
+.condition-btn-disable,
+.official-submit-btn-disable,
+.el-upload--picture-card,
+.official-title-input 
 {
     background-color: #444 !important;
 }
@@ -63,9 +66,11 @@ background-color: #222 !important;
 // {
 //     background: #fff1 !important;
 // }
-.recent-danmu-wrp .danmu-filter .left .line
+.recent-danmu-wrp .danmu-filter .left .line,
+.preview-avatar-con,
+.preview-title 
 {
-background: transparent !important;
+    background: transparent !important;
 }
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd h4 .user-container span,
@@ -120,7 +125,13 @@ ul.navigation li span,
 .ava-text,
 .title-module,
 .condition-txt,
-.condition-sub-title 
+.condition-sub-title,
+.official-name-info,
+.form-title-info,
+.preview-avatar-con:after,
+.preview-title:after,
+.upload-txt,
+.value-length 
 {
     color: #aaa !important;
 }
@@ -181,7 +192,11 @@ ul.navigation li.activated span,
 .card-name,
 .card-info,
 .condition-title,
-.condition-btn-disable 
+.condition-btn-disable,
+.official-label,
+.official-submit-btn-disable,
+.check-warp .el-checkbox,
+.preview-title-line1 
 {
     color: #eee !important;
 }
@@ -220,7 +235,9 @@ ul.navigation li.activated span,
 .other,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn:hover,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
+.official-title-input,
+.official-right-float .el-upload--picture-card 
 {
     border-color: transparent !important;
 }
@@ -357,7 +374,8 @@ ul.navigation li:hover,
 .comment-manage-wrap .dropdown .dropdown-menu .selected,
 .comment-manage-wrap .content .action-bar .dropdown .sort-btn:hover,
 .rank-menu li.active,
-.rank-tab-wrap .rank-tab .active
+.rank-tab-wrap .rank-tab .active,
+.check-warp a 
 {
     color: $customStyleColor !important;
 }
