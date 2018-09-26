@@ -21,7 +21,8 @@
 #edit-page .btn-group.main-active-btn .ui-btn.loading,
 #edit-page .btn-group.main-active-btn a.white:hover,
 #edit-page .btn-group.main-active-btn button.white:hover,
-.ticket-container
+.ticket-container,
+.assist-wrap .addModal .modal-wrap 
 {
     background-color: #222 !important;
 }
@@ -57,7 +58,8 @@
 .cover-upload-box .no-img,
 .ui-select .ul-select-list .select-item.active,
 .ui-select .ul-select-list .select-item:hover,
-.float-toolbar .toolbar-list li 
+.float-toolbar .toolbar-list li,
+.assist-wrap .addModal .control-group.assist-rights .rights 
 {
     background-color: #444 !important;
 }
@@ -90,7 +92,8 @@
 // }
 .recent-danmu-wrp .danmu-filter .left .line,
 .preview-avatar-con,
-.preview-title 
+.preview-title,
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon 
 {
     background: transparent !important;
 }
@@ -250,7 +253,10 @@ ul.navigation li.activated span,
 .ui-btn.blue-radius,
 .protocol-block,
 .create-compilations-btn .album-flex .album-bar-btn .album-bar-btn-text,
-.music-upload-wrapper .upload-music-bar-wrapper .pload-music-bar-btn
+.music-upload-wrapper .upload-music-bar-wrapper .pload-music-bar-btn,
+.assist-wrap .addModal .control-group > label,
+.assist-wrap .addModal .control-group,
+.ui-input-text input 
 {
     color: #eee !important;
 }
@@ -453,7 +459,8 @@ ul.navigation li:hover,
 .protocol-block a:hover,
 .music-clue .font-blue,
 .music-clue .iconfont,
-.music-tips .music-tip:hover
+.music-tips .music-tip:hover,
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon 
 {
     color: $customStyleColor !important;
 }
