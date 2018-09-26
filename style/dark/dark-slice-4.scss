@@ -6,9 +6,11 @@
 .dc-option:hover,
 .cc-content-body .medal,
 .comment-manage-wrap .search input,
-.comment-manage-wrap .head .search .bili-input
+.comment-manage-wrap .head .search .bili-input,
+.ui-select .ul-select-list .select-item.active, 
+.ui-select .ul-select-list .select-item:hover 
 {
-background-color: #222 !important;
+    background-color: #222 !important;
 }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
@@ -36,7 +38,11 @@ background-color: #222 !important;
 .condition-btn-disable,
 .official-submit-btn-disable,
 .el-upload--picture-card,
-.official-title-input 
+.official-title-input,
+.ui-select.white .ui-select-show-box,
+.ui-select .ul-select-list,
+.ui-select.white .ui-select-show-box:hover,
+.bili-input 
 {
     background-color: #444 !important;
 }
@@ -131,7 +137,7 @@ ul.navigation li span,
 .preview-avatar-con:after,
 .preview-title:after,
 .upload-txt,
-.value-length 
+.value-length
 {
     color: #aaa !important;
 }
@@ -196,7 +202,9 @@ ul.navigation li.activated span,
 .official-label,
 .official-submit-btn-disable,
 .check-warp .el-checkbox,
-.preview-title-line1 
+.preview-title-line1,
+.ui-select .ui-select-show-box,
+.danmu-wrp .section .bili-input 
 {
     color: #eee !important;
 }
@@ -237,7 +245,9 @@ ul.navigation li.activated span,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn:hover,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
 .official-title-input,
-.official-right-float .el-upload--picture-card 
+.official-right-float .el-upload--picture-card,
+.ui-select.white .ui-select-show-box,
+.bili-input 
 {
     border-color: transparent !important;
 }
@@ -375,7 +385,9 @@ ul.navigation li:hover,
 .comment-manage-wrap .content .action-bar .dropdown .sort-btn:hover,
 .rank-menu li.active,
 .rank-tab-wrap .rank-tab .active,
-.check-warp a 
+.check-warp a,
+.ui-select .ul-select-list .select-item.active, 
+.ui-select .ul-select-list .select-item:hover 
 {
     color: $customStyleColor !important;
 }
