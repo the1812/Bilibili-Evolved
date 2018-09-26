@@ -2504,7 +2504,6 @@ li.season-item .season-body .season-title span.follow,
 .cc-nav-wrp,
 .nav-upload-container,
 .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
-.row,
 .audioplayer,
 .log-empty,
 .follow-container .follow-right .follow-intro .follow-fold,
@@ -4118,7 +4117,9 @@ body>div.to-top.on,
 #activeCenter .s-imgUnit .s-imgUnit-img,
 .guide .old-btn a,
 .app .module-card,
-.nav-panel-vc
+.nav-panel-vc,
+.container .song-list .song-li .song-img,
+.audioplayer .ap-controller .ap-controller-left .ap-cover
 {
     background-color: #444 !important;
 }
@@ -4784,7 +4785,9 @@ ul.navigation li.activated span,
 .comment-wrap header h2,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .title,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white,
+.assist-wrap .assist-list header h1,
+.assist-wrap .assist-log header h1 
 {
     color: #eee !important;
 }

@@ -75,7 +75,10 @@ body>div.to-top.on,
 #activeCenter .s-imgUnit .s-imgUnit-img,
 .guide .old-btn a,
 .app .module-card,
-.nav-panel-vc
+.nav-panel-vc,
+.container .song-list .song-li .song-img,
+.audioplayer .ap-controller .ap-controller-left .ap-cover,
+.container .host-list-layout .hot-list-wrap .bg-wrap
 {
     background-color: #444 !important;
 }
@@ -161,7 +164,8 @@ body>div.to-top.on,
 .uploader-info .info .follow .num,
 .video-list-wrapper .title .text .num,
 .danmu-hot .tab-list .tab,
-.rank-item .content .info .bangumi-info
+.rank-item .content .info .bangumi-info,
+.container .hot-list .music-menu-list .menu-type
 {
     color: #aaa !important;
 }
@@ -210,7 +214,8 @@ body>div.to-top.on,
 .video-list-wrapper .title .more .text,
 .danmu-hot .video-list .video-wrapper .video .title,
 .blink-qrcode .title,
-.rank-item .content .info .title
+.rank-item .content .info .title,
+.container .hot-list .menu-title
 {
     color: #eee !important;
 }
@@ -324,6 +329,10 @@ body>div.to-top.on,
 .rank-item .content .info .detail .b-icon.author
 {
     filter: grayscale(1) !important;
+}
+.container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-title
+{
+    filter: brightness(0.7) !important;
 }
 // a
 // {
