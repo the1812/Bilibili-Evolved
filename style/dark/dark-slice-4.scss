@@ -7,8 +7,20 @@
 .cc-content-body .medal,
 .comment-manage-wrap .search input,
 .comment-manage-wrap .head .search .bili-input,
-.ui-select .ul-select-list .select-item.active, 
-.ui-select .ul-select-list .select-item:hover 
+.ui-select.white .ui-select-show-box,
+.ui-select.white .ui-select-show-box:hover,
+.ui-select .ul-select-list,
+.classify .classify-list .list-item .class-block,
+.classify .classify-list .list-item .class-block:hover,
+.ui-btn.sub-btn,
+.ui-btn.white,
+.cards-block .cards-list .card-item .card-case .title:empty,
+.cards-block .cards-list .card-item .card-case.type-head .text .content .block,
+.cards-block .cards-list .card-item .card-case .image,
+.ui-btn.white,
+#edit-page .btn-group.main-active-btn .ui-btn.loading,
+#edit-page .btn-group.main-active-btn a.white:hover,
+#edit-page .btn-group.main-active-btn button.white:hover
 {
     background-color: #222 !important;
 }
@@ -39,10 +51,12 @@
 .official-submit-btn-disable,
 .el-upload--picture-card,
 .official-title-input,
-.ui-select.white .ui-select-show-box,
-.ui-select .ul-select-list,
-.ui-select.white .ui-select-show-box:hover,
-.bili-input 
+.bili-input,
+#edit-page,
+.cover-upload-box .no-img,
+.ui-select .ul-select-list .select-item.active,
+.ui-select .ul-select-list .select-item:hover,
+.float-toolbar .toolbar-list li 
 {
     background-color: #444 !important;
 }
@@ -64,7 +78,8 @@
 // }
 .link-footer .footer-linker .footer-linker-line,
 .nav-notice li,
-.nav-notice li.hover
+.nav-notice li.hover,
+#text-contribute .fixed-header 
 {
     background-color: transparent !important;
 }
@@ -143,7 +158,15 @@ ul.navigation li span,
 .tool-box-v2-container .tool-title,
 .tool-box-v2-container .tool-xiaowan-bilibili a,
 .tool-box-v2-container .tool-xiaowan a,
-.upload-v2-step1-container .upload-agreement .reg-1 > div a
+.upload-v2-step1-container .upload-agreement .reg-1 > div a,
+.cover-upload-box .no-img,
+.tag-list-wrap .tag-list .add-item .tip,
+#edit-page .copyright-hint,
+#edit-page .block-wrap h3.block-title span.tips,
+.cards-block .cards-list .card-item .card-case .image .empty-icon p,
+.editor-box p.counter,
+.editor-wrap .article-title .count,
+.ui-input-textarea .count 
 {
     color: #aaa !important;
 }
@@ -211,7 +234,18 @@ ul.navigation li.activated span,
 .preview-title-line1,
 .ui-select .ui-select-show-box,
 .danmu-wrp .section .bili-input,
-.upload-v2-step1-container .video-jam .video-jam-pretext
+.upload-v2-step1-container .video-jam .video-jam-pretext,
+.cards-block .radio-list .radio-item .radio-label.active,
+.cards-block .radio-list .radio-item .radio-label:not([disabled=disabled]),
+.ui-select .ul-select-list .select-item,
+.classify .classify-list .list-item .class-block,
+.read-list-component .create-btn,
+.tag-list-wrap .tag-list .add-item .add-control,
+.cards-block .cards-list .card-item .card-case .user-info span,
+#edit-page .btn-group.main-active-btn a.white,
+#edit-page .btn-group.main-active-btn button.white,
+.ui-btn.blue-radius,
+.protocol-block 
 {
     color: #eee !important;
 }
@@ -254,14 +288,21 @@ ul.navigation li.activated span,
 .official-title-input,
 .official-right-float .el-upload--picture-card,
 .ui-select.white .ui-select-show-box,
-.bili-input 
+.bili-input,
+.classify .classify-list .list-item .class-block,
+.ui-btn.sub-btn,
+.ui-btn.white,
+#edit-page .btn-group.main-active-btn a.white,
+#edit-page .btn-group.main-active-btn button.white,
+.ui-input-textarea
 {
     border-color: transparent !important;
 }
 .banner-p a,
 .fjw-random .point-wrap .cnt,
 .fjw-random .point-wrap .cnt .list,
-.face-g-list#my-g-list .face-g-block .my-mp-block
+.face-g-list#my-g-list .face-g-block .my-mp-block,
+.ui-input 
 {
     border-color: #aaa !important;
 }
@@ -315,10 +356,10 @@ filter: $pinkImageFilter !important;
 // {
 //     border-radius: 4px !important;
 // }
-// a
-// {
-//     box-shadow: none !important;
-// }
+#edit-page 
+{
+    box-shadow: none !important;
+}
 // a
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
@@ -349,7 +390,8 @@ filter: $pinkImageFilter !important;
 .dc-radio-button.is-active:after,
 .rank-menu li.active,
 .ui-tabs .ui-tabs-head .tab-head-item.current a,
-.ui-tabs .ui-tabs-head .tab-head-item.current a:after 
+.ui-tabs .ui-tabs-head .tab-head-item.current a:after,
+.classify .classify-list .list-item .class-block:hover 
 {
     border-color: $customStyleColor !important;
 }
@@ -363,7 +405,8 @@ ul.navigation li:after,
 .main-container .sponsor-wrapper .sponsor-right-area .sponsor-btn,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu-wrap .bilibili-player-setting-menu-list .active-point,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn:hover,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
+.ui-btn.blue-radius 
 {
     background-color: $customStyleColor !important;
 }
@@ -399,7 +442,10 @@ ul.navigation li:hover,
 .ui-select .ul-select-list .select-item:hover,
 .ui-tabs .ui-tabs-head .tab-head-item.current a,
 .tool-box-v2-container .tool-xiaowan-bilibili a:hover,
-.tool-box-v2-container .tool-xiaowan a:hover 
+.tool-box-v2-container .tool-xiaowan a:hover,
+.classify .classify-list .list-item .class-block:hover,
+.protocol-block a,
+.protocol-block a:hover 
 {
     color: $customStyleColor !important;
 }
@@ -412,10 +458,11 @@ ul.navigation li:hover,
 //     fill: $customStyleColor !important;
 // }
 #page .game .game-box,
-.comment-manage-wrap .head .dropdown-menu .article-list
+.comment-manage-wrap .head .dropdown-menu .article-list,
+#edit-page .block-hr 
 {
-border-top-color: transparent !important;
-border-bottom-color: transparent !important;
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
 }
 // a
 // {

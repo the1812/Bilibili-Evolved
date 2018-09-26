@@ -54,7 +54,8 @@ blockquote .color-yellow-04,
 
 .link-footer,
 .el-input__inner,
-.commnent-screen-wrap .el-input__inner
+.commnent-screen-wrap .el-input__inner,
+.ui-input-textarea.focus 
 {
     border-color: transparent !important;
 }
