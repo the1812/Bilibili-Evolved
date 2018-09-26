@@ -20,7 +20,8 @@
 .ui-btn.white,
 #edit-page .btn-group.main-active-btn .ui-btn.loading,
 #edit-page .btn-group.main-active-btn a.white:hover,
-#edit-page .btn-group.main-active-btn button.white:hover
+#edit-page .btn-group.main-active-btn button.white:hover,
+.ticket-container
 {
     background-color: #222 !important;
 }
@@ -166,7 +167,9 @@ ul.navigation li span,
 .cards-block .cards-list .card-item .card-case .image .empty-icon p,
 .editor-box p.counter,
 .editor-wrap .article-title .count,
-.ui-input-textarea .count 
+.ui-input-textarea .count,
+.music-clue,
+.music-tips .music-tip
 {
     color: #aaa !important;
 }
@@ -245,7 +248,9 @@ ul.navigation li.activated span,
 #edit-page .btn-group.main-active-btn a.white,
 #edit-page .btn-group.main-active-btn button.white,
 .ui-btn.blue-radius,
-.protocol-block 
+.protocol-block,
+.create-compilations-btn .album-flex .album-bar-btn .album-bar-btn-text,
+.music-upload-wrapper .upload-music-bar-wrapper .pload-music-bar-btn
 {
     color: #eee !important;
 }
@@ -445,7 +450,10 @@ ul.navigation li:hover,
 .tool-box-v2-container .tool-xiaowan a:hover,
 .classify .classify-list .list-item .class-block:hover,
 .protocol-block a,
-.protocol-block a:hover 
+.protocol-block a:hover,
+.music-clue .font-blue,
+.music-clue .iconfont,
+.music-tips .music-tip:hover
 {
     color: $customStyleColor !important;
 }
