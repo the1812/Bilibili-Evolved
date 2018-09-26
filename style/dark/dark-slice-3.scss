@@ -33,7 +33,8 @@ div#square.container,
 .app .module-card.comment,
 .rank-item .content,
 .rank-tab-wrap,
-.area-item-ctnr .area-item:hover
+.area-item-ctnr .area-item:hover,
+.bili-radio+span::before
 {
     background-color: #222 !important;
 }
@@ -78,7 +79,9 @@ body>div.to-top.on,
 .nav-panel-vc,
 .container .song-list .song-li .song-img,
 .audioplayer .ap-controller .ap-controller-left .ap-cover,
-.container .host-list-layout .hot-list-wrap .bg-wrap
+.container .host-list-layout .hot-list-wrap .bg-wrap,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+.notify-v2-container>div
 {
     background-color: #444 !important;
 }
@@ -219,7 +222,11 @@ body>div.to-top.on,
 .blink-qrcode .title,
 .rank-item .content .info .title,
 .container .hot-list .menu-title,
-.announcement-cntr .header p
+.announcement-cntr .header p,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+.notify-v2-container>div>span,
+.notify-v2-container>div a,
+.notify-v2-container>div .notify-v2-close
 {
     color: #eee !important;
 }
@@ -253,14 +260,16 @@ body>div.to-top.on,
 .app .module-card,
 .uploader-info .info .follow .num,
 .danmu-hot .tab-list,
-.announcement-cntr .content
+.announcement-cntr .content,
+.upload-v2-step1-container .upload-btn,
+.upload-v2-step1-container .video-jam .video-jam-comment
 {
     border-color: transparent !important;
 }
-// a
-// {
-//     border-color: #aaa !important;
-// }
+.bili-radio+span::before
+{
+    border-color: #aaa !important;
+}
 // a
 // {
 //     border-color: #222 !important;
@@ -300,6 +309,11 @@ body>div.to-top.on,
 .list-wrap .s-showMore .icon-right
 {
     filter: brightness(0) invert(1) !important;
+}
+.tool-box-v2-container .icon-tv,
+.tool-box-v2-container .icon-download
+{
+    filter: brightness(0) invert(.7) !important;
 }
 .bp-svg-icon.link,
 .face-g-list .mp-block .right ul li.reach::after,
@@ -436,7 +450,8 @@ body>div.to-top.on
 #rankList .list-wrap .list .switch:hover.active:after,
 .danmu-hot .tab-list .tab.active,
 .container .hot-list .music-menu-list .choose-menu,
-.container .hot-list .music-menu-list .menu-type .type-triangle
+.container .hot-list .music-menu-list .menu-type .type-triangle,
+.bili-radio:checked+span::before
 {
     border-color: $customStyleColor !important;
 }
@@ -471,7 +486,9 @@ body>div.to-top.on
 .guide .feedback-btn a,
 .gift>.expires,
 .blp-ui-slider-process,
-.uploader-info .info .follow .btn
+.uploader-info .info .follow .btn,
+.bili-radio:checked+span::after,
+.upload-v2-step1-container .upload-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -536,7 +553,8 @@ body>div.to-top.on
 .danmu-hot .tab-list .tab.active,
 .danmu-hot .video-list .video-wrapper .video:hover .title,
 .rank-item .content .info .title:hover,
-.rank-item .content .info .bangumi-num
+.rank-item .content .info .bangumi-num,
+.upload-agreement a
 {
     color: $customStyleColor !important;
 }
@@ -552,7 +570,8 @@ body>div.to-top.on
 .index-nav .n-i .name:hover,
 .guide .feedback-btn a,
 .gift>.expires,
-.uploader-info .info .follow .btn
+.uploader-info .info .follow .btn,
+.upload-v2-step1-container .upload-btn
 {
     color: $foreground !important;
 }

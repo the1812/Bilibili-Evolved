@@ -513,9 +513,9 @@ font>span,
 }
 
 .bili-footer a,
-a.pic>p.title,
+a.pic > p.title,
 div.desc-tips,
-div.r.p>div.info,
+div.r.p > div.info,
 a.message,
 div.desc,
 .btn.followed .b-gz,
@@ -527,13 +527,13 @@ span.copyright,
 .bilibili-player-danmaku-date-picker-header,
 .bilibili-player-danmaku-date-picker-btn,
 .day-span,
-.video-toolbar .ops>span,
+.video-toolbar .ops > span,
 .video-toolbar .share .share-btn,
 .video-toolbar,
 li.tag,
-.tag-info-pane .tag-footer .btn-left-box>a,
+.tag-info-pane .tag-footer .btn-left-box > a,
 .video-desc .btn span,
-li.tag>a,
+li.tag > a,
 .tag-info-pane .tag-header .btn-unsubscribe,
 span.disabled,
 .btn-box .liked,
@@ -547,7 +547,7 @@ div.drag-bar,
 .bilibili-player-block-filter-image,
 .mode .selection-span,
 .recommend-list .rec-footer,
-.bilibili-player-block-list-function>div,
+.bilibili-player-block-list-function > div,
 .bilibili-player-block-line.block-state-disabled,
 .bilibili-player-block-line-delete,
 .bilibili-player-block-empty,
@@ -563,14 +563,14 @@ div.drag-bar,
 .dynamic-list-item-wrap .item-user a.user-name,
 .dynamic-list-item-wrap .item-user a.user-name.vip,
 .textarea-container .comm-tool .comm-transpond,
-.dynamic-list-item-wrap .info >span,
+.dynamic-list-item-wrap .info > span,
 .page-controller .prev.disabled,
 .page-controller .next.disabled,
 .forw-area .forw-more a,
 .watch-later-list header .d-btn,
 .tab-list .tb-item,
 .dynamic-list-item-wrap .view-more,
-.comment-area .comm-main .comm-list .hot-line >span,
+.comment-area .comm-main .comm-list .hot-line > span,
 .up-info-block .up-info-right-block .row-2,
 .up-info-block .up-info-right-block .fans-num,
 .up-info-block .up-info-right-block .view-num,
@@ -651,7 +651,7 @@ div.drag-bar,
 .submit-button.disabled,
 .vote-introduction,
 .suggest-wrap .title span,
-.nav-wrap .wrap>.sub>span,
+.nav-wrap .wrap > .sub > span,
 .filter-wrap .fold,
 .so-icon,
 .video.list .des,
@@ -686,7 +686,7 @@ div.drag-bar,
 .gift-info-desc,
 .block-setting-ctnr .sub-title,
 .list-content-candidate,
-.pophover>p:last-child,
+.pophover > p:last-child,
 .live-player-ctnr.minimal::before,
 .ban-detail .content-box .bk-user-info .time,
 .ban-detail .content-box .link-box,
@@ -702,7 +702,8 @@ div.drag-bar,
 .is-max .option-vote,
 .video-toolbar .ops .share-pos,
 .video-toolbar .ops .share-btn i,
-#page-index .section.empty:after
+#page-index .section.empty:after,
+body 
 {
     color: #aaa !important;
 }
@@ -2669,8 +2670,7 @@ a.bp_box_bot_click,
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover,
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover,
 .border-line,
-.count-wrapper div.danmu-count:after,
-.ui-calendar .flatpickr-day.inRange
+.count-wrapper div.danmu-count:after
 {
     background-color: #aaa !important;
 }
@@ -4075,7 +4075,8 @@ div#square.container,
 .app .module-card.comment,
 .rank-item .content,
 .rank-tab-wrap,
-.area-item-ctnr .area-item:hover
+.area-item-ctnr .area-item:hover,
+.bili-radio+span::before
 {
     background-color: #222 !important;
 }
@@ -4120,7 +4121,9 @@ body>div.to-top.on,
 .nav-panel-vc,
 .container .song-list .song-li .song-img,
 .audioplayer .ap-controller .ap-controller-left .ap-cover,
-.container .host-list-layout .hot-list-wrap .bg-wrap
+.container .host-list-layout .hot-list-wrap .bg-wrap,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+.notify-v2-container>div
 {
     background-color: #444 !important;
 }
@@ -4261,7 +4264,11 @@ body>div.to-top.on,
 .blink-qrcode .title,
 .rank-item .content .info .title,
 .container .hot-list .menu-title,
-.announcement-cntr .header p
+.announcement-cntr .header p,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+.notify-v2-container>div>span,
+.notify-v2-container>div a,
+.notify-v2-container>div .notify-v2-close
 {
     color: #eee !important;
 }
@@ -4295,14 +4302,16 @@ body>div.to-top.on,
 .app .module-card,
 .uploader-info .info .follow .num,
 .danmu-hot .tab-list,
-.announcement-cntr .content
+.announcement-cntr .content,
+.upload-v2-step1-container .upload-btn,
+.upload-v2-step1-container .video-jam .video-jam-comment
 {
     border-color: transparent !important;
 }
-// a
-// {
-//     border-color: #aaa !important;
-// }
+.bili-radio+span::before
+{
+    border-color: #aaa !important;
+}
 // a
 // {
 //     border-color: #222 !important;
@@ -4342,6 +4351,11 @@ body>div.to-top.on,
 .list-wrap .s-showMore .icon-right
 {
     filter: brightness(0) invert(1) !important;
+}
+.tool-box-v2-container .icon-tv,
+.tool-box-v2-container .icon-download
+{
+    filter: brightness(0) invert(.7) !important;
 }
 .bp-svg-icon.link,
 .face-g-list .mp-block .right ul li.reach::after,
@@ -4478,7 +4492,8 @@ body>div.to-top.on
 #rankList .list-wrap .list .switch:hover.active:after,
 .danmu-hot .tab-list .tab.active,
 .container .hot-list .music-menu-list .choose-menu,
-.container .hot-list .music-menu-list .menu-type .type-triangle
+.container .hot-list .music-menu-list .menu-type .type-triangle,
+.bili-radio:checked+span::before
 {
     border-color: $customStyleColor !important;
 }
@@ -4513,7 +4528,9 @@ body>div.to-top.on
 .guide .feedback-btn a,
 .gift>.expires,
 .blp-ui-slider-process,
-.uploader-info .info .follow .btn
+.uploader-info .info .follow .btn,
+.bili-radio:checked+span::after,
+.upload-v2-step1-container .upload-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -4578,7 +4595,8 @@ body>div.to-top.on
 .danmu-hot .tab-list .tab.active,
 .danmu-hot .video-list .video-wrapper .video:hover .title,
 .rank-item .content .info .title:hover,
-.rank-item .content .info .bangumi-num
+.rank-item .content .info .bangumi-num,
+.upload-agreement a
 {
     color: $customStyleColor !important;
 }
@@ -4594,7 +4612,8 @@ body>div.to-top.on
 .index-nav .n-i .name:hover,
 .guide .feedback-btn a,
 .gift>.expires,
-.uploader-info .info .follow .btn
+.uploader-info .info .follow .btn,
+.upload-v2-step1-container .upload-btn
 {
     color: $foreground !important;
 }
@@ -4638,9 +4657,39 @@ body>div.to-top.on
 .dc-option:hover,
 .cc-content-body .medal,
 .comment-manage-wrap .search input,
-.comment-manage-wrap .head .search .bili-input
+.comment-manage-wrap .head .search .bili-input,
+.ui-select.white .ui-select-show-box,
+.ui-select.white .ui-select-show-box:hover,
+.ui-select .ul-select-list,
+.classify .classify-list .list-item .class-block,
+.classify .classify-list .list-item .class-block:hover,
+.ui-btn.sub-btn,
+.ui-btn.white,
+.cards-block .cards-list .card-item .card-case .title:empty,
+.cards-block .cards-list .card-item .card-case.type-head .text .content .block,
+.cards-block .cards-list .card-item .card-case .image,
+.ui-btn.white,
+#edit-page .btn-group.main-active-btn .ui-btn.loading,
+#edit-page .btn-group.main-active-btn a.white:hover,
+#edit-page .btn-group.main-active-btn button.white:hover,
+.ticket-container,
+.assist-wrap .addModal .modal-wrap,
+.ui-calendar .flatpickr-day.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay.today.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay:focus,
+.ui-calendar .flatpickr-day.nextMonthDay:hover,
+.ui-calendar .flatpickr-day.prevMonthDay.inRange,
+.ui-calendar .flatpickr-day.prevMonthDay.today.inRange,
+.ui-calendar .flatpickr-day.prevMonthDay:focus,
+.ui-calendar .flatpickr-day.prevMonthDay:hover,
+.ui-calendar .flatpickr-day.today.inRange,
+.ui-calendar .flatpickr-day:focus,
+.ui-calendar .flatpickr-day:hover,
+.flatpickr-day.today:focus,
+.flatpickr-day.today:hover
 {
-background-color: #222 !important;
+    background-color: #222 !important;
 }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
@@ -4664,7 +4713,18 @@ background-color: #222 !important;
 .comment-manage-wrap .head .dropdown-btn .text,
 .recent-danmu-wrp .danmu-filter .left .delete .option-wrp .act-btn,
 .recent-danmu-wrp .head .dropdown-btn,
-.rank-list-head .rank_tips
+.rank-list-head .rank_tips,
+.condition-btn-disable,
+.official-submit-btn-disable,
+.el-upload--picture-card,
+.official-title-input,
+.bili-input,
+#edit-page,
+.cover-upload-box .no-img,
+.ui-select .ul-select-list .select-item.active,
+.ui-select .ul-select-list .select-item:hover,
+.float-toolbar .toolbar-list li,
+.assist-wrap .addModal .control-group.assist-rights .rights
 {
     background-color: #444 !important;
 }
@@ -4686,7 +4746,8 @@ background-color: #222 !important;
 // }
 .link-footer .footer-linker .footer-linker-line,
 .nav-notice li,
-.nav-notice li.hover
+.nav-notice li.hover,
+#text-contribute .fixed-header
 {
     background-color: transparent !important;
 }
@@ -4694,9 +4755,12 @@ background-color: #222 !important;
 // {
 //     background: #fff1 !important;
 // }
-.recent-danmu-wrp .danmu-filter .left .line
+.recent-danmu-wrp .danmu-filter .left .line,
+.preview-avatar-con,
+.preview-title,
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon
 {
-background: transparent !important;
+    background: transparent !important;
 }
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd h4 .user-container span,
@@ -4746,7 +4810,35 @@ ul.navigation li span,
 .more-data,
 .other span,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .mp-descr,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .mp-gettime
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .mp-gettime,
+.ava-name,
+.ava-text,
+.title-module,
+.condition-txt,
+.condition-sub-title,
+.official-name-info,
+.form-title-info,
+.preview-avatar-con:after,
+.preview-title:after,
+.upload-txt,
+.value-length,
+.cc-album-create .info-wrp p,
+.upload-v2-step1-container .upload-agreement .reg-2,
+.tool-box-v2-container .tool-title,
+.tool-box-v2-container .tool-xiaowan-bilibili a,
+.tool-box-v2-container .tool-xiaowan a,
+.upload-v2-step1-container .upload-agreement .reg-1 > div a,
+.cover-upload-box .no-img,
+.tag-list-wrap .tag-list .add-item .tip,
+#edit-page .copyright-hint,
+#edit-page .block-wrap h3.block-title span.tips,
+.cards-block .cards-list .card-item .card-case .image .empty-icon p,
+.editor-box p.counter,
+.editor-wrap .article-title .count,
+.ui-input-textarea .count,
+.music-clue,
+.music-tips .music-tip,
+.assist-wrap .assist-log header .tools .search-wrp input[type=text]::placeholder
 {
     color: #aaa !important;
 }
@@ -4802,7 +4894,35 @@ ul.navigation li.activated span,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white,
 .assist-wrap .assist-list header h1,
-.assist-wrap .assist-log header h1 
+.assist-wrap .assist-log header h1,
+.official-title,
+.card-name,
+.card-info,
+.condition-title,
+.condition-btn-disable,
+.official-label,
+.official-submit-btn-disable,
+.check-warp .el-checkbox,
+.preview-title-line1,
+.ui-select .ui-select-show-box,
+.danmu-wrp .section .bili-input,
+.upload-v2-step1-container .video-jam .video-jam-pretext,
+.cards-block .radio-list .radio-item .radio-label.active,
+.cards-block .radio-list .radio-item .radio-label:not([disabled=disabled]),
+.ui-select .ul-select-list .select-item,
+.classify .classify-list .list-item .class-block,
+.read-list-component .create-btn,
+.tag-list-wrap .tag-list .add-item .add-control,
+.cards-block .cards-list .card-item .card-case .user-info span,
+#edit-page .btn-group.main-active-btn a.white,
+#edit-page .btn-group.main-active-btn button.white,
+.ui-btn.blue-radius,
+.protocol-block,
+.create-compilations-btn .album-flex .album-bar-btn .album-bar-btn-text,
+.music-upload-wrapper .upload-music-bar-wrapper .pload-music-bar-btn,
+.assist-wrap .addModal .control-group > label,
+.assist-wrap .addModal .control-group,
+.ui-input-text input
 {
     color: #eee !important;
 }
@@ -4841,16 +4961,66 @@ ul.navigation li.activated span,
 .other,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn:hover,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
+.official-title-input,
+.official-right-float .el-upload--picture-card,
+.ui-select.white .ui-select-show-box,
+.bili-input,
+.classify .classify-list .list-item .class-block,
+.ui-btn.sub-btn,
+.ui-btn.white,
+#edit-page .btn-group.main-active-btn a.white,
+#edit-page .btn-group.main-active-btn button.white,
+.ui-input-textarea,
+.assist-wrap .addModal .modal-wrap,
+.ui-calendar .flatpickr-day.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay.today.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay:focus,
+.ui-calendar .flatpickr-day.nextMonthDay:hover,
+.ui-calendar .flatpickr-day.prevMonthDay.inRange,
+.ui-calendar .flatpickr-day.prevMonthDay.today.inRange,
+.ui-calendar .flatpickr-day.prevMonthDay:focus,
+.ui-calendar .flatpickr-day.prevMonthDay:hover,
+.ui-calendar .flatpickr-day.today.inRange,
+.ui-calendar .flatpickr-day:focus,
+.ui-calendar .flatpickr-day:hover,
+.ui-calendar .flatpickr-day.endRange,
+.ui-calendar .flatpickr-day.endRange.inRange,
+.ui-calendar .flatpickr-day.endRange.nextMonthDay,
+.ui-calendar .flatpickr-day.endRange.prevMonthDay,
+.ui-calendar .flatpickr-day.endRange:focus,
+.ui-calendar .flatpickr-day.endRange:hover,
+.ui-calendar .flatpickr-day.selected,
+.ui-calendar .flatpickr-day.selected.inRange,
+.ui-calendar .flatpickr-day.selected.nextMonthDay,
+.ui-calendar .flatpickr-day.selected.prevMonthDay,
+.ui-calendar .flatpickr-day.selected:focus,
+.ui-calendar .flatpickr-day.selected:hover,
+.ui-calendar .flatpickr-day.startRange,
+.ui-calendar .flatpickr-day.startRange.inRange,
+.ui-calendar .flatpickr-day.startRange.nextMonthDay,
+.ui-calendar .flatpickr-day.startRange.prevMonthDay,
+.ui-calendar .flatpickr-day.startRange:focus,
+.ui-calendar .flatpickr-day.startRange:hover
 {
     border-color: transparent !important;
 }
 .banner-p a,
 .fjw-random .point-wrap .cnt,
 .fjw-random .point-wrap .cnt .list,
-.face-g-list#my-g-list .face-g-block .my-mp-block
+.face-g-list#my-g-list .face-g-block .my-mp-block,
+.ui-input
 {
     border-color: #aaa !important;
+}
+.flatpickr-current-month .numInputWrapper span.arrowUp::after
+{
+    border-bottom-color: #aaa !important;
+}
+.flatpickr-current-month .numInputWrapper span.arrowDown::after
+{
+    border-top-color: #aaa !important;
 }
 // a
 // {
@@ -4868,10 +5038,11 @@ ul.navigation li.activated span,
 // {
 //     transition: all .2s !important;
 // }
-// a
-// {
-//     fill: #aaa !important;
-// }
+.flatpickr-next-month svg,
+.flatpickr-prev-month svg
+{
+    fill: #aaa !important;
+}
 .mainmenu ul.grid li a.yxzx,
 .footer-logo,
 .more-data i
@@ -4902,10 +5073,10 @@ filter: $pinkImageFilter !important;
 // {
 //     border-radius: 4px !important;
 // }
-// a
-// {
-//     box-shadow: none !important;
-// }
+#edit-page
+{
+    box-shadow: none !important;
+}
 // a
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
@@ -4928,13 +5099,20 @@ filter: $pinkImageFilter !important;
 // {
 //     opacity: 1 !important;
 // }
+
 .sort-item.on i.active,
 .banner-p h3,
 .banner-p a:hover,
 #page .game .game-box h4 span,
 .dc-radio-button.is-active,
 .dc-radio-button.is-active:after,
-.rank-menu li.active
+.rank-menu li.active,
+.ui-tabs .ui-tabs-head .tab-head-item.current a,
+.ui-tabs .ui-tabs-head .tab-head-item.current a:after,
+.classify .classify-list .list-item .class-block:hover,
+.flatpickr-day.today,
+.flatpickr-day.today:focus,
+.flatpickr-day.today:hover
 {
     border-color: $customStyleColor !important;
 }
@@ -4948,7 +5126,26 @@ ul.navigation li:after,
 .main-container .sponsor-wrapper .sponsor-right-area .sponsor-btn,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu-wrap .bilibili-player-setting-menu-list .active-point,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn:hover,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
+.ui-btn.blue-radius,
+.ui-calendar .flatpickr-day.endRange,
+.ui-calendar .flatpickr-day.endRange.inRange,
+.ui-calendar .flatpickr-day.endRange.nextMonthDay,
+.ui-calendar .flatpickr-day.endRange.prevMonthDay,
+.ui-calendar .flatpickr-day.endRange:focus,
+.ui-calendar .flatpickr-day.endRange:hover,
+.ui-calendar .flatpickr-day.selected,
+.ui-calendar .flatpickr-day.selected.inRange,
+.ui-calendar .flatpickr-day.selected.nextMonthDay,
+.ui-calendar .flatpickr-day.selected.prevMonthDay,
+.ui-calendar .flatpickr-day.selected:focus,
+.ui-calendar .flatpickr-day.selected:hover,
+.ui-calendar .flatpickr-day.startRange,
+.ui-calendar .flatpickr-day.startRange.inRange,
+.ui-calendar .flatpickr-day.startRange.nextMonthDay,
+.ui-calendar .flatpickr-day.startRange.prevMonthDay,
+.ui-calendar .flatpickr-day.startRange:focus,
+.ui-calendar .flatpickr-day.startRange:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -4978,7 +5175,20 @@ ul.navigation li:hover,
 .comment-manage-wrap .dropdown .dropdown-menu .selected,
 .comment-manage-wrap .content .action-bar .dropdown .sort-btn:hover,
 .rank-menu li.active,
-.rank-tab-wrap .rank-tab .active
+.rank-tab-wrap .rank-tab .active,
+.check-warp a,
+.ui-select .ul-select-list .select-item.active,
+.ui-select .ul-select-list .select-item:hover,
+.ui-tabs .ui-tabs-head .tab-head-item.current a,
+.tool-box-v2-container .tool-xiaowan-bilibili a:hover,
+.tool-box-v2-container .tool-xiaowan a:hover,
+.classify .classify-list .list-item .class-block:hover,
+.protocol-block a,
+.protocol-block a:hover,
+.music-clue .font-blue,
+.music-clue .iconfont,
+.music-tips .music-tip:hover,
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon
 {
     color: $customStyleColor !important;
 }
@@ -4986,15 +5196,17 @@ ul.navigation li:hover,
 // {
 //     color: $foreground !important;
 // }
-// a
-// {
-//     fill: $customStyleColor !important;
-// }
-#page .game .game-box,
-.comment-manage-wrap .head .dropdown-menu .article-list
+.flatpickr-next-month svg:hover,
+.flatpickr-prev-month svg:hover
 {
-border-top-color: transparent !important;
-border-bottom-color: transparent !important;
+    fill: $customStyleColor !important;
+}
+#page .game .game-box,
+.comment-manage-wrap .head .dropdown-menu .article-list,
+#edit-page .block-hr
+{
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
 }
 // a
 // {
@@ -5004,7 +5216,8 @@ border-bottom-color: transparent !important;
 #page .game .game-box-1,
 #page .game .game-box-3,
 .game-box-all,
-.footer-logo
+.footer-logo,
+.ui-tabs .ui-tabs-head .tab-head-item.current a::after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;

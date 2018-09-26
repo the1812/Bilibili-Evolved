@@ -22,7 +22,21 @@
 #edit-page .btn-group.main-active-btn a.white:hover,
 #edit-page .btn-group.main-active-btn button.white:hover,
 .ticket-container,
-.assist-wrap .addModal .modal-wrap 
+.assist-wrap .addModal .modal-wrap,
+.ui-calendar .flatpickr-day.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay.today.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay:focus,
+.ui-calendar .flatpickr-day.nextMonthDay:hover,
+.ui-calendar .flatpickr-day.prevMonthDay.inRange,
+.ui-calendar .flatpickr-day.prevMonthDay.today.inRange,
+.ui-calendar .flatpickr-day.prevMonthDay:focus,
+.ui-calendar .flatpickr-day.prevMonthDay:hover,
+.ui-calendar .flatpickr-day.today.inRange,
+.ui-calendar .flatpickr-day:focus,
+.ui-calendar .flatpickr-day:hover,
+.flatpickr-day.today:focus,
+.flatpickr-day.today:hover
 {
     background-color: #222 !important;
 }
@@ -59,7 +73,7 @@
 .ui-select .ul-select-list .select-item.active,
 .ui-select .ul-select-list .select-item:hover,
 .float-toolbar .toolbar-list li,
-.assist-wrap .addModal .control-group.assist-rights .rights 
+.assist-wrap .addModal .control-group.assist-rights .rights
 {
     background-color: #444 !important;
 }
@@ -82,7 +96,7 @@
 .link-footer .footer-linker .footer-linker-line,
 .nav-notice li,
 .nav-notice li.hover,
-#text-contribute .fixed-header 
+#text-contribute .fixed-header
 {
     background-color: transparent !important;
 }
@@ -93,7 +107,7 @@
 .recent-danmu-wrp .danmu-filter .left .line,
 .preview-avatar-con,
 .preview-title,
-.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon 
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon
 {
     background: transparent !important;
 }
@@ -172,7 +186,8 @@ ul.navigation li span,
 .editor-wrap .article-title .count,
 .ui-input-textarea .count,
 .music-clue,
-.music-tips .music-tip
+.music-tips .music-tip,
+.assist-wrap .assist-log header .tools .search-wrp input[type=text]::placeholder
 {
     color: #aaa !important;
 }
@@ -256,7 +271,8 @@ ul.navigation li.activated span,
 .music-upload-wrapper .upload-music-bar-wrapper .pload-music-bar-btn,
 .assist-wrap .addModal .control-group > label,
 .assist-wrap .addModal .control-group,
-.ui-input-text input 
+.ui-input-text input,
+.recent-danmu-wrp .danmu-filter .from-wrp .bili-input
 {
     color: #eee !important;
 }
@@ -305,7 +321,38 @@ ul.navigation li.activated span,
 .ui-btn.white,
 #edit-page .btn-group.main-active-btn a.white,
 #edit-page .btn-group.main-active-btn button.white,
-.ui-input-textarea
+.ui-input-textarea,
+.assist-wrap .addModal .modal-wrap,
+.ui-calendar .flatpickr-day.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay.today.inRange,
+.ui-calendar .flatpickr-day.nextMonthDay:focus,
+.ui-calendar .flatpickr-day.nextMonthDay:hover,
+.ui-calendar .flatpickr-day.prevMonthDay.inRange,
+.ui-calendar .flatpickr-day.prevMonthDay.today.inRange,
+.ui-calendar .flatpickr-day.prevMonthDay:focus,
+.ui-calendar .flatpickr-day.prevMonthDay:hover,
+.ui-calendar .flatpickr-day.today.inRange,
+.ui-calendar .flatpickr-day:focus,
+.ui-calendar .flatpickr-day:hover,
+.ui-calendar .flatpickr-day.endRange,
+.ui-calendar .flatpickr-day.endRange.inRange,
+.ui-calendar .flatpickr-day.endRange.nextMonthDay,
+.ui-calendar .flatpickr-day.endRange.prevMonthDay,
+.ui-calendar .flatpickr-day.endRange:focus,
+.ui-calendar .flatpickr-day.endRange:hover,
+.ui-calendar .flatpickr-day.selected,
+.ui-calendar .flatpickr-day.selected.inRange,
+.ui-calendar .flatpickr-day.selected.nextMonthDay,
+.ui-calendar .flatpickr-day.selected.prevMonthDay,
+.ui-calendar .flatpickr-day.selected:focus,
+.ui-calendar .flatpickr-day.selected:hover,
+.ui-calendar .flatpickr-day.startRange,
+.ui-calendar .flatpickr-day.startRange.inRange,
+.ui-calendar .flatpickr-day.startRange.nextMonthDay,
+.ui-calendar .flatpickr-day.startRange.prevMonthDay,
+.ui-calendar .flatpickr-day.startRange:focus,
+.ui-calendar .flatpickr-day.startRange:hover
 {
     border-color: transparent !important;
 }
@@ -313,9 +360,17 @@ ul.navigation li.activated span,
 .fjw-random .point-wrap .cnt,
 .fjw-random .point-wrap .cnt .list,
 .face-g-list#my-g-list .face-g-block .my-mp-block,
-.ui-input 
+.ui-input
 {
     border-color: #aaa !important;
+}
+.flatpickr-current-month .numInputWrapper span.arrowUp::after
+{
+    border-bottom-color: #aaa !important;
+}
+.flatpickr-current-month .numInputWrapper span.arrowDown::after
+{
+    border-top-color: #aaa !important;
 }
 // a
 // {
@@ -333,10 +388,11 @@ ul.navigation li.activated span,
 // {
 //     transition: all .2s !important;
 // }
-// a
-// {
-//     fill: #aaa !important;
-// }
+.flatpickr-next-month svg,
+.flatpickr-prev-month svg
+{
+    fill: #aaa !important;
+}
 .mainmenu ul.grid li a.yxzx,
 .footer-logo,
 .more-data i
@@ -367,7 +423,7 @@ filter: $pinkImageFilter !important;
 // {
 //     border-radius: 4px !important;
 // }
-#edit-page 
+#edit-page
 {
     box-shadow: none !important;
 }
@@ -393,6 +449,7 @@ filter: $pinkImageFilter !important;
 // {
 //     opacity: 1 !important;
 // }
+
 .sort-item.on i.active,
 .banner-p h3,
 .banner-p a:hover,
@@ -402,7 +459,10 @@ filter: $pinkImageFilter !important;
 .rank-menu li.active,
 .ui-tabs .ui-tabs-head .tab-head-item.current a,
 .ui-tabs .ui-tabs-head .tab-head-item.current a:after,
-.classify .classify-list .list-item .class-block:hover 
+.classify .classify-list .list-item .class-block:hover,
+.flatpickr-day.today,
+.flatpickr-day.today:focus,
+.flatpickr-day.today:hover
 {
     border-color: $customStyleColor !important;
 }
@@ -417,7 +477,25 @@ ul.navigation li:after,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu-wrap .bilibili-player-setting-menu-list .active-point,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn:hover,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
-.ui-btn.blue-radius 
+.ui-btn.blue-radius,
+.ui-calendar .flatpickr-day.endRange,
+.ui-calendar .flatpickr-day.endRange.inRange,
+.ui-calendar .flatpickr-day.endRange.nextMonthDay,
+.ui-calendar .flatpickr-day.endRange.prevMonthDay,
+.ui-calendar .flatpickr-day.endRange:focus,
+.ui-calendar .flatpickr-day.endRange:hover,
+.ui-calendar .flatpickr-day.selected,
+.ui-calendar .flatpickr-day.selected.inRange,
+.ui-calendar .flatpickr-day.selected.nextMonthDay,
+.ui-calendar .flatpickr-day.selected.prevMonthDay,
+.ui-calendar .flatpickr-day.selected:focus,
+.ui-calendar .flatpickr-day.selected:hover,
+.ui-calendar .flatpickr-day.startRange,
+.ui-calendar .flatpickr-day.startRange.inRange,
+.ui-calendar .flatpickr-day.startRange.nextMonthDay,
+.ui-calendar .flatpickr-day.startRange.prevMonthDay,
+.ui-calendar .flatpickr-day.startRange:focus,
+.ui-calendar .flatpickr-day.startRange:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -460,7 +538,7 @@ ul.navigation li:hover,
 .music-clue .font-blue,
 .music-clue .iconfont,
 .music-tips .music-tip:hover,
-.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon 
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon
 {
     color: $customStyleColor !important;
 }
@@ -468,13 +546,14 @@ ul.navigation li:hover,
 // {
 //     color: $foreground !important;
 // }
-// a
-// {
-//     fill: $customStyleColor !important;
-// }
+.flatpickr-next-month svg:hover,
+.flatpickr-prev-month svg:hover
+{
+    fill: $customStyleColor !important;
+}
 #page .game .game-box,
 .comment-manage-wrap .head .dropdown-menu .article-list,
-#edit-page .block-hr 
+#edit-page .block-hr
 {
     border-top-color: transparent !important;
     border-bottom-color: transparent !important;
@@ -487,7 +566,8 @@ ul.navigation li:hover,
 #page .game .game-box-1,
 #page .game .game-box-3,
 .game-box-all,
-.footer-logo
+.footer-logo,
+.ui-tabs .ui-tabs-head .tab-head-item.current a::after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
