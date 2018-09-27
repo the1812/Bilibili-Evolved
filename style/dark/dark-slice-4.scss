@@ -576,7 +576,8 @@ body #app .category-wrapper .upload-tip,
 .footer-logo,
 .season-item.on:after,
 .dc-radio-button.is-active:after,
-.bili-tab.current:after
+.bili-tab.current:after,
+.ui-tabs .ui-tabs-head .tab-head-item.current a:after 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
