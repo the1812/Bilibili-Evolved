@@ -22,7 +22,10 @@
 #edit-page .btn-group.main-active-btn a.white:hover,
 #edit-page .btn-group.main-active-btn button.white:hover,
 .ticket-container,
-.assist-wrap .addModal .modal-wrap 
+.assist-wrap .addModal .modal-wrap,
+.ui-radio .ui-radio-icon,
+.classify .sub-list,
+.modal-wrap 
 {
     background-color: #222 !important;
 }
@@ -59,7 +62,11 @@
 .ui-select .ul-select-list .select-item.active,
 .ui-select .ul-select-list .select-item:hover,
 .float-toolbar .toolbar-list li,
-.assist-wrap .addModal .control-group.assist-rights .rights 
+.assist-wrap .addModal .control-group.assist-rights .rights,
+.classify .sub-list .sub-item.active,
+.classify .sub-list .sub-item:hover,
+.read-list-component .creat-read-list-box .input-box button[disabled],
+.ui-radio input[type=radio]:active + .ui-radio-icon
 {
     background-color: #444 !important;
 }
@@ -93,7 +100,8 @@
 .recent-danmu-wrp .danmu-filter .left .line,
 .preview-avatar-con,
 .preview-title,
-.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon 
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
+.read-list-component .mask 
 {
     background: transparent !important;
 }
@@ -172,7 +180,12 @@ ul.navigation li span,
 .editor-wrap .article-title .count,
 .ui-input-textarea .count,
 .music-clue,
-.music-tips .music-tip
+.music-tips .music-tip,
+.read-list-component .tips,
+.read-list-component .tips.input-tips,
+.read-list-component .read-list-box li .count,
+.float-toolbar .toolbar-list .icon-block,
+.float-toolbar .back-top .icon-block 
 {
     color: #aaa !important;
 }
@@ -256,7 +269,12 @@ ul.navigation li.activated span,
 .music-upload-wrapper .upload-music-bar-wrapper .pload-music-bar-btn,
 .assist-wrap .addModal .control-group > label,
 .assist-wrap .addModal .control-group,
-.ui-input-text input 
+.ui-input-text input,
+.el-button--primary,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
+.read-list-component .creat-read-list-box .input-box button[disabled],
+.read-list-component .creat-read-list-box .input-box button,
+.read-list-component .read-list-box li label .title 
 {
     color: #eee !important;
 }
@@ -305,7 +323,14 @@ ul.navigation li.activated span,
 .ui-btn.white,
 #edit-page .btn-group.main-active-btn a.white,
 #edit-page .btn-group.main-active-btn button.white,
-.ui-input-textarea
+.ui-input-textarea,
+.el-button--primary,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
+.ui-radio.active .ui-radio-icon,
+.ui-radio .ui-radio-icon,
+.read-list-component hr,
+.read-list-component .creat-read-list-box .input-box button,
+.read-list-component .creat-read-list-box .input-box 
 {
     border-color: transparent !important;
 }
@@ -343,10 +368,12 @@ ul.navigation li.activated span,
 {
     filter: brightness(0) invert(1) !important;
 }
-// a
-// {
-//     filter: $blueImageFilter !important;
-// }
+.float-toolbar .toolbar-list .icon-block.icon-help,
+.float-toolbar .toolbar-list .icon-block.icon-feedback,
+.float-toolbar .back-top .icon-block.icon-back-top 
+{
+    filter: $blueImageFilter !important;
+}
 .episode-item .mark-icon
 {
 filter: $pinkImageFilter !important;
@@ -402,7 +429,11 @@ filter: $pinkImageFilter !important;
 .rank-menu li.active,
 .ui-tabs .ui-tabs-head .tab-head-item.current a,
 .ui-tabs .ui-tabs-head .tab-head-item.current a:after,
-.classify .classify-list .list-item .class-block:hover 
+.classify .classify-list .list-item .class-block:hover,
+.tabs-nav .active,
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
+.ui-radio.active .ui-radio-icon,
+.ui-radio input[type=radio]:hover + .ui-radio-icon 
 {
     border-color: $customStyleColor !important;
 }
@@ -417,7 +448,10 @@ ul.navigation li:after,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu-wrap .bilibili-player-setting-menu-list .active-point,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn:hover,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
-.ui-btn.blue-radius 
+.ui-btn.blue-radius,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
+.read-list-component .creat-read-list-box .input-box button,
+.ui-radio input[type=radio]:checked + .ui-radio-icon:after 
 {
     background-color: $customStyleColor !important;
 }
@@ -460,7 +494,8 @@ ul.navigation li:hover,
 .music-clue .font-blue,
 .music-clue .iconfont,
 .music-tips .music-tip:hover,
-.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon 
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
+.classify .position span 
 {
     color: $customStyleColor !important;
 }
@@ -487,7 +522,12 @@ ul.navigation li:hover,
 #page .game .game-box-1,
 #page .game .game-box-3,
 .game-box-all,
-.footer-logo
+.footer-logo,
+.season-item.on:after,
+.dc-radio-button.is-active:after,
+.bili-tab.current:after,
+.season-item.on:after,
+.bili-tab.current:after 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
