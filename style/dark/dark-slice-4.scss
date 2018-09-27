@@ -27,7 +27,11 @@
 .classify .sub-list,
 .modal-wrap,
 .song-info .info-wrap .album-itro,
-.song-info .info-wrap .album-name
+.song-info .info-wrap .album-name,
+.checkbox.checked .radio-btn,
+.text-input input,
+.set-copyright .copyright-select-box,
+.set-copyright .copyright-icon .icon-none-copyright
 {
     background-color: #222 !important;
 }
@@ -68,7 +72,9 @@
 .classify .sub-list .sub-item.active,
 .classify .sub-list .sub-item:hover,
 .read-list-component .creat-read-list-box .input-box button[disabled],
-.ui-radio input[type=radio]:active + .ui-radio-icon
+.ui-radio input[type=radio]:active + .ui-radio-icon,
+body #app .category-wrapper .upload-content,
+.set-copyright .copyright-select-box .copyright:hover 
 {
     background-color: #444 !important;
 }
@@ -190,7 +196,12 @@ ul.navigation li span,
 .float-toolbar .back-top .icon-block,
 .song-info .info-wrap .contact-us,
 .upload-cover-wrapper .upload-cover-tips,
-.song-info .info-wrap .form-item-paper-input-wrapper .form-item-paper-total
+.song-info .info-wrap .form-item-paper-input-wrapper .form-item-paper-total,
+.add-tag .default .placeholder,
+.checkbox .text,
+.text-input .text-length,
+.upload-image .tip,
+.set-copyright .copyright-select-box .copyright
 {
     color: #aaa !important;
 }
@@ -283,7 +294,13 @@ ul.navigation li.activated span,
 .song-info .info-wrap .title,
 .song-info .info-wrap .submit-btn,
 .song-info .info-wrap .album-itro,
-.song-info .info-wrap .album-name
+.song-info .info-wrap .album-name,
+.title .text,
+.category-wrapper .upload-title-text,
+.text-input input,
+.agree-rule .text,
+.submit-btn,
+body #app .category-wrapper .upload-content .title 
 {
     color: #eee !important;
 }
@@ -341,7 +358,11 @@ ul.navigation li.activated span,
 .read-list-component .creat-read-list-box .input-box button,
 .read-list-component .creat-read-list-box .input-box,
 .song-info .info-wrap .album-itro,
-.song-info .info-wrap .album-name
+.song-info .info-wrap .album-name,
+.checkbox.checked .radio-btn,
+.upload-image,
+.text-input input,
+.set-copyright .copyright-select-box
 {
     border-color: transparent !important;
 }
@@ -349,7 +370,8 @@ ul.navigation li.activated span,
 .fjw-random .point-wrap .cnt,
 .fjw-random .point-wrap .cnt .list,
 .face-g-list#my-g-list .face-g-block .my-mp-block,
-.ui-input 
+.ui-input,
+.set-copyright .copyright-icon .icon-none-copyright
 {
     border-color: #aaa !important;
 }
@@ -385,9 +407,11 @@ ul.navigation li.activated span,
 {
     filter: $blueImageFilter !important;
 }
-.episode-item .mark-icon
+.episode-item .mark-icon,
+.add-tag .default .btn-show,
+.submit-btn 
 {
-filter: $pinkImageFilter !important;
+    filter: $pinkImageFilter !important;
 }
 // a
 // {
@@ -463,7 +487,11 @@ ul.navigation li:after,
 .bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
 .read-list-component .creat-read-list-box .input-box button,
 .ui-radio input[type=radio]:checked + .ui-radio-icon:after,
-.song-info .info-wrap .submit-btn
+.song-info .info-wrap .submit-btn,
+body #app .category-wrapper .dot,
+.checkbox.checked .radio-btn:before,
+.add-tag .default .btn-show,
+.submit-btn 
 {
     background-color: $customStyleColor !important;
 }
@@ -508,7 +536,10 @@ ul.navigation li:hover,
 .music-tips .music-tip:hover,
 .ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
 .classify .position span,
-.upload-tips
+.upload-tips,
+.agree-rule .rule,
+body #app .category-wrapper .upload-tip,
+.set-copyright .copyright-select-box .copyright.selected .text
 {
     color: $customStyleColor !important;
 }
