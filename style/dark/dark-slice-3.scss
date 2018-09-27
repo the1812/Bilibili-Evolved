@@ -44,7 +44,8 @@ div#square.container,
 .mainBox .leaveMsg,
 .leaveMsg .leaveMsgBody .classDropdown-menus li a:hover,
 .leaveMsg .leaveMsgBody .classDropdown-menus li:hover,
-.mainBox .sureWindow
+.mainBox .sureWindow,
+.js-evaluateArea .evaluateDialog
 {
     background-color: #222 !important;
 }
@@ -98,7 +99,9 @@ body>div.to-top.on,
 .leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed .router,
 .leaveMsg .leaveMsgBody .classDropdown-menus,
 .leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed,
-.sureWindow .btngroup span
+.sureWindow .btngroup span,
+.evaluateWether .evaluate-btn,
+.evaluate .situation span
 {
     background-color: #444 !important;
 }
@@ -205,7 +208,8 @@ body>div.to-top.on,
 .leaveMsg .leaveMsgBody .questionClassify .classText,
 .questionClassify .classDropdownAreaFixed .router .routerDeep,
 .leaveMsg .leaveMsgBody .infoArea .infoAreaTitle,
-.leaveMsgUpload .btnarea span.btareatxt
+.leaveMsgUpload .btnarea span.btareatxt,
+.evaluate .h2
 {
     color: #aaa !important;
 }
@@ -271,7 +275,10 @@ body>div.to-top.on,
 .leaveMsg .leaveMsgBody .email,
 .leaveMsg .leaveMsgBody .telephone,
 .sureWindow .title,
-.sureWindow .btngroup span
+.sureWindow .btngroup span,
+.evaluateWether .evaluateTitle,
+.evaluateWether .evaluate-btn,
+.evaluate .situation span
 {
     color: #eee !important;
 }
@@ -310,7 +317,11 @@ body>div.to-top.on,
 .upload-v2-step1-container .video-jam .video-jam-comment,
 #page-channel-detail .watch-later-btn,
 #page-channel-detail .filter,
-.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed .router
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed .router,
+.evaluateWether .okactive,
+.evaluateWether .evaluate-btn,
+.evaluateWether .noactive,
+.evaluate .situation span
 {
     border-color: transparent !important;
 }
@@ -411,7 +422,10 @@ body>div.to-top.on,
 .rank-item .content .info .detail .b-icon.view,
 .rank-item .content .info .detail .b-icon.author,
 .leaveMsg .leaveMsgHeader .close,
-.sureWindow .close
+.sureWindow .close,
+.evaluateWether .evaluateno i,
+.evaluateWether .evaluateok i,
+.evaluateWether .operateType .unsolveActive span
 {
     filter: grayscale(1) !important;
 }
@@ -455,7 +469,8 @@ body>div.to-top.on,
     box-shadow: 0px 4px 16px 0px $customStyleColor40 !important;
 }
 .guide .feedback-btn a,
-.mainBox .leaveMsg
+.mainBox .leaveMsg,
+.js-evaluateArea .evaluateDialog
 {
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
@@ -562,7 +577,11 @@ body>div.to-top.on
 .zcChat .header,
 .rightMsg .msgDiv,
 .leaveMsg .submitArea .submit,
-.sureWindow .btngroup .leavesure
+.sureWindow .btngroup .leavesure,
+.evaluateWether .okactive,
+.evaluateWether .noactive,
+.evaluate .situation span.active,
+.evaluateSubmitArea .submit
 {
     background-color: $customStyleColor !important;
 }
@@ -654,7 +673,11 @@ body>div.to-top.on
 .infoBar .infoBarText,
 .magBox .msgDiv .msgText,
 .leaveMsg .submitArea .submit,
-.sureWindow .btngroup .leavesure
+.sureWindow .btngroup .leavesure,
+.evaluateWether .okactive,
+.evaluateWether .noactive,
+.evaluate .situation span.active,
+.evaluateSubmitArea .submit
 {
     color: $foreground !important;
 }
