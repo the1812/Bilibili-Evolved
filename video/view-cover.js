@@ -52,29 +52,34 @@
 
         SpinQuery.any(() => $("span.settings-category"), settingsCategories =>
         {
-            SpinQuery.any(() => $("meta[itemprop='image']"), metaData =>
-            {
-                if (metaData.length > 0)
-                {
-                    $(settingsCategories
-                        .filter((_, e) => e.innerHTML === "视频与直播"))
-                        .parent()
-                        .after(`
-                    <li class="indent-center">
-                    <button
-                        class="gui-settings-button"
-                        title="查看当前视频的封面"
-                        id="view-video-cover">
-                        查看封面
-                    </button>
-                    </li>`);
-                    const imageViewer = new ImageViewer(metaData.prop("content"));
-                    $("#view-video-cover").on("click", () =>
+            return {
+                ajaxReload: false,
+                settingsWidget: {
+                    after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
+                    content: `<li class="indent-center">
+                        <button
+                            class="gui-settings-button"
+                            title="查看当前视频的封面"
+                            id="view-video-cover">
+                            查看封面
+                        </button>
+                        </li>`,
+                    success: () =>
                     {
-                        imageViewer.show();
-                    });
+                        SpinQuery.any(() => $("meta[itemprop='image']"), metaData =>
+                        {
+                            if (metaData.length > 0)
+                            {
+                                const imageViewer = new ImageViewer(metaData.prop("content"));
+                                $("#view-video-cover").on("click", () =>
+                                {
+                                    imageViewer.show();
+                                });
+                            }
+                        });
+                    }
                 }
-            });
+            };
 
             SpinQuery.any(() => $(".header-info-ctnr .room-cover"), coverLink =>
             {
@@ -113,7 +118,22 @@
         });
 
         return {
-            ajaxReload: false
+            ajaxReload: false,
+            settingsWidget: {
+                after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
+                content: `<li class="indent-center">
+                        <button
+                            class="gui-settings-button"
+                            title="查看当前视频的封面"
+                            id="view-cover">
+                            查看封面
+                        </button>
+                        </li>`,
+                success: () =>
+                {
+
+                }
+            }
         };
     };
 })();
