@@ -201,7 +201,8 @@ ul.navigation li span,
 .checkbox .text,
 .text-input .text-length,
 .upload-image .tip,
-.set-copyright .copyright-select-box .copyright
+.set-copyright .copyright-select-box .copyright,
+.block-left .headline .hot-link 
 {
     color: #aaa !important;
 }
@@ -541,7 +542,8 @@ ul.navigation li:hover,
 .upload-tips,
 .agree-rule .rule,
 body #app .category-wrapper .upload-tip,
-.set-copyright .copyright-select-box .copyright.selected .text
+.set-copyright .copyright-select-box .copyright.selected .text,
+.block-left .headline .hot-link:hover 
 {
     color: $customStyleColor !important;
 }
