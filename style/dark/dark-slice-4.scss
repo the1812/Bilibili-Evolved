@@ -25,7 +25,9 @@
 .assist-wrap .addModal .modal-wrap,
 .ui-radio .ui-radio-icon,
 .classify .sub-list,
-.modal-wrap 
+.modal-wrap,
+.song-info .info-wrap .album-itro,
+.song-info .info-wrap .album-name
 {
     background-color: #222 !important;
 }
@@ -185,7 +187,10 @@ ul.navigation li span,
 .read-list-component .tips.input-tips,
 .read-list-component .read-list-box li .count,
 .float-toolbar .toolbar-list .icon-block,
-.float-toolbar .back-top .icon-block 
+.float-toolbar .back-top .icon-block,
+.song-info .info-wrap .contact-us,
+.upload-cover-wrapper .upload-cover-tips,
+.song-info .info-wrap .form-item-paper-input-wrapper .form-item-paper-total
 {
     color: #aaa !important;
 }
@@ -274,7 +279,11 @@ ul.navigation li.activated span,
 .bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
 .read-list-component .creat-read-list-box .input-box button[disabled],
 .read-list-component .creat-read-list-box .input-box button,
-.read-list-component .read-list-box li label .title 
+.read-list-component .read-list-box li label .title,
+.song-info .info-wrap .title,
+.song-info .info-wrap .submit-btn,
+.song-info .info-wrap .album-itro,
+.song-info .info-wrap .album-name
 {
     color: #eee !important;
 }
@@ -330,7 +339,9 @@ ul.navigation li.activated span,
 .ui-radio .ui-radio-icon,
 .read-list-component hr,
 .read-list-component .creat-read-list-box .input-box button,
-.read-list-component .creat-read-list-box .input-box 
+.read-list-component .creat-read-list-box .input-box,
+.song-info .info-wrap .album-itro,
+.song-info .info-wrap .album-name
 {
     border-color: transparent !important;
 }
@@ -451,7 +462,8 @@ ul.navigation li:after,
 .ui-btn.blue-radius,
 .bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
 .read-list-component .creat-read-list-box .input-box button,
-.ui-radio input[type=radio]:checked + .ui-radio-icon:after 
+.ui-radio input[type=radio]:checked + .ui-radio-icon:after,
+.song-info .info-wrap .submit-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -495,7 +507,8 @@ ul.navigation li:hover,
 .music-clue .iconfont,
 .music-tips .music-tip:hover,
 .ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
-.classify .position span 
+.classify .position span,
+.upload-tips
 {
     color: $customStyleColor !important;
 }
@@ -526,8 +539,7 @@ ul.navigation li:hover,
 .season-item.on:after,
 .dc-radio-button.is-active:after,
 .bili-tab.current:after,
-.season-item.on:after,
-.bili-tab.current:after 
+.season-item.on:after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
