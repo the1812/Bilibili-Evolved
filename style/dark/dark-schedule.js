@@ -1,0 +1,10 @@
+(() =>
+{
+    return () =>
+    {
+
+        return {
+            ajaxReload: false
+        };
+    };
+})();

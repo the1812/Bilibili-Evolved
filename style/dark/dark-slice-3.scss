@@ -35,7 +35,8 @@ div#square.container,
 .rank-tab-wrap,
 .area-item-ctnr .area-item:hover,
 .bili-radio+span::before,
-#page-channel-detail .watch-later-btn
+#page-channel-detail .watch-later-btn,
+.error-body
 {
     background-color: #222 !important;
 }
@@ -82,7 +83,8 @@ body>div.to-top.on,
 .audioplayer .ap-controller .ap-controller-left .ap-cover,
 .container .host-list-layout .hot-list-wrap .bg-wrap,
 .upload-v2-step1-container .video-jam .video-jam-comment,
-.notify-v2-container>div
+.notify-v2-container>div,
+.error-container
 {
     background-color: #444 !important;
 }
@@ -230,7 +232,8 @@ body>div.to-top.on,
 .notify-v2-container>div a,
 .notify-v2-container>div .notify-v2-close,
 .channel-detail .content .breadcrumb .item,
-#page-channel-detail .watch-later-btn
+#page-channel-detail .watch-later-btn,
+.error-container .error-text
 {
     color: #eee !important;
 }
@@ -314,7 +317,8 @@ body>div.to-top.on,
 .slide-controller .slide-btn .icon,
 #rankList .list-wrap .list .switch-day .icon-bottom,
 .list-wrap .s-showMore .icon-right,
-.breadcrumb .arrow
+.breadcrumb .arrow,
+.error-container .error.split
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -338,7 +342,8 @@ body>div.to-top.on,
 .mainmenu ul.grid li a.lbzx:hover,
 .mainmenu ul.grid li.hover a.lbzx,
 .carousel .indicator .indicator-btn-holder .indicator-btn.on,
-#page-channel-detail .watch-later-btn:hover
+#page-channel-detail .watch-later-btn:hover,
+.error-container .error-panel .error-msg .error-img img
 {
     filter: $blueImageFilter !important;
 }
@@ -497,7 +502,8 @@ body>div.to-top.on
 .blp-ui-slider-process,
 .uploader-info .info .follow .btn,
 .bili-radio:checked+span::after,
-.upload-v2-step1-container .upload-btn
+.upload-v2-step1-container .upload-btn,
+.error-container .big-btn
 {
     background-color: $customStyleColor !important;
 }
@@ -581,7 +587,8 @@ body>div.to-top.on
 .guide .feedback-btn a,
 .gift>.expires,
 .uploader-info .info .follow .btn,
-.upload-v2-step1-container .upload-btn
+.upload-v2-step1-container .upload-btn,
+.error-container .big-btn
 {
     color: $foreground !important;
 }

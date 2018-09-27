@@ -219,7 +219,7 @@
         }
         new SpinQuery(
             () => $("body"),
-            it => it.length > 0 && unsafeWindow.$,
+            it => it.length > 0 && !unsafeWindow.frameElement,
             it =>
             {
                 addSettingsIcon(it);

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.4.1
+// @version      1.4.2
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -49,7 +49,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.4.1"
+        currentVersion: "1.4.2"
     };
     function loadSettings()
     {
@@ -701,8 +701,38 @@
                         }
                     }
                 }
-                Promise.all(promises).then(() => resolve());
+                Promise.all(promises).then(() =>
+                {
+                    this.applySettingsWidgets();
+                    resolve();
+                });
             });
+        }
+        applySettingsWidgets()
+        {
+            const panel = $(".gui-settings-panel");
+            if (panel.length === 0)
+            {
+                return;
+            }
+            for (const info of Object.values(this.attributes)
+                .filter(it => it.settingsWidget)
+                .map(it => it.settingsWidget))
+            {
+                if (info.after)
+                {
+                    panel.find(info.after()).after(info.content);
+                }
+                else if (info.before)
+                {
+                    panel.find(info.before()).before(info.content);
+                }
+
+                if (info.success)
+                {
+                    info.success();
+                }
+            }
         }
         applyStyle(key, id)
         {
