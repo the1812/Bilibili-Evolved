@@ -50,13 +50,13 @@
             }
         }
 
-        SpinQuery.any(() => $("span.settings-category"), settingsCategories =>
+        if ($("meta[itemprop='image']").length > 0)
         {
             return {
                 ajaxReload: false,
                 settingsWidget: {
                     after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
-                    content: `<li class="indent-center">
+                    content: `<li class="indent-center hidden">
                         <button
                             class="gui-settings-button"
                             title="查看当前视频的封面"
@@ -74,66 +74,53 @@
                                 $("#view-video-cover").on("click", () =>
                                 {
                                     imageViewer.show();
-                                });
+                                }).parent().removeClass("hidden");
                             }
                         });
                     }
                 }
             };
-
-            SpinQuery.any(() => $(".header-info-ctnr .room-cover"), coverLink =>
-            {
-                const match = coverLink
-                    .attr("href")
-                    .match(/space\.bilibili\.com\/([\d]+)/);
-                if (match && match[1])
-                {
-                    const uid = match[1];
-                    const url = `https://api.live.bilibili.com/bili/getRoomInfo/${uid}`;
-                    downloadText(url, text =>
-                    {
-                        // remove the surrounding "(...);"
-                        const jsonText = text.slice(1, -2);
-                        const coverUrl = JSON.parse(jsonText).data.cover;
-                        $(settingsCategories
-                            .filter((_, e) => e.innerHTML === "视频与直播"))
-                            .parent()
-                            .after(`
-                            <li class="indent-center">
+        }
+        else
+        {
+            return {
+                settingsWidget: {
+                    after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
+                    content: `<li class="indent-center hidden">
                             <button
                                 class="gui-settings-button"
                                 title="查看当前直播的封面"
                                 id="view-live-cover">
                                 查看封面
                             </button>
-                            </li>`);
-                        const imageViewer = new ImageViewer(coverUrl);
-                        $("#view-live-cover").on("click", () =>
+                            </li>`,
+                    success: () =>
+                    {
+                        SpinQuery.any(() => $(".header-info-ctnr .room-cover"), coverLink =>
                         {
-                            imageViewer.show();
+                            const match = coverLink
+                                .attr("href")
+                                .match(/space\.bilibili\.com\/([\d]+)/);
+                            if (match && match[1])
+                            {
+                                const uid = match[1];
+                                const url = `https://api.live.bilibili.com/bili/getRoomInfo/${uid}`;
+                                downloadText(url, text =>
+                                {
+                                    // remove the surrounding "(...);"
+                                    const jsonText = text.slice(1, -2);
+                                    const coverUrl = JSON.parse(jsonText).data.cover;
+                                    const imageViewer = new ImageViewer(coverUrl);
+                                    $("#view-live-cover").on("click", () =>
+                                    {
+                                        imageViewer.show();
+                                    }).parent().removeClass("hidden");
+                                });
+                            }
                         });
-                    });
+                    }
                 }
-            });
-        });
-
-        return {
-            ajaxReload: false,
-            settingsWidget: {
-                after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
-                content: `<li class="indent-center">
-                        <button
-                            class="gui-settings-button"
-                            title="查看当前视频的封面"
-                            id="view-cover">
-                            查看封面
-                        </button>
-                        </li>`,
-                success: () =>
-                {
-
-                }
-            }
-        };
+            };
+        }
     };
 })();
