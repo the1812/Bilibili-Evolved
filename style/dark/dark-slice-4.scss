@@ -34,7 +34,9 @@
 .set-copyright .copyright-icon .icon-none-copyright,
 .add-tag .edit .btn-hide,
 .add-tag .edit .input-wrapper input,
-.add-tag .tag-list .tag
+.add-tag .tag-list .tag,
+.cards-block .cards-list .card-item .card-case.type2 .content .block,
+.faq-modal .modal-wrap .modal-content .text-content 
 {
     background-color: #222 !important;
 }
@@ -210,7 +212,8 @@ ul.navigation li span,
 .block-left .headline .hot-link,
 .danmu-wrp .section .label .second,
 .add-tag .edit .tip,
-.add-tag .edit .input-wrapper .count 
+.add-tag .edit .input-wrapper .count,
+.faq-modal .modal-wrap .modal-content .text-content p 
 {
     color: #aaa !important;
 }
@@ -317,7 +320,8 @@ body #app .category-wrapper .upload-content .title,
 .add-tag .edit .input-wrapper input:focus,
 .tag .text,
 .add-tag .edit .input-wrapper .btn-add,
-.tag .delete
+.tag .delete,
+.faq-modal .modal-wrap .modal-content .text-content h1 
 {
     color: #eee !important;
 }
@@ -564,7 +568,10 @@ ul.navigation li:hover,
 body #app .category-wrapper .upload-tip,
 .set-copyright .copyright-select-box .copyright.selected .text,
 .block-left .headline .hot-link:hover,
-body #app .marquee a 
+body #app .marquee a,
+.faq-modal .modal-wrap .modal-content .text-content a,
+.faq-modal .modal-wrap .modal-content .text-content a:active,
+.faq-modal .modal-wrap .modal-content .text-content a:hover 
 {
     color: $customStyleColor !important;
 }
