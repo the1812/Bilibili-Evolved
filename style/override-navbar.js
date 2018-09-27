@@ -3,7 +3,7 @@
     return (settings, resources) =>
     {
         new SpinQuery(
-            () => $(".search").not(".filter-item"),
+            () => $(".head-content.bili-wrapper>div.search").not(".filter-item"),
             it => it.length > 0 && $(".nav-con.fr").length > 0,
             textBox =>
             {
