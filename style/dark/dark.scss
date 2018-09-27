@@ -4078,7 +4078,15 @@ div#square.container,
 .area-item-ctnr .area-item:hover,
 .bili-radio+span::before,
 #page-channel-detail .watch-later-btn,
-.error-body
+.error-body,
+.footer .text-layout,
+.chatPanelBody .chatPanel,
+.chatPanelBody .chatPanel .chatPanelList,
+.leaveMsg .leaveMsgHeader,
+.mainBox .leaveMsg,
+.leaveMsg .leaveMsgBody .classDropdown-menus li a:hover,
+.leaveMsg .leaveMsgBody .classDropdown-menus li:hover,
+.mainBox .sureWindow
 {
     background-color: #222 !important;
 }
@@ -4126,7 +4134,13 @@ body>div.to-top.on,
 .container .host-list-layout .hot-list-wrap .bg-wrap,
 .upload-v2-step1-container .video-jam .video-jam-comment,
 .notify-v2-container>div,
-.error-container
+.error-container,
+.magBox .msgDiv,
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea,
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed .router,
+.leaveMsg .leaveMsgBody .classDropdown-menus,
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed,
+.sureWindow .btngroup span
 {
     background-color: #444 !important;
 }
@@ -4145,6 +4159,10 @@ body>div.to-top.on,
 .blp-ui-slider-container
 {
     background-color: rgba(0,0,0,0.1) !important;
+}
+.mainBox .sureWindowlayer
+{
+    background-color: rgba(0,0,0,.5) !important;
 }
 #mp-mine-header,
 #mp-mine-header.active,
@@ -4167,7 +4185,11 @@ body>div.to-top.on,
 .chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon,
 .page-content .right-side .up-list,
 #rankList .list-wrap .list .switch-day .switch-list,
-.index-nav .n-i .name:hover
+.index-nav .n-i .name:hover,
+.singlePage .mainBox,
+.leaveMsg .leaveMsgBody .email,
+.leaveMsg .leaveMsgBody .telephone,
+.leaveMsg .submitArea
 {
     background-color: transparent !important;
 }
@@ -4217,7 +4239,15 @@ body>div.to-top.on,
 .elec .elec-monthly-count,
 .announcement-cntr .header p .icon-edit,
 .announcement-cntr .header p span,
-.channel-info .meta
+.channel-info .meta,
+.magBox .leftName,
+.chatPanelList .msgData,
+.chatPanel .historyTrigger,
+.leaveMsg .leaveMsgBody .guide,
+.leaveMsg .leaveMsgBody .questionClassify .classText,
+.questionClassify .classDropdownAreaFixed .router .routerDeep,
+.leaveMsg .leaveMsgBody .infoArea .infoAreaTitle,
+.leaveMsgUpload .btnarea span.btareatxt
 {
     color: #aaa !important;
 }
@@ -4275,7 +4305,15 @@ body>div.to-top.on,
 .notify-v2-container>div .notify-v2-close,
 .channel-detail .content .breadcrumb .item,
 #page-channel-detail .watch-later-btn,
-.error-container .error-text
+.error-container .error-text,
+.magBox .msgDiv .msgText,
+.leaveMsg .leaveMsgHeader .title,
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitle,
+.leaveMsg .leaveMsgBody .classDropdown-menus li,
+.leaveMsg .leaveMsgBody .email,
+.leaveMsg .leaveMsgBody .telephone,
+.sureWindow .title,
+.sureWindow .btngroup span
 {
     color: #eee !important;
 }
@@ -4313,7 +4351,8 @@ body>div.to-top.on,
 .upload-v2-step1-container .upload-btn,
 .upload-v2-step1-container .video-jam .video-jam-comment,
 #page-channel-detail .watch-later-btn,
-#page-channel-detail .filter
+#page-channel-detail .filter,
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed .router
 {
     border-color: transparent !important;
 }
@@ -4336,7 +4375,11 @@ body>div.to-top.on,
 .pagelistbox .custom-right .custom-right-inner.custompage,
 .article-list-holder .article-item,
 .search-module .search-block,
-.search-module .search-block .search-word-panel .panel-title .split-line
+.search-module .search-block .search-word-panel .panel-title .split-line,
+.chatPanelBody .footer,
+.leftMsg .msgDiv:before,
+.singlePage .mainBox,
+.leaveMsg .leaveMsgHeader
 {
     border-color: #444 !important
 }
@@ -4360,12 +4403,18 @@ body>div.to-top.on,
 #rankList .list-wrap .list .switch-day .icon-bottom,
 .list-wrap .s-showMore .icon-right,
 .breadcrumb .arrow,
-.error-container .error.split
+.error-container .error.split,
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn
 {
     filter: brightness(0) invert(1) !important;
 }
 .tool-box-v2-container .icon-tv,
-.tool-box-v2-container .icon-download
+.tool-box-v2-container .icon-download,
+.funcPanel .addFace,
+.funcPanel .capture,
+.funcPanel .evaluate,
+.funcPanel .leaveMessage,
+.funcPanel .zhichiClose
 {
     filter: brightness(0) invert(.7) !important;
 }
@@ -4385,7 +4434,8 @@ body>div.to-top.on,
 .mainmenu ul.grid li.hover a.lbzx,
 .carousel .indicator .indicator-btn-holder .indicator-btn.on,
 #page-channel-detail .watch-later-btn:hover,
-.error-container .error-panel .error-msg .error-img img
+.error-container .error-panel .error-msg .error-img img,
+.leaveMsgUpload .btnarea .btnareaIcon
 {
     filter: $blueImageFilter !important;
 }
@@ -4401,7 +4451,9 @@ body>div.to-top.on,
 .rank-module .complete-rank::after,
 body>div.to-top.on,
 .rank-item .content .info .detail .b-icon.view,
-.rank-item .content .info .detail .b-icon.author
+.rank-item .content .info .detail .b-icon.author,
+.leaveMsg .leaveMsgHeader .close,
+.sureWindow .close
 {
     filter: grayscale(1) !important;
 }
@@ -4435,7 +4487,8 @@ body>div.to-top.on,
 .bui-sns-info a .bd,
 .guide .old-btn a,
 .link-navbar-ctnr,
-.rank-item:hover
+.rank-item:hover,
+.singlePage .mainBox
 {
     box-shadow: none !important;
 }
@@ -4443,7 +4496,8 @@ body>div.to-top.on,
 {
     box-shadow: 0px 4px 16px 0px $customStyleColor40 !important;
 }
-.guide .feedback-btn a
+.guide .feedback-btn a,
+.mainBox .leaveMsg
 {
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
@@ -4507,7 +4561,8 @@ body>div.to-top.on
 .danmu-hot .tab-list .tab.active,
 .container .hot-list .music-menu-list .choose-menu,
 .container .hot-list .music-menu-list .menu-type .type-triangle,
-.bili-radio:checked+span::before
+.bili-radio:checked+span::before,
+.rightMsg .msgDiv::before
 {
     border-color: $customStyleColor !important;
 }
@@ -4545,7 +4600,11 @@ body>div.to-top.on
 .uploader-info .info .follow .btn,
 .bili-radio:checked+span::after,
 .upload-v2-step1-container .upload-btn,
-.error-container .big-btn
+.error-container .big-btn,
+.zcChat .header,
+.rightMsg .msgDiv,
+.leaveMsg .submitArea .submit,
+.sureWindow .btngroup .leavesure
 {
     background-color: $customStyleColor !important;
 }
@@ -4612,7 +4671,8 @@ body>div.to-top.on
 .rank-item .content .info .title:hover,
 .rank-item .content .info .bangumi-num,
 .upload-agreement a,
-.channel-detail .content .breadcrumb .item:hover
+.channel-detail .content .breadcrumb .item:hover,
+.leaveMsgUpload .btnarea .btareatxt1
 {
     color: $customStyleColor !important;
 }
@@ -4630,7 +4690,13 @@ body>div.to-top.on
 .gift>.expires,
 .uploader-info .info .follow .btn,
 .upload-v2-step1-container .upload-btn,
-.error-container .big-btn
+.error-container .big-btn,
+.infoBarName .inputIng,
+.infoBarName .titleName,
+.infoBar .infoBarText,
+.magBox .msgDiv .msgText,
+.leaveMsg .submitArea .submit,
+.sureWindow .btngroup .leavesure
 {
     color: $foreground !important;
 }
@@ -4647,11 +4713,12 @@ body>div.to-top.on
     fill: $customStyleColor !important;
 }
 
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-bottom-color: transparent !important;
-// }
+.leftMsg .msgDiv:before,
+.rightMsg .msgDiv::before
+{
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+}
 // a
 // {
 //     border-top-color: transparent !important;
