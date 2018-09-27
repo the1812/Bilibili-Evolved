@@ -300,7 +300,8 @@ ul.navigation li.activated span,
 .text-input input,
 .agree-rule .text,
 .submit-btn,
-body #app .category-wrapper .upload-content .title 
+body #app .category-wrapper .upload-content .title,
+.block-left .headline h4
 {
     color: #eee !important;
 }
@@ -397,7 +398,8 @@ body #app .category-wrapper .upload-content .title
 // }
 .mainmenu ul.grid li a.yxzx,
 .footer-logo,
-.more-data i
+.more-data i,
+.block-left.block-brand .headline .tab-wrap .pgc-brand-tab 
 {
     filter: brightness(0) invert(1) !important;
 }
