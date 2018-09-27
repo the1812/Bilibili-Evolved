@@ -6,5 +6,5 @@
         return {
             ajaxReload: false
         };
-    }
+    };
 })();
