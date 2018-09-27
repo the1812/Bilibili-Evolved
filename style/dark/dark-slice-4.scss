@@ -31,7 +31,10 @@
 .checkbox.checked .radio-btn,
 .text-input input,
 .set-copyright .copyright-select-box,
-.set-copyright .copyright-icon .icon-none-copyright
+.set-copyright .copyright-icon .icon-none-copyright,
+.add-tag .edit .btn-hide,
+.add-tag .edit .input-wrapper input,
+.add-tag .tag-list .tag
 {
     background-color: #222 !important;
 }
@@ -74,7 +77,9 @@
 .read-list-component .creat-read-list-box .input-box button[disabled],
 .ui-radio input[type=radio]:active + .ui-radio-icon,
 body #app .category-wrapper .upload-content,
-.set-copyright .copyright-select-box .copyright:hover 
+.set-copyright .copyright-select-box .copyright:hover,
+.tag .delete,
+body #app .marquee 
 {
     background-color: #444 !important;
 }
@@ -90,10 +95,10 @@ body #app .category-wrapper .upload-content,
 // {
 //     background-color: #fff1 !important;
 // }
-// a
-// {
-//     background-image: none !important;
-// }
+.add-tag .edit .input-wrapper .container.active .btn-add
+{
+    background-image: none !important;
+}
 .link-footer .footer-linker .footer-linker-line,
 .nav-notice li,
 .nav-notice li.hover,
@@ -203,7 +208,9 @@ ul.navigation li span,
 .upload-image .tip,
 .set-copyright .copyright-select-box .copyright,
 .block-left .headline .hot-link,
-.danmu-wrp .section .label .second 
+.danmu-wrp .section .label .second,
+.add-tag .edit .tip,
+.add-tag .edit .input-wrapper .count 
 {
     color: #aaa !important;
 }
@@ -304,7 +311,13 @@ ul.navigation li.activated span,
 .submit-btn,
 body #app .category-wrapper .upload-content .title,
 .block-left .headline h4,
-.recent-danmu-wrp .danmu-filter .from-wrp .bili-input 
+.recent-danmu-wrp .danmu-filter .from-wrp .bili-input,
+.category-wrapper .tweet-title,
+.add-tag .edit .input-wrapper input:hover,
+.add-tag .edit .input-wrapper input:focus,
+.tag .text,
+.add-tag .edit .input-wrapper .btn-add,
+.tag .delete
 {
     color: #eee !important;
 }
@@ -367,7 +380,10 @@ body #app .category-wrapper .upload-content .title,
 .upload-image,
 .text-input input,
 .set-copyright .copyright-select-box,
-.recent-danmu-wrp .danmu-filter .from-wrp .bili-input 
+.recent-danmu-wrp .danmu-filter .from-wrp .bili-input,
+.add-tag .edit .input-wrapper input,
+.add-tag .edit .input-wrapper input:hover,
+.add-tag .edit .input-wrapper input:focus
 {
     border-color: transparent !important;
 }
@@ -474,7 +490,8 @@ body #app .category-wrapper .upload-content .title,
 .tabs-nav .active,
 .ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
 .ui-radio.active .ui-radio-icon,
-.ui-radio input[type=radio]:hover + .ui-radio-icon 
+.ui-radio input[type=radio]:hover + .ui-radio-icon,
+body #app .marquee 
 {
     border-color: $customStyleColor !important;
 }
@@ -546,7 +563,8 @@ ul.navigation li:hover,
 .agree-rule .rule,
 body #app .category-wrapper .upload-tip,
 .set-copyright .copyright-select-box .copyright.selected .text,
-.block-left .headline .hot-link:hover 
+.block-left .headline .hot-link:hover,
+body #app .marquee a 
 {
     color: $customStyleColor !important;
 }
