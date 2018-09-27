@@ -347,10 +347,13 @@ body>div.to-top.on,
 .search-module .search-block .search-word-panel .panel-title .split-line,
 .chatPanelBody .footer,
 .leftMsg .msgDiv:before,
-.singlePage .mainBox,
 .leaveMsg .leaveMsgHeader
 {
     border-color: #444 !important
+}
+.singlePage .mainBox
+{
+    border: 1px solid #444 !important;
 }
 // a
 // {
