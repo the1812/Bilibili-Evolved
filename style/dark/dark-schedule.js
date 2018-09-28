@@ -82,6 +82,10 @@
             }
             isInRange(start, end)
             {
+                if (start.equals(end))
+                {
+                    return false;
+                }
                 let inRange = this.greaterThan(start) && this.lessThan(end);
                 if (start.greaterThan(end))
                 {
