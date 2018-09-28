@@ -1,6 +1,6 @@
 (() =>
 {
-    return (settings) =>
+    return (settings, resources) =>
     {
         class ScheduleTime
         {
@@ -92,16 +92,46 @@
                     this.equals(end);
                 return result;
             }
+            millisecondsBefore(other)
+            {
+                let result =  (other.hour - this.hour) * 3600 * 1000
+                    + (other.minute - this.minute) * 60 * 1000;
+                if (this.greaterThan(other))
+                {
+                    result += 24 * 3600 * 1000;
+                }
+                return result;
+            }
         }
-        const start = new ScheduleTime(settings.darkScheduleStart);
-        const end = new ScheduleTime(settings.darkScheduleEnd);
-        const now = new ScheduleTime();
-        const darkMode = now.isInRange(start, end);
-        if (settings.useDarkStyle !== darkMode)
+        function checkTime()
         {
-            settings.useDarkStyle = darkMode;
-            saveSettings(settings);
+            if (settings.darkSchedule)
+            {
+                const start = new ScheduleTime(settings.darkScheduleStart);
+                const end = new ScheduleTime(settings.darkScheduleEnd);
+                const now = new ScheduleTime();
+                const darkMode = now.isInRange(start, end);
+                if (settings.useDarkStyle !== darkMode)
+                {
+                    settings.useDarkStyle = darkMode;
+                    saveSettings(settings);
+                    resources.fetchByKey("useDarkStyle");
+                }
+                let timeout = 0;
+                if (darkMode)
+                {
+                    timeout = now.millisecondsBefore(end);
+                }
+                else
+                {
+                    timeout = now.millisecondsBefore(start);
+                }
+                setTimeout(() => checkTime(), timeout);
+            }
+            // console.log(`Checked time: ${now.hour}:${now.minute}, result=${darkMode}`);
         }
+        checkTime();
+
         return {
             ajaxReload: false,
             export: ScheduleTime
