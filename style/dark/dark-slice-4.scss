@@ -36,7 +36,9 @@
 .add-tag .edit .input-wrapper input,
 .add-tag .tag-list .tag,
 .cards-block .cards-list .card-item .card-case.type2 .content .block,
-.faq-modal .modal-wrap .modal-content .text-content 
+.faq-modal .modal-wrap .modal-content .text-content,
+.game-groom-m .type-name,
+#announcement-area .rank-ctnr .rank-icon 
 {
     background-color: #222 !important;
 }
@@ -81,7 +83,10 @@
 body #app .category-wrapper .upload-content,
 .set-copyright .copyright-select-box .copyright:hover,
 .tag .delete,
-body #app .marquee 
+body #app .marquee,
+.promote-m .headline .change-push,
+.game-groom-m .title,
+.game-groom-m 
 {
     background-color: #444 !important;
 }
@@ -213,7 +218,16 @@ ul.navigation li span,
 .danmu-wrp .section .label .second,
 .add-tag .edit .tip,
 .add-tag .edit .input-wrapper .count,
-.faq-modal .modal-wrap .modal-content .text-content p 
+.faq-modal .modal-wrap .modal-content .text-content p,
+.video-floor-m .zone-title .headline .tags li a,
+.game-groom-m .num,
+.promote-m .headline .sub-name,
+#announcement-area .news-ctnr .icon-arrow-right,
+#announcement-area .news-ctnr .more-link,
+.hot-list .card-ctnr .room-count,
+.room-card .sub-area,
+.area-section .card-ctnr .tag-ctnr .tags,
+#announcement-area .rank-ctnr .anchor-name
 {
     color: #aaa !important;
 }
@@ -321,7 +335,14 @@ body #app .category-wrapper .upload-content .title,
 .tag .text,
 .add-tag .edit .input-wrapper .btn-add,
 .tag .delete,
-.faq-modal .modal-wrap .modal-content .text-content h1 
+.faq-modal .modal-wrap .modal-content .text-content h1,
+.game-groom-m a .title,
+.game-groom-m .type-name,
+#area-anchor .area-title-link,
+.idol-show .section-title .title,
+#announcement-area .rank-ctnr .cover-ctnr,
+#announcement-area .rank-ctnr .rank-icon,
+.item .live-status
 {
     color: #eee !important;
 }
@@ -387,7 +408,9 @@ body #app .category-wrapper .upload-content .title,
 .recent-danmu-wrp .danmu-filter .from-wrp .bili-input,
 .add-tag .edit .input-wrapper input,
 .add-tag .edit .input-wrapper input:hover,
-.add-tag .edit .input-wrapper input:focus
+.add-tag .edit .input-wrapper input:focus,
+.promote-m .headline .change-push,
+.game-groom-m 
 {
     border-color: transparent !important;
 }
@@ -396,7 +419,8 @@ body #app .category-wrapper .upload-content .title,
 .fjw-random .point-wrap .cnt .list,
 .face-g-list#my-g-list .face-g-block .my-mp-block,
 .ui-input,
-.set-copyright .copyright-icon .icon-none-copyright
+.set-copyright .copyright-icon .icon-none-copyright,
+.area-section .card-ctnr .tag-ctnr .tags
 {
     border-color: #aaa !important;
 }
@@ -495,7 +519,8 @@ body #app .category-wrapper .upload-content .title,
 .ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
 .ui-radio.active .ui-radio-icon,
 .ui-radio input[type=radio]:hover + .ui-radio-icon,
-body #app .marquee 
+body #app .marquee,
+.area-section .card-ctnr .tag-ctnr .tags:hover
 {
     border-color: $customStyleColor !important;
 }
@@ -518,7 +543,10 @@ ul.navigation li:after,
 body #app .category-wrapper .dot,
 .checkbox.checked .radio-btn:before,
 .add-tag .default .btn-show,
-.submit-btn 
+.submit-btn,
+.promote-m .headline .change-push:hover,
+#announcement-area .rank-ctnr .rank-icon.hot,
+.item .live-status.on
 {
     background-color: $customStyleColor !important;
 }
@@ -572,7 +600,12 @@ body #app .marquee a,
 .faq-modal .modal-wrap .modal-content .text-content a,
 .faq-modal .modal-wrap .modal-content .text-content a:active,
 .faq-modal .modal-wrap .modal-content .text-content a:hover,
-.set-copyright .copyright-select-box .copyright:hover .text
+.set-copyright .copyright-select-box .copyright:hover .text,
+.video-floor-m .zone-title .headline .tags li a:hover,
+.game-groom-box-m .game-groom-m:hover .title,
+#area-anchor .area-title-link:hover,
+.area-section .card-ctnr .tag-ctnr .tags:hover,
+.idol-show .section-title .title:hover
 {
     color: $customStyleColor !important;
 }
