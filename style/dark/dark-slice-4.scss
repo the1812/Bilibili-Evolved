@@ -36,7 +36,8 @@
 .add-tag .edit .input-wrapper input,
 .add-tag .tag-list .tag,
 .cards-block .cards-list .card-item .card-case.type2 .content .block,
-.faq-modal .modal-wrap .modal-content .text-content 
+.faq-modal .modal-wrap .modal-content .text-content,
+.game-groom-m .type-name 
 {
     background-color: #222 !important;
 }
@@ -81,7 +82,10 @@
 body #app .category-wrapper .upload-content,
 .set-copyright .copyright-select-box .copyright:hover,
 .tag .delete,
-body #app .marquee 
+body #app .marquee,
+.promote-m .headline .change-push,
+.game-groom-m .title,
+.game-groom-m 
 {
     background-color: #444 !important;
 }
@@ -213,7 +217,10 @@ ul.navigation li span,
 .danmu-wrp .section .label .second,
 .add-tag .edit .tip,
 .add-tag .edit .input-wrapper .count,
-.faq-modal .modal-wrap .modal-content .text-content p 
+.faq-modal .modal-wrap .modal-content .text-content p,
+.video-floor-m .zone-title .headline .tags li a,
+.game-groom-m .num,
+.promote-m .headline .sub-name 
 {
     color: #aaa !important;
 }
@@ -321,7 +328,9 @@ body #app .category-wrapper .upload-content .title,
 .tag .text,
 .add-tag .edit .input-wrapper .btn-add,
 .tag .delete,
-.faq-modal .modal-wrap .modal-content .text-content h1 
+.faq-modal .modal-wrap .modal-content .text-content h1,
+.game-groom-m a .title,
+.game-groom-m .type-name 
 {
     color: #eee !important;
 }
@@ -387,7 +396,9 @@ body #app .category-wrapper .upload-content .title,
 .recent-danmu-wrp .danmu-filter .from-wrp .bili-input,
 .add-tag .edit .input-wrapper input,
 .add-tag .edit .input-wrapper input:hover,
-.add-tag .edit .input-wrapper input:focus
+.add-tag .edit .input-wrapper input:focus,
+.promote-m .headline .change-push,
+.game-groom-m 
 {
     border-color: transparent !important;
 }
@@ -518,7 +529,8 @@ ul.navigation li:after,
 body #app .category-wrapper .dot,
 .checkbox.checked .radio-btn:before,
 .add-tag .default .btn-show,
-.submit-btn 
+.submit-btn,
+.promote-m .headline .change-push:hover 
 {
     background-color: $customStyleColor !important;
 }
@@ -572,7 +584,9 @@ body #app .marquee a,
 .faq-modal .modal-wrap .modal-content .text-content a,
 .faq-modal .modal-wrap .modal-content .text-content a:active,
 .faq-modal .modal-wrap .modal-content .text-content a:hover,
-.set-copyright .copyright-select-box .copyright:hover .text
+.set-copyright .copyright-select-box .copyright:hover .text,
+.video-floor-m .zone-title .headline .tags li a:hover,
+.game-groom-box-m .game-groom-m:hover .title 
 {
     color: $customStyleColor !important;
 }
