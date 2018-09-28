@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.4.2
+// @version      1.4.3
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -21,6 +21,9 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        darkScheduleStart: "18:00",
+        darkScheduleEnd: "06:00",
+        darkSchedule: false,
         blurSettingsPanel: false,
         blurVideoControl: false,
         toast: true,
@@ -49,7 +52,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.4.2"
+        currentVersion: "1.4.3"
     };
     function loadSettings()
     {
@@ -126,7 +129,8 @@
             notifyNewVersion: new Resource("min/notify-new-version.min.js"),
             toast: new Resource("min/toast.min.js"),
             removeVideoTopMask: new Resource("min/remove-top-mask.min.js"),
-            blurVideoControl: new Resource("min/blur-video-control.min.js")
+            blurVideoControl: new Resource("min/blur-video-control.min.js"),
+            darkSchedule: new Resource("min/dark-schedule.min.js")
         };
         (function ()
         {
@@ -192,6 +196,7 @@
             this.toast.displayName = "显示消息";
             this.removeVideoTopMask.displayName = "删除视频标题层";
             this.blurVideoControl.displayName = "模糊视频控制栏背景";
+            this.darkSchedule.displayName = "夜间模式计划时段";
         }).apply(Resource.all);
     }
     function downloadText(url, load, error)
@@ -510,6 +515,13 @@
                                 <path />
                             </svg>
                             <span>$4</span>
+                        </label>
+                    </li>
+                `).replace(/<textbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/textbox>/g, `
+                    <li class="indent-$1">
+                        <label class="gui-settings-textbox-container">
+                            <span>$4</span>
+                            <input key="$2" dependencies="$3" spellcheck="false" type="text" />
                         </label>
                     </li>
                 `);

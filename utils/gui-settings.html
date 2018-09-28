@@ -21,13 +21,17 @@
           </label>
         </li>
         <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox>
-        <li class="indent-1">
-          <label class="gui-settings-textbox-container">
-            <span>顶栏(对横幅)不透明度</span>
-            <input key="blurBackgroundOpacity" dependencies="useNewStyle" spellcheck="false" type="text" />
-          </label>
-        </li>
+        <textbox indent="1" key="blurBackgroundOpacity" dependencies="useNewStyle">
+          顶栏(对横幅)不透明度
+        </textbox>
         <checkbox indent="0" key="useDarkStyle" dependencies=""></checkbox>
+        <checkbox indent="0" key="darkSchedule" dependencies=""></checkbox>
+        <textbox indent="1" key="darkScheduleStart" dependencies="darkSchedule">
+          起始时间
+        </textbox>
+        <textbox indent="1" key="darkScheduleEnd" dependencies="darkSchedule">
+          结束时间
+        </textbox>
         <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox>
         <checkbox indent="1" key="showBanner" dependencies="overrideNavBar">
           显示顶部横幅

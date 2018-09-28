@@ -4792,7 +4792,12 @@ body>div.to-top.on
 .checkbox.checked .radio-btn,
 .text-input input,
 .set-copyright .copyright-select-box,
-.set-copyright .copyright-icon .icon-none-copyright
+.set-copyright .copyright-icon .icon-none-copyright,
+.add-tag .edit .btn-hide,
+.add-tag .edit .input-wrapper input,
+.add-tag .tag-list .tag,
+.cards-block .cards-list .card-item .card-case.type2 .content .block,
+.faq-modal .modal-wrap .modal-content .text-content 
 {
     background-color: #222 !important;
 }
@@ -4835,7 +4840,9 @@ body>div.to-top.on
 .read-list-component .creat-read-list-box .input-box button[disabled],
 .ui-radio input[type=radio]:active + .ui-radio-icon,
 body #app .category-wrapper .upload-content,
-.set-copyright .copyright-select-box .copyright:hover 
+.set-copyright .copyright-select-box .copyright:hover,
+.tag .delete,
+body #app .marquee 
 {
     background-color: #444 !important;
 }
@@ -4851,10 +4858,10 @@ body #app .category-wrapper .upload-content,
 // {
 //     background-color: #fff1 !important;
 // }
-// a
-// {
-//     background-image: none !important;
-// }
+.add-tag .edit .input-wrapper .container.active .btn-add
+{
+    background-image: none !important;
+}
 .link-footer .footer-linker .footer-linker-line,
 .nav-notice li,
 .nav-notice li.hover,
@@ -4962,7 +4969,12 @@ ul.navigation li span,
 .checkbox .text,
 .text-input .text-length,
 .upload-image .tip,
-.set-copyright .copyright-select-box .copyright
+.set-copyright .copyright-select-box .copyright,
+.block-left .headline .hot-link,
+.danmu-wrp .section .label .second,
+.add-tag .edit .tip,
+.add-tag .edit .input-wrapper .count,
+.faq-modal .modal-wrap .modal-content .text-content p 
 {
     color: #aaa !important;
 }
@@ -5061,7 +5073,16 @@ ul.navigation li.activated span,
 .text-input input,
 .agree-rule .text,
 .submit-btn,
-body #app .category-wrapper .upload-content .title 
+body #app .category-wrapper .upload-content .title,
+.block-left .headline h4,
+.recent-danmu-wrp .danmu-filter .from-wrp .bili-input,
+.category-wrapper .tweet-title,
+.add-tag .edit .input-wrapper input:hover,
+.add-tag .edit .input-wrapper input:focus,
+.tag .text,
+.add-tag .edit .input-wrapper .btn-add,
+.tag .delete,
+.faq-modal .modal-wrap .modal-content .text-content h1 
 {
     color: #eee !important;
 }
@@ -5123,7 +5144,11 @@ body #app .category-wrapper .upload-content .title
 .checkbox.checked .radio-btn,
 .upload-image,
 .text-input input,
-.set-copyright .copyright-select-box
+.set-copyright .copyright-select-box,
+.recent-danmu-wrp .danmu-filter .from-wrp .bili-input,
+.add-tag .edit .input-wrapper input,
+.add-tag .edit .input-wrapper input:hover,
+.add-tag .edit .input-wrapper input:focus
 {
     border-color: transparent !important;
 }
@@ -5158,7 +5183,8 @@ body #app .category-wrapper .upload-content .title
 // }
 .mainmenu ul.grid li a.yxzx,
 .footer-logo,
-.more-data i
+.more-data i,
+.block-left.block-brand .headline .tab-wrap .pgc-brand-tab 
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -5229,7 +5255,8 @@ body #app .category-wrapper .upload-content .title
 .tabs-nav .active,
 .ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
 .ui-radio.active .ui-radio-icon,
-.ui-radio input[type=radio]:hover + .ui-radio-icon 
+.ui-radio input[type=radio]:hover + .ui-radio-icon,
+body #app .marquee 
 {
     border-color: $customStyleColor !important;
 }
@@ -5300,7 +5327,13 @@ ul.navigation li:hover,
 .upload-tips,
 .agree-rule .rule,
 body #app .category-wrapper .upload-tip,
-.set-copyright .copyright-select-box .copyright.selected .text
+.set-copyright .copyright-select-box .copyright.selected .text,
+.block-left .headline .hot-link:hover,
+body #app .marquee a,
+.faq-modal .modal-wrap .modal-content .text-content a,
+.faq-modal .modal-wrap .modal-content .text-content a:active,
+.faq-modal .modal-wrap .modal-content .text-content a:hover,
+.set-copyright .copyright-select-box .copyright:hover .text
 {
     color: $customStyleColor !important;
 }
@@ -5331,7 +5364,7 @@ body #app .category-wrapper .upload-tip,
 .season-item.on:after,
 .dc-radio-button.is-active:after,
 .bili-tab.current:after,
-.season-item.on:after
+.ui-tabs .ui-tabs-head .tab-head-item.current a:after 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
