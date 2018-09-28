@@ -128,13 +128,11 @@
                 {
                     timeout = ScheduleTime.millisecondsBefore(start);
                 }
-                console.log(`timeout=${timeout}, darkMode=${darkMode}`);
                 if (timeout !== 0)
                 {
                     setTimeout(() => checkTime(), timeout);
                 }
             }
-            // console.log(`Checked time: ${now.hour}:${now.minute}, result=${darkMode}`);
         }
         checkTime();
 
