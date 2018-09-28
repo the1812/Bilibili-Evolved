@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.4.2
+// @version      1.4.3
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -21,6 +21,9 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        darkScheduleStart: "18:00",
+        darkScheduleEnd: "06:00",
+        darkSchedule: false,
         blurSettingsPanel: false,
         blurVideoControl: false,
         toast: true,
