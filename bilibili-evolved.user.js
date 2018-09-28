@@ -22,7 +22,7 @@
     const $ = unsafeWindow.$ || self$;
     const settings = {
         darkScheduleStart: "18:00",
-        darkScheduleEnd: "06:00",
+        darkScheduleEnd: "6:00",
         darkSchedule: false,
         blurSettingsPanel: false,
         blurVideoControl: false,
