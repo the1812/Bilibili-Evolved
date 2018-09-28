@@ -64,7 +64,7 @@
             const match = text.match(/^([\d]{1,2}):([\d]{1,2})$/);
             if (match && match.length >= 3)
             {
-                const time = { hour: match[1], minute: match[2] };
+                const time = { hour: parseInt(match[1]), minute: parseInt(match[2]) };
                 (function ()
                 {
                     while (this.minute < 0)
@@ -86,7 +86,7 @@
                         this.hour -= 24;
                     }
                 }).call(time);
-                return `${time.hour}:${time.minute}`;
+                return `${time.hour}:${(time.minute < 10 ? "0" + time.minute : time.minute)}`;
             }
             else
             {
