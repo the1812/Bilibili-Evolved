@@ -88,15 +88,17 @@
                     inRange = this.greaterThan(start) || this.lessThan(end);
                 }
                 const result = inRange ||
-                    this.equals(start) ||
-                    this.equals(end);
+                    this.equals(start);
                 return result;
             }
-            millisecondsBefore(other)
+            static millisecondsBefore(time)
             {
-                let result =  (other.hour - this.hour) * 3600 * 1000
-                    + (other.minute - this.minute) * 60 * 1000;
-                if (this.greaterThan(other))
+                const now = new ScheduleTime();
+                const nowSeconds = new Date().getSeconds();
+                const currentMilliseconds = 1000 * (now.hour * 3600 + now.minute * 60 + nowSeconds);
+                const targetMilliseconds = 1000 * (time.hour * 3600 + time.minute * 60);
+                let result = targetMilliseconds - currentMilliseconds;
+                if (now.greaterThan(time) || now.equals(time) && nowSeconds !== 0)
                 {
                     result += 24 * 3600 * 1000;
                 }
@@ -120,13 +122,17 @@
                 let timeout = 0;
                 if (darkMode)
                 {
-                    timeout = now.millisecondsBefore(end);
+                    timeout = ScheduleTime.millisecondsBefore(end);
                 }
                 else
                 {
-                    timeout = now.millisecondsBefore(start);
+                    timeout = ScheduleTime.millisecondsBefore(start);
                 }
-                setTimeout(() => checkTime(), timeout);
+                console.log(`timeout=${timeout}, darkMode=${darkMode}`);
+                if (timeout !== 0)
+                {
+                    setTimeout(() => checkTime(), timeout);
+                }
             }
             // console.log(`Checked time: ${now.hour}:${now.minute}, result=${darkMode}`);
         }
