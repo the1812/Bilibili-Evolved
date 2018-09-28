@@ -1,6 +1,6 @@
 (() =>
 {
-    return () =>
+    return (settings) =>
     {
         class ScheduleTime
         {
@@ -93,8 +93,18 @@
                 return result;
             }
         }
+        const start = new ScheduleTime(settings.darkScheduleStart);
+        const end = new ScheduleTime(settings.darkScheduleEnd);
+        const now = new ScheduleTime();
+        const darkMode = now.isInRange(start, end);
+        if (settings.useDarkStyle !== darkMode)
+        {
+            settings.useDarkStyle = darkMode;
+            saveSettings(settings);
+        }
         return {
-            ajaxReload: false
+            ajaxReload: false,
+            export: ScheduleTime
         };
     };
 })();
