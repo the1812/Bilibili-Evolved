@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.0
+// @version      1.5.1
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -45,6 +45,7 @@
         showBanner: true,
         useDarkStyle: false,
         useNewStyle: true,
+        useCache: true,
         cache: {}
     };
     const fixedSettings = {
@@ -53,7 +54,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.0"
+        currentVersion: "1.5.1"
     };
     function loadSettings()
     {
@@ -591,26 +592,35 @@
                             this.text = this.type.preprocessor(text);
                             resolve(this.text);
                         };
-                        const cache = this.loadCache(key);
-                        if (cache !== null)
+                        if (settings.useCache)
                         {
-                            apply(cache);
-                        }
-                        downloadText(this.url, text =>
-                        {
-                            if (cache !== text)
+                            const cache = this.loadCache(key);
+                            if (cache !== null)
                             {
-                                if (cache === null)
-                                {
-                                    apply(text);
-                                }
-                                if (typeof offlineData === "undefined")
-                                {
-                                    settings.cache[key] = text;
-                                    saveSettings(settings);
-                                }
+                                apply(cache);
                             }
-                        }, error => reject(error));
+                            downloadText(this.url, text =>
+                            {
+                                if (cache !== text)
+                                {
+                                    if (cache === null)
+                                    {
+                                        apply(text);
+                                    }
+                                    if (typeof offlineData === "undefined")
+                                    {
+                                        settings.cache[key] = text;
+                                        saveSettings(settings);
+                                    }
+                                }
+                            }, error => reject(error));
+                        }
+                        else
+                        {
+                            downloadText(this.url,
+                                text => apply(text),
+                                error => reject(error));
+                        }
                         // -#Offline build placeholder
                     });
                 }
@@ -696,17 +706,6 @@
             settings.pinkImageFilter = this.color.pinkImageFilter;
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
-        }
-        loadCache(key)
-        {
-            if (!settings.cache || !settings.cache[key])
-            {
-                return null;
-            }
-            else
-            {
-                return settings.cache[key];
-            }
         }
         fetchByKey(key)
         {
