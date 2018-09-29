@@ -679,7 +679,7 @@
             const cache = this.loadCache(key);
             if (cache !== null)
             {
-                this.applyComponent(key, text);
+                this.applyComponent(key, cache);
             }
             const promise = resource.download();
             promise.then(text =>
@@ -693,7 +693,7 @@
                     if (typeof offlineData === "undefined")
                     {
                         settings.cache[key] = text;
-                        saveSettings();
+                        saveSettings(settings);
                     }
                 }
             }).catch(reason =>
