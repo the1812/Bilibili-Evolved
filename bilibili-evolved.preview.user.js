@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.4.5
+// @version      1.5.0
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -44,7 +44,8 @@
         overrideNavBar: true,
         showBanner: true,
         useDarkStyle: false,
-        useNewStyle: true
+        useNewStyle: true,
+        cache: {}
     };
     const fixedSettings = {
         guiSettings: true,
@@ -52,7 +53,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.4.5"
+        currentVersion: "1.5.0"
     };
     function loadSettings()
     {
@@ -657,6 +658,17 @@
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
         }
+        loadCache(key)
+        {
+            if (!settings.cache || !settings.cache[key])
+            {
+                return null;
+            }
+            else
+            {
+                return settings.cache[key];
+            }
+        }
         fetchByKey(key)
         {
             const resource = Resource.all[key];
@@ -664,30 +676,22 @@
             {
                 return null;
             }
+            const cache = this.loadCache(key);
+            if (cache !== null)
+            {
+                this.applyComponent(text);
+            }
             const promise = resource.download();
             promise.then(text =>
             {
-                const func = eval(text);
-                if (func)
+                if (cache !== text)
                 {
-                    try
+                    if (cache === null)
                     {
-                        const attribute = func(settings, this);
-                        this.attributes[key] = attribute;
-                        if (attribute.ajaxReload)
-                        {
-                            $(document).ajaxComplete(() =>
-                            {
-                                func(settings, this);
-                            });
-                        }
+                        this.applyComponent(text);
                     }
-                    catch (error)
-                    {
-                        // execution error
-                        console.error(`Failed to apply feature "${key}": ${error}`);
-                        Toast.error(`加载组件<span>${Resource.all[key].displayName}</span>失败.`, "错误");
-                    }
+                    settings.cache[key] = text;
+                    saveSettings();
                 }
             }).catch(reason =>
             {
@@ -719,6 +723,31 @@
                     resolve();
                 });
             });
+        }
+        applyComponent(text)
+        {
+            const func = eval(text);
+            if (func)
+            {
+                try
+                {
+                    const attribute = func(settings, this);
+                    this.attributes[key] = attribute;
+                    if (attribute.ajaxReload)
+                    {
+                        $(document).ajaxComplete(() =>
+                        {
+                            func(settings, this);
+                        });
+                    }
+                }
+                catch (error)
+                {
+                    // execution error
+                    console.error(`Failed to apply feature "${key}": ${error}`);
+                    Toast.error(`加载组件<span>${Resource.all[key].displayName}</span>失败.`, "错误");
+                }
+            }
         }
         applySettingsWidgets()
         {
