@@ -227,7 +227,8 @@ ul.navigation li span,
 .hot-list .card-ctnr .room-count,
 .room-card .sub-area,
 .area-section .card-ctnr .tag-ctnr .tags,
-#announcement-area .rank-ctnr .anchor-name
+#announcement-area .rank-ctnr .anchor-name,
+#announcement-area .news-ctnr .news-date 
 {
     color: #aaa !important;
 }
@@ -342,7 +343,8 @@ body #app .category-wrapper .upload-content .title,
 .idol-show .section-title .title,
 #announcement-area .rank-ctnr .cover-ctnr,
 #announcement-area .rank-ctnr .rank-icon,
-.item .live-status
+.item .live-status,
+#area-anchor .icon-play 
 {
     color: #eee !important;
 }
@@ -410,7 +412,8 @@ body #app .category-wrapper .upload-content .title,
 .add-tag .edit .input-wrapper input:hover,
 .add-tag .edit .input-wrapper input:focus,
 .promote-m .headline .change-push,
-.game-groom-m 
+.game-groom-m,
+#announcement-area .news-ctnr .title-row 
 {
     border-color: transparent !important;
 }
