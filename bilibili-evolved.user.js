@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.4.4
+// @version      1.4.5
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -52,7 +52,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.4.4"
+        currentVersion: "1.4.5"
     };
     function loadSettings()
     {
@@ -686,14 +686,14 @@
                     {
                         // execution error
                         console.error(`Failed to apply feature "${key}": ${error}`);
-                        Toast.error(`加载组件"${Resource.all[key].displayName}"失败.`, "错误");
+                        Toast.error(`加载组件<span>${Resource.all[key].displayName}</span>失败.`, "错误");
                     }
                 }
             }).catch(reason =>
             {
                 // download error
                 console.error(`Download error, XHR status: ${reason}`);
-                Toast.error(`无法下载"${Resource.all[key].displayName}"组件.`, "错误");
+                Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>.`, "错误");
             });
             return promise;
         }
