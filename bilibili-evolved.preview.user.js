@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.4.3
+// @version      1.4.4
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -52,7 +52,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.4.3"
+        currentVersion: "1.4.4"
     };
     function loadSettings()
     {
@@ -180,8 +180,8 @@
         {
             this.guiSettings.displayName = "设置";
             this.useDarkStyle.displayName = "夜间模式";
-            this.useNewStyle.displayName = "新样式";
-            this.overrideNavBar.displayName = "搜索栏位置调整";
+            this.useNewStyle.displayName = "样式调整";
+            this.overrideNavBar.displayName = "搜索栏置顶";
             this.touchNavBar.displayName = "顶栏触摸优化";
             this.touchVideoPlayer.displayName = "播放器触摸支持";
             this.expandDanmakuList.displayName = "自动展开弹幕列表";
