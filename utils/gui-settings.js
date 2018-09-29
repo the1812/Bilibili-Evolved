@@ -272,6 +272,10 @@
                     {
                         addEffects();
                     }
+                    if (typeof offlineData !== "undefined")
+                    {
+                        $("input[key=useCache]").prop("disabled", true);
+                    }
                 }
             }
         ).start();
