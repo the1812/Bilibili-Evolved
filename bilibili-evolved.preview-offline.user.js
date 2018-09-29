@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      75.03
+// @version      75.18
 // @description  增强哔哩哔哩Web端体验.(预览离线版)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -802,7 +802,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             const cache = this.loadCache(key);
             if (cache !== null)
             {
-                this.applyComponent(text);
+                this.applyComponent(key, text);
             }
             const promise = resource.download();
             promise.then(text =>
@@ -811,10 +811,13 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 {
                     if (cache === null)
                     {
-                        this.applyComponent(text);
+                        this.applyComponent(key, text);
                     }
-                    settings.cache[key] = text;
-                    saveSettings();
+                    if (offlineData === undefined)
+                    {
+                        settings.cache[key] = text;
+                        saveSettings();
+                    }
                 }
             }).catch(reason =>
             {
@@ -847,7 +850,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 });
             });
         }
-        applyComponent(text)
+        applyComponent(key, text)
         {
             const func = text;
             if (func)

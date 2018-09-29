@@ -679,7 +679,7 @@
             const cache = this.loadCache(key);
             if (cache !== null)
             {
-                this.applyComponent(text);
+                this.applyComponent(key, text);
             }
             const promise = resource.download();
             promise.then(text =>
@@ -688,10 +688,13 @@
                 {
                     if (cache === null)
                     {
-                        this.applyComponent(text);
+                        this.applyComponent(key, text);
                     }
-                    settings.cache[key] = text;
-                    saveSettings();
+                    if (offlineData === undefined)
+                    {
+                        settings.cache[key] = text;
+                        saveSettings();
+                    }
                 }
             }).catch(reason =>
             {
@@ -724,7 +727,7 @@
                 });
             });
         }
-        applyComponent(text)
+        applyComponent(key, text)
         {
             const func = eval(text);
             if (func)
