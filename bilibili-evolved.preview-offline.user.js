@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      75.18
+// @version      75.22
 // @description  增强哔哩哔哩Web端体验.(预览离线版)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -674,6 +674,10 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         {
             return this.text !== null;
         }
+        get key()
+        {
+            return Object.keys(Resource.all).find(k => Resource.all[k] === this);
+        }
         constructor(url, priority)
         {
             this.url = Resource.root + url;
@@ -683,8 +687,21 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             this.type = ResourceType.fromUrl(url);
             this.displayName = "";
         }
+        loadCache()
+        {
+            const key = this.key;
+            if (!settings.cache || !settings.cache[key])
+            {
+                return null;
+            }
+            else
+            {
+                return settings.cache[key];
+            }
+        }
         download()
         {
+            const key = this.key;
             return new Promise((resolve, reject) =>
             {
                 if (this.downloaded)
@@ -799,26 +816,10 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             {
                 return null;
             }
-            const cache = this.loadCache(key);
-            if (cache !== null)
-            {
-                this.applyComponent(key, cache);
-            }
             const promise = resource.download();
             promise.then(text =>
             {
-                if (cache !== text)
-                {
-                    if (cache === null)
-                    {
-                        this.applyComponent(key, text);
-                    }
-                    if (typeof offlineData === "undefined")
-                    {
-                        settings.cache[key] = text;
-                        saveSettings(settings);
-                    }
-                }
+                this.applyComponent(key, text);
             }).catch(reason =>
             {
                 // download error
@@ -852,7 +853,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         }
         applyComponent(key, text)
         {
-            const func = text;
+            const func = eval(text);
             if (func)
             {
                 try

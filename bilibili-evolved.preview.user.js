@@ -547,6 +547,10 @@
         {
             return this.text !== null;
         }
+        get key()
+        {
+            return Object.keys(Resource.all).find(k => Resource.all[k] === this);
+        }
         constructor(url, priority)
         {
             this.url = Resource.root + url;
@@ -556,8 +560,21 @@
             this.type = ResourceType.fromUrl(url);
             this.displayName = "";
         }
+        loadCache()
+        {
+            const key = this.key;
+            if (!settings.cache || !settings.cache[key])
+            {
+                return null;
+            }
+            else
+            {
+                return settings.cache[key];
+            }
+        }
         download()
         {
+            const key = this.key;
             return new Promise((resolve, reject) =>
             {
                 if (this.downloaded)
@@ -568,11 +585,33 @@
                 {
                     Promise.all(this.dependencies.map(r => r.download())).then(() =>
                     {
-                        downloadText(this.url, text =>
+                        // +#Offline build placeholder
+                        const apply = text =>
                         {
                             this.text = this.type.preprocessor(text);
                             resolve(this.text);
+                        };
+                        const cache = this.loadCache(key);
+                        if (cache !== null)
+                        {
+                            apply(cache);
+                        }
+                        downloadText(this.url, text =>
+                        {
+                            if (cache !== text)
+                            {
+                                if (cache === null)
+                                {
+                                    apply(text);
+                                }
+                                if (typeof offlineData === "undefined")
+                                {
+                                    settings.cache[key] = text;
+                                    saveSettings(settings);
+                                }
+                            }
                         }, error => reject(error));
+                        // -#Offline build placeholder
                     });
                 }
             });
@@ -676,26 +715,10 @@
             {
                 return null;
             }
-            const cache = this.loadCache(key);
-            if (cache !== null)
-            {
-                this.applyComponent(key, cache);
-            }
             const promise = resource.download();
             promise.then(text =>
             {
-                if (cache !== text)
-                {
-                    if (cache === null)
-                    {
-                        this.applyComponent(key, text);
-                    }
-                    if (typeof offlineData === "undefined")
-                    {
-                        settings.cache[key] = text;
-                        saveSettings(settings);
-                    }
-                }
+                this.applyComponent(key, text);
             }).catch(reason =>
             {
                 // download error
