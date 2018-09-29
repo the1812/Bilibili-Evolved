@@ -813,7 +813,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                     {
                         this.applyComponent(key, text);
                     }
-                    if (offlineData === undefined)
+                    if (typeof offlineData === "undefined")
                     {
                         settings.cache[key] = text;
                         saveSettings();
@@ -823,7 +823,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             {
                 // download error
                 console.error(`Download error, XHR status: ${reason}`);
-                Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>.`, "错误");
+                Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
             });
             return promise;
         }
