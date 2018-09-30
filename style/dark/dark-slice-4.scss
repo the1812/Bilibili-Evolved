@@ -41,7 +41,9 @@
 #announcement-area .rank-ctnr .rank-icon,
 .review-reply-wrapper,
 .func-banner .btn-like,
-.func-banner .btn-dislike 
+.func-banner .btn-dislike,
+.order-list-wrapper,
+.order-header-wrapper 
 {
     background-color: #222 !important;
 }
@@ -92,7 +94,8 @@ body #app .marquee,
 .game-groom-m,
 .article-wrapper,
 .author-info-card,
-.relate-work-wrapper 
+.relate-work-wrapper,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper 
 {
     background-color: #444 !important;
 }
@@ -242,7 +245,8 @@ ul.navigation li span,
 .func-banner .right-btns a,
 .func-banner .right-btns span,
 .relate-work-wrapper .work-info .bread-crumb,
-.relate-work-wrapper .work-info .rate-info .tip 
+.relate-work-wrapper .work-info .rate-info .tip,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body .order-item-name-wrapper .time 
 {
     color: #aaa !important;
 }
@@ -368,7 +372,13 @@ body #app .category-wrapper .upload-content .title,
 .func-banner .btn-dislike,
 .relate-work-wrapper .wrapper-title,
 .relate-work-wrapper .work-info .work-title,
-.author-info-card .author-info .info-right .btn-attention 
+.author-info-card .author-info .info-right .btn-attention,
+.order-header-wrapper,
+.order-header-wrapper .order-header-status,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body .order-item-name-wrapper .name,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.canceldetail,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.checkdetail 
 {
     color: #eee !important;
 }
@@ -440,7 +450,10 @@ body #app .category-wrapper .upload-content .title,
 #announcement-area .news-ctnr .title-row,
 .author-info-card .data-area .split-line,
 .func-banner .btn-like,
-.func-banner .btn-dislike 
+.func-banner .btn-dislike,
+.order-list-wrapper .order-list .order-item,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.canceldetail,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.checkdetail 
 {
     border-color: transparent !important;
 }
