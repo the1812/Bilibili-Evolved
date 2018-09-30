@@ -45,7 +45,9 @@ div#square.container,
 .leaveMsg .leaveMsgBody .classDropdown-menus li a:hover,
 .leaveMsg .leaveMsgBody .classDropdown-menus li:hover,
 .mainBox .sureWindow,
-.js-evaluateArea .evaluateDialog
+.js-evaluateArea .evaluateDialog,
+.live-ctn .item-live,
+.live-status.offline
 {
     background-color: #222 !important;
 }
