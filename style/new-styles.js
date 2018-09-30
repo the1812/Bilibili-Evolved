@@ -32,6 +32,9 @@
                 resources.applyStyle("oldStyle", "bilibili-new-style");
             }
         });
+        new SpinQuery(() => $(".player-wrap,.danmaku-box"),
+            it => it.attr("style"),
+            it => it.attr("style", "")).start();
         return {
             ajaxReload: false
         };
