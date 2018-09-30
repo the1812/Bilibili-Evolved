@@ -150,7 +150,12 @@ body>div.to-top.on,
 .singlePage .mainBox,
 .leaveMsg .leaveMsgBody .email,
 .leaveMsg .leaveMsgBody .telephone,
-.leaveMsg .submitArea
+.leaveMsg .submitArea,
+#announcement-area .more-link:hover,
+.idol-show .section-title .more,
+.idol-show .section-title .more:hover,
+.area-section .card-ctnr .more,
+.area-section .card-ctnr .more:hover
 {
     background-color: transparent !important;
 }
@@ -209,7 +214,8 @@ body>div.to-top.on,
 .questionClassify .classDropdownAreaFixed .router .routerDeep,
 .leaveMsg .leaveMsgBody .infoArea .infoAreaTitle,
 .leaveMsgUpload .btnarea span.btareatxt,
-.evaluate .h2
+.evaluate .h2,
+.hot-list .card-ctnr .room-count .icon-font
 {
     color: #aaa !important;
 }
@@ -278,7 +284,11 @@ body>div.to-top.on,
 .sureWindow .btngroup span,
 .evaluateWether .evaluateTitle,
 .evaluateWether .evaluate-btn,
-.evaluate .situation span
+.evaluate .situation span,
+#announcement-area .news-ctnr .icon-arrow-right,
+#announcement-area .news-ctnr .more-link,
+#announcement-area .rank-ctnr .icon-arrow-right,
+#announcement-area .rank-ctnr .more-link
 {
     color: #eee !important;
 }
@@ -321,7 +331,8 @@ body>div.to-top.on,
 .evaluateWether .okactive,
 .evaluateWether .evaluate-btn,
 .evaluateWether .noactive,
-.evaluate .situation span
+.evaluate .situation span,
+.bilibili-live-player .bilibili-live-player-enter-tips
 {
     border-color: transparent !important;
 }
@@ -360,10 +371,10 @@ body>div.to-top.on,
 //     border-color: #99a2aa !important;
 // }
 
-// a
-// {
-//     transition: all .2s !important;
-// }
+#player-header .bg-image
+{
+    transition: all .2s .5s !important;
+}
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a
 {
     fill: #aaa !important;
@@ -432,9 +443,14 @@ body>div.to-top.on,
 {
     filter: grayscale(1) !important;
 }
-.container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-title
+.container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-title,
+#player-header .bg-image:hover
 {
     filter: brightness(0.7) !important;
+}
+#player-header .bg-image
+{
+    filter: brightness(0.2) !important;
 }
 // a
 // {
@@ -538,7 +554,8 @@ body>div.to-top.on
 .container .hot-list .music-menu-list .choose-menu,
 .container .hot-list .music-menu-list .menu-type .type-triangle,
 .bili-radio:checked+span::before,
-.rightMsg .msgDiv::before
+.rightMsg .msgDiv::before,
+#index-player-vm .item-border
 {
     border-color: $customStyleColor !important;
 }
@@ -549,6 +566,10 @@ body>div.to-top.on
 .blp-ui-slider-hover-container::after
 {
     border-bottom-color: $customStyleColor !important;
+}
+#index-player-vm .aside-item:after
+{
+    border-right-color: $customStyleColor !important;
 }
 .audioplayer .ap-controller,
 .audioplayer .ap-playlist
@@ -584,7 +605,9 @@ body>div.to-top.on
 .evaluateWether .okactive,
 .evaluateWether .noactive,
 .evaluate .situation span.active,
-.evaluateSubmitArea .submit
+.evaluateSubmitArea .submit,
+.bilibili-live-player .blpui-btn.default-btn.btn-blue,
+.bilibili-live-player .bilibili-live-player-enter-tips
 {
     background-color: $customStyleColor !important;
 }
@@ -652,7 +675,11 @@ body>div.to-top.on
 .rank-item .content .info .bangumi-num,
 .upload-agreement a,
 .channel-detail .content .breadcrumb .item:hover,
-.leaveMsgUpload .btnarea .btareatxt1
+.leaveMsgUpload .btnarea .btareatxt1,
+.hot-list .card-ctnr .room-count .amount,
+.hot-list .card-ctnr .room-count:hover .amount,
+.hot-list .card-ctnr .room-count:hover .icon-font,
+.hot-list .card-ctnr .room-count:hover
 {
     color: $customStyleColor !important;
 }
@@ -680,7 +707,9 @@ body>div.to-top.on
 .evaluateWether .okactive,
 .evaluateWether .noactive,
 .evaluate .situation span.active,
-.evaluateSubmitArea .submit
+.evaluateSubmitArea .submit,
+.bilibili-live-player .blpui-btn.default-btn.btn-blue,
+.bilibili-live-player .bilibili-live-player-enter-tips
 {
     color: $foreground !important;
 }
