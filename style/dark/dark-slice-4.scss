@@ -38,7 +38,10 @@
 .cards-block .cards-list .card-item .card-case.type2 .content .block,
 .faq-modal .modal-wrap .modal-content .text-content,
 .game-groom-m .type-name,
-#announcement-area .rank-ctnr .rank-icon 
+#announcement-area .rank-ctnr .rank-icon,
+.review-reply-wrapper,
+.func-banner .btn-like,
+.func-banner .btn-dislike 
 {
     background-color: #222 !important;
 }
@@ -86,7 +89,10 @@ body #app .category-wrapper .upload-content,
 body #app .marquee,
 .promote-m .headline .change-push,
 .game-groom-m .title,
-.game-groom-m 
+.game-groom-m,
+.article-wrapper,
+.author-info-card,
+.relate-work-wrapper 
 {
     background-color: #444 !important;
 }
@@ -228,7 +234,15 @@ ul.navigation li span,
 .room-card .sub-area,
 .area-section .card-ctnr .tag-ctnr .tags,
 #announcement-area .rank-ctnr .anchor-name,
-#announcement-area .news-ctnr .news-date 
+#announcement-area .news-ctnr .news-date,
+.author-info-card .data-area .data-block h4,
+.stat-banner .author-name,
+.stat-banner .pub-time,
+.stat-banner .review-summary,
+.func-banner .right-btns a,
+.func-banner .right-btns span,
+.relate-work-wrapper .work-info .bread-crumb,
+.relate-work-wrapper .work-info .rate-info .tip 
 {
     color: #aaa !important;
 }
@@ -344,7 +358,17 @@ body #app .category-wrapper .upload-content .title,
 #announcement-area .rank-ctnr .cover-ctnr,
 #announcement-area .rank-ctnr .rank-icon,
 .item .live-status,
-#area-anchor .icon-play 
+#area-anchor .icon-play,
+.article-wrapper .review-content,
+.article-wrapper .review-title,
+.review-reply-wrapper .review-reply-title,
+.author-info-card .author-info .info-right .author-name,
+.author-info-card .data-area .data-block p,
+.func-banner .btn-like,
+.func-banner .btn-dislike,
+.relate-work-wrapper .wrapper-title,
+.relate-work-wrapper .work-info .work-title,
+.author-info-card .author-info .info-right .btn-attention 
 {
     color: #eee !important;
 }
@@ -413,7 +437,10 @@ body #app .category-wrapper .upload-content .title,
 .add-tag .edit .input-wrapper input:focus,
 .promote-m .headline .change-push,
 .game-groom-m,
-#announcement-area .news-ctnr .title-row 
+#announcement-area .news-ctnr .title-row,
+.author-info-card .data-area .split-line,
+.func-banner .btn-like,
+.func-banner .btn-dislike 
 {
     border-color: transparent !important;
 }
@@ -523,7 +550,12 @@ body #app .category-wrapper .upload-content .title,
 .ui-radio.active .ui-radio-icon,
 .ui-radio input[type=radio]:hover + .ui-radio-icon,
 body #app .marquee,
-.area-section .card-ctnr .tag-ctnr .tags:hover
+.area-section .card-ctnr .tag-ctnr .tags:hover,
+.func-banner .btn-like:hover,
+.func-banner .btn-dislike:hover,
+.func-banner .btn-like.active,
+.func-banner .btn-dislike.active,
+.author-info-card .author-info .info-right .btn-attention 
 {
     border-color: $customStyleColor !important;
 }
@@ -549,7 +581,8 @@ body #app .category-wrapper .dot,
 .submit-btn,
 .promote-m .headline .change-push:hover,
 #announcement-area .rank-ctnr .rank-icon.hot,
-.item .live-status.on
+.item .live-status.on,
+.author-info-card .author-info .info-right .btn-attention 
 {
     background-color: $customStyleColor !important;
 }
@@ -608,7 +641,14 @@ body #app .marquee a,
 .game-groom-box-m .game-groom-m:hover .title,
 #area-anchor .area-title-link:hover,
 .area-section .card-ctnr .tag-ctnr .tags:hover,
-.idol-show .section-title .title:hover
+.idol-show .section-title .title:hover,
+.func-banner .right-btns a:hover,
+.func-banner .right-btns span:hover,
+.func-banner .btn-like:hover,
+.func-banner .btn-dislike:hover,
+.func-banner .btn-like.active,
+.func-banner .btn-dislike.active,
+.relate-work-wrapper .work-info .go-play 
 {
     color: $customStyleColor !important;
 }
