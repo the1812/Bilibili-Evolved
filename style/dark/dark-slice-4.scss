@@ -43,7 +43,9 @@
 .func-banner .btn-like,
 .func-banner .btn-dislike,
 .order-list-wrapper,
-.order-header-wrapper 
+.order-header-wrapper,
+.orderdetail-container .orderdetail-content,
+.total-container 
 {
     background-color: #222 !important;
 }
@@ -95,7 +97,9 @@ body #app .marquee,
 .article-wrapper,
 .author-info-card,
 .relate-work-wrapper,
-.order-list-wrapper .order-list .order-item .order-item-body-wrapper 
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper,
+.project-info table tr,
+.project-info table tr:first-child 
 {
     background-color: #444 !important;
 }
@@ -246,7 +250,11 @@ ul.navigation li span,
 .func-banner .right-btns span,
 .relate-work-wrapper .work-info .bread-crumb,
 .relate-work-wrapper .work-info .rate-info .tip,
-.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body .order-item-name-wrapper .time 
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body .order-item-name-wrapper .time,
+.orderdetail-container .orderdetail-wrapper .wrapper-ticket,
+.orderdetail-container .orderdetail-wrapper p,
+.project-info table .project-content .content-right p,
+.orderdetail-container .orderdetail-nav .orderdetail-nav-list li.order-center 
 {
     color: #aaa !important;
 }
@@ -378,7 +386,13 @@ body #app .category-wrapper .upload-content .title,
 .order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body .order-item-name-wrapper .name,
 .order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body,
 .order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.canceldetail,
-.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.checkdetail 
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.checkdetail,
+.orderdetail-container .orderdetail-status .status-text,
+.project-info table .project-content .content-right h1,
+.project-info table tr,
+.orderdetail-container .orderdetail-wrapper h1,
+.project-info table th,
+.total-container div 
 {
     color: #eee !important;
 }
@@ -453,7 +467,11 @@ body #app .category-wrapper .upload-content .title,
 .func-banner .btn-dislike,
 .order-list-wrapper .order-list .order-item,
 .order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.canceldetail,
-.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.checkdetail 
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.checkdetail,
+.orderdetail-container .orderdetail-status,
+.project-info table tr:last-child,
+.project-info table tr,
+.orderdetail-container .orderdetail-wrapper .wrapper-content 
 {
     border-color: transparent !important;
 }
@@ -502,7 +520,8 @@ body #app .category-wrapper .upload-content .title,
 }
 .episode-item .mark-icon,
 .add-tag .default .btn-show,
-.submit-btn 
+.submit-btn,
+.project-info table .project-content .content-right .ticket-type span 
 {
     filter: $pinkImageFilter !important;
 }
@@ -522,7 +541,8 @@ body #app .category-wrapper .upload-content .title,
 // {
 //     border-radius: 4px !important;
 // }
-#edit-page 
+#edit-page,
+.orderdetail-container .orderdetail-content 
 {
     box-shadow: none !important;
 }
@@ -661,7 +681,12 @@ body #app .marquee a,
 .func-banner .btn-dislike:hover,
 .func-banner .btn-like.active,
 .func-banner .btn-dislike.active,
-.relate-work-wrapper .work-info .go-play 
+.relate-work-wrapper .work-info .go-play,
+.project-info table .project-content .content-right h1:hover,
+.orderdetail-container .orderdetail-status h1,
+.total-container div span.total,
+.project-info table .project-content .content-right .ticket-type,
+.project-info table td.total 
 {
     color: $customStyleColor !important;
 }
