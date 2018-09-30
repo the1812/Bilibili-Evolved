@@ -28,7 +28,26 @@
 div#square.container,
 #rankList .list-wrap .list .switch-day .switch-list:hover,
 .bili-header-m .head-banner,
-.link-navbar-ctnr
+.link-navbar-ctnr,
+.uploader-info .info .follow .num,
+.app .module-card.comment,
+.rank-item .content,
+.rank-tab-wrap,
+.area-item-ctnr .area-item:hover,
+.bili-radio+span::before,
+#page-channel-detail .watch-later-btn,
+.error-body,
+.footer .text-layout,
+.chatPanelBody .chatPanel,
+.chatPanelBody .chatPanel .chatPanelList,
+.leaveMsg .leaveMsgHeader,
+.mainBox .leaveMsg,
+.leaveMsg .leaveMsgBody .classDropdown-menus li a:hover,
+.leaveMsg .leaveMsgBody .classDropdown-menus li:hover,
+.mainBox .sureWindow,
+.js-evaluateArea .evaluateDialog,
+.live-ctn .item-live,
+.live-status.offline
 {
     background-color: #222 !important;
 }
@@ -68,7 +87,23 @@ body>div.to-top.on,
 .index-nav .n-i.gotop .btn_gotop,
 .list-wrap .s-showMore,
 #activeCenter .s-imgUnit .s-imgUnit-img,
-.guide .old-btn a
+.guide .old-btn a,
+.app .module-card,
+.nav-panel-vc,
+.container .song-list .song-li .song-img,
+.audioplayer .ap-controller .ap-controller-left .ap-cover,
+.container .host-list-layout .hot-list-wrap .bg-wrap,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+.notify-v2-container>div,
+.error-container,
+.magBox .msgDiv,
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea,
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed .router,
+.leaveMsg .leaveMsgBody .classDropdown-menus,
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed,
+.sureWindow .btngroup span,
+.evaluateWether .evaluate-btn,
+.evaluate .situation span
 {
     background-color: #444 !important;
 }
@@ -83,6 +118,14 @@ body>div.to-top.on,
 .bilibili-player-video-time-seek
 {
     background-color: #fff1 !important;
+}
+.blp-ui-slider-container
+{
+    background-color: rgba(0,0,0,0.1) !important;
+}
+.mainBox .sureWindowlayer
+{
+    background-color: rgba(0,0,0,.5) !important;
 }
 #mp-mine-header,
 #mp-mine-header.active,
@@ -105,7 +148,18 @@ body>div.to-top.on,
 .chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon,
 .page-content .right-side .up-list,
 #rankList .list-wrap .list .switch-day .switch-list,
-.index-nav .n-i .name:hover
+.index-nav .n-i .name:hover,
+.singlePage .mainBox,
+.leaveMsg .leaveMsgBody .email,
+.leaveMsg .leaveMsgBody .telephone,
+.leaveMsg .submitArea,
+#announcement-area .more-link:hover,
+.idol-show .section-title .more,
+.idol-show .section-title .more:hover,
+.area-section .card-ctnr .more,
+.area-section .card-ctnr .more:hover,
+.link-panigation-ctnr .pagination,
+.jumping-ctnr .jumping-input
 {
     background-color: transparent !important;
 }
@@ -146,7 +200,26 @@ body>div.to-top.on,
 .more .help .info,
 .more .link .info,
 .s-imgUnit-text p,
-.box .content .item
+.box .content .item,
+.uploader-info .info .follow .num,
+.video-list-wrapper .title .text .num,
+.danmu-hot .tab-list .tab,
+.rank-item .content .info .bangumi-info,
+.container .hot-list .music-menu-list .menu-type,
+.elec .elec-monthly-count,
+.announcement-cntr .header p .icon-edit,
+.announcement-cntr .header p span,
+.channel-info .meta,
+.magBox .leftName,
+.chatPanelList .msgData,
+.chatPanel .historyTrigger,
+.leaveMsg .leaveMsgBody .guide,
+.leaveMsg .leaveMsgBody .questionClassify .classText,
+.questionClassify .classDropdownAreaFixed .router .routerDeep,
+.leaveMsg .leaveMsgBody .infoArea .infoAreaTitle,
+.leaveMsgUpload .btnarea span.btareatxt,
+.evaluate .h2,
+.hot-list .card-ctnr .room-count .icon-font
 {
     color: #aaa !important;
 }
@@ -189,7 +262,38 @@ body>div.to-top.on,
 .list-wrap .s-showMore,
 .footer .boston-postcards li .tips,
 .guide .old-btn a,
-.gift-box>.num
+.gift-box>.num,
+.base-info .btn-wrapper,
+.video-list-wrapper .title .text,
+.video-list-wrapper .title .more .text,
+.danmu-hot .video-list .video-wrapper .video .title,
+.blink-qrcode .title,
+.rank-item .content .info .title,
+.container .hot-list .menu-title,
+.announcement-cntr .header p,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+.notify-v2-container>div>span,
+.notify-v2-container>div a,
+.notify-v2-container>div .notify-v2-close,
+.channel-detail .content .breadcrumb .item,
+#page-channel-detail .watch-later-btn,
+.error-container .error-text,
+.magBox .msgDiv .msgText,
+.leaveMsg .leaveMsgHeader .title,
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitle,
+.leaveMsg .leaveMsgBody .classDropdown-menus li,
+.leaveMsg .leaveMsgBody .email,
+.leaveMsg .leaveMsgBody .telephone,
+.sureWindow .title,
+.sureWindow .btngroup span,
+.evaluateWether .evaluateTitle,
+.evaluateWether .evaluate-btn,
+.evaluate .situation span,
+#announcement-area .news-ctnr .icon-arrow-right,
+#announcement-area .news-ctnr .more-link,
+#announcement-area .rank-ctnr .icon-arrow-right,
+#announcement-area .rank-ctnr .more-link,
+.jumping-ctnr .jumping-input
 {
     color: #eee !important;
 }
@@ -219,14 +323,29 @@ body>div.to-top.on,
 .index-nav .n-i.gotop .btn_gotop,
 .list-wrap .s-showMore,
 .guide .old-btn a,
-.guide .feedback-btn a
+.guide .feedback-btn a,
+.app .module-card,
+.uploader-info .info .follow .num,
+.danmu-hot .tab-list,
+.announcement-cntr .content,
+.upload-v2-step1-container .upload-btn,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+#page-channel-detail .watch-later-btn,
+#page-channel-detail .filter,
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed .router,
+.evaluateWether .okactive,
+.evaluateWether .evaluate-btn,
+.evaluateWether .noactive,
+.evaluate .situation span,
+.bilibili-live-player .bilibili-live-player-enter-tips
 {
     border-color: transparent !important;
 }
-// a
-// {
-//     border-color: #aaa !important;
-// }
+.bili-radio+span::before,
+.channel-info .c-count
+{
+    border-color: #aaa !important;
+}
 // a
 // {
 //     border-color: #222 !important;
@@ -241,19 +360,26 @@ body>div.to-top.on,
 .pagelistbox .custom-right .custom-right-inner.custompage,
 .article-list-holder .article-item,
 .search-module .search-block,
-.search-module .search-block .search-word-panel .panel-title .split-line
+.search-module .search-block .search-word-panel .panel-title .split-line,
+.chatPanelBody .footer,
+.leftMsg .msgDiv:before,
+.leaveMsg .leaveMsgHeader
 {
     border-color: #444 !important
+}
+.singlePage .mainBox
+{
+    border: 1px solid #444 !important;
 }
 // a
 // {
 //     border-color: #99a2aa !important;
 // }
 
-// a
-// {
-//     transition: all .2s !important;
-// }
+#player-header .bg-image
+{
+    transition: all .2s .5s !important;
+}
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a
 {
     fill: #aaa !important;
@@ -263,9 +389,22 @@ body>div.to-top.on,
 .s-lineMore-more .icon-right,
 .slide-controller .slide-btn .icon,
 #rankList .list-wrap .list .switch-day .icon-bottom,
-.list-wrap .s-showMore .icon-right
+.list-wrap .s-showMore .icon-right,
+.breadcrumb .arrow,
+.error-container .error.split,
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn
 {
     filter: brightness(0) invert(1) !important;
+}
+.tool-box-v2-container .icon-tv,
+.tool-box-v2-container .icon-download,
+.funcPanel .addFace,
+.funcPanel .capture,
+.funcPanel .evaluate,
+.funcPanel .leaveMessage,
+.funcPanel .zhichiClose
+{
+    filter: brightness(0) invert(.7) !important;
 }
 .bp-svg-icon.link,
 .face-g-list .mp-block .right ul li.reach::after,
@@ -281,7 +420,10 @@ body>div.to-top.on,
 .mainmenu ul.grid li.hover a.yxlb,
 .mainmenu ul.grid li a.lbzx:hover,
 .mainmenu ul.grid li.hover a.lbzx,
-.carousel .indicator .indicator-btn-holder .indicator-btn.on
+.carousel .indicator .indicator-btn-holder .indicator-btn.on,
+#page-channel-detail .watch-later-btn:hover,
+.error-container .error-panel .error-msg .error-img img,
+.leaveMsgUpload .btnarea .btnareaIcon
 {
     filter: $blueImageFilter !important;
 }
@@ -295,9 +437,25 @@ body>div.to-top.on,
 .search-module .search-block .search-icon,
 .search-module .search-block .search-word-panel .history-item .cancel,
 .rank-module .complete-rank::after,
-body>div.to-top.on
+body>div.to-top.on,
+.rank-item .content .info .detail .b-icon.view,
+.rank-item .content .info .detail .b-icon.author,
+.leaveMsg .leaveMsgHeader .close,
+.sureWindow .close,
+.evaluateWether .evaluateno i,
+.evaluateWether .evaluateok i,
+.evaluateWether .operateType .unsolveActive span
 {
     filter: grayscale(1) !important;
+}
+.container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-title,
+#player-header .bg-image:hover
+{
+    filter: brightness(0.7) !important;
+}
+#player-header .bg-image
+{
+    filter: brightness(0.2) !important;
 }
 // a
 // {
@@ -324,7 +482,9 @@ body>div.to-top.on
 .canvas-card dd .icon-contain .support,
 .bui-sns-info a .bd,
 .guide .old-btn a,
-.link-navbar-ctnr
+.link-navbar-ctnr,
+.rank-item:hover,
+.singlePage .mainBox
 {
     box-shadow: none !important;
 }
@@ -332,7 +492,9 @@ body>div.to-top.on
 {
     box-shadow: 0px 4px 16px 0px $customStyleColor40 !important;
 }
-.guide .feedback-btn a
+.guide .feedback-btn a,
+.mainBox .leaveMsg,
+.js-evaluateArea .evaluateDialog
 {
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
@@ -392,9 +554,27 @@ body>div.to-top.on
 #rankList .list-wrap .list .switch.active,
 #rankList .list-wrap .list .switch:hover,
 #rankList .list-wrap .list .switch.active.active:after,
-#rankList .list-wrap .list .switch:hover.active:after
+#rankList .list-wrap .list .switch:hover.active:after,
+.danmu-hot .tab-list .tab.active,
+.container .hot-list .music-menu-list .choose-menu,
+.container .hot-list .music-menu-list .menu-type .type-triangle,
+.bili-radio:checked+span::before,
+.rightMsg .msgDiv::before,
+#index-player-vm .item-border
 {
     border-color: $customStyleColor !important;
+}
+.blp-ui-slider-hover-container::before
+{
+    border-top-color: $customStyleColor !important;
+}
+.blp-ui-slider-hover-container::after
+{
+    border-bottom-color: $customStyleColor !important;
+}
+#index-player-vm .aside-item:after
+{
+    border-right-color: $customStyleColor !important;
 }
 .audioplayer .ap-controller,
 .audioplayer .ap-playlist
@@ -417,12 +597,28 @@ body>div.to-top.on
 .s-rank.pink,
 .index-nav .n-i.gotop .btn_gotop:hover,
 .guide .feedback-btn a,
-.gift>.expires
+.gift>.expires,
+.blp-ui-slider-process,
+.uploader-info .info .follow .btn,
+.bili-radio:checked+span::after,
+.upload-v2-step1-container .upload-btn,
+.error-container .big-btn,
+.zcChat .header,
+.rightMsg .msgDiv,
+.leaveMsg .submitArea .submit,
+.sureWindow .btngroup .leavesure,
+.evaluateWether .okactive,
+.evaluateWether .noactive,
+.evaluate .situation span.active,
+.evaluateSubmitArea .submit,
+.bilibili-live-player .blpui-btn.default-btn.btn-blue,
+.bilibili-live-player .bilibili-live-player-enter-tips
 {
     background-color: $customStyleColor !important;
 }
 .audioplayer .ap-play-button svg,
-.audioplayer .ap-controller .ap-controller-center .ap-buffer-bar
+.audioplayer .ap-controller .ap-controller-center .ap-buffer-bar,
+.blp-ui-slider-buffer-container
 {
     background-color: $customStyleColor60 !important;
 }
@@ -470,7 +666,25 @@ body>div.to-top.on
 .list-wrap .s-showMore:hover,
 #activeCenter .s-imgUnit-img .overlay .des,
 .common-popup-wrap header,
-.gift-box:hover>.num
+.gift-box:hover>.num,
+.blp-ui-button:hover > i,
+.base-info .desc .tag,
+.base-info .btn-wrapper .btn:active .icon-font,
+.base-info .btn-wrapper .btn:active,
+.base-info .btn-wrapper .btn:hover .icon-font,
+.base-info .btn-wrapper .btn:hover,
+.video-list-wrapper .video-list .icon-font:hover,
+.danmu-hot .tab-list .tab.active,
+.danmu-hot .video-list .video-wrapper .video:hover .title,
+.rank-item .content .info .title:hover,
+.rank-item .content .info .bangumi-num,
+.upload-agreement a,
+.channel-detail .content .breadcrumb .item:hover,
+.leaveMsgUpload .btnarea .btareatxt1,
+.hot-list .card-ctnr .room-count .amount,
+.hot-list .card-ctnr .room-count:hover .amount,
+.hot-list .card-ctnr .room-count:hover .icon-font,
+.hot-list .card-ctnr .room-count:hover
 {
     color: $customStyleColor !important;
 }
@@ -485,7 +699,22 @@ body>div.to-top.on
 .s-rank.pink,
 .index-nav .n-i .name:hover,
 .guide .feedback-btn a,
-.gift>.expires
+.gift>.expires,
+.uploader-info .info .follow .btn,
+.upload-v2-step1-container .upload-btn,
+.error-container .big-btn,
+.infoBarName .inputIng,
+.infoBarName .titleName,
+.infoBar .infoBarText,
+.magBox .msgDiv .msgText,
+.leaveMsg .submitArea .submit,
+.sureWindow .btngroup .leavesure,
+.evaluateWether .okactive,
+.evaluateWether .noactive,
+.evaluate .situation span.active,
+.evaluateSubmitArea .submit,
+.bilibili-live-player .blpui-btn.default-btn.btn-blue,
+.bilibili-live-player .bilibili-live-player-enter-tips
 {
     color: $foreground !important;
 }
@@ -502,11 +731,12 @@ body>div.to-top.on
     fill: $customStyleColor !important;
 }
 
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-bottom-color: transparent !important;
-// }
+.leftMsg .msgDiv:before,
+.rightMsg .msgDiv::before
+{
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+}
 // a
 // {
 //     border-top-color: transparent !important;
@@ -515,7 +745,8 @@ body>div.to-top.on
 .data-card .tab .data-tab.current:after,
 .sort-item.on i.active,
 #rankList .list-wrap .list .switch.active.active:after,
-#rankList .list-wrap .list .switch:hover.active:after
+#rankList .list-wrap .list .switch:hover.active:after,
+.container .hot-list .music-menu-list .menu-type .type-triangle
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;

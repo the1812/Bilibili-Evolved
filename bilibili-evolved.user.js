@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.4.1
+// @version      1.5.1
 // @description  增强哔哩哔哩Web端体验.
-// @author       Grant Howard / Coulomb-G
+// @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
 // @run-at       document-end
@@ -21,6 +21,9 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        darkScheduleStart: "18:00",
+        darkScheduleEnd: "6:00",
+        darkSchedule: false,
         blurSettingsPanel: false,
         blurVideoControl: false,
         toast: true,
@@ -41,7 +44,9 @@
         overrideNavBar: true,
         showBanner: true,
         useDarkStyle: false,
-        useNewStyle: true
+        useNewStyle: true,
+        useCache: true,
+        cache: {}
     };
     const fixedSettings = {
         guiSettings: true,
@@ -49,7 +54,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.4.1"
+        currentVersion: "1.5.1"
     };
     function loadSettings()
     {
@@ -126,7 +131,8 @@
             notifyNewVersion: new Resource("min/notify-new-version.min.js"),
             toast: new Resource("min/toast.min.js"),
             removeVideoTopMask: new Resource("min/remove-top-mask.min.js"),
-            blurVideoControl: new Resource("min/blur-video-control.min.js")
+            blurVideoControl: new Resource("min/blur-video-control.min.js"),
+            darkSchedule: new Resource("min/dark-schedule.min.js")
         };
         (function ()
         {
@@ -176,8 +182,8 @@
         {
             this.guiSettings.displayName = "设置";
             this.useDarkStyle.displayName = "夜间模式";
-            this.useNewStyle.displayName = "新样式";
-            this.overrideNavBar.displayName = "搜索栏位置调整";
+            this.useNewStyle.displayName = "样式调整";
+            this.overrideNavBar.displayName = "搜索栏置顶";
             this.touchNavBar.displayName = "顶栏触摸优化";
             this.touchVideoPlayer.displayName = "播放器触摸支持";
             this.expandDanmakuList.displayName = "自动展开弹幕列表";
@@ -192,6 +198,7 @@
             this.toast.displayName = "显示消息";
             this.removeVideoTopMask.displayName = "删除视频标题层";
             this.blurVideoControl.displayName = "模糊视频控制栏背景";
+            this.darkSchedule.displayName = "夜间模式计划时段";
         }).apply(Resource.all);
     }
     function downloadText(url, load, error)
@@ -512,6 +519,13 @@
                             <span>$4</span>
                         </label>
                     </li>
+                `).replace(/<textbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/textbox>/g, `
+                    <li class="indent-$1">
+                        <label class="gui-settings-textbox-container">
+                            <span>$4</span>
+                            <input key="$2" dependencies="$3" spellcheck="false" type="text" />
+                        </label>
+                    </li>
                 `);
             });
         }
@@ -534,6 +548,10 @@
         {
             return this.text !== null;
         }
+        get key()
+        {
+            return Object.keys(Resource.all).find(k => Resource.all[k] === this);
+        }
         constructor(url, priority)
         {
             this.url = Resource.root + url;
@@ -543,8 +561,21 @@
             this.type = ResourceType.fromUrl(url);
             this.displayName = "";
         }
+        loadCache()
+        {
+            const key = this.key;
+            if (!settings.cache || !settings.cache[key])
+            {
+                return null;
+            }
+            else
+            {
+                return settings.cache[key];
+            }
+        }
         download()
         {
+            const key = this.key;
             return new Promise((resolve, reject) =>
             {
                 if (this.downloaded)
@@ -555,11 +586,42 @@
                 {
                     Promise.all(this.dependencies.map(r => r.download())).then(() =>
                     {
-                        downloadText(this.url, text =>
+                        // +#Offline build placeholder
+                        const apply = text =>
                         {
                             this.text = this.type.preprocessor(text);
                             resolve(this.text);
-                        }, error => reject(error));
+                        };
+                        if (settings.useCache)
+                        {
+                            const cache = this.loadCache(key);
+                            if (cache !== null)
+                            {
+                                apply(cache);
+                            }
+                            downloadText(this.url, text =>
+                            {
+                                if (cache !== text)
+                                {
+                                    if (cache === null)
+                                    {
+                                        apply(text);
+                                    }
+                                    if (typeof offlineData === "undefined")
+                                    {
+                                        settings.cache[key] = text;
+                                        saveSettings(settings);
+                                    }
+                                }
+                            }, error => reject(error));
+                        }
+                        else
+                        {
+                            downloadText(this.url,
+                                text => apply(text),
+                                error => reject(error));
+                        }
+                        // -#Offline build placeholder
                     });
                 }
             });
@@ -655,33 +717,12 @@
             const promise = resource.download();
             promise.then(text =>
             {
-                const func = eval(text);
-                if (func)
-                {
-                    try
-                    {
-                        const attribute = func(settings, this);
-                        this.attributes[key] = attribute;
-                        if (attribute.ajaxReload)
-                        {
-                            $(document).ajaxComplete(() =>
-                            {
-                                func(settings, this);
-                            });
-                        }
-                    }
-                    catch (error)
-                    {
-                        // execution error
-                        console.error(`Failed to apply feature "${key}": ${error}`);
-                        Toast.error(`加载组件"${Resource.all[key].displayName}"失败.`, "错误");
-                    }
-                }
+                this.applyComponent(key, text);
             }).catch(reason =>
             {
                 // download error
                 console.error(`Download error, XHR status: ${reason}`);
-                Toast.error(`无法下载"${Resource.all[key].displayName}"组件.`, "错误");
+                Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
             });
             return promise;
         }
@@ -701,8 +742,63 @@
                         }
                     }
                 }
-                Promise.all(promises).then(() => resolve());
+                Promise.all(promises).then(() =>
+                {
+                    this.applySettingsWidgets();
+                    resolve();
+                });
             });
+        }
+        applyComponent(key, text)
+        {
+            const func = eval(text);
+            if (func)
+            {
+                try
+                {
+                    const attribute = func(settings, this);
+                    this.attributes[key] = attribute;
+                    if (attribute.ajaxReload)
+                    {
+                        $(document).ajaxComplete(() =>
+                        {
+                            func(settings, this);
+                        });
+                    }
+                }
+                catch (error)
+                {
+                    // execution error
+                    console.error(`Failed to apply feature "${key}": ${error}`);
+                    Toast.error(`加载组件<span>${Resource.all[key].displayName}</span>失败.`, "错误");
+                }
+            }
+        }
+        applySettingsWidgets()
+        {
+            const panel = $(".gui-settings-panel");
+            if (panel.length === 0)
+            {
+                return;
+            }
+            for (const info of Object.values(this.attributes)
+                .filter(it => it.settingsWidget)
+                .map(it => it.settingsWidget))
+            {
+                if (info.after)
+                {
+                    panel.find(info.after()).after(info.content);
+                }
+                else if (info.before)
+                {
+                    panel.find(info.before()).before(info.content);
+                }
+
+                if (info.success)
+                {
+                    info.success();
+                }
+            }
         }
         applyStyle(key, id)
         {

@@ -51,6 +51,16 @@ svg.toast-card-dismiss
     padding: 16px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    transition: all .2s ease-out;
+    transform-origin: center;
+}
+svg.toast-card-dismiss:hover
+{
+    transform: scale(1.2);
+}
+svg.toast-card-dismiss:active
+{
+    transform: scale(1.1);
 }
 svg.toast-card-dismiss path
 {
@@ -77,4 +87,23 @@ svg.toast-card-dismiss path
 .toast-card.toast-success
 {
     background: #274227;
+}
+.toast-card span,
+.toast-card .link
+{
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: rgba(0,0,0,.1);
+    border-radius: 4px;
+    text-decoration: none;
+    color: #eeed;
+    transition: all .2s ease-out;
+}
+.toast-card .link:hover
+{
+    background-color: rgba(0,0,0,.2);
+}
+.toast-card .link:active
+{
+    background-color: rgba(0,0,0,.1);
 }

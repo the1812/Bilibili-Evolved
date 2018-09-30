@@ -11,7 +11,7 @@
         <category>样式</category>
         <li class="indent-0">
           <label class="gui-settings-textbox-container">
-            <span>自定义颜色</span>
+            <span>主题颜色</span>
             <div class="custom-color-preview">
               <div class="predefined-colors">
                 <div class="predefined-colors-grid"></div>
@@ -21,13 +21,17 @@
           </label>
         </li>
         <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox>
-        <li class="indent-1">
-          <label class="gui-settings-textbox-container">
-            <span>顶栏(对横幅)不透明度</span>
-            <input key="blurBackgroundOpacity" dependencies="useNewStyle" spellcheck="false" type="text" />
-          </label>
-        </li>
+        <textbox indent="1" key="blurBackgroundOpacity" dependencies="useNewStyle">
+          顶栏(对横幅)不透明度
+        </textbox>
         <checkbox indent="0" key="useDarkStyle" dependencies=""></checkbox>
+        <checkbox indent="0" key="darkSchedule" dependencies=""></checkbox>
+        <textbox indent="1" key="darkScheduleStart" dependencies="darkSchedule">
+          起始时间
+        </textbox>
+        <textbox indent="1" key="darkScheduleEnd" dependencies="darkSchedule">
+          结束时间
+        </textbox>
         <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox>
         <checkbox indent="1" key="showBanner" dependencies="overrideNavBar">
           显示顶部横幅
@@ -56,6 +60,9 @@
         <checkbox indent="0" key="toast" dependencies=""></checkbox>
         <checkbox indent="0" key="blurSettingsPanel" dependencies="">
           模糊设置面板背景
+        </checkbox>
+        <checkbox indent="0" key="useCache" dependencies="">
+          启用缓存
         </checkbox>
       </ul>
     </div>

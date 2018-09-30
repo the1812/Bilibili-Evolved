@@ -76,7 +76,6 @@ li.season-item .season-body .season-title span.follow,
 .cc-nav-wrp,
 .nav-upload-container,
 .bilibili-player-danmaku-setting-lite-panel .bilibili-player-danmaku-setting-lite,
-.row,
 .audioplayer,
 .log-empty,
 .follow-container .follow-right .follow-intro .follow-fold,
@@ -242,8 +241,7 @@ a.bp_box_bot_click,
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover,
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar:hover,
 .border-line,
-.count-wrapper div.danmu-count:after,
-.ui-calendar .flatpickr-day.inRange
+.count-wrapper div.danmu-count:after
 {
     background-color: #aaa !important;
 }
@@ -1191,8 +1189,7 @@ li.history,
 .bangumi-list-wrapper .top-block .mode-select li.simple-mode.selected,
 .bangumi-list-wrapper .top-block .mode-select li.simple-mode:hover,
 .fjw-random header h2 .head-icon,
-.timer-wrap .timer-top h2 .head-icon,
-.bp-svg-icon
+.timer-wrap .timer-top h2 .head-icon
 {
     filter: $blueImageFilter !important;
 }

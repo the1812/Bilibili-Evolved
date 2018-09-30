@@ -6,9 +6,49 @@
 .dc-option:hover,
 .cc-content-body .medal,
 .comment-manage-wrap .search input,
-.comment-manage-wrap .head .search .bili-input
+.comment-manage-wrap .head .search .bili-input,
+.ui-select.white .ui-select-show-box,
+.ui-select.white .ui-select-show-box:hover,
+.ui-select .ul-select-list,
+.classify .classify-list .list-item .class-block,
+.classify .classify-list .list-item .class-block:hover,
+.ui-btn.sub-btn,
+.ui-btn.white,
+.cards-block .cards-list .card-item .card-case .title:empty,
+.cards-block .cards-list .card-item .card-case.type-head .text .content .block,
+.cards-block .cards-list .card-item .card-case .image,
+.ui-btn.white,
+#edit-page .btn-group.main-active-btn .ui-btn.loading,
+#edit-page .btn-group.main-active-btn a.white:hover,
+#edit-page .btn-group.main-active-btn button.white:hover,
+.ticket-container,
+.assist-wrap .addModal .modal-wrap,
+.ui-radio .ui-radio-icon,
+.classify .sub-list,
+.modal-wrap,
+.song-info .info-wrap .album-itro,
+.song-info .info-wrap .album-name,
+.checkbox.checked .radio-btn,
+.text-input input,
+.set-copyright .copyright-select-box,
+.set-copyright .copyright-icon .icon-none-copyright,
+.add-tag .edit .btn-hide,
+.add-tag .edit .input-wrapper input,
+.add-tag .tag-list .tag,
+.cards-block .cards-list .card-item .card-case.type2 .content .block,
+.faq-modal .modal-wrap .modal-content .text-content,
+.game-groom-m .type-name,
+#announcement-area .rank-ctnr .rank-icon,
+.review-reply-wrapper,
+.func-banner .btn-like,
+.func-banner .btn-dislike,
+.order-list-wrapper,
+.order-header-wrapper,
+.orderdetail-container .orderdetail-content,
+.total-container,
+.qrcode-active .qrcode-active-slider .close-btn
 {
-background-color: #222 !important;
+    background-color: #222 !important;
 }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
@@ -32,9 +72,36 @@ background-color: #222 !important;
 .comment-manage-wrap .head .dropdown-btn .text,
 .recent-danmu-wrp .danmu-filter .left .delete .option-wrp .act-btn,
 .recent-danmu-wrp .head .dropdown-btn,
-.rank-item .content,
-.rank-tab-wrap,
-.rank-list-head .rank_tips
+.rank-list-head .rank_tips,
+.condition-btn-disable,
+.official-submit-btn-disable,
+.el-upload--picture-card,
+.official-title-input,
+.bili-input,
+#edit-page,
+.cover-upload-box .no-img,
+.ui-select .ul-select-list .select-item.active,
+.ui-select .ul-select-list .select-item:hover,
+.float-toolbar .toolbar-list li,
+.assist-wrap .addModal .control-group.assist-rights .rights,
+.classify .sub-list .sub-item.active,
+.classify .sub-list .sub-item:hover,
+.read-list-component .creat-read-list-box .input-box button[disabled],
+.ui-radio input[type=radio]:active + .ui-radio-icon,
+body #app .category-wrapper .upload-content,
+.set-copyright .copyright-select-box .copyright:hover,
+.tag .delete,
+body #app .marquee,
+.promote-m .headline .change-push,
+.game-groom-m .title,
+.game-groom-m,
+.article-wrapper,
+.author-info-card,
+.relate-work-wrapper,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper,
+.project-info table tr,
+.project-info table tr:first-child,
+.qrcode-active .qrcode-active-slider
 {
     background-color: #444 !important;
 }
@@ -50,13 +117,14 @@ background-color: #222 !important;
 // {
 //     background-color: #fff1 !important;
 // }
-// a
-// {
-//     background-image: none !important;
-// }
+.add-tag .edit .input-wrapper .container.active .btn-add
+{
+    background-image: none !important;
+}
 .link-footer .footer-linker .footer-linker-line,
 .nav-notice li,
-.nav-notice li.hover
+.nav-notice li.hover,
+#text-contribute .fixed-header
 {
     background-color: transparent !important;
 }
@@ -64,9 +132,13 @@ background-color: #222 !important;
 // {
 //     background: #fff1 !important;
 // }
-.recent-danmu-wrp .danmu-filter .left .line
+.recent-danmu-wrp .danmu-filter .left .line,
+.preview-avatar-con,
+.preview-title,
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
+.read-list-component .mask
 {
-background: transparent !important;
+    background: transparent !important;
 }
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd h4 .user-container span,
@@ -116,7 +188,76 @@ ul.navigation li span,
 .more-data,
 .other span,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .mp-descr,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .mp-gettime
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .mp-gettime,
+.ava-name,
+.ava-text,
+.title-module,
+.condition-txt,
+.condition-sub-title,
+.official-name-info,
+.form-title-info,
+.preview-avatar-con:after,
+.preview-title:after,
+.upload-txt,
+.value-length,
+.cc-album-create .info-wrp p,
+.upload-v2-step1-container .upload-agreement .reg-2,
+.tool-box-v2-container .tool-title,
+.tool-box-v2-container .tool-xiaowan-bilibili a,
+.tool-box-v2-container .tool-xiaowan a,
+.upload-v2-step1-container .upload-agreement .reg-1 > div a,
+.cover-upload-box .no-img,
+.tag-list-wrap .tag-list .add-item .tip,
+#edit-page .copyright-hint,
+#edit-page .block-wrap h3.block-title span.tips,
+.cards-block .cards-list .card-item .card-case .image .empty-icon p,
+.editor-box p.counter,
+.editor-wrap .article-title .count,
+.ui-input-textarea .count,
+.music-clue,
+.music-tips .music-tip,
+.read-list-component .tips,
+.read-list-component .tips.input-tips,
+.read-list-component .read-list-box li .count,
+.float-toolbar .toolbar-list .icon-block,
+.float-toolbar .back-top .icon-block,
+.song-info .info-wrap .contact-us,
+.upload-cover-wrapper .upload-cover-tips,
+.song-info .info-wrap .form-item-paper-input-wrapper .form-item-paper-total,
+.add-tag .default .placeholder,
+.checkbox .text,
+.text-input .text-length,
+.upload-image .tip,
+.set-copyright .copyright-select-box .copyright,
+.block-left .headline .hot-link,
+.danmu-wrp .section .label .second,
+.add-tag .edit .tip,
+.add-tag .edit .input-wrapper .count,
+.faq-modal .modal-wrap .modal-content .text-content p,
+.video-floor-m .zone-title .headline .tags li a,
+.game-groom-m .num,
+.promote-m .headline .sub-name,
+.hot-list .card-ctnr .room-count,
+.room-card .sub-area,
+.area-section .card-ctnr .tag-ctnr .tags,
+#announcement-area .rank-ctnr .anchor-name,
+#announcement-area .news-ctnr .news-date,
+.author-info-card .data-area .data-block h4,
+.stat-banner .author-name,
+.stat-banner .pub-time,
+.stat-banner .review-summary,
+.func-banner .right-btns a,
+.func-banner .right-btns span,
+.relate-work-wrapper .work-info .bread-crumb,
+.relate-work-wrapper .work-info .rate-info .tip,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body .order-item-name-wrapper .time,
+.orderdetail-container .orderdetail-wrapper .wrapper-ticket,
+.orderdetail-container .orderdetail-wrapper p,
+.project-info table .project-content .content-right p,
+.orderdetail-container .orderdetail-nav .orderdetail-nav-list li.order-center,
+.qrcode-active .qrcode-tip,
+.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-time,
+.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-title
 {
     color: #aaa !important;
 }
@@ -170,7 +311,93 @@ ul.navigation li.activated span,
 .comment-wrap header h2,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .title,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white,
+.assist-wrap .assist-list header h1,
+.assist-wrap .assist-log header h1,
+.official-title,
+.card-name,
+.card-info,
+.condition-title,
+.condition-btn-disable,
+.official-label,
+.official-submit-btn-disable,
+.check-warp .el-checkbox,
+.preview-title-line1,
+.ui-select .ui-select-show-box,
+.danmu-wrp .section .bili-input,
+.upload-v2-step1-container .video-jam .video-jam-pretext,
+.cards-block .radio-list .radio-item .radio-label.active,
+.cards-block .radio-list .radio-item .radio-label:not([disabled=disabled]),
+.ui-select .ul-select-list .select-item,
+.classify .classify-list .list-item .class-block,
+.read-list-component .create-btn,
+.tag-list-wrap .tag-list .add-item .add-control,
+.cards-block .cards-list .card-item .card-case .user-info span,
+#edit-page .btn-group.main-active-btn a.white,
+#edit-page .btn-group.main-active-btn button.white,
+.ui-btn.blue-radius,
+.protocol-block,
+.create-compilations-btn .album-flex .album-bar-btn .album-bar-btn-text,
+.music-upload-wrapper .upload-music-bar-wrapper .pload-music-bar-btn,
+.assist-wrap .addModal .control-group > label,
+.assist-wrap .addModal .control-group,
+.ui-input-text input,
+.el-button--primary,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
+.read-list-component .creat-read-list-box .input-box button[disabled],
+.read-list-component .creat-read-list-box .input-box button,
+.read-list-component .read-list-box li label .title,
+.song-info .info-wrap .title,
+.song-info .info-wrap .submit-btn,
+.song-info .info-wrap .album-itro,
+.song-info .info-wrap .album-name,
+.title .text,
+.category-wrapper .upload-title-text,
+.text-input input,
+.agree-rule .text,
+.submit-btn,
+body #app .category-wrapper .upload-content .title,
+.block-left .headline h4,
+.recent-danmu-wrp .danmu-filter .from-wrp .bili-input,
+.category-wrapper .tweet-title,
+.add-tag .edit .input-wrapper input:hover,
+.add-tag .edit .input-wrapper input:focus,
+.tag .text,
+.add-tag .edit .input-wrapper .btn-add,
+.tag .delete,
+.faq-modal .modal-wrap .modal-content .text-content h1,
+.game-groom-m a .title,
+.game-groom-m .type-name,
+#area-anchor .area-title-link,
+.idol-show .section-title .title,
+#announcement-area .rank-ctnr .cover-ctnr,
+#announcement-area .rank-ctnr .rank-icon,
+.item .live-status,
+#area-anchor .icon-play,
+.article-wrapper .review-content,
+.article-wrapper .review-title,
+.review-reply-wrapper .review-reply-title,
+.author-info-card .author-info .info-right .author-name,
+.author-info-card .data-area .data-block p,
+.func-banner .btn-like,
+.func-banner .btn-dislike,
+.relate-work-wrapper .wrapper-title,
+.relate-work-wrapper .work-info .work-title,
+.author-info-card .author-info .info-right .btn-attention,
+.order-header-wrapper,
+.order-header-wrapper .order-header-status,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body .order-item-name-wrapper .name,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-body,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.canceldetail,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.checkdetail,
+.orderdetail-container .orderdetail-status .status-text,
+.project-info table .project-content .content-right h1,
+.project-info table tr,
+.orderdetail-container .orderdetail-wrapper h1,
+.project-info table th,
+.total-container div,
+.qrcode-active .qrcode-container-item .seat-info,
+.qrcode-active .qrcode-container-item .seat-info span
 {
     color: #eee !important;
 }
@@ -204,19 +431,62 @@ ul.navigation li.activated span,
 .recent-danmu-wrp .danmu-filter .left .delete,
 .recent-danmu-wrp .dropdown .dropdown-btn,
 .bilibili-player .bilibili-player-area-separator,
-div.num,
+.rank-item div.num,
 .rank-item,
 .other,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn:hover,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
+.official-title-input,
+.official-right-float .el-upload--picture-card,
+.ui-select.white .ui-select-show-box,
+.bili-input,
+.classify .classify-list .list-item .class-block,
+.ui-btn.sub-btn,
+.ui-btn.white,
+#edit-page .btn-group.main-active-btn a.white,
+#edit-page .btn-group.main-active-btn button.white,
+.ui-input-textarea,
+.el-button--primary,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
+.ui-radio.active .ui-radio-icon,
+.ui-radio .ui-radio-icon,
+.read-list-component hr,
+.read-list-component .creat-read-list-box .input-box button,
+.read-list-component .creat-read-list-box .input-box,
+.song-info .info-wrap .album-itro,
+.song-info .info-wrap .album-name,
+.checkbox.checked .radio-btn,
+.upload-image,
+.text-input input,
+.set-copyright .copyright-select-box,
+.recent-danmu-wrp .danmu-filter .from-wrp .bili-input,
+.add-tag .edit .input-wrapper input,
+.add-tag .edit .input-wrapper input:hover,
+.add-tag .edit .input-wrapper input:focus,
+.promote-m .headline .change-push,
+.game-groom-m,
+#announcement-area .news-ctnr .title-row,
+.author-info-card .data-area .split-line,
+.func-banner .btn-like,
+.func-banner .btn-dislike,
+.order-list-wrapper .order-list .order-item,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.canceldetail,
+.order-list-wrapper .order-list .order-item .order-item-body-wrapper .order-item-btn-group .btn.checkdetail,
+.orderdetail-container .orderdetail-status,
+.project-info table tr:last-child,
+.project-info table tr,
+.orderdetail-container .orderdetail-wrapper .wrapper-content
 {
     border-color: transparent !important;
 }
 .banner-p a,
 .fjw-random .point-wrap .cnt,
 .fjw-random .point-wrap .cnt .list,
-.face-g-list#my-g-list .face-g-block .my-mp-block
+.face-g-list#my-g-list .face-g-block .my-mp-block,
+.ui-input,
+.set-copyright .copyright-icon .icon-none-copyright,
+.area-section .card-ctnr .tag-ctnr .tags
 {
     border-color: #aaa !important;
 }
@@ -242,17 +512,23 @@ div.num,
 // }
 .mainmenu ul.grid li a.yxzx,
 .footer-logo,
-.more-data i
+.more-data i,
+.block-left.block-brand .headline .tab-wrap .pgc-brand-tab,
+.qrcode-active .qrcode-active-slider .close-btn .close-btn-bg
 {
     filter: brightness(0) invert(1) !important;
 }
-// a
-// {
-//     filter: $blueImageFilter !important;
-// }
-.episode-item .mark-icon
+.float-toolbar .toolbar-list .icon-block.icon-help,
+.float-toolbar .toolbar-list .icon-block.icon-feedback,
+.float-toolbar .back-top .icon-block.icon-back-top
 {
-filter: $pinkImageFilter !important;
+    filter: $blueImageFilter !important;
+}
+.episode-item .mark-icon,
+.add-tag .default .btn-show,
+.project-info table .project-content .content-right .ticket-type span
+{
+    filter: $pinkImageFilter !important;
 }
 // a
 // {
@@ -270,10 +546,11 @@ filter: $pinkImageFilter !important;
 // {
 //     border-radius: 4px !important;
 // }
-// a
-// {
-//     box-shadow: none !important;
-// }
+#edit-page,
+.orderdetail-container .orderdetail-content
+{
+    box-shadow: none !important;
+}
 // a
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
@@ -302,7 +579,22 @@ filter: $pinkImageFilter !important;
 #page .game .game-box h4 span,
 .dc-radio-button.is-active,
 .dc-radio-button.is-active:after,
-.rank-menu li.active
+.rank-menu li.active,
+.ui-tabs .ui-tabs-head .tab-head-item.current a,
+.ui-tabs .ui-tabs-head .tab-head-item.current a:after,
+.classify .classify-list .list-item .class-block:hover,
+.tabs-nav .active,
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
+.ui-radio.active .ui-radio-icon,
+.ui-radio input[type=radio]:hover + .ui-radio-icon,
+body #app .marquee,
+.area-section .card-ctnr .tag-ctnr .tags:hover,
+.func-banner .btn-like:hover,
+.func-banner .btn-dislike:hover,
+.func-banner .btn-like.active,
+.func-banner .btn-dislike.active,
+.author-info-card .author-info .info-right .btn-attention,
+.swiper-pagination-custom
 {
     border-color: $customStyleColor !important;
 }
@@ -316,7 +608,19 @@ ul.navigation li:after,
 .main-container .sponsor-wrapper .sponsor-right-area .sponsor-btn,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-setting-menu-wrap .bilibili-player-setting-menu-list .active-point,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn:hover,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn,
+.ui-btn.blue-radius,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
+.read-list-component .creat-read-list-box .input-box button,
+.ui-radio input[type=radio]:checked + .ui-radio-icon:after,
+.song-info .info-wrap .submit-btn,
+body #app .category-wrapper .dot,
+.checkbox.checked .radio-btn:before,
+.add-tag .default .btn-show,
+.promote-m .headline .change-push:hover,
+#announcement-area .rank-ctnr .rank-icon.hot,
+.item .live-status.on,
+.author-info-card .author-info .info-right .btn-attention
 {
     background-color: $customStyleColor !important;
 }
@@ -346,7 +650,49 @@ ul.navigation li:hover,
 .comment-manage-wrap .dropdown .dropdown-menu .selected,
 .comment-manage-wrap .content .action-bar .dropdown .sort-btn:hover,
 .rank-menu li.active,
-.rank-tab-wrap .rank-tab .active
+.rank-tab-wrap .rank-tab .active,
+.check-warp a,
+.ui-select .ul-select-list .select-item.active,
+.ui-select .ul-select-list .select-item:hover,
+.ui-tabs .ui-tabs-head .tab-head-item.current a,
+.tool-box-v2-container .tool-xiaowan-bilibili a:hover,
+.tool-box-v2-container .tool-xiaowan a:hover,
+.classify .classify-list .list-item .class-block:hover,
+.protocol-block a,
+.protocol-block a:hover,
+.music-clue .font-blue,
+.music-clue .iconfont,
+.music-tips .music-tip:hover,
+.ui-checkbox input[type=checkbox]:checked + .ui-checkbox-icon,
+.classify .position span,
+.upload-tips,
+.agree-rule .rule,
+body #app .category-wrapper .upload-tip,
+.set-copyright .copyright-select-box .copyright.selected .text,
+.block-left .headline .hot-link:hover,
+body #app .marquee a,
+.faq-modal .modal-wrap .modal-content .text-content a,
+.faq-modal .modal-wrap .modal-content .text-content a:active,
+.faq-modal .modal-wrap .modal-content .text-content a:hover,
+.set-copyright .copyright-select-box .copyright:hover .text,
+.video-floor-m .zone-title .headline .tags li a:hover,
+.game-groom-box-m .game-groom-m:hover .title,
+#area-anchor .area-title-link:hover,
+.area-section .card-ctnr .tag-ctnr .tags:hover,
+.idol-show .section-title .title:hover,
+.func-banner .right-btns a:hover,
+.func-banner .right-btns span:hover,
+.func-banner .btn-like:hover,
+.func-banner .btn-dislike:hover,
+.func-banner .btn-like.active,
+.func-banner .btn-dislike.active,
+.relate-work-wrapper .work-info .go-play,
+.project-info table .project-content .content-right h1:hover,
+.orderdetail-container .orderdetail-status h1,
+.total-container div span.total,
+.project-info table .project-content .content-right .ticket-type,
+.project-info table td.total,
+.swiper-pagination-custom
 {
     color: $customStyleColor !important;
 }
@@ -359,10 +705,11 @@ ul.navigation li:hover,
 //     fill: $customStyleColor !important;
 // }
 #page .game .game-box,
-.comment-manage-wrap .head .dropdown-menu .article-list
+.comment-manage-wrap .head .dropdown-menu .article-list,
+#edit-page .block-hr
 {
-border-top-color: transparent !important;
-border-bottom-color: transparent !important;
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
 }
 // a
 // {
@@ -372,7 +719,11 @@ border-bottom-color: transparent !important;
 #page .game .game-box-1,
 #page .game .game-box-3,
 .game-box-all,
-.footer-logo
+.footer-logo,
+.season-item.on:after,
+.dc-radio-button.is-active:after,
+.bili-tab.current:after,
+.ui-tabs .ui-tabs-head .tab-head-item.current a:after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;

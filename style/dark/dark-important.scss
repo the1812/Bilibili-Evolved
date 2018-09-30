@@ -4,7 +4,8 @@
 }
 .wrapper .elec-btn.disabled,
 .f-list-hover:hover,
-.status_box .status_btn.disabled
+.status_box .status_btn.disabled,
+.game-groom-m .num 
 {
     background-color: #444 !important;
 }
@@ -46,14 +47,17 @@ blockquote .color-yellow-04,
 .cover .disabled-cover,
 .el-input__inner,
 .commnent-screen-wrap .el-input__inner,
-.tag-list li.tag-item.on
+.tag-list li.tag-item.on,
+.bp-popup-panel .title-ctnr .popup-title
 {
     color: #eee !important;
 }
 
 .link-footer,
 .el-input__inner,
-.commnent-screen-wrap .el-input__inner
+.commnent-screen-wrap .el-input__inner,
+.ui-input-textarea.focus,
+.user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner 
 {
     border-color: transparent !important;
 }
@@ -62,7 +66,9 @@ blockquote .color-yellow-04,
 .home-page .sticky-bar .bar-content .message:hover,
 .other a a:hover,
 .more-data a:hover,
-.rank-item .content .info .detail a a:hover 
+.rank-item .content .info .detail a a:hover,
+.rank-item .content .other a:hover,
+.rank-item .content .more-data:hover
 {
     color: $customStyleColor !important;
 }
@@ -82,7 +88,9 @@ blockquote .color-yellow-04,
 .el-date-table td.end-date,
 .el-date-table td.start-date,
 .tag-list li.tag-item.on,
-.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white 
+.face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white,
+.user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
+.user-my-btn .el-button--primary 
 {
     background-color: $customStyleColor !important;
 }

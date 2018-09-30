@@ -6,7 +6,8 @@
 }
 .bili-header-m .nav-menu .nav-mask,
 #link-navbar-vm>.link-navbar,
-#navbar-vm>.link-navbar
+#navbar-vm>.link-navbar,
+#app>.link-navbar
 {
     background-color: #444;
 }
@@ -15,11 +16,20 @@
 .right-part>.shortcuts-ctnr,
 .right-part>.shortcuts-ctnr .shortcut-item:hover,
 #link-navbar-vm>.link-navbar .nav-item:hover,
-.my-link-btn .label
+.my-link-btn .label,
+#app>.link-navbar .main-ctnr .nav-logo,
+#app>.link-navbar .nav-item.selected .label,
+#app>.link-navbar .nav-item:hover .icon-font
 {
     color: #eee;
 }
-#link-navbar-vm>.link-navbar-ctnr
+#link-navbar-vm>.link-navbar-ctnr,
+#app>.link-navbar
 {
     box-shadow: none;
+}
+#link-navbar-vm>.link-navbar .main-ctnr .nav-logo::before,
+#app>.link-navbar .main-ctnr .nav-logo::before
+{
+    filter: $blueImageFileter !important;
 }

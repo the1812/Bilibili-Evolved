@@ -26,7 +26,7 @@
             ok: "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"
         };
         const textValidate = {
-            "customStyleColor": text =>
+            customStyleColor: text =>
             {
                 const match = text.match(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);
                 if (match)
@@ -45,7 +45,7 @@
                     return settings.customStyleColor;
                 }
             },
-            "blurBackgroundOpacity": text =>
+            blurBackgroundOpacity: text =>
             {
                 const match = text.match(/^([-\+]?\d+)(\.\d+)?$/);
                 if (match)
@@ -59,6 +59,42 @@
                 return settings.blurBackgroundOpacity;
             }
         };
+        function darkScheduleValidate(text, defaultValue)
+        {
+            const match = text.match(/^([\d]{1,2}):([\d]{1,2})$/);
+            if (match && match.length >= 3)
+            {
+                const time = { hour: parseInt(match[1]), minute: parseInt(match[2]) };
+                (function ()
+                {
+                    while (this.minute < 0)
+                    {
+                        this.minute += 60;
+                        this.hour -= 1;
+                    }
+                    while (this.minute >= 60)
+                    {
+                        this.minute -= 60;
+                        this.hour += 1;
+                    }
+                    while (this.hour < 0)
+                    {
+                        this.hour += 24;
+                    }
+                    while (this.hour >= 24)
+                    {
+                        this.hour -= 24;
+                    }
+                }).call(time);
+                return `${time.hour}:${(time.minute < 10 ? "0" + time.minute : time.minute)}`;
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
+        textValidate.darkScheduleStart = text => darkScheduleValidate(text, settings.darkScheduleStart);
+        textValidate.darkScheduleEnd = text => darkScheduleValidate(text, settings.darkScheduleEnd);
 
         function settingsChange(key, _, newValue)
         {
@@ -219,7 +255,7 @@
         }
         new SpinQuery(
             () => $("body"),
-            it => it.length > 0 && unsafeWindow.$,
+            it => it.length > 0 && !unsafeWindow.frameElement && unsafeWindow.$,
             it =>
             {
                 addSettingsIcon(it);
@@ -235,6 +271,10 @@
                     if (settings.blurSettingsPanel)
                     {
                         addEffects();
+                    }
+                    if (typeof offlineData !== "undefined")
+                    {
+                        $("input[key=useCache]").prop("disabled", true);
                     }
                 }
             }
