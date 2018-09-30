@@ -45,7 +45,8 @@
 .order-list-wrapper,
 .order-header-wrapper,
 .orderdetail-container .orderdetail-content,
-.total-container 
+.total-container,
+.qrcode-active .qrcode-active-slider .close-btn 
 {
     background-color: #222 !important;
 }
@@ -99,7 +100,8 @@ body #app .marquee,
 .relate-work-wrapper,
 .order-list-wrapper .order-list .order-item .order-item-body-wrapper,
 .project-info table tr,
-.project-info table tr:first-child 
+.project-info table tr:first-child,
+.qrcode-active .qrcode-active-slider 
 {
     background-color: #444 !important;
 }
@@ -254,7 +256,10 @@ ul.navigation li span,
 .orderdetail-container .orderdetail-wrapper .wrapper-ticket,
 .orderdetail-container .orderdetail-wrapper p,
 .project-info table .project-content .content-right p,
-.orderdetail-container .orderdetail-nav .orderdetail-nav-list li.order-center 
+.orderdetail-container .orderdetail-nav .orderdetail-nav-list li.order-center,
+.qrcode-active .qrcode-tip,
+.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-time,
+.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-title 
 {
     color: #aaa !important;
 }
@@ -392,7 +397,9 @@ body #app .category-wrapper .upload-content .title,
 .project-info table tr,
 .orderdetail-container .orderdetail-wrapper h1,
 .project-info table th,
-.total-container div 
+.total-container div,
+.qrcode-active .qrcode-container-item .seat-info,
+.qrcode-active .qrcode-container-item .seat-info span 
 {
     color: #eee !important;
 }
@@ -508,7 +515,8 @@ body #app .category-wrapper .upload-content .title,
 .mainmenu ul.grid li a.yxzx,
 .footer-logo,
 .more-data i,
-.block-left.block-brand .headline .tab-wrap .pgc-brand-tab 
+.block-left.block-brand .headline .tab-wrap .pgc-brand-tab,
+.qrcode-active .qrcode-active-slider .close-btn .close-btn-bg 
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -588,7 +596,8 @@ body #app .marquee,
 .func-banner .btn-dislike:hover,
 .func-banner .btn-like.active,
 .func-banner .btn-dislike.active,
-.author-info-card .author-info .info-right .btn-attention 
+.author-info-card .author-info .info-right .btn-attention,
+.swiper-pagination-custom 
 {
     border-color: $customStyleColor !important;
 }
@@ -686,7 +695,8 @@ body #app .marquee a,
 .orderdetail-container .orderdetail-status h1,
 .total-container div span.total,
 .project-info table .project-content .content-right .ticket-type,
-.project-info table td.total 
+.project-info table td.total,
+.swiper-pagination-custom 
 {
     color: $customStyleColor !important;
 }
