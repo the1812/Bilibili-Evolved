@@ -19,6 +19,7 @@
                 const height = parseInt(window.getComputedStyle(navbar).height);
                 stardustStyles =
                     height === 50 /* stardust player & live room */ ||
+                    height === 0 ||
                     height === 56;/* photos */
             }
 
