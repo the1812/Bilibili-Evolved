@@ -155,7 +155,9 @@ body>div.to-top.on,
 .idol-show .section-title .more,
 .idol-show .section-title .more:hover,
 .area-section .card-ctnr .more,
-.area-section .card-ctnr .more:hover
+.area-section .card-ctnr .more:hover,
+.link-panigation-ctnr .pagination,
+.jumping-ctnr .jumping-input
 {
     background-color: transparent !important;
 }
@@ -288,7 +290,8 @@ body>div.to-top.on,
 #announcement-area .news-ctnr .icon-arrow-right,
 #announcement-area .news-ctnr .more-link,
 #announcement-area .rank-ctnr .icon-arrow-right,
-#announcement-area .rank-ctnr .more-link
+#announcement-area .rank-ctnr .more-link,
+.jumping-ctnr .jumping-input
 {
     color: #eee !important;
 }
