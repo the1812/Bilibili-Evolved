@@ -51,7 +51,8 @@
 .alert-container,
 .bind-info .note-footer .btn-group .unable-btn,
 .bind-info .note-footer .btn-group .back-btn,
-.history-card:hover 
+.history-card:hover,
+.bl-button--shallow:disabled 
 {
     background-color: #222 !important;
 }
@@ -452,7 +453,9 @@ body #app .category-wrapper .upload-content .title,
 .bind-info .bind-sub-title,
 .bind-info .note-footer .btn-group .unable-btn,
 .bind-info .note-footer .btn-group .back-btn,
-.income-info .item .info-title
+.income-info .item .info-title,
+.rhythm-storm label,
+.bl-button--shallow:disabled 
 {
     color: #eee !important;
 }
@@ -547,7 +550,8 @@ body #app .category-wrapper .upload-content .title,
 .bind-info .dividing-line,
 .bind-info .note-footer .btn-group .unable-btn,
 .bind-info .note-footer .btn-group .back-btn,
-.income-info .item
+.income-info .item,
+.bl-button--shallow:disabled 
 {
     border-color: transparent !important;
 }
