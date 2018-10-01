@@ -249,7 +249,8 @@ span.settings-category
 {
     cursor: pointer;
     display: flex;
-    justify-content: center;
+    width: 100%;
+    justify-content: start;
     align-items: center;
     padding: 0 16px;
     -webkit-tap-highlight-color: transparent;
