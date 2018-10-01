@@ -118,7 +118,8 @@ body #app .marquee,
 .bb_intro_box_top,
 .bind-info,
 .shell-intro-top,
-.history-card
+.history-card,
+.income-info .item
 {
     background-color: #444 !important;
 }
@@ -450,7 +451,8 @@ body #app .category-wrapper .upload-content .title,
 .shell-intro-top .bind-card-title,
 .bind-info .bind-sub-title,
 .bind-info .note-footer .btn-group .unable-btn,
-.bind-info .note-footer .btn-group .back-btn 
+.bind-info .note-footer .btn-group .back-btn,
+.income-info .item .info-title
 {
     color: #eee !important;
 }
@@ -544,7 +546,8 @@ body #app .category-wrapper .upload-content .title,
 .shell-intro-top,
 .bind-info .dividing-line,
 .bind-info .note-footer .btn-group .unable-btn,
-.bind-info .note-footer .btn-group .back-btn 
+.bind-info .note-footer .btn-group .back-btn,
+.income-info .item
 {
     border-color: transparent !important;
 }
@@ -775,7 +778,9 @@ body #app .marquee a,
 .balance,
 .bind-info .note-content a,
 .bind-info .bind-sec-title,
-.bind-info .note-footer .agree-group .submit-deal 
+.bind-info .note-footer .agree-group .submit-deal,
+.income-info .item.left .value,
+.income-info .item.right .value
 {
     color: $customStyleColor !important;
 }
