@@ -277,10 +277,10 @@ div.nav-gif,
 {
     width: 100% !important;
 }
-.player-wrap,
-.danmaku-box
+.player-wrap[style*="height: auto"],
+.danmaku-box[style*="height: auto"]
 {
-    height: 513px;
+    height: 513px !important;
 }
 .bilibili-player-video-control,
 .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap

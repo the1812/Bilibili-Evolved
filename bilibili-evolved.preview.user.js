@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.1
+// @version      1.5.2
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -54,7 +54,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.1"
+        currentVersion: "1.5.2"
     };
     function loadSettings()
     {
@@ -79,15 +79,6 @@
         for (const key in settings)
         {
             GM_addValueChangeListener(key, change);
-        }
-    }
-    function runAndObserveDomMutation(selector, callback)
-    {
-        const element = document.querySelector(selector);
-        if (element)
-        {
-            const observer = new MutationObserver(callback);
-            observer.observe(element, { childList: true, subtree: true });
         }
     }
     function loadResources()
@@ -219,6 +210,54 @@
         static info() { }
         static success() { }
         static error() { }
+    }
+    class Observer
+    {
+        constructor(element, callback)
+        {
+            this.element = element;
+            this.callback = callback;
+            this.observer = null;
+            this.options = { childList: true, subtree: true };
+        }
+        start()
+        {
+            if (this.element)
+            {
+                this.observer = new MutationObserver(this.callback);
+                this.observer.observe(this.element, this.options);
+            }
+            return this;
+        }
+        stop()
+        {
+            this.observer && this.observer.disconnect();
+            return this;
+        }
+        static subtree(selector, callback)
+        {
+            callback();
+            return new Array(...document.querySelectorAll(selector))
+                .map(it =>
+                {
+                    return new Observer(it, callback).start();
+                });
+        }
+        static attributes(selector, callback)
+        {
+            callback();
+            return new Array(...document.querySelectorAll(selector))
+                .map(it =>
+                {
+                    const observer = new Observer(it, callback);
+                    observer.options = {
+                        childList: false,
+                        subtree: false,
+                        attributes: true
+                    };
+                    return observer.start();
+                });
+        }
     }
     class SpinQuery
     {
@@ -770,7 +809,7 @@
                 {
                     // execution error
                     console.error(`Failed to apply feature "${key}": ${error}`);
-                    Toast.error(`加载组件<span>${Resource.all[key].displayName}</span>失败.`, "错误");
+                    Toast.error(`加载组件<span>${Resource.all[key].displayName}</span>失败`, "错误");
                 }
             }
         }
