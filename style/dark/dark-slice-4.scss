@@ -48,7 +48,9 @@
 .total-container,
 .qrcode-active .qrcode-active-slider .close-btn,
 .trade-customn input,
-.alert-container 
+.alert-container,
+.bind-info .note-footer .btn-group .unable-btn,
+.bind-info .note-footer .btn-group .back-btn 
 {
     background-color: #222 !important;
 }
@@ -112,7 +114,9 @@ body #app .marquee,
 .el-table .el-table__header-wrapper th,
 .el-table--enable-row-hover .el-table__body tr:hover > td,
 .balance_bp_box,
-.bb_intro_box_top 
+.bb_intro_box_top,
+.bind-info,
+.shell-intro-top 
 {
     background-color: #444 !important;
 }
@@ -282,7 +286,9 @@ ul.navigation li span,
 .el-pagination.is-background .el-pager li,
 .spend-recode .part-common .platformType,
 .el-date-table td.next-month,
-.el-date-table td.prev-month
+.el-date-table td.prev-month,
+.bind-info .note-content p,
+.el-checkbox__label 
 {
     color: #aaa !important;
 }
@@ -437,7 +443,11 @@ body #app .category-wrapper .upload-content .title,
 .bp_user_box i,
 .balance_bp_box,
 .bb_intro_box_top .b_icon_title,
-.button 
+.button,
+.shell-intro-top .bind-card-title,
+.bind-info .bind-sub-title,
+.bind-info .note-footer .btn-group .unable-btn,
+.bind-info .note-footer .btn-group .back-btn 
 {
     color: #eee !important;
 }
@@ -526,7 +536,12 @@ body #app .category-wrapper .upload-content .title,
 .balance_bp_box,
 .bb_intro_box_top,
 .bp_user_box_top,
-.button 
+.button,
+.bind-info,
+.shell-intro-top,
+.bind-info .dividing-line,
+.bind-info .note-footer .btn-group .unable-btn,
+.bind-info .note-footer .btn-group .back-btn 
 {
     border-color: transparent !important;
 }
@@ -754,7 +769,10 @@ body #app .marquee a,
 .qrpay-group .qrpay-content .price,
 .spend-recode .title-group .recode-title,
 .bb_intro_box_top .b_question .b_question_title:hover,
-.balance 
+.balance,
+.bind-info .note-content a,
+.bind-info .bind-sec-title,
+.bind-info .note-footer .agree-group .submit-deal 
 {
     color: $customStyleColor !important;
 }
