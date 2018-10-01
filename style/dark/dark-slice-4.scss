@@ -110,7 +110,9 @@ body #app .marquee,
 .el-table th,
 .el-table tr,
 .el-table .el-table__header-wrapper th,
-.el-table--enable-row-hover .el-table__body tr:hover > td 
+.el-table--enable-row-hover .el-table__body tr:hover > td,
+.balance_bp_box,
+.bb_intro_box_top 
 {
     background-color: #444 !important;
 }
@@ -280,7 +282,7 @@ ul.navigation li span,
 .el-pagination.is-background .el-pager li,
 .spend-recode .part-common .platformType,
 .el-date-table td.next-month,
-.el-date-table td.prev-month 
+.el-date-table td.prev-month
 {
     color: #aaa !important;
 }
@@ -430,7 +432,12 @@ body #app .category-wrapper .upload-content .title,
 .el-pagination__total,
 .el-pagination__jump,
 .el-table .el-table__header-wrapper .el-table__header .cell,
-.el-table .el-table__row .cell 
+.el-table .el-table__row .cell,
+.bp_user_box_top p,
+.bp_user_box i,
+.balance_bp_box,
+.bb_intro_box_top .b_icon_title,
+.button 
 {
     color: #eee !important;
 }
@@ -515,7 +522,11 @@ body #app .category-wrapper .upload-content .title,
 .spend-recode,
 .el-table td,
 .el-table th.is-leaf,
-.spend-recode .part-common .platformType 
+.spend-recode .part-common .platformType,
+.balance_bp_box,
+.bb_intro_box_top,
+.bp_user_box_top,
+.button 
 {
     border-color: transparent !important;
 }
@@ -663,7 +674,8 @@ body #app .category-wrapper .dot,
 #announcement-area .rank-ctnr .rank-icon.hot,
 .item .live-status.on,
 .author-info-card .author-info .info-right .btn-attention,
-.alert-container .alert-content .button
+.alert-container .alert-content .button,
+.button 
 {
     background-color: $customStyleColor !important;
 }
@@ -740,7 +752,9 @@ body #app .marquee a,
 .instructions,
 .agreement a,
 .qrpay-group .qrpay-content .price,
-.spend-recode .title-group .recode-title 
+.spend-recode .title-group .recode-title,
+.bb_intro_box_top .b_question .b_question_title:hover,
+.balance 
 {
     color: $customStyleColor !important;
 }
