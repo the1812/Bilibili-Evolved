@@ -46,7 +46,9 @@
 .order-header-wrapper,
 .orderdetail-container .orderdetail-content,
 .total-container,
-.qrcode-active .qrcode-active-slider .close-btn
+.qrcode-active .qrcode-active-slider .close-btn,
+.trade-customn input,
+.alert-container 
 {
     background-color: #222 !important;
 }
@@ -101,7 +103,9 @@ body #app .marquee,
 .order-list-wrapper .order-list .order-item .order-item-body-wrapper,
 .project-info table tr,
 .project-info table tr:first-child,
-.qrcode-active .qrcode-active-slider
+.qrcode-active .qrcode-active-slider,
+.trade-list,
+.trade-wrapper
 {
     background-color: #444 !important;
 }
@@ -124,7 +128,8 @@ body #app .marquee,
 .link-footer .footer-linker .footer-linker-line,
 .nav-notice li,
 .nav-notice li.hover,
-#text-contribute .fixed-header
+#text-contribute .fixed-header,
+.alert-container .alert-header:after 
 {
     background-color: transparent !important;
 }
@@ -257,7 +262,11 @@ ul.navigation li span,
 .orderdetail-container .orderdetail-nav .orderdetail-nav-list li.order-center,
 .qrcode-active .qrcode-tip,
 .qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-time,
-.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-title
+.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-title,
+.trade-wrapper > div > div,
+.trade-customn .tips,
+.agreement,
+.num-tip 
 {
     color: #aaa !important;
 }
@@ -397,7 +406,12 @@ body #app .category-wrapper .upload-content .title,
 .project-info table th,
 .total-container div,
 .qrcode-active .qrcode-container-item .seat-info,
-.qrcode-active .qrcode-container-item .seat-info span
+.qrcode-active .qrcode-container-item .seat-info span,
+.trade-wrapper,
+.qrpay-group .qrpay-content .pay-tips,
+.trade-customn input,
+.alert-container .alert-header h2,
+.alert-container .alert-content .button
 {
     color: #eee !important;
 }
@@ -476,7 +490,9 @@ body #app .category-wrapper .upload-content .title,
 .orderdetail-container .orderdetail-status,
 .project-info table tr:last-child,
 .project-info table tr,
-.orderdetail-container .orderdetail-wrapper .wrapper-content
+.orderdetail-container .orderdetail-wrapper .wrapper-content,
+.b-info .dividing-line,
+.trade-list 
 {
     border-color: transparent !important;
 }
@@ -486,7 +502,8 @@ body #app .category-wrapper .upload-content .title,
 .face-g-list#my-g-list .face-g-block .my-mp-block,
 .ui-input,
 .set-copyright .copyright-icon .icon-none-copyright,
-.area-section .card-ctnr .tag-ctnr .tags
+.area-section .card-ctnr .tag-ctnr .tags,
+.trade-wrapper 
 {
     border-color: #aaa !important;
 }
@@ -594,7 +611,8 @@ body #app .marquee,
 .func-banner .btn-like.active,
 .func-banner .btn-dislike.active,
 .author-info-card .author-info .info-right .btn-attention,
-.swiper-pagination-custom
+.swiper-pagination-custom,
+.trade-wrapper.is-selected 
 {
     border-color: $customStyleColor !important;
 }
@@ -620,7 +638,8 @@ body #app .category-wrapper .dot,
 .promote-m .headline .change-push:hover,
 #announcement-area .rank-ctnr .rank-icon.hot,
 .item .live-status.on,
-.author-info-card .author-info .info-right .btn-attention
+.author-info-card .author-info .info-right .btn-attention,
+.alert-container .alert-content .button
 {
     background-color: $customStyleColor !important;
 }
@@ -692,7 +711,11 @@ body #app .marquee a,
 .total-container div span.total,
 .project-info table .project-content .content-right .ticket-type,
 .project-info table td.total,
-.swiper-pagination-custom
+.swiper-pagination-custom,
+.trade-wrapper.is-selected,
+.instructions,
+.agreement a,
+.qrpay-group .qrpay-content .price 
 {
     color: $customStyleColor !important;
 }
