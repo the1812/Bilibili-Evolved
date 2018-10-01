@@ -50,7 +50,8 @@
 .trade-customn input,
 .alert-container,
 .bind-info .note-footer .btn-group .unable-btn,
-.bind-info .note-footer .btn-group .back-btn 
+.bind-info .note-footer .btn-group .back-btn,
+.history-card:hover 
 {
     background-color: #222 !important;
 }
@@ -116,7 +117,8 @@ body #app .marquee,
 .balance_bp_box,
 .bb_intro_box_top,
 .bind-info,
-.shell-intro-top 
+.shell-intro-top,
+.history-card
 {
     background-color: #444 !important;
 }
@@ -288,7 +290,8 @@ ul.navigation li span,
 .el-date-table td.next-month,
 .el-date-table td.prev-month,
 .bind-info .note-content p,
-.el-checkbox__label 
+.el-checkbox__label,
+.history-card
 {
     color: #aaa !important;
 }
