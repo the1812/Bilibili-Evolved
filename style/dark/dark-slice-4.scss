@@ -105,7 +105,12 @@ body #app .marquee,
 .project-info table tr:first-child,
 .qrcode-active .qrcode-active-slider,
 .trade-list,
-.trade-wrapper
+.trade-wrapper,
+.spend-recode,
+.el-table th,
+.el-table tr,
+.el-table .el-table__header-wrapper th,
+.el-table--enable-row-hover .el-table__body tr:hover > td 
 {
     background-color: #444 !important;
 }
@@ -129,7 +134,10 @@ body #app .marquee,
 .nav-notice li,
 .nav-notice li.hover,
 #text-contribute .fixed-header,
-.alert-container .alert-header:after 
+.alert-container .alert-header:after,
+.el-table--border:after,
+.el-table--group:after,
+.el-table:before 
 {
     background-color: transparent !important;
 }
@@ -266,7 +274,13 @@ ul.navigation li span,
 .trade-wrapper > div > div,
 .trade-customn .tips,
 .agreement,
-.num-tip 
+.num-tip,
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li,
+.spend-recode .part-common .platformType,
+.el-date-table td.next-month,
+.el-date-table td.prev-month 
 {
     color: #aaa !important;
 }
@@ -411,7 +425,12 @@ body #app .category-wrapper .upload-content .title,
 .qrpay-group .qrpay-content .pay-tips,
 .trade-customn input,
 .alert-container .alert-header h2,
-.alert-container .alert-content .button
+.alert-container .alert-content .button,
+.spend-recode .title-group .selected-title,
+.el-pagination__total,
+.el-pagination__jump,
+.el-table .el-table__header-wrapper .el-table__header .cell,
+.el-table .el-table__row .cell 
 {
     color: #eee !important;
 }
@@ -492,7 +511,11 @@ body #app .category-wrapper .upload-content .title,
 .project-info table tr,
 .orderdetail-container .orderdetail-wrapper .wrapper-content,
 .b-info .dividing-line,
-.trade-list 
+.trade-list,
+.spend-recode,
+.el-table td,
+.el-table th.is-leaf,
+.spend-recode .part-common .platformType 
 {
     border-color: transparent !important;
 }
@@ -503,7 +526,8 @@ body #app .category-wrapper .upload-content .title,
 .ui-input,
 .set-copyright .copyright-icon .icon-none-copyright,
 .area-section .card-ctnr .tag-ctnr .tags,
-.trade-wrapper 
+.trade-wrapper,
+.el-date-table th 
 {
     border-color: #aaa !important;
 }
@@ -715,7 +739,8 @@ body #app .marquee a,
 .trade-wrapper.is-selected,
 .instructions,
 .agreement a,
-.qrpay-group .qrpay-content .price 
+.qrpay-group .qrpay-content .price,
+.spend-recode .title-group .recode-title 
 {
     color: $customStyleColor !important;
 }
