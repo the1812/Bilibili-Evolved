@@ -52,7 +52,8 @@
 .bind-info .note-footer .btn-group .unable-btn,
 .bind-info .note-footer .btn-group .back-btn,
 .history-card:hover,
-.bl-button--shallow:disabled 
+.bl-button--shallow:disabled,
+.bangumi-up-info 
 {
     background-color: #222 !important;
 }
@@ -455,7 +456,8 @@ body #app .category-wrapper .upload-content .title,
 .bind-info .note-footer .btn-group .back-btn,
 .income-info .item .info-title,
 .rhythm-storm label,
-.bl-button--shallow:disabled 
+.bl-button--shallow:disabled,
+.bangumi-up-info .func-btns .b-gz 
 {
     color: #eee !important;
 }
@@ -672,7 +674,8 @@ body #app .marquee,
 .func-banner .btn-dislike.active,
 .author-info-card .author-info .info-right .btn-attention,
 .swiper-pagination-custom,
-.trade-wrapper.is-selected 
+.trade-wrapper.is-selected,
+.bangumi-up-info .func-btns .b-gz 
 {
     border-color: $customStyleColor !important;
 }
@@ -700,7 +703,8 @@ body #app .category-wrapper .dot,
 .item .live-status.on,
 .author-info-card .author-info .info-right .btn-attention,
 .alert-container .alert-content .button,
-.button 
+.button,
+.bangumi-up-info .func-btns .b-gz 
 {
     background-color: $customStyleColor !important;
 }
