@@ -56,7 +56,8 @@
 .bangumi-up-info,
 .online-list .ebox,
 .online-list .ebox .ol,
-.main-ctnr
+.main-ctnr,
+.demo-app .detail 
 {
     background-color: #222 !important;
 }
@@ -129,7 +130,8 @@ body #app .marquee,
 .u-btn-e,
 .u-btn-m,
 .u-btn-c,
-.drawer-card
+.drawer-card,
+.demo-app .detail .category
 {
     background-color: #444 !important;
 }
@@ -309,7 +311,8 @@ ul.navigation li span,
 .container .tip,
 .online-list .ebox .dlo .author,
 .online-list .ebox .dlo span,
-.error-panel.server-error .right-panel 
+.error-panel.server-error .right-panel,
+.category li a
 {
     color: #aaa !important;
 }
@@ -849,7 +852,8 @@ body #app .marquee a,
 .online-list .ebox:hover .ol b,
 .cl .mb20 .g1:hover,
 .hot-activity a:hover,
-.drawer-card li a:hover dd
+.drawer-card li a:hover dd,
+.category li a:hover
 {
     color: $customStyleColor !important;
 }
