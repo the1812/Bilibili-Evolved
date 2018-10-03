@@ -55,7 +55,8 @@
 .bl-button--shallow:disabled,
 .bangumi-up-info,
 .online-list .ebox,
-.online-list .ebox .ol 
+.online-list .ebox .ol,
+.main-ctnr
 {
     background-color: #222 !important;
 }
@@ -127,7 +128,8 @@ body #app .marquee,
 .rel .pl26 .mb18 .rank .abs .l0 .bggr,
 .u-btn-e,
 .u-btn-m,
-.u-btn-c
+.u-btn-c,
+.drawer-card
 {
     background-color: #444 !important;
 }
@@ -154,7 +156,8 @@ body #app .marquee,
 .alert-container .alert-header:after,
 .el-table--border:after,
 .el-table--group:after,
-.el-table:before 
+.el-table:before,
+.app-ctnr 
 {
     background-color: transparent !important;
 }
@@ -481,7 +484,10 @@ body #app .category-wrapper .upload-content .title,
 .u-btn-e,
 .u-btn-e:hover,
 .error-panel .rollback-btn,
-.error-manga .change-img-btn 
+.error-manga .change-img-btn,
+.hot-activity a,
+.hot-content .title,
+.drawer-card dd
 {
     color: #eee !important;
 }
@@ -841,7 +847,9 @@ body #app .marquee a,
 .online-list .ebox .dlo .author:hover,
 .online-list .ebox a:hover .etitle,
 .online-list .ebox:hover .ol b,
-.cl .mb20 .g1:hover 
+.cl .mb20 .g1:hover,
+.hot-activity a:hover,
+.drawer-card li a:hover dd
 {
     color: $customStyleColor !important;
 }
