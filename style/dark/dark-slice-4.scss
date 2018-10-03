@@ -788,7 +788,12 @@ body #app .marquee a,
 .bind-info .bind-sec-title,
 .bind-info .note-footer .agree-group .submit-deal,
 .income-info .item.left .value,
-.income-info .item.right .value
+.income-info .item.right .value,
+.selector-wrapper .type-list .current-type span.active,
+.selector-wrapper .type-list li:hover,
+.selector-wrapper .city-list .li-more span:hover,
+.selector-wrapper .order-list .li-more span:hover,
+.project-list .project-list-item .project-list-item-detail .project-list-item-price 
 {
     color: $customStyleColor !important;
 }
