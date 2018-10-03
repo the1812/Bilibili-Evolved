@@ -305,7 +305,8 @@ ul.navigation li span,
 .container .subtitle,
 .container .tip,
 .online-list .ebox .dlo .author,
-.online-list .ebox .dlo span 
+.online-list .ebox .dlo span,
+.error-panel.server-error .right-panel 
 {
     color: #aaa !important;
 }
@@ -478,7 +479,9 @@ body #app .category-wrapper .upload-content .title,
 .u-btn-m,
 .u-btn-c,
 .u-btn-e,
-.u-btn-e:hover 
+.u-btn-e:hover,
+.error-panel .rollback-btn,
+.error-manga .change-img-btn 
 {
     color: #eee !important;
 }
@@ -741,7 +744,9 @@ body #app .category-wrapper .dot,
 .bangumi-up-info .func-btns .b-gz,
 .nav-container .single-box .ep-item:hover,
 .rel .pl122 .mb20 .rank .abs .l0 .bgre,
-.u-btn-e:hover 
+.u-btn-e:hover,
+.error-panel .rollback-btn,
+.error-manga .change-img-btn 
 {
     background-color: $customStyleColor !important;
 }
