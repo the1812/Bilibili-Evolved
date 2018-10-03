@@ -123,7 +123,11 @@ body #app .marquee,
 .bind-info,
 .shell-intro-top,
 .history-card,
-.income-info .item
+.income-info .item,
+.rel .pl26 .mb18 .rank .abs .l0 .bggr,
+.u-btn-e,
+.u-btn-m,
+.u-btn-c
 {
     background-color: #444 !important;
 }
@@ -468,7 +472,13 @@ body #app .category-wrapper .upload-content .title,
 .nav-container .single-box .ep-item,
 .nav-container .single-box .ep-item:hover,
 .container .main-btn,
-.online-list .ebox .etitle 
+.online-list .ebox .etitle,
+.cl .mb20 .g1,
+.rel .pl26 .mb18 .rank .abs .l0 .bggr,
+.u-btn-m,
+.u-btn-c,
+.u-btn-e,
+.u-btn-e:hover 
 {
     color: #eee !important;
 }
@@ -569,7 +579,10 @@ body #app .category-wrapper .upload-content .title,
 .container .main-btn:hover,
 .container .main-btn.edit-btn,
 .b-head.online,
-.online-list .ebox 
+.online-list .ebox,
+.u-btn-e,
+.u-btn-m,
+.u-btn-c
 {
     border-color: transparent !important;
 }
@@ -611,7 +624,10 @@ body #app .category-wrapper .upload-content .title,
 .footer-logo,
 .more-data i,
 .block-left.block-brand .headline .tab-wrap .pgc-brand-tab,
-.qrcode-active .qrcode-active-slider .close-btn .close-btn-bg
+.qrcode-active .qrcode-active-slider .close-btn .close-btn-bg,
+.icon-arrow-r,
+.u-btn-m i,
+.u-btn-e i 
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -723,7 +739,9 @@ body #app .category-wrapper .dot,
 .alert-container .alert-content .button,
 .button,
 .bangumi-up-info .func-btns .b-gz,
-.nav-container .single-box .ep-item:hover 
+.nav-container .single-box .ep-item:hover,
+.rel .pl122 .mb20 .rank .abs .l0 .bgre,
+.u-btn-e:hover 
 {
     background-color: $customStyleColor !important;
 }
@@ -817,7 +835,8 @@ body #app .marquee a,
 .container .main-btn.edit-btn,
 .online-list .ebox .dlo .author:hover,
 .online-list .ebox a:hover .etitle,
-.online-list .ebox:hover .ol b 
+.online-list .ebox:hover .ol b,
+.cl .mb20 .g1:hover 
 {
     color: $customStyleColor !important;
 }
