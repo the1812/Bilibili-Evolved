@@ -53,7 +53,9 @@
 .bind-info .note-footer .btn-group .back-btn,
 .history-card:hover,
 .bl-button--shallow:disabled,
-.bangumi-up-info 
+.bangumi-up-info,
+.online-list .ebox,
+.online-list .ebox .ol 
 {
     background-color: #222 !important;
 }
@@ -297,7 +299,9 @@ ul.navigation li span,
 .history-card,
 .bangumi-list .synthetical .headline .bangumi-label,
 .container .subtitle,
-.container .tip
+.container .tip,
+.online-list .ebox .dlo .author,
+.online-list .ebox .dlo span 
 {
     color: #aaa !important;
 }
@@ -463,7 +467,8 @@ body #app .category-wrapper .upload-content .title,
 .bangumi-up-info .func-btns .b-gz,
 .nav-container .single-box .ep-item,
 .nav-container .single-box .ep-item:hover,
-.container .main-btn
+.container .main-btn,
+.online-list .ebox .etitle 
 {
     color: #eee !important;
 }
@@ -562,7 +567,9 @@ body #app .category-wrapper .upload-content .title,
 .bl-button--shallow:disabled,
 .container .main-btn,
 .container .main-btn:hover,
-.container .main-btn.edit-btn
+.container .main-btn.edit-btn,
+.b-head.online,
+.online-list .ebox 
 {
     border-color: transparent !important;
 }
@@ -807,7 +814,10 @@ body #app .marquee a,
 .selector-wrapper .order-list .li-more span:hover,
 .project-list .project-list-item .project-list-item-detail .project-list-item-price,
 .container .main-btn:hover,
-.container .main-btn.edit-btn
+.container .main-btn.edit-btn,
+.online-list .ebox .dlo .author:hover,
+.online-list .ebox a:hover .etitle,
+.online-list .ebox:hover .ol b 
 {
     color: $customStyleColor !important;
 }
