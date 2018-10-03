@@ -294,7 +294,8 @@ ul.navigation li span,
 .el-date-table td.prev-month,
 .bind-info .note-content p,
 .el-checkbox__label,
-.history-card
+.history-card,
+.bangumi-list .synthetical .headline .bangumi-label 
 {
     color: #aaa !important;
 }
@@ -457,7 +458,9 @@ body #app .category-wrapper .upload-content .title,
 .income-info .item .info-title,
 .rhythm-storm label,
 .bl-button--shallow:disabled,
-.bangumi-up-info .func-btns .b-gz 
+.bangumi-up-info .func-btns .b-gz,
+.nav-container .single-box .ep-item,
+.nav-container .single-box .ep-item:hover 
 {
     color: #eee !important;
 }
@@ -565,7 +568,9 @@ body #app .category-wrapper .upload-content .title,
 .set-copyright .copyright-icon .icon-none-copyright,
 .area-section .card-ctnr .tag-ctnr .tags,
 .trade-wrapper,
-.el-date-table th 
+.el-date-table th,
+.nav-container .single-box .ep-item,
+.bangumi-list .synthetical .headline .bangumi-label 
 {
     border-color: #aaa !important;
 }
@@ -704,7 +709,8 @@ body #app .category-wrapper .dot,
 .author-info-card .author-info .info-right .btn-attention,
 .alert-container .alert-content .button,
 .button,
-.bangumi-up-info .func-btns .b-gz 
+.bangumi-up-info .func-btns .b-gz,
+.nav-container .single-box .ep-item:hover 
 {
     background-color: $customStyleColor !important;
 }
