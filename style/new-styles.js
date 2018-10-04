@@ -7,23 +7,45 @@
             () => $(".custom-scrollbar"),
             it => it.removeClass("custom-scrollbar")
         );
-        SpinQuery.any(() => $(".bili-wrapper,#link-navbar-vm,.link-navbar"), () =>
-        {
-            const navbar =
-                document.getElementsByClassName("bili-wrapper")[0] ||
-                document.getElementById("link-navbar-vm") ||
-                document.getElementsByClassName("link-navbar")[0];
-            let stardustStyles = false;
-            if (navbar instanceof Element)
+        const newStyles = {
+            selectors: [
+                ".bili-wrapper",
+                "#link-navbar-vm",
+                ".link-navbar",
+                ".nav-header-wrapper"
+            ],
+            get allSelectors()
             {
-                const height = parseInt(window.getComputedStyle(navbar).height);
-                stardustStyles =
-                    height === 50 /* stardust player */ ||
-                    height === 0 /* live room */ ||
-                    height === 56;/* photos */
+                return this.selectors.reduce((acc, s) => acc + "," + s);
+            },
+            get navbar()
+            {
+                let result = null;
+                for (selector of this.selectors)
+                {
+                    result = result || document.querySelector(selector);
+                }
+                return result;
+            },
+            supports(navbar)
+            {
+                if (navbar instanceof Element)
+                {
+                    const height = parseInt(window.getComputedStyle(navbar).height);
+                    const supportHeights = [
+                        60, /* show */
+                        50, /* stardust player */
+                        0,  /* live room */
+                        56  /* photos */
+                    ];
+                    return supportHeights.indexOf(height) !== -1;
+                }
             }
-
-            if (stardustStyles)
+        };
+        SpinQuery.any(() => $(newStyles.allSelectors), () =>
+        {
+            const navbar = newStyles.navbar;
+            if (newStyles.supports(navbar))
             {
                 resources.applyStyle("style", "bilibili-new-style");
             }

@@ -8,10 +8,13 @@
 #link-navbar-vm>.link-navbar,
 #navbar-vm>.link-navbar,
 #app>.link-navbar,
-#app>.nav-header-wrapper>.nav-header,
 #app>.nav-header-wrapper
 {
     background-color: #444;
+}
+#app>.nav-header-wrapper>.nav-header
+{
+    background: transparent;
 }
 .bili-header-m .nav-menu .nav-con .nav-item .t,
 #link-navbar-vm>.link-navbar .main-ctnr .nav-logo,
