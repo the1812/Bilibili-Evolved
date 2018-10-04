@@ -46,7 +46,18 @@
 .order-header-wrapper,
 .orderdetail-container .orderdetail-content,
 .total-container,
-.qrcode-active .qrcode-active-slider .close-btn
+.qrcode-active .qrcode-active-slider .close-btn,
+.trade-customn input,
+.alert-container,
+.bind-info .note-footer .btn-group .unable-btn,
+.bind-info .note-footer .btn-group .back-btn,
+.history-card:hover,
+.bl-button--shallow:disabled,
+.bangumi-up-info,
+.online-list .ebox,
+.online-list .ebox .ol,
+.main-ctnr,
+.demo-app .detail 
 {
     background-color: #222 !important;
 }
@@ -101,7 +112,26 @@ body #app .marquee,
 .order-list-wrapper .order-list .order-item .order-item-body-wrapper,
 .project-info table tr,
 .project-info table tr:first-child,
-.qrcode-active .qrcode-active-slider
+.qrcode-active .qrcode-active-slider,
+.trade-list,
+.trade-wrapper,
+.spend-recode,
+.el-table th,
+.el-table tr,
+.el-table .el-table__header-wrapper th,
+.el-table--enable-row-hover .el-table__body tr:hover > td,
+.balance_bp_box,
+.bb_intro_box_top,
+.bind-info,
+.shell-intro-top,
+.history-card,
+.income-info .item,
+.rel .pl26 .mb18 .rank .abs .l0 .bggr,
+.u-btn-e,
+.u-btn-m,
+.u-btn-c,
+.drawer-card,
+.demo-app .detail .category
 {
     background-color: #444 !important;
 }
@@ -124,7 +154,12 @@ body #app .marquee,
 .link-footer .footer-linker .footer-linker-line,
 .nav-notice li,
 .nav-notice li.hover,
-#text-contribute .fixed-header
+#text-contribute .fixed-header,
+.alert-container .alert-header:after,
+.el-table--border:after,
+.el-table--group:after,
+.el-table:before,
+.app-ctnr 
 {
     background-color: transparent !important;
 }
@@ -257,7 +292,27 @@ ul.navigation li span,
 .orderdetail-container .orderdetail-nav .orderdetail-nav-list li.order-center,
 .qrcode-active .qrcode-tip,
 .qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-time,
-.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-title
+.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-title,
+.trade-wrapper > div > div,
+.trade-customn .tips,
+.agreement,
+.num-tip,
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li,
+.spend-recode .part-common .platformType,
+.el-date-table td.next-month,
+.el-date-table td.prev-month,
+.bind-info .note-content p,
+.el-checkbox__label,
+.history-card,
+.bangumi-list .synthetical .headline .bangumi-label,
+.container .subtitle,
+.container .tip,
+.online-list .ebox .dlo .author,
+.online-list .ebox .dlo span,
+.error-panel.server-error .right-panel,
+.category li a
 {
     color: #aaa !important;
 }
@@ -397,7 +452,45 @@ body #app .category-wrapper .upload-content .title,
 .project-info table th,
 .total-container div,
 .qrcode-active .qrcode-container-item .seat-info,
-.qrcode-active .qrcode-container-item .seat-info span
+.qrcode-active .qrcode-container-item .seat-info span,
+.trade-wrapper,
+.qrpay-group .qrpay-content .pay-tips,
+.trade-customn input,
+.alert-container .alert-header h2,
+.alert-container .alert-content .button,
+.spend-recode .title-group .selected-title,
+.el-pagination__total,
+.el-pagination__jump,
+.el-table .el-table__header-wrapper .el-table__header .cell,
+.el-table .el-table__row .cell,
+.bp_user_box_top p,
+.bp_user_box i,
+.balance_bp_box,
+.bb_intro_box_top .b_icon_title,
+.button,
+.shell-intro-top .bind-card-title,
+.bind-info .bind-sub-title,
+.bind-info .note-footer .btn-group .unable-btn,
+.bind-info .note-footer .btn-group .back-btn,
+.income-info .item .info-title,
+.rhythm-storm label,
+.bl-button--shallow:disabled,
+.bangumi-up-info .func-btns .b-gz,
+.nav-container .single-box .ep-item,
+.nav-container .single-box .ep-item:hover,
+.container .main-btn,
+.online-list .ebox .etitle,
+.cl .mb20 .g1,
+.rel .pl26 .mb18 .rank .abs .l0 .bggr,
+.u-btn-m,
+.u-btn-c,
+.u-btn-e,
+.u-btn-e:hover,
+.error-panel .rollback-btn,
+.error-manga .change-img-btn,
+.hot-activity a,
+.hot-content .title,
+.drawer-card dd
 {
     color: #eee !important;
 }
@@ -476,7 +569,32 @@ body #app .category-wrapper .upload-content .title,
 .orderdetail-container .orderdetail-status,
 .project-info table tr:last-child,
 .project-info table tr,
-.orderdetail-container .orderdetail-wrapper .wrapper-content
+.orderdetail-container .orderdetail-wrapper .wrapper-content,
+.b-info .dividing-line,
+.trade-list,
+.spend-recode,
+.el-table td,
+.el-table th.is-leaf,
+.spend-recode .part-common .platformType,
+.balance_bp_box,
+.bb_intro_box_top,
+.bp_user_box_top,
+.button,
+.bind-info,
+.shell-intro-top,
+.bind-info .dividing-line,
+.bind-info .note-footer .btn-group .unable-btn,
+.bind-info .note-footer .btn-group .back-btn,
+.income-info .item,
+.bl-button--shallow:disabled,
+.container .main-btn,
+.container .main-btn:hover,
+.container .main-btn.edit-btn,
+.b-head.online,
+.online-list .ebox,
+.u-btn-e,
+.u-btn-m,
+.u-btn-c
 {
     border-color: transparent !important;
 }
@@ -486,7 +604,11 @@ body #app .category-wrapper .upload-content .title,
 .face-g-list#my-g-list .face-g-block .my-mp-block,
 .ui-input,
 .set-copyright .copyright-icon .icon-none-copyright,
-.area-section .card-ctnr .tag-ctnr .tags
+.area-section .card-ctnr .tag-ctnr .tags,
+.trade-wrapper,
+.el-date-table th,
+.nav-container .single-box .ep-item,
+.bangumi-list .synthetical .headline .bangumi-label 
 {
     border-color: #aaa !important;
 }
@@ -514,7 +636,10 @@ body #app .category-wrapper .upload-content .title,
 .footer-logo,
 .more-data i,
 .block-left.block-brand .headline .tab-wrap .pgc-brand-tab,
-.qrcode-active .qrcode-active-slider .close-btn .close-btn-bg
+.qrcode-active .qrcode-active-slider .close-btn .close-btn-bg,
+.icon-arrow-r,
+.u-btn-m i,
+.u-btn-e i 
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -594,7 +719,9 @@ body #app .marquee,
 .func-banner .btn-like.active,
 .func-banner .btn-dislike.active,
 .author-info-card .author-info .info-right .btn-attention,
-.swiper-pagination-custom
+.swiper-pagination-custom,
+.trade-wrapper.is-selected,
+.bangumi-up-info .func-btns .b-gz 
 {
     border-color: $customStyleColor !important;
 }
@@ -620,7 +747,15 @@ body #app .category-wrapper .dot,
 .promote-m .headline .change-push:hover,
 #announcement-area .rank-ctnr .rank-icon.hot,
 .item .live-status.on,
-.author-info-card .author-info .info-right .btn-attention
+.author-info-card .author-info .info-right .btn-attention,
+.alert-container .alert-content .button,
+.button,
+.bangumi-up-info .func-btns .b-gz,
+.nav-container .single-box .ep-item:hover,
+.rel .pl122 .mb20 .rank .abs .l0 .bgre,
+.u-btn-e:hover,
+.error-panel .rollback-btn,
+.error-manga .change-img-btn 
 {
     background-color: $customStyleColor !important;
 }
@@ -692,7 +827,33 @@ body #app .marquee a,
 .total-container div span.total,
 .project-info table .project-content .content-right .ticket-type,
 .project-info table td.total,
-.swiper-pagination-custom
+.swiper-pagination-custom,
+.trade-wrapper.is-selected,
+.instructions,
+.agreement a,
+.qrpay-group .qrpay-content .price,
+.spend-recode .title-group .recode-title,
+.bb_intro_box_top .b_question .b_question_title:hover,
+.balance,
+.bind-info .note-content a,
+.bind-info .bind-sec-title,
+.bind-info .note-footer .agree-group .submit-deal,
+.income-info .item.left .value,
+.income-info .item.right .value,
+.selector-wrapper .type-list .current-type span.active,
+.selector-wrapper .type-list li:hover,
+.selector-wrapper .city-list .li-more span:hover,
+.selector-wrapper .order-list .li-more span:hover,
+.project-list .project-list-item .project-list-item-detail .project-list-item-price,
+.container .main-btn:hover,
+.container .main-btn.edit-btn,
+.online-list .ebox .dlo .author:hover,
+.online-list .ebox a:hover .etitle,
+.online-list .ebox:hover .ol b,
+.cl .mb20 .g1:hover,
+.hot-activity a:hover,
+.drawer-card li a:hover dd,
+.category li a:hover
 {
     color: $customStyleColor !important;
 }
