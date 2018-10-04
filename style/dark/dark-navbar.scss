@@ -7,7 +7,9 @@
 .bili-header-m .nav-menu .nav-mask,
 #link-navbar-vm>.link-navbar,
 #navbar-vm>.link-navbar,
-#app>.link-navbar
+#app>.link-navbar,
+#app>.nav-header-wrapper>.nav-header,
+#app>.nav-header-wrapper
 {
     background-color: #444;
 }
@@ -19,7 +21,9 @@
 .my-link-btn .label,
 #app>.link-navbar .main-ctnr .nav-logo,
 #app>.link-navbar .nav-item.selected .label,
-#app>.link-navbar .nav-item:hover .icon-font
+#app>.link-navbar .nav-item:hover .icon-font,
+#app>.nav-header-wrapper>.nav-header .nav-header-mainsite,
+#app>.nav-header-wrapper>.nav-header .order-center
 {
     color: #eee;
 }
@@ -32,4 +36,8 @@
 #app>.link-navbar .main-ctnr .nav-logo::before
 {
     filter: $blueImageFileter !important;
+}
+#app>.nav-header-wrapper .nav-header .order-icon
+{
+    filter: brightness(0) invert(1) !important;
 }
