@@ -47,7 +47,8 @@ div#square.container,
 .mainBox .sureWindow,
 .js-evaluateArea .evaluateDialog,
 .live-ctn .item-live,
-.live-status.offline
+.live-status.offline,
+.banner-wrapper .swiper-pagination-bullet
 {
     background-color: #222 !important;
 }
@@ -160,6 +161,7 @@ body>div.to-top.on,
 .area-section .card-ctnr .more,
 .area-section .card-ctnr .more:hover,
 .link-panigation-ctnr .pagination,
+.link-progress-tv,
 .jumping-ctnr .jumping-input
 {
     background-color: transparent !important;
@@ -294,7 +296,8 @@ body>div.to-top.on,
 #announcement-area .news-ctnr .more-link,
 #announcement-area .rank-ctnr .icon-arrow-right,
 #announcement-area .rank-ctnr .more-link,
-.jumping-ctnr .jumping-input
+.jumping-ctnr .jumping-input,
+.banner-wrapper .swiper-pagination-bullet
 {
     color: #eee !important;
 }
@@ -485,7 +488,8 @@ body>div.to-top.on,
 .guide .old-btn a,
 .link-navbar-ctnr,
 .rank-item:hover,
-.singlePage .mainBox
+.singlePage .mainBox,
+.selector-wrapper
 {
     box-shadow: none !important;
 }
@@ -495,7 +499,9 @@ body>div.to-top.on,
 }
 .guide .feedback-btn a,
 .mainBox .leaveMsg,
-.js-evaluateArea .evaluateDialog
+.js-evaluateArea .evaluateDialog,
+.project-list .project-list-item:hover,
+#app .toolbar-wrapper
 {
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
@@ -613,7 +619,8 @@ body>div.to-top.on
 .evaluate .situation span.active,
 .evaluateSubmitArea .submit,
 .bilibili-live-player .blpui-btn.default-btn.btn-blue,
-.bilibili-live-player .bilibili-live-player-enter-tips
+.bilibili-live-player .bilibili-live-player-enter-tips,
+.banner-wrapper .swiper-pagination-bullet-active
 {
     background-color: $customStyleColor !important;
 }
@@ -715,7 +722,8 @@ body>div.to-top.on
 .evaluate .situation span.active,
 .evaluateSubmitArea .submit,
 .bilibili-live-player .blpui-btn.default-btn.btn-blue,
-.bilibili-live-player .bilibili-live-player-enter-tips
+.bilibili-live-player .bilibili-live-player-enter-tips,
+.banner-wrapper .swiper-pagination-bullet-active
 {
     color: $foreground !important;
 }
