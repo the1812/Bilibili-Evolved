@@ -125,7 +125,7 @@ body #app .marquee,
 .shell-intro-top,
 .history-card,
 .income-info .item,
-.rel .pl26 .mb18 .rank .abs .l0 .bggr,
+.rel.pl26.mb18 .rank.abs.l0.bggr,
 .u-btn-e,
 .u-btn-m,
 .u-btn-c,
@@ -479,8 +479,8 @@ body #app .category-wrapper .upload-content .title,
 .nav-container .single-box .ep-item:hover,
 .container .main-btn,
 .online-list .ebox .etitle,
-.cl .mb20 .g1,
-.rel .pl26 .mb18 .rank .abs .l0 .bggr,
+.cl.mb20 .g1,
+.rel.pl26.mb18 .rank.abs.l0.bggr,
 .u-btn-m,
 .u-btn-c,
 .u-btn-e,
@@ -489,7 +489,8 @@ body #app .category-wrapper .upload-content .title,
 .error-manga .change-img-btn,
 .hot-activity a,
 .hot-content .title,
-.drawer-card dd
+.drawer-card dd,
+.rel.pl26.mb18 .g1
 {
     color: #eee !important;
 }
@@ -751,7 +752,7 @@ body #app .category-wrapper .dot,
 .button,
 .bangumi-up-info .func-btns .b-gz,
 .nav-container .single-box .ep-item:hover,
-.rel .pl122 .mb20 .rank .abs .l0 .bgre,
+.rel.pl122.mb20 .rank.abs.l0.bgre,
 .u-btn-e:hover,
 .error-panel .rollback-btn,
 .error-manga .change-img-btn
@@ -849,10 +850,11 @@ body #app .marquee a,
 .online-list .ebox .dlo .author:hover,
 .online-list .ebox a:hover .etitle,
 .online-list .ebox:hover .ol b,
-.cl .mb20 .g1:hover,
+.cl.mb20 .g1:hover,
 .hot-activity a:hover,
 .drawer-card li a:hover dd,
-.category li a:hover
+.category li a:hover,
+.rel.pl26.mb18 .g1:hover
 {
     color: $customStyleColor !important;
 }
