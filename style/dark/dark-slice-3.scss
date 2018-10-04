@@ -49,7 +49,8 @@ div#square.container,
 .live-ctn .item-live,
 .live-status.offline,
 .banner-wrapper .swiper-pagination-bullet,
-.nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list
+.nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list,
+.project-list .project-list-item .project-list-item-img
 {
     background-color: #222 !important;
 }
@@ -496,7 +497,8 @@ body>div.to-top.on,
 .singlePage .mainBox,
 .selector-wrapper,
 .nav-header-wrapper .nav-header .user-panel .user-uname,
-.nav-header-wrapper .nav-header .user-panel .panel-list
+.nav-header-wrapper .nav-header .user-panel .panel-list,
+.demo-app .detail .category
 {
     box-shadow: none !important;
 }
