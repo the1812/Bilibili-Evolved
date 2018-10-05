@@ -125,12 +125,13 @@ body #app .marquee,
 .shell-intro-top,
 .history-card,
 .income-info .item,
-.rel .pl26 .mb18 .rank .abs .l0 .bggr,
+.rel.pl26.mb18 .bggr,
 .u-btn-e,
 .u-btn-m,
 .u-btn-c,
 .drawer-card,
-.demo-app .detail .category
+.demo-app .detail .category,
+.rel.pl26.mb18 .bggr 
 {
     background-color: #444 !important;
 }
@@ -311,7 +312,28 @@ ul.navigation li span,
 .online-list .ebox .dlo .author,
 .online-list .ebox .dlo span,
 .error-panel.server-error .right-panel,
-.category li a
+.category li a,
+.tv-m-crumb li a,
+.tv-m3 .tv-m-desc,
+.tv-m2 .tv-m-desc,
+.tv-m1 .tv-m-desc,
+.tv-m3 .up,
+.tv-m2 .up,
+.tv-m1 .up,
+.tv-m3 .time,
+.tv-m2 .time,
+.tv-m1 .time,
+.mn-ot-l-u-icon1,
+.mn-ot-l-u-icon2,
+.tv-m3 .play,
+.tv-m2 .play,
+.tv-m1 .play, 
+.tv-m3 .com, 
+.tv-m2 .com,
+.tv-m1 .com,
+.tv-m3 .colt, 
+.tv-m2 .colt, 
+.tv-m1 .colt 
 {
     color: #aaa !important;
 }
@@ -479,8 +501,8 @@ body #app .category-wrapper .upload-content .title,
 .nav-container .single-box .ep-item:hover,
 .container .main-btn,
 .online-list .ebox .etitle,
-.cl .mb20 .g1,
-.rel .pl26 .mb18 .rank .abs .l0 .bggr,
+.cl.mb20 .g1,
+.rel.pl26.mb18 .rank,
 .u-btn-m,
 .u-btn-c,
 .u-btn-e,
@@ -489,7 +511,12 @@ body #app .category-wrapper .upload-content .title,
 .error-manga .change-img-btn,
 .hot-activity a,
 .hot-content .title,
-.drawer-card dd
+.drawer-card dd,
+.rel.pl26.mb18 .g1,
+.bbgr.cl.h29 .g1,
+.tv-m1 .tv-m-tt,
+.rel.pl122.mb20 .rank,
+.rel.pl26.mb18 .rank 
 {
     color: #eee !important;
 }
@@ -593,7 +620,9 @@ body #app .category-wrapper .upload-content .title,
 .online-list .ebox,
 .u-btn-e,
 .u-btn-m,
-.u-btn-c
+.u-btn-c,
+.mg-l.w880.cl .bbgr,
+.tv-m1 .tv-m-con 
 {
     border-color: transparent !important;
 }
@@ -644,7 +673,12 @@ body #app .category-wrapper .upload-content .title,
 }
 .float-toolbar .toolbar-list .icon-block.icon-help,
 .float-toolbar .toolbar-list .icon-block.icon-feedback,
-.float-toolbar .back-top .icon-block.icon-back-top
+.float-toolbar .back-top .icon-block.icon-back-top,
+.icon-sort3-on,
+.u-btn-s3:hover,
+.on.u-btn-s3,
+.timer-wrap .vote-dialog-new .main .main-txt-1 label .selected,
+.timer-wrap .vote-dialog-new .main .checkbox 
 {
     filter: $blueImageFilter !important;
 }
@@ -720,7 +754,8 @@ body #app .marquee,
 .author-info-card .author-info .info-right .btn-attention,
 .swiper-pagination-custom,
 .trade-wrapper.is-selected,
-.bangumi-up-info .func-btns .b-gz
+.bangumi-up-info .func-btns .b-gz,
+.act.tv-u-btn-t 
 {
     border-color: $customStyleColor !important;
 }
@@ -751,10 +786,11 @@ body #app .category-wrapper .dot,
 .button,
 .bangumi-up-info .func-btns .b-gz,
 .nav-container .single-box .ep-item:hover,
-.rel .pl122 .mb20 .rank .abs .l0 .bgre,
+.rel.pl122.mb20 .bgre,
 .u-btn-e:hover,
 .error-panel .rollback-btn,
-.error-manga .change-img-btn
+.error-manga .change-img-btn,
+.rel.pl122.mb20 .bgre 
 {
     background-color: $customStyleColor !important;
 }
@@ -849,10 +885,15 @@ body #app .marquee a,
 .online-list .ebox .dlo .author:hover,
 .online-list .ebox a:hover .etitle,
 .online-list .ebox:hover .ol b,
-.cl .mb20 .g1:hover,
+.cl.mb20 .g1:hover,
 .hot-activity a:hover,
 .drawer-card li a:hover dd,
-.category li a:hover
+.category li a:hover,
+.rel.pl26.mb18 .g1:hover,
+.tv-m-crumb li a:hover,
+.bbgr.cl.h29 .g1:hover,
+.tv-m1 .tv-m-tt:hover,
+.act.tv-u-btn-t 
 {
     color: $customStyleColor !important;
 }
