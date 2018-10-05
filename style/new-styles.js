@@ -21,7 +21,7 @@
             get navbar()
             {
                 let result = null;
-                for (selector of this.selectors)
+                for (const selector of this.selectors)
                 {
                     result = result || document.querySelector(selector);
                 }
