@@ -131,7 +131,10 @@ body #app .marquee,
 .u-btn-c,
 .drawer-card,
 .demo-app .detail .category,
-.rel.pl26.mb18 .bggr
+.rel.pl26.mb18 .bggr,
+.infor-body-left ul li,
+.infor-news .news-body,
+.infor-news .news-top 
 {
     background-color: #444 !important;
 }
@@ -147,7 +150,8 @@ body #app .marquee,
 // {
 //     background-color: #fff1 !important;
 // }
-.add-tag .edit .input-wrapper .container.active .btn-add
+.add-tag .edit .input-wrapper .container.active .btn-add,
+.infor-news .news-top 
 {
     background-image: none !important;
 }
@@ -333,7 +337,8 @@ ul.navigation li span,
 .tv-m1 .com,
 .tv-m3 .colt,
 .tv-m2 .colt,
-.tv-m1 .colt
+.tv-m1 .colt,
+.news-text .news-date 
 {
     color: #aaa !important;
 }
@@ -516,7 +521,12 @@ body #app .category-wrapper .upload-content .title,
 .tv-m1 .tv-m-tt,
 .rel.pl122.mb20 .rank,
 .rel.pl26.mb18 .rank,
-.rel.pl122.mb20 .g1 
+.rel.pl122.mb20 .g1,
+.news_block .text-name,
+.infor-label .label-date,
+.news-body .news-1 .news-text p,
+.infor-news .news-top,
+.news-body .news-1 i 
 {
     color: #eee !important;
 }
@@ -621,7 +631,9 @@ body #app .category-wrapper .upload-content .title,
 .u-btn-m,
 .u-btn-c,
 .mg-l.w880.cl .bbgr,
-.tv-m1 .tv-m-con
+.tv-m1 .tv-m-con,
+.infor-body-left ul li,
+.news-body .news-1 
 {
     border-color: transparent !important;
 }
@@ -669,6 +681,10 @@ body #app .category-wrapper .upload-content .title,
 .u-btn-e i
 {
     filter: brightness(0) invert(1) !important;
+}
+.infor-load-more 
+{
+    filter: invert(0.75) !important;
 }
 .float-toolbar .toolbar-list .icon-block.icon-help,
 .float-toolbar .toolbar-list .icon-block.icon-feedback,
@@ -789,7 +805,8 @@ body #app .category-wrapper .dot,
 .u-btn-e:hover,
 .error-panel .rollback-btn,
 .error-manga .change-img-btn,
-.rel.pl122.mb20 .bgre
+.rel.pl122.mb20 .bgre,
+.news-body .news-1 i 
 {
     background-color: $customStyleColor !important;
 }
@@ -893,7 +910,8 @@ body #app .marquee a,
 .bbgr.cl.h29 .g1:hover,
 .tv-m1 .tv-m-tt:hover,
 .act.tv-u-btn-t,
-.rel.pl122.mb20 .g1:hover
+.rel.pl122.mb20 .g1:hover,
+.news-body .news-1 .news-text:hover .n-text 
 {
     color: $customStyleColor !important;
 }
