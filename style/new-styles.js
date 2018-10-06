@@ -9,7 +9,7 @@
         );
         const newStyles = {
             selectors: [
-                ".bili-wrapper",
+                "div.nav-con.fl",
                 "#link-navbar-vm",
                 ".link-navbar",
                 ".nav-header-wrapper"
@@ -29,9 +29,11 @@
             },
             supports(navbar)
             {
+                console.log(navbar);
                 if (navbar instanceof Element)
                 {
                     const height = parseInt(window.getComputedStyle(navbar).height);
+                    console.log(height);
                     const supportHeights = [
                         60, /* show */
                         50, /* stardust player */
