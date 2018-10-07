@@ -57,7 +57,8 @@
 .online-list .ebox,
 .online-list .ebox .ol,
 .demo-app .detail,
-.active-main .act-list ul li 
+.active-main .act-list ul li,
+.topic-main .act-list ul li 
 {
     background-color: #222 !important;
 }
@@ -344,7 +345,8 @@ ul.navigation li span,
 .tv-m2 .colt,
 .tv-m1 .colt,
 .news-text .news-date,
-.pagelist .flip-right span 
+.pagelist .flip-right span,
+.topic-main .act-list ul li .found-time 
 {
     color: #aaa !important;
 }
@@ -539,7 +541,10 @@ body #app .category-wrapper .upload-content .title,
 .pagelist .flip-left span,
 .pagelist .flip-left .active,
 .pagelist .flip-left span:hover,
-.pagelist .flip-right input 
+.pagelist .flip-right input,
+.topic-main .nav-tab li,
+.topic-main .topic-title .b-topic-t,
+.topic-main .act-list ul li h2 a 
 {
     color: #eee !important;
 }
@@ -652,7 +657,9 @@ body #app .category-wrapper .upload-content .title,
 .pagelist .flip-left span,
 .pagelist .flip-left .active,
 .pagelist .flip-left span:hover,
-.pagelist .flip-right input 
+.pagelist .flip-right input,
+.topic-main .nav-tab,
+.topic-main .act-list ul li 
 {
     border-color: transparent !important;
 }
@@ -937,7 +944,8 @@ body #app .marquee a,
 .news-body .news-1 .news-text:hover .n-text,
 .nav-bar .nav-wrapper .main-tab:hover,
 .active-main .act-list ul li .event_status .status-ing,
-.active-main .act-list ul li h2 a:hover 
+.active-main .act-list ul li h2 a:hover,
+.topic-main .nav-tab .on 
 {
     color: $customStyleColor !important;
 }
