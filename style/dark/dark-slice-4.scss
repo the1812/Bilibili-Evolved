@@ -56,7 +56,8 @@
 .bangumi-up-info,
 .online-list .ebox,
 .online-list .ebox .ol,
-.demo-app .detail
+.demo-app .detail,
+.active-main .act-list ul li 
 {
     background-color: #222 !important;
 }
@@ -135,7 +136,10 @@ body #app .marquee,
 .infor-body-left ul li,
 .infor-news .news-body,
 .infor-news .news-top,
-.cntr .category
+.cntr .category,
+.pagelist .flip-left span,
+.pagelist .flip-left strong,
+.pagelist .flip-right input 
 {
     background-color: #444 !important;
 }
@@ -339,7 +343,8 @@ ul.navigation li span,
 .tv-m3 .colt,
 .tv-m2 .colt,
 .tv-m1 .colt,
-.news-text .news-date 
+.news-text .news-date,
+.pagelist .flip-right span 
 {
     color: #aaa !important;
 }
@@ -527,7 +532,14 @@ body #app .category-wrapper .upload-content .title,
 .infor-label .label-date,
 .news-body .news-1 .news-text p,
 .infor-news .news-top,
-.news-body .news-1 i 
+.news-body .news-1 i,
+.active-main .active-title .b-active-t,
+.active-main .act-list ul li h2 a,
+.active-main .act-list ul li .event_status,
+.pagelist .flip-left span,
+.pagelist .flip-left .active,
+.pagelist .flip-left span:hover,
+.pagelist .flip-right input 
 {
     color: #eee !important;
 }
@@ -634,7 +646,13 @@ body #app .category-wrapper .upload-content .title,
 .mg-l.w880.cl .bbgr,
 .tv-m1 .tv-m-con,
 .infor-body-left ul li,
-.news-body .news-1 
+.news-body .news-1,
+.active-main .act-list ul li,
+.active-main .active-title,
+.pagelist .flip-left span,
+.pagelist .flip-left .active,
+.pagelist .flip-left span:hover,
+.pagelist .flip-right input 
 {
     border-color: transparent !important;
 }
@@ -809,7 +827,9 @@ body #app .category-wrapper .dot,
 .error-manga .change-img-btn,
 .rel.pl122.mb20 .bgre,
 .news-body .news-1 i,
-.balance_bp_box .button 
+.balance_bp_box .button,
+.pagelist .flip-left .active,
+.pagelist .flip-left span:hover 
 {
     background-color: $customStyleColor !important;
 }
@@ -915,7 +935,9 @@ body #app .marquee a,
 .act.tv-u-btn-t,
 .rel.pl122.mb20 .g1:hover,
 .news-body .news-1 .news-text:hover .n-text,
-.nav-bar .nav-wrapper .main-tab:hover 
+.nav-bar .nav-wrapper .main-tab:hover,
+.active-main .act-list ul li .event_status .status-ing,
+.active-main .act-list ul li h2 a:hover 
 {
     color: $customStyleColor !important;
 }
