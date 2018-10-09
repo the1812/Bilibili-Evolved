@@ -52,7 +52,6 @@
 .bind-info .note-footer .btn-group .unable-btn,
 .bind-info .note-footer .btn-group .back-btn,
 .history-card:hover,
-.bl-button--shallow:disabled,
 .bangumi-up-info,
 .online-list .ebox,
 .online-list .ebox .ol,
@@ -61,7 +60,8 @@
 .topic-main .act-list ul li ,
 li.user-wrapper .avatar .detail,
 li.user-wrapper .avatar .detail .logout,
-#bp_right .bb_intro_box
+#bp_right .bb_intro_box,
+.rhythm-storm .bl-button:disabled
 {
     background-color: #222 !important;
 }
@@ -521,7 +521,6 @@ body #app .category-wrapper .upload-content .title,
 .bind-info .note-footer .btn-group .back-btn,
 .income-info .item .info-title,
 .rhythm-storm label,
-.bl-button--shallow:disabled,
 .bangumi-up-info .func-btns .b-gz,
 .nav-container .single-box .ep-item,
 .nav-container .single-box .ep-item:hover,
@@ -567,7 +566,8 @@ body #app .category-wrapper .upload-content .title,
 .bb_intro_box .bb_intro_info,
 .valid_box .button.ready,
 .valid_box .button.ready:active,
-.valid_box .button.ready:hover
+.valid_box .button.ready:hover,
+.rhythm-storm .bl-button:disabled
 {
     color: #eee !important;
 }
@@ -662,7 +662,6 @@ body #app .category-wrapper .upload-content .title,
 .bind-info .note-footer .btn-group .unable-btn,
 .bind-info .note-footer .btn-group .back-btn,
 .income-info .item,
-.bl-button--shallow:disabled,
 .container .main-btn,
 .container .main-btn:hover,
 .container .main-btn.edit-btn,
@@ -691,7 +690,8 @@ body #app .category-wrapper .upload-content .title,
 .valid_box .button.ready,
 .valid_box .button.ready:active,
 .valid_box .button.ready:hover,
-.valid_box .button
+.valid_box .button,
+.rhythm-storm .bl-button
 {
     border-color: transparent !important;
 }
@@ -872,7 +872,8 @@ body #app .category-wrapper .dot,
 .pagelist .flip-left .active,
 .pagelist .flip-left span:hover,
 .balance_bp_box .button:active,
-.balance_bp_box .button:hover
+.balance_bp_box .button:hover,
+.rhythm-storm .bl-button
 {
     background-color: $customStyleColor !important;
 }
@@ -991,7 +992,8 @@ body #app .marquee a,
 {
     color: $customStyleColor !important;
 }
-.valid_box .button
+.valid_box .button,
+.rhythm-storm .bl-button
 {
     color: $foreground !important;
 }
