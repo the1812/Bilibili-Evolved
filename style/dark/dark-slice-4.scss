@@ -544,7 +544,8 @@ body #app .category-wrapper .upload-content .title,
 .pagelist .flip-right input,
 .topic-main .nav-tab li,
 .topic-main .topic-title .b-topic-t,
-.topic-main .act-list ul li h2 a 
+.topic-main .act-list ul li h2 a,
+.w160.h48.ovh .g1 
 {
     color: #eee !important;
 }
@@ -945,7 +946,8 @@ body #app .marquee a,
 .nav-bar .nav-wrapper .main-tab:hover,
 .active-main .act-list ul li .event_status .status-ing,
 .active-main .act-list ul li h2 a:hover,
-.topic-main .nav-tab .on 
+.topic-main .nav-tab .on,
+.w160.h48.ovh .g1:hover
 {
     color: $customStyleColor !important;
 }
