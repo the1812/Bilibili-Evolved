@@ -78,7 +78,8 @@ blockquote .color-yellow-04,
 .season-timeline .season-group.today,
 .season-timeline .season-group.today .group-time::before,
 .aside-ctnr .author-info .communicate-btn,
-.tag-list li.tag-item.on
+.tag-list li.tag-item.on,
+.tag-list li.tag-item:hover 
 {
     border-color: $customStyleColor !important;
 }
