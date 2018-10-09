@@ -60,7 +60,8 @@
 .active-main .act-list ul li,
 .topic-main .act-list ul li ,
 li.user-wrapper .avatar .detail,
-li.user-wrapper .avatar .detail .logout
+li.user-wrapper .avatar .detail .logout,
+#bp_right .bb_intro_box
 {
     background-color: #222 !important;
 }
@@ -145,7 +146,10 @@ body #app .marquee,
 .pagelist .flip-right input,
 .nav-container .single-box .ep-item,
 .bangumi-list .synthetical .headline .bangumi-label,
-.avatar .detail .level a.total
+.avatar .detail .level a.total,
+.valid_box .button.ready,
+.valid_box .button.ready:active,
+.valid_box .button.ready:hover
 {
     background-color: #444 !important;
 }
@@ -162,7 +166,8 @@ body #app .marquee,
 //     background-color: #fff1 !important;
 // }
 .add-tag .edit .input-wrapper .container.active .btn-add,
-.infor-news .news-top
+.infor-news .news-top,
+.spend-recode .title-group .selected-title
 {
     background-image: none !important;
 }
@@ -174,7 +179,9 @@ body #app .marquee,
 .el-table--border:after,
 .el-table--group:after,
 .el-table:before,
-.app-ctnr
+.app-ctnr,
+.el-table,
+.el-table__expanded-cell
 {
     background-color: transparent !important;
 }
@@ -556,7 +563,11 @@ body #app .category-wrapper .upload-content .title,
 .balance_bp_box .button:active,
 .balance_bp_box .button:hover,
 .bangumi-list .synthetical .headline .bangumi-label,
-.header .right li.order span a
+.header .right li.order span a,
+.bb_intro_box .bb_intro_info,
+.valid_box .button.ready,
+.valid_box .button.ready:active,
+.valid_box .button.ready:hover
 {
     color: #eee !important;
 }
@@ -673,7 +684,14 @@ body #app .category-wrapper .upload-content .title,
 .topic-main .nav-tab,
 .topic-main .act-list ul li,
 .nav-container .single-box .ep-item,
-.bangumi-list .synthetical .headline .bangumi-label
+.bangumi-list .synthetical .headline .bangumi-label,
+.bb_intro_box .bb_intro_info,
+#bp_right .bb_intro_box,
+#bp_right .bb_intro_box_top,
+.valid_box .button.ready,
+.valid_box .button.ready:active,
+.valid_box .button.ready:hover,
+.valid_box .button
 {
     border-color: transparent !important;
 }
@@ -723,6 +741,10 @@ body #app .category-wrapper .upload-content .title,
 .infor-load-more
 {
     filter: invert(0.75) !important;
+}
+.bb_intro_box_top .b_question .b_question_icon
+{
+    filter: brightness(0.5) contrast(3) !important;
 }
 .float-toolbar .toolbar-list .icon-block.icon-help,
 .float-toolbar .toolbar-list .icon-block.icon-feedback,
@@ -854,6 +876,10 @@ body #app .category-wrapper .dot,
 {
     background-color: $customStyleColor !important;
 }
+.valid_box .button
+{
+    background: $customStyleColor !important;
+}
 
 .canvas-card dd h4 .user-container a:hover,
 .nav-bar .sub-nav .sub-tab.active,
@@ -965,10 +991,10 @@ body #app .marquee a,
 {
     color: $customStyleColor !important;
 }
-// a
-// {
-//     color: $foreground !important;
-// }
+.valid_box .button
+{
+    color: $foreground !important;
+}
 // a
 // {
 //     fill: $customStyleColor !important;
