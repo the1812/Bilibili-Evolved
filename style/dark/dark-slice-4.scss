@@ -58,7 +58,9 @@
 .online-list .ebox .ol,
 .demo-app .detail,
 .active-main .act-list ul li,
-.topic-main .act-list ul li 
+.topic-main .act-list ul li ,
+li.user-wrapper .avatar .detail,
+li.user-wrapper .avatar .detail .logout
 {
     background-color: #222 !important;
 }
@@ -142,7 +144,8 @@ body #app .marquee,
 .pagelist .flip-left strong,
 .pagelist .flip-right input,
 .nav-container .single-box .ep-item,
-.bangumi-list .synthetical .headline .bangumi-label 
+.bangumi-list .synthetical .headline .bangumi-label,
+.avatar .detail .level a.total
 {
     background-color: #444 !important;
 }
@@ -159,7 +162,7 @@ body #app .marquee,
 //     background-color: #fff1 !important;
 // }
 .add-tag .edit .input-wrapper .container.active .btn-add,
-.infor-news .news-top 
+.infor-news .news-top
 {
     background-image: none !important;
 }
@@ -349,7 +352,8 @@ ul.navigation li span,
 .pagelist .flip-right span,
 .topic-main .act-list ul li .found-time,
 .pager .jump-pager,
-.card-more 
+.card-more,
+li.user-wrapper .avatar .detail .level .progress span
 {
     color: #aaa !important;
 }
@@ -551,7 +555,8 @@ body #app .category-wrapper .upload-content .title,
 .w160.h48.ovh .g1,
 .balance_bp_box .button:active,
 .balance_bp_box .button:hover,
-.bangumi-list .synthetical .headline .bangumi-label 
+.bangumi-list .synthetical .headline .bangumi-label,
+.header .right li.order span a
 {
     color: #eee !important;
 }
@@ -668,7 +673,7 @@ body #app .category-wrapper .upload-content .title,
 .topic-main .nav-tab,
 .topic-main .act-list ul li,
 .nav-container .single-box .ep-item,
-.bangumi-list .synthetical .headline .bangumi-label 
+.bangumi-list .synthetical .headline .bangumi-label
 {
     border-color: transparent !important;
 }
@@ -715,7 +720,7 @@ body #app .category-wrapper .upload-content .title,
 {
     filter: brightness(0) invert(1) !important;
 }
-.infor-load-more 
+.infor-load-more
 {
     filter: invert(0.75) !important;
 }
@@ -805,7 +810,7 @@ body #app .marquee,
 .trade-wrapper.is-selected,
 .bangumi-up-info .func-btns .b-gz,
 .act.tv-u-btn-t,
-.balance_bp_box .button 
+.balance_bp_box .button
 {
     border-color: $customStyleColor !important;
 }
@@ -845,7 +850,7 @@ body #app .category-wrapper .dot,
 .pagelist .flip-left .active,
 .pagelist .flip-left span:hover,
 .balance_bp_box .button:active,
-.balance_bp_box .button:hover 
+.balance_bp_box .button:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -956,7 +961,7 @@ body #app .marquee a,
 .active-main .act-list ul li h2 a:hover,
 .topic-main .nav-tab .on,
 .w160.h48.ovh .g1:hover,
-.card-more a 
+.card-more a
 {
     color: $customStyleColor !important;
 }
