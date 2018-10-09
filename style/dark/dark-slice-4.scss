@@ -545,7 +545,9 @@ body #app .category-wrapper .upload-content .title,
 .topic-main .nav-tab li,
 .topic-main .topic-title .b-topic-t,
 .topic-main .act-list ul li h2 a,
-.w160.h48.ovh .g1 
+.w160.h48.ovh .g1,
+.balance_bp_box .button:active,
+.balance_bp_box .button:hover
 {
     color: #eee !important;
 }
@@ -837,7 +839,9 @@ body #app .category-wrapper .dot,
 .news-body .news-1 i,
 .balance_bp_box .button,
 .pagelist .flip-left .active,
-.pagelist .flip-left span:hover 
+.pagelist .flip-left span:hover,
+.balance_bp_box .button:active,
+.balance_bp_box .button:hover 
 {
     background-color: $customStyleColor !important;
 }
