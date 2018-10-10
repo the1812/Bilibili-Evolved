@@ -117,14 +117,14 @@ a.t>i.bili-icon,
     display: none !important;
 }
 
-.i-face>.face
+/*.i-face>.face
 {
     margin-top: -1px !important;
-}
+}*/
 .i-face>.face,
 .user-panel-ctnr .msg-hinter
 {
-    border: 1.5px solid #fff3 !important;
+    box-shadow: 0 0 2px 1.5px #0002 !important;
 }
 div.up-load
 {
