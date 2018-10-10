@@ -18,7 +18,8 @@
                 "div.nav-con.fl",
                 "#link-navbar-vm",
                 ".link-navbar",
-                ".nav-header-wrapper"
+                ".nav-header-wrapper",
+                ".z_top .z_header"
             ],
             get allSelectors()
             {
@@ -46,6 +47,7 @@
                     ];
                     return supportHeights.indexOf(height) !== -1;
                 }
+                return false;
             }
         };
         SpinQuery.any(() => $(newStyles.allSelectors), () =>

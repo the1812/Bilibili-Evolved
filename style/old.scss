@@ -4,7 +4,8 @@
     box-shadow: $customStyleColor70 0px 2px 10px 1px !important;
 }
 
-body .bili-header-m .nav-menu div.nav-mask
+body .bili-header-m .nav-menu div.nav-mask,
+.b-header-mask-wrp
 {
     background-color: transparent !important;
     box-shadow: none !important;
@@ -35,11 +36,21 @@ a.t>i.bili-icon
     height: 16px !important;
     opacity: 0.81 !important;
 }
+.z_top .z_top_nav ul li.home
+{
+    filter: brightness(0) invert(1) !important;
+    background: url(https://www.bilibili.com/favicon.ico) no-repeat left center !important;
+    opacity: 0.81 !important;
+    background-size: 16px !important;
+    background-position-x: 16% !important;
+}
 
 #entryOld,
 .nav-search-submit,
 .b-icon-app,
-.title-icon
+.title-icon,
+.z_top .z_top_nav li .new,
+.z_top .z_top_nav li .beta
 {
     display: none !important;
 }

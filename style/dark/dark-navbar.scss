@@ -1,6 +1,7 @@
 .bili-header-m .nav-menu .nav-con .nav-item:hover,
 .right-part>.shortcuts-ctnr .shortcut-item:hover,
-#link-navbar-vm>.link-navbar .nav-item:hover
+#link-navbar-vm>.link-navbar .nav-item:hover,
+.z_top .z_top_nav ul li:hover
 {
     background-color: #222;
 }
@@ -8,9 +9,15 @@
 #link-navbar-vm>.link-navbar,
 #navbar-vm>.link-navbar,
 #app>.link-navbar,
-#app>.nav-header-wrapper
+#app>.nav-header-wrapper,
+.b-header-mask-wrp .b-header-mask
 {
     background-color: #444;
+}
+.z_top .i-link:hover,
+.z_top .z_top_nav ul li.home:hover
+{
+    background-color: transparent;
 }
 #app>.nav-header-wrapper>.nav-header
 {
@@ -26,7 +33,9 @@
 #app>.link-navbar .nav-item.selected .label,
 #app>.link-navbar .nav-item:hover .icon-font,
 #app>.nav-header-wrapper>.nav-header .nav-header-mainsite,
-#app>.nav-header-wrapper>.nav-header .order-center
+#app>.nav-header-wrapper>.nav-header .order-center,
+.z_top.b-header-blur .z_top_nav li a.i-link,
+.z_top.b-header-blur .uns_box li.u-i a.i-link
 {
     color: #eee;
 }
