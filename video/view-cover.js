@@ -66,17 +66,16 @@
                         </li>`,
                     success: () =>
                     {
-                        SpinQuery.any(() => $("meta[itemprop='image']"), metaData =>
-                        {
-                            if (metaData.length > 0)
+                        new SpinQuery(() => $("meta[itemprop='image']"),
+                            metaData => metaData.length > 0 && metaData.prop("content"),
+                            metaData =>
                             {
                                 const imageViewer = new ImageViewer(metaData.prop("content"));
                                 $("#view-video-cover").on("click", () =>
                                 {
                                     imageViewer.show();
                                 }).parent().removeClass("hidden");
-                            }
-                        });
+                            }).start();
                     }
                 }
             };
