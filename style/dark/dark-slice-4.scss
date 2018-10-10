@@ -149,7 +149,8 @@ body #app .marquee,
 .avatar .detail .level a.total,
 .valid_box .button.ready,
 .valid_box .button.ready:active,
-.valid_box .button.ready:hover
+.valid_box .button.ready:hover,
+.bili-pay-box-wrapper
 {
     background-color: #444 !important;
 }
@@ -360,7 +361,8 @@ ul.navigation li span,
 .topic-main .act-list ul li .found-time,
 .pager .jump-pager,
 .card-more,
-li.user-wrapper .avatar .detail .level .progress span
+li.user-wrapper .avatar .detail .level .progress span,
+.pay-result-sub-title
 {
     color: #aaa !important;
 }
@@ -567,7 +569,10 @@ body #app .category-wrapper .upload-content .title,
 .valid_box .button.ready,
 .valid_box .button.ready:active,
 .valid_box .button.ready:hover,
-.rhythm-storm .bl-button:disabled
+.rhythm-storm .bl-button:disabled,
+.bili-pay-uname,
+.pay-result-title,
+.pay-result-btn
 {
     color: #eee !important;
 }
@@ -691,7 +696,8 @@ body #app .category-wrapper .upload-content .title,
 .valid_box .button.ready:active,
 .valid_box .button.ready:hover,
 .valid_box .button,
-.rhythm-storm .bl-button
+.rhythm-storm .bl-button,
+.bili-pay-header-wrapper
 {
     border-color: transparent !important;
 }
@@ -873,11 +879,13 @@ body #app .category-wrapper .dot,
 .pagelist .flip-left span:hover,
 .balance_bp_box .button:active,
 .balance_bp_box .button:hover,
-.rhythm-storm .bl-button
+.rhythm-storm .bl-button,
+.pay-result-btn
 {
     background-color: $customStyleColor !important;
 }
-.valid_box .button
+.valid_box .button,
+.pay-result-btn:hover 
 {
     background: $customStyleColor !important;
 }
