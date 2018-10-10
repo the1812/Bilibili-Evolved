@@ -6,10 +6,16 @@
 }
 
 body .bili-header-m .nav-menu div.nav-mask,
-.b-header-mask-wrp
+.b-header-mask-wrp,
+.z_top
 {
     background-color: transparent !important;
     box-shadow: none !important;
+}
+
+.b-header-mask-wrp
+{
+    overflow: unset !important;
 }
 
 .bili-header-m .nav-menu .nav-con .nav-item .t,
@@ -60,10 +66,11 @@ a.t>i.bili-icon
     display: none !important;
 }
 
-.i-face>.face
+.i-face>.face,
+.uns_box li.u-i .i_face
 {
-    border: 1.5px solid #fff3 !important;
-    margin-top: -1px !important;
+    box-shadow: 0 0 2px 1.5px #0002 !important;
+    /* margin-top: -1px !important; */
 }
 
 div.up-load
