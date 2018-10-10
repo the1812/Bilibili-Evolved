@@ -1,9 +1,11 @@
 #banner_link,
-.ban-banner
+.ban-banner,
+.z-top-container.has-banner>.header
 {
     display: none !important;
 }
-div.blur-bg
+div.blur-bg,
+.b-header-mask-wrp .b-header-mask-bg
 {
     opacity: 0 !important;
 }

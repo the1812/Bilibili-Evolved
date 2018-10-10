@@ -2,6 +2,12 @@
 {
     return (settings, resources) =>
     {
+        if (document.URL === `https://h.bilibili.com/`)
+        {
+            return {
+                ajaxReload: false
+            };
+        }
         resources.applyStyle("scrollbarStyle", "bilibili-scrollbar-style");
         SpinQuery.any(
             () => $(".custom-scrollbar"),
