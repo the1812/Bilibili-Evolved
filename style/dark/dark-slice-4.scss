@@ -609,7 +609,8 @@ body #app .category-wrapper .upload-content .title,
 .pay-activation-btn,
 .pay-other-way-link,
 .pay-points-way-content,
-.pay-points-way-btn-disable
+.pay-points-way-btn-disable,
+.pay-points-way-btn
 {
     color: #eee !important;
 }
@@ -934,7 +935,8 @@ div.cntr a.check-all,
 .pay-other-way-link,
 .pay-other-way-link:hover,
 .pay-activation-btn,
-.pay-activation-btn:hover 
+.pay-activation-btn:hover,
+.pay-points-way-btn
 {
     background-color: $customStyleColor !important;
 }
