@@ -155,10 +155,10 @@ body #app .marquee,
 {
     background-color: #444 !important;
 }
-// a
-// {
-//     background-color: #555 !important;
-// }
+.player-auxiliary-area
+{
+    background-color: #555 !important;
+}
 // a
 // {
 //     background-color: #aaa !important;
@@ -185,7 +185,10 @@ div.cntr a.check-all
 .app-ctnr,
 .el-table,
 .el-table__expanded-cell,
-.container .main-btn.edit-btn:hover
+.container .main-btn.edit-btn:hover,
+.player-auxiliary-area .player-auxiliary-filter,
+.bui-collapse .bui-collapse-header,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap
 {
     background-color: transparent !important;
 }
@@ -580,7 +583,9 @@ body #app .category-wrapper .upload-content .title,
 .rhythm-storm .bl-button:disabled,
 .bili-pay-uname,
 .pay-result-title,
-.pay-result-btn
+.pay-result-btn,
+.player-auxiliary-area .player-auxiliary-filter-title,
+.player-auxiliary-area .player-auxiliary-filter-menu
 {
     color: #eee !important;
 }
@@ -1011,7 +1016,8 @@ body #app .marquee a,
 .active-main .act-list ul li h2 a:hover,
 .topic-main .nav-tab .on,
 .w160.h48.ovh .g1:hover,
-.card-more a
+.card-more a,
+.player-auxiliary-area .player-auxiliary-filter-menu:hover
 {
     color: $customStyleColor !important;
 }
