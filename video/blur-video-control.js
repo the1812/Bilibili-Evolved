@@ -2,7 +2,7 @@
 {
     return (_, resources) =>
     {
-        runAndObserveDomMutation("#bofqi", () =>
+        Observer.subtree("#bofqi", () =>
         {
             SpinQuery.count(
                 () => $(".bui-slider .bui-track.bui-track-video-progress,.bilibili-player-area .bilibili-player-video-control"),

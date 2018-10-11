@@ -94,7 +94,8 @@ a.bp_box_bot_click,
 .user-info > .tag-flag,
 .result.is-web,
 .has-prize,
-.selector-wrapper .more-type-wrapper
+.selector-wrapper .more-type-wrapper,
+.word-limit-h5 textarea
 {
     background-color: #222 !important;
 }
@@ -173,7 +174,6 @@ a.bp_box_bot_click,
 .bangumi-nav-right .nav-mini-switch,
 .share-module .share-list .weixin-share-modal,
 .dialog .content-outer,
-.word-limit-h5 textarea,
 .timer-wrap .vote-dialog-new .footer .b-disable,
 .cm-model,
 .info-model .border-b,
@@ -1116,7 +1116,6 @@ li.history,
 .elec .elec-monthly-count,
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string:not(:focus),
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string-short:not(:focus),
-.player-auxiliary-modal-header,
 .favourite-card .anchor-info,
 .favourite-card,
 .h-list-item,
@@ -1136,7 +1135,8 @@ li.history,
 .hot-live .room-list,
 .player-auxiliary-danmaku-date-picker-header,
 .table-normal tbody tr td,
-.table-normal thead tr td
+.table-normal thead tr td,
+.player-auxiliary-modal-header
 {
     border-color: #444 !important;
 }

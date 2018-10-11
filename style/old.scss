@@ -1,21 +1,32 @@
-.bili-header-m>.nav-menu
+.bili-header-m>.nav-menu,
+.b-header-mask-wrp .b-header-mask
 {
     background: $customStyleColorff !important;
     box-shadow: $customStyleColor70 0px 2px 10px 1px !important;
 }
 
-body .bili-header-m .nav-menu div.nav-mask
+body .bili-header-m .nav-menu div.nav-mask,
+.b-header-mask-wrp,
+.z_top
 {
     background-color: transparent !important;
     box-shadow: none !important;
 }
 
-.bili-header-m .nav-menu .nav-con .nav-item .t
+.b-header-mask-wrp
+{
+    overflow: unset !important;
+}
+
+.bili-header-m .nav-menu .nav-con .nav-item .t,
+.z_top.b-header-blur .z_top_nav li:not(.home) a.i-link
 {
     color: $foregroundd !important;
 }
 
-li.nav-item:hover
+li.nav-item:hover,
+.z_top .z_top_nav ul li:hover,
+.uns_box ul.menu li:not(.b-post):hover
 {
     background-color: hsla(0,0%,$brightness,.2) !important;
 }
@@ -35,19 +46,31 @@ a.t>i.bili-icon
     height: 16px !important;
     opacity: 0.81 !important;
 }
+.z_top .z_top_nav ul li.home
+{
+    filter: brightness(0) invert(1) !important;
+    background: url(https://www.bilibili.com/favicon.ico) no-repeat left center !important;
+    opacity: 0.81 !important;
+    background-size: 16px !important;
+    background-position-x: 16% !important;
+}
 
 #entryOld,
 .nav-search-submit,
 .b-icon-app,
-.title-icon
+.title-icon,
+.z_top .z_top_nav li .new,
+.z_top .z_top_nav li .beta,
+.uns_box li.u-i.b-post .up-new
 {
     display: none !important;
 }
 
-.i-face>.face
+.i-face>.face,
+.uns_box li.u-i .i_face
 {
-    border: 1.5px solid #fff3 !important;
-    margin-top: -1px !important;
+    box-shadow: 0 0 2px 1.5px #0002 !important;
+    /* margin-top: -1px !important; */
 }
 
 div.up-load
@@ -55,7 +78,8 @@ div.up-load
     margin: 5px 0 0 5px !important;
     height: 32px !important;
 }
-.u-link
+.u-link,
+.uns_box li.u-i.b-post a.i-link
 {
     background: transparent !important;
     color: $foregroundd !important;
@@ -66,10 +90,15 @@ div.up-load
     transition: background-color .2s !important;
 }
 
-.u-link:hover
+.u-link:hover,
+.uns_box li.u-i.b-post a.i-link:hover
 {
     opacity: 1 !important;
     background-color: hsla(0,0%,$brightness,.2) !important;
+}
+.uns_box li.u-i.b-post
+{
+    margin-left: 8px !important;
 }
 
 .nav-search
@@ -126,11 +155,12 @@ li.suggest-item>a
 
 div.num
 {
-    border: 1px solid #fff8 !important;
+    box-shadow: 0 0.5px 4px 0 #0004 !important;
 }
 
 #primary_menu,
-#primary_menu>ul.nav-menu
+#primary_menu>ul.nav-menu,
+.uns_box li.u-i.b-post
 {
     display: flex !important;
     align-items: center !important;
@@ -147,7 +177,8 @@ div.nav-gif,
     top: 37px !important;
 }
 
-.filter-item.search
+.filter-item.search,
+body
 {
     margin: 0 !important;
 }

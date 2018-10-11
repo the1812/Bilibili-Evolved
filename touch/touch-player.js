@@ -669,7 +669,7 @@
             }
         }
 
-        runAndObserveDomMutation("#bofqi", () => main());
+        Observer.subtree("#bofqi", () => main());
 
         resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
         return {

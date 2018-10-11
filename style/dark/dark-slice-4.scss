@@ -46,7 +46,23 @@
 .order-header-wrapper,
 .orderdetail-container .orderdetail-content,
 .total-container,
-.qrcode-active .qrcode-active-slider .close-btn
+.qrcode-active .qrcode-active-slider .close-btn,
+.trade-customn input,
+.alert-container,
+.bind-info .note-footer .btn-group .unable-btn,
+.bind-info .note-footer .btn-group .back-btn,
+.history-card:hover,
+.bangumi-up-info,
+.online-list .ebox,
+.online-list .ebox .ol,
+.demo-app .detail,
+.active-main .act-list ul li,
+.topic-main .act-list ul li ,
+li.user-wrapper .avatar .detail,
+li.user-wrapper .avatar .detail .logout,
+#bp_right .bb_intro_box,
+.rhythm-storm .bl-button:disabled,
+.member-list-item .member-list-img
 {
     background-color: #222 !important;
 }
@@ -101,14 +117,48 @@ body #app .marquee,
 .order-list-wrapper .order-list .order-item .order-item-body-wrapper,
 .project-info table tr,
 .project-info table tr:first-child,
-.qrcode-active .qrcode-active-slider
+.qrcode-active .qrcode-active-slider,
+.trade-list,
+.trade-wrapper,
+.spend-recode,
+.el-table th,
+.el-table tr,
+.el-table .el-table__header-wrapper th,
+.el-table--enable-row-hover .el-table__body tr:hover > td,
+.balance_bp_box,
+.bb_intro_box_top,
+.bind-info,
+.shell-intro-top,
+.history-card,
+.income-info .item,
+.rel.pl26.mb18 .bggr,
+.u-btn-e,
+.u-btn-m,
+.u-btn-c,
+.drawer-card,
+.demo-app .detail .category,
+.rel.pl26.mb18 .bggr,
+.infor-body-left ul li,
+.infor-news .news-body,
+.infor-news .news-top,
+.cntr .category,
+.pagelist .flip-left span,
+.pagelist .flip-left strong,
+.pagelist .flip-right input,
+.nav-container .single-box .ep-item,
+.bangumi-list .synthetical .headline .bangumi-label,
+.avatar .detail .level a.total,
+.valid_box .button.ready,
+.valid_box .button.ready:active,
+.valid_box .button.ready:hover,
+.bili-pay-box-wrapper
 {
     background-color: #444 !important;
 }
-// a
-// {
-//     background-color: #555 !important;
-// }
+.player-auxiliary-area
+{
+    background-color: #555 !important;
+}
 // a
 // {
 //     background-color: #aaa !important;
@@ -117,14 +167,28 @@ body #app .marquee,
 // {
 //     background-color: #fff1 !important;
 // }
-.add-tag .edit .input-wrapper .container.active .btn-add
+.add-tag .edit .input-wrapper .container.active .btn-add,
+.infor-news .news-top,
+.spend-recode .title-group .selected-title,
+div.cntr a.check-all
 {
     background-image: none !important;
 }
 .link-footer .footer-linker .footer-linker-line,
 .nav-notice li,
 .nav-notice li.hover,
-#text-contribute .fixed-header
+#text-contribute .fixed-header,
+.alert-container .alert-header:after,
+.el-table--border:after,
+.el-table--group:after,
+.el-table:before,
+.app-ctnr,
+.el-table,
+.el-table__expanded-cell,
+.container .main-btn.edit-btn:hover,
+.player-auxiliary-area .player-auxiliary-filter,
+.bui-collapse .bui-collapse-header,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap
 {
     background-color: transparent !important;
 }
@@ -139,6 +203,10 @@ body #app .marquee,
 .read-list-component .mask
 {
     background: transparent !important;
+}
+ul.a-fade-in.content li:nth-child(n+41):after
+{
+    background-image: linear-gradient(#2221,#222) !important;
 }
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd h4 .user-container span,
@@ -257,7 +325,55 @@ ul.navigation li span,
 .orderdetail-container .orderdetail-nav .orderdetail-nav-list li.order-center,
 .qrcode-active .qrcode-tip,
 .qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-time,
-.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-title
+.qrcode-active .qrcode-container-item .qrcode .qrstatus .qrstatus-title,
+.trade-wrapper > div > div,
+.trade-customn .tips,
+.agreement,
+.num-tip,
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li,
+.spend-recode .part-common .platformType,
+.el-date-table td.next-month,
+.el-date-table td.prev-month,
+.bind-info .note-content p,
+.el-checkbox__label,
+.history-card,
+.container .subtitle,
+.container .tip,
+.online-list .ebox .dlo .author,
+.online-list .ebox .dlo span,
+.error-panel.server-error .right-panel,
+.category li a,
+.tv-m-crumb li a,
+.tv-m3 .tv-m-desc,
+.tv-m2 .tv-m-desc,
+.tv-m1 .tv-m-desc,
+.tv-m3 .up,
+.tv-m2 .up,
+.tv-m1 .up,
+.tv-m3 .time,
+.tv-m2 .time,
+.tv-m1 .time,
+.mn-ot-l-u-icon1,
+.mn-ot-l-u-icon2,
+.tv-m3 .play,
+.tv-m2 .play,
+.tv-m1 .play,
+.tv-m3 .com,
+.tv-m2 .com,
+.tv-m1 .com,
+.tv-m3 .colt,
+.tv-m2 .colt,
+.tv-m1 .colt,
+.news-text .news-date,
+.pagelist .flip-right span,
+.topic-main .act-list ul li .found-time,
+.pager .jump-pager,
+.card-more,
+li.user-wrapper .avatar .detail .level .progress span,
+.pay-result-sub-title,
+.rel.pl122.mb20 .g3
 {
     color: #aaa !important;
 }
@@ -397,7 +513,79 @@ body #app .category-wrapper .upload-content .title,
 .project-info table th,
 .total-container div,
 .qrcode-active .qrcode-container-item .seat-info,
-.qrcode-active .qrcode-container-item .seat-info span
+.qrcode-active .qrcode-container-item .seat-info span,
+.trade-wrapper,
+.qrpay-group .qrpay-content .pay-tips,
+.trade-customn input,
+.alert-container .alert-header h2,
+.alert-container .alert-content .button,
+.spend-recode .title-group .selected-title,
+.el-pagination__total,
+.el-pagination__jump,
+.el-table .el-table__header-wrapper .el-table__header .cell,
+.el-table .el-table__row .cell,
+.bp_user_box_top p,
+.bp_user_box i,
+.balance_bp_box,
+.bb_intro_box_top .b_icon_title,
+.shell-intro-top .bind-card-title,
+.bind-info .bind-sub-title,
+.bind-info .note-footer .btn-group .unable-btn,
+.bind-info .note-footer .btn-group .back-btn,
+.income-info .item .info-title,
+.rhythm-storm label,
+.bangumi-up-info .func-btns .b-gz,
+.nav-container .single-box .ep-item,
+.nav-container .single-box .ep-item:hover,
+.container .main-btn,
+.online-list .ebox .etitle,
+.cl.mb20 .g1,
+.rel.pl26.mb18 .rank,
+.u-btn-m,
+.u-btn-c,
+.u-btn-e,
+.u-btn-e:hover,
+.error-panel .rollback-btn,
+.error-manga .change-img-btn,
+.hot-activity a,
+.hot-content .title,
+.drawer-card dd,
+.rel.pl26.mb18 .g1,
+.bbgr.cl.h29 .g1,
+.tv-m1 .tv-m-tt,
+.rel.pl122.mb20 .rank,
+.rel.pl26.mb18 .rank,
+.rel.pl122.mb20 .g1,
+.news_block .text-name,
+.infor-label .label-date,
+.news-body .news-1 .news-text p,
+.infor-news .news-top,
+.news-body .news-1 i,
+.active-main .active-title .b-active-t,
+.active-main .act-list ul li h2 a,
+.active-main .act-list ul li .event_status,
+.pagelist .flip-left span,
+.pagelist .flip-left .active,
+.pagelist .flip-left span:hover,
+.pagelist .flip-right input,
+.topic-main .nav-tab li,
+.topic-main .topic-title .b-topic-t,
+.topic-main .act-list ul li h2 a,
+.w160.h48.ovh .g1,
+.balance_bp_box .button:active,
+.balance_bp_box .button:hover,
+.bangumi-list .synthetical .headline .bangumi-label,
+.header .right li.order span a,
+.bb_intro_box .bb_intro_info,
+.valid_box .button.ready,
+.valid_box .button.ready:active,
+.valid_box .button.ready:hover,
+.rhythm-storm .bl-button:disabled,
+.bili-pay-uname,
+.pay-result-title,
+.pay-result-btn,
+.player-auxiliary-area .player-auxiliary-filter-title,
+.player-auxiliary-area .player-auxiliary-filter-menu
 {
     color: #eee !important;
 }
@@ -476,7 +664,53 @@ body #app .category-wrapper .upload-content .title,
 .orderdetail-container .orderdetail-status,
 .project-info table tr:last-child,
 .project-info table tr,
-.orderdetail-container .orderdetail-wrapper .wrapper-content
+.orderdetail-container .orderdetail-wrapper .wrapper-content,
+.b-info .dividing-line,
+.trade-list,
+.spend-recode,
+.el-table td,
+.el-table th.is-leaf,
+.spend-recode .part-common .platformType,
+.balance_bp_box,
+.bb_intro_box_top,
+.bp_user_box_top,
+.bind-info,
+.shell-intro-top,
+.bind-info .dividing-line,
+.bind-info .note-footer .btn-group .unable-btn,
+.bind-info .note-footer .btn-group .back-btn,
+.income-info .item,
+.container .main-btn,
+.container .main-btn:hover,
+.container .main-btn.edit-btn,
+.b-head.online,
+.online-list .ebox,
+.u-btn-e,
+.u-btn-m,
+.u-btn-c,
+.mg-l.w880.cl .bbgr,
+.tv-m1 .tv-m-con,
+.infor-body-left ul li,
+.news-body .news-1,
+.active-main .act-list ul li,
+.active-main .active-title,
+.pagelist .flip-left span,
+.pagelist .flip-left .active,
+.pagelist .flip-left span:hover,
+.pagelist .flip-right input,
+.topic-main .nav-tab,
+.topic-main .act-list ul li,
+.nav-container .single-box .ep-item,
+.bangumi-list .synthetical .headline .bangumi-label,
+.bb_intro_box .bb_intro_info,
+#bp_right .bb_intro_box,
+#bp_right .bb_intro_box_top,
+.valid_box .button.ready,
+.valid_box .button.ready:active,
+.valid_box .button.ready:hover,
+.valid_box .button,
+.rhythm-storm .bl-button,
+.bili-pay-header-wrapper
 {
     border-color: transparent !important;
 }
@@ -486,7 +720,9 @@ body #app .category-wrapper .upload-content .title,
 .face-g-list#my-g-list .face-g-block .my-mp-block,
 .ui-input,
 .set-copyright .copyright-icon .icon-none-copyright,
-.area-section .card-ctnr .tag-ctnr .tags
+.area-section .card-ctnr .tag-ctnr .tags,
+.trade-wrapper,
+.el-date-table th
 {
     border-color: #aaa !important;
 }
@@ -502,6 +738,10 @@ body #app .category-wrapper .upload-content .title,
 // {
 //     border-color: #99a2aa !important;
 // }
+#BilibiliVipDialog
+{
+    border: none !important;
+}
 // a
 // {
 //     transition: all .2s !important;
@@ -514,13 +754,31 @@ body #app .category-wrapper .upload-content .title,
 .footer-logo,
 .more-data i,
 .block-left.block-brand .headline .tab-wrap .pgc-brand-tab,
-.qrcode-active .qrcode-active-slider .close-btn .close-btn-bg
+.qrcode-active .qrcode-active-slider .close-btn .close-btn-bg,
+.icon-arrow-r,
+.u-btn-m i,
+.u-btn-e i,
+.play-btn .icon-play
 {
     filter: brightness(0) invert(1) !important;
 }
+.infor-load-more
+{
+    filter: invert(0.75) !important;
+}
+.bb_intro_box_top .b_question .b_question_icon
+{
+    filter: brightness(0.5) contrast(3) !important;
+}
 .float-toolbar .toolbar-list .icon-block.icon-help,
 .float-toolbar .toolbar-list .icon-block.icon-feedback,
-.float-toolbar .back-top .icon-block.icon-back-top
+.float-toolbar .back-top .icon-block.icon-back-top,
+.icon-sort3-on,
+.u-btn-s3:hover,
+.on.u-btn-s3,
+.timer-wrap .vote-dialog-new .main .main-txt-1 label .selected,
+.timer-wrap .vote-dialog-new .main .checkbox,
+.icon-slide-h
 {
     filter: $blueImageFilter !important;
 }
@@ -551,10 +809,10 @@ body #app .category-wrapper .upload-content .title,
 {
     box-shadow: none !important;
 }
-// a
-// {
-//     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
-// }
+div.cntr a.check-all
+{
+    box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
+}
 .icon-hot,
 .icon-new,
 .icon-home
@@ -594,7 +852,11 @@ body #app .marquee,
 .func-banner .btn-like.active,
 .func-banner .btn-dislike.active,
 .author-info-card .author-info .info-right .btn-attention,
-.swiper-pagination-custom
+.swiper-pagination-custom,
+.trade-wrapper.is-selected,
+.bangumi-up-info .func-btns .b-gz,
+.act.tv-u-btn-t,
+.balance_bp_box .button
 {
     border-color: $customStyleColor !important;
 }
@@ -620,9 +882,32 @@ body #app .category-wrapper .dot,
 .promote-m .headline .change-push:hover,
 #announcement-area .rank-ctnr .rank-icon.hot,
 .item .live-status.on,
-.author-info-card .author-info .info-right .btn-attention
+.author-info-card .author-info .info-right .btn-attention,
+.alert-container .alert-content .button,
+.bangumi-up-info .func-btns .b-gz,
+.nav-container .single-box .ep-item:hover,
+.rel.pl122.mb20 .bgre,
+.u-btn-e:hover,
+.error-panel .rollback-btn,
+.error-manga .change-img-btn,
+.rel.pl122.mb20 .bgre,
+.news-body .news-1 i,
+.balance_bp_box .button,
+.pagelist .flip-left .active,
+.pagelist .flip-left span:hover,
+.balance_bp_box .button:active,
+.balance_bp_box .button:hover,
+.rhythm-storm .bl-button,
+.pay-result-btn,
+div.cntr a.check-all,
+.bili-header-m .bubble-traditional .renew-btn button
 {
     background-color: $customStyleColor !important;
+}
+.valid_box .button,
+.pay-result-btn:hover
+{
+    background: $customStyleColor !important;
 }
 
 .canvas-card dd h4 .user-container a:hover,
@@ -692,14 +977,57 @@ body #app .marquee a,
 .total-container div span.total,
 .project-info table .project-content .content-right .ticket-type,
 .project-info table td.total,
-.swiper-pagination-custom
+.swiper-pagination-custom,
+.trade-wrapper.is-selected,
+.instructions,
+.agreement a,
+.qrpay-group .qrpay-content .price,
+.spend-recode .title-group .recode-title,
+.bb_intro_box_top .b_question .b_question_title:hover,
+.balance,
+.bind-info .note-content a,
+.bind-info .bind-sec-title,
+.bind-info .note-footer .agree-group .submit-deal,
+.income-info .item.left .value,
+.income-info .item.right .value,
+.selector-wrapper .type-list .current-type span.active,
+.selector-wrapper .type-list li:hover,
+.selector-wrapper .city-list .li-more span:hover,
+.selector-wrapper .order-list .li-more span:hover,
+.project-list .project-list-item .project-list-item-detail .project-list-item-price,
+.container .main-btn:hover,
+.container .main-btn.edit-btn,
+.online-list .ebox .dlo .author:hover,
+.online-list .ebox a:hover .etitle,
+.online-list .ebox:hover .ol b,
+.cl.mb20 .g1:hover,
+.hot-activity a:hover,
+.drawer-card li a:hover dd,
+.category li a:hover,
+.rel.pl26.mb18 .g1:hover,
+.tv-m-crumb li a:hover,
+.bbgr.cl.h29 .g1:hover,
+.tv-m1 .tv-m-tt:hover,
+.act.tv-u-btn-t,
+.rel.pl122.mb20 .g1:hover,
+.news-body .news-1 .news-text:hover .n-text,
+.nav-bar .nav-wrapper .main-tab:hover,
+.active-main .act-list ul li .event_status .status-ing,
+.active-main .act-list ul li h2 a:hover,
+.topic-main .nav-tab .on,
+.w160.h48.ovh .g1:hover,
+.card-more a,
+.player-auxiliary-area .player-auxiliary-filter-menu:hover
 {
     color: $customStyleColor !important;
 }
-// a
-// {
-//     color: $foreground !important;
-// }
+.valid_box .button,
+.rhythm-storm .bl-button,
+div.cntr a.check-all,
+.bili-header-m .bubble-traditional .renew-btn button
+{
+    color: $foreground !important;
+}
 // a
 // {
 //     fill: $customStyleColor !important;

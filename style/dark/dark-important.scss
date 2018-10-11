@@ -5,7 +5,9 @@
 .wrapper .elec-btn.disabled,
 .f-list-hover:hover,
 .status_box .status_btn.disabled,
-.game-groom-m .num 
+.game-groom-m .num,
+.container .pagination,
+.fjw-case-detail .ban-detail .content-box .video-model 
 {
     background-color: #444 !important;
 }
@@ -76,7 +78,8 @@ blockquote .color-yellow-04,
 .season-timeline .season-group.today,
 .season-timeline .season-group.today .group-time::before,
 .aside-ctnr .author-info .communicate-btn,
-.tag-list li.tag-item.on
+.tag-list li.tag-item.on,
+.tag-list li.tag-item:hover 
 {
     border-color: $customStyleColor !important;
 }

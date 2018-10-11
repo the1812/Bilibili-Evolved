@@ -144,6 +144,7 @@
     font-size: 16px;
     margin: 12px 0;
     display: flex;
+    height: 24px;
 }
 .gui-settings-content ul li.indent-0
 {
@@ -249,7 +250,8 @@ span.settings-category
 {
     cursor: pointer;
     display: flex;
-    justify-content: center;
+    width: 100%;
+    justify-content: start;
     align-items: center;
     padding: 0 16px;
     -webkit-tap-highlight-color: transparent;

@@ -47,7 +47,10 @@ div#square.container,
 .mainBox .sureWindow,
 .js-evaluateArea .evaluateDialog,
 .live-ctn .item-live,
-.live-status.offline
+.live-status.offline,
+.banner-wrapper .swiper-pagination-bullet,
+.nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list,
+.project-list .project-list-item .project-list-item-img
 {
     background-color: #222 !important;
 }
@@ -103,7 +106,8 @@ body>div.to-top.on,
 .leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed,
 .sureWindow .btngroup span,
 .evaluateWether .evaluate-btn,
-.evaluate .situation span
+.evaluate .situation span,
+.up-info .u-face .up-face
 {
     background-color: #444 !important;
 }
@@ -159,6 +163,7 @@ body>div.to-top.on,
 .area-section .card-ctnr .more,
 .area-section .card-ctnr .more:hover,
 .link-panigation-ctnr .pagination,
+.link-progress-tv,
 .jumping-ctnr .jumping-input
 {
     background-color: transparent !important;
@@ -293,7 +298,10 @@ body>div.to-top.on,
 #announcement-area .news-ctnr .more-link,
 #announcement-area .rank-ctnr .icon-arrow-right,
 #announcement-area .rank-ctnr .more-link,
-.jumping-ctnr .jumping-input
+.jumping-ctnr .jumping-input,
+.banner-wrapper .swiper-pagination-bullet,
+.nav-header-wrapper .nav-header .user-panel,
+.nav-header-wrapper .nav-header .user-panel a
 {
     color: #eee !important;
 }
@@ -337,7 +345,8 @@ body>div.to-top.on,
 .evaluateWether .evaluate-btn,
 .evaluateWether .noactive,
 .evaluate .situation span,
-.bilibili-live-player .bilibili-live-player-enter-tips
+.bilibili-live-player .bilibili-live-player-enter-tips,
+.nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list
 {
     border-color: transparent !important;
 }
@@ -392,7 +401,8 @@ body>div.to-top.on,
 .list-wrap .s-showMore .icon-right,
 .breadcrumb .arrow,
 .error-container .error.split,
-.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn,
+.nav-header-wrapper .nav-header .user-panel .panel-list .icon
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -484,7 +494,11 @@ body>div.to-top.on,
 .guide .old-btn a,
 .link-navbar-ctnr,
 .rank-item:hover,
-.singlePage .mainBox
+.singlePage .mainBox,
+.selector-wrapper,
+.nav-header-wrapper .nav-header .user-panel .user-uname,
+.nav-header-wrapper .nav-header .user-panel .panel-list,
+.demo-app .detail .category
 {
     box-shadow: none !important;
 }
@@ -494,7 +508,9 @@ body>div.to-top.on,
 }
 .guide .feedback-btn a,
 .mainBox .leaveMsg,
-.js-evaluateArea .evaluateDialog
+.js-evaluateArea .evaluateDialog,
+.project-list .project-list-item:hover,
+#app .toolbar-wrapper
 {
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
@@ -612,7 +628,9 @@ body>div.to-top.on
 .evaluate .situation span.active,
 .evaluateSubmitArea .submit,
 .bilibili-live-player .blpui-btn.default-btn.btn-blue,
-.bilibili-live-player .bilibili-live-player-enter-tips
+.bilibili-live-player .bilibili-live-player-enter-tips,
+.banner-wrapper .swiper-pagination-bullet-active,
+.nav-header-wrapper .nav-header .profile-img.active::before
 {
     background-color: $customStyleColor !important;
 }
@@ -684,7 +702,8 @@ body>div.to-top.on
 .hot-list .card-ctnr .room-count .amount,
 .hot-list .card-ctnr .room-count:hover .amount,
 .hot-list .card-ctnr .room-count:hover .icon-font,
-.hot-list .card-ctnr .room-count:hover
+.hot-list .card-ctnr .room-count:hover,
+.panel-list .order-center-item:hover a
 {
     color: $customStyleColor !important;
 }
@@ -714,7 +733,8 @@ body>div.to-top.on
 .evaluate .situation span.active,
 .evaluateSubmitArea .submit,
 .bilibili-live-player .blpui-btn.default-btn.btn-blue,
-.bilibili-live-player .bilibili-live-player-enter-tips
+.bilibili-live-player .bilibili-live-player-enter-tips,
+.banner-wrapper .swiper-pagination-bullet-active
 {
     color: $foreground !important;
 }
