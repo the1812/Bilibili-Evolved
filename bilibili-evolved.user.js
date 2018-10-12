@@ -540,7 +540,7 @@
                 for (const key of keys)
                 {
                     html = html
-                        .replace(new RegExp(`(<checkbox\\s*indent=".+"\\s*key="${key}"\\s*dependencies=".*">)[^\\0]*?(</checkbox>)`, "g"),
+                        .replace(new RegExp(`(<checkbox\\s*?indent=".+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</checkbox>)`, "g"),
                             `$1${Resource.all[key].displayName}$2`);
                 }
                 return html

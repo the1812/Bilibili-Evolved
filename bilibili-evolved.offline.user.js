@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      87.21
+// @version      88.22
 // @description  增强哔哩哔哩Web端体验.(离线版)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -578,7 +578,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 for (const key of keys)
                 {
                     html = html
-                        .replace(new RegExp(`(<checkbox\\s*indent=".+"\\s*key="${key}"\\s*dependencies=".*">)[^\\0]*?(</checkbox>)`, "g"),
+                        .replace(new RegExp(`(<checkbox\\s*?indent=".+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</checkbox>)`, "g"),
                             `$1${Resource.all[key].displayName}$2`);
                 }
                 return html
