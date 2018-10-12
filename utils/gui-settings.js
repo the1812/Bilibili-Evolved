@@ -99,8 +99,7 @@
         function settingsChange(key, _, newValue)
         {
             $(`input[type='checkbox'][key='${key}']`)
-                .prop("checked", newValue)
-                .change();
+                .prop("checked", newValue);
             $(`input[type='text'][key='${key}']`).val(newValue);
         }
         function syncGui()
@@ -149,10 +148,10 @@
                         settings[key] = textValidate[key](value);
                     });
                 saveSettings(settings);
-                syncGui();
+                // syncGui();
                 console.log("settings saved");
             };
-            $("input[type='checkbox'][key]").on("blur", () => saveChanges());
+            $("input[type='checkbox'][key]").on("change", () => saveChanges());
             $("input[type='text'][key]").on("change", () => saveChanges());
         }
         function fillSvgData()
@@ -233,7 +232,7 @@
                     {
                         $(`input[key='customStyleColor']`)
                             .val($(e.target).attr("data-color"))
-                            .trigger("input");
+                            .trigger("input").change();
                         $("div.custom-color-preview").on("click");
                     });
             }
