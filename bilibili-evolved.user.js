@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.2
+// @version      1.5.3
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -54,7 +54,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.5.2"
+        currentVersion: "1.5.3"
     };
     function loadSettings()
     {
@@ -101,8 +101,8 @@
             toastStyle: new Resource("min/toast.min.scss", 9),
             blurVideoControlStyle: new Resource("min/blur-video-control.min.css", 10),
 
-            guiSettingsDom: new Resource("utils/gui-settings.html"),
-            imageViewerDom: new Resource("utils/image-viewer.html"),
+            guiSettingsDom: new Resource("min/gui-settings.min.html"),
+            imageViewerDom: new Resource("min/image-viewer.min.html"),
             latestVersion: new Resource("version.txt"),
 
             guiSettings: new Resource("min/gui-settings.min.js"),
@@ -548,7 +548,7 @@
                     <li class="indent-center category">
                         <span class="settings-category">$1</span>
                     </li>
-                `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
+                `).replace(/<checkbox\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
                             <input key="$2" type="checkbox" dependencies="$3" checked/>
@@ -558,7 +558,7 @@
                             <span>$4</span>
                         </label>
                     </li>
-                `).replace(/<textbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/textbox>/g, `
+                `).replace(/<textbox\s*?indent="(.+?)"\s*key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/textbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-textbox-container">
                             <span>$4</span>
