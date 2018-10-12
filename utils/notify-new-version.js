@@ -105,7 +105,7 @@
                 return {
                     ajaxReload: false,
                     settingsWidget: {
-                        after: () => $(".gui-settings-footer"),
+                        after: () => $(".gui-settings-content"),
                         content: `<div class="gui-settings-footer">
                                     <span class="gui-settings-label">新版本${latestVersion.versionString}已发布.</span>
                                     <a href="${settings.latestVersionLink}">
