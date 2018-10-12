@@ -131,17 +131,40 @@
                 box.toggleClass("opened");
             });
 
-            const button = document.querySelector("button.save");
-            const svg = document.querySelector(".gui-settings-footer svg.gui-settings-ok");
-            const saveCompleteClass = "save-complete";
-            const animationend = () =>
-            {
-                svg.classList.remove(saveCompleteClass);
-                button.classList.remove(saveCompleteClass);
-            };
-            button.addEventListener("animationend", animationend);
-            svg.addEventListener("animationend", animationend);
-            button.addEventListener("click", () =>
+            // const button = document.querySelector("button.save");
+            // const svg = document.querySelector(".gui-settings-footer svg.gui-settings-ok");
+            // const saveCompleteClass = "save-complete";
+            // const animationend = () =>
+            // {
+            //     svg.classList.remove(saveCompleteClass);
+            //     button.classList.remove(saveCompleteClass);
+            // };
+            // button.addEventListener("animationend", animationend);
+            // svg.addEventListener("animationend", animationend);
+            // button.addEventListener("click", () =>
+            // {
+            //     $("input[type='checkbox'][key]")
+            //         .each((_, element) =>
+            //         {
+            //             settings[$(element).attr("key")] = $(element).prop("checked");
+            //         });
+            //     $("input[type='text'][key]")
+            //         .each((_, element) =>
+            //         {
+            //             const key = $(element).attr("key");
+            //             const value = $(element).val();
+            //             settings[key] = textValidate[key](value);
+            //         });
+            //     saveSettings(settings);
+            //     if ([svg, button].every(it =>
+            //         !it.classList.contains(saveCompleteClass)))
+            //     {
+            //         button.classList.add(saveCompleteClass);
+            //         svg.classList.add(saveCompleteClass);
+            //     }
+            //     syncGui();
+            // });
+            const saveChanges = () =>
             {
                 $("input[type='checkbox'][key]")
                     .each((_, element) =>
@@ -156,14 +179,16 @@
                         settings[key] = textValidate[key](value);
                     });
                 saveSettings(settings);
-                if ([svg, button].every(it =>
-                    !it.classList.contains(saveCompleteClass)))
-                {
-                    button.classList.add(saveCompleteClass);
-                    svg.classList.add(saveCompleteClass);
-                }
+                // if ([svg, button].every(it =>
+                //     !it.classList.contains(saveCompleteClass)))
+                // {
+                //     button.classList.add(saveCompleteClass);
+                //     svg.classList.add(saveCompleteClass);
+                // }
                 syncGui();
-            });
+            };
+            $("input[type='checkbox'][key]").on("blur", () => saveChanges());
+            $("input[type='text'][key]").on("change", () => saveChanges());
             onSettingsChange(settingsChange);
         }
         function fillSvgData()
