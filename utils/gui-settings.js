@@ -276,7 +276,8 @@
         }
         function addEffects()
         {
-            $(".gui-settings-content ul li.category, .gui-settings-content").addClass("blur");
+            $(".gui-settings-content ul li.category,.gui-settings-content,.gui-settings-header,.gui-settings-footer")
+                .addClass("blur");
         }
         new SpinQuery(
             () => $("body"),
