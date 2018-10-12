@@ -276,7 +276,7 @@
         }
         function addEffects()
         {
-            $(".gui-settings-content ul li.category,.gui-settings-content,.gui-settings-header,.gui-settings-footer")
+            $(".gui-settings-content ul li.category,.gui-settings-content,.gui-settings-header,.gui-settings-footer,.gui-settings-box")
                 .addClass("blur");
         }
         new SpinQuery(
