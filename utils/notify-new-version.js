@@ -106,7 +106,7 @@
                     ajaxReload: false,
                     settingsWidget: {
                         after: () => $(".gui-settings-content"),
-                        content: `<div class="gui-settings-footer">
+                        content: `<div class="gui-settings-footer${(settings.blurSettingsPanel ? " blur" : "")}">
                                     <span class="gui-settings-label">新版本${latestVersion.versionString}已发布.</span>
                                     <a href="${settings.latestVersionLink}">
                                         <button
