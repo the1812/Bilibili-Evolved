@@ -391,7 +391,8 @@ li.user-wrapper .avatar .detail .level .progress span,
 .pay-activation-txt,
 .pay-points-way-title,
 .pay-points-way-txt,
-.bili-pay-voucher-help-disable 
+.bili-pay-voucher-help-disable,
+.article-holder .shop-card a .container .disc 
 {
     color: #aaa !important;
 }
@@ -610,7 +611,8 @@ body #app .category-wrapper .upload-content .title,
 .pay-other-way-link,
 .pay-points-way-content,
 .pay-points-way-btn-disable,
-.pay-points-way-btn
+.pay-points-way-btn,
+.article-holder .shop-card a .container .title 
 {
     color: #eee !important;
 }
@@ -740,7 +742,8 @@ body #app .category-wrapper .upload-content .title,
 .bili-payment-list,
 .payment-active,
 .pay-points-way-content,
-.pay-points-way-select
+.pay-points-way-select,
+.article-holder .shop-card 
 {
     border-color: transparent !important;
 }
@@ -814,7 +817,8 @@ body #app .category-wrapper .upload-content .title,
 }
 .episode-item .mark-icon,
 .add-tag .default .btn-show,
-.project-info table .project-content .content-right .ticket-type span
+.project-info table .project-content .content-right .ticket-type span,
+.article-holder .shop-card a .container .bottom-col .card-label 
 {
     filter: $pinkImageFilter !important;
 }
@@ -1056,7 +1060,8 @@ body #app .marquee a,
 .player-auxiliary-area .player-auxiliary-filter-menu:hover,
 .bili-pay-panel-list-active .bili-pay-price,
 .bili-payment-num,
-.pay-points-way-next
+.pay-points-way-next,
+.article-holder .shop-card a .container .bottom-col 
 {
     color: $customStyleColor !important;
 }
