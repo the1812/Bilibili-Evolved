@@ -179,13 +179,13 @@
                     const dependency = dependencies[key].split(" ");
                     if (dependency.indexOf(element.attr("key")) !== -1)
                     {
-                        let value = true;
+                        let disable = true;
                         if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
                         {
-                            value = false;
+                            disable = false;
                         }
-                        $(`input[key='${key}']`).prop("disabled", value);
-                        if (value)
+                        $(`input[key='${key}']`).prop("disabled", disable);
+                        if (disable)
                         {
                             $(`input[key='${key}'][type='text']`).parent().addClass("disabled");
                         }
@@ -202,8 +202,8 @@
                 }
             };
             $(`input[type='checkbox'][key]`)
-                .on("change", e => checkBoxChange(e.target))
-                .each(e => checkBoxChange($(e)));
+                .on("change", e => checkBoxChange($(e.target)))
+                .each((_, e) => checkBoxChange($(e)));
         }
         function addSettingsIcon(body)
         {
@@ -251,8 +251,8 @@
                     $("body").append(settingsBox);
                     setupEvents();
                     fillSvgData();
-                    listenDependencies();
                     syncGui();
+                    listenDependencies();
                     addPredefinedColors();
                     listenSettingsChange();
                     if (settings.blurSettingsPanel)
