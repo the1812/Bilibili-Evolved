@@ -149,7 +149,7 @@
                     });
                 saveSettings(settings);
                 // syncGui();
-                console.log("settings saved");
+                // console.log("settings saved");
             };
             $("input[type='checkbox'][key]").on("change", () => saveChanges());
             $("input[type='text'][key]").on("change", () => saveChanges());
@@ -171,14 +171,13 @@
                     dependencies[$(element).attr("key")] = dep;
                 }
             });
-            $(`input[type='checkbox'][key]`).on("change", e =>
+            const checkBoxChange = element =>
             {
-                const self = $(e.target);
-                const checked = self.prop("checked");
+                const checked = element.prop("checked");
                 for (const key in dependencies)
                 {
                     const dependency = dependencies[key].split(" ");
-                    if (dependency.indexOf(self.attr("key")) !== -1)
+                    if (dependency.indexOf(element.attr("key")) !== -1)
                     {
                         let value = true;
                         if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
@@ -201,7 +200,10 @@
                 {
                     box.removeClass("opened");
                 }
-            });
+            };
+            $(`input[type='checkbox'][key]`)
+                .on("change", e => checkBoxChange(e.target))
+                .each(e => checkBoxChange($(e)));
         }
         function addSettingsIcon(body)
         {
