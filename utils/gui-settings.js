@@ -237,11 +237,6 @@
                     });
             }
         }
-        function addEffects()
-        {
-            $(".gui-settings-content ul li.category,.gui-settings-content,.gui-settings-header,.gui-settings-footer,.gui-settings-box")
-                .addClass("blur");
-        }
         new SpinQuery(
             () => $("body"),
             it => it.length > 0 && !unsafeWindow.frameElement && unsafeWindow.$,
@@ -260,7 +255,7 @@
                     listenSettingsChange();
                     if (settings.blurSettingsPanel)
                     {
-                        addEffects();
+                        $(".gui-settings-box").addClass("blur");
                     }
                     if (typeof offlineData !== "undefined")
                     {

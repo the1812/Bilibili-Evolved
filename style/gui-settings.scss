@@ -419,7 +419,7 @@ input[type='text'][key]
 }
 @supports (backdrop-filter: blur(24px)) or (-webkit-backdrop-filter: blur(24px))
 {
-    .gui-settings-content ul li.category.blur
+    .gui-settings-box.blur li.category
     {
         -webkit-backdrop-filter: blur(24px);
         backdrop-filter: blur(24px);
@@ -428,27 +428,26 @@ input[type='text'][key]
 }
 @supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
 {
-    .gui-settings-content.blur,
-    .gui-settings-header.blur,
-    .gui-settings-footer.blur
-    {
-        -webkit-backdrop-filter: blur(64px);
-        backdrop-filter: blur(64px);
-    }
-    .gui-settings-content.blur
-    {
-        background: #fff8;
-    }
-    .gui-settings-header.blur,
-    .gui-settings-footer.blur
-    {
-        background: #fff4;
-    }
     .gui-settings-box.blur
     {
         background: transparent;
         box-shadow: none;
-        border: 1px solid $customStyleColor80;
+    }
+    .gui-settings-box.blur .gui-settings-content,
+    .gui-settings-box.blur .gui-settings-header,
+    .gui-settings-box.blur .gui-settings-footer
+    {
+        -webkit-backdrop-filter: blur(64px);
+        backdrop-filter: blur(64px);
+    }
+    .gui-settings-box.blur .gui-settings-content
+    {
+        background: #fff8;
+    }
+    .gui-settings-box.blur .gui-settings-header,
+    .gui-settings-box.blur .gui-settings-footer
+    {
+        background: #fff4;
     }
 }
 .gui-settings-panel.animation
