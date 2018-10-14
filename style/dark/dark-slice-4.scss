@@ -66,7 +66,8 @@ li.user-wrapper .avatar .detail .logout,
 .pay-points-way-next,
 .pay-points-way-content,
 .pay-points-way-btn-disable,
-.bl-search:hover 
+.bl-search:hover,
+.invite-code .copy-btn 
 {
     background-color: #222 !important;
 }
@@ -166,7 +167,8 @@ body #app .marquee,
 .text-ctnr,
 .daily-task .task-item,
 .achievement-user,
-.achievement-card 
+.achievement-card,
+.section-block with-bottom-radius a-move-in-left .invite 
 {
     background-color: #444 !important;
 }
@@ -779,7 +781,8 @@ body #app .category-wrapper .upload-content .title,
 .achievement-user,
 .achievement-card,
 .achievement-card-centent > .header > .state-normal,
-.achievement-user-info > .info
+.achievement-user-info > .info,
+.app-body .section-block.with-bottom-radius 
 {
     border-color: transparent !important;
 }
@@ -928,7 +931,8 @@ body #app .marquee,
 .act.tv-u-btn-t,
 .balance_bp_box .button,
 .bili-pay-panel-list-active,
-.blink-border.blue
+.blink-border.blue,
+.invite-code .copy-btn 
 {
     border-color: $customStyleColor !important;
 }
@@ -1108,7 +1112,9 @@ body #app .marquee a,
 .blink-border.blue,
 .task-info .task-bar .status-icon.active,
 .achievement-card-centent > .header > .state-normal.-success,
-.achievement-user-info > .a
+.achievement-user-info > .a,
+.invite-code .code,
+.invite-code .copy-btn 
 {
     color: $customStyleColor !important;
 }
