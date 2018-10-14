@@ -156,7 +156,9 @@ body #app .marquee,
 .valid_box .button.ready:hover,
 .bili-pay-box-wrapper,
 .bili-pay-payment-wrapper,
-.bili-payment-list
+.bili-payment-list,
+.center-grid,
+.center-grid tbody tr:nth-child(odd) 
 {
     background-color: #444 !important;
 }
@@ -392,7 +394,8 @@ li.user-wrapper .avatar .detail .level .progress span,
 .pay-points-way-title,
 .pay-points-way-txt,
 .bili-pay-voucher-help-disable,
-.article-holder .shop-card a .container .disc
+.article-holder .shop-card a .container .disc,
+.center-grid thead tr 
 {
     color: #aaa !important;
 }
@@ -612,7 +615,8 @@ body #app .category-wrapper .upload-content .title,
 .pay-points-way-content,
 .pay-points-way-btn-disable,
 .pay-points-way-btn,
-.article-holder .shop-card a .container .title
+.article-holder .shop-card a .container .title,
+.center-grid tbody tr 
 {
     color: #eee !important;
 }
@@ -1064,7 +1068,9 @@ body #app .marquee a,
 .bili-pay-panel-list-active .bili-pay-price,
 .bili-payment-num,
 .pay-points-way-next,
-.article-holder .shop-card a .container .bottom-col
+.article-holder .shop-card a .container .bottom-col,
+.center-grid th a:hover,
+.center-grid td a:hover 
 {
     color: $customStyleColor !important;
 }
