@@ -159,7 +159,8 @@ body #app .marquee,
 .bili-payment-list,
 .center-grid,
 .center-grid tbody tr:nth-child(odd),
-.section-filter
+.section-filter,
+.sponsor-pay-dialog-v2 .sponsor-pay-content 
 {
     background-color: #444 !important;
 }
@@ -396,7 +397,8 @@ li.user-wrapper .avatar .detail .level .progress span,
 .pay-points-way-txt,
 .bili-pay-voucher-help-disable,
 .article-holder .shop-card a .container .disc,
-.center-grid thead tr 
+.center-grid thead tr,
+.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p 
 {
     color: #aaa !important;
 }
@@ -617,7 +619,8 @@ body #app .category-wrapper .upload-content .title,
 .pay-points-way-btn-disable,
 .pay-points-way-btn,
 .article-holder .shop-card a .container .title,
-.center-grid tbody tr 
+.center-grid tbody tr,
+.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p.sponsor-pay-result-title 
 {
     color: #eee !important;
 }
@@ -752,7 +755,8 @@ body #app .category-wrapper .upload-content .title,
 .favourite-card,
 .favourite-card .anchor-info,
 .favourite-card .other-info-ctnr .anchor-live:before,
-.section-filter
+.section-filter,
+.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-msg 
 {
     border-color: transparent !important;
 }
