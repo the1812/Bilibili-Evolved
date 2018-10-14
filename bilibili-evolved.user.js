@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.3
+// @version      1.5.4
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -21,6 +21,8 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        forceWideMinWidth: "1368px",
+        forceWide: true,
         darkScheduleStart: "18:00",
         darkScheduleEnd: "6:00",
         darkSchedule: false,
@@ -54,7 +56,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.5.3"
+        currentVersion: "1.5.4"
     };
     function loadSettings()
     {
@@ -100,6 +102,7 @@
             imageViewerStyle: new Resource("min/image-viewer.min.scss", 8),
             toastStyle: new Resource("min/toast.min.scss", 9),
             blurVideoControlStyle: new Resource("min/blur-video-control.min.css", 10),
+            forceWideStyle: new Resource("min/force-wide.min.scss"),
 
             guiSettingsDom: new Resource("min/gui-settings.min.html"),
             imageViewerDom: new Resource("min/image-viewer.min.html"),
@@ -123,7 +126,8 @@
             toast: new Resource("min/toast.min.js"),
             removeVideoTopMask: new Resource("min/remove-top-mask.min.js"),
             blurVideoControl: new Resource("min/blur-video-control.min.js"),
-            darkSchedule: new Resource("min/dark-schedule.min.js")
+            darkSchedule: new Resource("min/dark-schedule.min.js"),
+            forceWide: new Resource("min/force-wide.min.js")
         };
         (function ()
         {
@@ -168,6 +172,9 @@
             this.blurVideoControl.dependencies = [
                 this.blurVideoControlStyle
             ];
+            this.forceWide.dependencies = [
+                this.forceWideStyle
+            ];
         }).apply(Resource.all);
         (function ()
         {
@@ -190,6 +197,7 @@
             this.removeVideoTopMask.displayName = "删除视频标题层";
             this.blurVideoControl.displayName = "模糊视频控制栏背景";
             this.darkSchedule.displayName = "夜间模式计划时段";
+            this.forceWide.displayName = "强制宽屏";
         }).apply(Resource.all);
     }
     function downloadText(url, load, error)
