@@ -158,7 +158,8 @@ body #app .marquee,
 .bili-pay-payment-wrapper,
 .bili-payment-list,
 .center-grid,
-.center-grid tbody tr:nth-child(odd) 
+.center-grid tbody tr:nth-child(odd),
+.section-filter
 {
     background-color: #444 !important;
 }
@@ -750,7 +751,8 @@ body #app .category-wrapper .upload-content .title,
 .article-holder .shop-card,
 .favourite-card,
 .favourite-card .anchor-info,
-.favourite-card .other-info-ctnr .anchor-live:before 
+.favourite-card .other-info-ctnr .anchor-live:before,
+.section-filter
 {
     border-color: transparent !important;
 }
