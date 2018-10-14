@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.4
+// @version      1.5.5
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -22,7 +22,7 @@
     const $ = unsafeWindow.$ || self$;
     const settings = {
         forceWideMinWidth: "1368px",
-        forceWide: true,
+        forceWide: false,
         darkScheduleStart: "18:00",
         darkScheduleEnd: "6:00",
         darkSchedule: false,
@@ -56,7 +56,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.4"
+        currentVersion: "1.5.5"
     };
     function loadSettings()
     {
