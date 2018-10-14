@@ -162,7 +162,8 @@ body #app .marquee,
 .section-filter,
 .sponsor-pay-dialog-v2 .sponsor-pay-content,
 .table-ctnr,
-.text-ctnr
+.text-ctnr,
+.daily-task .task-item 
 {
     background-color: #444 !important;
 }
@@ -400,7 +401,10 @@ li.user-wrapper .avatar .detail .level .progress span,
 .bili-pay-voucher-help-disable,
 .article-holder .shop-card a .container .disc,
 .center-grid thead tr,
-.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p 
+.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p,
+.daily-task .task-item,
+.daily-task .task-item .task-status,
+.daily-task .task-item .desc 
 {
     color: #aaa !important;
 }
@@ -761,7 +765,8 @@ body #app .category-wrapper .upload-content .title,
 .favourite-card .anchor-info,
 .favourite-card .other-info-ctnr .anchor-live:before,
 .section-filter,
-.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-msg 
+.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-msg,
+.daily-task .task-item 
 {
     border-color: transparent !important;
 }
@@ -1087,7 +1092,8 @@ body #app .marquee a,
 .center-grid td a:hover,
 .favourite-card .other-info-ctnr > div .anchor-status.on-live,
 .blink.blue,
-.blink-border.blue
+.blink-border.blue,
+.task-info .task-bar .status-icon.active
 {
     color: $customStyleColor !important;
 }
