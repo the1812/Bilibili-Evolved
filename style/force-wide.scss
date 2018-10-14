@@ -63,7 +63,12 @@
         margin-left: 2%;
     }
 
-    .primary-menu .nav-menu>li {
+    .primary-menu .nav-menu>li
+    {
         margin-right: 0 !important;
+    }
+    .primary-menu .nav-menu>li.home
+    {
+        padding-right: 1%;
     }
 }
