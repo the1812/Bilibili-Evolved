@@ -743,7 +743,10 @@ body #app .category-wrapper .upload-content .title,
 .payment-active,
 .pay-points-way-content,
 .pay-points-way-select,
-.article-holder .shop-card
+.article-holder .shop-card,
+.favourite-card,
+.favourite-card .anchor-info,
+.favourite-card .other-info-ctnr .anchor-live:before 
 {
     border-color: transparent !important;
 }
