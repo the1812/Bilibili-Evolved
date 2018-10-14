@@ -40,4 +40,26 @@
     .elevator-module {
         margin-left:590px;
     }
+
+    #primary_menu,
+    #primary_menu>ul.nav-menu,
+    .uns_box li.u-i.b-post
+    {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .primary-menu
+    {
+        width: 100%;
+    }
+    .primary-menu .nav-menu
+    {
+        flex-grow: 1;
+    }
+    .primary-menu .nav-gif
+    {
+        position: static;
+        margin-left: 2%;
+    }
 }
