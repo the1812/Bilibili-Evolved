@@ -69,7 +69,8 @@ li.user-wrapper .avatar .detail .logout,
 .bl-search:hover,
 .invite-code .copy-btn,
 .title-level .title-level-bar-wrap .title-level-bar,
-.title-factory-card .title-num .num-value
+.title-factory-card .title-num .num-value,
+.record-ctnr .areas 
 {
     background-color: #222 !important;
 }
@@ -172,7 +173,11 @@ body #app .marquee,
 .achievement-card,
 .section-block with-bottom-radius a-move-in-left .invite,
 .sailors-ctnr,
-.apply-banner-table tr:nth-child(even) 
+.apply-banner-table tr:nth-child(even),
+.record-ctnr,
+.record-ctnr .area-selection-cntr,
+.record-ctnr .areas .btn-cntr .btn,
+.record-ctnr .areas .btn-cntr .btn.normal 
 {
     background-color: #444 !important;
 }
@@ -417,7 +422,8 @@ li.user-wrapper .avatar .detail .level .progress span,
 .daily-task .task-item .desc,
 .achievement-card-centent > .text a,
 .achievement-card-centent > .header > .state-normal,
-.achievement-user-info > .info
+.achievement-user-info > .info,
+.record-ctnr 
 {
     color: #aaa !important;
 }
@@ -646,7 +652,12 @@ body #app .category-wrapper .upload-content .title,
 .achievement-card-centent > .header,
 .achievement-card-centent > .header > .icon,
 .title-factory-card .title-num .num-value,
-.sailors-ctnr
+.sailors-ctnr,
+.record-ctnr .areas-tip-cntr .areas-tip,
+.record-ctnr .area-selection-cntr .tips,
+.record-ctnr .areas .btn-cntr .btn,
+.record-ctnr .areas .btn-cntr .btn.normal,
+.record-ctnr .areas .btn-cntr .btn.normal:hover 
 {
     color: #eee !important;
 }
@@ -789,7 +800,11 @@ body #app .category-wrapper .upload-content .title,
 .achievement-card-centent > .header > .state-normal,
 .achievement-user-info > .info,
 .title-factory-card .title-num .num-value.num-input,
-.sailors-ctnr
+.sailors-ctnr,
+.record-ctnr,
+.record-ctnr .area-selection-cntr,
+.record-ctnr .areas,
+.record-ctnr .areas .btn-cntr .btn.normal 
 {
     border-color: transparent !important;
 }
@@ -941,7 +956,8 @@ body #app .marquee,
 .bili-pay-panel-list-active,
 .blink-border.blue,
 .invite-code .copy-btn,
-.title-factory-card.selected
+.title-factory-card.selected,
+.record-ctnr .areas .all-area.checked 
 {
     border-color: $customStyleColor !important;
 }
@@ -991,7 +1007,9 @@ div.cntr a.check-all,
 .pay-activation-btn,
 .pay-activation-btn:hover,
 .pay-points-way-btn,
-.tabnav-tip.plain 
+.tabnav-tip.plain,
+.record-ctnr .areas .btn-cntr .btn:hover,
+.record-ctnr .areas .btn-cntr .btn.normal:hover 
 {
     background-color: $customStyleColor !important;
 }
@@ -1125,7 +1143,8 @@ body #app .marquee a,
 .invite-code .code,
 .invite-code .copy-btn,
 .title-factory-card .title-num .num-value,
-.title-factory-card .title-num .ajust-btn
+.title-factory-card .title-num .ajust-btn,
+.record-ctnr .areas .all-area.checked 
 {
     color: $customStyleColor !important;
 }
