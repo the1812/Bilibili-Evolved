@@ -160,7 +160,9 @@ body #app .marquee,
 .center-grid,
 .center-grid tbody tr:nth-child(odd),
 .section-filter,
-.sponsor-pay-dialog-v2 .sponsor-pay-content 
+.sponsor-pay-dialog-v2 .sponsor-pay-content,
+.table-ctnr,
+.text-ctnr
 {
     background-color: #444 !important;
 }
@@ -622,7 +624,8 @@ body #app .category-wrapper .upload-content .title,
 .center-grid tbody tr,
 .sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p.sponsor-pay-result-title,
 .sponsor-pay-dialog-v2 .sponsor-pay-header,
-.favourite-card .other-info-ctnr > div
+.favourite-card .other-info-ctnr > div,
+.tabnav-tip.plain 
 {
     color: #eee !important;
 }
@@ -906,7 +909,8 @@ body #app .marquee,
 .bangumi-up-info .func-btns .b-gz,
 .act.tv-u-btn-t,
 .balance_bp_box .button,
-.bili-pay-panel-list-active
+.bili-pay-panel-list-active,
+.blink-border.blue
 {
     border-color: $customStyleColor !important;
 }
@@ -955,7 +959,8 @@ div.cntr a.check-all,
 .pay-other-way-link:hover,
 .pay-activation-btn,
 .pay-activation-btn:hover,
-.pay-points-way-btn
+.pay-points-way-btn,
+.tabnav-tip.plain 
 {
     background-color: $customStyleColor !important;
 }
@@ -1080,7 +1085,9 @@ body #app .marquee a,
 .article-holder .shop-card a .container .bottom-col,
 .center-grid th a:hover,
 .center-grid td a:hover,
-.favourite-card .other-info-ctnr > div .anchor-status.on-live
+.favourite-card .other-info-ctnr > div .anchor-status.on-live,
+.blink.blue,
+.blink-border.blue
 {
     color: $customStyleColor !important;
 }
