@@ -65,7 +65,8 @@ li.user-wrapper .avatar .detail .logout,
 .member-list-item .member-list-img,
 .pay-points-way-next,
 .pay-points-way-content,
-.pay-points-way-btn-disable
+.pay-points-way-btn-disable,
+.bl-search:hover 
 {
     background-color: #222 !important;
 }
@@ -163,7 +164,9 @@ body #app .marquee,
 .sponsor-pay-dialog-v2 .sponsor-pay-content,
 .table-ctnr,
 .text-ctnr,
-.daily-task .task-item 
+.daily-task .task-item,
+.achievement-user,
+.achievement-card 
 {
     background-color: #444 !important;
 }
@@ -201,7 +204,8 @@ div.cntr a.check-all
 .player-auxiliary-area .player-auxiliary-filter,
 .bui-collapse .bui-collapse-header,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap,
-.gui-settings-box.blur
+.gui-settings-box.blur,
+.bl-search
 {
     background-color: transparent !important;
 }
@@ -404,7 +408,10 @@ li.user-wrapper .avatar .detail .level .progress span,
 .sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p,
 .daily-task .task-item,
 .daily-task .task-item .task-status,
-.daily-task .task-item .desc 
+.daily-task .task-item .desc,
+.achievement-card-centent > .text a,
+.achievement-card-centent > .header > .state-normal,
+.achievement-user-info > .info
 {
     color: #aaa !important;
 }
@@ -629,7 +636,9 @@ body #app .category-wrapper .upload-content .title,
 .sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p.sponsor-pay-result-title,
 .sponsor-pay-dialog-v2 .sponsor-pay-header,
 .favourite-card .other-info-ctnr > div,
-.tabnav-tip.plain 
+.tabnav-tip.plain,
+.achievement-card-centent > .header,
+.achievement-card-centent > .header > .icon 
 {
     color: #eee !important;
 }
@@ -766,7 +775,11 @@ body #app .category-wrapper .upload-content .title,
 .favourite-card .other-info-ctnr .anchor-live:before,
 .section-filter,
 .sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-msg,
-.daily-task .task-item 
+.daily-task .task-item,
+.achievement-user,
+.achievement-card,
+.achievement-card-centent > .header > .state-normal,
+.achievement-user-info > .info
 {
     border-color: transparent !important;
 }
@@ -1093,7 +1106,9 @@ body #app .marquee a,
 .favourite-card .other-info-ctnr > div .anchor-status.on-live,
 .blink.blue,
 .blink-border.blue,
-.task-info .task-bar .status-icon.active
+.task-info .task-bar .status-icon.active,
+.achievement-card-centent > .header > .state-normal.-success,
+.achievement-user-info > .a
 {
     color: $customStyleColor !important;
 }
