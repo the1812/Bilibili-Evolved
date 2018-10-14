@@ -621,7 +621,8 @@ body #app .category-wrapper .upload-content .title,
 .article-holder .shop-card a .container .title,
 .center-grid tbody tr,
 .sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p.sponsor-pay-result-title,
-.sponsor-pay-dialog-v2 .sponsor-pay-header 
+.sponsor-pay-dialog-v2 .sponsor-pay-header,
+.favourite-card .other-info-ctnr > div
 {
     color: #eee !important;
 }
@@ -959,7 +960,8 @@ div.cntr a.check-all,
     background-color: $customStyleColor !important;
 }
 .valid_box .button,
-.pay-result-btn:hover
+.pay-result-btn:hover,
+.page-title .count
 {
     background: $customStyleColor !important;
 }
@@ -1077,7 +1079,8 @@ body #app .marquee a,
 .pay-points-way-next,
 .article-holder .shop-card a .container .bottom-col,
 .center-grid th a:hover,
-.center-grid td a:hover 
+.center-grid td a:hover,
+.favourite-card .other-info-ctnr > div .anchor-status.on-live
 {
     color: $customStyleColor !important;
 }
