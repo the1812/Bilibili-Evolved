@@ -260,6 +260,10 @@
                     {
                         $(".gui-settings-box").addClass("blur");
                     }
+                    else
+                    {
+                        $(".gui-settings-panel").addClass("animation");
+                    }
                     if (typeof offlineData !== "undefined")
                     {
                         $("input[key=useCache]").prop("disabled", true);
