@@ -81,7 +81,7 @@
             }
         }
 
-        resources.applyStyle("toastStyle", "toast-style");
+        resources.applyStyle("toastStyle");
         Toast.createToastContainer();
 
 

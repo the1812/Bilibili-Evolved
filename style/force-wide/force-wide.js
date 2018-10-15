@@ -2,7 +2,7 @@
 {
     return (_, resources) =>
     {
-        resources.applyImportantStyle("forceWideStyle", "bilibili-force-wide-style");
+        resources.applyImportantStyle("forceWideStyle");
         return {
             ajaxReload: false
         };

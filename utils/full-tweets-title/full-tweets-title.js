@@ -2,7 +2,7 @@
 {
     return (_, resources) =>
     {
-        resources.applyStyle("fullTweetsTitleStyle", "full-tweets-title-style");
+        resources.applyStyle("fullTweetsTitleStyle");
         return {
             ajaxReload: false
         };

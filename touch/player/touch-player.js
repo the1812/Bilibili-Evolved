@@ -671,7 +671,7 @@
 
         Observer.subtree("#bofqi", () => main());
 
-        resources.applyStyle("touchPlayerStyle", "bilibili-touch-video-player");
+        resources.applyStyle("touchPlayerStyle");
         return {
             ajaxReload: false
         };

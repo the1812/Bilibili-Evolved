@@ -8,7 +8,7 @@
                 ajaxReload: false
             };
         }
-        resources.applyStyle("scrollbarStyle", "bilibili-scrollbar-style");
+        resources.applyStyle("scrollbarStyle");
         SpinQuery.any(
             () => $(".custom-scrollbar"),
             it => it.removeClass("custom-scrollbar")
@@ -55,11 +55,11 @@
             const navbar = newStyles.navbar;
             if (newStyles.supports(navbar))
             {
-                resources.applyStyle("style", "bilibili-new-style");
+                resources.applyStyle("style", "bilibili-style-optimization");
             }
             else
             {
-                resources.applyStyle("oldStyle", "bilibili-new-style");
+                resources.applyStyle("oldStyle", "bilibili-style-optimization");
             }
         });
         return {

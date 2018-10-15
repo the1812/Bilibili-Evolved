@@ -220,7 +220,7 @@
                     $(".gui-settings-panel").addClass("opened");
                 });
             }
-            resources.applyStyle("guiSettingsStyle", "gui-settings-style");
+            resources.applyStyle("guiSettingsStyle");
         }
         function addPredefinedColors()
         {

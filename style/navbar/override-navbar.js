@@ -11,11 +11,11 @@
                     .insertAfter(".nav-con.fr");
             }
         ).start();
-        resources.applyStyle("navbarOverrideStyle", "bilibili-nav-bar-override");
+        resources.applyStyle("navbarOverrideStyle");
 
         if (!settings.showBanner)
         {
-            resources.applyStyle("noBannerStyle", "bilibili-banner-override");
+            resources.applyStyle("noBannerStyle");
         }
         return {
             ajaxReload: false
