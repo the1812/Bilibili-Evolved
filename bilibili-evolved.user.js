@@ -804,7 +804,7 @@
                 try
                 {
                     const attribute = func(settings, this);
-                    this.attributes[key] = attribute;
+                    this.attributes[key] = attribute || {};
                     if (attribute.ajaxReload)
                     {
                         $(document).ajaxComplete(() =>
