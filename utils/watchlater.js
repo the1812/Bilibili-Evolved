@@ -63,8 +63,5 @@
                 }
             ).start();
         });
-        return {
-            ajaxReload: true
-        };
     };
 })();

@@ -2,8 +2,7 @@
 {
     return () =>
     {
-        // TODO: put danmaku selector below
-        Observer.subtree("", () =>
+        Observer.subtree("#bofqi", () =>
         {
             SpinQuery.any(
                 () => $(".bui-collapse-header"),
@@ -17,8 +16,5 @@
                 }
             );
         });
-        return {
-            ajaxReload: true
-        };
     };
 })();

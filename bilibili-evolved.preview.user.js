@@ -266,6 +266,21 @@
                     return observer.start();
                 });
         }
+        static all(selector, callback)
+        {
+            callback();
+            return new Array(...document.querySelectorAll(selector))
+                .map(it =>
+                {
+                    const observer = new Observer(it, callback);
+                    observer.options = {
+                        childList: true,
+                        subtree: true,
+                        attributes: true
+                    };
+                    return observer.start();
+                });
+        }
     }
     class SpinQuery
     {
@@ -803,8 +818,8 @@
             {
                 try
                 {
-                    const attribute = func(settings, this);
-                    this.attributes[key] = attribute || {};
+                    const attribute = func(settings, this) || {};
+                    this.attributes[key] = attribute;
                     if (attribute.ajaxReload)
                     {
                         $(document).ajaxComplete(() =>
