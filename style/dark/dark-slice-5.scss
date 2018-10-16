@@ -62,7 +62,9 @@
 .live-btn,
 .my-room.room-info .room-info-ctnr .room-id,
 .live-btn.default,
-.popup-content 
+.popup-content,
+.t-gray-dark,
+.live-info .label 
 {
     color: #eee !important;
 }
@@ -83,7 +85,8 @@
 .recent-danmu-wrp .danmu-filter .left .protect .plain,
 .recent-danmu-wrp .danmu-filter .left .refresh .plain,
 .popup-close-btn,
-.user-avatar 
+.user-avatar,
+.areas .area 
 {
     border-color: transparent !important;
 }
@@ -166,7 +169,8 @@
 // {
 //     opacity: 1 !important;
 // }
-.add-cover:hover
+.add-cover:hover,
+.category:hover 
 {
     border-color: $customStyleColor !important;
 }
@@ -184,7 +188,8 @@
 .add-cover:hover,
 .bili-blue,
 .text-blue,
-.save-btn.active 
+.save-btn.active,
+.category:hover 
 {
     color: $customStyleColor !important;
 }
