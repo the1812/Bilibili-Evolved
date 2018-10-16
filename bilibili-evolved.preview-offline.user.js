@@ -907,6 +907,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             {
                 settings.cache.version = settings.currentVersion;
             }
+            saveSettings(settings);
         }
     }
 

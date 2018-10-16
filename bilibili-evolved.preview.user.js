@@ -901,6 +901,7 @@
             {
                 settings.cache.version = settings.currentVersion;
             }
+            saveSettings(settings);
         }
     }
 
