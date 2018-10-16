@@ -1,11 +1,14 @@
-// a
-// {
-//     background-color: #222 !important;
-// }
-// a
-// {
-//     background-color: #444 !important;
-// }
+.title-list .title-list-item:hover .tips,
+.title-factory-card,
+.live-btn.default 
+{
+    background-color: #222 !important;
+}
+.title-item,
+.live-haruna .tab-body .item 
+{
+    background-color: #444 !important;
+}
 // a
 // {
 //     background-color: #555 !important;
@@ -35,26 +38,53 @@
 //     background: transparent !important;
 // }
 
-// a
-// {
-//     color: #aaa !important;
-// }
-// a
-// {
-//     color: #eee !important;
-// }
+.title-item,
+.notice-ctnr .blink,
+.notice .blink,
+.add-cover,
+.my-room.room-info .room-info-ctnr .timing-num,
+.my-room.room-info .room-info-ctnr .san-num,
+.recent-danmu-wrp .danmu-filter .left .danmu-type .plain.disable,
+.recent-danmu-wrp .danmu-filter .left .protect .plain.disable,
+.recent-danmu-wrp .danmu-filter .left .refresh .plain.disable,
+.recent-danmu-wrp .danmu-filter .left .delete .plain.disable 
+{
+    color: #aaa !important;
+}
+.title-name,
+.start-live,
+.room-id,
+.live-setting-ctnr,
+.live-btn,
+.my-room.room-info .room-info-ctnr .room-id,
+.live-btn.default 
+{
+    color: #eee !important;
+}
 // a
 // {
 //     color: #222 !important;
 // }
-// a
-// {
-//     border-color: transparent !important;
-// }
-// a
-// {
-//     border-color: #aaa !important;
-// }
+.title-item,
+.title-factory-card,
+.title-factory-card .title-num,
+.title-list .title-list-item:hover .tips .tips-title,
+.tag-input,
+.user-ctnr .top,
+.my-room.room-info .room-info-ctnr .top,
+.live-haruna .tab-body .item,
+.recent-danmu-wrp .danmu-filter .left .delete .plain,
+.recent-danmu-wrp .danmu-filter .left .danmu-type .plain,
+.recent-danmu-wrp .danmu-filter .left .protect .plain,
+.recent-danmu-wrp .danmu-filter .left .refresh .plain 
+{
+    border-color: transparent !important;
+}
+.link-input,
+.add-cover 
+{
+    border-color: #aaa !important;
+}
 // a
 // {
 //     border-color: #222 !important;
@@ -129,19 +159,26 @@
 // {
 //     opacity: 1 !important;
 // }
-
-// a
-// {
-//     border-color: $customStyleColor !important;
-// }
-// a
-// {
-//     background-color: $customStyleColor !important;
-// }
-// a
-// {
-//     color: $customStyleColor !important;
-// }
+.add-cover:hover
+{
+    border-color: $customStyleColor !important;
+}
+.live-btn,
+.live-btn:active,
+.live-btn:hover,
+.live-btn.default:active,
+.live-btn.default:hover 
+{
+    background-color: $customStyleColor !important;
+}
+.notice-ctnr .blink:hover,
+.notice .blink:hover,
+.add-cover:hover,
+.bili-blue,
+.text-blue
+{
+    color: $customStyleColor !important;
+}
 // a
 // {
 //     color: $foreground !important;

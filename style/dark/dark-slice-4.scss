@@ -70,7 +70,14 @@ li.user-wrapper .avatar .detail .logout,
 .invite-code .copy-btn,
 .title-level .title-level-bar-wrap .title-level-bar,
 .title-factory-card .title-num .num-value,
-.record-ctnr .areas 
+.record-ctnr .areas,
+.user-info > .tag-gray,
+.buy-vip-panel .panel-ctnr,
+.buy-vip-panel .panel-ctnr .panel-aside .aside-item.active,
+.p-relative gold-seed-store over-hidden .content,
+.content .user-protocol,
+.sub-tab-box .item.active,
+.recharge-store-box .cntr .store-content
 {
     background-color: #222 !important;
 }
@@ -171,13 +178,17 @@ body #app .marquee,
 .daily-task .task-item,
 .achievement-user,
 .achievement-card,
-.section-block with-bottom-radius a-move-in-left .invite,
+.section-block.with-bottom-radius.a-move-in-left .invite,
 .sailors-ctnr,
 .apply-banner-table tr:nth-child(even),
 .record-ctnr,
 .record-ctnr .area-selection-cntr,
 .record-ctnr .areas .btn-cntr .btn,
-.record-ctnr .areas .btn-cntr .btn.normal 
+.record-ctnr .areas .btn-cntr .btn.normal,
+.buy-vip-panel .panel-ctnr .panel-aside,
+.gold-seed-store,
+.recharge-store-box dl.recharge-form .ipt-number,
+.fast-amount-list .item.free-amount input.ipt-free-amount 
 {
     background-color: #444 !important;
 }
@@ -216,7 +227,8 @@ div.cntr a.check-all
 .bui-collapse .bui-collapse-header,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap,
 .gui-settings-box.blur,
-.bl-search
+.bl-search,
+.buy-vip-panel .panel-ctnr .panel-aside .aside-item .item-img-ctnr 
 {
     background-color: transparent !important;
 }
@@ -423,7 +435,10 @@ li.user-wrapper .avatar .detail .level .progress span,
 .achievement-card-centent > .text a,
 .achievement-card-centent > .header > .state-normal,
 .achievement-user-info > .info,
-.record-ctnr 
+.record-ctnr,
+.content .user-protocol,
+.sub-tab-box .item,
+.recharge-rule 
 {
     color: #aaa !important;
 }
@@ -657,7 +672,13 @@ body #app .category-wrapper .upload-content .title,
 .record-ctnr .area-selection-cntr .tips,
 .record-ctnr .areas .btn-cntr .btn,
 .record-ctnr .areas .btn-cntr .btn.normal,
-.record-ctnr .areas .btn-cntr .btn.normal:hover 
+.record-ctnr .areas .btn-cntr .btn.normal:hover,
+.user-info > .tag-gray,
+.buy-vip-panel .panel-ctnr .panel-aside .aside-item .item-label,
+.live-btn.default,
+.recharge-store-box dl.recharge-form dt,
+.recharge-store-box dl.recharge-form .ipt-number,
+.fast-amount-list .item.free-amount input.ipt-free-amount 
 {
     color: #eee !important;
 }
@@ -804,7 +825,9 @@ body #app .category-wrapper .upload-content .title,
 .record-ctnr,
 .record-ctnr .area-selection-cntr,
 .record-ctnr .areas,
-.record-ctnr .areas .btn-cntr .btn.normal 
+.record-ctnr .areas .btn-cntr .btn.normal,
+.buy-vip-panel .panel-ctnr,
+.recharge-store-box dl.recharge-form .ipt-number 
 {
     border-color: transparent !important;
 }
@@ -816,7 +839,9 @@ body #app .category-wrapper .upload-content .title,
 .set-copyright .copyright-icon .icon-none-copyright,
 .area-section .card-ctnr .tag-ctnr .tags,
 .trade-wrapper,
-.el-date-table th
+.el-date-table th,
+.user-info > .tag-gray,
+.recharge-store-box ul.select-list .item 
 {
     border-color: #aaa !important;
 }
@@ -873,7 +898,8 @@ body #app .category-wrapper .upload-content .title,
 .timer-wrap .vote-dialog-new .main .main-txt-1 label .selected,
 .timer-wrap .vote-dialog-new .main .checkbox,
 .icon-slide-h,
-.title-factory-card.selected:after 
+.title-factory-card.selected:after,
+.recharge-store-box ul.select-list .item.active:after 
 {
     filter: $blueImageFilter !important;
 }
@@ -957,7 +983,9 @@ body #app .marquee,
 .blink-border.blue,
 .invite-code .copy-btn,
 .title-factory-card.selected,
-.record-ctnr .areas .all-area.checked 
+.record-ctnr .areas .all-area.checked,
+.recharge-store-box ul.select-list .item.active,
+.recharge-store-box ul.select-list .item:hover 
 {
     border-color: $customStyleColor !important;
 }
@@ -1009,7 +1037,10 @@ div.cntr a.check-all,
 .pay-points-way-btn,
 .tabnav-tip.plain,
 .record-ctnr .areas .btn-cntr .btn:hover,
-.record-ctnr .areas .btn-cntr .btn.normal:hover 
+.record-ctnr .areas .btn-cntr .btn.normal:hover,
+.live-btn.default,
+.live-btn.default:hover,
+.live-btn.default:active 
 {
     background-color: $customStyleColor !important;
 }
@@ -1144,7 +1175,13 @@ body #app .marquee a,
 .invite-code .copy-btn,
 .title-factory-card .title-num .num-value,
 .title-factory-card .title-num .ajust-btn,
-.record-ctnr .areas .all-area.checked 
+.record-ctnr .areas .all-area.checked,
+.sub-tab-box .item.active,
+.content .user-protocol a,
+.recharge-store-box ul.select-list .item.active,
+.recharge-store-box ul.select-list .item:hover,
+.btn-recharge-bcoin,
+.recharge-rule a 
 {
     color: $customStyleColor !important;
 }
