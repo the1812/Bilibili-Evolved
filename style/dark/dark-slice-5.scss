@@ -39,7 +39,9 @@
 .title-item,
 .notice-ctnr .blink,
 .notice .blink,
-.add-cover 
+.add-cover,
+.my-room.room-info .room-info-ctnr .timing-num,
+.my-room.room-info .room-info-ctnr .san-num
 {
     color: #aaa !important;
 }
@@ -47,7 +49,8 @@
 .start-live,
 .room-id,
 .live-setting-ctnr,
-.live-btn 
+.live-btn,
+.my-room.room-info .room-info-ctnr .room-id 
 {
     color: #eee !important;
 }
@@ -60,7 +63,8 @@
 .title-factory-card .title-num,
 .title-list .title-list-item:hover .tips .tips-title,
 .tag-input,
-.user-ctnr .top 
+.user-ctnr .top,
+.my-room.room-info .room-info-ctnr .top
 {
     border-color: transparent !important;
 }
@@ -155,7 +159,8 @@
 }
 .notice-ctnr .blink:hover,
 .notice .blink:hover,
-.add-cover:hover 
+.add-cover:hover,
+.bili-blue 
 {
     color: $customStyleColor !important;
 }
