@@ -50,7 +50,8 @@
 .recent-danmu-wrp .danmu-filter .left .protect .plain.disable,
 .recent-danmu-wrp .danmu-filter .left .refresh .plain.disable,
 .recent-danmu-wrp .danmu-filter .left .delete .plain.disable,
-.qrcode-box .tip 
+.qrcode-box .tip,
+.announcement-cntr .tips 
 {
     color: #aaa !important;
 }
@@ -81,7 +82,8 @@
 .recent-danmu-wrp .danmu-filter .left .danmu-type .plain,
 .recent-danmu-wrp .danmu-filter .left .protect .plain,
 .recent-danmu-wrp .danmu-filter .left .refresh .plain,
-.popup-close-btn 
+.popup-close-btn,
+.user-avatar 
 {
     border-color: transparent !important;
 }
@@ -181,7 +183,8 @@
 .notice .blink:hover,
 .add-cover:hover,
 .bili-blue,
-.text-blue
+.text-blue,
+.save-btn.active 
 {
     color: $customStyleColor !important;
 }
