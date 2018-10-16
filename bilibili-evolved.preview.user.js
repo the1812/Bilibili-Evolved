@@ -897,6 +897,10 @@
             {
                 settings.cache = {};
             }
+            if (settings.cache.version === undefined)
+            {
+                settings.cache.version = settings.currentVersion;
+            }
         }
     }
 
