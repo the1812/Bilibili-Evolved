@@ -4,7 +4,7 @@
     {
         return {
             settingsWidget: {
-                after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "其他").parent(),
+                after: () => $("input[key=useCache]").parent().parent(),
                 content: `<li class="indent-center">
                         <button
                             class="gui-settings-button"
@@ -22,7 +22,7 @@
                     });
                     if (typeof offlineData !== "undefined")
                     {
-                        $("button#clear-cache").addClass("hidden");
+                        $("button#clear-cache").parent().addClass("hidden");
                     }
                 }
             }
