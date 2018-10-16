@@ -1,11 +1,13 @@
 .title-list .title-list-item:hover .tips,
 .title-factory-card,
-.live-btn.default 
+.p-relative.gold-seed-store.over-hidden .content,
+.title-item,
+.live-haruna .tab-body .item
+
 {
     background-color: #222 !important;
 }
-.title-item,
-.live-haruna .tab-body .item 
+.live-btn.default 
 {
     background-color: #444 !important;
 }
@@ -47,7 +49,9 @@
 .recent-danmu-wrp .danmu-filter .left .danmu-type .plain.disable,
 .recent-danmu-wrp .danmu-filter .left .protect .plain.disable,
 .recent-danmu-wrp .danmu-filter .left .refresh .plain.disable,
-.recent-danmu-wrp .danmu-filter .left .delete .plain.disable 
+.recent-danmu-wrp .danmu-filter .left .delete .plain.disable,
+.qrcode-box .tip,
+.announcement-cntr .tips 
 {
     color: #aaa !important;
 }
@@ -57,7 +61,10 @@
 .live-setting-ctnr,
 .live-btn,
 .my-room.room-info .room-info-ctnr .room-id,
-.live-btn.default 
+.live-btn.default,
+.popup-content,
+.t-gray-dark,
+.live-info .label 
 {
     color: #eee !important;
 }
@@ -76,7 +83,10 @@
 .recent-danmu-wrp .danmu-filter .left .delete .plain,
 .recent-danmu-wrp .danmu-filter .left .danmu-type .plain,
 .recent-danmu-wrp .danmu-filter .left .protect .plain,
-.recent-danmu-wrp .danmu-filter .left .refresh .plain 
+.recent-danmu-wrp .danmu-filter .left .refresh .plain,
+.popup-close-btn,
+.user-avatar,
+.areas .area 
 {
     border-color: transparent !important;
 }
@@ -159,7 +169,8 @@
 // {
 //     opacity: 1 !important;
 // }
-.add-cover:hover
+.add-cover:hover,
+.category:hover 
 {
     border-color: $customStyleColor !important;
 }
@@ -167,7 +178,8 @@
 .live-btn:active,
 .live-btn:hover,
 .live-btn.default:active,
-.live-btn.default:hover 
+.live-btn.default:hover,
+.popup-close-btn 
 {
     background-color: $customStyleColor !important;
 }
@@ -175,7 +187,9 @@
 .notice .blink:hover,
 .add-cover:hover,
 .bili-blue,
-.text-blue
+.text-blue,
+.save-btn.active,
+.category:hover 
 {
     color: $customStyleColor !important;
 }
