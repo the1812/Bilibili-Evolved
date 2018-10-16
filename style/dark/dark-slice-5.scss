@@ -1,9 +1,11 @@
 .title-list .title-list-item:hover .tips,
-.title-factory-card
+.title-factory-card,
+.live-btn.default 
 {
     background-color: #222 !important;
 }
-.title-item
+.title-item,
+.live-haruna .tab-body .item 
 {
     background-color: #444 !important;
 }
@@ -50,7 +52,8 @@
 .room-id,
 .live-setting-ctnr,
 .live-btn,
-.my-room.room-info .room-info-ctnr .room-id 
+.my-room.room-info .room-info-ctnr .room-id,
+.live-btn.default 
 {
     color: #eee !important;
 }
@@ -64,7 +67,8 @@
 .title-list .title-list-item:hover .tips .tips-title,
 .tag-input,
 .user-ctnr .top,
-.my-room.room-info .room-info-ctnr .top
+.my-room.room-info .room-info-ctnr .top,
+.live-haruna .tab-body .item 
 {
     border-color: transparent !important;
 }
@@ -153,7 +157,9 @@
 }
 .live-btn,
 .live-btn:active,
-.live-btn:hover 
+.live-btn:hover,
+.live-btn.default:active,
+.live-btn.default:hover 
 {
     background-color: $customStyleColor !important;
 }
