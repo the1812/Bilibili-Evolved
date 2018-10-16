@@ -36,11 +36,18 @@
 //     background: transparent !important;
 // }
 
-.title-item
+.title-item,
+.notice-ctnr .blink,
+.notice .blink,
+.add-cover 
 {
     color: #aaa !important;
 }
-.title-name
+.title-name,
+.start-live,
+.room-id,
+.live-setting-ctnr,
+.live-btn 
 {
     color: #eee !important;
 }
@@ -51,11 +58,14 @@
 .title-item,
 .title-factory-card,
 .title-factory-card .title-num,
-.title-list .title-list-item:hover .tips .tips-title
+.title-list .title-list-item:hover .tips .tips-title,
+.tag-input,
+.user-ctnr .top 
 {
     border-color: transparent !important;
 }
-.link-input
+.link-input,
+.add-cover 
 {
     border-color: #aaa !important;
 }
@@ -133,19 +143,22 @@
 // {
 //     opacity: 1 !important;
 // }
-
-// a
-// {
-//     border-color: $customStyleColor !important;
-// }
-// a
-// {
-//     background-color: $customStyleColor !important;
-// }
-// a
-// {
-//     color: $customStyleColor !important;
-// }
+.add-cover:hover
+{
+    border-color: $customStyleColor !important;
+}
+.live-btn,
+.live-btn:active,
+.live-btn:hover 
+{
+    background-color: $customStyleColor !important;
+}
+.notice-ctnr .blink:hover,
+.notice .blink:hover,
+.add-cover:hover 
+{
+    color: $customStyleColor !important;
+}
 // a
 // {
 //     color: $foreground !important;
