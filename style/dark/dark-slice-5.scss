@@ -1,11 +1,12 @@
 .title-list .title-list-item:hover .tips,
 .title-factory-card,
-.live-btn.default 
+.p-relative.gold-seed-store.over-hidden .content 
 {
     background-color: #222 !important;
 }
 .title-item,
-.live-haruna .tab-body .item 
+.live-haruna .tab-body .item,
+.live-btn.default 
 {
     background-color: #444 !important;
 }
@@ -47,7 +48,8 @@
 .recent-danmu-wrp .danmu-filter .left .danmu-type .plain.disable,
 .recent-danmu-wrp .danmu-filter .left .protect .plain.disable,
 .recent-danmu-wrp .danmu-filter .left .refresh .plain.disable,
-.recent-danmu-wrp .danmu-filter .left .delete .plain.disable 
+.recent-danmu-wrp .danmu-filter .left .delete .plain.disable,
+.qrcode-box .tip 
 {
     color: #aaa !important;
 }
@@ -76,7 +78,8 @@
 .recent-danmu-wrp .danmu-filter .left .delete .plain,
 .recent-danmu-wrp .danmu-filter .left .danmu-type .plain,
 .recent-danmu-wrp .danmu-filter .left .protect .plain,
-.recent-danmu-wrp .danmu-filter .left .refresh .plain 
+.recent-danmu-wrp .danmu-filter .left .refresh .plain,
+.popup-close-btn 
 {
     border-color: transparent !important;
 }
@@ -167,7 +170,8 @@
 .live-btn:active,
 .live-btn:hover,
 .live-btn.default:active,
-.live-btn.default:hover 
+.live-btn.default:hover,
+.popup-close-btn 
 {
     background-color: $customStyleColor !important;
 }
