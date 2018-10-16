@@ -1,7 +1,8 @@
-// a
-// {
-//     background-color: #222 !important;
-// }
+.title-list .title-list-item:hover .tips,
+.title-factory-card
+{
+    background-color: #222 !important;
+}
 .title-item
 {
     background-color: #444 !important;
@@ -47,7 +48,10 @@
 // {
 //     color: #222 !important;
 // }
-.title-item
+.title-item,
+.title-factory-card,
+.title-factory-card .title-num,
+.title-list .title-list-item:hover .tips .tips-title
 {
     border-color: transparent !important;
 }
