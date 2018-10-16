@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.6
+// @version      1.5.7
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -56,7 +56,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.6"
+        currentVersion: "1.5.7"
     };
     function loadSettings()
     {
@@ -94,7 +94,7 @@
             darkStyleImportant: new Resource("min/dark-important.min.scss"),
             darkStyleNavBar: new Resource("min/dark-navbar.min.scss"),
             touchPlayerStyle: new Resource("min/touch-player.min.scss", 3),
-            navbarOverrideStyle: new Resource("min/navbar-override.min.css", 4),
+            navbarOverrideStyle: new Resource("min/override-navbar.min.css", 4),
             noBannerStyle: new Resource("min/no-banner.min.css", 5),
             removeAdsStyle: new Resource("min/remove-promotions.min.css", 6),
             guiSettingsStyle: new Resource("min/gui-settings.min.scss", 0),
