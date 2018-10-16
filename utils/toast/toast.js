@@ -83,5 +83,9 @@
 
         resources.applyStyle("toastStyle");
         Toast.createToastContainer();
+
+        return {
+            export: Toast
+        };
     };
 })();

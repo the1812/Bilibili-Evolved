@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.8
+// @version      1.5.9
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -54,9 +54,10 @@
         guiSettings: true,
         viewCover: true,
         notifyNewVersion: true,
+        clearCache: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.8"
+        currentVersion: "1.5.9"
     };
     function loadSettings()
     {
@@ -127,7 +128,8 @@
             removeVideoTopMask: new Resource("min/remove-top-mask.min.js"),
             blurVideoControl: new Resource("min/blur-video-control.min.js"),
             darkSchedule: new Resource("min/dark-schedule.min.js"),
-            forceWide: new Resource("min/force-wide.min.js")
+            forceWide: new Resource("min/force-wide.min.js"),
+            clearCache: new Resource("min/clear-cache.min.js")
         };
         (function ()
         {
@@ -804,6 +806,7 @@
                         }
                     }
                 }
+                this.validateCache();
                 Promise.all(promises).then(() =>
                 {
                     this.applySettingsWidgets();
@@ -887,6 +890,18 @@
         getStyle(key, id)
         {
             return Resource.all[key].getStyle(id);
+        }
+        validateCache()
+        {
+            if (settings.cache.version !== settings.currentVersion)
+            {
+                settings.cache = {};
+            }
+            if (settings.cache.version === undefined)
+            {
+                settings.cache.version = settings.currentVersion;
+            }
+            saveSettings(settings);
         }
     }
 
