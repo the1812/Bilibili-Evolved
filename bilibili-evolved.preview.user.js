@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.7
+// @version      1.5.8
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -56,7 +56,7 @@
         notifyNewVersion: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.7"
+        currentVersion: "1.5.8"
     };
     function loadSettings()
     {
@@ -820,13 +820,6 @@
                 {
                     const attribute = func(settings, this) || {};
                     this.attributes[key] = attribute;
-                    if (attribute.ajaxReload)
-                    {
-                        $(document).ajaxComplete(() =>
-                        {
-                            func(settings, this);
-                        });
-                    }
                 }
                 catch (error)
                 {

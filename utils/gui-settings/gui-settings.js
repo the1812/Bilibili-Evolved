@@ -271,8 +271,5 @@
                 }
             }
         ).start();
-        return {
-            ajaxReload: false
-        };
     };
 })();

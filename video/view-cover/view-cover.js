@@ -53,7 +53,6 @@
         if ($("meta[itemprop='image']").length > 0)
         {
             return {
-                ajaxReload: false,
                 settingsWidget: {
                     after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
                     content: `<li class="indent-center hidden">

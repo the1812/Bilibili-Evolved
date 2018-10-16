@@ -17,8 +17,5 @@
                 navItems.each(enableTouch);
             }
         );
-        return {
-            ajaxReload: false
-        };
     };
 })();

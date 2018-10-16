@@ -4,9 +4,7 @@
     {
         if (document.URL === `https://h.bilibili.com/`)
         {
-            return {
-                ajaxReload: false
-            };
+            return;
         }
         resources.applyStyle("scrollbarStyle");
         SpinQuery.any(
@@ -62,8 +60,5 @@
                 resources.applyStyle("oldStyle", "bilibili-style-optimization");
             }
         });
-        return {
-            ajaxReload: false
-        };
     };
 })();
