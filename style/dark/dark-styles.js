@@ -24,9 +24,5 @@
             $("#bilibili-scrollbar-style,#bilibili-new-style-dark-nav-bar,#bilibili-new-style-dark,#bilibili-new-style-dark-important")
                 .remove();
         }
-
-        return {
-            ajaxReload: false
-        };
     };
 })();

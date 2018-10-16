@@ -103,7 +103,6 @@
             else
             {
                 return {
-                    ajaxReload: false,
                     settingsWidget: {
                         after: () => $(".gui-settings-content"),
                         content: `<div class="gui-settings-footer${(settings.blurSettingsPanel ? " blur" : "")}">
@@ -129,9 +128,5 @@
                 };
             }
         }
-
-        return {
-            ajaxReload: false
-        };
     };
 })();

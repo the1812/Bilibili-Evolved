@@ -83,11 +83,5 @@
 
         resources.applyStyle("toastStyle");
         Toast.createToastContainer();
-
-
-        return {
-            ajaxReload: false,
-            export: Toast
-        };
     };
 })();

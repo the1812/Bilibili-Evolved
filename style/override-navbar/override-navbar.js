@@ -17,8 +17,5 @@
         {
             resources.applyStyle("noBannerStyle");
         }
-        return {
-            ajaxReload: false
-        };
     };
 })();

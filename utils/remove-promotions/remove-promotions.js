@@ -16,8 +16,5 @@
                 });
             }
         );
-        return {
-            ajaxReload: false
-        };
     };
 })();

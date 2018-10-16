@@ -8,8 +8,5 @@
         {
             originalRequsetFullscreen.call(this);
         };
-        return {
-            ajaxReload: false
-        };
     };
 })();
