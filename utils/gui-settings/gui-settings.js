@@ -267,6 +267,7 @@
                     if (typeof offlineData !== "undefined")
                     {
                         $("input[key=useCache]").prop("disabled", true);
+                        $("button#clear-cache").addClass("hidden");
                     }
                 }
             }
