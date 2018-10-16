@@ -18,7 +18,7 @@
                     $("#clear-cache").on("click", () =>
                     {
                         settings.cache = {};
-                        Toast.show("已删除全部缓存.", "清除缓存");
+                        Toast.show("已删除全部缓存.", "清除缓存", 5000);
                     });
                     if (typeof offlineData !== "undefined")
                     {
