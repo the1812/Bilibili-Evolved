@@ -20,6 +20,10 @@
                         settings.cache = {};
                         Toast.show("已删除全部缓存.", "清除缓存");
                     });
+                    if (typeof offlineData !== "undefined")
+                    {
+                        $("button#clear-cache").addClass("hidden");
+                    }
                 }
             }
         };

@@ -54,6 +54,7 @@
         guiSettings: true,
         viewCover: true,
         notifyNewVersion: true,
+        clearCache: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
         currentVersion: "1.5.9"
@@ -127,7 +128,8 @@
             removeVideoTopMask: new Resource("min/remove-top-mask.min.js"),
             blurVideoControl: new Resource("min/blur-video-control.min.js"),
             darkSchedule: new Resource("min/dark-schedule.min.js"),
-            forceWide: new Resource("min/force-wide.min.js")
+            forceWide: new Resource("min/force-wide.min.js"),
+            clearCache: new Resource("min/clear-cache.min.js")
         };
         (function ()
         {
