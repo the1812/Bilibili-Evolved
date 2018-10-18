@@ -240,36 +240,36 @@
                     });
             }
         }
+
+        addSettingsIcon($("body"));
+        const settingsBox = resources.data.guiSettingsDom.text;
+        if (settingsBox)
+        {
+            $("body").append(settingsBox);
+            setupEvents();
+            fillSvgData();
+            syncGui();
+            listenDependencies();
+            addPredefinedColors();
+            listenSettingsChange();
+            if (settings.blurSettingsPanel)
+            {
+                $(".gui-settings-box").addClass("blur");
+            }
+            else
+            {
+                $(".gui-settings-panel").addClass("animation");
+            }
+            if (typeof offlineData !== "undefined")
+            {
+                $("input[key=useCache]").prop("disabled", true);
+            }
+        }
+
         new SpinQuery(
             () => $("body"),
-            it => it.length > 0 && !unsafeWindow.frameElement && unsafeWindow.$,
-            it =>
-            {
-                addSettingsIcon(it);
-                const settingsBox = resources.data.guiSettingsDom.text;
-                if (settingsBox)
-                {
-                    $("body").append(settingsBox);
-                    setupEvents();
-                    fillSvgData();
-                    syncGui();
-                    listenDependencies();
-                    addPredefinedColors();
-                    listenSettingsChange();
-                    if (settings.blurSettingsPanel)
-                    {
-                        $(".gui-settings-box").addClass("blur");
-                    }
-                    else
-                    {
-                        $(".gui-settings-panel").addClass("animation");
-                    }
-                    if (typeof offlineData !== "undefined")
-                    {
-                        $("input[key=useCache]").prop("disabled", true);
-                    }
-                }
-            }
+            it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
+            _ => $(".gui-settings-icon-panel").css("display", "none")
         ).start();
     };
 })();

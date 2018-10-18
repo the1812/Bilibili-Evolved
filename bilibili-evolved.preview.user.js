@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.9
+// @version      1.5.10
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -57,7 +57,7 @@
         clearCache: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.9"
+        currentVersion: "1.5.10"
     };
     function loadSettings()
     {
@@ -779,16 +779,19 @@
                 return null;
             }
             const promise = resource.download();
-            promise.then(text =>
+            return new Promise(resolve =>
             {
-                this.applyComponent(key, text);
-            }).catch(reason =>
-            {
-                // download error
-                console.error(`Download error, XHR status: ${reason}`);
-                Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
+                promise.then(text =>
+                {
+                    this.applyComponent(key, text);
+                    resolve();
+                }).catch(reason =>
+                {
+                    // download error
+                    console.error(`Download error, XHR status: ${reason}`);
+                    Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
+                });
             });
-            return promise;
         }
         fetch()
         {
