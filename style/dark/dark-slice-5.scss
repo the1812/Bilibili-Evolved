@@ -2,15 +2,15 @@
 .title-factory-card,
 .p-relative.gold-seed-store.over-hidden .content,
 .title-item,
-.live-haruna .tab-body .item
-
+.live-haruna .tab-body .item,
+.live-btn.default 
 {
     background-color: #222 !important;
 }
-.live-btn.default 
-{
-    background-color: #444 !important;
-}
+// a
+// {
+//    background-color: #444 !important;
+// }
 // a
 // {
 //     background-color: #555 !important;
@@ -23,10 +23,10 @@
 // {
 //     background-color: #fff1 !important;
 // }
-// a
-// {
-//     background-image: none !important;
-// }
+.live-haruna .section-stage .stage-wrap
+{
+    background-image: none !important;
+}
 // a
 // {
 //     background-color: transparent !important;
@@ -51,7 +51,9 @@
 .recent-danmu-wrp .danmu-filter .left .refresh .plain.disable,
 .recent-danmu-wrp .danmu-filter .left .delete .plain.disable,
 .qrcode-box .tip,
-.announcement-cntr .tips 
+.announcement-cntr .tips,
+.live-haruna,
+.record-ctnr .summary .s-item .title 
 {
     color: #aaa !important;
 }
@@ -86,7 +88,8 @@
 .recent-danmu-wrp .danmu-filter .left .refresh .plain,
 .popup-close-btn,
 .user-avatar,
-.areas .area 
+.areas .area,
+.record-ctnr .summary 
 {
     border-color: transparent !important;
 }
