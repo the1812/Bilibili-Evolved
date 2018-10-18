@@ -1,16 +1,15 @@
 .title-list .title-list-item:hover .tips,
 .title-factory-card,
 .p-relative.gold-seed-store.over-hidden .content,
-.title-item,
-.live-haruna .tab-body .item,
 .live-btn.default 
 {
     background-color: #222 !important;
 }
-// a
-// {
-//    background-color: #444 !important;
-// }
+.live-haruna .tab-body .item,
+.title-item
+{
+    background-color: #444 !important;
+}
 // a
 // {
 //     background-color: #555 !important;
@@ -23,7 +22,7 @@
 // {
 //     background-color: #fff1 !important;
 // }
-.live-haruna .section-stage .stage-wrap
+.live-haruna .section-stage .stage-wrap 
 {
     background-image: none !important;
 }
