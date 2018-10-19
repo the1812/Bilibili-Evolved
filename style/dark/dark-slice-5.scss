@@ -1,12 +1,15 @@
 .title-list .title-list-item:hover .tips,
 .title-factory-card,
 .p-relative.gold-seed-store.over-hidden .content,
-.live-btn.default 
+.live-btn.default,
+.collapse-subitem--active 
 {
     background-color: #222 !important;
 }
 .live-haruna .tab-body .item,
-.title-item
+.title-item,
+.help-list,
+.help-box 
 {
     background-color: #444 !important;
 }
@@ -68,7 +71,10 @@
 .t-gray-dark,
 .live-info .label,
 .main_body .pick_up .pick_list .pick_block .info .title,
-.main_body .future .future_list .future_block .info .title 
+.main_body .future .future_list .future_block .info .title,
+.collapse-item a,
+.help-subtitle,
+.collapse-subitem--active a 
 {
     color: #eee !important;
 }
@@ -91,7 +97,9 @@
 .popup-close-btn,
 .user-avatar,
 .areas .area,
-.record-ctnr .summary 
+.record-ctnr .summary,
+.help-list,
+.help-box 
 {
     border-color: transparent !important;
 }
@@ -186,7 +194,8 @@
 .live-btn:hover,
 .live-btn.default:active,
 .live-btn.default:hover,
-.popup-close-btn 
+.popup-close-btn,
+.helper-icon-dots 
 {
     background-color: $customStyleColor !important;
 }
@@ -196,7 +205,10 @@
 .bili-blue,
 .text-blue,
 .save-btn.active,
-.category:hover 
+.category:hover,
+.help-title,
+.collapse-item--active .collapse-title,
+.help-subindex
 {
     color: $customStyleColor !important;
 }
