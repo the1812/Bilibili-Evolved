@@ -9,7 +9,8 @@
 .live-haruna .tab-body .item,
 .title-item,
 .help-list,
-.help-box 
+.help-box,
+.right-action-ctnr.pointer.dp-i-block.primary.btn.p-relative .btn.primary 
 {
     background-color: #444 !important;
 }
@@ -56,7 +57,9 @@
 .announcement-cntr .tips,
 .live-haruna,
 .record-ctnr .summary .s-item .title,
-.main_body .future .future_list .future_block .info .loca 
+.main_body .future .future_list .future_block .info .loca,
+.edit-button > span,
+.room-introduction-content.empty 
 {
     color: #aaa !important;
 }
@@ -74,7 +77,8 @@
 .main_body .future .future_list .future_block .info .title,
 .collapse-item a,
 .help-subtitle,
-.collapse-subitem--active a 
+.collapse-subitem--active a,
+.drop-menu-item 
 {
     color: #eee !important;
 }
@@ -208,7 +212,9 @@
 .category:hover,
 .help-title,
 .collapse-item--active .collapse-title,
-.help-subindex
+.help-subindex,
+.drop-menu-item:hover,
+icon-label.hover-text-blue:hover .label 
 {
     color: $customStyleColor !important;
 }

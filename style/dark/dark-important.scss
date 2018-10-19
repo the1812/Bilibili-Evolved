@@ -11,7 +11,7 @@
 .container .pagination,
 .fjw-case-detail .ban-detail .content-box .video-model,
 .app-body .section-block.with-bottom-radius,
-.app-body .section-block.with-radius 
+.app-body .section-block.with-radius
 {
     background-color: #444 !important;
 }
@@ -74,7 +74,9 @@ blockquote .color-yellow-04,
 .more-data a:hover,
 .rank-item .content .info .detail a a:hover,
 .rank-item .content .other a:hover,
-.rank-item .content .more-data:hover
+.rank-item .content .more-data:hover,
+.edit-button:hover > .icon-font,
+.edit-button:hover > span
 {
     color: $customStyleColor !important;
 }
