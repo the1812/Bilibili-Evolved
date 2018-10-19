@@ -172,7 +172,9 @@
 //     opacity: 1 !important;
 // }
 .add-cover:hover,
-.category:hover 
+.category:hover,
+.data-card .data-box .tab .fan-tab.current:after,
+.data-card .fans-box .tab .fan-tab.current:after 
 {
     border-color: $customStyleColor !important;
 }
@@ -214,8 +216,9 @@
 //     border-top-color: transparent !important;
 //     border-right-color: transparent !important;
 // }
-// a
-// {
-//     border-left-color: transparent !important;
-//     border-right-color: transparent !important;
-// }
+.data-card .data-box .tab .fan-tab.current:after,
+.data-card .fans-box .tab .fan-tab.current:after
+{
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+}
