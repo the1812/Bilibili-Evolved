@@ -57,12 +57,27 @@
 .online-list .ebox .ol,
 .demo-app .detail,
 .active-main .act-list ul li,
-.topic-main .act-list ul li ,
+.topic-main .act-list ul li,
 li.user-wrapper .avatar .detail,
 li.user-wrapper .avatar .detail .logout,
 #bp_right .bb_intro_box,
 .rhythm-storm .bl-button:disabled,
-.member-list-item .member-list-img
+.member-list-item .member-list-img,
+.pay-points-way-next,
+.pay-points-way-content,
+.pay-points-way-btn-disable,
+.bl-search:hover,
+.invite-code .copy-btn,
+.title-level .title-level-bar-wrap .title-level-bar,
+.title-factory-card .title-num .num-value,
+.record-ctnr .areas,
+.user-info > .tag-gray,
+.buy-vip-panel .panel-ctnr,
+.buy-vip-panel .panel-ctnr .panel-aside .aside-item.active,
+.p-relative gold-seed-store over-hidden .content,
+.content .user-protocol,
+.sub-tab-box .item.active,
+.recharge-store-box .cntr .store-content
 {
     background-color: #222 !important;
 }
@@ -151,7 +166,29 @@ body #app .marquee,
 .valid_box .button.ready,
 .valid_box .button.ready:active,
 .valid_box .button.ready:hover,
-.bili-pay-box-wrapper
+.bili-pay-box-wrapper,
+.bili-pay-payment-wrapper,
+.bili-payment-list,
+.center-grid,
+.center-grid tbody tr:nth-child(odd),
+.section-filter,
+.sponsor-pay-dialog-v2 .sponsor-pay-content,
+.table-ctnr,
+.text-ctnr,
+.daily-task .task-item,
+.achievement-user,
+.achievement-card,
+.section-block.with-bottom-radius.a-move-in-left .invite,
+.sailors-ctnr,
+.apply-banner-table tr:nth-child(even),
+.record-ctnr,
+.record-ctnr .area-selection-cntr,
+.record-ctnr .areas .btn-cntr .btn,
+.record-ctnr .areas .btn-cntr .btn.normal,
+.buy-vip-panel .panel-ctnr .panel-aside,
+.gold-seed-store,
+.recharge-store-box dl.recharge-form .ipt-number,
+.fast-amount-list .item.free-amount input.ipt-free-amount 
 {
     background-color: #444 !important;
 }
@@ -188,7 +225,10 @@ div.cntr a.check-all
 .container .main-btn.edit-btn:hover,
 .player-auxiliary-area .player-auxiliary-filter,
 .bui-collapse .bui-collapse-header,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap,
+.gui-settings-box.blur,
+.bl-search,
+.buy-vip-panel .panel-ctnr .panel-aside .aside-item .item-img-ctnr 
 {
     background-color: transparent !important;
 }
@@ -373,7 +413,32 @@ ul.navigation li span,
 .card-more,
 li.user-wrapper .avatar .detail .level .progress span,
 .pay-result-sub-title,
-.rel.pl122.mb20 .g3
+.rel.pl122.mb20 .g3,
+.bili-pay-text,
+.bili-pay-panel-remark,
+.bili-payment-num i,
+.bili-payment-txt,
+.pay-bottom-link,
+.bili-pay-vouche-name,
+.pay-other p,
+.bili-pay-panel-name,
+.pay-activation-txt,
+.pay-points-way-title,
+.pay-points-way-txt,
+.bili-pay-voucher-help-disable,
+.article-holder .shop-card a .container .disc,
+.center-grid thead tr,
+.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p,
+.daily-task .task-item,
+.daily-task .task-item .task-status,
+.daily-task .task-item .desc,
+.achievement-card-centent > .text a,
+.achievement-card-centent > .header > .state-normal,
+.achievement-user-info > .info,
+.record-ctnr,
+.content .user-protocol,
+.sub-tab-box .item,
+.recharge-rule 
 {
     color: #aaa !important;
 }
@@ -585,7 +650,35 @@ body #app .category-wrapper .upload-content .title,
 .pay-result-title,
 .pay-result-btn,
 .player-auxiliary-area .player-auxiliary-filter-title,
-.player-auxiliary-area .player-auxiliary-filter-menu
+.player-auxiliary-area .player-auxiliary-filter-menu,
+.bili-payment-list,
+.bili-pay-price,
+.pay-activation-btn,
+.pay-other-way-link,
+.pay-points-way-content,
+.pay-points-way-btn-disable,
+.pay-points-way-btn,
+.article-holder .shop-card a .container .title,
+.center-grid tbody tr,
+.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-body .sponsor-pay-result .sponsor-pay-result-body p.sponsor-pay-result-title,
+.sponsor-pay-dialog-v2 .sponsor-pay-header,
+.favourite-card .other-info-ctnr > div,
+.tabnav-tip.plain,
+.achievement-card-centent > .header,
+.achievement-card-centent > .header > .icon,
+.title-factory-card .title-num .num-value,
+.sailors-ctnr,
+.record-ctnr .areas-tip-cntr .areas-tip,
+.record-ctnr .area-selection-cntr .tips,
+.record-ctnr .areas .btn-cntr .btn,
+.record-ctnr .areas .btn-cntr .btn.normal,
+.record-ctnr .areas .btn-cntr .btn.normal:hover,
+.user-info > .tag-gray,
+.buy-vip-panel .panel-ctnr .panel-aside .aside-item .item-label,
+.live-btn.default,
+.recharge-store-box dl.recharge-form dt,
+.recharge-store-box dl.recharge-form .ipt-number,
+.fast-amount-list .item.free-amount input.ipt-free-amount 
 {
     color: #eee !important;
 }
@@ -710,7 +803,31 @@ body #app .category-wrapper .upload-content .title,
 .valid_box .button.ready:hover,
 .valid_box .button,
 .rhythm-storm .bl-button,
-.bili-pay-header-wrapper
+.bili-pay-header-wrapper,
+.bili-pay-payment-wrapper,
+.bili-payment-list,
+.payment-active,
+.pay-points-way-content,
+.pay-points-way-select,
+.article-holder .shop-card,
+.favourite-card,
+.favourite-card .anchor-info,
+.favourite-card .other-info-ctnr .anchor-live:before,
+.section-filter,
+.sponsor-pay-dialog-v2 .sp-pay-success .sponsor-pay-msg,
+.daily-task .task-item,
+.achievement-user,
+.achievement-card,
+.achievement-card-centent > .header > .state-normal,
+.achievement-user-info > .info,
+.title-factory-card .title-num .num-value.num-input,
+.sailors-ctnr,
+.record-ctnr,
+.record-ctnr .area-selection-cntr,
+.record-ctnr .areas,
+.record-ctnr .areas .btn-cntr .btn.normal,
+.buy-vip-panel .panel-ctnr,
+.recharge-store-box dl.recharge-form .ipt-number 
 {
     border-color: transparent !important;
 }
@@ -722,7 +839,9 @@ body #app .category-wrapper .upload-content .title,
 .set-copyright .copyright-icon .icon-none-copyright,
 .area-section .card-ctnr .tag-ctnr .tags,
 .trade-wrapper,
-.el-date-table th
+.el-date-table th,
+.user-info > .tag-gray,
+.recharge-store-box ul.select-list .item 
 {
     border-color: #aaa !important;
 }
@@ -778,13 +897,16 @@ body #app .category-wrapper .upload-content .title,
 .on.u-btn-s3,
 .timer-wrap .vote-dialog-new .main .main-txt-1 label .selected,
 .timer-wrap .vote-dialog-new .main .checkbox,
-.icon-slide-h
+.icon-slide-h,
+.title-factory-card.selected:after,
+.recharge-store-box ul.select-list .item.active:after 
 {
     filter: $blueImageFilter !important;
 }
 .episode-item .mark-icon,
 .add-tag .default .btn-show,
-.project-info table .project-content .content-right .ticket-type span
+.project-info table .project-content .content-right .ticket-type span,
+.article-holder .shop-card a .container .bottom-col .card-label
 {
     filter: $pinkImageFilter !important;
 }
@@ -856,7 +978,14 @@ body #app .marquee,
 .trade-wrapper.is-selected,
 .bangumi-up-info .func-btns .b-gz,
 .act.tv-u-btn-t,
-.balance_bp_box .button
+.balance_bp_box .button,
+.bili-pay-panel-list-active,
+.blink-border.blue,
+.invite-code .copy-btn,
+.title-factory-card.selected,
+.record-ctnr .areas .all-area.checked,
+.recharge-store-box ul.select-list .item.active,
+.recharge-store-box ul.select-list .item:hover 
 {
     border-color: $customStyleColor !important;
 }
@@ -900,12 +1029,24 @@ body #app .category-wrapper .dot,
 .rhythm-storm .bl-button,
 .pay-result-btn,
 div.cntr a.check-all,
-.bili-header-m .bubble-traditional .renew-btn button
+.bili-header-m .bubble-traditional .renew-btn button,
+.pay-other-way-link,
+.pay-other-way-link:hover,
+.pay-activation-btn,
+.pay-activation-btn:hover,
+.pay-points-way-btn,
+.tabnav-tip.plain,
+.record-ctnr .areas .btn-cntr .btn:hover,
+.record-ctnr .areas .btn-cntr .btn.normal:hover,
+.live-btn.default,
+.live-btn.default:hover,
+.live-btn.default:active 
 {
     background-color: $customStyleColor !important;
 }
 .valid_box .button,
-.pay-result-btn:hover
+.pay-result-btn:hover,
+.page-title .count
 {
     background: $customStyleColor !important;
 }
@@ -1017,7 +1158,30 @@ body #app .marquee a,
 .topic-main .nav-tab .on,
 .w160.h48.ovh .g1:hover,
 .card-more a,
-.player-auxiliary-area .player-auxiliary-filter-menu:hover
+.player-auxiliary-area .player-auxiliary-filter-menu:hover,
+.bili-pay-panel-list-active .bili-pay-price,
+.bili-payment-num,
+.pay-points-way-next,
+.article-holder .shop-card a .container .bottom-col,
+.center-grid th a:hover,
+.center-grid td a:hover,
+.favourite-card .other-info-ctnr > div .anchor-status.on-live,
+.blink.blue,
+.blink-border.blue,
+.task-info .task-bar .status-icon.active,
+.achievement-card-centent > .header > .state-normal.-success,
+.achievement-user-info > .a,
+.invite-code .code,
+.invite-code .copy-btn,
+.title-factory-card .title-num .num-value,
+.title-factory-card .title-num .ajust-btn,
+.record-ctnr .areas .all-area.checked,
+.sub-tab-box .item.active,
+.content .user-protocol a,
+.recharge-store-box ul.select-list .item.active,
+.recharge-store-box ul.select-list .item:hover,
+.btn-recharge-bcoin,
+.recharge-rule a 
 {
     color: $customStyleColor !important;
 }
@@ -1051,7 +1215,9 @@ div.cntr a.check-all,
 .season-item.on:after,
 .dc-radio-button.is-active:after,
 .bili-tab.current:after,
-.ui-tabs .ui-tabs-head .tab-head-item.current a:after
+.ui-tabs .ui-tabs-head .tab-head-item.current a:after,
+.bili-pay-payment-nav,
+.bili-payment-list-border
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;

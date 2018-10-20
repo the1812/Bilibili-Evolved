@@ -35,7 +35,7 @@ li.season-item .season-body .season-title span.follow,
 .player-auxiliary-block-list .player-auxiliary-block-line,
 .player-auxiliary-context-menu-container,
 .player-auxiliary-modal-container,
-.gui-settings-content ul li.category,
+.gui-settings-box li.category,
 .main-container .player-wrapper,
 .big-gift-btn-home,
 .h-safe-nobtn,
@@ -259,9 +259,9 @@ a.bp_box_bot_click,
 {
     background-color: #2229 !important;
 }
-.gui-settings-content ul li.category.blur
+.gui-settings-box.blur li.category
 {
-    background-color: #2229 !important;
+    background-color: #2220 !important;
 }
 .mask::after
 {
@@ -1116,8 +1116,6 @@ li.history,
 .elec .elec-monthly-count,
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string:not(:focus),
 .player-auxiliary-block-tabpanel .player-auxiliary-block-string-short:not(:focus),
-.favourite-card .anchor-info,
-.favourite-card,
 .h-list-item,
 .h-mp-space,
 .go-secuirty,

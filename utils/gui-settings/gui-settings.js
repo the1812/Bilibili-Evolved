@@ -26,6 +26,7 @@
             ok: "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"
         };
         const textValidate = {
+            forceWideMinWidth: text => text, /* How to validate CSS unit ?? */
             customStyleColor: text =>
             {
                 const match = text.match(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);
@@ -99,8 +100,7 @@
         function settingsChange(key, _, newValue)
         {
             $(`input[type='checkbox'][key='${key}']`)
-                .prop("checked", newValue)
-                .change();
+                .prop("checked", newValue);
             $(`input[type='text'][key='${key}']`).val(newValue);
         }
         function syncGui()
@@ -130,18 +130,11 @@
                 const box = $(".predefined-colors");
                 box.toggleClass("opened");
             });
-
-            const button = document.querySelector("button.save");
-            const svg = document.querySelector(".gui-settings-footer svg.gui-settings-ok");
-            const saveCompleteClass = "save-complete";
-            const animationend = () =>
-            {
-                svg.classList.remove(saveCompleteClass);
-                button.classList.remove(saveCompleteClass);
-            };
-            button.addEventListener("animationend", animationend);
-            svg.addEventListener("animationend", animationend);
-            button.addEventListener("click", () =>
+            onSettingsChange(settingsChange);
+        }
+        function listenSettingsChange()
+        {
+            const saveChanges = () =>
             {
                 $("input[type='checkbox'][key]")
                     .each((_, element) =>
@@ -156,15 +149,11 @@
                         settings[key] = textValidate[key](value);
                     });
                 saveSettings(settings);
-                if ([svg, button].every(it =>
-                    !it.classList.contains(saveCompleteClass)))
-                {
-                    button.classList.add(saveCompleteClass);
-                    svg.classList.add(saveCompleteClass);
-                }
-                syncGui();
-            });
-            onSettingsChange(settingsChange);
+                // syncGui();
+                // console.log("settings saved");
+            };
+            $("input[type='checkbox'][key]").on("change", () => saveChanges());
+            $("input[type='text'][key]").on("change", () => saveChanges());
         }
         function fillSvgData()
         {
@@ -183,22 +172,21 @@
                     dependencies[$(element).attr("key")] = dep;
                 }
             });
-            $(`input[type='checkbox'][key]`).on("change", e =>
+            const checkBoxChange = element =>
             {
-                const self = $(e.target);
-                const checked = self.prop("checked");
+                const checked = element.prop("checked");
                 for (const key in dependencies)
                 {
                     const dependency = dependencies[key].split(" ");
-                    if (dependency.indexOf(self.attr("key")) !== -1)
+                    if (dependency.indexOf(element.attr("key")) !== -1)
                     {
-                        let value = true;
+                        let disable = true;
                         if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
                         {
-                            value = false;
+                            disable = false;
                         }
-                        $(`input[key='${key}']`).prop("disabled", value);
-                        if (value)
+                        $(`input[key='${key}']`).prop("disabled", disable);
+                        if (disable)
                         {
                             $(`input[key='${key}'][type='text']`).parent().addClass("disabled");
                         }
@@ -213,7 +201,10 @@
                 {
                     box.removeClass("opened");
                 }
-            });
+            };
+            $(`input[type='checkbox'][key]`)
+                .on("change", e => checkBoxChange($(e.target)))
+                .each((_, e) => checkBoxChange($(e)));
         }
         function addSettingsIcon(body)
         {
@@ -229,7 +220,7 @@
                     $(".gui-settings-panel").addClass("opened");
                 });
             }
-            resources.applyStyle("guiSettingsStyle", "gui-settings-style");
+            resources.applyStyle("guiSettingsStyle");
         }
         function addPredefinedColors()
         {
@@ -244,43 +235,41 @@
                     {
                         $(`input[key='customStyleColor']`)
                             .val($(e.target).attr("data-color"))
-                            .trigger("input");
+                            .trigger("input").change();
                         $("div.custom-color-preview").on("click");
                     });
             }
         }
-        function addEffects()
+
+        addSettingsIcon($("body"));
+        const settingsBox = resources.data.guiSettingsDom.text;
+        if (settingsBox)
         {
-            $(".gui-settings-content ul li.category, .gui-settings-content").addClass("blur");
+            $("body").append(settingsBox);
+            setupEvents();
+            fillSvgData();
+            syncGui();
+            listenDependencies();
+            addPredefinedColors();
+            listenSettingsChange();
+            if (settings.blurSettingsPanel)
+            {
+                $(".gui-settings-box").addClass("blur");
+            }
+            else
+            {
+                $(".gui-settings-panel").addClass("animation");
+            }
+            if (typeof offlineData !== "undefined")
+            {
+                $("input[key=useCache]").prop("disabled", true);
+            }
         }
+
         new SpinQuery(
             () => $("body"),
-            it => it.length > 0 && !unsafeWindow.frameElement && unsafeWindow.$,
-            it =>
-            {
-                addSettingsIcon(it);
-                const settingsBox = resources.data.guiSettingsDom.text;
-                if (settingsBox)
-                {
-                    $("body").append(settingsBox);
-                    setupEvents();
-                    fillSvgData();
-                    listenDependencies();
-                    syncGui();
-                    addPredefinedColors();
-                    if (settings.blurSettingsPanel)
-                    {
-                        addEffects();
-                    }
-                    if (typeof offlineData !== "undefined")
-                    {
-                        $("input[key=useCache]").prop("disabled", true);
-                    }
-                }
-            }
+            it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
+            _ => $(".gui-settings-icon-panel").css("display", "none")
         ).start();
-        return {
-            ajaxReload: false
-        };
     };
 })();

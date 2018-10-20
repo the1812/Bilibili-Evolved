@@ -13,31 +13,11 @@
         {
             constructor(versionString)
             {
-                this.parts = versionString.split('.');
+                this.parts = versionString.split('.').map(it => parseInt(it));
                 this.versionString = versionString;
-            }
-            isPositiveInteger(x)
-            {
-                // http://stackoverflow.com/a/1019526/11236
-                return /^\d+$/.test(x);
-            }
-            validateParts()
-            {
-                for (var i = 0; i < this.parts.length; ++i)
-                {
-                    if (!this.isPositiveInteger(this.parts[i]))
-                    {
-                        return false;
-                    }
-                }
-                return true;
             }
             compareTo(other)
             {
-                if (!this.validateParts() || !other.validateParts())
-                {
-                    return CompareResult.incomparable;
-                }
                 for (let i = 0; i < this.parts.length; ++i)
                 {
                     if (other.parts.length === i)
@@ -103,10 +83,9 @@
             else
             {
                 return {
-                    ajaxReload: false,
                     settingsWidget: {
-                        after: () => $(".gui-settings-footer"),
-                        content: `<div class="gui-settings-footer">
+                        after: () => $(".gui-settings-content"),
+                        content: `<div class="gui-settings-footer${(settings.blurSettingsPanel ? " blur" : "")}">
                                     <span class="gui-settings-label">新版本${latestVersion.versionString}已发布.</span>
                                     <a href="${settings.latestVersionLink}">
                                         <button
@@ -129,9 +108,5 @@
                 };
             }
         }
-
-        return {
-            ajaxReload: false
-        };
     };
 })();

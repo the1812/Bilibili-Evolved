@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.2
+// @version      1.5.10
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -21,6 +21,8 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        forceWideMinWidth: "1368px",
+        forceWide: false,
         darkScheduleStart: "18:00",
         darkScheduleEnd: "6:00",
         darkSchedule: false,
@@ -52,9 +54,10 @@
         guiSettings: true,
         viewCover: true,
         notifyNewVersion: true,
+        clearCache: true,
         fixFullscreen: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.5.2"
+        currentVersion: "1.5.10"
     };
     function loadSettings()
     {
@@ -92,7 +95,7 @@
             darkStyleImportant: new Resource("min/dark-important.min.scss"),
             darkStyleNavBar: new Resource("min/dark-navbar.min.scss"),
             touchPlayerStyle: new Resource("min/touch-player.min.scss", 3),
-            navbarOverrideStyle: new Resource("min/navbar-override.min.css", 4),
+            navbarOverrideStyle: new Resource("min/override-navbar.min.css", 4),
             noBannerStyle: new Resource("min/no-banner.min.css", 5),
             removeAdsStyle: new Resource("min/remove-promotions.min.css", 6),
             guiSettingsStyle: new Resource("min/gui-settings.min.scss", 0),
@@ -100,9 +103,10 @@
             imageViewerStyle: new Resource("min/image-viewer.min.scss", 8),
             toastStyle: new Resource("min/toast.min.scss", 9),
             blurVideoControlStyle: new Resource("min/blur-video-control.min.css", 10),
+            forceWideStyle: new Resource("min/force-wide.min.scss"),
 
-            guiSettingsDom: new Resource("utils/gui-settings.html"),
-            imageViewerDom: new Resource("utils/image-viewer.html"),
+            guiSettingsDom: new Resource("min/gui-settings.min.html"),
+            imageViewerDom: new Resource("min/image-viewer.min.html"),
             latestVersion: new Resource("version.txt"),
 
             guiSettings: new Resource("min/gui-settings.min.js"),
@@ -123,7 +127,9 @@
             toast: new Resource("min/toast.min.js"),
             removeVideoTopMask: new Resource("min/remove-top-mask.min.js"),
             blurVideoControl: new Resource("min/blur-video-control.min.js"),
-            darkSchedule: new Resource("min/dark-schedule.min.js")
+            darkSchedule: new Resource("min/dark-schedule.min.js"),
+            forceWide: new Resource("min/force-wide.min.js"),
+            clearCache: new Resource("min/clear-cache.min.js")
         };
         (function ()
         {
@@ -168,6 +174,9 @@
             this.blurVideoControl.dependencies = [
                 this.blurVideoControlStyle
             ];
+            this.forceWide.dependencies = [
+                this.forceWideStyle
+            ];
         }).apply(Resource.all);
         (function ()
         {
@@ -190,6 +199,7 @@
             this.removeVideoTopMask.displayName = "删除视频标题层";
             this.blurVideoControl.displayName = "模糊视频控制栏背景";
             this.darkSchedule.displayName = "夜间模式计划时段";
+            this.forceWide.displayName = "强制宽屏";
         }).apply(Resource.all);
     }
     function downloadText(url, load, error)
@@ -253,6 +263,21 @@
                     observer.options = {
                         childList: false,
                         subtree: false,
+                        attributes: true
+                    };
+                    return observer.start();
+                });
+        }
+        static all(selector, callback)
+        {
+            callback();
+            return new Array(...document.querySelectorAll(selector))
+                .map(it =>
+                {
+                    const observer = new Observer(it, callback);
+                    observer.options = {
+                        childList: true,
+                        subtree: true,
                         attributes: true
                     };
                     return observer.start();
@@ -540,7 +565,7 @@
                 for (const key of keys)
                 {
                     html = html
-                        .replace(new RegExp(`(<checkbox\\s*indent=".+"\\s*key="${key}"\\s*dependencies=".*">)[^\\0]*?(</checkbox>)`, "g"),
+                        .replace(new RegExp(`(<checkbox\\s*?indent=".+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</checkbox>)`, "g"),
                             `$1${Resource.all[key].displayName}$2`);
                 }
                 return html
@@ -548,7 +573,7 @@
                     <li class="indent-center category">
                         <span class="settings-category">$1</span>
                     </li>
-                `).replace(/<checkbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/checkbox>/g, `
+                `).replace(/<checkbox\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
                             <input key="$2" type="checkbox" dependencies="$3" checked/>
@@ -558,7 +583,7 @@
                             <span>$4</span>
                         </label>
                     </li>
-                `).replace(/<textbox\s*indent="(.+)"\s*key="(.+)"\s*dependencies="(.*)">([^\0]*?)<\/textbox>/g, `
+                `).replace(/<textbox\s*?indent="(.+?)"\s*key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/textbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-textbox-container">
                             <span>$4</span>
@@ -754,16 +779,19 @@
                 return null;
             }
             const promise = resource.download();
-            promise.then(text =>
+            return new Promise(resolve =>
             {
-                this.applyComponent(key, text);
-            }).catch(reason =>
-            {
-                // download error
-                console.error(`Download error, XHR status: ${reason}`);
-                Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
+                promise.then(text =>
+                {
+                    this.applyComponent(key, text);
+                    resolve();
+                }).catch(reason =>
+                {
+                    // download error
+                    console.error(`Download error, XHR status: ${reason}`);
+                    Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
+                });
             });
-            return promise;
         }
         fetch()
         {
@@ -781,6 +809,7 @@
                         }
                     }
                 }
+                this.validateCache();
                 Promise.all(promises).then(() =>
                 {
                     this.applySettingsWidgets();
@@ -795,15 +824,8 @@
             {
                 try
                 {
-                    const attribute = func(settings, this);
+                    const attribute = func(settings, this) || {};
                     this.attributes[key] = attribute;
-                    if (attribute.ajaxReload)
-                    {
-                        $(document).ajaxComplete(() =>
-                        {
-                            func(settings, this);
-                        });
-                    }
                 }
                 catch (error)
                 {
@@ -839,12 +861,25 @@
                 }
             }
         }
+        getDefaultStyleId(key)
+        {
+            return key.replace(/([a-z][A-Z])/g,
+                g => `${g[0]}-${g[1].toLowerCase()}`);
+        }
         applyStyle(key, id)
         {
+            if (id === undefined)
+            {
+                id = this.getDefaultStyleId(key);
+            }
             Resource.all[key].applyStyle(id, false);
         }
         applyImportantStyle(key, id)
         {
+            if (id === undefined)
+            {
+                id = this.getDefaultStyleId(key);
+            }
             Resource.all[key].applyStyle(id, true);
         }
         applyStyleFromText(text)
@@ -858,6 +893,18 @@
         getStyle(key, id)
         {
             return Resource.all[key].getStyle(id);
+        }
+        validateCache()
+        {
+            if (settings.cache.version !== settings.currentVersion)
+            {
+                settings.cache = {};
+            }
+            if (settings.cache.version === undefined)
+            {
+                settings.cache.version = settings.currentVersion;
+            }
+            saveSettings(settings);
         }
     }
 

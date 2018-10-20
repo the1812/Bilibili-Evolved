@@ -4,7 +4,7 @@
     {
         if (settings.useDarkStyle)
         {
-            resources.applyStyle("scrollbarStyle", "bilibili-scrollbar-style");
+            resources.applyStyle("scrollbarStyle");
             SpinQuery.any(
                 () => $(".custom-scrollbar"),
                 it => it.removeClass("custom-scrollbar")
@@ -14,19 +14,15 @@
                 settings.overrideNavBar &&
                 !settings.showBanner)
             {
-                resources.applyImportantStyle("darkStyleNavBar", "bilibili-new-style-dark-nav-bar");
+                resources.applyImportantStyle("darkStyleNavBar");
             }
-            resources.applyStyle("darkStyle", "bilibili-new-style-dark");
-            resources.applyImportantStyle("darkStyleImportant", "bilibili-new-style-dark-important");
+            resources.applyStyle("darkStyle");
+            resources.applyImportantStyle("darkStyleImportant");
         }
         else
         {
             $("#bilibili-scrollbar-style,#bilibili-new-style-dark-nav-bar,#bilibili-new-style-dark,#bilibili-new-style-dark-important")
                 .remove();
         }
-
-        return {
-            ajaxReload: false
-        };
     };
 })();

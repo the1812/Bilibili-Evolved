@@ -1,4 +1,6 @@
-.link-footer
+.link-footer,
+.payment-active,
+.app-body .section-block 
 {
     background-color: #222 !important;
 }
@@ -7,7 +9,9 @@
 .status_box .status_btn.disabled,
 .game-groom-m .num,
 .container .pagination,
-.fjw-case-detail .ban-detail .content-box .video-model 
+.fjw-case-detail .ban-detail .content-box .video-model,
+.app-body .section-block.with-bottom-radius,
+.app-body .section-block.with-radius
 {
     background-color: #444 !important;
 }
@@ -70,7 +74,9 @@ blockquote .color-yellow-04,
 .more-data a:hover,
 .rank-item .content .info .detail a a:hover,
 .rank-item .content .other a:hover,
-.rank-item .content .more-data:hover
+.rank-item .content .more-data:hover,
+.edit-button:hover > .icon-font,
+.edit-button:hover > span
 {
     color: $customStyleColor !important;
 }

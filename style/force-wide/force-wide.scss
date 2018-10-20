@@ -1,0 +1,74 @@
+@media screen and (min-width: $forceWideMinWidth) {
+    .bili-wrapper {
+        width:1160px;
+    }
+    .bili-wrapper .l-con {
+        width:900px;
+    }
+    .bili-header-m .bili-wrapper {
+        width:1160px;
+    }
+    .bili-header-m .bili-wrapper .l-con {
+        width:900px;
+    }
+    .gg-floor-module {
+        width:1160px;
+        max-height: 96px;
+    }
+    .bangumi-timing-module .headline .bili-tab {
+        width:650px;
+    }
+
+    .bangumi-timing-module .headline .bili-tab .bili-tab-item {
+        width: 70px;
+    }
+    .bangumi-timing-module .card-timing:first-child:nth-child(4),
+    .bangumi-timing-module .card-timing:nth-child(2):nth-child(4),
+    .bangumi-timing-module .card-timing:nth-child(3):nth-child(4),
+    .bangumi-timing-module .card-timing:nth-child(4):nth-child(4) {
+        padding-top:0;
+    }
+    .bangumi-timing-module .card-timing {
+        padding:36px 34px 0 0;
+    }
+    .audio-list .song-list .song-li:nth-child(5n) .content .text {
+        margin-right:0;
+    }
+    .audiolist-list .song-list .song-li:nth-child(5n) .content .text {
+        margin-right:0;
+    }
+    .elevator-module {
+        margin-left:590px;
+    }
+
+    #primary_menu,
+    #primary_menu>ul.nav-menu,
+    .uns_box li.u-i.b-post
+    {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .primary-menu
+    {
+        width: 100%;
+    }
+    .primary-menu .nav-menu
+    {
+        flex-grow: 1;
+    }
+    .primary-menu .nav-gif
+    {
+        position: static;
+        margin-left: 2%;
+    }
+
+    .primary-menu .nav-menu>li
+    {
+        margin-right: 0 !important;
+    }
+    .primary-menu .nav-menu>li.home
+    {
+        padding-right: 1%;
+    }
+}

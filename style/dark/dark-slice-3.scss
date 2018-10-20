@@ -539,9 +539,14 @@ body>div.to-top.on,
 // }
 @supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
 {
-    .gui-settings-content.blur
+    .gui-settings-box.blur .gui-settings-content
     {
-        background: #222c !important;
+        background: #2228 !important;
+    }
+    .gui-settings-box.blur .gui-settings-header,
+    .gui-settings-box.blur .gui-settings-footer
+    {
+        background: #2224 !important;
     }
 }
 .face-g-list .mp-block .right ul li.base .round

@@ -17,7 +17,7 @@
             createDom()
             {
                 $("body").append(resources.data.imageViewerDom.text);
-                resources.applyStyle("imageViewerStyle", "image-viewer-style");
+                resources.applyStyle("imageViewerStyle");
                 $(".image-viewer-container .close").on("click", () => this.hide());
             }
             downloadImage()
@@ -53,7 +53,6 @@
         if ($("meta[itemprop='image']").length > 0)
         {
             return {
-                ajaxReload: false,
                 settingsWidget: {
                     after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
                     content: `<li class="indent-center hidden">

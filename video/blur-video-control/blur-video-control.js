@@ -13,13 +13,9 @@
                     {
                         containers.addClass("video-control-blur-container");
                         containers.prepend(`<div class="video-control-blur-layer"></div>`);
-                        resources.applyStyle("blurVideoControlStyle", "bilibili-blur-video-control");
+                        resources.applyStyle("blurVideoControlStyle");
                     }
                 });
         });
-
-        return {
-            ajaxReload: true
-        };
     };
 })();

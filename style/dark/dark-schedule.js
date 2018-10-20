@@ -141,7 +141,6 @@
         checkTime();
 
         return {
-            ajaxReload: false,
             export: ScheduleTime
         };
     };

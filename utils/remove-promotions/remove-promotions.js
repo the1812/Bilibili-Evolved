@@ -2,7 +2,7 @@
 {
     return (_, resources) =>
     {
-        resources.applyStyle("removeAdsStyle", "remove-promotions-style");
+        resources.applyStyle("removeAdsStyle");
         SpinQuery.any(
             () => $(".gg-pic").parent("a"),
             it =>
@@ -16,8 +16,5 @@
                 });
             }
         );
-        return {
-            ajaxReload: false
-        };
     };
 })();
