@@ -2,7 +2,8 @@
 .title-factory-card,
 .p-relative.gold-seed-store.over-hidden .content,
 .live-btn.default,
-.collapse-subitem--active 
+.collapse-subitem--active,
+.invtable tr:nth-child(odd) td 
 {
     background-color: #222 !important;
 }
@@ -10,7 +11,9 @@
 .title-item,
 .help-list,
 .help-box,
-.right-action-ctnr.pointer.dp-i-block.primary.btn.p-relative .btn.primary 
+.right-action-ctnr.pointer.dp-i-block.primary.btn.p-relative .btn.primary,
+.code-content,
+.invtable .codedone 
 {
     background-color: #444 !important;
 }
@@ -59,7 +62,8 @@
 .record-ctnr .summary .s-item .title,
 .main_body .future .future_list .future_block .info .loca,
 .edit-button > span,
-.room-introduction-content.empty 
+.room-introduction-content.empty,
+.invitation-subtitle 
 {
     color: #aaa !important;
 }
@@ -78,7 +82,11 @@
 .collapse-item a,
 .help-subtitle,
 .collapse-subitem--active a,
-.drop-menu-item 
+.drop-menu-item,
+.invitation-title,
+.code-btn,
+table.invtable td,
+.invtable .codedone 
 {
     color: #eee !important;
 }
@@ -103,7 +111,8 @@
 .areas .area,
 .record-ctnr .summary,
 .help-list,
-.help-box 
+.help-box,
+.code-result 
 {
     border-color: transparent !important;
 }
@@ -199,7 +208,9 @@
 .live-btn.default:active,
 .live-btn.default:hover,
 .popup-close-btn,
-.helper-icon-dots 
+.helper-icon-dots,
+.code-btn,
+.code-btn:hover 
 {
     background-color: $customStyleColor !important;
 }
