@@ -186,10 +186,8 @@
 ![消息](images/toast.png)
 ### 模糊设置面板背景
 使设置面板的内容区半透明并模糊后方图像.
-#### 启用前
-![无模糊](images/gui-settings-no-blur.png)
-#### 启用后
-![模糊](images/gui-settings-blur.png)
+#### 效果对比
+![效果对比](images/gui-settings-blur.png)
 ### 启用缓存
 使用缓存以提高脚本的加载速度, 此选项只对非离线版有效.
 
