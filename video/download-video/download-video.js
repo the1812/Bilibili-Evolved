@@ -12,7 +12,7 @@
             }
             static get availableFormats()
             {
-                return new Promise((resolve) =>
+                return new Promise((resolve, reject) =>
                 {
                     const url = `https://api.bilibili.com/x/player/playurl?avid=${unsafeWinodw.aid}&cid=${unsafeWinodw.cid}&otype=json`;
                     downloadText(url, json =>
@@ -33,7 +33,7 @@
                             formats.push(format);
                         }
                         resolve(formats);
-                    });
+                    }, error => reject(`获取清晰度信息失败: ${error}`));
                 });
             }
         }
@@ -56,17 +56,24 @@
             }
             fetchVideoInfo()
             {
-                return new Promise((resolve) =>
+                return new Promise((resolve, reject) =>
                 {
                     const url = `https://api.bilibili.com/x/player/playurl?avid=${unsafeWinodw.aid}&cid=${unsafeWinodw.cid}&qn=${this.format.quality}&otype=json`;
                     downloadText(url, json =>
                     {
                         const data = JSON.parse(json).data;
-                        const urls = data.durl;
-                        this.fragments = urls.map(it => new VideoInfoFragment(
-                            it.length, it.size, it.url, it.backup_url
-                        ));
-                        resolve();
+                        if (data.quality !== this.format.quality)
+                        {
+                            reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
+                        }
+                        else
+                        {
+                            const urls = data.durl;
+                            this.fragments = urls.map(it => new VideoInfoFragment(
+                                it.length, it.size, it.url, it.backup_url
+                            ));
+                            resolve();
+                        }
                     });
                 });
             }
