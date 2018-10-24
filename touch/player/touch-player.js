@@ -303,45 +303,24 @@
         {
             constructor()
             {
-                const url = window.location.href;
-                const aidMatch = url.match(/av([\d]+)/);
-                this.aid = aidMatch[1];
-                const pageMatch = url.match(/p=([\d]+)/);
-                this.page = pageMatch ? pageMatch[1] : 1;
-
-                this.pagesData = null;
-                this.cidMap = {};
-                this.cidData = {};
+                this.aid = unsafeWindow.aid;
+                this.cid = unsafeWindow.cid;
+                this.cidData = null;
                 this.supportWebp = VideoShot.supportWebp;
-
-                downloadText(url, html => this.findCid(html));
-            }
-            findCid(html)
-            {
-                const match = html.match(/"pages":(\[[^\0]*\]),"embedPlayer"/);
-                if (match)
-                {
-                    this.pagesData = JSON.parse(match[1]);
-                    this.pagesData.forEach(pageData =>
-                    {
-                        this.cidMap[pageData.page] = pageData.cid;
-                    });
-                }
             }
             getVideoshot(currentTime, done)
             {
-                if (!this.cidData[this.page])
+                if (!this.cidData)
                 {
-                    downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cidMap[this.page]}&index=1`, response =>
+                    downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`, response =>
                     {
-                        this.cidData[this.page] = JSON.parse(response).data;
+                        this.cidData = JSON.parse(response).data;
                         this.getVideoshot(currentTime, done);
                     });
                 }
                 else
                 {
-                    const data = this.cidData[this.page];
-
+                    const data = this.cidData;
                     const indexData = data.index;
                     let shotIndex = 0;
                     for (let index = 0; index < indexData.length - 2; index++)
