@@ -66,14 +66,15 @@
                         {
                             reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
                         }
-                        else
+                        const urls = data.durl;
+                        this.fragments = urls.map(it => new VideoInfoFragment(
+                            it.length, it.size, it.url, it.backup_url
+                        ));
+                        if (this.fragments.length > 1)
                         {
-                            const urls = data.durl;
-                            this.fragments = urls.map(it => new VideoInfoFragment(
-                                it.length, it.size, it.url, it.backup_url
-                            ));
-                            resolve();
+                            reject("暂不支持分段视频的下载.");
                         }
+                        resolve();
                     });
                 });
             }
