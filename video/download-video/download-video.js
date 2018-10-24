@@ -26,7 +26,10 @@
                 return new Promise((resolve) =>
                 {
                     const url = `https://api.bilibili.com/x/player/playurl?avid=${unsafeWinodw.aid}&cid=${unsafeWinodw.cid}&qn=${this.format.quality}&otype=json`;
+                    downloadText(url, json =>
+                    {
 
+                    });
                 });
             }
         }

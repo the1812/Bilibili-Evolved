@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.10
+// @version      1.5.11
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -207,6 +207,7 @@
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("load", () => load && load(xhr.responseText));
         xhr.addEventListener("error", () => error && error(xhr.responseText));
+        xhr.withCredentials = true;
         xhr.open("GET", url);
         xhr.send();
     }
