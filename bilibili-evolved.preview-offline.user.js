@@ -181,6 +181,10 @@
             this.forceWide.dependencies = [
                 this.forceWideStyle
             ];
+            this.downloadVideo.dependencies = [
+                this.downloadVideoDom,
+                this.downloadVideoStyle
+            ];
         }).apply(Resource.all);
         (function ()
         {
