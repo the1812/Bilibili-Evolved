@@ -9,7 +9,10 @@
 .cc-article-wrp .article-card .meta-view .appeal,
 .cc-article-wrp .article-card .meta-view .data,
 .cc-article-wrp .article-card .meta-view .delete,
-.cc-article-wrp .article-card .meta-view .option 
+.cc-article-wrp .article-card .meta-view .option,
+.comment-list-item .ci-action a:hover,
+.comment-manage-wrap .content .action-bar .dropdown .action-menu li:hover,
+.comment-manage-wrap .content .action-bar .dropdown .sort-menu li:hover 
 {
     background-color: #222 !important;
 }
@@ -24,7 +27,8 @@
 .videoCharts .stat .stat-wrp,
 .article-data-wrp .video-box,
 .article-net-charts .content-box,
-.article-net-charts .area 
+.article-net-charts .area,
+.comment-manage-wrap .content 
 {
     background-color: #444 !important;
 }
@@ -137,7 +141,8 @@ table.invtable td,
 .el-input-group__prepend,
 .page-wrp.is-article.cc-article-wrp .article-card,
 .videoCharts .stat .stat-wrp .stat-card,
-.article-chart-wrp 
+.article-chart-wrp,
+.comment-list-item 
 {
     border-color: transparent !important;
 }
