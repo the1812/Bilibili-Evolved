@@ -130,9 +130,16 @@
                             const blobUrl = URL.createObjectURL(blob);
                             const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
                             const extension = fragment.url.indexOf(".flv") !== -1 ? ".flv" : ".mp4";
+                            const oldBlobUrl = $("a#video-complete").attr("href");
+                            if (oldBlobUrl)
+                            {
+                                URL.revokeObjectURL(oldBlobUrl);
+                            }
                             $("a#video-complete")
                                 .attr("href", blobUrl)
                                 .attr("download", title + extension);
+                            this.progress && this.progress(0);
+                            document.getElementById("video-complete").click();
                             resolve(blobUrl);
                         }
                         else
@@ -171,7 +178,6 @@
                                 $(".download-video-panel")
                                     .removeClass("progress")
                                     .addClass("quality");
-                                document.getElementById("video-complete").click();
                             }
                             $(`<li>${format.displayName}</li>`)
                                 .on("click", formatClick)
