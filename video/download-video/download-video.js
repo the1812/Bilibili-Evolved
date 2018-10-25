@@ -85,7 +85,7 @@
                     const xhr = new XMLHttpRequest();
                     xhr.addEventListener("load", () =>
                     {
-                        const data = JSON.parse(xhr.responseText).data;
+                        const data = JSON.parse(xhr.responseText.replace("http:", "https:")).data;
                         if (data.quality !== this.format.quality)
                         {
                             reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
@@ -93,8 +93,8 @@
                         const urls = data.durl;
                         this.fragments = urls.map(it => new VideoInfoFragment(
                             it.length, it.size,
-                            it.url.replace("http:", "https:"),
-                            it.backup_url.map(it => it.replace("http:", "https:"))
+                            it.url,
+                            it.backup_url
                         ));
                         if (this.fragments.length > 1)
                         {
