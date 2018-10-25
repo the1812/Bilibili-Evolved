@@ -54,7 +54,7 @@
         {
             return {
                 settingsWidget: {
-                    after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
+                    category: "视频与直播",
                     content: `<li class="indent-half hidden">
                         <button
                             class="gui-settings-button"
@@ -83,7 +83,7 @@
         {
             return {
                 settingsWidget: {
-                    after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
+                    category: "视频与直播",
                     content: `<li class="indent-center hidden">
                             <button
                                 class="gui-settings-button"

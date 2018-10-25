@@ -4,7 +4,7 @@
     {
         return {
             settingsWidget: {
-                after: () => $("input[key=useCache]").parent().parent(),
+                category: "其他",
                 content: `<li class="indent-center">
                         <button
                             class="gui-settings-button"

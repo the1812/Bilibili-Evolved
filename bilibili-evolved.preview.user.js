@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.14
+// @version      1.5.15
 // @description  增强哔哩哔哩Web端体验.(预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -60,7 +60,7 @@
         fixFullscreen: false,
         downloadVideo: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.14"
+        currentVersion: "1.5.15"
     };
     function loadSettings()
     {
@@ -603,6 +603,8 @@
                     <li class="indent-center category">
                         <span class="settings-category">$1</span>
                     </li>
+                    <li class="indent-center widgets-container" category-name="$1">
+                    </li>
                 `).replace(/<checkbox\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
@@ -883,6 +885,10 @@
                 else if (info.before)
                 {
                     panel.find(info.before()).before(info.content);
+                }
+                else if (info.category)
+                {
+                    panel.find(`.widgets-container[category-name=${info.category}]`).append(info.content);
                 }
 
                 if (info.success)

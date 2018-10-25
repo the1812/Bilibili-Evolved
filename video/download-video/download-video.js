@@ -157,7 +157,7 @@
         }
         return {
             settingsWidget: {
-                after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
+                category: "视频与直播",
                 content: resources.data.downloadVideoDom.text,
                 success: () =>
                 {

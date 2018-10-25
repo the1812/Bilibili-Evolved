@@ -153,6 +153,14 @@
     align-items: center;
     justify-content: center;
 }
+.gui-settings-content ul li.widgets-container
+{
+    margin: 0;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
 .gui-settings-content ul li.indent-half
 {
     width: 50%;
