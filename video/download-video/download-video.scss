@@ -39,9 +39,13 @@
 {
     display: block;
 }
-.download-progress-value
+.download-progress-text
 {
-    margin-left: 4px;
+    display: flex;
+}
+.download-progress-title
+{
+    flex: 1 0 0;
 }
 .download-progress-background
 {
@@ -63,6 +67,10 @@
 .video-progress
 {
     padding: 12px;
+}
+.video-progress
+{
+    min-width: 160px;
 }
 .video-complete
 {
