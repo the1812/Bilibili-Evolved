@@ -2,6 +2,12 @@
 {
     return (settings, resources) =>
     {
+        const aid = (unsafeWindow || window).aid;
+        const cid = (unsafeWindow || window).cid;
+        if (aid === undefined || cid === undefined)
+        {
+            console.error(`unable to get aid or cid. aid=${aid}, cid=${cid}`);
+        }
         class VideoFormat
         {
             constructor(quality, internalName, displayName)
@@ -14,7 +20,7 @@
             {
                 return new Promise((resolve, reject) =>
                 {
-                    const url = `https://api.bilibili.com/x/player/playurl?avid=${unsafeWinodw.aid}&cid=${unsafeWinodw.cid}&otype=json`;
+                    const url = `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json`;
                     downloadText(url, json =>
                     {
                         const data = JSON.parse(json).data;
@@ -58,7 +64,7 @@
             {
                 return new Promise((resolve, reject) =>
                 {
-                    const url = `https://api.bilibili.com/x/player/playurl?avid=${unsafeWinodw.aid}&cid=${unsafeWinodw.cid}&qn=${this.format.quality}&otype=json`;
+                    const url = `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${this.format.quality}&otype=json`;
                     downloadText(url, json =>
                     {
                         const data = JSON.parse(json).data;
@@ -85,24 +91,18 @@
                 content: resources.data.downloadVideoDom.text,
                 success: () =>
                 {
-                    new SpinQuery(() => $("#download-video"),
-                        it => it.length > 0 && typeof unsafeWinodw !== "undefined",
-                        () =>
+                    VideoFormat.availableFormats.then((formats) =>
+                    {
+                        formats.forEach(format =>
                         {
-                            VideoFormat.availableFormats.then((formats) =>
-                            {
-                                formats.forEach(format =>
-                                {
-                                    $("ol.video-quality").append(`<li>${format.displayName}</li>`);
-                                });
-                                resources.applyStyle("downloadVideoStyle");
-                                $("#download-video").on("click", () =>
-                                {
-                                    $(".download-video-panel").toggleClass("opened");
-                                }).parent().removeClass("hidden");
-                            });
-                        }
-                    ).start();
+                            $("ol.video-quality").append(`<li>${format.displayName}</li>`);
+                        });
+                        resources.applyStyle("downloadVideoStyle");
+                        $("#download-video").on("click", () =>
+                        {
+                            $(".download-video-panel").toggleClass("opened");
+                        }).parent().removeClass("hidden");
+                    });
                 }
             }
         };
