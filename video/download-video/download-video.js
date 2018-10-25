@@ -1,6 +1,6 @@
 (() =>
 {
-    return () =>
+    return (settings, resources) =>
     {
         class VideoFormat
         {
@@ -79,5 +79,15 @@
                 });
             }
         }
+        return {
+            settingsWidget: {
+                after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
+                content: resources.data.downloadVideoDom.text,
+                success: () =>
+                {
+                    resources.applyStyle("downloadVideoStyle");
+                }
+            }
+        };
     };
 })();
