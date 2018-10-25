@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.11
+// @version      1.5.12
 // @description  增强哔哩哔哩Web端体验. (预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @match        *://*.bilibili.com/*
@@ -56,8 +56,9 @@
         notifyNewVersion: true,
         clearCache: true,
         fixFullscreen: false,
+        downloadVideo: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.10"
+        currentVersion: "1.5.12"
     };
     function loadSettings()
     {
@@ -104,9 +105,11 @@
             toastStyle: new Resource("min/toast.min.scss", 9),
             blurVideoControlStyle: new Resource("min/blur-video-control.min.css", 10),
             forceWideStyle: new Resource("min/force-wide.min.scss"),
+            downloadVideoStyle: new Resource("min/download-video.min.scss"),
 
             guiSettingsDom: new Resource("min/gui-settings.min.html"),
             imageViewerDom: new Resource("min/image-viewer.min.html"),
+            downloadVideoDom: new Resource("min/download-video.min.html"),
             latestVersion: new Resource("version.txt"),
 
             guiSettings: new Resource("min/gui-settings.min.js"),
@@ -129,7 +132,8 @@
             blurVideoControl: new Resource("min/blur-video-control.min.js"),
             darkSchedule: new Resource("min/dark-schedule.min.js"),
             forceWide: new Resource("min/force-wide.min.js"),
-            clearCache: new Resource("min/clear-cache.min.js")
+            clearCache: new Resource("min/clear-cache.min.js"),
+            downloadVideo: new Resource("min/download-video.min.js")
         };
         (function ()
         {

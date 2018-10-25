@@ -85,7 +85,24 @@
                 content: resources.data.downloadVideoDom.text,
                 success: () =>
                 {
-                    resources.applyStyle("downloadVideoStyle");
+                    new SpinQuery(() => $("#download-video"),
+                        it => it.length > 0 && typeof unsafeWinodw !== "undefined",
+                        () =>
+                        {
+                            VideoFormat.availableFormats.then((formats) =>
+                            {
+                                formats.forEach(format =>
+                                {
+                                    $("ol.video-quality").append(`<li>${format.displayName}</li>`);
+                                });
+                                resources.applyStyle("downloadVideoStyle");
+                                $("#download-video").on("click", () =>
+                                {
+                                    $(".download-video-panel").toggleClass("opened");
+                                }).parent().removeClass("hidden");
+                            });
+                        }
+                    ).start();
                 }
             }
         };
