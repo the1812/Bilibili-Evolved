@@ -6,7 +6,6 @@
         const cid = (unsafeWindow || window).cid;
         if (aid === undefined || cid === undefined)
         {
-            console.error(`unable to get aid or cid. aid=${aid}, cid=${cid}`);
             return;
         }
         class VideoFormat
