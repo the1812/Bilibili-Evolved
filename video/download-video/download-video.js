@@ -19,14 +19,10 @@
             async download()
             {
                 const videoInfo = new VideoInfo(this);
-                await videoInfo.fetchVideoInfo().catch(error =>
-                {
-                    $(".download-video-panel").addClass("error");
-                    $(".video-error").text(error);
-                });
+                await videoInfo.fetchVideoInfo();
                 videoInfo.progress = percent =>
                 {
-                    $(".download-progress-value").text(`${fixed(percent * 100)}%`);
+                    $(".download-progress-value").text(`${fixed(percent * 100)}`);
                     $(".download-progress-foreground").css("transform", `scaleX(${percent})`);
                 };
                 return videoInfo.download();
@@ -76,59 +72,67 @@
                 this.fragments = fragments || [];
                 this.progress = null;
             }
-            async fetchVideoInfo()
+            fetchVideoInfo()
             {
-                const url = `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${this.format.quality}&otype=json`;
-                downloadText(url, json =>
+                return new Promise((resolve, reject) =>
                 {
-                    const data = JSON.parse(json).data;
-                    if (data.quality !== this.format.quality)
+                    const url = `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${this.format.quality}&otype=json`;
+                    downloadText(url, json =>
                     {
-                        throw new Error("获取下载链接失败, 请确认当前账号有下载权限后重试.");
-                    }
-                    const urls = data.durl;
-                    this.fragments = urls.map(it => new VideoInfoFragment(
-                        it.length, it.size, it.url, it.backup_url
-                    ));
-                    if (this.fragments.length > 1)
-                    {
-                        throw new Error("暂不支持分段视频的下载.");
-                    }
-                    Promise.resolve();
+                        const data = JSON.parse(json).data;
+                        if (data.quality !== this.format.quality)
+                        {
+                            reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
+                        }
+                        const urls = data.durl;
+                        this.fragments = urls.map(it => new VideoInfoFragment(
+                            it.length, it.size,
+                            it.url.replace("http:", "https:"),
+                            it.backup_url.map(it => it.replace("http:", "https:"))
+                        ));
+                        if (this.fragments.length > 1)
+                        {
+                            reject("暂不支持分段视频的下载.");
+                        }
+                        resolve(this.fragments);
+                    });
                 });
             }
-            async download()
+            download()
             {
-                const [fragment] = this.fragments;
-                const xhr = new XMLHttpRequest();
-                xhr.open("GET", fragment.url);
-                xhr.responseType = "arraybuffer";
-                xhr.withCredentials = true;
-                xhr.addEventListener("progress", (e) =>
+                return new Promise((resolve, reject) =>
                 {
-                    this.progress && this.progress(e.loaded / fragment.size);
-                });
-                xhr.addEventListener("load", () =>
-                {
-                    if (xhr.status === 200)
+                    const [fragment] = this.fragments;
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("GET", fragment.url);
+                    xhr.responseType = "arraybuffer";
+                    xhr.withCredentials = true;
+                    xhr.addEventListener("progress", (e) =>
                     {
-                        const blob = new Blob([xhr.response], {
-                            type: "video/x-flv"
-                        });
-                        const blobUrl = URL.createObjectURL(blob);
-                        open(blobUrl);
-                        Promise.resolve(blobUrl);
-                    }
-                    else
+                        this.progress && this.progress(e.loaded / fragment.size);
+                    });
+                    xhr.addEventListener("load", () =>
                     {
-                        throw new Error(`请求失败. ${xhr.status}`);
-                    }
+                        if (xhr.status === 200)
+                        {
+                            const blob = new Blob([xhr.response], {
+                                type: "video/x-flv"
+                            });
+                            const blobUrl = URL.createObjectURL(blob);
+                            open(blobUrl);
+                            resolve(blobUrl);
+                        }
+                        else
+                        {
+                            reject(`请求失败. ${xhr.status}`);
+                        }
+                    });
+                    xhr.addEventListener("error", e =>
+                    {
+                        reject(`下载失败. ${e}`);
+                    });
+                    xhr.send();
                 });
-                xhr.addEventListener("error", e =>
-                {
-                    throw new Error(`下载失败. ${e}`);
-                });
-                xhr.send();
             }
         }
         return {
@@ -146,7 +150,11 @@
                                 $(".download-video-panel")
                                     .removeClass("quality")
                                     .addClass("progress");
-                                await format.download();
+                                await format.download().catch(error =>
+                                {
+                                    $(".download-video-panel").addClass("error");
+                                    $(".video-error").text(error);
+                                });
                                 $(".download-video-panel")
                                     .removeClass("progress")
                                     .addClass("quality");
