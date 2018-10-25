@@ -3,7 +3,13 @@
 .p-relative.gold-seed-store.over-hidden .content,
 .live-btn.default,
 .collapse-subitem--active,
-.invtable tr:nth-child(odd) td
+.invtable tr:nth-child(odd) td,
+.el-input-group__append,
+.el-input-group__prepend,
+.cc-article-wrp .article-card .meta-view .appeal,
+.cc-article-wrp .article-card .meta-view .data,
+.cc-article-wrp .article-card .meta-view .delete,
+.cc-article-wrp .article-card .meta-view .option 
 {
     background-color: #222 !important;
 }
@@ -13,7 +19,8 @@
 .help-box,
 .right-action-ctnr.pointer.dp-i-block.primary.btn.p-relative .btn.primary,
 .code-content,
-.invtable .codedone
+.invtable .codedone,
+.cc-article-wrp .article-card 
 {
     background-color: #444 !important;
 }
@@ -63,7 +70,12 @@
 .main_body .future .future_list .future_block .info .loca,
 .edit-button > span,
 .room-introduction-content.empty,
-.invitation-subtitle
+.invitation-subtitle,
+.cc-article-wrp .article-card .meta-title .typename,
+.cc-article-wrp .article-card .meta-view .appeal,
+.cc-article-wrp .article-card .meta-view .data,
+.cc-article-wrp .article-card .meta-view .delete,
+.cc-article-wrp .article-card .meta-view .option
 {
     color: #aaa !important;
 }
@@ -86,7 +98,10 @@
 .invitation-title,
 .code-btn,
 table.invtable td,
-.invtable .codedone
+.invtable .codedone,
+.el-input-group__append,
+.el-input-group__prepend,
+.cc-article-wrp .article-header .search-wrp input 
 {
     color: #eee !important;
 }
@@ -112,12 +127,16 @@ table.invtable td,
 .record-ctnr .summary,
 .help-list,
 .help-box,
-.code-result
+.code-result,
+.el-input-group__append,
+.el-input-group__prepend,
+.page-wrp.is-article.cc-article-wrp .article-card
 {
     border-color: transparent !important;
 }
 .link-input,
-.add-cover
+.add-cover,
+.cc-article-wrp .article-card .meta-title .typename 
 {
     border-color: #aaa !important;
 }
@@ -210,7 +229,11 @@ table.invtable td,
 .popup-close-btn,
 .helper-icon-dots,
 .code-btn,
-.code-btn:hover
+.code-btn:hover,
+.cc-article-wrp .article-card .meta-view .appeal:hover,
+.cc-article-wrp .article-card .meta-view .data:hover,
+.cc-article-wrp .article-card .meta-view .delete:hover,
+.cc-article-wrp .article-card .meta-view .option:hover 
 {
     background-color: $customStyleColor !important;
 }
