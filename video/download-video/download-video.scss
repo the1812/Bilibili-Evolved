@@ -28,12 +28,39 @@
     background: rgba(0,0,0,0.24);
 }
 .video-quality,
-.video-progress
+.video-progress,
+.video-error
 {
     display: none;
 }
-.download-video-panel.quality .video-quality,
-.download-video-panel.progress .video-progress
+.download-video-panel.quality:not(.error) .video-quality,
+.download-video-panel.progress:not(.error) .video-progress,
+.download-video-panel.error .video-error
 {
     display: block;
+}
+.download-progress-value
+{
+    margin-left: 4px;
+}
+.download-progress-background
+{
+    background-color: #0006;
+    height: 4px;
+    width: 100%;
+    margin-top: 4px;
+}
+.download-progress-foreground
+{
+    background-color: $customStyleColor;
+    transform-origin: left;
+    transition: all .2s ease-out;
+    transform: scaleX(0);
+    height: 100%;
+    width: 100%;
+}
+.video-error,
+.video-progress
+{
+    padding: 12px;
 }

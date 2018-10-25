@@ -14,26 +14,6 @@
             }
             return { x: x, y: y };
         };
-        const fixed = (number, precision = 1) =>
-        {
-            const str = number.toString();
-            const index = str.indexOf(".");
-            if (index !== -1)
-            {
-                if (str.length - index > precision + 1)
-                {
-                    return str.substring(0, index + precision + 1);
-                }
-                else
-                {
-                    return str;
-                }
-            }
-            else
-            {
-                return str + ".0";
-            }
-        };
         const secondsToTime = sec =>
         {
             sec = Math.abs(sec);

@@ -219,6 +219,26 @@
         xhr.open("GET", url);
         xhr.send();
     }
+    function fixed(number, precision = 1)
+    {
+        const str = number.toString();
+        const index = str.indexOf(".");
+        if (index !== -1)
+        {
+            if (str.length - index > precision + 1)
+            {
+                return str.substring(0, index + precision + 1);
+            }
+            else
+            {
+                return str;
+            }
+        }
+        else
+        {
+            return str + ".0";
+        }
+    }
     // Placeholder class for Toast
     class Toast
     {
