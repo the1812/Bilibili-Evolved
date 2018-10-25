@@ -3,6 +3,8 @@
 // @version      1.5.12
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard, Coulomb-G
+// @copyright    2018, Grant Howrad (https://github.com/the1812)
+// @license      MIT
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
 // @run-at       document-end
