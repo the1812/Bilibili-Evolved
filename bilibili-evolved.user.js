@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.13
+// @version      1.5.14
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -60,7 +60,7 @@
         fixFullscreen: false,
         downloadVideo: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.5.13"
+        currentVersion: "1.5.14"
     };
     function loadSettings()
     {
@@ -217,7 +217,6 @@
         const xhr = new XMLHttpRequest();
         xhr.addEventListener("load", () => load && load(xhr.responseText));
         xhr.addEventListener("error", () => error && error(xhr.responseText));
-        xhr.withCredentials = true;
         xhr.open("GET", url);
         xhr.send();
     }

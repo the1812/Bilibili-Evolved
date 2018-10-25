@@ -33,10 +33,10 @@
                 return new Promise((resolve, reject) =>
                 {
                     const url = `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json`;
-                    downloadText(url, json =>
+                    const xhr = new XMLHttpRequest();
+                    xhr.addEventListener("load", () =>
                     {
-                        const data = JSON.parse(json).data;
-
+                        const data = JSON.parse(xhr.responseText).data;
                         const qualities = data.accept_quality;
                         const internalNames = data.accept_format.split(",");
                         const displayNames = data.accept_description;
@@ -51,7 +51,11 @@
                             formats.push(format);
                         }
                         resolve(formats);
-                    }, error => reject(`获取清晰度信息失败: ${error}`));
+                    });
+                    xhr.addEventListener("error", () => reject(`获取清晰度信息失败.`));
+                    xhr.withCredentials = true;
+                    xhr.open("GET", url);
+                    xhr.send();
                 });
             }
         }
@@ -78,9 +82,10 @@
                 return new Promise((resolve, reject) =>
                 {
                     const url = `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${this.format.quality}&otype=json`;
-                    downloadText(url, json =>
+                    const xhr = new XMLHttpRequest();
+                    xhr.addEventListener("load", () =>
                     {
-                        const data = JSON.parse(json).data;
+                        const data = JSON.parse(xhr.responseText).data;
                         if (data.quality !== this.format.quality)
                         {
                             reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
@@ -97,6 +102,9 @@
                         }
                         resolve(this.fragments);
                     });
+                    xhr.withCredentials = true;
+                    xhr.open("GET", url);
+                    xhr.send();
                 });
             }
             download()
