@@ -50,7 +50,7 @@
             }
         }
 
-        if ($("meta[itemprop='image']").length > 0)
+        if ($("meta[itemprop='image'],meta[property='og:image']").length > 0)
         {
             return {
                 settingsWidget: {
@@ -65,7 +65,7 @@
                         </li>`,
                     success: () =>
                     {
-                        new SpinQuery(() => $("meta[itemprop='image']"),
+                        new SpinQuery(() => $("meta[itemprop='image'],meta[property='og:image']"),
                             metaData => metaData.length > 0 && metaData.prop("content"),
                             metaData =>
                             {
