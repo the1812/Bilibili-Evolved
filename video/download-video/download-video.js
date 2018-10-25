@@ -95,7 +95,7 @@
                     {
                         formats.forEach(format =>
                         {
-                            $("ol.video-quality").append(`<li>${format.displayName}</li>`);
+                            $("ol.video-quality").prepend(`<li>${format.displayName}</li>`);
                         });
                         resources.applyStyle("downloadVideoStyle");
                         $("#download-video").on("click", () =>
