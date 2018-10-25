@@ -55,7 +55,7 @@
             return {
                 settingsWidget: {
                     after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
-                    content: `<li class="indent-center hidden">
+                    content: `<li class="indent-half hidden">
                         <button
                             class="gui-settings-button"
                             title="查看当前视频的封面"

@@ -147,10 +147,16 @@
 {
     margin-left: 144px;
 }
-.gui-settings-content ul li.indent-center
+.gui-settings-content ul li.indent-center,
+.gui-settings-content ul li.indent-half
 {
     align-items: center;
     justify-content: center;
+}
+.gui-settings-content ul li.indent-half
+{
+    width: 50%;
+    display: inline-flex;
 }
 .gui-settings-content ul li.category
 {
