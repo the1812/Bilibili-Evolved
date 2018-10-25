@@ -224,7 +224,8 @@ table.invtable td,
 // }
 .videoCharts .stat .stat-wrp,
 .article-data-wrp .video-box,
-.article-net-charts .content-box 
+.article-net-charts .content-box,
+.el-radio-button__orig-radio:checked + .el-radio-button__inner 
 {
     box-shadow: none !important;
 }
