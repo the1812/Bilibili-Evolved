@@ -30,7 +30,9 @@
 .article-net-charts .area,
 .comment-manage-wrap .content,
 .head .dropdown-btn,
-.head .dropdown.open .dropdown-btn 
+.head .dropdown.open .dropdown-btn,
+.dc-button.dc-button-text,
+.dc-progress-bar 
 {
     background-color: #444 !important;
 }
@@ -86,7 +88,8 @@
 .cc-article-wrp .article-card .meta-view .data,
 .cc-article-wrp .article-card .meta-view .delete,
 .cc-article-wrp .article-card .meta-view .option,
-.article-data-wrp .menu-wrp .menu-tips 
+.article-data-wrp .menu-wrp .menu-tips,
+.type-rank-item-label 
 {
     color: #aaa !important;
 }
@@ -113,7 +116,11 @@ table.invtable td,
 .el-input-group__append,
 .el-input-group__prepend,
 .cc-article-wrp .article-header .search-wrp input,
-.head .dropdown-menu .search .bili-input 
+.head .dropdown-menu .search .bili-input,
+#dc-section_summary .source-rank-list-item .video-info-title a,
+.dc-button.dc-button-text,
+.dc-button.dc-button-text a,
+.dc-button.dc-button-text:hover 
 {
     color: #eee !important;
 }
@@ -147,7 +154,8 @@ table.invtable td,
 .article-chart-wrp,
 .comment-list-item,
 .head .dropdown-btn,
-.dropdown .dropdown-menu 
+.dropdown .dropdown-menu,
+#dc-section_summary .source-rank-list-item 
 {
     border-color: transparent !important;
 }
@@ -253,7 +261,8 @@ table.invtable td,
 .cc-article-wrp .article-card .meta-view .data:hover,
 .cc-article-wrp .article-card .meta-view .delete:hover,
 .cc-article-wrp .article-card .meta-view .option:hover,
-.head .dropdown-btn:hover 
+.head .dropdown-btn:hover,
+.dc-button.dc-button-text:hover 
 {
     background-color: $customStyleColor !important;
 }
