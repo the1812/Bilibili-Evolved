@@ -32,7 +32,8 @@
 .head .dropdown-btn,
 .head .dropdown.open .dropdown-btn,
 .dc-button.dc-button-text,
-.dc-progress-bar 
+.dc-progress-bar,
+.h-none-btn
 {
     background-color: #444 !important;
 }
@@ -89,7 +90,8 @@
 .cc-article-wrp .article-card .meta-view .delete,
 .cc-article-wrp .article-card .meta-view .option,
 .article-data-wrp .menu-wrp .menu-tips,
-.type-rank-item-label 
+.type-rank-item-label,
+.h-none-msg 
 {
     color: #aaa !important;
 }
@@ -120,7 +122,10 @@ table.invtable td,
 #dc-section_summary .source-rank-list-item .video-info-title a,
 .dc-button.dc-button-text,
 .dc-button.dc-button-text a,
-.dc-button.dc-button-text:hover 
+.dc-button.dc-button-text:hover,
+.home-top-msg-name,
+.h-none-btn,
+.h-none-btn:hover 
 {
     color: #eee !important;
 }
@@ -265,7 +270,8 @@ table.invtable td,
 .cc-article-wrp .article-card .meta-view .delete:hover,
 .cc-article-wrp .article-card .meta-view .option:hover,
 .head .dropdown-btn:hover,
-.dc-button.dc-button-text:hover 
+.dc-button.dc-button-text:hover,
+.h-none-btn:hover 
 {
     background-color: $customStyleColor !important;
 }
