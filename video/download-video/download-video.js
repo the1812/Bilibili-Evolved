@@ -1,12 +1,13 @@
 (() =>
 {
-    return (settings, resources) =>
+    return (_, resources) =>
     {
         const aid = (unsafeWindow || window).aid;
         const cid = (unsafeWindow || window).cid;
         if (aid === undefined || cid === undefined)
         {
             console.error(`unable to get aid or cid. aid=${aid}, cid=${cid}`);
+            return;
         }
         class VideoFormat
         {
@@ -106,7 +107,7 @@
                     const xhr = new XMLHttpRequest();
                     xhr.open("GET", fragment.url);
                     xhr.responseType = "arraybuffer";
-                    xhr.withCredentials = true;
+                    xhr.withCredentials = false;
                     xhr.addEventListener("progress", (e) =>
                     {
                         this.progress && this.progress(e.loaded / fragment.size);
@@ -119,17 +120,21 @@
                                 type: "video/x-flv"
                             });
                             const blobUrl = URL.createObjectURL(blob);
-                            open(blobUrl);
+                            const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+                            const extension = fragment.url.indexOf(".flv") !== -1 ? ".flv" : ".mp4";
+                            $("a#video-complete")
+                                .attr("href", blobUrl)
+                                .attr("download", title + extension);
                             resolve(blobUrl);
                         }
                         else
                         {
-                            reject(`请求失败. ${xhr.status}`);
+                            reject(`请求失败.`);
                         }
                     });
-                    xhr.addEventListener("error", e =>
+                    xhr.addEventListener("error", () =>
                     {
-                        reject(`下载失败. ${e}`);
+                        reject(`下载失败.`);
                     });
                     xhr.send();
                 });
@@ -158,7 +163,7 @@
                                 $(".download-video-panel")
                                     .removeClass("progress")
                                     .addClass("quality");
-                                // $("a#video-complete").click();
+                                document.getElementById("video-complete").click();
                             }
                             $(`<li>${format.displayName}</li>`)
                                 .on("click", formatClick)
