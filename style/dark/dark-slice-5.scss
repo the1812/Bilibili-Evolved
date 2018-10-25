@@ -20,7 +20,11 @@
 .right-action-ctnr.pointer.dp-i-block.primary.btn.p-relative .btn.primary,
 .code-content,
 .invtable .codedone,
-.cc-article-wrp .article-card 
+.cc-article-wrp .article-card,
+.videoCharts .stat .stat-wrp,
+.article-data-wrp .video-box,
+.article-net-charts .content-box,
+.article-net-charts .area 
 {
     background-color: #444 !important;
 }
@@ -75,7 +79,8 @@
 .cc-article-wrp .article-card .meta-view .appeal,
 .cc-article-wrp .article-card .meta-view .data,
 .cc-article-wrp .article-card .meta-view .delete,
-.cc-article-wrp .article-card .meta-view .option
+.cc-article-wrp .article-card .meta-view .option,
+.article-data-wrp .menu-wrp .menu-tips 
 {
     color: #aaa !important;
 }
@@ -130,7 +135,9 @@ table.invtable td,
 .code-result,
 .el-input-group__append,
 .el-input-group__prepend,
-.page-wrp.is-article.cc-article-wrp .article-card
+.page-wrp.is-article.cc-article-wrp .article-card,
+.videoCharts .stat .stat-wrp .stat-card,
+.article-chart-wrp 
 {
     border-color: transparent !important;
 }
@@ -190,10 +197,12 @@ table.invtable td,
 // {
 //     border-radius: 4px !important;
 // }
-// a
-// {
-//     box-shadow: none !important;
-// }
+.videoCharts .stat .stat-wrp,
+.article-data-wrp .video-box,
+.article-net-charts .content-box 
+{
+    box-shadow: none !important;
+}
 // a
 // {
 //     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
@@ -248,7 +257,8 @@ table.invtable td,
 .collapse-item--active .collapse-title,
 .help-subindex,
 .drop-menu-item:hover,
-icon-label.hover-text-blue:hover .label
+icon-label.hover-text-blue:hover .label,
+.stat-card .num .text 
 {
     color: $customStyleColor !important;
 }
