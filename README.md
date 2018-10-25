@@ -213,3 +213,5 @@
 - 触摸功能需要手动在`about:flags`中开启.
 ## ![Safari:未知](https://img.shields.io/badge/Safari-未知-lightgrey.svg?style=flat-square&colorB=323232)
 尚未在Safari中测试.
+
+[返回顶部](#Bilibili-Evolved)
