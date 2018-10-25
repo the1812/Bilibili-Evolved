@@ -244,7 +244,10 @@ table.invtable td,
 .add-cover:hover,
 .category:not(.gui-settings-content .category):hover,
 .data-card .data-box .tab .fan-tab.current:after,
-.data-card .fans-box .tab .fan-tab.current:after
+.data-card .fans-box .tab .fan-tab.current:after,
+.data-card .data-box .tab .fan-tab.current:after,
+.data-card .fans-box .tab .fan-tab.current:after,
+.section-item .diff-wrp .diff-text:before 
 {
     border-color: $customStyleColor !important;
 }
@@ -278,7 +281,9 @@ table.invtable td,
 .help-subindex,
 .drop-menu-item:hover,
 icon-label.hover-text-blue:hover .label,
-.stat-card .num .text 
+.stat-card .num .text,
+.comment-card .comment-item .comment-info .reply-block .comment-vedio a,
+.section-item .diff-wrp .diff-text 
 {
     color: $customStyleColor !important;
 }
@@ -302,7 +307,10 @@ icon-label.hover-text-blue:hover .label,
 //     border-right-color: transparent !important;
 // }
 .data-card .data-box .tab .fan-tab.current:after,
-.data-card .fans-box .tab .fan-tab.current:after
+.data-card .fans-box .tab .fan-tab.current:after,
+.data-card .data-box .tab .fan-tab.current:after,
+.data-card .fans-box .tab .fan-tab.current:after,
+.section-item .diff-wrp .diff-text:before 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
