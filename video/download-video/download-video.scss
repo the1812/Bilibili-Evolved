@@ -24,7 +24,12 @@
     border-radius: 4px;
     transition: all .2s ease-out;
 }
-.gui-settings-content ol.video-quality li:hover
+.video-action>div
+{
+    padding: 12px 24px;
+}
+.gui-settings-content ol.video-quality li:hover,
+.video-action>div:hover
 {
     background: rgba(0,0,0,0.16);
 }

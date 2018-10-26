@@ -196,11 +196,7 @@
                         }
                     }
                 }
-                const box = $(".predefined-colors");
-                if (box.hasClass("opened"))
-                {
-                    box.removeClass("opened");
-                }
+                $(".download-video-panel,.predefined-colors").removeClass("opened");
             };
             $(`input[type='checkbox'][key]`)
                 .on("change", e => checkBoxChange($(e.target)))

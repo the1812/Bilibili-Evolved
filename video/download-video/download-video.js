@@ -225,7 +225,6 @@
                             completeLink.setAttribute("download", result.filename);
                             completeLink.click();
                             $(".download-video-panel")
-                                .removeClass("opened")
                                 .removeClass("progress")
                                 .addClass("quality");
                         }
@@ -238,7 +237,6 @@
                             const info = await getVideoInfo();
                             info.copyUrl();
                             $(".download-video-panel")
-                                .removeClass("opened")
                                 .removeClass("action")
                                 .addClass("quality");
                         }
