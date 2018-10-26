@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.15
+// @version      1.5.16
 // @description  增强哔哩哔哩Web端体验.(预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -17,6 +17,7 @@
 // @grant        GM_setValue
 // @grant        GM_addValueChangeListener
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
+// @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
 (self$ =>
@@ -60,7 +61,7 @@
         fixFullscreen: false,
         downloadVideo: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.15"
+        currentVersion: "1.5.16"
     };
     function loadSettings()
     {

@@ -75,6 +75,8 @@
                 this.format = format;
                 this.fragments = fragments || [];
                 this.progress = null;
+                this.loaded = 0;
+                this.totalSize = null;
             }
             fetchVideoInfo()
             {
@@ -95,10 +97,10 @@
                             it.url,
                             it.backup_url
                         ));
-                        if (this.fragments.length > 1)
-                        {
-                            reject("暂不支持分段视频的下载.");
-                        }
+                        // if (this.fragments.length > 1)
+                        // {
+                        //     reject("暂不支持分段视频的下载.");
+                        // }
                         resolve(this.fragments);
                     });
                     xhr.withCredentials = true;
@@ -106,40 +108,23 @@
                     xhr.send();
                 });
             }
-            download()
+            downloadUrl(url)
             {
                 return new Promise((resolve, reject) =>
                 {
-                    const [fragment] = this.fragments;
                     const xhr = new XMLHttpRequest();
                     xhr.open("GET", fragment.url);
                     xhr.responseType = "arraybuffer";
                     xhr.withCredentials = false;
                     xhr.addEventListener("progress", (e) =>
                     {
-                        this.progress && this.progress(e.loaded / fragment.size);
+                        this.progress && this.progress((this.loaded + e.loaded) / this.totalSize);
                     });
                     xhr.addEventListener("load", () =>
                     {
                         if (xhr.status === 200)
                         {
-                            const blob = new Blob([xhr.response], {
-                                type: "video/x-flv"
-                            });
-                            const blobUrl = URL.createObjectURL(blob);
-                            const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
-                            const extension = fragment.url.indexOf(".flv") !== -1 ? ".flv" : ".mp4";
-                            const oldBlobUrl = $("a#video-complete").attr("href");
-                            if (oldBlobUrl)
-                            {
-                                URL.revokeObjectURL(oldBlobUrl);
-                            }
-                            $("a#video-complete")
-                                .attr("href", blobUrl)
-                                .attr("download", title + extension);
-                            this.progress && this.progress(0);
-                            document.getElementById("video-complete").click();
-                            resolve(blobUrl);
+                            resolve(xhr.response);
                         }
                         else
                         {
@@ -152,6 +137,55 @@
                     });
                     xhr.send();
                 });
+            }
+            async download()
+            {
+                const downloadedData = [];
+                this.loaded = 0;
+                this.totalSize = this.fragments.map(it => it.size).reduce((acc, it) => acc + it);
+                for (const fragment of this.fragments)
+                {
+                    const data = await this.downloadUrl(fragment.url);
+                    this.loaded += fragment.size;
+                    downloadedData.push(data);
+                }
+                if (downloadedData.length < 1)
+                {
+                    throw new Error("下载失败.");
+                }
+
+                let blob = null;
+                const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+                const extension = fragment.url.indexOf(".flv") !== -1 ? ".flv" : ".mp4";
+                if (downloadedData.length === 1)
+                {
+                    const [data] = downloadedData;
+                    blob = new Blob([data], {
+                        type: "video/x-flv"
+                    });
+                }
+                else
+                {
+                    const zip = new JSZip();
+                    downloadedData.forEach((data, index) =>
+                    {
+                        zip.file(`${title} - ${index}${extension}`, data);
+                    });
+                    blob = await zip.generateAsync({ type: "blob" });
+                }
+
+                const blobUrl = URL.createObjectURL(blob);
+                const oldBlobUrl = $("a#video-complete").attr("href");
+                if (oldBlobUrl)
+                {
+                    URL.revokeObjectURL(oldBlobUrl);
+                }
+                $("a#video-complete")
+                    .attr("href", blobUrl)
+                    .attr("download", title + extension);
+                this.progress && this.progress(0);
+                document.getElementById("video-complete").click();
+                return blobUrl;
             }
         }
         return {
