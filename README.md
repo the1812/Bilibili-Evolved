@@ -10,21 +10,9 @@
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.
 
-[![正式版](https://img.shields.io/badge/正式版-🌸-green.svg?style=flat-square&colorB=009688)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
-
-正式发布的版本, 最稳定, 更新频率较低.
-
-[![预览版](https://img.shields.io/badge/预览版-🍺-yellow.svg?style=flat-square&colorB=607D8B)](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
-
-新增内容测试的地方, 更新频率高, 但功能不稳定.
-
-[![离线版](https://img.shields.io/badge/离线版-👻-blue.svg?style=flat-square)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)
-
-内置所有依赖项, 体积较大, 可以减少GitHub服务器不稳定的影响. 由于任何依赖项更新后此脚本也需更新, 所以更新频率会高于正式版.
-
-[![预览离线版](https://img.shields.io/badge/预览离线版-🌟-blue.svg?style=flat-square&colorB=F06292)](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)
-
-兼备预览版和离线版的特点.
+[正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)
+----- | ----- | ----- | -----
+正式发布的版本, 最稳定, 更新频率较低. | 新增内容测试的地方, 更新频率高, 但功能不稳定. | 内置所有依赖项, 体积较大, 更新频率高于正式版. | 兼备预览版和离线版的特点.
 
 > 某些破坏性的大更新会使旧版脚本**完全**无法工作, 请及时检查更新.
 # 设置
@@ -215,6 +203,6 @@
 - 顶栏触摸体验不佳.
 - 触摸功能需要手动在`about:flags`中开启.
 ## ![Safari:未知](https://img.shields.io/badge/Safari-未知-lightgrey.svg?style=flat-square&colorB=323232)
-尚未在Safari中测试.
+- 尚未在Safari中测试.
 
 [返回顶部](#Bilibili-Evolved)
