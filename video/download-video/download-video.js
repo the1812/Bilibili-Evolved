@@ -32,11 +32,12 @@
                     const xhr = new XMLHttpRequest();
                     xhr.addEventListener("load", () =>
                     {
-                        const data = JSON.parse(xhr.responseText).data;
-                        if (data.code !== 0)
+                        const json = JSON.parse(xhr.responseText);
+                        if (json.code !== 0)
                         {
                             reject("获取清晰度信息失败.");
                         }
+                        const data = json.data;
                         const qualities = data.accept_quality;
                         const internalNames = data.accept_format.split(",");
                         const displayNames = data.accept_description;
@@ -235,6 +236,8 @@
                 {
                     return;
                 }
+                pageData.aid = aid;
+                pageData.cid = cid;
                 VideoFormat.availableFormats.then((formats) =>
                 {
                     let [selectedFormat] = formats;
