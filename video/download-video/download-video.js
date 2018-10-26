@@ -86,7 +86,7 @@
                     const xhr = new XMLHttpRequest();
                     xhr.addEventListener("load", () =>
                     {
-                        const data = JSON.parse(xhr.responseText.replace("http:", "https:")).data;
+                        const data = JSON.parse(xhr.responseText.replace(/http:/g, "https:")).data;
                         if (data.quality !== this.format.quality)
                         {
                             reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
@@ -113,7 +113,7 @@
                 return new Promise((resolve, reject) =>
                 {
                     const xhr = new XMLHttpRequest();
-                    xhr.open("GET", fragment.url);
+                    xhr.open("GET", url);
                     xhr.responseType = "arraybuffer";
                     xhr.withCredentials = false;
                     xhr.addEventListener("progress", (e) =>
@@ -155,23 +155,26 @@
                 }
 
                 let blob = null;
-                const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
-                const extension = fragment.url.indexOf(".flv") !== -1 ? ".flv" : ".mp4";
+                let filename = null;
+                const extension = fragment => (fragment || this.fragments[0]).url.indexOf(".flv") !== -1 ? ".flv" : ".mp4";
                 if (downloadedData.length === 1)
                 {
                     const [data] = downloadedData;
                     blob = new Blob([data], {
-                        type: "video/x-flv"
+                        type: extension() === ".flv" ? "video/x-flv" : "video/mp4"
                     });
+                    filename = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "") + extension();
                 }
                 else
                 {
                     const zip = new JSZip();
+                    const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
                     downloadedData.forEach((data, index) =>
                     {
-                        zip.file(`${title} - ${index}${extension}`, data);
+                        zip.file(`${title} - ${index}${extension(this.fragments[index])}`, data);
                     });
                     blob = await zip.generateAsync({ type: "blob" });
+                    filename = title + ".zip";
                 }
 
                 const blobUrl = URL.createObjectURL(blob);
@@ -182,7 +185,7 @@
                 }
                 $("a#video-complete")
                     .attr("href", blobUrl)
-                    .attr("download", title + extension);
+                    .attr("download", filename);
                 this.progress && this.progress(0);
                 document.getElementById("video-complete").click();
                 return blobUrl;
