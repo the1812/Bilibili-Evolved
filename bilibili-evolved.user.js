@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.17
+// @version      1.5.18
 // @description  增强哔哩哔哩Web端体验.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -62,7 +62,7 @@
         fixFullscreen: false,
         downloadVideo: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.5.17"
+        currentVersion: "1.5.18"
     };
     function loadSettings()
     {
@@ -137,7 +137,8 @@
             darkSchedule: new Resource("min/dark-schedule.min.js"),
             forceWide: new Resource("min/force-wide.min.js"),
             clearCache: new Resource("min/clear-cache.min.js"),
-            downloadVideo: new Resource("min/download-video.min.js")
+            downloadVideo: new Resource("min/download-video.min.js"),
+            videoInfo: new Resource("min/video-info.min.js")
         };
         (function ()
         {
@@ -187,7 +188,8 @@
             ];
             this.downloadVideo.dependencies = [
                 this.downloadVideoDom,
-                this.downloadVideoStyle
+                this.downloadVideoStyle,
+                this.videoInfo
             ];
         }).apply(Resource.all);
         (function ()
@@ -217,10 +219,23 @@
     function downloadText(url, load, error)
     {
         const xhr = new XMLHttpRequest();
-        xhr.addEventListener("load", () => load && load(xhr.responseText));
-        xhr.addEventListener("error", () => error && error(xhr.responseText));
         xhr.open("GET", url);
-        xhr.send();
+
+        if (load) // callback
+        {
+            xhr.addEventListener("load", () => load && load(xhr.responseText));
+            xhr.addEventListener("error", () => error && error(xhr.responseText));
+            xhr.send();
+        }
+        else
+        {
+            return new Promise((resolve, reject) =>
+            {
+                xhr.addEventListener("load", () => resolve(xhr.responseText));
+                xhr.addEventListener("error", () => reject(xhr.responseText));
+                xhr.send();
+            });
+        }
     }
     function fixed(number, precision = 1)
     {
@@ -813,6 +828,9 @@
                 return null;
             }
             const promise = resource.download();
+            resource.dependencies
+                .filter(it => it.type.name === "script")
+                .forEach(it => this.fetchByKey(it.key));
             return new Promise(resolve =>
             {
                 promise.then(text =>

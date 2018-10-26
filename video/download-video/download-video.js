@@ -2,12 +2,13 @@
 {
     return (_, resources) =>
     {
-        const aid = (unsafeWindow || window).aid;
-        const cid = (unsafeWindow || window).cid;
-        if (aid === undefined || cid === undefined)
-        {
-            return;
-        }
+        const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
+        const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
+        const pageData = {
+            aid: undefined,
+            cid: undefined,
+            isBangumi: false
+        };
         class VideoFormat
         {
             constructor(quality, internalName, displayName)
@@ -18,7 +19,7 @@
             }
             async downloadInfo()
             {
-                const videoInfo = new VideoInfo(this);
+                const videoInfo = new VideoDownloadInfo(this);
                 await videoInfo.fetchVideoInfo();
                 return videoInfo;
             }
@@ -26,11 +27,15 @@
             {
                 return new Promise((resolve, reject) =>
                 {
-                    const url = `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json`;
+                    const url = `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json`;
                     const xhr = new XMLHttpRequest();
                     xhr.addEventListener("load", () =>
                     {
                         const data = JSON.parse(xhr.responseText).data;
+                        if (data.code !== 0)
+                        {
+                            reject("获取清晰度信息失败.");
+                        }
                         const qualities = data.accept_quality;
                         const internalNames = data.accept_format.split(",");
                         const displayNames = data.accept_description;
@@ -53,7 +58,7 @@
                 });
             }
         }
-        class VideoInfoFragment
+        class VideoDownloadInfoFragment
         {
             constructor(length, size, url, backupUrls)
             {
@@ -63,7 +68,7 @@
                 this.backupUrls = backupUrls;
             }
         }
-        class VideoInfo
+        class VideoDownloadInfo
         {
             constructor(format, fragments)
             {
@@ -78,7 +83,7 @@
             {
                 return new Promise((resolve, reject) =>
                 {
-                    const url = `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${this.format.quality}&otype=json`;
+                    const url = `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${this.format.quality}&otype=json`;
                     const xhr = new XMLHttpRequest();
                     xhr.addEventListener("load", () =>
                     {
@@ -88,7 +93,7 @@
                             reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
                         }
                         const urls = data.durl;
-                        this.fragments = urls.map(it => new VideoInfoFragment(
+                        this.fragments = urls.map(it => new VideoDownloadInfoFragment(
                             it.length, it.size,
                             it.url,
                             it.backup_url
@@ -197,95 +202,126 @@
                 };
             }
         }
-        return {
-            settingsWidget: {
-                category: "视频与直播",
-                content: resources.data.downloadVideoDom.text,
-                success: () =>
+        function loadWidget()
+        {
+            (async () =>
+            {
+                let aid = (unsafeWindow || window).aid;
+                let cid = (unsafeWindow || window).cid;
+                if (aid === undefined || cid === undefined)
                 {
-                    VideoFormat.availableFormats.then((formats) =>
+                    const aidMatch = document.URL.match(/\/av(\d+)/);
+                    const epMatch = document.URL.match(/\/ep(\d+)/);
+                    if (aidMatch && aidMatch[1])
                     {
-                        let [selectedFormat] = formats;
-                        const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
+                        const info = await new VideoInfo(aidMatch[1]).fetchInfo();
+                        aid = info.aid;
+                        cid = info.cid;
+                    }
+                    else if (epMatch && epMatch[1])
+                    {
+                        const info = await new BangumiInfo(epMatch[1]).fetchInfo();
+                        aid = info.aid;
+                        cid = info.cid;
+                    }
+                }
+                return [aid, cid];
+            })().then(result =>
+            {
+                const [aid, cid] = result;
+                if (aid === undefined || cid === undefined)
+                {
+                    return;
+                }
+                VideoFormat.availableFormats.then((formats) =>
+                {
+                    let [selectedFormat] = formats;
+                    const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
+                    {
+                        $(".download-video-panel").addClass("error");
+                        $(".video-error").text(error);
+                    });
+                    async function download()
+                    {
+                        if (!selectedFormat)
+                        {
+                            return;
+                        }
+                        $(".download-video-panel")
+                            .removeClass("action")
+                            .addClass("progress");
+                        const info = await getVideoInfo();
+                        info.progress = percent =>
+                        {
+                            $(".download-progress-value").text(`${fixed(percent * 100)}`);
+                            $(".download-progress-foreground").css("transform", `scaleX(${percent})`);
+                        };
+                        document.querySelector(".download-progress-cancel>span").onclick = () => info.cancelDownload();
+                        const result = await info.download()
+                            .catch(error =>
                             {
                                 $(".download-video-panel").addClass("error");
                                 $(".video-error").text(error);
                             });
-                        async function download()
+                        if (!result) // canceled or other errors
                         {
-                            if (!selectedFormat)
-                            {
-                                return;
-                            }
-                            $(".download-video-panel")
-                                .removeClass("action")
-                                .addClass("progress");
-                            const info = await getVideoInfo();
-                            info.progress = percent =>
-                            {
-                                $(".download-progress-value").text(`${fixed(percent * 100)}`);
-                                $(".download-progress-foreground").css("transform", `scaleX(${percent})`);
-                            };
-                            document.querySelector(".download-progress-cancel>span").onclick = () => info.cancelDownload();
-                            const result = await info.download()
-                                .catch(error =>
-                                {
-                                    $(".download-video-panel").addClass("error");
-                                    $(".video-error").text(error);
-                                });
-                            if (!result) // canceled or other errors
-                            {
-                                return;
-                            }
-                            const completeLink = document.getElementById("video-complete");
-                            completeLink.setAttribute("href", result.url);
-                            completeLink.setAttribute("download", result.filename);
-                            completeLink.click();
-                            $(".download-video-panel")
-                                .removeClass("progress")
-                                .addClass("quality");
+                            return;
                         }
-                        async function copyLink()
-                        {
-                            if (!selectedFormat)
-                            {
-                                return;
-                            }
-                            const info = await getVideoInfo();
-                            info.copyUrl();
-                            $(".download-video-panel")
-                                .removeClass("action")
-                                .addClass("quality");
-                        }
-                        $(".video-action>#video-action-download").on("click", download);
-                        $(".video-action>#video-action-copy").on("click", copyLink);
-                        formats.forEach(format =>
-                        {
-                            $(`<li>${format.displayName}</li>`)
-                                .on("click", () =>
-                                {
-                                    selectedFormat = format;
-                                    $(".download-video-panel")
-                                        .removeClass("quality")
-                                        .addClass("action");
-                                })
-                                .prependTo("ol.video-quality");
-                        });
-                        resources.applyStyle("downloadVideoStyle");
-                        $("#download-video").on("click", () =>
-                        {
-                            $(".download-video-panel").toggleClass("opened");
-                        }).parent().removeClass("hidden");
-                    });
-                    $(".video-error").on("click", () =>
-                    {
-                        $(".video-error").text("");
+                        const completeLink = document.getElementById("video-complete");
+                        completeLink.setAttribute("href", result.url);
+                        completeLink.setAttribute("download", result.filename);
+                        completeLink.click();
                         $(".download-video-panel")
-                            .removeClass("error")
                             .removeClass("progress")
                             .addClass("quality");
+                    }
+                    async function copyLink()
+                    {
+                        if (!selectedFormat)
+                        {
+                            return;
+                        }
+                        const info = await getVideoInfo();
+                        info.copyUrl();
+                        $(".download-video-panel")
+                            .removeClass("action")
+                            .addClass("quality");
+                    }
+                    $(".video-action>#video-action-download").on("click", download);
+                    $(".video-action>#video-action-copy").on("click", copyLink);
+                    formats.forEach(format =>
+                    {
+                        $(`<li>${format.displayName}</li>`)
+                            .on("click", () =>
+                            {
+                                selectedFormat = format;
+                                $(".download-video-panel")
+                                    .removeClass("quality")
+                                    .addClass("action");
+                            })
+                            .prependTo("ol.video-quality");
                     });
-                }
+                    resources.applyStyle("downloadVideoStyle");
+                    $("#download-video").on("click", () =>
+                    {
+                        $(".download-video-panel").toggleClass("opened");
+                    }).parent().removeClass("hidden");
+                });
+                $(".video-error").on("click", () =>
+                {
+                    $(".video-error").text("");
+                    $(".download-video-panel")
+                        .removeClass("error")
+                        .removeClass("progress")
+                        .addClass("quality");
+                });
+            });
+        }
+        return {
+            settingsWidget: {
+                category: "视频与直播",
+                content: resources.data.downloadVideoDom.text,
+                success: loadWidget
             }
         };
     };
