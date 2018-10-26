@@ -233,6 +233,10 @@
                                     $(".download-video-panel").addClass("error");
                                     $(".video-error").text(error);
                                 });
+                            if (!result) // canceled or other errors
+                            {
+                                return;
+                            }
                             const completeLink = document.getElementById("video-complete");
                             completeLink.setAttribute("href", result.url);
                             completeLink.setAttribute("download", result.filename);
