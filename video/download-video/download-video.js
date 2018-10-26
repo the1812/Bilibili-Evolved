@@ -171,7 +171,7 @@
                     const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
                     downloadedData.forEach((data, index) =>
                     {
-                        zip.file(`${title} - ${index}${extension(this.fragments[index])}`, data);
+                        zip.file(`${title} - ${index + 1}${extension(this.fragments[index])}`, data);
                     });
                     blob = await zip.generateAsync({ type: "blob" });
                     filename = title + ".zip";
