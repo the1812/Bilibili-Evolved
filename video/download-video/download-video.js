@@ -16,16 +16,11 @@
                 this.internalName = internalName;
                 this.displayName = displayName;
             }
-            async download()
+            async downloadInfo()
             {
                 const videoInfo = new VideoInfo(this);
                 await videoInfo.fetchVideoInfo();
-                videoInfo.progress = percent =>
-                {
-                    $(".download-progress-value").text(`${fixed(percent * 100)}`);
-                    $(".download-progress-foreground").css("transform", `scaleX(${percent})`);
-                };
-                return videoInfo.download();
+                return videoInfo;
             }
             static get availableFormats()
             {
@@ -138,6 +133,11 @@
                     xhr.send();
                 });
             }
+            copyUrl()
+            {
+                const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + "\r\n" + it);
+                GM_setClipboard(urls, "text");
+            }
             async download()
             {
                 const downloadedData = [];
@@ -183,12 +183,11 @@
                 {
                     URL.revokeObjectURL(oldBlobUrl);
                 }
-                $("a#video-complete")
-                    .attr("href", blobUrl)
-                    .attr("download", filename);
                 this.progress && this.progress(0);
-                document.getElementById("video-complete").click();
-                return blobUrl;
+                return {
+                    url: blobUrl,
+                    filename: filename
+                };
             }
         }
         return {
@@ -199,24 +198,62 @@
                 {
                     VideoFormat.availableFormats.then((formats) =>
                     {
+                        let [selectedFormat] = formats;
+                        const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
+                            {
+                                $(".download-video-panel").addClass("error");
+                                $(".video-error").text(error);
+                            });
+                        async function download()
+                        {
+                            if (!selectedFormat)
+                            {
+                                return;
+                            }
+                            $(".download-video-panel")
+                                .removeClass("action")
+                                .addClass("progress");
+                            const info = await getVideoInfo();
+                            info.progress = percent =>
+                            {
+                                $(".download-progress-value").text(`${fixed(percent * 100)}`);
+                                $(".download-progress-foreground").css("transform", `scaleX(${percent})`);
+                            };
+                            const result = await info.download();
+                            const completeLink = document.getElementById("video-complete");
+                            completeLink.setAttribute("href", result.url);
+                            completeLink.setAttribute("download", result.filename);
+                            completeLink.click();
+                            $(".download-video-panel")
+                                .removeClass("opened")
+                                .removeClass("progress")
+                                .addClass("quality");
+                        }
+                        async function copyLink()
+                        {
+                            if (!selectedFormat)
+                            {
+                                return;
+                            }
+                            const info = await getVideoInfo();
+                            info.copyUrl();
+                            $(".download-video-panel")
+                                .removeClass("opened")
+                                .removeClass("action")
+                                .addClass("quality");
+                        }
+                        $(".video-action>#video-action-download").on("click", download);
+                        $(".video-action>#video-action-copy").on("click", copyLink);
                         formats.forEach(format =>
                         {
-                            async function formatClick()
-                            {
-                                $(".download-video-panel")
-                                    .removeClass("quality")
-                                    .addClass("progress");
-                                await format.download().catch(error =>
-                                {
-                                    $(".download-video-panel").addClass("error");
-                                    $(".video-error").text(error);
-                                });
-                                $(".download-video-panel")
-                                    .removeClass("progress")
-                                    .addClass("quality");
-                            }
                             $(`<li>${format.displayName}</li>`)
-                                .on("click", formatClick)
+                                .on("click", () =>
+                                {
+                                    selectedFormat = format;
+                                    $(".download-video-panel")
+                                        .removeClass("quality")
+                                        .addClass("action");
+                                })
                                 .prependTo("ol.video-quality");
                         });
                         resources.applyStyle("downloadVideoStyle");
