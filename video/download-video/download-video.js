@@ -7,7 +7,8 @@
         const pageData = {
             aid: undefined,
             cid: undefined,
-            isBangumi: false
+            isBangumi: false,
+            isMovie: false
         };
         class VideoFormat
         {
@@ -218,12 +219,13 @@
                         aid = info.aid;
                         cid = info.cid;
                     }
-                    else if (epMatch && epMatch[1])
-                    {
-                        const info = await new BangumiInfo(epMatch[1]).fetchInfo();
-                        aid = info.aid;
-                        cid = info.cid;
-                    }
+                    // TODO: Download bangumi, the legacy method not work...
+                    // else if (epMatch && epMatch[1])
+                    // {
+                    //     const info = await new BangumiInfo(epMatch[1]).fetchInfo();
+                    //     aid = info.aid;
+                    //     cid = info.cid;
+                    // }
                 }
                 return [aid, cid];
             })().then(result =>
