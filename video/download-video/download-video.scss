@@ -71,6 +71,27 @@
     height: 100%;
     width: 100%;
 }
+.download-progress-cancel
+{
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+}
+.download-progress-cancel>span
+{
+    border-radius: 4px;
+    background-color: #8884;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+.download-progress-cancel>span:hover
+{
+    opacity: .9;
+}
+.download-progress-cancel>span:active
+{
+    opacity: .8;
+}
 .video-error,
 .video-progress
 {

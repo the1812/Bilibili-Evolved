@@ -72,6 +72,7 @@
                 this.progress = null;
                 this.loaded = 0;
                 this.totalSize = null;
+                this.workingXhr = null;
             }
             fetchVideoInfo()
             {
@@ -103,6 +104,13 @@
                     xhr.send();
                 });
             }
+            cancelDownload()
+            {
+                if (this.workingXhr)
+                {
+                    this.workingXhr.abort();
+                }
+            }
             downloadUrl(url)
             {
                 return new Promise((resolve, reject) =>
@@ -126,11 +134,10 @@
                             reject(`请求失败.`);
                         }
                     });
-                    xhr.addEventListener("error", () =>
-                    {
-                        reject(`下载失败.`);
-                    });
+                    xhr.addEventListener("abort", () => reject("下载已取消."));
+                    xhr.addEventListener("error", () => reject(`下载失败.`));
                     xhr.send();
+                    this.workingXhr = xhr;
                 });
             }
             copyUrl()
@@ -219,7 +226,13 @@
                                 $(".download-progress-value").text(`${fixed(percent * 100)}`);
                                 $(".download-progress-foreground").css("transform", `scaleX(${percent})`);
                             };
-                            const result = await info.download();
+                            document.querySelector(".download-progress-cancel>span").onclick = () => info.cancelDownload();
+                            const result = await info.download()
+                                .catch(error =>
+                                {
+                                    $(".download-video-panel").addClass("error");
+                                    $(".video-error").text(error);
+                                });
                             const completeLink = document.getElementById("video-complete");
                             completeLink.setAttribute("href", result.url);
                             completeLink.setAttribute("download", result.filename);
