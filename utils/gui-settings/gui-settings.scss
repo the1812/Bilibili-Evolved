@@ -137,7 +137,8 @@
     transition: all .2s;
     overflow: hidden;
 }
-.gui-settings-content ul li.disabled
+.gui-settings-content ul li.disabled,
+.gui-settings-content ul li:not(.category).folded
 {
     height: 0;
     margin: 0;
@@ -183,10 +184,17 @@
     position: sticky;
     top: 0;
     z-index: 10;
+    cursor: pointer;
+    transition: all .2s ease-out;
+    -webkit-tap-highlight-color: transparent;
+}
+.gui-settings-content ul li.category.folded
+{
+    margin-bottom: -1px;
 }
 span.settings-category
 {
-    opacity: 0.6;
+    opacity: 0.8;
 }
 .gui-settings-title
 {
@@ -474,4 +482,30 @@ input[type='text'][key]
 .gui-settings-panel.animation
 {
     transition: all .2s ease-out;
+}
+i.settings-category-arrow
+{
+    transform-origin: center;
+    transition: all .2s ease-out;
+    transform: translateY(-2.828427px) rotate(45deg);
+    height: 100%;
+    display: inline-block;
+    margin-left: 12px;
+}
+li.category.folded i.settings-category-arrow
+{
+    transform: translateY(2.828427px) rotate(-135deg);
+}
+i.settings-category-arrow::after
+{
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+    border: 2px solid white;
+    opacity: .8;
+    display: block;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-radius: 2.4px;
 }

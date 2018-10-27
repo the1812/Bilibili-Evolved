@@ -130,6 +130,16 @@
                 const box = $(".predefined-colors");
                 box.toggleClass("opened");
             });
+            $(".gui-settings-content ul li.category").on("click", e =>
+            {
+                e.currentTarget.classList.toggle("folded");
+                let element = e.currentTarget.nextElementSibling;
+                while (element !== null && !element.classList.contains("category"))
+                {
+                    element.classList.toggle("folded");
+                    element = element.nextElementSibling;
+                }
+            });
             onSettingsChange(settingsChange);
         }
         function listenSettingsChange()
