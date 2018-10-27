@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.18
+// @version      1.5.19
 // @description  增强哔哩哔哩Web端体验.(预览版分支)
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -62,7 +62,7 @@
         fixFullscreen: false,
         downloadVideo: true,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
-        currentVersion: "1.5.18"
+        currentVersion: "1.5.19"
     };
     function loadSettings()
     {
@@ -91,130 +91,294 @@
     }
     function loadResources()
     {
-        Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
-        Resource.all = {
-            style: new Resource("min/style.min.scss", 1),
-            oldStyle: new Resource("min/old.min.scss", 1),
-            scrollbarStyle: new Resource("min/scrollbar.min.css", 1),
-            darkStyle: new Resource("min/dark.min.scss", 2),
-            darkStyleImportant: new Resource("min/dark-important.min.scss"),
-            darkStyleNavBar: new Resource("min/dark-navbar.min.scss"),
-            touchPlayerStyle: new Resource("min/touch-player.min.scss", 3),
-            navbarOverrideStyle: new Resource("min/override-navbar.min.css", 4),
-            noBannerStyle: new Resource("min/no-banner.min.css", 5),
-            removeAdsStyle: new Resource("min/remove-promotions.min.css", 6),
-            guiSettingsStyle: new Resource("min/gui-settings.min.scss", 0),
-            fullTweetsTitleStyle: new Resource("min/full-tweets-title.min.css", 7),
-            imageViewerStyle: new Resource("min/image-viewer.min.scss", 8),
-            toastStyle: new Resource("min/toast.min.scss", 9),
-            blurVideoControlStyle: new Resource("min/blur-video-control.min.css", 10),
-            forceWideStyle: new Resource("min/force-wide.min.scss"),
-            downloadVideoStyle: new Resource("min/download-video.min.scss"),
-
-            guiSettingsDom: new Resource("min/gui-settings.min.html"),
-            imageViewerDom: new Resource("min/image-viewer.min.html"),
-            downloadVideoDom: new Resource("min/download-video.min.html"),
-            latestVersion: new Resource("version.txt"),
-
-            guiSettings: new Resource("min/gui-settings.min.js"),
-            useDarkStyle: new Resource("min/dark-styles.min.js"),
-            useNewStyle: new Resource("min/new-styles.min.js"),
-            overrideNavBar: new Resource("min/override-navbar.min.js"),
-            touchNavBar: new Resource("min/touch-navbar.min.js"),
-            touchVideoPlayer: new Resource("min/touch-player.min.js"),
-            expandDanmakuList: new Resource("min/expand-danmaku.min.js"),
-            removeAds: new Resource("min/remove-promotions.min.js"),
-            watchLaterRedirect: new Resource("min/watchlater.min.js"),
-            hideTopSearch: new Resource("min/hide-top-search.min.js"),
-            harunaScale: new Resource("min/haruna-scale.min.js"),
-            removeLiveWatermark: new Resource("min/remove-watermark.min.js"),
-            fullTweetsTitle: new Resource("min/full-tweets-title.min.js"),
-            viewCover: new Resource("min/view-cover.min.js"),
-            notifyNewVersion: new Resource("min/notify-new-version.min.js"),
-            toast: new Resource("min/toast.min.js"),
-            removeVideoTopMask: new Resource("min/remove-top-mask.min.js"),
-            blurVideoControl: new Resource("min/blur-video-control.min.js"),
-            darkSchedule: new Resource("min/dark-schedule.min.js"),
-            forceWide: new Resource("min/force-wide.min.js"),
-            clearCache: new Resource("min/clear-cache.min.js"),
-            downloadVideo: new Resource("min/download-video.min.js"),
-            videoInfo: new Resource("min/video-info.min.js")
+        const resouceData = {
+            style: {
+                path: "min/style.min.scss",
+                order: 1
+            },
+            oldStyle: {
+                path: "min/old.min.scss",
+                order: 1
+            },
+            scrollbarStyle: {
+                path: "min/scrollbar.min.css",
+                order: 1
+            },
+            darkStyle: {
+                path: "min/dark.min.scss",
+                order: 2
+            },
+            darkStyleImportant: {
+                path: "min/dark-important.min.scss"
+            },
+            darkStyleNavBar: {
+                path: "min/dark-navbar.min.scss"
+            },
+            touchPlayerStyle: {
+                path: "min/touch-player.min.scss",
+                order: 3
+            },
+            navbarOverrideStyle: {
+                path: "min/override-navbar.min.css",
+                order: 4
+            },
+            noBannerStyle: {
+                path: "min/no-banner.min.css",
+                order: 5
+            },
+            removeAdsStyle: {
+                path: "min/remove-promotions.min.css",
+                order: 6
+            },
+            guiSettingsStyle: {
+                path: "min/gui-settings.min.scss",
+                order: 0
+            },
+            fullTweetsTitleStyle: {
+                path: "min/full-tweets-title.min.css",
+                order: 7
+            },
+            imageViewerStyle: {
+                path: "min/image-viewer.min.scss",
+                order: 8
+            },
+            toastStyle: {
+                path: "min/toast.min.scss",
+                order: 9
+            },
+            blurVideoControlStyle: {
+                path: "min/blur-video-control.min.css",
+                order: 10
+            },
+            forceWideStyle: {
+                path: "min/force-wide.min.scss"
+            },
+            downloadVideoStyle: {
+                path: "min/download-video.min.scss"
+            },
+            guiSettingsDom: {
+                path: "min/gui-settings.min.html"
+            },
+            imageViewerDom: {
+                path: "min/image-viewer.min.html"
+            },
+            downloadVideoDom: {
+                path: "min/download-video.min.html"
+            },
+            latestVersion: {
+                path: "version.txt"
+            },
+            guiSettings: {
+                path: "min/gui-settings.min.js",
+                dependencies: [
+                    "guiSettingsDom",
+                    "guiSettingsStyle"
+                ],
+                displayNames: {
+                    guiSettings: "设置",
+                    blurSettingsPanel: "模糊设置面板背景"
+                }
+            },
+            useDarkStyle: {
+                path: "min/dark-styles.min.js",
+                dependencies: [
+                    "darkStyle",
+                    "darkStyleImportant",
+                    "darkStyleNavBar",
+                    "scrollbarStyle"
+                ],
+                displayNames: {
+                    useDarkStyle: "夜间模式"
+                }
+            },
+            useNewStyle: {
+                path: "min/new-styles.min.js",
+                dependencies: [
+                    "style",
+                    "oldStyle",
+                    "scrollbarStyle"
+                ],
+                displayNames: {
+                    useNewStyle: "样式调整",
+                    blurBackgroundOpacity: "顶栏(对横幅)不透明度"
+                }
+            },
+            overrideNavBar: {
+                path: "min/override-navbar.min.js",
+                dependencies: [
+                    "navbarOverrideStyle",
+                    "noBannerStyle"
+                ],
+                displayNames: {
+                    overrideNavBar: "搜索栏置顶",
+                    showBanner: "显示顶部横幅"
+                }
+            },
+            touchNavBar: {
+                path: "min/touch-navbar.min.js",
+                displayNames: {
+                    touchNavBar: "顶栏触摸优化"
+                }
+            },
+            touchVideoPlayer: {
+                path: "min/touch-player.min.js",
+                dependencies: [
+                    "touchPlayerStyle"
+                ],
+                displayNames: {
+                    overrideNavBar: "播放器触摸支持",
+                    touchVideoPlayerAnimation: "启用实验性动画效果",
+                    touchVideoPlayerDoubleTapControl: "启用双击控制"
+                }
+            },
+            expandDanmakuList: {
+                path: "min/expand-danmaku.min.js",
+                displayNames: {
+                    expandDanmakuList: "自动展开弹幕列表"
+                }
+            },
+            removeAds: {
+                path: "min/remove-promotions.min.js",
+                dependencies: [
+                    "removeAdsStyle"
+                ],
+                displayNames: {
+                    removeAds: "删除广告"
+                }
+            },
+            watchLaterRedirect: {
+                path: "min/watchlater.min.js",
+                displayNames: {
+                    watchLaterRedirect: "稍后再看重定向"
+                }
+            },
+            hideTopSearch: {
+                path: "min/hide-top-search.min.js",
+                displayNames: {
+                    hideTopSearch: "隐藏搜索推荐"
+                }
+            },
+            harunaScale: {
+                path: "min/haruna-scale.min.js",
+                displayNames: {
+                    harunaScale: "缩放看板娘"
+                }
+            },
+            removeLiveWatermark: {
+                path: "min/remove-watermark.min.js",
+                displayNames: {
+                    removeLiveWatermark: "删除直播水印"
+                }
+            },
+            fullTweetsTitle: {
+                path: "min/full-tweets-title.min.js",
+                dependencies: [
+                    "fullTweetsTitleStyle"
+                ],
+                displayNames: {
+                    fullTweetsTitle: "展开动态标题"
+                }
+            },
+            viewCover: {
+                path: "min/view-cover.min.js",
+                dependencies: [
+                    "imageViewerDom",
+                    "imageViewerStyle"
+                ],
+                displayNames: {
+                    viewCover: "查看封面"
+                }
+            },
+            notifyNewVersion: {
+                path: "min/notify-new-version.min.js",
+                dependencies: [
+                    "latestVersion"
+                ],
+                displayNames: {
+                    notifyNewVersion: "检查更新"
+                }
+            },
+            toast: {
+                path: "min/toast.min.js",
+                dependencies: [
+                    "toastStyle"
+                ],
+                displayNames: {
+                    toast: "显示消息"
+                }
+            },
+            removeVideoTopMask: {
+                path: "min/remove-top-mask.min.js",
+                displayNames: {
+                    removeVideoTopMask: "删除视频标题层"
+                }
+            },
+            blurVideoControl: {
+                path: "min/blur-video-control.min.js",
+                dependencies: [
+                    "blurVideoControlStyle"
+                ],
+                displayNames: {
+                    blurVideoControl: "模糊视频控制栏背景"
+                }
+            },
+            darkSchedule: {
+                path: "min/dark-schedule.min.js",
+                displayNames: {
+                    darkSchedule: "夜间模式计划时段",
+                    darkScheduleStart: "起始时间",
+                    darkScheduleEnd: "结束时间"
+                }
+            },
+            forceWide: {
+                path: "min/force-wide.min.js",
+                dependencies: [
+                    "forceWideStyle"
+                ],
+                displayNames: {
+                    forceWide: "强制宽屏",
+                    forceWideMinWidth: "触发宽度"
+                }
+            },
+            clearCache: {
+                path: "min/clear-cache.min.js",
+                displayNames: {
+                    useCache: "启用缓存"
+                }
+            },
+            downloadVideo: {
+                path: "min/download-video.min.js",
+                dependencies: [
+                    "downloadVideoDom",
+                    "downloadVideoStyle",
+                    "videoInfo"
+                ]
+            },
+            videoInfo: {
+                path: "min/video-info.min.js"
+            }
         };
-        (function ()
+        Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
+        Resource.all = {};
+        Resource.displayNames = {};
+        for (const [key, data] of Object.entries(resouceData))
         {
-            this.guiSettings.dependencies = [
-                this.guiSettingsDom,
-                this.guiSettingsStyle
-            ];
-            this.useDarkStyle.dependencies = [
-                this.darkStyle,
-                this.darkStyleImportant,
-                this.darkStyleNavBar,
-                this.scrollbarStyle
-            ];
-            this.useNewStyle.dependencies = [
-                this.style,
-                this.oldStyle,
-                this.scrollbarStyle
-            ];
-            this.overrideNavBar.dependencies = [
-                this.navbarOverrideStyle,
-                this.noBannerStyle
-            ];
-            this.touchVideoPlayer.dependencies = [
-                this.touchPlayerStyle
-            ];
-            this.removeAds.dependencies = [
-                this.removeAdsStyle
-            ];
-            this.fullTweetsTitle.dependencies = [
-                this.fullTweetsTitleStyle
-            ];
-            this.viewCover.dependencies = [
-                this.imageViewerDom,
-                this.imageViewerStyle
-            ];
-            this.notifyNewVersion.dependencies = [
-                this.latestVersion
-            ];
-            this.toast.dependencies = [
-                this.toastStyle
-            ];
-            this.blurVideoControl.dependencies = [
-                this.blurVideoControlStyle
-            ];
-            this.forceWide.dependencies = [
-                this.forceWideStyle
-            ];
-            this.downloadVideo.dependencies = [
-                this.downloadVideoDom,
-                this.downloadVideoStyle,
-                this.videoInfo
-            ];
-        }).apply(Resource.all);
-        (function ()
+            const resource = new Resource(data.path, data.order);
+            resource.key = key;
+            if (data.displayNames)
+            {
+                resource.displayName = data.displayNames[key];
+                Object.assign(Resource.all, data.displayNames);
+            }
+            Resource.all[key] = resource;
+        }
+        for (const [key, data] of Object.entries(resouceData))
         {
-            this.guiSettings.displayName = "设置";
-            this.useDarkStyle.displayName = "夜间模式";
-            this.useNewStyle.displayName = "样式调整";
-            this.overrideNavBar.displayName = "搜索栏置顶";
-            this.touchNavBar.displayName = "顶栏触摸优化";
-            this.touchVideoPlayer.displayName = "播放器触摸支持";
-            this.expandDanmakuList.displayName = "自动展开弹幕列表";
-            this.removeAds.displayName = "删除广告";
-            this.watchLaterRedirect.displayName = "稍后再看重定向";
-            this.hideTopSearch.displayName = "隐藏搜索推荐";
-            this.harunaScale.displayName = "缩放看板娘";
-            this.removeLiveWatermark.displayName = "删除直播水印";
-            this.fullTweetsTitle.displayName = "展开动态标题";
-            this.viewCover.displayName = "查看封面";
-            this.notifyNewVersion.displayName = "新版本提醒";
-            this.toast.displayName = "显示消息";
-            this.removeVideoTopMask.displayName = "删除视频标题层";
-            this.blurVideoControl.displayName = "模糊视频控制栏背景";
-            this.darkSchedule.displayName = "夜间模式计划时段";
-            this.forceWide.displayName = "强制宽屏";
-        }).apply(Resource.all);
+            if (data.dependencies)
+            {
+                Resource.all[key].dependencies = data.dependencies.map(name => Resource.all[name]);
+            }
+        }
     }
     function downloadText(url, load, error)
     {
@@ -608,15 +772,10 @@
         {
             return new ResourceType("html", html =>
             {
-                const keys = Object.keys(Resource.all).filter(key => Resource.all[key].displayName);
-                for (const key of keys)
-                {
-                    html = html
-                        .replace(new RegExp(`(<checkbox\\s*?indent=".+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</checkbox>)`, "g"),
-                            `$1${Resource.all[key].displayName}$2`);
-                }
                 return html
-                    .replace(/<category>([^\0]*?)<\/category>/g, `
+                    .replace(new RegExp(`(<checkbox\\s*?indent=".+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</checkbox>)`, "g"),
+                    `$1${Resource.displayNames[key]}$2
+                `).replace(/<category>([^\0]*?)<\/category>/g, `
                     <li class="indent-center category">
                         <span class="settings-category">$1</span>
                     </li>
@@ -661,16 +820,13 @@
         {
             return this.text !== null;
         }
-        get key()
-        {
-            return Object.keys(Resource.all).find(k => Resource.all[k] === this);
-        }
         constructor(url, priority)
         {
             this.url = Resource.root + url;
             this.dependencies = [];
             this.priority = priority;
             this.text = null;
+            this.key = null;
             this.type = ResourceType.fromUrl(url);
             this.displayName = "";
         }
