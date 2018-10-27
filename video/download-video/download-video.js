@@ -288,6 +288,7 @@
                         }
                         const info = await getVideoInfo();
                         info.copyUrl();
+                        Toast.success("已复制链接到剪贴板.", "复制链接", 3000);
                         $(".download-video-panel")
                             .removeClass("action")
                             .addClass("quality");
