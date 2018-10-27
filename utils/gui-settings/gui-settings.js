@@ -154,7 +154,7 @@
             $(".gui-settings-content ul li.category").on("click", e =>
             {
                 e.currentTarget.classList.toggle("folded");
-                getCategoriyItems(e).forEach(it => it.classList.toggle("folded"));
+                getCategoriyItems(e.currentTarget).forEach(it => it.classList.toggle("folded"));
             });
             onSettingsChange(settingsChange);
         }
