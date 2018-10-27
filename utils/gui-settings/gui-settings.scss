@@ -487,14 +487,14 @@ i.settings-category-arrow
 {
     transform-origin: center;
     transition: all .2s ease-out;
-    transform: translateY(-2.828427px) rotate(45deg);
+    transform: translateY(2.828427px) rotate(-135deg);
     height: 100%;
     display: inline-block;
     margin-left: 12px;
 }
 li.category.folded i.settings-category-arrow
 {
-    transform: translateY(2.828427px) rotate(-135deg);
+    transform: translateY(-2.828427px) rotate(45deg);
 }
 i.settings-category-arrow::after
 {

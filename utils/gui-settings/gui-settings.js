@@ -60,6 +60,17 @@
                 return settings.blurBackgroundOpacity;
             }
         };
+        function getCategoriyItems(category)
+        {
+            let element = category.nextElementSibling;
+            const elements = [];
+            while (element !== null && !element.classList.contains("category"))
+            {
+                elements.push(element);
+                element = element.nextElementSibling;
+            }
+            return elements;
+        }
         function darkScheduleValidate(text, defaultValue)
         {
             const match = text.match(/^([\d]{1,2}):([\d]{1,2})$/);
@@ -109,6 +120,16 @@
             {
                 settingsChange(key, undefined, settings[key]);
             }
+            $(".gui-settings-content ul li.category").each((_, e) =>
+            {
+                const items = getCategoriyItems(e);
+                if (items
+                    .filter(it => !it.classList.contains("disabled"))
+                    .every(it => $(it).has("input:checked").length === 0))
+                {
+                    $(e).click();
+                }
+            });
         }
         function setupEvents()
         {
@@ -133,12 +154,7 @@
             $(".gui-settings-content ul li.category").on("click", e =>
             {
                 e.currentTarget.classList.toggle("folded");
-                let element = e.currentTarget.nextElementSibling;
-                while (element !== null && !element.classList.contains("category"))
-                {
-                    element.classList.toggle("folded");
-                    element = element.nextElementSibling;
-                }
+                getCategoriyItems(e).forEach(it => it.classList.toggle("folded"));
             });
             onSettingsChange(settingsChange);
         }
@@ -249,6 +265,11 @@
             $("body").append(settingsBox);
             setupEvents();
             fillSvgData();
+            if (typeof offlineData !== "undefined")
+            {
+                $("li:has(input[key=useCache])").addClass("disabled");
+                $("input[key=useCache]").prop("disabled", true);
+            }
             syncGui();
             listenDependencies();
             addPredefinedColors();
@@ -260,11 +281,6 @@
             else
             {
                 $(".gui-settings-panel").addClass("animation");
-            }
-            if (typeof offlineData !== "undefined")
-            {
-                $("li:has(input[key=useCache])").addClass("disabled");
-                $("input[key=useCache]").prop("disabled", true);
             }
         }
 
