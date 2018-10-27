@@ -226,7 +226,7 @@
                     "touchPlayerStyle"
                 ],
                 displayNames: {
-                    overrideNavBar: "播放器触摸支持",
+                    touchVideoPlayer: "播放器触摸支持",
                     touchVideoPlayerAnimation: "启用实验性动画效果",
                     touchVideoPlayerDoubleTapControl: "启用双击控制"
                 }
@@ -368,7 +368,7 @@
             if (data.displayNames)
             {
                 resource.displayName = data.displayNames[key];
-                Object.assign(Resource.all, data.displayNames);
+                Object.assign(Resource.displayNames, data.displayNames);
             }
             Resource.all[key] = resource;
         }
@@ -772,10 +772,12 @@
         {
             return new ResourceType("html", html =>
             {
-                return html
-                    .replace(new RegExp(`(<checkbox\\s*?indent=".+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</checkbox>)`, "g"),
-                    `$1${Resource.displayNames[key]}$2
-                `).replace(/<category>([^\0]*?)<\/category>/g, `
+                for (const [key, name] of Object.entries(Resource.displayNames))
+                {
+                    html = html.replace(new RegExp(`(<(.+)\\s*?indent="[\\d]+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</\\2>)`, "g"),
+                        `$1${name}$3`);
+                }
+                return html.replace(/<category>([^\0]*?)<\/category>/g, `
                     <li class="indent-center category">
                         <span class="settings-category">$1</span>
                     </li>
