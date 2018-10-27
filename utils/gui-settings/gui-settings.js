@@ -185,15 +185,10 @@
                         {
                             disable = false;
                         }
-                        $(`input[key='${key}']`).prop("disabled", disable);
-                        if (disable)
-                        {
-                            $(`input[key='${key}'][type='text']`).parent().addClass("disabled");
-                        }
-                        else
-                        {
-                            $(`input[key='${key}'][type='text']`).parent().removeClass("disabled");
-                        }
+                        const li = $(`li:has(input[key='${key}'])`);
+                        const action = disable ? "addClass" : "removeClass";
+                        li[action]("disabled");
+                        $(`input[key='${key}'][type='text']`).parent()[action]("disabled");
                     }
                 }
                 $(".download-video-panel,.predefined-colors").removeClass("opened");
@@ -258,6 +253,7 @@
             }
             if (typeof offlineData !== "undefined")
             {
+                $("li:has(input[key=useCache])").addClass("disabled");
                 $("input[key=useCache]").prop("disabled", true);
             }
         }

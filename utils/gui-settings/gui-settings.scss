@@ -131,9 +131,16 @@
 .gui-settings-content ul li
 {
     font-size: 16px;
-    margin: 12px 0;
+    margin-bottom: 12px;
     display: flex;
     height: 24px;
+    transition: all .2s;
+    overflow: hidden;
+}
+.gui-settings-content ul li.disabled
+{
+    height: 0;
+    margin: 0;
 }
 .gui-settings-content ul li.indent-0
 {
@@ -169,7 +176,7 @@
 .gui-settings-content ul li.category
 {
     padding: 8px 0;
-    margin: 0;
+    margin-bottom: 12px;
     border-top: 1px dashed #8884;
     border-bottom: 1px dashed #8884;
     background: white;
