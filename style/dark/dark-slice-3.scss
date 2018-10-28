@@ -165,7 +165,9 @@ body>div.to-top.on,
 .area-section .card-ctnr .more:hover,
 .link-panigation-ctnr .pagination,
 .link-progress-tv,
-.jumping-ctnr .jumping-input
+.jumping-ctnr .jumping-input,
+#song_detail_click_upper~div .pager .pages .page-item.active button,
+#song_detail_click_upper~div .pager .pages .page-item button
 {
     background-color: transparent !important;
 }
@@ -302,7 +304,9 @@ body>div.to-top.on,
 .jumping-ctnr .jumping-input,
 .banner-wrapper .swiper-pagination-bullet,
 .nav-header-wrapper .nav-header .user-panel,
-.nav-header-wrapper .nav-header .user-panel a
+.nav-header-wrapper .nav-header .user-panel a,
+.similar-song-menu .similar-right .title,
+.gridview-sidebar .album-title
 {
     color: #eee !important;
 }
@@ -712,7 +716,10 @@ body>div.to-top.on
 .hot-list .card-ctnr .room-count:hover .amount,
 .hot-list .card-ctnr .room-count:hover .icon-font,
 .hot-list .card-ctnr .room-count:hover,
-.panel-list .order-center-item:hover a
+.panel-list .order-center-item:hover a,
+.similar-song-menu .similar-right .title:hover,
+#song_detail_click_upper~div .pager .pages .page-item.active button,
+#song_detail_click_upper~div .pager .pages .page-item button:hover
 {
     color: $customStyleColor !important;
 }
