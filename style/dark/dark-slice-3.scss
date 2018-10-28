@@ -169,7 +169,8 @@ body>div.to-top.on,
 .link-progress-tv,
 .jumping-ctnr .jumping-input,
 #song_detail_click_upper~div .pager .pages .page-item.active button,
-#song_detail_click_upper~div .pager .pages .page-item button
+#song_detail_click_upper~div .pager .pages .page-item button,
+.filter-wrap .sub-filter
 {
     background-color: transparent !important;
 }
@@ -233,7 +234,8 @@ body>div.to-top.on,
 .article-action .ops i,
 .page-container .article-action,
 .article-action .ops .share-container .weixin-holder p,
-.coin-wrap .coin-tips
+.coin-wrap .coin-tips,
+.up-feedback .up-fb-btn
 {
     color: #aaa !important;
 }
@@ -364,7 +366,8 @@ body>div.to-top.on,
 .hash-popup .topic-container .item.is-selected,
 .article-holder .bangumi-card a .container,
 .article-action .ops .share-container .weixin-holder,
-.coin-wrap .coin-sure
+.coin-wrap .coin-sure,
+.filter-wrap .sub-filter
 {
     border-color: transparent !important;
 }
@@ -485,6 +488,10 @@ body>div.to-top.on,
 {
     filter: brightness(0.2) !important;
 }
+.up-feedback .icon-beta
+{
+    filter: brightness(0.5) !important;
+}
 // a
 // {
 //     filter: none !important;
@@ -541,7 +548,8 @@ body>div.to-top.on,
 .nav-bar .sub-nav::after,
 .bui-sns-info a .bd::after,
 .more .help .icon,
-.more .link .icon
+.more .link .icon,
+.filter-wrap .icon-tid2-arr
 {
     display: none !important;
 }
@@ -660,7 +668,8 @@ body>div.to-top.on
 .bilibili-live-player .bilibili-live-player-enter-tips,
 .banner-wrapper .swiper-pagination-bullet-active,
 .nav-header-wrapper .nav-header .profile-img.active::before,
-.coin-wrap .coin-sure
+.coin-wrap .coin-sure,
+.up-feedback .up-fb-btn:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -783,7 +792,8 @@ body>div.to-top.on
 .bilibili-live-player .blpui-btn.default-btn.btn-blue,
 .bilibili-live-player .bilibili-live-player-enter-tips,
 .banner-wrapper .swiper-pagination-bullet-active,
-.coin-wrap .coin-sure
+.coin-wrap .coin-sure,
+.up-feedback .up-fb-btn:hover
 {
     color: $foreground !important;
 }
