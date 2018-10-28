@@ -41,31 +41,31 @@
             show()
             {
                 this.viewer.addClass("opened");
-                $("html,body").addClass("image-viewer-opened");
+                // $("html,body").addClass("image-viewer-opened");
             }
             hide()
             {
                 this.viewer.removeClass("opened");
-                $("html,body").removeClass("image-viewer-opened");
+                // $("html,body").removeClass("image-viewer-opened");
             }
         }
 
-        if ($("meta[itemprop='image']").length > 0)
+        if ($("meta[itemprop='image'],meta[property='og:image']").length > 0)
         {
             return {
                 settingsWidget: {
-                    after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
-                    content: `<li class="indent-center hidden">
+                    category: "视频与直播",
+                    content: `<div class="hidden">
                         <button
                             class="gui-settings-button"
                             title="查看当前视频的封面"
                             id="view-video-cover">
                             查看封面
                         </button>
-                        </li>`,
+                        </div>`,
                     success: () =>
                     {
-                        new SpinQuery(() => $("meta[itemprop='image']"),
+                        new SpinQuery(() => $("meta[itemprop='image'],meta[property='og:image']"),
                             metaData => metaData.length > 0 && metaData.prop("content"),
                             metaData =>
                             {
@@ -83,15 +83,15 @@
         {
             return {
                 settingsWidget: {
-                    after: () => $("span.settings-category").filter((_, e) => e.innerHTML === "视频与直播").parent(),
-                    content: `<li class="indent-center hidden">
+                    category: "视频与直播",
+                    content: `<div class="hidden">
                             <button
                                 class="gui-settings-button"
                                 title="查看当前直播的封面"
                                 id="view-live-cover">
                                 查看封面
                             </button>
-                            </li>`,
+                            </div>`,
                     success: () =>
                     {
                         SpinQuery.any(() => $(".header-info-ctnr .room-cover"), coverLink =>

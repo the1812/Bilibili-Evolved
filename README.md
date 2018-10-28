@@ -1,29 +1,23 @@
 # Bilibili-Evolved
-增强哔哩哔哩Web端体验的油猴脚本.
+增强哔哩哔哩Web端体验的油猴脚本: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
+
+- [安装](#安装)
+- [了解所有功能](#功能概览)
+- [浏览设置项](#设置)
+- [浏览器兼容性](#兼容性)
+- [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
 
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.
 
-[![正式版](https://img.shields.io/badge/正式版-🌸-green.svg?style=flat-square&colorB=009688)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)
-
-正式发布的版本, 最稳定, 更新频率较低.
-
-[![预览版](https://img.shields.io/badge/预览版-🍺-yellow.svg?style=flat-square&colorB=607D8B)](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)
-
-新增内容测试的地方, 更新频率高, 但功能不稳定.
-
-[![离线版](https://img.shields.io/badge/离线版-👻-blue.svg?style=flat-square)](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)
-
-内置所有依赖项, 体积较大, 可以减少GitHub服务器不稳定的影响. 由于任何依赖项更新后此脚本也需更新, 所以更新频率会高于正式版.
-
-[![预览离线版](https://img.shields.io/badge/预览离线版-🌟-blue.svg?style=flat-square&colorB=F06292)](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)
-
-兼备预览版和离线版的特点.
+[正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)
+----- | ----- | ----- | -----
+正式发布的版本, 最稳定, 更新频率较低. | 新增内容测试的地方, 更新频率高, 但功能不稳定. | 内置所有依赖项, 体积较大, 更新频率高于正式版. | 兼备预览版和离线版的特点.
 
 > 某些破坏性的大更新会使旧版脚本**完全**无法工作, 请及时检查更新.
 # 设置
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置.
-设置项的说明见功能概览一节.
+设置项的说明见[功能概览](#功能概览)一节.
 
 **设置保存后, 需要刷新网页才能生效.**
 ![设置](images/gui-settings.png)
@@ -102,7 +96,7 @@
 #### 启用后
 ![调整](images/override-navbar.png)
 #### 移除横幅
-在搜索框位置调整启用的时候, 还可以使用此功能移除顶部横幅.
+在搜索栏置顶启用的时候, 还可以使用此功能移除顶部横幅.
 ##### 启用前
 ![不移除](images/override-navbar.png)
 ##### 启用后
@@ -110,7 +104,10 @@
 ### 强制宽屏
 对主站强制使用宽屏样式, 默认将在宽度达到`1368px`时启用. 这个触发宽度可以在设置中更改为任何有效的CSS宽度值.
 > 原有的宽屏样式会在宽度超过`1400px`时使用, 如果将触发宽度设为大于`1400px`的值实际上没有意义.
-
+#### 启用前
+![默认布局](images/force-wide-before.png)
+#### 启用后
+![宽屏布局](images/force-wide-after.png)
 
 ## 工具
 ### 删除广告
@@ -132,13 +129,24 @@
 
 
 ## 视频与直播
+### 下载视频(实验性)
+在视频播放页面中, `设置`→`视频与直播`下会出现下载视频按钮, 点击可以选择清晰度并下载.
+
+由于JavaScript的单线程限制, 下载速度可能不是很快, 如果你更喜欢使用其他的多线程下载软件, 可以在选择清晰度后选择`复制链接`. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=当前视频网址`**
+> 目前此功能只支持普通视频, 对番剧和电影无效. 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换.
+
+> **分段**的视频会把所有视频打包成`.zip`格式.
+
+> 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
+
+![下载视频按钮](images/download-video.png)
 ### 查看封面
-在视频播放页面/直播间中, `设置`→`视频与直播`下会出现查看封面按钮, 点击可以查看或保存封面.
+在视频播放页面/直播间中, `设置`→`视频与直播`下会出现查看封面按钮, 点击可以查看或保存封面. (其实还可以看专栏的封面, 不过专栏的封面本来就显示在标题上方了)
 ![查看封面按钮](images/view-cover-button.png)
 ### 自动展开弹幕列表
 新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.
 ### 缩放看板娘
-根据屏幕DPI缩放看板娘的大小以提高像素的清晰度.
+根据屏幕DPI缩放看板娘的大小以提高像素的清晰度, DPI缩放为100%的用户可以忽略此选项.
 ### 删除直播水印
 删除观看直播时角落的水印.
 ### 删除视频标题层
@@ -183,6 +191,8 @@
 ![消息](images/toast.png)
 ### 模糊设置面板背景
 使设置面板的内容区半透明并模糊后方图像.
+#### 效果对比
+![效果对比](images/gui-settings-blur.png)
 ### 启用缓存
 使用缓存以提高脚本的加载速度, 此选项只对非离线版有效.
 
@@ -199,4 +209,6 @@
 - 顶栏触摸体验不佳.
 - 触摸功能需要手动在`about:flags`中开启.
 ## ![Safari:未知](https://img.shields.io/badge/Safari-未知-lightgrey.svg?style=flat-square&colorB=323232)
-尚未在Safari中测试.
+- 尚未在Safari中测试.
+
+[返回顶部](#Bilibili-Evolved)

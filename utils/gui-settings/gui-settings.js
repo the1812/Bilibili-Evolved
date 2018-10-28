@@ -60,6 +60,17 @@
                 return settings.blurBackgroundOpacity;
             }
         };
+        function getCategoriyItems(category)
+        {
+            let element = category.nextElementSibling;
+            const elements = [];
+            while (element !== null && !element.classList.contains("category"))
+            {
+                elements.push(element);
+                element = element.nextElementSibling;
+            }
+            return elements;
+        }
         function darkScheduleValidate(text, defaultValue)
         {
             const match = text.match(/^([\d]{1,2}):([\d]{1,2})$/);
@@ -109,6 +120,16 @@
             {
                 settingsChange(key, undefined, settings[key]);
             }
+            $(".gui-settings-content ul li.category").each((_, e) =>
+            {
+                const items = getCategoriyItems(e);
+                if (items
+                    .filter(it => !it.classList.contains("disabled"))
+                    .every(it => $(it).has("input:checked").length === 0))
+                {
+                    $(e).click();
+                }
+            });
         }
         function setupEvents()
         {
@@ -129,6 +150,11 @@
             {
                 const box = $(".predefined-colors");
                 box.toggleClass("opened");
+            });
+            $(".gui-settings-content ul li.category").on("click", e =>
+            {
+                e.currentTarget.classList.toggle("folded");
+                getCategoriyItems(e.currentTarget).forEach(it => it.classList.toggle("folded"));
             });
             onSettingsChange(settingsChange);
         }
@@ -185,22 +211,13 @@
                         {
                             disable = false;
                         }
-                        $(`input[key='${key}']`).prop("disabled", disable);
-                        if (disable)
-                        {
-                            $(`input[key='${key}'][type='text']`).parent().addClass("disabled");
-                        }
-                        else
-                        {
-                            $(`input[key='${key}'][type='text']`).parent().removeClass("disabled");
-                        }
+                        const li = $(`li:has(input[key='${key}'])`);
+                        const action = disable ? "addClass" : "removeClass";
+                        li[action]("disabled");
+                        $(`input[key='${key}'][type='text']`).parent()[action]("disabled");
                     }
                 }
-                const box = $(".predefined-colors");
-                if (box.hasClass("opened"))
-                {
-                    box.removeClass("opened");
-                }
+                $(".download-video-panel,.predefined-colors").removeClass("opened");
             };
             $(`input[type='checkbox'][key]`)
                 .on("change", e => checkBoxChange($(e.target)))
@@ -240,18 +257,8 @@
                     });
             }
         }
-
-        addSettingsIcon($("body"));
-        const settingsBox = resources.data.guiSettingsDom.text;
-        if (settingsBox)
+        function applyBlurEffect()
         {
-            $("body").append(settingsBox);
-            setupEvents();
-            fillSvgData();
-            syncGui();
-            listenDependencies();
-            addPredefinedColors();
-            listenSettingsChange();
             if (settings.blurSettingsPanel)
             {
                 $(".gui-settings-box").addClass("blur");
@@ -260,10 +267,29 @@
             {
                 $(".gui-settings-panel").addClass("animation");
             }
+        }
+        function checkOfflineData()
+        {
             if (typeof offlineData !== "undefined")
             {
+                $("li:has(input[key=useCache])").addClass("disabled");
                 $("input[key=useCache]").prop("disabled", true);
             }
+        }
+
+        addSettingsIcon($("body"));
+        const settingsBox = resources.data.guiSettingsDom.text;
+        if (settingsBox)
+        {
+            $("body").append(settingsBox);
+            setupEvents();
+            fillSvgData();
+            checkOfflineData();
+            syncGui();
+            listenDependencies();
+            addPredefinedColors();
+            listenSettingsChange();
+            applyBlurEffect();
         }
 
         new SpinQuery(

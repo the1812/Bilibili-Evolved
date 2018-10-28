@@ -50,7 +50,11 @@ div#square.container,
 .live-status.offline,
 .banner-wrapper .swiper-pagination-bullet,
 .nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list,
-.project-list .project-list-item .project-list-item-img
+.project-list .project-list-item .project-list-item-img,
+.download-video-panel,
+.article-action .ops .share-container .weixin-holder,
+.coin-wrap,
+.bilibili-evolved-about
 {
     background-color: #222 !important;
 }
@@ -164,14 +168,17 @@ body>div.to-top.on,
 .area-section .card-ctnr .more:hover,
 .link-panigation-ctnr .pagination,
 .link-progress-tv,
-.jumping-ctnr .jumping-input
+.jumping-ctnr .jumping-input,
+#song_detail_click_upper~div .pager .pages .page-item.active button,
+#song_detail_click_upper~div .pager .pages .page-item button,
+.filter-wrap .sub-filter
 {
     background-color: transparent !important;
 }
-// a
-// {
-//     background: #fff1 !important;
-// }
+.coin-wrap .coin-nav .coin-checkbox
+{
+    background: #fff !important;
+}
 // a
 // {
 //     background: transparent !important;
@@ -224,7 +231,12 @@ body>div.to-top.on,
 .leaveMsg .leaveMsgBody .infoArea .infoAreaTitle,
 .leaveMsgUpload .btnarea span.btareatxt,
 .evaluate .h2,
-.hot-list .card-ctnr .room-count .icon-font
+.hot-list .card-ctnr .room-count .icon-font,
+.article-action .ops i,
+.page-container .article-action,
+.article-action .ops .share-container .weixin-holder p,
+.coin-wrap .coin-tips,
+.up-feedback .up-fb-btn
 {
     color: #aaa !important;
 }
@@ -301,7 +313,11 @@ body>div.to-top.on,
 .jumping-ctnr .jumping-input,
 .banner-wrapper .swiper-pagination-bullet,
 .nav-header-wrapper .nav-header .user-panel,
-.nav-header-wrapper .nav-header .user-panel a
+.nav-header-wrapper .nav-header .user-panel a,
+.similar-song-menu .similar-right .title,
+.gridview-sidebar .album-title,
+.article-holder .bangumi-card a .container .title,
+.coin-wrap .coin-title
 {
     color: #eee !important;
 }
@@ -346,7 +362,13 @@ body>div.to-top.on,
 .evaluateWether .noactive,
 .evaluate .situation span,
 .bilibili-live-player .bilibili-live-player-enter-tips,
-.nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list
+.nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list,
+.publish-panel .hash-popup,
+.hash-popup .topic-container .item.is-selected,
+.article-holder .bangumi-card a .container,
+.article-action .ops .share-container .weixin-holder,
+.coin-wrap .coin-sure,
+.filter-wrap .sub-filter
 {
     border-color: transparent !important;
 }
@@ -467,6 +489,10 @@ body>div.to-top.on,
 {
     filter: brightness(0.2) !important;
 }
+.up-feedback .icon-beta
+{
+    filter: brightness(0.5) !important;
+}
 // a
 // {
 //     filter: none !important;
@@ -510,7 +536,9 @@ body>div.to-top.on,
 .mainBox .leaveMsg,
 .js-evaluateArea .evaluateDialog,
 .project-list .project-list-item:hover,
-#app .toolbar-wrapper
+.publish-panel .hash-popup,
+#app .toolbar-wrapper,
+.article-action .ops .share-container .weixin-holder
 {
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
@@ -521,7 +549,8 @@ body>div.to-top.on,
 .nav-bar .sub-nav::after,
 .bui-sns-info a .bd::after,
 .more .help .icon,
-.more .link .icon
+.more .link .icon,
+.filter-wrap .icon-tid2-arr
 {
     display: none !important;
 }
@@ -561,6 +590,10 @@ body>div.to-top.on,
 body>div.to-top.on
 {
     background-repeat: no-repeat !important;
+}
+.article-action .ops .share-container .weixin-holder p
+{
+    margin-bottom: 10px !important;
 }
 
 .list-filter-bar .sort-box .item.active,
@@ -635,7 +668,9 @@ body>div.to-top.on
 .bilibili-live-player .blpui-btn.default-btn.btn-blue,
 .bilibili-live-player .bilibili-live-player-enter-tips,
 .banner-wrapper .swiper-pagination-bullet-active,
-.nav-header-wrapper .nav-header .profile-img.active::before
+.nav-header-wrapper .nav-header .profile-img.active::before,
+.coin-wrap .coin-sure,
+.up-feedback .up-fb-btn:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -708,7 +743,25 @@ body>div.to-top.on
 .hot-list .card-ctnr .room-count:hover .amount,
 .hot-list .card-ctnr .room-count:hover .icon-font,
 .hot-list .card-ctnr .room-count:hover,
-.panel-list .order-center-item:hover a
+.panel-list .order-center-item:hover a,
+.similar-song-menu .similar-right .title:hover,
+#song_detail_click_upper~div .pager .pages .page-item.active button,
+#song_detail_click_upper~div .pager .pages .page-item button:hover,
+.article-action .coin-btn.on,
+.article-action .coin-btn.on i,
+.article-action .coin-btn:hover,
+.article-action .coin-btn:hover i,
+.article-action .fav-btn.on,
+.article-action .fav-btn.on i,
+.article-action .fav-btn:hover,
+.article-action .fav-btn:hover i,
+.article-action .like-btn.on,
+.article-action .like-btn.on i,
+.article-action .like-btn:hover,
+.article-action .like-btn:hover i,
+.article-action .ops i:hover,
+.coin-wrap .coin-title i,
+.coin-wrap .coin-nav .coin-checkbox.on .lable
 {
     color: $customStyleColor !important;
 }
@@ -739,7 +792,9 @@ body>div.to-top.on
 .evaluateSubmitArea .submit,
 .bilibili-live-player .blpui-btn.default-btn.btn-blue,
 .bilibili-live-player .bilibili-live-player-enter-tips,
-.banner-wrapper .swiper-pagination-bullet-active
+.banner-wrapper .swiper-pagination-bullet-active,
+.coin-wrap .coin-sure,
+.up-feedback .up-fb-btn:hover
 {
     color: $foreground !important;
 }

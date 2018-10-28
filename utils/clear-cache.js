@@ -4,15 +4,15 @@
     {
         return {
             settingsWidget: {
-                after: () => $("input[key=useCache]").parent().parent(),
-                content: `<li class="indent-center">
+                category: "其他",
+                content: `<div>
                         <button
                             class="gui-settings-button"
                             title="清除缓存"
                             id="clear-cache">
                             清除缓存
                         </button>
-                        </li>`,
+                        </div>`,
                 success: () =>
                 {
                     $("#clear-cache").on("click", () =>

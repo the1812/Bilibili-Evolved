@@ -102,7 +102,6 @@
     overflow: auto;
     position: relative;
     overscroll-behavior: contain;
-    padding-bottom: 16px;
 }
 .gui-settings-content-top-mask,
 .gui-settings-content-bottom-mask
@@ -131,9 +130,17 @@
 .gui-settings-content ul li
 {
     font-size: 16px;
-    margin: 12px 0;
+    margin-bottom: 12px;
     display: flex;
     height: 24px;
+    transition: all .2s;
+    overflow: hidden;
+}
+.gui-settings-content ul li.disabled,
+.gui-settings-content ul li:not(.category).folded
+{
+    height: 0;
+    margin: 0;
 }
 .gui-settings-content ul li.indent-0
 {
@@ -152,20 +159,44 @@
     align-items: center;
     justify-content: center;
 }
+.gui-settings-content ul li.widgets-container
+{
+    margin: 0;
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: visible;
+}
+.gui-settings-content ul li.widgets-container>div
+{
+    align-items: center;
+    justify-content: center;
+    min-width: 50%;
+    display: inline-flex;
+    margin-bottom: 12px;
+}
 .gui-settings-content ul li.category
 {
     padding: 8px 0;
-    margin: 0;
+    margin-bottom: 12px;
     border-top: 1px dashed #8884;
     border-bottom: 1px dashed #8884;
     background: white;
     position: sticky;
     top: 0;
     z-index: 10;
+    cursor: pointer;
+    transition: all .2s ease-out;
+    -webkit-tap-highlight-color: transparent;
+}
+.gui-settings-content ul li.category.folded
+{
+    margin-bottom: -1px;
 }
 span.settings-category
 {
-    opacity: 0.6;
+    opacity: 0.8;
 }
 .gui-settings-title
 {
@@ -453,4 +484,30 @@ input[type='text'][key]
 .gui-settings-panel.animation
 {
     transition: all .2s ease-out;
+}
+i.settings-category-arrow
+{
+    transform-origin: center;
+    transition: all .2s ease-out;
+    transform: translateY(2.828427px) rotate(-135deg);
+    height: 100%;
+    display: inline-block;
+    margin-left: 12px;
+}
+li.category.folded i.settings-category-arrow
+{
+    transform: translateY(-2.828427px) rotate(45deg);
+}
+i.settings-category-arrow::after
+{
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+    border: 2px solid white;
+    opacity: .8;
+    display: block;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    border-radius: 2.4px;
 }
