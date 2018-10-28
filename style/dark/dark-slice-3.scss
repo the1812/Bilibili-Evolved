@@ -51,7 +51,9 @@ div#square.container,
 .banner-wrapper .swiper-pagination-bullet,
 .nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list,
 .project-list .project-list-item .project-list-item-img,
-.download-video-panel
+.download-video-panel,
+.article-action .ops .share-container .weixin-holder,
+.coin-wrap
 {
     background-color: #222 !important;
 }
@@ -171,10 +173,10 @@ body>div.to-top.on,
 {
     background-color: transparent !important;
 }
-// a
-// {
-//     background: #fff1 !important;
-// }
+.coin-wrap .coin-nav .coin-checkbox
+{
+    background: #fff !important;
+}
 // a
 // {
 //     background: transparent !important;
@@ -227,7 +229,11 @@ body>div.to-top.on,
 .leaveMsg .leaveMsgBody .infoArea .infoAreaTitle,
 .leaveMsgUpload .btnarea span.btareatxt,
 .evaluate .h2,
-.hot-list .card-ctnr .room-count .icon-font
+.hot-list .card-ctnr .room-count .icon-font,
+.article-action .ops i,
+.page-container .article-action,
+.article-action .ops .share-container .weixin-holder p,
+.coin-wrap .coin-tips
 {
     color: #aaa !important;
 }
@@ -306,7 +312,9 @@ body>div.to-top.on,
 .nav-header-wrapper .nav-header .user-panel,
 .nav-header-wrapper .nav-header .user-panel a,
 .similar-song-menu .similar-right .title,
-.gridview-sidebar .album-title
+.gridview-sidebar .album-title,
+.article-holder .bangumi-card a .container .title,
+.coin-wrap .coin-title
 {
     color: #eee !important;
 }
@@ -353,7 +361,10 @@ body>div.to-top.on,
 .bilibili-live-player .bilibili-live-player-enter-tips,
 .nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list,
 .publish-panel .hash-popup,
-.hash-popup .topic-container .item.is-selected
+.hash-popup .topic-container .item.is-selected,
+.article-holder .bangumi-card a .container,
+.article-action .ops .share-container .weixin-holder,
+.coin-wrap .coin-sure
 {
     border-color: transparent !important;
 }
@@ -518,7 +529,8 @@ body>div.to-top.on,
 .js-evaluateArea .evaluateDialog,
 .project-list .project-list-item:hover,
 .publish-panel .hash-popup,
-#app .toolbar-wrapper
+#app .toolbar-wrapper,
+.article-action .ops .share-container .weixin-holder
 {
     box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
 }
@@ -569,6 +581,10 @@ body>div.to-top.on,
 body>div.to-top.on
 {
     background-repeat: no-repeat !important;
+}
+.article-action .ops .share-container .weixin-holder p
+{
+    margin-bottom: 10px !important;
 }
 
 .list-filter-bar .sort-box .item.active,
@@ -643,7 +659,8 @@ body>div.to-top.on
 .bilibili-live-player .blpui-btn.default-btn.btn-blue,
 .bilibili-live-player .bilibili-live-player-enter-tips,
 .banner-wrapper .swiper-pagination-bullet-active,
-.nav-header-wrapper .nav-header .profile-img.active::before
+.nav-header-wrapper .nav-header .profile-img.active::before,
+.coin-wrap .coin-sure
 {
     background-color: $customStyleColor !important;
 }
@@ -719,7 +736,22 @@ body>div.to-top.on
 .panel-list .order-center-item:hover a,
 .similar-song-menu .similar-right .title:hover,
 #song_detail_click_upper~div .pager .pages .page-item.active button,
-#song_detail_click_upper~div .pager .pages .page-item button:hover
+#song_detail_click_upper~div .pager .pages .page-item button:hover,
+.article-action .coin-btn.on,
+.article-action .coin-btn.on i,
+.article-action .coin-btn:hover,
+.article-action .coin-btn:hover i,
+.article-action .fav-btn.on,
+.article-action .fav-btn.on i,
+.article-action .fav-btn:hover,
+.article-action .fav-btn:hover i,
+.article-action .like-btn.on,
+.article-action .like-btn.on i,
+.article-action .like-btn:hover,
+.article-action .like-btn:hover i,
+.article-action .ops i:hover,
+.coin-wrap .coin-title i,
+.coin-wrap .coin-nav .coin-checkbox.on .lable
 {
     color: $customStyleColor !important;
 }
@@ -750,7 +782,8 @@ body>div.to-top.on
 .evaluateSubmitArea .submit,
 .bilibili-live-player .blpui-btn.default-btn.btn-blue,
 .bilibili-live-player .bilibili-live-player-enter-tips,
-.banner-wrapper .swiper-pagination-bullet-active
+.banner-wrapper .swiper-pagination-bullet-active,
+.coin-wrap .coin-sure
 {
     color: $foreground !important;
 }
