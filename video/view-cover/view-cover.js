@@ -55,14 +55,14 @@
             return {
                 settingsWidget: {
                     category: "视频与直播",
-                    content: `<li class="indent-half hidden">
+                    content: `<div class="hidden">
                         <button
                             class="gui-settings-button"
                             title="查看当前视频的封面"
                             id="view-video-cover">
                             查看封面
                         </button>
-                        </li>`,
+                        </div>`,
                     success: () =>
                     {
                         new SpinQuery(() => $("meta[itemprop='image'],meta[property='og:image']"),
@@ -84,14 +84,14 @@
             return {
                 settingsWidget: {
                     category: "视频与直播",
-                    content: `<li class="indent-center hidden">
+                    content: `<div class="hidden">
                             <button
                                 class="gui-settings-button"
                                 title="查看当前直播的封面"
                                 id="view-live-cover">
                                 查看封面
                             </button>
-                            </li>`,
+                            </div>`,
                     success: () =>
                     {
                         SpinQuery.any(() => $(".header-info-ctnr .room-cover"), coverLink =>

@@ -5,14 +5,14 @@
         return {
             settingsWidget: {
                 category: "其他",
-                content: `<li class="indent-center">
+                content: `<div>
                         <button
                             class="gui-settings-button"
                             title="清除缓存"
                             id="clear-cache">
                             清除缓存
                         </button>
-                        </li>`,
+                        </div>`,
                 success: () =>
                 {
                     $("#clear-cache").on("click", () =>
