@@ -257,23 +257,8 @@
                     });
             }
         }
-
-        addSettingsIcon($("body"));
-        const settingsBox = resources.data.guiSettingsDom.text;
-        if (settingsBox)
+        function applyBlurEffect()
         {
-            $("body").append(settingsBox);
-            setupEvents();
-            fillSvgData();
-            if (typeof offlineData !== "undefined")
-            {
-                $("li:has(input[key=useCache])").addClass("disabled");
-                $("input[key=useCache]").prop("disabled", true);
-            }
-            syncGui();
-            listenDependencies();
-            addPredefinedColors();
-            listenSettingsChange();
             if (settings.blurSettingsPanel)
             {
                 $(".gui-settings-box").addClass("blur");
@@ -282,6 +267,29 @@
             {
                 $(".gui-settings-panel").addClass("animation");
             }
+        }
+        function checkOfflineData()
+        {
+            if (typeof offlineData !== "undefined")
+            {
+                $("li:has(input[key=useCache])").addClass("disabled");
+                $("input[key=useCache]").prop("disabled", true);
+            }
+        }
+
+        addSettingsIcon($("body"));
+        const settingsBox = resources.data.guiSettingsDom.text;
+        if (settingsBox)
+        {
+            $("body").append(settingsBox);
+            setupEvents();
+            fillSvgData();
+            checkOfflineData();
+            syncGui();
+            listenDependencies();
+            addPredefinedColors();
+            listenSettingsChange();
+            applyBlurEffect();
         }
 
         new SpinQuery(

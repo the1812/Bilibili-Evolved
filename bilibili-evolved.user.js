@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.21
+// @version      1.5.22
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -17,6 +17,7 @@
 // @grant        GM_setValue
 // @grant        GM_addValueChangeListener
 // @grant        GM_setClipboard
+// @grant        GM_info
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo.png
@@ -61,8 +62,8 @@
         clearCache: true,
         fixFullscreen: false,
         downloadVideo: true,
-        latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
-        currentVersion: "1.5.21"
+        latestVersionLink: GM_info.script.updateURL,
+        currentVersion: GM_info.script.version
     };
     function loadSettings()
     {
@@ -91,7 +92,7 @@
     }
     function loadResources()
     {
-        const resouceData = {
+        const resouceManifest = {
             style: {
                 path: "min/style.min.scss",
                 order: 1
@@ -356,12 +357,25 @@
             },
             videoInfo: {
                 path: "min/video-info.min.js"
+            },
+            aboutDom: {
+                path: "min/about.min.html"
+            },
+            aboutStyle: {
+                path: "min/about.min.scss"
+            },
+            about: {
+                path: "min/about.min.js",
+                dependencies: [
+                    "aboutDom",
+                    "aboutStyle"
+                ]
             }
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
         Resource.displayNames = {};
-        for (const [key, data] of Object.entries(resouceData))
+        for (const [key, data] of Object.entries(resouceManifest))
         {
             const resource = new Resource(data.path, data.order);
             resource.key = key;
@@ -372,7 +386,7 @@
             }
             Resource.all[key] = resource;
         }
-        for (const [key, data] of Object.entries(resouceData))
+        for (const [key, data] of Object.entries(resouceManifest))
         {
             if (data.dependencies)
             {
