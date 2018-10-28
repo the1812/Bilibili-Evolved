@@ -62,6 +62,7 @@
         clearCache: true,
         fixFullscreen: false,
         downloadVideo: true,
+        about: true,
         latestVersionLink: GM_info.script.updateURL,
         currentVersion: GM_info.script.version
     };
