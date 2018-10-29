@@ -39,6 +39,33 @@
                 return this;
             }
         }
+        class Danmaku
+        {
+            constructor(text, p)
+            {
+                this.text = text;
+                this.p = p;
+            }
+        }
+        class DanmakuInfo
+        {
+            constructor(cid)
+            {
+                this.cid = cid;
+            }
+            async fetchInfo()
+            {
+                const xml = await downloadText(`https://api.bilibili.com/x/v1/dm/list.so?oid=${this.cid}`);
+                this.rawXML = xml;
+
+                const dom = new DOMParser().parseFromString(xml, "application/xml").documentElement;
+                this.xml = dom;
+                this.danmakus = [].map.call(dom.querySelectorAll("d[p]"), it =>
+                {
+                    return new Danmaku(it.innerHTML, it.getAttribute("p"));
+                });
+            }
+        }
         class BangumiInfo
         {
             constructor(ep)
@@ -70,7 +97,9 @@
         return {
             export: {
                 VideoInfo: VideoInfo,
-                BangumiInfo: BangumiInfo
+                BangumiInfo: BangumiInfo,
+                Danmaku: Danmaku,
+                DanmakuInfo: DanmakuInfo
             }
         };
     };
