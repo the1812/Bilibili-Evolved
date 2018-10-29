@@ -97,7 +97,9 @@
         return {
             export: {
                 VideoInfo: VideoInfo,
-                BangumiInfo: BangumiInfo
+                BangumiInfo: BangumiInfo,
+                Danmaku: Danmaku,
+                DanmakuInfo: DanmakuInfo
             }
         };
     };
