@@ -454,7 +454,7 @@ input[type='text'][key]
     {
         -webkit-backdrop-filter: blur(24px);
         backdrop-filter: blur(24px);
-        background: transparent;
+        background: #fff8;
     }
 }
 @supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
@@ -473,12 +473,12 @@ input[type='text'][key]
     }
     .gui-settings-box.blur .gui-settings-content
     {
-        background: #fff8;
+        background: #fffc;
     }
     .gui-settings-box.blur .gui-settings-header,
     .gui-settings-box.blur .gui-settings-footer
     {
-        background: #fff4;
+        background: #fffc;
     }
 }
 .gui-settings-panel.animation
