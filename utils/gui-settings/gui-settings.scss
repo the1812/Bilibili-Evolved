@@ -504,7 +504,8 @@ i.settings-category-arrow::after
     width: 8px;
     height: 8px;
     background-color: transparent;
-    border: 2px solid white;
+    border: 2px solid;
+    border-color: black;
     opacity: .8;
     display: block;
     border-left-color: transparent;
