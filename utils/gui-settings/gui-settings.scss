@@ -141,6 +141,7 @@
 {
     height: 0;
     margin: 0;
+    overflow: hidden;
 }
 .gui-settings-content ul li.indent-0
 {
@@ -454,7 +455,7 @@ input[type='text'][key]
     {
         -webkit-backdrop-filter: blur(24px);
         backdrop-filter: blur(24px);
-        background: #fff8;
+        background: #fffa;
     }
 }
 @supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
@@ -473,12 +474,12 @@ input[type='text'][key]
     }
     .gui-settings-box.blur .gui-settings-content
     {
-        background: #fffc;
+        background: #fffa;
     }
     .gui-settings-box.blur .gui-settings-header,
     .gui-settings-box.blur .gui-settings-footer
     {
-        background: #fffc;
+        background: #fffa;
     }
 }
 .gui-settings-panel.animation
