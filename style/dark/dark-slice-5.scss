@@ -35,7 +35,13 @@
 .dc-button.dc-button-text,
 .dc-progress-bar,
 .h-none-btn,
-.list.main_body .right_box .select_box .select .option_block .option:hover 
+.list.main_body .right_box .select_box .select .option_block .option:hover,
+.anime-expo-container,
+.hot-goods-container,
+.goods-container,
+.comment-container,
+.comment-container .main-desc .goods-info,
+.scroll-container .main .article-container 
 {
     background-color: #444 !important;
 }
@@ -97,7 +103,8 @@
 .h-none-msg,
 .page_body .page_box .block .info .text,
 .list.main_body .list_box .block .info .text,
-.list.main_body .right_box .select_box .select .option_block .option 
+.list.main_body .right_box .select_box .select .option_block .option,
+.comment-container .main-desc .comment-info .word-container .bottom .personal-info .nickname
 {
     color: #aaa !important;
 }
@@ -135,7 +142,10 @@ table.invtable td,
 .big-user-name,
 .page_body .page_box .block .info .title,
 .list.main_body .list_box .block .info .title,
-.list.main_body .right_box .select_box .select .title 
+.list.main_body .right_box .select_box .select .title,
+.anime-expo-container .head .title,
+.comment-container .head .title,
+.article-container .head .title 
 {
     color: #eee !important;
 }
@@ -302,7 +312,11 @@ table.invtable td,
 icon-label.hover-text-blue:hover .label,
 .stat-card .num .text,
 .comment-card .comment-item .comment-info .reply-block .comment-vedio a,
-.section-item .diff-wrp .diff-text 
+.section-item .diff-wrp .diff-text,
+.comment-container .main-desc .goods-info .desc .price,
+.hot-goods-container .bottom .price-tag .price,
+.goods-container > .info-container .price,
+.anime-expo-container .main .price 
 {
     color: $customStyleColor !important;
 }
