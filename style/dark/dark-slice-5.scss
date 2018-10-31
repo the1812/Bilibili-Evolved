@@ -34,7 +34,8 @@
 .head .dropdown.open .dropdown-btn,
 .dc-button.dc-button-text,
 .dc-progress-bar,
-.h-none-btn
+.h-none-btn,
+.list.main_body .right_box .select_box .select .option_block .option:hover 
 {
     background-color: #444 !important;
 }
@@ -94,7 +95,9 @@
 .article-data-wrp .menu-wrp .menu-tips,
 .type-rank-item-label,
 .h-none-msg,
-.page_body .page_box .block .info .text 
+.page_body .page_box .block .info .text,
+.list.main_body .list_box .block .info .text,
+.list.main_body .right_box .select_box .select .option_block .option 
 {
     color: #aaa !important;
 }
@@ -130,7 +133,9 @@ table.invtable td,
 .h-none-btn,
 .h-none-btn:hover,
 .big-user-name,
-.page_body .page_box .block .info .title 
+.page_body .page_box .block .info .title,
+.list.main_body .list_box .block .info .title,
+.list.main_body .right_box .select_box .select .title 
 {
     color: #eee !important;
 }
@@ -165,7 +170,9 @@ table.invtable td,
 .comment-list-item,
 .head .dropdown-btn,
 .dropdown .dropdown-menu,
-#dc-section_summary .source-rank-list-item 
+#dc-section_summary .source-rank-list-item,
+.list.main_body .right_box .select_box .select .title,
+.list.main_body .list_box .block 
 {
     border-color: transparent !important;
 }
