@@ -6,6 +6,7 @@
 - [浏览设置项](#设置)
 - [浏览器兼容性](#兼容性)
 - [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
+- [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/Coming-Features)
 
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.
