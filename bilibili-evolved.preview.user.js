@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.22
+// @version      1.5.23
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -26,6 +26,8 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        customControlBackgroundOpacity: 0.5,
+        customControlBackground: true,
         forceWideMinWidth: "1368px",
         forceWide: false,
         darkScheduleStart: "18:00",
@@ -371,6 +373,19 @@
                     "aboutDom",
                     "aboutStyle"
                 ]
+            },
+            customControlBackgroundStyle: {
+                path: "min/custom-control-background.min.scss"
+            },
+            customControlBackground: {
+                path: "min/custom-control-background.min.js",
+                dependencies: [
+                    "customControlBackgroundStyle"
+                ],
+                displayNames: {
+                    customControlBackground: "控制栏着色",
+                    customControlBackgroundOpacity: "不透明度"
+                }
             }
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";

@@ -107,6 +107,21 @@
         }
         textValidate.darkScheduleStart = text => darkScheduleValidate(text, settings.darkScheduleStart);
         textValidate.darkScheduleEnd = text => darkScheduleValidate(text, settings.darkScheduleEnd);
+        function opacityValidate(text, defaultValue)
+        {
+            const match = text.match(/^([-\+]?\d+)(\.\d+)?$/);
+            if (match)
+            {
+                const value = parseFloat(text);
+                if (value >= 0 && value <= 1)
+                {
+                    return text;
+                }
+            }
+            return defaultValue;
+        }
+        textValidate.blurBackgroundOpacity = text => opacityValidate(text, settings.blurBackgroundOpacity);
+        textValidate.customControlBackgroundOpacity = text => opacityValidate(text, settings.customControlBackgroundOpacity);
 
         function settingsChange(key, _, newValue)
         {
