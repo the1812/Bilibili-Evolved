@@ -304,10 +304,14 @@ body
 // {
 //     height: 403px !important;
 // }
+.bilibili-player-video-control-bottom
+{
+    background-color: #222c !important;
+}
 .bilibili-player-video-control,
 .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
 {
-    background-color: #222c !important;
+    background-color: transparent !important;
 }
 .search-bar-ctnr .search-bar input::placeholder,
 .search-bar-ctnr .search-bar .search-btn,

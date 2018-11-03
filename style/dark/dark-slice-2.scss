@@ -250,8 +250,7 @@ a.bp_box_bot_click,
 {
     background-image: none !important;
 }
-.bilibili-player-video-control,
-.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
+.bilibili-player-video-control-bottom
 {
     background-color: #222c !important;
 }
@@ -294,7 +293,9 @@ a.bp_box_bot_click,
 .contri-condition .contri-sort .contri-sort-type li:hover,
 .share-module,
 .sponsor-rank-item.simple .sp-rank i,
-.prize-winner-block
+.prize-winner-block,
+.bilibili-player-video-control,
+.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
 {
     background-color: transparent !important;
 }
