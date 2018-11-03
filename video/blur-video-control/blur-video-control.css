@@ -8,6 +8,7 @@
         -webkit-backdrop-filter: blur(48px);
         backdrop-filter: blur(48px);
         z-index: -1;
+        top: 0;
     }
     .bilibili-player-video-control-bottom,
     .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap

@@ -117,15 +117,27 @@
     transform: rotateX(0deg) rotateY(0deg) scale(1);
 }
 
-.disable-original-hover.video-control-show .bilibili-player-video-control-wrap
+.disable-original-hover .bilibili-player-video-control-bottom
 {
     opacity: 0 !important;
     visibility: hidden !important;
 }
-.disable-original-hover.touch-video-control-show .bilibili-player-video-control-wrap
+.disable-original-hover.touch-video-control-show .bilibili-player-video-control-bottom
 {
     opacity: 1 !important;
     visibility: visible !important;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-control-top
+{
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 32px !important;
+}
+.disable-original-hover .bilibili-player-video-control-top
+{
+    left: -12px !important;
+    right: -12px !important;
+    bottom: -6px !important;
 }
 
 
