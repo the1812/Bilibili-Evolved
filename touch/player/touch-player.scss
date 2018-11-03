@@ -117,12 +117,14 @@
     transform: rotateX(0deg) rotateY(0deg) scale(1);
 }
 
-.disable-original-hover .bilibili-player-video-control-bottom
+.disable-original-hover .bilibili-player-video-control-bottom,
+.disable-original-hover .bilibili-player-video-control-wrap
 {
     opacity: 0 !important;
     visibility: hidden !important;
 }
-.disable-original-hover.touch-video-control-show .bilibili-player-video-control-bottom
+.disable-original-hover.touch-video-control-show .bilibili-player-video-control-bottom,
+.disable-original-hover.touch-video-control-show .bilibili-player-video-control-wrap
 {
     opacity: 1 !important;
     visibility: visible !important;
