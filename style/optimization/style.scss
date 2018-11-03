@@ -76,8 +76,7 @@ li.nav-item.home:hover,
 .link-navbar .nav-item:hover .nav-link .label,
 .shortcuts-ctnr .shortcut-item .label-wrapper .text:hover,
 .publish-btn:hover::after,
-.my-link-btn .label:hover,
-.bilibili-player-video-control-mask
+.my-link-btn .label:hover
 {
     background: transparent !important;
 }
@@ -248,15 +247,20 @@ div.num
 }
 
 #primary_menu,
-#primary_menu>ul.nav-menu,
-.bilibili-player-iconfont-setting,
-.video-state-volume-max .bilibili-player-iconfont-volume-max,
-.video-state-volume-min .bilibili-player-iconfont-volume-min,
-.bilibili-player-video-btn-volume:not(.video-state-volume-max):not(.video-state-volume-min) .bilibili-player-iconfont-volume,
-.bilibili-player-iconfont-next
+#primary_menu>ul.nav-menu
+// .bilibili-player-iconfont-setting,
+// .video-state-volume-max .bilibili-player-iconfont-volume-max,
+// .video-state-volume-min .bilibili-player-iconfont-volume-min,
+// .bilibili-player-video-btn-volume:not(.video-state-volume-max):not(.video-state-volume-min) .bilibili-player-iconfont-volume,
+// .bilibili-player-iconfont-next
 {
     display: flex !important;
     align-items: center !important;
+}
+.bilibili-player-video-btn-quality
+{
+    width: auto !important;
+    margin: 0 6px !important;
 }
 
 /*li.home>a.t,*/
@@ -304,15 +308,34 @@ body
 // {
 //     height: 403px !important;
 // }
-.bilibili-player-video-control-bottom
-{
-    background-color: #222c !important;
-}
-.bilibili-player-video-control,
-.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
+// .bilibili-player-video-control-bottom
+// {
+//     margin: 0 !important;
+//     padding: 7px 0 0 !important;
+// }
+// .bilibili-player-video-control-bottom,
+// .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
+// {
+//     background-color: #222c !important;
+// }
+.bilibili-player-video-control
 {
     background-color: transparent !important;
 }
+.video-control-show .bilibili-player-video-control-top,
+.mouse-hover .bilibili-player-video-control-top
+{
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 32px !important;
+}
+.bilibili-player-video-control-top
+{
+    left: -12px !important;
+    right: -12px !important;
+    bottom: -6px !important;
+}
+
 .search-bar-ctnr .search-bar input::placeholder,
 .search-bar-ctnr .search-bar .search-btn,
 .nav-header-wrapper .nav-header .nav-header-search-bar::placeholder
@@ -347,5 +370,29 @@ body
     .stardust-video .nav-con li.suggest-item>a
     {
         max-width: 205px !important;
+    }
+}
+
+@media screen and (min-width: 750px)
+{
+    .player .bilibili-player.mode-fullscreen .video-control-show .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-fullscreen .mouse-hover .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-fullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .video-control-show .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .mouse-hover .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top
+    {
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 48px !important;
+    }
+    .player .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-fullscreen .disable-original-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .disable-original-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top
+    {
+        left: -12px !important;
+        right: -12px !important;
+        bottom: -6px !important;
     }
 }
