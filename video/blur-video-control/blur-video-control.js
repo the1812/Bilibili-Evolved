@@ -4,9 +4,8 @@
     {
         Observer.subtree("#bofqi", () =>
         {
-            SpinQuery.count(
-                () => $(".bui-slider .bui-track.bui-track-video-progress,.bilibili-player-area .bilibili-player-video-control"),
-                2,
+            SpinQuery.any(
+                () => $(".bui-slider .bui-track.bui-track-video-progress,.bilibili-player-video-control-bottom"),
                 containers =>
                 {
                     if (!containers.hasClass("video-control-blur-container"))

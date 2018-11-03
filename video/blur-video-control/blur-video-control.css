@@ -9,11 +9,13 @@
         backdrop-filter: blur(48px);
         z-index: -1;
     }
+    .bilibili-player-video-control-bottom,
     .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
     {
         background-color: transparent !important;
     }
-    .bilibili-player-area .bilibili-player-video-control-wrap
+    .bilibili-player-area .bilibili-player-video-control-wrap,
+    .bilibili-player-area .bilibili-player-video-control-bottom
     {
         transition: none !important;
     }
