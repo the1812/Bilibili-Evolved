@@ -128,11 +128,18 @@
     opacity: 1 !important;
     visibility: visible !important;
 }
+.disable-original-hover .bilibili-player-video-control-top,
 .bilibili-player-video-control-top
 {
     left: 0 !important;
     right: 0 !important;
     bottom: -6px !important;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-control-top
+{
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 32px !important;
 }
 .bilibili-player-video-control-bottom
 {
@@ -294,5 +301,12 @@ div.bilibili-player-video-control
         left: 0 !important;
         right: 0 !important;
         bottom: -6px !important;
+    }
+    .player .bilibili-player.mode-fullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top
+    {
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 48px !important;
     }
 }
