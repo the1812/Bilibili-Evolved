@@ -204,6 +204,10 @@ div.up-load
     background-color: #fffd !important;
     transition: all 0.2s !important;
 }
+.bilibili-player-video-control-top
+{
+    transition: all 0.2s !important;
+}
 .search-bar-ctnr .search-bar:hover,
 .stardust-video .nav-con #nav_searchform:hover,
 .nav-header-wrapper .nav-header .nav-header-search-bar:hover,
@@ -371,20 +375,16 @@ body
 @media screen and (min-width: 750px)
 {
     .player .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-fullscreen .disable-original-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-webfullscreen .disable-original-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top
+    .player .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top
     {
         left: -12px !important;
         right: -12px !important;
         bottom: -6px !important;
     }
-    .player .bilibili-player.mode-fullscreen .video-control-show .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-fullscreen .mouse-hover .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-fullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-webfullscreen .video-control-show .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-webfullscreen .mouse-hover .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-webfullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top
+    .player .bilibili-player.mode-fullscreen :not(.disable-original-hover) .video-control-show .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-fullscreen :not(.disable-original-hover) .mouse-hover .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen :not(.disable-original-hover) .video-control-show .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen :not(.disable-original-hover) .mouse-hover .bilibili-player-video-control-wrap .bilibili-player-video-control-top
     {
         left: 0 !important;
         right: 0 !important;
