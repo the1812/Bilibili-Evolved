@@ -117,14 +117,13 @@
     transform: rotateX(0deg) rotateY(0deg) scale(1);
 }
 
-.disable-original-hover .bilibili-player-video-control-bottom,
-.disable-original-hover .bilibili-player-video-control-wrap
+.disable-original-hover .bilibili-player-video-control-bottom
 {
     opacity: 0 !important;
     visibility: hidden !important;
 }
 .disable-original-hover.touch-video-control-show .bilibili-player-video-control-bottom,
-.disable-original-hover.touch-video-control-show .bilibili-player-video-control-wrap
+.disable-original-hover .bilibili-player-video-control-wrap
 {
     opacity: 1 !important;
     visibility: visible !important;
@@ -288,18 +287,15 @@ div.bilibili-player-video-control
     {
         flex-grow: 0.5 !important;
     }
-    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top
-    {
-        bottom: 48px !important;
-    }
-    .player .bilibili-player.mode-fullscreen .video-control-show.bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-fullscreen .mouse-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-fullscreen .video-control-show .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-fullscreen .mouse-hover .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
     .player .bilibili-player.mode-fullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-webfullscreen .video-control-show.bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-    .player .bilibili-player.mode-webfullscreen .mouse-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .video-control-show .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .mouse-hover .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
     .player .bilibili-player.mode-webfullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top
     {
+        left:0 !important;
+        right: 0 !important;
         bottom: 48px !important;
     }
     .player .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
@@ -307,6 +303,8 @@ div.bilibili-player-video-control
     .player .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
     .player .bilibili-player.mode-webfullscreen .disable-original-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top
     {
+        left: 0 !important;
+        right: 0 !important;
         bottom: -6px !important;
     }
 }
