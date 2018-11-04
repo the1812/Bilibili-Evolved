@@ -5,7 +5,7 @@
         Observer.subtree("#bofqi", () =>
         {
             SpinQuery.count(
-                () => $(".bui-slider .bui-track.bui-track-video-progress,.bilibili-player-area .bilibili-player-video-control"),
+                () => $(".bui-slider .bui-track.bui-track-video-progress,.bilibili-player-video-control-bottom"),
                 2,
                 containers =>
                 {

@@ -1,0 +1,8 @@
+{
+    "preview": "bilibili-evolved.preview.user.js",
+    "offline": "bilibili-evolved.offline.user.js",
+    "previewOffline": "bilibili-evolved.preview-offline.user.js",
+    "master": "bilibili-evolved.user.js",
+    "logoPath": "images/logo.png",
+    "owner": "the1812"
+}

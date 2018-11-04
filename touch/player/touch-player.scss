@@ -26,7 +26,8 @@
     border: 4px solid transparent;
     transform-origin: center;
 }
-.touch-video-box.animation
+.touch-video-box.animation,
+.bilibili-player-video-control-top
 {
     transition: all 0.2s;
 }
@@ -117,15 +118,33 @@
     transform: rotateX(0deg) rotateY(0deg) scale(1);
 }
 
-.disable-original-hover.video-control-show .bilibili-player-video-control-wrap
+.disable-original-hover .bilibili-player-video-control-bottom
 {
     opacity: 0 !important;
     visibility: hidden !important;
 }
-.disable-original-hover.touch-video-control-show .bilibili-player-video-control-wrap
+.disable-original-hover.touch-video-control-show .bilibili-player-video-control-bottom,
+.disable-original-hover .bilibili-player-video-control-wrap
 {
     opacity: 1 !important;
     visibility: visible !important;
+}
+.disable-original-hover .bilibili-player-video-control-top,
+.bilibili-player-video-control-top
+{
+    left: 0 !important;
+    right: 0 !important;
+    bottom: -6px !important;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-control-top
+{
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 32px !important;
+}
+.bilibili-player-video-control-bottom
+{
+    padding: 0 !important;
 }
 
 
@@ -194,10 +213,15 @@ div.bilibili-player-video-control
 {
     align-items: center !important;
 }
+.bilibili-player-iconfont-setting,
+.video-state-volume-max .bilibili-player-iconfont-volume-max,
+.video-state-volume-min .bilibili-player-iconfont-volume-min,
+.bilibili-player-video-btn-volume:not(.video-state-volume-max):not(.video-state-volume-min) .bilibili-player-iconfont-volume,
+.bilibili-player-iconfont-next,
 .bilibili-player-video-control-bottom-left
 {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
 }
 .bilibili-player-video-btn-danmaku
 {
@@ -232,10 +256,6 @@ div.bilibili-player-video-control
 {
     padding: 0 3px !important;
 }
-.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
-{
-    background: #666;
-}
 .bilibili-player .bilibili-player-area .bilibili-player-video-control-bottom,
 .bilibili-player-video-control-bottom-left,
 .bilibili-player .bilibili-player-area .bilibili-player-video-control-bottom-right
@@ -255,18 +275,18 @@ div.bilibili-player-video-control
         background: #fff1 !important;
     }
     .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control,
-     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control
+    .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control
     {
         height: 100% !important;
         margin: 0 !important;
     }
     .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom,
-     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom
+    .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom
     {
         margin: 0 !important;
     }
     .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-left,
-     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-left
+    .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-left
     {
         height: 100% !important;
     }
@@ -274,9 +294,24 @@ div.bilibili-player-video-control
     {
         flex-grow: 0.5 !important;
     }
-    .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
-     .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top
-     {
-         bottom: 48px !important;
-     }
+    .player .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    {
+        left: 0 !important;
+        right: 0 !important;
+    }
+    .player .bilibili-player.mode-fullscreen .disable-original-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .disable-original-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top
+    {
+        left: 0 !important;
+        right: 0 !important;
+        bottom: -6px !important;
+    }
+    .player .bilibili-player.mode-fullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top,
+    .player .bilibili-player.mode-webfullscreen .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top
+    {
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 48px !important;
+    }
 }

@@ -402,10 +402,10 @@ body>div.to-top.on,
 {
     border: 1px solid #444 !important;
 }
-// a
-// {
-//     border-color: #99a2aa !important;
-// }
+i.settings-category-arrow::after
+{
+    border-color: white !important;
+}
 
 #player-header .bg-image
 {
@@ -566,6 +566,13 @@ body>div.to-top.on,
 // {
 //     opacity: 1 !important;
 // }
+@supports (backdrop-filter: blur(24px)) or (-webkit-backdrop-filter: blur(24px))
+{
+    .gui-settings-box.blur li.category
+    {
+        background: transparent !important;
+    }
+}
 @supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
 {
     .gui-settings-box.blur .gui-settings-content
@@ -575,7 +582,7 @@ body>div.to-top.on,
     .gui-settings-box.blur .gui-settings-header,
     .gui-settings-box.blur .gui-settings-footer
     {
-        background: #2224 !important;
+        background: #2228 !important;
     }
 }
 .face-g-list .mp-block .right ul li.base .round
@@ -817,11 +824,11 @@ body>div.to-top.on
     border-top-color: transparent !important;
     border-bottom-color: transparent !important;
 }
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-right-color: transparent !important;
-// }
+i.settings-category-arrow::after
+{
+    border-top-color: transparent !important;
+    border-left-color: transparent !important;
+}
 .data-card .tab .data-tab.current:after,
 .sort-item.on i.active,
 #rankList .list-wrap .list .switch.active.active:after,

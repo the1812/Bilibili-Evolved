@@ -134,13 +134,13 @@
     display: flex;
     height: 24px;
     transition: all .2s;
-    overflow: hidden;
 }
 .gui-settings-content ul li.disabled,
 .gui-settings-content ul li:not(.category).folded
 {
     height: 0;
     margin: 0;
+    overflow: hidden;
 }
 .gui-settings-content ul li.indent-0
 {
@@ -406,7 +406,7 @@ button.save.save-complete
     left: -64px;
     transform: scale(0);
     transform-origin: top;
-    z-index: 100;
+    z-index: 9;
 }
 .predefined-colors.opened
 {
@@ -433,7 +433,7 @@ input[key]:focus
 {
     outline: none;
 }
-input[type='text'][key]
+input[type=text][key]
 {
     height: auto;
     border: none;
@@ -454,7 +454,7 @@ input[type='text'][key]
     {
         -webkit-backdrop-filter: blur(24px);
         backdrop-filter: blur(24px);
-        background: transparent;
+        background: #fffa;
     }
 }
 @supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
@@ -473,12 +473,12 @@ input[type='text'][key]
     }
     .gui-settings-box.blur .gui-settings-content
     {
-        background: #fff8;
+        background: #fffa;
     }
     .gui-settings-box.blur .gui-settings-header,
     .gui-settings-box.blur .gui-settings-footer
     {
-        background: #fff4;
+        background: #fffa;
     }
 }
 .gui-settings-panel.animation
@@ -504,7 +504,8 @@ i.settings-category-arrow::after
     width: 8px;
     height: 8px;
     background-color: transparent;
-    border: 2px solid white;
+    border: 2px solid;
+    border-color: black;
     opacity: .8;
     display: block;
     border-left-color: transparent;

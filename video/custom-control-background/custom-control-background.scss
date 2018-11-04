@@ -1,0 +1,9 @@
+.bilibili-player-video-control-mask
+{
+    background: transparent !important;
+}
+.bilibili-player-video-control-bottom,
+.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
+{
+    background-color: rgba(0,0,0,$customControlBackgroundOpacity) !important;
+}

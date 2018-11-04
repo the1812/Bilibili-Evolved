@@ -1,0 +1,114 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+
+namespace BilibiliEvolved.Build
+{
+    partial class ProjectBuilder
+    {
+        private string offlineText;
+        private string offlineVersion;
+
+        private void replaceInfo(Dictionary<string, string> map)
+        {
+            var logoBytes = File.ReadAllBytes(config.LogoPath);
+            var logoBase64 = $"data:image/png;base64,{Convert.ToBase64String(logoBytes)}";
+            map.ForEach(item => offlineText = offlineText.Replace(item.Key, item.Value));
+            offlineText = ownerRegex.Replace(offlineText, "${1}" + config.Owner + "${3}");
+            offlineText = offlineText.Replace(
+                $"@icon         https://raw.githubusercontent.com/{config.Owner}/Bilibili-Evolved/master/images/logo.png",
+                $"@icon         {logoBase64}");
+        }
+        private void generateVersion()
+        {
+            var startDate = new DateTime(2018, 7, 16, 15, 46, 53);
+            var versionRegex = new Regex(@"(@version[ ]*)[\d\.]*");
+            var version = DateTime.Now.ToOADate() - startDate.ToOADate();
+            offlineVersion = version.ToString("0.00");
+            offlineText = versionRegex.Replace(offlineText, "${1}" + offlineVersion);
+        }
+        private void compileOfflineData()
+        {
+            var onlineRoot = new Regex(@"Resource.root = ""(.*)"";").Match(offlineText).Groups[1].Value;
+            var urlList = (from match in new Regex(@"path:\s*""(.*)""").Matches(offlineText)
+                           as IEnumerable<Match>
+                           select match.Groups[1].Value.Trim()
+                          ).ToList();
+
+            var downloadCodeStart = @"// \+#Offline build placeholder";
+            var downloadCodeEnd = @"// \-#Offline build placeholder";
+            var downloadCodes = new Regex($"({downloadCodeStart}([^\0]*){downloadCodeEnd})").Match(offlineText).Groups[0].Value;
+
+            var offlineData = "const offlineData = {};" + Environment.NewLine;
+            foreach (var url in urlList)
+            {
+                var text = File.ReadAllText(url);
+                if (url.EndsWith(".js"))
+                {
+                    offlineData = offlineData + $"offlineData[\"{onlineRoot + url}\"] = {text}" + Environment.NewLine;
+                }
+                else
+                {
+                    offlineData = offlineData + $"offlineData[\"{onlineRoot + url}\"] = `{text}`;" + Environment.NewLine;
+                }
+            }
+            offlineText = offlineText
+                .Replace(@"// [Offline build placeholder]", offlineData)
+                .Replace(downloadCodes, "this.text=this.type.preprocessor(offlineData[this.url]);resolve(this.text);");
+        }
+        private void buildFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                var offlineFileText = File.ReadAllText(path);
+
+                var noVersion = new Regex(@"// @version[ ]*(.*)" + Environment.NewLine);
+                var originalOffline = noVersion.Replace(offlineFileText, "");
+                var currentOffline = noVersion.Replace(offlineText, "");
+
+                if (currentOffline == originalOffline)
+                {
+                    offlineVersion = noVersion.Match(offlineFileText).Groups[1].Value.Trim();
+                    return;
+                }
+            }
+
+            File.WriteAllText(path, offlineText);
+        }
+        private ProjectBuilder build(Dictionary<string, string> replaceMap, string outputPath, string successMessage)
+        {
+            offlineText = Output;
+            replaceInfo(replaceMap);
+            generateVersion();
+            compileOfflineData();
+            buildFile(outputPath);
+
+            WriteSuccess(successMessage);
+            return this;
+        }
+
+        public ProjectBuilder BuildOffline()
+        {
+            var replaceMap = new Dictionary<string, string>
+                {
+                    { "Bilibili Evolved", "Bilibili Evolved (Offline)" },
+                    { "增强哔哩哔哩Web端体验:", "增强哔哩哔哩Web端体验(离线版):" },
+                    { $"master/{config.Master}", $"master/{config.Offline}" },
+                };
+            return build(replaceMap, config.Offline, "Offline build complete.");
+        }
+        public ProjectBuilder BuildPreviewOffline()
+        {
+            var replaceMap = new Dictionary<string, string>
+                {
+                    { "Bilibili Evolved", "Bilibili Evolved (Preview Offline)" },
+                    { "增强哔哩哔哩Web端体验:", "增强哔哩哔哩Web端体验(预览离线版):" },
+                    { $"master/{config.Master}", $"preview/{config.PreviewOffline}" },
+                };
+            return build(replaceMap, config.PreviewOffline, "Preview Offline build complete.");
+        }
+    }
+}

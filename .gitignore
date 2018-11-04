@@ -1,10 +1,8 @@
 .vscode/
-build-scripts/
+builder/node/
 .node_modules/
 package-lock.json
 build.cache
-build.dll
-build.runtimeconfig.json
 dark.scss
 dark-template.scss
 min/dark-slice-*.min.scss
@@ -146,8 +144,6 @@ DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
 
-# Click-Once directory
-publish/
 
 # Publish Web Output
 *.[Pp]ublish.xml
