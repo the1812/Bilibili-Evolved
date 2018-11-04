@@ -26,7 +26,7 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
-        customControlBackgroundOpacity: 0.5,
+        customControlBackgroundOpacity: 0.64,
         customControlBackground: true,
         forceWideMinWidth: "1368px",
         forceWide: false,

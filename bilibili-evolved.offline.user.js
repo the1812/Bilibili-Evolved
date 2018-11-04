@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      110.32
+// @version      111.12
 // @description  增强哔哩哔哩Web端体验(离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -26,7 +26,7 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
-        customControlBackgroundOpacity: 0.5,
+        customControlBackgroundOpacity: 0.64,
         customControlBackground: true,
         forceWideMinWidth: "1368px",
         forceWide: false,
