@@ -157,13 +157,18 @@
 标题覆盖层的位置:
 ![标题覆盖层](images/remove-top-mask.png)
 ### 模糊视频控制栏背景
-此功能需要浏览器支持背景模糊效果, 详情见兼容性一节.
+模糊视频控制栏背景, 控制栏着色效果和原阴影效果将无效.
+此功能需要浏览器支持背景模糊效果, 详情见[兼容性](#兼容性)一节.
 #### 启用前
 ![不模糊背景](images/blur-video-control-disabled.png)
 #### 启用后
 ![模糊背景](images/blur-video-control.png)
 ### 控制栏着色
 给视频控制栏附上半透明的黑色, 代替原来的阴影, 黑色的不透明度可在设置中调整.
+#### 启用前
+![原版](images/custom-control-background-disabled.png)
+#### 启用后
+![着色](images/custom-control-background.png)
 
 ## 触摸支持
 ### 顶栏
