@@ -58,6 +58,11 @@ div#square.container,
 {
     background-color: #222 !important;
 }
+.article-holder .error-card .video-holder .video-cover,
+.article-holder .error-card .video-holder p
+{
+    background-color: #333 !important;
+}
 .main-container .title>span,
 .content-panel .title span,
 .face-g-list .mp-block .right ul li.base .round,
@@ -677,7 +682,8 @@ body>div.to-top.on
 .banner-wrapper .swiper-pagination-bullet-active,
 .nav-header-wrapper .nav-header .profile-img.active::before,
 .coin-wrap .coin-sure,
-.up-feedback .up-fb-btn:hover
+.up-feedback .up-fb-btn:hover,
+.draft-holder-block .draft-holder .panel .btn.on
 {
     background-color: $customStyleColor !important;
 }
