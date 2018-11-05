@@ -13,7 +13,10 @@
 .comment-list-item .ci-action a:hover,
 .comment-manage-wrap .content .action-bar .dropdown .action-menu li:hover,
 .comment-manage-wrap .content .action-bar .dropdown .sort-menu li:hover,
-.hash-popup .topic-container .item.is-selected 
+.hash-popup .topic-container .item.is-selected,
+.fjw-kpi-wrap,
+.mobile-kpi-head h2,
+.mini-progress 
 {
     background-color: #222 !important;
 }
@@ -41,7 +44,10 @@
 .goods-container,
 .comment-container,
 .comment-container .main-desc .goods-info,
-.scroll-container .main .article-container 
+.scroll-container .main .article-container,
+.fjw-kpi-wrap .fjw-kpi-mid .fjw-grade-wrap,
+.fjw-kpi-wrap .fjw-kpi-top,
+.fjw-kpi-wrap .fjw-kpi-foot .fjw-kpi-presents 
 {
     background-color: #444 !important;
 }
@@ -112,7 +118,8 @@
 .page_body .page_box .block .info .text,
 .list.main_body .list_box .block .info .text,
 .list.main_body .right_box .select_box .select .option_block .option,
-.comment-container .main-desc .comment-info .word-container .bottom .personal-info .nickname
+.comment-container .main-desc .comment-info .word-container .bottom .personal-info .nickname,
+.fjw-kpi-wrap .fjw-kpi-top .fjw-person-detail label.fjw-person-item 
 {
     color: #aaa !important;
 }
@@ -153,7 +160,13 @@ table.invtable td,
 .list.main_body .right_box .select_box .select .title,
 .anime-expo-container .head .title,
 .comment-container .head .title,
-.article-container .head .title 
+.article-container .head .title,
+.fjw-kpi-wrap .fjw-kpi-mid .fjw-grade-wrap .fjw-progress-title .description,
+.fjw-kpi-wrap .fjw-kpi-mid .fjw-grade-wrap .fjw-grade .fjw-grade-text,
+.mobile-kpi-head h2,
+.fjw-kpi-wrap .fjw-kpi-top .fjw-person-detail label.fjw-person-item .fjw-name,
+.fjw-kpi-wrap .fjw-kpi-foot .fjw-kpi-presents .kpi-presents-item .present-text,
+.fjw-kpi-wrap h2.fjw-kpi-h2 
 {
     color: #eee !important;
 }
@@ -190,7 +203,8 @@ table.invtable td,
 .dropdown .dropdown-menu,
 #dc-section_summary .source-rank-list-item,
 .list.main_body .right_box .select_box .select .title,
-.list.main_body .list_box .block 
+.list.main_body .list_box .block,
+.mobile-kpi-head 
 {
     border-color: transparent !important;
 }
