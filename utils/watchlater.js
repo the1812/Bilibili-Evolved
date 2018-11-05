@@ -12,10 +12,10 @@
                         const href = $(it).attr("href");
                         if (href)
                         {
-                            const match = href.match(/av[\d]+/);
-                            if (match && match[0])
+                            const match = href.match(/(av[\d]+)\/p([\d]+)/);
+                            if (match)
                             {
-                                return "https://www.bilibili.com/" + match[0];
+                                return `https://www.bilibili.com/video/${match[1]}/?p=${match[2]}`;
                             }
                         }
                         return "javascript:;";
