@@ -54,7 +54,10 @@ div#square.container,
 .download-video-panel,
 .article-action .ops .share-container .weixin-holder,
 .coin-wrap,
-.bilibili-evolved-about
+.bilibili-evolved-about,
+.uns_box li .i_menu,
+.user-info .user-info-desc,
+#community_msg
 {
     background-color: #222 !important;
 }
@@ -116,7 +119,10 @@ body>div.to-top.on,
 .sureWindow .btngroup span,
 .evaluateWether .evaluate-btn,
 .evaluate .situation span,
-.up-info .u-face .up-face
+.up-info .u-face .up-face,
+.main_body .future .next_button,
+.user-info .points-wrp .bar,
+.list.main_body .list_box .next_button
 {
     background-color: #444 !important;
 }
@@ -241,7 +247,8 @@ body>div.to-top.on,
 .page-container .article-action,
 .article-action .ops .share-container .weixin-holder p,
 .coin-wrap .coin-tips,
-.up-feedback .up-fb-btn
+.up-feedback .up-fb-btn,
+.user-info .user-info-desc
 {
     color: #aaa !important;
 }
@@ -322,14 +329,21 @@ body>div.to-top.on,
 .similar-song-menu .similar-right .title,
 .gridview-sidebar .album-title,
 .article-holder .bangumi-card a .container .title,
-.coin-wrap .coin-title
+.coin-wrap .coin-title,
+.main_body .future .next_button,
+#i_menu_profile .info .coin .outside,
+#i_menu_profile .info a.linkToCurrency,
+.user-info .user-info-hd .t,
+.user-info .points-wrp .points-schedule .now-points,
+#community_msg .dyn_menu li a,
+.list.main_body .list_box .next_button
 {
     color: #eee !important;
 }
-// a
-// {
-//     color: #222 !important;
-// }
+.list.main_body .right_box .select_box .select .option_block .option.selected
+{
+    color: #fff !important;
+}
 .content-panel .title span,
 .medal-up-trueLove,
 .el-picker-panel,
@@ -373,7 +387,8 @@ body>div.to-top.on,
 .article-holder .bangumi-card a .container,
 .article-action .ops .share-container .weixin-holder,
 .coin-wrap .coin-sure,
-.filter-wrap .sub-filter
+.filter-wrap .sub-filter,
+.list.main_body .list_box .block .cover
 {
     border-color: transparent !important;
 }
@@ -529,7 +544,8 @@ body>div.to-top.on,
 .selector-wrapper,
 .nav-header-wrapper .nav-header .user-panel .user-uname,
 .nav-header-wrapper .nav-header .user-panel .panel-list,
-.demo-app .detail .category
+.demo-app .detail .category,
+.main_body .pick_up .pick_list .pick_block .pic
 {
     box-shadow: none !important;
 }
@@ -555,7 +571,8 @@ body>div.to-top.on,
 .bui-sns-info a .bd::after,
 .more .help .icon,
 .more .link .icon,
-.filter-wrap .icon-tid2-arr
+.filter-wrap .icon-tid2-arr,
+.user-info .user-info-desc .arrow-left
 {
     display: none !important;
 }
@@ -606,6 +623,10 @@ body>div.to-top.on
 .article-action .ops .share-container .weixin-holder p
 {
     margin-bottom: 10px !important;
+}
+.activity.topic-preview-wrapper .s-bottom
+{
+    border-radius: 0 !important;
 }
 
 .list-filter-bar .sort-box .item.active,
@@ -774,7 +795,8 @@ body>div.to-top.on
 .article-action .like-btn:hover i,
 .article-action .ops i:hover,
 .coin-wrap .coin-title i,
-.coin-wrap .coin-nav .coin-checkbox.on .lable
+.coin-wrap .coin-nav .coin-checkbox.on .lable,
+#community_msg .dyn_menu li a:hover
 {
     color: $customStyleColor !important;
 }

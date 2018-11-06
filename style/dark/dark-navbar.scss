@@ -36,9 +36,16 @@
 #app>.nav-header-wrapper>.nav-header .nav-header-mainsite,
 #app>.nav-header-wrapper>.nav-header .order-center,
 .z_top.b-header-blur .z_top_nav li a.i-link,
-.z_top.b-header-blur .uns_box li.u-i a.i-link
+.z_top.b-header-blur .uns_box li.u-i a.i-link,
+.z_top a,
+.uns_box li.u-i a.i-link
 {
     color: #eee;
+}
+.uns_box li.u-i:hover a.i-link,
+.z_top .i-link:hover
+{
+    color: $customStyleColor;
 }
 #link-navbar-vm>.link-navbar-ctnr,
 #app>.link-navbar
