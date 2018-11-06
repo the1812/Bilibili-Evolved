@@ -268,8 +268,7 @@ span.settings-category
 }
 .gui-settings-checkbox-container input
 {
-    opacity: 0;
-    width: 0;
+    visibility: collapse;
     transition: all 0.2s;
 }
 .gui-settings-checkbox-container svg
