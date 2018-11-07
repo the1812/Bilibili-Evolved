@@ -591,7 +591,7 @@
             const pattern = `#?${part.repeat(count)}`;
             return new RegExp(pattern, "ig");
         }
-        _hexToRgb(hex, alpha)
+        hexToRgbOrRgba(hex, alpha)
         {
             const isShortHand = hex.length < 6;
             if (isShortHand)
@@ -627,7 +627,7 @@
             }
             else if (alpha)
             {
-                const rgb = this._hexToRgb(hex, false);
+                const rgb = this.hexToRgbOrRgba(hex, false);
                 if (rgb)
                 {
                     rgb.a = 1;
@@ -638,11 +638,11 @@
         }
         hexToRgb(hex)
         {
-            return this._hexToRgb(hex, false);
+            return this.hexToRgbOrRgba(hex, false);
         }
         hexToRgba(hex)
         {
-            return this._hexToRgb(hex, true);
+            return this.hexToRgbOrRgba(hex, true);
         }
         rgbToHsb(rgb)
         {
