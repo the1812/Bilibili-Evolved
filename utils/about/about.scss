@@ -13,23 +13,74 @@
 .bilibili-evolved-about
 {
     display: none;
-    width: 60vw;
+    width: 50vw;
     height: 40vh;
     background-color: white;
     position: fixed;
     top: 20%;
-    left: 20%;
+    left: 25%;
     z-index: 100000;
     box-shadow: 0px 3px 20px 2px #0004;
+    border-top: 4px solid $customStyleColor;
 }
 .bilibili-evolved-about.opened
 {
     display: flex;
 }
+.bilibili-evolved-info a
+{
+    margin: 0 4px;
+}
+.bilibili-evolved-info>p
+{
+    margin: 8px 0;
+}
+.bilibili-evolved-about>div
+{
+    flex: 1 0 0;
+    padding: 32px;
+}
+.bilibili-evolved-about h1
+{
+    font-size: 36px;
+    margin-bottom: 16px;
+}
+.bilibili-evolved-about h2
+{
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+.open-source-components>li
+{
+    margin: 12px 0;
+    padding: 12px 24px;
+    border: 4px solid #8884;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all .2s ease-out;
+}
+.open-source-components>li:hover
+{
+    background-color: #8884;
+    border-color: transparent;
+}
+.component-name
+{
+    font-size: 18px;
+    font-weight: bold;
+}
+.component-info
+{
+    margin-top: 8px;
+}
 #about-link
 {
     cursor: pointer;
     transition: all .2s;
+}
+.bilibili-evolved-about a
+{
+    color: $customStyleColor;
 }
 #about-link:hover
 {

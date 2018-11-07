@@ -3,8 +3,8 @@
     return (settings, resources) =>
     {
         $("body").append(resources.data.aboutDom.text);
-        $(".bilibili-evolved-version-name").text(GM_info.script.name.replace("Bilibili Evolved", "").trim());
-        $(".bilibili-evolved-version-number").text(settings.currentVersion);
+        const version = GM_info.script.name.replace("Bilibili Evolved", "").replace(/^[\(\) ]+|[\(\) ]+$/g, '') + " · " + settings.currentVersion;
+        $(".bilibili-evolved-version").text(version);
         const openSourceComponents = [
             {
                 name: "jQuery",
@@ -23,9 +23,9 @@
         {
             $(".open-source-components").append(`
                 <li>
-                    <a href="${component.homepage}">
-                        <span class="component-name">${component.name}</span>
-                        <span class="component-info">${component.version} · ${component.license}</span>
+                    <a target="_blank" href="${component.homepage}">
+                        <div class="component-name">${component.name}</div>
+                        <div class="component-info">${component.version} · ${component.license}</div>
                     </a>
                 </li>
             `);
