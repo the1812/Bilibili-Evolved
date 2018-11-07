@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.24
+// @version      1.5.25
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -55,7 +55,7 @@
         useDarkStyle: false,
         useNewStyle: true,
         useCache: true,
-        cache: {}
+        cache: {},
     };
     const fixedSettings = {
         guiSettings: true,
@@ -66,7 +66,7 @@
         downloadVideo: true,
         about: false,
         latestVersionLink: GM_info.script.updateURL,
-        currentVersion: GM_info.script.version
+        currentVersion: GM_info.script.version,
     };
     function loadSettings()
     {
@@ -98,90 +98,90 @@
         const resouceManifest = {
             style: {
                 path: "min/style.min.scss",
-                order: 1
+                order: 1,
             },
             oldStyle: {
                 path: "min/old.min.scss",
-                order: 1
+                order: 1,
             },
             scrollbarStyle: {
                 path: "min/scrollbar.min.css",
-                order: 1
+                order: 1,
             },
             darkStyle: {
                 path: "min/dark.min.scss",
-                order: 2
+                order: 2,
             },
             darkStyleImportant: {
-                path: "min/dark-important.min.scss"
+                path: "min/dark-important.min.scss",
             },
             darkStyleNavBar: {
-                path: "min/dark-navbar.min.scss"
+                path: "min/dark-navbar.min.scss",
             },
             touchPlayerStyle: {
                 path: "min/touch-player.min.scss",
-                order: 3
+                order: 3,
             },
             navbarOverrideStyle: {
                 path: "min/override-navbar.min.css",
-                order: 4
+                order: 4,
             },
             noBannerStyle: {
                 path: "min/no-banner.min.css",
-                order: 5
+                order: 5,
             },
             removeAdsStyle: {
                 path: "min/remove-promotions.min.css",
-                order: 6
+                order: 6,
             },
             guiSettingsStyle: {
                 path: "min/gui-settings.min.scss",
-                order: 0
+                order: 0,
             },
             fullTweetsTitleStyle: {
                 path: "min/full-tweets-title.min.css",
-                order: 7
+                order: 7,
             },
             imageViewerStyle: {
                 path: "min/image-viewer.min.scss",
-                order: 8
+                order: 8,
             },
             toastStyle: {
                 path: "min/toast.min.scss",
-                order: 9
+                order: 9,
             },
             blurVideoControlStyle: {
                 path: "min/blur-video-control.min.css",
-                order: 10
+                order: 10,
             },
             forceWideStyle: {
-                path: "min/force-wide.min.scss"
+                path: "min/force-wide.min.scss",
             },
             downloadVideoStyle: {
-                path: "min/download-video.min.scss"
+                path: "min/download-video.min.scss",
             },
             guiSettingsDom: {
-                path: "min/gui-settings.min.html"
+                path: "min/gui-settings.min.html",
             },
             imageViewerDom: {
-                path: "min/image-viewer.min.html"
+                path: "min/image-viewer.min.html",
             },
             downloadVideoDom: {
-                path: "min/download-video.min.html"
+                path: "min/download-video.min.html",
             },
             latestVersion: {
-                path: "version.txt"
+                path: "version.txt",
             },
             guiSettings: {
                 path: "min/gui-settings.min.js",
                 dependencies: [
                     "guiSettingsDom",
-                    "guiSettingsStyle"
+                    "guiSettingsStyle",
                 ],
                 displayNames: {
                     guiSettings: "设置",
-                    blurSettingsPanel: "模糊设置面板背景"
-                }
+                    blurSettingsPanel: "模糊设置面板背景",
+                },
             },
             useDarkStyle: {
                 path: "min/dark-styles.min.js",
@@ -189,209 +189,209 @@
                     "darkStyle",
                     "darkStyleImportant",
                     "darkStyleNavBar",
-                    "scrollbarStyle"
+                    "scrollbarStyle",
                 ],
                 displayNames: {
-                    useDarkStyle: "夜间模式"
-                }
+                    useDarkStyle: "夜间模式",
+                },
             },
             useNewStyle: {
                 path: "min/new-styles.min.js",
                 dependencies: [
                     "style",
                     "oldStyle",
-                    "scrollbarStyle"
+                    "scrollbarStyle",
                 ],
                 displayNames: {
                     useNewStyle: "样式调整",
-                    blurBackgroundOpacity: "顶栏(对横幅)不透明度"
-                }
+                    blurBackgroundOpacity: "顶栏(对横幅)不透明度",
+                },
             },
             overrideNavBar: {
                 path: "min/override-navbar.min.js",
                 dependencies: [
                     "navbarOverrideStyle",
-                    "noBannerStyle"
+                    "noBannerStyle",
                 ],
                 displayNames: {
                     overrideNavBar: "搜索栏置顶",
-                    showBanner: "显示顶部横幅"
-                }
+                    showBanner: "显示顶部横幅",
+                },
             },
             touchNavBar: {
                 path: "min/touch-navbar.min.js",
                 displayNames: {
-                    touchNavBar: "顶栏触摸优化"
-                }
+                    touchNavBar: "顶栏触摸优化",
+                },
             },
             touchVideoPlayer: {
                 path: "min/touch-player.min.js",
                 dependencies: [
-                    "touchPlayerStyle"
+                    "touchPlayerStyle",
                 ],
                 displayNames: {
                     touchVideoPlayer: "播放器触摸支持",
                     touchVideoPlayerAnimation: "启用实验性动画效果",
-                    touchVideoPlayerDoubleTapControl: "启用双击控制"
-                }
+                    touchVideoPlayerDoubleTapControl: "启用双击控制",
+                },
             },
             expandDanmakuList: {
                 path: "min/expand-danmaku.min.js",
                 displayNames: {
-                    expandDanmakuList: "自动展开弹幕列表"
-                }
+                    expandDanmakuList: "自动展开弹幕列表",
+                },
             },
             removeAds: {
                 path: "min/remove-promotions.min.js",
                 dependencies: [
-                    "removeAdsStyle"
+                    "removeAdsStyle",
                 ],
                 displayNames: {
-                    removeAds: "删除广告"
-                }
+                    removeAds: "删除广告",
+                },
             },
             watchLaterRedirect: {
                 path: "min/watchlater.min.js",
                 displayNames: {
-                    watchLaterRedirect: "稍后再看重定向"
-                }
+                    watchLaterRedirect: "稍后再看重定向",
+                },
             },
             hideTopSearch: {
                 path: "min/hide-top-search.min.js",
                 displayNames: {
-                    hideTopSearch: "隐藏搜索推荐"
-                }
+                    hideTopSearch: "隐藏搜索推荐",
+                },
             },
             harunaScale: {
                 path: "min/haruna-scale.min.js",
                 displayNames: {
-                    harunaScale: "缩放看板娘"
-                }
+                    harunaScale: "缩放看板娘",
+                },
             },
             removeLiveWatermark: {
                 path: "min/remove-watermark.min.js",
                 displayNames: {
-                    removeLiveWatermark: "删除直播水印"
-                }
+                    removeLiveWatermark: "删除直播水印",
+                },
             },
             fullTweetsTitle: {
                 path: "min/full-tweets-title.min.js",
                 dependencies: [
-                    "fullTweetsTitleStyle"
+                    "fullTweetsTitleStyle",
                 ],
                 displayNames: {
-                    fullTweetsTitle: "展开动态标题"
-                }
+                    fullTweetsTitle: "展开动态标题",
+                },
             },
             viewCover: {
                 path: "min/view-cover.min.js",
                 dependencies: [
                     "imageViewerDom",
-                    "imageViewerStyle"
+                    "imageViewerStyle",
                 ],
                 displayNames: {
-                    viewCover: "查看封面"
-                }
+                    viewCover: "查看封面",
+                },
             },
             notifyNewVersion: {
                 path: "min/notify-new-version.min.js",
                 dependencies: [
-                    "latestVersion"
+                    "latestVersion",
                 ],
                 displayNames: {
-                    notifyNewVersion: "检查更新"
-                }
+                    notifyNewVersion: "检查更新",
+                },
             },
             toast: {
                 path: "min/toast.min.js",
                 dependencies: [
-                    "toastStyle"
+                    "toastStyle",
                 ],
                 displayNames: {
-                    toast: "显示消息"
-                }
+                    toast: "显示消息",
+                },
             },
             removeVideoTopMask: {
                 path: "min/remove-top-mask.min.js",
                 displayNames: {
-                    removeVideoTopMask: "删除视频标题层"
-                }
+                    removeVideoTopMask: "删除视频标题层",
+                },
             },
             blurVideoControl: {
                 path: "min/blur-video-control.min.js",
                 dependencies: [
-                    "blurVideoControlStyle"
+                    "blurVideoControlStyle",
                 ],
                 displayNames: {
-                    blurVideoControl: "模糊视频控制栏背景"
-                }
+                    blurVideoControl: "模糊视频控制栏背景",
+                },
             },
             darkSchedule: {
                 path: "min/dark-schedule.min.js",
                 displayNames: {
                     darkSchedule: "夜间模式计划时段",
                     darkScheduleStart: "起始时间",
-                    darkScheduleEnd: "结束时间"
-                }
+                    darkScheduleEnd: "结束时间",
+                },
             },
             forceWide: {
                 path: "min/force-wide.min.js",
                 dependencies: [
-                    "forceWideStyle"
+                    "forceWideStyle",
                 ],
                 displayNames: {
                     forceWide: "强制宽屏",
-                    forceWideMinWidth: "触发宽度"
-                }
+                    forceWideMinWidth: "触发宽度",
+                },
             },
             clearCache: {
                 path: "min/clear-cache.min.js",
                 displayNames: {
-                    useCache: "启用缓存"
-                }
+                    useCache: "启用缓存",
+                },
             },
             downloadVideo: {
                 path: "min/download-video.min.js",
                 dependencies: [
                     "downloadVideoDom",
                     "downloadVideoStyle",
-                    "videoInfo"
-                ]
+                    "videoInfo",
+                ],
             },
             videoInfo: {
-                path: "min/video-info.min.js"
+                path: "min/video-info.min.js",
             },
             aboutDom: {
-                path: "min/about.min.html"
+                path: "min/about.min.html",
             },
             aboutStyle: {
-                path: "min/about.min.scss"
+                path: "min/about.min.scss",
             },
             about: {
                 path: "min/about.min.js",
                 dependencies: [
                     "aboutDom",
-                    "aboutStyle"
-                ]
+                    "aboutStyle",
+                ],
             },
             customControlBackgroundStyle: {
-                path: "min/custom-control-background.min.scss"
+                path: "min/custom-control-background.min.scss",
             },
             customControlBackground: {
                 path: "min/custom-control-background.min.js",
                 dependencies: [
-                    "customControlBackgroundStyle"
+                    "customControlBackgroundStyle",
                 ],
                 displayNames: {
                     customControlBackground: "控制栏着色",
-                    customControlBackgroundOpacity: "不透明度"
-                }
-            }
+                    customControlBackgroundOpacity: "不透明度",
+                },
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
         Resource.displayNames = {};
-        for (const [key, data] of Object.entries(resouceManifest))
+        for (const [key, data,] of Object.entries(resouceManifest))
         {
             const resource = new Resource(data.path, data.order);
             resource.key = key;
@@ -402,7 +402,7 @@
             }
             Resource.all[key] = resource;
         }
-        for (const [key, data] of Object.entries(resouceManifest))
+        for (const [key, data,] of Object.entries(resouceManifest))
         {
             if (data.dependencies)
             {
@@ -469,7 +469,7 @@
             this.element = element;
             this.callback = callback;
             this.observer = null;
-            this.options = { childList: true, subtree: true };
+            this.options = { childList: true, subtree: true, };
         }
         start()
         {
@@ -488,8 +488,8 @@
         static subtree(selector, callback)
         {
             callback();
-            return new Array(...document.querySelectorAll(selector))
-                .map(it =>
+            return Array.from(...document.querySelectorAll(selector),
+                it =>
                 {
                     return new Observer(it, callback).start();
                 });
@@ -497,14 +497,14 @@
         static attributes(selector, callback)
         {
             callback();
-            return new Array(...document.querySelectorAll(selector))
-                .map(it =>
+            return Array.from(...document.querySelectorAll(selector),
+                it =>
                 {
                     const observer = new Observer(it, callback);
                     observer.options = {
                         childList: false,
                         subtree: false,
-                        attributes: true
+                        attributes: true,
                     };
                     return observer.start();
                 });
@@ -512,14 +512,14 @@
         static all(selector, callback)
         {
             callback();
-            return new Array(...document.querySelectorAll(selector))
-                .map(it =>
+            return Array.from(...document.querySelectorAll(selector),
+                it =>
                 {
                     const observer = new Observer(it, callback);
                     observer.options = {
                         childList: true,
                         subtree: true,
-                        attributes: true
+                        attributes: true,
                     };
                     return observer.start();
                 });
@@ -597,13 +597,13 @@
             if (isShortHand)
             {
                 const shorthandRegex = this.getHexRegex(alpha, true);
-                hex = hex.replace(shorthandRegex, function ()
+                hex = hex.replace(shorthandRegex, function (...args)
                 {
                     let result = "";
                     let i = 1;
-                    while (arguments[i])
+                    while (args[i])
                     {
-                        result += arguments[i].repeat(2);
+                        result += args[i].repeat(2);
                         i++;
                     }
                     return result;
@@ -617,7 +617,7 @@
                 const color = {
                     r: parseInt(regexResult[1], 16),
                     g: parseInt(regexResult[2], 16),
-                    b: parseInt(regexResult[3], 16)
+                    b: parseInt(regexResult[3], 16),
                 };
                 if (regexResult[4])
                 {
@@ -646,7 +646,7 @@
         }
         rgbToHsb(rgb)
         {
-            const { r, g, b } = rgb;
+            const { r, g, b, } = rgb;
             const max = Math.max(r, g, b);
             const min = Math.min(r, g, b);
             const delta = max - min;
@@ -676,7 +676,7 @@
                 h += 360;
             }
 
-            return { h: h, s: s, b: v };
+            return { h: h, s: s, b: v, };
         }
         get hsb()
         {
@@ -698,7 +698,7 @@
         }
         makeImageFilter(originalRgb)
         {
-            const { h, s, b } = this.rgbToHsb(originalRgb);
+            const { h, s, b, } = this.rgbToHsb(originalRgb);
             const targetColor = this.hsb;
 
             const hue = targetColor.h - h;
@@ -712,7 +712,7 @@
             const blueColor = {
                 r: 0,
                 g: 160,
-                b: 213
+                b: 213,
             };
             return this.makeImageFilter(blueColor);
         }
@@ -721,7 +721,7 @@
             const pinkColor = {
                 r: 251,
                 g: 113,
-                b: 152
+                b: 152,
             };
             return this.makeImageFilter(pinkColor);
         }
@@ -802,7 +802,7 @@
         {
             return new ResourceType("html", html =>
             {
-                for (const [key, name] of Object.entries(Resource.displayNames))
+                for (const [key, name,] of Object.entries(Resource.displayNames))
                 {
                     html = html.replace(new RegExp(`(<(.+)\\s*?indent="[\\d]+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</\\2>)`, "g"),
                         `$1${name}$3`);

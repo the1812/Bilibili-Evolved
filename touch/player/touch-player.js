@@ -12,7 +12,7 @@
                 y += element.offsetTop - element.scrollTop;
                 element = element.offsetParent;
             }
-            return { x: x, y: y };
+            return { x: x, y: y, };
         };
         const secondsToTime = sec =>
         {
@@ -53,12 +53,12 @@
                 this.action = new SwipeAction(element);
                 this.onTouchStart = null;
                 this.onTouchEnd = null;
-                this._direction = null;
+                this.direction = null;
 
                 element.addEventListener("touchstart", e =>
                 {
-                    this._xDown = e.touches[0].clientX;
-                    this._yDown = e.touches[0].clientY;
+                    this.xDown = e.touches[0].clientX;
+                    this.yDown = e.touches[0].clientY;
                     if (this.onTouchStart)
                     {
                         this.onTouchStart(e);
@@ -66,7 +66,7 @@
                 });
                 element.addEventListener("touchmove", e =>
                 {
-                    if (!this._xDown || !this._yDown)
+                    if (!this.xDown || !this.yDown)
                     {
                         return;
                     }
@@ -77,13 +77,13 @@
                         x: (e.touches[0].pageX - elementPosition.x) / element.clientWidth,
                         y: (e.touches[0].pageY - elementPosition.y) / element.clientHeight,
                         width: element.clientWidth,
-                        height: element.clientHeight
+                        height: element.clientHeight,
                     };
 
-                    const xDiff = this._xDown - xUp;
-                    const yDiff = this._yDown - yUp;
+                    const xDiff = this.xDown - xUp;
+                    const yDiff = this.yDown - yUp;
 
-                    if (!this._direction)
+                    if (!this.direction)
                     {
                         let direction = "";
                         if (Math.abs(xDiff) > Math.abs(yDiff))
@@ -94,27 +94,27 @@
                         {
                             direction = "vertical";
                         }
-                        this._direction = direction;
+                        this.direction = direction;
                         e.preventDefault();
                     }
                     else
                     {
-                        if (this._direction === "vertical")
+                        if (this.direction === "vertical")
                         {
-                            this.action.startAction(this._direction, yDiff, position);
+                            this.action.startAction(this.direction, yDiff, position);
                         }
-                        else if (this._direction === "horizontal")
+                        else if (this.direction === "horizontal")
                         {
-                            this.action.startAction(this._direction, -xDiff, position);
+                            this.action.startAction(this.direction, -xDiff, position);
                         }
                         e.preventDefault();
                     }
                 });
                 element.addEventListener("touchend", e =>
                 {
-                    this._xDown = null;
-                    this._yDown = null;
-                    this._direction = null;
+                    this.xDown = null;
+                    this.yDown = null;
+                    this.direction = null;
                     if (this.onTouchEnd)
                     {
                         this.onTouchEnd(e);
@@ -146,49 +146,49 @@
                 this.onActionStart = null;
                 this.onActionEnd = null;
 
-                this._element = element;
-                this._touchStart = false;
-                this._startPosition = null;
-                this._lastAction = null;
+                this.element = element;
+                this.touchStart = false;
+                this.startPosition = null;
+                this.lastAction = null;
                 element.addEventListener("touchstart", e =>
                 {
-                    this._touchStart = true;
+                    this.touchStart = true;
                 });
                 element.addEventListener("touchend", e =>
                 {
-                    this._startPosition = null;
-                    this.onActionEnd && this.onActionEnd(this._lastAction);
-                    this._lastAction = null;
+                    this.startPosition = null;
+                    this.onActionEnd && this.onActionEnd(this.lastAction);
+                    this.lastAction = null;
                 });
             }
 
             startAction(direction, distance, position)
             {
-                if (this._touchStart)
+                if (this.touchStart)
                 {
                     this.onActionStart && this.onActionStart(direction);
-                    this._startPosition = position;
-                    this._touchStart = false;
+                    this.startPosition = position;
+                    this.touchStart = false;
                 }
                 if (direction === "vertical")
                 {
                     if (Math.abs(distance) < this.minSwipeDistance)
                     {
                         this.volumeCancel && this.volumeCancel();
-                        this._lastAction = null;
+                        this.lastAction = null;
                     }
                     else
                     {
                         let volumeFactor = 0;
                         let upHandler = undefined;
                         let downHandler = undefined;
-                        if (this._startPosition.x < 1 / 3)
+                        if (this.startPosition.x < 1 / 3)
                         {
                             volumeFactor = 0.4;
                             upHandler = this.lowVolumeUp;
                             downHandler = this.lowVolumeDown;
                         }
-                        else if (this._startPosition.x >= 1 / 3 && this._startPosition.x <= 2 / 3)
+                        else if (this.startPosition.x >= 1 / 3 && this.startPosition.x <= 2 / 3)
                         {
                             volumeFactor = 1;
                             upHandler = this.mediumVolumeUp;
@@ -207,9 +207,9 @@
                                 volumeFactor * 100 * (distance - this.minSwipeDistance) / (1.5 * position.height)
                             );
                             upHandler && upHandler(volumeChange);
-                            this._lastAction = {
+                            this.lastAction = {
                                 type: "volume",
-                                volume: volumeChange
+                                volume: volumeChange,
                             };
                         }
                         else
@@ -218,9 +218,9 @@
                                 volumeFactor * 100 * (distance + this.minSwipeDistance) / (1.5 * position.height)
                             );
                             downHandler && downHandler(volumeChange);
-                            this._lastAction = {
+                            this.lastAction = {
                                 type: "volume",
-                                volume: volumeChange
+                                volume: volumeChange,
                             };
                         }
                     }
@@ -231,20 +231,20 @@
                         Math.abs(distance) < this.minSwipeDistance)
                     {
                         this.speedCancel && this.speedCancel();
-                        this._lastAction = null;
+                        this.lastAction = null;
                     }
                     else
                     {
                         let speedFactor = 0;
                         let forwardHandler = undefined;
                         let backwardHandler = undefined;
-                        if (this._startPosition.y < 1 / 3)
+                        if (this.startPosition.y < 1 / 3)
                         {
                             speedFactor = 0.05;
                             forwardHandler = this.lowSpeedForward;
                             backwardHandler = this.lowSpeedBackward;
                         }
-                        else if (this._startPosition.y >= 1 / 3 && this._startPosition.y <= 2 / 3)
+                        else if (this.startPosition.y >= 1 / 3 && this.startPosition.y <= 2 / 3)
                         {
                             speedFactor = 0.2;
                             forwardHandler = this.mediumSpeedForward;
@@ -261,18 +261,18 @@
                         {
                             const seconds = (distance - this.minSwipeDistance) * speedFactor;
                             forwardHandler && forwardHandler(seconds);
-                            this._lastAction = {
+                            this.lastAction = {
                                 type: "playback",
-                                seconds: seconds
+                                seconds: seconds,
                             };
                         }
                         else
                         {
                             const seconds = (distance + this.minSwipeDistance) * speedFactor;
                             backwardHandler && backwardHandler(seconds);
-                            this._lastAction = {
+                            this.lastAction = {
                                 type: "playback",
-                                seconds: seconds
+                                seconds: seconds,
                             };
                         }
                     }
@@ -328,7 +328,7 @@
                         width: xSize,
                         height: ySize,
                         backgroundImage: `url(${imageData[Math.floor(shotIndex / 100)]})`,
-                        backgroundPosition: `${x}px ${y}px`
+                        backgroundPosition: `${x}px ${y}px`,
                     });
                 }
             }

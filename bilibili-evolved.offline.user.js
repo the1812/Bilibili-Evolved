@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      112.95
+// @version      114.20
 // @description  增强哔哩哔哩Web端体验(离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -55,7 +55,7 @@
         useDarkStyle: false,
         useNewStyle: true,
         useCache: true,
-        cache: {}
+        cache: {},
     };
     const fixedSettings = {
         guiSettings: true,
@@ -66,7 +66,7 @@
         downloadVideo: true,
         about: false,
         latestVersionLink: GM_info.script.updateURL,
-        currentVersion: GM_info.script.version
+        currentVersion: GM_info.script.version,
     };
     function loadSettings()
     {
@@ -98,90 +98,90 @@
         const resouceManifest = {
             style: {
                 path: "min/style.min.scss",
-                order: 1
+                order: 1,
             },
             oldStyle: {
                 path: "min/old.min.scss",
-                order: 1
+                order: 1,
             },
             scrollbarStyle: {
                 path: "min/scrollbar.min.css",
-                order: 1
+                order: 1,
             },
             darkStyle: {
                 path: "min/dark.min.scss",
-                order: 2
+                order: 2,
             },
             darkStyleImportant: {
-                path: "min/dark-important.min.scss"
+                path: "min/dark-important.min.scss",
             },
             darkStyleNavBar: {
-                path: "min/dark-navbar.min.scss"
+                path: "min/dark-navbar.min.scss",
             },
             touchPlayerStyle: {
                 path: "min/touch-player.min.scss",
-                order: 3
+                order: 3,
             },
             navbarOverrideStyle: {
                 path: "min/override-navbar.min.css",
-                order: 4
+                order: 4,
             },
             noBannerStyle: {
                 path: "min/no-banner.min.css",
-                order: 5
+                order: 5,
             },
             removeAdsStyle: {
                 path: "min/remove-promotions.min.css",
-                order: 6
+                order: 6,
             },
             guiSettingsStyle: {
                 path: "min/gui-settings.min.scss",
-                order: 0
+                order: 0,
             },
             fullTweetsTitleStyle: {
                 path: "min/full-tweets-title.min.css",
-                order: 7
+                order: 7,
             },
             imageViewerStyle: {
                 path: "min/image-viewer.min.scss",
-                order: 8
+                order: 8,
             },
             toastStyle: {
                 path: "min/toast.min.scss",
-                order: 9
+                order: 9,
             },
             blurVideoControlStyle: {
                 path: "min/blur-video-control.min.css",
-                order: 10
+                order: 10,
             },
             forceWideStyle: {
-                path: "min/force-wide.min.scss"
+                path: "min/force-wide.min.scss",
             },
             downloadVideoStyle: {
-                path: "min/download-video.min.scss"
+                path: "min/download-video.min.scss",
             },
             guiSettingsDom: {
-                path: "min/gui-settings.min.html"
+                path: "min/gui-settings.min.html",
             },
             imageViewerDom: {
-                path: "min/image-viewer.min.html"
+                path: "min/image-viewer.min.html",
             },
             downloadVideoDom: {
-                path: "min/download-video.min.html"
+                path: "min/download-video.min.html",
             },
             latestVersion: {
-                path: "version.txt"
+                path: "version.txt",
             },
             guiSettings: {
                 path: "min/gui-settings.min.js",
                 dependencies: [
                     "guiSettingsDom",
-                    "guiSettingsStyle"
+                    "guiSettingsStyle",
                 ],
                 displayNames: {
                     guiSettings: "设置",
-                    blurSettingsPanel: "模糊设置面板背景"
-                }
+                    blurSettingsPanel: "模糊设置面板背景",
+                },
             },
             useDarkStyle: {
                 path: "min/dark-styles.min.js",
@@ -189,209 +189,209 @@
                     "darkStyle",
                     "darkStyleImportant",
                     "darkStyleNavBar",
-                    "scrollbarStyle"
+                    "scrollbarStyle",
                 ],
                 displayNames: {
-                    useDarkStyle: "夜间模式"
-                }
+                    useDarkStyle: "夜间模式",
+                },
             },
             useNewStyle: {
                 path: "min/new-styles.min.js",
                 dependencies: [
                     "style",
                     "oldStyle",
-                    "scrollbarStyle"
+                    "scrollbarStyle",
                 ],
                 displayNames: {
                     useNewStyle: "样式调整",
-                    blurBackgroundOpacity: "顶栏(对横幅)不透明度"
-                }
+                    blurBackgroundOpacity: "顶栏(对横幅)不透明度",
+                },
             },
             overrideNavBar: {
                 path: "min/override-navbar.min.js",
                 dependencies: [
                     "navbarOverrideStyle",
-                    "noBannerStyle"
+                    "noBannerStyle",
                 ],
                 displayNames: {
                     overrideNavBar: "搜索栏置顶",
-                    showBanner: "显示顶部横幅"
-                }
+                    showBanner: "显示顶部横幅",
+                },
             },
             touchNavBar: {
                 path: "min/touch-navbar.min.js",
                 displayNames: {
-                    touchNavBar: "顶栏触摸优化"
-                }
+                    touchNavBar: "顶栏触摸优化",
+                },
             },
             touchVideoPlayer: {
                 path: "min/touch-player.min.js",
                 dependencies: [
-                    "touchPlayerStyle"
+                    "touchPlayerStyle",
                 ],
                 displayNames: {
                     touchVideoPlayer: "播放器触摸支持",
                     touchVideoPlayerAnimation: "启用实验性动画效果",
-                    touchVideoPlayerDoubleTapControl: "启用双击控制"
-                }
+                    touchVideoPlayerDoubleTapControl: "启用双击控制",
+                },
             },
             expandDanmakuList: {
                 path: "min/expand-danmaku.min.js",
                 displayNames: {
-                    expandDanmakuList: "自动展开弹幕列表"
-                }
+                    expandDanmakuList: "自动展开弹幕列表",
+                },
             },
             removeAds: {
                 path: "min/remove-promotions.min.js",
                 dependencies: [
-                    "removeAdsStyle"
+                    "removeAdsStyle",
                 ],
                 displayNames: {
-                    removeAds: "删除广告"
-                }
+                    removeAds: "删除广告",
+                },
             },
             watchLaterRedirect: {
                 path: "min/watchlater.min.js",
                 displayNames: {
-                    watchLaterRedirect: "稍后再看重定向"
-                }
+                    watchLaterRedirect: "稍后再看重定向",
+                },
             },
             hideTopSearch: {
                 path: "min/hide-top-search.min.js",
                 displayNames: {
-                    hideTopSearch: "隐藏搜索推荐"
-                }
+                    hideTopSearch: "隐藏搜索推荐",
+                },
             },
             harunaScale: {
                 path: "min/haruna-scale.min.js",
                 displayNames: {
-                    harunaScale: "缩放看板娘"
-                }
+                    harunaScale: "缩放看板娘",
+                },
             },
             removeLiveWatermark: {
                 path: "min/remove-watermark.min.js",
                 displayNames: {
-                    removeLiveWatermark: "删除直播水印"
-                }
+                    removeLiveWatermark: "删除直播水印",
+                },
             },
             fullTweetsTitle: {
                 path: "min/full-tweets-title.min.js",
                 dependencies: [
-                    "fullTweetsTitleStyle"
+                    "fullTweetsTitleStyle",
                 ],
                 displayNames: {
-                    fullTweetsTitle: "展开动态标题"
-                }
+                    fullTweetsTitle: "展开动态标题",
+                },
             },
             viewCover: {
                 path: "min/view-cover.min.js",
                 dependencies: [
                     "imageViewerDom",
-                    "imageViewerStyle"
+                    "imageViewerStyle",
                 ],
                 displayNames: {
-                    viewCover: "查看封面"
-                }
+                    viewCover: "查看封面",
+                },
             },
             notifyNewVersion: {
                 path: "min/notify-new-version.min.js",
                 dependencies: [
-                    "latestVersion"
+                    "latestVersion",
                 ],
                 displayNames: {
-                    notifyNewVersion: "检查更新"
-                }
+                    notifyNewVersion: "检查更新",
+                },
             },
             toast: {
                 path: "min/toast.min.js",
                 dependencies: [
-                    "toastStyle"
+                    "toastStyle",
                 ],
                 displayNames: {
-                    toast: "显示消息"
-                }
+                    toast: "显示消息",
+                },
             },
             removeVideoTopMask: {
                 path: "min/remove-top-mask.min.js",
                 displayNames: {
-                    removeVideoTopMask: "删除视频标题层"
-                }
+                    removeVideoTopMask: "删除视频标题层",
+                },
             },
             blurVideoControl: {
                 path: "min/blur-video-control.min.js",
                 dependencies: [
-                    "blurVideoControlStyle"
+                    "blurVideoControlStyle",
                 ],
                 displayNames: {
-                    blurVideoControl: "模糊视频控制栏背景"
-                }
+                    blurVideoControl: "模糊视频控制栏背景",
+                },
             },
             darkSchedule: {
                 path: "min/dark-schedule.min.js",
                 displayNames: {
                     darkSchedule: "夜间模式计划时段",
                     darkScheduleStart: "起始时间",
-                    darkScheduleEnd: "结束时间"
-                }
+                    darkScheduleEnd: "结束时间",
+                },
             },
             forceWide: {
                 path: "min/force-wide.min.js",
                 dependencies: [
-                    "forceWideStyle"
+                    "forceWideStyle",
                 ],
                 displayNames: {
                     forceWide: "强制宽屏",
-                    forceWideMinWidth: "触发宽度"
-                }
+                    forceWideMinWidth: "触发宽度",
+                },
             },
             clearCache: {
                 path: "min/clear-cache.min.js",
                 displayNames: {
-                    useCache: "启用缓存"
-                }
+                    useCache: "启用缓存",
+                },
             },
             downloadVideo: {
                 path: "min/download-video.min.js",
                 dependencies: [
                     "downloadVideoDom",
                     "downloadVideoStyle",
-                    "videoInfo"
-                ]
+                    "videoInfo",
+                ],
             },
             videoInfo: {
-                path: "min/video-info.min.js"
+                path: "min/video-info.min.js",
             },
             aboutDom: {
-                path: "min/about.min.html"
+                path: "min/about.min.html",
             },
             aboutStyle: {
-                path: "min/about.min.scss"
+                path: "min/about.min.scss",
             },
             about: {
                 path: "min/about.min.js",
                 dependencies: [
                     "aboutDom",
-                    "aboutStyle"
-                ]
+                    "aboutStyle",
+                ],
             },
             customControlBackgroundStyle: {
-                path: "min/custom-control-background.min.scss"
+                path: "min/custom-control-background.min.scss",
             },
             customControlBackground: {
                 path: "min/custom-control-background.min.js",
                 dependencies: [
-                    "customControlBackgroundStyle"
+                    "customControlBackgroundStyle",
                 ],
                 displayNames: {
                     customControlBackground: "控制栏着色",
-                    customControlBackgroundOpacity: "不透明度"
-                }
-            }
+                    customControlBackgroundOpacity: "不透明度",
+                },
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
         Resource.displayNames = {};
-        for (const [key, data] of Object.entries(resouceManifest))
+        for (const [key, data,] of Object.entries(resouceManifest))
         {
             const resource = new Resource(data.path, data.order);
             resource.key = key;
@@ -402,7 +402,7 @@
             }
             Resource.all[key] = resource;
         }
-        for (const [key, data] of Object.entries(resouceManifest))
+        for (const [key, data,] of Object.entries(resouceManifest))
         {
             if (data.dependencies)
             {
@@ -469,7 +469,7 @@
             this.element = element;
             this.callback = callback;
             this.observer = null;
-            this.options = { childList: true, subtree: true };
+            this.options = { childList: true, subtree: true, };
         }
         start()
         {
@@ -488,8 +488,8 @@
         static subtree(selector, callback)
         {
             callback();
-            return new Array(...document.querySelectorAll(selector))
-                .map(it =>
+            return Array.from(...document.querySelectorAll(selector),
+                it =>
                 {
                     return new Observer(it, callback).start();
                 });
@@ -497,14 +497,14 @@
         static attributes(selector, callback)
         {
             callback();
-            return new Array(...document.querySelectorAll(selector))
-                .map(it =>
+            return Array.from(...document.querySelectorAll(selector),
+                it =>
                 {
                     const observer = new Observer(it, callback);
                     observer.options = {
                         childList: false,
                         subtree: false,
-                        attributes: true
+                        attributes: true,
                     };
                     return observer.start();
                 });
@@ -512,14 +512,14 @@
         static all(selector, callback)
         {
             callback();
-            return new Array(...document.querySelectorAll(selector))
-                .map(it =>
+            return Array.from(...document.querySelectorAll(selector),
+                it =>
                 {
                     const observer = new Observer(it, callback);
                     observer.options = {
                         childList: true,
                         subtree: true,
-                        attributes: true
+                        attributes: true,
                     };
                     return observer.start();
                 });
@@ -597,13 +597,13 @@
             if (isShortHand)
             {
                 const shorthandRegex = this.getHexRegex(alpha, true);
-                hex = hex.replace(shorthandRegex, function ()
+                hex = hex.replace(shorthandRegex, function (...args)
                 {
                     let result = "";
                     let i = 1;
-                    while (arguments[i])
+                    while (args[i])
                     {
-                        result += arguments[i].repeat(2);
+                        result += args[i].repeat(2);
                         i++;
                     }
                     return result;
@@ -617,7 +617,7 @@
                 const color = {
                     r: parseInt(regexResult[1], 16),
                     g: parseInt(regexResult[2], 16),
-                    b: parseInt(regexResult[3], 16)
+                    b: parseInt(regexResult[3], 16),
                 };
                 if (regexResult[4])
                 {
@@ -646,7 +646,7 @@
         }
         rgbToHsb(rgb)
         {
-            const { r, g, b } = rgb;
+            const { r, g, b, } = rgb;
             const max = Math.max(r, g, b);
             const min = Math.min(r, g, b);
             const delta = max - min;
@@ -676,7 +676,7 @@
                 h += 360;
             }
 
-            return { h: h, s: s, b: v };
+            return { h: h, s: s, b: v, };
         }
         get hsb()
         {
@@ -698,7 +698,7 @@
         }
         makeImageFilter(originalRgb)
         {
-            const { h, s, b } = this.rgbToHsb(originalRgb);
+            const { h, s, b, } = this.rgbToHsb(originalRgb);
             const targetColor = this.hsb;
 
             const hue = targetColor.h - h;
@@ -712,7 +712,7 @@
             const blueColor = {
                 r: 0,
                 g: 160,
-                b: 213
+                b: 213,
             };
             return this.makeImageFilter(blueColor);
         }
@@ -721,7 +721,7 @@
             const pinkColor = {
                 r: 251,
                 g: 113,
-                b: 152
+                b: 152,
             };
             return this.makeImageFilter(pinkColor);
         }
@@ -755,13 +755,13 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.html"] = `<div class="gui-settings-panel"><div class="gui-settings-box"><div class="gui-settings-header"><span class="gui-settings-title">设置</span><svg class="gui-settings-close" viewBox="0 0 24 24"><path/></svg></div><div class="gui-settings-content"><ul><category>样式</category><li class="indent-0"><label class="gui-settings-textbox-container"><span>主题颜色</span><div class="custom-color-preview"><div class="predefined-colors"><div class="predefined-colors-grid"></div></div></div><input key="customStyleColor" dependencies="" spellcheck="false" type="text"/></label></li><checkbox indent="0" key="useNewStyle" dependencies=""></checkbox><textbox indent="1" key="blurBackgroundOpacity" dependencies="useNewStyle"></textbox><checkbox indent="0" key="useDarkStyle" dependencies=""></checkbox><checkbox indent="0" key="darkSchedule" dependencies=""></checkbox><textbox indent="1" key="darkScheduleStart" dependencies="darkSchedule"></textbox><textbox indent="1" key="darkScheduleEnd" dependencies="darkSchedule"></textbox><checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox><checkbox indent="1" key="showBanner" dependencies="overrideNavBar"></checkbox><checkbox indent="0" key="forceWide" dependencies=""></checkbox><textbox indent="1" key="forceWideMinWidth" dependencies="forceWide"></textbox><category>工具</category><checkbox indent="0" key="removeAds" dependencies=""></checkbox><checkbox indent="0" key="watchLaterRedirect" dependencies=""></checkbox><checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox><checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox><category>视频与直播</category><checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox><checkbox indent="0" key="harunaScale" dependencies=""></checkbox><checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox><checkbox indent="0" key="removeVideoTopMask" dependencies=""></checkbox><checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox><checkbox indent="0" key="customControlBackground" dependencies=""></checkbox><textbox indent="1" key="customControlBackgroundOpacity" dependencies="customControlBackground"></textbox><category>触摸优化</category><checkbox indent="0" key="touchNavBar" dependencies=""></checkbox><checkbox indent="0" key="touchVideoPlayer" dependencies=""></checkbox><checkbox indent="1" key="touchVideoPlayerAnimation" dependencies="touchVideoPlayer"></checkbox><checkbox indent="1" key="touchVideoPlayerDoubleTapControl" dependencies="touchVideoPlayer"></checkbox><category>其他</category><checkbox indent="0" key="toast" dependencies=""></checkbox><checkbox indent="0" key="blurSettingsPanel" dependencies=""></checkbox><checkbox indent="0" key="useCache" dependencies=""></checkbox></ul></div></div></div>`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/image-viewer.min.html"] = `<div class="image-viewer-container"><div class="image-viewer"><img class="image"/><a class="close image-viewer-icon" title="关闭"><svg viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/></svg></a><a target="_blank" class="download image-viewer-icon" title="下载"><svg viewBox="0 0 24 24"><path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z"/></svg></a></div></div>`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/download-video.min.html"] = `<div style="position: relative;" class="hidden"><button class="gui-settings-button" title="下载当前视频" id="download-video">下载视频</button><div class="download-video-panel quality"><ol class="video-quality"></ol><div class="video-action"><div id="video-action-download">直接下载</div><div id="video-action-copy">复制链接</div></div><div class="video-progress"><div class="download-progress-text"><span class="download-progress-title">正在下载</span><span class="download-progress-value">0</span><span class="download-progress-percent">%</span></div><div class="download-progress-background"><div class="download-progress-foreground"></div></div><div class="download-progress-cancel"><span>取消</span></div></div><div class="video-error"></div><a href="" id="video-complete"></a></div></div>`;
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/version.txt"] = `1.5.24`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/version.txt"] = `1.5.25`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.js"] = (()=>{return(e,t)=>{const n={red:"#e57373",pink:"#F06292",purple:"#BA68C8",deepPurple:"#9575CD",indigo:"#7986CB",blue:"#2196F3",lightBlue:"#00A0D8",cyan:"#00ACC1",teal:"#26A69A",green:"#81C784",lightGreen:"#9CCC65",orange:"#FF9800",deepOrange:"#FF7043",brown:"#A1887F",grey:"#757575",blueGrey:"#78909C"};const i={settings:"M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z",close:"M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z",ok:"M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"};const o={forceWideMinWidth:e=>e,customStyleColor:t=>{const n=t.match(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);if(n){if(t.length<7){return`#${t[1]}${t[1]}${t[2]}${t[2]}${t[3]}${t[3]}`}else{return t}}else{return e.customStyleColor}},blurBackgroundOpacity:t=>{const n=t.match(/^([-\+]?\d+)(\.\d+)?$/);if(n){const e=parseFloat(t);if(e>=0&&e<=1){return t}}return e.blurBackgroundOpacity}};function s(e){let t=e.nextElementSibling;const n=[];while(t!==null&&!t.classList.contains("category")){n.push(t);t=t.nextElementSibling}return n}function c(e,t){const n=e.match(/^([\d]{1,2}):([\d]{1,2})$/);if(n&&n.length>=3){const e={hour:parseInt(n[1]),minute:parseInt(n[2])};(function(){while(this.minute<0){this.minute+=60;this.hour-=1}while(this.minute>=60){this.minute-=60;this.hour+=1}while(this.hour<0){this.hour+=24}while(this.hour>=24){this.hour-=24}}).call(e);return`${e.hour}:${e.minute<10?"0"+e.minute:e.minute}`}else{return t}}o.darkScheduleStart=(t=>c(t,e.darkScheduleStart));o.darkScheduleEnd=(t=>c(t,e.darkScheduleEnd));function a(e,t){const n=e.match(/^([-\+]?\d+)(\.\d+)?$/);if(n){const t=parseFloat(e);if(t>=0&&t<=1){return e}}return t}o.blurBackgroundOpacity=(t=>a(t,e.blurBackgroundOpacity));o.customControlBackgroundOpacity=(t=>a(t,e.customControlBackgroundOpacity));function r(e,t,n){$(`input[type='checkbox'][key='${e}']`).prop("checked",n);$(`input[type='text'][key='${e}']`).val(n)}function l(){for(const t in e){r(t,undefined,e[t])}$(".gui-settings-content ul li.category").each((e,t)=>{const n=s(t);if(n.filter(e=>!e.classList.contains("disabled")).every(e=>$(e).has("input:checked").length===0)){$(t).click()}})}function u(){$(".gui-settings-header .gui-settings-close").on("click",()=>{$(".gui-settings-panel").removeClass("opened")});$("input[key='customStyleColor']").on("input",()=>{const e=o.customStyleColor($("input[key='customStyleColor']").val());$("div.custom-color-preview").css("background",e)});$("input[type='text'][key]").each((t,n)=>{$(n).attr("placeholder",e[$(n).attr("key")])});$("div.custom-color-preview").on("click",()=>{const e=$(".predefined-colors");e.toggleClass("opened")});$(".gui-settings-content ul li.category").on("click",e=>{e.currentTarget.classList.toggle("folded");s(e.currentTarget).forEach(e=>e.classList.toggle("folded"))});onSettingsChange(r)}function d(){const t=()=>{$("input[type='checkbox'][key]").each((t,n)=>{e[$(n).attr("key")]=$(n).prop("checked")});$("input[type='text'][key]").each((t,n)=>{const i=$(n).attr("key");const s=$(n).val();e[i]=o[i](s)});saveSettings(e)};$("input[type='checkbox'][key]").on("change",()=>t());$("input[type='text'][key]").on("change",()=>t())}function p(){$(".gui-settings-close path").attr("d",i.close);$(".gui-settings-ok path").attr("d",i.ok);$(".gui-settings svg path").attr("d",i.settings)}function g(){const e={};$(`input[dependencies]`).each((t,n)=>{const i=$(n).attr("dependencies");if(i){e[$(n).attr("key")]=i}});const t=t=>{const n=t.prop("checked");for(const i in e){const o=e[i].split(" ");if(o.indexOf(t.attr("key"))!==-1){let e=true;if(n&&o.every(e=>$(`input[key='${e}']`).prop("checked"))){e=false}const t=$(`li:has(input[key='${i}'])`);const s=e?"addClass":"removeClass";t[s]("disabled");$(`input[key='${i}'][type='text']`).parent()[s]("disabled")}}$(".download-video-panel,.predefined-colors").removeClass("opened")};$(`input[type='checkbox'][key]`).on("change",e=>t($(e.target))).each((e,n)=>t($(n)))}function h(e){if($(".gui-settings").length===0){e.append(`<div class='gui-settings-icon-panel'><div class='gui-settings'>\n                    <svg style='width:24px;height:24px' viewBox='0 0 24 24'>\n                        <path/>\n                    </svg>\n                </div></div>`);$(".gui-settings").on("click",()=>{$(".gui-settings-panel").addClass("opened")})}t.applyStyle("guiSettingsStyle")}function y(){const e=$(".predefined-colors-grid");for(const t of Object.values(n)){$(`<div class='predefined-colors-grid-block'></div>`).appendTo(e).css("background",t).attr("data-color",t).on("click",e=>{$(`input[key='customStyleColor']`).val($(e.target).attr("data-color")).trigger("input").change();$("div.custom-color-preview").on("click")})}}function k(){if(e.blurSettingsPanel){$(".gui-settings-box").addClass("blur")}else{$(".gui-settings-panel").addClass("animation")}}function f(){if(typeof offlineData!=="undefined"){$("li:has(input[key=useCache])").addClass("disabled");$("input[key=useCache]").prop("disabled",true)}}h($("body"));const C=t.data.guiSettingsDom.text;if(C){$("body").append(C);u();p();f();l();g();y();d();k()}new SpinQuery(()=>$("body"),e=>e.length>0&&!(unsafeWindow.parent.window===unsafeWindow),e=>$(".gui-settings-icon-panel").css("display","none")).start()}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/dark-styles.min.js"] = (()=>{return(l,e)=>{if(l.useDarkStyle){e.applyStyle("scrollbarStyle");SpinQuery.any(()=>$(".custom-scrollbar"),l=>l.removeClass("custom-scrollbar"));if($("#banner_link").length===0||$("#banner_link").length>0&&l.overrideNavBar&&!l.showBanner){e.applyImportantStyle("darkStyleNavBar")}e.applyStyle("darkStyle");e.applyImportantStyle("darkStyleImportant")}else{$("#bilibili-scrollbar-style,#bilibili-new-style-dark-nav-bar,#bilibili-new-style-dark,#bilibili-new-style-dark-important").remove()}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/new-styles.min.js"] = (()=>{return(e,t)=>{if(document.URL===`https://h.bilibili.com/`){return}t.applyStyle("scrollbarStyle");SpinQuery.any(()=>$(".custom-scrollbar"),e=>e.removeClass("custom-scrollbar"));const l={selectors:["div.nav-con.fl","#link-navbar-vm",".link-navbar",".nav-header-wrapper",".z_top .z_header"],get allSelectors(){return this.selectors.reduce((e,t)=>e+","+t)},get navbar(){let e=null;for(const t of this.selectors){e=e||document.querySelector(t)}return e},supports(e){if(e instanceof Element){const t=parseInt(window.getComputedStyle(e).height);const l=[60,50,0,56];return l.indexOf(t)!==-1}return false}};SpinQuery.any(()=>$(l.allSelectors),()=>{const e=l.navbar;if(l.supports(e)){t.applyStyle("style","bilibili-style-optimization")}else{t.applyStyle("oldStyle","bilibili-style-optimization")}})}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/override-navbar.min.js"] = (()=>{return(e,n)=>{new SpinQuery(()=>$(".head-content.bili-wrapper>div.search").not(".filter-item"),e=>e.length>0&&$(".nav-con.fr").length>0,e=>{e.detach().insertAfter(".nav-con.fr")}).start();n.applyStyle("navbarOverrideStyle");if(!e.showBanner){n.applyStyle("noBannerStyle")}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/touch-navbar.min.js"] = (()=>{return()=>{SpinQuery.count(()=>$("ul.fr>li.nav-item").not(".profile-info"),6,n=>{const r=(n,r)=>{const t=$(r);t.css("cursor","pointer");const o=t.find("a.t");o.removeAttr("href")};n.each(r)})}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/touch-player.min.js"] = (()=>{return(t,i)=>{const e=t=>{let i=0;let e=0;while(t&&!isNaN(t.offsetLeft)&&!isNaN(t.offsetTop)){i+=t.offsetLeft-t.scrollLeft;e+=t.offsetTop-t.scrollTop;t=t.offsetParent}return{x:i,y:e}};const s=t=>{t=Math.abs(t);const i=Math.floor(t/3600);const e=Math.floor((t-i*3600)/60);const s=t-i*3600-e*60;let o=fixed(s)+"秒";if(e>0){o=e+"分"+o}if(i>0){o=i+"时"+o}return o};const o=t=>{t=Math.abs(t);const i=Math.floor(t/3600);const e=Math.floor((t-i*3600)/60);const s=t-i*3600-e*60;let o=(s<10?"0":"")+fixed(s);o=(e<10?"0":"")+e+":"+o;o=(i<10?"0":"")+i+":"+o;return o};class n{constructor(t){this.action=new l(t);this.onTouchStart=null;this.onTouchEnd=null;this._direction=null;t.addEventListener("touchstart",t=>{this._xDown=t.touches[0].clientX;this._yDown=t.touches[0].clientY;if(this.onTouchStart){this.onTouchStart(t)}});t.addEventListener("touchmove",i=>{if(!this._xDown||!this._yDown){return}const s=i.touches[0].clientX;const o=i.touches[0].clientY;const n=e(t);const l={x:(i.touches[0].pageX-n.x)/t.clientWidth,y:(i.touches[0].pageY-n.y)/t.clientHeight,width:t.clientWidth,height:t.clientHeight};const a=this._xDown-s;const c=this._yDown-o;if(!this._direction){let t="";if(Math.abs(a)>Math.abs(c)){t="horizontal"}else{t="vertical"}this._direction=t;i.preventDefault()}else{if(this._direction==="vertical"){this.action.startAction(this._direction,c,l)}else if(this._direction==="horizontal"){this.action.startAction(this._direction,-a,l)}i.preventDefault()}});t.addEventListener("touchend",t=>{this._xDown=null;this._yDown=null;this._direction=null;if(this.onTouchEnd){this.onTouchEnd(t)}})}}class l{constructor(t){this.lowSpeedForward=null;this.lowSpeedBackward=null;this.mediumSpeedForward=null;this.mediumSpeedBackward=null;this.highSpeedForward=null;this.highSpeedBackward=null;this.lowVolumeUp=null;this.lowVolumeDown=null;this.mediumVolumeUp=null;this.mediumVolumeDown=null;this.highVolumeUp=null;this.highVolumeDown=null;this.speedCancel=null;this.volumeCancel=null;this.minSwipeDistance=20;this.onActionStart=null;this.onActionEnd=null;this._element=t;this._touchStart=false;this._startPosition=null;this._lastAction=null;t.addEventListener("touchstart",t=>{this._touchStart=true});t.addEventListener("touchend",t=>{this._startPosition=null;this.onActionEnd&&this.onActionEnd(this._lastAction);this._lastAction=null})}startAction(t,i,e){if(this._touchStart){this.onActionStart&&this.onActionStart(t);this._startPosition=e;this._touchStart=false}if(t==="vertical"){if(Math.abs(i)<this.minSwipeDistance){this.volumeCancel&&this.volumeCancel();this._lastAction=null}else{let t=0;let s=undefined;let o=undefined;if(this._startPosition.x<1/3){t=.4;s=this.lowVolumeUp;o=this.lowVolumeDown}else if(this._startPosition.x>=1/3&&this._startPosition.x<=2/3){t=1;s=this.mediumVolumeUp;o=this.mediumVolumeDown}else{t=2;s=this.highVolumeUp;o=this.highVolumeDown}if(i>0){const o=Math.round(t*100*(i-this.minSwipeDistance)/(1.5*e.height));s&&s(o);this._lastAction={type:"volume",volume:o}}else{const s=Math.round(t*100*(i+this.minSwipeDistance)/(1.5*e.height));o&&o(s);this._lastAction={type:"volume",volume:s}}}}else if(t==="horizontal"){if(e.y<1/3&&(e.x<.1||e.x>.9)||Math.abs(i)<this.minSwipeDistance){this.speedCancel&&this.speedCancel();this._lastAction=null}else{let t=0;let e=undefined;let s=undefined;if(this._startPosition.y<1/3){t=.05;e=this.lowSpeedForward;s=this.lowSpeedBackward}else if(this._startPosition.y>=1/3&&this._startPosition.y<=2/3){t=.2;e=this.mediumSpeedForward;s=this.mediumSpeedBackward}else{t=1;e=this.highSpeedForward;s=this.highSpeedBackward}if(i>0){const s=(i-this.minSwipeDistance)*t;e&&e(s);this._lastAction={type:"playback",seconds:s}}else{const e=(i+this.minSwipeDistance)*t;s&&s(e);this._lastAction={type:"playback",seconds:e}}}}}}class a{constructor(){this.aid=unsafeWindow.aid;this.cid=unsafeWindow.cid;this.cidData=null;this.supportWebp=a.supportWebp}getVideoshot(t,i){if(!this.cidData){downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`,e=>{this.cidData=JSON.parse(e).data;this.getVideoshot(t,i)})}else{const e=this.cidData;const s=e.index;let o=0;for(let i=0;i<s.length-2;i++){if(t>=s[i]&&t<s[i+1]){o=i;break}}let n=e.image;if(this.supportWebp){n=n.map(t=>t.replace(".jpg",".jpg@.webp"))}const l=parseInt(e.pv_x_len)||10;const a=parseInt(e.pv_y_len)||10;const c=parseInt(e.pv_x_size)||160;const r=parseInt(e.pv_y_size)||90;const h=-(o%100%l)*c;const d=-Math.floor(o%100/a)*r;i({width:c,height:r,backgroundImage:`url(${n[Math.floor(o/100)]})`,backgroundPosition:`${h}px ${d}px`})}}static get supportWebp(){try{const t=document.createElement("canvas");if(t.getContext&&t.getContext("2d"))try{return t.toDataURL("image/webp").indexOf("data:image/webp")===0}catch(t){return false}else return false}catch(t){return false}}}function c(t){t.unbind("click")}function r(i){if($(".touch-video-box").length!==0){return}$(".bilibili-player-video-subtitle").before(`\n                <div class='touch-video-box-wrapper'>\n                    <div class='touch-video-box adjust-closed'>\n                        <div class='touch-video-info'></div>\n                        <div class='touch-progress'></div>\n                    </div>\n                </div>`);const e=$("video");const l=e.prop("duration");const c=new n(i.get(0));const r=document.getElementsByClassName("touch-video-info")[0];const h=document.getElementsByClassName("touch-video-box")[0];let d=Math.round(e.prop("volume")*100);const u=t=>{t/=100;if(t<0){t=0}else if(t>1){t=1}e.prop("volume",t);$(".bilibili-player-video-volume-num").text(Math.round(t*100));$(".bui-thumb").css("transform",`translateY(-${48*t}px)`);$(".bui-track-vertical .bui-bar").css("transform",`scaleY(${t})`);if(t===0){$(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");e.prop("muted",true)}else if(t===1){$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").addClass(".video-state-volume-max");e.prop("muted",false)}else{$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");e.prop("muted",false)}};if(t.touchVideoPlayerAnimation){h.classList.add("animation")}c.action.onActionStart=(t=>{h.classList.add("adjust-opened");r.innerHTML="";d=Math.round(e.prop("volume")*100)});const p=new a;const m=t=>{return i=>{const n=e.prop("currentTime");let a=n+i;let c=fixed(100*a/l);let h=i;if(a>l){a=l;c=100;h=l-n}else if(a<0){a=0;c=0;h=n}const d=`${o(n)} →<br/>${o(a)} (${c}%)`;const u=`\n                        <div class='touch-row'>\n                            <div class='touch-row-item'>\n                                <span class='touch-speed'>${t}速</span>\n                            </div>\n                            <div class='touch-row-item-wide'>\n                                <span class='touch-info'>进度: ${i>0?"+":"-"}${s(h)}</span>\n                            </div>\n                        </div>\n                        <div class='touch-row'>\n                            <div class='videoshot-wrapper touch-row-item'>\n                                <div class='videoshot'></div>\n                            </div>\n                            <div class='touch-row-item-wide'>\n                                <span class='touch-result'>${d}</span>\n                            </div>\n                        </div>\n                        `;r.innerHTML=u;p.getVideoshot(a,t=>$(".videoshot").css(t));$(".touch-progress").css("transform",`scaleX(${c/100})`)}};c.action.lowSpeedBackward=m("低");c.action.lowSpeedForward=m("低");c.action.mediumSpeedBackward=m("中");c.action.mediumSpeedForward=m("中");c.action.highSpeedBackward=m("高");c.action.highSpeedForward=m("高");const v=t=>{return i=>{let e=d+i;let s=Math.abs(i);if(e>100){e=100;s=100-d}else if(e<0){e=0;s=d}const o=`${d} → ${e}`;u(e);const n=`\n                        <div class='touch-row'>\n                            <div class='touch-row-item'>\n                                <span class='touch-speed'>${t}速</span>\n                            </div>\n                            <div class='touch-row-item-wide'>\n                                <span class='touch-info'>音量: ${i>0?"+":"-"}${s}</span>\n                            </div>\n                        </div>\n                        <div class='touch-row'>\n                            <div class='touch-row-item'>\n                                <span class='touch-result'>${o}</span>\n                            </div>\n                        </div>\n                        `;r.innerHTML=n;$(".touch-progress").css("transform",`scaleX(${e/100})`)}};c.action.lowVolumeUp=v("低");c.action.lowVolumeDown=v("低");c.action.mediumVolumeUp=v("中");c.action.mediumVolumeDown=v("中");c.action.highVolumeUp=v("高");c.action.highVolumeDown=v("高");c.action.speedCancel=(()=>{r.innerHTML=`松开手指,取消进退`;$(".touch-progress").css("transform","scaleX(0)")});c.action.volumeCancel=(()=>{r.innerHTML=`松开手指,取消调整`;$(".touch-progress").css("transform","scaleX(0)");u(d)});if(!unsafeWindow.TOUCH_PLAYER_DEBUG){c.action.onActionEnd=(t=>{r.innerHTML="";if(t){if(t.type==="playback"){let i=e.prop("currentTime");i+=t.seconds;if(i<0){i=0}else if(i>l){i=l}e.prop("currentTime",i)}}h.classList.remove("adjust-opened")})}}function h(t){if(!t.hasClass("disable-original-hover")){t.addClass("disable-original-hover");const i=unsafeWindow.$(".bilibili-player-video");const e="touch-video-control-show";const s=i.data("events").click[0].handler;let o=false;const n=(i,o)=>{if(i){s(o)}else{t.toggleClass(e)}};const l=t=>{if(!o){o=true;setTimeout(()=>{if(o){o=false;n(false,t)}},160)}else{o=false;n(true,t)}};i.unbind("click");i.on("click",l)}}function d(){SpinQuery.any(()=>$(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),c);new SpinQuery(()=>$(".bilibili-player-video"),t=>t.length>0&&$("video").length>0&&$("video").prop("duration"),r).start();if(t.touchVideoPlayerDoubleTapControl){new SpinQuery(()=>$(".bilibili-player-area"),t=>t.length>0&&unsafeWindow.$&&unsafeWindow.$(".bilibili-player-video").data("events"),h).start()}}Observer.subtree("#bofqi",()=>d());i.applyStyle("touchPlayerStyle")}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/touch-player.min.js"] = (()=>{return(t,i)=>{const e=t=>{let i=0;let e=0;while(t&&!isNaN(t.offsetLeft)&&!isNaN(t.offsetTop)){i+=t.offsetLeft-t.scrollLeft;e+=t.offsetTop-t.scrollTop;t=t.offsetParent}return{x:i,y:e}};const s=t=>{t=Math.abs(t);const i=Math.floor(t/3600);const e=Math.floor((t-i*3600)/60);const s=t-i*3600-e*60;let o=fixed(s)+"秒";if(e>0){o=e+"分"+o}if(i>0){o=i+"时"+o}return o};const o=t=>{t=Math.abs(t);const i=Math.floor(t/3600);const e=Math.floor((t-i*3600)/60);const s=t-i*3600-e*60;let o=(s<10?"0":"")+fixed(s);o=(e<10?"0":"")+e+":"+o;o=(i<10?"0":"")+i+":"+o;return o};class n{constructor(t){this.action=new l(t);this.onTouchStart=null;this.onTouchEnd=null;this.direction=null;t.addEventListener("touchstart",t=>{this.xDown=t.touches[0].clientX;this.yDown=t.touches[0].clientY;if(this.onTouchStart){this.onTouchStart(t)}});t.addEventListener("touchmove",i=>{if(!this.xDown||!this.yDown){return}const s=i.touches[0].clientX;const o=i.touches[0].clientY;const n=e(t);const l={x:(i.touches[0].pageX-n.x)/t.clientWidth,y:(i.touches[0].pageY-n.y)/t.clientHeight,width:t.clientWidth,height:t.clientHeight};const a=this.xDown-s;const c=this.yDown-o;if(!this.direction){let t="";if(Math.abs(a)>Math.abs(c)){t="horizontal"}else{t="vertical"}this.direction=t;i.preventDefault()}else{if(this.direction==="vertical"){this.action.startAction(this.direction,c,l)}else if(this.direction==="horizontal"){this.action.startAction(this.direction,-a,l)}i.preventDefault()}});t.addEventListener("touchend",t=>{this.xDown=null;this.yDown=null;this.direction=null;if(this.onTouchEnd){this.onTouchEnd(t)}})}}class l{constructor(t){this.lowSpeedForward=null;this.lowSpeedBackward=null;this.mediumSpeedForward=null;this.mediumSpeedBackward=null;this.highSpeedForward=null;this.highSpeedBackward=null;this.lowVolumeUp=null;this.lowVolumeDown=null;this.mediumVolumeUp=null;this.mediumVolumeDown=null;this.highVolumeUp=null;this.highVolumeDown=null;this.speedCancel=null;this.volumeCancel=null;this.minSwipeDistance=20;this.onActionStart=null;this.onActionEnd=null;this.element=t;this.touchStart=false;this.startPosition=null;this.lastAction=null;t.addEventListener("touchstart",t=>{this.touchStart=true});t.addEventListener("touchend",t=>{this.startPosition=null;this.onActionEnd&&this.onActionEnd(this.lastAction);this.lastAction=null})}startAction(t,i,e){if(this.touchStart){this.onActionStart&&this.onActionStart(t);this.startPosition=e;this.touchStart=false}if(t==="vertical"){if(Math.abs(i)<this.minSwipeDistance){this.volumeCancel&&this.volumeCancel();this.lastAction=null}else{let t=0;let s=undefined;let o=undefined;if(this.startPosition.x<1/3){t=.4;s=this.lowVolumeUp;o=this.lowVolumeDown}else if(this.startPosition.x>=1/3&&this.startPosition.x<=2/3){t=1;s=this.mediumVolumeUp;o=this.mediumVolumeDown}else{t=2;s=this.highVolumeUp;o=this.highVolumeDown}if(i>0){const o=Math.round(t*100*(i-this.minSwipeDistance)/(1.5*e.height));s&&s(o);this.lastAction={type:"volume",volume:o}}else{const s=Math.round(t*100*(i+this.minSwipeDistance)/(1.5*e.height));o&&o(s);this.lastAction={type:"volume",volume:s}}}}else if(t==="horizontal"){if(e.y<1/3&&(e.x<.1||e.x>.9)||Math.abs(i)<this.minSwipeDistance){this.speedCancel&&this.speedCancel();this.lastAction=null}else{let t=0;let e=undefined;let s=undefined;if(this.startPosition.y<1/3){t=.05;e=this.lowSpeedForward;s=this.lowSpeedBackward}else if(this.startPosition.y>=1/3&&this.startPosition.y<=2/3){t=.2;e=this.mediumSpeedForward;s=this.mediumSpeedBackward}else{t=1;e=this.highSpeedForward;s=this.highSpeedBackward}if(i>0){const s=(i-this.minSwipeDistance)*t;e&&e(s);this.lastAction={type:"playback",seconds:s}}else{const e=(i+this.minSwipeDistance)*t;s&&s(e);this.lastAction={type:"playback",seconds:e}}}}}}class a{constructor(){this.aid=unsafeWindow.aid;this.cid=unsafeWindow.cid;this.cidData=null;this.supportWebp=a.supportWebp}getVideoshot(t,i){if(!this.cidData){downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`,e=>{this.cidData=JSON.parse(e).data;this.getVideoshot(t,i)})}else{const e=this.cidData;const s=e.index;let o=0;for(let i=0;i<s.length-2;i++){if(t>=s[i]&&t<s[i+1]){o=i;break}}let n=e.image;if(this.supportWebp){n=n.map(t=>t.replace(".jpg",".jpg@.webp"))}const l=parseInt(e.pv_x_len)||10;const a=parseInt(e.pv_y_len)||10;const c=parseInt(e.pv_x_size)||160;const r=parseInt(e.pv_y_size)||90;const h=-(o%100%l)*c;const d=-Math.floor(o%100/a)*r;i({width:c,height:r,backgroundImage:`url(${n[Math.floor(o/100)]})`,backgroundPosition:`${h}px ${d}px`})}}static get supportWebp(){try{const t=document.createElement("canvas");if(t.getContext&&t.getContext("2d"))try{return t.toDataURL("image/webp").indexOf("data:image/webp")===0}catch(t){return false}else return false}catch(t){return false}}}function c(t){t.unbind("click")}function r(i){if($(".touch-video-box").length!==0){return}$(".bilibili-player-video-subtitle").before(`\n                <div class='touch-video-box-wrapper'>\n                    <div class='touch-video-box adjust-closed'>\n                        <div class='touch-video-info'></div>\n                        <div class='touch-progress'></div>\n                    </div>\n                </div>`);const e=$("video");const l=e.prop("duration");const c=new n(i.get(0));const r=document.getElementsByClassName("touch-video-info")[0];const h=document.getElementsByClassName("touch-video-box")[0];let d=Math.round(e.prop("volume")*100);const u=t=>{t/=100;if(t<0){t=0}else if(t>1){t=1}e.prop("volume",t);$(".bilibili-player-video-volume-num").text(Math.round(t*100));$(".bui-thumb").css("transform",`translateY(-${48*t}px)`);$(".bui-track-vertical .bui-bar").css("transform",`scaleY(${t})`);if(t===0){$(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");e.prop("muted",true)}else if(t===1){$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").addClass(".video-state-volume-max");e.prop("muted",false)}else{$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");$(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");e.prop("muted",false)}};if(t.touchVideoPlayerAnimation){h.classList.add("animation")}c.action.onActionStart=(t=>{h.classList.add("adjust-opened");r.innerHTML="";d=Math.round(e.prop("volume")*100)});const p=new a;const m=t=>{return i=>{const n=e.prop("currentTime");let a=n+i;let c=fixed(100*a/l);let h=i;if(a>l){a=l;c=100;h=l-n}else if(a<0){a=0;c=0;h=n}const d=`${o(n)} →<br/>${o(a)} (${c}%)`;const u=`\n                        <div class='touch-row'>\n                            <div class='touch-row-item'>\n                                <span class='touch-speed'>${t}速</span>\n                            </div>\n                            <div class='touch-row-item-wide'>\n                                <span class='touch-info'>进度: ${i>0?"+":"-"}${s(h)}</span>\n                            </div>\n                        </div>\n                        <div class='touch-row'>\n                            <div class='videoshot-wrapper touch-row-item'>\n                                <div class='videoshot'></div>\n                            </div>\n                            <div class='touch-row-item-wide'>\n                                <span class='touch-result'>${d}</span>\n                            </div>\n                        </div>\n                        `;r.innerHTML=u;p.getVideoshot(a,t=>$(".videoshot").css(t));$(".touch-progress").css("transform",`scaleX(${c/100})`)}};c.action.lowSpeedBackward=m("低");c.action.lowSpeedForward=m("低");c.action.mediumSpeedBackward=m("中");c.action.mediumSpeedForward=m("中");c.action.highSpeedBackward=m("高");c.action.highSpeedForward=m("高");const v=t=>{return i=>{let e=d+i;let s=Math.abs(i);if(e>100){e=100;s=100-d}else if(e<0){e=0;s=d}const o=`${d} → ${e}`;u(e);const n=`\n                        <div class='touch-row'>\n                            <div class='touch-row-item'>\n                                <span class='touch-speed'>${t}速</span>\n                            </div>\n                            <div class='touch-row-item-wide'>\n                                <span class='touch-info'>音量: ${i>0?"+":"-"}${s}</span>\n                            </div>\n                        </div>\n                        <div class='touch-row'>\n                            <div class='touch-row-item'>\n                                <span class='touch-result'>${o}</span>\n                            </div>\n                        </div>\n                        `;r.innerHTML=n;$(".touch-progress").css("transform",`scaleX(${e/100})`)}};c.action.lowVolumeUp=v("低");c.action.lowVolumeDown=v("低");c.action.mediumVolumeUp=v("中");c.action.mediumVolumeDown=v("中");c.action.highVolumeUp=v("高");c.action.highVolumeDown=v("高");c.action.speedCancel=(()=>{r.innerHTML=`松开手指,取消进退`;$(".touch-progress").css("transform","scaleX(0)")});c.action.volumeCancel=(()=>{r.innerHTML=`松开手指,取消调整`;$(".touch-progress").css("transform","scaleX(0)");u(d)});if(!unsafeWindow.TOUCH_PLAYER_DEBUG){c.action.onActionEnd=(t=>{r.innerHTML="";if(t){if(t.type==="playback"){let i=e.prop("currentTime");i+=t.seconds;if(i<0){i=0}else if(i>l){i=l}e.prop("currentTime",i)}}h.classList.remove("adjust-opened")})}}function h(t){if(!t.hasClass("disable-original-hover")){t.addClass("disable-original-hover");const i=unsafeWindow.$(".bilibili-player-video");const e="touch-video-control-show";const s=i.data("events").click[0].handler;let o=false;const n=(i,o)=>{if(i){s(o)}else{t.toggleClass(e)}};const l=t=>{if(!o){o=true;setTimeout(()=>{if(o){o=false;n(false,t)}},160)}else{o=false;n(true,t)}};i.unbind("click");i.on("click",l)}}function d(){SpinQuery.any(()=>$(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),c);new SpinQuery(()=>$(".bilibili-player-video"),t=>t.length>0&&$("video").length>0&&$("video").prop("duration"),r).start();if(t.touchVideoPlayerDoubleTapControl){new SpinQuery(()=>$(".bilibili-player-area"),t=>t.length>0&&unsafeWindow.$&&unsafeWindow.$(".bilibili-player-video").data("events"),h).start()}}Observer.subtree("#bofqi",()=>d());i.applyStyle("touchPlayerStyle")}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/expand-danmaku.min.js"] = (()=>{return()=>{Observer.subtree("#bofqi",()=>{SpinQuery.any(()=>$(".bui-collapse-header"),e=>{if(parseInt($(".bui-collapse-body").css("height"))===0&&$(".bui-collapse-arrow-text").text()==="展开"){e.click()}})})}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-promotions.min.js"] = (()=>{return(n,e)=>{e.applyStyle("removeAdsStyle");SpinQuery.any(()=>$(".gg-pic").parent("a"),n=>{n.css("display","none");n.each((n,e)=>{const i=$(e).index()+1;const t=$(e).parent().parent().find(`.pic li:nth-child(${i})`);$(t).css("visibility","hidden")})})}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/watchlater.min.js"] = (()=>{return()=>{const t=t=>{if(t.attr("href").indexOf("watchlater")!==0){const a=t.map((t,a)=>{const e=$(a).attr("href");if(e){const t=e.match(/(av[\d]+)\/p([\d]+)/);if(t){return`https://www.bilibili.com/video/${t[1]}/?p=${t[2]}`}}return"javascript:;"});t.each((t,e)=>$(e).attr("href",a[t]).attr("target","_blank"))}};Observer.subtree("li.nav-item[report-id*=watchlater]",()=>{SpinQuery.any(()=>$(".av-item>a"),a=>t(a));SpinQuery.any(()=>$(".av-about>a"),a=>t(a));SpinQuery.any(()=>$("div.watch-later-m>ul>div>li>a"),a=>t(a));SpinQuery.any(()=>$(".read-more.mr"),t=>t.remove());SpinQuery.any(()=>$(".read-more-grp>.read-more"),t=>t.css({float:"none",width:"auto"}));new SpinQuery(()=>document.URL.match(/av[\d]+/),t=>t&&document.URL.indexOf("watchlater")!==-1,t=>{const a=t[0];if(a){window.location.replace(`https://www.bilibili.com/${a}`)}}).start()})}})();
@@ -774,13 +774,13 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/toast.min.js"] = (()=>{return(t,s)=>{class e{constructor(t="",s="",e="default"){this.type=e;this.message=t;this.title=s;this.duration=3e3;this.element=$(this.cardHtml)[0];this.$element=$(this.element);$(".toast-card-container").append(this.$element)}show(){this.element.classList.add("visible");this.$element.find(".toast-card-dismiss").on("click",()=>this.dismiss());if(this.duration){setTimeout(()=>this.dismiss(),this.duration)}}dismiss(){if(this.element.classList.contains("visible")){this.$element.on("transitionend",()=>this.$element.remove());this.element.classList.remove("visible")}}get cardHtml(){return`\n                <div class="toast-card toast-${this.type}">\n                <div class="toast-card-header">\n                    <h1 class="toast-card-title">${this.title}</h1>\n                    <svg class="toast-card-dismiss" viewbox="0 0 24 24">\n                    <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z">\n                    </path>\n                    </svg>\n                </div>\n                <p class="toast-card-message">${this.message}</p>\n                </div>\n                `}static get container(){return $(".toast-card-container")}static createToastContainer(){if($(".toast-card-container").length===0){$("body").append(`<div class="toast-card-container"></div>`)}}static _show(t,s,i,a){const n=new e(t,s,a);n.duration=i;n.show()}static show(t,s,e){this._show(t,s,e,"default")}static info(t,s,e){this._show(t,s,e,"info")}static success(t,s,e){this._show(t,s,e,"success")}static error(t,s,e){this._show(t,s,e,"error")}}s.applyStyle("toastStyle");e.createToastContainer();return{export:e}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-top-mask.min.js"] = (()=>{return(i,n)=>{const l="bilibili-video-top-mask";if($(`#${l}`).length===0){n.applyStyleFromText(`\n            <style id='${l}'>\n                .bilibili-player-video-top\n                {\n                    display: none !important;\n                }\n            </style>\n            `)}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/blur-video-control.min.js"] = (()=>{return(r,o)=>{Observer.subtree("#bofqi",()=>{SpinQuery.count(()=>$(".bui-slider .bui-track.bui-track-video-progress,.bilibili-player-video-control-bottom"),2,r=>{if(!r.hasClass("video-control-blur-container")){r.addClass("video-control-blur-container");r.prepend(`<div class="video-control-blur-layer"></div>`);o.applyStyle("blurVideoControlStyle")}})})}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/dark-schedule.min.js"] = (()=>{return(e,t)=>{class s{constructor(e){if(arguments.length===0){const e=new Date;this.hour=e.getHours();this.minute=e.getMinutes()}else if(arguments.length===1){[this.hour,this.minute]=e.split(":").slice(0,2).map(e=>this.validatePart(e));this.normalize()}else if(arguments.length===2){[this.hour,this.minute]=arguments}}validatePart(e){const t=parseInt(e);if(!isNaN(t)&&0<=t&&t<=59){return t}else{return null}}normalize(){while(this.minute<0){this.minute+=60;this.hour-=1}while(this.minute>=60){this.minute-=60;this.hour+=1}while(this.hour<0){this.hour+=24}while(this.hour>=24){this.hour-=24}}lessThan(e){if(this.hour<e.hour||this.hour===e.hour&&this.minute<e.minute){return true}return false}greaterThan(e){if(this.hour>e.hour||this.hour===e.hour&&this.minute>e.minute){return true}return false}equals(e){return this.hour===e.hour&&this.minute===e.minute}isInRange(e,t){if(e.equals(t)){return false}let s=this.greaterThan(e)&&this.lessThan(t);if(e.greaterThan(t)){s=this.greaterThan(e)||this.lessThan(t)}const i=s||this.equals(e);return i}static millisecondsBefore(e){const t=new s;const i=(new Date).getSeconds();const r=1e3*(t.hour*3600+t.minute*60+i);const n=1e3*(e.hour*3600+e.minute*60);let h=n-r;if(t.greaterThan(e)||t.equals(e)&&i!==0){h+=24*3600*1e3}return h}}function i(){if(e.darkSchedule){const r=new s(e.darkScheduleStart);const n=new s(e.darkScheduleEnd);const h=new s;const u=h.isInRange(r,n);if(e.useDarkStyle!==u){e.useDarkStyle=u;saveSettings(e);t.fetchByKey("useDarkStyle")}let o=0;if(u){o=s.millisecondsBefore(n)}else{o=s.millisecondsBefore(r)}if(o!==0){setTimeout(()=>i(),o)}}}i();return{export:s}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/dark-schedule.min.js"] = (()=>{return(e,t)=>{class s{constructor(...e){if(e.length===0){const e=new Date;this.hour=e.getHours();this.minute=e.getMinutes()}else if(e.length===1){const[t]=e;[this.hour,this.minute]=t.split(":").slice(0,2).map(e=>this.validatePart(e));this.normalize()}else if(v.length===2){[this.hour,this.minute]=e}}validatePart(e){const t=parseInt(e);if(!isNaN(t)&&0<=t&&t<=59){return t}else{return null}}normalize(){while(this.minute<0){this.minute+=60;this.hour-=1}while(this.minute>=60){this.minute-=60;this.hour+=1}while(this.hour<0){this.hour+=24}while(this.hour>=24){this.hour-=24}}lessThan(e){if(this.hour<e.hour||this.hour===e.hour&&this.minute<e.minute){return true}return false}greaterThan(e){if(this.hour>e.hour||this.hour===e.hour&&this.minute>e.minute){return true}return false}equals(e){return this.hour===e.hour&&this.minute===e.minute}isInRange(e,t){if(e.equals(t)){return false}let s=this.greaterThan(e)&&this.lessThan(t);if(e.greaterThan(t)){s=this.greaterThan(e)||this.lessThan(t)}const i=s||this.equals(e);return i}static millisecondsBefore(e){const t=new s;const i=(new Date).getSeconds();const r=1e3*(t.hour*3600+t.minute*60+i);const n=1e3*(e.hour*3600+e.minute*60);let h=n-r;if(t.greaterThan(e)||t.equals(e)&&i!==0){h+=24*3600*1e3}return h}}function i(){if(e.darkSchedule){const r=new s(e.darkScheduleStart);const n=new s(e.darkScheduleEnd);const h=new s;const u=h.isInRange(r,n);if(e.useDarkStyle!==u){e.useDarkStyle=u;saveSettings(e);t.fetchByKey("useDarkStyle")}let o=0;if(u){o=s.millisecondsBefore(n)}else{o=s.millisecondsBefore(r)}if(o!==0){setTimeout(()=>i(),o)}}}i();return{export:s}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/force-wide.min.js"] = (()=>{return(e,t)=>{t.applyImportantStyle("forceWideStyle")}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/clear-cache.min.js"] = (()=>{return(t,e)=>{return{settingsWidget:{category:"其他",content:`<div>\n                        <button\n                            class="gui-settings-button"\n                            title="清除缓存"\n                            id="clear-cache">\n                            清除缓存\n                        </button>\n                        </div>`,success:()=>{$("#clear-cache").on("click",()=>{t.cache={};Toast.show("已删除全部缓存.","清除缓存",5e3)});if(typeof offlineData!=="undefined"){$("button#clear-cache").parent().addClass("hidden")}}}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/download-video.min.js"] = (()=>{return(e,t)=>{const o=t.attributes.videoInfo.export.VideoInfo;const n=t.attributes.videoInfo.export.BangumiInfo;const s={aid:undefined,cid:undefined,isBangumi:false,isMovie:false};class i{constructor(e,t,o){this.quality=e;this.internalName=t;this.displayName=o}async downloadInfo(){const e=new r(this);await e.fetchVideoInfo();return e}static get availableFormats(){return new Promise((e,t)=>{const o=`https://api.bilibili.com/x/player/playurl?avid=${s.aid}&cid=${s.cid}&otype=json`;const n=new XMLHttpRequest;n.addEventListener("load",()=>{const o=JSON.parse(n.responseText);if(o.code!==0){t("获取清晰度信息失败.")}const s=o.data;const a=s.accept_quality;const r=s.accept_format.split(",");const d=s.accept_description;const l=[];while(a.length>0){const e=new i(a.pop(),r.pop(),d.pop());l.push(e)}e(l)});n.addEventListener("error",()=>t(`获取清晰度信息失败.`));n.withCredentials=true;n.open("GET",o);n.send()})}}class a{constructor(e,t,o,n){this.length=e;this.size=t;this.url=o;this.backupUrls=n}}class r{constructor(e,t){this.format=e;this.fragments=t||[];this.progress=null;this.loaded=0;this.totalSize=null;this.workingXhr=null}fetchVideoInfo(){return new Promise((e,t)=>{const o=`https://api.bilibili.com/x/player/playurl?avid=${s.aid}&cid=${s.cid}&qn=${this.format.quality}&otype=json`;const n=new XMLHttpRequest;n.addEventListener("load",()=>{const o=JSON.parse(n.responseText.replace(/http:/g,"https:")).data;if(o.quality!==this.format.quality){t("获取下载链接失败, 请确认当前账号有下载权限后重试.")}const s=o.durl;this.fragments=s.map(e=>new a(e.length,e.size,e.url,e.backup_url));e(this.fragments)});n.withCredentials=true;n.open("GET",o);n.send()})}cancelDownload(){if(this.workingXhr){this.workingXhr.abort()}}downloadUrl(e){return new Promise((t,o)=>{const n=new XMLHttpRequest;n.open("GET",e);n.responseType="arraybuffer";n.withCredentials=false;n.addEventListener("progress",e=>{this.progress&&this.progress((this.loaded+e.loaded)/this.totalSize)});n.addEventListener("load",()=>{if(n.status===200){t(n.response)}else{o(`请求失败.`)}});n.addEventListener("abort",()=>o("下载已取消."));n.addEventListener("error",()=>o(`下载失败.`));n.send();this.workingXhr=n})}copyUrl(){const e=this.fragments.map(e=>e.url).reduce((e,t)=>e+"\r\n"+t);GM_setClipboard(e,"text")}async download(){const e=[];this.loaded=0;this.totalSize=this.fragments.map(e=>e.size).reduce((e,t)=>e+t);for(const t of this.fragments){const o=await this.downloadUrl(t.url);this.loaded+=t.size;e.push(o)}if(e.length<1){throw new Error("下载失败.")}let t=null;let o=null;const n=e=>(e||this.fragments[0]).url.indexOf(".flv")!==-1?".flv":".mp4";if(e.length===1){const[s]=e;t=new Blob([s],{type:n()===".flv"?"video/x-flv":"video/mp4"});o=document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili","")+n()}else{const s=new JSZip;const i=document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili","");e.forEach((e,t)=>{s.file(`${i} - ${t+1}${n(this.fragments[t])}`,e)});t=await s.generateAsync({type:"blob"});o=i+".zip"}const s=URL.createObjectURL(t);const i=$("a#video-complete").attr("href");if(i){URL.revokeObjectURL(i)}this.progress&&this.progress(0);return{url:s,filename:o}}}function d(){(async()=>{let e=(unsafeWindow||window).aid;let t=(unsafeWindow||window).cid;if(e===undefined||t===undefined){const n=document.URL.match(/\/av(\d+)/);const s=document.URL.match(/\/ep(\d+)/);if(n&&n[1]){const s=await new o(n[1]).fetchInfo();e=s.aid;t=s.cid}}return[e,t]})().then(e=>{const[o,n]=e;if(o===undefined||n===undefined){return}s.aid=o;s.cid=n;i.availableFormats.then(e=>{let[o]=e;const n=()=>o.downloadInfo().catch(e=>{$(".download-video-panel").addClass("error");$(".video-error").text(e)});async function s(){if(!o){return}$(".download-video-panel").removeClass("action").addClass("progress");const e=await n();e.progress=(e=>{$(".download-progress-value").text(`${fixed(e*100)}`);$(".download-progress-foreground").css("transform",`scaleX(${e})`)});document.querySelector(".download-progress-cancel>span").onclick=(()=>e.cancelDownload());const t=await e.download().catch(e=>{$(".download-video-panel").addClass("error");$(".video-error").text(e)});if(!t){return}const s=document.getElementById("video-complete");s.setAttribute("href",t.url);s.setAttribute("download",t.filename);s.click();$(".download-video-panel").removeClass("progress").addClass("quality")}async function i(){if(!o){return}const e=await n();e.copyUrl();Toast.success("已复制链接到剪贴板.","复制链接",3e3);$(".download-video-panel").removeClass("action").addClass("quality")}$(".video-action>#video-action-download").on("click",s);$(".video-action>#video-action-copy").on("click",i);e.forEach(e=>{$(`<li>${e.displayName}</li>`).on("click",()=>{o=e;$(".download-video-panel").removeClass("quality").addClass("action")}).prependTo("ol.video-quality")});t.applyStyle("downloadVideoStyle");$("#download-video").on("click",()=>{$(".download-video-panel").toggleClass("opened")}).parent().removeClass("hidden")});$(".video-error").on("click",()=>{$(".video-error").text("");$(".download-video-panel").removeClass("error").removeClass("progress").addClass("quality")})})}return{settingsWidget:{category:"视频与直播",content:t.data.downloadVideoDom.text,success:d}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/video-info.min.js"] = (()=>{return()=>{class t{constructor(t){this.aid=t}async fetchInfo(){const t=JSON.parse(await downloadText(`https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`));if(t.code!==0){throw new Error(t.message)}const i=t.data;this.cid=i.cid;this.pageCount=i.videos;this.coverUrl=i.pic;this.tagId=i.tid;this.tagName=i.tname;this.title=i.title;this.description=i.desc;this.up={uid:i.owner.mid,name:i.owner.name,faceUrl:i.owner.face};this.pages=i.pages.map(t=>{return{cid:t.cid,title:t.part,pageNumber:t.page}});return this}}class i{constructor(t,i){this.text=t;this.p=i}}class e{constructor(t){this.cid=t}async fetchInfo(){const t=await downloadText(`https://api.bilibili.com/x/v1/dm/list.so?oid=${this.cid}`);this.rawXML=t;const e=(new DOMParser).parseFromString(t,"application/xml").documentElement;this.xml=e;this.danmakus=[].map.call(e.querySelectorAll("d[p]"),t=>{return new i(t.innerHTML,t.getAttribute("p"))})}}class a{constructor(t){this.ep=t;this.videos=[]}async fetchInfo(){const i=await downloadText(`https://www.bilibili.com/bangumi/play/ep${this.ep}/`);const e=JSON.parse(i.match(/window\.__INITIAL_STATE__=(.*);\(function\(\){/)[1]);this.title=e.mediaInfo.title;this.cover=e.mediaInfo.cover;this.squareCover=e.mediaInfo.square_cover;this.aid=e.epInfo.aid;this.cid=e.epInfo.cid;this.videos=e.epList.map(async i=>{return{title:i.index_title,aid:i.aid,cid:i.cid,info:await new t(i.aid).fetchInfo()}});return this}}return{export:{VideoInfo:t,BangumiInfo:a,Danmaku:i,DanmakuInfo:e}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.html"] = `<div class="bilibili-evolved-about"></div>`;
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.scss"] = `.about.gui-settings-footer{height:24px;font-size:14px;justify-content:space-between;padding:6px 24px;border-top:1px dashed #8884;}.about.gui-settings-footer>span{opacity:0.2;}.bilibili-evolved-about{display:none;width:60vw;height:40vh;background-color:white;position:absolute;top:20%;left:20%;z-index:100000;box-shadow:0px 3px 20px 2px #0004;}.bilibili-evolved-about.opened{display:flex;}#about-link{cursor:pointer;transition:all .2s;}#about-link:hover{opacity:1;color:$customStyleColor;}`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.scss"] = `.about.gui-settings-footer{height:24px;font-size:14px;justify-content:space-between;padding:6px 24px;border-top:1px dashed #8884;}.about.gui-settings-footer>span{opacity:0.2;}.bilibili-evolved-about{display:none;width:60vw;height:40vh;background-color:white;position:fixed;top:20%;left:20%;z-index:100000;box-shadow:0px 3px 20px 2px #0004;}.bilibili-evolved-about.opened{display:flex;}#about-link{cursor:pointer;transition:all .2s;}#about-link:hover{opacity:1;color:$customStyleColor;}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.js"] = (()=>{return(t,n)=>{$("body").append(n.data.aboutDom.text);function e(){n.applyStyle("aboutStyle");$("#about-link").on("click",()=>{$(".bilibili-evolved-about").toggleClass("opened")})}return{settingsWidget:{after:()=>$(".gui-settings-content"),content:`\n                    <div class="about gui-settings-footer">\n                        <span id="about-version">${GM_info.script.name}, version ${t.currentVersion}</span>\n                        <span id="about-link">About</span>\n                    </div>`,success:e}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/custom-control-background.min.scss"] = `.bilibili-player-video-control-mask{background:transparent!important;}.bilibili-player-video-control-bottom,.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap{background-color:rgba(0,0,0,$customControlBackgroundOpacity)!important;}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/custom-control-background.min.js"] = (()=>{return(o,t)=>{if(o.customControlBackgroundOpacity>0){t.applyStyle("customControlBackgroundStyle");if(!o.touchVideoPlayer){t.applyImportantStyleFromText(`\n<style id="control-background-non-touch">\n.bilibili-player-video-control-bottom\n{\n    margin: 0 !important;\n    padding: 7px 0 0 !important;\n}\n</style>\n            `)}}}})();
@@ -852,7 +852,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         {
             return new ResourceType("html", html =>
             {
-                for (const [key, name] of Object.entries(Resource.displayNames))
+                for (const [key, name,] of Object.entries(Resource.displayNames))
                 {
                     html = html.replace(new RegExp(`(<(.+)\\s*?indent="[\\d]+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</\\2>)`, "g"),
                         `$1${name}$3`);

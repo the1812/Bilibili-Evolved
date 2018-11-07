@@ -4,25 +4,26 @@
     {
         class ScheduleTime
         {
-            constructor(text)
+            constructor(...args)
             {
-                if (arguments.length === 0)
+                if (args.length === 0)
                 {
                     const now = new Date();
                     this.hour = now.getHours();
                     this.minute = now.getMinutes();
                 }
-                else if (arguments.length === 1)
+                else if (args.length === 1)
                 {
+                    const [text] = args;
                     [this.hour, this.minute] = text
                         .split(":")
                         .slice(0, 2)
                         .map(it => this.validatePart(it));
                     this.normalize();
                 }
-                else if (arguments.length === 2)
+                else if (v.length === 2)
                 {
-                    [this.hour, this.minute] = arguments;
+                    [this.hour, this.minute] = args;
                 }
             }
             validatePart(text)
