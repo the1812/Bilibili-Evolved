@@ -34,7 +34,7 @@
         function init()
         {
             resources.applyStyle("aboutStyle");
-            $("#about-link").on("click", () =>
+            $("#about-link,#about-close").on("click", () =>
             {
                 $(".bilibili-evolved-about").toggleClass("opened");
             });
