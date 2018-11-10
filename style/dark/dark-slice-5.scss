@@ -16,7 +16,9 @@
 .hash-popup .topic-container .item.is-selected,
 .fjw-kpi-wrap,
 .mobile-kpi-head h2,
-.mini-progress 
+.mini-progress,
+.tab-selector-wrap .tag-wrap .tag span,
+.tab-selector-wrap .tag-wrap .tag span.selected 
 {
     background-color: #222 !important;
 }
@@ -47,7 +49,11 @@
 .scroll-container .main .article-container,
 .fjw-kpi-wrap .fjw-kpi-mid .fjw-grade-wrap,
 .fjw-kpi-wrap .fjw-kpi-top,
-.fjw-kpi-wrap .fjw-kpi-foot .fjw-kpi-presents 
+.fjw-kpi-wrap .fjw-kpi-foot .fjw-kpi-presents,
+.tab-selector-wrap,
+#newsList #list,
+.pagination-container li.pagination-input-wrap .pagination-input,
+.infor-body .news-contents 
 {
     background-color: #444 !important;
 }
@@ -119,7 +125,9 @@
 .list.main_body .list_box .block .info .text,
 .list.main_body .right_box .select_box .select .option_block .option,
 .comment-container .main-desc .comment-info .word-container .bottom .personal-info .nickname,
-.fjw-kpi-wrap .fjw-kpi-top .fjw-person-detail label.fjw-person-item 
+.fjw-kpi-wrap .fjw-kpi-top .fjw-person-detail label.fjw-person-item,
+.tab-selector-wrap .tag-wrap .tag span,
+.item .brief-desc 
 {
     color: #aaa !important;
 }
@@ -166,7 +174,17 @@ table.invtable td,
 .mobile-kpi-head h2,
 .fjw-kpi-wrap .fjw-kpi-top .fjw-person-detail label.fjw-person-item .fjw-name,
 .fjw-kpi-wrap .fjw-kpi-foot .fjw-kpi-presents .kpi-presents-item .present-text,
-.fjw-kpi-wrap h2.fjw-kpi-h2 
+.fjw-kpi-wrap h2.fjw-kpi-h2,
+.article-holder .ticket-card a .container .title,
+.item .title-wrap,
+.pagination-container li.pagination,
+.pagination-container li.pagination-input-wrap .pagination-input,
+.c-top .name-top1,
+.news-contents h2,
+.infor-body-left news-contents .c-text,
+.total-bt .t-date a,
+.tv-m2 .tv-m-tt,
+.tv-m3 .tv-m-tt 
 {
     color: #eee !important;
 }
@@ -204,7 +222,15 @@ table.invtable td,
 #dc-section_summary .source-rank-list-item,
 .list.main_body .right_box .select_box .select .title,
 .list.main_body .list_box .block,
-.mobile-kpi-head 
+.mobile-kpi-head,
+.article-holder .ticket-card a,
+.tab-selector-wrap .tab-wrap,
+.pagination-container li.pagination,
+.pagination-container li.pagination-input-wrap .pagination-input,
+.c-text .c-hd2,
+.tv-m2:nth-child(odd),
+.tv-m2,
+.tv-m3 
 {
     border-color: transparent !important;
 }
@@ -297,7 +323,9 @@ table.invtable td,
 .data-card .fans-box .tab .fan-tab.current:after,
 .data-card .data-box .tab .fan-tab.current:after,
 .data-card .fans-box .tab .fan-tab.current:after,
-.section-item .diff-wrp .diff-text:before 
+.section-item .diff-wrp .diff-text:before,
+.tab-selector-wrap .tag-wrap .tag span.selected,
+.tab-selector-wrap .tab-wrap .tab span.active 
 {
     border-color: $customStyleColor !important;
 }
@@ -316,7 +344,8 @@ table.invtable td,
 .cc-article-wrp .article-card .meta-view .option:hover,
 .head .dropdown-btn:hover,
 .dc-button.dc-button-text:hover,
-.h-none-btn:hover 
+.h-none-btn:hover,
+.item .title-wrap .activity 
 {
     background-color: $customStyleColor !important;
 }
@@ -338,7 +367,14 @@ icon-label.hover-text-blue:hover .label,
 .comment-container .main-desc .goods-info .desc .price,
 .hot-goods-container .bottom .price-tag .price,
 .goods-container > .info-container .price,
-.anime-expo-container .main .price 
+.anime-expo-container .main .price,
+.tab-selector-wrap .tab-wrap .tab span:hover,
+.tab-selector-wrap .tag-wrap .tag span.selected,
+.tab-selector-wrap .tab-wrap .tab span.active,
+.item:hover .title,
+.total-bt .t-date a:hover,
+.tv-m2 .tv-m-tt:hover,
+.tv-m3 .tv-m-tt:hover 
 {
     color: $customStyleColor !important;
 }
