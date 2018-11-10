@@ -182,7 +182,9 @@ table.invtable td,
 .c-top .name-top1,
 .news-contents h2,
 .infor-body-left news-contents .c-text,
-.total-bt .t-date a 
+.total-bt .t-date a,
+.tv-m2 .tv-m-tt,
+.tv-m3 .tv-m-tt 
 {
     color: #eee !important;
 }
@@ -225,7 +227,10 @@ table.invtable td,
 .tab-selector-wrap .tab-wrap,
 .pagination-container li.pagination,
 .pagination-container li.pagination-input-wrap .pagination-input,
-.c-text .c-hd2 
+.c-text .c-hd2,
+.tv-m2:nth-child(odd),
+.tv-m2,
+.tv-m3 
 {
     border-color: transparent !important;
 }
@@ -367,7 +372,9 @@ icon-label.hover-text-blue:hover .label,
 .tab-selector-wrap .tag-wrap .tag span.selected,
 .tab-selector-wrap .tab-wrap .tab span.active,
 .item:hover .title,
-.total-bt .t-date a:hover 
+.total-bt .t-date a:hover,
+.tv-m2 .tv-m-tt:hover,
+.tv-m3 .tv-m-tt:hover 
 {
     color: $customStyleColor !important;
 }
