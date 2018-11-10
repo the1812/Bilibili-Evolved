@@ -52,7 +52,8 @@
 .fjw-kpi-wrap .fjw-kpi-foot .fjw-kpi-presents,
 .tab-selector-wrap,
 #newsList #list,
-.pagination-container li.pagination-input-wrap .pagination-input 
+.pagination-container li.pagination-input-wrap .pagination-input,
+.infor-body .news-contents 
 {
     background-color: #444 !important;
 }
@@ -177,7 +178,11 @@ table.invtable td,
 .article-holder .ticket-card a .container .title,
 .item .title-wrap,
 .pagination-container li.pagination,
-.pagination-container li.pagination-input-wrap .pagination-input 
+.pagination-container li.pagination-input-wrap .pagination-input,
+.c-top .name-top1,
+.news-contents h2,
+.infor-body-left news-contents .c-text,
+.total-bt .t-date a 
 {
     color: #eee !important;
 }
@@ -219,7 +224,8 @@ table.invtable td,
 .article-holder .ticket-card a,
 .tab-selector-wrap .tab-wrap,
 .pagination-container li.pagination,
-.pagination-container li.pagination-input-wrap .pagination-input 
+.pagination-container li.pagination-input-wrap .pagination-input,
+.c-text .c-hd2 
 {
     border-color: transparent !important;
 }
@@ -360,7 +366,8 @@ icon-label.hover-text-blue:hover .label,
 .tab-selector-wrap .tab-wrap .tab span:hover,
 .tab-selector-wrap .tag-wrap .tag span.selected,
 .tab-selector-wrap .tab-wrap .tab span.active,
-.item:hover .title 
+.item:hover .title,
+.total-bt .t-date a:hover 
 {
     color: $customStyleColor !important;
 }
