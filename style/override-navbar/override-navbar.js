@@ -11,11 +11,5 @@
                     .insertAfter(".nav-con.fr");
             }
         ).start();
-        resources.applyStyle("navbarOverrideStyle");
-
-        if (!settings.showBanner)
-        {
-            resources.applyStyle("noBannerStyle");
-        }
     };
 })();

@@ -225,9 +225,12 @@
             },
             overrideNavBar: {
                 path: "min/override-navbar.min.js",
-                dependencies: [
+                styles: [
                     "navbarOverrideStyle",
-                    "noBannerStyle",
+                    {
+                        key: "noBannerStyle",
+                        condition: () => !settings.showBanner
+                    }
                 ],
                 displayNames: {
                     overrideNavBar: "搜索栏置顶",
@@ -242,7 +245,7 @@
             },
             touchVideoPlayer: {
                 path: "min/touch-player.min.js",
-                dependencies: [
+                styles: [
                     "touchPlayerStyle",
                 ],
                 displayNames: {
@@ -259,7 +262,7 @@
             },
             removeAds: {
                 path: "min/remove-promotions.min.js",
-                dependencies: [
+                styles: [
                     "removeAdsStyle",
                 ],
                 displayNames: {
@@ -292,7 +295,7 @@
             },
             fullTweetsTitle: {
                 path: "min/full-tweets-title.min.js",
-                dependencies: [
+                styles: [
                     "fullTweetsTitleStyle",
                 ],
                 displayNames: {
@@ -303,6 +306,8 @@
                 path: "min/view-cover.min.js",
                 dependencies: [
                     "imageViewerDom",
+                ],
+                styles: [
                     "imageViewerStyle",
                 ],
                 displayNames: {
@@ -320,7 +325,7 @@
             },
             toast: {
                 path: "min/toast.min.js",
-                dependencies: [
+                styles: [
                     "toastStyle",
                 ],
                 displayNames: {
@@ -335,7 +340,7 @@
             },
             blurVideoControl: {
                 path: "min/blur-video-control.min.js",
-                dependencies: [
+                styles: [
                     "blurVideoControlStyle",
                 ],
                 displayNames: {
@@ -352,7 +357,7 @@
             },
             forceWide: {
                 path: "min/force-wide.min.js",
-                dependencies: [
+                styles: [
                     "forceWideStyle",
                 ],
                 displayNames: {
@@ -387,6 +392,8 @@
                 path: "min/about.min.js",
                 dependencies: [
                     "aboutDom",
+                ],
+                styles: [
                     "aboutStyle",
                 ],
             },
@@ -395,7 +402,7 @@
             },
             customControlBackground: {
                 path: "min/custom-control-background.min.js",
-                dependencies: [
+                styles: [
                     "customControlBackgroundStyle",
                 ],
                 displayNames: {
