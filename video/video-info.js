@@ -38,6 +38,11 @@
                 });
                 return this;
             }
+            async fetchDanmaku()
+            {
+                this.danmaku = new DanmakuInfo(this.cid);
+                return this.danmaku.fetchInfo();
+            }
         }
         class Danmaku
         {
