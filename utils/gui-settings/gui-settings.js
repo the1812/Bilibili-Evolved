@@ -252,6 +252,7 @@
                     $(".gui-settings-panel").addClass("opened");
                 });
             }
+            resources.applyStyle("guiSettingsStyle");
         }
         function addPredefinedColors()
         {

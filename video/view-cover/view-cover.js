@@ -18,6 +18,7 @@
             {
                 $("body").append(resources.data.imageViewerDom.text);
                 $(".image-viewer-container .close").on("click", () => this.hide());
+                resources.applyStyle("imageViewerStyle");
             }
             downloadImage()
             {

@@ -4,6 +4,7 @@
     {
         if (settings.customControlBackgroundOpacity > 0)
         {
+            resources.applyStyle("customControlBackgroundStyle");
             if (!settings.touchVideoPlayer)
             {
                 resources.applyImportantStyleFromText(`

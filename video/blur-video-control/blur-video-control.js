@@ -16,5 +16,6 @@
                     }
                 });
         });
+        resources.applyStyle("blurVideoControlStyle");
     };
 })();
