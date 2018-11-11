@@ -33,7 +33,6 @@
 
         function init()
         {
-            resources.applyStyle("aboutStyle");
             $("#about-link,#about-close").on("click", () =>
             {
                 $(".bilibili-evolved-about").toggleClass("opened");

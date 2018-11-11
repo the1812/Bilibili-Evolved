@@ -57,7 +57,7 @@
                     $("body").append(`<div class="toast-card-container"></div>`);
                 }
             }
-            static _show(message, title, duration, type)
+            static internalShow(message, title, duration, type)
             {
                 const toast = new Toast(message, title, type);
                 toast.duration = duration;
@@ -65,23 +65,22 @@
             }
             static show(message, title, duration)
             {
-                this._show(message, title, duration, "default");
+                this.internalShow(message, title, duration, "default");
             }
             static info(message, title, duration)
             {
-                this._show(message, title, duration, "info");
+                this.internalShow(message, title, duration, "info");
             }
             static success(message, title, duration)
             {
-                this._show(message, title, duration, "success");
+                this.internalShow(message, title, duration, "success");
             }
             static error(message, title, duration)
             {
-                this._show(message, title, duration, "error");
+                this.internalShow(message, title, duration, "error");
             }
         }
 
-        resources.applyStyle("toastStyle");
         Toast.createToastContainer();
 
         return {

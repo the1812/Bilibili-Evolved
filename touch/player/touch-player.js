@@ -629,7 +629,5 @@
         }
 
         Observer.subtree("#bofqi", () => main());
-
-        resources.applyStyle("touchPlayerStyle");
     };
 })();

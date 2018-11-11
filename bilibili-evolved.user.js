@@ -189,10 +189,10 @@
                 path: "min/dark-styles.min.js",
                 styles: [
                     "darkStyle",
-                    "darkStyleImportant",
                     "scrollbarStyle",
                     {
                         key: "darkStyleNavBar",
+                        important: true,
                         condition()
                         {
                             return $("#banner_link").length === 0 ||
@@ -200,7 +200,12 @@
                                 settings.overrideNavBar &&
                                 !settings.showBanner;
                         }
-                    }
+                    },
+                    {
+                        key: "darkStyleImportant",
+                        important: true,
+                        condition: () => true,
+                    },
                 ],
                 displayNames: {
                     useDarkStyle: "夜间模式",
@@ -358,7 +363,11 @@
             forceWide: {
                 path: "min/force-wide.min.js",
                 styles: [
-                    "forceWideStyle",
+                    {
+                        key: "forceWideStyle",
+                        important: true,
+                        condition: () => true,
+                    },
                 ],
                 displayNames: {
                     forceWide: "强制宽屏",
@@ -1061,7 +1070,16 @@
                         .filter(it => it.condition !== undefined ? it.condition() : true)
                         .forEach(it =>
                         {
-                            this.applyStyle(typeof it === "object" ? it.key : it);
+                            const important = typeof it === "object" ? it.important : true;
+                            const key = typeof it === "object" ? it.key : it;
+                            if (important)
+                            {
+                                this.applyImportantStyle(key);
+                            }
+                            else
+                            {
+                                this.applyStyle(key);
+                            }
                         });
                     this.applyComponent(key, text);
                     resolve();

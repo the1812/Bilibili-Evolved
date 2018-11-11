@@ -1,7 +1,7 @@
 (() =>
 {
-    return (_, resources) =>
+    return () =>
     {
-        resources.applyStyle("fullTweetsTitleStyle");
+
     };
 })();

@@ -307,7 +307,6 @@
                             })
                             .prependTo("ol.video-quality");
                     });
-                    resources.applyStyle("downloadVideoStyle");
                     $("#download-video").on("click", () =>
                     {
                         $(".download-video-panel").toggleClass("opened");

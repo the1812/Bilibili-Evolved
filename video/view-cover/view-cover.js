@@ -17,7 +17,6 @@
             createDom()
             {
                 $("body").append(resources.data.imageViewerDom.text);
-                resources.applyStyle("imageViewerStyle");
                 $(".image-viewer-container .close").on("click", () => this.hide());
             }
             downloadImage()

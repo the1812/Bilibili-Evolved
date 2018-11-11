@@ -2,7 +2,6 @@
 {
     return (_, resources) =>
     {
-        resources.applyStyle("removeAdsStyle");
         SpinQuery.any(
             () => $(".gg-pic").parent("a"),
             it =>
