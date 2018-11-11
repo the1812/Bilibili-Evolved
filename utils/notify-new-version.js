@@ -94,6 +94,12 @@
                                             更新
                                         </button>
                                     </a>
+                                    <a href="https://github.com/the1812/Bilibili-Evolved/releases">
+                                        <button
+                                            class="gui-settings-button">
+                                            详细信息
+                                        </button>
+                                    </a>
                                 </div>`,
                         success: () =>
                         {
