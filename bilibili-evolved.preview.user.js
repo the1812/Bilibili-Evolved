@@ -931,30 +931,25 @@
                     .then(() =>
                     {
                         // +#Offline build placeholder
-                        const apply = text =>
-                        {
-                            this.text = this.type.preprocessor(text);
-                            resolve(this.text);
-                        };
                         if (settings.useCache)
                         {
                             const cache = this.loadCache(key);
                             if (cache !== null)
                             {
-                                apply(cache);
+                                resolve(cache);
                             }
                             downloadText(this.url, text =>
                             {
-                                if (cache !== text)
+                                this.text = this.type.preprocessor(text);
+                                if (cache !== this.text)
                                 {
                                     if (cache === null)
                                     {
-                                        apply(text);
+                                        resolve(this.text);
                                     }
                                     if (typeof offlineData === "undefined")
                                     {
-                                        settings.cache[key] = text;
-                                        saveSettings(settings);
+                                        settings.cache[key] = this.text;
                                     }
                                 }
                             }, error => reject(error));
@@ -962,7 +957,11 @@
                         else
                         {
                             downloadText(this.url,
-                                text => apply(text),
+                                text =>
+                                {
+                                    this.text = this.type.preprocessor(text);
+                                    resolve(this.text);
+                                },
                                 error => reject(error));
                         }
                         // -#Offline build placeholder
