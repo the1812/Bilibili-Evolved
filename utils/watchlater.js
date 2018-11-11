@@ -25,43 +25,49 @@
                     .attr("target", "_blank"));
             }
         };
-        Observer.subtree("li.nav-item[report-id*=watchlater]", () =>
-        {
-            SpinQuery.any(
-                () => $(".av-item>a"),
-                items => redirectLinks(items)
-            );
-            SpinQuery.any(
-                () => $(".av-about>a"),
-                items => redirectLinks(items)
-            );
-            SpinQuery.any(
-                () => $("div.watch-later-m>ul>div>li>a"),
-                items => redirectLinks(items)
-            );
-            SpinQuery.any(
-                () => $(".read-more.mr"),
-                it => it.remove()
-            );
-            SpinQuery.any(
-                () => $(".read-more-grp>.read-more"),
-                it => it.css({
-                    float: "none",
-                    width: "auto"
-                })
-            );
-            new SpinQuery(
-                () => document.URL.match(/av[\d]+/),
-                it => it && document.URL.indexOf("watchlater") !== -1,
-                it =>
+        SpinQuery.any(
+            () => $("li.nav-item[report-id*=watchlater]"),
+            () =>
+            {
+                Observer.subtree("li.nav-item[report-id*=watchlater]", () =>
                 {
-                    const id = it[0];
-                    if (id)
-                    {
-                        window.location.replace(`https://www.bilibili.com/${id}`);
-                    }
-                }
-            ).start();
-        });
+                    SpinQuery.any(
+                        () => $(".av-item>a"),
+                        items => redirectLinks(items)
+                    );
+                    SpinQuery.any(
+                        () => $(".av-about>a"),
+                        items => redirectLinks(items)
+                    );
+                    SpinQuery.any(
+                        () => $("div.watch-later-m>ul>div>li>a"),
+                        items => redirectLinks(items)
+                    );
+                    SpinQuery.any(
+                        () => $(".read-more.mr"),
+                        it => it.remove()
+                    );
+                    SpinQuery.any(
+                        () => $(".read-more-grp>.read-more"),
+                        it => it.css({
+                            float: "none",
+                            width: "auto"
+                        })
+                    );
+                    new SpinQuery(
+                        () => document.URL.match(/av[\d]+/),
+                        it => it && document.URL.indexOf("watchlater") !== -1,
+                        it =>
+                        {
+                            const id = it[0];
+                            if (id)
+                            {
+                                window.location.replace(`https://www.bilibili.com/${id}`);
+                            }
+                        }
+                    ).start();
+                });
+            }
+        );
     };
 })();
