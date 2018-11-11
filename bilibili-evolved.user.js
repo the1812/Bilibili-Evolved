@@ -1043,12 +1043,6 @@
                 return null;
             }
             const promise = resource.download();
-            resource.styles
-                .filter(it => it.condition !== undefined ? it.condition() : true)
-                .forEach(it =>
-                {
-                    this.applyStyle(typeof it === "object" ? it.key : it);
-                });
             resource.dependencies
                 .filter(it => it.type.name === "script")
                 .forEach(it => this.fetchByKey(it.key));
@@ -1056,6 +1050,12 @@
             {
                 promise.then(text =>
                 {
+                    resource.styles
+                        .filter(it => it.condition !== undefined ? it.condition() : true)
+                        .forEach(it =>
+                        {
+                            this.applyStyle(typeof it === "object" ? it.key : it);
+                        });
                     this.applyComponent(key, text);
                     resolve();
                 }).catch(reason =>
