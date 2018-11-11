@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.26
+// @version      1.5.27
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -176,6 +176,8 @@
                 path: "min/gui-settings.min.js",
                 dependencies: [
                     "guiSettingsDom",
+                ],
+                styles: [
                     "guiSettingsStyle",
                 ],
                 displayNames: {
@@ -185,11 +187,20 @@
             },
             useDarkStyle: {
                 path: "min/dark-styles.min.js",
-                dependencies: [
+                styles: [
                     "darkStyle",
                     "darkStyleImportant",
-                    "darkStyleNavBar",
                     "scrollbarStyle",
+                    {
+                        key: "darkStyleNavBar",
+                        condition()
+                        {
+                            return $("#banner_link").length === 0 ||
+                                $("#banner_link").length > 0 &&
+                                settings.overrideNavBar &&
+                                !settings.showBanner;
+                        }
+                    }
                 ],
                 displayNames: {
                     useDarkStyle: "夜间模式",
@@ -200,7 +211,12 @@
                 dependencies: [
                     "style",
                     "oldStyle",
-                    "scrollbarStyle",
+                ],
+                styles: [
+                    {
+                        key: "scrollbarStyle",
+                        condition: () => document.URL !== `https://h.bilibili.com/`,
+                    }
                 ],
                 displayNames: {
                     useNewStyle: "样式调整",
@@ -391,9 +407,9 @@
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};
         Resource.displayNames = {};
-        for (const [key, data,] of Object.entries(resouceManifest))
+        for (const [key, data] of Object.entries(resouceManifest))
         {
-            const resource = new Resource(data.path, data.order);
+            const resource = new Resource(data.path, data.order, data.styles);
             resource.key = key;
             if (data.displayNames)
             {
@@ -402,7 +418,7 @@
             }
             Resource.all[key] = resource;
         }
-        for (const [key, data,] of Object.entries(resouceManifest))
+        for (const [key, data] of Object.entries(resouceManifest))
         {
             if (data.dependencies)
             {
@@ -855,11 +871,12 @@
         {
             return this.text !== null;
         }
-        constructor(url, priority)
+        constructor(url, priority, styles = [])
         {
             this.url = Resource.root + url;
             this.dependencies = [];
             this.priority = priority;
+            this.styles = styles;
             this.text = null;
             this.key = null;
             this.type = ResourceType.fromUrl(url);
@@ -888,7 +905,14 @@
                 }
                 else
                 {
-                    Promise.all(this.dependencies.map(r => r.download())).then(() =>
+                    Promise.all(this.dependencies
+                        .concat(this.styles
+                            .flatMap(it => typeof it === "object" ? it.key : it)
+                            .map(it => Resource.all[it])
+                        )
+                        .map(r => r.download())
+                    )
+                    .then(() =>
                     {
                         // +#Offline build placeholder
                         const apply = text =>
@@ -1019,6 +1043,12 @@
                 return null;
             }
             const promise = resource.download();
+            resource.styles
+                .filter(it => it.condition !== undefined ? it.condition() : true)
+                .forEach(it =>
+                {
+                    this.applyStyle(typeof it === "object" ? it.key : it);
+                });
             resource.dependencies
                 .filter(it => it.type.name === "script")
                 .forEach(it => this.fetchByKey(it.key));
