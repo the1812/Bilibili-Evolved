@@ -94,7 +94,7 @@
                                             更新
                                         </button>
                                     </a>
-                                    <a href="https://github.com/the1812/Bilibili-Evolved/releases">
+                                    <a target="blank"  href="https://github.com/the1812/Bilibili-Evolved/releases">
                                         <button
                                             class="gui-settings-button">
                                             详细信息
@@ -107,7 +107,7 @@
                             {
                                 it.addClass("gui-settings-notification");
                             });
-                            const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">更新</a>`;
+                            const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">更新</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">详细信息</a>`;
                             Toast.show(message, "检查更新");
                         }
                     }
