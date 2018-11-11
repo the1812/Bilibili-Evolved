@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.29
+// @version      1.5.30
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -944,6 +944,10 @@
                             downloadText(this.url, text =>
                             {
                                 this.text = this.type.preprocessor(text);
+                                if (text === null)
+                                {
+                                    reject("download failed");
+                                }
                                 if (cache !== this.text)
                                 {
                                     if (cache === null)
@@ -1097,6 +1101,7 @@
         {
             return new Promise(resolve =>
             {
+                this.validateCache();
                 const promises = [];
                 for (const key in settings)
                 {
@@ -1109,7 +1114,6 @@
                         }
                     }
                 }
-                this.validateCache();
                 Promise.all(promises).then(() =>
                 {
                     this.applySettingsWidgets();
@@ -1203,12 +1207,13 @@
             if (settings.cache.version !== settings.currentVersion)
             {
                 settings.cache = {};
+                saveSettings(settings);
             }
             if (settings.cache.version === undefined)
             {
                 settings.cache.version = settings.currentVersion;
+                saveSettings(settings);
             }
-            saveSettings(settings);
         }
     }
 
@@ -1220,12 +1225,12 @@
         resources.fetchByKey("toast").then(() =>
         {
             Toast = resources.attributes.toast.export;
-            resources.fetch();
+            resources.fetch().then(() => saveSettings(settings));
         });
     }
     else
     {
-        resources.fetch();
+        resources.fetch().then(() => saveSettings(settings));
     }
 
 })(window.jQuery.noConflict(true));
