@@ -939,6 +939,7 @@
                             const cache = this.loadCache(key);
                             if (cache !== null)
                             {
+                                this.text = cache;
                                 resolve(cache);
                             }
                             downloadText(this.url, text =>
