@@ -61,7 +61,7 @@
             },
             defaultPlayerMode: text =>
             {
-                if (["常规", "宽屏", "网页全屏", "全屏"].indexOf(text) !== -1)
+                if (["常规", "宽屏", "网页全屏"].indexOf(text) !== -1)
                 {
                     return text;
                 }
