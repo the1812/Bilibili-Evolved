@@ -183,6 +183,10 @@
             {
                 $(e.currentTarget).parent().toggleClass("opened");
             });
+            $(".gui-settings-panel").on("click", () =>
+            {
+                $(".gui-settings-panel .popup").removeClass("opened");
+            });
             onSettingsChange(settingsChange);
         }
         function listenSettingsChange()
@@ -246,7 +250,7 @@
                         $(`input[key='${key}'][type='text']`).parent()[action]("disabled");
                     }
                 }
-                $(".download-video-panel,.predefined-colors").removeClass("opened");
+                $(".gui-settings-panel .popup").removeClass("opened");
             };
             $(`input[type='checkbox'][key]`)
                 .on("change", e => checkBoxChange($(e.target)))

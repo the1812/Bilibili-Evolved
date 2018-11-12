@@ -424,7 +424,8 @@ body>div.to-top.on,
 {
     border: 1px solid #444 !important;
 }
-i.settings-category-arrow::after
+i.settings-category-arrow::after,
+.gui-settings-dropdown::after
 {
     border-color: white !important;
 }
@@ -854,7 +855,8 @@ body>div.to-top.on
     border-top-color: transparent !important;
     border-bottom-color: transparent !important;
 }
-i.settings-category-arrow::after
+i.settings-category-arrow::after,
+.gui-settings-dropdown::after
 {
     border-top-color: transparent !important;
     border-left-color: transparent !important;
