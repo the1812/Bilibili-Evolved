@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.31
+// @version      1.5.32
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -54,6 +54,7 @@
         touchVideoPlayerAnimation: false,
         customStyleColor: "#00A0D8",
         blurBackgroundOpacity: 0.382,
+        defaultPlayerMode: "常规",
         useCache: true,
         cache: {},
     };
@@ -64,6 +65,7 @@
         clearCache: true,
         fixFullscreen: false,
         downloadVideo: true,
+        useDefaultPlayerMode: true,
         about: false,
         latestVersionLink: GM_info.script.updateURL,
         currentVersion: GM_info.script.version,
@@ -420,6 +422,12 @@
                 displayNames: {
                     customControlBackground: "控制栏着色",
                     customControlBackgroundOpacity: "不透明度",
+                },
+            },
+            useDefaultPlayerMode: {
+                path: "min/default-player-mode.min.js",
+                displayNames: {
+                    defaultPlayerMode: "默认播放器模式",
                 },
             },
         };

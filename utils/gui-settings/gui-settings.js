@@ -58,7 +58,15 @@
                     }
                 }
                 return settings.blurBackgroundOpacity;
-            }
+            },
+            defaultPlayerMode: text =>
+            {
+                if (["常规", "宽屏", "网页全屏", "全屏"].indexOf(text) !== -1)
+                {
+                    return text;
+                }
+                return settings.defaultPlayerMode;
+            },
         };
         function getCategoriyItems(category)
         {

@@ -513,3 +513,22 @@ i.settings-category-arrow::after
     border-top-color: transparent;
     border-radius: 2.4px;
 }
+.gui-settings-dropdown
+{
+    position: relative;
+    cursor: pointer;
+}
+.gui-settings-dropdown>ul
+{
+    position: absolute;
+    cursor: pointer;
+    background: white;
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: all .2s ease-out;
+}
+.gui-settings-dropdown:hover>ul,
+.gui-settings-dropdown:focus-within>ul
+{
+    transform: scaleY(1);
+}
