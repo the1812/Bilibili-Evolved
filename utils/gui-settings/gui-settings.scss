@@ -551,8 +551,7 @@ i.settings-category-arrow::after
 {
     background: rgba(0,0,0,0.16);
 }
-.gui-settings-dropdown:hover>ul,
-.gui-settings-dropdown:focus-within>ul
+.gui-settings-dropdown.opened>ul
 {
     transform: scaleY(1);
 }

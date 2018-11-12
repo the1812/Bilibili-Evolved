@@ -179,6 +179,10 @@
                 e.currentTarget.classList.toggle("folded");
                 getCategoriyItems(e.currentTarget).forEach(it => it.classList.toggle("folded"));
             });
+            $(".gui-settings-dropdown>input").on("click", e =>
+            {
+                $(e.currentTarget).parent().toggleClass("opened");
+            });
             onSettingsChange(settingsChange);
         }
         function listenSettingsChange()
