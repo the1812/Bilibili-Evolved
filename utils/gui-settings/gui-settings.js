@@ -193,9 +193,11 @@
                 $("input[type='text'][key]")
                     .each((_, element) =>
                     {
-                        const key = $(element).attr("key");
-                        const value = $(element).val();
-                        settings[key] = textValidate[key](value);
+                        const $element = $(element);
+                        const key = $element.attr("key");
+                        const value = textValidate[key]($element.val());
+                        settings[key] = value;
+                        $element.val(value);
                     });
                 saveSettings(settings);
                 // syncGui();
