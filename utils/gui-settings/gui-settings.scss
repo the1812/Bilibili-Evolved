@@ -234,12 +234,14 @@ span.settings-category
     align-items: center;
     -webkit-tap-highlight-color: transparent;
 }
-.gui-settings-textbox-container span
+.gui-settings-textbox-container span,
+.gui-settings-dropdown-span
 {
     margin: 0 16px;
     transition: all 0.2s;
 }
-.gui-settings-textbox-container input
+.gui-settings-textbox-container input,
+.gui-settings-dropdown input
 {
     border-radius: 4px;
     border: none;
@@ -517,6 +519,8 @@ i.settings-category-arrow::after
 {
     position: relative;
     cursor: pointer;
+    display: inline-block;
+    -webkit-tap-highlight-color: transparent;
 }
 .gui-settings-dropdown>ul
 {
@@ -526,6 +530,20 @@ i.settings-category-arrow::after
     transform-origin: top;
     transform: scaleY(0);
     transition: all .2s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 3px 20px 2px #0004;
+    border-radius: 4px;
+}
+.gui-settings-dropdown ul li
+{
+    margin: 8px 0;
+    height: auto;
+}
+.gui-settings-dropdown ul li:hover
+{
+    background: rgba(0,0,0,0.16);
 }
 .gui-settings-dropdown:hover>ul,
 .gui-settings-dropdown:focus-within>ul
