@@ -24,7 +24,7 @@
                 const input = dropdown.find("input");
                 Object.values(playerModes).forEach(value =>
                 {
-                    $(`<li>${value.name}</li>`).prependTo(list)
+                    $(`<li>${value.name}</li>`).appendTo(list)
                         .on("click", () =>
                         {
                             input.val(value.name).trigger("input").change();

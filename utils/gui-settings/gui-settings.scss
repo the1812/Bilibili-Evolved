@@ -525,6 +525,8 @@ i.settings-category-arrow::after
 .gui-settings-dropdown>ul
 {
     position: absolute;
+    top: calc(100%);
+    width: 100%;
     cursor: pointer;
     background: white;
     transform-origin: top;
@@ -538,8 +540,12 @@ i.settings-category-arrow::after
 }
 .gui-settings-dropdown ul li
 {
-    margin: 8px 0;
+    margin: 0;
+    padding: 8px 0;
     height: auto;
+    width: 100%;
+    justify-content: center;
+    border-radius: 4px;
 }
 .gui-settings-dropdown ul li:hover
 {
