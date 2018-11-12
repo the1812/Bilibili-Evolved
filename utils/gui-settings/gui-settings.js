@@ -183,9 +183,12 @@
             {
                 $(e.currentTarget).parent().toggleClass("opened");
             });
-            $(".gui-settings-panel").on("click", () =>
+            $(".gui-settings-panel").on("click", e =>
             {
-                $(".gui-settings-panel .popup").removeClass("opened");
+                if (e.target === document.querySelector(".gui-settings-panel"))
+                {
+                    $(".gui-settings-panel .popup").removeClass("opened");
+                }
             });
             onSettingsChange(settingsChange);
         }
