@@ -216,8 +216,8 @@ div.bilibili-player-video-control
     align-items: center !important;
 }
 .bilibili-player-iconfont-setting,
-.video-state-volume-max .bilibili-player-iconfont-volume-max,
-.video-state-volume-min .bilibili-player-iconfont-volume-min,
+.bilibili-player-video-btn-volume.video-state-volume-max .bilibili-player-iconfont-volume-max,
+.bilibili-player-video-btn-volume.video-state-volume-min .bilibili-player-iconfont-volume-min,
 .bilibili-player-video-btn-volume:not(.video-state-volume-max):not(.video-state-volume-min) .bilibili-player-iconfont-volume,
 .bilibili-player-iconfont-next,
 .bilibili-player-video-control-bottom-left
