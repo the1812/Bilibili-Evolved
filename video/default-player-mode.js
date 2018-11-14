@@ -9,12 +9,12 @@
             {
                 name: "宽屏",
                 actionButtonSelector: ".bilibili-player-video-btn-widescreen",
-                condition: () => $("#bilibiliPlayer.mode-widescreen").length === 0
+                condition: () => $("#bilibiliPlayer[class*=mode-]").length === 0
             },
             {
                 name: "网页全屏",
                 actionButtonSelector: ".bilibili-player-video-web-fullscreen",
-                condition: () => $("#bilibiliPlayer.mode-webfullscreen").length === 0
+                condition: () => $("#bilibiliPlayer[class*=mode-]").length === 0
             },
             // {
             //     name: "全屏",
