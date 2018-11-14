@@ -4,16 +4,17 @@
     {
         const playerModes = [
             {
-                name: "常规",
-                actionButtonSelector: "",
+                name: "常规"
             },
             {
                 name: "宽屏",
                 actionButtonSelector: ".bilibili-player-video-btn-widescreen",
+                condition: () => $("#bilibiliPlayer.mode-widescreen").length === 0
             },
             {
                 name: "网页全屏",
                 actionButtonSelector: ".bilibili-player-video-web-fullscreen",
+                condition: () => $("#bilibiliPlayer.mode-webfullscreen").length === 0
             },
             // {
             //     name: "全屏",
@@ -49,7 +50,7 @@
                     {
                         return;
                     }
-                    if (info.name !== "常规")
+                    if (info.name !== "常规" && info.condition())
                     {
                         $(info.actionButtonSelector).click();
                     }
