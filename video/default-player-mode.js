@@ -8,18 +8,26 @@
             },
             {
                 name: "宽屏",
-                actionButtonSelector: ".bilibili-player-video-btn-widescreen",
-                condition: () => $("#bilibiliPlayer[class*=mode-]").length === 0
+                action: () =>
+                {
+                    $(".bilibili-player-video-btn-widescreen").click();
+                },
             },
             {
                 name: "网页全屏",
-                actionButtonSelector: ".bilibili-player-video-web-fullscreen",
-                condition: () => $("#bilibiliPlayer[class*=mode-]").length === 0
+                action: () =>
+                {
+                    $(".bilibili-player-video-web-fullscreen").click();
+                },
             },
-            // {
-            //     name: "全屏",
-            //     actionButtonSelector: ".bilibili-player-video-btn-fullscreen",
-            // },
+            {
+                name: "全屏",
+                action: () =>
+                {
+                    $(".bilibili-player-video-btn-fullscreen").click();
+
+                },
+            },
         ];
         SpinQuery.any(
             () => $(".gui-settings-dropdown:has(input[key=defaultPlayerMode])"),
@@ -43,20 +51,28 @@
             () =>
             {
                 const video = document.querySelector("video");
-                const onplay = () =>
+                const info = playerModes.find(it => it.name === settings.defaultPlayerMode);
+                if (info.name === "常规")
                 {
-                    const info = playerModes.find(it => it.name === settings.defaultPlayerMode);
-                    if (!info)
+                    return;
+                }
+                if (info.name !== "全屏")
+                {
+                    const onplay = () =>
                     {
-                        return;
-                    }
-                    if (info.name !== "常规" && info.condition())
-                    {
-                        $(info.actionButtonSelector).click();
-                    }
-                    video.removeEventListener("play", onplay);
-                };
-                video.addEventListener("play", onplay);
+                        if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
+                        {
+                            $(info.actionButtonSelector).click();
+                        }
+                        video.removeEventListener("play", onplay);
+                    };
+                    video.addEventListener("play", onplay);
+                }
+                else
+                {
+                    // TODO: listen click events to apply fullscreen mode
+                }
+
             }
         ).start();
     };

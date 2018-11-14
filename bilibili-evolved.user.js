@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.32
+// @version      1.5.33
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -55,6 +55,7 @@
         customStyleColor: "#00A0D8",
         blurBackgroundOpacity: 0.382,
         defaultPlayerMode: "常规",
+        autoLightOff: false,
         useCache: true,
         cache: {},
     };
@@ -504,6 +505,54 @@
         static info() { }
         static success() { }
         static error() { }
+    }
+    class DoubleClickEvent
+    {
+        constructor(handler, singleClickHandler = null)
+        {
+            this.handler = handler;
+            this.singleClickHandler = singleClickHandler;
+            this.elements = [];
+            this.clickedOnce = false;
+            this.doubleClickHandler = e =>
+            {
+                if (!this.clickedOnce)
+                {
+                    this.clickedOnce = true;
+                    setTimeout(() =>
+                    {
+                        if (this.clickedOnce)
+                        {
+                            this.clickedOnce = false;
+                            this.singleClickHandler && this.singleClickHandler(e);
+                        }
+                    }, 200);
+                }
+                else
+                {
+                    this.clickedOnce = false;
+                    this.handler && this.handler(e);
+                }
+            };
+        }
+        bind(element)
+        {
+            if (this.elements.indexOf(element) !== -1)
+            {
+                this.elements.push(element);
+                element.addEventListener("click", this.doubleClickHandler);
+            }
+        }
+        unbind(element)
+        {
+            const index = this.elements.indexOf(element);
+            if (index === -1)
+            {
+                return;
+            }
+            this.elements.splice(index, 1);
+            element.removeEventListener("click", this.doubleClickHandler);
+        }
     }
     class Observer
     {

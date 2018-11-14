@@ -567,7 +567,6 @@
                 const hoverClassName = "touch-video-control-show";
                 const originalClickHandler = video.data("events").click[0].handler;
 
-                let clickedOnce = false;
                 const handleTap = (double, e) =>
                 {
                     if (double)
@@ -579,29 +578,13 @@
                         playerArea.toggleClass(hoverClassName);
                     }
                 };
-                const clickHandler = e =>
-                {
-                    if (!clickedOnce)
-                    {
-                        clickedOnce = true;
-                        setTimeout(() =>
-                        {
-                            if (clickedOnce)
-                            {
-                                clickedOnce = false;
-                                handleTap(false, e);
-                            }
-                        }, 160);
-                    }
-                    else
-                    {
-                        clickedOnce = false;
-                        handleTap(true, e);
-                    }
-                };
+                const doubleClick = new DoubleClickEvent(
+                    e => handleTap(true, e),
+                    e => handleTap(false, e),
+                );
 
                 video.unbind("click");
-                video.on("click", clickHandler);
+                doubleClick.bind(video[0]);
             }
         }
 
