@@ -46,8 +46,8 @@
             }
         );
         new SpinQuery(
-            () => $(".bilibili-player-video"),
-            it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
+            () => $(".bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area"),
+            it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"),
             () =>
             {
                 const video = document.querySelector("video");
@@ -56,23 +56,48 @@
                 {
                     return;
                 }
-                if (info.name !== "全屏")
-                {
-                    const onplay = () =>
-                    {
-                        if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
-                        {
-                            info.action();
-                        }
-                        video.removeEventListener("play", onplay);
-                    };
-                    video.addEventListener("play", onplay);
-                }
-                else
-                {
-                    // TODO: listen click events to apply fullscreen mode
-                }
 
+                const onplay = () =>
+                {
+                    if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
+                    {
+                        info.action();
+                    }
+                    video.removeEventListener("play", onplay);
+                };
+                video.addEventListener("play", onplay);
+
+                if (info.name === "全屏")
+                {
+                    const playButton = document.querySelector(".bilibili-player-video-btn-start");
+                    const playerArea = document.querySelector(".bilibili-player-area");
+
+                    const onclick = () =>
+                    {
+                        document.documentElement.requestFullscreen();
+                        playButton.removeEventListener("click", onclick);
+                        if (playerAreaClick.unbind)
+                        {
+                            playerAreaClick.unbind(playerArea);
+                        }
+                        else
+                        {
+                            playerArea.removeEventListener("click", playerAreaClick);
+                        }
+                    };
+                    let playerAreaClick = onclick;
+
+                    playButton.addEventListener("click", onclick);
+                    if (settings.touchVideoPlayerDoubleTapControl)
+                    {
+                        playerAreaClick = new DoubleClickEvent(onclick);
+                        playerAreaClick.bind(playerArea);
+                    }
+                    else
+                    {
+                        playerArea.addEventListener("click", playerAreaClick);
+                    }
+                }
             }
         ).start();
     };
