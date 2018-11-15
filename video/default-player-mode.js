@@ -20,9 +20,9 @@
                     $(".bilibili-player-video-web-fullscreen").click();
                 },
             },
-            {
-                name: "全屏",
-            },
+            // {
+            //     name: "全屏",
+            // },
         ];
         SpinQuery.any(
             () => $(".gui-settings-dropdown:has(input[key=defaultPlayerMode])"),
