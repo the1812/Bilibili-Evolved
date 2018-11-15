@@ -9,7 +9,7 @@
 - [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/Coming-Features)
 
 # 安装
-需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.
+需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
 
 [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)
 ----- | ----- | ----- | -----
