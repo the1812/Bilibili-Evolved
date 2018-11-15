@@ -59,10 +59,10 @@
                         const playButton = document.querySelector(".bilibili-player-video-btn-start");
                         const playerArea = document.querySelector(".bilibili-player-area");
 
-                        const onclick = () =>
+                        const playerButtonClick = () =>
                         {
                             $(".bilibili-player-video-btn-fullscreen").click();
-                            playButton.removeEventListener("click", onclick);
+                            playButton.removeEventListener("click", playerButtonClick);
                             if (playerAreaClick.unbind)
                             {
                                 playerAreaClick.unbind(playerArea);
@@ -72,12 +72,12 @@
                                 playerArea.removeEventListener("click", playerAreaClick);
                             }
                         };
-                        let playerAreaClick = onclick;
+                        let playerAreaClick = playerButtonClick;
 
-                        playButton.addEventListener("click", onclick);
+                        playButton.addEventListener("click", playerButtonClick);
                         if (settings.touchVideoPlayerDoubleTapControl)
                         {
-                            playerAreaClick = new DoubleClickEvent(onclick);
+                            playerAreaClick = new DoubleClickEvent(playerButtonClick);
                             playerAreaClick.bind(playerArea);
                         }
                         else
