@@ -4,7 +4,7 @@
     {
         const playerModes = [
             {
-                name: "常规"
+                name: "常规",
             },
             {
                 name: "宽屏",
@@ -22,7 +22,6 @@
             },
             {
                 name: "全屏",
-                action: () => { },
             },
         ];
         SpinQuery.any(
@@ -41,60 +40,66 @@
                 });
             }
         );
-        new SpinQuery(
-            () => $(".bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area"),
-            it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"),
-            () =>
-            {
-                const video = document.querySelector("video");
-                const info = playerModes.find(it => it.name === settings.defaultPlayerMode);
-                if (info.name === "常规")
+        function main()
+        {
+            new SpinQuery(
+                () => $(".bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area"),
+                it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"),
+                () =>
                 {
-                    return;
-                }
-
-                const onplay = () =>
-                {
-                    if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
+                    const video = document.querySelector("video");
+                    const info = playerModes.find(it => it.name === settings.defaultPlayerMode);
+                    if (info.name === "常规")
                     {
-                        info.action();
+                        return;
                     }
-                    video.removeEventListener("play", onplay);
-                };
-                video.addEventListener("play", onplay);
 
-                if (info.name === "全屏")
-                {
-                    const playButton = document.querySelector(".bilibili-player-video-btn-start");
-                    const playerArea = document.querySelector(".bilibili-player-area");
-
-                    const onclick = () =>
+                    if (info.name === "全屏")
                     {
-                        $(".bilibili-player-video-btn-fullscreen").click();
-                        playButton.removeEventListener("click", onclick);
-                        if (playerAreaClick.unbind)
+                        const playButton = document.querySelector(".bilibili-player-video-btn-start");
+                        const playerArea = document.querySelector(".bilibili-player-area");
+
+                        const onclick = () =>
                         {
-                            playerAreaClick.unbind(playerArea);
+                            $(".bilibili-player-video-btn-fullscreen").click();
+                            playButton.removeEventListener("click", onclick);
+                            if (playerAreaClick.unbind)
+                            {
+                                playerAreaClick.unbind(playerArea);
+                            }
+                            else
+                            {
+                                playerArea.removeEventListener("click", playerAreaClick);
+                            }
+                        };
+                        let playerAreaClick = onclick;
+
+                        playButton.addEventListener("click", onclick);
+                        if (settings.touchVideoPlayerDoubleTapControl)
+                        {
+                            playerAreaClick = new DoubleClickEvent(onclick);
+                            playerAreaClick.bind(playerArea);
                         }
                         else
                         {
-                            playerArea.removeEventListener("click", playerAreaClick);
+                            playerArea.addEventListener("click", playerAreaClick);
                         }
-                    };
-                    let playerAreaClick = onclick;
-
-                    playButton.addEventListener("click", onclick);
-                    if (settings.touchVideoPlayerDoubleTapControl)
-                    {
-                        playerAreaClick = new DoubleClickEvent(onclick);
-                        playerAreaClick.bind(playerArea);
                     }
                     else
                     {
-                        playerArea.addEventListener("click", playerAreaClick);
+                        const onplay = () =>
+                        {
+                            if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
+                            {
+                                info.action();
+                            }
+                            video.removeEventListener("play", onplay);
+                        };
+                        video.addEventListener("play", onplay);
                     }
                 }
-            }
-        ).start();
+            ).start();
+        }
+        Observer.subtree("#bofqi", () => main());
     };
 })();
