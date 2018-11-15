@@ -22,11 +22,7 @@
             },
             {
                 name: "全屏",
-                action: () =>
-                {
-                    $(".bilibili-player-video-btn-fullscreen").click();
-
-                },
+                action: () => { },
             },
         ];
         SpinQuery.any(
@@ -74,7 +70,7 @@
 
                     const onclick = () =>
                     {
-                        document.documentElement.requestFullscreen();
+                        $(".bilibili-player-video-btn-fullscreen").click();
                         playButton.removeEventListener("click", onclick);
                         if (playerAreaClick.unbind)
                         {
