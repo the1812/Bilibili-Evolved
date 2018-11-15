@@ -62,7 +62,7 @@
                     {
                         if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
                         {
-                            $(info.actionButtonSelector).click();
+                            info.action();
                         }
                         video.removeEventListener("play", onplay);
                     };

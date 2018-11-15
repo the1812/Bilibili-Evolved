@@ -537,7 +537,7 @@
         }
         bind(element)
         {
-            if (this.elements.indexOf(element) !== -1)
+            if (this.elements.indexOf(element) === -1)
             {
                 this.elements.push(element);
                 element.addEventListener("click", this.doubleClickHandler);
