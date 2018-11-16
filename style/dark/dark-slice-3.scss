@@ -632,6 +632,11 @@ body>div.to-top.on
 {
     border-radius: 0 !important;
 }
+.card-list .card
+{
+    border: none !important;
+    border-radius: 4px !important;
+}
 
 .list-filter-bar .sort-box .item.active,
 .list-filter-bar .sort-box .item:hover,
