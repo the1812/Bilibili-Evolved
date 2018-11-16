@@ -2,6 +2,18 @@
 {
     return () =>
     {
+        const getRedirectLink = text =>
+        {
+            const match = text.match(/(av[\d]+)\/p([\d]+)/);
+            if (match)
+            {
+                return `https://www.bilibili.com/video/${match[1]}/?p=${match[2]}`;
+            }
+            else
+            {
+                return null;
+            }
+        };
         const redirectLinks = items =>
         {
             if (items.attr("href").indexOf("watchlater") !== 0)
@@ -12,11 +24,7 @@
                         const href = $(it).attr("href");
                         if (href)
                         {
-                            const match = href.match(/av[\d]+/);
-                            if (match && match[0])
-                            {
-                                return "https://www.bilibili.com/" + match[0];
-                            }
+                            return getRedirectLink(href);
                         }
                         return "javascript:;";
                     });
@@ -25,43 +33,62 @@
                     .attr("target", "_blank"));
             }
         };
-        Observer.subtree("li.nav-item[report-id*=watchlater]", () =>
-        {
-            SpinQuery.any(
-                () => $(".av-item>a"),
-                items => redirectLinks(items)
-            );
-            SpinQuery.any(
-                () => $(".av-about>a"),
-                items => redirectLinks(items)
-            );
-            SpinQuery.any(
-                () => $("div.watch-later-m>ul>div>li>a"),
-                items => redirectLinks(items)
-            );
-            SpinQuery.any(
-                () => $(".read-more.mr"),
-                it => it.remove()
-            );
-            SpinQuery.any(
-                () => $(".read-more-grp>.read-more"),
-                it => it.css({
-                    float: "none",
-                    width: "auto"
-                })
-            );
-            new SpinQuery(
-                () => document.URL.match(/av[\d]+/),
-                it => it && document.URL.indexOf("watchlater") !== -1,
-                it =>
+        SpinQuery.any(
+            () => $(".watch-later-list"),
+            () =>
+            {
+                Observer.subtree(".watch-later-list", () =>
                 {
-                    const id = it[0];
-                    if (id)
-                    {
-                        window.location.replace(`https://www.bilibili.com/${id}`);
-                    }
-                }
-            ).start();
-        });
+                    new SpinQuery(
+                        () => document.URL.match(/(av[\d]+)\/p([\d]+)/),
+                        it => it && document.URL.indexOf("watchlater") !== -1,
+                        () =>
+                        {
+                            const url = getRedirectLink(document.URL);
+                            if (url !== null)
+                            {
+                                window.location.replace(url);
+                            }
+                        }
+                    ).start();
+                    SpinQuery.any(
+                        () => $(".av-pic"),
+                        it => redirectLinks(it),
+                    );
+                });
+            }
+        );
+        SpinQuery.any(
+            () => $("li.nav-item[report-id*=watchlater]"),
+            () =>
+            {
+                Observer.subtree("li.nav-item[report-id*=watchlater]", () =>
+                {
+                    SpinQuery.any(
+                        () => $(".av-item>a"),
+                        items => redirectLinks(items)
+                    );
+                    SpinQuery.any(
+                        () => $(".av-about>a"),
+                        items => redirectLinks(items)
+                    );
+                    SpinQuery.any(
+                        () => $("div.watch-later-m>ul>div>li>a"),
+                        items => redirectLinks(items)
+                    );
+                    SpinQuery.any(
+                        () => $(".read-more.mr"),
+                        it => it.remove()
+                    );
+                    SpinQuery.any(
+                        () => $(".read-more-grp>.read-more"),
+                        it => it.css({
+                            float: "none",
+                            width: "auto"
+                        })
+                    );
+                });
+            }
+        );
     };
 })();

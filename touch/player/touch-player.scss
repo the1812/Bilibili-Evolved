@@ -118,13 +118,15 @@
     transform: rotateX(0deg) rotateY(0deg) scale(1);
 }
 
-.disable-original-hover .bilibili-player-video-control-bottom
+.disable-original-hover .bilibili-player-video-control-bottom,
+.disable-original-hover .bilibili-player-video-control-mask
 {
     opacity: 0 !important;
     visibility: hidden !important;
 }
 .disable-original-hover.touch-video-control-show .bilibili-player-video-control-bottom,
-.disable-original-hover .bilibili-player-video-control-wrap
+.disable-original-hover .bilibili-player-video-control-wrap,
+.disable-original-hover.touch-video-control-show  .bilibili-player-video-control-mask
 {
     opacity: 1 !important;
     visibility: visible !important;
@@ -214,8 +216,8 @@ div.bilibili-player-video-control
     align-items: center !important;
 }
 .bilibili-player-iconfont-setting,
-.video-state-volume-max .bilibili-player-iconfont-volume-max,
-.video-state-volume-min .bilibili-player-iconfont-volume-min,
+.bilibili-player-video-btn-volume.video-state-volume-max .bilibili-player-iconfont-volume-max,
+.bilibili-player-video-btn-volume.video-state-volume-min .bilibili-player-iconfont-volume-min,
 .bilibili-player-video-btn-volume:not(.video-state-volume-max):not(.video-state-volume-min) .bilibili-player-iconfont-volume,
 .bilibili-player-iconfont-next,
 .bilibili-player-video-control-bottom-left

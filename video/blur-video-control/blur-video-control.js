@@ -13,9 +13,9 @@
                     {
                         containers.addClass("video-control-blur-container");
                         containers.prepend(`<div class="video-control-blur-layer"></div>`);
-                        resources.applyStyle("blurVideoControlStyle");
                     }
                 });
         });
+        resources.applyStyle("blurVideoControlStyle");
     };
 })();

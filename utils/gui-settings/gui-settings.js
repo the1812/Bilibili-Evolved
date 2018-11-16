@@ -58,7 +58,17 @@
                     }
                 }
                 return settings.blurBackgroundOpacity;
-            }
+            },
+            defaultPlayerMode: text =>
+            {
+                if (["常规", "宽屏", "网页全屏",
+                    //"全屏"
+                ].indexOf(text) !== -1)
+                {
+                    return text;
+                }
+                return settings.defaultPlayerMode;
+            },
         };
         function getCategoriyItems(category)
         {
@@ -171,6 +181,17 @@
                 e.currentTarget.classList.toggle("folded");
                 getCategoriyItems(e.currentTarget).forEach(it => it.classList.toggle("folded"));
             });
+            $(".gui-settings-dropdown>input").on("click", e =>
+            {
+                $(e.currentTarget).parent().toggleClass("opened");
+            });
+            $(".gui-settings-panel").on("click", e =>
+            {
+                if (e.target === document.querySelector(".gui-settings-panel"))
+                {
+                    $(".gui-settings-panel .popup").removeClass("opened");
+                }
+            });
             onSettingsChange(settingsChange);
         }
         function listenSettingsChange()
@@ -185,9 +206,11 @@
                 $("input[type='text'][key]")
                     .each((_, element) =>
                     {
-                        const key = $(element).attr("key");
-                        const value = $(element).val();
-                        settings[key] = textValidate[key](value);
+                        const $element = $(element);
+                        const key = $element.attr("key");
+                        const value = textValidate[key]($element.val());
+                        settings[key] = value;
+                        $element.val(value);
                     });
                 saveSettings(settings);
                 // syncGui();
@@ -232,7 +255,7 @@
                         $(`input[key='${key}'][type='text']`).parent()[action]("disabled");
                     }
                 }
-                $(".download-video-panel,.predefined-colors").removeClass("opened");
+                $(".gui-settings-panel .popup").removeClass("opened");
             };
             $(`input[type='checkbox'][key]`)
                 .on("change", e => checkBoxChange($(e.target)))
