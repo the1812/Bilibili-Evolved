@@ -92,6 +92,14 @@
                             if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
                             {
                                 info.action();
+                                if (settings.autoLightOff)
+                                {
+                                    const lightOff = document.querySelector(".bilibili-player-video-btn-setting-panel-others-content-lightoff .bui-checkbox-input");
+                                    const event = document.createEvent("HTMLEvents");
+                                    event.initEvent("change", true, true);
+                                    lightOff.checked = true;
+                                    lightOff.dispatchEvent(event);
+                                }
                             }
                             video.removeEventListener("play", onplay);
                         };
