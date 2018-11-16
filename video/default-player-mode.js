@@ -40,8 +40,35 @@
                 });
             }
         );
+        let lightOff = () => { };
+        function initLightOff()
+        {
+            if (settings.autoLightOff)
+            {
+                new SpinQuery(
+                    () => $(""),
+                    () => unsafeWindow.$ && unsafeWindow.$(".bilibili-player-video-btn-setting"),
+                    () => unsafeWindow.$(".bilibili-player-video-btn-setting").mouseover().mouseout(),
+                ).start();
+                lightOff = () =>
+                {
+                    SpinQuery.any(
+                        () => $(".bilibili-player-video-btn-setting-panel-others-content-lightoff .bui-checkbox-input"),
+                        checkbox =>
+                        {
+                            const lightOff = checkbox[0];
+                            const event = document.createEvent("HTMLEvents");
+                            event.initEvent("change", true, true);
+                            lightOff.checked = true;
+                            lightOff.dispatchEvent(event);
+                        }
+                    );
+                };
+            }
+        }
         function main()
         {
+            initLightOff();
             new SpinQuery(
                 () => $(".bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area"),
                 it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"),
@@ -92,15 +119,8 @@
                             if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
                             {
                                 info.action();
-                                if (settings.autoLightOff)
-                                {
-                                    const lightOff = document.querySelector(".bilibili-player-video-btn-setting-panel-others-content-lightoff .bui-checkbox-input");
-                                    const event = document.createEvent("HTMLEvents");
-                                    event.initEvent("change", true, true);
-                                    lightOff.checked = true;
-                                    lightOff.dispatchEvent(event);
-                                }
                             }
+                            lightOff();
                             video.removeEventListener("play", onplay);
                         };
                         video.addEventListener("play", onplay);

@@ -432,6 +432,7 @@
             useDefaultPlayerMode: {
                 path: "min/default-player-mode.min.js",
                 displayNames: {
+                    useDefaultPlayerMode: "默认播放器模式",
                     defaultPlayerMode: "默认播放器模式",
                     autoLightOff: "播放时自动关灯",
                 },
