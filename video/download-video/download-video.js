@@ -193,7 +193,7 @@
 
                 const blobUrl = URL.createObjectURL(blob);
                 const oldBlobUrl = $("a#video-complete").attr("href");
-                if (oldBlobUrl)
+                if (oldBlobUrl && $(`.link[href=${oldBlobUrl}]`).length === 0)
                 {
                     URL.revokeObjectURL(oldBlobUrl);
                 }
