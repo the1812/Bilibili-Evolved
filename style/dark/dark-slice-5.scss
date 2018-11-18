@@ -127,7 +127,10 @@
 .comment-container .main-desc .comment-info .word-container .bottom .personal-info .nickname,
 .fjw-kpi-wrap .fjw-kpi-top .fjw-person-detail label.fjw-person-item,
 .tab-selector-wrap .tag-wrap .tag span,
-.item .brief-desc 
+.item .brief-desc,
+.left-nav-childed-list,
+.card-user,
+.play-num 
 {
     color: #aaa !important;
 }
@@ -184,7 +187,13 @@ table.invtable td,
 .infor-body-left news-contents .c-text,
 .total-bt .t-date a,
 .tv-m2 .tv-m-tt,
-.tv-m3 .tv-m-tt 
+.tv-m3 .tv-m-tt,
+.left-nav-item,
+.left-nav-item-child,
+.card-txt,
+.academy-right-link,
+.tabs-tab,
+.academy-left-name 
 {
     color: #eee !important;
 }
@@ -325,7 +334,8 @@ table.invtable td,
 .data-card .fans-box .tab .fan-tab.current:after,
 .section-item .diff-wrp .diff-text:before,
 .tab-selector-wrap .tag-wrap .tag span.selected,
-.tab-selector-wrap .tab-wrap .tab span.active 
+.tab-selector-wrap .tab-wrap .tab span.active,
+.tabs-tab-active:before 
 {
     border-color: $customStyleColor !important;
 }
@@ -345,7 +355,8 @@ table.invtable td,
 .head .dropdown-btn:hover,
 .dc-button.dc-button-text:hover,
 .h-none-btn:hover,
-.item .title-wrap .activity 
+.item .title-wrap .activity,
+.tabs_active-bar 
 {
     background-color: $customStyleColor !important;
 }
@@ -374,7 +385,12 @@ icon-label.hover-text-blue:hover .label,
 .item:hover .title,
 .total-bt .t-date a:hover,
 .tv-m2 .tv-m-tt:hover,
-.tv-m3 .tv-m-tt:hover 
+.tv-m3 .tv-m-tt:hover,
+.left-nav-item:hover,
+.left-nav-item-child:hover,
+.left-nav-item-childed:hover,
+.academy-right-link:hover,
+.tabs-tab-active 
 {
     color: $customStyleColor !important;
 }
@@ -401,7 +417,8 @@ icon-label.hover-text-blue:hover .label,
 .data-card .fans-box .tab .fan-tab.current:after,
 .data-card .data-box .tab .fan-tab.current:after,
 .data-card .fans-box .tab .fan-tab.current:after,
-.section-item .diff-wrp .diff-text:before 
+.section-item .diff-wrp .diff-text:before,
+.tabs-tab-active:before 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
