@@ -277,7 +277,7 @@
                         completeLink.setAttribute("download", result.filename);
                         completeLink.click();
 
-                        const message = `下载完成. <a class="link" href="${result.url}">再次保存</a>`;
+                        const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename}">再次保存</a>`;
                         Toast.success(message, "下载视频");
 
                         $(".download-video-panel")
