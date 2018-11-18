@@ -53,7 +53,8 @@
 .tab-selector-wrap,
 #newsList #list,
 .pagination-container li.pagination-input-wrap .pagination-input,
-.infor-body .news-contents 
+.infor-body .news-contents,
+.pager .jump-pager input[type=number] 
 {
     background-color: #444 !important;
 }
@@ -193,7 +194,8 @@ table.invtable td,
 .card-txt,
 .academy-right-link,
 .tabs-tab,
-.academy-left-name 
+.academy-left-name,
+.pager .jump-pager input[type=number] 
 {
     color: #eee !important;
 }
@@ -239,7 +241,8 @@ table.invtable td,
 .c-text .c-hd2,
 .tv-m2:nth-child(odd),
 .tv-m2,
-.tv-m3 
+.tv-m3,
+.pager .jump-pager input[type=number] 
 {
     border-color: transparent !important;
 }
