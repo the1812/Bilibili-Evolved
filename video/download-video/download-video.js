@@ -276,6 +276,10 @@
                         completeLink.setAttribute("href", result.url);
                         completeLink.setAttribute("download", result.filename);
                         completeLink.click();
+
+                        const message = `下载完成. <a class="link" href="${result.url}">再次保存</a>`;
+                        Toast.success(message, "下载视频");
+
                         $(".download-video-panel")
                             .removeClass("progress")
                             .addClass("quality");
