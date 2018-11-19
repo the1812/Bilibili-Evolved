@@ -191,7 +191,7 @@
                 else
                 {
                     const [data] = downloadedData;
-                    zip.file(`${title}}${this.extension()}`, data);
+                    zip.file(`${title}${this.extension()}`, data);
                 }
 
                 if (settings.downloadDanmaku)
