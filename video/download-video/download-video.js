@@ -190,6 +190,7 @@
                 }
                 else
                 {
+                    const [data] = downloadedData;
                     zip.file(`${title}}${this.extension()}`, data);
                 }
 
