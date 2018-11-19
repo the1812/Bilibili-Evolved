@@ -4,6 +4,7 @@
     {
         const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
         const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
+        const DanmakuInfo = resources.attributes.videoInfo.export.DanmakuInfo;
         const pageData = {
             aid: undefined,
             cid: undefined,
@@ -152,6 +153,56 @@
                 const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + "\r\n" + it);
                 GM_setClipboard(urls, "text");
             }
+            extension(fragment)
+            {
+                return (fragment || this.fragments[0]).url
+                    .indexOf(".flv") !== -1
+                    ? ".flv"
+                    : ".mp4";
+            }
+            cleanUpOldBlobUrl()
+            {
+                const oldBlobUrl = $("a#video-complete").attr("href");
+                if (oldBlobUrl && $(`.link[href=${oldBlobUrl}]`).length === 0)
+                {
+                    URL.revokeObjectURL(oldBlobUrl);
+                }
+            }
+            downloadSingle(downloadedData)
+            {
+                const [data] = downloadedData;
+                const blob = new Blob([data], {
+                    type: this.extension() === ".flv" ? "video/x-flv" : "video/mp4"
+                });
+                const filename = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "") + this.extension();
+                return [blob, filename];
+            }
+            async downloadMultiple(downloadedData)
+            {
+                const zip = new JSZip();
+                const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+                if (downloadedData.length > 1)
+                {
+                    downloadedData.forEach((data, index) =>
+                    {
+                        zip.file(`${title} - ${index + 1}${this.extension(this.fragments[index])}`, data);
+                    });
+                }
+                else
+                {
+                    zip.file(`${title}}${this.extension()}`, data);
+                }
+
+                if (settings.downloadDanmaku)
+                {
+                    const danmaku = new DanmakuInfo(pageData.cid);
+                    await danmaku.fetchInfo();
+                    zip.file(`${title}.xml`, danmaku.rawXML);
+                }
+                const blob = await zip.generateAsync({ type: "blob" });
+                const filename = title + ".zip";
+                return [blob, filename];
+            }
             async download()
             {
                 const downloadedData = [];
@@ -170,33 +221,17 @@
 
                 let blob = null;
                 let filename = null;
-                const extension = fragment => (fragment || this.fragments[0]).url.indexOf(".flv") !== -1 ? ".flv" : ".mp4";
-                if (downloadedData.length === 1)
+                if (downloadedData.length === 1 && !settings.downloadDanmaku)
                 {
-                    const [data] = downloadedData;
-                    blob = new Blob([data], {
-                        type: extension() === ".flv" ? "video/x-flv" : "video/mp4"
-                    });
-                    filename = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "") + extension();
+                    [blob, filename] = this.downloadSingle(downloadedData);
                 }
                 else
                 {
-                    const zip = new JSZip();
-                    const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
-                    downloadedData.forEach((data, index) =>
-                    {
-                        zip.file(`${title} - ${index + 1}${extension(this.fragments[index])}`, data);
-                    });
-                    blob = await zip.generateAsync({ type: "blob" });
-                    filename = title + ".zip";
+                    [blob, filename] = await this.downloadMultiple(downloadedData);
                 }
 
                 const blobUrl = URL.createObjectURL(blob);
-                const oldBlobUrl = $("a#video-complete").attr("href");
-                if (oldBlobUrl && $(`.link[href=${oldBlobUrl}]`).length === 0)
-                {
-                    URL.revokeObjectURL(oldBlobUrl);
-                }
+                this.cleanUpOldBlobUrl();
                 this.progress && this.progress(0);
                 return {
                     url: blobUrl,
