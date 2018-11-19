@@ -18,7 +18,8 @@
 .mobile-kpi-head h2,
 .mini-progress,
 .tab-selector-wrap .tag-wrap .tag span,
-.tab-selector-wrap .tag-wrap .tag span.selected 
+.tab-selector-wrap .tag-wrap .tag span.selected,
+.cc-body .setting 
 {
     background-color: #222 !important;
 }
@@ -62,7 +63,7 @@
 .article-header .filter-wrp .filter-level,
 .article-header .filter-wrp .article-type .bili-btn,
 .article-header .filter-wrp .filter-article-type .bili-btn,
-.article-header .filter-wrp .filter-level .bili-btn 
+.article-header .filter-wrp .filter-level .bili-btn
 {
     background-color: #444 !important;
 }
@@ -102,7 +103,8 @@
 .article-header .filter-wrp .article-type .line,
 .article-header .filter-wrp .filter-article-type .line,
 .article-header .filter-wrp .filter-level .line,
-.border-line 
+.border-line,
+.setting .follow-setting .follow-wrp .follow-modal 
 {
     background: transparent !important;
 }
@@ -141,7 +143,8 @@
 .item .brief-desc,
 .left-nav-childed-list,
 .card-user,
-.play-num 
+.play-num,
+.setting .follow-setting .follow-wrp .follow-modal .follow-show p 
 {
     color: #aaa !important;
 }
@@ -268,7 +271,8 @@ table.invtable td,
 .btn-section .btn-item,
 .article-header .filter-wrp .article-type,
 .article-header .filter-wrp .filter-article-type,
-.article-header .filter-wrp .filter-level 
+.article-header .filter-wrp .filter-level,
+setting cc-content-body .setting .follow-setting 
 {
     border-color: transparent !important;
 }
