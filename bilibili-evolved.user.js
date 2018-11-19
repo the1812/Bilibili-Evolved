@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.36
+// @version      1.5.37
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -567,7 +567,7 @@
             this.element = element;
             this.callback = callback;
             this.observer = null;
-            this.options = { childList: true, subtree: true, };
+            this.options = undefined;
         }
         start()
         {
@@ -589,7 +589,13 @@
             return [...document.querySelectorAll(selector)].map(
                 it =>
                 {
-                    return new Observer(it, callback).start();
+                    const observer = new Observer(it, callback);
+                    observer.options = {
+                        childList: true,
+                        subtree: false,
+                        attributes: false,
+                    };
+                    return observer.start();
                 });
         }
         static attributes(selector, callback)
@@ -601,7 +607,7 @@
                     const observer = new Observer(it, callback);
                     observer.options = {
                         childList: false,
-                        subtree: false,
+                        subtree: true,
                         attributes: true,
                     };
                     return observer.start();
