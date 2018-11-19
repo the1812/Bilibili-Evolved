@@ -13,7 +13,7 @@
           <label class="gui-settings-textbox-container">
             <span>主题颜色</span>
             <div class="custom-color-preview">
-              <div class="predefined-colors">
+              <div class="predefined-colors popup">
                 <div class="predefined-colors-grid"></div>
               </div>
             </div>
@@ -36,6 +36,16 @@
         <checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox>
         <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
         <category>视频与直播</category>
+        <li class="indent-0">
+          <label>
+            <span class="gui-settings-dropdown-span">默认播放器模式</span>
+            <div class="gui-settings-dropdown popup">
+              <input readonly type="text" spellcheck="false" key="defaultPlayerMode">
+              <ul></ul>
+            </div>
+          </label>
+        </li>
+        <checkbox indent="0" key="autoLightOff" dependencies=""></checkbox>
         <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
         <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
         <checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox>

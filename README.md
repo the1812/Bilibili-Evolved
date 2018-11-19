@@ -9,9 +9,9 @@
 - [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/Coming-Features)
 
 # 安装
-需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)或同类插件.
+需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
 
-[正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)
+[正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)
 ----- | ----- | ----- | -----
 正式发布的版本, 最稳定, 更新频率较低. | 新增内容测试的地方, 更新频率高, 但功能不稳定. | 内置所有依赖项, 体积较大, 更新频率高于正式版. | 兼备预览版和离线版的特点.
 
@@ -41,6 +41,8 @@
 - 隐藏搜索推荐: `关闭`
 - 展开动态标题: `开启`
 ### 视频与直播
+- 默认播放器模式: `常规`
+- 播放时自动关灯: `关闭`
 - 自动展开弹幕列表: `开启`
 - 缩放看板娘: `开启`
 - 删除直播水印: `开启`
@@ -145,6 +147,10 @@
 ### 查看封面
 在视频播放页面/直播间中, `设置`→`视频与直播`下会出现查看封面按钮, 点击可以查看或保存封面. (其实还可以看专栏的封面, 不过专栏的封面本来就显示在标题上方了)
 ![查看封面按钮](images/view-cover-button.png)
+### 默认播放器模式
+设置默认的播放器模式, 可以为`常规`, `宽屏`或`网页全屏`(`全屏`还未完成). 默认模式将在进入视频页面的首次播放时应用.
+### 播放时自动关灯
+首次播放时, 自动进入关灯模式.
 ### 自动展开弹幕列表
 新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.
 ### 缩放看板娘

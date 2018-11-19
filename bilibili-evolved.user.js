@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.26
+// @version      1.5.37
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -26,6 +26,14 @@
 {
     const $ = unsafeWindow.$ || self$;
     const settings = {
+        useDarkStyle: false,
+        useNewStyle: true,
+        showBanner: true,
+        overrideNavBar: true,
+        expandDanmakuList: true,
+        watchLaterRedirect: true,
+        touchNavBar: false,
+        touchVideoPlayer: false,
         customControlBackgroundOpacity: 0.64,
         customControlBackground: true,
         forceWideMinWidth: "1368px",
@@ -44,16 +52,10 @@
         hideTopSearch: false,
         touchVideoPlayerDoubleTapControl: false,
         touchVideoPlayerAnimation: false,
-        touchNavBar: false,
-        touchVideoPlayer: false,
-        watchLaterRedirect: true,
-        expandDanmakuList: true,
         customStyleColor: "#00A0D8",
         blurBackgroundOpacity: 0.382,
-        overrideNavBar: true,
-        showBanner: true,
-        useDarkStyle: false,
-        useNewStyle: true,
+        defaultPlayerMode: "常规",
+        autoLightOff: false,
         useCache: true,
         cache: {},
     };
@@ -64,8 +66,9 @@
         clearCache: true,
         fixFullscreen: false,
         downloadVideo: true,
+        useDefaultPlayerMode: true,
         about: false,
-        latestVersionLink: GM_info.script.updateURL,
+        latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
         currentVersion: GM_info.script.version,
     };
     function loadSettings()
@@ -88,6 +91,10 @@
     }
     function onSettingsChange(change)
     {
+        if (typeof GM_addValueChangeListener === "undefined")
+        {
+            return;
+        }
         for (const key in settings)
         {
             GM_addValueChangeListener(key, change);
@@ -176,6 +183,8 @@
                 path: "min/gui-settings.min.js",
                 dependencies: [
                     "guiSettingsDom",
+                ],
+                styles: [
                     "guiSettingsStyle",
                 ],
                 displayNames: {
@@ -185,11 +194,25 @@
             },
             useDarkStyle: {
                 path: "min/dark-styles.min.js",
-                dependencies: [
+                styles: [
                     "darkStyle",
-                    "darkStyleImportant",
-                    "darkStyleNavBar",
                     "scrollbarStyle",
+                    {
+                        key: "darkStyleNavBar",
+                        important: true,
+                        condition()
+                        {
+                            return $("#banner_link").length === 0 ||
+                                $("#banner_link").length > 0 &&
+                                settings.overrideNavBar &&
+                                !settings.showBanner;
+                        }
+                    },
+                    {
+                        key: "darkStyleImportant",
+                        important: true,
+                        condition: () => true,
+                    },
                 ],
                 displayNames: {
                     useDarkStyle: "夜间模式",
@@ -200,7 +223,12 @@
                 dependencies: [
                     "style",
                     "oldStyle",
-                    "scrollbarStyle",
+                ],
+                styles: [
+                    {
+                        key: "scrollbarStyle",
+                        condition: () => document.URL !== `https://h.bilibili.com/`,
+                    }
                 ],
                 displayNames: {
                     useNewStyle: "样式调整",
@@ -209,9 +237,12 @@
             },
             overrideNavBar: {
                 path: "min/override-navbar.min.js",
-                dependencies: [
+                styles: [
                     "navbarOverrideStyle",
-                    "noBannerStyle",
+                    {
+                        key: "noBannerStyle",
+                        condition: () => !settings.showBanner
+                    }
                 ],
                 displayNames: {
                     overrideNavBar: "搜索栏置顶",
@@ -226,7 +257,7 @@
             },
             touchVideoPlayer: {
                 path: "min/touch-player.min.js",
-                dependencies: [
+                styles: [
                     "touchPlayerStyle",
                 ],
                 displayNames: {
@@ -243,7 +274,7 @@
             },
             removeAds: {
                 path: "min/remove-promotions.min.js",
-                dependencies: [
+                styles: [
                     "removeAdsStyle",
                 ],
                 displayNames: {
@@ -276,7 +307,7 @@
             },
             fullTweetsTitle: {
                 path: "min/full-tweets-title.min.js",
-                dependencies: [
+                styles: [
                     "fullTweetsTitleStyle",
                 ],
                 displayNames: {
@@ -287,6 +318,8 @@
                 path: "min/view-cover.min.js",
                 dependencies: [
                     "imageViewerDom",
+                ],
+                styles: [
                     "imageViewerStyle",
                 ],
                 displayNames: {
@@ -304,7 +337,7 @@
             },
             toast: {
                 path: "min/toast.min.js",
-                dependencies: [
+                styles: [
                     "toastStyle",
                 ],
                 displayNames: {
@@ -319,7 +352,7 @@
             },
             blurVideoControl: {
                 path: "min/blur-video-control.min.js",
-                dependencies: [
+                styles: [
                     "blurVideoControlStyle",
                 ],
                 displayNames: {
@@ -336,8 +369,12 @@
             },
             forceWide: {
                 path: "min/force-wide.min.js",
-                dependencies: [
-                    "forceWideStyle",
+                styles: [
+                    {
+                        key: "forceWideStyle",
+                        important: true,
+                        condition: () => true,
+                    },
                 ],
                 displayNames: {
                     forceWide: "强制宽屏",
@@ -371,6 +408,8 @@
                 path: "min/about.min.js",
                 dependencies: [
                     "aboutDom",
+                ],
+                styles: [
                     "aboutStyle",
                 ],
             },
@@ -379,21 +418,32 @@
             },
             customControlBackground: {
                 path: "min/custom-control-background.min.js",
-                dependencies: [
-                    "customControlBackgroundStyle",
+                styles: [
+                    {
+                        key: "customControlBackgroundStyle",
+                        condition: () => settings.customControlBackgroundOpacity > 0
+                    },
                 ],
                 displayNames: {
                     customControlBackground: "控制栏着色",
                     customControlBackgroundOpacity: "不透明度",
                 },
             },
+            useDefaultPlayerMode: {
+                path: "min/default-player-mode.min.js",
+                displayNames: {
+                    useDefaultPlayerMode: "默认播放器模式",
+                    defaultPlayerMode: "默认播放器模式",
+                    autoLightOff: "播放时自动关灯",
+                },
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
         Resource.displayNames = {};
-        for (const [key, data,] of Object.entries(resouceManifest))
+        for (const [key, data] of Object.entries(resouceManifest))
         {
-            const resource = new Resource(data.path, data.order);
+            const resource = new Resource(data.path, data.order, data.styles);
             resource.key = key;
             if (data.displayNames)
             {
@@ -402,7 +452,7 @@
             }
             Resource.all[key] = resource;
         }
-        for (const [key, data,] of Object.entries(resouceManifest))
+        for (const [key, data] of Object.entries(resouceManifest))
         {
             if (data.dependencies)
             {
@@ -462,6 +512,54 @@
         static success() { }
         static error() { }
     }
+    class DoubleClickEvent
+    {
+        constructor(handler, singleClickHandler = null)
+        {
+            this.handler = handler;
+            this.singleClickHandler = singleClickHandler;
+            this.elements = [];
+            this.clickedOnce = false;
+            this.doubleClickHandler = e =>
+            {
+                if (!this.clickedOnce)
+                {
+                    this.clickedOnce = true;
+                    setTimeout(() =>
+                    {
+                        if (this.clickedOnce)
+                        {
+                            this.clickedOnce = false;
+                            this.singleClickHandler && this.singleClickHandler(e);
+                        }
+                    }, 200);
+                }
+                else
+                {
+                    this.clickedOnce = false;
+                    this.handler && this.handler(e);
+                }
+            };
+        }
+        bind(element)
+        {
+            if (this.elements.indexOf(element) === -1)
+            {
+                this.elements.push(element);
+                element.addEventListener("click", this.doubleClickHandler);
+            }
+        }
+        unbind(element)
+        {
+            const index = this.elements.indexOf(element);
+            if (index === -1)
+            {
+                return;
+            }
+            this.elements.splice(index, 1);
+            element.removeEventListener("click", this.doubleClickHandler);
+        }
+    }
     class Observer
     {
         constructor(element, callback)
@@ -469,7 +567,7 @@
             this.element = element;
             this.callback = callback;
             this.observer = null;
-            this.options = { childList: true, subtree: true, };
+            this.options = undefined;
         }
         start()
         {
@@ -491,7 +589,13 @@
             return [...document.querySelectorAll(selector)].map(
                 it =>
                 {
-                    return new Observer(it, callback).start();
+                    const observer = new Observer(it, callback);
+                    observer.options = {
+                        childList: true,
+                        subtree: false,
+                        attributes: false,
+                    };
+                    return observer.start();
                 });
         }
         static attributes(selector, callback)
@@ -503,7 +607,7 @@
                     const observer = new Observer(it, callback);
                     observer.options = {
                         childList: false,
-                        subtree: false,
+                        subtree: true,
                         attributes: true,
                     };
                     return observer.start();
@@ -855,11 +959,12 @@
         {
             return this.text !== null;
         }
-        constructor(url, priority)
+        constructor(url, priority, styles = [])
         {
             this.url = Resource.root + url;
             this.dependencies = [];
             this.priority = priority;
+            this.styles = styles;
             this.text = null;
             this.key = null;
             this.type = ResourceType.fromUrl(url);
@@ -888,33 +993,40 @@
                 }
                 else
                 {
-                    Promise.all(this.dependencies.map(r => r.download())).then(() =>
+                    Promise.all(this.dependencies
+                        .concat(this.styles
+                            .flatMap(it => typeof it === "object" ? it.key : it)
+                            .map(it => Resource.all[it])
+                        )
+                        .map(r => r.download())
+                    )
+                    .then(() =>
                     {
                         // +#Offline build placeholder
-                        const apply = text =>
-                        {
-                            this.text = this.type.preprocessor(text);
-                            resolve(this.text);
-                        };
                         if (settings.useCache)
                         {
                             const cache = this.loadCache(key);
                             if (cache !== null)
                             {
-                                apply(cache);
+                                this.text = cache;
+                                resolve(cache);
                             }
                             downloadText(this.url, text =>
                             {
-                                if (cache !== text)
+                                this.text = this.type.preprocessor(text);
+                                if (text === null)
+                                {
+                                    reject("download failed");
+                                }
+                                if (cache !== this.text)
                                 {
                                     if (cache === null)
                                     {
-                                        apply(text);
+                                        resolve(this.text);
                                     }
                                     if (typeof offlineData === "undefined")
                                     {
-                                        settings.cache[key] = text;
-                                        saveSettings(settings);
+                                        settings.cache[key] = this.text;
                                     }
                                 }
                             }, error => reject(error));
@@ -922,7 +1034,11 @@
                         else
                         {
                             downloadText(this.url,
-                                text => apply(text),
+                                text =>
+                                {
+                                    this.text = this.type.preprocessor(text);
+                                    resolve(this.text);
+                                },
                                 error => reject(error));
                         }
                         // -#Offline build placeholder
@@ -1026,6 +1142,21 @@
             {
                 promise.then(text =>
                 {
+                    resource.styles
+                        .filter(it => it.condition !== undefined ? it.condition() : true)
+                        .forEach(it =>
+                        {
+                            const important = typeof it === "object" ? it.important : false;
+                            const key = typeof it === "object" ? it.key : it;
+                            if (important)
+                            {
+                                this.applyImportantStyle(key);
+                            }
+                            else
+                            {
+                                this.applyStyle(key);
+                            }
+                        });
                     this.applyComponent(key, text);
                     resolve();
                 }).catch(reason =>
@@ -1040,6 +1171,7 @@
         {
             return new Promise(resolve =>
             {
+                this.validateCache();
                 const promises = [];
                 for (const key in settings)
                 {
@@ -1052,7 +1184,6 @@
                         }
                     }
                 }
-                this.validateCache();
                 Promise.all(promises).then(() =>
                 {
                     this.applySettingsWidgets();
@@ -1146,12 +1277,13 @@
             if (settings.cache.version !== settings.currentVersion)
             {
                 settings.cache = {};
+                saveSettings(settings);
             }
             if (settings.cache.version === undefined)
             {
                 settings.cache.version = settings.currentVersion;
+                saveSettings(settings);
             }
-            saveSettings(settings);
         }
     }
 
@@ -1163,12 +1295,12 @@
         resources.fetchByKey("toast").then(() =>
         {
             Toast = resources.attributes.toast.export;
-            resources.fetch();
+            resources.fetch().then(() => saveSettings(settings));
         });
     }
     else
     {
-        resources.fetch();
+        resources.fetch().then(() => saveSettings(settings));
     }
 
 })(window.jQuery.noConflict(true));

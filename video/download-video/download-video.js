@@ -193,7 +193,7 @@
 
                 const blobUrl = URL.createObjectURL(blob);
                 const oldBlobUrl = $("a#video-complete").attr("href");
-                if (oldBlobUrl)
+                if (oldBlobUrl && $(`.link[href=${oldBlobUrl}]`).length === 0)
                 {
                     URL.revokeObjectURL(oldBlobUrl);
                 }
@@ -276,6 +276,10 @@
                         completeLink.setAttribute("href", result.url);
                         completeLink.setAttribute("download", result.filename);
                         completeLink.click();
+
+                        const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename}">再次保存</a>`;
+                        Toast.success(message, "下载视频");
+
                         $(".download-video-panel")
                             .removeClass("progress")
                             .addClass("quality");

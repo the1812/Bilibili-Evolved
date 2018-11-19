@@ -6,7 +6,6 @@
         {
             return;
         }
-        resources.applyStyle("scrollbarStyle");
         SpinQuery.any(
             () => $(".custom-scrollbar"),
             it => it.removeClass("custom-scrollbar")
