@@ -8,6 +8,25 @@
     </div>
     <div class="gui-settings-content">
       <ul>
+        <category>视频与直播</category>
+        <li class="indent-0">
+          <label>
+            <span class="gui-settings-dropdown-span">默认播放器模式</span>
+            <div class="gui-settings-dropdown popup">
+              <input readonly type="text" spellcheck="false" key="defaultPlayerMode">
+              <ul></ul>
+            </div>
+          </label>
+        </li>
+        <checkbox indent="0" key="downloadDanmaku" dependencies=""></checkbox>
+        <checkbox indent="0" key="autoLightOff" dependencies=""></checkbox>
+        <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
+        <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
+        <checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox>
+        <checkbox indent="0" key="removeVideoTopMask" dependencies=""></checkbox>
+        <checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox>
+        <checkbox indent="0" key="customControlBackground" dependencies=""></checkbox>
+        <textbox indent="1" key="customControlBackgroundOpacity" dependencies="customControlBackground"></textbox>
         <category>样式</category>
         <li class="indent-0">
           <label class="gui-settings-textbox-container">
@@ -35,25 +54,6 @@
         <checkbox indent="0" key="watchLaterRedirect" dependencies=""></checkbox>
         <checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox>
         <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
-        <category>视频与直播</category>
-        <li class="indent-0">
-          <label>
-            <span class="gui-settings-dropdown-span">默认播放器模式</span>
-            <div class="gui-settings-dropdown popup">
-              <input readonly type="text" spellcheck="false" key="defaultPlayerMode">
-              <ul></ul>
-            </div>
-          </label>
-        </li>
-        <checkbox indent="0" key="downloadDanmaku" dependencies=""></checkbox>
-        <checkbox indent="0" key="autoLightOff" dependencies=""></checkbox>
-        <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
-        <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
-        <checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox>
-        <checkbox indent="0" key="removeVideoTopMask" dependencies=""></checkbox>
-        <checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox>
-        <checkbox indent="0" key="customControlBackground" dependencies=""></checkbox>
-        <textbox indent="1" key="customControlBackgroundOpacity" dependencies="customControlBackground"></textbox>
         <category>触摸优化</category>
         <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
         <checkbox indent="0" key="touchVideoPlayer" dependencies=""></checkbox>
