@@ -84,13 +84,11 @@
                     if (info.name === "全屏")
                     {
                         const playButton = document.querySelector(".bilibili-player-video-btn-start");
-                        const playerArea = document.querySelector(".bilibili-player-area");
 
                         const playerButtonClick = () =>
                         {
                             $(".bilibili-player-video-btn-fullscreen").click();
                             playButton.removeEventListener("click", playerButtonClick);
-                            console.log("default fullscreen");
                         };
                         playButton.addEventListener("click", playerButtonClick);
                     }
