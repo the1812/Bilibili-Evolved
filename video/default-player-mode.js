@@ -90,27 +90,9 @@
                         {
                             $(".bilibili-player-video-btn-fullscreen").click();
                             playButton.removeEventListener("click", playerButtonClick);
-                            if (playerAreaClick.unbind)
-                            {
-                                playerAreaClick.unbind(playerArea);
-                            }
-                            else
-                            {
-                                playerArea.removeEventListener("click", playerAreaClick);
-                            }
+                            console.log("default fullscreen");
                         };
-                        let playerAreaClick = playerButtonClick;
-
                         playButton.addEventListener("click", playerButtonClick);
-                        if (settings.touchVideoPlayerDoubleTapControl)
-                        {
-                            playerAreaClick = new DoubleClickEvent(playerButtonClick);
-                            playerAreaClick.bind(playerArea);
-                        }
-                        else
-                        {
-                            playerArea.addEventListener("click", playerAreaClick);
-                        }
                     }
                     else
                     {

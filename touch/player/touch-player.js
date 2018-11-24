@@ -566,21 +566,9 @@
                 const video = unsafeWindow.$(".bilibili-player-video");
                 const hoverClassName = "touch-video-control-show";
                 const originalClickHandler = video.data("events").click[0].handler;
-
-                const handleTap = (double, e) =>
-                {
-                    if (double)
-                    {
-                        originalClickHandler(e);
-                    }
-                    else
-                    {
-                        playerArea.toggleClass(hoverClassName);
-                    }
-                };
                 const doubleClick = new DoubleClickEvent(
-                    e => handleTap(true, e),
-                    e => handleTap(false, e),
+                    e => originalClickHandler(e),
+                    () => playerArea.toggleClass(hoverClassName),
                 );
 
                 video.unbind("click");
