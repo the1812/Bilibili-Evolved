@@ -4,6 +4,7 @@
     {
         const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
         const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
+        const DanmakuInfo = resources.attributes.videoInfo.export.DanmakuInfo;
         const pageData = {
             aid: undefined,
             cid: undefined,
@@ -80,6 +81,7 @@
                 this.loaded = 0;
                 this.totalSize = null;
                 this.workingXhr = null;
+                this.fragmentSplitFactor = 6 * 5;
             }
             fetchVideoInfo()
             {
@@ -115,42 +117,111 @@
             {
                 if (this.workingXhr)
                 {
-                    this.workingXhr.abort();
+                    this.workingXhr.forEach(it => it.abort());
                 }
             }
-            downloadUrl(url)
+            downloadFragment(fragment)
             {
-                return new Promise((resolve, reject) =>
+                const promises = [];
+                const partialLength = Math.round(fragment.size / this.fragmentSplitFactor);
+                let startByte = 0;
+                while (startByte < fragment.size)
                 {
-                    const xhr = new XMLHttpRequest();
-                    xhr.open("GET", url);
-                    xhr.responseType = "arraybuffer";
-                    xhr.withCredentials = false;
-                    xhr.addEventListener("progress", (e) =>
+                    const range = `bytes=${startByte}-${Math.min(fragment.size - 1, Math.round(startByte + partialLength))}`;
+                    promises.push(new Promise((resolve, reject) =>
                     {
-                        this.progress && this.progress((this.loaded + e.loaded) / this.totalSize);
-                    });
-                    xhr.addEventListener("load", () =>
-                    {
-                        if (xhr.status === 200)
+                        let loaded = 0;
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("GET", fragment.url);
+                        xhr.responseType = "arraybuffer";
+                        xhr.withCredentials = false;
+                        xhr.addEventListener("progress", (e) =>
                         {
-                            resolve(xhr.response);
-                        }
-                        else
+                            this.loaded += e.loaded - loaded;
+                            loaded = e.loaded;
+                            this.progress && this.progress(this.loaded / this.totalSize);
+                        });
+                        xhr.addEventListener("load", () =>
                         {
-                            reject(`请求失败.`);
-                        }
-                    });
-                    xhr.addEventListener("abort", () => reject("下载已取消."));
-                    xhr.addEventListener("error", () => reject(`下载失败.`));
-                    xhr.send();
-                    this.workingXhr = xhr;
-                });
+                            if (("" + xhr.status)[0] === "2")
+                            {
+                                resolve(xhr.response);
+                            }
+                            else
+                            {
+                                reject(`请求失败.`);
+                            }
+                        });
+                        xhr.addEventListener("abort", () => reject("下载已取消."));
+                        xhr.addEventListener("error", () => reject(`下载失败.`));
+                        xhr.setRequestHeader("Range", range);
+                        xhr.send();
+                    }));
+                    startByte = Math.round(startByte + partialLength);
+                }
+                this.workingXhr = Promise.all(promises);
+                return this.workingXhr;
             }
             copyUrl()
             {
                 const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + "\r\n" + it);
                 GM_setClipboard(urls, "text");
+            }
+            extension(fragment)
+            {
+                return (fragment || this.fragments[0]).url
+                    .indexOf(".flv") !== -1
+                    ? ".flv"
+                    : ".mp4";
+            }
+            makeBlob(data, fragment = null)
+            {
+                return new Blob(Array.isArray(data) ? data : [data], {
+                    type: this.extension(fragment) === ".flv" ? "video/x-flv" : "video/mp4"
+                });
+            }
+            cleanUpOldBlobUrl()
+            {
+                const oldBlobUrl = $("a#video-complete").attr("href");
+                if (oldBlobUrl && $(`.link[href=${oldBlobUrl}]`).length === 0)
+                {
+                    URL.revokeObjectURL(oldBlobUrl);
+                }
+            }
+            downloadSingle(downloadedData)
+            {
+                const [data] = downloadedData;
+                const blob = this.makeBlob(data);
+                const filename = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "") + this.extension();
+                return [blob, filename];
+            }
+            async downloadMultiple(downloadedData)
+            {
+                const zip = new JSZip();
+                const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+                if (downloadedData.length > 1)
+                {
+                    downloadedData.forEach((data, index) =>
+                    {
+                        const fragment = this.fragments[index];
+                        zip.file(`${title} - ${index + 1}${this.extension(fragment)}`, this.makeBlob(data, fragment));
+                    });
+                }
+                else
+                {
+                    const [data] = downloadedData;
+                    zip.file(`${title}${this.extension()}`, this.makeBlob(data));
+                }
+
+                if (settings.downloadDanmaku)
+                {
+                    const danmaku = new DanmakuInfo(pageData.cid);
+                    await danmaku.fetchInfo();
+                    zip.file(`${title}.xml`, danmaku.rawXML);
+                }
+                const blob = await zip.generateAsync({ type: "blob" });
+                const filename = title + ".zip";
+                return [blob, filename];
             }
             async download()
             {
@@ -159,8 +230,7 @@
                 this.totalSize = this.fragments.map(it => it.size).reduce((acc, it) => acc + it);
                 for (const fragment of this.fragments)
                 {
-                    const data = await this.downloadUrl(fragment.url);
-                    this.loaded += fragment.size;
+                    const data = await this.downloadFragment(fragment);
                     downloadedData.push(data);
                 }
                 if (downloadedData.length < 1)
@@ -170,33 +240,17 @@
 
                 let blob = null;
                 let filename = null;
-                const extension = fragment => (fragment || this.fragments[0]).url.indexOf(".flv") !== -1 ? ".flv" : ".mp4";
-                if (downloadedData.length === 1)
+                if (downloadedData.length === 1 && !settings.downloadDanmaku)
                 {
-                    const [data] = downloadedData;
-                    blob = new Blob([data], {
-                        type: extension() === ".flv" ? "video/x-flv" : "video/mp4"
-                    });
-                    filename = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "") + extension();
+                    [blob, filename] = this.downloadSingle(downloadedData);
                 }
                 else
                 {
-                    const zip = new JSZip();
-                    const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
-                    downloadedData.forEach((data, index) =>
-                    {
-                        zip.file(`${title} - ${index + 1}${extension(this.fragments[index])}`, data);
-                    });
-                    blob = await zip.generateAsync({ type: "blob" });
-                    filename = title + ".zip";
+                    [blob, filename] = await this.downloadMultiple(downloadedData);
                 }
 
                 const blobUrl = URL.createObjectURL(blob);
-                const oldBlobUrl = $("a#video-complete").attr("href");
-                if (oldBlobUrl)
-                {
-                    URL.revokeObjectURL(oldBlobUrl);
-                }
+                this.cleanUpOldBlobUrl();
                 this.progress && this.progress(0);
                 return {
                     url: blobUrl,
@@ -276,6 +330,10 @@
                         completeLink.setAttribute("href", result.url);
                         completeLink.setAttribute("download", result.filename);
                         completeLink.click();
+
+                        const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename}">再次保存</a>`;
+                        Toast.success(message, "下载视频");
+
                         $(".download-video-panel")
                             .removeClass("progress")
                             .addClass("quality");

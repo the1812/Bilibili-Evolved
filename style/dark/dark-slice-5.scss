@@ -18,7 +18,8 @@
 .mobile-kpi-head h2,
 .mini-progress,
 .tab-selector-wrap .tag-wrap .tag span,
-.tab-selector-wrap .tag-wrap .tag span.selected 
+.tab-selector-wrap .tag-wrap .tag span.selected,
+.cc-body .setting 
 {
     background-color: #222 !important;
 }
@@ -53,7 +54,16 @@
 .tab-selector-wrap,
 #newsList #list,
 .pagination-container li.pagination-input-wrap .pagination-input,
-.infor-body .news-contents 
+.infor-body .news-contents,
+.pager .jump-pager input[type=number],
+.article-header .filter-wrp .category-wrp,
+.article-header .filter-wrp .order-wrp,
+.article-header .filter-wrp .article-type,
+.article-header .filter-wrp .filter-article-type,
+.article-header .filter-wrp .filter-level,
+.article-header .filter-wrp .article-type .bili-btn,
+.article-header .filter-wrp .filter-article-type .bili-btn,
+.article-header .filter-wrp .filter-level .bili-btn
 {
     background-color: #444 !important;
 }
@@ -90,11 +100,14 @@
 // {
 //     background: #fff1 !important;
 // }
-// a
-// {
-//     background: transparent !important;
-// }
-
+.article-header .filter-wrp .article-type .line,
+.article-header .filter-wrp .filter-article-type .line,
+.article-header .filter-wrp .filter-level .line,
+.border-line,
+.setting .follow-setting .follow-wrp .follow-modal 
+{
+    background: transparent !important;
+}
 .title-item,
 .notice-ctnr .blink,
 .notice .blink,
@@ -127,7 +140,11 @@
 .comment-container .main-desc .comment-info .word-container .bottom .personal-info .nickname,
 .fjw-kpi-wrap .fjw-kpi-top .fjw-person-detail label.fjw-person-item,
 .tab-selector-wrap .tag-wrap .tag span,
-.item .brief-desc 
+.item .brief-desc,
+.left-nav-childed-list,
+.card-user,
+.play-num,
+.setting .follow-setting .follow-wrp .follow-modal .follow-show p 
 {
     color: #aaa !important;
 }
@@ -184,7 +201,24 @@ table.invtable td,
 .infor-body-left news-contents .c-text,
 .total-bt .t-date a,
 .tv-m2 .tv-m-tt,
-.tv-m3 .tv-m-tt 
+.tv-m3 .tv-m-tt,
+.left-nav-item,
+.left-nav-item-child,
+.card-txt,
+.academy-right-link,
+.tabs-tab,
+.academy-left-name,
+.pager .jump-pager input[type=number],
+.go-back-link,
+.left-nav-item .icon,
+.article-header .filter-wrp .category-wrp,
+.article-header .filter-wrp .order-wrp,
+.article-header .dropdown-btn .icon-text,
+.article-header .filter-wrp .article-type .bili-btn,
+.article-header .filter-wrp .filter-article-type .bili-btn,
+.article-header .filter-wrp .filter-level .bili-btn,
+.article-header .filter-wrp .article-bread .main,
+.left-nav-wrapper .advice-btn 
 {
     color: #eee !important;
 }
@@ -230,7 +264,15 @@ table.invtable td,
 .c-text .c-hd2,
 .tv-m2:nth-child(odd),
 .tv-m2,
-.tv-m3 
+.tv-m3,
+.pager .jump-pager input[type=number],
+.article-header .filter-wrp .category-wrp,
+.article-header .filter-wrp .order-wrp,
+.btn-section .btn-item,
+.article-header .filter-wrp .article-type,
+.article-header .filter-wrp .filter-article-type,
+.article-header .filter-wrp .filter-level,
+setting cc-content-body .setting .follow-setting 
 {
     border-color: transparent !important;
 }
@@ -261,10 +303,11 @@ table.invtable td,
 // {
 //     fill: #aaa !important;
 // }
-// a
-// {
-//     filter: brightness(0) invert(1) !important;
-// }
+.left-nav-logo,
+.icon-back 
+{
+    filter: brightness(0) invert(1) !important;
+}
 // a
 // {
 //     filter: $blueImageFilter !important;
@@ -325,7 +368,8 @@ table.invtable td,
 .data-card .fans-box .tab .fan-tab.current:after,
 .section-item .diff-wrp .diff-text:before,
 .tab-selector-wrap .tag-wrap .tag span.selected,
-.tab-selector-wrap .tab-wrap .tab span.active 
+.tab-selector-wrap .tab-wrap .tab span.active,
+.tabs-tab-active:before 
 {
     border-color: $customStyleColor !important;
 }
@@ -345,7 +389,9 @@ table.invtable td,
 .head .dropdown-btn:hover,
 .dc-button.dc-button-text:hover,
 .h-none-btn:hover,
-.item .title-wrap .activity 
+.item .title-wrap .activity,
+.tabs_active-bar,
+.tabs-nav .active 
 {
     background-color: $customStyleColor !important;
 }
@@ -374,7 +420,17 @@ icon-label.hover-text-blue:hover .label,
 .item:hover .title,
 .total-bt .t-date a:hover,
 .tv-m2 .tv-m-tt:hover,
-.tv-m3 .tv-m-tt:hover 
+.tv-m3 .tv-m-tt:hover,
+.left-nav-item:hover,
+.left-nav-item-child:hover,
+.left-nav-item-childed:hover,
+.academy-right-link:hover,
+.tabs-tab-active,
+.left-nav-item:hover .icon,
+.left-nav-item-childed:hover,
+.article-header .filter-wrp .article-type .bili-btn.current,
+.article-header .filter-wrp .filter-article-type .bili-btn.current,
+.article-header .filter-wrp .filter-level .bili-btn.current 
 {
     color: $customStyleColor !important;
 }
@@ -401,7 +457,8 @@ icon-label.hover-text-blue:hover .label,
 .data-card .fans-box .tab .fan-tab.current:after,
 .data-card .data-box .tab .fan-tab.current:after,
 .data-card .fans-box .tab .fan-tab.current:after,
-.section-item .diff-wrp .diff-text:before 
+.section-item .diff-wrp .diff-text:before,
+.tabs-tab-active:before 
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;

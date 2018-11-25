@@ -58,61 +58,36 @@
         const currentVersion = new Version(settings.currentVersion);
         if (latestVersion.greaterThan(currentVersion))
         {
-            if (currentVersion.lessThan(new Version("1.4.2")))
-            {
-                SpinQuery.any(() => $(".gui-settings"), it =>
-                {
-                    it.addClass("gui-settings-notification");
-                    const footer = $(".gui-settings-footer");
-                    footer.after(`
-                        <div class="gui-settings-footer">
+            return {
+                settingsWidget: {
+                    after: () => $(".gui-settings-content"),
+                    content: `<div class="gui-settings-footer${(settings.blurSettingsPanel ? " blur" : "")}">
                             <span class="gui-settings-label">新版本${latestVersion.versionString}已发布.</span>
-                            <a>
+                            <a href="${settings.latestVersionLink}">
                                 <button
                                     class="gui-settings-button"
                                     id="new-version-update">
                                     更新
                                 </button>
                             </a>
-                        </div>`);
-                    $("#new-version-update").parent().attr("href", settings.latestVersionLink);
-                });
-                const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">更新</a>`;
-                Toast.show(message, "检查更新", 10000);
-            }
-            else
-            {
-                return {
-                    settingsWidget: {
-                        after: () => $(".gui-settings-content"),
-                        content: `<div class="gui-settings-footer${(settings.blurSettingsPanel ? " blur" : "")}">
-                                    <span class="gui-settings-label">新版本${latestVersion.versionString}已发布.</span>
-                                    <a href="${settings.latestVersionLink}">
-                                        <button
-                                            class="gui-settings-button"
-                                            id="new-version-update">
-                                            更新
-                                        </button>
-                                    </a>
-                                    <a target="blank"  href="https://github.com/the1812/Bilibili-Evolved/releases">
-                                        <button
-                                            class="gui-settings-button">
-                                            详细信息
-                                        </button>
-                                    </a>
-                                </div>`,
-                        success: () =>
+                            <a target="blank"  href="https://github.com/the1812/Bilibili-Evolved/releases">
+                                <button
+                                    class="gui-settings-button">
+                                    详细信息
+                                </button>
+                            </a>
+                        </div>`,
+                    success: () =>
+                    {
+                        SpinQuery.any(() => $(".gui-settings"), it =>
                         {
-                            SpinQuery.any(() => $(".gui-settings"), it =>
-                            {
-                                it.addClass("gui-settings-notification");
-                            });
-                            const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">更新</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">详细信息</a>`;
-                            Toast.show(message, "检查更新");
-                        }
+                            it.addClass("gui-settings-notification");
+                        });
+                        const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">更新</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">详细信息</a>`;
+                        Toast.info(message, "检查更新");
                     }
-                };
-            }
+                }
+            };
         }
     };
 })();

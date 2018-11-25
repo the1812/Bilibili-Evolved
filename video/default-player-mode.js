@@ -84,33 +84,13 @@
                     if (info.name === "全屏")
                     {
                         const playButton = document.querySelector(".bilibili-player-video-btn-start");
-                        const playerArea = document.querySelector(".bilibili-player-area");
 
                         const playerButtonClick = () =>
                         {
                             $(".bilibili-player-video-btn-fullscreen").click();
                             playButton.removeEventListener("click", playerButtonClick);
-                            if (playerAreaClick.unbind)
-                            {
-                                playerAreaClick.unbind(playerArea);
-                            }
-                            else
-                            {
-                                playerArea.removeEventListener("click", playerAreaClick);
-                            }
                         };
-                        let playerAreaClick = playerButtonClick;
-
                         playButton.addEventListener("click", playerButtonClick);
-                        if (settings.touchVideoPlayerDoubleTapControl)
-                        {
-                            playerAreaClick = new DoubleClickEvent(playerButtonClick);
-                            playerAreaClick.bind(playerArea);
-                        }
-                        else
-                        {
-                            playerArea.addEventListener("click", playerAreaClick);
-                        }
                     }
                     else
                     {
