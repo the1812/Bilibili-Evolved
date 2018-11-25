@@ -81,7 +81,7 @@
                 this.loaded = 0;
                 this.totalSize = null;
                 this.workingXhr = null;
-                this.fragmentSplitFactor = 10;
+                this.fragmentSplitFactor = 8;
             }
             fetchVideoInfo()
             {
@@ -123,24 +123,27 @@
             downloadFragment(fragment)
             {
                 const promises = [];
-                const partialLength = fragment.length / this.fragmentSplitFactor;
+                const partialLength = Math.round(fragment.size / this.fragmentSplitFactor);
                 let startByte = 0;
-                while (startByte <= fragment.length)
+                while (startByte <= fragment.size)
                 {
-                    const range = `bytes=${startByte}-${Math.min(fragment.length - 1, startByte + partialLength)}`;
+                    const range = `bytes=${startByte}-${Math.min(fragment.size - 1, Math.round(startByte + partialLength))}`;
                     promises.push(new Promise((resolve, reject) =>
                     {
+                        let loaded = 0;
                         const xhr = new XMLHttpRequest();
                         xhr.open("GET", fragment.url);
                         xhr.responseType = "arraybuffer";
                         xhr.withCredentials = false;
                         xhr.addEventListener("progress", (e) =>
                         {
-                            this.progress && this.progress((this.loaded + e.loaded) / this.totalSize);
+                            this.loaded += e.loaded - loaded;
+                            loaded = e.loaded;
+                            this.progress && this.progress(this.loaded / this.totalSize);
                         });
                         xhr.addEventListener("load", () =>
                         {
-                            if (xhr.status === 200)
+                            if (("" + xhr.status)[0] === "2")
                             {
                                 resolve(xhr.response);
                             }
@@ -154,7 +157,7 @@
                         xhr.setRequestHeader("Range", range);
                         xhr.send();
                     }));
-                    startByte += partialLength;
+                    startByte = Math.round(startByte + partialLength);
                 }
                 this.workingXhr = Promise.all(promises);
                 return this.workingXhr;
@@ -223,7 +226,6 @@
                 for (const fragment of this.fragments)
                 {
                     const data = await this.downloadFragment(fragment);
-                    this.loaded += fragment.size;
                     downloadedData.push(data);
                 }
                 if (downloadedData.length < 1)
