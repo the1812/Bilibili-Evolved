@@ -1,0 +1,31 @@
+{
+    "extends": "defaults/configurations/eslint",
+    "parser": "babel-eslint",
+    "env": {
+        "amd": true,
+        "browser": true,
+        "jquery": true,
+        "node": true,
+        "es6": true,
+        "worker": true
+    },
+    "rules": {
+        "camelcase": 0,
+        "new-cap": ["warn", {
+            "capIsNewExceptionPattern": "GM_*"
+        }],
+        "eqeqeq": 2,
+        "comma-dangle": 0,
+        "no-console": 0,
+        "no-debugger": 0,
+        "no-extra-semi": 1,
+        "no-extra-parens": 1,
+        "no-irregular-whitespace": 0,
+        "no-undef": 0,
+        "no-unused-vars": 0,
+        "no-underscore-dangle": 1,
+        "semi": 1,
+        "semi-spacing": 1,
+        "valid-jsdoc": 0
+    }
+}
