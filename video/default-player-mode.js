@@ -5,6 +5,7 @@
         const playerModes = [
             {
                 name: "常规",
+                action: () => {},
             },
             {
                 name: "宽屏",
@@ -56,11 +57,11 @@
                         () => $(".bilibili-player-video-btn-setting-panel-others-content-lightoff .bui-checkbox-input"),
                         checkbox =>
                         {
-                            const lightOff = checkbox[0];
+                            const lightOffCheckBox = checkbox[0];
                             const event = document.createEvent("HTMLEvents");
                             event.initEvent("change", true, true);
-                            lightOff.checked = true;
-                            lightOff.dispatchEvent(event);
+                            lightOffCheckBox.checked = true;
+                            lightOffCheckBox.dispatchEvent(event);
                         }
                     );
                 };
@@ -76,11 +77,6 @@
                 {
                     const video = document.querySelector("video");
                     const info = playerModes.find(it => it.name === settings.defaultPlayerMode);
-                    if (info.name === "常规")
-                    {
-                        return;
-                    }
-
                     if (info.name === "全屏")
                     {
                         const playButton = document.querySelector(".bilibili-player-video-btn-start");
