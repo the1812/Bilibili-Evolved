@@ -174,6 +174,12 @@
                     ? ".flv"
                     : ".mp4";
             }
+            makeBlob(data, fragment = null)
+            {
+                return new Blob(Array.isArray(data) ? data : [data], {
+                    type: this.extension(fragment) === ".flv" ? "video/x-flv" : "video/mp4"
+                });
+            }
             cleanUpOldBlobUrl()
             {
                 const oldBlobUrl = $("a#video-complete").attr("href");
@@ -185,9 +191,7 @@
             downloadSingle(downloadedData)
             {
                 const [data] = downloadedData;
-                const blob = new Blob([data], {
-                    type: this.extension() === ".flv" ? "video/x-flv" : "video/mp4"
-                });
+                const blob = this.makeBlob(data);
                 const filename = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "") + this.extension();
                 return [blob, filename];
             }
@@ -199,13 +203,14 @@
                 {
                     downloadedData.forEach((data, index) =>
                     {
-                        zip.file(`${title} - ${index + 1}${this.extension(this.fragments[index])}`, data);
+                        const fragment = this.fragments[index];
+                        zip.file(`${title} - ${index + 1}${this.extension(fragment)}`, this.makeBlob(data, fragment));
                     });
                 }
                 else
                 {
                     const [data] = downloadedData;
-                    zip.file(`${title}${this.extension()}`, data);
+                    zip.file(`${title}${this.extension()}`, this.makeBlob(data));
                 }
 
                 if (settings.downloadDanmaku)
