@@ -117,7 +117,7 @@
             {
                 if (this.workingXhr)
                 {
-                    this.workingXhr.abort();
+                    this.workingXhr.forEach(it => it.abort());
                 }
             }
             downloadFragment(fragment)
