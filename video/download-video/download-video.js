@@ -81,6 +81,7 @@
                 this.loaded = 0;
                 this.totalSize = null;
                 this.workingXhr = null;
+                this.fragmentSplitFactor = 10;
             }
             fetchVideoInfo()
             {
@@ -119,34 +120,44 @@
                     this.workingXhr.abort();
                 }
             }
-            downloadUrl(url)
+            downloadFragment(fragment)
             {
-                return new Promise((resolve, reject) =>
+                const promises = [];
+                const partialLength = fragment.length / this.fragmentSplitFactor;
+                let startByte = 0;
+                while (startByte <= fragment.length)
                 {
-                    const xhr = new XMLHttpRequest();
-                    xhr.open("GET", url);
-                    xhr.responseType = "arraybuffer";
-                    xhr.withCredentials = false;
-                    xhr.addEventListener("progress", (e) =>
+                    const range = `bytes=${startByte}-${Math.min(fragment.length - 1, startByte + partialLength)}`;
+                    promises.push(new Promise((resolve, reject) =>
                     {
-                        this.progress && this.progress((this.loaded + e.loaded) / this.totalSize);
-                    });
-                    xhr.addEventListener("load", () =>
-                    {
-                        if (xhr.status === 200)
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("GET", fragment.url);
+                        xhr.responseType = "arraybuffer";
+                        xhr.withCredentials = false;
+                        xhr.addEventListener("progress", (e) =>
                         {
-                            resolve(xhr.response);
-                        }
-                        else
+                            this.progress && this.progress((this.loaded + e.loaded) / this.totalSize);
+                        });
+                        xhr.addEventListener("load", () =>
                         {
-                            reject(`请求失败.`);
-                        }
-                    });
-                    xhr.addEventListener("abort", () => reject("下载已取消."));
-                    xhr.addEventListener("error", () => reject(`下载失败.`));
-                    xhr.send();
-                    this.workingXhr = xhr;
-                });
+                            if (xhr.status === 200)
+                            {
+                                resolve(xhr.response);
+                            }
+                            else
+                            {
+                                reject(`请求失败.`);
+                            }
+                        });
+                        xhr.addEventListener("abort", () => reject("下载已取消."));
+                        xhr.addEventListener("error", () => reject(`下载失败.`));
+                        xhr.setRequestHeader("Range", range);
+                        xhr.send();
+                    }));
+                    startByte += partialLength;
+                }
+                this.workingXhr = Promise.all(promises);
+                return this.workingXhr;
             }
             copyUrl()
             {
@@ -211,7 +222,7 @@
                 this.totalSize = this.fragments.map(it => it.size).reduce((acc, it) => acc + it);
                 for (const fragment of this.fragments)
                 {
-                    const data = await this.downloadUrl(fragment.url);
+                    const data = await this.downloadFragment(fragment);
                     this.loaded += fragment.size;
                     downloadedData.push(data);
                 }
