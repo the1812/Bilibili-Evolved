@@ -81,7 +81,7 @@
                 this.loaded = 0;
                 this.totalSize = null;
                 this.workingXhr = null;
-                this.fragmentSplitFactor = 8;
+                this.fragmentSplitFactor = 6 * 5;
             }
             fetchVideoInfo()
             {
@@ -125,7 +125,7 @@
                 const promises = [];
                 const partialLength = Math.round(fragment.size / this.fragmentSplitFactor);
                 let startByte = 0;
-                while (startByte <= fragment.size)
+                while (startByte < fragment.size)
                 {
                     const range = `bytes=${startByte}-${Math.min(fragment.size - 1, Math.round(startByte + partialLength))}`;
                     promises.push(new Promise((resolve, reject) =>
