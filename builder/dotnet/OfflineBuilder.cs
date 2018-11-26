@@ -97,6 +97,7 @@ namespace BilibiliEvolved.Build
                     { "Bilibili Evolved", "Bilibili Evolved (Offline)" },
                     { "增强哔哩哔哩Web端体验:", "增强哔哩哔哩Web端体验(离线版):" },
                     { $"master/{config.Master}", $"master/{config.Offline}" },
+                    { $"// ==/UserScript==", $"// ==/UserScript=={Environment.NewLine}/* eslint-disable */"},
                 };
             return build(replaceMap, config.Offline, "Offline build complete.");
         }
@@ -107,6 +108,7 @@ namespace BilibiliEvolved.Build
                     { "Bilibili Evolved", "Bilibili Evolved (Preview Offline)" },
                     { "增强哔哩哔哩Web端体验:", "增强哔哩哔哩Web端体验(预览离线版):" },
                     { $"master/{config.Master}", $"preview/{config.PreviewOffline}" },
+                    { $"// ==/UserScript==", $"// ==/UserScript=={Environment.NewLine}/* eslint-disable */"},
                 };
             return build(replaceMap, config.PreviewOffline, "Preview Offline build complete.");
         }
