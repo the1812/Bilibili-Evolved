@@ -227,7 +227,9 @@ table.invtable td,
 .dropdown__content .dropdown__active,
 .article-header .dropdown-btn,
 .article-header .dropdown-btn .icon-ic_unfold,
-.search-wrp .bili-input
+.search-wrp .bili-input,
+.help-title-wrap help-box .help-title,
+.help-subindex 
 {
     color: #eee !important;
 }
@@ -446,7 +448,11 @@ icon-label.hover-text-blue:hover .label,
 .left-nav-item.active,
 .left-nav-item.active i.active,
 .left-nav-list.on .left-nav-item .icon,
-.left-nav-list.on .left-nav-item 
+.left-nav-list.on .left-nav-item,
+.help-subcontent .a,
+.help-subcontent .a:hover,
+.fixed-service-word .a,
+fixed-service-word .a:hover 
 {
     color: $customStyleColor !important;
 }
