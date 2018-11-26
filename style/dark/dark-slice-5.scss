@@ -66,7 +66,10 @@
 .article-header .filter-wrp .article-type .bili-btn,
 .article-header .filter-wrp .filter-article-type .bili-btn,
 .article-header .filter-wrp .filter-level .bili-btn,
-.dropdown__content 
+.dropdown__content,
+.ivu-input-costom-width ivu-input-wrapper ivu-input-wrapper-default ivu-input-type .ivu-input,
+.ivu-form-item-error .ivu-input-group-append,
+.ivu-form-item-error .ivu-input-group-prepend 
 {
     background-color: #444 !important;
 }
@@ -147,7 +150,9 @@
 .left-nav-childed-list,
 .card-user,
 .play-num,
-.setting .follow-setting .follow-wrp .follow-modal .follow-show p 
+.setting .follow-setting .follow-wrp .follow-modal .follow-show p,
+.main-footer .cp,
+.main-footer .link-item a
 {
     color: #aaa !important;
 }
@@ -229,7 +234,15 @@ table.invtable td,
 .article-header .dropdown-btn .icon-ic_unfold,
 .search-wrp .bili-input,
 .help-title-wrap help-box .help-title,
-.help-subindex 
+.help-subindex,
+.ivu-input-costom-width ivu-input-wrapper ivu-input-wrapper-default ivu-input-type .ivu-input,
+.ivu-input-group-append,
+.ivu-input-group-prepend,
+.about-index .about-desc,
+.ivu-form .ivu-form-item-label,
+.ivu-btn-primary.active,
+.ivu-btn-primary:active,
+.ivu-btn-primary:hover 
 {
     color: #eee !important;
 }
@@ -283,7 +296,11 @@ table.invtable td,
 .article-header .filter-wrp .article-type,
 .article-header .filter-wrp .filter-article-type,
 .article-header .filter-wrp .filter-level,
-setting cc-content-body .setting .follow-setting 
+setting cc-content-body .setting .follow-setting,
+.ivu-input-costom-width ivu-input-wrapper ivu-input-wrapper-default ivu-input-type .ivu-input,
+.about-index .about-desc,
+.apply-form .btn, .apply-form .btn:not([disabled]):hover,
+.main-footer .link-item
 {
     border-color: transparent !important;
 }
@@ -380,7 +397,9 @@ setting cc-content-body .setting .follow-setting
 .section-item .diff-wrp .diff-text:before,
 .tab-selector-wrap .tag-wrap .tag span.selected,
 .tab-selector-wrap .tab-wrap .tab span.active,
-.tabs-tab-active:before 
+.tabs-tab-active:before,
+.ivu-input:focus,
+.ivu-input:hover 
 {
     border-color: $customStyleColor !important;
 }
@@ -402,7 +421,8 @@ setting cc-content-body .setting .follow-setting
 .h-none-btn:hover,
 .item .title-wrap .activity,
 .tabs_active-bar,
-.tabs-nav .active 
+.tabs-nav .active,
+.apply-form .btn, .apply-form .btn:not([disabled]):hover 
 {
     background-color: $customStyleColor !important;
 }
