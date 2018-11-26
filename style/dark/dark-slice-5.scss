@@ -19,7 +19,9 @@
 .mini-progress,
 .tab-selector-wrap .tag-wrap .tag span,
 .tab-selector-wrap .tag-wrap .tag span.selected,
-.cc-body .setting 
+.cc-body .setting,
+.dropdown__content .dropdown__active,
+.dropdown__content .dropdown__item:hover 
 {
     background-color: #222 !important;
 }
@@ -63,7 +65,8 @@
 .article-header .filter-wrp .filter-level,
 .article-header .filter-wrp .article-type .bili-btn,
 .article-header .filter-wrp .filter-article-type .bili-btn,
-.article-header .filter-wrp .filter-level .bili-btn
+.article-header .filter-wrp .filter-level .bili-btn,
+.dropdown__content 
 {
     background-color: #444 !important;
 }
@@ -218,7 +221,13 @@ table.invtable td,
 .article-header .filter-wrp .filter-article-type .bili-btn,
 .article-header .filter-wrp .filter-level .bili-btn,
 .article-header .filter-wrp .article-bread .main,
-.left-nav-wrapper .advice-btn 
+.left-nav-wrapper .advice-btn,
+.dropdown__content .dropdown__item,
+.dropdown__content .dropdown__item:hover,
+.dropdown__content .dropdown__active,
+.article-header .dropdown-btn,
+.article-header .dropdown-btn .icon-ic_unfold,
+.search-wrp .bili-input
 {
     color: #eee !important;
 }
@@ -430,7 +439,14 @@ icon-label.hover-text-blue:hover .label,
 .left-nav-item-childed:hover,
 .article-header .filter-wrp .article-type .bili-btn.current,
 .article-header .filter-wrp .filter-article-type .bili-btn.current,
-.article-header .filter-wrp .filter-level .bili-btn.current 
+.article-header .filter-wrp .filter-level .bili-btn.current,
+.left-nav-item-childed:hover,
+.active .left-nav-item-child,
+.active[data-v-54800c27], .advice-btn:hover,
+.left-nav-item.active,
+.left-nav-item.active i.active,
+.left-nav-list.on .left-nav-item .icon,
+.left-nav-list.on .left-nav-item 
 {
     color: $customStyleColor !important;
 }
