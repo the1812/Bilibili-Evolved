@@ -11,12 +11,12 @@
             }
             else
             {
-                return null;
+                return "javascript:;";
             }
         };
         const redirectLinks = items =>
         {
-            if (items.attr("href").indexOf("watchlater") !== 0)
+            if (items.attr("href").match(/.*watchlater.*|javascript:;/g))
             {
                 const watchlaterList = items
                     .map((_, it) =>
