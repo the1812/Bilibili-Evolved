@@ -115,14 +115,19 @@
             }
             cancelDownload()
             {
-                if (this.workingXhr)
+                if ("forEach" in this.workingXhr)
                 {
                     this.workingXhr.forEach(it => it.abort());
+                }
+                else
+                {
+                    console.error("Cancel Download Failed: forEach in this.workingXhr not found.");
                 }
             }
             downloadFragment(fragment)
             {
                 const promises = [];
+                this.workingXhr = [];
                 const partialLength = Math.round(fragment.size / this.fragmentSplitFactor);
                 let startByte = 0;
                 while (startByte < fragment.size)
@@ -156,11 +161,11 @@
                         xhr.addEventListener("error", () => reject(`下载失败.`));
                         xhr.setRequestHeader("Range", range);
                         xhr.send();
+                        this.workingXhr.push(xhr);
                     }));
                     startByte = Math.round(startByte + partialLength);
                 }
-                this.workingXhr = Promise.all(promises);
-                return this.workingXhr;
+                return Promise.all(promises);
             }
             copyUrl()
             {
