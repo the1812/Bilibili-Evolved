@@ -984,8 +984,7 @@
                         .map(mapFunc)
                         .reduce((acc, it) => acc.concat(it), []);
                 };
-                flatMap.bind(this.styles);
-                return flatMap;
+                return flatMap.bind(this.styles);
             }
             else
             {
