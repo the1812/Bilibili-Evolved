@@ -202,6 +202,7 @@
                 displayNames: {
                     guiSettings: "设置",
                     blurSettingsPanel: "模糊设置面板背景",
+                    clearCache: "清除缓存",
                 },
             },
             useDarkStyle: {
@@ -409,6 +410,7 @@
                 ],
                 displayNames: {
                     "downloadDanmaku": "下载视频时包含弹幕",
+                    "downloadVideo": "下载视频",
                 },
             },
             videoInfo: {
@@ -428,6 +430,9 @@
                 styles: [
                     "aboutStyle",
                 ],
+                displayNames: {
+                    "about": "关于",
+                }
             },
             customControlBackgroundStyle: {
                 path: "min/custom-control-background.min.scss",
@@ -1170,9 +1175,9 @@
                 console.error(`Download error, XHR status: ${reason}`);
                 Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
             });
-            resource.dependencies
+            await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "script")
-                .forEach(it => this.fetchByKey(it.key));
+                .map(it => this.fetchByKey(it.key)));
             resource.styles
                 .filter(it => it.condition !== undefined ? it.condition() : true)
                 .forEach(it =>
