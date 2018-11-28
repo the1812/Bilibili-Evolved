@@ -1173,7 +1173,12 @@
             const text = await resource.download().catch(reason =>
             {
                 console.error(`Download error, XHR status: ${reason}`);
-                Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
+                let toastMessage = `无法下载组件<span>${Resource.all[key].displayName}</span>`;
+                if (settings.toastInternalError && "stack" in reason)
+                {
+                    toastMessage += "\n" + reason.stack;
+                }
+                Toast.error(toast, "错误");
             });
             await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "script")
@@ -1231,9 +1236,13 @@
                 }
                 catch (error)
                 {
-                    // execution error
                     console.error(`Failed to apply feature "${key}": ${error}`);
-                    Toast.error(`加载组件<span>${Resource.all[key].displayName}</span>失败`, "错误");
+                    let toastMessage = `加载组件<span>${Resource.all[key].displayName}</span>失败`;
+                    if (settings.toastInternalError && "stack" in error)
+                    {
+                        toastMessage += "\n" + error.stack;
+                    }
+                    Toast.error(toastMessage, "错误");
                 }
             }
         }
