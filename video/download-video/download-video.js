@@ -121,7 +121,7 @@
                 }
                 else
                 {
-                    console.error("Cancel Download Failed: forEach in this.workingXhr not found.");
+                    logError("Cancel Download Failed: forEach in this.workingXhr not found.");
                 }
             }
             downloadFragment(fragment)

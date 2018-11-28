@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.5.39
+// @version      1.5.40
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -58,6 +58,7 @@
         autoLightOff: false,
         downloadDanmaku: false,
         useCache: true,
+        toastInternalError: false,
         cache: {},
     };
     const fixedSettings = {
@@ -72,6 +73,14 @@
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
         currentVersion: GM_info.script.version,
     };
+    function logError(message)
+    {
+        if (settings.toastInternalError)
+        {
+            Toast.error(message, "错误");
+        }
+        console.error(message);
+    }
     function loadSettings()
     {
         for (const key in settings)
@@ -343,6 +352,7 @@
                 ],
                 displayNames: {
                     toast: "显示消息",
+                    toastInternalError: "显示内部错误消息",
                 },
             },
             removeVideoTopMask: {
@@ -1070,7 +1080,7 @@
             const style = this.text;
             if (style === null)
             {
-                console.error("Attempt to get style which is not downloaded.");
+                logError("Attempt to get style which is not downloaded.");
             }
             let attributes = `id='${id}'`;
             if (this.priority !== undefined)
@@ -1146,69 +1156,61 @@
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
         }
-        fetchByKey(key)
+        async fetchByKey(key)
         {
             const resource = Resource.all[key];
             if (!resource)
             {
                 return null;
             }
-            const promise = resource.download();
+            const text = await resource.download().catch(reason =>
+            {
+                console.error(`Download error, XHR status: ${reason}`);
+                Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
+            });
             resource.dependencies
                 .filter(it => it.type.name === "script")
                 .forEach(it => this.fetchByKey(it.key));
-            return new Promise(resolve =>
-            {
-                promise.then(text =>
+            resource.styles
+                .filter(it => it.condition !== undefined ? it.condition() : true)
+                .forEach(it =>
                 {
-                    resource.styles
-                        .filter(it => it.condition !== undefined ? it.condition() : true)
-                        .forEach(it =>
-                        {
-                            const important = typeof it === "object" ? it.important : false;
-                            const key = typeof it === "object" ? it.key : it;
-                            if (important)
-                            {
-                                this.applyImportantStyle(key);
-                            }
-                            else
-                            {
-                                this.applyStyle(key);
-                            }
-                        });
-                    this.applyComponent(key, text);
-                    resolve();
-                }).catch(reason =>
-                {
-                    // download error
-                    console.error(`Download error, XHR status: ${reason}`);
-                    Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
-                });
-            });
-        }
-        fetch()
-        {
-            return new Promise(resolve =>
-            {
-                this.validateCache();
-                const promises = [];
-                for (const key in settings)
-                {
-                    if (settings[key] === true && key !== "toast")
+                    const important = typeof it === "object" ? it.important : false;
+                    const key = typeof it === "object" ? it.key : it;
+                    if (important)
                     {
-                        const promise = this.fetchByKey(key);
-                        if (promise)
-                        {
-                            promises.push(promise);
-                        }
+                        this.applyImportantStyle(key);
+                    }
+                    else
+                    {
+                        this.applyStyle(key);
+                    }
+                });
+            this.applyComponent(key, text);
+        }
+        async fetch()
+        {
+            this.validateCache();
+            if (settings.toast === true)
+            {
+                await this.fetchByKey("toast");
+                Toast = this.attributes.toast.export;
+            }
+            const promises = [];
+            for (const key in settings)
+            {
+                if (settings[key] === true && key !== "toast")
+                {
+                    const promise = this.fetchByKey(key);
+                    if (promise)
+                    {
+                        promises.push(promise);
                     }
                 }
-                Promise.all(promises).then(() =>
-                {
-                    this.applySettingsWidgets();
-                    resolve();
-                });
-            });
+            }
+            await Promise.all(promises);
+            this.applySettingsWidgets();
+            saveSettings(settings);
         }
         applyComponent(key, text)
         {
@@ -1306,20 +1308,15 @@
         }
     }
 
-    loadResources();
-    loadSettings();
-    const resources = new ResourceManager();
-    if (settings.toast)
+    try
     {
-        resources.fetchByKey("toast").then(() =>
-        {
-            Toast = resources.attributes.toast.export;
-            resources.fetch().then(() => saveSettings(settings));
-        });
+        loadResources();
+        loadSettings();
+        const resources = new ResourceManager();
+        resources.fetch().catch(error => logError(error));
     }
-    else
+    catch (error)
     {
-        resources.fetch().then(() => saveSettings(settings));
+        logError(error);
     }
-
 })(window.jQuery.noConflict(true));
