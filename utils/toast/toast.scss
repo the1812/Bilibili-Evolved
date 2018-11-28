@@ -67,11 +67,13 @@ svg.toast-card-dismiss path
 {
     fill: #fff6;
 }
-.toast-card-message {
+.toast-card-message
+{
     color: #eeed;
     font-size: 14px;
     margin: 16px;
     margin-top: 0;
+    white-space: pre-wrap;
 }
 .toast-card.toast-default
 {
