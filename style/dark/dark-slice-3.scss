@@ -58,7 +58,8 @@ div#square.container,
 .uns_box li .i_menu,
 .user-info .user-info-desc,
 #community_msg,
-.gui-settings-dropdown>ul
+.gui-settings-dropdown>ul,
+.toast-card
 {
     background-color: #222 !important;
 }
@@ -343,7 +344,11 @@ body>div.to-top.on,
 {
     color: #eee !important;
 }
-.list.main_body .right_box .select_box .select .option_block .option.selected
+.list.main_body .right_box .select_box .select .option_block .option.selected,
+.toast-card-title,
+.toast-card-message
+.toast-card span,
+.toast-card .link
 {
     color: #fff !important;
 }
@@ -438,6 +443,10 @@ i.settings-category-arrow::after,
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a
 {
     fill: #aaa !important;
+}
+svg.toast-card-dismiss path
+{
+    fill: #fff !important;
 }
 .security-list .first-level .m-arrow,
 .page-content .right-side .up-list .fresh-btn:before,

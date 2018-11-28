@@ -10,10 +10,10 @@
 }
 .toast-card
 {
-    background: #222;
+    background: #fff;
     min-width: 240px;
     max-width: 60vw;
-    box-shadow: 0 1px 20px 4px rgba(0,0,0,.4);
+    box-shadow: 0 4px 16px 1px rgba(0,0,0,.3);
     transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     transform: translateY(16px);
     transform-origin: bottom;
@@ -39,7 +39,8 @@
 .toast-card-title
 {
     font-size: 18px;
-    color: #fff6;
+    color: #000;
+    opacity: 0.5;
     margin: 16px;
     font-weight: bold;
     flex: 1 1 auto;
@@ -65,11 +66,12 @@ svg.toast-card-dismiss:active
 }
 svg.toast-card-dismiss path
 {
-    fill: #fff6;
+    fill: #000;
+    opacity: 0.5;
 }
 .toast-card-message
 {
-    color: #eeed;
+    color: #000;
     font-size: 14px;
     margin: 16px;
     margin-top: 0;
@@ -100,7 +102,7 @@ svg.toast-card-dismiss path
     background-color: rgba(0,0,0,.1);
     border-radius: 4px;
     text-decoration: none;
-    color: #eeed;
+    color: #000;
     transition: all .2s ease-out;
 }
 .toast-card .link:hover
