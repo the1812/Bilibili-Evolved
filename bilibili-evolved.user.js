@@ -77,7 +77,9 @@
     {
         if (settings.toastInternalError)
         {
-            Toast.error(message, "错误");
+            Toast.error("stack" in message
+                ? message.stack.replace(/ at/g, "\n\tat")
+                : message, "错误");
         }
         console.error(message);
     }
