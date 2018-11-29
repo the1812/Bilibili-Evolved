@@ -486,7 +486,7 @@
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url);
 
-        if (load) // callback
+        if (load !== undefined) // callback
         {
             xhr.addEventListener("load", () => load && load(xhr.responseText));
             xhr.addEventListener("error", () => error && error(xhr.responseText));
@@ -604,50 +604,40 @@
             this.observer && this.observer.disconnect();
             return this;
         }
-        static subtree(selector, callback)
+        static observe(selector, callback, options)
         {
             callback();
             return [...document.querySelectorAll(selector)].map(
                 it =>
                 {
                     const observer = new Observer(it, callback);
-                    observer.options = {
-                        childList: true,
-                        subtree: false,
-                        attributes: false,
-                    };
+                    observer.options = options;
                     return observer.start();
                 });
+        }
+        static subtree(selector, callback)
+        {
+            return Observer.observe(selector, callback, {
+                childList: true,
+                subtree: false,
+                attributes: false,
+            });
         }
         static attributes(selector, callback)
         {
-            callback();
-            return [...document.querySelectorAll(selector)].map(
-                it =>
-                {
-                    const observer = new Observer(it, callback);
-                    observer.options = {
-                        childList: false,
-                        subtree: true,
-                        attributes: true,
-                    };
-                    return observer.start();
-                });
+            return Observer.observe(selector, callback, {
+                childList: false,
+                subtree: true,
+                attributes: true,
+            });
         }
         static all(selector, callback)
         {
-            callback();
-            return [...document.querySelectorAll(selector)].map(
-                it =>
-                {
-                    const observer = new Observer(it, callback);
-                    observer.options = {
-                        childList: true,
-                        subtree: true,
-                        attributes: true,
-                    };
-                    return observer.start();
-                });
+            return Observer.observe(selector, callback, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+            });
         }
     }
     class SpinQuery
@@ -927,7 +917,7 @@
         {
             return new ResourceType("html", html =>
             {
-                for (const [key, name,] of Object.entries(Resource.displayNames))
+                for (const [key, name] of Object.entries(Resource.displayNames))
                 {
                     html = html.replace(new RegExp(`(<(.+)\\s*?indent="[\\d]+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</\\2>)`, "g"),
                         `$1${name}$3`);
@@ -1180,7 +1170,7 @@
                 {
                     toastMessage += "\n" + reason.stack;
                 }
-                Toast.error(toast, "错误");
+                Toast.error(toastMessage, "错误");
             });
             await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "script")
