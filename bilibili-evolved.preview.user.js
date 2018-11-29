@@ -1001,11 +1001,11 @@
                         .map(mapFunc)
                         .reduce((acc, it) => acc.concat(it), []);
                 };
-                return flatMap.bind(this.styles);
+                return flatMap;
             }
             else
             {
-                return Array.prototype.flatMap.bind(this.styles);
+                return Array.prototype.flatMap;
             }
         }
         loadCache()
@@ -1020,7 +1020,7 @@
                 return settings.cache[key];
             }
         }
-        download()
+        async download()
         {
             const key = this.key;
             return new Promise((resolve, reject) =>
@@ -1031,7 +1031,8 @@
                 }
                 else
                 {
-                    const flattenStyles = this.flatMapPolyfill()(it => typeof it === "object" ? it.key : it);
+                    const flattenStyles = this.flatMapPolyfill()
+                        .bind(this.styles)(it => typeof it === "object" ? it.key : it);
                     Promise.all(this.dependencies
                         .concat(flattenStyles.map(it => Resource.all[it]))
                         .map(r => r.download())

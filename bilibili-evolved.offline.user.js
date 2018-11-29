@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      134.90
+// @version      136.17
 // @description  增强哔哩哔哩Web端体验(离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -1053,11 +1053,11 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                         .map(mapFunc)
                         .reduce((acc, it) => acc.concat(it), []);
                 };
-                return flatMap.bind(this.styles);
+                return flatMap;
             }
             else
             {
-                return Array.prototype.flatMap.bind(this.styles);
+                return Array.prototype.flatMap;
             }
         }
         loadCache()
@@ -1072,7 +1072,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 return settings.cache[key];
             }
         }
-        download()
+        async download()
         {
             const key = this.key;
             return new Promise((resolve, reject) =>
@@ -1083,7 +1083,8 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 }
                 else
                 {
-                    const flattenStyles = this.flatMapPolyfill()(it => typeof it === "object" ? it.key : it);
+                    const flattenStyles = this.flatMapPolyfill()
+                        .bind(this.styles)(it => typeof it === "object" ? it.key : it);
                     Promise.all(this.dependencies
                         .concat(flattenStyles.map(it => Resource.all[it]))
                         .map(r => r.download())
