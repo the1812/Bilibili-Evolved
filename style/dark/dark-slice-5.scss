@@ -21,7 +21,7 @@
 .tab-selector-wrap .tag-wrap .tag span.selected,
 .cc-body .setting,
 .dropdown__content .dropdown__active,
-.dropdown__content .dropdown__item:hover 
+.dropdown__content .dropdown__item:hover
 {
     background-color: #222 !important;
 }
@@ -67,9 +67,9 @@
 .article-header .filter-wrp .filter-article-type .bili-btn,
 .article-header .filter-wrp .filter-level .bili-btn,
 .dropdown__content,
-.ivu-input-costom-width ivu-input-wrapper ivu-input-wrapper-default ivu-input-type .ivu-input,
+.ivu-input-costom-width .ivu-input-wrapper .ivu-input-wrapper-default .ivu-input-type .ivu-input,
 .ivu-form-item-error .ivu-input-group-append,
-.ivu-form-item-error .ivu-input-group-prepend 
+.ivu-form-item-error .ivu-input-group-prepend
 {
     background-color: #444 !important;
 }
@@ -94,7 +94,7 @@
 .bangumi-order-wrap .bangumi-collection,
 .bangumi-order-wrap .bangumi-collection-d,
 .bangumi-order-wrap .bangumi-order,
-.bangumi-order-wrap .bangumi-order-d 
+.bangumi-order-wrap .bangumi-order-d
 {
     background-image: none !important;
 }
@@ -110,7 +110,7 @@
 .article-header .filter-wrp .filter-article-type .line,
 .article-header .filter-wrp .filter-level .line,
 .border-line,
-.setting .follow-setting .follow-wrp .follow-modal 
+.setting .follow-setting .follow-wrp .follow-modal
 {
     background: transparent !important;
 }
@@ -206,7 +206,7 @@ table.invtable td,
 .pagination-container li.pagination-input-wrap .pagination-input,
 .c-top .name-top1,
 .news-contents h2,
-.infor-body-left news-contents .c-text,
+.infor-body-left .news-contents .c-text,
 .total-bt .t-date a,
 .tv-m2 .tv-m-tt,
 .tv-m3 .tv-m-tt,
@@ -233,16 +233,16 @@ table.invtable td,
 .article-header .dropdown-btn,
 .article-header .dropdown-btn .icon-ic_unfold,
 .search-wrp .bili-input,
-.help-title-wrap help-box .help-title,
+.help-title-wrap .help-box .help-title,
 .help-subindex,
-.ivu-input-costom-width ivu-input-wrapper ivu-input-wrapper-default ivu-input-type .ivu-input,
+.ivu-input-costom-width .ivu-input-wrapper .ivu-input-wrapper-default .ivu-input-type .ivu-input,
 .ivu-input-group-append,
 .ivu-input-group-prepend,
 .about-index .about-desc,
 .ivu-form .ivu-form-item-label,
 .ivu-btn-primary.active,
 .ivu-btn-primary:active,
-.ivu-btn-primary:hover 
+.ivu-btn-primary:hover
 {
     color: #eee !important;
 }
@@ -296,8 +296,8 @@ table.invtable td,
 .article-header .filter-wrp .article-type,
 .article-header .filter-wrp .filter-article-type,
 .article-header .filter-wrp .filter-level,
-setting cc-content-body .setting .follow-setting,
-.ivu-input-costom-width ivu-input-wrapper ivu-input-wrapper-default ivu-input-type .ivu-input,
+.setting .cc-content-body .setting .follow-setting,
+.ivu-input-costom-width .ivu-input-wrapper .ivu-input-wrapper-default .ivu-input-type .ivu-input,
 .about-index .about-desc,
 .apply-form .btn, .apply-form .btn:not([disabled]):hover,
 .main-footer .link-item
@@ -306,7 +306,7 @@ setting cc-content-body .setting .follow-setting,
 }
 .link-input,
 .add-cover,
-.cc-article-wrp .article-card .meta-title .typename 
+.cc-article-wrp .article-card .meta-title .typename
 {
     border-color: #aaa !important;
 }
@@ -332,7 +332,7 @@ setting cc-content-body .setting .follow-setting,
 //     fill: #aaa !important;
 // }
 .left-nav-logo,
-.icon-back 
+.icon-back
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -364,7 +364,7 @@ setting cc-content-body .setting .follow-setting,
 .videoCharts .stat .stat-wrp,
 .article-data-wrp .video-box,
 .article-net-charts .content-box,
-.el-radio-button__orig-radio:checked + .el-radio-button__inner 
+.el-radio-button__orig-radio:checked + .el-radio-button__inner
 {
     box-shadow: none !important;
 }
@@ -399,7 +399,7 @@ setting cc-content-body .setting .follow-setting,
 .tab-selector-wrap .tab-wrap .tab span.active,
 .tabs-tab-active:before,
 .ivu-input:focus,
-.ivu-input:hover 
+.ivu-input:hover
 {
     border-color: $customStyleColor !important;
 }
@@ -422,7 +422,7 @@ setting cc-content-body .setting .follow-setting,
 .item .title-wrap .activity,
 .tabs_active-bar,
 .tabs-nav .active,
-.apply-form .btn, .apply-form .btn:not([disabled]):hover 
+.apply-form .btn, .apply-form .btn:not([disabled]):hover
 {
     background-color: $customStyleColor !important;
 }
@@ -437,7 +437,7 @@ setting cc-content-body .setting .follow-setting,
 .collapse-item--active .collapse-title,
 .help-subindex,
 .drop-menu-item:hover,
-icon-label.hover-text-blue:hover .label,
+.icon-label.hover-text-blue:hover .label,
 .stat-card .num .text,
 .comment-card .comment-item .comment-info .reply-block .comment-vedio a,
 .section-item .diff-wrp .diff-text,
@@ -472,7 +472,7 @@ icon-label.hover-text-blue:hover .label,
 .help-subcontent .a,
 .help-subcontent .a:hover,
 .fixed-service-word .a,
-fixed-service-word .a:hover 
+.fixed-service-word .a:hover
 {
     color: $customStyleColor !important;
 }
@@ -500,7 +500,7 @@ fixed-service-word .a:hover
 .data-card .data-box .tab .fan-tab.current:after,
 .data-card .fans-box .tab .fan-tab.current:after,
 .section-item .diff-wrp .diff-text:before,
-.tabs-tab-active:before 
+.tabs-tab-active:before
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
