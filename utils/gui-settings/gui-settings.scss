@@ -2,6 +2,7 @@
 {
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: fixed;
@@ -10,7 +11,8 @@
     width: 24px;
     z-index: 99999;
 }
-.gui-settings
+.gui-settings,
+.gui-settings-widgets
 {
     display: flex;
     justify-content: center;
@@ -18,6 +20,7 @@
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     transform: translateX(-12px);
+    margin: 16px 0;
 }
 .gui-settings.gui-settings-notification::before
 {
@@ -31,25 +34,31 @@
     border-radius: 50%;
 }
 .gui-settings,
+.gui-settings-widgets,
 .gui-settings-header .gui-settings-close path,
-.gui-settings svg path
+.gui-settings svg path,
+.gui-settings-widgets svg path
 {
     transition: all 0.2s;
 }
-.gui-settings svg path
+.gui-settings svg path,
+.gui-settings-widgets svg path
 {
     fill: #8884;
     opacity: 0.75;
     transform-origin: center !important;
+    transform: rotate(120deg);
 }
-.gui-settings:hover
+.gui-settings:hover,
+.gui-settings-widgets:hover
 {
     transform: translateX(0px);
 }
-.gui-settings:hover svg path
+.gui-settings:hover svg path,
+.gui-settings-widgets:hover svg path
 {
     opacity: 1;
-    transform: rotate(120deg);
+    transform: rotate(0deg);
 }
 .gui-settings-panel
 {

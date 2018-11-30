@@ -114,7 +114,7 @@
     }
     function loadResources()
     {
-        const resouceManifest = {
+        const resourceManifest = {
             style: {
                 path: "min/style.min.scss",
                 order: 1,
@@ -462,7 +462,7 @@
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
         Resource.displayNames = {};
-        for (const [key, data] of Object.entries(resouceManifest))
+        for (const [key, data] of Object.entries(resourceManifest))
         {
             const resource = new Resource(data.path, data.order, data.styles);
             resource.key = key;
@@ -473,7 +473,7 @@
             }
             Resource.all[key] = resource;
         }
-        for (const [key, data] of Object.entries(resouceManifest))
+        for (const [key, data] of Object.entries(resourceManifest))
         {
             if (data.dependencies)
             {

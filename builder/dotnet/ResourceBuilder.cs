@@ -22,7 +22,7 @@ namespace BilibiliEvolved.Build
     abstract class ResourceMinifier
     {
         public abstract Predicate<FileInfo> FileFilter { get; }
-        public abstract string ResouceType { get; }
+        public abstract string ResourceType { get; }
         public abstract string Minify(string input);
         protected string GetMinifiedFileName(string path)
         {
@@ -78,7 +78,7 @@ namespace BilibiliEvolved.Build
                 var changedFiles = files.Where(file => !cache.Contains(file));
                 Parallel.ForEach(changedFiles, path =>
                 {
-                    builder.WriteInfo($"{ResouceType} minify: {path}");
+                    builder.WriteInfo($"{ResourceType} minify: {path}");
 
                     var text = File.ReadAllText(path);
                     var result = Minify(text);
@@ -96,7 +96,7 @@ namespace BilibiliEvolved.Build
                 builder.OriginalResourceLength += new FileInfo(file).Length;
                 builder.MinifiedResourceLength += new FileInfo(GetMinifiedFileName(file)).Length;
             });
-            builder.WriteSuccess($"{ResouceType} minify complete.");
+            builder.WriteSuccess($"{ResourceType} minify complete.");
             return builder;
         }
     }
@@ -110,7 +110,7 @@ namespace BilibiliEvolved.Build
                 && (file.Extension == ".css" || file.Extension == ".scss");
         };
 
-        public override string ResouceType { get; } = "CSS";
+        public override string ResourceType { get; } = "CSS";
 
         public override string Minify(string input)
         {
@@ -190,7 +190,7 @@ namespace BilibiliEvolved.Build
                 && file.Extension == ".js";
         };
 
-        public override string ResouceType { get; } = "JavaScript";
+        public override string ResourceType { get; } = "JavaScript";
 
         public override string Minify(string input)
         {
@@ -222,7 +222,7 @@ namespace BilibiliEvolved.Build
             return !file.FullName.Contains(".min") && file.Extension == ".html";
         };
 
-        public override string ResouceType { get; } = "HTML";
+        public override string ResourceType { get; } = "HTML";
 
         public override string Minify(string input)
         {
