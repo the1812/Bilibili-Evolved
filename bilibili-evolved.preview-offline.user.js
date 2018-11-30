@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      136.28
+// @version      137.18
 // @description  增强哔哩哔哩Web端体验(预览离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -682,11 +682,31 @@
         }
         static any(query, action)
         {
-            new SpinQuery(query, it => it.length > 0, action).start();
+            if (action !== undefined)
+            {
+                new SpinQuery(query, it => it.length > 0, action).start();
+            }
+            else
+            {
+                return new Promise(resolve =>
+                {
+                    new SpinQuery(query, it => it.length > 0, it => resolve(it)).start();
+                });
+            }
         }
         static count(query, count, action)
         {
-            new SpinQuery(query, it => it.length === count, action).start();
+            if (action !== undefined)
+            {
+                new SpinQuery(query, it => it.length === count, action).start();
+            }
+            else
+            {
+                return new Promise(resolve =>
+                {
+                    new SpinQuery(query, it => it.length === count, it => resolve(it)).start();
+                });
+            }
         }
     }
     class ColorProcessor

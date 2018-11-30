@@ -681,11 +681,31 @@
         }
         static any(query, action)
         {
-            new SpinQuery(query, it => it.length > 0, action).start();
+            if (action !== undefined)
+            {
+                new SpinQuery(query, it => it.length > 0, action).start();
+            }
+            else
+            {
+                return new Promise(resolve =>
+                {
+                    new SpinQuery(query, it => it.length > 0, it => resolve(it)).start();
+                });
+            }
         }
         static count(query, count, action)
         {
-            new SpinQuery(query, it => it.length === count, action).start();
+            if (action !== undefined)
+            {
+                new SpinQuery(query, it => it.length === count, action).start();
+            }
+            else
+            {
+                return new Promise(resolve =>
+                {
+                    new SpinQuery(query, it => it.length === count, it => resolve(it)).start();
+                });
+            }
         }
     }
     class ColorProcessor
