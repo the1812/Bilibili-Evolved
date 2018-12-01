@@ -98,10 +98,10 @@
 {
     background-image: none !important;
 }
-// a
-// {
-//     background-color: transparent !important;
-// }
+.help-subcontent p
+{
+    background-color: transparent !important;
+}
 // a
 // {
 //     background: #fff1 !important;
@@ -422,7 +422,7 @@ table.invtable td,
 .item .title-wrap .activity,
 .tabs_active-bar,
 .tabs-nav .active,
-.apply-form .btn, .apply-form .btn:not([disabled]):hover
+.apply-form .btn, .apply-form .btn:not(:disabled):hover
 {
     background-color: $customStyleColor !important;
 }
@@ -462,17 +462,10 @@ table.invtable td,
 .article-header .filter-wrp .article-type .bili-btn.current,
 .article-header .filter-wrp .filter-article-type .bili-btn.current,
 .article-header .filter-wrp .filter-level .bili-btn.current,
-.left-nav-item-childed:hover,
-.active .left-nav-item-child,
-.active[data-v-54800c27], .advice-btn:hover,
-.left-nav-item.active,
-.left-nav-item.active i.active,
-.left-nav-list.on .left-nav-item .icon,
-.left-nav-list.on .left-nav-item,
-.help-subcontent .a,
-.help-subcontent .a:hover,
-.fixed-service-word .a,
-.fixed-service-word .a:hover
+.help-subcontent a,
+.help-subcontent a:hover,
+.fixed-service-word a,
+.fixed-service-word a:hover
 {
     color: $customStyleColor !important;
 }

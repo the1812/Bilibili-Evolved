@@ -268,11 +268,6 @@
             if ($(".gui-settings").length === 0)
             {
                 body.append(`<div class='gui-settings-icon-panel'>
-                <div class='gui-settings-widgets'>
-                    <svg style='width:24px;height:24px' viewBox='0 0 24 24'>
-                        <path/>
-                    </svg>
-                </div>
                 <div class='gui-settings'>
                     <svg style='width:24px;height:24px' viewBox='0 0 24 24'>
                         <path/>
