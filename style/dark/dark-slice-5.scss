@@ -233,7 +233,6 @@ table.invtable td,
 .article-header .dropdown-btn,
 .article-header .dropdown-btn .icon-ic_unfold,
 .search-wrp .bili-input,
-.help-title-wrap .help-box .help-title,
 .help-subindex,
 .ivu-input-costom-width .ivu-input-wrapper .ivu-input-wrapper-default .ivu-input-type .ivu-input,
 .ivu-input-group-append,
@@ -299,7 +298,7 @@ table.invtable td,
 .setting .cc-content-body .setting .follow-setting,
 .ivu-input-costom-width .ivu-input-wrapper .ivu-input-wrapper-default .ivu-input-type .ivu-input,
 .about-index .about-desc,
-.apply-form .btn, .apply-form .btn:not([disabled]):hover,
+.apply-form .btn, .apply-form .btn:hover,
 .main-footer .link-item
 {
     border-color: transparent !important;
@@ -422,7 +421,8 @@ table.invtable td,
 .item .title-wrap .activity,
 .tabs_active-bar,
 .tabs-nav .active,
-.apply-form .btn, .apply-form .btn:not(:disabled):hover
+.apply-form .btn,
+.apply-form .btn:hover
 {
     background-color: $customStyleColor !important;
 }
@@ -432,8 +432,6 @@ table.invtable td,
 .bili-blue,
 .text-blue,
 .save-btn.active,
-.category:not(.gui-settings-content .category):hover,
-.help-title,
 .collapse-item--active .collapse-title,
 .help-subindex,
 .drop-menu-item:hover,
@@ -465,7 +463,8 @@ table.invtable td,
 .help-subcontent a,
 .help-subcontent a:hover,
 .fixed-service-word a,
-.fixed-service-word a:hover
+.fixed-service-word a:hover,
+.help-title-wrap.help-box .help-title
 {
     color: $customStyleColor !important;
 }
