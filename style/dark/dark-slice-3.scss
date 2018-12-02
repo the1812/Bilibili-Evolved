@@ -460,7 +460,7 @@ svg.toast-card-dismiss path
 .error-container .error.split,
 .leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn,
 .nav-header-wrapper .nav-header .user-panel .panel-list .icon,
-.icon-view::after
+[class^=icon-]::after
 {
     filter: brightness(0) invert(1) !important;
 }

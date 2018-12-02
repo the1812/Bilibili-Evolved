@@ -33,7 +33,7 @@
                     <button
                         class="gui-settings-flat-button"
                         id="clear-cache">
-                        <i class=""></i>
+                        <i class="icon-clear"></i>
                         <span>清除缓存</span>
                     </button>`,
                 success: () =>
@@ -46,7 +46,7 @@
                     });
                     if (typeof offlineData !== "undefined")
                     {
-                        $("button#clear-cache").addClass("hidden");
+                        $("button#clear-cache").remove();
                     }
                 }
             },

@@ -646,7 +646,7 @@
     }
     class SpinQuery
     {
-        constructor(query, condition, action)
+        constructor(query, condition, action, failed)
         {
             this.maxRetry = 30;
             this.retry = 0;
@@ -654,12 +654,13 @@
             this.query = query;
             this.condition = condition;
             this.action = action;
+            this.failed = failed;
         }
         start()
         {
-            this.tryQuery(this.query, this.condition, this.action);
+            this.tryQuery(this.query, this.condition, this.action, this.failed);
         }
-        tryQuery(query, condition, action)
+        tryQuery(query, condition, action, failed)
         {
             if (this.retry < this.maxRetry)
             {
@@ -671,31 +672,35 @@
                 else
                 {
                     this.retry++;
-                    setTimeout(() => this.tryQuery(query, condition, action), this.queryInterval);
+                    setTimeout(() => this.tryQuery(query, condition, action, failed), this.queryInterval);
                 }
-            }
-        }
-        static condition(query, condition, action)
-        {
-            if (action !== undefined)
-            {
-                new SpinQuery(query, condition, action).start();
             }
             else
             {
-                return new Promise(resolve =>
+                typeof failed === "function" && failed();
+            }
+        }
+        static condition(query, condition, action, failed)
+        {
+            if (action !== undefined)
+            {
+                new SpinQuery(query, condition, action, failed).start();
+            }
+            else
+            {
+                return new Promise((resolve, reject) =>
                 {
-                    new SpinQuery(query, condition, it => resolve(it)).start();
+                    new SpinQuery(query, condition, it => resolve(it), it => reject(it)).start();
                 });
             }
         }
-        static any(query, action)
+        static any(query, action, failed)
         {
-            return SpinQuery.condition(query, it => it.length > 0, action);
+            return SpinQuery.condition(query, it => it.length > 0, action, failed);
         }
-        static count(query, count, action)
+        static count(query, count, action, failed)
         {
-            return SpinQuery.condition(query, it => it.length === count, action);
+            return SpinQuery.condition(query, it => it.length === count, action, failed);
         }
     }
     class ColorProcessor

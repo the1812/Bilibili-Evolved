@@ -90,7 +90,7 @@
                         const metaData = await SpinQuery.condition(
                             () => $("meta[itemprop='image'],meta[property='og:image']"),
                             metaData => metaData.length > 0 && metaData.prop("content"),
-                        );
+                        ).catch(() => $("#view-cover").remove());
                         const imageViewer = new ImageViewer(metaData.prop("content"));
                         $("#view-cover").on("click", () =>
                         {
@@ -149,7 +149,8 @@
                         </button>`,
                     success: async () =>
                     {
-                        const coverLink = await SpinQuery.any(() => $(".header-info-ctnr .room-cover"));
+                        const coverLink = await SpinQuery.any(() => $(".header-info-ctnr .room-cover"))
+                            .catch(() => $("#view-cover").remove());
                         const match = coverLink
                             .attr("href")
                             .match(/space\.bilibili\.com\/([\d]+)/);
