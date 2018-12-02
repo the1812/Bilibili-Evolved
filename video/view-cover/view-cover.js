@@ -80,8 +80,7 @@
                 widget: {
                     content: `
                         <button
-                            class="hidden"
-                            title="查看当前视频的封面"
+                            class="hidden gui-settings-flat-button"
                             id="view-video-cover">
                             <i class="icon-view"></i>
                             <span>查看封面</span>

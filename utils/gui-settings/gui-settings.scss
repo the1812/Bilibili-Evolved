@@ -339,58 +339,6 @@ button.gui-settings-button:focus
 {
     outline: none;
 }
-button.save
-{
-    padding: 8px 38px;
-    max-height: 38px;
-    background: $customStyleColor;
-    color: $foreground;
-    transform-origin: center;
-}
-button.save.save-complete
-{
-    animation: hide-a-moment 3.8s;
-}
-@keyframes hide-a-moment
-{
-    0%, 100%
-    {
-        transform: scale(1);
-    }
-    5%, 95%
-    {
-        transform: scale(0);
-    }
-}
-.gui-settings-footer svg
-{
-    width: 30px;
-    height: 30px;
-    margin-left: 0;
-    transition: all 0.2s;
-    position: absolute;
-    transform-origin: center;
-    transform: scale(0);
-}
-.gui-settings-footer svg.save-complete
-{
-    animation: show-a-moment 3.8s;
-}
-@keyframes show-a-moment
-{
-    0%, 5%, 95%, 100%
-    {
-        transform: scale(0);
-    }
-    10%, 90%
-    {
-        transform: scale(1);
-    }
-}
-.gui-settings-footer svg path
-{
-    fill: $customStyleColor;
-}
 .custom-color-preview
 {
     width: 40px;
@@ -630,9 +578,8 @@ i.settings-category-arrow::after
 {
     padding: 32px;
     display: flex;
-    flex-direction: column;
     align-items: start;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 .gui-settings-widgets-box>.widgets-container:empty::after
@@ -640,7 +587,7 @@ i.settings-category-arrow::after
     content: "当前页面没有可用的附加功能.";
     font-size: 10pt;
 }
-.gui-settings-widgets-box>.widgets-container>button
+.gui-settings-flat-button
 {
     width: auto;
     padding: 8px 16px;
@@ -649,5 +596,53 @@ i.settings-category-arrow::after
     color: black;
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
+    transition: all .2s ease-out;
+    transform-origin: center;
+}
+.gui-settings-flat-button:hover
+{
+    transform: scale(1.05);
+}
+.gui-settings-flat-button:active
+{
+    transform: scale(0.95);
+}
+.gui-settings-flat-button>i
+{
+    margin-right: 8px;
+}
+.gui-settings-widgets-box .gui-settings-flat-button
+{
+    flex: 1 0 auto;
+    margin: 4px;
+}
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-6)
+{
+    border-bottom: 2px solid #00A0D8;
+}
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-5)
+{
+    border-bottom: 2px solid #26A69A;
+}
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-4)
+{
+    border-bottom: 2px solid #81C784;
+}
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-3)
+{
+    border-bottom: 2px solid #FF9800;
+}
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-2)
+{
+    border-bottom: 2px solid #e57373;
+}
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-1)
+{
+    border-bottom: 2px solid #F06292;
+}
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n)
+{
+    border-bottom: 2px solid #9575CD;
 }
