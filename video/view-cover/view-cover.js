@@ -53,30 +53,6 @@
         if ($("meta[itemprop='image'],meta[property='og:image']").length > 0)
         {
             return {
-                settingsWidget: {
-                    category: "视频与直播",
-                    content: `<div class="hidden">
-                        <button
-                            class="gui-settings-button"
-                            title="查看当前视频的封面"
-                            id="view-video-cover">
-                            查看封面
-                        </button>
-                        </div>`,
-                    success: () =>
-                    {
-                        new SpinQuery(() => $("meta[itemprop='image'],meta[property='og:image']"),
-                            metaData => metaData.length > 0 && metaData.prop("content"),
-                            metaData =>
-                            {
-                                const imageViewer = new ImageViewer(metaData.prop("content"));
-                                $("#view-video-cover").on("click", () =>
-                                {
-                                    imageViewer.show();
-                                }).parent().removeClass("hidden");
-                            }).start();
-                    }
-                },
                 widget: {
                     content: `
                         <button
@@ -107,42 +83,6 @@
         else
         {
             return {
-                settingsWidget: {
-                    category: "视频与直播",
-                    content: `<div class="hidden">
-                            <button
-                                class="gui-settings-button"
-                                title="查看当前直播的封面"
-                                id="view-live-cover">
-                                查看封面
-                            </button>
-                            </div>`,
-                    success: () =>
-                    {
-                        SpinQuery.any(() => $(".header-info-ctnr .room-cover"), coverLink =>
-                        {
-                            const match = coverLink
-                                .attr("href")
-                                .match(/space\.bilibili\.com\/([\d]+)/);
-                            if (match && match[1])
-                            {
-                                const uid = match[1];
-                                const url = `https://api.live.bilibili.com/bili/getRoomInfo/${uid}`;
-                                downloadText(url, text =>
-                                {
-                                    // remove the surrounding "(...);"
-                                    const jsonText = text.slice(1, -2);
-                                    const coverUrl = JSON.parse(jsonText).data.cover;
-                                    const imageViewer = new ImageViewer(coverUrl);
-                                    $("#view-live-cover").on("click", () =>
-                                    {
-                                        imageViewer.show();
-                                    }).parent().removeClass("hidden");
-                                });
-                            }
-                        });
-                    }
-                },
                 widget: {
                     content: `
                         <button
