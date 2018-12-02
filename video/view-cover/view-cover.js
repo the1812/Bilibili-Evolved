@@ -81,7 +81,7 @@
                     content: `
                         <button
                             class="hidden gui-settings-flat-button"
-                            id="view-video-cover">
+                            id="view-cover">
                             <i class="icon-view"></i>
                             <span>查看封面</span>
                         </button>`,
@@ -92,7 +92,7 @@
                             metaData => metaData.length > 0 && metaData.prop("content"),
                         );
                         const imageViewer = new ImageViewer(metaData.prop("content"));
-                        $("#view-video-cover").on("click", () =>
+                        $("#view-cover").on("click", () =>
                         {
                             imageViewer.show();
                         }).removeClass("hidden");
@@ -138,7 +138,37 @@
                             }
                         });
                     }
-                }
+                },
+                widget: {
+                    content: `
+                        <button
+                            class="hidden gui-settings-flat-button"
+                            id="view-cover">
+                            <i class="icon-view"></i>
+                            <span>查看封面</span>
+                        </button>`,
+                    success: async () =>
+                    {
+                        const coverLink = await SpinQuery.any(() => $(".header-info-ctnr .room-cover"));
+                        const match = coverLink
+                            .attr("href")
+                            .match(/space\.bilibili\.com\/([\d]+)/);
+                        if (match && match[1])
+                        {
+                            const uid = match[1];
+                            const url = `https://api.live.bilibili.com/bili/getRoomInfo/${uid}`;
+                            const text = await downloadText(url);
+                            // remove the surrounding "(...);"
+                            const jsonText = text.slice(1, -2);
+                            const coverUrl = JSON.parse(jsonText).data.cover;
+                            const imageViewer = new ImageViewer(coverUrl);
+                            $("#view-cover").on("click", () =>
+                            {
+                                imageViewer.show();
+                            }).removeClass("hidden");
+                        }
+                    },
+                },
             };
         }
     };
