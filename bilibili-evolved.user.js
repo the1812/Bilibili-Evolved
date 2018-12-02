@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.41
+// @version      1.6.0
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -191,6 +191,9 @@
             latestVersion: {
                 path: "version.txt",
             },
+            iconsStyle: {
+                path: "min/icons.min.css",
+            },
             guiSettings: {
                 path: "min/gui-settings.min.js",
                 dependencies: [
@@ -198,6 +201,7 @@
                 ],
                 styles: [
                     "guiSettingsStyle",
+                    "iconsStyle",
                 ],
                 displayNames: {
                     guiSettings: "设置",
@@ -642,7 +646,7 @@
     }
     class SpinQuery
     {
-        constructor(query, condition, action, onFailed)
+        constructor(query, condition, action)
         {
             this.maxRetry = 30;
             this.retry = 0;
@@ -650,22 +654,14 @@
             this.query = query;
             this.condition = condition;
             this.action = action;
-            this.onFailed = onFailed;
         }
         start()
         {
-            this.tryQuery(this.query, this.condition, this.action, this.onFailed);
+            this.tryQuery(this.query, this.condition, this.action);
         }
-        tryQuery(query, condition, action, onFailed)
+        tryQuery(query, condition, action)
         {
-            if (this.retry >= this.maxRetry)
-            {
-                if (onFailed)
-                {
-                    onFailed();
-                }
-            }
-            else
+            if (this.retry < this.maxRetry)
             {
                 const result = query();
                 if (condition(result))
@@ -675,37 +671,31 @@
                 else
                 {
                     this.retry++;
-                    setTimeout(() => this.tryQuery(query, condition, action, onFailed), this.queryInterval);
+                    setTimeout(() => this.tryQuery(query, condition, action), this.queryInterval);
                 }
+            }
+        }
+        static condition(query, condition, action)
+        {
+            if (action !== undefined)
+            {
+                new SpinQuery(query, condition, action).start();
+            }
+            else
+            {
+                return new Promise(resolve =>
+                {
+                    new SpinQuery(query, condition, it => resolve(it)).start();
+                });
             }
         }
         static any(query, action)
         {
-            if (action !== undefined)
-            {
-                new SpinQuery(query, it => it.length > 0, action).start();
-            }
-            else
-            {
-                return new Promise(resolve =>
-                {
-                    new SpinQuery(query, it => it.length > 0, it => resolve(it)).start();
-                });
-            }
+            return SpinQuery.condition(query, it => it.length > 0, action);
         }
         static count(query, count, action)
         {
-            if (action !== undefined)
-            {
-                new SpinQuery(query, it => it.length === count, action).start();
-            }
-            else
-            {
-                return new Promise(resolve =>
-                {
-                    new SpinQuery(query, it => it.length === count, it => resolve(it)).start();
-                });
-            }
+            return SpinQuery.condition(query, it => it.length === count, action);
         }
     }
     class ColorProcessor
@@ -1233,7 +1223,7 @@
                 }
             }
             await Promise.all(promises);
-            this.applySettingsWidgets();
+            this.applyWidgets();
             saveSettings(settings);
         }
         applyComponent(key, text)
@@ -1258,7 +1248,7 @@
                 }
             }
         }
-        applySettingsWidgets()
+        applyWidgets()
         {
             const panel = $(".gui-settings-panel");
             if (panel.length === 0)
@@ -1282,6 +1272,16 @@
                     panel.find(`.widgets-container[category-name=${info.category}]`).append(info.content);
                 }
 
+                if (info.success)
+                {
+                    info.success();
+                }
+            }
+            for (const info of Object.values(this.attributes)
+                .filter(it => it.widget)
+                .map(it => it.widget))
+            {
+                $(".widgets-container").append($(info.content));
                 if (info.success)
                 {
                     info.success();

@@ -626,16 +626,28 @@ i.settings-category-arrow::after
     margin: 32px;
     font-size: 16pt;
 }
-.widgets-container
+.gui-settings-widgets-box>.widgets-container
 {
     padding: 32px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     justify-content: center;
+    flex-wrap: wrap;
 }
-.widgets-container:empty::after
+.gui-settings-widgets-box>.widgets-container:empty::after
 {
     content: "当前页面没有可用的附加功能.";
     font-size: 10pt;
+}
+.gui-settings-widgets-box>.widgets-container>button
+{
+    width: auto;
+    padding: 8px 16px;
+    background: #8884;
+    border: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }

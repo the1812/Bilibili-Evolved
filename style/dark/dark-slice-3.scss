@@ -341,7 +341,8 @@ body>div.to-top.on,
 #community_msg .dyn_menu li a,
 .list.main_body .list_box .next_button,
 .gui-settings-dropdown input,
-.bilibili-player-video-control .bilibili-player-video-volume-num
+.bilibili-player-video-control .bilibili-player-video-volume-num,
+.gui-settings-widgets-box>.widgets-container>button
 {
     color: #eee !important;
 }
@@ -458,7 +459,8 @@ svg.toast-card-dismiss path
 .breadcrumb .arrow,
 .error-container .error.split,
 .leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn,
-.nav-header-wrapper .nav-header .user-panel .panel-list .icon
+.nav-header-wrapper .nav-header .user-panel .panel-list .icon,
+.icon-view::after
 {
     filter: brightness(0) invert(1) !important;
 }

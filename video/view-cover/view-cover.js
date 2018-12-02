@@ -76,7 +76,29 @@
                                 }).parent().removeClass("hidden");
                             }).start();
                     }
-                }
+                },
+                widget: {
+                    content: `
+                        <button
+                            class="hidden"
+                            title="查看当前视频的封面"
+                            id="view-video-cover">
+                            <i class="icon-view"></i>
+                            <span>查看封面</span>
+                        </button>`,
+                    success: async () =>
+                    {
+                        const metaData = await SpinQuery.condition(
+                            () => $("meta[itemprop='image'],meta[property='og:image']"),
+                            metaData => metaData.length > 0 && metaData.prop("content"),
+                        );
+                        const imageViewer = new ImageViewer(metaData.prop("content"));
+                        $("#view-video-cover").on("click", () =>
+                        {
+                            imageViewer.show();
+                        }).removeClass("hidden");
+                    },
+                },
             };
         }
         else
