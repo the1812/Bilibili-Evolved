@@ -5,30 +5,28 @@
 .download-video-panel
 {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 2px);
     transition: all .16s ease-out;
     transform-origin: top;
     transform: scaleY(0);
     background: white;
-    border-radius: 4px;
     box-shadow: 0px 3px 20px 2px #0004;
     z-index: 100;
 }
-.gui-settings-content ol.video-quality li,
+ol.video-quality li,
 .video-action>div
 {
     cursor: pointer;
     align-items: center;
     margin: 0;
     padding: 8px 16px;
-    border-radius: 4px;
     transition: all .2s ease-out;
 }
 .video-action>div
 {
     padding: 12px 24px;
 }
-.gui-settings-content ol.video-quality li:hover,
+ol.video-quality li:hover,
 .video-action>div:hover
 {
     background: rgba(0,0,0,0.16);
@@ -50,10 +48,6 @@
 .download-progress-text
 {
     display: flex;
-}
-.download-progress-title
-{
-    flex: 1 0 0;
 }
 .download-progress-background
 {
@@ -79,7 +73,6 @@
 }
 .download-progress-cancel>span
 {
-    border-radius: 4px;
     background-color: #8884;
     padding: 4px 8px;
     cursor: pointer;
@@ -99,7 +92,7 @@
 }
 .video-progress
 {
-    min-width: 160px;
+    min-width: 120px;
 }
 #video-complete
 {

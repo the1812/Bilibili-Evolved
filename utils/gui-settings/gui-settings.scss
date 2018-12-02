@@ -581,6 +581,7 @@ i.settings-category-arrow::after
     align-items: start;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: relative;
 }
 .gui-settings-widgets-box>.widgets-container:empty::after
 {
@@ -604,11 +605,15 @@ i.settings-category-arrow::after
 }
 .gui-settings-flat-button:hover
 {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 .gui-settings-flat-button:active
 {
-    transform: scale(0.95);
+    transform: scale(0.98);
+}
+.gui-settings-flat-button:focus
+{
+    outline: none;
 }
 .gui-settings-flat-button>i
 {

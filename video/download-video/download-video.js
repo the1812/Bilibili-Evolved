@@ -292,6 +292,7 @@
             const [aid, cid] = result;
             if (aid === undefined || cid === undefined)
             {
+                $("#download-video").remove();
                 return;
             }
             pageData.aid = aid;
@@ -369,10 +370,10 @@
                     .prependTo("ol.video-quality");
             });
             resources.applyStyle("downloadVideoStyle");
-            $("#download-video").on("click", () =>
-            {
-                $(".download-video-panel").toggleClass("opened");
-            }).removeClass("hidden").parent().removeClass("hidden");
+            const togglePopup = () => $(".download-video-panel").toggleClass("opened");
+            $("#download-video")
+                .hover(togglePopup, togglePopup)
+                .removeClass("hidden");
             $(".video-error").on("click", () =>
             {
                 $(".video-error").text("");
@@ -383,16 +384,11 @@
             });
         }
         return {
-            settingsWidget: {
-                category: "视频与直播",
+            widget:
+            {
                 content: resources.data.downloadVideoDom.text,
                 success: loadWidget,
             },
-            // widget:
-            // {
-            //     content: resources.data.downloadVideoDom.text,
-            //     success: loadWidget,
-            // },
         };
     };
 })();
