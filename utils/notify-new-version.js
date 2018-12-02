@@ -90,7 +90,22 @@
                 widget:
                 {
                     content: `
-
+                        <button
+                            class="gui-settings-flat-button"
+                            id="new-version-update">
+                            <a href="${settings.latestVersionLink}">
+                                <i class="icon-update"></i>
+                                <span>安装更新</span>
+                            </a>
+                        </button>
+                        <button
+                            class="gui-settings-flat-button"
+                            id="new-version-info">
+                            <a target="blank" href="https://github.com/the1812/Bilibili-Evolved/releases">
+                                <i class="icon-info"></i>
+                                <span>查看更新</span>
+                            </a>
+                        </button>
                     `,
                     success: async () =>
                     {

@@ -588,6 +588,15 @@ i.settings-category-arrow::after
     content: "当前页面没有可用的附加功能.";
     font-size: 10pt;
 }
+.gui-settings-flat-button,
+.gui-settings-flat-button a,
+.gui-settings-flat-button a:hover
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+}
 .gui-settings-flat-button
 {
     width: auto;
@@ -595,9 +604,6 @@ i.settings-category-arrow::after
     background: #8884;
     border: none;
     color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
     transition: all .2s ease-out;
     transform-origin: center;
@@ -615,7 +621,7 @@ i.settings-category-arrow::after
 {
     outline: none;
 }
-.gui-settings-flat-button>i
+.gui-settings-flat-button i
 {
     margin-right: 8px;
 }
@@ -624,31 +630,15 @@ i.settings-category-arrow::after
     flex: 1 0 auto;
     margin: 4px;
 }
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-6)
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(4n-3),
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(4n)
 {
-    border-bottom: 2px solid #00A0D8;
+    border-bottom: 2px solid $customStyleColor;
+    flex-basis: calc(60% - 8px);
 }
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-5)
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(4n-1),
+.gui-settings-widgets-box .gui-settings-flat-button:nth-child(4n-2)
 {
-    border-bottom: 2px solid #26A69A;
-}
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-4)
-{
-    border-bottom: 2px solid #81C784;
-}
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-3)
-{
-    border-bottom: 2px solid #FF9800;
-}
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-2)
-{
-    border-bottom: 2px solid #e57373;
-}
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n-1)
-{
-    border-bottom: 2px solid #F06292;
-}
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(7n)
-{
-    border-bottom: 2px solid #9575CD;
+    border-bottom: 2px solid $customStyleColor;
+    flex-basis: calc(40% - 8px);
 }
