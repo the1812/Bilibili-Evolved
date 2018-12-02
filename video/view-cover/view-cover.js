@@ -91,6 +91,10 @@
                             () => $("meta[itemprop='image'],meta[property='og:image']"),
                             metaData => metaData.length > 0 && metaData.prop("content"),
                         ).catch(() => $("#view-cover").remove());
+                        if (!metaData)
+                        {
+                            return;
+                        }
                         const imageViewer = new ImageViewer(metaData.prop("content"));
                         $("#view-cover").on("click", () =>
                         {
@@ -151,6 +155,10 @@
                     {
                         const coverLink = await SpinQuery.any(() => $(".header-info-ctnr .room-cover"))
                             .catch(() => $("#view-cover").remove());
+                        if (!coverLink)
+                        {
+                            return;
+                        }
                         const match = coverLink
                             .attr("href")
                             .match(/space\.bilibili\.com\/([\d]+)/);
