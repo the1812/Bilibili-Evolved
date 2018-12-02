@@ -944,8 +944,6 @@
                             <i class="settings-category-arrow"></i>
                         </span>
                     </li>
-                    <li class="indent-center widgets-container" category-name="$1">
-                    </li>
                 `).replace(/<checkbox\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
@@ -1259,28 +1257,6 @@
             if (panel.length === 0)
             {
                 return;
-            }
-            for (const info of Object.values(this.attributes)
-                .filter(it => it.settingsWidget)
-                .map(it => it.settingsWidget))
-            {
-                if (info.after)
-                {
-                    panel.find(info.after()).after(info.content);
-                }
-                else if (info.before)
-                {
-                    panel.find(info.before()).before(info.content);
-                }
-                else if (info.category)
-                {
-                    panel.find(`.widgets-container[category-name=${info.category}]`).append(info.content);
-                }
-
-                if (info.success)
-                {
-                    info.success();
-                }
             }
             for (const info of Object.values(this.attributes)
                 .filter(it => it.widget)
