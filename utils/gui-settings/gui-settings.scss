@@ -582,3 +582,38 @@ i.settings-category-arrow::after
     border-top-color: transparent;
     opacity: .8;
 }
+
+.gui-settings-mask
+{
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    background: #000a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    pointer-events: none;
+    transition: all .3s cubic-bezier(0, 0.86, 0.58, 1);
+}
+.gui-settings-mask.opened
+{
+    opacity: 1;
+    pointer-events: initial;
+}
+.gui-settings-widgets-box
+{
+    height: 100%;
+    width: 30%;
+    background: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    transform: translateX(-100%);
+    transition: all .3s cubic-bezier(0, 0.86, 0.58, 1);
+}
+.gui-settings-widgets-box.opened
+{
+    transform: translateX(0);
+}

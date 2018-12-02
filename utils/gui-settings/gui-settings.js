@@ -163,6 +163,10 @@
             {
                 $(".gui-settings-panel").removeClass("opened");
             });
+            $(".gui-settings-mask").on("click", () =>
+            {
+                $(".gui-settings-widgets-box,.gui-settings-mask").removeClass("opened");
+            });
             $("input[key='customStyleColor']").on("input", () =>
             {
                 const color = textValidate.customStyleColor($("input[key='customStyleColor']").val());
@@ -268,6 +272,11 @@
             if ($(".gui-settings").length === 0)
             {
                 body.append(`<div class='gui-settings-icon-panel'>
+                <div class='gui-settings-widgets'>
+                    <svg style='width:24px;height:24px' viewBox='0 0 24 24'>
+                        <path/>
+                    </svg>
+                </div>
                 <div class='gui-settings'>
                     <svg style='width:24px;height:24px' viewBox='0 0 24 24'>
                         <path/>
@@ -276,6 +285,10 @@
                 $(".gui-settings").on("click", () =>
                 {
                     $(".gui-settings-panel").addClass("opened");
+                });
+                $(".gui-settings-widgets").on("click", () =>
+                {
+                    $(".gui-settings-widgets-box,.gui-settings-mask").addClass("opened");
                 });
             }
             resources.applyStyle("guiSettingsStyle");
