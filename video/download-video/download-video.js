@@ -263,7 +263,7 @@
                 };
             }
         }
-        async function loadWidget()
+        async function loadPageData()
         {
             const result = await (async () =>
             {
@@ -290,13 +290,13 @@
                 return [aid, cid];
             })();
             const [aid, cid] = result;
-            if (aid === undefined || cid === undefined)
-            {
-                $("#download-video").remove();
-                return;
-            }
             pageData.aid = aid;
             pageData.cid = cid;
+            return aid !== undefined && cid !== undefined;
+        }
+        async function loadWidget()
+        {
+            await loadPageData();
             const formats = await VideoFormat.availableFormats;
             let [selectedFormat] = formats;
             const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
@@ -371,9 +371,7 @@
             });
             resources.applyStyle("downloadVideoStyle");
             const togglePopup = () => $(".download-video-panel").toggleClass("opened");
-            $("#download-video")
-                .hover(togglePopup, togglePopup)
-                .removeClass("hidden");
+            $("#download-video").hover(togglePopup, togglePopup);
             $(".video-error").on("click", () =>
             {
                 $(".video-error").text("");
@@ -387,6 +385,7 @@
             widget:
             {
                 content: resources.data.downloadVideoDom.text,
+                condition: loadPageData,
                 success: loadWidget,
             },
         };

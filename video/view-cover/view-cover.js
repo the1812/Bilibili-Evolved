@@ -56,26 +56,27 @@
                 widget: {
                     content: `
                         <button
-                            class="hidden gui-settings-flat-button"
+                            class="gui-settings-flat-button"
                             id="view-cover">
                             <i class="icon-view"></i>
                             <span>查看封面</span>
                         </button>`,
-                    success: async () =>
+                    condition: async () =>
                     {
                         const metaData = await SpinQuery.condition(
                             () => $("meta[itemprop='image'],meta[property='og:image']"),
                             metaData => metaData.length > 0 && metaData.prop("content"),
-                        ).catch(() => $("#view-cover").remove());
-                        if (!metaData)
-                        {
-                            return;
-                        }
+                        );
+                        return metaData !== undefined;
+                    },
+                    success: async () =>
+                    {
+                        const metaData = $("meta[itemprop='image'],meta[property='og:image']");
                         const imageViewer = new ImageViewer(metaData.prop("content"));
                         $("#view-cover").on("click", () =>
                         {
                             imageViewer.show();
-                        }).removeClass("hidden");
+                        });
                     },
                 },
             };
@@ -86,19 +87,20 @@
                 widget: {
                     content: `
                         <button
-                            class="hidden gui-settings-flat-button"
+                            class="gui-settings-flat-button"
                             id="view-cover">
                             <i class="icon-view"></i>
                             <span>查看封面</span>
                         </button>`,
-                    success: async () =>
+                    condition: async () =>
                     {
                         const coverLink = await SpinQuery.any(() => $(".header-info-ctnr .room-cover"))
                             .catch(() => $("#view-cover").remove());
-                        if (!coverLink)
-                        {
-                            return;
-                        }
+                        return coverLink !== undefined;
+                    },
+                    success: async () =>
+                    {
+                        const coverLink = $(".header-info-ctnr .room-cover");
                         const match = coverLink
                             .attr("href")
                             .match(/space\.bilibili\.com\/([\d]+)/);
@@ -114,7 +116,7 @@
                             $("#view-cover").on("click", () =>
                             {
                                 imageViewer.show();
-                            }).removeClass("hidden");
+                            });
                         }
                     },
                 },

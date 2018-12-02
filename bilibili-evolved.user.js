@@ -1251,7 +1251,7 @@
                 }
             }
         }
-        applyWidgets()
+        async applyWidgets()
         {
             const panel = $(".gui-settings-panel");
             if (panel.length === 0)
@@ -1262,10 +1262,25 @@
                 .filter(it => it.widget)
                 .map(it => it.widget))
             {
-                $(".widgets-container").append($(info.content));
-                if (info.success)
+                let condition = true;
+                if (typeof info.condition === "function")
                 {
-                    info.success();
+                    condition = info.condition();
+                    if (condition instanceof Promise)
+                    {
+                        condition = await condition;
+                    }
+                }
+                if (condition === true)
+                {
+                    if (info.content)
+                    {
+                        $(".widgets-container").append($(info.content));
+                    }
+                    if (info.success)
+                    {
+                        info.success();
+                    }
                 }
             }
         }
