@@ -67,19 +67,19 @@
                                 <button
                                     class="gui-settings-button"
                                     id="new-version-update">
-                                    更新
+                                    安装
                                 </button>
                             </a>
                             <a target="blank"  href="https://github.com/the1812/Bilibili-Evolved/releases">
                                 <button
                                     class="gui-settings-button">
-                                    详细信息
+                                    查看
                                 </button>
                             </a>
                         </div>`,
                     success: () =>
                     {
-                        const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">更新</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">详细信息</a>`;
+                        const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;
                         Toast.info(message, "检查更新");
                     }
                 },
@@ -105,7 +105,7 @@
                     `,
                     success: () =>
                     {
-                        const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">更新</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">详细信息</a>`;
+                        const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;
                         Toast.info(message, "检查更新");
                     },
                 },
