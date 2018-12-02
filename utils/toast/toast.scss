@@ -13,11 +13,12 @@
     background: #fff;
     min-width: 240px;
     max-width: 60vw;
+    min-height: 0;
+    max-height: 0;
     box-shadow: 0 4px 16px 1px rgba(0,0,0,.3);
-    transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    transform: translateY(16px);
-    transform-origin: bottom;
-    opacity: 0;
+    transition: all .3s cubic-bezier(0, 0.65, 0.58, 1);
+    transform: translateX(-150%);
+    transform-origin: left;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -27,8 +28,8 @@
 .toast-card.visible
 {
     min-height: 96px;
-    transform: scale(1) translateY(0);
-    opacity: 1;
+    max-height: unset;
+    transform: translateX(0);
     margin-top: 16px;
 }
 .toast-card-header
