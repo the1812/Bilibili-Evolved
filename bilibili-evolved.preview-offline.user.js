@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      139.26
+// @version      139.27
 // @description  增强哔哩哔哩Web端体验(预览离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -901,7 +901,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/haruna-scale.min.js"] = (()=>{return(n,t)=>{const a="bilibili-haruna-scale";if($(a).length===0){t.applyStyleFromText(`\n            <style id='${a}'>\n                .haruna-ctnr,\n                .avatar-btn\n                {\n                    transform: scale(${1/window.devicePixelRatio}) !important;\n                }\n            </style>\n            `)}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-watermark.min.js"] = (()=>{return(i,l)=>{const n="bilibili-live-watermark";if($(`#${n}`).length===0){l.applyStyleFromText(`\n            <style id='${n}'>\n                .bilibili-live-player-video-logo\n                {\n                    display: none !important;\n                }\n            </style>\n            `)}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/full-tweets-title.min.js"] = (()=>{return(e,l)=>{l.applyStyle("fullTweetsTitleStyle")}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/view-cover.min.js"] = (()=>{return(e,t)=>{class n{constructor(e){this.url=e;if($(".image-viewer").length===0){this.createDom()}this.viewer=$(".image-viewer-container");this.downloadImage()}createDom(){$("body").append(t.data.imageViewerDom.text);$(".image-viewer-container .close").on("click",()=>this.hide());t.applyStyle("imageViewerStyle")}downloadImage(){const e=new XMLHttpRequest;e.open("GET",this.url.replace("http:","https:"),true);e.responseType="blob";e.onload=(()=>{const t=document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili","");const n=URL.createObjectURL(e.response);this.imageData=n;this.viewer.find(".download").attr("href",n).attr("download",t);this.viewer.find(".image").prop("src",n)});e.send()}show(){this.viewer.addClass("opened")}hide(){this.viewer.removeClass("opened")}}if($("meta[itemprop='image'],meta[property='og:image']").length>0){return{widget:{content:`\n                        <button\n                            class="gui-settings-flat-button"\n                            id="view-cover">\n                            <i class="icon-view"></i>\n                            <span>查看封面</span>\n                        </button>`,condition:async()=>{const e=await SpinQuery.condition(()=>$("meta[itemprop='image'],meta[property='og:image']"),e=>e.length>0&&e.prop("content"));return e!==undefined},success:async()=>{const e=$("meta[itemprop='image'],meta[property='og:image']");const t=new n(e.prop("content"));$("#view-cover").on("click",()=>{t.show()})}}}}else{return{widget:{content:`\n                        <button\n                            class="gui-settings-flat-button"\n                            id="view-cover">\n                            <i class="icon-view"></i>\n                            <span>查看封面</span>\n                        </button>`,condition:async()=>{const e=await SpinQuery.any(()=>$(".header-info-ctnr .room-cover")).catch(()=>$("#view-cover").remove());return e!==undefined},success:async()=>{const e=$(".header-info-ctnr .room-cover");const t=e.attr("href").match(/space\.bilibili\.com\/([\d]+)/);if(t&&t[1]){const e=t[1];const i=`https://api.live.bilibili.com/bili/getRoomInfo/${e}`;const o=await downloadText(i);const a=o.slice(1,-2);const s=JSON.parse(a).data.cover;const c=new n(s);$("#view-cover").on("click",()=>{c.show()})}}}}}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/view-cover.min.js"] = (()=>{return(e,t)=>{class n{constructor(e){this.url=e;if($(".image-viewer").length===0){this.createDom()}this.viewer=$(".image-viewer-container");this.downloadImage()}createDom(){$("body").append(t.data.imageViewerDom.text);$(".image-viewer-container .close").on("click",()=>this.hide());t.applyStyle("imageViewerStyle")}downloadImage(){const e=new XMLHttpRequest;e.open("GET",this.url.replace("http:","https:"),true);e.responseType="blob";e.onload=(()=>{const t=document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili","");const n=URL.createObjectURL(e.response);this.imageData=n;this.viewer.find(".download").attr("href",n).attr("download",t);this.viewer.find(".image").prop("src",n)});e.send()}show(){this.viewer.addClass("opened")}hide(){this.viewer.removeClass("opened")}}if($("meta[itemprop='image'],meta[property='og:image']").length>0){return{widget:{content:`\n                        <button\n                            class="gui-settings-flat-button"\n                            id="view-cover">\n                            <i class="icon-view"></i>\n                            <span>查看封面</span>\n                        </button>`,condition:async()=>{const e=await SpinQuery.condition(()=>$("meta[itemprop='image'],meta[property='og:image']"),e=>e.length>0&&e.prop("content"));return typeof e!=="undefined"},success:async()=>{const e=$("meta[itemprop='image'],meta[property='og:image']");const t=new n(e.prop("content"));$("#view-cover").on("click",()=>{t.show()})}}}}else{return{widget:{content:`\n                        <button\n                            class="gui-settings-flat-button"\n                            id="view-cover">\n                            <i class="icon-view"></i>\n                            <span>查看封面</span>\n                        </button>`,condition:async()=>{const e=await SpinQuery.any(()=>$(".header-info-ctnr .room-cover"));return typeof e!=="undefined"},success:async()=>{const e=$(".header-info-ctnr .room-cover");const t=e.attr("href").match(/space\.bilibili\.com\/([\d]+)/);if(t&&t[1]){const e=t[1];const i=`https://api.live.bilibili.com/bili/getRoomInfo/${e}`;const o=await downloadText(i);const a=o.slice(1,-2);const s=JSON.parse(a).data.cover;const c=new n(s);$("#view-cover").on("click",()=>{c.show()})}}}}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/notify-new-version.min.js"] = (()=>{return(t,n)=>{const e={less:-1,equal:0,greater:1,incomparable:NaN};class s{constructor(t){this.parts=t.split(".").map(t=>parseInt(t));this.versionString=t}compareTo(t){for(let n=0;n<this.parts.length;++n){if(t.parts.length===n){return e.greater}if(this.parts[n]===t.parts[n]){continue}if(this.parts[n]>t.parts[n]){return e.greater}return e.less}if(this.parts.length!==t.parts.length){return e.less}return e.equal}greaterThan(t){return this.compareTo(t)===e.greater}lessThan(t){return this.compareTo(t)===e.less}equals(t){return this.compareTo(t)===e.equal}}const i=new s(n.data.latestVersion.text);const a=new s(t.currentVersion);if(i.greaterThan(a)){return{settingsWidget:{after:()=>$(".gui-settings-content"),content:`<div class="gui-settings-footer${t.blurSettingsPanel?" blur":""}">\n                            <span class="gui-settings-label">新版本${i.versionString}已发布.</span>\n                            <a href="${t.latestVersionLink}">\n                                <button\n                                    class="gui-settings-button"\n                                    id="new-version-update">\n                                    安装\n                                </button>\n                            </a>\n                            <a target="blank"  href="https://github.com/the1812/Bilibili-Evolved/releases">\n                                <button\n                                    class="gui-settings-button">\n                                    查看\n                                </button>\n                            </a>\n                        </div>`,success:()=>{const n=`新版本${i.versionString}已发布.  <a class="link" href="${t.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;Toast.info(n,"检查更新")}},widget:{content:`\n                        <button\n                            class="gui-settings-flat-button"\n                            id="new-version-update">\n                            <a href="${t.latestVersionLink}" style="display:none"></a>\n                            <i class="icon-update"></i>\n                            <span>安装更新</span>\n                        </button>\n                        <button\n                            class="gui-settings-flat-button"\n                            id="new-version-info">\n                            <a target="blank" style="display:none" href="https://github.com/the1812/Bilibili-Evolved/releases"></a>\n                            <i class="icon-info"></i>\n                            <span>查看更新</span>\n                        </button>\n                    `,success:()=>{const n=`新版本${i.versionString}已发布.  <a class="link" href="${t.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;Toast.info(n,"检查更新");$("#new-version-update").on("click",()=>document.querySelector("#new-version-update a").click());$("#new-version-info").on("click",()=>document.querySelector("#new-version-info a").click())}}}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/toast.min.js"] = (()=>{return(t,s)=>{class e{constructor(t="",s="",e="default"){this.type=e;this.message=t;this.title=s;this.duration=3e3;this.element=$(this.cardHtml)[0];this.$element=$(this.element);$(".toast-card-container").append(this.$element)}show(){this.element.classList.add("visible");this.$element.find(".toast-card-dismiss").on("click",()=>this.dismiss());if(this.duration){setTimeout(()=>this.dismiss(),this.duration)}}dismiss(){if(this.element.classList.contains("visible")){this.$element.on("transitionend",()=>this.$element.remove());this.element.classList.remove("visible")}}get cardHtml(){return`\n                <div class="toast-card toast-${this.type}">\n                <div class="toast-card-header">\n                    <h1 class="toast-card-title">${this.title}</h1>\n                    <svg class="toast-card-dismiss" viewbox="0 0 24 24">\n                    <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z">\n                    </path>\n                    </svg>\n                </div>\n                <p class="toast-card-message">${this.message}</p>\n                </div>\n                `}static get container(){return $(".toast-card-container")}static createToastContainer(){if($(".toast-card-container").length===0){$("body").append(`<div class="toast-card-container"></div>`)}}static internalShow(t,s,i,a){const n=new e(t,s,a);n.duration=i;n.show()}static show(t,s,e){this.internalShow(t,s,e,"default")}static info(t,s,e){this.internalShow(t,s,e,"info")}static success(t,s,e){this.internalShow(t,s,e,"success")}static error(t,s,e){this.internalShow(t,s,e,"error")}}s.applyStyle("toastStyle");e.createToastContainer();return{export:e}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-top-mask.min.js"] = (()=>{return(i,n)=>{const l="bilibili-video-top-mask";if($(`#${l}`).length===0){n.applyStyleFromText(`\n            <style id='${l}'>\n                .bilibili-player-video-top\n                {\n                    display: none !important;\n                }\n            </style>\n            `)}}})();
@@ -1271,31 +1271,32 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             {
                 return;
             }
-            for (const info of Object.values(this.attributes)
+            await Promise.all(Object.values(this.attributes)
                 .filter(it => it.widget)
-                .map(it => it.widget))
-            {
-                let condition = true;
-                if (typeof info.condition === "function")
+                .map(async it =>
                 {
-                    condition = info.condition();
-                    if (condition instanceof Promise)
+                    const info = it.widget;
+                    let condition = true;
+                    if (typeof info.condition === "function")
                     {
-                        condition = await condition;
+                        condition = info.condition();
+                        if (condition instanceof Promise)
+                        {
+                            condition = await condition.catch(() => { return false; });
+                        }
                     }
-                }
-                if (condition === true)
-                {
-                    if (info.content)
+                    if (condition === true)
                     {
-                        $(".widgets-container").append($(info.content));
+                        if (info.content)
+                        {
+                            $(".widgets-container").append($(info.content));
+                        }
+                        if (info.success)
+                        {
+                            info.success();
+                        }
                     }
-                    if (info.success)
-                    {
-                        info.success();
-                    }
-                }
-            }
+                }));
         }
         getDefaultStyleId(key)
         {

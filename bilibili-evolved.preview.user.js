@@ -1258,31 +1258,32 @@
             {
                 return;
             }
-            for (const info of Object.values(this.attributes)
+            await Promise.all(Object.values(this.attributes)
                 .filter(it => it.widget)
-                .map(it => it.widget))
-            {
-                let condition = true;
-                if (typeof info.condition === "function")
+                .map(async it =>
                 {
-                    condition = info.condition();
-                    if (condition instanceof Promise)
+                    const info = it.widget;
+                    let condition = true;
+                    if (typeof info.condition === "function")
                     {
-                        condition = await condition;
+                        condition = info.condition();
+                        if (condition instanceof Promise)
+                        {
+                            condition = await condition.catch(() => { return false; });
+                        }
                     }
-                }
-                if (condition === true)
-                {
-                    if (info.content)
+                    if (condition === true)
                     {
-                        $(".widgets-container").append($(info.content));
+                        if (info.content)
+                        {
+                            $(".widgets-container").append($(info.content));
+                        }
+                        if (info.success)
+                        {
+                            info.success();
+                        }
                     }
-                    if (info.success)
-                    {
-                        info.success();
-                    }
-                }
-            }
+                }));
         }
         getDefaultStyleId(key)
         {

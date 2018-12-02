@@ -67,7 +67,7 @@
                             () => $("meta[itemprop='image'],meta[property='og:image']"),
                             metaData => metaData.length > 0 && metaData.prop("content"),
                         );
-                        return metaData !== undefined;
+                        return typeof metaData !== "undefined";
                     },
                     success: async () =>
                     {
@@ -94,9 +94,8 @@
                         </button>`,
                     condition: async () =>
                     {
-                        const coverLink = await SpinQuery.any(() => $(".header-info-ctnr .room-cover"))
-                            .catch(() => $("#view-cover").remove());
-                        return coverLink !== undefined;
+                        const coverLink = await SpinQuery.any(() => $(".header-info-ctnr .room-cover"));
+                        return typeof coverLink !== "undefined";
                     },
                     success: async () =>
                     {
