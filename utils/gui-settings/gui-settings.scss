@@ -22,17 +22,6 @@
     transform: translateX(-12px);
     margin: 16px 0;
 }
-.gui-settings.gui-settings-notification::before
-{
-    content: "";
-    width: 6px;
-    height: 6px;
-    background: $customStyleColor;
-    position: fixed;
-    right: 0;
-    top: 0;
-    border-radius: 50%;
-}
 .gui-settings,
 .gui-settings-widgets,
 .gui-settings-header .gui-settings-close path,
