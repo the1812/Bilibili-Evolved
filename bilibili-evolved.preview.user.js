@@ -938,7 +938,7 @@
                         `$1${name}$3`);
                 }
                 return html.replace(/<category\s*?icon="(.+?)">([^\0]*?)<\/category>/g, `
-                    <li class="indent-center category folded">
+                    <li class="indent-center category">
                         <i class="icon-$1" style="margin-right:8px"></i>
                         <span class="settings-category">$2</span>
                         <i class="icon-arrow" style="margin-left:8px"></i>

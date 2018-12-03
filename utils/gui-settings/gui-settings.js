@@ -140,16 +140,6 @@
             {
                 settingsChange(key, undefined, settings[key]);
             }
-            $(".gui-settings-content ul li.category").each((_, e) =>
-            {
-                const items = getCategoriyItems(e);
-                if (items
-                    .filter(it => !it.classList.contains("disabled"))
-                    .every(it => $(it).has("input:checked").length === 0))
-                {
-                    $(e).click();
-                }
-            });
         }
         function setupEvents()
         {
@@ -301,6 +291,13 @@
                 $("input[key=useCache]").prop("disabled", true);
             }
         }
+        function foldAllCategories()
+        {
+            $(".gui-settings-content ul li.category").each((_, e) =>
+            {
+                $(e).click();
+            });
+        }
 
         addSettingsIcon($("body"));
         const settingsBox = resources.data.guiSettingsDom.text;
@@ -314,6 +311,7 @@
             addPredefinedColors();
             listenSettingsChange();
             applyBlurEffect();
+            foldAllCategories();
         }
 
         new SpinQuery(

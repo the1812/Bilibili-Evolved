@@ -280,6 +280,13 @@ button.gui-settings-button:focus
     justify-self: center;
     align-self: center;
     cursor: pointer;
+    transform-origin: center;
+    transition: all .1s ease-out;
+}
+.predefined-colors-grid-block:hover
+{
+    transform: scale(1.1);
+    box-shadow: 0 0 8px 1px #0004;
 }
 input[key]:focus
 {
@@ -504,20 +511,9 @@ li.category.folded i.icon-arrow
 }
 .gui-settings-widgets-box .gui-settings-flat-button
 {
-    flex: 1 0 auto;
+    border-bottom: 2px solid $customStyleColor;
+    flex: 0 0 auto;
     margin: 4px;
-}
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(4n-3),
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(4n)
-{
-    border-bottom: 2px solid $customStyleColor;
-    flex-basis: calc(60% - 8px);
-}
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(4n-1),
-.gui-settings-widgets-box .gui-settings-flat-button:nth-child(4n-2)
-{
-    border-bottom: 2px solid $customStyleColor;
-    flex-basis: calc(40% - 8px);
 }
 
 .gui-settings-checkbox
