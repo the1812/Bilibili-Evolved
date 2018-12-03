@@ -160,9 +160,10 @@
             $("input[key='customStyleColor']").on("input", () =>
             {
                 const color = textValidate.customStyleColor($("input[key='customStyleColor']").val());
+                const shadowColor = resources.color.hexToRgba(color + "70");
                 $("div.custom-color-preview")
                     .css("background", color)
-                    .css("box-shadow", `0px 2px 8px 1px ${resources.color.hexToRgba(color + "70")}`);
+                    .css("box-shadow", `0px 2px 8px 1px rgba(${shadowColor.r},${shadowColor.g},${shadowColor.b},${shadowColor.a})`);
             });
             $("input[type='text'][key]").each((_, element) =>
             {
