@@ -237,15 +237,16 @@ button.gui-settings-button:focus
 }
 .custom-color-preview
 {
-    width: 40px;
-    height: 100%;
-    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
     background: $customStyleColor;
     margin-right: 16px;
     border: 1px solid #8884;
     position: relative;
     cursor: pointer;
     box-sizing: border-box;
+    box-shadow: 0px 2px 8px 1px $customStyleColor70;
 }
 .predefined-colors
 {
