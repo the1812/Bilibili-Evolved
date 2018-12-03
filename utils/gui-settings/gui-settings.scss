@@ -570,7 +570,7 @@ i.settings-category-arrow::after
 }
 .gui-settings-checkbox-container input:checked ~ .gui-settings-checkbox::after
 {
-    background: $customStyleColor;
+    background: $customStyleColor !important;
     box-shadow: 0px 2px 8px 1px $customStyleColor70;
     left: calc(100% - 16px);
 }
