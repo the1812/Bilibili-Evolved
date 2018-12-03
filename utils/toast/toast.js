@@ -38,7 +38,7 @@
                 <div class="toast-card-header">
                     <h1 class="toast-card-title">${this.title}</h1>
                     <div class="toast-card-dismiss">
-                        <i class="icon-cancel"</i>
+                        <i class="icon-cancel"></i>
                     </div>
                 </div>
                 <p class="toast-card-message">${this.message}</p>

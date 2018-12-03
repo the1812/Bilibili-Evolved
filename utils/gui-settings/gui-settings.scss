@@ -481,6 +481,7 @@ i.settings-category-arrow::after
     position: relative;
     overscroll-behavior: contain;
     overflow: auto;
+    height: 100%;
 }
 .gui-settings-widgets-box>.widgets-container:empty::after
 {
