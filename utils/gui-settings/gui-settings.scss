@@ -144,13 +144,12 @@
     margin: 0 16px;
     transition: all 0.2s;
 }
-.gui-settings-textbox-container input,
-.gui-settings-dropdown input
+.gui-settings-textbox-container input
 {
     border: none;
     height: 100%;
     max-width: 80px;
-    padding: 2px 8px;
+    padding: 4px 8px;
     background: #8884;
     transition: all 0.2s;
     font-size: 16px;
@@ -351,8 +350,16 @@ li.category.folded i.icon-arrow
 {
     position: relative;
     cursor: pointer;
-    display: inline-block;
     -webkit-tap-highlight-color: transparent;
+    background-color: #8884;
+    display: inline-flex;
+    align-items: center;
+}
+.gui-settings-dropdown>i
+{
+    transition: all .2s ease-out;
+    transform-origin: center;
+    transform: rotate(180deg);
 }
 .gui-settings-dropdown>ul
 {
@@ -385,23 +392,20 @@ li.category.folded i.icon-arrow
 {
     transform: scaleY(1);
 }
+.gui-settings-dropdown.opened>i
+{
+    transform: rotate(0deg);
+}
 .gui-settings-dropdown input
 {
     cursor: pointer;
-}
-.gui-settings-dropdown::after
-{
-    content: "";
-    border: 4px solid black;
-    position: absolute;
-    top: calc(50% - 6px);
-    box-sizing: border-box;
-    right: 6px;
-    transform-origin: center;
-    transform: rotate(45deg);
-    border-left-color: transparent;
-    border-top-color: transparent;
-    opacity: .8;
+    border: none;
+    height: 100%;
+    max-width: 80px;
+    padding: 4px 8px;
+    transition: all 0.2s;
+    font-size: 16px;
+    background-color: transparent;
 }
 
 .gui-settings-mask
