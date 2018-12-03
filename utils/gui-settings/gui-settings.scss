@@ -311,15 +311,17 @@ input[type=text][key]
     {
         -webkit-backdrop-filter: blur(24px);
         backdrop-filter: blur(24px);
-        background: #fffa;
+        background: transparent;
     }
 }
 @supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
 {
-    .gui-settings-box.blur
+    .gui-settings-box.blur,
+    .gui-settings-box.blur .gui-settings-content,
+    .gui-settings-box.blur .gui-settings-header,
+    .gui-settings-box.blur .gui-settings-footer
     {
         background: transparent;
-        box-shadow: none;
     }
     .gui-settings-box.blur .gui-settings-content,
     .gui-settings-box.blur .gui-settings-header,
@@ -327,15 +329,6 @@ input[type=text][key]
     {
         -webkit-backdrop-filter: blur(64px);
         backdrop-filter: blur(64px);
-    }
-    .gui-settings-box.blur .gui-settings-content
-    {
-        background: #fffa;
-    }
-    .gui-settings-box.blur .gui-settings-header,
-    .gui-settings-box.blur .gui-settings-footer
-    {
-        background: #fffa;
     }
 }
 li.category i.icon-arrow

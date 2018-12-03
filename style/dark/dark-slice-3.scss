@@ -609,21 +609,12 @@ body>div.to-top.on,
 // }
 @supports (backdrop-filter: blur(24px)) or (-webkit-backdrop-filter: blur(24px))
 {
-    .gui-settings-box.blur li.category
-    {
-        background: transparent !important;
-    }
-}
-@supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
-{
+    .gui-settings-box.blur li.category,
+    .gui-settings-box.blur .gui-settings-header,
+    .gui-settings-box.blur .gui-settings-footer,
     .gui-settings-box.blur .gui-settings-content
     {
-        background: #2228 !important;
-    }
-    .gui-settings-box.blur .gui-settings-header,
-    .gui-settings-box.blur .gui-settings-footer
-    {
-        background: #2228 !important;
+        background: transparent !important;
     }
 }
 .face-g-list .mp-block .right ul li.base .round
