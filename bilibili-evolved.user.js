@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.1
+// @version      1.6.2
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -1224,7 +1224,7 @@
                 }
             }
             await Promise.all(promises);
-            this.applyWidgets();
+            await this.applyWidgets();
             saveSettings(settings);
         }
         applyComponent(key, text)
@@ -1251,37 +1251,33 @@
         }
         async applyWidgets()
         {
-            const panel = $(".gui-settings-panel");
-            if (panel.length === 0)
+            async function applyWidget(info)
             {
-                return;
+                let condition = true;
+                if (typeof info.condition === "function")
+                {
+                    condition = info.condition();
+                    if (condition instanceof Promise)
+                    {
+                        condition = await condition.catch(() => { return false; });
+                    }
+                }
+                if (condition === true)
+                {
+                    if (info.content)
+                    {
+                        $(".widgets-container").append($(info.content));
+                    }
+                    if (info.success)
+                    {
+                        info.success();
+                    }
+                }
             }
             await Promise.all(Object.values(this.attributes)
                 .filter(it => it.widget)
-                .map(async it =>
-                {
-                    const info = it.widget;
-                    let condition = true;
-                    if (typeof info.condition === "function")
-                    {
-                        condition = info.condition();
-                        if (condition instanceof Promise)
-                        {
-                            condition = await condition.catch(() => { return false; });
-                        }
-                    }
-                    if (condition === true)
-                    {
-                        if (info.content)
-                        {
-                            $(".widgets-container").append($(info.content));
-                        }
-                        if (info.success)
-                        {
-                            info.success();
-                        }
-                    }
-                }));
+                .map(it => applyWidget(it.widget))
+            );
         }
         getDefaultStyleId(key)
         {

@@ -37,7 +37,9 @@
                 <div class="toast-card icons-enabled toast-${this.type}">
                 <div class="toast-card-header">
                     <h1 class="toast-card-title">${this.title}</h1>
-                    <div class="toast-card-dismiss icon-cancel" viewbox="0 0 24 24"></div>
+                    <div class="toast-card-dismiss">
+                        <i class="icon-cancel"</i>
+                    </div>
                 </div>
                 <p class="toast-card-message">${this.message}</p>
                 </div>
