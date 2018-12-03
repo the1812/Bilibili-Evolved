@@ -948,9 +948,9 @@
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
                             <input key="$2" type="checkbox" dependencies="$3" checked/>
-                            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-                                <path />
-                            </svg>
+                            <div class="gui-settings-ok">
+                                <i class="icon-ok"></i>
+                            </div>
                             <span>$4</span>
                         </label>
                     </li>

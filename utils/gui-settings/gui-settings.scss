@@ -19,56 +19,19 @@
     align-items: center;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    transform: translateX(-12px);
     margin: 16px 0;
-}
-.gui-settings,
-.gui-settings-widgets,
-.gui-settings-header .gui-settings-close path,
-.gui-settings svg path,
-.gui-settings-widgets svg path
-{
+    width: 24px;
+    height: 24px;
     transition: all 0.2s;
-}
-.gui-settings svg path,
-.gui-settings-widgets svg path
-{
-    fill: #8884;
-    opacity: 0.75;
+    opacity: 0.3;
     transform-origin: center !important;
-    transform: rotate(120deg);
+    transform: translateX(-12px) rotate(120deg);
 }
 .gui-settings:hover,
 .gui-settings-widgets:hover
 {
-    transform: translateX(0px);
-}
-.gui-settings:hover svg path,
-.gui-settings-widgets:hover svg path
-{
     opacity: 1;
-    transform: rotate(0deg);
-}
-.gui-settings-panel
-{
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100000;
-    display: flex;
-    opacity: 0;
-    transform: scale(0);
-    transform-origin: center;
-    align-items: center;
-    justify-content: center;
-}
-.gui-settings-panel.opened
-{
-    opacity: 1;
-    transform: scale(1);
+    transform: translateX(0px) rotate(0deg);
 }
 .gui-settings-box
 {
@@ -213,18 +176,6 @@ span.settings-category
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
-.gui-settings-header .gui-settings-close:hover path
-{
-    fill: $customStyleColor !important;
-}
-.gui-settings-close path
-{
-    fill: #222;
-}
-.gui-settings-ok path
-{
-    fill: transparent;
-}
 .gui-settings-textbox-container
 {
     display: flex;
@@ -272,7 +223,7 @@ span.settings-category
     transition: all 0.2s;
     width: 0;
 }
-.gui-settings-checkbox-container svg
+.gui-settings-checkbox-container .gui-settings-ok
 {
     width: 24px;
     height: 24px;
@@ -280,24 +231,25 @@ span.settings-category
     margin-right: 16px;
     transition: all 0.2s;
 }
-.gui-settings-checkbox-container svg path
-{
-    transform: scale(0.8);
-    transform-origin: center;
-}
-.gui-settings-checkbox-container input ~ svg
+.gui-settings-checkbox-container input ~ .gui-settings-ok
 {
     background-color: #8884;
 }
-.gui-settings-checkbox-container input:checked ~ svg
+.gui-settings-checkbox-container input:checked ~ .gui-settings-ok
 {
     background-color: $customStyleColor;
 }
-.gui-settings-checkbox-container input:checked ~ svg path
+.gui-settings-checkbox-container input ~ .gui-settings-ok>i
 {
-    fill: $foreground;
+    opacity: 0;
+    transform-origin: center;
+    transform: scale(0.9);
 }
-.gui-settings-checkbox-container input:disabled ~ svg,
+.gui-settings-checkbox-container input:checked ~ .gui-settings-ok>i
+{
+    opacity: 1;
+}
+.gui-settings-checkbox-container input:disabled ~ .gui-settings-ok,
 .gui-settings-checkbox-container input:disabled ~ span
 {
     opacity: 0.5;
@@ -429,10 +381,6 @@ input[type=text][key]
     {
         background: #fffa;
     }
-}
-.gui-settings-panel.animation
-{
-    transition: all .2s ease-out;
 }
 i.settings-category-arrow
 {

@@ -46,7 +46,7 @@
     font-weight: bold;
     flex: 1 1 auto;
 }
-svg.toast-card-dismiss
+.toast-card-dismiss
 {
     height: 24px;
     width: 24px;
@@ -56,19 +56,15 @@ svg.toast-card-dismiss
     -webkit-tap-highlight-color: transparent;
     transition: all .2s ease-out;
     transform-origin: center;
+    opacity: 0.5;
 }
-svg.toast-card-dismiss:hover
+.toast-card-dismiss:hover
 {
     transform: scale(1.2);
 }
-svg.toast-card-dismiss:active
+.toast-card-dismiss:active
 {
     transform: scale(1.1);
-}
-svg.toast-card-dismiss path
-{
-    fill: #000;
-    opacity: 0.5;
 }
 .toast-card-message
 {
