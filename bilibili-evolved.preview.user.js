@@ -948,9 +948,7 @@
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
                             <input key="$2" type="checkbox" dependencies="$3" checked/>
-                            <div class="gui-settings-ok">
-                                <i class="icon-ok"></i>
-                            </div>
+                            <div class="gui-settings-checkbox"></div>
                             <span>$4</span>
                         </label>
                     </li>
