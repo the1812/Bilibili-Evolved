@@ -159,7 +159,7 @@
             });
             $(".gui-settings-mask").on("click", () =>
             {
-                $(".gui-settings-widgets-box,.gui-settings-mask").removeClass("opened");
+                $(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask").removeClass("opened");
             });
             $("input[key='customStyleColor']").on("input", () =>
             {
@@ -268,7 +268,7 @@
                 </div>`);
                 $(".gui-settings").on("click", () =>
                 {
-                    $(".gui-settings-panel").addClass("opened");
+                    $(".gui-settings-box,.gui-settings-mask").addClass("opened");
                 });
                 $(".gui-settings-widgets").on("click", () =>
                 {
