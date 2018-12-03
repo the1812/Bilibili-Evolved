@@ -1,6 +1,6 @@
 .link-footer,
 .payment-active,
-.app-body .section-block 
+.app-body .section-block
 {
     background-color: #222 !important;
 }
@@ -12,7 +12,7 @@
 .fjw-case-detail .ban-detail .content-box .video-model,
 .app-body .section-block.with-bottom-radius,
 .app-body .section-block.with-radius,
-.pagination-container li.pagination 
+.pagination-container li.pagination
 {
     background-color: #444 !important;
 }
@@ -65,7 +65,7 @@ blockquote .color-yellow-04,
 .commnent-screen-wrap .el-input__inner,
 .ui-input-textarea.focus,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
-.tabs-bar 
+.tabs-bar
 {
     border-color: transparent !important;
 }
@@ -79,6 +79,13 @@ blockquote .color-yellow-04,
 .rank-item .content .more-data:hover,
 .edit-button:hover > .icon-font,
 .edit-button:hover > span
+.left-nav-item-childed:hover,
+.active .left-nav-item-child,
+.active[data-v-54800c27], .advice-btn:hover,
+.left-nav-item.active,
+.left-nav-item.active i.active,
+.left-nav-list.on .left-nav-item .icon,
+.left-nav-list.on .left-nav-item
 {
     color: $customStyleColor !important;
 }
@@ -87,7 +94,7 @@ blockquote .color-yellow-04,
 .season-timeline .season-group.today .group-time::before,
 .aside-ctnr .author-info .communicate-btn,
 .tag-list li.tag-item.on,
-.tag-list li.tag-item:hover 
+.tag-list li.tag-item:hover
 {
     border-color: $customStyleColor !important;
 }
@@ -101,7 +108,7 @@ blockquote .color-yellow-04,
 .tag-list li.tag-item.on,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
-.user-my-btn .el-button--primary 
+.user-my-btn .el-button--primary
 {
     background-color: $customStyleColor !important;
 }

@@ -115,14 +115,19 @@
             }
             cancelDownload()
             {
-                if (this.workingXhr)
+                if ("forEach" in this.workingXhr)
                 {
                     this.workingXhr.forEach(it => it.abort());
+                }
+                else
+                {
+                    logError("Cancel Download Failed: forEach in this.workingXhr not found.");
                 }
             }
             downloadFragment(fragment)
             {
                 const promises = [];
+                this.workingXhr = [];
                 const partialLength = Math.round(fragment.size / this.fragmentSplitFactor);
                 let startByte = 0;
                 while (startByte < fragment.size)
@@ -156,11 +161,11 @@
                         xhr.addEventListener("error", () => reject(`下载失败.`));
                         xhr.setRequestHeader("Range", range);
                         xhr.send();
+                        this.workingXhr.push(xhr);
                     }));
                     startByte = Math.round(startByte + partialLength);
                 }
-                this.workingXhr = Promise.all(promises);
-                return this.workingXhr;
+                return Promise.all(promises);
             }
             copyUrl()
             {
@@ -258,9 +263,9 @@
                 };
             }
         }
-        function loadWidget()
+        async function loadPageData()
         {
-            (async () =>
+            const result = await (async () =>
             {
                 let aid = (unsafeWindow || window).aid;
                 let cid = (unsafeWindow || window).cid;
@@ -283,110 +288,113 @@
                     // }
                 }
                 return [aid, cid];
-            })().then(result =>
+            })();
+            const [aid, cid] = result;
+            pageData.aid = aid;
+            pageData.cid = cid;
+            return aid !== undefined && cid !== undefined;
+        }
+        async function loadWidget()
+        {
+            await loadPageData();
+            const formats = await VideoFormat.availableFormats;
+            let [selectedFormat] = formats;
+            const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
             {
-                const [aid, cid] = result;
-                if (aid === undefined || cid === undefined)
+                $(".download-video-panel").addClass("error");
+                $(".video-error").text(error);
+            });
+            async function download()
+            {
+                if (!selectedFormat)
                 {
                     return;
                 }
-                pageData.aid = aid;
-                pageData.cid = cid;
-                VideoFormat.availableFormats.then((formats) =>
+                $(".download-video-panel")
+                    .removeClass("action")
+                    .addClass("progress");
+                const info = await getVideoInfo();
+                info.progress = percent =>
                 {
-                    let [selectedFormat] = formats;
-                    const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
+                    $(".download-progress-value").text(`${fixed(percent * 100)}`);
+                    $(".download-progress-foreground").css("transform", `scaleX(${percent})`);
+                };
+                document.querySelector(".download-progress-cancel>span").onclick = () => info.cancelDownload();
+                const result = await info.download()
+                    .catch(error =>
                     {
                         $(".download-video-panel").addClass("error");
                         $(".video-error").text(error);
                     });
-                    async function download()
-                    {
-                        if (!selectedFormat)
-                        {
-                            return;
-                        }
-                        $(".download-video-panel")
-                            .removeClass("action")
-                            .addClass("progress");
-                        const info = await getVideoInfo();
-                        info.progress = percent =>
-                        {
-                            $(".download-progress-value").text(`${fixed(percent * 100)}`);
-                            $(".download-progress-foreground").css("transform", `scaleX(${percent})`);
-                        };
-                        document.querySelector(".download-progress-cancel>span").onclick = () => info.cancelDownload();
-                        const result = await info.download()
-                            .catch(error =>
-                            {
-                                $(".download-video-panel").addClass("error");
-                                $(".video-error").text(error);
-                            });
-                        if (!result) // canceled or other errors
-                        {
-                            return;
-                        }
-                        const completeLink = document.getElementById("video-complete");
-                        completeLink.setAttribute("href", result.url);
-                        completeLink.setAttribute("download", result.filename);
-                        completeLink.click();
-
-                        const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename}">再次保存</a>`;
-                        Toast.success(message, "下载视频");
-
-                        $(".download-video-panel")
-                            .removeClass("progress")
-                            .addClass("quality");
-                    }
-                    async function copyLink()
-                    {
-                        if (!selectedFormat)
-                        {
-                            return;
-                        }
-                        const info = await getVideoInfo();
-                        info.copyUrl();
-                        Toast.success("已复制链接到剪贴板.", "复制链接", 3000);
-                        $(".download-video-panel")
-                            .removeClass("action")
-                            .addClass("quality");
-                    }
-                    $(".video-action>#video-action-download").on("click", download);
-                    $(".video-action>#video-action-copy").on("click", copyLink);
-                    formats.forEach(format =>
-                    {
-                        $(`<li>${format.displayName}</li>`)
-                            .on("click", () =>
-                            {
-                                selectedFormat = format;
-                                $(".download-video-panel")
-                                    .removeClass("quality")
-                                    .addClass("action");
-                            })
-                            .prependTo("ol.video-quality");
-                    });
-                    resources.applyStyle("downloadVideoStyle");
-                    $("#download-video").on("click", () =>
-                    {
-                        $(".download-video-panel").toggleClass("opened");
-                    }).parent().removeClass("hidden");
-                });
-                $(".video-error").on("click", () =>
+                if (!result) // canceled or other errors
                 {
-                    $(".video-error").text("");
-                    $(".download-video-panel")
-                        .removeClass("error")
-                        .removeClass("progress")
-                        .addClass("quality");
-                });
+                    return;
+                }
+                const completeLink = document.getElementById("video-complete");
+                completeLink.setAttribute("href", result.url);
+                completeLink.setAttribute("download", result.filename);
+                completeLink.click();
+
+                const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename}">再次保存</a>`;
+                Toast.success(message, "下载视频");
+
+                $(".download-video-panel")
+                    .removeClass("progress")
+                    .addClass("quality");
+            }
+            async function copyLink()
+            {
+                if (!selectedFormat)
+                {
+                    return;
+                }
+                const info = await getVideoInfo();
+                info.copyUrl();
+                Toast.success("已复制链接到剪贴板.", "复制链接", 3000);
+                $(".download-video-panel")
+                    .removeClass("action")
+                    .addClass("quality");
+            }
+            $(".video-action>#video-action-download").on("click", download);
+            $(".video-action>#video-action-copy").on("click", copyLink);
+            formats.forEach(format =>
+            {
+                $(`<li>${format.displayName}</li>`)
+                    .on("click", () =>
+                    {
+                        selectedFormat = format;
+                        $(".download-video-panel")
+                            .removeClass("quality")
+                            .addClass("action");
+                    })
+                    .prependTo("ol.video-quality");
+            });
+            resources.applyStyle("downloadVideoStyle");
+            const downloadPanel = document.querySelector(".download-video-panel");
+            const togglePopup = () => $(".download-video-panel").toggleClass("opened");
+            $("#download-video").on("click", e =>
+            {
+                if (!downloadPanel.contains(e.target))
+                {
+                    togglePopup();
+                }
+            });
+            $(".video-error").on("click", () =>
+            {
+                $(".video-error").text("");
+                $(".download-video-panel")
+                    .removeClass("error")
+                    .removeClass("progress")
+                    .addClass("quality");
             });
         }
         return {
-            settingsWidget: {
-                category: "视频与直播",
+            widget:
+            {
                 content: resources.data.downloadVideoDom.text,
-                success: loadWidget
-            }
+                condition: loadPageData,
+                success: loadWidget,
+            },
         };
     };
 })();

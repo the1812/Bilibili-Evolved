@@ -2,6 +2,7 @@
 {
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: fixed;
@@ -10,77 +11,27 @@
     width: 24px;
     z-index: 99999;
 }
-.gui-settings
+.gui-settings,
+.gui-settings-widgets
 {
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    transform: translateX(-12px);
-}
-.gui-settings.gui-settings-notification::before
-{
-    content: "";
-    width: 6px;
-    height: 6px;
-    background: $customStyleColor;
-    position: fixed;
-    right: 0;
-    top: 0;
-    border-radius: 50%;
-}
-.gui-settings,
-.gui-settings-header .gui-settings-close path,
-.gui-settings svg path
-{
+    margin: 16px 0;
+    width: 24px;
+    height: 24px;
     transition: all 0.2s;
-}
-.gui-settings svg path
-{
-    fill: #8884;
-    opacity: 0.75;
+    opacity: 0.3;
     transform-origin: center !important;
+    transform: translateX(-12px) rotate(180deg);
 }
-.gui-settings:hover
-{
-    transform: translateX(0px);
-}
-.gui-settings:hover svg path
+.gui-settings:hover,
+.gui-settings-widgets:hover
 {
     opacity: 1;
-    transform: rotate(120deg);
-}
-.gui-settings-panel
-{
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100000;
-    display: flex;
-    opacity: 0;
-    transform: scale(0);
-    transform-origin: center;
-    align-items: center;
-    justify-content: center;
-}
-.gui-settings-panel.opened
-{
-    opacity: 1;
-    transform: scale(1);
-}
-.gui-settings-box
-{
-    width: 400px;
-    height: 90%;
-    background: white;
-    box-shadow: 0px 3px 20px 2px #0004;
-    display: flex;
-    flex-direction: column;
-    line-height: initial;
+    transform: translateX(0px) rotate(0deg);
 }
 .gui-settings-footer,
 .gui-settings-header
@@ -89,6 +40,8 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    z-index: 10;
+    padding: 32px;
 }
 .gui-settings-footer
 {
@@ -103,25 +56,6 @@
     position: relative;
     overscroll-behavior: contain;
 }
-.gui-settings-content-top-mask,
-.gui-settings-content-bottom-mask
-{
-    height: 10px;
-    position: sticky;
-    left: 0px;
-    width: 100%;
-    z-index: 10;
-}
-.gui-settings-content-top-mask
-{
-    background: linear-gradient(to bottom, white, transparent);
-    top: 0px;
-}
-.gui-settings-content-bottom-mask
-{
-    background: linear-gradient(to top, white, transparent);
-    bottom: 0px;
-}
 .gui-settings-content ul
 {
     padding: 0;
@@ -130,7 +64,7 @@
 .gui-settings-content ul li
 {
     font-size: 16px;
-    margin-bottom: 12px;
+    margin-bottom: 18px;
     display: flex;
     height: 24px;
     transition: all .2s;
@@ -159,27 +93,10 @@
     align-items: center;
     justify-content: center;
 }
-.gui-settings-content ul li.widgets-container
-{
-    margin: 0;
-    height: auto;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    overflow: visible;
-}
-.gui-settings-content ul li.widgets-container>div
-{
-    align-items: center;
-    justify-content: center;
-    min-width: 50%;
-    display: inline-flex;
-    margin-bottom: 12px;
-}
 .gui-settings-content ul li.category
 {
-    padding: 8px 0;
-    margin-bottom: 12px;
+    padding: 16px 0;
+    margin-bottom: 18px;
     border-top: 1px dashed #8884;
     border-bottom: 1px dashed #8884;
     background: white;
@@ -194,15 +111,14 @@
 {
     margin-bottom: -1px;
 }
-span.settings-category
+.gui-settings-content ul li.category *
 {
     opacity: 0.8;
 }
 .gui-settings-title
 {
     flex-grow: 1;
-    font-size: 16px;
-    margin: 16px;
+    font-size: 16pt;
 }
 .gui-settings-close
 {
@@ -214,18 +130,6 @@ span.settings-category
 {
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-}
-.gui-settings-header .gui-settings-close:hover path
-{
-    fill: $customStyleColor !important;
-}
-.gui-settings-close path
-{
-    fill: #222;
-}
-.gui-settings-ok path
-{
-    fill: transparent;
 }
 .gui-settings-textbox-container
 {
@@ -240,14 +144,12 @@ span.settings-category
     margin: 0 16px;
     transition: all 0.2s;
 }
-.gui-settings-textbox-container input,
-.gui-settings-dropdown input
+.gui-settings-textbox-container input
 {
-    border-radius: 4px;
     border: none;
     height: 100%;
     max-width: 80px;
-    padding: 2px 8px;
+    padding: 4px 8px;
     background: #8884;
     transition: all 0.2s;
     font-size: 16px;
@@ -274,32 +176,32 @@ span.settings-category
     transition: all 0.2s;
     width: 0;
 }
-.gui-settings-checkbox-container svg
+.gui-settings-checkbox-container .gui-settings-ok
 {
     width: 24px;
     height: 24px;
-    border-radius: 4px;
     margin-right: 16px;
     transition: all 0.2s;
 }
-.gui-settings-checkbox-container svg path
-{
-    transform: scale(0.8);
-    transform-origin: center;
-}
-.gui-settings-checkbox-container input ~ svg
+.gui-settings-checkbox-container input ~ .gui-settings-ok
 {
     background-color: #8884;
 }
-.gui-settings-checkbox-container input:checked ~ svg
+.gui-settings-checkbox-container input:checked ~ .gui-settings-ok
 {
     background-color: $customStyleColor;
 }
-.gui-settings-checkbox-container input:checked ~ svg path
+.gui-settings-checkbox-container input ~ .gui-settings-ok>i
 {
-    fill: $foreground;
+    opacity: 0;
+    transform-origin: center;
+    transform: scale(0.9);
 }
-.gui-settings-checkbox-container input:disabled ~ svg,
+.gui-settings-checkbox-container input:checked ~ .gui-settings-ok>i
+{
+    opacity: 1;
+}
+.gui-settings-checkbox-container input:disabled ~ .gui-settings-ok,
 .gui-settings-checkbox-container input:disabled ~ span
 {
     opacity: 0.5;
@@ -311,7 +213,6 @@ button.gui-settings-button
     max-height: 34px;
     border: none;
     background: #8884;
-    border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.2s ease-out;
@@ -330,69 +231,18 @@ button.gui-settings-button:focus
 {
     outline: none;
 }
-button.save
-{
-    padding: 8px 38px;
-    max-height: 38px;
-    background: $customStyleColor;
-    color: $foreground;
-    transform-origin: center;
-}
-button.save.save-complete
-{
-    animation: hide-a-moment 3.8s;
-}
-@keyframes hide-a-moment
-{
-    0%, 100%
-    {
-        transform: scale(1);
-    }
-    5%, 95%
-    {
-        transform: scale(0);
-    }
-}
-.gui-settings-footer svg
-{
-    width: 30px;
-    height: 30px;
-    margin-left: 0;
-    transition: all 0.2s;
-    position: absolute;
-    transform-origin: center;
-    transform: scale(0);
-}
-.gui-settings-footer svg.save-complete
-{
-    animation: show-a-moment 3.8s;
-}
-@keyframes show-a-moment
-{
-    0%, 5%, 95%, 100%
-    {
-        transform: scale(0);
-    }
-    10%, 90%
-    {
-        transform: scale(1);
-    }
-}
-.gui-settings-footer svg path
-{
-    fill: $customStyleColor;
-}
 .custom-color-preview
 {
-    width: 40px;
-    height: 100%;
-    border-radius: 4px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
     background: $customStyleColor;
     margin-right: 16px;
     border: 1px solid #8884;
     position: relative;
     cursor: pointer;
     box-sizing: border-box;
+    box-shadow: 0px 2px 8px 1px $customStyleColor70;
 }
 .predefined-colors
 {
@@ -404,9 +254,8 @@ button.save.save-complete
     height: 168px;
     position: absolute;
     box-shadow: 0px 3px 20px 2px #0004;
-    border-radius: 4px;
     top: 32px;
-    left: -64px;
+    left: calc(-84px + 50%);
     transform: scale(0);
     transform-origin: top;
     z-index: 9;
@@ -425,12 +274,18 @@ button.save.save-complete
 }
 .predefined-colors-grid-block
 {
-    width: 32px;
-    height: 32px;
-    border-radius: 4px;
+    width: 100%;
+    height: 100%;
     justify-self: center;
     align-self: center;
     cursor: pointer;
+    transform-origin: center;
+    transition: all .1s ease-out;
+}
+.predefined-colors-grid-block:hover
+{
+    transform: scale(1.1);
+    box-shadow: 0 0 8px 1px #0004;
 }
 input[key]:focus
 {
@@ -440,7 +295,6 @@ input[type=text][key]
 {
     height: auto;
     border: none;
-    border-radius: 4px;
 }
 .gui-settings-label
 {
@@ -457,15 +311,17 @@ input[type=text][key]
     {
         -webkit-backdrop-filter: blur(24px);
         backdrop-filter: blur(24px);
-        background: #fffa;
+        background: transparent;
     }
 }
 @supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
 {
-    .gui-settings-box.blur
+    .gui-settings-box.blur,
+    .gui-settings-box.blur .gui-settings-content,
+    .gui-settings-box.blur .gui-settings-header,
+    .gui-settings-box.blur .gui-settings-footer
     {
         background: transparent;
-        box-shadow: none;
     }
     .gui-settings-box.blur .gui-settings-content,
     .gui-settings-box.blur .gui-settings-header,
@@ -474,53 +330,29 @@ input[type=text][key]
         -webkit-backdrop-filter: blur(64px);
         backdrop-filter: blur(64px);
     }
-    .gui-settings-box.blur .gui-settings-content
-    {
-        background: #fffa;
-    }
-    .gui-settings-box.blur .gui-settings-header,
-    .gui-settings-box.blur .gui-settings-footer
-    {
-        background: #fffa;
-    }
 }
-.gui-settings-panel.animation
+li.category i.icon-arrow
 {
     transition: all .2s ease-out;
 }
-i.settings-category-arrow
+li.category.folded i.icon-arrow
 {
-    transform-origin: center;
-    transition: all .2s ease-out;
-    transform: translateY(2.828427px) rotate(-135deg);
-    height: 100%;
-    display: inline-block;
-    margin-left: 12px;
-}
-li.category.folded i.settings-category-arrow
-{
-    transform: translateY(-2.828427px) rotate(45deg);
-}
-i.settings-category-arrow::after
-{
-    content: "";
-    width: 8px;
-    height: 8px;
-    background-color: transparent;
-    border: 2px solid;
-    border-color: black;
-    opacity: .8;
-    display: block;
-    border-left-color: transparent;
-    border-top-color: transparent;
-    border-radius: 2.4px;
+    transform: rotate(180deg);
 }
 .gui-settings-dropdown
 {
     position: relative;
     cursor: pointer;
-    display: inline-block;
     -webkit-tap-highlight-color: transparent;
+    background-color: #8884;
+    display: inline-flex;
+    align-items: center;
+}
+.gui-settings-dropdown>i
+{
+    transition: all .2s ease-out;
+    transform-origin: center;
+    transform: rotate(180deg);
 }
 .gui-settings-dropdown>ul
 {
@@ -536,16 +368,14 @@ i.settings-category-arrow::after
     flex-direction: column;
     align-items: center;
     box-shadow: 0px 3px 20px 2px #0004;
-    border-radius: 4px;
 }
 .gui-settings-dropdown ul li
 {
     margin: 0;
-    padding: 8px 0;
+    padding: 12px 0;
     height: auto;
     width: 100%;
     justify-content: center;
-    border-radius: 4px;
 }
 .gui-settings-dropdown ul li:hover
 {
@@ -555,21 +385,167 @@ i.settings-category-arrow::after
 {
     transform: scaleY(1);
 }
+.gui-settings-dropdown.opened>i
+{
+    transform: rotate(0deg);
+}
 .gui-settings-dropdown input
 {
     cursor: pointer;
+    border: none;
+    height: 100%;
+    max-width: 80px;
+    padding: 4px 8px;
+    transition: all 0.2s;
+    font-size: 16px;
+    background-color: transparent;
 }
-.gui-settings-dropdown::after
+
+.gui-settings-mask
+{
+    height: calc(100% + 5px);
+    width: calc(100% + 5px);
+    opacity: 0;
+    background: #000a;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    pointer-events: none;
+    transition: all .3s cubic-bezier(0, 0.86, 0.58, 1);
+    overscroll-behavior: contain;
+}
+.gui-settings-mask.opened
+{
+    opacity: 1;
+    pointer-events: initial;
+}
+.gui-settings-widgets-box,
+.gui-settings-box
+{
+    height: 100%;
+    width: 400px;
+    background: white;
+    color: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    transform: translateX(-100%);
+    transition: all .3s cubic-bezier(0, 0.86, 0.58, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0px 16px 0px #0000;
+}
+.gui-settings-widgets-box
+{
+    width: 200px;
+}
+.gui-settings-widgets-box.opened,
+.gui-settings-box.opened
+{
+    transform: translateX(0);
+    box-shadow: 4px 0px 16px 0px #0005;
+}
+.gui-settings-widgets-box>.title
+{
+    margin: 32px;
+    font-size: 16pt;
+}
+.gui-settings-widgets-box>.widgets-container
+{
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
+    position: relative;
+    overscroll-behavior: contain;
+    overflow: auto;
+    height: 100%;
+}
+.gui-settings-widgets-box>.widgets-container:empty::after
+{
+    content: "当前页面没有可用的附加功能.";
+    font-size: 10pt;
+}
+.gui-settings-flat-button,
+.gui-settings-flat-button a,
+.gui-settings-flat-button a:hover
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+}
+.gui-settings-flat-button
+{
+    width: auto;
+    padding: 8px 16px;
+    background: #8884;
+    border: none;
+    color: black;
+    cursor: pointer;
+    transition: all .2s ease-out;
+    transform-origin: center;
+    font-size: 10pt;
+}
+.gui-settings-flat-button:hover
+{
+    transform: scale(1.02);
+}
+.gui-settings-flat-button:active
+{
+    transform: scale(0.98);
+}
+.gui-settings-flat-button:focus
+{
+    outline: none;
+}
+.gui-settings-flat-button i
+{
+    margin-right: 8px;
+}
+.gui-settings-widgets-box .gui-settings-flat-button
+{
+    border-bottom: 2px solid $customStyleColor;
+    flex: 0 0 auto;
+    margin: 4px;
+}
+
+.gui-settings-checkbox
+{
+    width: 28px;
+    margin-right: 24px;
+    height: 12px;
+    background: #8884;
+    border-radius: 16px;
+    position: relative;
+}
+.gui-settings-checkbox::after
 {
     content: "";
-    border: 4px solid black;
+    width: 20px;
+    height: 20px;
+    background: #c6c6c6;
     position: absolute;
-    top: calc(50% - 6px);
-    box-sizing: border-box;
-    right: 6px;
-    transform-origin: center;
-    transform: rotate(45deg);
-    border-left-color: transparent;
-    border-top-color: transparent;
-    opacity: .8;
+    border-radius: 50%;
+    top: -4px;
+    left: -4px;
+    box-shadow: 0px 2px 8px 1px #0003;
+    transition: all .2s ease-out;
+}
+.gui-settings-checkbox-container input:checked ~ .gui-settings-checkbox
+{
+    background: $customStyleColor80;
+}
+.gui-settings-checkbox-container input:checked ~ .gui-settings-checkbox::after
+{
+    background: $customStyleColor !important;
+    box-shadow: 0px 2px 8px 1px $customStyleColor70;
+    left: calc(100% - 16px);
+}
+.gui-settings-header>i
+{
+    margin-right: 8px;
 }

@@ -11,7 +11,7 @@
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
 
-[正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)
+[正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)
 ----- | ----- | ----- | -----
 正式发布的版本, 最稳定, 更新频率较低. | 新增内容测试的地方, 更新频率高, 但功能不稳定. | 内置所有依赖项, 体积较大, 更新频率高于正式版. | 兼备预览版和离线版的特点.
 
@@ -83,7 +83,7 @@
 ![主站](images/new-navbar.png)
 ![播放](images/new-navbar-stardust.png)
 ### 夜间模式(实验性)
-夜间模式更适合光线暗的环境, 并会大量应用自定义颜色.
+夜间模式更适合光线暗的环境, 并会大量应用主题颜色.
 
 目前仅支持部分常用页面, 其他页面会陆续添加, 不支持推广板块(会被`删除广告`功能去除的部分).
 #### 启用前
@@ -108,6 +108,8 @@
 ### 强制宽屏
 对主站强制使用宽屏样式, 默认将在宽度达到`1368px`时启用. 这个触发宽度可以在设置中更改为任何有效的CSS宽度值.
 > 原有的宽屏样式会在宽度超过`1400px`时使用, 如果将触发宽度设为大于`1400px`的值实际上没有意义.
+
+> 非宽屏样式下, 首页视频排行为2行**3**列; 宽屏样式下, 首页视频排行为2行**4**列. 如果原本就是宽屏样式, 则没有必要开启此功能.
 #### 启用前
 ![默认布局](images/force-wide-before.png)
 #### 启用后

@@ -58,7 +58,9 @@ div#square.container,
 .uns_box li .i_menu,
 .user-info .user-info-desc,
 #community_msg,
-.gui-settings-dropdown>ul
+.gui-settings-dropdown>ul,
+.toast-card,
+.gui-settings-widgets-box
 {
     background-color: #222 !important;
 }
@@ -123,7 +125,9 @@ body>div.to-top.on,
 .up-info .u-face .up-face,
 .main_body .future .next_button,
 .user-info .points-wrp .bar,
-.list.main_body .list_box .next_button
+.list.main_body .list_box .next_button,
+.gui-settings-checkbox::after
+
 {
     background-color: #444 !important;
 }
@@ -339,11 +343,17 @@ body>div.to-top.on,
 #community_msg .dyn_menu li a,
 .list.main_body .list_box .next_button,
 .gui-settings-dropdown input,
-.bilibili-player-video-control .bilibili-player-video-volume-num
+.bilibili-player-video-control .bilibili-player-video-volume-num,
+.gui-settings-widgets-box>.widgets-container>button,
+.gui-settings-widgets-box
 {
     color: #eee !important;
 }
-.list.main_body .right_box .select_box .select .option_block .option.selected
+.list.main_body .right_box .select_box .select .option_block .option.selected,
+.toast-card-title,
+.toast-card-message,
+.toast-card span,
+.toast-card .link
 {
     color: #fff !important;
 }
@@ -439,6 +449,10 @@ i.settings-category-arrow::after,
 {
     fill: #aaa !important;
 }
+svg.toast-card-dismiss path
+{
+    fill: #fff !important;
+}
 .security-list .first-level .m-arrow,
 .page-content .right-side .up-list .fresh-btn:before,
 .s-lineMore-more .icon-right,
@@ -448,7 +462,8 @@ i.settings-category-arrow::after,
 .breadcrumb .arrow,
 .error-container .error.split,
 .leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn,
-.nav-header-wrapper .nav-header .user-panel .panel-list .icon
+.nav-header-wrapper .nav-header .user-panel .panel-list .icon,
+[class^=icon-]::after
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -594,21 +609,12 @@ body>div.to-top.on,
 // }
 @supports (backdrop-filter: blur(24px)) or (-webkit-backdrop-filter: blur(24px))
 {
-    .gui-settings-box.blur li.category
-    {
-        background: transparent !important;
-    }
-}
-@supports (backdrop-filter: blur(64px)) or (-webkit-backdrop-filter: blur(64px))
-{
+    .gui-settings-box.blur li.category,
+    .gui-settings-box.blur .gui-settings-header,
+    .gui-settings-box.blur .gui-settings-footer,
     .gui-settings-box.blur .gui-settings-content
     {
-        background: #2228 !important;
-    }
-    .gui-settings-box.blur .gui-settings-header,
-    .gui-settings-box.blur .gui-settings-footer
-    {
-        background: #2228 !important;
+        background: transparent !important;
     }
 }
 .face-g-list .mp-block .right ul li.base .round

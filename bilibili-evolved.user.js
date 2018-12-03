@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.5.38
+// @version      1.6.3
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -58,6 +58,7 @@
         autoLightOff: false,
         downloadDanmaku: false,
         useCache: true,
+        toastInternalError: false,
         cache: {},
     };
     const fixedSettings = {
@@ -72,6 +73,16 @@
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
         currentVersion: GM_info.script.version,
     };
+    function logError(message)
+    {
+        if (settings.toastInternalError)
+        {
+            Toast.error("stack" in message
+                ? message.stack
+                : message, "错误");
+        }
+        console.error(message);
+    }
     function loadSettings()
     {
         for (const key in settings)
@@ -103,22 +114,22 @@
     }
     function loadResources()
     {
-        const resouceManifest = {
+        const resourceManifest = {
             style: {
                 path: "min/style.min.scss",
-                order: 1,
+                order: 0,
             },
             oldStyle: {
                 path: "min/old.min.scss",
-                order: 1,
+                order: 0,
             },
             scrollbarStyle: {
                 path: "min/scrollbar.min.css",
-                order: 1,
+                order: 0,
             },
             darkStyle: {
                 path: "min/dark.min.scss",
-                order: 2,
+                order: 1,
             },
             darkStyleImportant: {
                 path: "min/dark-important.min.scss",
@@ -144,7 +155,7 @@
             },
             guiSettingsStyle: {
                 path: "min/gui-settings.min.scss",
-                order: 0,
+                order: 2,
             },
             fullTweetsTitleStyle: {
                 path: "min/full-tweets-title.min.css",
@@ -180,6 +191,9 @@
             latestVersion: {
                 path: "version.txt",
             },
+            iconsStyle: {
+                path: "min/icons.min.css",
+            },
             guiSettings: {
                 path: "min/gui-settings.min.js",
                 dependencies: [
@@ -187,10 +201,12 @@
                 ],
                 styles: [
                     "guiSettingsStyle",
+                    "iconsStyle",
                 ],
                 displayNames: {
                     guiSettings: "设置",
                     blurSettingsPanel: "模糊设置面板背景",
+                    clearCache: "清除缓存",
                 },
             },
             useDarkStyle: {
@@ -343,6 +359,7 @@
                 ],
                 displayNames: {
                     toast: "显示消息",
+                    toastInternalError: "显示内部错误消息",
                 },
             },
             removeVideoTopMask: {
@@ -397,6 +414,7 @@
                 ],
                 displayNames: {
                     "downloadDanmaku": "下载视频时包含弹幕",
+                    "downloadVideo": "下载视频",
                 },
             },
             videoInfo: {
@@ -416,6 +434,9 @@
                 styles: [
                     "aboutStyle",
                 ],
+                displayNames: {
+                    "about": "关于",
+                }
             },
             customControlBackgroundStyle: {
                 path: "min/custom-control-background.min.scss",
@@ -445,7 +466,7 @@
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
         Resource.displayNames = {};
-        for (const [key, data] of Object.entries(resouceManifest))
+        for (const [key, data] of Object.entries(resourceManifest))
         {
             const resource = new Resource(data.path, data.order, data.styles);
             resource.key = key;
@@ -456,7 +477,7 @@
             }
             Resource.all[key] = resource;
         }
-        for (const [key, data] of Object.entries(resouceManifest))
+        for (const [key, data] of Object.entries(resourceManifest))
         {
             if (data.dependencies)
             {
@@ -469,7 +490,7 @@
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url);
 
-        if (load) // callback
+        if (load !== undefined) // callback
         {
             xhr.addEventListener("load", () => load && load(xhr.responseText));
             xhr.addEventListener("error", () => error && error(xhr.responseText));
@@ -587,55 +608,45 @@
             this.observer && this.observer.disconnect();
             return this;
         }
-        static subtree(selector, callback)
+        static observe(selector, callback, options)
         {
             callback();
             return [...document.querySelectorAll(selector)].map(
                 it =>
                 {
                     const observer = new Observer(it, callback);
-                    observer.options = {
-                        childList: true,
-                        subtree: false,
-                        attributes: false,
-                    };
+                    observer.options = options;
                     return observer.start();
                 });
+        }
+        static subtree(selector, callback)
+        {
+            return Observer.observe(selector, callback, {
+                childList: true,
+                subtree: false,
+                attributes: false,
+            });
         }
         static attributes(selector, callback)
         {
-            callback();
-            return [...document.querySelectorAll(selector)].map(
-                it =>
-                {
-                    const observer = new Observer(it, callback);
-                    observer.options = {
-                        childList: false,
-                        subtree: true,
-                        attributes: true,
-                    };
-                    return observer.start();
-                });
+            return Observer.observe(selector, callback, {
+                childList: false,
+                subtree: true,
+                attributes: true,
+            });
         }
         static all(selector, callback)
         {
-            callback();
-            return [...document.querySelectorAll(selector)].map(
-                it =>
-                {
-                    const observer = new Observer(it, callback);
-                    observer.options = {
-                        childList: true,
-                        subtree: true,
-                        attributes: true,
-                    };
-                    return observer.start();
-                });
+            return Observer.observe(selector, callback, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+            });
         }
     }
     class SpinQuery
     {
-        constructor(query, condition, action, onFailed)
+        constructor(query, condition, action, failed)
         {
             this.maxRetry = 30;
             this.retry = 0;
@@ -643,22 +654,15 @@
             this.query = query;
             this.condition = condition;
             this.action = action;
-            this.onFailed = onFailed;
+            this.failed = failed;
         }
         start()
         {
-            this.tryQuery(this.query, this.condition, this.action, this.onFailed);
+            this.tryQuery(this.query, this.condition, this.action, this.failed);
         }
-        tryQuery(query, condition, action, onFailed)
+        tryQuery(query, condition, action, failed)
         {
-            if (this.retry >= this.maxRetry)
-            {
-                if (onFailed)
-                {
-                    onFailed();
-                }
-            }
-            else
+            if (this.retry < this.maxRetry)
             {
                 const result = query();
                 if (condition(result))
@@ -668,17 +672,35 @@
                 else
                 {
                     this.retry++;
-                    setTimeout(() => this.tryQuery(query, condition, action, onFailed), this.queryInterval);
+                    setTimeout(() => this.tryQuery(query, condition, action, failed), this.queryInterval);
                 }
             }
+            else
+            {
+                typeof failed === "function" && failed();
+            }
         }
-        static any(query, action)
+        static condition(query, condition, action, failed)
         {
-            new SpinQuery(query, it => it.length > 0, action).start();
+            if (action !== undefined)
+            {
+                new SpinQuery(query, condition, action, failed).start();
+            }
+            else
+            {
+                return new Promise((resolve, reject) =>
+                {
+                    new SpinQuery(query, condition, it => resolve(it), it => reject(it)).start();
+                });
+            }
         }
-        static count(query, count, action)
+        static any(query, action, failed)
         {
-            new SpinQuery(query, it => it.length === count, action).start();
+            return SpinQuery.condition(query, it => it.length > 0, action, failed);
+        }
+        static count(query, count, action, failed)
+        {
+            return SpinQuery.condition(query, it => it.length === count, action, failed);
         }
     }
     class ColorProcessor
@@ -910,27 +932,22 @@
         {
             return new ResourceType("html", html =>
             {
-                for (const [key, name,] of Object.entries(Resource.displayNames))
+                for (const [key, name] of Object.entries(Resource.displayNames))
                 {
                     html = html.replace(new RegExp(`(<(.+)\\s*?indent="[\\d]+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</\\2>)`, "g"),
                         `$1${name}$3`);
                 }
-                return html.replace(/<category>([^\0]*?)<\/category>/g, `
+                return html.replace(/<category\s*?icon="(.+?)">([^\0]*?)<\/category>/g, `
                     <li class="indent-center category">
-                        <span class="settings-category">
-                            $1
-                            <i class="settings-category-arrow"></i>
-                        </span>
-                    </li>
-                    <li class="indent-center widgets-container" category-name="$1">
+                        <i class="icon-$1" style="margin-right:8px"></i>
+                        <span class="settings-category">$2</span>
+                        <i class="icon-arrow" style="margin-left:8px"></i>
                     </li>
                 `).replace(/<checkbox\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
                             <input key="$2" type="checkbox" dependencies="$3" checked/>
-                            <svg class="gui-settings-ok" viewBox="0 0 24 24">
-                                <path />
-                            </svg>
+                            <div class="gui-settings-checkbox"></div>
                             <span>$4</span>
                         </label>
                     </li>
@@ -974,6 +991,23 @@
             this.type = ResourceType.fromUrl(url);
             this.displayName = "";
         }
+        flatMapPolyfill()
+        {
+            if (Array.prototype.flatMap === undefined)
+            {
+                const flatMap = function (mapFunc)
+                {
+                    return this
+                        .map(mapFunc)
+                        .reduce((acc, it) => acc.concat(it), []);
+                };
+                return flatMap;
+            }
+            else
+            {
+                return Array.prototype.flatMap;
+            }
+        }
         loadCache()
         {
             const key = this.key;
@@ -986,7 +1020,7 @@
                 return settings.cache[key];
             }
         }
-        download()
+        async download()
         {
             const key = this.key;
             return new Promise((resolve, reject) =>
@@ -997,11 +1031,10 @@
                 }
                 else
                 {
+                    const flattenStyles = this.flatMapPolyfill()
+                        .bind(this.styles)(it => typeof it === "object" ? it.key : it);
                     Promise.all(this.dependencies
-                        .concat(this.styles
-                            .flatMap(it => typeof it === "object" ? it.key : it)
-                            .map(it => Resource.all[it])
-                        )
+                        .concat(flattenStyles.map(it => Resource.all[it]))
                         .map(r => r.download())
                     )
                     .then(() =>
@@ -1031,6 +1064,7 @@
                                     if (typeof offlineData === "undefined")
                                     {
                                         settings.cache[key] = this.text;
+                                        saveSettings(settings);
                                     }
                                 }
                             }, error => reject(error));
@@ -1055,7 +1089,7 @@
             const style = this.text;
             if (style === null)
             {
-                console.error("Attempt to get style which is not downloaded.");
+                logError("Attempt to get style which is not downloaded.");
             }
             let attributes = `id='${id}'`;
             if (this.priority !== undefined)
@@ -1131,69 +1165,66 @@
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
         }
-        fetchByKey(key)
+        async fetchByKey(key)
         {
             const resource = Resource.all[key];
             if (!resource)
             {
                 return null;
             }
-            const promise = resource.download();
-            resource.dependencies
-                .filter(it => it.type.name === "script")
-                .forEach(it => this.fetchByKey(it.key));
-            return new Promise(resolve =>
+            const text = await resource.download().catch(reason =>
             {
-                promise.then(text =>
+                console.error(`Download error, XHR status: ${reason}`);
+                let toastMessage = `无法下载组件<span>${Resource.all[key].displayName}</span>`;
+                if (settings.toastInternalError && "stack" in reason)
                 {
-                    resource.styles
-                        .filter(it => it.condition !== undefined ? it.condition() : true)
-                        .forEach(it =>
-                        {
-                            const important = typeof it === "object" ? it.important : false;
-                            const key = typeof it === "object" ? it.key : it;
-                            if (important)
-                            {
-                                this.applyImportantStyle(key);
-                            }
-                            else
-                            {
-                                this.applyStyle(key);
-                            }
-                        });
-                    this.applyComponent(key, text);
-                    resolve();
-                }).catch(reason =>
-                {
-                    // download error
-                    console.error(`Download error, XHR status: ${reason}`);
-                    Toast.error(`无法下载组件<span>${Resource.all[key].displayName}</span>`, "错误");
-                });
+                    toastMessage += "\n" + reason.stack;
+                }
+                Toast.error(toastMessage, "错误");
             });
-        }
-        fetch()
-        {
-            return new Promise(resolve =>
-            {
-                this.validateCache();
-                const promises = [];
-                for (const key in settings)
+            await Promise.all(resource.dependencies
+                .filter(it => it.type.name === "script")
+                .map(it => this.fetchByKey(it.key)));
+            resource.styles
+                .filter(it => it.condition !== undefined ? it.condition() : true)
+                .forEach(it =>
                 {
-                    if (settings[key] === true && key !== "toast")
+                    const important = typeof it === "object" ? it.important : false;
+                    const key = typeof it === "object" ? it.key : it;
+                    if (important)
                     {
-                        const promise = this.fetchByKey(key);
-                        if (promise)
-                        {
-                            promises.push(promise);
-                        }
+                        this.applyImportantStyle(key);
+                    }
+                    else
+                    {
+                        this.applyStyle(key);
+                    }
+                });
+            this.applyComponent(key, text);
+        }
+        async fetch()
+        {
+            this.validateCache();
+            if (settings.toast === true)
+            {
+                await this.fetchByKey("toast");
+                Toast = this.attributes.toast.export;
+            }
+            const promises = [];
+            for (const key in settings)
+            {
+                if (settings[key] === true && key !== "toast")
+                {
+                    const promise = this.fetchByKey(key);
+                    if (promise)
+                    {
+                        promises.push(promise);
                     }
                 }
-                Promise.all(promises).then(() =>
-                {
-                    this.applySettingsWidgets();
-                    resolve();
-                });
-            });
+            }
+            await Promise.all(promises);
+            await this.applyWidgets();
+            saveSettings(settings);
         }
         applyComponent(key, text)
         {
@@ -1207,41 +1238,45 @@
                 }
                 catch (error)
                 {
-                    // execution error
                     console.error(`Failed to apply feature "${key}": ${error}`);
-                    Toast.error(`加载组件<span>${Resource.all[key].displayName}</span>失败`, "错误");
+                    let toastMessage = `加载组件<span>${Resource.all[key].displayName}</span>失败`;
+                    if (settings.toastInternalError && "stack" in error)
+                    {
+                        toastMessage += "\n" + error.stack;
+                    }
+                    Toast.error(toastMessage, "错误");
                 }
             }
         }
-        applySettingsWidgets()
+        async applyWidgets()
         {
-            const panel = $(".gui-settings-panel");
-            if (panel.length === 0)
+            async function applyWidget(info)
             {
-                return;
-            }
-            for (const info of Object.values(this.attributes)
-                .filter(it => it.settingsWidget)
-                .map(it => it.settingsWidget))
-            {
-                if (info.after)
+                let condition = true;
+                if (typeof info.condition === "function")
                 {
-                    panel.find(info.after()).after(info.content);
+                    condition = info.condition();
+                    if (condition instanceof Promise)
+                    {
+                        condition = await condition.catch(() => { return false; });
+                    }
                 }
-                else if (info.before)
+                if (condition === true)
                 {
-                    panel.find(info.before()).before(info.content);
-                }
-                else if (info.category)
-                {
-                    panel.find(`.widgets-container[category-name=${info.category}]`).append(info.content);
-                }
-
-                if (info.success)
-                {
-                    info.success();
+                    if (info.content)
+                    {
+                        $(".widgets-container").append($(info.content));
+                    }
+                    if (info.success)
+                    {
+                        info.success();
+                    }
                 }
             }
+            await Promise.all(Object.values(this.attributes)
+                .filter(it => it.widget)
+                .map(it => applyWidget(it.widget))
+            );
         }
         getDefaultStyleId(key)
         {
@@ -1291,20 +1326,15 @@
         }
     }
 
-    loadResources();
-    loadSettings();
-    const resources = new ResourceManager();
-    if (settings.toast)
+    try
     {
-        resources.fetchByKey("toast").then(() =>
-        {
-            Toast = resources.attributes.toast.export;
-            resources.fetch().then(() => saveSettings(settings));
-        });
+        loadResources();
+        loadSettings();
+        const resources = new ResourceManager();
+        resources.fetch().catch(error => logError(error));
     }
-    else
+    catch (error)
     {
-        resources.fetch().then(() => saveSettings(settings));
+        logError(error);
     }
-
 })(window.jQuery.noConflict(true));

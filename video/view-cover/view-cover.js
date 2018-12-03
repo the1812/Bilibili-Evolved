@@ -53,71 +53,72 @@
         if ($("meta[itemprop='image'],meta[property='og:image']").length > 0)
         {
             return {
-                settingsWidget: {
-                    category: "视频与直播",
-                    content: `<div class="hidden">
+                widget: {
+                    content: `
                         <button
-                            class="gui-settings-button"
-                            title="查看当前视频的封面"
-                            id="view-video-cover">
-                            查看封面
-                        </button>
-                        </div>`,
-                    success: () =>
+                            class="gui-settings-flat-button"
+                            id="view-cover">
+                            <i class="icon-view"></i>
+                            <span>查看封面</span>
+                        </button>`,
+                    condition: async () =>
                     {
-                        new SpinQuery(() => $("meta[itemprop='image'],meta[property='og:image']"),
+                        const metaData = await SpinQuery.condition(
+                            () => $("meta[itemprop='image'],meta[property='og:image']"),
                             metaData => metaData.length > 0 && metaData.prop("content"),
-                            metaData =>
-                            {
-                                const imageViewer = new ImageViewer(metaData.prop("content"));
-                                $("#view-video-cover").on("click", () =>
-                                {
-                                    imageViewer.show();
-                                }).parent().removeClass("hidden");
-                            }).start();
-                    }
-                }
+                        );
+                        return typeof metaData !== "undefined";
+                    },
+                    success: async () =>
+                    {
+                        const metaData = $("meta[itemprop='image'],meta[property='og:image']");
+                        const imageViewer = new ImageViewer(metaData.prop("content"));
+                        $("#view-cover").on("click", () =>
+                        {
+                            imageViewer.show();
+                        });
+                    },
+                },
             };
         }
         else
         {
             return {
-                settingsWidget: {
-                    category: "视频与直播",
-                    content: `<div class="hidden">
-                            <button
-                                class="gui-settings-button"
-                                title="查看当前直播的封面"
-                                id="view-live-cover">
-                                查看封面
-                            </button>
-                            </div>`,
-                    success: () =>
+                widget: {
+                    content: `
+                        <button
+                            class="gui-settings-flat-button"
+                            id="view-cover">
+                            <i class="icon-view"></i>
+                            <span>查看封面</span>
+                        </button>`,
+                    condition: async () =>
                     {
-                        SpinQuery.any(() => $(".header-info-ctnr .room-cover"), coverLink =>
+                        const coverLink = await SpinQuery.any(() => $(".header-info-ctnr .room-cover"));
+                        return typeof coverLink !== "undefined";
+                    },
+                    success: async () =>
+                    {
+                        const coverLink = $(".header-info-ctnr .room-cover");
+                        const match = coverLink
+                            .attr("href")
+                            .match(/space\.bilibili\.com\/([\d]+)/);
+                        if (match && match[1])
                         {
-                            const match = coverLink
-                                .attr("href")
-                                .match(/space\.bilibili\.com\/([\d]+)/);
-                            if (match && match[1])
+                            const uid = match[1];
+                            const url = `https://api.live.bilibili.com/bili/getRoomInfo/${uid}`;
+                            const text = await downloadText(url);
+                            // remove the surrounding "(...);"
+                            const jsonText = text.slice(1, -2);
+                            const coverUrl = JSON.parse(jsonText).data.cover;
+                            const imageViewer = new ImageViewer(coverUrl);
+                            $("#view-cover").on("click", () =>
                             {
-                                const uid = match[1];
-                                const url = `https://api.live.bilibili.com/bili/getRoomInfo/${uid}`;
-                                downloadText(url, text =>
-                                {
-                                    // remove the surrounding "(...);"
-                                    const jsonText = text.slice(1, -2);
-                                    const coverUrl = JSON.parse(jsonText).data.cover;
-                                    const imageViewer = new ImageViewer(coverUrl);
-                                    $("#view-live-cover").on("click", () =>
-                                    {
-                                        imageViewer.show();
-                                    }).parent().removeClass("hidden");
-                                });
-                            }
-                        });
-                    }
-                }
+                                imageViewer.show();
+                            });
+                        }
+                    },
+                },
             };
         }
     };
