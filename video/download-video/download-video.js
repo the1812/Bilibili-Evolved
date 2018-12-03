@@ -370,8 +370,15 @@
                     .prependTo("ol.video-quality");
             });
             resources.applyStyle("downloadVideoStyle");
+            const downloadPanel = document.querySelector(".download-video-panel");
             const togglePopup = () => $(".download-video-panel").toggleClass("opened");
-            $("#download-video").hover(togglePopup, togglePopup);
+            $("#download-video").on("click", e =>
+            {
+                if (!downloadPanel.contains(e.target))
+                {
+                    togglePopup();
+                }
+            });
             $(".video-error").on("click", () =>
             {
                 $(".video-error").text("");
