@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.2
+// @version      1.6.3
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -937,12 +937,11 @@
                     html = html.replace(new RegExp(`(<(.+)\\s*?indent="[\\d]+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</\\2>)`, "g"),
                         `$1${name}$3`);
                 }
-                return html.replace(/<category>([^\0]*?)<\/category>/g, `
-                    <li class="indent-center category">
-                        <span class="settings-category">
-                            $1
-                            <i class="settings-category-arrow"></i>
-                        </span>
+                return html.replace(/<category\s*?icon="(.+?)">([^\0]*?)<\/category>/g, `
+                    <li class="indent-center category folded">
+                        <i class="icon-$1" style="margin-right:8px"></i>
+                        <span class="settings-category">$2</span>
+                        <i class="icon-arrow" style="margin-left:8px"></i>
                     </li>
                 `).replace(/<checkbox\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">

@@ -64,7 +64,7 @@
 .gui-settings-content ul li
 {
     font-size: 16px;
-    margin-bottom: 12px;
+    margin-bottom: 18px;
     display: flex;
     height: 24px;
     transition: all .2s;
@@ -95,8 +95,8 @@
 }
 .gui-settings-content ul li.category
 {
-    padding: 8px 0;
-    margin-bottom: 12px;
+    padding: 16px 0;
+    margin-bottom: 18px;
     border-top: 1px dashed #8884;
     border-bottom: 1px dashed #8884;
     background: white;
@@ -111,7 +111,7 @@
 {
     margin-bottom: -1px;
 }
-span.settings-category
+.gui-settings-content ul li.category *
 {
     opacity: 0.8;
 }
@@ -332,32 +332,13 @@ input[type=text][key]
         background: #fffa;
     }
 }
-i.settings-category-arrow
+li.category i.icon-arrow
 {
-    transform-origin: center;
     transition: all .2s ease-out;
-    transform: translateY(2.828427px) rotate(-135deg);
-    height: 100%;
-    display: inline-block;
-    margin-left: 12px;
 }
-li.category.folded i.settings-category-arrow
+li.category.folded i.icon-arrow
 {
-    transform: translateY(-2.828427px) rotate(45deg);
-}
-i.settings-category-arrow::after
-{
-    content: "";
-    width: 8px;
-    height: 8px;
-    background-color: transparent;
-    border: 2px solid;
-    border-color: black;
-    opacity: .8;
-    display: block;
-    border-left-color: transparent;
-    border-top-color: transparent;
-    border-radius: 2.4px;
+    transform: rotate(180deg);
 }
 .gui-settings-dropdown
 {
@@ -452,6 +433,10 @@ i.settings-category-arrow::after
     flex-direction: column;
     box-shadow: 4px 0px 16px 0px #0000;
 }
+.gui-settings-widgets-box
+{
+    width: 200px;
+}
 .gui-settings-widgets-box.opened,
 .gui-settings-box.opened
 {
@@ -467,9 +452,9 @@ i.settings-category-arrow::after
 {
     padding: 32px;
     display: flex;
-    align-items: start;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: start;
     position: relative;
     overscroll-behavior: contain;
     overflow: auto;
