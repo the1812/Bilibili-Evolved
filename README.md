@@ -136,7 +136,7 @@
 
 ## 视频与直播
 ### 下载视频(实验性)
-在视频播放页面中, `设置`→`视频与直播`下会出现下载视频按钮, 点击可以选择清晰度并下载. 如果勾选了`下载视频时包含弹幕`, 则还会包含XML格式的弹幕, XML格式可以在[其他站点](https://tiansh.github.io/us-danmaku/bilibili/)转换为ASS格式.
+在视频播放页面中, `下载视频`按钮将在`附加功能`中启用, 点击可以选择清晰度并下载. 如果在设置中勾选了`下载视频时包含弹幕`, 则还会包含XML格式的弹幕, XML格式可以在[其他站点](https://tiansh.github.io/us-danmaku/bilibili/)转换为ASS格式.
 
 如果你更喜欢使用其他的多线程下载软件, 可以在选择清晰度后选择`复制链接`. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=当前视频网址`**
 > 目前此功能只支持普通视频, 对番剧和电影无效. 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换.
@@ -145,10 +145,11 @@
 
 > 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
 
-![下载视频按钮](images/download-video.png)
 ### 查看封面
-在视频播放页面/直播间中, `设置`→`视频与直播`下会出现查看封面按钮, 点击可以查看或保存封面. (其实还可以看专栏的封面, 不过专栏的封面本来就显示在标题上方了)
-![查看封面按钮](images/view-cover-button.png)
+在视频播放页面/直播间中, `查看封面`按钮将在`附加功能`中启用, 点击可以查看或保存封面. (其实还可以看专栏的封面, 不过专栏的封面本来就显示在标题上方了)
+
+![查看封面与下载视频](images/download-video-view-cover.png)
+
 ### 默认播放器模式
 设置默认的播放器模式, 可以为`常规`, `宽屏`或`网页全屏`(`全屏`还未完成). 默认模式将在进入视频页面的首次播放时应用.
 ### 播放时自动关灯
@@ -211,21 +212,22 @@
 #### 效果对比
 ![效果对比](images/gui-settings-blur.png)
 ### 启用缓存
-使用缓存以提高脚本的加载速度, 此选项只对非离线版有效.
+使用缓存以提高脚本的加载速度, 此选项只对非离线版有效, 可在`附加功能`中清除脚本的缓存.
 
 # 兼容性
-## ![Chrome:兼容](https://img.shields.io/badge/Chrome-兼容-brightgreen.svg?style=flat-square&colorB=009688)
+## Chrome
 - 背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
-## ![Firfox:部分兼容](https://img.shields.io/badge/FireFox-部分兼容-yellow.svg?style=flat-square&colorB=1976D2)
+- 含有背景模糊效果的动画有掉帧现象.
+## Firefox
 - 滚动条样式无效.
 - 背景模糊效果无效.
 - 触摸调整的进度预览有弹跳现象.(来自`transition: all 0.2s;`. 短时间内总是从原数值开始变化, 而不是当前数值)
-## ![Edge:部分兼容](https://img.shields.io/badge/Edge-部分兼容-yellow.svg?style=flat-square&colorB=1976D2)
+## Edge
 - 滚动条样式无效.
-- 由于Edge的CSS渲染bug(主要集中在`filter`和`color`), 部分自定义颜色错乱.
+- 由于Edge的CSS渲染bug(主要集中在`filter`和`color`), 部分主题颜色错乱.
 - 顶栏触摸体验不佳.
 - 触摸功能需要手动在`about:flags`中开启.
-## ![Safari:未知](https://img.shields.io/badge/Safari-未知-lightgrey.svg?style=flat-square&colorB=323232)
+## Safari
 - 尚未在Safari中测试.
 
 [返回顶部](#Bilibili-Evolved)
