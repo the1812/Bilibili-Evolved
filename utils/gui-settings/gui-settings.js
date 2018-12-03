@@ -153,10 +153,6 @@
         }
         function setupEvents()
         {
-            $(".gui-settings-header .gui-settings-close").on("click", () =>
-            {
-                $(".gui-settings-panel").removeClass("opened");
-            });
             $(".gui-settings-mask").on("click", () =>
             {
                 $(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask").removeClass("opened");
@@ -183,13 +179,6 @@
             $(".gui-settings-dropdown>input").on("click", e =>
             {
                 $(e.currentTarget).parent().toggleClass("opened");
-            });
-            $(".gui-settings-panel").on("click", e =>
-            {
-                if (e.target === document.querySelector(".gui-settings-panel"))
-                {
-                    $(".gui-settings-panel .popup").removeClass("opened");
-                }
             });
             onSettingsChange(settingsChange);
         }
@@ -248,7 +237,6 @@
                         $(`input[key='${key}'][type='text']`).parent()[action]("disabled");
                     }
                 }
-                $(".gui-settings-panel .popup").removeClass("opened");
             };
             $(`input[type='checkbox'][key]`)
                 .on("change", e => checkBoxChange($(e.target)))
@@ -300,10 +288,6 @@
             if (settings.blurSettingsPanel)
             {
                 $(".gui-settings-box").addClass("blur");
-            }
-            else
-            {
-                $(".gui-settings-panel").addClass("animation");
             }
         }
         function checkOfflineData()
