@@ -8,7 +8,8 @@
             textBox =>
             {
                 textBox.detach()
-                    .insertAfter(".nav-con.fr");
+                    // insert after only "first" right-nav. There will be 2 in Edge...
+                    .insertAfter($(document.querySelector(".nav-con.fr")));
             }
         ).start();
     };
