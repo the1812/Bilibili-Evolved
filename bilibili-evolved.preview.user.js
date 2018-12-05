@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.3
+// @version      1.6.4
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -41,7 +41,6 @@
         darkScheduleStart: "18:00",
         darkScheduleEnd: "6:00",
         darkSchedule: false,
-        blurSettingsPanel: false,
         blurVideoControl: false,
         toast: true,
         fullTweetsTitle: true,
@@ -70,6 +69,7 @@
         downloadVideo: true,
         useDefaultPlayerMode: true,
         about: false,
+        blurSettingsPanel: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
         currentVersion: GM_info.script.version,
     };
@@ -701,6 +701,10 @@
         static count(query, count, action, failed)
         {
             return SpinQuery.condition(query, it => it.length === count, action, failed);
+        }
+        static unsafeJquery(action, failed)
+        {
+            return SpinQuery.condition(() => unsafeWindow.$, jquery => jquery !== undefined, action, failed);
         }
     }
     class ColorProcessor
