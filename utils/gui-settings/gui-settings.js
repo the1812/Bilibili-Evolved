@@ -300,7 +300,8 @@
         }
         function checkCompatibility()
         {
-            if (!CSS.supports("backdrop-filter", "blur(24px)"))
+            if (!CSS.supports("backdrop-filter", "blur(24px)")
+                && !CSS.supports("-webkit-backdrop-filter", "blur(24px)"))
             {
                 $("input[key=blurVideoControl]").prop("disabled", true);
                 settings.blurVideoControl = false;
