@@ -298,6 +298,13 @@
                 $(e).click();
             });
         }
+        function checkCompatibility()
+        {
+            if (!CSS.supports("backdrop-filter", "blur(24px)"))
+            {
+                $("input[key=blurVideoControl]").prop("disabled", true);
+            }
+        }
 
         addSettingsIcon($("body"));
         const settingsBox = resources.data.guiSettingsDom.text;
@@ -310,8 +317,9 @@
             listenDependencies();
             addPredefinedColors();
             listenSettingsChange();
-            applyBlurEffect();
+            // applyBlurEffect();
             foldAllCategories();
+            checkCompatibility();
         }
 
         new SpinQuery(
