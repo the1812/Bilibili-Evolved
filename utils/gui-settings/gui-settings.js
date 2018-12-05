@@ -303,6 +303,8 @@
             if (!CSS.supports("backdrop-filter", "blur(24px)"))
             {
                 $("input[key=blurVideoControl]").prop("disabled", true);
+                settings.blurVideoControl = false;
+                saveSettings(settings);
             }
         }
 

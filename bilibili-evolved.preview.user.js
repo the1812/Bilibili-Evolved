@@ -688,9 +688,9 @@
             }
             else
             {
-                return new Promise((resolve, reject) =>
+                return new Promise((resolve) =>
                 {
-                    new SpinQuery(query, condition, it => resolve(it), it => reject(it)).start();
+                    new SpinQuery(query, condition, it => resolve(it)).start();
                 });
             }
         }
