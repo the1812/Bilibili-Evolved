@@ -259,7 +259,9 @@ table.invtable td,
 .tag-modal .tag-item,
 .spa-sub-title,
 .spa-user-info a,
-.spa-use-type 
+.spa-use-type,
+#gameCenter .hot-list .s-imgUnit .rank.gray,
+.s-statusUnit-text .info a 
 {
     color: #eee !important;
 }
@@ -321,7 +323,10 @@ table.invtable td,
 .tag-default.current,
 .tag-default:active,
 .tag-default,
-.btn-primary 
+.btn-primary,
+#gameCenter .hot-list .s-imgUnit,
+#gameCenter .hot-list .s-imgUnit:hover,
+#gameCenter .hot-list .s-imgUnit .rank 
 {
     border-color: transparent !important;
 }
@@ -494,7 +499,10 @@ table.invtable td,
 .link-no-hover:hover,
 .qa-index .help-content .help-title,
 .qa-index .help-list .collapse-item.collapse-item-active .collapse-title,
-.qa-index .help-list .collapse-item.collapse-item-title 
+.qa-index .help-list .collapse-item.collapse-item-title,
+#status .s-statusUnit .s-statusUnit-text .info .game-name,
+#gameCenter .hot-list .s-imgUnit .rank.pink,
+.s-statusUnit-text .info a:hover
 {
     color: $customStyleColor !important;
 }
