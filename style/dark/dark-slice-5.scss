@@ -72,7 +72,8 @@
 .ivu-form-item-error .ivu-input-group-append,
 .ivu-form-item-error .ivu-input-group-prepend,
 .tags-box .tag,
-.btn-primary 
+.btn-primary,
+.tag-modal
 {
     background-color: #444 !important;
 }
@@ -155,7 +156,8 @@
 .play-num,
 .setting .follow-setting .follow-wrp .follow-modal .follow-show p,
 .main-footer .cp,
-.main-footer .link-item a
+.main-footer .link-item a,
+.sap-use-view
 {
     color: #aaa !important;
 }
@@ -251,7 +253,13 @@ table.invtable td,
 .tag-default,
 .details-list-t div,
 .details-up-name a,
-.btn-primary 
+.btn-primary,
+.tag-modal,
+.tag-modal .tag-title,
+.tag-modal .tag-item,
+.spa-sub-title,
+.spa-user-info a,
+.spa-use-type 
 {
     color: #eee !important;
 }
