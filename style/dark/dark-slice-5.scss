@@ -21,7 +21,8 @@
 .tab-selector-wrap .tag-wrap .tag span.selected,
 .cc-body .setting,
 .dropdown__content .dropdown__active,
-.dropdown__content .dropdown__item:hover
+.dropdown__content .dropdown__item:hover,
+.layout .layout-main .main-footer
 {
     background-color: #222 !important;
 }
@@ -438,7 +439,8 @@ table.invtable td,
 .apply-form .btn:hover,
 .tag-default.current,
 .tag-default:active,
-.tag-default:hover 
+.tag-default:hover,
+.qa-index .help-list .collapse-item.collapse-item-active .collapse-title-icon 
 {
     background-color: $customStyleColor !important;
 }
@@ -481,7 +483,10 @@ table.invtable td,
 .fixed-service-word a,
 .fixed-service-word a:hover,
 .help-title-wrap.help-box .help-title,
-.link-no-hover:hover 
+.link-no-hover:hover,
+.qa-index .help-content .help-title,
+.qa-index .help-list .collapse-item.collapse-item-active .collapse-title,
+.qa-index .help-list .collapse-item.collapse-item-title 
 {
     color: $customStyleColor !important;
 }
