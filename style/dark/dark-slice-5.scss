@@ -70,7 +70,8 @@
 .ivu-input-costom-width .ivu-input-wrapper .ivu-input-wrapper-default .ivu-input-type .ivu-input,
 .ivu-form-item-error .ivu-input-group-append,
 .ivu-form-item-error .ivu-input-group-prepend,
-.tags-box .tag 
+.tags-box .tag,
+.btn-primary 
 {
     background-color: #444 !important;
 }
@@ -246,7 +247,10 @@ table.invtable td,
 .tag-default.current,
 .tag-default:active,
 .tag-default:hover,
-.tag-default
+.tag-default,
+.details-list-t div,
+.details-up-name a,
+.btn-primary 
 {
     color: #eee !important;
 }
@@ -307,7 +311,8 @@ table.invtable td,
 .main-footer .link-item,
 .tag-default.current,
 .tag-default:active,
-.tag-default
+.tag-default,
+.btn-primary 
 {
     border-color: transparent !important;
 }
@@ -475,7 +480,8 @@ table.invtable td,
 .help-subcontent a:hover,
 .fixed-service-word a,
 .fixed-service-word a:hover,
-.help-title-wrap.help-box .help-title
+.help-title-wrap.help-box .help-title,
+.link-no-hover:hover 
 {
     color: $customStyleColor !important;
 }
