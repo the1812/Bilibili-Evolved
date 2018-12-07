@@ -60,7 +60,7 @@
                 .map(it => it.value);
             const [finalQuality] = qualities
                 .map(it => it.value)
-                .filter(it => it <= (targetQuality || availableHighestQualities))
+                .filter(it => it <= Math.min(targetQuality, availableHighestQualities))
                 .sort()
                 .reverse();
 
