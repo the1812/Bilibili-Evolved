@@ -19,6 +19,10 @@
     {
         background-color: transparent !important;
     }
+    .bilibili-player-video-control-bottom
+    {
+        position: relative;
+    }
     .bilibili-player-area .bilibili-player-video-control-wrap,
     .bilibili-player-area .bilibili-player-video-control-bottom
     {

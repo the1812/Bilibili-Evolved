@@ -335,7 +335,11 @@ body
 {
     left: -12px !important;
     right: -12px !important;
-    bottom: -6px !important;
+    bottom: 0px !important;
+}
+.bilibili-player .bilibili-player-area .bilibili-player-video-control-wrap
+{
+    bottom: 0px !important;
 }
 
 .search-bar-ctnr .search-bar input::placeholder,
@@ -388,7 +392,7 @@ body
     {
         left: -12px !important;
         right: -12px !important;
-        bottom: -6px !important;
+        bottom: 0 !important;
     }
     .mode-fullscreen .bilibili-player-area.video-control-show:not(.disable-original-hover) .bilibili-player-video-control-top,
     .mode-fullscreen .bilibili-player-area.mouse-hover:not(.disable-original-hover) .bilibili-player-video-control-top,
@@ -397,6 +401,6 @@ body
     {
         left: 0 !important;
         right: 0 !important;
-        bottom: 48px !important;
+        bottom: 42px !important;
     }
 }

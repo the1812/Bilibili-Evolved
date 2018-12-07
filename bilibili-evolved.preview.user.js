@@ -446,6 +446,7 @@
             },
             customControlBackgroundStyle: {
                 path: "min/custom-control-background.min.scss",
+                order: 11
             },
             customControlBackground: {
                 path: "min/custom-control-background.min.js",
