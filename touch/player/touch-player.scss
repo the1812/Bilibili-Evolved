@@ -320,4 +320,13 @@ div.bilibili-player-video-control
         right: 0 !important;
         bottom: 48px !important;
     }
+    .mode-fullscreen .bilibili-player-area.video-control-show:not(.disable-original-hover) .bilibili-player-video-control-top,
+    .mode-fullscreen .bilibili-player-area.mouse-hover:not(.disable-original-hover) .bilibili-player-video-control-top,
+    .mode-webfullscreen .bilibili-player-area.video-control-show:not(.disable-original-hover) .bilibili-player-video-control-top,
+    .mode-webfullscreen .bilibili-player-area.mouse-hover:not(.disable-original-hover) .bilibili-player-video-control-top
+    {
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 48px !important;
+    }
 }
