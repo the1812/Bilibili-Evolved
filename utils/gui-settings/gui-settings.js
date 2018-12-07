@@ -64,6 +64,24 @@
                 }
                 return settings.defaultPlayerMode;
             },
+            defaultVideoQuality: text =>
+            {
+                if ([
+                    "高清 1080P60",
+                    "高清 720P60",
+                    "高清 1080P+",
+                    "高清 720P+",
+                    "高清 1080P",
+                    "高清 720P",
+                    "清晰 480P",
+                    "流畅 360P",
+                    "自动",
+                ].indexOf(text) !== -1)
+                {
+                    return text;
+                }
+                return settings.defaultVideoQuality;
+            }
         };
         function getCategoriyItems(category)
         {

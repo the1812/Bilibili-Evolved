@@ -14,16 +14,8 @@
   <div class="gui-settings-content">
     <ul>
       <category icon="video">视频与直播</category>
-      <li class="indent-0">
-        <label>
-          <span class="gui-settings-dropdown-span">默认播放器模式</span>
-          <div class="gui-settings-dropdown popup">
-            <input readonly type="text" spellcheck="false" key="defaultPlayerMode">
-            <ul></ul>
-            <i class="icon-arrow"></i>
-          </div>
-        </label>
-      </li>
+      <dropdown indent="0" key="defaultPlayerMode" dependencies=""></dropdown>
+      <dropdown indent="0" key="defaultVideoQuality" dependencies=""></dropdown>
       <checkbox indent="0" key="downloadDanmaku" dependencies=""></checkbox>
       <checkbox indent="0" key="autoLightOff" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>

@@ -55,6 +55,7 @@
         preserveRank: true,
         blurBackgroundOpacity: 0.382,
         defaultPlayerMode: "常规",
+        defaultVideoQuality: "自动",
         autoLightOff: false,
         downloadDanmaku: false,
         useCache: true,
@@ -69,6 +70,7 @@
         fixFullscreen: false,
         downloadVideo: true,
         useDefaultPlayerMode: true,
+        useDefaultVideoQuality: true,
         about: false,
         blurSettingsPanel: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
@@ -462,6 +464,13 @@
                     useDefaultPlayerMode: "默认播放器模式",
                     defaultPlayerMode: "默认播放器模式",
                     autoLightOff: "播放时自动关灯",
+                },
+            },
+            useDefaultVideoQuality: {
+                path: "min/default-video-quality.min.js",
+                displayNames: {
+                    useDefaultVideoQuality: "默认视频画质",
+                    defaultVideoQuality: "默认视频画质",
                 },
             },
         };
@@ -955,6 +964,17 @@
                             <input key="$2" type="checkbox" dependencies="$3" checked/>
                             <div class="gui-settings-checkbox"></div>
                             <span>$4</span>
+                        </label>
+                    </li>
+                `).replace(/<dropdown\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/dropdown>/g,`
+                    <li class="indent-$1">
+                        <label>
+                            <span class="gui-settings-dropdown-span">$4</span>
+                            <div class="gui-settings-dropdown popup">
+                                <input readonly type="text" spellcheck="false" key="$2" dependencies="$3">
+                                <ul></ul>
+                                <i class="icon-arrow"></i>
+                            </div>
                         </label>
                     </li>
                 `).replace(/<textbox\s*?indent="(.+?)"\s*key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/textbox>/g, `
