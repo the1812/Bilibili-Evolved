@@ -32,8 +32,11 @@
         {
             const [favoriteButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.collect"));
             favoriteButton.click();
-            const defaultInput = $(".group-list label:has(input)").filter((_, it) => it.innerText.indexOf("默认收藏夹") !== -1).find("input");
-            defaultInput.prop("checked", !defaultInput.prop("checked"));
+            const defaultInput = $(".group-list label:has(input)").filter((_, it) => it.innerText.indexOf("默认收藏夹") !== -1).find("input")[0];
+            const event = document.createEvent("HTMLEvents");
+            event.initEvent("change", true, true);
+            defaultInput.checked = !defaultInput.checked;
+            defaultInput.dispatchEvent(event);
             const okButton = $(".btn.submit-move")[0];
             okButton.disabled = false;
             okButton.click();
