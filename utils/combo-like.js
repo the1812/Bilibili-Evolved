@@ -45,36 +45,48 @@
         async function favorite()
         {
             const [favoriteButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.collect"));
-            favoriteButton.click();
-            const dialog = await SpinQuery.any(() => $(".group-list label:has(input)"));
-            const defaultInput = dialog.filter((_, it) => it.innerText.indexOf("默认收藏夹") !== -1).find("input")[0];
-            if (!defaultInput.checked)
+            if (!favoriteButton.classList.contains("on"))
             {
-                const event = document.createEvent("HTMLEvents");
-                event.initEvent("change", true, true);
-                defaultInput.checked = true;
-                defaultInput.dispatchEvent(event);
-                const okButton = $(".btn.submit-move")[0];
-                okButton.disabled = false;
-                okButton.click();
+                favoriteButton.click();
+                const dialog = await SpinQuery.any(() => $(".group-list label:has(input)"));
+                const defaultInput = dialog.filter((_, it) => it.innerText.indexOf("默认收藏夹") !== -1).find("input")[0];
+                if (!defaultInput.checked)
+                {
+                    const event = document.createEvent("HTMLEvents");
+                    event.initEvent("change", true, true);
+                    defaultInput.checked = true;
+                    defaultInput.dispatchEvent(event);
+                    const okButton = $(".btn.submit-move")[0];
+                    okButton.disabled = false;
+                    okButton.click();
+                }
+                else
+                {
+                    const okButton = $("i.close")[0];
+                    okButton.click();
+                }
                 await SpinQuery.condition(
                     () => $(".mc-box"),
                     it => it.length === 0
                 );
             }
+
         }
         async function comboLike()
         {
-            resources.applyImportantStyleFromText(`<style id="combo-like-temp-style">
-                .bili-dialog-m
-                {
-                    display: none !important;
-                }
-            </style>`);
+            // resources.applyImportantStyleFromText(`<style id="combo-like-temp-style">
+            //     .bili-dialog-m
+            //     {
+            //         display: none !important;
+            //     }
+            // </style>`);
+            console.log("combo start");
             await like();
-            await coin();
             await favorite();
-            $("#combo-like-temp-style").remove();
+            await coin();
+            console.log("combo end");
+
+            //$("#combo-like-temp-style").remove();
         }
         (async () =>
         {
