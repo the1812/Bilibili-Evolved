@@ -29,15 +29,23 @@
                     }
                 }, triggerTime);
             });
-            likeButton.addEventListener("pointerup", e =>
+            likeButton.addEventListener("click", e =>
             {
                 if (trigger === false)
                 {
                     e.preventDefault();
+                    e.stopImmediatePropagation();
                 }
                 else
                 {
                     trigger = false;
+                }
+            });
+            likeButton.addEventListener("touchend", e =>
+            {
+                if (trigger === false)
+                {
+                    e.preventDefault();
                 }
             });
         })();
@@ -51,6 +59,11 @@
                         <i class="icon-like"></i>
                         <span>素质三连</span>
                     </button>`,
+                condition: async () =>
+                {
+                    const likeButton = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.like"));
+                    return likeButton !== undefined;
+                },
                 success: () =>
                 {
                     $("#combo-like").on("click", () =>
