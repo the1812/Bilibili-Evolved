@@ -55,7 +55,7 @@ input.search-keyword
     transform: scale(0.64);
     cursor: pointer;
     width: 30px;
-    transition: all .2s ease-out;
+    transition: all .2s ease-out !important;
     flex-shrink: 0;
 }
 .preserve-rank>a:hover
