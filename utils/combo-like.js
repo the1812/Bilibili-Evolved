@@ -19,7 +19,8 @@
             {
                 coinButton.click();
                 const dialog = await SpinQuery.any(() => $(".mc-box"));
-                const supportDoubleCoins = $(".coin-operated-m").children().filter((_, it) => it.innerText === "2硬币").length !== 0;
+                const coinsSpan = await SpinQuery.any(() => $(".coin-operated-m"));
+                const supportDoubleCoins = coinsSpan.children().filter((_, it) => it.innerText === "2硬币").length !== 0;
                 const coins = (() =>
                 {
                     if (settings.doubleCoins && supportDoubleCoins)
@@ -35,6 +36,10 @@
                 coinSpan.click();
                 const okButton = $(".bi-btn").filter((_, it) => it.innerText === "确定")[0];
                 okButton.click();
+                await SpinQuery.condition(
+                    () => $(".mc-box"),
+                    it => it.length === 0
+                );
             }
         }
         async function favorite()
@@ -52,6 +57,10 @@
                 const okButton = $(".btn.submit-move")[0];
                 okButton.disabled = false;
                 okButton.click();
+                await SpinQuery.condition(
+                    () => $(".mc-box"),
+                    it => it.length === 0
+                );
             }
         }
         async function comboLike()
@@ -65,10 +74,6 @@
             await like();
             await coin();
             await favorite();
-            await SpinQuery.condition(
-                () => $(".mc-box"),
-                it => it.length === 0
-            );
             $("#combo-like-temp-style").remove();
         }
         (async () =>
