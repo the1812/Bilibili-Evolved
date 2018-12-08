@@ -56,8 +56,6 @@
         }
         async function comboLike()
         {
-            // TODO: combo like logic here
-            console.log("combo like");
             resources.applyImportantStyleFromText(`<style id="combo-like-temp-style">
                 .bili-dialog-m
                 {
