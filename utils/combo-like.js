@@ -17,6 +17,7 @@
             const [coinButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.coin"));
             if (!coinButton.classList.contains("on"))
             {
+                const dialog = await SpinQuery.any(() => $(".mc-box"));
                 const supportDoubleCoins = $(".coin-operated-m").children().filter((_, it) => it.innerText === "2硬币").length !== 0;
                 const coins = (() =>
                 {
@@ -30,7 +31,6 @@
                     }
                 })();
                 coinButton.click();
-                const dialog = await SpinQuery.any(() => $(".mc-box"));
                 const coinSpan = dialog.filter((_, it) => it.innerText.indexOf(coins) !== -1)[0];
                 coinSpan.click();
                 const okButton = $(".bi-btn").filter((_, it) => it.innerText === "确定")[0];
