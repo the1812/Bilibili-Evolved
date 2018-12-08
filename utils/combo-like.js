@@ -149,6 +149,7 @@
                     $("#combo-like").on("click", () =>
                     {
                         comboLike();
+                        $(".gui-settings-mask").click();
                     });
                 },
             },
