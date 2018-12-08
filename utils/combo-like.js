@@ -58,6 +58,10 @@
             await like();
             await coin();
             await favorite();
+            await SpinQuery.condition(
+                () => $(".mc-box"),
+                it => it.length === 0
+            );
             $("#combo-like-temp-style").remove();
         }
         (async () =>

@@ -1366,6 +1366,7 @@
     {
         loadResources();
         loadSettings();
+        unsafeWindow.bilibiliEvolved = { SpinQuery };
         const resources = new ResourceManager();
         resources.fetch().catch(error => logError(error));
     }
