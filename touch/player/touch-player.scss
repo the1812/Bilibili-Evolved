@@ -273,6 +273,17 @@ div.bilibili-player-video-control
 {
     display: none !important;
 }
+.disable-original-hover .bilibili-player-video-control-wrap:hover .bilibili-player-video-control-top .bilibili-player-video-progress-slider,
+.disable-original-hover.bilibili-player-area.video-control-show .bilibili-player-video-control-top .bilibili-player-video-progress-slider
+{
+    height: 2px !important;
+}
+.disable-original-hover.bilibili-player-area .bilibili-player-video-control .bilibili-player-video-progress-detail.show
+{
+    bottom: 1px !important;
+}
+
+
 @media screen and (min-width: 750px)
 {
     .bilibili-player.mode-fullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-center .bilibili-player-video-sendbar .bilibili-player-video-inputbar,
@@ -318,7 +329,7 @@ div.bilibili-player-video-control
     {
         left: 0 !important;
         right: 0 !important;
-        bottom: 48px !important;
+        bottom: 54px !important;
     }
     .mode-fullscreen .bilibili-player-area.video-control-show:not(.disable-original-hover) .bilibili-player-video-control-top,
     .mode-fullscreen .bilibili-player-area.mouse-hover:not(.disable-original-hover) .bilibili-player-video-control-top,
