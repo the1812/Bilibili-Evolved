@@ -2,10 +2,56 @@
 {
     return (settings, resources) =>
     {
-        function comboLike()
+        async function like()
+        {
+            const [likeButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.like"));
+            likeButton.click();
+        }
+        async function coin()
+        {
+            const [coinButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.coin"));
+            const supportDoubleCoins = $(".coin-operated-m").children().filter((_, it) => it.innerText === "2硬币").length !== 0;
+            const coins = (() =>
+            {
+                if (settings.doubleCoins && supportDoubleCoins)
+                {
+                    return 2;
+                }
+                else
+                {
+                    return 1;
+                }
+            })();
+            coinButton.click();
+            const coinSpan = $(".mc-box").filter((_, it) => it.innerText.indexOf(coins) !== -1)[0];
+            coinSpan.click();
+            const okButton = $(".bi-btn").filter((_, it) => it.innerText === "确定")[0];
+            okButton.click();
+        }
+        async function favorite()
+        {
+            const [favoriteButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.collect"));
+            favoriteButton.click();
+            const defaultInput = $(".group-list label:has(input)").filter((_, it) => it.innerText.indexOf("默认收藏夹") !== -1).find("input");
+            defaultInput.prop("checked", !defaultInput.prop("checked"));
+            const okButton = $(".btn.submit-move")[0];
+            okButton.disabled = false;
+            okButton.click();
+        }
+        async function comboLike()
         {
             // TODO: combo like logic here
             console.log("combo like");
+            resources.applyImportantStyleFromText(`<style id="combo-like-temp-style">
+                .bili-dialog-m
+                {
+                    display: none !important;
+                }
+            </style>`);
+            await like();
+            await coin();
+            await favorite();
+            $("#combo-like-temp-style").remove();
         }
         (async () =>
         {
