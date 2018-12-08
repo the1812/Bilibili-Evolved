@@ -2,9 +2,11 @@
 {
     return (settings, resources) =>
     {
+        let trigger = false;
         async function like()
         {
             const [likeButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.like"));
+            trigger = true;
             likeButton.click();
         }
         async function coin()
@@ -23,7 +25,8 @@
                 }
             })();
             coinButton.click();
-            const coinSpan = $(".mc-box").filter((_, it) => it.innerText.indexOf(coins) !== -1)[0];
+            const dialog = await SpinQuery.any(() => $(".mc-box"));
+            const coinSpan = dialog.filter((_, it) => it.innerText.indexOf(coins) !== -1)[0];
             coinSpan.click();
             const okButton = $(".bi-btn").filter((_, it) => it.innerText === "确定")[0];
             okButton.click();
@@ -32,7 +35,8 @@
         {
             const [favoriteButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.collect"));
             favoriteButton.click();
-            const defaultInput = $(".group-list label:has(input)").filter((_, it) => it.innerText.indexOf("默认收藏夹") !== -1).find("input")[0];
+            const dialog = await SpinQuery.any(() => $(".group-list label:has(input)"));
+            const defaultInput = dialog.filter((_, it) => it.innerText.indexOf("默认收藏夹") !== -1).find("input")[0];
             const event = document.createEvent("HTMLEvents");
             event.initEvent("change", true, true);
             defaultInput.checked = !defaultInput.checked;
@@ -61,7 +65,6 @@
             const [likeButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.like"));
             likeButton.style.userSelect = "none";
             const triggerTime = 2000;
-            let trigger = false;
             likeButton.addEventListener("pointerdown", e =>
             {
                 trigger = true;
