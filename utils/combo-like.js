@@ -6,30 +6,36 @@
         async function like()
         {
             const [likeButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.like"));
-            trigger = true;
-            likeButton.click();
+            if (!likeButton.classList.contains("on"))
+            {
+                trigger = true;
+                likeButton.click();
+            }
         }
         async function coin()
         {
             const [coinButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.coin"));
-            const supportDoubleCoins = $(".coin-operated-m").children().filter((_, it) => it.innerText === "2硬币").length !== 0;
-            const coins = (() =>
+            if (!coinButton.classList.contains("on"))
             {
-                if (settings.doubleCoins && supportDoubleCoins)
+                const supportDoubleCoins = $(".coin-operated-m").children().filter((_, it) => it.innerText === "2硬币").length !== 0;
+                const coins = (() =>
                 {
-                    return 2;
-                }
-                else
-                {
-                    return 1;
-                }
-            })();
-            coinButton.click();
-            const dialog = await SpinQuery.any(() => $(".mc-box"));
-            const coinSpan = dialog.filter((_, it) => it.innerText.indexOf(coins) !== -1)[0];
-            coinSpan.click();
-            const okButton = $(".bi-btn").filter((_, it) => it.innerText === "确定")[0];
-            okButton.click();
+                    if (settings.doubleCoins && supportDoubleCoins)
+                    {
+                        return 2;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
+                })();
+                coinButton.click();
+                const dialog = await SpinQuery.any(() => $(".mc-box"));
+                const coinSpan = dialog.filter((_, it) => it.innerText.indexOf(coins) !== -1)[0];
+                coinSpan.click();
+                const okButton = $(".bi-btn").filter((_, it) => it.innerText === "确定")[0];
+                okButton.click();
+            }
         }
         async function favorite()
         {
@@ -37,13 +43,16 @@
             favoriteButton.click();
             const dialog = await SpinQuery.any(() => $(".group-list label:has(input)"));
             const defaultInput = dialog.filter((_, it) => it.innerText.indexOf("默认收藏夹") !== -1).find("input")[0];
-            const event = document.createEvent("HTMLEvents");
-            event.initEvent("change", true, true);
-            defaultInput.checked = !defaultInput.checked;
-            defaultInput.dispatchEvent(event);
-            const okButton = $(".btn.submit-move")[0];
-            okButton.disabled = false;
-            okButton.click();
+            if (!defaultInput.checked)
+            {
+                const event = document.createEvent("HTMLEvents");
+                event.initEvent("change", true, true);
+                defaultInput.checked = true;
+                defaultInput.dispatchEvent(event);
+                const okButton = $(".btn.submit-move")[0];
+                okButton.disabled = false;
+                okButton.click();
+            }
         }
         async function comboLike()
         {
