@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.7
+// @version      1.6.8
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -1260,6 +1260,7 @@
             }
             await Promise.all(promises);
             await this.applyWidgets();
+            await this.applyDropdownOptions();
             saveSettings(settings);
         }
         applyComponent(key, text)
@@ -1312,6 +1313,27 @@
             await Promise.all(Object.values(this.attributes)
                 .filter(it => it.widget)
                 .map(it => applyWidget(it.widget))
+            );
+        }
+        async applyDropdownOptions()
+        {
+            await Promise.all(Object.entries(this.attributes)
+                .filter(([_, attr]) => attr.dropdown)
+                .map(async ([key, attr]) =>
+                {
+                    const dropdown = await SpinQuery.any(
+                        () => $(`.gui-settings-dropdown:has(input[key=${key}])`));
+                    const list = dropdown.find("ul");
+                    const input = dropdown.find("input");
+                    attr.dropdown.forEach(item =>
+                    {
+                        $(`<li>${item.name}</li>`).appendTo(list)
+                            .on("click", () =>
+                            {
+                                input.val(item.name).trigger("input").change();
+                            });
+                    });
+                })
             );
         }
         getDefaultStyleId(key)

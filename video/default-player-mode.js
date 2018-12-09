@@ -25,22 +25,6 @@
             //     name: "全屏",
             // },
         ];
-        SpinQuery.any(
-            () => $(".gui-settings-dropdown:has(input[key=defaultPlayerMode])"),
-            dropdown =>
-            {
-                const list = dropdown.find("ul");
-                const input = dropdown.find("input");
-                Object.values(playerModes).forEach(value =>
-                {
-                    $(`<li>${value.name}</li>`).appendTo(list)
-                        .on("click", () =>
-                        {
-                            input.val(value.name).trigger("input").change();
-                        });
-                });
-            }
-        );
         let lightOff = () => { };
         async function initLightOff()
         {
@@ -111,5 +95,8 @@
             }
         }
         Observer.subtree("#bofqi", () => main());
+        return {
+            dropdown: playerModes.map(it => it.name),
+        }
     };
 })();
