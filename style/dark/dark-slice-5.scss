@@ -263,7 +263,8 @@ table.invtable td,
 #gameCenter .hot-list .s-imgUnit .rank.gray,
 .s-statusUnit-text .info a,
 .bp_user_box .bp_user_box_bb,
-.bp_user_box .bp_user_box_bk 
+.bp_user_box .bp_user_box_bk,
+.list-wrap.hot-forum-lft-con .s-imgUnit a
 {
     color: #eee !important;
 }
@@ -457,7 +458,8 @@ table.invtable td,
 .tag-default:active,
 .tag-default:hover,
 .qa-index .help-list .collapse-item.collapse-item-active .collapse-title-icon,
-.balance_bp_box .button 
+.balance_bp_box .button,
+.ac-artilce-tabs .tabs-nav .active 
 {
     background-color: $customStyleColor !important;
 }
@@ -506,7 +508,8 @@ table.invtable td,
 .qa-index .help-list .collapse-item.collapse-item-title,
 #status .s-statusUnit .s-statusUnit-text .info .game-name,
 #gameCenter .hot-list .s-imgUnit .rank.pink,
-.s-statusUnit-text .info a:hover
+.s-statusUnit-text .info a:hover,
+.list-wrap.hot-forum-lft-con .s-imgUnit a:hover
 {
     color: $customStyleColor !important;
 }
