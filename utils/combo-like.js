@@ -45,7 +45,8 @@
                 okButton.click();
                 await SpinQuery.condition(
                     () => $(".bili-dialog-m"),
-                    it => it.length === 0 || $(".bili-msg").text().indexOf("硬币不足") !== -1,
+                    it => it.length === 0 && coinButton.classList.contains("on")
+                        || $(".bili-msg").text().indexOf("硬币不足") !== -1,
                 );
                 const closeButton = document.querySelector(".bili-dialog-m i.icon.close");
                 if (closeButton)
@@ -83,7 +84,7 @@
                 }
                 await SpinQuery.condition(
                     () => $(".bili-dialog-m"),
-                    it => it.length === 0
+                    it => it.length === 0 && favoriteButton.classList.contains("on"),
                 );
             }
 
