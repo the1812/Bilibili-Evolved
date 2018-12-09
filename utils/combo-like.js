@@ -3,6 +3,13 @@
     return (settings, resources) =>
     {
         let trigger = false;
+        async function delay(time)
+        {
+            return new Promise(resolve =>
+            {
+                setTimeout(() => resolve(), time);
+            });
+        }
         async function like()
         {
             const [likeButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.like"));
@@ -20,7 +27,7 @@
                 coinButton.click();
                 const dialog = await SpinQuery.any(() => $(".mc-box"));
                 const coinsSpan = await SpinQuery.any(() => $(".coin-operated-m"));
-                const supportDoubleCoins = coinsSpan.children().filter((_, it) => it.innerText === "2硬币").length !== 0;
+                const supportDoubleCoins = coinsSpan.children().filter((_, it) => it.innerText.indexOf("2硬币")).length !== 0;
                 const coins = (() =>
                 {
                     if (settings.doubleCoins && supportDoubleCoins)
@@ -37,9 +44,18 @@
                 const okButton = $(".bi-btn").filter((_, it) => it.innerText === "确定")[0];
                 okButton.click();
                 await SpinQuery.condition(
-                    () => $(".mc-box"),
-                    it => it.length === 0
+                    () => $(".bili-dialog-m"),
+                    it => it.length === 0 || $(".bili-msg").text().indexOf("硬币不足") !== -1,
                 );
+                const closeButton = document.querySelector(".bili-dialog-m i.icon.close");
+                if (closeButton)
+                {
+                    closeButton.click();
+                    await SpinQuery.condition(
+                        () => $(".bili-dialog-m"),
+                        it => it.length === 0,
+                    );
+                }
             }
         }
         async function favorite()
@@ -66,7 +82,7 @@
                     okButton.click();
                 }
                 await SpinQuery.condition(
-                    () => $(".mc-box"),
+                    () => $(".bili-dialog-m"),
                     it => it.length === 0
                 );
             }
@@ -123,7 +139,7 @@
             });
             likeButton.addEventListener("touchend", e =>
             {
-                if (trigger === false)
+                if (trigger === false && e.cancelable)
                 {
                     e.preventDefault();
                 }
