@@ -242,4 +242,6 @@
 ## Safari
 - 尚未在Safari中测试.
 
+**喜欢的话就点个⭐Star吧(°∀°)ﾉ**
+
 [返回顶部](#Bilibili-Evolved)
