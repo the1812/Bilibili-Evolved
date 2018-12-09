@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.7
+// @version      1.6.8
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -468,12 +468,20 @@
                     defaultPlayerMode: "默认播放器模式",
                     autoLightOff: "播放时自动关灯",
                 },
+                dropdown: {
+                    key: "defaultPlayerMode",
+                    items: ["常规", "宽屏", "网页全屏"],
+                },
             },
             useDefaultVideoQuality: {
                 path: "min/default-video-quality.min.js",
                 displayNames: {
                     useDefaultVideoQuality: "使用默认视频画质",
                     defaultVideoQuality: "画质设定",
+                },
+                dropdown: {
+                    key: "defaultVideoQuality",
+                    items: ["1080P60", "1080P+", "1080P", "720P", "480P", "360P", "自动"],
                 },
             },
             comboLike: {
@@ -487,6 +495,7 @@
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};
         Resource.displayNames = {};
+        Resource.manifest = resourceManifest;
         for (const [key, data] of Object.entries(resourceManifest))
         {
             const resource = new Resource(data.path, data.order, data.styles);
@@ -1259,6 +1268,7 @@
                 }
             }
             await Promise.all(promises);
+            await this.applyDropdownOptions();
             await this.applyWidgets();
             saveSettings(settings);
         }
@@ -1312,6 +1322,28 @@
             await Promise.all(Object.values(this.attributes)
                 .filter(it => it.widget)
                 .map(it => applyWidget(it.widget))
+            );
+        }
+        async applyDropdownOptions()
+        {
+            async function applyDropdownOption(info)
+            {
+                const dropdown = await SpinQuery.any(
+                    () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
+                const list = dropdown.find("ul");
+                const input = dropdown.find("input");
+                info.items.forEach(item =>
+                {
+                    $(`<li>${item}</li>`).appendTo(list)
+                        .on("click", () =>
+                        {
+                            input.val(item).trigger("input").change();
+                        });
+                });
+            }
+            await Promise.all(Object.values(Resource.manifest)
+                .filter(it  => it.dropdown)
+                .map(it => applyDropdownOption(it.dropdown))
             );
         }
         getDefaultStyleId(key)
