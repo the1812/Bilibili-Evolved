@@ -56,9 +56,7 @@
             },
             defaultPlayerMode: text =>
             {
-                if (["常规", "宽屏", "网页全屏",
-                    //"全屏"
-                ].indexOf(text) !== -1)
+                if (Resource.manifest.useDefaultPlayerMode.dropdown.items.indexOf(text) !== -1)
                 {
                     return text;
                 }
@@ -66,15 +64,7 @@
             },
             defaultVideoQuality: text =>
             {
-                if ([
-                    "1080P60",
-                    "1080P+",
-                    "1080P",
-                    "720P",
-                    "480P",
-                    "360P",
-                    "自动",
-                ].indexOf(text) !== -1)
+                if (Resource.manifest.useDefaultVideoQuality.dropdown.items.indexOf(text) !== -1)
                 {
                     return text;
                 }
