@@ -96,7 +96,10 @@
         }
         Observer.subtree("#bofqi", () => main());
         return {
-            dropdown: playerModes.map(it => it.name),
+            dropdown: {
+                key: "defaultPlayerMode",
+                items: playerModes.map(it => it.name),
+            }
         }
     };
 })();

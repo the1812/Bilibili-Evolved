@@ -1259,8 +1259,8 @@
                 }
             }
             await Promise.all(promises);
-            await this.applyWidgets();
             await this.applyDropdownOptions();
+            await this.applyWidgets();
             saveSettings(settings);
         }
         applyComponent(key, text)
@@ -1317,23 +1317,24 @@
         }
         async applyDropdownOptions()
         {
-            await Promise.all(Object.entries(this.attributes)
-                .filter(([_, attr]) => attr.dropdown)
-                .map(async ([key, attr]) =>
+            async function applyDropdownOption(info)
+            {
+                const dropdown = await SpinQuery.any(
+                    () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
+                const list = dropdown.find("ul");
+                const input = dropdown.find("input");
+                info.items.forEach(item =>
                 {
-                    const dropdown = await SpinQuery.any(
-                        () => $(`.gui-settings-dropdown:has(input[key=${key}])`));
-                    const list = dropdown.find("ul");
-                    const input = dropdown.find("input");
-                    attr.dropdown.forEach(item =>
-                    {
-                        $(`<li>${item.name}</li>`).appendTo(list)
-                            .on("click", () =>
-                            {
-                                input.val(item.name).trigger("input").change();
-                            });
-                    });
-                })
+                    $(`<li>${item}</li>`).appendTo(list)
+                        .on("click", () =>
+                        {
+                            input.val(item).trigger("input").change();
+                        });
+                });
+            }
+            await Promise.all(Object.values(this.attributes)
+                .filter(it  => it.dropdown)
+                .map(it => applyDropdownOption(it.dropdown))
             );
         }
         getDefaultStyleId(key)
