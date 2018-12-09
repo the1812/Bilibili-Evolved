@@ -3,7 +3,7 @@
     return (settings, resources) =>
     {
         let trigger = false;
-        async function delay(time)
+        function delay(time)
         {
             return new Promise(resolve =>
             {
@@ -17,6 +17,7 @@
             {
                 trigger = true;
                 likeButton.click();
+                await SpinQuery.condition(() => likeButton, () => likeButton.classList.contains("on"));
             }
         }
         async function coin()
