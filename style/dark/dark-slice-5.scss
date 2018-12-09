@@ -261,7 +261,9 @@ table.invtable td,
 .spa-user-info a,
 .spa-use-type,
 #gameCenter .hot-list .s-imgUnit .rank.gray,
-.s-statusUnit-text .info a 
+.s-statusUnit-text .info a,
+.bp_user_box .bp_user_box_bb,
+.bp_user_box .bp_user_box_bk 
 {
     color: #eee !important;
 }
@@ -326,7 +328,9 @@ table.invtable td,
 .btn-primary,
 #gameCenter .hot-list .s-imgUnit,
 #gameCenter .hot-list .s-imgUnit:hover,
-#gameCenter .hot-list .s-imgUnit .rank 
+#gameCenter .hot-list .s-imgUnit .rank,
+.bp_user_box_bb,
+.bp_user_box_bottom p 
 {
     border-color: transparent !important;
 }
@@ -453,7 +457,8 @@ table.invtable td,
 .tag-default.current,
 .tag-default:active,
 .tag-default:hover,
-.qa-index .help-list .collapse-item.collapse-item-active .collapse-title-icon 
+.qa-index .help-list .collapse-item.collapse-item-active .collapse-title-icon,
+.balance_bp_box .button 
 {
     background-color: $customStyleColor !important;
 }
