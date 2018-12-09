@@ -106,7 +106,7 @@
                         if (match && match[1])
                         {
                             const uid = match[1];
-                            const url = `http://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`;
+                            const url = `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`;
                             const text = await downloadText(url);
                             const coverUrl = JSON.parse(text).data.cover;
                             const imageViewer = new ImageViewer(coverUrl);
