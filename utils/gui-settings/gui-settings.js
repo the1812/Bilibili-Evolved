@@ -137,7 +137,8 @@
         function settingsChange(key, _, newValue)
         {
             $(`input[type='checkbox'][key='${key}']`)
-                .prop("checked", newValue);
+                .prop("checked", newValue)
+                .change();
             $(`input[type='text'][key='${key}']`).val(newValue);
         }
         function syncGui()
