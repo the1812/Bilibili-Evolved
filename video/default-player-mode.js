@@ -95,11 +95,5 @@
             }
         }
         Observer.subtree("#bofqi", () => main());
-        return {
-            dropdown: {
-                key: "defaultPlayerMode",
-                items: playerModes.map(it => it.name),
-            }
-        }
     };
 })();

@@ -468,12 +468,20 @@
                     defaultPlayerMode: "默认播放器模式",
                     autoLightOff: "播放时自动关灯",
                 },
+                dropdown: {
+                    key: "defaultPlayerMode",
+                    items: ["常规", "宽屏", "网页全屏"],
+                },
             },
             useDefaultVideoQuality: {
                 path: "min/default-video-quality.min.js",
                 displayNames: {
                     useDefaultVideoQuality: "使用默认视频画质",
                     defaultVideoQuality: "画质设定",
+                },
+                dropdown: {
+                    key: "defaultVideoQuality",
+                    items: ["1080P60", "1080P+", "1080P", "720P", "480P", "360P", "自动"],
                 },
             },
             comboLike: {
@@ -487,6 +495,7 @@
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};
         Resource.displayNames = {};
+        Resource.manifest = resourceManifest;
         for (const [key, data] of Object.entries(resourceManifest))
         {
             const resource = new Resource(data.path, data.order, data.styles);
@@ -1332,7 +1341,7 @@
                         });
                 });
             }
-            await Promise.all(Object.values(this.attributes)
+            await Promise.all(Object.values(Resource.manifest)
                 .filter(it  => it.dropdown)
                 .map(it => applyDropdownOption(it.dropdown))
             );

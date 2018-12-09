@@ -59,11 +59,5 @@
                 }
             });
         })();
-        return {
-            dropdown: {
-                key: "defaultVideoQuality",
-                items: qualities.map(it => it.name),
-            },
-        };
     };
 })();
