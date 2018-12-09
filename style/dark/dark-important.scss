@@ -79,13 +79,13 @@ blockquote .color-yellow-04,
 .rank-item .content .more-data:hover,
 .edit-button:hover > .icon-font,
 .edit-button:hover > span .left-nav-item-childed:hover,
-.router-link-exact-active on left-nav-list .active .left-nav-item-child,
-.router-link-exact-active on left-nav-list .active,
-.router-link-exact-active on left-nav-list .advice-btn:hover,
-.router-link-exact-active on left-nav-list .left-nav-item.active,
-.router-link-exact-active on left-nav-list .left-nav-item.active i.active,
-.router-link-exact-active on left-nav-list .left-nav-list.on .left-nav-item .icon,
-.router-link-exact-active on left-nav-list .left-nav-list.on .left-nav-item 
+.router-link-exact-active.on.left-nav-list .active .left-nav-item-child,
+.router-link-exact-active.on.left-nav-list .active,
+.router-link-exact-active.on.left-nav-list .advice-btn:hover,
+.router-link-exact-active.on.left-nav-list .left-nav-item.active,
+.router-link-exact-active.on.left-nav-list .left-nav-item.active i.active,
+.router-link-exact-active.on.left-nav-list .left-nav-list.on .left-nav-item .icon,
+.router-link-exact-active.on.left-nav-list .left-nav-list.on .left-nav-item 
 {
     color: $customStyleColor !important;
 }
