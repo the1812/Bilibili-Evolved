@@ -3,13 +3,6 @@
     return (settings, resources) =>
     {
         let trigger = false;
-        function delay(time)
-        {
-            return new Promise(resolve =>
-            {
-                setTimeout(() => resolve(), time);
-            });
-        }
         async function like()
         {
             const [likeButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.like"));
@@ -92,19 +85,18 @@
         }
         async function comboLike()
         {
-            // resources.applyImportantStyleFromText(`<style id="combo-like-temp-style">
-            //     .bili-dialog-m
-            //     {
-            //         display: none !important;
-            //     }
-            // </style>`);
-            console.log("combo start");
+            resources.applyImportantStyleFromText(`<style id="combo-like-temp-style">
+                .bili-dialog-m
+                {
+                    display: none !important;
+                }
+            </style>`);
+            // console.log("combo start");
             await like();
-            await favorite();
             await coin();
-            console.log("combo end");
-
-            //$("#combo-like-temp-style").remove();
+            await favorite();
+            // console.log("combo end");
+            $("#combo-like-temp-style").remove();
         }
         (async () =>
         {
