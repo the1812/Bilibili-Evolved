@@ -8,12 +8,15 @@
 }
 .bili-header-m .nav-menu .nav-mask,
 #link-navbar-vm>.link-navbar,
-#navbar-vm>.link-navbar,
 #app>.link-navbar,
 #app>.nav-header-wrapper,
 .b-header-mask-wrp .b-header-mask
 {
     background-color: #444;
+}
+#navbar-vm>.link-navbar
+{
+    background-color: #444 !important;
 }
 .z_top .i-link:hover,
 .z_top .z_top_nav ul li.home:hover
@@ -27,7 +30,6 @@
 .bili-header-m .nav-menu .nav-con .nav-item .t,
 #link-navbar-vm>.link-navbar .main-ctnr .nav-logo,
 .right-part>.shortcuts-ctnr,
-.right-part>.shortcuts-ctnr .shortcut-item,
 .right-part>.shortcuts-ctnr .shortcut-item:hover,
 #link-navbar-vm>.link-navbar .nav-item:hover,
 .my-link-btn .label,
@@ -61,4 +63,23 @@
 #app>.nav-header-wrapper .nav-header .order-icon
 {
     filter: brightness(0) invert(1) !important;
+}
+.shortcuts-ctnr .shortcut-item,
+.link-navbar .main-ctnr .custom-link>a
+{
+    color: #eee !important;
+}
+.search-bar-ctnr .search-bar input
+{
+    color: #eee !important;
+}
+.search-bar-ctnr .search-bar .placeholder,
+.search-bar-ctnr .search-bar .search-btn
+{
+    color: #878787 !important;
+}
+.search-bar-ctnr .search-bar
+{
+    border: none !important;
+    box-shadow: 0px 2px 10px 1px #0002 !important;
 }

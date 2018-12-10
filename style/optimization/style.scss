@@ -59,7 +59,8 @@ div.stardust-player
 .link-navbar .nav-item.selected .label,
 .link-navbar .nav-item .icon-font,
 .nav-header-wrapper .nav-header .nav-header-mainsite,
- .nav-header-wrapper .nav-header .order-center
+.nav-header-wrapper .nav-header .order-center,
+.link-navbar .main-ctnr .custom-link>a
 {
     color: $foregroundd !important;
 }
@@ -154,9 +155,20 @@ div.up-load
 {
     border-radius: 0 !important;
 }
-.slot-ctnr a
+.slot-ctnr a,
+.main-ctnr .search-bar-ctnr .search-bar input
 {
     color: #222 !important;
+}
+.main-ctnr .search-bar-ctnr .search-bar .placeholder,
+.main-ctnr .search-bar-ctnr .search-bar .search-btn
+{
+    color: #878787 !important;
+}
+.main-ctnr .search-bar-ctnr .search-bar
+{
+    border: none !important;
+    box-shadow: 0px 2px 10px 1px #0002 !important;
 }
 .u-link
 {
