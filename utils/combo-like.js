@@ -116,7 +116,7 @@
             })();
             if (message !== null)
             {
-                Toast.message(message, "素质三连", 10000);
+                Toast.info(message, "素质三连", 10000);
                 console.log(message);
             }
             $("#combo-like-temp-style").remove();
