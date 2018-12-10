@@ -21,7 +21,8 @@
 .tab-selector-wrap .tag-wrap .tag span.selected,
 .cc-body .setting,
 .dropdown__content .dropdown__active,
-.dropdown__content .dropdown__item:hover
+.dropdown__content .dropdown__item:hover,
+.layout .layout-main .main-footer
 {
     background-color: #222 !important;
 }
@@ -69,7 +70,10 @@
 .dropdown__content,
 .ivu-input-costom-width .ivu-input-wrapper .ivu-input-wrapper-default .ivu-input-type .ivu-input,
 .ivu-form-item-error .ivu-input-group-append,
-.ivu-form-item-error .ivu-input-group-prepend
+.ivu-form-item-error .ivu-input-group-prepend,
+.tags-box .tag,
+.btn-primary,
+.tag-modal
 {
     background-color: #444 !important;
 }
@@ -152,7 +156,8 @@
 .play-num,
 .setting .follow-setting .follow-wrp .follow-modal .follow-show p,
 .main-footer .cp,
-.main-footer .link-item a
+.main-footer .link-item a,
+.sap-use-view
 {
     color: #aaa !important;
 }
@@ -241,7 +246,25 @@ table.invtable td,
 .ivu-form .ivu-form-item-label,
 .ivu-btn-primary.active,
 .ivu-btn-primary:active,
-.ivu-btn-primary:hover
+.ivu-btn-primary:hover,
+.tag-default.current,
+.tag-default:active,
+.tag-default:hover,
+.tag-default,
+.details-list-t div,
+.details-up-name a,
+.btn-primary,
+.tag-modal,
+.tag-modal .tag-title,
+.tag-modal .tag-item,
+.spa-sub-title,
+.spa-user-info a,
+.spa-use-type,
+#gameCenter .hot-list .s-imgUnit .rank.gray,
+.s-statusUnit-text .info a,
+.bp_user_box .bp_user_box_bb,
+.bp_user_box .bp_user_box_bk,
+.list-wrap.hot-forum-lft-con .s-imgUnit a
 {
     color: #eee !important;
 }
@@ -299,7 +322,16 @@ table.invtable td,
 .ivu-input-costom-width .ivu-input-wrapper .ivu-input-wrapper-default .ivu-input-type .ivu-input,
 .about-index .about-desc,
 .apply-form .btn, .apply-form .btn:hover,
-.main-footer .link-item
+.main-footer .link-item,
+.tag-default.current,
+.tag-default:active,
+.tag-default,
+.btn-primary,
+#gameCenter .hot-list .s-imgUnit,
+#gameCenter .hot-list .s-imgUnit:hover,
+#gameCenter .hot-list .s-imgUnit .rank,
+.bp_user_box_bb,
+.bp_user_box_bottom p 
 {
     border-color: transparent !important;
 }
@@ -420,9 +452,14 @@ table.invtable td,
 .h-none-btn:hover,
 .item .title-wrap .activity,
 .tabs_active-bar,
-.tabs-nav .active,
 .apply-form .btn,
-.apply-form .btn:hover
+.apply-form .btn:hover,
+.tag-default.current,
+.tag-default:active,
+.tag-default:hover,
+.qa-index .help-list .collapse-item.collapse-item-active .collapse-title-icon,
+.balance_bp_box .button,
+.ac-artilce-tabs .tabs-nav .active 
 {
     background-color: $customStyleColor !important;
 }
@@ -464,7 +501,15 @@ table.invtable td,
 .help-subcontent a:hover,
 .fixed-service-word a,
 .fixed-service-word a:hover,
-.help-title-wrap.help-box .help-title
+.help-title-wrap.help-box .help-title,
+.link-no-hover:hover,
+.qa-index .help-content .help-title,
+.qa-index .help-list .collapse-item.collapse-item-active .collapse-title,
+.qa-index .help-list .collapse-item.collapse-item-title,
+#status .s-statusUnit .s-statusUnit-text .info .game-name,
+#gameCenter .hot-list .s-imgUnit .rank.pink,
+.s-statusUnit-text .info a:hover,
+.list-wrap.hot-forum-lft-con .s-imgUnit a:hover
 {
     color: $customStyleColor !important;
 }

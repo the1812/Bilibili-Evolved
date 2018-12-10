@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.3
+// @version      1.6.10
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -41,7 +41,6 @@
         darkScheduleStart: "18:00",
         darkScheduleEnd: "6:00",
         darkSchedule: false,
-        blurSettingsPanel: false,
         blurVideoControl: false,
         toast: true,
         fullTweetsTitle: true,
@@ -53,11 +52,15 @@
         touchVideoPlayerDoubleTapControl: false,
         touchVideoPlayerAnimation: false,
         customStyleColor: "#00A0D8",
+        preserveRank: true,
         blurBackgroundOpacity: 0.382,
         defaultPlayerMode: "常规",
+        defaultVideoQuality: "自动",
+        useDefaultVideoQuality: false,
         autoLightOff: false,
-        downloadDanmaku: false,
         useCache: true,
+        comboLike: true,
+        doubleCoins: true,
         toastInternalError: false,
         cache: {},
     };
@@ -68,8 +71,10 @@
         clearCache: true,
         fixFullscreen: false,
         downloadVideo: true,
+        downloadDanmaku: true,
         useDefaultPlayerMode: true,
         about: false,
+        blurSettingsPanel: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
         currentVersion: GM_info.script.version,
     };
@@ -264,6 +269,7 @@
                 displayNames: {
                     overrideNavBar: "搜索栏置顶",
                     showBanner: "显示顶部横幅",
+                    preserveRank: "显示排行榜图标",
                 },
             },
             touchNavBar: {
@@ -413,8 +419,16 @@
                     "videoInfo",
                 ],
                 displayNames: {
-                    "downloadDanmaku": "下载视频时包含弹幕",
                     "downloadVideo": "下载视频",
+                },
+            },
+            downloadDanmaku: {
+                path: "min/download-danmaku.min.js",
+                dependencies: [
+                    "videoInfo",
+                ],
+                displayNames: {
+                    "downloadDanmaku": "下载弹幕",
                 },
             },
             videoInfo: {
@@ -440,6 +454,7 @@
             },
             customControlBackgroundStyle: {
                 path: "min/custom-control-background.min.scss",
+                order: 11
             },
             customControlBackground: {
                 path: "min/custom-control-background.min.js",
@@ -461,11 +476,40 @@
                     defaultPlayerMode: "默认播放器模式",
                     autoLightOff: "播放时自动关灯",
                 },
+                dropdown: {
+                    key: "defaultPlayerMode",
+                    items: ["常规", "宽屏", "网页全屏"],
+                },
             },
+            useDefaultVideoQuality: {
+                path: "min/default-video-quality.min.js",
+                displayNames: {
+                    useDefaultVideoQuality: "使用默认视频画质",
+                    defaultVideoQuality: "画质设定",
+                },
+                dropdown: {
+                    key: "defaultVideoQuality",
+                    items: ["1080P60", "1080P+", "1080P", "720P", "480P", "360P", "自动"],
+                },
+            },
+            comboLikeStyle: {
+                path: "min/combo-like.min.css",
+            },
+            comboLike: {
+                path: "min/combo-like.min.js",
+                styles: [
+                    "comboLikeStyle",
+                ],
+                displayNames: {
+                    comboLike: "启用素质三连",
+                    doubleCoins: "为原创视频投2个币"
+                }
+            }
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};
         Resource.displayNames = {};
+        Resource.manifest = resourceManifest;
         for (const [key, data] of Object.entries(resourceManifest))
         {
             const resource = new Resource(data.path, data.order, data.styles);
@@ -688,9 +732,9 @@
             }
             else
             {
-                return new Promise((resolve, reject) =>
+                return new Promise((resolve) =>
                 {
-                    new SpinQuery(query, condition, it => resolve(it), it => reject(it)).start();
+                    new SpinQuery(query, condition, it => resolve(it)).start();
                 });
             }
         }
@@ -701,6 +745,10 @@
         static count(query, count, action, failed)
         {
             return SpinQuery.condition(query, it => it.length === count, action, failed);
+        }
+        static unsafeJquery(action, failed)
+        {
+            return SpinQuery.condition(() => unsafeWindow.$, jquery => jquery !== undefined, action, failed);
         }
     }
     class ColorProcessor
@@ -949,6 +997,17 @@
                             <input key="$2" type="checkbox" dependencies="$3" checked/>
                             <div class="gui-settings-checkbox"></div>
                             <span>$4</span>
+                        </label>
+                    </li>
+                `).replace(/<dropdown\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/dropdown>/g,`
+                    <li class="indent-$1">
+                        <label>
+                            <span class="gui-settings-dropdown-span">$4</span>
+                            <div class="gui-settings-dropdown popup">
+                                <input readonly type="text" spellcheck="false" key="$2" dependencies="$3">
+                                <ul></ul>
+                                <i class="icon-arrow"></i>
+                            </div>
                         </label>
                     </li>
                 `).replace(/<textbox\s*?indent="(.+?)"\s*key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/textbox>/g, `
@@ -1223,6 +1282,7 @@
                 }
             }
             await Promise.all(promises);
+            await this.applyDropdownOptions();
             await this.applyWidgets();
             saveSettings(settings);
         }
@@ -1278,6 +1338,28 @@
                 .map(it => applyWidget(it.widget))
             );
         }
+        async applyDropdownOptions()
+        {
+            async function applyDropdownOption(info)
+            {
+                const dropdown = await SpinQuery.any(
+                    () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
+                const list = dropdown.find("ul");
+                const input = dropdown.find("input");
+                info.items.forEach(item =>
+                {
+                    $(`<li>${item}</li>`).appendTo(list)
+                        .on("click", () =>
+                        {
+                            input.val(item).trigger("input").change();
+                        });
+                });
+            }
+            await Promise.all(Object.values(Resource.manifest)
+                .filter(it  => it.dropdown)
+                .map(it => applyDropdownOption(it.dropdown))
+            );
+        }
         getDefaultStyleId(key)
         {
             return key.replace(/([a-z][A-Z])/g,
@@ -1330,6 +1412,7 @@
     {
         loadResources();
         loadSettings();
+        unsafeWindow.bilibiliEvolved = { SpinQuery };
         const resources = new ResourceManager();
         resources.fetch().catch(error => logError(error));
     }

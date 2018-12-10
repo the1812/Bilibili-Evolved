@@ -56,14 +56,20 @@
             },
             defaultPlayerMode: text =>
             {
-                if (["常规", "宽屏", "网页全屏",
-                    //"全屏"
-                ].indexOf(text) !== -1)
+                if (Resource.manifest.useDefaultPlayerMode.dropdown.items.indexOf(text) !== -1)
                 {
                     return text;
                 }
                 return settings.defaultPlayerMode;
             },
+            defaultVideoQuality: text =>
+            {
+                if (Resource.manifest.useDefaultVideoQuality.dropdown.items.indexOf(text) !== -1)
+                {
+                    return text;
+                }
+                return settings.defaultVideoQuality;
+            }
         };
         function getCategoriyItems(category)
         {
@@ -131,7 +137,8 @@
         function settingsChange(key, _, newValue)
         {
             $(`input[type='checkbox'][key='${key}']`)
-                .prop("checked", newValue);
+                .prop("checked", newValue)
+                .change();
             $(`input[type='text'][key='${key}']`).val(newValue);
         }
         function syncGui()
@@ -298,6 +305,16 @@
                 $(e).click();
             });
         }
+        function checkCompatibility()
+        {
+            if (!CSS.supports("backdrop-filter", "blur(24px)")
+                && !CSS.supports("-webkit-backdrop-filter", "blur(24px)"))
+            {
+                $("input[key=blurVideoControl]").prop("disabled", true);
+                settings.blurVideoControl = false;
+                saveSettings(settings);
+            }
+        }
 
         addSettingsIcon($("body"));
         const settingsBox = resources.data.guiSettingsDom.text;
@@ -310,8 +327,9 @@
             listenDependencies();
             addPredefinedColors();
             listenSettingsChange();
-            applyBlurEffect();
+            // applyBlurEffect();
             foldAllCategories();
+            checkCompatibility();
         }
 
         new SpinQuery(

@@ -41,6 +41,32 @@ input.search-keyword
     padding: 0 10px !important;
 }
 
+.preserve-rank
+{
+    display: flex !important;
+}
+.preserve-rank>a
+{
+    opacity: 0.382;
+    filter: brightness(0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.64);
+    cursor: pointer;
+    width: 30px;
+    transition: all .2s ease-out !important;
+    flex-shrink: 0;
+}
+.preserve-rank>a:hover
+{
+    opacity: 0.75;
+}
+.preserve-rank>input
+{
+    padding-left: 0 !important;
+}
+
 @media only screen and (min-width: 1291px)
 {
     body .bili-header-m .nav-menu div.bili-wrapper

@@ -25,32 +25,14 @@
             //     name: "全屏",
             // },
         ];
-        SpinQuery.any(
-            () => $(".gui-settings-dropdown:has(input[key=defaultPlayerMode])"),
-            dropdown =>
-            {
-                const list = dropdown.find("ul");
-                const input = dropdown.find("input");
-                Object.values(playerModes).forEach(value =>
-                {
-                    $(`<li>${value.name}</li>`).appendTo(list)
-                        .on("click", () =>
-                        {
-                            input.val(value.name).trigger("input").change();
-                        });
-                });
-            }
-        );
         let lightOff = () => { };
-        function initLightOff()
+        async function initLightOff()
         {
             if (settings.autoLightOff)
             {
-                new SpinQuery(
-                    () => $(""),
-                    () => unsafeWindow.$ && unsafeWindow.$(".bilibili-player-video-btn-setting"),
-                    () => unsafeWindow.$(".bilibili-player-video-btn-setting").mouseover().mouseout(),
-                ).start();
+                const unsafe$ = await SpinQuery.unsafeJquery();
+                const settingsButton = await SpinQuery.any(() => unsafe$(".bilibili-player-video-btn-setting"));
+                settingsButton.mouseover().mouseout();
                 lightOff = () =>
                 {
                     SpinQuery.any(
@@ -67,42 +49,50 @@
                 };
             }
         }
-        function main()
+        async function main()
         {
-            initLightOff();
-            new SpinQuery(
+            await initLightOff();
+            await SpinQuery.condition(
                 () => $(".bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area"),
-                it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"),
-                () =>
-                {
-                    const video = document.querySelector("video");
-                    const info = playerModes.find(it => it.name === settings.defaultPlayerMode);
-                    if (info.name === "全屏")
-                    {
-                        const playButton = document.querySelector(".bilibili-player-video-btn-start");
+                it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"));
 
-                        const playerButtonClick = () =>
-                        {
-                            $(".bilibili-player-video-btn-fullscreen").click();
-                            playButton.removeEventListener("click", playerButtonClick);
-                        };
-                        playButton.addEventListener("click", playerButtonClick);
-                    }
-                    else
+            const video = document.querySelector("video");
+            if (video.length === 0)
+            {
+                return;
+            }
+            const info = playerModes.find(it => it.name === settings.defaultPlayerMode);
+            if (info.name === "全屏")
+            {
+                const unsafe$ = await SpinQuery.unsafeJquery();
+                const playButton = document.querySelector(".bilibili-player-video-btn-start");
+                const playerButtonClick = () =>
+                {
+                    const events = unsafe$(".bilibili-player-video-btn-fullscreen").data("events");
+                    if (events.click && events.click[0] && events.click[0].handler)
                     {
-                        const onplay = () =>
-                        {
-                            if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
-                            {
-                                info.action();
-                            }
-                            lightOff();
-                            video.removeEventListener("play", onplay);
-                        };
-                        video.addEventListener("play", onplay);
+                        const handler = unsafe$(".bilibili-player-video-btn-fullscreen").data("events").click[0].handler;
+                        console.log(handler);
+                        handler();
                     }
-                }
-            ).start();
+
+                    playButton.removeEventListener("click", playerButtonClick);
+                };
+                playButton.addEventListener("click", playerButtonClick);
+            }
+            else
+            {
+                const onplay = () =>
+                {
+                    if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
+                    {
+                        info.action();
+                    }
+                    lightOff();
+                    video.removeEventListener("play", onplay);
+                };
+                video.addEventListener("play", onplay);
+            }
         }
         Observer.subtree("#bofqi", () => main());
     };

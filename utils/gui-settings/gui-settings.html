@@ -14,17 +14,9 @@
   <div class="gui-settings-content">
     <ul>
       <category icon="video">视频与直播</category>
-      <li class="indent-0">
-        <label>
-          <span class="gui-settings-dropdown-span">默认播放器模式</span>
-          <div class="gui-settings-dropdown popup">
-            <input readonly type="text" spellcheck="false" key="defaultPlayerMode">
-            <ul></ul>
-            <i class="icon-arrow"></i>
-          </div>
-        </label>
-      </li>
-      <checkbox indent="0" key="downloadDanmaku" dependencies=""></checkbox>
+      <dropdown indent="0" key="defaultPlayerMode" dependencies=""></dropdown>
+      <checkbox indent="0" key="useDefaultVideoQuality" dependencies=""></checkbox>
+      <dropdown indent="1" key="defaultVideoQuality" dependencies="useDefaultVideoQuality"></dropdown>
       <checkbox indent="0" key="autoLightOff" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
       <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
@@ -53,6 +45,7 @@
       <textbox indent="1" key="darkScheduleEnd" dependencies="darkSchedule"></textbox>
       <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox>
       <checkbox indent="1" key="showBanner" dependencies="overrideNavBar"></checkbox>
+      <checkbox indent="1" key="preserveRank" dependencies="overrideNavBar"></checkbox>
       <checkbox indent="0" key="forceWide" dependencies=""></checkbox>
       <textbox indent="1" key="forceWideMinWidth" dependencies="forceWide"></textbox>
       <category icon="tool">工具</category>
@@ -60,6 +53,8 @@
       <checkbox indent="0" key="watchLaterRedirect" dependencies=""></checkbox>
       <checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox>
       <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
+      <checkbox indent="0" key="comboLike" dependencies=""></checkbox>
+      <checkbox indent="1" key="doubleCoins" dependencies="comboLike"></checkbox>
       <category icon="touch">触摸优化</category>
       <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
       <checkbox indent="0" key="touchVideoPlayer" dependencies=""></checkbox>
@@ -68,7 +63,6 @@
       <category icon="other">其他</category>
       <checkbox indent="0" key="toast" dependencies=""></checkbox>
       <checkbox indent="1" key="toastInternalError" dependencies="toast"></checkbox>
-      <checkbox indent="0" key="blurSettingsPanel" dependencies=""></checkbox>
       <checkbox indent="0" key="useCache" dependencies=""></checkbox>
     </ul>
   </div>

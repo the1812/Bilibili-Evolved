@@ -78,14 +78,14 @@ blockquote .color-yellow-04,
 .rank-item .content .other a:hover,
 .rank-item .content .more-data:hover,
 .edit-button:hover > .icon-font,
-.edit-button:hover > span
-.left-nav-item-childed:hover,
-.active .left-nav-item-child,
-.active[data-v-54800c27], .advice-btn:hover,
-.left-nav-item.active,
-.left-nav-item.active i.active,
-.left-nav-list.on .left-nav-item .icon,
-.left-nav-list.on .left-nav-item
+.edit-button:hover > span .left-nav-item-childed:hover,
+.left-nav-ul .active .left-nav-item-child,
+.left-nav-ul .active,
+.left-nav-ul .advice-btn:hover,
+.left-nav-ul .left-nav-item.active,
+.left-nav-ul .left-nav-item.active i.active,
+.left-nav-ul .left-nav-list.on .left-nav-item .icon,
+.left-nav-ul .left-nav-list.on .left-nav-item
 {
     color: $customStyleColor !important;
 }

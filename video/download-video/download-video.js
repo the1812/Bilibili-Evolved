@@ -4,7 +4,6 @@
     {
         const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
         const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
-        const DanmakuInfo = resources.attributes.videoInfo.export.DanmakuInfo;
         const pageData = {
             aid: undefined,
             cid: undefined,
@@ -217,13 +216,6 @@
                     const [data] = downloadedData;
                     zip.file(`${title}${this.extension()}`, this.makeBlob(data));
                 }
-
-                if (settings.downloadDanmaku)
-                {
-                    const danmaku = new DanmakuInfo(pageData.cid);
-                    await danmaku.fetchInfo();
-                    zip.file(`${title}.xml`, danmaku.rawXML);
-                }
                 const blob = await zip.generateAsync({ type: "blob" });
                 const filename = title + ".zip";
                 return [blob, filename];
@@ -245,7 +237,7 @@
 
                 let blob = null;
                 let filename = null;
-                if (downloadedData.length === 1 && !settings.downloadDanmaku)
+                if (downloadedData.length === 1)
                 {
                     [blob, filename] = this.downloadSingle(downloadedData);
                 }
