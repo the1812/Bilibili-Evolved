@@ -3,6 +3,9 @@
     return (settings, resources) =>
     {
         let trigger = false;
+        const executed = Symbol("executed");
+        const skipped = Symbol("skipped");
+        const failed = Symbol("failed");
         async function like()
         {
             const [likeButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.like"));
@@ -11,7 +14,9 @@
                 trigger = true;
                 likeButton.click();
                 await SpinQuery.condition(() => likeButton, () => likeButton.classList.contains("on"));
+                return executed;
             }
+            return skipped;
         }
         async function coin()
         {
@@ -50,8 +55,11 @@
                         () => $(".bili-dialog-m"),
                         it => it.length === 0,
                     );
+                    return [failed, 0];
                 }
+                return [executed, coins];
             }
+            return [skipped, 0];
         }
         async function favorite()
         {
@@ -80,8 +88,9 @@
                     () => $(".bili-dialog-m"),
                     it => it.length === 0 && favoriteButton.classList.contains("on"),
                 );
+                return executed;
             }
-
+            return skipped;
         }
         async function comboLike()
         {
@@ -91,18 +100,32 @@
                     display: none !important;
                 }
             </style>`);
-            // console.log("combo start");
-            await like();
-            await coin();
-            await favorite();
-            // console.log("combo end");
+            const likeResult = await like();
+            const [coinResult] = await coin();
+            const favoriteResult = await favorite();
+            const message = (() =>
+            {
+                if ([likeResult, coinResult, favoriteResult].every(it => it === executed || it === skipped))
+                {
+                    return null;
+                }
+                if (coinResult === failed)
+                {
+                    return "已跳过投币阶段: 硬币不足.";
+                }
+            })();
+            if (message !== null)
+            {
+                Toast.message(message, "素质三连", 10000);
+                console.log(message);
+            }
             $("#combo-like-temp-style").remove();
         }
         (async () =>
         {
             const [likeButton] = await SpinQuery.any(() => document.querySelectorAll("div.ops>span.like"));
             likeButton.style.userSelect = "none";
-            const triggerTime = 2000;
+            const triggerTime = 1000;
             likeButton.addEventListener("pointerdown", e =>
             {
                 trigger = true;
