@@ -3,7 +3,7 @@
     return (settings, resources) =>
     {
         const DanmakuInfo = resources.attributes.videoInfo.export.DanmakuInfo;
-        async function downloadDanmaku()
+        async function downloadDanmaku(timeout)
         {
             const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
             const danmaku = new DanmakuInfo((unsafeWindow || window).cid);
@@ -18,6 +18,8 @@
             {
                 URL.revokeObjectURL(oldUrl);
             }
+            clearTimeout(timeout);
+            document.querySelector("#download-danmaku>span").innerHTML = "下载弹幕";
             link.attr("download", `${title}.xml`).attr("href", url).get(0).click();
         }
         return {
@@ -53,7 +55,10 @@
                     {
                         if (e.target !== link)
                         {
-                            downloadDanmaku();
+                            const timeout = setTimeout(
+                                () => document.querySelector("#download-danmaku>span").innerHTML = "请稍侯...",
+                                200);
+                            downloadDanmaku(timeout);
                         }
                     });
                 },
