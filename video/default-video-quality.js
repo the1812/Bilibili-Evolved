@@ -39,17 +39,15 @@
                 it => it.length > 0 && $("li.profile-info").length > 0
             );
             const [availableHighestQualities] = qualityItems.toArray()
-                .map(it => it.getAttribute("data-value"))
-                .sort()
-                .reverse();
+                .map(it => parseInt(it.getAttribute("data-value")))
+                .sort(it => it);
             const [targetQuality] = qualities
                 .filter(it => it.name === settings.defaultVideoQuality)
                 .map(it => it.value);
             const [finalQuality] = qualities
                 .map(it => it.value)
                 .filter(it => it <= Math.min(targetQuality, availableHighestQualities))
-                .sort()
-                .reverse();
+                .sort(it => it);
 
             qualityItems.each((_, it) =>
             {
