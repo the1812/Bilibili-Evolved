@@ -100,26 +100,35 @@
                     display: none !important;
                 }
             </style>`);
-            const likeResult = await like();
-            const [coinResult] = await coin();
-            const favoriteResult = await favorite();
-            const message = (() =>
+            const operationArea = document.querySelector(".video-toolbar .ops");
+            operationArea.classList.add("combo-liking");
+            try
             {
-                if ([likeResult, coinResult, favoriteResult].every(it => it === executed || it === skipped))
+                const likeResult = await like();
+                const [coinResult] = await coin();
+                const favoriteResult = await favorite();
+                const message = (() =>
                 {
-                    return null;
-                }
-                if (coinResult === failed)
+                    if ([likeResult, coinResult, favoriteResult].every(it => it === executed || it === skipped))
+                    {
+                        return null;
+                    }
+                    if (coinResult === failed)
+                    {
+                        return "已跳过投币阶段: 硬币不足.";
+                    }
+                })();
+                if (message !== null)
                 {
-                    return "已跳过投币阶段: 硬币不足.";
+                    Toast.info(message, "素质三连", 10000);
+                    console.log(message);
                 }
-            })();
-            if (message !== null)
-            {
-                Toast.info(message, "素质三连", 10000);
-                console.log(message);
             }
-            $("#combo-like-temp-style").remove();
+            finally
+            {
+                operationArea.classList.remove("combo-liking");
+                $("#combo-like-temp-style").remove();
+            }
         }
         (async () =>
         {
