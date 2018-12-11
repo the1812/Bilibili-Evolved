@@ -240,7 +240,7 @@ div.up-load
 
 .blur-bg
 {
-    opacity: $blurBackgroundOpacity !important;
+    opacity: var(--blur-background-opacity) !important;
     filter: blur(20px) !important;
 }
 

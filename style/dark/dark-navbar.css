@@ -63,7 +63,7 @@
 #link-navbar-vm>.link-navbar .main-ctnr .nav-logo::before,
 #app>.link-navbar .main-ctnr .nav-logo::before
 {
-    filter: $blueImageFileter !important;
+    filter: var(--blue-image-filter) !important;
 }
 #app>.nav-header-wrapper .nav-header .order-icon
 {

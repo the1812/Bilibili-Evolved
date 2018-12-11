@@ -1195,19 +1195,34 @@
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
 
-            const html = document.querySelector("html");
-            html.style.setProperty("--theme-color", settings.customStyleColor);
+            const rgbToString = color =>
+            {
+                if (color.a)
+                {
+                    return `rgba(${color.r},${color.g},${color.b},${color.a})`;
+                }
+                return `rgb(${color.r},${color.g},${color.b})`;
+            };
+            let styles = [];
+            styles.push("--theme-color:" + settings.customStyleColor);
             for (let opacity = 10; opacity <= 90; opacity += 10)
             {
-                html.style.setProperty(`--theme-color-${opacity}`, this.color.hexToRgba(settings.customStyleColor + opacity));
+                styles.push(`--theme-color-${opacity}:` +
+                    rgbToString(this.color.hexToRgba(settings.customStyleColor + opacity)));
             }
-            html.style.setProperty("--foreground-color", settings.foreground);
-            html.style.setProperty("--foreground-color-b", this.color.hexToRgba(settings.foreground + "b"));
-            html.style.setProperty("--foreground-color-d", this.color.hexToRgba(settings.foreground + "d"));
-            html.style.setProperty("--blue-image-filter", settings.blueImageFilter);
-            html.style.setProperty("--pink-image-filter", settings.pinkImageFilter);
-            html.style.setProperty("--brightness", settings.brightness);
-            html.style.setProperty("--invert-filter", settings.filterInvert);
+            styles.push("--foreground-color:" + settings.foreground);
+            styles.push("--foreground-color-b:" +
+                rgbToString(this.color.hexToRgba(settings.foreground + "b")));
+            styles.push("--foreground-color-d:" +
+                rgbToString(this.color.hexToRgba(settings.foreground + "d")));
+            styles.push("--blue-image-filter:" + settings.blueImageFilter);
+            styles.push("--pink-image-filter:" + settings.pinkImageFilter);
+            styles.push("--brightness:" + settings.brightness);
+            styles.push("--invert-filter:" + settings.filterInvert);
+            styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
+            styles.push("--custom-control-background-opacity:" + settings.blurBackgroundOpacity);
+            styles.push("--force-wide-min-width:" + settings.forceWideMinWidth);
+            this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(",")}}</style>`);
         }
         async fetchByKey(key)
         {

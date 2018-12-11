@@ -1196,14 +1196,25 @@
             settings.filterInvert = this.color.filterInvert;
 
             const html = document.querySelector("html");
+            const rgbToString = color =>
+            {
+                if (color.a)
+                {
+                    return `rgba(${color.r},${color.g},${color.b},${color.a})`;
+                }
+                return `rgb(${color.r},${color.g},${color.b})`;
+            }
             html.style.setProperty("--theme-color", settings.customStyleColor);
             for (let opacity = 10; opacity <= 90; opacity += 10)
             {
-                html.style.setProperty(`--theme-color-${opacity}`, this.color.hexToRgba(settings.customStyleColor + opacity));
+                html.style.setProperty(`--theme-color-${opacity}`,
+                    rgbToString(this.color.hexToRgba(settings.customStyleColor + opacity)));
             }
             html.style.setProperty("--foreground-color", settings.foreground);
-            html.style.setProperty("--foreground-color-b", this.color.hexToRgba(settings.foreground + "b"));
-            html.style.setProperty("--foreground-color-d", this.color.hexToRgba(settings.foreground + "d"));
+            html.style.setProperty("--foreground-color-b",
+                rgbToString(this.color.hexToRgba(settings.foreground + "b")));
+            html.style.setProperty("--foreground-color-d",
+                rgbToString(this.color.hexToRgba(settings.foreground + "d")));
             html.style.setProperty("--blue-image-filter", settings.blueImageFilter);
             html.style.setProperty("--pink-image-filter", settings.pinkImageFilter);
             html.style.setProperty("--brightness", settings.brightness);

@@ -1,7 +1,7 @@
 .bili-header-m>.nav-menu,
 .b-header-mask-wrp .b-header-mask
 {
-    background: var(--theme-color)ff !important;
+    background: var(--theme-color) !important;
     box-shadow: var(--theme-color-70) 0px 2px 10px 1px !important;
 }
 
@@ -133,7 +133,7 @@ div.up-load
 
 .blur-bg
 {
-    opacity: $blurBackgroundOpacity !important;
+    opacity: var(--blur-background-opacity) !important;
     filter: blur(20px) !important;
 }
 

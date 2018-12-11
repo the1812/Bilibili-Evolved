@@ -5,5 +5,5 @@
 .bilibili-player-video-control-bottom,
 .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
 {
-    background: rgba(0,0,0,$customControlBackgroundOpacity) !important;
+    background: rgba(0,0,0,var(--custom-control-background-opacity)) !important;
 }
