@@ -18,7 +18,6 @@
     .bangumi-timing-module .headline .bili-tab {
         width:650px;
     }
-
     .bangumi-timing-module .headline .bili-tab .bili-tab-item {
         width: 70px;
     }
@@ -40,7 +39,6 @@
     .elevator-module {
         margin-left:590px;
     }
-
     #primary_menu,
     #primary_menu>ul.nav-menu,
     .uns_box li.u-i.b-post
@@ -62,7 +60,6 @@
         position: static;
         margin-left: 2%;
     }
-
     .primary-menu .nav-menu>li
     {
         margin-right: 0 !important;

@@ -136,14 +136,6 @@ body>div.to-top.on,
 {
     background-color: #444 !important;
 }
-// a
-// {
-//     background-color: #555 !important;
-// }
-// a
-// {
-//     background-color: #aaa !important;
-// }
 .bilibili-player-video-time-seek
 {
     background-color: #fff1 !important;
@@ -201,11 +193,6 @@ body>div.to-top.on,
 {
     background: #fff !important;
 }
-// a
-// {
-//     background: transparent !important;
-// }
-
 .scroll-loading,
 .room-card-item .info .s-info,
 .fans-no-data::after,
@@ -421,10 +408,6 @@ body>div.to-top.on,
 {
     border-color: #aaa !important;
 }
-// a
-// {
-//     border-color: #222 !important;
-// }
 .up-info-holder .fixed-box .up-article-list-block .block-title,
 .up-info-holder .fixed-box .more .top-bar,
 .el-date-range-picker__content.is-left,
@@ -452,7 +435,6 @@ i.settings-category-arrow::after,
 {
     border-color: white !important;
 }
-
 #player-header .bg-image
 {
     transition: all .2s .5s !important;
@@ -544,11 +526,6 @@ body>div.to-top.on,
 {
     filter: brightness(0.5) !important;
 }
-// a
-// {
-//     filter: none !important;
-// }
-
 .tab-mk2.active,
 .face-g-more,
 .bangumi-player,
@@ -557,10 +534,6 @@ body>div.to-top.on,
 {
     background-image: none !important;
 }
-// a
-// {
-//     border-radius: 4px !important;
-// }
 .bangumi-player,
 .live-sidebar-ctnr,
 .el-picker-panel,
@@ -607,18 +580,6 @@ body>div.to-top.on,
 {
     display: none !important;
 }
-// a
-// {
-//     opacity: 0 !important;
-// }
-// a
-// {
-//     opacity: 0.5 !important;
-// }
-// a
-// {
-//     opacity: 1 !important;
-// }
 @supports (backdrop-filter: blur(24px)) or (-webkit-backdrop-filter: blur(24px))
 {
     .gui-settings-box.blur li.category,
@@ -655,7 +616,6 @@ body>div.to-top.on
     border: none !important;
     border-radius: 4px !important;
 }
-
 .list-filter-bar .sort-box .item.active,
 .list-filter-bar .sort-box .item:hover,
 .data-card .tab .data-tab.current:after,
@@ -881,7 +841,6 @@ body>div.to-top.on
 {
     fill: var(--theme-color) !important;
 }
-
 .leftMsg .msgDiv:before,
 .rightMsg .msgDiv::before
 {
