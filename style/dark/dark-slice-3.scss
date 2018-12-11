@@ -61,7 +61,9 @@ div#square.container,
 .gui-settings-dropdown>ul,
 .toast-card,
 .gui-settings-widgets-box,
-.user-panel-ctnr .user-avatar
+.user-panel-ctnr .user-avatar,
+.link-popover-ctnr .link-popover,
+.medal-get-box, .medal-message-box
 {
     background-color: #222 !important;
 }
@@ -127,8 +129,10 @@ body>div.to-top.on,
 .main_body .future .next_button,
 .user-info .points-wrp .bar,
 .list.main_body .list_box .next_button,
-.gui-settings-checkbox::after
-
+.gui-settings-checkbox::after,
+.user-hd,
+.progress-tv .progress-img,
+.progress-tv
 {
     background-color: #444 !important;
 }
@@ -148,7 +152,8 @@ body>div.to-top.on,
 {
     background-color: rgba(0,0,0,0.1) !important;
 }
-.mainBox .sureWindowlayer
+.mainBox .sureWindowlayer,
+.medal-mask
 {
     background-color: rgba(0,0,0,.5) !important;
 }
@@ -346,7 +351,9 @@ body>div.to-top.on,
 .gui-settings-dropdown input,
 .bilibili-player-video-control .bilibili-player-video-volume-num,
 .gui-settings-widgets-box>.widgets-container>button,
-.gui-settings-widgets-box
+.gui-settings-widgets-box,
+.link-popover-ctnr .link-popover,
+.details-up-name
 {
     color: #eee !important;
 }
@@ -402,7 +409,10 @@ body>div.to-top.on,
 .article-action .ops .share-container .weixin-holder,
 .coin-wrap .coin-sure,
 .filter-wrap .sub-filter,
-.list.main_body .list_box .block .cover
+.list.main_body .list_box .block .cover,
+.link-popover::after,
+.link-popover::before,
+.medal-get-box, .medal-message-box
 {
     border-color: transparent !important;
 }
@@ -428,7 +438,8 @@ body>div.to-top.on,
 .search-module .search-block .search-word-panel .panel-title .split-line,
 .chatPanelBody .footer,
 .leftMsg .msgDiv:before,
-.leaveMsg .leaveMsgHeader
+.leaveMsg .leaveMsgHeader,
+.medal-receive-title
 {
     border-color: #444 !important
 }
@@ -720,7 +731,14 @@ body>div.to-top.on
 .nav-header-wrapper .nav-header .profile-img.active::before,
 .coin-wrap .coin-sure,
 .up-feedback .up-fb-btn:hover,
-.draft-holder-block .draft-holder .panel .btn.on
+.draft-holder-block .draft-holder .panel .btn.on,
+.follow-dialog-wrap .follow-dialog-window .bottom .btn,
+.follow-dialog-wrap .follow-dialog-window .bottom .btn:hover,
+.progress-bar-ctnr .bar-body .progress-bar,
+.user-info > .uid,
+.receive-list-prev i,
+.receive-list-next i,
+.receive-list-page
 {
     background-color: $customStyleColor !important;
 }
@@ -845,7 +863,8 @@ body>div.to-top.on
 .bilibili-live-player .bilibili-live-player-enter-tips,
 .banner-wrapper .swiper-pagination-bullet-active,
 .coin-wrap .coin-sure,
-.up-feedback .up-fb-btn:hover
+.up-feedback .up-fb-btn:hover,
+.user-info > .uid
 {
     color: $foreground !important;
 }
@@ -857,7 +876,8 @@ body>div.to-top.on
 .bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-subtitle-setting-right-more:hover,
 .bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
-.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover,
+.receive-list-page
 {
     fill: $customStyleColor !important;
 }
