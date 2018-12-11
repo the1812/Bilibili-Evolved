@@ -265,7 +265,8 @@ table.invtable td,
 .bp_user_box .bp_user_box_bb,
 .bp_user_box .bp_user_box_bk,
 .list-wrap.hot-forum-lft-con .s-imgUnit a,
-.sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group 
+.sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group,
+#gameCenter .look-around .s-imgUnit .s-imgUnit-text 
 {
     color: #eee !important;
 }
@@ -510,7 +511,8 @@ table.invtable td,
 #status .s-statusUnit .s-statusUnit-text .info .game-name,
 #gameCenter .hot-list .s-imgUnit .rank.pink,
 .s-statusUnit-text .info a:hover,
-.list-wrap.hot-forum-lft-con .s-imgUnit a:hover
+.list-wrap.hot-forum-lft-con .s-imgUnit a:hover,
+.list-wrap.lft-con .s-imgUnit a:hover 
 {
     color: $customStyleColor !important;
 }
