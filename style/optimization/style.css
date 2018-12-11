@@ -309,29 +309,52 @@ body
 {
     width: 100% !important;
 }
-// .player-wrap[style*="height: auto"]
-// {
-//     height: 513px !important;
-// }
-// .danmaku-wrap .player-auxiliary-block-wrap,
-// .player-auxiliary-advanced-danmaku-control-container
-// {
-//     height: 474px !important;
-// }
-// .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap
-// {
-//     height: 403px !important;
-// }
-// .bilibili-player-video-control-bottom
-// {
-//     margin: 0 !important;
-//     padding: 7px 0 0 !important;
-// }
-// .bilibili-player-video-control-bottom,
-// .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
-// {
-//     background-color: #222c !important;
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .bilibili-player-video-control
 {
     background-color: transparent !important;

@@ -36,7 +36,6 @@
         touchVideoPlayer: false,
         customControlBackgroundOpacity: 0.64,
         customControlBackground: true,
-        forceWideMinWidth: "1368px",
         forceWide: false,
         darkScheduleStart: "18:00",
         darkScheduleEnd: "6:00",
@@ -1221,8 +1220,7 @@
             styles.push("--invert-filter:" + settings.filterInvert);
             styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
             styles.push("--custom-control-background-opacity:" + settings.blurBackgroundOpacity);
-            styles.push("--force-wide-min-width:" + settings.forceWideMinWidth);
-            this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(",")}}</style>`);
+            this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(";")}}</style>`);
         }
         async fetchByKey(key)
         {

@@ -195,14 +195,6 @@ body #app .marquee,
 {
     background-color: #555 !important;
 }
-// a
-// {
-//     background-color: #aaa !important;
-// }
-// a
-// {
-//     background-color: #fff1 !important;
-// }
 .add-tag .edit .input-wrapper .container.active .btn-add,
 .infor-news .news-top,
 .spend-recode .title-group .selected-title,
@@ -231,10 +223,6 @@ div.cntr a.check-all
 {
     background-color: transparent !important;
 }
-// a
-// {
-//     background: #fff1 !important;
-// }
 .recent-danmu-wrp .danmu-filter .left .line,
 .preview-avatar-con,
 .preview-title,
@@ -441,7 +429,6 @@ li.user-wrapper .avatar .detail .level .progress span,
 {
     color: #aaa !important;
 }
-
 .rank-item .detail .work-name,
 .rank-list-container .more .text,
 .canvas-card dd h3 a,
@@ -681,10 +668,6 @@ body #app .category-wrapper .upload-content .title,
 {
     color: #eee !important;
 }
-// a
-// {
-//     color: #222 !important;
-// }
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .link-footer .footer-img-linker .footer-img-item,
 .canvas-card dd .icon-contain .support,
@@ -844,30 +827,10 @@ body #app .category-wrapper .upload-content .title,
 {
     border-color: #aaa !important;
 }
-// a
-// {
-//     border-color: #222 !important;
-// }
-// a
-// {
-//     border-color: #444 !important
-// }
-// a
-// {
-//     border-color: #99a2aa !important;
-// }
 #BilibiliVipDialog
 {
     border: none !important;
 }
-// a
-// {
-//     transition: all .2s !important;
-// }
-// a
-// {
-//     fill: #aaa !important;
-// }
 .mainmenu ul.grid li a.yxzx,
 .footer-logo,
 .more-data i,
@@ -909,22 +872,6 @@ body #app .category-wrapper .upload-content .title,
 {
     filter: var(--pink-image-filter) !important;
 }
-// a
-// {
-//     filter: grayscale(1) !important;
-// }
-// a
-// {
-//     filter: none !important;
-// }
-// a
-// {
-//     background-image: none !important;
-// }
-// a
-// {
-//     border-radius: 4px !important;
-// }
 #edit-page,
 .orderdetail-container .orderdetail-content
 {
@@ -940,18 +887,6 @@ div.cntr a.check-all
 {
     display: none !important;
 }
-// a
-// {
-//     opacity: 0 !important;
-// }
-// a
-// {
-//     opacity: 0.5 !important;
-// }
-// a
-// {
-//     opacity: 1 !important;
-// }
 .sort-item.on i.active,
 .banner-p h3,
 .banner-p a:hover,
@@ -988,7 +923,6 @@ body #app .marquee,
 {
     border-color: var(--theme-color) !important;
 }
-
 .nav-bar .nav-wrapper .slide-block,
 ul.navigation li:after,
 .link-panigation .panigation.selected,
@@ -1049,7 +983,6 @@ div.cntr a.check-all,
 {
     background: var(--theme-color) !important;
 }
-
 .canvas-card dd h4 .user-container a:hover,
 .nav-bar .sub-nav .sub-tab.active,
 .rank-item .detail .work-name:hover,
@@ -1191,10 +1124,6 @@ div.cntr a.check-all,
 {
     color: var(--foreground-color) !important;
 }
-// a
-// {
-//     fill: var(--theme-color) !important;
-// }
 #page .game .game-box,
 .comment-manage-wrap .head .dropdown-menu .article-list,
 #edit-page .block-hr
@@ -1202,11 +1131,6 @@ div.cntr a.check-all,
     border-top-color: transparent !important;
     border-bottom-color: transparent !important;
 }
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-right-color: transparent !important;
-// }
 #page .game .game-box-1,
 #page .game .game-box-3,
 .game-box-all,

@@ -77,18 +77,6 @@
 {
     background-color: #444 !important;
 }
-// a
-// {
-//     background-color: #555 !important;
-// }
-// a
-// {
-//     background-color: #aaa !important;
-// }
-// a
-// {
-//     background-color: #fff1 !important;
-// }
 .live-haruna .section-stage .stage-wrap,
 .tabs-nav .active,
 .bangumi-collection-wrap .bangumi-collection,
@@ -106,10 +94,6 @@
 {
     background-color: transparent !important;
 }
-// a
-// {
-//     background: #fff1 !important;
-// }
 .article-header .filter-wrp .article-type .line,
 .article-header .filter-wrp .filter-article-type .line,
 .article-header .filter-wrp .filter-level .line,
@@ -268,10 +252,6 @@ table.invtable td,
 {
     color: #eee !important;
 }
-// a
-// {
-//     color: #222 !important;
-// }
 .title-item,
 .title-factory-card,
 .title-factory-card .title-num,
@@ -341,57 +321,11 @@ table.invtable td,
 {
     border-color: #aaa !important;
 }
-// a
-// {
-//     border-color: #222 !important;
-// }
-// a
-// {
-//     border-color: #444 !important
-// }
-// a
-// {
-//     border-color: #99a2aa !important;
-// }
-
-// a
-// {
-//     transition: all .2s !important;
-// }
-// a
-// {
-//     fill: #aaa !important;
-// }
 .left-nav-logo,
 .icon-back
 {
     filter: brightness(0) invert(1) !important;
 }
-// a
-// {
-//     filter: var(--blue-image-filter) !important;
-// }
-// a
-// {
-//     filter: var(--pink-image-filter) !important;
-// }
-// a
-// {
-//     filter: grayscale(1) !important;
-// }
-// a
-// {
-//     filter: none !important;
-// }
-
-// a
-// {
-//     background-image: none !important;
-// }
-// a
-// {
-//     border-radius: 4px !important;
-// }
 .videoCharts .stat .stat-wrp,
 .article-data-wrp .video-box,
 .article-net-charts .content-box,
@@ -399,26 +333,6 @@ table.invtable td,
 {
     box-shadow: none !important;
 }
-// a
-// {
-//     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
-// }
-// a
-// {
-//     display: none !important;
-// }
-// a
-// {
-//     opacity: 0 !important;
-// }
-// a
-// {
-//     opacity: 0.5 !important;
-// }
-// a
-// {
-//     opacity: 1 !important;
-// }
 .add-cover:hover,
 .category:not(.gui-settings-content .category):hover,
 .data-card .data-box .tab .fan-tab.current:after,
@@ -513,25 +427,6 @@ table.invtable td,
 {
     color: var(--theme-color) !important;
 }
-// a
-// {
-//     color: var(--foreground-color) !important;
-// }
-// a
-// {
-//     fill: var(--theme-color) !important;
-// }
-
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-bottom-color: transparent !important;
-// }
-// a
-// {
-//     border-top-color: transparent !important;
-//     border-right-color: transparent !important;
-// }
 .data-card .data-box .tab .fan-tab.current:after,
 .data-card .fans-box .tab .fan-tab.current:after,
 .data-card .data-box .tab .fan-tab.current:after,
