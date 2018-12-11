@@ -13,7 +13,7 @@ namespace BilibiliEvolved.Build
             var files = new DirectoryInfo("min").EnumerateFiles().Where(f => f.FullName.Contains("dark-slice"));
             var fullStyle = files.Select(f => File.ReadAllText(f.FullName))
                 .Aggregate((acc, s) => acc + s);
-            File.WriteAllText("min/dark.min.scss", fullStyle);
+            File.WriteAllText("min/dark.min.css", fullStyle);
             WriteSuccess("Dark style build complete.");
             return this;
         }
