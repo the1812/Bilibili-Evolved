@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      147.90
+// @version      147.99
 // @description  增强哔哩哔哩Web端体验(离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -123,19 +123,19 @@
         const resourceManifest = {
             style: {
                 path: "min/style.min.scss",
-                order: 0,
+                order: 10,
             },
             oldStyle: {
                 path: "min/old.min.scss",
-                order: 0,
+                order: 10,
             },
             scrollbarStyle: {
                 path: "min/scrollbar.min.css",
-                order: 0,
+                order: 10,
             },
             darkStyle: {
                 path: "min/dark.min.scss",
-                order: 1,
+                order: 11,
             },
             darkStyleImportant: {
                 path: "min/dark-important.min.scss",
@@ -145,39 +145,39 @@
             },
             touchPlayerStyle: {
                 path: "min/touch-player.min.scss",
-                order: 3,
+                order: 13,
             },
             navbarOverrideStyle: {
                 path: "min/override-navbar.min.css",
-                order: 4,
+                order: 14,
             },
             noBannerStyle: {
                 path: "min/no-banner.min.css",
-                order: 5,
+                order: 15,
             },
             removeAdsStyle: {
                 path: "min/remove-promotions.min.css",
-                order: 6,
+                order: 16,
             },
             guiSettingsStyle: {
                 path: "min/gui-settings.min.scss",
-                order: 2,
+                order: 12,
             },
             fullTweetsTitleStyle: {
                 path: "min/full-tweets-title.min.css",
-                order: 7,
+                order: 17,
             },
             imageViewerStyle: {
                 path: "min/image-viewer.min.scss",
-                order: 8,
+                order: 18,
             },
             toastStyle: {
                 path: "min/toast.min.scss",
-                order: 9,
+                order: 19,
             },
             blurVideoControlStyle: {
                 path: "min/blur-video-control.min.css",
-                order: 10,
+                order: 20,
             },
             forceWideStyle: {
                 path: "min/force-wide.min.scss",
@@ -455,7 +455,7 @@
             },
             customControlBackgroundStyle: {
                 path: "min/custom-control-background.min.scss",
-                order: 11
+                order: 21
             },
             customControlBackground: {
                 path: "min/custom-control-background.min.js",
@@ -505,7 +505,7 @@
                     comboLike: "启用素质三连",
                     doubleCoins: "为原创视频投2个币"
                 }
-            }
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
@@ -1240,6 +1240,20 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             settings.pinkImageFilter = this.color.pinkImageFilter;
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
+
+            const html = document.querySelector("html");
+            html.style.setProperty("--theme-color", settings.customStyleColor);
+            for (let opacity = 10; opacity <= 90; opacity += 10)
+            {
+                html.style.setProperty(`--theme-color-${opacity}`, this.color.hexToRgba(settings.customStyleColor + opacity));
+            }
+            html.style.setProperty("--foreground-color", settings.foreground);
+            html.style.setProperty("--foreground-color-b", this.color.hexToRgba(settings.foreground + "b"));
+            html.style.setProperty("--foreground-color-d", this.color.hexToRgba(settings.foreground + "d"));
+            html.style.setProperty("--blue-image-filter", settings.blueImageFilter);
+            html.style.setProperty("--pink-image-filter", settings.pinkImageFilter);
+            html.style.setProperty("--brightness", settings.brightness);
+            html.style.setProperty("--invert-filter", settings.filterInvert);
         }
         async fetchByKey(key)
         {
