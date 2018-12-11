@@ -1219,7 +1219,7 @@
             styles.push("--brightness:" + settings.brightness);
             styles.push("--invert-filter:" + settings.filterInvert);
             styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
-            styles.push("--custom-control-background-opacity:" + settings.blurBackgroundOpacity);
+            styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
             this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(";")}}</style>`);
         }
         async fetchByKey(key)
