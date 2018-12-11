@@ -58,7 +58,7 @@ ol.video-quality li:hover,
 }
 .download-progress-foreground
 {
-    background-color: $customStyleColor;
+    background-color: var(--theme-color);
     transform-origin: left;
     transition: all .2s ease-out;
     transform: scaleX(0);

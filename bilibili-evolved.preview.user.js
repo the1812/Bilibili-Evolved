@@ -121,11 +121,11 @@
     {
         const resourceManifest = {
             style: {
-                path: "min/style.min.scss",
+                path: "min/style.min.css",
                 order: 10,
             },
             oldStyle: {
-                path: "min/old.min.scss",
+                path: "min/old.min.css",
                 order: 10,
             },
             scrollbarStyle: {
@@ -133,17 +133,17 @@
                 order: 10,
             },
             darkStyle: {
-                path: "min/dark.min.scss",
+                path: "min/dark.min.css",
                 order: 11,
             },
             darkStyleImportant: {
-                path: "min/dark-important.min.scss",
+                path: "min/dark-important.min.css",
             },
             darkStyleNavBar: {
-                path: "min/dark-navbar.min.scss",
+                path: "min/dark-navbar.min.css",
             },
             touchPlayerStyle: {
-                path: "min/touch-player.min.scss",
+                path: "min/touch-player.min.css",
                 order: 13,
             },
             navbarOverrideStyle: {
@@ -159,7 +159,7 @@
                 order: 16,
             },
             guiSettingsStyle: {
-                path: "min/gui-settings.min.scss",
+                path: "min/gui-settings.min.css",
                 order: 12,
             },
             fullTweetsTitleStyle: {
@@ -167,11 +167,11 @@
                 order: 17,
             },
             imageViewerStyle: {
-                path: "min/image-viewer.min.scss",
+                path: "min/image-viewer.min.css",
                 order: 18,
             },
             toastStyle: {
-                path: "min/toast.min.scss",
+                path: "min/toast.min.css",
                 order: 19,
             },
             blurVideoControlStyle: {
@@ -179,10 +179,10 @@
                 order: 20,
             },
             forceWideStyle: {
-                path: "min/force-wide.min.scss",
+                path: "min/force-wide.min.css",
             },
             downloadVideoStyle: {
-                path: "min/download-video.min.scss",
+                path: "min/download-video.min.css",
             },
             guiSettingsDom: {
                 path: "min/gui-settings.min.html",
@@ -438,7 +438,7 @@
                 path: "min/about.min.html",
             },
             aboutStyle: {
-                path: "min/about.min.scss",
+                path: "min/about.min.css",
             },
             about: {
                 path: "min/about.min.js",
@@ -453,7 +453,7 @@
                 }
             },
             customControlBackgroundStyle: {
-                path: "min/custom-control-background.min.scss",
+                path: "min/custom-control-background.min.css",
                 order: 21
             },
             customControlBackground: {
@@ -922,7 +922,7 @@
         }
         static fromUrl(url)
         {
-            if (url.indexOf(".scss") !== -1 || url.indexOf(".css") !== -1)
+            if (url.indexOf(".css") !== -1)
             {
                 return this.style;
             }

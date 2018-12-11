@@ -508,11 +508,11 @@ svg.toast-card-dismiss path
 .error-container .error-panel .error-msg .error-img img,
 .leaveMsgUpload .btnarea .btnareaIcon
 {
-    filter: $blueImageFilter !important;
+    filter: var(--blue-image-filter) !important;
 }
 .svg-icon.good-6-click
 {
-    filter: $pinkImageFilter !important;
+    filter: var(--pink-image-filter) !important;
 }
 .article-item .item-holder .article-info-bar .like:before,
 .article-item .item-holder .article-info-bar .reply:before,
@@ -582,7 +582,7 @@ body>div.to-top.on,
 }
 #bilibiliPlayer
 {
-    box-shadow: 0px 4px 16px 0px $customStyleColor40 !important;
+    box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 }
 .guide .feedback-btn a,
 .mainBox .leaveMsg,
@@ -592,7 +592,7 @@ body>div.to-top.on,
 #app .toolbar-wrapper,
 .article-action .ops .share-container .weixin-holder
 {
-    box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
+    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
 .main-container .title span::before,
 .top-banner,
@@ -676,24 +676,24 @@ body>div.to-top.on
 .rightMsg .msgDiv::before,
 #index-player-vm .item-border
 {
-    border-color: $customStyleColor !important;
+    border-color: var(--theme-color) !important;
 }
 .blp-ui-slider-hover-container::before
 {
-    border-top-color: $customStyleColor !important;
+    border-top-color: var(--theme-color) !important;
 }
 .blp-ui-slider-hover-container::after
 {
-    border-bottom-color: $customStyleColor !important;
+    border-bottom-color: var(--theme-color) !important;
 }
 #index-player-vm .aside-item:after
 {
-    border-right-color: $customStyleColor !important;
+    border-right-color: var(--theme-color) !important;
 }
 .audioplayer .ap-controller,
 .audioplayer .ap-playlist
 {
-    border: 1px solid $customStyleColor !important;
+    border: 1px solid var(--theme-color) !important;
 }
 .medal-progress>i,
 .gift-item-wrap .expiration,
@@ -740,17 +740,17 @@ body>div.to-top.on
 .receive-list-next i,
 .receive-list-page
 {
-    background-color: $customStyleColor !important;
+    background-color: var(--theme-color) !important;
 }
 .audioplayer .ap-play-button svg,
 .audioplayer .ap-controller .ap-controller-center .ap-buffer-bar,
 .blp-ui-slider-buffer-container
 {
-    background-color: $customStyleColor60 !important;
+    background-color: var(--theme-color-60) !important;
 }
 .audioplayer .ap-play-button:hover svg
 {
-    background-color: $customStyleColor90 !important;
+    background-color: var(--theme-color-90) !important;
 }
 .face-g-more,
 .room-card-item:hover .room-name,
@@ -832,7 +832,7 @@ body>div.to-top.on
 .coin-wrap .coin-nav .coin-checkbox.on .lable,
 #community_msg .dyn_menu li a:hover
 {
-    color: $customStyleColor !important;
+    color: var(--theme-color) !important;
 }
 .gift-item-wrap .expiration,
 .el-date-table td.in-range.start-date:hover,
@@ -866,7 +866,7 @@ body>div.to-top.on
 .up-feedback .up-fb-btn:hover,
 .user-info > .uid
 {
-    color: $foreground !important;
+    color: var(--foreground-color) !important;
 }
 .bilibili-player-video-danmaku-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-danmaku-setting-right-more:hover .bp-svgicon,
@@ -879,7 +879,7 @@ body>div.to-top.on
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover,
 .receive-list-page
 {
-    fill: $customStyleColor !important;
+    fill: var(--theme-color) !important;
 }
 
 .leftMsg .msgDiv:before,

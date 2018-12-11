@@ -1,8 +1,8 @@
 .bili-header-m>.nav-menu,
 .b-header-mask-wrp .b-header-mask
 {
-    background: $customStyleColorff !important;
-    box-shadow: $customStyleColor70 0px 2px 10px 1px !important;
+    background: var(--theme-color)ff !important;
+    box-shadow: var(--theme-color-70) 0px 2px 10px 1px !important;
 }
 
 body .bili-header-m .nav-menu div.nav-mask,
@@ -21,14 +21,14 @@ body .bili-header-m .nav-menu div.nav-mask,
 .bili-header-m .nav-menu .nav-con .nav-item .t,
 .z_top.b-header-blur .z_top_nav li:not(.home) a.i-link
 {
-    color: $foregroundd !important;
+    color: var(--foreground-color-d) !important;
 }
 
 li.nav-item:hover,
 .z_top .z_top_nav ul li:hover,
 .uns_box ul.menu li:not(.b-post):hover
 {
-    background-color: hsla(0,0%,$brightness,.2) !important;
+    background-color: hsla(0,0%,var(--brightness),.2) !important;
 }
 
 .vip-m
@@ -38,7 +38,7 @@ li.nav-item:hover,
 
 a.t>i.bili-icon
 {
-    filter: brightness(0) $filterInvert !important;
+    filter: brightness(0) var(--invert-filter) !important;
     background-image: url(https://www.bilibili.com/favicon.ico) !important;
     background-size: cover !important;
     background-position: inherit !important;
@@ -82,11 +82,11 @@ div.up-load
 .uns_box li.u-i.b-post a.i-link
 {
     background: transparent !important;
-    color: $foregroundd !important;
+    color: var(--foreground-color-d) !important;
     border-radius: 4px !important;
     line-height: 30px !important;
     height: 30px !important;
-    border: 1px solid $foregroundb !important;
+    border: 1px solid var(--foreground-color-b) !important;
     transition: background-color .2s !important;
 }
 
@@ -94,7 +94,7 @@ div.up-load
 .uns_box li.u-i.b-post a.i-link:hover
 {
     opacity: 1 !important;
-    background-color: hsla(0,0%,$brightness,.2) !important;
+    background-color: hsla(0,0%,var(--brightness),.2) !important;
 }
 .uns_box li.u-i.b-post
 {
@@ -128,7 +128,7 @@ div.up-load
 
 #bilibiliPlayer
 {
-    box-shadow: 0px 4px 16px 0px $customStyleColor40 !important;
+    box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 }
 
 .blur-bg

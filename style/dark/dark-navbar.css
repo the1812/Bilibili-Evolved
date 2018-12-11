@@ -53,7 +53,7 @@
 .uns_box li.u-i:hover a.i-link,
 .z_top .i-link:hover
 {
-    color: $customStyleColor;
+    color: var(--theme-color);
 }
 #link-navbar-vm>.link-navbar-ctnr,
 #app>.link-navbar

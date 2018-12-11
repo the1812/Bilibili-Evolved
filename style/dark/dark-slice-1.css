@@ -1569,14 +1569,14 @@ ul.up-nav li
 .home-wrap .home-logo,
 .home-wrap .home-tips .tips-link .tip-item>a
 {
-    filter: $blueImageFilter !important;
+    filter: var(--blue-image-filter) !important;
 }
 .single-button .text-bar.selected,
 .is-max .percentage-bar,
 .calendar .day-item.gift-checked,
 .home-wrap .home-tips .tips-link .tip-item>a:hover
 {
-    filter: $pinkImageFilter !important;
+    filter: var(--pink-image-filter) !important;
 }
 .switch-wrap i.icon-aver,
 .switch-wrap i.icon-imgleft,
@@ -1694,7 +1694,7 @@ div.drag-bar,
 .live-player-ctnr.minimal,
 .bb-comment .nameplate .nameplate-card
 {
-    box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
+    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
 .sticky-bar
 {
@@ -1739,11 +1739,11 @@ canvas.cliper.is-img,
 }
 .bilibili-player-video-progress-detail-sign-down
 {
-    border-top-color: $customStyleColor !important;
+    border-top-color: var(--theme-color) !important;
 }
 .bilibili-player-video-progress-detail-sign-up
 {
-    border-bottom-color: $customStyleColor !important;
+    border-bottom-color: var(--theme-color) !important;
 }
 .bilibili-player-video-control
 {
@@ -1786,7 +1786,7 @@ canvas.cliper.is-img,
 }
 #page-setting #setting-new-tag-btn
 {
-    background: $customStyleColor !important;
+    background: var(--theme-color) !important;
 }
 .bilibili-player-video-panel-image-detail
 {
@@ -1888,7 +1888,7 @@ input[type=text]:focus,
 .radio-icon.selected,
 .live-status-label
 {
-    border-color: $customStyleColor !important;
+    border-color: var(--theme-color) !important;
 }
 .num-wrap>span,
 .rank-item.highlight>.ri-num,
@@ -2015,7 +2015,7 @@ a.s-btn:hover,
 .cases-wrap .fjw-user .b-right button,
 #app .submit .confirm
 {
-    background-color: $customStyleColor !important;
+    background-color: var(--theme-color) !important;
 }
 p.t:hover,
 p.ri-title:hover,
@@ -2253,7 +2253,7 @@ a.up-name:hover,
 .app-watch .app-look .foot-txt a,
 #app .header .close:hover
 {
-    color: $customStyleColor !important;
+    color: var(--theme-color) !important;
 }
 .sortable:hover,
 .read-push:hover,
@@ -2353,7 +2353,7 @@ a.s-btn:hover,
 .cases-wrap .fjw-user .b-right button,
 #app .submit .confirm
 {
-    color: $foreground !important;
+    color: var(--foreground-color) !important;
 }
 .bui-checkbox .bui-checkbox-input:checked+.bui-checkbox-label .bui-checkbox-icon svg,
 .bui-checkbox:hover .bui-checkbox-icon svg,
@@ -2367,7 +2367,7 @@ a.s-btn:hover,
 .bilibili-player-video-danmaku-setting:hover,
 .bilibili-player-video-sendbar .bilibili-player-video-btn:hover
 {
-    fill: $customStyleColor !important;
+    fill: var(--theme-color) !important;
 }
 .gui-settings-close path
 {
@@ -2391,7 +2391,7 @@ a.s-btn:hover,
 .dynamic-m .dyn_menu .line:before,
 .be-tab-cursor:after
 {
-    border-color: $customStyleColor !important;
+    border-color: var(--theme-color) !important;
 }
 .bili-tab-item:before,
 .dynamic-m .dyn_menu .line:before,

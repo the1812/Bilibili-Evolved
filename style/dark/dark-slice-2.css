@@ -1183,7 +1183,7 @@ li.history,
 .fjw-random header h2 .head-icon,
 .timer-wrap .timer-top h2 .head-icon
 {
-    filter: $blueImageFilter !important;
+    filter: var(--blue-image-filter) !important;
 }
 .season-timer .current-timer:before,
 li.season-item .season-body .season-title span.follow,
@@ -1196,7 +1196,7 @@ li.season-item .season-body .season-title span.follow,
 .toolbar-wrapper .scroll-icon,
 .block-area .timeline-title .headline .timeline-more i
 {
-    filter: $pinkImageFilter !important;
+    filter: var(--pink-image-filter) !important;
 }
 .wrapper .modal-body .elec-protocol .checkbox.checked,
 .wrapper .modal-close,
@@ -1249,7 +1249,7 @@ li.season-item .season-body .season-title span.follow,
 .bili-header-m .i_menu_login,
 .player-auxiliary-context-menu-container
 {
-    box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
+    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
 .side-bar-popup-cntr > .arrow,
 .empty-hint .hint-img,
@@ -1319,7 +1319,7 @@ li.season-item .season-body .season-title span.follow,
 .project-list .project-list-item .promo-item,
 .carousel-wrapper .carou-mini .thumb-cursor
 {
-    border-color: $customStyleColor !important;
+    border-color: var(--theme-color) !important;
 }
 .progress-bar-inner,
 .tl-head .tl-day.today .indicator,
@@ -1388,7 +1388,7 @@ li.season-item .season-body .season-title span.follow,
 .new-stat-module .zone-title .headline .new-stat-more:hover,
 .block-area .timeline-title .headline .timeline-more:hover
 {
-    background-color: $customStyleColor !important;
+    background-color: var(--theme-color) !important;
 }
 .union-cntr a,
 .title-link,
@@ -1547,7 +1547,7 @@ a.bp_box_bot_click,
 .timeline-box .timeline-item .item-right a:hover,
 .block-area .timeline-toggle-block .timeline-toggle-btn:hover
 {
-    color: $customStyleColor !important;
+    color: var(--theme-color) !important;
 }
 .hot-box li .tag-type,
 .bili-header-m .i_menu_login .login-btn,
@@ -1576,12 +1576,12 @@ a.bp_box_bot_click,
 .history-list .cover-contain .label,
 .comment-video
 {
-    color: $foreground !important;
+    color: var(--foreground-color) !important;
 }
 .bilibili-player-ending-panel-box-functions div.active .bp-svgicon,
 .bilibili-player-ending-panel-box-functions div.active:hover .bp-svgicon
 {
-    fill: $customStyleColor !important;
+    fill: var(--theme-color) !important;
 }
 
 .sl-ep-nav .sl-ep-nav-list .sl-ep-nav-item.on:after,
