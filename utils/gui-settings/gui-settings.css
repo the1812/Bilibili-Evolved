@@ -238,7 +238,6 @@ button.gui-settings-button:focus
     border-radius: 50%;
     background: var(--theme-color);
     margin-right: 16px;
-    border: 1px solid #8884;
     position: relative;
     cursor: pointer;
     box-sizing: border-box;

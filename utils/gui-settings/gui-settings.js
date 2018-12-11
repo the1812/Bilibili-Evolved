@@ -20,6 +20,20 @@
             grey: "#757575",
             blueGrey: "#78909C"
         };
+        const reloadColor = (() =>
+        {
+            const html = document.querySelector("html");
+            const color = new ColorProcessor();
+            return function ()
+            {
+                html.style.setProperty("--theme-color", settings.customStyleColor);
+                for (let opacity = 10; opacity <= 90; opacity += 10)
+                {
+                    html.style.setProperty(`--theme-color-${opacity}`,
+                        color.rgbToString(color.hexToRgba(settings.customStyleColor + opacity)));
+                }
+            };
+        })();
         const textValidate = {
             forceWideMinWidth: text => text, /* How to validate CSS unit ?? */
             customStyleColor: text =>
@@ -140,6 +154,7 @@
                 .prop("checked", newValue)
                 .change();
             $(`input[type='text'][key='${key}']`).val(newValue);
+            reloadColor();
         }
         function syncGui()
         {

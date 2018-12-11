@@ -821,6 +821,14 @@
         {
             return this.hexToRgbOrRgba(hex, true);
         }
+        rgbToString(color)
+        {
+            if (color.a)
+            {
+                return `rgba(${color.r},${color.g},${color.b},${color.a})`;
+            }
+            return `rgb(${color.r},${color.g},${color.b})`;
+        }
         rgbToHsb(rgb)
         {
             const { r, g, b, } = rgb;
