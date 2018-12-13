@@ -93,7 +93,8 @@
 .stm-ly .usr .status,
 .stm-ly .stm-lst li,
 .stm-ly .stm-lst,
-.stm-ly > .ct 
+.stm-ly > .ct,
+.security-right .sr-b .box-inner
 {
     background-color: #444 !important;
 }
@@ -118,7 +119,8 @@
 .bangumi-order-wrap .bangumi-collection,
 .bangumi-order-wrap .bangumi-collection-d,
 .bangumi-order-wrap .bangumi-order,
-.bangumi-order-wrap .bangumi-order-d
+.bangumi-order-wrap .bangumi-order-d,
+.sr-record a.on 
 {
     background-image: none !important;
 }
@@ -299,7 +301,8 @@ table.invtable td,
 .news-detail-content .news-title,
 .news-content a,
 .stm-ly .ct .stm-filter li,
-.stm-ly .stm-lst .name a 
+.stm-ly .stm-lst .name a,
+.sr-record a 
 {
     color: #eee !important;
 }
@@ -384,7 +387,8 @@ table.invtable td,
 .stm-ly .stm-lst li + li,
 .stm-ly > .ct,
 .stm-ly .ct .stm-filter li.on,
-.stm-lst-item .share 
+.stm-lst-item .share,
+.security-right .sr-record 
 {
     border-color: transparent !important;
 }
@@ -484,7 +488,8 @@ table.invtable td,
 .tabs-tab-active:before,
 .ivu-input:focus,
 .ivu-input:hover,
-.tab-selector-wrap .tab-wrap .tab span.active 
+.tab-selector-wrap .tab-wrap .tab span.active,
+.sr-record a.on 
 {
     border-color: $customStyleColor !important;
 }
@@ -571,7 +576,9 @@ table.invtable td,
 .list-wrap.lft-con .s-imgUnit a:hover,
 .stm-ly .stm-lst .name a:hover,
 .stm-ly .stm-lst a,
-.stm-ly .stm-lst a:hover 
+.stm-ly .stm-lst a:hover,
+.sr-record a:hover,
+.sr-record a.on 
 {
     color: $customStyleColor !important;
 }
