@@ -21,7 +21,9 @@
                 searchForm =>
                 {
                     searchForm.addClass("preserve-rank");
-                    searchForm.prepend(`
+                    if (searchForm.find("a.icons-enabled").length === 0)
+                    {
+                        searchForm.prepend(`
                         <a  title="排行榜"
                             class="icons-enabled"
                             href="https://www.bilibili.com/ranking"
@@ -29,6 +31,18 @@
                             <i class="icon-rank"></i>
                         </a>
                     `);
+                    }
+                }
+            );
+        }
+        else
+        {
+            SpinQuery.any(
+                () => $(".head-content.bili-wrapper>div.search:not(.filter-item) .searchform,.nav-con #nav_searchform"),
+                searchForm =>
+                {
+                    searchForm.removeClass("preserve-rank");
+                    searchForm.find("a.icons-enabled").remove();
                 }
             );
         }

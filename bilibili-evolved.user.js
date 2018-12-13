@@ -516,8 +516,8 @@
         Resource.all = {};
         Resource.displayNames = {};
         Resource.reloadables = {
-            useDarkStyle,
-            showBanner: "useNewStyle",
+            useDarkStyle: "useDarkStyle",
+            showBanner: "overrideNavBar",
         };
         Resource.manifest = resourceManifest;
         for (const [key, data] of Object.entries(resourceManifest))
