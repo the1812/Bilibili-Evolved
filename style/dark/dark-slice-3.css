@@ -838,7 +838,8 @@ body>div.to-top.on
 .bilibili-player-video-subtitle-setting-right-more:hover,
 .bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
 .bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover,
-.receive-list-page
+.receive-list-page,
+.bilibili-player-video-toast-item-close:hover
 {
     fill: var(--theme-color) !important;
 }
