@@ -399,7 +399,8 @@ body>div.to-top.on,
 .list.main_body .list_box .block .cover,
 .link-popover::after,
 .link-popover::before,
-.medal-get-box, .medal-message-box
+.medal-get-box, .medal-message-box,
+.detail-card .card
 {
     border-color: transparent !important;
 }
