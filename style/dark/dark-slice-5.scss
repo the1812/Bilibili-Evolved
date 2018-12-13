@@ -24,7 +24,10 @@
 .dropdown__content .dropdown__item:hover,
 .layout .layout-main .main-footer,
 .home-index .even,
-.home-index .odd 
+.home-index .odd,
+.stm-ly .sd-l a:hover,
+.stm-ly .ct .stm-filter li.on,
+.stm-lst-item .share 
 {
     background-color: #222 !important;
 }
@@ -83,7 +86,14 @@
 .s-paging .jump-to-page input[type="text"],
 .s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
 .s-paging > ul > span:not(.disabled):not(.current):not(a):hover,
-.newsDetail .news-detail-content 
+.newsDetail .news-detail-content,
+.stm-ly > .sd > .sec,
+.stm-ly .usr,
+.stm-ly .usr .info,
+.stm-ly .usr .status,
+.stm-ly .stm-lst li,
+.stm-ly .stm-lst,
+.stm-ly > .ct 
 {
     background-color: #444 !important;
 }
@@ -167,7 +177,9 @@
 .setting .follow-setting .follow-wrp .follow-modal .follow-show p,
 .main-footer .cp,
 .main-footer .link-item a,
-.sap-use-view
+.sap-use-view,
+.stm-ly .sd-l a,
+.stm-ly .stm-lst .hint 
 {
     color: #aaa !important;
 }
@@ -285,7 +297,9 @@ table.invtable td,
 .s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
 .s-paging > ul > span:not(.disabled):not(.current):not(a):hover,
 .news-detail-content .news-title,
-.news-content a
+.news-content a,
+.stm-ly .ct .stm-filter li,
+.stm-ly .stm-lst .name a 
 {
     color: #eee !important;
 }
@@ -364,7 +378,13 @@ table.invtable td,
 .s-paging .jump-to-page input[type="text"],
 .s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
 .s-paging > ul > span:not(.disabled):not(.current):not(a):hover,
-.tab-selector-wrap .tag-wrap .tag span.selected 
+.tab-selector-wrap .tag-wrap .tag span.selected,
+.stm-ly > .sd > .sec,
+.stm-ly .usr,
+.stm-ly .stm-lst li + li,
+.stm-ly > .ct,
+.stm-ly .ct .stm-filter li.on,
+.stm-lst-item .share 
 {
     border-color: transparent !important;
 }
@@ -548,7 +568,10 @@ table.invtable td,
 #gameCenter .hot-list .s-imgUnit .rank.pink,
 .s-statusUnit-text .info a:hover,
 .list-wrap.hot-forum-lft-con .s-imgUnit a:hover,
-.list-wrap.lft-con .s-imgUnit a:hover 
+.list-wrap.lft-con .s-imgUnit a:hover,
+.stm-ly .stm-lst .name a:hover,
+.stm-ly .stm-lst a,
+.stm-ly .stm-lst a:hover 
 {
     color: $customStyleColor !important;
 }
