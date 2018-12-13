@@ -23,15 +23,19 @@
         const reloadColor = (() =>
         {
             const html = document.querySelector("html");
-            const color = new ColorProcessor();
-            return function ()
+            return function (newColor)
             {
-                html.style.setProperty("--theme-color", settings.customStyleColor);
+                const color = new ColorProcessor(newColor);
+                html.style.setProperty("--theme-color", newColor);
                 for (let opacity = 10; opacity <= 90; opacity += 10)
                 {
                     html.style.setProperty(`--theme-color-${opacity}`,
-                        color.rgbToString(color.hexToRgba(settings.customStyleColor + opacity)));
+                        color.rgbToString(color.hexToRgba(newColor + opacity)));
                 }
+                html.style.setProperty("--blue-image-filter", color.blueImageFilter);
+                html.style.setProperty("--pink-image-filter", color.pinkImageFilter);
+                html.style.setProperty("--brightness", color.brightness);
+                html.style.setProperty("--invert-filter", color.filterInvert);
             };
         })();
         const textValidate = {
@@ -154,7 +158,10 @@
                 .prop("checked", newValue)
                 .change();
             $(`input[type='text'][key='${key}']`).val(newValue);
-            reloadColor();
+            if (key === "customStyleColor")
+            {
+                reloadColor(newValue);
+            }
         }
         function syncGui()
         {
