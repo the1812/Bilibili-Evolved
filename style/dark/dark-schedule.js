@@ -122,7 +122,7 @@
                 {
                     settings.useDarkStyle = darkMode;
                     saveSettings(settings);
-                    resources.fetchByKey("useDarkStyle");
+                    // resources.fetchByKey("useDarkStyle");
                 }
                 let timeout = 0;
                 if (darkMode)

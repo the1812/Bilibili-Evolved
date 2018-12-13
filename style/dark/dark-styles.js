@@ -21,7 +21,7 @@
         }
         else
         {
-            $("#bilibili-scrollbar-style,#bilibili-new-style-dark-nav-bar,#bilibili-new-style-dark,#bilibili-new-style-dark-important")
+            $("#scrollbar-style,#dark-style-nav-bar,#dark-style,#dark-style-important")
                 .remove();
         }
     };

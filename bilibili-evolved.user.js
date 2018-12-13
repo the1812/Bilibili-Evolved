@@ -239,6 +239,7 @@
                 displayNames: {
                     useDarkStyle: "夜间模式",
                 },
+                reloadable: true,
             },
             useNewStyle: {
                 path: "min/new-styles.min.js",
