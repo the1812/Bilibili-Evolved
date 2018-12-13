@@ -75,7 +75,14 @@
 .ivu-form-item-error .ivu-input-group-prepend,
 .tags-box .tag,
 .btn-primary,
-.tag-modal
+.tag-modal,
+.s-paging > ul > a,
+.s-paging > ul > span,
+.s-paging > ul > a.disabled,
+.s-paging > ul > span.disabled,
+.s-paging .jump-to-page input[type="text"],
+.s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
+.s-paging > ul > span:not(.disabled):not(.current):not(a):hover 
 {
     background-color: #444 !important;
 }
@@ -268,7 +275,14 @@ table.invtable td,
 .bp_user_box .bp_user_box_bk,
 .list-wrap.hot-forum-lft-con .s-imgUnit a,
 .sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group,
-#gameCenter .look-around .s-imgUnit .s-imgUnit-text 
+#gameCenter .look-around .s-imgUnit .s-imgUnit-text,
+.s-paging > ul > a,
+.s-paging > ul > span,
+.s-paging > ul > a:not(.disabled):not(.current):hover,
+.s-paging > ul > span:not(.disabled):not(.current):hover,
+.s-paging .jump-to-page input[type="text"],
+.s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
+.s-paging > ul > span:not(.disabled):not(.current):not(a):hover 
 {
     color: #eee !important;
 }
@@ -335,7 +349,18 @@ table.invtable td,
 #gameCenter .hot-list .s-imgUnit:hover,
 #gameCenter .hot-list .s-imgUnit .rank,
 .bp_user_box_bb,
-.bp_user_box_bottom p 
+.bp_user_box_bottom p,
+.s-paging > ul > a,
+.s-paging > ul > span,
+.s-paging > ul > a.current,
+.s-paging > ul > span.current,
+.s-paging > ul > a:not(.disabled):not(.current):not(a),
+.s-paging > ul > span:not(.disabled):not(.current):not(a),
+.s-paging > ul > a:not(.disabled):not(.current):hover,
+.s-paging > ul > span:not(.disabled):not(.current):hover,
+.s-paging .jump-to-page input[type="text"],
+.s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
+.s-paging > ul > span:not(.disabled):not(.current):not(a):hover 
 {
     border-color: transparent !important;
 }
@@ -463,7 +488,11 @@ table.invtable td,
 .tag-default:hover,
 .qa-index .help-list .collapse-item.collapse-item-active .collapse-title-icon,
 .balance_bp_box .button,
-.ac-artilce-tabs .tabs-nav .active 
+.ac-artilce-tabs .tabs-nav .active,
+.s-paging > ul > a.current,
+.s-paging > ul > span.current,
+.s-paging > ul > a:not(.disabled):not(.current):hover,
+.s-paging > ul > span:not(.disabled):not(.current):hover 
 {
     background-color: $customStyleColor !important;
 }
