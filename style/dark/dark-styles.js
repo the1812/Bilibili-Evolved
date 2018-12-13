@@ -21,8 +21,10 @@
         }
         else
         {
-            $("#scrollbar-style,#dark-style-nav-bar,#dark-style,#dark-style-important")
-                .remove();
+            resources.removeStyle("scrollbarStyle");
+            resources.removeStyle("darkStyleNavBar");
+            resources.removeStyle("darkStyle");
+            resources.removeStyle("darkStyleImportant");
         }
     };
 })();

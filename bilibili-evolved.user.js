@@ -239,7 +239,6 @@
                 displayNames: {
                     useDarkStyle: "夜间模式",
                 },
-                reloadable: true,
             },
             useNewStyle: {
                 path: "min/new-styles.min.js",
@@ -516,6 +515,10 @@
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
         Resource.displayNames = {};
+        Resource.reloadables = {
+            useDarkStyle,
+            showBanner: "useNewStyle",
+        };
         Resource.manifest = resourceManifest;
         for (const [key, data] of Object.entries(resourceManifest))
         {
@@ -1386,6 +1389,10 @@
                 id = this.getDefaultStyleId(key);
             }
             Resource.all[key].applyStyle(id, false);
+        }
+        removeStyle(key)
+        {
+            $(`#${this.getDefaultStyleId(key)}`).remove();
         }
         applyImportantStyle(key, id)
         {

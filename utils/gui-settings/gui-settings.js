@@ -162,10 +162,11 @@
             {
                 reloadColor(newValue);
             }
-            if (Resource.manifest[key] && Resource.manifest[key].reloadable === true)
+            const reloadable = Resource.reloadables[key];
+            if (reloadable)
             {
                 settings[key] = newValue;
-                resources.fetchByKey(key);
+                resources.fetchByKey(reloadable);
             }
         }
         function syncGui()

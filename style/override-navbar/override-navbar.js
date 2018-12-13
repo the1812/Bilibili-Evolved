@@ -32,5 +32,14 @@
                 }
             );
         }
+
+        if (!settings.showBanner)
+        {
+            resources.applyStyle("noBannerStyle");
+        }
+        else
+        {
+            resources.removeStyle("noBannerStyle");
+        }
     };
 })();
