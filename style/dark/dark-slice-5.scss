@@ -82,7 +82,8 @@
 .s-paging > ul > span.disabled,
 .s-paging .jump-to-page input[type="text"],
 .s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
-.s-paging > ul > span:not(.disabled):not(.current):not(a):hover 
+.s-paging > ul > span:not(.disabled):not(.current):not(a):hover,
+.newsDetail .news-detail-content 
 {
     background-color: #444 !important;
 }
@@ -282,7 +283,9 @@ table.invtable td,
 .s-paging > ul > span:not(.disabled):not(.current):hover,
 .s-paging .jump-to-page input[type="text"],
 .s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
-.s-paging > ul > span:not(.disabled):not(.current):not(a):hover 
+.s-paging > ul > span:not(.disabled):not(.current):not(a):hover,
+.news-detail-content .news-title,
+.news-content a
 {
     color: #eee !important;
 }
@@ -360,7 +363,8 @@ table.invtable td,
 .s-paging > ul > span:not(.disabled):not(.current):hover,
 .s-paging .jump-to-page input[type="text"],
 .s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
-.s-paging > ul > span:not(.disabled):not(.current):not(a):hover 
+.s-paging > ul > span:not(.disabled):not(.current):not(a):hover,
+.tab-selector-wrap .tag-wrap .tag span.selected 
 {
     border-color: transparent !important;
 }
@@ -459,7 +463,8 @@ table.invtable td,
 .tab-selector-wrap .tab-wrap .tab span.active,
 .tabs-tab-active:before,
 .ivu-input:focus,
-.ivu-input:hover
+.ivu-input:hover,
+.tab-selector-wrap .tab-wrap .tab span.active 
 {
     border-color: $customStyleColor !important;
 }
