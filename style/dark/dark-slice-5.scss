@@ -94,7 +94,8 @@
 .stm-ly .stm-lst li,
 .stm-ly .stm-lst,
 .stm-ly > .ct,
-.security-right .sr-b .box-inner
+.security-right .sr-b .box-inner,
+.drawer-pop-ctn.pop-ctn-4 .drawer-pop 
 {
     background-color: #444 !important;
 }
@@ -303,7 +304,8 @@ table.invtable td,
 .stm-ly .ct .stm-filter li,
 .stm-ly .stm-lst .name a,
 .sr-record a,
-.categories-bar .tag-item 
+.categories-bar .tag-item,
+.info-line a
 {
     color: #eee !important;
 }
@@ -389,7 +391,8 @@ table.invtable td,
 .stm-ly > .ct,
 .stm-ly .ct .stm-filter li.on,
 .stm-lst-item .share,
-.security-right .sr-record 
+.security-right .sr-record,
+.drawer-pop-ctn.pop-ctn-4 .draw-list 
 {
     border-color: transparent !important;
 }
@@ -491,7 +494,7 @@ table.invtable td,
 .ivu-input:hover,
 .tab-selector-wrap .tab-wrap .tab span.active,
 .sr-record a.on,
-.categories-bar .tag-item.on 
+.categories-bar .tag-item.on
 {
     border-color: $customStyleColor !important;
 }
@@ -581,7 +584,7 @@ table.invtable td,
 .stm-ly .stm-lst a:hover,
 .sr-record a:hover,
 .sr-record a.on,
-.categories-bar .tag-item.on 
+.categories-bar .tag-item.on
 {
     color: $customStyleColor !important;
 }
