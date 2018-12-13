@@ -302,7 +302,8 @@ table.invtable td,
 .news-content a,
 .stm-ly .ct .stm-filter li,
 .stm-ly .stm-lst .name a,
-.sr-record a 
+.sr-record a,
+.categories-bar .tag-item 
 {
     color: #eee !important;
 }
@@ -489,7 +490,8 @@ table.invtable td,
 .ivu-input:focus,
 .ivu-input:hover,
 .tab-selector-wrap .tab-wrap .tab span.active,
-.sr-record a.on 
+.sr-record a.on,
+.categories-bar .tag-item.on 
 {
     border-color: $customStyleColor !important;
 }
@@ -578,7 +580,8 @@ table.invtable td,
 .stm-ly .stm-lst a,
 .stm-ly .stm-lst a:hover,
 .sr-record a:hover,
-.sr-record a.on 
+.sr-record a.on,
+.categories-bar .tag-item.on 
 {
     color: $customStyleColor !important;
 }
