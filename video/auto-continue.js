@@ -16,12 +16,12 @@
             {
                 if (historyTime.length === 3)
                 {
-                    const [hour, minute, second] = historyTime.map(parseInt);
+                    const [hour, minute, second] = historyTime.map(it => parseInt(it));
                     return hour * 60 * 60 + minute * 60 + second;
                 }
                 else if (historyTime.length === 2)
                 {
-                    const [minute, second] = historyTime.map(parseInt);
+                    const [minute, second] = historyTime.map(it => parseInt(it));
                     return minute * 60 + second;
                 }
                 else
@@ -44,7 +44,7 @@
             SpinQuery.condition(
                 () => $(".bilibili-player-video-toast-item-text"),
                 it => it.text().indexOf("上次看到") !== -1,
-                it => continuePlay(it),
+                it => continuePlay(it.filter((_, e) => e.innerText.indexOf("上次看到") !== -1)),
             );
         }
         Observer.subtree("#bofqi", findHistoryToast);
