@@ -154,24 +154,21 @@
 
         function settingsChange(key, value)
         {
-            if (settings[key] !== value)
-            {
-                const reloadable = Resource.reloadables[key];
-                if (reloadable)
-                {
-                    settings[key] = value;
-                    resources.fetchByKey(reloadable);
-                }
-            }
+            // const reloadable = Resource.reloadables[key];
+            // if (reloadable)
+            // {
+            //     settings[key] = value;
+            //     resources.fetchByKey(reloadable);
+            // }
+            $(`input[type='checkbox'][key='${key}']`)
+                .prop("checked", value);
+            $(`input[type='text'][key='${key}']`).val(value);
         }
         function syncGui()
         {
             for (const [key, value] of Object.entries(settings))
             {
-                $(`input[type='checkbox'][key='${key}']`)
-                    .prop("checked", value)
-                    .change();
-                $(`input[type='text'][key='${key}']`).val(value);
+                settingsChange(key, value);
             }
         }
         function setupEvents()
@@ -221,8 +218,11 @@
                     {
                         const key = element.getAttribute("key");
                         const value = element.checked;
+                        // if (typeof GM_addValueChangeListener === "undefined")
+                        // {
+                        //     settingsChange(key, value);
+                        // }
                         settings[key] = value;
-                        settingsChange(key, value);
                     });
                 $("input[type='text'][key]")
                     .each((_, element) =>
@@ -233,8 +233,11 @@
                         {
                             reloadColor(value);
                         }
+                        // if (typeof GM_addValueChangeListener === "undefined")
+                        // {
+                        //     settingsChange(key, value);
+                        // }
                         settings[key] = value;
-                        settingsChange(key, value);
                         element.value = value;
                     });
                 saveSettings(settings);
