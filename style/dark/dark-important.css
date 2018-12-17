@@ -55,9 +55,7 @@ blockquote .color-yellow-04,
 .el-input__inner,
 .commnent-screen-wrap .el-input__inner,
 .tag-list li.tag-item.on,
-.bp-popup-panel .title-ctnr .popup-title,
-.s-paging > ul > a.current,
-.s-paging > ul > span.current 
+.bp-popup-panel .title-ctnr .popup-title
 {
     color: #eee !important;
 }
@@ -89,7 +87,7 @@ blockquote .color-yellow-04,
 .left-nav-ul .left-nav-list.on .left-nav-item .icon,
 .left-nav-ul .left-nav-list.on .left-nav-item
 {
-    color: $customStyleColor !important;
+    color: var(--theme-color) !important;
 }
 
 .season-timeline .season-group.today,
@@ -98,7 +96,7 @@ blockquote .color-yellow-04,
 .tag-list li.tag-item.on,
 .tag-list li.tag-item:hover
 {
-    border-color: $customStyleColor !important;
+    border-color: var(--theme-color) !important;
 }
 .season-timeline .season-group.today.is-published .group-time::before,
 .bg-blue,
@@ -112,7 +110,7 @@ blockquote .color-yellow-04,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
 .user-my-btn .el-button--primary
 {
-    background-color: $customStyleColor !important;
+    background-color: var(--theme-color) !important;
 }
 .face-g-tab li.current,
 .current .tab-btn-link,
@@ -120,5 +118,5 @@ blockquote .color-yellow-04,
 .el-date-table td.end-date,
 .el-date-table td.start-date
 {
-    color: $foreground !important;
+    color: var(--foreground-color) !important;
 }

@@ -189,7 +189,7 @@
 }
 .gui-settings-checkbox-container input:checked ~ .gui-settings-ok
 {
-    background-color: $customStyleColor;
+    background-color: var(--theme-color);
 }
 .gui-settings-checkbox-container input ~ .gui-settings-ok>i
 {
@@ -236,13 +236,12 @@ button.gui-settings-button:focus
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background: $customStyleColor;
+    background: var(--theme-color);
     margin-right: 16px;
-    border: 1px solid #8884;
     position: relative;
     cursor: pointer;
     box-sizing: border-box;
-    box-shadow: 0px 2px 8px 1px $customStyleColor70;
+    box-shadow: 0px 2px 8px 1px var(--theme-color-70);
 }
 .predefined-colors
 {
@@ -506,7 +505,7 @@ li.category.folded i.icon-arrow
 }
 .gui-settings-widgets-box .gui-settings-flat-button
 {
-    border-bottom: 2px solid $customStyleColor;
+    border-bottom: 2px solid var(--theme-color);
     flex: 0 0 auto;
     margin: 4px;
 }
@@ -535,12 +534,12 @@ li.category.folded i.icon-arrow
 }
 .gui-settings-checkbox-container input:checked ~ .gui-settings-checkbox
 {
-    background: $customStyleColor80;
+    background: var(--theme-color-80);
 }
 .gui-settings-checkbox-container input:checked ~ .gui-settings-checkbox::after
 {
-    background: $customStyleColor !important;
-    box-shadow: 0px 2px 8px 1px $customStyleColor70;
+    background: var(--theme-color) !important;
+    box-shadow: 0px 2px 8px 1px var(--theme-color-70);
     left: calc(100% - 16px);
 }
 .gui-settings-checkbox-container input:disabled ~ .gui-settings-checkbox

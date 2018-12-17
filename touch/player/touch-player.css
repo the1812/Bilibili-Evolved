@@ -63,7 +63,7 @@
 .touch-info
 {
     display: block;
-    color: $customStyleColor;
+    color: var(--theme-color);
 }
 .touch-result
 {
@@ -81,7 +81,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background: $customStyleColor;
+    background: var(--theme-color);
     width: 100%;
     transform-origin: left;
     transform: scaleX(0);
@@ -213,7 +213,6 @@ div.bilibili-player-video-control
 .bilibili-player-video-control-wrap
 {
     padding: 0 !important;
-    // background: #222d !important;
 }
 .bilibili-player-video-control-bottom
 {

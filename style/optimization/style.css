@@ -10,13 +10,13 @@
 .link-navbar .main-ctnr .nav-items-ctnr,
 .nav-header-wrapper
 {
-    background: $customStyleColor !important;
+    background: var(--theme-color) !important;
 }
 .bili-header-m>.nav-menu,
 .nav-header-wrapper,
 .link-navbar-ctnr
 {
-    box-shadow: $customStyleColor70 0px 2px 10px 1px !important;
+    box-shadow: var(--theme-color-70) 0px 2px 10px 1px !important;
 }
 div.stardust-player
 {
@@ -62,7 +62,7 @@ div.stardust-player
 .nav-header-wrapper .nav-header .order-center,
 .link-navbar .main-ctnr .custom-link>a
 {
-    color: $foregroundd !important;
+    color: var(--foreground-color-d) !important;
 }
 
 li.nav-item:hover,
@@ -71,7 +71,7 @@ li.nav-item:hover,
 .my-link-btn:hover,
 .publish-btn:hover
 {
-    background-color: hsla(0,0%,$brightness,.2) !important;
+    background-color: hsla(0,0%,var(--brightness),.2) !important;
 }
 
 li.nav-item.home:hover,
@@ -105,7 +105,7 @@ a.t>i.bili-icon,
 .nav-header-wrapper .nav-header .nav-header-tv-icon,
 .nav-header-wrapper .nav-header .order-icon
 {
-    filter: brightness(0) $filterInvert !important;
+    filter: brightness(0) var(--invert-filter) !important;
     opacity: 0.81 !important;
 }
 
@@ -140,8 +140,8 @@ div.up-load
 {
     height: 40px !important;
     line-height: 40px !important;
-    background: $customStyleColor !important;
-    border: 1px solid $foregroundd !important;
+    background: var(--theme-color) !important;
+    border: 1px solid var(--foreground-color-d) !important;
     border-radius: 5px !important;
     box-shadow: none !important;
     top: calc(50% - 20px) !important;
@@ -173,7 +173,7 @@ div.up-load
 .u-link
 {
     background: transparent !important;
-    color: $foregroundd !important;
+    color: var(--foreground-color-d) !important;
     border-radius: 4px !important;
     line-height: 30px !important;
     height: 30px !important;
@@ -183,13 +183,13 @@ div.up-load
 .shortcuts-ctnr .shortcut-item .hinter,
 .shortcuts-ctnr .shortcut-item .num-hinter
 {
-    border: 1px solid $foregroundb !important;
+    border: 1px solid var(--foreground-color-b) !important;
 }
 
 .u-link:hover
 {
     opacity: 1 !important;
-    background-color: hsla(0,0%,$brightness,.2) !important;
+    background-color: hsla(0,0%,var(--brightness),.2) !important;
 }
 
 .stardust-video .nav-con .nav-search
@@ -235,12 +235,12 @@ div.up-load
 
 #bilibiliPlayer
 {
-    box-shadow: 0px 4px 16px 0px $customStyleColor40 !important;
+    box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 }
 
 .blur-bg
 {
-    opacity: $blurBackgroundOpacity !important;
+    opacity: var(--blur-background-opacity) !important;
     filter: blur(20px) !important;
 }
 
@@ -309,29 +309,52 @@ body
 {
     width: 100% !important;
 }
-// .player-wrap[style*="height: auto"]
-// {
-//     height: 513px !important;
-// }
-// .danmaku-wrap .player-auxiliary-block-wrap,
-// .player-auxiliary-advanced-danmaku-control-container
-// {
-//     height: 474px !important;
-// }
-// .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap
-// {
-//     height: 403px !important;
-// }
-// .bilibili-player-video-control-bottom
-// {
-//     margin: 0 !important;
-//     padding: 7px 0 0 !important;
-// }
-// .bilibili-player-video-control-bottom,
-// .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
-// {
-//     background-color: #222c !important;
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .bilibili-player-video-control
 {
     background-color: transparent !important;

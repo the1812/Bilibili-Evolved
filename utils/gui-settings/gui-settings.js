@@ -20,6 +20,24 @@
             grey: "#757575",
             blueGrey: "#78909C"
         };
+        const reloadColor = (() =>
+        {
+            const html = document.querySelector("html");
+            return function (newColor)
+            {
+                const color = new ColorProcessor(newColor);
+                html.style.setProperty("--theme-color", newColor);
+                for (let opacity = 10; opacity <= 90; opacity += 10)
+                {
+                    html.style.setProperty(`--theme-color-${opacity}`,
+                        color.rgbToString(color.hexToRgba(newColor + opacity)));
+                }
+                html.style.setProperty("--blue-image-filter", color.blueImageFilter);
+                html.style.setProperty("--pink-image-filter", color.pinkImageFilter);
+                html.style.setProperty("--brightness", color.brightness);
+                html.style.setProperty("--invert-filter", color.filterInvert);
+            };
+        })();
         const textValidate = {
             forceWideMinWidth: text => text, /* How to validate CSS unit ?? */
             customStyleColor: text =>
@@ -140,6 +158,16 @@
                 .prop("checked", newValue)
                 .change();
             $(`input[type='text'][key='${key}']`).val(newValue);
+            if (key === "customStyleColor")
+            {
+                reloadColor(newValue);
+            }
+            const reloadable = Resource.reloadables[key];
+            if (reloadable)
+            {
+                settings[key] = newValue;
+                resources.fetchByKey(reloadable);
+            }
         }
         function syncGui()
         {

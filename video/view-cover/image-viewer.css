@@ -79,6 +79,6 @@ html.image-viewer-opened, body.image-viewer-opened
 }
 .image-viewer-icon:hover path
 {
-    fill: $customStyleColor;
+    fill: var(--theme-color);
     transform: scale(1.2);
 }

@@ -21,8 +21,10 @@
         }
         else
         {
-            $("#bilibili-scrollbar-style,#bilibili-new-style-dark-nav-bar,#bilibili-new-style-dark,#bilibili-new-style-dark-important")
-                .remove();
+            resources.removeStyle("scrollbarStyle");
+            resources.removeStyle("darkStyleNavBar");
+            resources.removeStyle("darkStyle");
+            resources.removeStyle("darkStyleImportant");
         }
     };
 })();

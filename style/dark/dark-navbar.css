@@ -7,16 +7,13 @@
     background-color: #222;
 }
 .bili-header-m .nav-menu .nav-mask,
+#navbar-vm>.link-navbar,
 #link-navbar-vm>.link-navbar,
 #app>.link-navbar,
 #app>.nav-header-wrapper,
 .b-header-mask-wrp .b-header-mask
 {
     background-color: #444;
-}
-#navbar-vm>.link-navbar
-{
-    background-color: #444 !important;
 }
 .z_top .i-link:hover,
 .z_top .z_top_nav ul li.home:hover
@@ -56,7 +53,7 @@
 .uns_box li.u-i:hover a.i-link,
 .z_top .i-link:hover
 {
-    color: $customStyleColor;
+    color: var(--theme-color);
 }
 #link-navbar-vm>.link-navbar-ctnr,
 #app>.link-navbar
@@ -66,7 +63,7 @@
 #link-navbar-vm>.link-navbar .main-ctnr .nav-logo::before,
 #app>.link-navbar .main-ctnr .nav-logo::before
 {
-    filter: $blueImageFileter !important;
+    filter: var(--blue-image-filter) !important;
 }
 #app>.nav-header-wrapper .nav-header .order-icon
 {

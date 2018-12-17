@@ -61,7 +61,9 @@ div#square.container,
 .gui-settings-dropdown>ul,
 .toast-card,
 .gui-settings-widgets-box,
-.user-panel-ctnr .user-avatar
+.user-panel-ctnr .user-avatar,
+.link-popover-ctnr .link-popover,
+.medal-get-box, .medal-message-box
 {
     background-color: #222 !important;
 }
@@ -127,19 +129,13 @@ body>div.to-top.on,
 .main_body .future .next_button,
 .user-info .points-wrp .bar,
 .list.main_body .list_box .next_button,
-.gui-settings-checkbox::after
-
+.gui-settings-checkbox::after,
+.user-hd,
+.progress-tv .progress-img,
+.progress-tv
 {
     background-color: #444 !important;
 }
-// a
-// {
-//     background-color: #555 !important;
-// }
-// a
-// {
-//     background-color: #aaa !important;
-// }
 .bilibili-player-video-time-seek
 {
     background-color: #fff1 !important;
@@ -148,7 +144,8 @@ body>div.to-top.on,
 {
     background-color: rgba(0,0,0,0.1) !important;
 }
-.mainBox .sureWindowlayer
+.mainBox .sureWindowlayer,
+.medal-mask
 {
     background-color: rgba(0,0,0,.5) !important;
 }
@@ -196,11 +193,6 @@ body>div.to-top.on,
 {
     background: #fff !important;
 }
-// a
-// {
-//     background: transparent !important;
-// }
-
 .scroll-loading,
 .room-card-item .info .s-info,
 .fans-no-data::after,
@@ -346,7 +338,9 @@ body>div.to-top.on,
 .gui-settings-dropdown input,
 .bilibili-player-video-control .bilibili-player-video-volume-num,
 .gui-settings-widgets-box>.widgets-container>button,
-.gui-settings-widgets-box
+.gui-settings-widgets-box,
+.link-popover-ctnr .link-popover,
+.details-up-name
 {
     color: #eee !important;
 }
@@ -402,7 +396,11 @@ body>div.to-top.on,
 .article-action .ops .share-container .weixin-holder,
 .coin-wrap .coin-sure,
 .filter-wrap .sub-filter,
-.list.main_body .list_box .block .cover
+.list.main_body .list_box .block .cover,
+.link-popover::after,
+.link-popover::before,
+.medal-get-box, .medal-message-box,
+.detail-card .card
 {
     border-color: transparent !important;
 }
@@ -411,10 +409,6 @@ body>div.to-top.on,
 {
     border-color: #aaa !important;
 }
-// a
-// {
-//     border-color: #222 !important;
-// }
 .up-info-holder .fixed-box .up-article-list-block .block-title,
 .up-info-holder .fixed-box .more .top-bar,
 .el-date-range-picker__content.is-left,
@@ -428,7 +422,8 @@ body>div.to-top.on,
 .search-module .search-block .search-word-panel .panel-title .split-line,
 .chatPanelBody .footer,
 .leftMsg .msgDiv:before,
-.leaveMsg .leaveMsgHeader
+.leaveMsg .leaveMsgHeader,
+.medal-receive-title
 {
     border-color: #444 !important
 }
@@ -441,7 +436,6 @@ i.settings-category-arrow::after,
 {
     border-color: white !important;
 }
-
 #player-header .bg-image
 {
     transition: all .2s .5s !important;
@@ -497,11 +491,11 @@ svg.toast-card-dismiss path
 .error-container .error-panel .error-msg .error-img img,
 .leaveMsgUpload .btnarea .btnareaIcon
 {
-    filter: $blueImageFilter !important;
+    filter: var(--blue-image-filter) !important;
 }
 .svg-icon.good-6-click
 {
-    filter: $pinkImageFilter !important;
+    filter: var(--pink-image-filter) !important;
 }
 .article-item .item-holder .article-info-bar .like:before,
 .article-item .item-holder .article-info-bar .reply:before,
@@ -533,11 +527,6 @@ body>div.to-top.on,
 {
     filter: brightness(0.5) !important;
 }
-// a
-// {
-//     filter: none !important;
-// }
-
 .tab-mk2.active,
 .face-g-more,
 .bangumi-player,
@@ -546,10 +535,6 @@ body>div.to-top.on,
 {
     background-image: none !important;
 }
-// a
-// {
-//     border-radius: 4px !important;
-// }
 .bangumi-player,
 .live-sidebar-ctnr,
 .el-picker-panel,
@@ -571,7 +556,7 @@ body>div.to-top.on,
 }
 #bilibiliPlayer
 {
-    box-shadow: 0px 4px 16px 0px $customStyleColor40 !important;
+    box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 }
 .guide .feedback-btn a,
 .mainBox .leaveMsg,
@@ -581,7 +566,7 @@ body>div.to-top.on,
 #app .toolbar-wrapper,
 .article-action .ops .share-container .weixin-holder
 {
-    box-shadow: 0px 1px 10px 0px $customStyleColor30 !important;
+    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
 .main-container .title span::before,
 .top-banner,
@@ -596,18 +581,6 @@ body>div.to-top.on,
 {
     display: none !important;
 }
-// a
-// {
-//     opacity: 0 !important;
-// }
-// a
-// {
-//     opacity: 0.5 !important;
-// }
-// a
-// {
-//     opacity: 1 !important;
-// }
 @supports (backdrop-filter: blur(24px)) or (-webkit-backdrop-filter: blur(24px))
 {
     .gui-settings-box.blur li.category,
@@ -644,7 +617,6 @@ body>div.to-top.on
     border: none !important;
     border-radius: 4px !important;
 }
-
 .list-filter-bar .sort-box .item.active,
 .list-filter-bar .sort-box .item:hover,
 .data-card .tab .data-tab.current:after,
@@ -665,24 +637,24 @@ body>div.to-top.on
 .rightMsg .msgDiv::before,
 #index-player-vm .item-border
 {
-    border-color: $customStyleColor !important;
+    border-color: var(--theme-color) !important;
 }
 .blp-ui-slider-hover-container::before
 {
-    border-top-color: $customStyleColor !important;
+    border-top-color: var(--theme-color) !important;
 }
 .blp-ui-slider-hover-container::after
 {
-    border-bottom-color: $customStyleColor !important;
+    border-bottom-color: var(--theme-color) !important;
 }
 #index-player-vm .aside-item:after
 {
-    border-right-color: $customStyleColor !important;
+    border-right-color: var(--theme-color) !important;
 }
 .audioplayer .ap-controller,
 .audioplayer .ap-playlist
 {
-    border: 1px solid $customStyleColor !important;
+    border: 1px solid var(--theme-color) !important;
 }
 .medal-progress>i,
 .gift-item-wrap .expiration,
@@ -720,19 +692,26 @@ body>div.to-top.on
 .nav-header-wrapper .nav-header .profile-img.active::before,
 .coin-wrap .coin-sure,
 .up-feedback .up-fb-btn:hover,
-.draft-holder-block .draft-holder .panel .btn.on
+.draft-holder-block .draft-holder .panel .btn.on,
+.follow-dialog-wrap .follow-dialog-window .bottom .btn,
+.follow-dialog-wrap .follow-dialog-window .bottom .btn:hover,
+.progress-bar-ctnr .bar-body .progress-bar,
+.user-info > .uid,
+.receive-list-prev i,
+.receive-list-next i,
+.receive-list-page
 {
-    background-color: $customStyleColor !important;
+    background-color: var(--theme-color) !important;
 }
 .audioplayer .ap-play-button svg,
 .audioplayer .ap-controller .ap-controller-center .ap-buffer-bar,
 .blp-ui-slider-buffer-container
 {
-    background-color: $customStyleColor60 !important;
+    background-color: var(--theme-color-60) !important;
 }
 .audioplayer .ap-play-button:hover svg
 {
-    background-color: $customStyleColor90 !important;
+    background-color: var(--theme-color-90) !important;
 }
 .face-g-more,
 .room-card-item:hover .room-name,
@@ -814,7 +793,7 @@ body>div.to-top.on
 .coin-wrap .coin-nav .coin-checkbox.on .lable,
 #community_msg .dyn_menu li a:hover
 {
-    color: $customStyleColor !important;
+    color: var(--theme-color) !important;
 }
 .gift-item-wrap .expiration,
 .el-date-table td.in-range.start-date:hover,
@@ -845,9 +824,10 @@ body>div.to-top.on
 .bilibili-live-player .bilibili-live-player-enter-tips,
 .banner-wrapper .swiper-pagination-bullet-active,
 .coin-wrap .coin-sure,
-.up-feedback .up-fb-btn:hover
+.up-feedback .up-fb-btn:hover,
+.user-info > .uid
 {
-    color: $foreground !important;
+    color: var(--foreground-color) !important;
 }
 .bilibili-player-video-danmaku-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-danmaku-setting-right-more:hover .bp-svgicon,
@@ -857,11 +837,12 @@ body>div.to-top.on
 .bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
 .bilibili-player-video-subtitle-setting-right-more:hover,
 .bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
-.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover,
+.receive-list-page,
+.bilibili-player-video-toast-item-close:hover
 {
-    fill: $customStyleColor !important;
+    fill: var(--theme-color) !important;
 }
-
 .leftMsg .msgDiv:before,
 .rightMsg .msgDiv::before
 {

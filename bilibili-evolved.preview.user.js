@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.10
+// @version      1.6.14
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -31,12 +31,12 @@
         showBanner: true,
         overrideNavBar: true,
         expandDanmakuList: true,
+        expandDescription: true,
         watchLaterRedirect: true,
         touchNavBar: false,
         touchVideoPlayer: false,
         customControlBackgroundOpacity: 0.64,
         customControlBackground: true,
-        forceWideMinWidth: "1368px",
         forceWide: false,
         darkScheduleStart: "18:00",
         darkScheduleEnd: "6:00",
@@ -59,13 +59,14 @@
         useDefaultVideoQuality: false,
         autoLightOff: false,
         useCache: true,
-        comboLike: true,
-        doubleCoins: true,
+        autoContinue: false,
         toastInternalError: false,
         cache: {},
     };
     const fixedSettings = {
         guiSettings: true,
+        comboLike: false,
+        doubleCoins: false,
         viewCover: true,
         notifyNewVersion: true,
         clearCache: true,
@@ -121,68 +122,68 @@
     {
         const resourceManifest = {
             style: {
-                path: "min/style.min.scss",
-                order: 0,
+                path: "min/style.min.css",
+                order: 10,
             },
             oldStyle: {
-                path: "min/old.min.scss",
-                order: 0,
+                path: "min/old.min.css",
+                order: 10,
             },
             scrollbarStyle: {
                 path: "min/scrollbar.min.css",
-                order: 0,
+                order: 10,
             },
             darkStyle: {
-                path: "min/dark.min.scss",
-                order: 1,
+                path: "min/dark.min.css",
+                order: 11,
             },
             darkStyleImportant: {
-                path: "min/dark-important.min.scss",
+                path: "min/dark-important.min.css",
             },
             darkStyleNavBar: {
-                path: "min/dark-navbar.min.scss",
+                path: "min/dark-navbar.min.css",
             },
             touchPlayerStyle: {
-                path: "min/touch-player.min.scss",
-                order: 3,
+                path: "min/touch-player.min.css",
+                order: 13,
             },
             navbarOverrideStyle: {
                 path: "min/override-navbar.min.css",
-                order: 4,
+                order: 14,
             },
             noBannerStyle: {
                 path: "min/no-banner.min.css",
-                order: 5,
+                order: 15,
             },
             removeAdsStyle: {
                 path: "min/remove-promotions.min.css",
-                order: 6,
+                order: 16,
             },
             guiSettingsStyle: {
-                path: "min/gui-settings.min.scss",
-                order: 2,
+                path: "min/gui-settings.min.css",
+                order: 12,
             },
             fullTweetsTitleStyle: {
                 path: "min/full-tweets-title.min.css",
-                order: 7,
+                order: 17,
             },
             imageViewerStyle: {
-                path: "min/image-viewer.min.scss",
-                order: 8,
+                path: "min/image-viewer.min.css",
+                order: 18,
             },
             toastStyle: {
-                path: "min/toast.min.scss",
-                order: 9,
+                path: "min/toast.min.css",
+                order: 19,
             },
             blurVideoControlStyle: {
                 path: "min/blur-video-control.min.css",
-                order: 10,
+                order: 20,
             },
             forceWideStyle: {
-                path: "min/force-wide.min.scss",
+                path: "min/force-wide.min.css",
             },
             downloadVideoStyle: {
-                path: "min/download-video.min.scss",
+                path: "min/download-video.min.css",
             },
             guiSettingsDom: {
                 path: "min/gui-settings.min.html",
@@ -438,7 +439,7 @@
                 path: "min/about.min.html",
             },
             aboutStyle: {
-                path: "min/about.min.scss",
+                path: "min/about.min.css",
             },
             about: {
                 path: "min/about.min.js",
@@ -453,8 +454,8 @@
                 }
             },
             customControlBackgroundStyle: {
-                path: "min/custom-control-background.min.scss",
-                order: 11
+                path: "min/custom-control-background.min.css",
+                order: 21
             },
             customControlBackground: {
                 path: "min/custom-control-background.min.js",
@@ -503,12 +504,34 @@
                 displayNames: {
                     comboLike: "启用素质三连",
                     doubleCoins: "为原创视频投2个币"
+                },
+            },
+            autoContinue: {
+                path: "min/auto-continue.min.js",
+                displayNames: {
+                    autoContinue: "自动从历史记录点播放",
+                },
+            },
+            expandDescriptionStyle: {
+                path: "min/expand-description.min.css"
+            },
+            expandDescription: {
+                path: "min/expand-description.min.js",
+                styles: [
+                    "expandDescriptionStyle"
+                ],
+                displayNames: {
+                    expandDescription: "自动展开视频简介"
                 }
             }
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};
         Resource.displayNames = {};
+        Resource.reloadables = {
+            useDarkStyle: "useDarkStyle",
+            showBanner: "overrideNavBar",
+        };
         Resource.manifest = resourceManifest;
         for (const [key, data] of Object.entries(resourceManifest))
         {
@@ -822,6 +845,14 @@
         {
             return this.hexToRgbOrRgba(hex, true);
         }
+        rgbToString(color)
+        {
+            if (color.a)
+            {
+                return `rgba(${color.r},${color.g},${color.b},${color.a})`;
+            }
+            return `rgb(${color.r},${color.g},${color.b})`;
+        }
         rgbToHsb(rgb)
         {
             const { r, g, b, } = rgb;
@@ -922,7 +953,7 @@
         }
         static fromUrl(url)
         {
-            if (url.indexOf(".scss") !== -1 || url.indexOf(".css") !== -1)
+            if (url.indexOf(".css") !== -1)
             {
                 return this.style;
             }
@@ -945,36 +976,7 @@
         }
         static get style()
         {
-            return new ResourceType("style", style =>
-            {
-                const color = new ColorProcessor();
-                const hexToRgba = text =>
-                {
-                    const replaceColor = (text, shorthand) =>
-                    {
-                        const part = `([a-f\\d]${shorthand ? "" : "{2}"})`.repeat(4);
-                        return text.replace(new RegExp(`(#${part})[^a-f\\d]`, "ig"), (original, it) =>
-                        {
-                            const rgba = color.hexToRgba(it);
-                            if (rgba)
-                            {
-                                return `rgba(${rgba.r},${rgba.g},${rgba.b},${rgba.a})${original.slice(-1)}`;
-                            }
-                            else
-                            {
-                                return original;
-                            }
-                        });
-                    };
-                    return replaceColor(replaceColor(text, false), true);
-                };
-                for (const key of Object.keys(settings))
-                {
-                    style = style
-                        .replace(new RegExp("\\$" + key, "g"), settings[key]);
-                }
-                return hexToRgba(style);
-            });
+            return new ResourceType("style");
         }
         static get html()
         {
@@ -1223,6 +1225,34 @@
             settings.pinkImageFilter = this.color.pinkImageFilter;
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
+
+            const rgbToString = color =>
+            {
+                if (color.a)
+                {
+                    return `rgba(${color.r},${color.g},${color.b},${color.a})`;
+                }
+                return `rgb(${color.r},${color.g},${color.b})`;
+            };
+            let styles = [];
+            styles.push("--theme-color:" + settings.customStyleColor);
+            for (let opacity = 10; opacity <= 90; opacity += 10)
+            {
+                styles.push(`--theme-color-${opacity}:` +
+                    rgbToString(this.color.hexToRgba(settings.customStyleColor + opacity)));
+            }
+            styles.push("--foreground-color:" + settings.foreground);
+            styles.push("--foreground-color-b:" +
+                rgbToString(this.color.hexToRgba(settings.foreground + "b")));
+            styles.push("--foreground-color-d:" +
+                rgbToString(this.color.hexToRgba(settings.foreground + "d")));
+            styles.push("--blue-image-filter:" + settings.blueImageFilter);
+            styles.push("--pink-image-filter:" + settings.pinkImageFilter);
+            styles.push("--brightness:" + settings.brightness);
+            styles.push("--invert-filter:" + settings.filterInvert);
+            styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
+            styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
+            this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(";")}}</style>`);
         }
         async fetchByKey(key)
         {
@@ -1372,6 +1402,10 @@
                 id = this.getDefaultStyleId(key);
             }
             Resource.all[key].applyStyle(id, false);
+        }
+        removeStyle(key)
+        {
+            $(`#${this.getDefaultStyleId(key)}`).remove();
         }
         applyImportantStyle(key, id)
         {

@@ -1,0 +1,8 @@
+.video-desc .info
+{
+    height: auto !important;
+}
+.video-desc .btn
+{
+    display: none !important;
+}
