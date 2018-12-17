@@ -48,6 +48,9 @@
                 .filter(it => it <= Math.min(targetQuality, availableHighestQualities))
                 .sort(it => it);
 
+            console.info(`[Video Quality] availableHighestQualities=${availableHighestQualities}`);
+            console.info(`[Video Quality] targetQuality=${targetQuality}`);
+            console.info(`[Video Quality] finalQuality=${finalQuality}`);
             const video = await SpinQuery.condition(() => document.querySelector("video"), it => it);
             function onplay()
             {
