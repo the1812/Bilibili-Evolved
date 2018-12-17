@@ -49,13 +49,19 @@
                 .filter(it => it <= Math.min(targetQuality, availableHighestQualities))
                 .sort(it => it);
 
-            qualityItems.each((_, it) =>
+            const video = document.querySelector("video");
+            function onplay()
             {
-                if (parseInt(it.getAttribute("data-value")) === finalQuality)
+                qualityItems.each((_, it) =>
                 {
-                    it.click();
-                }
-            });
+                    if (parseInt(it.getAttribute("data-value")) === finalQuality)
+                    {
+                        it.click();
+                    }
+                });
+                this.removeEventListener("play", onplay);
+            }
+            video.addEventListener("play", onplay);
         })();
     };
 })();
