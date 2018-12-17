@@ -152,28 +152,23 @@
         textValidate.blurBackgroundOpacity = text => opacityValidate(text, settings.blurBackgroundOpacity);
         textValidate.customControlBackgroundOpacity = text => opacityValidate(text, settings.customControlBackgroundOpacity);
 
-        function settingsChange(key, _, newValue)
+        function settingsChange(key, value)
         {
+            // const reloadable = Resource.reloadables[key];
+            // if (reloadable)
+            // {
+            //     settings[key] = value;
+            //     resources.fetchByKey(reloadable);
+            // }
             $(`input[type='checkbox'][key='${key}']`)
-                .prop("checked", newValue)
-                .change();
-            $(`input[type='text'][key='${key}']`).val(newValue);
-            if (key === "customStyleColor")
-            {
-                reloadColor(newValue);
-            }
-            const reloadable = Resource.reloadables[key];
-            if (reloadable)
-            {
-                settings[key] = newValue;
-                resources.fetchByKey(reloadable);
-            }
+                .prop("checked", value);
+            $(`input[type='text'][key='${key}']`).val(value);
         }
         function syncGui()
         {
-            for (const key in settings)
+            for (const [key, value] of Object.entries(settings))
             {
-                settingsChange(key, undefined, settings[key]);
+                settingsChange(key, value);
             }
         }
         function setupEvents()
@@ -208,7 +203,11 @@
             {
                 $(e.currentTarget).parent().toggleClass("opened");
             });
-            onSettingsChange(settingsChange);
+            onSettingsChange((key, _, value) =>
+            {
+                settingsChange(key, value);
+                syncGui();
+            });
         }
         function listenSettingsChange()
         {
@@ -217,20 +216,31 @@
                 $("input[type='checkbox'][key]")
                     .each((_, element) =>
                     {
-                        settings[$(element).attr("key")] = $(element).prop("checked");
+                        const key = element.getAttribute("key");
+                        const value = element.checked;
+                        // if (typeof GM_addValueChangeListener === "undefined")
+                        // {
+                        //     settingsChange(key, value);
+                        // }
+                        settings[key] = value;
                     });
                 $("input[type='text'][key]")
                     .each((_, element) =>
                     {
-                        const $element = $(element);
-                        const key = $element.attr("key");
-                        const value = textValidate[key]($element.val());
+                        const key = element.getAttribute("key");
+                        const value = textValidate[key](element.value);
+                        if (key === "customStyleColor")
+                        {
+                            reloadColor(value);
+                        }
+                        // if (typeof GM_addValueChangeListener === "undefined")
+                        // {
+                        //     settingsChange(key, value);
+                        // }
                         settings[key] = value;
-                        $element.val(value);
+                        element.value = value;
                     });
                 saveSettings(settings);
-                // syncGui();
-                // console.log("settings saved");
             };
             $("input[type='checkbox'][key]").on("change", () => saveChanges());
             $("input[type='text'][key]").on("change", () => saveChanges());
