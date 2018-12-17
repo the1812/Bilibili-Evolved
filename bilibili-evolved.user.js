@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.13
+// @version      1.6.14
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -31,6 +31,7 @@
         showBanner: true,
         overrideNavBar: true,
         expandDanmakuList: true,
+        expandDescription: true,
         watchLaterRedirect: true,
         touchNavBar: false,
         touchVideoPlayer: false,
@@ -511,6 +512,18 @@
                     autoContinue: "自动从历史记录点播放",
                 },
             },
+            expandDescriptionStyle: {
+                path: "min/expand-description.min.css"
+            },
+            expandDescription: {
+                path: "min/expand-description.min.js",
+                styles: [
+                    "expandDescriptionStyle"
+                ],
+                displayNames: {
+                    expandDescription: "自动展开视频简介"
+                }
+            }
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
