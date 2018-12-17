@@ -32,11 +32,10 @@
                 value: 0
             },
         ];
-        (async () =>
+        async function applyQuality()
         {
-            const qualityItems = await SpinQuery.condition(
+            const qualityItems = await SpinQuery.any(
                 () => $(".bilibili-player-video-quality-menu .bui-select-list>li.bui-select-item"),
-                it => it.length > 0 && $("li.profile-info").length > 0
             );
             const [availableHighestQualities] = qualityItems.toArray()
                 .map(it => parseInt(it.getAttribute("data-value")))
@@ -49,7 +48,7 @@
                 .filter(it => it <= Math.min(targetQuality, availableHighestQualities))
                 .sort(it => it);
 
-            const video = document.querySelector("video");
+            const video = await SpinQuery.condition(() => document.querySelector("video"), it => it);
             function onplay()
             {
                 qualityItems.each((_, it) =>
@@ -62,6 +61,7 @@
                 this.removeEventListener("play", onplay);
             }
             video.addEventListener("play", onplay);
-        })();
+        }
+        Observer.subtree("#bofqi", () => applyQuality());
     };
 })();
