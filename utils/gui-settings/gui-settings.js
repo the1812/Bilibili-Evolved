@@ -83,7 +83,6 @@
             {
                 $(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask").removeClass("opened");
             });
-
             $("input[type='text'][key]").each((_, element) =>
             {
                 $(element).attr("placeholder", settings[$(element).attr("key")]);
@@ -110,39 +109,31 @@
         }
         function listenSettingsChange()
         {
-            const saveChanges = () =>
+            $("input[type='checkbox'][key]").each((_, element) =>
             {
-                $("input[type='checkbox'][key]")
-                    .each((_, element) =>
+                $(element).on("change", () =>
+                {
+                    const key = element.getAttribute("key");
+                    const value = element.checked;
+                    settings[key] = value;
+                    saveSettings(settings);
+                });
+            });
+            $("input[type='text'][key]").each((_, element) =>
+            {
+                $(element).on("change", () =>
+                {
+                    const key = element.getAttribute("key");
+                    const value = Validator.getValidator(key).validate(element.value);
+                    if (key === "customStyleColor")
                     {
-                        const key = element.getAttribute("key");
-                        const value = element.checked;
-                        // if (typeof GM_addValueChangeListener === "undefined")
-                        // {
-                        //     settingsChange(key, value);
-                        // }
-                        settings[key] = value;
-                    });
-                $("input[type='text'][key]")
-                    .each((_, element) =>
-                    {
-                        const key = element.getAttribute("key");
-                        const value = Validator.getValidator(key).validate(element.value);
-                        if (key === "customStyleColor")
-                        {
-                            reloadColor(value);
-                        }
-                        // if (typeof GM_addValueChangeListener === "undefined")
-                        // {
-                        //     settingsChange(key, value);
-                        // }
-                        settings[key] = value;
-                        element.value = value;
-                    });
-                saveSettings(settings);
-            };
-            $("input[type='checkbox'][key]").on("change", () => saveChanges());
-            $("input[type='text'][key]").on("change", () => saveChanges());
+                        reloadColor(value);
+                    }
+                    settings[key] = value;
+                    element.value = value;
+                    saveSettings(settings);
+                });
+            });
         }
         function listenDependencies()
         {
