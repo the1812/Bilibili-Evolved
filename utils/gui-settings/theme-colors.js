@@ -56,6 +56,10 @@
             }
             setupDom()
             {
+                $(`input[key='customStyleColor']`).on("change", () =>
+                {
+                    this.reloadColor(newColor);
+                });
                 const grid = $(".predefined-colors-grid");
                 for (const color of Object.values(colors))
                 {
@@ -70,7 +74,6 @@
                                 .val(newColor)
                                 .trigger("input").change();
                             $("div.custom-color-preview").on("click");
-                            this.reloadColor(newColor);
                         });
                 }
                 $("div.custom-color-preview").on("click", () =>

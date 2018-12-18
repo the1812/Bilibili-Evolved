@@ -66,11 +66,11 @@
         {
             const reloadChanges = (key) =>
             {
-                const reloadableKey = Resource.reloadables[key];
-                if (reloadableKey)
-                {
-                    resources.fetchByKey(reloadableKey);
-                }
+                // const reloadableKey = Resource.reloadables[key];
+                // if (reloadableKey)
+                // {
+                //     resources.fetchByKey(reloadableKey);
+                // }
             };
             $("input[type='checkbox'][key]").each((_, element) =>
             {
