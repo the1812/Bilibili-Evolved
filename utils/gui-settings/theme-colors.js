@@ -58,7 +58,7 @@
             {
                 $(`input[key='customStyleColor']`).on("change", () =>
                 {
-                    this.reloadColor(newColor);
+                    this.reloadColor($(`input[key='customStyleColor']`).val());
                 });
                 const grid = $(".predefined-colors-grid");
                 for (const color of Object.values(colors))
