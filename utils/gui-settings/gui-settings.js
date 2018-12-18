@@ -5,6 +5,7 @@
         const Validator = resources.attributes.textValidate.export.Validator;
         const ThemeColors = resources.attributes.themeColors.export;
         const themeColors = new ThemeColors();
+        const settingsBox = resources.data.guiSettingsDom.text;
 
         function getCategoriyItems(category)
         {
@@ -139,22 +140,24 @@
                 settings.blurVideoControl = false;
                 saveSettings(settings);
             }
+            if (window.devicePixelRatio === 1)
+            {
+                $("input[key=harunaScale]").prop("disabled", true);
+                settings.harunaScale = false;
+                saveSettings(settings);
+            }
         }
 
         resources.applyStyle("guiSettingsStyle");
-        const settingsBox = resources.data.guiSettingsDom.text;
-        if (settingsBox)
-        {
-            $("body").append(settingsBox);
-            setupEvents();
-            checkOfflineData();
-            syncGui();
-            listenDependencies();
-            themeColors.setupDom();
-            listenSettingsChange();
-            foldAllCategories();
-            checkCompatibility();
-        }
+        $("body").append(settingsBox);
+        setupEvents();
+        checkOfflineData();
+        syncGui();
+        listenDependencies();
+        themeColors.setupDom();
+        listenSettingsChange();
+        foldAllCategories();
+        checkCompatibility();
 
         new SpinQuery(
             () => $("body"),
