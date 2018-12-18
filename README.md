@@ -126,7 +126,8 @@
 
 ## 样式
 ### 主题颜色
-设定顶栏(样式调整启用时)和夜间模式使用的主题色.
+设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(`#rrggbb`或`#rgb`).
+![颜色设置](images/theme-color.png)
 ![粉色](images/new-navbar-stardust.png)
 ![紫色](images/new-navbar-purple.png)
 ![蓝色](images/new-navbar-lightBlue.png)
