@@ -200,6 +200,9 @@
             iconsStyle: {
                 path: "min/icons.min.css",
             },
+            settingsSideBar: {
+                path: "min/settings-side-bar.min.js",
+            },
             textValidate: {
                 path: "min/text-validate.min.js",
             },
@@ -208,6 +211,7 @@
                 dependencies: [
                     "guiSettingsDom",
                     "textValidate",
+                    "settingsSideBar",
                 ],
                 styles: [
                     "guiSettingsStyle",
