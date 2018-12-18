@@ -39,6 +39,11 @@
                     html.style.setProperty(`--theme-color-${opacity}`,
                         color.rgbToString(color.hexToRgba(newColor + opacity)));
                 }
+                html.style.setProperty("--foreground-color:" + color.foreground);
+                html.style.setProperty("--foreground-color-b:" +
+                    rgbToString(color.hexToRgba(color.foreground + "b")));
+                html.style.setPropertyh("--foreground-color-d:" +
+                    rgbToString(color.hexToRgba(color.foreground + "d")));
                 html.style.setProperty("--blue-image-filter", color.blueImageFilter);
                 html.style.setProperty("--pink-image-filter", color.pinkImageFilter);
                 html.style.setProperty("--brightness", color.brightness);
