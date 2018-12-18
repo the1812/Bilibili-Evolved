@@ -2,6 +2,7 @@
 {
     return (settings, resources) =>
     {
+        const Validator = resources.attributes.textValidate.export.Validator;
         const colors = {
             red: "#e57373",
             pink: "#F06292",
@@ -26,6 +27,12 @@
             return function (newColor)
             {
                 const color = new ColorProcessor(newColor);
+
+                const shadowColor = color.hexToRgba(newColor + "70");
+                $("div.custom-color-preview")
+                    .css("background", newColor)
+                    .css("box-shadow", `0px 2px 8px 1px rgba(${shadowColor.r},${shadowColor.g},${shadowColor.b},${shadowColor.a})`);
+
                 html.style.setProperty("--theme-color", newColor);
                 for (let opacity = 10; opacity <= 90; opacity += 10)
                 {
@@ -38,57 +45,7 @@
                 html.style.setProperty("--invert-filter", color.filterInvert);
             };
         })();
-        const textValidate = {
-            forceWideMinWidth: text => text, /* How to validate CSS unit ?? */
-            customStyleColor: text =>
-            {
-                const match = text.match(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);
-                if (match)
-                {
-                    if (text.length < 7)
-                    {
-                        return `#${text[1]}${text[1]}${text[2]}${text[2]}${text[3]}${text[3]}`;
-                    }
-                    else
-                    {
-                        return text;
-                    }
-                }
-                else
-                {
-                    return settings.customStyleColor;
-                }
-            },
-            blurBackgroundOpacity: text =>
-            {
-                const match = text.match(/^([-\+]?\d+)(\.\d+)?$/);
-                if (match)
-                {
-                    const value = parseFloat(text);
-                    if (value >= 0 && value <= 1)
-                    {
-                        return text;
-                    }
-                }
-                return settings.blurBackgroundOpacity;
-            },
-            defaultPlayerMode: text =>
-            {
-                if (Resource.manifest.useDefaultPlayerMode.dropdown.items.indexOf(text) !== -1)
-                {
-                    return text;
-                }
-                return settings.defaultPlayerMode;
-            },
-            defaultVideoQuality: text =>
-            {
-                if (Resource.manifest.useDefaultVideoQuality.dropdown.items.indexOf(text) !== -1)
-                {
-                    return text;
-                }
-                return settings.defaultVideoQuality;
-            }
-        };
+
         function getCategoriyItems(category)
         {
             let element = category.nextElementSibling;
@@ -100,57 +57,6 @@
             }
             return elements;
         }
-        function darkScheduleValidate(text, defaultValue)
-        {
-            const match = text.match(/^([\d]{1,2}):([\d]{1,2})$/);
-            if (match && match.length >= 3)
-            {
-                const time = { hour: parseInt(match[1]), minute: parseInt(match[2]) };
-                (function ()
-                {
-                    while (this.minute < 0)
-                    {
-                        this.minute += 60;
-                        this.hour -= 1;
-                    }
-                    while (this.minute >= 60)
-                    {
-                        this.minute -= 60;
-                        this.hour += 1;
-                    }
-                    while (this.hour < 0)
-                    {
-                        this.hour += 24;
-                    }
-                    while (this.hour >= 24)
-                    {
-                        this.hour -= 24;
-                    }
-                }).call(time);
-                return `${time.hour}:${(time.minute < 10 ? "0" + time.minute : time.minute)}`;
-            }
-            else
-            {
-                return defaultValue;
-            }
-        }
-        textValidate.darkScheduleStart = text => darkScheduleValidate(text, settings.darkScheduleStart);
-        textValidate.darkScheduleEnd = text => darkScheduleValidate(text, settings.darkScheduleEnd);
-        function opacityValidate(text, defaultValue)
-        {
-            const match = text.match(/^([-\+]?\d+)(\.\d+)?$/);
-            if (match)
-            {
-                const value = parseFloat(text);
-                if (value >= 0 && value <= 1)
-                {
-                    return text;
-                }
-            }
-            return defaultValue;
-        }
-        textValidate.blurBackgroundOpacity = text => opacityValidate(text, settings.blurBackgroundOpacity);
-        textValidate.customControlBackgroundOpacity = text => opacityValidate(text, settings.customControlBackgroundOpacity);
 
         function settingsChange(key, value)
         {
@@ -177,14 +83,7 @@
             {
                 $(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask").removeClass("opened");
             });
-            $("input[key='customStyleColor']").on("input", () =>
-            {
-                const color = textValidate.customStyleColor($("input[key='customStyleColor']").val());
-                const shadowColor = resources.color.hexToRgba(color + "70");
-                $("div.custom-color-preview")
-                    .css("background", color)
-                    .css("box-shadow", `0px 2px 8px 1px rgba(${shadowColor.r},${shadowColor.g},${shadowColor.b},${shadowColor.a})`);
-            });
+
             $("input[type='text'][key]").each((_, element) =>
             {
                 $(element).attr("placeholder", settings[$(element).attr("key")]);
@@ -228,7 +127,7 @@
                     .each((_, element) =>
                     {
                         const key = element.getAttribute("key");
-                        const value = textValidate[key](element.value);
+                        const value = Validator.getValidator(key).validate(element.value);
                         if (key === "customStyleColor")
                         {
                             reloadColor(value);
