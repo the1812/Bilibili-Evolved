@@ -206,12 +206,16 @@
             textValidate: {
                 path: "min/text-validate.min.js",
             },
+            themeColors: {
+                path: "min/theme-colors.min.js",
+            },
             guiSettings: {
                 path: "min/gui-settings.min.js",
                 dependencies: [
                     "guiSettingsDom",
                     "textValidate",
                     "settingsSideBar",
+                    "themeColors",
                 ],
                 styles: [
                     "guiSettingsStyle",
@@ -948,7 +952,7 @@
         }
         get filterInvert()
         {
-            return this.foreground === "#000" ? "" : "invert(1)";
+            return this.foreground === "#000" ? "invert(0)" : "invert(1)";
         }
     }
     // [Offline build placeholder]
