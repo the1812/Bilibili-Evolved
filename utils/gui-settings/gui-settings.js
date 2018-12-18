@@ -53,12 +53,25 @@
             });
             onSettingsChange((key, _, value) =>
             {
-                settingsChange(key, value);
-                syncGui();
+                if (settings[key] !== value)
+                {
+                    settings[key] = value;
+                    $(`input[type='checkbox'][key='${key}']`)
+                        .prop("checked", value).change();
+                    $(`input[type='text'][key='${key}']`).val(value).change();
+                }
             });
         }
         function listenSettingsChange()
         {
+            const reloadChanges = (key) =>
+            {
+                const reloadableKey = Resource.reloadables[key];
+                if (reloadableKey)
+                {
+                    resources.fetchByKey(reloadableKey);
+                }
+            };
             $("input[type='checkbox'][key]").each((_, element) =>
             {
                 $(element).on("change", () =>
@@ -66,6 +79,7 @@
                     const key = element.getAttribute("key");
                     const value = element.checked;
                     settings[key] = value;
+                    reloadChanges(key);
                     saveSettings(settings);
                 });
             });
@@ -77,6 +91,7 @@
                     const value = Validator.getValidator(key).validate(element.value);
                     settings[key] = value;
                     element.value = value;
+                    reloadChanges(key);
                     saveSettings(settings);
                 });
             });
