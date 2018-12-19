@@ -5,7 +5,9 @@
         const DanmakuInfo = resources.attributes.videoInfo.export.DanmakuInfo;
         async function downloadDanmaku(timeout)
         {
-            const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+            const title = document.title
+                .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
+                .replace("_番剧_bilibili_哔哩哔哩", "");
             const danmaku = new DanmakuInfo((unsafeWindow || window).cid);
             await danmaku.fetchInfo();
             const blob = new Blob([danmaku.rawXML], {
@@ -34,18 +36,10 @@
                     </button>`,
                 condition: async () =>
                 {
-                    let aid = (unsafeWindow || window).aid;
-                    let cid = (unsafeWindow || window).cid;
-                    if (aid === undefined || cid === undefined)
-                    {
-                        const aidMatch = document.URL.match(/\/av(\d+)/);
-                        if (aidMatch && aidMatch[1])
-                        {
-                            const info = await new VideoInfo(aidMatch[1]).fetchInfo();
-                            aid = info.aid;
-                            cid = info.cid;
-                        }
-                    }
+                    let cid = await SpinQuery.condition(
+                        () => (unsafeWindow || window).cid,
+                        it => it !== undefined,
+                    );
                     return cid !== undefined;
                 },
                 success: () =>
