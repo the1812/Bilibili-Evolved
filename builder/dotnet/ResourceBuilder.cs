@@ -72,6 +72,7 @@ namespace BilibiliEvolved.Build
                 && !file.FullName.Contains(@".vscode\")
                 && !file.FullName.Contains(@"build-scripts\")
                 && !file.FullName.Contains(@"node_modules\")
+                && !file.FullName.Contains(@".backup.")
                 );
             using (var cache = new BuildCache())
             {
