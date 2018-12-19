@@ -132,7 +132,8 @@ body>div.to-top.on,
 .gui-settings-checkbox::after,
 .user-hd,
 .progress-tv .progress-img,
-.progress-tv
+.progress-tv,
+.dynamic-list-item-wrap .send-bg
 {
     background-color: #444 !important;
 }
