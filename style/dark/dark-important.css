@@ -55,7 +55,9 @@ blockquote .color-yellow-04,
 .el-input__inner,
 .commnent-screen-wrap .el-input__inner,
 .tag-list li.tag-item.on,
-.bp-popup-panel .title-ctnr .popup-title
+.bp-popup-panel .title-ctnr .popup-title,
+.s-paging > ul > a.current,
+.s-paging > ul > span.current 
 {
     color: #eee !important;
 }

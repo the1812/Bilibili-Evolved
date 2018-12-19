@@ -22,7 +22,12 @@
 .cc-body .setting,
 .dropdown__content .dropdown__active,
 .dropdown__content .dropdown__item:hover,
-.layout .layout-main .main-footer
+.layout .layout-main .main-footer,
+.home-index .even,
+.home-index .odd,
+.stm-ly .sd-l a:hover,
+.stm-ly .ct .stm-filter li.on,
+.stm-lst-item .share 
 {
     background-color: #222 !important;
 }
@@ -73,7 +78,24 @@
 .ivu-form-item-error .ivu-input-group-prepend,
 .tags-box .tag,
 .btn-primary,
-.tag-modal
+.tag-modal,
+.s-paging > ul > a,
+.s-paging > ul > span,
+.s-paging > ul > a.disabled,
+.s-paging > ul > span.disabled,
+.s-paging .jump-to-page input[type="text"],
+.s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
+.s-paging > ul > span:not(.disabled):not(.current):not(a):hover,
+.newsDetail .news-detail-content,
+.stm-ly > .sd > .sec,
+.stm-ly .usr,
+.stm-ly .usr .info,
+.stm-ly .usr .status,
+.stm-ly .stm-lst li,
+.stm-ly .stm-lst,
+.stm-ly > .ct,
+.security-right .sr-b .box-inner,
+.drawer-pop-ctn.pop-ctn-4 .drawer-pop
 {
     background-color: #444 !important;
 }
@@ -86,7 +108,8 @@
 .bangumi-order-wrap .bangumi-collection,
 .bangumi-order-wrap .bangumi-collection-d,
 .bangumi-order-wrap .bangumi-order,
-.bangumi-order-wrap .bangumi-order-d
+.bangumi-order-wrap .bangumi-order-d,
+.sr-record a.on 
 {
     background-image: none !important;
 }
@@ -141,7 +164,10 @@
 .setting .follow-setting .follow-wrp .follow-modal .follow-show p,
 .main-footer .cp,
 .main-footer .link-item a,
-.sap-use-view
+.sap-use-view,
+.stm-ly .sd-l a,
+.stm-ly .stm-lst .hint,
+#page-index .col-2 .section .auth-detail
 {
     color: #aaa !important;
 }
@@ -250,7 +276,22 @@ table.invtable td,
 .bp_user_box .bp_user_box_bk,
 .list-wrap.hot-forum-lft-con .s-imgUnit a,
 .sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group,
-#gameCenter .look-around .s-imgUnit .s-imgUnit-text 
+#gameCenter .look-around .s-imgUnit .s-imgUnit-text ,
+.s-paging > ul > a,
+.s-paging > ul > span,
+.s-paging > ul > a:not(.disabled):not(.current):hover,
+.s-paging > ul > span:not(.disabled):not(.current):hover,
+.s-paging .jump-to-page input[type="text"],
+.s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
+.s-paging > ul > span:not(.disabled):not(.current):not(a):hover,
+.news-detail-content .news-title,
+.news-content a,
+.stm-ly .ct .stm-filter li,
+.stm-ly .stm-lst .name a,
+.sr-record a,
+.categories-bar .tag-item,
+.info-line a,
+.coin-operated-m .like-checkbox
 {
     color: #eee !important;
 }
@@ -313,7 +354,27 @@ table.invtable td,
 #gameCenter .hot-list .s-imgUnit:hover,
 #gameCenter .hot-list .s-imgUnit .rank,
 .bp_user_box_bb,
-.bp_user_box_bottom p
+.bp_user_box_bottom p,
+.s-paging > ul > a,
+.s-paging > ul > span,
+.s-paging > ul > a.current,
+.s-paging > ul > span.current,
+.s-paging > ul > a:not(.disabled):not(.current):not(a),
+.s-paging > ul > span:not(.disabled):not(.current):not(a),
+.s-paging > ul > a:not(.disabled):not(.current):hover,
+.s-paging > ul > span:not(.disabled):not(.current):hover,
+.s-paging .jump-to-page input[type="text"],
+.s-paging > ul > a:not(.disabled):not(.current):not(a):hover,
+.s-paging > ul > span:not(.disabled):not(.current):not(a):hover,
+.tab-selector-wrap .tag-wrap .tag span.selected,
+.stm-ly > .sd > .sec,
+.stm-ly .usr,
+.stm-ly .stm-lst li + li,
+.stm-ly > .ct,
+.stm-ly .ct .stm-filter li.on,
+.stm-lst-item .share,
+.security-right .sr-record,
+.drawer-pop-ctn.pop-ctn-4 .draw-list 
 {
     border-color: transparent !important;
 }
@@ -346,7 +407,10 @@ table.invtable td,
 .tab-selector-wrap .tab-wrap .tab span.active,
 .tabs-tab-active:before,
 .ivu-input:focus,
-.ivu-input:hover
+.ivu-input:hover,
+.tab-selector-wrap .tab-wrap .tab span.active,
+.sr-record a.on,
+.categories-bar .tag-item.on 
 {
     border-color: var(--theme-color) !important;
 }
@@ -375,7 +439,11 @@ table.invtable td,
 .tag-default:hover,
 .qa-index .help-list .collapse-item.collapse-item-active .collapse-title-icon,
 .balance_bp_box .button,
-.ac-artilce-tabs .tabs-nav .active
+.ac-artilce-tabs .tabs-nav .active,
+.s-paging > ul > a.current,
+.s-paging > ul > span.current,
+.s-paging > ul > a:not(.disabled):not(.current):hover,
+.s-paging > ul > span:not(.disabled):not(.current):hover 
 {
     background-color: var(--theme-color) !important;
 }
@@ -426,7 +494,13 @@ table.invtable td,
 #gameCenter .hot-list .s-imgUnit .rank.pink,
 .s-statusUnit-text .info a:hover,
 .list-wrap.hot-forum-lft-con .s-imgUnit a:hover,
-.list-wrap.lft-con .s-imgUnit a:hover 
+.list-wrap.lft-con .s-imgUnit a:hover,
+.stm-ly .stm-lst .name a:hover,
+.stm-ly .stm-lst a,
+.stm-ly .stm-lst a:hover,
+.sr-record a:hover,
+.sr-record a.on,
+.categories-bar .tag-item.on 
 {
     color: var(--theme-color) !important;
 }
