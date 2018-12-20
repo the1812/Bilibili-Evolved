@@ -14,9 +14,11 @@
     max-height: 60%;
     line-height: 24px;
     white-space: pre-wrap;
+    pointer-events: none;
 }
 .gui-settings-tooltip.show
 {
+    pointer-events: initial;
     opacity: 1;
 }
 .gui-settings-tooltip span
