@@ -133,7 +133,10 @@ body>div.to-top.on,
 .user-hd,
 .progress-tv .progress-img,
 .progress-tv,
-.dynamic-list-item-wrap .send-bg
+.dynamic-list-item-wrap .send-bg,
+.bili-share-pc,
+.bili-share-pc .share-weixin-qr,
+.bili-share-pc .weixin-hover .qr-before
 {
     background-color: #444 !important;
 }
@@ -341,7 +344,9 @@ body>div.to-top.on,
 .gui-settings-widgets-box>.widgets-container>button,
 .gui-settings-widgets-box,
 .link-popover-ctnr .link-popover,
-.details-up-name
+.details-up-name,
+.bili-share-pc .title,
+.bili-share-pc .share-weixin-qr h4
 {
     color: #eee !important;
 }
@@ -401,7 +406,8 @@ body>div.to-top.on,
 .link-popover::after,
 .link-popover::before,
 .medal-get-box, .medal-message-box,
-.detail-card .card
+.detail-card .card,
+.bili-share-pc
 {
     border-color: transparent !important;
 }
@@ -490,7 +496,8 @@ svg.toast-card-dismiss path
 .carousel .indicator .indicator-btn-holder .indicator-btn.on,
 #page-channel-detail .watch-later-btn:hover,
 .error-container .error-panel .error-msg .error-img img,
-.leaveMsgUpload .btnarea .btnareaIcon
+.leaveMsgUpload .btnarea .btnareaIcon,
+.coin-operated-m .like-checkbox input[type=checkbox]:checked+i
 {
     filter: var(--blue-image-filter) !important;
 }
