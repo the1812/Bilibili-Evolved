@@ -71,10 +71,8 @@
                 const defaultInput = dialog.filter((_, it) => it.innerText.indexOf("默认收藏夹") !== -1).find("input")[0];
                 if (!defaultInput.checked)
                 {
-                    const event = document.createEvent("HTMLEvents");
-                    event.initEvent("change", true, true);
                     defaultInput.checked = true;
-                    defaultInput.dispatchEvent(event);
+                    raiseEvent(defaultInput, "change");
                     const okButton = $(".btn.submit-move")[0];
                     okButton.disabled = false;
                     okButton.click();
