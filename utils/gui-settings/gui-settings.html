@@ -19,13 +19,10 @@
       <dropdown indent="1" key="defaultVideoQuality" dependencies="useDefaultVideoQuality"></dropdown>
       <checkbox indent="0" key="useDefaultDanmakuSettings" dependencies=""></checkbox>
       <checkbox indent="1" key="enableDanmaku" dependencies="useDefaultDanmakuSettings"></checkbox>
-      <checkbox indent="1" key="rememberDanmakuBlock" dependencies="enableDanmaku"></checkbox>
+      <checkbox indent="1" key="rememberDanmakuBlock" dependencies="useDefaultDanmakuSettings enableDanmaku"></checkbox>
       <checkbox indent="0" key="autoLightOff" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDescription" dependencies=""></checkbox>
-      <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
-      <checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox>
-      <checkbox indent="0" key="removeVideoTopMask" dependencies=""></checkbox>
       <textbox indent="1" key="customControlBackgroundOpacity" dependencies="customControlBackground"></textbox>
       <checkbox indent="0" key="autoContinue" dependencies=""></checkbox>
       <category icon="style">样式</category>
@@ -51,6 +48,9 @@
       <checkbox indent="1" key="preserveRank" dependencies="overrideNavBar"></checkbox>
       <checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox>
       <checkbox indent="0" key="customControlBackground" dependencies=""></checkbox>
+      <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
+      <checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox>
+      <checkbox indent="0" key="removeVideoTopMask" dependencies=""></checkbox>
       <checkbox indent="0" key="forceWide" dependencies=""></checkbox>
       <category icon="tool">工具</category>
       <checkbox indent="0" key="removeAds" dependencies=""></checkbox>

@@ -342,7 +342,7 @@
             harunaScale: {
                 path: "min/haruna-scale.min.js",
                 displayNames: {
-                    harunaScale: "缩放看板娘",
+                    harunaScale: "缩放直播看板娘",
                 },
             },
             removeLiveWatermark: {
