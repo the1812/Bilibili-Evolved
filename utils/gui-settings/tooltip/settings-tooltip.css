@@ -1,0 +1,25 @@
+.gui-settings-tooltip
+{
+    content: attr(data-tool-tip);
+    position: fixed;
+    left: 420px;
+    background: #0008;
+    padding: 1rem;
+    font-size: 12pt;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all .2s ease-out .8s;
+    opacity: 0;
+    min-width: 50%;
+}
+.gui-settings-tooltip.show
+{
+    opacity: 1;
+}
+.gui-settings-tooltip span
+{
+    background: #0008;
+    padding: 2px 4px;
+    display: inline-block;
+    font-weight: bold;
+}
