@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      157.01
+// @version      157.03
 // @description  增强哔哩哔哩Web端体验(离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -1043,7 +1043,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/auto-continue.min.js"] = (()=>{return(t,e)=>{function i(t){const e=/((\d)*:)?(\d)*:(\d)*/g;const i=t.text();const n=i.match(e);if(!n){return}const r=n[0].split(":");const o=(()=>{if(r.length===3){const[t,e,i]=r.map(t=>parseInt(t));return t*60*60+e*60+i}else if(r.length===2){const[t,e]=r.map(t=>parseInt(t));return t*60+e}else{logError(`解析历史时间发生错误: historyTime=${JSON.stringify(r)}`);return NaN}})();const s=t.parent();const c=document.querySelector("video");c.currentTime=o;c.play();s.find(".bilibili-player-video-toast-item-jump").remove();const l=$(`<div class="bilibili-player-video-toast-item-jump">从头开始</div>`);l.appendTo(s).on("click",()=>c.currentTime=0);t.html(`<span>已跳转到上次历史记录</span><span>${n[0]}</span>`)}function n(){SpinQuery.condition(()=>$(".bilibili-player-video-toast-item-text"),t=>t.text().indexOf("上次看到")!==-1,t=>i(t.filter((t,e)=>e.innerText.indexOf("上次看到")!==-1)))}Observer.subtree("#bofqi",n)}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/expand-description.min.css"] = `.video-desc .info{height:auto!important;}.video-desc .btn{display:none!important;}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/expand-description.min.js"] = (()=>{return(e,p)=>{p.applyStyle("expandDescriptionStyle")}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/default-danmaku-settings.min.js"] = (()=>{return(r,e)=>{}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/default-danmaku-settings.min.js"] = (()=>{return(n,e)=>{async function a(n,e){const a=await SpinQuery.condition(()=>document.querySelector(n),n=>n!==null);if(!a){return}a.checked=e;raiseEvent(a,"change")}const i={enableDanmaku:".bilibili-player-video-danmaku-switch>input"};if(!n.enableDanmaku){a(i.enableDanmaku,false)}}})();
 
     class ResourceType
     {
