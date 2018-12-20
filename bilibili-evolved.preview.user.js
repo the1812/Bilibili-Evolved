@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.18
+// @version      1.6.19
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -57,9 +57,16 @@
         defaultPlayerMode: "常规",
         useDefaultVideoQuality: false,
         defaultVideoQuality: "自动",
-        useDefaultDanmukuSettings: false,
+        useDefaultDanmakuSettings: false,
         enableDanmaku: true,
-
+        rememberDanmakuBlock: false,
+        danmakuBlockSettings: {
+            scroll: false,
+            top: false,
+            bottom: false,
+            color: false,
+            magic: false,
+        },
         autoLightOff: false,
         useCache: true,
         autoContinue: false,
@@ -539,7 +546,15 @@
                 displayNames: {
                     expandDescription: "自动展开视频简介"
                 }
-            }
+            },
+            useDefaultDanmakuSettings: {
+                path: "min/default-danmaku-settings.min.js",
+                displayNames: {
+                    useDefaultDanmakuSettings: "使用默认弹幕设置",
+                    enableDanmaku: "开启弹幕",
+                    rememberDanmakuBlock: "记住弹幕屏蔽类型",
+                },
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};
