@@ -4,9 +4,7 @@
     {
         async function setCheckState(selector, value)
         {
-            const checkbox = await SpinQuery.condition(
-                () => document.querySelector(selector),
-                it => it !== null);
+            const checkbox = await SpinQuery.select(() => document.querySelector(selector));
             if (!checkbox)
             {
                 return;
@@ -16,10 +14,47 @@
         }
         const selectors = {
             enableDanmaku: ".bilibili-player-video-danmaku-switch>input",
+            settingsIcon: ".bilibili-player-video-danmaku-setting",
         };
         if (!settings.enableDanmaku)
         {
             setCheckState(selectors.enableDanmaku, false);
+        }
+        if (settings.rememberDanmakuBlock)
+        {
+            for (const type in settings.danmakuBlockSettings)
+            {
+                selectors[type] = `.bilibili-player-block-filter-type[ftype=${type}]`;
+            }
+            async function applyBlockSettings()
+            {
+                await SpinQuery.unsafeJquery();
+                const settingsIcon = await SpinQuery.any(() => unsafeWindow.$(selectors.settingsIcon));
+                settingsIcon.mouseover().mouseout();
+
+                for (const [type, value] of Object.entries(settings.danmakuBlockSettings))
+                {
+                    if (value === true)
+                    {
+                        const element = await SpinQuery.select(() => document.querySelector(selectors[type]));
+                        element.click();
+                    }
+                }
+            }
+            async function listenBlockSettingsChange()
+            {
+                for (const type in settings.danmakuBlockSettings)
+                {
+                    const element = await SpinQuery.select(() =>document.querySelector(selectors[type]));
+                    element.addEventListener("click", () =>
+                    {
+                        settings.danmakuBlockSettings[type] = element.classList.contains("disabled");
+                        saveSettings(settings);
+                    });
+                }
+            }
+            applyBlockSettings();
+            listenBlockSettingsChange();
         }
     };
 })();

@@ -65,7 +65,7 @@
             top: false,
             bottom: false,
             color: false,
-            magic: false,
+            special: false,
         },
         autoLightOff: false,
         useCache: true,
@@ -797,6 +797,10 @@
                     new SpinQuery(query, condition, it => resolve(it)).start();
                 });
             }
+        }
+        static select(query, action, failed)
+        {
+            return SpinQuery.condition(query, it => it !== null, action, failed);
         }
         static any(query, action, failed)
         {

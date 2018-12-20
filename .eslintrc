@@ -21,6 +21,7 @@
         "no-extra-semi": 1,
         "no-extra-parens": 1,
         "no-irregular-whitespace": 0,
+        "no-inner-declarations": 0,
         "no-undef": 0,
         "no-unused-vars": 0,
         "no-underscore-dangle": 1,
