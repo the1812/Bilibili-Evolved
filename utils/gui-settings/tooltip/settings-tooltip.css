@@ -10,7 +10,10 @@
     transform: translateY(-50%);
     transition: all .2s ease-out .8s;
     opacity: 0;
-    min-width: 50%;
+    min-width: 100%;
+    max-height: 60%;
+    line-height: 24px;
+    white-space: pre-wrap;
 }
 .gui-settings-tooltip.show
 {
@@ -18,8 +21,5 @@
 }
 .gui-settings-tooltip span
 {
-    background: #0008;
-    padding: 2px 4px;
-    display: inline-block;
     font-weight: bold;
 }
