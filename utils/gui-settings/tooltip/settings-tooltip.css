@@ -1,6 +1,5 @@
 .gui-settings-tooltip
 {
-    content: attr(data-tool-tip);
     position: fixed;
     left: 420px;
     background: #0008;
