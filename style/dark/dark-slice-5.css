@@ -27,7 +27,10 @@
 .home-index .odd,
 .stm-ly .sd-l a:hover,
 .stm-ly .ct .stm-filter li.on,
-.stm-lst-item .share 
+.stm-lst-item .share,
+.nav-item3:hover,
+.nav-item3.active,
+.nav-item2 .nav-item2-title:hover 
 {
     background-color: #222 !important;
 }
@@ -95,7 +98,12 @@
 .stm-ly .stm-lst,
 .stm-ly > .ct,
 .security-right .sr-b .box-inner,
-.drawer-pop-ctn.pop-ctn-4 .drawer-pop
+.drawer-pop-ctn.pop-ctn-4 .drawer-pop,
+.app-ctnr .live-helper .main-content,
+.app-ctnr .live-helper .main-content .anchor li,
+.nav-warp2 .nav-item3,
+.nav-item2 .nav-item2-title,
+.nav-item1 .nav-item1-title
 {
     background-color: #444 !important;
 }
@@ -292,7 +300,13 @@ table.invtable td,
 .categories-bar .tag-item,
 .info-line a,
 .coin-operated-m .like-checkbox,
-.tab-selector-wrap .tab-wrap .tab a
+.tab-selector-wrap .tab-wrap .tab a,
+.app-ctnr .live-helper .main-content .menu-item .menu-title,
+.app-ctnr .live-helper .main-content .menu-item .menu-txt,
+.app-ctnr .live-helper .main-content .anchor li,
+.nav-warp2 .nav-item3,
+.nav-item3.active,
+.nav-item2 .nav-item2-title
 {
     color: #eee !important;
 }
@@ -377,7 +391,10 @@ table.invtable td,
 .security-right .sr-record,
 .drawer-pop-ctn.pop-ctn-4 .draw-list ,
 .news-detail-content .sepatator,
-.left-side .categories-bar
+.left-side .categories-bar,
+.nav-warp2 .nav-item3,
+.nav-item2 .nav-item2-title,
+.nav-warp1 .nav-item2
 {
     border-color: transparent !important;
 }
@@ -410,7 +427,9 @@ table.invtable td,
 .ivu-input:focus,
 .ivu-input:hover,
 .security-right .sr-record a.on,
-.left-side .categories-bar .tag-item.on
+.left-side .categories-bar .tag-item.on,
+.app-ctnr .live-helper .main-content .menu-item .menu-title,
+.nav-item3.active 
 {
     border-color: var(--theme-color) !important;
 }
@@ -500,7 +519,10 @@ table.invtable td,
 .stm-ly .stm-lst a:hover,
 .sr-record a:hover,
 .sr-record a.on,
-.categories-bar .tag-item.on 
+.categories-bar .tag-item.on,
+.app-ctnr .live-helper .main-content .anchor li:hover,
+.app-ctnr .live-helper .main-content .menu-item .menu-txt p a,
+.nav-item1 .nav-item1-title.expand 
 {
     color: var(--theme-color) !important;
 }
