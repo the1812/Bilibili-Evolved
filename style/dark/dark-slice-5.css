@@ -376,7 +376,8 @@ table.invtable td,
 .stm-lst-item .share,
 .security-right .sr-record,
 .drawer-pop-ctn.pop-ctn-4 .draw-list ,
-.news-detail-content .sepatator
+.news-detail-content .sepatator,
+.left-side .categories-bar
 {
     border-color: transparent !important;
 }
@@ -409,7 +410,7 @@ table.invtable td,
 .ivu-input:focus,
 .ivu-input:hover,
 .security-right .sr-record a.on,
-.categories-bar .tag-item.on
+.left-side .categories-bar .tag-item.on
 {
     border-color: var(--theme-color) !important;
 }
