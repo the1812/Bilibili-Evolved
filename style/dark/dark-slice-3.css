@@ -136,7 +136,9 @@ body>div.to-top.on,
 .dynamic-list-item-wrap .send-bg,
 .bili-share-pc,
 .bili-share-pc .share-weixin-qr,
-.bili-share-pc .weixin-hover .qr-before
+.bili-share-pc .weixin-hover .qr-before,
+.form-login .input-box .item input,
+.form-login .input-box .btn-box .btn
 {
     background-color: #444 !important;
 }
@@ -149,7 +151,8 @@ body>div.to-top.on,
     background-color: rgba(0,0,0,0.1) !important;
 }
 .mainBox .sureWindowlayer,
-.medal-mask
+.medal-mask,
+.qrcode-login .qrcode-con .qrcode-box .status
 {
     background-color: rgba(0,0,0,.5) !important;
 }
@@ -189,7 +192,8 @@ body>div.to-top.on,
 .jumping-ctnr .jumping-input,
 #song_detail_click_upper~div .pager .pages .page-item.active button,
 #song_detail_click_upper~div .pager .pages .page-item button,
-.filter-wrap .sub-filter
+.filter-wrap .sub-filter,
+.title-line .tit
 {
     background-color: transparent !important;
 }
@@ -250,7 +254,10 @@ body>div.to-top.on,
 .article-action .ops .share-container .weixin-holder p,
 .coin-wrap .coin-tips,
 .up-feedback .up-fb-btn,
-.user-info .user-info-desc
+.user-info .user-info-desc,
+.qrcode-login .qrcode-footer .app-link,
+.qrcode-login .qrcode-footer .suc-txt,
+.form-login .input-box .sns .btn
 {
     color: #aaa !important;
 }
@@ -346,7 +353,10 @@ body>div.to-top.on,
 .link-popover-ctnr .link-popover,
 .details-up-name,
 .bili-share-pc .title,
-.bili-share-pc .share-weixin-qr h4
+.bili-share-pc .share-weixin-qr h4,
+.form-login .input-box .remember,
+.form-login .input-box .item input,
+.form-login .input-box .btn-box .btn
 {
     color: #eee !important;
 }
@@ -407,7 +417,11 @@ body>div.to-top.on,
 .link-popover::before,
 .medal-get-box, .medal-message-box,
 .detail-card .card,
-.bili-share-pc
+.bili-share-pc,
+.title-line,
+.form-login .input-box .item input,
+.form-login .input-box .btn-box .btn-login,
+.form-login .input-box .btn-box .btn
 {
     border-color: transparent !important;
 }
@@ -430,7 +444,8 @@ body>div.to-top.on,
 .chatPanelBody .footer,
 .leftMsg .msgDiv:before,
 .leaveMsg .leaveMsgHeader,
-.medal-receive-title
+.medal-receive-title,
+.login-box .line
 {
     border-color: #444 !important
 }
@@ -660,7 +675,8 @@ body>div.to-top.on
     border-right-color: var(--theme-color) !important;
 }
 .audioplayer .ap-controller,
-.audioplayer .ap-playlist
+.audioplayer .ap-playlist,
+.form-login .input-box .item input:focus
 {
     border: 1px solid var(--theme-color) !important;
 }
@@ -707,7 +723,8 @@ body>div.to-top.on
 .user-info > .uid,
 .receive-list-prev i,
 .receive-list-next i,
-.receive-list-page
+.receive-list-page,
+.form-login .input-box .btn-box .btn-login
 {
     background-color: var(--theme-color) !important;
 }
@@ -799,7 +816,9 @@ body>div.to-top.on
 .article-action .ops i:hover,
 .coin-wrap .coin-title i,
 .coin-wrap .coin-nav .coin-checkbox.on .lable,
-#community_msg .dyn_menu li a:hover
+#community_msg .dyn_menu li a:hover,
+.form-login .remember a,
+.app-link a
 {
     color: var(--theme-color) !important;
 }
@@ -833,7 +852,8 @@ body>div.to-top.on
 .banner-wrapper .swiper-pagination-bullet-active,
 .coin-wrap .coin-sure,
 .up-feedback .up-fb-btn:hover,
-.user-info > .uid
+.user-info > .uid,
+.form-login .input-box .btn-box .btn-login
 {
     color: var(--foreground-color) !important;
 }
