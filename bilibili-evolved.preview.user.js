@@ -1437,7 +1437,7 @@
                 });
             }
             await Promise.all(Object.values(Resource.manifest)
-                .filter(it  => it.dropdown)
+                .filter(it => it.dropdown)
                 .map(it => applyDropdownOption(it.dropdown))
             );
         }
