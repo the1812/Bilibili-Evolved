@@ -429,7 +429,8 @@ table.invtable td,
 .security-right .sr-record a.on,
 .left-side .categories-bar .tag-item.on,
 .app-ctnr .live-helper .main-content .menu-item .menu-title,
-.nav-item3.active 
+.nav-item3.active,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active > span 
 {
     border-color: var(--theme-color) !important;
 }
