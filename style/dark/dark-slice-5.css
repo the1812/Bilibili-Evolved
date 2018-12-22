@@ -32,7 +32,12 @@
 .nav-item3.active,
 .nav-item2 .nav-item2-title:hover,
 .biliPager .pager-jumper .pager-jumper-input,
-.biliPager .pager-jumper a 
+.biliPager .pager-jumper a,
+.common-modal-container .common-modal-content .common-modal-foot > div div:nth-child(2),
+.drop-cascader-container .drop-cascader-pre-wrp .drop-cascader-pre-item:hover,
+.drop-cascader-container .drop-cascader-list-wrp .drop-cascader-list-item:hover,
+.drop-list-v2-container .drop-list-v2-item:hover,
+.time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item:hover 
 {
     background-color: #222 !important;
 }
@@ -105,7 +110,27 @@
 .app-ctnr .live-helper .main-content .anchor li,
 .nav-warp2 .nav-item3,
 .nav-item2 .nav-item2-title,
-.nav-item1 .nav-item1-title
+.nav-item1 .nav-item1-title,
+.normal-v2-container .normal-title-wrp>.template-op,
+.alert-v2-container-info,
+.file-list-v2-wrp .file-list-v2-item .file-list-v2-item-wrp .item-upload-progress,
+.select-box-v2-container .select-box-v2-controller,
+.input-box-v2-1-container,
+.label-item-v2-2-container,
+.content-tag-v2-container .content-tag-v2-edit-mod-wrp,
+.content-tag-v2-container .content-tag-v2-other-tag-error-wrp,
+.file-list-v2-container .file-add-btn,
+.template-list-small-container,
+.common-modal-container .common-modal-content,
+.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-items .selector-item,
+.drop-cascader-container,
+.drop-list-v2-container,
+.check-radio-v2-2-container,
+.d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-date,
+.d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-timer,
+.submit-button-group-v2-container .submit-btn-group-tpl,
+.date-picker-v2-container,
+.time-picker-v2-container
 {
     background-color: #444 !important;
 }
@@ -124,7 +149,8 @@
     background-image: none !important;
 }
 .help-subcontent p,
-.biliPager .page-li 
+.biliPager .page-li,
+.cover-chop-modal-v2-body .cover-chop-modal-v2-body-split 
 {
     background-color: transparent !important;
 }
@@ -179,7 +205,25 @@
 .stm-ly .sd-l a,
 .stm-ly .stm-lst .hint,
 #page-index .col-2 .section .auth-detail,
-.biliPager .pager-jumper
+.biliPager .pager-jumper,
+.file-list-v2-wrp .file-list-v2-item .file-list-v2-item-wrp .item-upload-info,
+.section-title-v2-container .section-title-v2-content-sub,
+.more-selector-v2-container .more-selector-v2-title-wrp .more-selector-v2-drop-tip,
+.file-list-v2-container .file-title p,
+.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title,
+.cover-chop-modal-v2-body .cover-chop-modal-v2-body-left .cover-chop-clip-reset-v2>span,
+.cover-chop-modal-v2-body .cover-chop-modal-v2-body-left .cover-chop-clip-warning-v2>span.chop-warning-normal,
+.cover-chop-modal-v2-body .cover-chop-modal-v2-body-right>p,
+.content-tag-v2-container .content-tag-v2-other-wrp .content-tag-v2-mission-tag-wrp .content-tag-v2-mission-tag-tip,
+.text-area-box-v2-container .text-area-box-v2-max-tip,
+.water-mark-set-v2-copy-switch-wrp a,
+.date-picker-v2-container .date-picker-v2-nav-wrp .next-btn-day,
+.date-picker-v2-container .date-picker-v2-nav-wrp .next-btn-month,
+.date-picker-v2-container .date-picker-v2-nav-wrp .prev-btn-day,
+.date-picker-v2-container .date-picker-v2-nav-wrp .prev-btn-month,
+.date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item-disabled,
+.date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-disabled,
+.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more
 {
     color: #aaa !important;
 }
@@ -314,7 +358,45 @@ table.invtable td,
 .biliPager .current span,
 .biliPager .pager-jumper .pager-jumper-input,
 .biliPager .pager-jumper a,
-.biliPager .pager-jumper a:hover
+.biliPager .pager-jumper a:hover,
+.file-list-v2-wrp .file-list-v2-item .file-list-v2-item-wrp .item-status-wrp p.item-title,
+.file-list-v2-wrp .file-list-v2-item .file-list-v2-item-wrp .item-status-wrp .item-status-op,
+.alert-v2-container-info div.alert-v2-btn:nth-child(2),
+.check-radio-v2-container .check-radio-v2-name,
+.input-box-v2-1-container .input-box-v2-1-instance .input-box-v2-1-val,
+.label-item-v2-2-container,
+.label-item-v2-2-container-selected,
+.more-selector-v2-container .more-selector-v2-title-wrp>h1,
+.content-tag-v2-container .content-tag-v2-edit-mod-wrp,
+.content-tag-v2-container .content-tag-v2-other-tag-error-wrp,
+.check-box-v2-container .check-box-v2-content,
+.water-mark-set-v2-container .water-mark-set-v2-copy-switch-wrp>span,
+.electron-set-v2-container .electron-set-v2-copy-switch-wrp .electron-set-v2-hint,
+.d-time-v2-container .d-time-v2-switch-wrp p.d-time-v2-last,
+.d-time-v2-container .d-time-v2-switch-wrp p.d-time-v2-pre,
+.file-list-v2-container .file-add-btn,
+.common-modal-container .common-modal-content .common-modal-foot>div div:nth-child(2),
+.common-modal-container .common-modal-content .common-modal-foot>div div:nth-child(2):hover,
+.common-modal-container .common-modal-content .common-modal-foot>div div:first-child,
+.drop-cascader-container .drop-cascader-pre-wrp .drop-cascader-pre-item .pre-item-content,
+.drop-cascader-container .drop-cascader-list-wrp .drop-cascader-list-item p.item-main,
+.select-box-v2-container .select-box-v2-controller .select-item-cont-inserted,
+.file-list-v2-wrp .file-list-v2-item .file-list-v2-item-icon,
+.drop-list-v2-container .drop-list-v2-item .drop-list-v2-item-cont p.item-cont-main,
+.select-box-v2-container .select-box-v2-controller,
+.d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-date,
+.d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-timer,
+.submit-button-group-v2-container .submit-btn-group-tpl,
+.submit-button-group-v2-container .submit-btn-group-add,
+.date-picker-v2-container .date-picker-v2-nav-wrp p.date-picker-nav-title,
+.date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .weekend-item,
+.date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .weekend-item,
+.date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item,
+.date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item,
+.date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item-selected,
+.date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected,
+.time-picker-v2-container .time-picker-head-wrp .time-picker-show,
+.time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item
 {
     color: #eee !important;
 }
@@ -406,13 +488,32 @@ table.invtable td,
 .biliPager .page-li,
 .biliPager .pager-jumper .pager-jumper-input,
 .biliPager .pager-jumper a,
-.biliPager .pager-jumper a:hover
+.biliPager .pager-jumper a:hover,
+.normal-v2-container .normal-title-wrp>.template-op,
+.file-list-v2-container .dividing-line,
+.select-box-v2-container .select-box-v2-controller,
+.input-box-v2-1-container,
+.label-item-v2-2-container,
+.normal-v2-container .dividing-line,
+.content-tag-v2-container .content-tag-v2-edit-mod-wrp,
+.content-tag-v2-container .content-tag-v2-other-tag-error-wrp,
+.template-list-small-container,
+.common-modal-container .common-modal-content .common-modal-head,
+.common-modal-container .common-modal-content .common-modal-foot>div div:nth-child(2),
+.drop-cascader-container,
+.drop-cascader-container .drop-cascader-list-wrp,
+.drop-list-v2-container,
+.d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-date,
+.d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-timer,
+.submit-button-group-v2-container .submit-btn-group-tpl
 {
     border-color: transparent !important;
 }
 .link-input,
 .add-cover,
-.cc-article-wrp .article-card .meta-title .typename
+.cc-article-wrp .article-card .meta-title .typename,
+.text-area-box-v2-container,
+.check-radio-v2-container .check-radio-v2-box 
 {
     border-color: #aaa !important;
 }
@@ -442,7 +543,15 @@ table.invtable td,
 .left-side .categories-bar .tag-item.on,
 .app-ctnr .live-helper .main-content .menu-item .menu-title,
 .nav-item3.active,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active > span 
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active > span,
+.select-box-v2-container .select-box-v2-controller:hover,
+.input-box-v2-1-container.input-box-v2-1-container-active,
+.input-box-v2-1-container:hover,
+.text-area-box-v2-container.text-area-box-v2-container-active,
+.text-area-box-v2-container:hover,
+.d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-date:hover,
+.d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-timer:hover,
+.date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item:hover 
 {
     border-color: var(--theme-color) !important;
 }
@@ -477,7 +586,24 @@ table.invtable td,
 .s-paging > ul > a:not(.disabled):not(.current):hover,
 .s-paging > ul > span:not(.disabled):not(.current):hover,
 .biliPager .current span,
-.biliPager .pager-jumper a:hover 
+.biliPager .pager-jumper a:hover,
+.alert-v2-container-info div.alert-v2-btn:nth-child(2),
+.file-list-v2-wrp .file-list-v2-item .file-list-v2-item-wrp .item-upload-progress .item-upload-progress-loading,
+.label-item-v2-2-container:hover,
+.label-item-v2-2-container-selected,
+.label-item-v2-container,
+.file-list-v2-container .file-add-btn:hover,
+.common-modal-container .common-modal-content .common-modal-foot > div div:nth-child(2):hover,
+.common-modal-container .common-modal-content .common-modal-foot > div div:first-child,
+.common-modal-container .common-modal-content .common-modal-foot > div div:first-child:hover,
+.check-radio-v2-container .check-radio-v2-box.check-radio-v2-box-checked:after,
+.check-radio-v2-2-container.check-radio-v2-2-container-active,
+.submit-button-group-v2-container .submit-btn-group-add-img:hover,
+.submit-button-group-v2-container .submit-btn-group-add:hover,
+.submit-button-group-v2-container .submit-btn-group-tpl:hover,
+.submit-button-group-v2-container .submit-btn-group-add ,
+.date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item-selected,
+.date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected
 {
     background-color: var(--theme-color) !important;
 }
@@ -537,7 +663,18 @@ table.invtable td,
 .categories-bar .tag-item.on,
 .app-ctnr .live-helper .main-content .anchor li:hover,
 .app-ctnr .live-helper .main-content .menu-item .menu-txt p a,
-.nav-item1 .nav-item1-title.expand 
+.nav-item1 .nav-item1-title.expand,
+.file-list-v2-wrp .file-list-v2-item .file-list-v2-item-wrp .item-status-wrp .item-status-op .item-status-click:hover,
+.cover-chop-modal-v2-body .cover-chop-modal-v2-body-left .cover-chop-clip-reset-v2:hover > span,
+.drop-cascader-container .drop-cascader-pre-wrp .drop-cascader-pre-item-selected .pre-item-content,
+.check-box-v2-container .check-box-v2-pre-selected,
+.water-mark-set-v2-copy-switch-wrp a:hover,
+.drop-list-v2-container .drop-list-v2-item i.drop-list-v2-item-icon,
+.drop-cascader-container .drop-cascader-list-wrp .drop-cascader-list-item-selected p.item-main,
+.date-picker-v2-container .date-picker-v2-footer-wrp .date-picker-v2-select-today,
+.date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item:hover,
+.time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item.time-selected,
+.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more:hover 
 {
     color: var(--theme-color) !important;
 }
