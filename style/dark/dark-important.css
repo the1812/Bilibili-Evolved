@@ -1,6 +1,7 @@
 .link-footer,
 .payment-active,
-.app-body .section-block
+.app-body .section-block,
+.bl-button--primary:disabled 
 {
     background-color: #222 !important;
 }

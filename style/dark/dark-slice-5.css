@@ -531,7 +531,6 @@ table.invtable td,
     box-shadow: none !important;
 }
 .add-cover:hover,
-.category:not(.gui-settings-content .category):hover,
 .data-card .data-box .tab .fan-tab.current:after,
 .data-card .fans-box .tab .fan-tab.current:after,
 .section-item .diff-wrp .diff-text:before,
