@@ -396,7 +396,8 @@ table.invtable td,
 .date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item-selected,
 .date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected,
 .time-picker-v2-container .time-picker-head-wrp .time-picker-show,
-.time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item
+.time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item,
+.bind-info .note-footer .btn-group .active-btn
 {
     color: #eee !important;
 }
@@ -551,7 +552,11 @@ table.invtable td,
 .text-area-box-v2-container:hover,
 .d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-date:hover,
 .d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-timer:hover,
-.date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item:hover 
+.date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item:hover,
+.el-checkbox__inner:hover,
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner,
+.bind-info .note-footer .btn-group .active-btn 
 {
     border-color: var(--theme-color) !important;
 }
@@ -603,7 +608,11 @@ table.invtable td,
 .submit-button-group-v2-container .submit-btn-group-tpl:hover,
 .submit-button-group-v2-container .submit-btn-group-add,
 .date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item-selected,
-.date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected {
+.date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected,
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner,
+.bind-info .note-footer .btn-group .active-btn 
+{
     background-color: var(--theme-color) !important;
 }
 .notice-ctnr .blink:hover,
