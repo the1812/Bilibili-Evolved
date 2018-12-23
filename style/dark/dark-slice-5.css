@@ -579,7 +579,7 @@ table.invtable td,
 .tag-default:active,
 .tag-default:hover,
 .qa-index .help-list .collapse-item.collapse-item-active .collapse-title-icon,
-.balance_bp_box .button,
+#bp_right .balance_bp_box .button,
 .ac-artilce-tabs .tabs-nav .active,
 .s-paging > ul > a.current,
 .s-paging > ul > span.current,
@@ -601,10 +601,9 @@ table.invtable td,
 .submit-button-group-v2-container .submit-btn-group-add-img:hover,
 .submit-button-group-v2-container .submit-btn-group-add:hover,
 .submit-button-group-v2-container .submit-btn-group-tpl:hover,
-.submit-button-group-v2-container .submit-btn-group-add ,
+.submit-button-group-v2-container .submit-btn-group-add,
 .date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item-selected,
-.date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected
-{
+.date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected {
     background-color: var(--theme-color) !important;
 }
 .notice-ctnr .blink:hover,
