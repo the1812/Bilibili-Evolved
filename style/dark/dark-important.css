@@ -87,7 +87,8 @@ blockquote .color-yellow-04,
 .left-nav-ul .left-nav-item.active,
 .left-nav-ul .left-nav-item.active i.active,
 .left-nav-ul .left-nav-list.on .left-nav-item .icon,
-.left-nav-ul .left-nav-list.on .left-nav-item
+.left-nav-ul .left-nav-list.on .left-nav-item,
+.drop-list-v2-container .drop-list-v2-item-selected .drop-list-v2-item-cont p.item-cont-main 
 {
     color: var(--theme-color) !important;
 }
