@@ -7,6 +7,9 @@
             const jumpButton = document.querySelector(".bilibili-player-electric-panel-jump");
             jumpButton && jumpButton.click();
         }
-        Observer.subtree("#bofqi", () => skipChargeList());
+        SpinQuery.select(() => document.querySelector("#bofqi")).then(() =>
+        {
+            Observer.subtree("#bofqi", () => skipChargeList());
+        });
     };
 })();
