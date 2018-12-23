@@ -67,6 +67,7 @@
             color: false,
             special: false,
         },
+        skipChargeList: false,
         autoLightOff: false,
         useCache: true,
         autoContinue: false,
@@ -564,6 +565,18 @@
                     enableDanmaku: "开启弹幕",
                     rememberDanmakuBlock: "记住弹幕屏蔽类型",
                 },
+            },
+            skipChargeListStyle: {
+                path: "min/skip-charge-list.min.css",
+            },
+            skipChargeList: {
+                path: "min/skip-charge-list.min.js",
+                styles: [
+                    "skipChargeListStyle",
+                ],
+                displayNames: {
+                    skipChargeList: "跳过充电鸣谢",
+                }
             },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
