@@ -7,6 +7,6 @@
             const jumpButton = document.querySelector(".bilibili-player-electric-panel-jump");
             jumpButton && jumpButton.click();
         }
-        Observer.subtree(".bilibili-player-video-wrap", skipChargeList);
+        Observer.subtree("#bofqi", () => skipChargeList());
     };
 })();
