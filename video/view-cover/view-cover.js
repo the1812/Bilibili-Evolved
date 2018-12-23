@@ -86,7 +86,7 @@
                         {
                             imageViewer.show();
                         });
-                        Observer.subtree("#bofqi", async () =>
+                        (Observer.childList || Observer.subtree)("#bofqi", async () =>
                         {
                             imageViewer = new ImageViewer(await getUrl());
                         });

@@ -67,6 +67,7 @@
             color: false,
             special: false,
         },
+        skipChargeList: false,
         autoLightOff: false,
         useCache: true,
         autoContinue: false,
@@ -565,6 +566,18 @@
                     rememberDanmakuBlock: "记住弹幕屏蔽类型",
                 },
             },
+            skipChargeListStyle: {
+                path: "min/skip-charge-list.min.css",
+            },
+            skipChargeList: {
+                path: "min/skip-charge-list.min.js",
+                styles: [
+                    "skipChargeListStyle",
+                ],
+                displayNames: {
+                    skipChargeList: "跳过充电鸣谢",
+                }
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};
@@ -733,7 +746,7 @@
                     return observer.start();
                 });
         }
-        static subtree(selector, callback)
+        static childList(selector, callback)
         {
             return Observer.observe(selector, callback, {
                 childList: true,
@@ -741,7 +754,15 @@
                 attributes: false,
             });
         }
-        static attributes(selector, callback)
+        static childListSubtree(selector, callback)
+        {
+            return Observer.observe(selector, callback, {
+                childList: true,
+                subtree: true,
+                attributes: false,
+            });
+        }
+        static attributesSubtree(selector, callback)
         {
             return Observer.observe(selector, callback, {
                 childList: false,
@@ -1437,7 +1458,7 @@
                 });
             }
             await Promise.all(Object.values(Resource.manifest)
-                .filter(it  => it.dropdown)
+                .filter(it => it.dropdown)
                 .map(it => applyDropdownOption(it.dropdown))
             );
         }
@@ -1497,7 +1518,16 @@
     {
         loadResources();
         loadSettings();
-        unsafeWindow.bilibiliEvolved = { SpinQuery };
+        unsafeWindow.bilibiliEvolved = {
+            SpinQuery,
+            Toast,
+            Observer,
+            ColorProcessor,
+            DoubleClickEvent,
+            ResourceManager,
+            Resource,
+            ResourceType,
+        };
         const resources = new ResourceManager();
         resources.fetch().catch(error => logError(error));
     }
