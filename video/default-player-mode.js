@@ -92,6 +92,6 @@
                 video.addEventListener("play", onplay);
             }
         }
-        Observer.subtree("#bofqi", () => main());
+        (Observer.childList || Observer.subtree)("#bofqi", () => main());
     };
 })();

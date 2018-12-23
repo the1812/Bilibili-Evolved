@@ -37,7 +37,7 @@
             () => $(".watch-later-list"),
             () =>
             {
-                Observer.subtree(".watch-later-list", () =>
+                (Observer.childListSubtree || Observer.subtree)(".watch-later-list", () =>
                 {
                     new SpinQuery(
                         () => document.URL.match(/(av[\d]+)\/p([\d]+)/),
@@ -62,7 +62,7 @@
             () => $("li.nav-item[report-id*=watchlater]"),
             () =>
             {
-                Observer.subtree("li.nav-item[report-id*=watchlater]", () =>
+                (Observer.childListSubtree || Observer.subtree)("li.nav-item[report-id*=watchlater]", () =>
                 {
                     SpinQuery.any(
                         () => $(".av-item>a"),

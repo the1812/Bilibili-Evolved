@@ -746,7 +746,7 @@
                     return observer.start();
                 });
         }
-        static subtree(selector, callback)
+        static childList(selector, callback)
         {
             return Observer.observe(selector, callback, {
                 childList: true,
@@ -754,7 +754,15 @@
                 attributes: false,
             });
         }
-        static attributes(selector, callback)
+        static childListSubtree(selector, callback)
+        {
+            return Observer.observe(selector, callback, {
+                childList: true,
+                subtree: true,
+                attributes: false,
+            });
+        }
+        static attributesSubtree(selector, callback)
         {
             return Observer.observe(selector, callback, {
                 childList: false,

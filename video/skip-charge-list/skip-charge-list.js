@@ -9,7 +9,7 @@
         }
         SpinQuery.select(() => document.querySelector("#bofqi")).then(() =>
         {
-            Observer.subtree("#bofqi", () => skipChargeList());
+            Observer.childListSubtree("#bofqi", () => skipChargeList());
         });
     };
 })();
