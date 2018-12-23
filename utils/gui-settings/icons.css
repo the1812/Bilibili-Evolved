@@ -3,6 +3,7 @@
     width: 24px;
     height: 24px;
     display: inline-block;
+    background-image: none;
 }
 .icons-enabled [class^=icon-]::after
 {
