@@ -37,7 +37,7 @@
 .drop-cascader-container .drop-cascader-pre-wrp .drop-cascader-pre-item:hover,
 .drop-cascader-container .drop-cascader-list-wrp .drop-cascader-list-item:hover,
 .drop-list-v2-container .drop-list-v2-item:hover,
-.time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item:hover 
+.time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item:hover
 {
     background-color: #222 !important;
 }
@@ -144,13 +144,13 @@
 .bangumi-order-wrap .bangumi-collection-d,
 .bangumi-order-wrap .bangumi-order,
 .bangumi-order-wrap .bangumi-order-d,
-.sr-record a.on 
+.sr-record a.on
 {
     background-image: none !important;
 }
 .help-subcontent p,
 .biliPager .page-li,
-.cover-chop-modal-v2-body .cover-chop-modal-v2-body-split 
+.cover-chop-modal-v2-body .cover-chop-modal-v2-body-split
 {
     background-color: transparent !important;
 }
@@ -514,7 +514,7 @@ table.invtable td,
 .add-cover,
 .cc-article-wrp .article-card .meta-title .typename,
 .text-area-box-v2-container,
-.check-radio-v2-container .check-radio-v2-box 
+.check-radio-v2-container .check-radio-v2-box
 {
     border-color: #aaa !important;
 }
@@ -531,7 +531,6 @@ table.invtable td,
     box-shadow: none !important;
 }
 .add-cover:hover,
-.category:not(.gui-settings-content .category):hover,
 .data-card .data-box .tab .fan-tab.current:after,
 .data-card .fans-box .tab .fan-tab.current:after,
 .section-item .diff-wrp .diff-text:before,
@@ -556,7 +555,7 @@ table.invtable td,
 .el-checkbox__inner:hover,
 .el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner,
-.bind-info .note-footer .btn-group .active-btn 
+.bind-info .note-footer .btn-group .active-btn
 {
     border-color: var(--theme-color) !important;
 }
@@ -611,7 +610,7 @@ table.invtable td,
 .date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected,
 .el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner,
-.bind-info .note-footer .btn-group .active-btn 
+.bind-info .note-footer .btn-group .active-btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -682,7 +681,7 @@ table.invtable td,
 .date-picker-v2-container .date-picker-v2-footer-wrp .date-picker-v2-select-today,
 .date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item:hover,
 .time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item.time-selected,
-.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more:hover 
+.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more:hover
 {
     color: var(--theme-color) !important;
 }
