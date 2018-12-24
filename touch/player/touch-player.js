@@ -599,7 +599,7 @@
             }
         }
 
-        Observer.subtree("#bofqi", () => main());
+        (Observer.childList || Observer.subtree)("#bofqi", () => main());
         resources.applyStyle("touchPlayerStyle");
     };
 })();

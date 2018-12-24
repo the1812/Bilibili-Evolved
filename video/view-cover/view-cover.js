@@ -2,6 +2,7 @@
 {
     return (_, resources) =>
     {
+        const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
         class ImageViewer
         {
             constructor(url)
@@ -27,7 +28,9 @@
                 xhr.responseType = "blob";
                 xhr.onload = () =>
                 {
-                    const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+                    const title = document.title
+                        .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
+                        .replace("_番剧_bilibili_哔哩哔哩", "");
                     const data = URL.createObjectURL(xhr.response);
                     this.imageData = data;
                     this.viewer.find(".download")
@@ -63,19 +66,29 @@
                         </button>`,
                     condition: async () =>
                     {
-                        const metaData = await SpinQuery.condition(
-                            () => $("meta[itemprop='image'],meta[property='og:image']"),
-                            metaData => metaData.length > 0 && metaData.prop("content"),
+                        const aid = await SpinQuery.condition(
+                            () => (unsafeWindow || window).aid,
+                            it => it !== undefined,
                         );
-                        return typeof metaData !== "undefined";
+                        return aid !== "undefined";
                     },
                     success: async () =>
                     {
-                        const metaData = $("meta[itemprop='image'],meta[property='og:image']");
-                        const imageViewer = new ImageViewer(metaData.prop("content"));
+                        async function getUrl()
+                        {
+                            const aid = (unsafeWindow || window).aid;
+                            const videoInfo = new VideoInfo(aid);
+                            await videoInfo.fetchInfo();
+                            return videoInfo.coverUrl;
+                        }
+                        let imageViewer = new ImageViewer(await getUrl());
                         $("#view-cover").on("click", () =>
                         {
                             imageViewer.show();
+                        });
+                        (Observer.childList || Observer.subtree)("#bofqi", async () =>
+                        {
+                            imageViewer = new ImageViewer(await getUrl());
                         });
                     },
                 },

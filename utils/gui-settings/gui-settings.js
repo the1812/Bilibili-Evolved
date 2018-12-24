@@ -2,93 +2,11 @@
 {
     return (settings, resources) =>
     {
-        const colors = {
-            red: "#e57373",
-            pink: "#F06292",
-            purple: "#BA68C8",
-            deepPurple: "#9575CD",
-            indigo: "#7986CB",
-            blue: "#2196F3",
-            lightBlue: "#00A0D8",
-            cyan: "#00ACC1",
-            teal: "#26A69A",
-            green: "#81C784",
-            lightGreen: "#9CCC65",
-            orange: "#FF9800",
-            deepOrange: "#FF7043",
-            brown: "#A1887F",
-            grey: "#757575",
-            blueGrey: "#78909C"
-        };
-        const reloadColor = (() =>
-        {
-            const html = document.querySelector("html");
-            return function (newColor)
-            {
-                const color = new ColorProcessor(newColor);
-                html.style.setProperty("--theme-color", newColor);
-                for (let opacity = 10; opacity <= 90; opacity += 10)
-                {
-                    html.style.setProperty(`--theme-color-${opacity}`,
-                        color.rgbToString(color.hexToRgba(newColor + opacity)));
-                }
-                html.style.setProperty("--blue-image-filter", color.blueImageFilter);
-                html.style.setProperty("--pink-image-filter", color.pinkImageFilter);
-                html.style.setProperty("--brightness", color.brightness);
-                html.style.setProperty("--invert-filter", color.filterInvert);
-            };
-        })();
-        const textValidate = {
-            forceWideMinWidth: text => text, /* How to validate CSS unit ?? */
-            customStyleColor: text =>
-            {
-                const match = text.match(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/);
-                if (match)
-                {
-                    if (text.length < 7)
-                    {
-                        return `#${text[1]}${text[1]}${text[2]}${text[2]}${text[3]}${text[3]}`;
-                    }
-                    else
-                    {
-                        return text;
-                    }
-                }
-                else
-                {
-                    return settings.customStyleColor;
-                }
-            },
-            blurBackgroundOpacity: text =>
-            {
-                const match = text.match(/^([-\+]?\d+)(\.\d+)?$/);
-                if (match)
-                {
-                    const value = parseFloat(text);
-                    if (value >= 0 && value <= 1)
-                    {
-                        return text;
-                    }
-                }
-                return settings.blurBackgroundOpacity;
-            },
-            defaultPlayerMode: text =>
-            {
-                if (Resource.manifest.useDefaultPlayerMode.dropdown.items.indexOf(text) !== -1)
-                {
-                    return text;
-                }
-                return settings.defaultPlayerMode;
-            },
-            defaultVideoQuality: text =>
-            {
-                if (Resource.manifest.useDefaultVideoQuality.dropdown.items.indexOf(text) !== -1)
-                {
-                    return text;
-                }
-                return settings.defaultVideoQuality;
-            }
-        };
+        const Validator = resources.attributes.textValidate.export.Validator;
+        const ThemeColors = resources.attributes.themeColors.export;
+        const themeColors = new ThemeColors();
+        const settingsBox = resources.data.guiSettingsDom.text;
+
         function getCategoriyItems(category)
         {
             let element = category.nextElementSibling;
@@ -100,66 +18,9 @@
             }
             return elements;
         }
-        function darkScheduleValidate(text, defaultValue)
-        {
-            const match = text.match(/^([\d]{1,2}):([\d]{1,2})$/);
-            if (match && match.length >= 3)
-            {
-                const time = { hour: parseInt(match[1]), minute: parseInt(match[2]) };
-                (function ()
-                {
-                    while (this.minute < 0)
-                    {
-                        this.minute += 60;
-                        this.hour -= 1;
-                    }
-                    while (this.minute >= 60)
-                    {
-                        this.minute -= 60;
-                        this.hour += 1;
-                    }
-                    while (this.hour < 0)
-                    {
-                        this.hour += 24;
-                    }
-                    while (this.hour >= 24)
-                    {
-                        this.hour -= 24;
-                    }
-                }).call(time);
-                return `${time.hour}:${(time.minute < 10 ? "0" + time.minute : time.minute)}`;
-            }
-            else
-            {
-                return defaultValue;
-            }
-        }
-        textValidate.darkScheduleStart = text => darkScheduleValidate(text, settings.darkScheduleStart);
-        textValidate.darkScheduleEnd = text => darkScheduleValidate(text, settings.darkScheduleEnd);
-        function opacityValidate(text, defaultValue)
-        {
-            const match = text.match(/^([-\+]?\d+)(\.\d+)?$/);
-            if (match)
-            {
-                const value = parseFloat(text);
-                if (value >= 0 && value <= 1)
-                {
-                    return text;
-                }
-            }
-            return defaultValue;
-        }
-        textValidate.blurBackgroundOpacity = text => opacityValidate(text, settings.blurBackgroundOpacity);
-        textValidate.customControlBackgroundOpacity = text => opacityValidate(text, settings.customControlBackgroundOpacity);
 
         function settingsChange(key, value)
         {
-            // const reloadable = Resource.reloadables[key];
-            // if (reloadable)
-            // {
-            //     settings[key] = value;
-            //     resources.fetchByKey(reloadable);
-            // }
             $(`input[type='checkbox'][key='${key}']`)
                 .prop("checked", value);
             $(`input[type='text'][key='${key}']`).val(value);
@@ -177,22 +38,9 @@
             {
                 $(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask").removeClass("opened");
             });
-            $("input[key='customStyleColor']").on("input", () =>
-            {
-                const color = textValidate.customStyleColor($("input[key='customStyleColor']").val());
-                const shadowColor = resources.color.hexToRgba(color + "70");
-                $("div.custom-color-preview")
-                    .css("background", color)
-                    .css("box-shadow", `0px 2px 8px 1px rgba(${shadowColor.r},${shadowColor.g},${shadowColor.b},${shadowColor.a})`);
-            });
             $("input[type='text'][key]").each((_, element) =>
             {
                 $(element).attr("placeholder", settings[$(element).attr("key")]);
-            });
-            $("div.custom-color-preview").on("click", () =>
-            {
-                const box = $(".predefined-colors");
-                box.toggleClass("opened");
             });
             $(".gui-settings-content ul li.category").on("click", e =>
             {
@@ -205,45 +53,48 @@
             });
             onSettingsChange((key, _, value) =>
             {
-                settingsChange(key, value);
-                syncGui();
+                if (settings[key] !== value)
+                {
+                    settings[key] = value;
+                    $(`input[type='checkbox'][key='${key}']`)
+                        .prop("checked", value).change();
+                    $(`input[type='text'][key='${key}']`).val(value).change();
+                }
             });
         }
         function listenSettingsChange()
         {
-            const saveChanges = () =>
+            const reloadChanges = (key) =>
             {
-                $("input[type='checkbox'][key]")
-                    .each((_, element) =>
-                    {
-                        const key = element.getAttribute("key");
-                        const value = element.checked;
-                        // if (typeof GM_addValueChangeListener === "undefined")
-                        // {
-                        //     settingsChange(key, value);
-                        // }
-                        settings[key] = value;
-                    });
-                $("input[type='text'][key]")
-                    .each((_, element) =>
-                    {
-                        const key = element.getAttribute("key");
-                        const value = textValidate[key](element.value);
-                        if (key === "customStyleColor")
-                        {
-                            reloadColor(value);
-                        }
-                        // if (typeof GM_addValueChangeListener === "undefined")
-                        // {
-                        //     settingsChange(key, value);
-                        // }
-                        settings[key] = value;
-                        element.value = value;
-                    });
-                saveSettings(settings);
+                // const reloadableKey = Resource.reloadables[key];
+                // if (reloadableKey)
+                // {
+                //     resources.fetchByKey(reloadableKey);
+                // }
             };
-            $("input[type='checkbox'][key]").on("change", () => saveChanges());
-            $("input[type='text'][key]").on("change", () => saveChanges());
+            $("input[type='checkbox'][key]").each((_, element) =>
+            {
+                $(element).on("change", () =>
+                {
+                    const key = element.getAttribute("key");
+                    const value = element.checked;
+                    settings[key] = value;
+                    reloadChanges(key);
+                    saveSettings(settings);
+                });
+            });
+            $("input[type='text'][key]").each((_, element) =>
+            {
+                $(element).on("change", () =>
+                {
+                    const key = element.getAttribute("key");
+                    const value = Validator.getValidator(key).validate(element.value);
+                    settings[key] = value;
+                    element.value = value;
+                    reloadChanges(key);
+                    saveSettings(settings);
+                });
+            });
         }
         function listenDependencies()
         {
@@ -280,54 +131,6 @@
                 .on("change", e => checkBoxChange($(e.target)))
                 .each((_, e) => checkBoxChange($(e)));
         }
-        function addSettingsIcon(body)
-        {
-            if ($(".gui-settings").length === 0)
-            {
-                body.append(`<div class='gui-settings-icon-panel icons-enabled'>
-                    <div class='gui-settings-widgets' title='附加功能'>
-                        <i class="icon-widgets"></i>
-                    </div>
-                    <div class='gui-settings' title='设置'>
-                        <i class="icon-settings"></i>
-                    </div>
-                </div>`);
-                $(".gui-settings").on("click", () =>
-                {
-                    $(".gui-settings-box,.gui-settings-mask").addClass("opened");
-                });
-                $(".gui-settings-widgets").on("click", () =>
-                {
-                    $(".gui-settings-widgets-box,.gui-settings-mask").addClass("opened");
-                });
-            }
-            resources.applyStyle("guiSettingsStyle");
-        }
-        function addPredefinedColors()
-        {
-            const grid = $(".predefined-colors-grid");
-            for (const color of Object.values(colors))
-            {
-                $(`<div class='predefined-colors-grid-block'></div>`)
-                    .appendTo(grid)
-                    .css("background", color)
-                    .attr("data-color", color)
-                    .on("click", e =>
-                    {
-                        $(`input[key='customStyleColor']`)
-                            .val($(e.target).attr("data-color"))
-                            .trigger("input").change();
-                        $("div.custom-color-preview").on("click");
-                    });
-            }
-        }
-        function applyBlurEffect()
-        {
-            if (settings.blurSettingsPanel)
-            {
-                $(".gui-settings-box").addClass("blur");
-            }
-        }
         function checkOfflineData()
         {
             if (typeof offlineData !== "undefined")
@@ -352,23 +155,24 @@
                 settings.blurVideoControl = false;
                 saveSettings(settings);
             }
+            if (window.devicePixelRatio === 1)
+            {
+                $("input[key=harunaScale]").prop("disabled", true);
+                settings.harunaScale = false;
+                saveSettings(settings);
+            }
         }
 
-        addSettingsIcon($("body"));
-        const settingsBox = resources.data.guiSettingsDom.text;
-        if (settingsBox)
-        {
-            $("body").append(settingsBox);
-            setupEvents();
-            checkOfflineData();
-            syncGui();
-            listenDependencies();
-            addPredefinedColors();
-            listenSettingsChange();
-            // applyBlurEffect();
-            foldAllCategories();
-            checkCompatibility();
-        }
+        resources.applyStyle("guiSettingsStyle");
+        $("body").append(settingsBox);
+        setupEvents();
+        checkOfflineData();
+        syncGui();
+        listenDependencies();
+        themeColors.setupDom();
+        listenSettingsChange();
+        foldAllCategories();
+        checkCompatibility();
 
         new SpinQuery(
             () => $("body"),

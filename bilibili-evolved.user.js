@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.14
-// @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览, 下载视频或视频封面, 以及增加对触屏设备的支持等.
+// @version      1.6.21
+// @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
 // @license      MIT
@@ -55,8 +55,19 @@
         preserveRank: true,
         blurBackgroundOpacity: 0.382,
         defaultPlayerMode: "常规",
-        defaultVideoQuality: "自动",
         useDefaultVideoQuality: false,
+        defaultVideoQuality: "自动",
+        useDefaultDanmakuSettings: false,
+        enableDanmaku: true,
+        rememberDanmakuBlock: false,
+        danmakuBlockSettings: {
+            scroll: false,
+            top: false,
+            bottom: false,
+            color: false,
+            special: false,
+        },
+        skipChargeList: false,
         autoLightOff: false,
         useCache: true,
         autoContinue: false,
@@ -200,10 +211,32 @@
             iconsStyle: {
                 path: "min/icons.min.css",
             },
+            settingsSideBar: {
+                path: "min/settings-side-bar.min.js",
+            },
+            textValidate: {
+                path: "min/text-validate.min.js",
+            },
+            themeColors: {
+                path: "min/theme-colors.min.js",
+            },
+            settingsTooltipStyle: {
+                path: "min/settings-tooltip.min.css",
+            },
+            settingsTooltip: {
+                path: "min/settings-tooltip.min.js",
+                styles: [
+                    "settingsTooltipStyle"
+                ],
+            },
             guiSettings: {
                 path: "min/gui-settings.min.js",
                 dependencies: [
                     "guiSettingsDom",
+                    "textValidate",
+                    "settingsSideBar",
+                    "themeColors",
+                    "settingsTooltip",
                 ],
                 styles: [
                     "guiSettingsStyle",
@@ -255,7 +288,7 @@
                 ],
                 displayNames: {
                     useNewStyle: "样式调整",
-                    blurBackgroundOpacity: "顶栏(对横幅)不透明度",
+                    blurBackgroundOpacity: "顶栏(对横幅)透明度",
                 },
             },
             overrideNavBar: {
@@ -320,7 +353,7 @@
             harunaScale: {
                 path: "min/haruna-scale.min.js",
                 displayNames: {
-                    harunaScale: "缩放看板娘",
+                    harunaScale: "缩放直播看板娘",
                 },
             },
             removeLiveWatermark: {
@@ -342,6 +375,7 @@
                 path: "min/view-cover.min.js",
                 dependencies: [
                     "imageViewerDom",
+                    "videoInfo",
                 ],
                 styles: [
                     "imageViewerStyle",
@@ -490,7 +524,7 @@
                 },
                 dropdown: {
                     key: "defaultVideoQuality",
-                    items: ["1080P60", "1080P+", "1080P", "720P", "480P", "360P", "自动"],
+                    items: ["1080P60", "1080P+", "1080P", "720P60", "720P", "480P", "360P", "自动"],
                 },
             },
             comboLikeStyle: {
@@ -523,7 +557,27 @@
                 displayNames: {
                     expandDescription: "自动展开视频简介"
                 }
-            }
+            },
+            useDefaultDanmakuSettings: {
+                path: "min/default-danmaku-settings.min.js",
+                displayNames: {
+                    useDefaultDanmakuSettings: "使用默认弹幕设置",
+                    enableDanmaku: "开启弹幕",
+                    rememberDanmakuBlock: "记住弹幕屏蔽类型",
+                },
+            },
+            skipChargeListStyle: {
+                path: "min/skip-charge-list.min.css",
+            },
+            skipChargeList: {
+                path: "min/skip-charge-list.min.js",
+                styles: [
+                    "skipChargeListStyle",
+                ],
+                displayNames: {
+                    skipChargeList: "跳过充电鸣谢",
+                }
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
@@ -572,6 +626,12 @@
                 xhr.send();
             });
         }
+    }
+    function raiseEvent(element, eventName)
+    {
+        const event = document.createEvent("HTMLEvents");
+        event.initEvent(eventName, true, true);
+        element.dispatchEvent(event);
     }
     function fixed(number, precision = 1)
     {
@@ -686,7 +746,7 @@
                     return observer.start();
                 });
         }
-        static subtree(selector, callback)
+        static childList(selector, callback)
         {
             return Observer.observe(selector, callback, {
                 childList: true,
@@ -694,7 +754,15 @@
                 attributes: false,
             });
         }
-        static attributes(selector, callback)
+        static childListSubtree(selector, callback)
+        {
+            return Observer.observe(selector, callback, {
+                childList: true,
+                subtree: true,
+                attributes: false,
+            });
+        }
+        static attributesSubtree(selector, callback)
         {
             return Observer.observe(selector, callback, {
                 childList: false,
@@ -760,6 +828,10 @@
                     new SpinQuery(query, condition, it => resolve(it)).start();
                 });
             }
+        }
+        static select(query, action, failed)
+        {
+            return SpinQuery.condition(query, it => it !== null, action, failed);
         }
         static any(query, action, failed)
         {
@@ -940,7 +1012,7 @@
         }
         get filterInvert()
         {
-            return this.foreground === "#000" ? "" : "invert(1)";
+            return this.foreground === "#000" ? "invert(0)" : "invert(1)";
         }
     }
     // [Offline build placeholder]
@@ -1226,26 +1298,16 @@
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
 
-            const rgbToString = color =>
-            {
-                if (color.a)
-                {
-                    return `rgba(${color.r},${color.g},${color.b},${color.a})`;
-                }
-                return `rgb(${color.r},${color.g},${color.b})`;
-            };
+            const hexToRgba = input => this.color.rgbToString(this.color.hexToRgba(input));
             let styles = [];
             styles.push("--theme-color:" + settings.customStyleColor);
             for (let opacity = 10; opacity <= 90; opacity += 10)
             {
-                styles.push(`--theme-color-${opacity}:` +
-                    rgbToString(this.color.hexToRgba(settings.customStyleColor + opacity)));
+                styles.push(`--theme-color-${opacity}:` + hexToRgba(settings.customStyleColor + opacity));
             }
             styles.push("--foreground-color:" + settings.foreground);
-            styles.push("--foreground-color-b:" +
-                rgbToString(this.color.hexToRgba(settings.foreground + "b")));
-            styles.push("--foreground-color-d:" +
-                rgbToString(this.color.hexToRgba(settings.foreground + "d")));
+            styles.push("--foreground-color-b:" + hexToRgba(settings.foreground + "b"));
+            styles.push("--foreground-color-d:" + hexToRgba(settings.foreground + "d"));
             styles.push("--blue-image-filter:" + settings.blueImageFilter);
             styles.push("--pink-image-filter:" + settings.pinkImageFilter);
             styles.push("--brightness:" + settings.brightness);
@@ -1386,7 +1448,7 @@
                 });
             }
             await Promise.all(Object.values(Resource.manifest)
-                .filter(it  => it.dropdown)
+                .filter(it => it.dropdown)
                 .map(it => applyDropdownOption(it.dropdown))
             );
         }
@@ -1446,7 +1508,16 @@
     {
         loadResources();
         loadSettings();
-        unsafeWindow.bilibiliEvolved = { SpinQuery };
+        unsafeWindow.bilibiliEvolved = {
+            SpinQuery,
+            Toast,
+            Observer,
+            ColorProcessor,
+            DoubleClickEvent,
+            ResourceManager,
+            Resource,
+            ResourceType,
+        };
         const resources = new ResourceManager();
         resources.fetch().catch(error => logError(error));
     }

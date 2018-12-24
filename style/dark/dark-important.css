@@ -1,6 +1,7 @@
 .link-footer,
 .payment-active,
-.app-body .section-block
+.app-body .section-block,
+.bl-button--primary:disabled 
 {
     background-color: #222 !important;
 }
@@ -55,7 +56,9 @@ blockquote .color-yellow-04,
 .el-input__inner,
 .commnent-screen-wrap .el-input__inner,
 .tag-list li.tag-item.on,
-.bp-popup-panel .title-ctnr .popup-title
+.bp-popup-panel .title-ctnr .popup-title,
+.s-paging > ul > a.current,
+.s-paging > ul > span.current 
 {
     color: #eee !important;
 }
@@ -85,7 +88,8 @@ blockquote .color-yellow-04,
 .left-nav-ul .left-nav-item.active,
 .left-nav-ul .left-nav-item.active i.active,
 .left-nav-ul .left-nav-list.on .left-nav-item .icon,
-.left-nav-ul .left-nav-list.on .left-nav-item
+.left-nav-ul .left-nav-list.on .left-nav-item,
+.drop-list-v2-container .drop-list-v2-item-selected .drop-list-v2-item-cont p.item-cont-main 
 {
     color: var(--theme-color) !important;
 }

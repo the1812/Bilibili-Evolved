@@ -13,23 +13,27 @@
             },
             {
                 name: "1080P",
-                value: 80
+                value: 80,
+            },
+            {
+                name: "720P60",
+                value: 74,
             },
             {
                 name: "720P",
-                value: 64
+                value: 64,
             },
             {
                 name: "480P",
-                value: 32
+                value: 32,
             },
             {
                 name: "360P",
-                value: 15
+                value: 15,
             },
             {
                 name: "自动",
-                value: 0
+                value: 0,
             },
         ];
         async function applyQuality()
@@ -65,6 +69,6 @@
             }
             video.addEventListener("play", onplay);
         }
-        Observer.subtree("#bofqi", () => applyQuality());
+        (Observer.childList || Observer.subtree)("#bofqi", () => applyQuality());
     };
 })();

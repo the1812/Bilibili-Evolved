@@ -30,8 +30,8 @@
         {
             if (settings.autoLightOff)
             {
-                const unsafe$ = await SpinQuery.unsafeJquery();
-                const settingsButton = await SpinQuery.any(() => unsafe$(".bilibili-player-video-btn-setting"));
+                await SpinQuery.unsafeJquery();
+                const settingsButton = await SpinQuery.any(() => unsafeWindow.$(".bilibili-player-video-btn-setting"));
                 settingsButton.mouseover().mouseout();
                 lightOff = () =>
                 {
@@ -40,10 +40,8 @@
                         checkbox =>
                         {
                             const lightOffCheckBox = checkbox[0];
-                            const event = document.createEvent("HTMLEvents");
-                            event.initEvent("change", true, true);
                             lightOffCheckBox.checked = true;
-                            lightOffCheckBox.dispatchEvent(event);
+                            raiseEvent(lightOffCheckBox, "change");
                         }
                     );
                 };
@@ -94,6 +92,6 @@
                 video.addEventListener("play", onplay);
             }
         }
-        Observer.subtree("#bofqi", () => main());
+        (Observer.childList || Observer.subtree)("#bofqi", () => main());
     };
 })();

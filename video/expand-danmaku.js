@@ -2,7 +2,7 @@
 {
     return () =>
     {
-        Observer.subtree("#bofqi", () =>
+        (Observer.childList || Observer.subtree)("#bofqi", () =>
         {
             SpinQuery.any(
                 () => $(".bui-collapse-header"),
