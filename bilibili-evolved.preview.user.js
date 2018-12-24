@@ -1298,26 +1298,16 @@
             settings.brightness = this.color.brightness;
             settings.filterInvert = this.color.filterInvert;
 
-            const rgbToString = color =>
-            {
-                if (color.a)
-                {
-                    return `rgba(${color.r},${color.g},${color.b},${color.a})`;
-                }
-                return `rgb(${color.r},${color.g},${color.b})`;
-            };
+            const hexToRgba = input => this.color.rgbToString(this.color.hexToRgba(input));
             let styles = [];
             styles.push("--theme-color:" + settings.customStyleColor);
             for (let opacity = 10; opacity <= 90; opacity += 10)
             {
-                styles.push(`--theme-color-${opacity}:` +
-                    rgbToString(this.color.hexToRgba(settings.customStyleColor + opacity)));
+                styles.push(`--theme-color-${opacity}:` + hexToRgba(settings.customStyleColor + opacity));
             }
             styles.push("--foreground-color:" + settings.foreground);
-            styles.push("--foreground-color-b:" +
-                rgbToString(this.color.hexToRgba(settings.foreground + "b")));
-            styles.push("--foreground-color-d:" +
-                rgbToString(this.color.hexToRgba(settings.foreground + "d")));
+            styles.push("--foreground-color-b:" + hexToRgba(settings.foreground + "b"));
+            styles.push("--foreground-color-d:" + hexToRgba(settings.foreground + "d"));
             styles.push("--blue-image-filter:" + settings.blueImageFilter);
             styles.push("--pink-image-filter:" + settings.pinkImageFilter);
             styles.push("--brightness:" + settings.brightness);

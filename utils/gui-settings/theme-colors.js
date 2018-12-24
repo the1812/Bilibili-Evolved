@@ -30,6 +30,7 @@
                     return function (newColor)
                     {
                         const color = new ColorProcessor(newColor);
+                        const hexToRgba = input => color.rgbToString(color.hexToRgba(input));
 
                         const shadowColor = color.hexToRgba(newColor + "70");
                         $("div.custom-color-preview")
@@ -39,14 +40,11 @@
                         html.style.setProperty("--theme-color", newColor);
                         for (let opacity = 10; opacity <= 90; opacity += 10)
                         {
-                            html.style.setProperty(`--theme-color-${opacity}`,
-                                color.rgbToString(color.hexToRgba(newColor + opacity)));
+                            html.style.setProperty(`--theme-color-${opacity}`, hexToRgba(newColor + opacity));
                         }
                         html.style.setProperty("--foreground-color", color.foreground);
-                        html.style.setProperty("--foreground-color-b",
-                            color.rgbToString(color.hexToRgba(color.foreground + "b")));
-                        html.style.setProperty("--foreground-color-d",
-                            color.rgbToString(color.hexToRgba(color.foreground + "d")));
+                        html.style.setProperty("--foreground-color-b", hexToRgba(color.foreground + "b"));
+                        html.style.setProperty("--foreground-color-d", hexToRgba(color.foreground + "d"));
                         html.style.setProperty("--blue-image-filter", color.blueImageFilter);
                         html.style.setProperty("--pink-image-filter", color.pinkImageFilter);
                         html.style.setProperty("--brightness", color.brightness);
