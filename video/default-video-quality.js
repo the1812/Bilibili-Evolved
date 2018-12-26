@@ -41,16 +41,18 @@
             const qualityItems = await SpinQuery.any(
                 () => $(".bilibili-player-video-quality-menu .bui-select-list>li.bui-select-item"),
             );
+            const descendingOrder = (a, b) => b - a;
             const [availableHighestQualities] = qualityItems.toArray()
                 .map(it => parseInt(it.getAttribute("data-value")))
-                .sort(it => it);
+                .sort(descendingOrder);
             const [targetQuality] = qualities
                 .filter(it => it.name === settings.defaultVideoQuality)
-                .map(it => it.value);
+                .map(it => it.value)
+                .sort(descendingOrder);
             const [finalQuality] = qualities
                 .map(it => it.value)
                 .filter(it => it <= Math.min(targetQuality, availableHighestQualities))
-                .sort(it => it);
+                .sort(descendingOrder);
 
             console.info(`[Video Quality] availableHighestQualities=${availableHighestQualities}`);
             console.info(`[Video Quality] targetQuality=${targetQuality}`);
