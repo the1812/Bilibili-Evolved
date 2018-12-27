@@ -274,6 +274,9 @@
                     useDarkStyle: "夜间模式",
                 },
             },
+            tweetsStyle: {
+                path: "min/tweets.min.css",
+            },
             useNewStyle: {
                 path: "min/new-styles.min.js",
                 dependencies: [
@@ -284,7 +287,12 @@
                     {
                         key: "scrollbarStyle",
                         condition: () => document.URL !== `https://h.bilibili.com/`,
-                    }
+                    },
+                    {
+                        key: "tweetsStyle",
+                        condition: () => document.domain === "t.bilibili.com",
+                        important: true,
+                    },
                 ],
                 displayNames: {
                     useNewStyle: "样式调整",
