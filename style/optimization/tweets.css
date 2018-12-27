@@ -7,6 +7,7 @@
     display: block !important;
     color: var(--foreground-color-d) !important;
     transform: translateX(-125px);
+    -webkit-tap-highlight-color: transparent;
 }
 .nav-search-submit:hover
 {
