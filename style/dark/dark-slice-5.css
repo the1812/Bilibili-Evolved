@@ -527,7 +527,8 @@ table.invtable td,
 .main-c .main-b .main-b-l .convert,
 .main-c .main-b .main-b-l,
 .security-right .vip-help p,
-.channel-menu .r-box
+.channel-menu .r-box,
+.feed-card .content .card
 {
     border-color: transparent !important;
 }
