@@ -106,7 +106,6 @@ div.up-load
 }
 #nav_searchform
 {
-    margin-top: 0.1rem !important;
     border-radius: 4px !important;
     background: #fffb !important;
     border: none !important;
@@ -116,6 +115,10 @@ div.up-load
 #nav_searchform:hover
 {
     background-color: #fff !important;
+}
+.showSearch .nav-search-submit
+{
+    top: 6px !important;
 }
 #bilibiliPlayer
 {
