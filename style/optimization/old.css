@@ -40,6 +40,12 @@ a.t>i.bili-icon
     height: 16px !important;
     opacity: 0.81 !important;
 }
+.header-icon-bilibili-tv
+{
+    filter: brightness(0) var(--invert-filter) !important;
+    opacity: 0.81;
+    transform: scale(0.9);
+}
 .z_top .z_top_nav ul li.home
 {
     filter: brightness(0) invert(1) !important;
