@@ -223,7 +223,9 @@
 .date-picker-v2-container .date-picker-v2-nav-wrp .prev-btn-month,
 .date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item-disabled,
 .date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-disabled,
-.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more
+.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more,
+.article-holder .color-gray-03,
+.article-holder figcaption
 {
     color: #aaa !important;
 }
