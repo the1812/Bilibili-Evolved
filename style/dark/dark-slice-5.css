@@ -37,7 +37,9 @@
 .drop-cascader-container .drop-cascader-pre-wrp .drop-cascader-pre-item:hover,
 .drop-cascader-container .drop-cascader-list-wrp .drop-cascader-list-item:hover,
 .drop-list-v2-container .drop-list-v2-item:hover,
-.time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item:hover
+.time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item:hover,
+.main-c .main-b .main-b-l .convert,
+.channel-menu
 {
     background-color: #222 !important;
 }
@@ -130,7 +132,8 @@
 .d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-timer,
 .submit-button-group-v2-container .submit-btn-group-tpl,
 .date-picker-v2-container,
-.time-picker-v2-container
+.time-picker-v2-container,
+.channel-menu .box a:hover
 {
     background-color: #444 !important;
 }
@@ -223,7 +226,11 @@
 .date-picker-v2-container .date-picker-v2-nav-wrp .prev-btn-month,
 .date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item-disabled,
 .date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-disabled,
-.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more
+.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more,
+.article-holder .color-gray-03,
+.article-holder figcaption,
+.security-right .vip-help p,
+.channel-menu .box .count
 {
     color: #aaa !important;
 }
@@ -397,7 +404,15 @@ table.invtable td,
 .date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected,
 .time-picker-v2-container .time-picker-head-wrp .time-picker-show,
 .time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item,
-.bind-info .note-footer .btn-group .active-btn
+.bind-info .note-footer .btn-group .active-btn,
+.app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a:hover,
+.main-c .main-b .main-b-l .info-l p,
+.score-info span,
+.security-right .main-c .xts,
+.security-right .main-c .xts i,
+.main-c .main-b .main-b-l .convert,
+.security-right .vip-help a,
+.channel-menu .box a
 {
     color: #eee !important;
 }
@@ -506,7 +521,14 @@ table.invtable td,
 .drop-list-v2-container,
 .d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-date,
 .d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-timer,
-.submit-button-group-v2-container .submit-btn-group-tpl
+.submit-button-group-v2-container .submit-btn-group-tpl,
+.main-c .faq-l .faq-line,
+.main-c .faq-l .vip-help,
+.main-c .main-b .main-b-l .convert,
+.main-c .main-b .main-b-l,
+.security-right .vip-help p,
+.channel-menu .r-box,
+.feed-card .content .card
 {
     border-color: transparent !important;
 }
@@ -519,9 +541,16 @@ table.invtable td,
     border-color: #aaa !important;
 }
 .left-nav-logo,
-.icon-back
+.icon-back,
+.nav-item1 .nav-item1-title.arrow:after,
+.nav-item1 .nav-item1-title i.item0,
+.nav-item1 .nav-item1-title i.item1
 {
     filter: brightness(0) invert(1) !important;
+}
+.main-c .main-head 
+{
+    filter: brightness(0.5) contrast(3) !important;
 }
 .videoCharts .stat .stat-wrp,
 .article-data-wrp .video-box,
@@ -555,7 +584,8 @@ table.invtable td,
 .el-checkbox__inner:hover,
 .el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner,
-.bind-info .note-footer .btn-group .active-btn
+.bind-info .note-footer .btn-group .active-btn,
+.app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a 
 {
     border-color: var(--theme-color) !important;
 }
@@ -610,7 +640,9 @@ table.invtable td,
 .date-picker-v2-container .date-picker-v2-body-wrp .weekend-wrp .date-item-selected,
 .el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner,
-.bind-info .note-footer .btn-group .active-btn
+.bind-info .note-footer .btn-group .active-btn,
+.app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a:hover,
+.main-c .main-b .main-b-l .convert:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -681,7 +713,11 @@ table.invtable td,
 .date-picker-v2-container .date-picker-v2-footer-wrp .date-picker-v2-select-today,
 .date-picker-v2-container .date-picker-v2-body-wrp .date-wrp .date-item:hover,
 .time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item.time-selected,
-.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more:hover
+.cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more:hover,
+.app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a,
+.main-c .main-b .main-b-l .info-l i,
+.main-c .main-head .main-h span.sc,
+.security-right .vip-help a:hover 
 {
     color: var(--theme-color) !important;
 }

@@ -40,6 +40,12 @@ a.t>i.bili-icon
     height: 16px !important;
     opacity: 0.81 !important;
 }
+.header-icon-bilibili-tv
+{
+    filter: brightness(0) var(--invert-filter) !important;
+    opacity: 0.81;
+    transform: scale(0.9);
+}
 .z_top .z_top_nav ul li.home
 {
     filter: brightness(0) invert(1) !important;
@@ -100,7 +106,6 @@ div.up-load
 }
 #nav_searchform
 {
-    margin-top: 0.1rem !important;
     border-radius: 4px !important;
     background: #fffb !important;
     border: none !important;
@@ -110,6 +115,10 @@ div.up-load
 #nav_searchform:hover
 {
     background-color: #fff !important;
+}
+.showSearch .nav-search-submit
+{
+    top: 6px !important;
 }
 #bilibiliPlayer
 {

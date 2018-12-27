@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.21
+// @version      1.6.22
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -274,6 +274,9 @@
                     useDarkStyle: "夜间模式",
                 },
             },
+            tweetsStyle: {
+                path: "min/tweets.min.css",
+            },
             useNewStyle: {
                 path: "min/new-styles.min.js",
                 dependencies: [
@@ -284,7 +287,8 @@
                     {
                         key: "scrollbarStyle",
                         condition: () => document.URL !== `https://h.bilibili.com/`,
-                    }
+                    },
+                    "tweetsStyle",
                 ],
                 displayNames: {
                     useNewStyle: "样式调整",

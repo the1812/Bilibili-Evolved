@@ -21,6 +21,7 @@ ol.video-quality li,
     margin: 0;
     padding: 8px 16px;
     transition: all .2s ease-out;
+    text-align: center;
 }
 .video-action>div
 {
