@@ -58,7 +58,8 @@ blockquote .color-yellow-04,
 .tag-list li.tag-item.on,
 .bp-popup-panel .title-ctnr .popup-title,
 .s-paging > ul > a.current,
-.s-paging > ul > span.current 
+.s-paging > ul > span.current,
+.score-info .go-movie 
 {
     color: #eee !important;
 }
@@ -68,7 +69,8 @@ blockquote .color-yellow-04,
 .commnent-screen-wrap .el-input__inner,
 .ui-input-textarea.focus,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
-.tabs-bar
+.tabs-bar,
+.score-info .go-movie 
 {
     border-color: transparent !important;
 }
