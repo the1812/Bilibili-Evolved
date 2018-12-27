@@ -38,7 +38,8 @@
 .drop-cascader-container .drop-cascader-list-wrp .drop-cascader-list-item:hover,
 .drop-list-v2-container .drop-list-v2-item:hover,
 .time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item:hover,
-.main-c .main-b .main-b-l .convert
+.main-c .main-b .main-b-l .convert,
+.playpage_main .channel-menu
 {
     background-color: #222 !important;
 }
@@ -131,7 +132,8 @@
 .d-time-v2-container .d-time-v2-date-picker-wrp .date-picker-date-wrp .date-picker-timer,
 .submit-button-group-v2-container .submit-btn-group-tpl,
 .date-picker-v2-container,
-.time-picker-v2-container
+.time-picker-v2-container,
+.channel-menu .box a:hover
 {
     background-color: #444 !important;
 }
@@ -227,7 +229,8 @@
 .cover-v2-container .cover-v2-detail-wrp .cover-v2-selector .cover-v2-selector-title-more,
 .article-holder .color-gray-03,
 .article-holder figcaption,
-.security-right .vip-help p
+.security-right .vip-help p,
+.channel-menu .box .count
 {
     color: #aaa !important;
 }
@@ -408,7 +411,8 @@ table.invtable td,
 .security-right .main-c .xts,
 .security-right .main-c .xts i,
 .main-c .main-b .main-b-l .convert,
-.security-right .vip-help a
+.security-right .vip-help a,
+.channel-menu .box a
 {
     color: #eee !important;
 }
@@ -522,7 +526,8 @@ table.invtable td,
 .main-c .faq-l .vip-help,
 .main-c .main-b .main-b-l .convert,
 .main-c .main-b .main-b-l,
-.security-right .vip-help p
+.security-right .vip-help p,
+.channel-menu .r-box
 {
     border-color: transparent !important;
 }
