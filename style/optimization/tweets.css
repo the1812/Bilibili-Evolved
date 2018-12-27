@@ -6,6 +6,7 @@
 {
     display: block !important;
     color: var(--foreground-color-d) !important;
+    transform: translateX(-125px);
 }
 .nav-search-submit:hover
 {
@@ -36,6 +37,7 @@
 .showSearch .nav-search-submit:hover
 {
     color: #888 !important;
+    transform: none;
 }
 
 @media only screen and (max-width: 1291px)
