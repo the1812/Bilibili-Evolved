@@ -10,6 +10,10 @@
             () => $(".custom-scrollbar"),
             it => it.removeClass("custom-scrollbar")
         );
+        SpinQuery.any(
+            () => $("#banner_link"),
+            () => resources.removeStyle("tweetsStyle"),
+        );
         const newStyles = {
             selectors: [
                 "div.nav-con.fl",

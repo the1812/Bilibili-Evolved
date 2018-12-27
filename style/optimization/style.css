@@ -346,6 +346,10 @@ body
 {
     bottom: 0px !important;
 }
+.showSearch .nav-search-submit
+{
+    top: 6px !important;
+}
 
 .search-bar-ctnr .search-bar input::placeholder,
 .search-bar-ctnr .search-bar .search-btn,

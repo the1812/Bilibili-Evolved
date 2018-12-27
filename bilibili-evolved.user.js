@@ -288,18 +288,7 @@
                         key: "scrollbarStyle",
                         condition: () => document.URL !== `https://h.bilibili.com/`,
                     },
-                    {
-                        key: "tweetsStyle",
-                        condition()
-                        {
-                            const workingDomains = [
-                                "t.bilibili.com",
-                                "space.bilibili.com",
-                                "www.bilibili.com/bangumi"
-                            ];
-                            return workingDomains.some(it => document.URL.indexOf(it) !== -1);
-                        }
-                    },
+                    "tweetsStyle",
                 ],
                 displayNames: {
                     useNewStyle: "样式调整",
