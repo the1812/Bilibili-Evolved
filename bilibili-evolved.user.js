@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.21
+// @version      1.6.22
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -290,8 +290,15 @@
                     },
                     {
                         key: "tweetsStyle",
-                        condition: () => document.domain === "t.bilibili.com",
-                        important: true,
+                        condition()
+                        {
+                            const workingDomains = [
+                                "t.bilibili.com",
+                                "space.bilibili.com",
+                                "www.bilibili.com/bangumi"
+                            ];
+                            return workingDomains.some(it => document.URL.indexOf(it) !== -1);
+                        }
                     },
                 ],
                 displayNames: {
