@@ -412,7 +412,8 @@ table.invtable td,
 .security-right .main-c .xts i,
 .main-c .main-b .main-b-l .convert,
 .security-right .vip-help a,
-.channel-menu .box a
+.channel-menu .box a,
+.coin-operated-m .coin-bottom .coin-btn
 {
     color: #eee !important;
 }
@@ -528,7 +529,9 @@ table.invtable td,
 .main-c .main-b .main-b-l,
 .security-right .vip-help p,
 .channel-menu .r-box,
-.feed-card .content .card
+.feed-card .content .card,
+.coin-operated-m .coin-bottom .coin-btn,
+.coin-operated-m .coin-bottom .coin-btn:hover
 {
     border-color: transparent !important;
 }
@@ -642,7 +645,9 @@ table.invtable td,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner,
 .bind-info .note-footer .btn-group .active-btn,
 .app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a:hover,
-.main-c .main-b .main-b-l .convert:hover
+.main-c .main-b .main-b-l .convert:hover,
+.coin-operated-m .coin-bottom .coin-btn,
+.coin-operated-m .coin-bottom .coin-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
