@@ -60,9 +60,20 @@ div.stardust-player
 .link-navbar .nav-item .icon-font,
 .nav-header-wrapper .nav-header .nav-header-mainsite,
 .nav-header-wrapper .nav-header .order-center,
-.link-navbar .main-ctnr .custom-link>a
+.link-navbar .main-ctnr .custom-link>a,
+.stardust-video .nav-menu .nav-con .nav-item.home .drop,
+.stardust-video .nav-menu .nav-con .nav-item.home .header-icon-Navbar_logo
 {
     color: var(--foreground-color-d) !important;
+}
+.stardust-video .nav-menu .nav-con .nav-item.home .header-icon-Navbar_logo
+{
+    transform: scale(0.75) !important;
+    top: 7px !important;
+}
+.stardust-video .nav-menu .up-load .up-nav
+{
+    top: 42px !important;
 }
 
 li.nav-item:hover,
@@ -130,11 +141,16 @@ a.t>i.bili-icon,
 }
 div.up-load
 {
+    margin-top: 8px !important;
     margin-left: 9px !important;
     height: 32px !important;
     order: 4 !important;
     flex-grow: 0;
     flex-shrink: 0;
+}
+.stardust-video .nav-menu .nav-wrapper
+{
+    padding: 0 5rem !important;
 }
 .publish-btn
 {
@@ -192,7 +208,8 @@ div.up-load
     background-color: hsla(0,0%,var(--brightness),.2) !important;
 }
 
-.stardust-video .nav-con .nav-search
+.stardust-video .nav-con .nav-search,
+#nav_searchform
 {
     width: 130px !important;
 }
@@ -206,7 +223,6 @@ div.up-load
 .stardust-video .nav-con #nav_searchform,
 .nav-header-wrapper .nav-header .nav-header-search-bar
 {
-    margin-top: 0.1rem !important;
     border-radius: 4px !important;
     background: #fffb !important;
     border: none !important;
@@ -352,7 +368,8 @@ body
     }
 
     .stardust-video .nav-con .bilibili-suggest.nav,
-    .stardust-video .nav-con .nav-search
+    .stardust-video .nav-con .nav-search,
+    #nav_searchform
     {
         width: 250px !important;
     }
