@@ -39,7 +39,8 @@
 .drop-list-v2-container .drop-list-v2-item:hover,
 .time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item:hover,
 .main-c .main-b .main-b-l .convert,
-.channel-menu
+.channel-menu,
+.nameplate-card 
 {
     background-color: #222 !important;
 }
@@ -147,7 +148,8 @@
 .bangumi-order-wrap .bangumi-collection-d,
 .bangumi-order-wrap .bangumi-order,
 .bangumi-order-wrap .bangumi-order-d,
-.sr-record a.on
+.sr-record a.on,
+.nameplate-card .nameplate-arrow
 {
     background-image: none !important;
 }
@@ -413,7 +415,8 @@ table.invtable td,
 .main-c .main-b .main-b-l .convert,
 .security-right .vip-help a,
 .channel-menu .box a,
-.coin-operated-m .coin-bottom .coin-btn
+.coin-operated-m .coin-bottom .coin-btn,
+.nameplate-card .nameplate-text .n-name
 {
     color: #eee !important;
 }
@@ -531,7 +534,9 @@ table.invtable td,
 .channel-menu .r-box,
 .feed-card .content .card,
 .coin-operated-m .coin-bottom .coin-btn,
-.coin-operated-m .coin-bottom .coin-btn:hover
+.coin-operated-m .coin-bottom .coin-btn:hover,
+.nameplate-card,
+.nameplate-card .nameplate-text
 {
     border-color: transparent !important;
 }
@@ -722,7 +727,8 @@ table.invtable td,
 .app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a,
 .main-c .main-b .main-b-l .info-l i,
 .main-c .main-head .main-h span.sc,
-.security-right .vip-help a:hover 
+.security-right .vip-help a:hover,
+.nameplate-card .nameplate-text .n-type a 
 {
     color: var(--theme-color) !important;
 }
