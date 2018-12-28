@@ -416,7 +416,8 @@ table.invtable td,
 .security-right .vip-help a,
 .channel-menu .box a,
 .coin-operated-m .coin-bottom .coin-btn,
-.nameplate-card .nameplate-text .n-name
+.nameplate-card .nameplate-text .n-name,
+.main-t .main-title
 {
     color: #eee !important;
 }
