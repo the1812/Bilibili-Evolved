@@ -40,7 +40,8 @@
 .time-picker-v2-container .time-picker-body-wrp .time-picker-panel-select-wrp .time-picker-panel-select-item:hover,
 .main-c .main-b .main-b-l .convert,
 .channel-menu,
-.nameplate-card 
+.nameplate-card,
+.black-list .black-btn
 {
     background-color: #222 !important;
 }
@@ -232,7 +233,8 @@
 .article-holder .color-gray-03,
 .article-holder figcaption,
 .security-right .vip-help p,
-.channel-menu .box .count
+.channel-menu .box .count,
+.black-info .black-time
 {
     color: #aaa !important;
 }
@@ -417,7 +419,10 @@ table.invtable td,
 .channel-menu .box a,
 .coin-operated-m .coin-bottom .coin-btn,
 .nameplate-card .nameplate-text .n-name,
-.main-t .main-title
+.main-t .main-title,
+.black-info .black-name,
+.black-list .black-btn,
+.black-list .black-btn:hover
 {
     color: #eee !important;
 }
@@ -537,7 +542,10 @@ table.invtable td,
 .coin-operated-m .coin-bottom .coin-btn,
 .coin-operated-m .coin-bottom .coin-btn:hover,
 .nameplate-card,
-.nameplate-card .nameplate-text
+.nameplate-card .nameplate-text,
+.black-ul clearfix .black-list,
+.black-list .black-btn,
+.black-list .black-btn:hover
 {
     border-color: transparent !important;
 }
@@ -653,7 +661,8 @@ table.invtable td,
 .app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a:hover,
 .main-c .main-b .main-b-l .convert:hover,
 .coin-operated-m .coin-bottom .coin-btn,
-.coin-operated-m .coin-bottom .coin-btn:hover
+.coin-operated-m .coin-bottom .coin-btn:hover,
+.black-list .black-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
