@@ -746,7 +746,8 @@ table.invtable td,
 .main-c .main-b .main-b-l .info-l i,
 .main-c .main-head .main-h span.sc,
 .security-right .vip-help a:hover,
-.nameplate-card .nameplate-text .n-type a 
+.nameplate-card .nameplate-text .n-type a,
+.home-wrap .home-suggest .title .delete-history:hover 
 {
     color: var(--theme-color) !important;
 }
