@@ -158,7 +158,8 @@
 }
 .help-subcontent p,
 .biliPager .page-li,
-.cover-chop-modal-v2-body .cover-chop-modal-v2-body-split
+.cover-chop-modal-v2-body .cover-chop-modal-v2-body-split,
+.my-album .line 
 {
     background-color: transparent !important;
 }
@@ -238,7 +239,8 @@
 .channel-menu .box .count,
 .black-info .black-time,
 #page-fav .fav-main .fav-action-top .clearing-invalid-video,
-#page-fav .fav-main .fav-video-list .article-item .article-meta .meta-item
+#page-fav .fav-main .fav-video-list .article-item .article-meta .meta-item,
+.my-album .album-count
 {
     color: #aaa !important;
 }
