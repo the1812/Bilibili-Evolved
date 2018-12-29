@@ -18,6 +18,7 @@
     transition: all .3s ease-out;
     box-shadow: none;
     width: 0 !important;
+    padding: 0 !important;
 }
 .preserve-rank>a
 {
