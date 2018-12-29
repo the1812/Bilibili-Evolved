@@ -13,7 +13,10 @@
                     .insertAfter(rightNav);
             }
         ).start();
-
+        SpinQuery.any(
+            () => $("#banner_link"),
+            () => resources.removeStyle("tweetsStyle"),
+        );
         if (settings.preserveRank)
         {
             SpinQuery.any(

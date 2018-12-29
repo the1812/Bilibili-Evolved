@@ -299,6 +299,7 @@
                 path: "min/override-navbar.min.js",
                 styles: [
                     "navbarOverrideStyle",
+                    "tweetsStyle",
                     {
                         key: "noBannerStyle",
                         condition: () => !settings.showBanner
