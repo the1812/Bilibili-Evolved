@@ -237,7 +237,8 @@
 .security-right .vip-help p,
 .channel-menu .box .count,
 .black-info .black-time,
-#page-fav .fav-main .fav-action-top .clearing-invalid-video
+#page-fav .fav-main .fav-action-top .clearing-invalid-video,
+#page-fav .fav-main .fav-video-list .article-item .article-meta .meta-item
 {
     color: #aaa !important;
 }
