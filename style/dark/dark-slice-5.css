@@ -41,7 +41,8 @@
 .main-c .main-b .main-b-l .convert,
 .channel-menu,
 .nameplate-card,
-.black-list .black-btn
+.black-list .black-btn,
+.privilege-box-right-btn 
 {
     background-color: #222 !important;
 }
@@ -135,7 +136,8 @@
 .submit-button-group-v2-container .submit-btn-group-tpl,
 .date-picker-v2-container,
 .time-picker-v2-container,
-.channel-menu .box a:hover
+.channel-menu .box a:hover,
+.privilege-box clearfix .privilege-box-right
 {
     background-color: #444 !important;
 }
@@ -240,7 +242,10 @@
 .black-info .black-time,
 #page-fav .fav-main .fav-action-top .clearing-invalid-video,
 #page-fav .fav-main .fav-video-list .article-item .article-meta .meta-item,
-.my-album .album-count
+.my-album .album-count,
+.privilege-box-right-title .privilege-subtitle,
+.help-footer-warp p,
+.help-footer-warp .foot_title
 {
     color: #aaa !important;
 }
@@ -428,7 +433,14 @@ table.invtable td,
 .main-t .main-title,
 .black-info .black-name,
 .black-list .black-btn,
-.black-list .black-btn:hover
+.black-list .black-btn:hover,
+.privilege-content-warp .right-crumbs a,
+.privilege-content-warp .right-crumbs,
+.privilege-content-warp .right-crumbs i,
+.privilege-tabs-title,
+.privilege-tabs .privilege-item,
+.privilege-box-right-name,
+.privilege-box-right-btn
 {
     color: #eee !important;
 }
@@ -553,7 +565,10 @@ table.invtable td,
 .black-list .black-btn,
 .black-list .black-btn:hover,
 .home-wrap .home-input .type.selected,
-.home-wrap .home-input .type:hover
+.home-wrap .home-input .type:hover,
+.privilege-tabs-title,
+.privilege-content-warp .privilege-box,
+.privilege-box clearfix .privilege-box-right
 {
     border-color: transparent !important;
 }
@@ -670,7 +685,8 @@ table.invtable td,
 .main-c .main-b .main-b-l .convert:hover,
 .coin-operated-m .coin-bottom .coin-btn,
 .coin-operated-m .coin-bottom .coin-btn:hover,
-.black-list .black-btn:hover
+.black-list .black-btn:hover,
+.privilege-box-right-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -747,7 +763,9 @@ table.invtable td,
 .main-c .main-head .main-h span.sc,
 .security-right .vip-help a:hover,
 .nameplate-card .nameplate-text .n-type a,
-.home-wrap .home-suggest .title .delete-history:hover 
+.home-wrap .home-suggest .title .delete-history:hover,
+.privilege-tabs .privilege-item-active,
+.privilege-tabs .privilege-item:hover
 {
     color: var(--theme-color) !important;
 }
