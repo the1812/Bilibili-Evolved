@@ -20,7 +20,7 @@ body .bili-header-m .nav-menu div.nav-mask,
 {
     color: var(--foreground-color-d) !important;
 }
-li.nav-item:hover,
+li.nav-item:not(.profile-info):hover,
 .z_top .z_top_nav ul li:hover,
 .uns_box ul.menu li:not(.b-post):hover
 {
@@ -116,9 +116,13 @@ div.up-load
 {
     background-color: #fff !important;
 }
+.nav-search-submit
+{
+    top: 2px !important;
+}
 .showSearch .nav-search-submit
 {
-    top: 6px !important;
+    top: 4px !important;
 }
 #bilibiliPlayer
 {

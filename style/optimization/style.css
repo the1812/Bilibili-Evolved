@@ -76,7 +76,7 @@ div.stardust-player
     top: 42px !important;
 }
 
-li.nav-item:hover,
+li.nav-item:not(.profile-info):hover,
 .link-navbar .nav-item:hover,
 .shortcuts-ctnr .shortcut-item:hover,
 .my-link-btn:hover,
