@@ -137,7 +137,8 @@
 .date-picker-v2-container,
 .time-picker-v2-container,
 .channel-menu .box a:hover,
-.privilege-box clearfix .privilege-box-right
+.privilege-box clearfix .privilege-box-right,
+.pagelistbox clearfix .pagelistbox .p
 {
     background-color: #444 !important;
 }
