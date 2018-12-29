@@ -236,7 +236,8 @@
 .article-holder figcaption,
 .security-right .vip-help p,
 .channel-menu .box .count,
-.black-info .black-time
+.black-info .black-time,
+#page-fav .fav-main .fav-action-top .clearing-invalid-video
 {
     color: #aaa !important;
 }
