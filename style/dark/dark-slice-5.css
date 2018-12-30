@@ -42,7 +42,11 @@
 .channel-menu,
 .nameplate-card,
 .black-list .black-btn,
-.privilege-box-right-btn 
+.privilege-box-right-btn,
+.bui-container .gift-recommend,
+.bui-container .gift-all,
+.widescreen footer .footer-box ,
+.widescreen .footer
 {
     background-color: #222 !important;
 }
@@ -138,7 +142,9 @@
 .time-picker-v2-container,
 .channel-menu .box a:hover,
 .privilege-box clearfix .privilege-box-right,
-.pagelistbox clearfix .pagelistbox .p
+.pagelistbox clearfix .pagelistbox .p,
+.gift-recommend .gift-box .info,
+.gift-all .gift-box
 {
     background-color: #444 !important;
 }
@@ -155,7 +161,8 @@
 .sr-record a.on,
 .nameplate-card .nameplate-arrow,
 .home-wrap .home-input .type.selected,
-.home-wrap .home-input .type:hover
+.home-wrap .home-input .type:hover,
+.gift-recommend .gift-box .hover-bg
 {
     background-image: none !important;
 }
@@ -246,7 +253,14 @@
 .my-album .album-count,
 .privilege-box-right-title .privilege-subtitle,
 .help-footer-warp p,
-.help-footer-warp .foot_title
+.help-footer-warp .foot_title,
+.gift-recommend .gift-box .info .price-box .price-old,
+.gift-all .gift-box .info .price-box .price-old,
+.gift-all .gift-box .info p,
+.widescreen .footer,
+.footer-box .footer-text p,
+.footer-box a,
+.footer-text .record
 {
     color: #aaa !important;
 }
@@ -441,7 +455,16 @@ table.invtable td,
 .privilege-tabs-title,
 .privilege-tabs .privilege-item,
 .privilege-box-right-name,
-.privilege-box-right-btn
+.privilege-box-right-btn,
+.bui-content .g-title h4,
+.gift-recommend .gift-box .info h5,
+.bui-content .g-title .btn,
+.bui-content .g-title .btn:hover,
+.gift-all .gift-box .info h5,
+.gift-all .gift-box:hover .info h5,
+.gift-all .gift-box:hover .info p,
+.gift-all .gift-box:hover .info .btn,
+.gift-recommend .gift-box .hover-bg .depict
 {
     color: #eee !important;
 }
@@ -569,7 +592,11 @@ table.invtable td,
 .home-wrap .home-input .type:hover,
 .privilege-tabs-title,
 .privilege-content-warp .privilege-box,
-.privilege-box clearfix .privilege-box-right
+.privilege-box clearfix .privilege-box-right,
+.g-title .btn.btn-red,
+.g-title .btn.btn-red:hover,
+.gift-all .gift-box,
+.footer-logo-list .footer-logo
 {
     border-color: transparent !important;
 }
@@ -585,7 +612,8 @@ table.invtable td,
 .icon-back,
 .nav-item1 .nav-item1-title.arrow:after,
 .nav-item1 .nav-item1-title i.item0,
-.nav-item1 .nav-item1-title i.item1
+.nav-item1 .nav-item1-title i.item1,
+.footer-logo-list .footer-logo
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -687,7 +715,12 @@ table.invtable td,
 .coin-operated-m .coin-bottom .coin-btn,
 .coin-operated-m .coin-bottom .coin-btn:hover,
 .black-list .black-btn:hover,
-.privilege-box-right-btn:hover
+.privilege-box-right-btn:hover,
+.bui-content .g-title .btn:hover,
+.gift-recommend .g-title h4:before,
+.gift-all .g-title:before,
+.gift-all .gift-box:hover,
+.gift-recommend .gift-box .hover-bg
 {
     background-color: var(--theme-color) !important;
 }
@@ -766,7 +799,10 @@ table.invtable td,
 .nameplate-card .nameplate-text .n-type a,
 .home-wrap .home-suggest .title .delete-history:hover,
 .privilege-tabs .privilege-item-active,
-.privilege-tabs .privilege-item:hover
+.privilege-tabs .privilege-item:hover,
+.gift-recommend .gift-box .info .price-box em,
+.gift-all .gift-box .info .price-box em ,
+.footer-box .footer-text a:hover
 {
     color: var(--theme-color) !important;
 }
