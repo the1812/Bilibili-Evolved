@@ -801,8 +801,9 @@ table.invtable td,
 .privilege-tabs .privilege-item-active,
 .privilege-tabs .privilege-item:hover,
 .gift-recommend .gift-box .info .price-box em,
-.gift-all .gift-box .info .price-box em ,
-.footer-box .footer-text a:hover
+.gift-all .gift-box .info .price-box em,
+.footer-box .footer-text a:hover,
+.i-pin-info a:hover 
 {
     color: var(--theme-color) !important;
 }
