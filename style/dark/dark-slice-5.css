@@ -267,7 +267,8 @@
 .bangumi-detail .detail-info,
 .bangumi-detail .detail-evaluate p.static,
 .bangumi-detail .detail-evaluate,
-.main-container .sponsor-wrapper .sponsor-right-area .sponsor-count-info
+.main-container .sponsor-wrapper .sponsor-right-area .sponsor-count-info,
+.btn-sponsor-wrapper .sponsor-count
 {
     color: #aaa !important;
 }
