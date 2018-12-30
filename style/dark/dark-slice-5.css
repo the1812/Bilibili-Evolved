@@ -41,7 +41,13 @@
 .main-c .main-b .main-b-l .convert,
 .channel-menu,
 .nameplate-card,
-.black-list .black-btn
+.black-list .black-btn,
+.privilege-box-right-btn,
+.bui-container .gift-recommend,
+.bui-container .gift-all,
+.widescreen footer .footer-box ,
+.widescreen .footer,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover
 {
     background-color: #222 !important;
 }
@@ -135,7 +141,13 @@
 .submit-button-group-v2-container .submit-btn-group-tpl,
 .date-picker-v2-container,
 .time-picker-v2-container,
-.channel-menu .box a:hover
+.channel-menu .box a:hover,
+.privilege-box clearfix .privilege-box-right,
+.pagelistbox clearfix .pagelistbox .p,
+.gift-recommend .gift-box .info,
+.gift-all .gift-box,
+.bangumi-detail .detail-evaluate p i,
+.bangumi-detail .detail-evaluate p i:before
 {
     background-color: #444 !important;
 }
@@ -152,7 +164,8 @@
 .sr-record a.on,
 .nameplate-card .nameplate-arrow,
 .home-wrap .home-input .type.selected,
-.home-wrap .home-input .type:hover
+.home-wrap .home-input .type:hover,
+.gift-recommend .gift-box .hover-bg
 {
     background-image: none !important;
 }
@@ -240,7 +253,22 @@
 .black-info .black-time,
 #page-fav .fav-main .fav-action-top .clearing-invalid-video,
 #page-fav .fav-main .fav-video-list .article-item .article-meta .meta-item,
-.my-album .album-count
+.my-album .album-count,
+.privilege-box-right-title .privilege-subtitle,
+.help-footer-warp p,
+.help-footer-warp .foot_title,
+.gift-recommend .gift-box .info .price-box .price-old,
+.gift-all .gift-box .info .price-box .price-old,
+.gift-all .gift-box .info p,
+.widescreen .footer,
+.footer-box .footer-text p,
+.footer-box a,
+.footer-text .record,
+.bangumi-detail .detail-info,
+.bangumi-detail .detail-evaluate p.static,
+.bangumi-detail .detail-evaluate,
+.main-container .sponsor-wrapper .sponsor-right-area .sponsor-count-info,
+.btn-sponsor-wrapper .sponsor-count
 {
     color: #aaa !important;
 }
@@ -428,7 +456,25 @@ table.invtable td,
 .main-t .main-title,
 .black-info .black-name,
 .black-list .black-btn,
-.black-list .black-btn:hover
+.black-list .black-btn:hover,
+.privilege-content-warp .right-crumbs a,
+.privilege-content-warp .right-crumbs,
+.privilege-content-warp .right-crumbs i,
+.privilege-tabs-title,
+.privilege-tabs .privilege-item,
+.privilege-box-right-name,
+.privilege-box-right-btn,
+.bui-content .g-title h4,
+.gift-recommend .gift-box .info h5,
+.bui-content .g-title .btn,
+.bui-content .g-title .btn:hover,
+.gift-all .gift-box .info h5,
+.gift-all .gift-box:hover .info h5,
+.gift-all .gift-box:hover .info p,
+.gift-all .gift-box:hover .info .btn,
+.gift-recommend .gift-box .hover-bg .depict,
+.bangumi-detail .detail-evaluate p i,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn span
 {
     color: #eee !important;
 }
@@ -549,11 +595,20 @@ table.invtable td,
 .coin-operated-m .coin-bottom .coin-btn:hover,
 .nameplate-card,
 .nameplate-card .nameplate-text,
-.black-ul clearfix .black-list,
+.black-ul.clearfix .black-list,
 .black-list .black-btn,
 .black-list .black-btn:hover,
 .home-wrap .home-input .type.selected,
-.home-wrap .home-input .type:hover
+.home-wrap .home-input .type:hover,
+.privilege-tabs-title,
+.privilege-content-warp .privilege-box,
+.privilege-box clearfix .privilege-box-right,
+.g-title .btn.btn-red,
+.g-title .btn.btn-red:hover,
+.gift-all .gift-box,
+.footer-logo-list .footer-logo,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover
 {
     border-color: transparent !important;
 }
@@ -569,7 +624,8 @@ table.invtable td,
 .icon-back,
 .nav-item1 .nav-item1-title.arrow:after,
 .nav-item1 .nav-item1-title i.item0,
-.nav-item1 .nav-item1-title i.item1
+.nav-item1 .nav-item1-title i.item1,
+.footer-logo-list .footer-logo
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -670,7 +726,14 @@ table.invtable td,
 .main-c .main-b .main-b-l .convert:hover,
 .coin-operated-m .coin-bottom .coin-btn,
 .coin-operated-m .coin-bottom .coin-btn:hover,
-.black-list .black-btn:hover
+.black-list .black-btn:hover,
+.privilege-box-right-btn:hover,
+.bui-content .g-title .btn:hover,
+.gift-recommend .g-title h4:before,
+.gift-all .g-title:before,
+.gift-all .gift-box:hover,
+.gift-recommend .gift-box .hover-bg,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow
 {
     background-color: var(--theme-color) !important;
 }
@@ -746,7 +809,15 @@ table.invtable td,
 .main-c .main-b .main-b-l .info-l i,
 .main-c .main-head .main-h span.sc,
 .security-right .vip-help a:hover,
-.nameplate-card .nameplate-text .n-type a 
+.nameplate-card .nameplate-text .n-type a,
+.home-wrap .home-suggest .title .delete-history:hover,
+.privilege-tabs .privilege-item-active,
+.privilege-tabs .privilege-item:hover,
+.gift-recommend .gift-box .info .price-box em,
+.gift-all .gift-box .info .price-box em,
+.footer-box .footer-text a:hover,
+.i-pin-info a:hover ,
+.player-limit-wrap .limit_not_start_wrap .not_start_info span
 {
     color: var(--theme-color) !important;
 }
