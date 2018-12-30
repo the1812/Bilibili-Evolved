@@ -67,6 +67,7 @@
             color: false,
             special: false,
         },
+        defaultPlayerLayout: "新版2",
         skipChargeList: false,
         autoLightOff: false,
         useCache: true,
@@ -85,6 +86,7 @@
         downloadVideo: true,
         downloadDanmaku: true,
         useDefaultPlayerMode: true,
+        useDefaultPlayerLayout: true,
         about: false,
         blurSettingsPanel: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
@@ -585,6 +587,16 @@
                     skipChargeList: "跳过充电鸣谢",
                 }
             },
+            useDefaultPlayerLayout: {
+                path: "min/default-player-layout.min.js",
+                displayNames: {
+                    "defaultPlayerLayout": "默认播放器布局",
+                },
+                dropdown: {
+                    key: "defaultPlayerLayout",
+                    items: ["旧版", "新版"]
+                },
+            }
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
