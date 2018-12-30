@@ -67,7 +67,7 @@
             color: false,
             special: false,
         },
-        defaultPlayerLayout: "新版2",
+        defaultPlayerLayout: "新版",
         skipChargeList: false,
         autoLightOff: false,
         useCache: true,

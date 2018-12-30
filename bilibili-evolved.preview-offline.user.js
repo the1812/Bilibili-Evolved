@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      167.26
+// @version      167.28
 // @description  增强哔哩哔哩Web端体验(预览离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -68,7 +68,7 @@
             color: false,
             special: false,
         },
-        defaultPlayerLayout: "新版2",
+        defaultPlayerLayout: "新版",
         skipChargeList: false,
         autoLightOff: false,
         useCache: true,
