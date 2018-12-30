@@ -9,7 +9,6 @@
             aid: undefined,
             cid: undefined,
             isBangumi: false,
-            isMovie: false
         };
 
         const bangumiUrls = [];
