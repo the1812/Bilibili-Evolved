@@ -457,7 +457,7 @@
                     "downloadVideoDom",
                     // "videoInfo",
                 ],
-                style: [
+                styles: [
                     "downloadVideoStyle",
                 ],
                 displayNames: {
@@ -838,7 +838,7 @@
         }
         static select(query, action, failed)
         {
-            return SpinQuery.condition(query, it => it !== null && it !== undefined && !isNaN(it), action, failed);
+            return SpinQuery.condition(query, it => it !== null && it !== undefined, action, failed);
         }
         static any(query, action, failed)
         {
@@ -1524,7 +1524,7 @@
             ResourceManager,
             Resource,
             ResourceType,
-            GM_info
+            monkeyInfo: GM_info
         };
         const resources = new ResourceManager();
         resources.fetch().catch(error => logError(error));

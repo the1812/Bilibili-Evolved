@@ -47,7 +47,7 @@
                             {
                                 reject("获取清晰度信息失败.");
                             }
-                            const data = json.data;
+                            const data = json.data || json;
                             const qualities = data.accept_quality;
                             const internalNames = data.accept_format.split(",");
                             const displayNames = data.accept_description;
@@ -71,7 +71,12 @@
                     let url = `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json`;
                     if (pageData.isBangumi)
                     {
-                        SpinQuery.select(() => bangumiUrls[0],
+                        SpinQuery.select(
+                            () =>
+                            {
+                                const [bangumiUrl] = bangumiUrls;
+                                return bangumiUrl;
+                            },
                             bangumiUrl =>
                             {
                                 url = bangumiUrl;
