@@ -2,14 +2,23 @@
 {
     return (_, resources) =>
     {
-        const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
-        const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
+        // const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
+        // const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
         const pageData = {
             aid: undefined,
             cid: undefined,
             isBangumi: false,
             isMovie: false
         };
+
+        const bangumiUrls = [];
+        $(document).ajaxSend((event, request, params) =>
+        {
+            if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
+            {
+                bangumiUrls.unshift(params.url);
+            }
+        });
         class VideoFormat
         {
             constructor(quality, internalName, displayName)
@@ -28,35 +37,53 @@
             {
                 return new Promise((resolve, reject) =>
                 {
-                    const url = `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json`;
-                    const xhr = new XMLHttpRequest();
-                    xhr.addEventListener("load", () =>
+                    function downloadFormats(url)
                     {
-                        const json = JSON.parse(xhr.responseText);
-                        if (json.code !== 0)
+                        const xhr = new XMLHttpRequest();
+                        xhr.addEventListener("load", () =>
                         {
-                            reject("获取清晰度信息失败.");
-                        }
-                        const data = json.data;
-                        const qualities = data.accept_quality;
-                        const internalNames = data.accept_format.split(",");
-                        const displayNames = data.accept_description;
-                        const formats = [];
-                        while (qualities.length > 0)
-                        {
-                            const format = new VideoFormat(
-                                qualities.pop(),
-                                internalNames.pop(),
-                                displayNames.pop()
-                            );
-                            formats.push(format);
-                        }
-                        resolve(formats);
-                    });
-                    xhr.addEventListener("error", () => reject(`获取清晰度信息失败.`));
-                    xhr.withCredentials = true;
-                    xhr.open("GET", url);
-                    xhr.send();
+                            const json = JSON.parse(xhr.responseText);
+                            if (json.code !== 0)
+                            {
+                                reject("获取清晰度信息失败.");
+                            }
+                            const data = json.data;
+                            const qualities = data.accept_quality;
+                            const internalNames = data.accept_format.split(",");
+                            const displayNames = data.accept_description;
+                            const formats = [];
+                            while (qualities.length > 0)
+                            {
+                                const format = new VideoFormat(
+                                    qualities.pop(),
+                                    internalNames.pop(),
+                                    displayNames.pop()
+                                );
+                                formats.push(format);
+                            }
+                            resolve(formats);
+                        });
+                        xhr.addEventListener("error", () => reject(`获取清晰度信息失败.`));
+                        xhr.withCredentials = true;
+                        xhr.open("GET", url);
+                        xhr.send();
+                    }
+                    let url = `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json`;
+                    if (pageData.isBangumi)
+                    {
+                        SpinQuery.select(() => bangumiUrls[0],
+                            bangumiUrl =>
+                            {
+                                url = bangumiUrl;
+                                downloadFormats(url);
+                            },
+                            () => logError("获取番剧下载链接失败."),
+                        );
+                    }
+                    else
+                    {
+                        downloadFormats(url);
+                    }
                 });
             }
         }
@@ -257,33 +284,14 @@
         }
         async function loadPageData()
         {
-            const result = await (async () =>
-            {
-                let aid = (unsafeWindow || window).aid;
-                let cid = (unsafeWindow || window).cid;
-                if (aid === undefined || cid === undefined)
-                {
-                    const aidMatch = document.URL.match(/\/av(\d+)/);
-                    const epMatch = document.URL.match(/\/ep(\d+)/);
-                    if (aidMatch && aidMatch[1])
-                    {
-                        const info = await new VideoInfo(aidMatch[1]).fetchInfo();
-                        aid = info.aid;
-                        cid = info.cid;
-                    }
-                    // TODO: Download bangumi, the legacy method not work...
-                    // else if (epMatch && epMatch[1])
-                    // {
-                    //     const info = await new BangumiInfo(epMatch[1]).fetchInfo();
-                    //     aid = info.aid;
-                    //     cid = info.cid;
-                    // }
-                }
-                return [aid, cid];
-            })();
-            const [aid, cid] = result;
+            const aid = await SpinQuery.select(() => (unsafeWindow || window).aid);
+            const cid = await SpinQuery.select(() => (unsafeWindow || window).cid);
             pageData.aid = aid;
             pageData.cid = cid;
+            if (document.URL.indexOf("bangumi") !== -1)
+            {
+                pageData.isBangumi = true;
+            }
             return aid !== undefined && cid !== undefined;
         }
         async function loadWidget()
