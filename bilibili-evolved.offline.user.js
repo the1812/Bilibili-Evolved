@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      167.04
+// @version      167.05
 // @description  增强哔哩哔哩Web端体验(离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -95,7 +95,7 @@
     {
         if (settings.toastInternalError)
         {
-            Toast.error("stack" in message
+            Toast.error(typeof message === "object" && "stack" in message
                 ? message.stack
                 : message, "错误");
         }
@@ -456,8 +456,10 @@
                 path: "min/download-video.min.js",
                 dependencies: [
                     "downloadVideoDom",
-                    "downloadVideoStyle",
                     // "videoInfo",
+                ],
+                style: [
+                    "downloadVideoStyle",
                 ],
                 displayNames: {
                     "downloadVideo": "下载视频",
@@ -837,7 +839,7 @@
         }
         static select(query, action, failed)
         {
-            return SpinQuery.condition(query, it => it !== null, action, failed);
+            return SpinQuery.condition(query, it => it !== null && it !== undefined && !isNaN(it), action, failed);
         }
         static any(query, action, failed)
         {

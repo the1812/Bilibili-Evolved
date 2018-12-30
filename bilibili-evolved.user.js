@@ -94,7 +94,7 @@
     {
         if (settings.toastInternalError)
         {
-            Toast.error("stack" in message
+            Toast.error(typeof message === "object" && "stack" in message
                 ? message.stack
                 : message, "错误");
         }
@@ -455,8 +455,10 @@
                 path: "min/download-video.min.js",
                 dependencies: [
                     "downloadVideoDom",
-                    "downloadVideoStyle",
                     // "videoInfo",
+                ],
+                style: [
+                    "downloadVideoStyle",
                 ],
                 displayNames: {
                     "downloadVideo": "下载视频",
@@ -836,7 +838,7 @@
         }
         static select(query, action, failed)
         {
-            return SpinQuery.condition(query, it => it !== null, action, failed);
+            return SpinQuery.condition(query, it => it !== null && it !== undefined && !isNaN(it), action, failed);
         }
         static any(query, action, failed)
         {
