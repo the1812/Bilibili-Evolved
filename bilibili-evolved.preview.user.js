@@ -592,7 +592,7 @@
                 },
                 dropdown: {
                     key: "defaultPlayerLayout",
-                    items: ["旧版", "新版1", "新版2"]
+                    items: ["旧版", "新版"]
                 },
             }
         };
