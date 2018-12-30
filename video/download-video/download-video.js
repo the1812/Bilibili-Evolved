@@ -60,7 +60,7 @@
             {
                 if (quality)
                 {
-                    return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${this.format.quality}&otype=json`;
+                    return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`;
                 }
                 else
                 {
@@ -389,7 +389,7 @@
                 completeLink.setAttribute("download", result.filename);
                 completeLink.click();
 
-                const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename}">再次保存</a>`;
+                const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename.replace(/"/g, "&quot;")}">再次保存</a>`;
                 Toast.success(message, "下载视频");
                 pageData.entity.resetMenuClass();
             }
