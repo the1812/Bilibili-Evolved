@@ -270,13 +270,17 @@
             {
                 const [data] = downloadedData;
                 const blob = this.makeBlob(data);
-                const filename = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "") + this.extension();
+                const filename = document.title
+                    .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
+                    .replace("_番剧_bilibili_哔哩哔哩", "") + this.extension();
                 return [blob, filename];
             }
             async downloadMultiple(downloadedData)
             {
                 const zip = new JSZip();
-                const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+                const title = document.title
+                    .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
+                    .replace("_番剧_bilibili_哔哩哔哩", "");
                 if (downloadedData.length > 1)
                 {
                     downloadedData.forEach((data, index) =>
