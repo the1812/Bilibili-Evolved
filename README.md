@@ -83,7 +83,9 @@
 - **分段**的视频会把所有视频打包成`.zip`格式.
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
 - 下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=当前视频网址`**
-- 不同的浏览器对单个文件大小有限制, 如果在下载完成时浏览器发生崩溃, 请尝试适当降低画质.
+- Chrome浏览器对单个文件大小有[限制](https://chromium.googlesource.com/chromium/src/+/master/storage/browser/blob/README.md#example-limits), 如果在下载完成时浏览器发生崩溃, 请尝试适当降低画质.
+    - 64位限制: 2GB
+    - 32位限制: 614MB
 
 ### 下载弹幕
 在视频播放页面中, `下载弹幕`按钮将在`附加功能`中启用, 点击可以下载XML格式的弹幕. XML格式可以在[其他站点](https://tiansh.github.io/us-danmaku/bilibili/)转换为ASS格式.
