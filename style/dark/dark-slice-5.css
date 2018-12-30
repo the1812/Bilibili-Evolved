@@ -46,7 +46,8 @@
 .bui-container .gift-recommend,
 .bui-container .gift-all,
 .widescreen footer .footer-box ,
-.widescreen .footer
+.widescreen .footer,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover
 {
     background-color: #222 !important;
 }
@@ -144,7 +145,9 @@
 .privilege-box clearfix .privilege-box-right,
 .pagelistbox clearfix .pagelistbox .p,
 .gift-recommend .gift-box .info,
-.gift-all .gift-box
+.gift-all .gift-box,
+.bangumi-detail .detail-evaluate p i,
+.bangumi-detail .detail-evaluate p i:before
 {
     background-color: #444 !important;
 }
@@ -260,7 +263,11 @@
 .widescreen .footer,
 .footer-box .footer-text p,
 .footer-box a,
-.footer-text .record
+.footer-text .record,
+.bangumi-detail .detail-info,
+.bangumi-detail .detail-evaluate p.static,
+.bangumi-detail .detail-evaluate,
+.main-container .sponsor-wrapper .sponsor-right-area .sponsor-count-info
 {
     color: #aaa !important;
 }
@@ -464,7 +471,9 @@ table.invtable td,
 .gift-all .gift-box:hover .info h5,
 .gift-all .gift-box:hover .info p,
 .gift-all .gift-box:hover .info .btn,
-.gift-recommend .gift-box .hover-bg .depict
+.gift-recommend .gift-box .hover-bg .depict,
+.bangumi-detail .detail-evaluate p i,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn span
 {
     color: #eee !important;
 }
@@ -596,7 +605,9 @@ table.invtable td,
 .g-title .btn.btn-red,
 .g-title .btn.btn-red:hover,
 .gift-all .gift-box,
-.footer-logo-list .footer-logo
+.footer-logo-list .footer-logo,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover
 {
     border-color: transparent !important;
 }
@@ -720,7 +731,8 @@ table.invtable td,
 .gift-recommend .g-title h4:before,
 .gift-all .g-title:before,
 .gift-all .gift-box:hover,
-.gift-recommend .gift-box .hover-bg
+.gift-recommend .gift-box .hover-bg,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow
 {
     background-color: var(--theme-color) !important;
 }
@@ -803,7 +815,8 @@ table.invtable td,
 .gift-recommend .gift-box .info .price-box em,
 .gift-all .gift-box .info .price-box em,
 .footer-box .footer-text a:hover,
-.i-pin-info a:hover 
+.i-pin-info a:hover ,
+.player-limit-wrap .limit_not_start_wrap .not_start_info span
 {
     color: var(--theme-color) !important;
 }
