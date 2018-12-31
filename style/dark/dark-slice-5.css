@@ -51,7 +51,8 @@
 #app .player-box,
 .bili-wrapper clearfix .up-info-m,
 .elecrank-wrapper .elecrank-content .rank-item .msg,
-.elecrank-wrapper .elecrank-content .rank-item .item-num
+.elecrank-wrapper .elecrank-content .rank-item .item-num,
+.log-list li.log-item
 {
     background-color: #222 !important;
 }
@@ -159,7 +160,8 @@
 .elecrank-wrapper .elecrank-content,
 .video-toolbar-module .share-box:hover,
 .video-toolbar-module .app-download:hover ,
-.video-toolbar-module .share-box .share-popup
+.video-toolbar-module .share-box .share-popup,
+.bili-wrapper .del-log-content
 {
     background-color: #444 !important;
 }
@@ -298,7 +300,10 @@
 .s_tag .btn-view-tag a,
 .video-desc-m .reprint,
 .elecrank-header .rank-tab,
-.s_tag .btn-view-tag
+.s_tag .btn-view-tag,
+.del-log-content .del-log-header .block,
+.del-log-content .log-statictic,
+li.log-item .user-time
 {
     color: #aaa !important;
 }
@@ -511,7 +516,8 @@ table.invtable td,
 .video-toolbar-module .btn-item .t,
 .video-toolbar-module .app-download,
 .elecrank-wrapper .elecrank-content .rank-item .msg,
-.elecrank-wrapper .elecrank-content .rank-item .item-num
+.elecrank-wrapper .elecrank-content .rank-item .item-num,
+.log-item li.log-item .txt-block
 {
     color: #eee !important;
 }
@@ -868,7 +874,8 @@ table.invtable td,
 .player-limit-wrap .limit_not_start_wrap .not_start_info span,
 .video-info-m .tm-info a:hover,
 .s_tag .btn-view-tag a:hover,
-.elecrank-header .rank-tab.active 
+.elecrank-header .rank-tab.active ,
+li.log-item .user-action .up-mark
 {
     color: var(--theme-color) !important;
 }
