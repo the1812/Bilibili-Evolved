@@ -268,7 +268,9 @@
 .bangumi-detail .detail-evaluate p.static,
 .bangumi-detail .detail-evaluate,
 .main-container .sponsor-wrapper .sponsor-right-area .sponsor-count-info,
-.btn-sponsor-wrapper .sponsor-count
+.btn-sponsor-wrapper .sponsor-count,
+#page-fav .fav-main .fav-video-list.topic-list .large-item .desc,
+#page-fav .fav-main .fav-video-list.topic-list .large-item .pubdate
 {
     color: #aaa !important;
 }
