@@ -51,8 +51,7 @@
 #app .player-box,
 .bili-wrapper clearfix .up-info-m,
 .elecrank-wrapper .elecrank-content .rank-item .msg,
-.elecrank-wrapper .elecrank-content .rank-item .item-num,
-.video-toolbar-module .app-download:hover 
+.elecrank-wrapper .elecrank-content .rank-item .item-num
 {
     background-color: #222 !important;
 }
@@ -157,7 +156,10 @@
 .video-toolbar-module,
 .elecrank-header .name,
 .elecrank-wrapper.report-wrap-module.report-scroll-module .elecrank-header,
-.elecrank-wrapper .elecrank-content
+.elecrank-wrapper .elecrank-content,
+.video-toolbar-module .share-box:hover,
+.video-toolbar-module .app-download:hover ,
+.video-toolbar-module .share-box .share-popup
 {
     background-color: #444 !important;
 }
@@ -649,7 +651,10 @@ table.invtable td,
 .l-wrapper .y-layout,
 .elecrank-wrapper.report-wrap-module.report-scroll-module .elecrank-header,
 .elecrank-wrapper .elecrank-content,
-.elecrank-wrapper .elecrank-footer
+.elecrank-wrapper .elecrank-footer,
+.video-toolbar-module .app-download:hover,
+.video-toolbar-module .share-box:hover,
+.video-toolbar-module .share-box:hover .share-popup
 {
     border-color: transparent !important;
 }
