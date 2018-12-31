@@ -45,9 +45,14 @@
 .privilege-box-right-btn,
 .bui-container .gift-recommend,
 .bui-container .gift-all,
-.widescreen footer .footer-box ,
+.widescreen.footer .footer-box,
 .widescreen .footer,
-.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover,
+#app .player-box,
+.bili-wrapper clearfix .up-info-m,
+.elecrank-wrapper .elecrank-content .rank-item .msg,
+.elecrank-wrapper .elecrank-content .rank-item .item-num,
+.video-toolbar-module .app-download:hover 
 {
     background-color: #222 !important;
 }
@@ -148,7 +153,11 @@
 .gift-all .gift-box,
 .bangumi-detail .detail-evaluate p i,
 .bangumi-detail .detail-evaluate p i:before,
-.privilege-warp .privilege-content-warp
+.privilege-warp .privilege-content-warp,
+.video-toolbar-module,
+.elecrank-header .name,
+.elecrank-wrapper.report-wrap-module.report-scroll-module .elecrank-header,
+.elecrank-wrapper .elecrank-content
 {
     background-color: #444 !important;
 }
@@ -166,7 +175,13 @@
 .nameplate-card .nameplate-arrow,
 .home-wrap .home-input .type.selected,
 .home-wrap .home-input .type:hover,
-.gift-recommend .gift-box .hover-bg
+.gift-recommend .gift-box .hover-bg,
+.video-info-m .number .coin b,
+.video-info-m .number .coin i,
+.video-info-m .number .fav b,
+.video-info-m .number .fav i,
+.elecrank-header .rank-tab .arr-up,
+.elecrank-wrapper .elecrank-content .rank-item .msg .arrow
 {
     background-image: none !important;
 }
@@ -271,7 +286,17 @@
 .main-container .sponsor-wrapper .sponsor-right-area .sponsor-count-info,
 .btn-sponsor-wrapper .sponsor-count,
 #page-fav .fav-main .fav-video-list.topic-list .large-item .desc,
-#page-fav .fav-main .fav-video-list.topic-list .large-item .pubdate
+#page-fav .fav-main .fav-video-list.topic-list .large-item .pubdate,
+.video-info-m .tm-info .btn-appeal,
+.video-info-m .tm-info time,
+.video-info-m .tm-info a,
+.video-info-m .tm-info,
+.up-info-m .number,
+.video-toolbar-module .btn-item .num,
+.s_tag .btn-view-tag a,
+.video-desc-m .reprint,
+.elecrank-header .rank-tab,
+.s_tag .btn-view-tag
 {
     color: #aaa !important;
 }
@@ -477,7 +502,14 @@ table.invtable td,
 .gift-all .gift-box:hover .info .btn,
 .gift-recommend .gift-box .hover-bg .depict,
 .bangumi-detail .detail-evaluate p i,
-.player-limit-wrap .limit_not_start_wrap .not_start_btn span
+.player-limit-wrap .limit_not_start_wrap .not_start_btn span,
+#viewbox_report .video-info-m h1,
+.elecrank-header .title,
+.video-toolbar-module .share-box .s-text .t,
+.video-toolbar-module .btn-item .t,
+.video-toolbar-module .app-download,
+.elecrank-wrapper .elecrank-content .rank-item .msg,
+.elecrank-wrapper .elecrank-content .rank-item .item-num
 {
     color: #eee !important;
 }
@@ -611,7 +643,13 @@ table.invtable td,
 .gift-all .gift-box,
 .footer-logo-list .footer-logo,
 .player-limit-wrap .limit_not_start_wrap .not_start_btn .follow,
-.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover,
+#app .player-box,
+.video-info-m .number .line,
+.l-wrapper .y-layout,
+.elecrank-wrapper.report-wrap-module.report-scroll-module .elecrank-header,
+.elecrank-wrapper .elecrank-content,
+.elecrank-wrapper .elecrank-footer
 {
     border-color: transparent !important;
 }
@@ -669,7 +707,9 @@ table.invtable td,
 .el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner,
 .bind-info .note-footer .btn-group .active-btn,
-.app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a 
+.app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a,
+.elecrank-header .rank-tab.active,
+.s_tag .btn-add:hover 
 {
     border-color: var(--theme-color) !important;
 }
@@ -819,8 +859,11 @@ table.invtable td,
 .gift-recommend .gift-box .info .price-box em,
 .gift-all .gift-box .info .price-box em,
 .footer-box .footer-text a:hover,
-.i-pin-info a:hover ,
-.player-limit-wrap .limit_not_start_wrap .not_start_info span
+.i-pin-info a:hover,
+.player-limit-wrap .limit_not_start_wrap .not_start_info span,
+.video-info-m .tm-info a:hover,
+.s_tag .btn-view-tag a:hover,
+.elecrank-header .rank-tab.active 
 {
     color: var(--theme-color) !important;
 }
