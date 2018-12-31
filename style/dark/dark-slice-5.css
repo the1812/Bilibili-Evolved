@@ -142,12 +142,13 @@
 .date-picker-v2-container,
 .time-picker-v2-container,
 .channel-menu .box a:hover,
-.privilege-box clearfix .privilege-box-right,
+.privilege-box.clearfix .privilege-box-right,
 .pagelistbox clearfix .pagelistbox .p,
 .gift-recommend .gift-box .info,
 .gift-all .gift-box,
 .bangumi-detail .detail-evaluate p i,
-.bangumi-detail .detail-evaluate p i:before
+.bangumi-detail .detail-evaluate p i:before,
+.privilege-warp .privilege-content-warp
 {
     background-color: #444 !important;
 }
@@ -604,7 +605,7 @@ table.invtable td,
 .home-wrap .home-input .type:hover,
 .privilege-tabs-title,
 .privilege-content-warp .privilege-box,
-.privilege-box clearfix .privilege-box-right,
+.privilege-box.clearfix .privilege-box-right,
 .g-title .btn.btn-red,
 .g-title .btn.btn-red:hover,
 .gift-all .gift-box,
