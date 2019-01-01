@@ -58,31 +58,11 @@
         const currentVersion = new Version(settings.currentVersion);
         if (latestVersion.greaterThan(currentVersion))
         {
+            const message = `新版本${latestVersion.versionString}已发布.  <a id="new-version-link" class="link" href="${settings.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;
+            const toast = Toast.info(message, "检查更新");
+            $("#new-version-link").on("click", () => toast && toast.dismiss());
+
             return {
-                settingsWidget: {
-                    after: () => $(".gui-settings-content"),
-                    content: `<div class="gui-settings-footer${(settings.blurSettingsPanel ? " blur" : "")}">
-                            <span class="gui-settings-label">新版本${latestVersion.versionString}已发布.</span>
-                            <a href="${settings.latestVersionLink}">
-                                <button
-                                    class="gui-settings-button"
-                                    id="new-version-update">
-                                    安装
-                                </button>
-                            </a>
-                            <a target="blank"  href="https://github.com/the1812/Bilibili-Evolved/releases">
-                                <button
-                                    class="gui-settings-button">
-                                    查看
-                                </button>
-                            </a>
-                        </div>`,
-                    success: () =>
-                    {
-                        const message = `新版本${latestVersion.versionString}已发布.  <a class="link" href="${settings.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;
-                        Toast.info(message, "检查更新");
-                    }
-                },
                 widget:
                 {
                     content: `
@@ -103,11 +83,8 @@
                     `,
                     success: () =>
                     {
-                        const message = `新版本${latestVersion.versionString}已发布.  <a id="new-version-link" class="link" href="${settings.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;
-                        const toast = Toast.info(message, "检查更新");
                         $("#new-version-update").on("click",
                             () => document.querySelector("#new-version-update a").click());
-                        $("#new-version-link").on("click", () => toast && toast.dismiss());
                         $("#new-version-info").on("click",
                             () => document.querySelector("#new-version-info a").click());
                     },
