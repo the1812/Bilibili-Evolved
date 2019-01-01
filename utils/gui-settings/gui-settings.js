@@ -3,6 +3,7 @@
     return (settings, resources) =>
     {
         const Validator = resources.attributes.textValidate.export.Validator;
+        const Search = resources.attributes.settingsSearch.export;
         const ThemeColors = resources.attributes.themeColors.export;
         const themeColors = new ThemeColors();
         const settingsBox = resources.data.guiSettingsDom.text;
@@ -174,6 +175,7 @@
         foldAllCategories();
         checkCompatibility();
 
+        new Search();
         new SpinQuery(
             () => $("body"),
             it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
