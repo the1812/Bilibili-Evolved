@@ -696,9 +696,11 @@ table.invtable td,
 .nav-item1 .nav-item1-title i.item1,
 .footer-logo-list .footer-logo,
 .video-toolbar-module .b-icon,
-.clearfix .bili-icon,
-.clearfix .icon,
-.video-toolbar-module .fav-box .btn-item .f-icon-move
+#arc_toolbar_report .elec-btn .bili-icon,
+#arc_toolbar_report .elec-btn .icon,
+.video-toolbar-module .fav-box .btn-item .f-icon-move,
+#playpage_share .share-btn .clearfix .bili-icon,
+#playpage_share .share-btn .clearfix .icon
 {
     filter: brightness(0) invert(1) !important;
 }
