@@ -132,6 +132,7 @@
     transition: all .2s;
     color: inherit;
     background: transparent;
+    box-sizing: border-box;
 }
 .gui-settings-close
 {
