@@ -166,7 +166,9 @@
 .video-toolbar-module .share-box:after,
 .video-toolbar-module .app-download:after,
 .video-toolbar-module .app-download .qr-code-box,
-.app-download .qr-code-box .box.div
+.app-download .qr-code-box .div.box,
+.fixed-nav-m .mini,
+.fixed-nav-m .go-top
 {
     background-color: #444 !important;
 }
@@ -531,7 +533,10 @@ table.invtable td,
 .elecrank-wrapper .elecrank-content.no-list .elec-btn,
 .video-toolbar-module .share-box .share-popup .share-address ul li .name,
 .video-toolbar-module .share-box .share-popup .share-address ul li .btn,
-.video-toolbar-module .share-box .share-popup .share-address ul li input
+.video-toolbar-module .share-box .share-popup .share-address ul li input,
+.fixed-nav-m .mini:hover,
+.fixed-nav-m .mini,
+.guide .trynew-btn a
 {
     color: #eee !important;
 }
@@ -677,7 +682,9 @@ table.invtable td,
 .video-toolbar-module .share-box:hover .share-popup,
 .video-toolbar-module .share-box .share-popup .share-address ul li input,
 .video-toolbar-module .share-box .share-popup .or-code,
-.video-toolbar-module .app-download:hover .qr-code-box
+.video-toolbar-module .app-download:hover .qr-code-box,
+.fixed-nav-m .mini,
+.fixed-nav-m .go-top
 {
     border-color: transparent !important;
 }
@@ -711,7 +718,8 @@ table.invtable td,
 .videoCharts .stat .stat-wrp,
 .article-data-wrp .video-box,
 .article-net-charts .content-box,
-.el-radio-button__orig-radio:checked + .el-radio-button__inner
+.el-radio-button__orig-radio:checked + .el-radio-button__inner,
+.guide .trynew-btn a
 {
     box-shadow: none !important;
 }
@@ -812,7 +820,10 @@ table.invtable td,
 .gift-recommend .gift-box .hover-bg,
 .player-limit-wrap .limit_not_start_wrap .not_start_btn .follow,
 .elecrank-wrapper .elecrank-content.no-list .elec-btn,
-.video-toolbar-module .share-box .share-popup .share-address ul li .btn
+.video-toolbar-module .share-box .share-popup .share-address ul li .btn,
+.fixed-nav-m .mini:hover,
+.pop-live .pl__mask .pl__icon--live,
+.guide .trynew-btn a
 {
     background-color: var(--theme-color) !important;
 }
