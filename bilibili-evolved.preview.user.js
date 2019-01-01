@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.25
+// @version      1.6.26
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -637,7 +637,7 @@
         if (load !== undefined) // callback
         {
             xhr.addEventListener("load", () => load && load(xhr.responseText));
-            xhr.addEventListener("error", () => error && error(xhr.responseText));
+            xhr.addEventListener("error", () => error && error(xhr.status));
             xhr.send();
         }
         else
@@ -645,7 +645,7 @@
             return new Promise((resolve, reject) =>
             {
                 xhr.addEventListener("load", () => resolve(xhr.responseText));
-                xhr.addEventListener("error", () => reject(xhr.responseText));
+                xhr.addEventListener("error", () => reject(xhr.status));
                 xhr.send();
             });
         }
@@ -1350,9 +1350,9 @@
             {
                 console.error(`Download error, XHR status: ${reason}`);
                 let toastMessage = `无法下载组件<span>${Resource.all[key].displayName}</span>`;
-                if (settings.toastInternalError && "stack" in reason)
+                if (settings.toastInternalError)
                 {
-                    toastMessage += "\n" + reason.stack;
+                    toastMessage += "\n" + reason;
                 }
                 Toast.error(toastMessage, "错误");
             });
@@ -1415,9 +1415,9 @@
                 {
                     console.error(`Failed to apply feature "${key}": ${error}`);
                     let toastMessage = `加载组件<span>${Resource.all[key].displayName}</span>失败`;
-                    if (settings.toastInternalError && "stack" in error)
+                    if (settings.toastInternalError)
                     {
-                        toastMessage += "\n" + error.stack;
+                        toastMessage += "\n" + error;
                     }
                     Toast.error(toastMessage, "错误");
                 }
