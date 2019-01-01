@@ -2,14 +2,86 @@
 {
     return (_, resources) =>
     {
-        const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
-        const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
+        // const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
+        // const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
         const pageData = {
+            entity: null,
             aid: undefined,
             cid: undefined,
             isBangumi: false,
-            isMovie: false
         };
+
+        const bangumiUrls = [];
+        $(document).ajaxSend((event, request, params) =>
+        {
+            if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
+            {
+                bangumiUrls.unshift(params.url);
+            }
+        });
+        class Video
+        {
+            constructor()
+            {
+                this.menuPanel = document.querySelector(".download-video-panel");
+                this.menuClasses = ["quality", "action", "progress"];
+                this.currentMenuClass = "quality";
+            }
+            addMenuClass()
+            {
+                this.menuPanel.classList.remove(...this.menuClasses);
+                this.menuPanel.classList.add(this.currentMenuClass);
+                return this.currentMenuClass;
+            }
+            resetMenuClass()
+            {
+                [this.currentMenuClass] = this.menuClasses;
+                this.addMenuClass();
+            }
+            nextMenuClass()
+            {
+                const index = this.menuClasses.indexOf(this.currentMenuClass) + 1;
+                const next = this.menuClasses[index >= this.menuClasses.length ? 0 : index];
+                this.currentMenuClass = next;
+                this.addMenuClass();
+                return next;
+            }
+            addError()
+            {
+                this.menuPanel.classList.add("error");
+            }
+            removeError()
+            {
+                this.menuPanel.classList.remove("error");
+                this.resetMenuClass();
+            }
+            async getUrl(quality)
+            {
+                if (quality)
+                {
+                    return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`;
+                }
+                else
+                {
+                    return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json`;
+                }
+            }
+        }
+        class Bangumi extends Video
+        {
+            constructor(menuPanel)
+            {
+                super(menuPanel);
+                this.menuClasses = ["action", "progress"];
+                this.currentMenuClass = "action";
+            }
+            async getUrl()
+            {
+                const url = await SpinQuery.select(() => bangumiUrls[0])
+                    .catch(() => logError("获取番剧下载链接失败."));
+                return url;
+            }
+        }
         class VideoFormat
         {
             constructor(quality, internalName, displayName)
@@ -20,7 +92,7 @@
             }
             async downloadInfo()
             {
-                const videoInfo = new VideoDownloadInfo(this);
+                const videoInfo = new VideoDownloader(this);
                 await videoInfo.fetchVideoInfo();
                 return videoInfo;
             }
@@ -28,39 +100,41 @@
             {
                 return new Promise((resolve, reject) =>
                 {
-                    const url = `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json`;
-                    const xhr = new XMLHttpRequest();
-                    xhr.addEventListener("load", () =>
+                    pageData.entity.getUrl().then(url =>
                     {
-                        const json = JSON.parse(xhr.responseText);
-                        if (json.code !== 0)
+                        const xhr = new XMLHttpRequest();
+                        xhr.addEventListener("load", () =>
                         {
-                            reject("获取清晰度信息失败.");
-                        }
-                        const data = json.data;
-                        const qualities = data.accept_quality;
-                        const internalNames = data.accept_format.split(",");
-                        const displayNames = data.accept_description;
-                        const formats = [];
-                        while (qualities.length > 0)
-                        {
-                            const format = new VideoFormat(
-                                qualities.pop(),
-                                internalNames.pop(),
-                                displayNames.pop()
-                            );
-                            formats.push(format);
-                        }
-                        resolve(formats);
+                            const json = JSON.parse(xhr.responseText);
+                            if (json.code !== 0)
+                            {
+                                reject("获取清晰度信息失败.");
+                            }
+                            const data = json.data || json;
+                            const qualities = data.accept_quality;
+                            const internalNames = data.accept_format.split(",");
+                            const displayNames = data.accept_description;
+                            const formats = [];
+                            while (qualities.length > 0)
+                            {
+                                const format = new VideoFormat(
+                                    qualities.pop(),
+                                    internalNames.pop(),
+                                    displayNames.pop()
+                                );
+                                formats.push(format);
+                            }
+                            resolve(formats);
+                        });
+                        xhr.addEventListener("error", () => reject(`获取清晰度信息失败.`));
+                        xhr.withCredentials = true;
+                        xhr.open("GET", url);
+                        xhr.send();
                     });
-                    xhr.addEventListener("error", () => reject(`获取清晰度信息失败.`));
-                    xhr.withCredentials = true;
-                    xhr.open("GET", url);
-                    xhr.send();
                 });
             }
         }
-        class VideoDownloadInfoFragment
+        class VideoDownloaderFragment
         {
             constructor(length, size, url, backupUrls)
             {
@@ -70,7 +144,7 @@
                 this.backupUrls = backupUrls;
             }
         }
-        class VideoDownloadInfo
+        class VideoDownloader
         {
             constructor(format, fragments)
             {
@@ -86,30 +160,29 @@
             {
                 return new Promise((resolve, reject) =>
                 {
-                    const url = `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${this.format.quality}&otype=json`;
-                    const xhr = new XMLHttpRequest();
-                    xhr.addEventListener("load", () =>
+                    pageData.entity.getUrl(this.format.quality).then(url =>
                     {
-                        const data = JSON.parse(xhr.responseText.replace(/http:/g, "https:")).data;
-                        if (data.quality !== this.format.quality)
+                        const xhr = new XMLHttpRequest();
+                        xhr.addEventListener("load", () =>
                         {
-                            reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
-                        }
-                        const urls = data.durl;
-                        this.fragments = urls.map(it => new VideoDownloadInfoFragment(
-                            it.length, it.size,
-                            it.url,
-                            it.backup_url
-                        ));
-                        // if (this.fragments.length > 1)
-                        // {
-                        //     reject("暂不支持分段视频的下载.");
-                        // }
-                        resolve(this.fragments);
+                            const json = JSON.parse(xhr.responseText.replace(/http:/g, "https:"));
+                            const data = json.data || json;
+                            if (!pageData.isBangumi && data.quality !== this.format.quality)
+                            {
+                                reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
+                            }
+                            const urls = data.durl;
+                            this.fragments = urls.map(it => new VideoDownloaderFragment(
+                                it.length, it.size,
+                                it.url,
+                                it.backup_url
+                            ));
+                            resolve(this.fragments);
+                        });
+                        xhr.withCredentials = true;
+                        xhr.open("GET", url);
+                        xhr.send();
                     });
-                    xhr.withCredentials = true;
-                    xhr.open("GET", url);
-                    xhr.send();
                 });
             }
             cancelDownload()
@@ -196,13 +269,17 @@
             {
                 const [data] = downloadedData;
                 const blob = this.makeBlob(data);
-                const filename = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "") + this.extension();
+                const filename = document.title
+                    .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
+                    .replace("_番剧_bilibili_哔哩哔哩", "") + this.extension();
                 return [blob, filename];
             }
             async downloadMultiple(downloadedData)
             {
                 const zip = new JSZip();
-                const title = document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+                const title = document.title
+                    .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
+                    .replace("_番剧_bilibili_哔哩哔哩", "");
                 if (downloadedData.length > 1)
                 {
                     downloadedData.forEach((data, index) =>
@@ -257,33 +334,19 @@
         }
         async function loadPageData()
         {
-            const result = await (async () =>
-            {
-                let aid = (unsafeWindow || window).aid;
-                let cid = (unsafeWindow || window).cid;
-                if (aid === undefined || cid === undefined)
-                {
-                    const aidMatch = document.URL.match(/\/av(\d+)/);
-                    const epMatch = document.URL.match(/\/ep(\d+)/);
-                    if (aidMatch && aidMatch[1])
-                    {
-                        const info = await new VideoInfo(aidMatch[1]).fetchInfo();
-                        aid = info.aid;
-                        cid = info.cid;
-                    }
-                    // TODO: Download bangumi, the legacy method not work...
-                    // else if (epMatch && epMatch[1])
-                    // {
-                    //     const info = await new BangumiInfo(epMatch[1]).fetchInfo();
-                    //     aid = info.aid;
-                    //     cid = info.cid;
-                    // }
-                }
-                return [aid, cid];
-            })();
-            const [aid, cid] = result;
+            const aid = await SpinQuery.select(() => (unsafeWindow || window).aid);
+            const cid = await SpinQuery.select(() => (unsafeWindow || window).cid);
             pageData.aid = aid;
             pageData.cid = cid;
+            if (document.URL.indexOf("bangumi") !== -1)
+            {
+                pageData.isBangumi = true;
+                pageData.entity = new Bangumi();
+            }
+            else
+            {
+                pageData.entity = new Video();
+            }
             return aid !== undefined && cid !== undefined;
         }
         async function loadWidget()
@@ -293,7 +356,7 @@
             let [selectedFormat] = formats;
             const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
             {
-                $(".download-video-panel").addClass("error");
+                pageData.entity.addError();
                 $(".video-error").text(error);
             });
             async function download()
@@ -302,9 +365,7 @@
                 {
                     return;
                 }
-                $(".download-video-panel")
-                    .removeClass("action")
-                    .addClass("progress");
+                pageData.entity.nextMenuClass();
                 const info = await getVideoInfo();
                 info.progress = percent =>
                 {
@@ -315,7 +376,7 @@
                 const result = await info.download()
                     .catch(error =>
                     {
-                        $(".download-video-panel").addClass("error");
+                        pageData.entity.addError();
                         $(".video-error").text(error);
                     });
                 if (!result) // canceled or other errors
@@ -327,12 +388,9 @@
                 completeLink.setAttribute("download", result.filename);
                 completeLink.click();
 
-                const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename}">再次保存</a>`;
+                const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename.replace(/"/g, "&quot;")}">再次保存</a>`;
                 Toast.success(message, "下载视频");
-
-                $(".download-video-panel")
-                    .removeClass("progress")
-                    .addClass("quality");
+                pageData.entity.resetMenuClass();
             }
             async function copyLink()
             {
@@ -343,9 +401,7 @@
                 const info = await getVideoInfo();
                 info.copyUrl();
                 Toast.success("已复制链接到剪贴板.", "复制链接", 3000);
-                $(".download-video-panel")
-                    .removeClass("action")
-                    .addClass("quality");
+                pageData.entity.resetMenuClass();
             }
             $(".video-action>#video-action-download").on("click", download);
             $(".video-action>#video-action-copy").on("click", copyLink);
@@ -355,9 +411,7 @@
                     .on("click", () =>
                     {
                         selectedFormat = format;
-                        $(".download-video-panel")
-                            .removeClass("quality")
-                            .addClass("action");
+                        pageData.entity.nextMenuClass();
                     })
                     .prependTo("ol.video-quality");
             });
@@ -374,11 +428,10 @@
             $(".video-error").on("click", () =>
             {
                 $(".video-error").text("");
-                $(".download-video-panel")
-                    .removeClass("error")
-                    .removeClass("progress")
-                    .addClass("quality");
+                pageData.entity.removeError();
             });
+
+            pageData.entity.addMenuClass();
         }
         return {
             widget:

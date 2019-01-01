@@ -61,10 +61,7 @@
     box-shadow: none;
 }
 #link-navbar-vm>.link-navbar .main-ctnr .nav-logo::before,
-#app>.link-navbar .main-ctnr .nav-logo::before
-{
-    filter: var(--blue-image-filter) !important;
-}
+#app>.link-navbar .main-ctnr .nav-logo::before,
 #app>.nav-header-wrapper .nav-header .order-icon
 {
     filter: brightness(0) invert(1) !important;

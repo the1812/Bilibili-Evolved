@@ -41,7 +41,19 @@
 .main-c .main-b .main-b-l .convert,
 .channel-menu,
 .nameplate-card,
-.black-list .black-btn
+.black-list .black-btn,
+.privilege-box-right-btn,
+.bui-container .gift-recommend,
+.bui-container .gift-all,
+.widescreen.footer .footer-box,
+.widescreen .footer,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover,
+#app .player-box,
+.bili-wrapper.clearfix .up-info-m,
+.elecrank-wrapper .elecrank-content .rank-item .msg,
+.elecrank-wrapper .elecrank-content .rank-item .item-num,
+.log-list li.log-item,
+.video-toolbar-module .share-box .share-popup .share-address ul li input
 {
     background-color: #222 !important;
 }
@@ -135,7 +147,26 @@
 .submit-button-group-v2-container .submit-btn-group-tpl,
 .date-picker-v2-container,
 .time-picker-v2-container,
-.channel-menu .box a:hover
+.channel-menu .box a:hover,
+.privilege-box.clearfix .privilege-box-right,
+.pagelistbox clearfix .pagelistbox .p,
+.gift-recommend .gift-box .info,
+.gift-all .gift-box,
+.bangumi-detail .detail-evaluate p i,
+.bangumi-detail .detail-evaluate p i:before,
+.privilege-warp .privilege-content-warp,
+.video-toolbar-module,
+.elecrank-header .name,
+.elecrank-wrapper.report-wrap-module.report-scroll-module .elecrank-header,
+.elecrank-wrapper .elecrank-content,
+.video-toolbar-module .share-box:hover,
+.video-toolbar-module .app-download:hover ,
+.video-toolbar-module .share-box .share-popup,
+.bili-wrapper .del-log-content,
+.video-toolbar-module .share-box:after,
+.video-toolbar-module .app-download:after,
+.video-toolbar-module .app-download .qr-code-box,
+.app-download .qr-code-box .box.div
 {
     background-color: #444 !important;
 }
@@ -152,7 +183,14 @@
 .sr-record a.on,
 .nameplate-card .nameplate-arrow,
 .home-wrap .home-input .type.selected,
-.home-wrap .home-input .type:hover
+.home-wrap .home-input .type:hover,
+.gift-recommend .gift-box .hover-bg,
+.video-info-m .number .coin b,
+.video-info-m .number .coin i,
+.video-info-m .number .fav b,
+.video-info-m .number .fav i,
+.elecrank-header .rank-tab .arr-up,
+.elecrank-wrapper .elecrank-content .rank-item .msg .arrow
 {
     background-image: none !important;
 }
@@ -240,7 +278,41 @@
 .black-info .black-time,
 #page-fav .fav-main .fav-action-top .clearing-invalid-video,
 #page-fav .fav-main .fav-video-list .article-item .article-meta .meta-item,
-.my-album .album-count
+.my-album .album-count,
+.privilege-box-right-title .privilege-subtitle,
+.help-footer-warp p,
+.help-footer-warp .foot_title,
+.gift-recommend .gift-box .info .price-box .price-old,
+.gift-all .gift-box .info .price-box .price-old,
+.gift-all .gift-box .info p,
+.widescreen .footer,
+.footer-box .footer-text p,
+.footer-box a,
+.footer-text .record,
+.bangumi-detail .detail-info,
+.bangumi-detail .detail-evaluate p.static,
+.bangumi-detail .detail-evaluate,
+.main-container .sponsor-wrapper .sponsor-right-area .sponsor-count-info,
+.btn-sponsor-wrapper .sponsor-count,
+#page-fav .fav-main .fav-video-list.topic-list .large-item .desc,
+#page-fav .fav-main .fav-video-list.topic-list .large-item .pubdate,
+.video-info-m .tm-info .btn-appeal,
+.video-info-m .tm-info time,
+.video-info-m .tm-info a,
+.video-info-m .tm-info,
+.up-info-m .number,
+.video-toolbar-module .btn-item .num,
+.s_tag .btn-view-tag a,
+.video-desc-m .reprint,
+.elecrank-header .rank-tab,
+.s_tag .btn-view-tag,
+.del-log-content .del-log-header .block,
+.del-log-content .log-statictic,
+li.log-item .user-time,
+.elecrank-wrapper .elecrank-content.no-list .desc,
+.video-toolbar-module .app-download .qr-code-box .box .txt,
+.video-toolbar-module .share-box .s-text .num,
+.pop-live .pl__user
 {
     color: #aaa !important;
 }
@@ -428,7 +500,38 @@ table.invtable td,
 .main-t .main-title,
 .black-info .black-name,
 .black-list .black-btn,
-.black-list .black-btn:hover
+.black-list .black-btn:hover,
+.privilege-content-warp .right-crumbs a,
+.privilege-content-warp .right-crumbs,
+.privilege-content-warp .right-crumbs i,
+.privilege-tabs-title,
+.privilege-tabs .privilege-item,
+.privilege-box-right-name,
+.privilege-box-right-btn,
+.bui-content .g-title h4,
+.gift-recommend .gift-box .info h5,
+.bui-content .g-title .btn,
+.bui-content .g-title .btn:hover,
+.gift-all .gift-box .info h5,
+.gift-all .gift-box:hover .info h5,
+.gift-all .gift-box:hover .info p,
+.gift-all .gift-box:hover .info .btn,
+.gift-recommend .gift-box .hover-bg .depict,
+.bangumi-detail .detail-evaluate p i,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn span,
+#viewbox_report.video-info-m h1,
+.elecrank-header .title,
+.video-toolbar-module .share-box .s-text .t,
+.video-toolbar-module .btn-item .t,
+.video-toolbar-module .app-download,
+.elecrank-wrapper .elecrank-content .rank-item .msg,
+.elecrank-wrapper .elecrank-content .rank-item .item-num,
+.log-item li.log-item .txt-block,
+.elecrank-wrapper.no .elecrank-header.no-list .total-txt,
+.elecrank-wrapper .elecrank-content.no-list .elec-btn,
+.video-toolbar-module .share-box .share-popup .share-address ul li .name,
+.video-toolbar-module .share-box .share-popup .share-address ul li .btn,
+.video-toolbar-module .share-box .share-popup .share-address ul li input
 {
     color: #eee !important;
 }
@@ -549,11 +652,32 @@ table.invtable td,
 .coin-operated-m .coin-bottom .coin-btn:hover,
 .nameplate-card,
 .nameplate-card .nameplate-text,
-.black-ul clearfix .black-list,
+.black-ul.clearfix .black-list,
 .black-list .black-btn,
 .black-list .black-btn:hover,
 .home-wrap .home-input .type.selected,
-.home-wrap .home-input .type:hover
+.home-wrap .home-input .type:hover,
+.privilege-tabs-title,
+.privilege-content-warp .privilege-box,
+.privilege-box.clearfix .privilege-box-right,
+.g-title .btn.btn-red,
+.g-title .btn.btn-red:hover,
+.gift-all .gift-box,
+.footer-logo-list .footer-logo,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover,
+#app .player-box,
+.video-info-m .number .line,
+.l-wrapper .y-layout,
+.elecrank-wrapper.report-wrap-module.report-scroll-module .elecrank-header,
+.elecrank-wrapper .elecrank-content,
+.elecrank-wrapper .elecrank-footer,
+.video-toolbar-module .app-download:hover,
+.video-toolbar-module .share-box:hover,
+.video-toolbar-module .share-box:hover .share-popup,
+.video-toolbar-module .share-box .share-popup .share-address ul li input,
+.video-toolbar-module .share-box .share-popup .or-code,
+.video-toolbar-module .app-download:hover .qr-code-box
 {
     border-color: transparent !important;
 }
@@ -569,7 +693,12 @@ table.invtable td,
 .icon-back,
 .nav-item1 .nav-item1-title.arrow:after,
 .nav-item1 .nav-item1-title i.item0,
-.nav-item1 .nav-item1-title i.item1
+.nav-item1 .nav-item1-title i.item1,
+.footer-logo-list .footer-logo,
+.video-toolbar-module .b-icon,
+.clearfix .bili-icon,
+.clearfix .icon,
+.video-toolbar-module .fav-box .btn-item .f-icon-move
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -610,7 +739,9 @@ table.invtable td,
 .el-checkbox__input.is-checked .el-checkbox__inner,
 .el-checkbox__input.is-indeterminate .el-checkbox__inner,
 .bind-info .note-footer .btn-group .active-btn,
-.app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a 
+.app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a,
+.elecrank-header .rank-tab.active,
+.s_tag .btn-add:hover 
 {
     border-color: var(--theme-color) !important;
 }
@@ -670,7 +801,16 @@ table.invtable td,
 .main-c .main-b .main-b-l .convert:hover,
 .coin-operated-m .coin-bottom .coin-btn,
 .coin-operated-m .coin-bottom .coin-btn:hover,
-.black-list .black-btn:hover
+.black-list .black-btn:hover,
+.privilege-box-right-btn:hover,
+.bui-content .g-title .btn:hover,
+.gift-recommend .g-title h4:before,
+.gift-all .g-title:before,
+.gift-all .gift-box:hover,
+.gift-recommend .gift-box .hover-bg,
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow,
+.elecrank-wrapper .elecrank-content.no-list .elec-btn,
+.video-toolbar-module .share-box .share-popup .share-address ul li .btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -746,7 +886,21 @@ table.invtable td,
 .main-c .main-b .main-b-l .info-l i,
 .main-c .main-head .main-h span.sc,
 .security-right .vip-help a:hover,
-.nameplate-card .nameplate-text .n-type a 
+.nameplate-card .nameplate-text .n-type a,
+.home-wrap .home-suggest .title .delete-history:hover,
+.privilege-tabs .privilege-item-active,
+.privilege-tabs .privilege-item:hover,
+.gift-recommend .gift-box .info .price-box em,
+.gift-all .gift-box .info .price-box em,
+.footer-box .footer-text a:hover,
+.i-pin-info a:hover,
+.player-limit-wrap .limit_not_start_wrap .not_start_info span,
+.video-info-m .tm-info a:hover,
+.s_tag .btn-view-tag a:hover,
+.elecrank-header .rank-tab.active ,
+li.log-item .user-action .up-mark,
+.video-toolbar-module .app-download .qr-code-box .box .txt a,
+.video-toolbar-module .elec-btn
 {
     color: var(--theme-color) !important;
 }

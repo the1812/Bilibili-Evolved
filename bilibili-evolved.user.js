@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.22
+// @version      1.6.25
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -67,6 +67,7 @@
             color: false,
             special: false,
         },
+        defaultPlayerLayout: "新版",
         skipChargeList: false,
         autoLightOff: false,
         useCache: true,
@@ -85,6 +86,7 @@
         downloadVideo: true,
         downloadDanmaku: true,
         useDefaultPlayerMode: true,
+        useDefaultPlayerLayout: true,
         about: false,
         blurSettingsPanel: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
@@ -94,7 +96,7 @@
     {
         if (settings.toastInternalError)
         {
-            Toast.error("stack" in message
+            Toast.error(typeof message === "object" && "stack" in message
                 ? message.stack
                 : message, "错误");
         }
@@ -229,6 +231,9 @@
                     "settingsTooltipStyle"
                 ],
             },
+            settingsSearch: {
+                path: "min/settings-search.min.js",
+            },
             guiSettings: {
                 path: "min/gui-settings.min.js",
                 dependencies: [
@@ -237,6 +242,7 @@
                     "settingsSideBar",
                     "themeColors",
                     "settingsTooltip",
+                    "settingsSearch",
                 ],
                 styles: [
                     "guiSettingsStyle",
@@ -299,6 +305,7 @@
                 path: "min/override-navbar.min.js",
                 styles: [
                     "navbarOverrideStyle",
+                    "tweetsStyle",
                     {
                         key: "noBannerStyle",
                         condition: () => !settings.showBanner
@@ -454,8 +461,10 @@
                 path: "min/download-video.min.js",
                 dependencies: [
                     "downloadVideoDom",
+                    // "videoInfo",
+                ],
+                styles: [
                     "downloadVideoStyle",
-                    "videoInfo",
                 ],
                 displayNames: {
                     "downloadVideo": "下载视频",
@@ -582,6 +591,16 @@
                     skipChargeList: "跳过充电鸣谢",
                 }
             },
+            useDefaultPlayerLayout: {
+                path: "min/default-player-layout.min.js",
+                displayNames: {
+                    "defaultPlayerLayout": "默认播放器布局",
+                },
+                dropdown: {
+                    key: "defaultPlayerLayout",
+                    items: ["旧版", "新版"]
+                },
+            }
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
@@ -835,7 +854,7 @@
         }
         static select(query, action, failed)
         {
-            return SpinQuery.condition(query, it => it !== null, action, failed);
+            return SpinQuery.condition(query, it => it !== null && it !== undefined, action, failed);
         }
         static any(query, action, failed)
         {
@@ -1521,6 +1540,7 @@
             ResourceManager,
             Resource,
             ResourceType,
+            monkeyInfo: GM_info
         };
         const resources = new ResourceManager();
         resources.fetch().catch(error => logError(error));

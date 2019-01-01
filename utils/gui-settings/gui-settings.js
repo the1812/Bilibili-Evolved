@@ -3,6 +3,7 @@
     return (settings, resources) =>
     {
         const Validator = resources.attributes.textValidate.export.Validator;
+        const Search = resources.attributes.settingsSearch.export;
         const ThemeColors = resources.attributes.themeColors.export;
         const themeColors = new ThemeColors();
         const settingsBox = resources.data.guiSettingsDom.text;
@@ -44,6 +45,12 @@
             });
             $(".gui-settings-content ul li.category").on("click", e =>
             {
+                const searchBox = document.querySelector(".gui-settings-search");
+                if (searchBox.value !== "")
+                {
+                    searchBox.value = "";
+                    raiseEvent(searchBox, "input");
+                }
                 e.currentTarget.classList.toggle("folded");
                 getCategoriyItems(e.currentTarget).forEach(it => it.classList.toggle("folded"));
             });
@@ -174,6 +181,7 @@
         foldAllCategories();
         checkCompatibility();
 
+        new Search();
         new SpinQuery(
             () => $("body"),
             it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),

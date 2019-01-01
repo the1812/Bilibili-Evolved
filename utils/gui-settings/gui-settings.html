@@ -10,11 +10,15 @@
   <div class="gui-settings-header">
     <i class="icon-settings"></i>
     <span class="gui-settings-title">设置</span>
+    <div style="flex: 1 0 auto"></div>
+    <i class="icon-search" style="transform: scale(0.9); margin-right: 0"></i>
+    <input class="gui-settings-search" placeholder="搜索设置项" type="text">
   </div>
   <div class="gui-settings-content">
     <ul>
       <category icon="video">视频</category>
       <dropdown indent="0" key="defaultPlayerMode" dependencies=""></dropdown>
+      <dropdown indent="0" key="defaultPlayerLayout" dependencies=""></dropdown>
       <checkbox indent="0" key="useDefaultVideoQuality" dependencies=""></checkbox>
       <dropdown indent="1" key="defaultVideoQuality" dependencies="useDefaultVideoQuality"></dropdown>
       <checkbox indent="0" key="useDefaultDanmakuSettings" dependencies=""></checkbox>

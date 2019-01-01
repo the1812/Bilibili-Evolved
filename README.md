@@ -1,4 +1,4 @@
-﻿# Bilibili-Evolved
+# Bilibili-Evolved
 增强哔哩哔哩Web端体验的油猴脚本: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 
 - [安装](#安装)
@@ -11,9 +11,11 @@
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
 
-[正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)
------ | ----- | ----- | -----
-正式发布的版本, 最稳定, 更新频率较低. | 新增内容测试的地方, 更新频率高, 但功能不稳定. | 内置所有依赖项, 体积较大, 更新频率高于正式版. | 兼备预览版和离线版的特点.
+点击名称即可安装👇
+
+| [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)
+| ----- | ----- | ----- | -----
+| 正式发布的版本, 最稳定, 更新频率较低. | 新增内容测试的地方, 更新频率高, 但功能不稳定. | 内置所有依赖项, 体积较大, 更新频率高于正式版. | 兼备预览版和离线版的特点.
 
 > 某些破坏性的大更新会使旧版脚本**完全**无法工作, 请及时检查更新.
 # 设置
@@ -25,6 +27,7 @@
 ## 默认值
 ### 视频
 - 默认播放器模式: `常规`
+- 默认播放器布局: `新版`
 - 使用默认视频画质: `关闭`
     - 画质设定: `自动`
 - 使用默认弹幕设置: `关闭`
@@ -76,12 +79,15 @@
 ### 下载视频(实验性)
 在视频播放页面中, `下载视频`按钮将在`附加功能`中启用, 点击可以选择清晰度并下载.
 
-如果你更喜欢使用其他的多线程下载软件, 可以在选择清晰度后选择`复制链接`. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=当前视频网址`**
-> 目前此功能只支持普通视频, 对番剧和电影无效. 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换.
-
-> **分段**的视频会把所有视频打包成`.zip`格式.
-
-> 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
+#### 注意事项
+- 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换.
+- 下载视频时, 画质是从下载菜单中选择; 而下载番剧/电影时, 画质将与播放器里选中的画质相同.
+- **分段**的视频会把所有视频打包成`.zip`格式.
+- 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
+- 下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=当前视频网址`**
+- Chrome浏览器对单个文件大小有[限制](https://chromium.googlesource.com/chromium/src/+/master/storage/browser/blob/README.md#example-limits), 如果在下载完成时浏览器发生崩溃, 请尝试适当降低画质.
+    - 64位限制: 2GB
+    - 32位限制: 614MB
 
 ### 下载弹幕
 在视频播放页面中, `下载弹幕`按钮将在`附加功能`中启用, 点击可以下载XML格式的弹幕. XML格式可以在[其他站点](https://tiansh.github.io/us-danmaku/bilibili/)转换为ASS格式.
@@ -93,6 +99,15 @@
 
 ### 默认播放器模式
 设置默认的播放器模式, 可以为`常规`, `宽屏`或`网页全屏`(`全屏`还未完成). 默认模式将在进入视频页面的首次播放时应用.
+### 默认播放器布局
+设置视频页(非番剧/电影)默认的播放器布局.
+> **⚠ 更改此设置将立即刷新页面**
+
+> **⚠ 旧版布局中, 很多功能将不适用, 如夜间模式, 样式调整, 历史记录点播放等**
+
+- 旧版: 传统布局/番剧区使用的布局
+- 新版: 视频区默认的新版布局
+
 ### 默认视频画质
 进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.
 ### 默认弹幕设置
@@ -138,7 +153,7 @@
 设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式.
 > 结束时间小于起始时间时将视为次日, 如`18:00`至`6:00`表示晚上18:00到次日6:00.
 ### 搜索栏置顶
-在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.
+在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示. 仅对常用页面有效, 部分页面可能会有点布局错乱.
 #### 启用前
 ![不调整](images/original-navbar.png)
 #### 启用后

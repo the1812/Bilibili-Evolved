@@ -61,22 +61,23 @@
                 const toast = new Toast(message, title, type);
                 toast.duration = duration;
                 toast.show();
+                return toast;
             }
             static show(message, title, duration)
             {
-                this.internalShow(message, title, duration, "default");
+                return this.internalShow(message, title, duration, "default");
             }
             static info(message, title, duration)
             {
-                this.internalShow(message, title, duration, "info");
+                return this.internalShow(message, title, duration, "info");
             }
             static success(message, title, duration)
             {
-                this.internalShow(message, title, duration, "success");
+                return this.internalShow(message, title, duration, "success");
             }
             static error(message, title, duration)
             {
-                this.internalShow(message, title, duration, "error");
+                return this.internalShow(message, title, duration, "error");
             }
         }
 
