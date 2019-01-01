@@ -89,5 +89,8 @@
                 });
             });
         })();
+        return {
+            export: toolTips,
+        };
     };
 })();
