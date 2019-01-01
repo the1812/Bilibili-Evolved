@@ -168,7 +168,8 @@
 .video-toolbar-module .app-download .qr-code-box,
 .app-download .qr-code-box .div.box,
 .fixed-nav-m .mini,
-.fixed-nav-m .go-top
+.fixed-nav-m .go-top,
+.guide .trynew-btn a
 {
     background-color: #444 !important;
 }
@@ -823,7 +824,7 @@ table.invtable td,
 .video-toolbar-module .share-box .share-popup .share-address ul li .btn,
 .fixed-nav-m .mini:hover,
 .pop-live .pl__mask .pl__icon--live,
-.guide .trynew-btn a
+.guide .trynew-btn a:hover
 {
     background-color: var(--theme-color) !important;
 }
