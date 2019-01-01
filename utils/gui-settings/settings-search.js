@@ -16,7 +16,7 @@
             }
             keywordChange()
             {
-                const value = this.input.value;
+                const value = this.input.value.trim();
                 this.items.forEach(item =>
                 {
                     const key = $(item).find("input").attr("key");
