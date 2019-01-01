@@ -49,10 +49,11 @@
 .widescreen .footer,
 .player-limit-wrap .limit_not_start_wrap .not_start_btn .follow:hover,
 #app .player-box,
-.bili-wrapper clearfix .up-info-m,
+.bili-wrapper.clearfix .up-info-m,
 .elecrank-wrapper .elecrank-content .rank-item .msg,
 .elecrank-wrapper .elecrank-content .rank-item .item-num,
-.log-list li.log-item
+.log-list li.log-item,
+.video-toolbar-module .share-box .share-popup .share-address ul li input
 {
     background-color: #222 !important;
 }
@@ -161,7 +162,11 @@
 .video-toolbar-module .share-box:hover,
 .video-toolbar-module .app-download:hover ,
 .video-toolbar-module .share-box .share-popup,
-.bili-wrapper .del-log-content
+.bili-wrapper .del-log-content,
+.video-toolbar-module .share-box:after,
+.video-toolbar-module .app-download:after,
+.video-toolbar-module .app-download .qr-code-box,
+.app-download .qr-code-box .box.div
 {
     background-color: #444 !important;
 }
@@ -303,7 +308,11 @@
 .s_tag .btn-view-tag,
 .del-log-content .del-log-header .block,
 .del-log-content .log-statictic,
-li.log-item .user-time
+li.log-item .user-time,
+.elecrank-wrapper .elecrank-content.no-list .desc,
+.video-toolbar-module .app-download .qr-code-box .box .txt,
+.video-toolbar-module .share-box .s-text .num,
+.pop-live .pl__user
 {
     color: #aaa !important;
 }
@@ -510,14 +519,19 @@ table.invtable td,
 .gift-recommend .gift-box .hover-bg .depict,
 .bangumi-detail .detail-evaluate p i,
 .player-limit-wrap .limit_not_start_wrap .not_start_btn span,
-#viewbox_report .video-info-m h1,
+#viewbox_report.video-info-m h1,
 .elecrank-header .title,
 .video-toolbar-module .share-box .s-text .t,
 .video-toolbar-module .btn-item .t,
 .video-toolbar-module .app-download,
 .elecrank-wrapper .elecrank-content .rank-item .msg,
 .elecrank-wrapper .elecrank-content .rank-item .item-num,
-.log-item li.log-item .txt-block
+.log-item li.log-item .txt-block,
+.elecrank-wrapper.no .elecrank-header.no-list .total-txt,
+.elecrank-wrapper .elecrank-content.no-list .elec-btn,
+.video-toolbar-module .share-box .share-popup .share-address ul li .name,
+.video-toolbar-module .share-box .share-popup .share-address ul li .btn,
+.video-toolbar-module .share-box .share-popup .share-address ul li input
 {
     color: #eee !important;
 }
@@ -660,7 +674,10 @@ table.invtable td,
 .elecrank-wrapper .elecrank-footer,
 .video-toolbar-module .app-download:hover,
 .video-toolbar-module .share-box:hover,
-.video-toolbar-module .share-box:hover .share-popup
+.video-toolbar-module .share-box:hover .share-popup,
+.video-toolbar-module .share-box .share-popup .share-address ul li input,
+.video-toolbar-module .share-box .share-popup .or-code,
+.video-toolbar-module .app-download:hover .qr-code-box
 {
     border-color: transparent !important;
 }
@@ -677,7 +694,11 @@ table.invtable td,
 .nav-item1 .nav-item1-title.arrow:after,
 .nav-item1 .nav-item1-title i.item0,
 .nav-item1 .nav-item1-title i.item1,
-.footer-logo-list .footer-logo
+.footer-logo-list .footer-logo,
+.video-toolbar-module .b-icon,
+.clearfix .bili-icon,
+.clearfix .icon,
+.video-toolbar-module .fav-box .btn-item .f-icon-move
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -787,7 +808,9 @@ table.invtable td,
 .gift-all .g-title:before,
 .gift-all .gift-box:hover,
 .gift-recommend .gift-box .hover-bg,
-.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow
+.player-limit-wrap .limit_not_start_wrap .not_start_btn .follow,
+.elecrank-wrapper .elecrank-content.no-list .elec-btn,
+.video-toolbar-module .share-box .share-popup .share-address ul li .btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -875,7 +898,9 @@ table.invtable td,
 .video-info-m .tm-info a:hover,
 .s_tag .btn-view-tag a:hover,
 .elecrank-header .rank-tab.active ,
-li.log-item .user-action .up-mark
+li.log-item .user-action .up-mark,
+.video-toolbar-module .app-download .qr-code-box .box .txt a,
+.video-toolbar-module .elec-btn
 {
     color: var(--theme-color) !important;
 }
