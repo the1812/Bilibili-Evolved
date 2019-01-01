@@ -698,7 +698,9 @@ table.invtable td,
 .video-toolbar-module .b-icon,
 #arc_toolbar_report .elec-btn .bili-icon,
 #arc_toolbar_report .elec-btn .icon,
-.video-toolbar-module .fav-box .btn-item .f-icon-move
+.video-toolbar-module .fav-box .btn-item .f-icon-move,
+#playpage_share .share-btn .clearfix .bili-icon,
+#playpage_share .share-btn .clearfix .icon
 {
     filter: brightness(0) invert(1) !important;
 }
