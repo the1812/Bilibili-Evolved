@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.26
+// @version      1.6.27
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -69,6 +69,7 @@
         },
         defaultPlayerLayout: "新版",
         skipChargeList: false,
+        comboLike: false,
         autoLightOff: false,
         useCache: true,
         autoContinue: false,
@@ -77,18 +78,14 @@
     };
     const fixedSettings = {
         guiSettings: true,
-        comboLike: false,
-        doubleCoins: false,
         viewCover: true,
         notifyNewVersion: true,
         clearCache: true,
-        fixFullscreen: false,
         downloadVideo: true,
         downloadDanmaku: true,
         useDefaultPlayerMode: true,
         useDefaultPlayerLayout: true,
         about: false,
-        blurSettingsPanel: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
         currentVersion: GM_info.script.version,
     };
@@ -540,17 +537,10 @@
                     items: ["1080P60", "1080P+", "1080P", "720P60", "720P", "480P", "360P", "自动"],
                 },
             },
-            comboLikeStyle: {
-                path: "min/combo-like.min.css",
-            },
             comboLike: {
                 path: "min/combo-like.min.js",
-                styles: [
-                    "comboLikeStyle",
-                ],
                 displayNames: {
-                    comboLike: "启用素质三连",
-                    doubleCoins: "为原创视频投2个币"
+                    comboLike: "素质三连触摸支持",
                 },
             },
             autoContinue: {
