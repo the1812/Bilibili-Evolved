@@ -169,7 +169,8 @@
 .app-download .qr-code-box .div.box,
 .fixed-nav-m .mini,
 .fixed-nav-m .go-top,
-.guide .trynew-btn a
+.guide .trynew-btn a,
+.clearfix .multi-page .item
 {
     background-color: #444 !important;
 }
@@ -200,7 +201,8 @@
 .help-subcontent p,
 .biliPager .page-li,
 .cover-chop-modal-v2-body .cover-chop-modal-v2-body-split,
-.my-album .line 
+.my-album .line,
+#app .player-box .multi-page
 {
     background-color: transparent !important;
 }
@@ -535,9 +537,12 @@ table.invtable td,
 .video-toolbar-module .share-box .share-popup .share-address ul li .name,
 .video-toolbar-module .share-box .share-popup .share-address ul li .btn,
 .video-toolbar-module .share-box .share-popup .share-address ul li input,
-.fixed-nav-m .mini:hover,
-.fixed-nav-m .mini,
-.guide .trynew-btn a
+#fixnav_report .fixed-nav-m .mini:hover,
+#fixnav_report .fixed-nav-m .mini,
+.guide .trynew-btn a,
+.clearfix .multi-page .item.on,
+.clearfix .multi-page .item:hover,
+.clearfix .multi-page .item
 {
     color: #eee !important;
 }
@@ -685,7 +690,10 @@ table.invtable td,
 .video-toolbar-module .share-box .share-popup .or-code,
 .video-toolbar-module .app-download:hover .qr-code-box,
 .fixed-nav-m .mini,
-.fixed-nav-m .go-top
+.fixed-nav-m .go-top,
+.clearfix .multi-page .item.on,
+.clearfix .multi-page .item:hover,
+.clearfix .multi-page .item
 {
     border-color: transparent !important;
 }
@@ -824,7 +832,9 @@ table.invtable td,
 .video-toolbar-module .share-box .share-popup .share-address ul li .btn,
 .fixed-nav-m .mini:hover,
 .pop-live .pl__mask .pl__icon--live,
-.guide .trynew-btn a:hover
+.guide .trynew-btn a:hover,
+.clearfix .multi-page .item.on,
+.clearfix .multi-page .item:hover
 {
     background-color: var(--theme-color) !important;
 }
