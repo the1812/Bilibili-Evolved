@@ -72,6 +72,7 @@
         }
         (async () =>
         {
+            resources.applyStyle("settingsTooltipStyle");
             const tooltip = await SpinQuery.select(() => document.querySelector(".gui-settings-tooltip"));
             document.querySelectorAll(".gui-settings-content>ul>li").forEach(element =>
             {

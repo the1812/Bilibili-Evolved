@@ -224,7 +224,7 @@
             },
             settingsTooltip: {
                 path: "min/settings-tooltip.min.js",
-                styles: [
+                dependencies: [
                     "settingsTooltipStyle"
                 ],
             },
@@ -1347,32 +1347,36 @@
         {
             return Resource.all[key].getStyle(id);
         }
+        fetchStyleByKey(key)
+        {
+            if (settings[key] !== true)
+            {
+                return;
+            }
+            Resource.all[key].styles
+                .filter(it => it.condition !== undefined ? it.condition() : true)
+                .forEach(it =>
+                {
+                    const important = typeof it === "object" ? it.important : false;
+                    const key = typeof it === "object" ? it.key : it;
+                    Resource.all[key].download().then(() =>
+                    {
+                        if (important)
+                        {
+                            contentLoaded(() => this.applyImportantStyle(key));
+                        }
+                        else
+                        {
+                            this.applyStyle(key);
+                        }
+                    });
+                });
+        }
         fetchStyles()
         {
-            for (const [key, resource] of Object.entries(Resource.all))
+            for (const key in Resource.all)
             {
-                if (settings[key] !== true)
-                {
-                    continue;
-                }
-                resource.styles
-                    .filter(it => it.condition !== undefined ? it.condition() : true)
-                    .forEach(it =>
-                    {
-                        const important = typeof it === "object" ? it.important : false;
-                        const key = typeof it === "object" ? it.key : it;
-                        Resource.all[key].download().then(() =>
-                        {
-                            if (important)
-                            {
-                                contentLoaded(() => this.applyImportantStyle(key));
-                            }
-                            else
-                            {
-                                this.applyStyle(key);
-                            }
-                        });
-                    });
+                this.fetchStyleByKey(key);
             }
         }
     }
@@ -1440,6 +1444,9 @@
             await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "script")
                 .map(it => this.fetchByKey(it.key)));
+            await Promise.all(resource.dependencies
+                .filter(it => it.type.name === "style")
+                .map(it => this.styleManager.fetchStyleByKey(it.key)));
             this.applyComponent(key, text);
         }
         async fetch()
