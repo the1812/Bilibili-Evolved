@@ -484,11 +484,11 @@ svg.toast-card-dismiss path
 .leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn,
 .nav-header-wrapper .nav-header .user-panel .panel-list .icon,
 [class^=icon-]::after,
-.primary-menu .nav-menu>li.home>a,
-.primary-menu .nav-menu .side-nav .side-link i.square,
-.primary-menu .nav-menu .side-nav .side-link i.zhuanlan,
-.primary-menu .nav-menu .side-nav .side-link i.live,
-.primary-menu .nav-menu .side-nav .side-link i.blackroom
+.compact .primary-menu .nav-menu>li.home>a,
+.compact .primary-menu .nav-menu .side-nav .side-link i.square,
+.compact .primary-menu .nav-menu .side-nav .side-link i.zhuanlan,
+.compact .primary-menu .nav-menu .side-nav .side-link i.live,
+.compact .primary-menu .nav-menu .side-nav .side-link i.blackroom
 {
     filter: brightness(0) invert(1) !important;
 }

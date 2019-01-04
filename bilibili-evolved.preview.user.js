@@ -28,6 +28,7 @@
     const settings = {
         useDarkStyle: false,
         useNewStyle: true,
+        compactLayout: false,
         showBanner: true,
         overrideNavBar: true,
         expandDanmakuList: true,
@@ -243,7 +244,10 @@
                 ],
                 styles: [
                     "guiSettingsStyle",
-                    "iconsStyle",
+                    {
+                        key: "iconsStyle",
+                        important: true,
+                    },
                 ],
                 displayNames: {
                     guiSettings: "设置",
@@ -590,6 +594,21 @@
                     key: "defaultPlayerLayout",
                     items: ["旧版", "新版"]
                 },
+            },
+            compactLayoutStyle: {
+                path: "min/compact-layout.min.css",
+            },
+            compactLayout: {
+                path: "min/compact-layout.min.js",
+                styles: [
+                    {
+                        key: "compactLayoutStyle",
+                        important: true,
+                    },
+                ],
+                displayNames: {
+                    compactLayout: "首页使用紧凑布局",
+                }
             }
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
