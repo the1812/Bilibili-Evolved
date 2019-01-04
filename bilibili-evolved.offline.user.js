@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      171.99
+// @version      172.00
 // @description  增强哔哩哔哩Web端体验(离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -1307,8 +1307,14 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 const priorStyle = this.getPriorStyle();
                 if (priorStyle === null)
                 {
-                    const root = important ? $("html") : $("head");
-                    root.append(element);
+                    if (important)
+                    {
+                        $("html").append(element);
+                    }
+                    else
+                    {
+                        $("head").prepend(element);
+                    }
                 }
                 else
                 {
@@ -1350,7 +1356,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         }
         applyStyleFromText(text)
         {
-            $("head").append(text);
+            $("head").prepend(text);
         }
         applyImportantStyleFromText(text)
         {
@@ -1401,7 +1407,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             {
                 this[key] = function (...params)
                 {
-                    this.styleManager[key](params);
+                    this.styleManager[key](...params);
                 };
             }
             this.setupColors();

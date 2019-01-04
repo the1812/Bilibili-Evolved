@@ -1277,8 +1277,14 @@
                 const priorStyle = this.getPriorStyle();
                 if (priorStyle === null)
                 {
-                    const root = important ? $("html") : $("head");
-                    root.append(element);
+                    if (important)
+                    {
+                        $("html").append(element);
+                    }
+                    else
+                    {
+                        $("head").prepend(element);
+                    }
                 }
                 else
                 {
@@ -1320,7 +1326,7 @@
         }
         applyStyleFromText(text)
         {
-            $("head").append(text);
+            $("head").prepend(text);
         }
         applyImportantStyleFromText(text)
         {
@@ -1371,7 +1377,7 @@
             {
                 this[key] = function (...params)
                 {
-                    this.styleManager[key](params);
+                    this.styleManager[key](...params);
                 };
             }
             this.setupColors();
