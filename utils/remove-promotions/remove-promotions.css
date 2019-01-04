@@ -1,5 +1,6 @@
 #slide_ad,
-#home_popularize,
+#home_popularize .l-con,
+#home_popularize .adpos,
 .gg-floor-module,
 .home-app-download,
 .activity-m,
@@ -12,3 +13,15 @@
 {
     visibility: hidden !important;
 } */
+#home_popularize
+{
+    padding: 0 !important;
+    position: relative !important;
+}
+.popularize-module .online
+{
+    position: absolute !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-50%) !important;
+}

@@ -138,7 +138,8 @@ body>div.to-top.on,
 .bili-share-pc .share-weixin-qr,
 .bili-share-pc .weixin-hover .qr-before,
 .form-login .input-box .item input,
-.form-login .input-box .btn-box .btn
+.form-login .input-box .btn-box .btn,
+.popularize-module .online
 {
     background-color: #444 !important;
 }
@@ -356,7 +357,8 @@ body>div.to-top.on,
 .bili-share-pc .share-weixin-qr h4,
 .form-login .input-box .remember,
 .form-login .input-box .item input,
-.form-login .input-box .btn-box .btn
+.form-login .input-box .btn-box .btn,
+.popularize-module .online a
 {
     color: #eee !important;
 }
@@ -426,7 +428,8 @@ body>div.to-top.on,
     border-color: transparent !important;
 }
 .bili-radio+span::before,
-.channel-info .c-count
+.channel-info .c-count,
+.popularize-module .online em
 {
     border-color: #aaa !important;
 }
