@@ -38,7 +38,6 @@
         touchVideoPlayer: false,
         customControlBackgroundOpacity: 0.64,
         customControlBackground: true,
-        forceWide: false,
         darkScheduleStart: "18:00",
         darkScheduleEnd: "6:00",
         darkSchedule: false,
@@ -87,6 +86,7 @@
         useDefaultPlayerMode: true,
         useDefaultPlayerLayout: true,
         about: false,
+        forceWide: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
         currentVersion: GM_info.script.version,
     };
@@ -189,9 +189,6 @@
             blurVideoControlStyle: {
                 path: "min/blur-video-control.min.css",
                 order: 20,
-            },
-            forceWideStyle: {
-                path: "min/force-wide.min.css",
             },
             downloadVideoStyle: {
                 path: "min/download-video.min.css",
@@ -436,20 +433,6 @@
                     darkSchedule: "夜间模式计划时段",
                     darkScheduleStart: "起始时间",
                     darkScheduleEnd: "结束时间",
-                },
-            },
-            forceWide: {
-                path: "min/force-wide.min.js",
-                styles: [
-                    {
-                        key: "forceWideStyle",
-                        important: true,
-                        condition: () => true,
-                    },
-                ],
-                displayNames: {
-                    forceWide: "强制宽屏",
-                    forceWideMinWidth: "触发宽度",
                 },
             },
             clearCache: {

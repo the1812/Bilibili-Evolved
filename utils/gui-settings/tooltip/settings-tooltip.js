@@ -42,9 +42,6 @@
             harunaScale: `根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度.`,
             removeLiveWatermark: `删除观看直播时角落的水印.`,
             removeVideoTopMask: `删除视频里鼠标经过时出现在顶端的标题覆盖层.`,
-            forceWide: `对主站强制使用宽屏样式, 将在宽度达到<span>1300px</span>时启用. 此功能的适用范围为屏幕宽度介于<span>1300px</span>至<span>1400px</span>的设备.
-原有的宽屏样式会在宽度超过<span>1400px</span>时自动启用, 如果你的屏幕宽度大于<span>1400px</span>, 则没有必要开启此功能.
-非宽屏样式下, 首页视频排行为2行<span>3</span>列; 宽屏样式下, 首页视频排行为2行<span>4</span>列.`,
             removeAds: `删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.`,
             watchLaterRedirect: `将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`,
             hideTopSearch: `将搜索框的推荐词替换为<span>搜索</span>.`,
