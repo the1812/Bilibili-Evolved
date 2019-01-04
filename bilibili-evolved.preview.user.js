@@ -1330,7 +1330,7 @@
         {
             return Resource.all[key].getStyle(id);
         }
-        fetch()
+        fetchStyles()
         {
             for (const [key, resource] of Object.entries(Resource.all))
             {
@@ -1344,14 +1344,17 @@
                     {
                         const important = typeof it === "object" ? it.important : false;
                         const key = typeof it === "object" ? it.key : it;
-                        if (important)
+                        Resource.all[key].download().then(() =>
                         {
-                            this.applyImportantStyle(key);
-                        }
-                        else
-                        {
-                            this.applyStyle(key);
-                        }
+                            if (important)
+                            {
+                                this.applyImportantStyle(key);
+                            }
+                            else
+                            {
+                                this.applyStyle(key);
+                            }
+                        });
                     });
             }
         }
@@ -1362,15 +1365,16 @@
         {
             this.data = Resource.all;
             this.attributes = {};
-            this.setupColors();
             this.styleManager = new StyleManager(this);
-            for (const key of Object.keys(this.styleManager))
+            const styleMethods = Object.getOwnPropertyNames(StyleManager.prototype).filter(it => it !== "constructor");
+            for (const key of styleMethods)
             {
                 this[key] = function (...params)
                 {
                     this.styleManager[key](params);
                 };
             }
+            this.setupColors();
         }
         setupColors()
         {
@@ -1551,7 +1555,7 @@
             monkeyInfo: GM_info
         };
         const resources = new ResourceManager();
-        resources.styleManager.fetch();
+        resources.styleManager.fetchStyles();
 
         const applyScripts = () => resources.fetch().catch(error => logError(error));
         if (/complete|interactive|loaded/.test(document.readyState))

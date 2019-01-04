@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.27
+// @version      1.7.0
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
-// @run-at       document-end
+// @run-at       document-start
 // @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js
 // @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js
 // @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
@@ -1244,15 +1244,15 @@
             }
             return `<style ${attributes}>${style}</style>`;
         }
-        getPriorStyle(root)
+        getPriorStyle()
         {
             if (this.priority !== undefined)
             {
                 let insertPosition = this.priority - 1;
-                let formerStyle = root.find(`style[priority='${insertPosition}']`);
+                let formerStyle = $(`style[priority='${insertPosition}']`);
                 while (insertPosition >= 0 && formerStyle.length === 0)
                 {
-                    formerStyle = root.find(`style[priority='${insertPosition}']`);
+                    formerStyle = $(`style[priority='${insertPosition}']`);
                     insertPosition--;
                 }
                 if (insertPosition < 0)
@@ -1274,23 +1274,88 @@
             if ($(`#${id}`).length === 0)
             {
                 const element = this.getStyle(id);
-                const root = important ? $("body") : $("head");
-                const priorStyle = this.getPriorStyle(root);
+                const priorStyle = this.getPriorStyle();
                 if (priorStyle === null)
                 {
-                    if (important)
-                    {
-                        root.after(element);
-                    }
-                    else
-                    {
-                        root.prepend(element);
-                    }
+                    const root = important ? $("html") : $("head");
+                    root.append(element);
                 }
                 else
                 {
                     priorStyle.after(element);
                 }
+            }
+        }
+    }
+    class StyleManager
+    {
+        constructor(resources)
+        {
+            this.resources = resources;
+        }
+        getDefaultStyleId(key)
+        {
+            return key.replace(/([a-z][A-Z])/g,
+                g => `${g[0]}-${g[1].toLowerCase()}`);
+        }
+        applyStyle(key, id)
+        {
+            if (id === undefined)
+            {
+                id = this.getDefaultStyleId(key);
+            }
+            Resource.all[key].applyStyle(id, false);
+        }
+        removeStyle(key)
+        {
+            $(`#${this.getDefaultStyleId(key)}`).remove();
+        }
+        applyImportantStyle(key, id)
+        {
+            if (id === undefined)
+            {
+                id = this.getDefaultStyleId(key);
+            }
+            Resource.all[key].applyStyle(id, true);
+        }
+        applyStyleFromText(text)
+        {
+            $("head").append(text);
+        }
+        applyImportantStyleFromText(text)
+        {
+            $("html").append(text);
+        }
+        getStyle(key, id)
+        {
+            return Resource.all[key].getStyle(id);
+        }
+        fetchStyles()
+        {
+            for (const [key, resource] of Object.entries(Resource.all))
+            {
+                if (settings[key] !== true)
+                {
+                    continue;
+                }
+                resource.styles
+                    .filter(it => it.condition !== undefined ? it.condition() : true)
+                    .forEach(it =>
+                    {
+                        const important = typeof it === "object" ? it.important : false;
+                        const key = typeof it === "object" ? it.key : it;
+                        Resource.all[key].download().then(() =>
+                        {
+                            if (important)
+                            {
+                                this.applyImportantStyle(key);
+                            }
+                            else
+                            {
+                                this.applyStyle(key);
+                            }
+                        });
+                    });
             }
         }
     }
@@ -1300,6 +1365,15 @@
         {
             this.data = Resource.all;
             this.attributes = {};
+            this.styleManager = new StyleManager(this);
+            const styleMethods = Object.getOwnPropertyNames(StyleManager.prototype).filter(it => it !== "constructor");
+            for (const key of styleMethods)
+            {
+                this[key] = function (...params)
+                {
+                    this.styleManager[key](params);
+                };
+            }
             this.setupColors();
         }
         setupColors()
@@ -1349,21 +1423,6 @@
             await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "script")
                 .map(it => this.fetchByKey(it.key)));
-            resource.styles
-                .filter(it => it.condition !== undefined ? it.condition() : true)
-                .forEach(it =>
-                {
-                    const important = typeof it === "object" ? it.important : false;
-                    const key = typeof it === "object" ? it.key : it;
-                    if (important)
-                    {
-                        this.applyImportantStyle(key);
-                    }
-                    else
-                    {
-                        this.applyStyle(key);
-                    }
-                });
             this.applyComponent(key, text);
         }
         async fetch()
@@ -1465,43 +1524,6 @@
                 .map(it => applyDropdownOption(it.dropdown))
             );
         }
-        getDefaultStyleId(key)
-        {
-            return key.replace(/([a-z][A-Z])/g,
-                g => `${g[0]}-${g[1].toLowerCase()}`);
-        }
-        applyStyle(key, id)
-        {
-            if (id === undefined)
-            {
-                id = this.getDefaultStyleId(key);
-            }
-            Resource.all[key].applyStyle(id, false);
-        }
-        removeStyle(key)
-        {
-            $(`#${this.getDefaultStyleId(key)}`).remove();
-        }
-        applyImportantStyle(key, id)
-        {
-            if (id === undefined)
-            {
-                id = this.getDefaultStyleId(key);
-            }
-            Resource.all[key].applyStyle(id, true);
-        }
-        applyStyleFromText(text)
-        {
-            $("head").prepend(text);
-        }
-        applyImportantStyleFromText(text)
-        {
-            $("body").after(text);
-        }
-        getStyle(key, id)
-        {
-            return Resource.all[key].getStyle(id);
-        }
         validateCache()
         {
             if (settings.cache.version !== settings.currentVersion)
@@ -1533,7 +1555,17 @@
             monkeyInfo: GM_info
         };
         const resources = new ResourceManager();
-        resources.fetch().catch(error => logError(error));
+        resources.styleManager.fetchStyles();
+
+        const applyScripts = () => resources.fetch().catch(error => logError(error));
+        if (/complete|interactive|loaded/.test(document.readyState))
+        {
+            applyScripts();
+        }
+        else
+        {
+            document.addEventListener("DOMContentLoaded", applyScripts);
+        }
     }
     catch (error)
     {
