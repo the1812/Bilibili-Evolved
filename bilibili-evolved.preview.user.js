@@ -1330,6 +1330,31 @@
         {
             return Resource.all[key].getStyle(id);
         }
+        fetch()
+        {
+            for (const [key, resource] of Object.entries(Resource.all))
+            {
+                if (settings[key] !== true)
+                {
+                    continue;
+                }
+                resource.styles
+                    .filter(it => it.condition !== undefined ? it.condition() : true)
+                    .forEach(it =>
+                    {
+                        const important = typeof it === "object" ? it.important : false;
+                        const key = typeof it === "object" ? it.key : it;
+                        if (important)
+                        {
+                            this.applyImportantStyle(key);
+                        }
+                        else
+                        {
+                            this.applyStyle(key);
+                        }
+                    });
+            }
+        }
     }
     class ResourceManager
     {
@@ -1394,21 +1419,6 @@
             await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "script")
                 .map(it => this.fetchByKey(it.key)));
-            resource.styles
-                .filter(it => it.condition !== undefined ? it.condition() : true)
-                .forEach(it =>
-                {
-                    const important = typeof it === "object" ? it.important : false;
-                    const key = typeof it === "object" ? it.key : it;
-                    if (important)
-                    {
-                        this.applyImportantStyle(key);
-                    }
-                    else
-                    {
-                        this.applyStyle(key);
-                    }
-                });
             this.applyComponent(key, text);
         }
         async fetch()
@@ -1541,7 +1551,17 @@
             monkeyInfo: GM_info
         };
         const resources = new ResourceManager();
-        resources.fetch().catch(error => logError(error));
+        resources.styleManager.fetch();
+
+        const applyScripts = () => resources.fetch().catch(error => logError(error));
+        if (/complete|interactive|loaded/.test(document.readyState))
+        {
+            applyScripts();
+        }
+        else
+        {
+            document.addEventListener("DOMContentLoaded", applyScripts);
+        }
     }
     catch (error)
     {
