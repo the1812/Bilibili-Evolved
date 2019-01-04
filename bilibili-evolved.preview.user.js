@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.27
+// @version      1.7.0
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
-// @run-at       document-end
+// @run-at       document-start
 // @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
 // @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
 // @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
@@ -1244,15 +1244,15 @@
             }
             return `<style ${attributes}>${style}</style>`;
         }
-        getPriorStyle(root)
+        getPriorStyle()
         {
             if (this.priority !== undefined)
             {
                 let insertPosition = this.priority - 1;
-                let formerStyle = root.find(`style[priority='${insertPosition}']`);
+                let formerStyle = $(`style[priority='${insertPosition}']`);
                 while (insertPosition >= 0 && formerStyle.length === 0)
                 {
-                    formerStyle = root.find(`style[priority='${insertPosition}']`);
+                    formerStyle = $(`style[priority='${insertPosition}']`);
                     insertPosition--;
                 }
                 if (insertPosition < 0)
@@ -1274,24 +1274,61 @@
             if ($(`#${id}`).length === 0)
             {
                 const element = this.getStyle(id);
-                const root = important ? $("body") : $("head");
-                const priorStyle = this.getPriorStyle(root);
+                const priorStyle = this.getPriorStyle();
                 if (priorStyle === null)
                 {
-                    if (important)
-                    {
-                        root.after(element);
-                    }
-                    else
-                    {
-                        root.prepend(element);
-                    }
+                    const root = important ? $("html") : $("head");
+                    root.append(element);
                 }
                 else
                 {
                     priorStyle.after(element);
                 }
             }
+        }
+    }
+    class StyleManager
+    {
+        constructor(resources)
+        {
+            this.resources = resources;
+        }
+        getDefaultStyleId(key)
+        {
+            return key.replace(/([a-z][A-Z])/g,
+                g => `${g[0]}-${g[1].toLowerCase()}`);
+        }
+        applyStyle(key, id)
+        {
+            if (id === undefined)
+            {
+                id = this.getDefaultStyleId(key);
+            }
+            Resource.all[key].applyStyle(id, false);
+        }
+        removeStyle(key)
+        {
+            $(`#${this.getDefaultStyleId(key)}`).remove();
+        }
+        applyImportantStyle(key, id)
+        {
+            if (id === undefined)
+            {
+                id = this.getDefaultStyleId(key);
+            }
+            Resource.all[key].applyStyle(id, true);
+        }
+        applyStyleFromText(text)
+        {
+            $("head").append(text);
+        }
+        applyImportantStyleFromText(text)
+        {
+            $("html").append(text);
+        }
+        getStyle(key, id)
+        {
+            return Resource.all[key].getStyle(id);
         }
     }
     class ResourceManager
@@ -1301,6 +1338,14 @@
             this.data = Resource.all;
             this.attributes = {};
             this.setupColors();
+            this.styleManager = new StyleManager(this);
+            for (const key of Object.keys(this.styleManager))
+            {
+                this[key] = function (...params)
+                {
+                    this.styleManager[key](params);
+                };
+            }
         }
         setupColors()
         {
@@ -1464,43 +1509,6 @@
                 .filter(it => it.dropdown)
                 .map(it => applyDropdownOption(it.dropdown))
             );
-        }
-        getDefaultStyleId(key)
-        {
-            return key.replace(/([a-z][A-Z])/g,
-                g => `${g[0]}-${g[1].toLowerCase()}`);
-        }
-        applyStyle(key, id)
-        {
-            if (id === undefined)
-            {
-                id = this.getDefaultStyleId(key);
-            }
-            Resource.all[key].applyStyle(id, false);
-        }
-        removeStyle(key)
-        {
-            $(`#${this.getDefaultStyleId(key)}`).remove();
-        }
-        applyImportantStyle(key, id)
-        {
-            if (id === undefined)
-            {
-                id = this.getDefaultStyleId(key);
-            }
-            Resource.all[key].applyStyle(id, true);
-        }
-        applyStyleFromText(text)
-        {
-            $("head").prepend(text);
-        }
-        applyImportantStyleFromText(text)
-        {
-            $("body").after(text);
-        }
-        getStyle(key, id)
-        {
-            return Resource.all[key].getStyle(id);
         }
         validateCache()
         {
