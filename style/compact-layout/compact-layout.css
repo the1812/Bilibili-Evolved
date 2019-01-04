@@ -134,6 +134,7 @@
     flex: 1 0 auto;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-right: 28px;
 }
 .primary-menu .nav-menu>li .num-wrap span
@@ -182,6 +183,10 @@
     visibility: hidden;
     display: block;
     position: static;
+}
+.primary-menu .nav-menu .sub-nav
+{
+    top: 42px;
 }
 
 @media screen and (min-width: 1300px)
