@@ -138,8 +138,7 @@ body>div.to-top.on,
 .bili-share-pc .share-weixin-qr,
 .bili-share-pc .weixin-hover .qr-before,
 .form-login .input-box .item input,
-.form-login .input-box .btn-box .btn,
-.popularize-module .online
+.form-login .input-box .btn-box .btn
 {
     background-color: #444 !important;
 }
@@ -194,7 +193,8 @@ body>div.to-top.on,
 #song_detail_click_upper~div .pager .pages .page-item.active button,
 #song_detail_click_upper~div .pager .pages .page-item button,
 .filter-wrap .sub-filter,
-.title-line .tit
+.title-line .tit,
+.popularize-module .online
 {
     background-color: transparent !important;
 }
