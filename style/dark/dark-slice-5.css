@@ -170,7 +170,9 @@
 .fixed-nav-m .mini,
 .fixed-nav-m .go-top,
 .guide .trynew-btn a,
-.clearfix .multi-page .item
+.clearfix .multi-page .item,
+.bili-wrapper .online-list .ebox,
+.bili-wrapper .online-list .ebox .ol
 {
     background-color: #444 !important;
 }
