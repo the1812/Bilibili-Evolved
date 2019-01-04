@@ -133,6 +133,7 @@
     color: inherit;
     background: transparent;
     box-sizing: border-box;
+    outline: none !important;
 }
 .gui-settings-close
 {
