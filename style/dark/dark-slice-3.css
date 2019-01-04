@@ -821,7 +821,8 @@ body>div.to-top.on
 .coin-wrap .coin-nav .coin-checkbox.on .lable,
 #community_msg .dyn_menu li a:hover,
 .form-login .remember a,
-.app-link a
+.app-link a,
+.popularize-module .online a:hover
 {
     color: var(--theme-color) !important;
 }
