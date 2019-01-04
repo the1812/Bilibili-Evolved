@@ -172,7 +172,9 @@
 .guide .trynew-btn a,
 .clearfix .multi-page .item,
 .bili-wrapper .online-list .ebox,
-.bili-wrapper .online-list .ebox .ol
+.bili-wrapper .online-list .ebox .ol,
+.new_list .vd_list li.l1,
+.b-page-body .container-body .pagelistbox .p
 {
     background-color: #444 !important;
 }
@@ -319,7 +321,10 @@ li.log-item .user-time,
 .elecrank-wrapper .elecrank-content.no-list .desc,
 .video-toolbar-module .app-download .qr-code-box .box .txt,
 .video-toolbar-module .share-box .s-text .num,
-.pop-live .pl__user
+.pop-live .pl__user,
+.newlist_info clearfix .b-head .b-head-s,
+.new_list .vd_list li .w_info i,
+.new_list .vd_list li .up
 {
     color: #aaa !important;
 }
@@ -544,7 +549,9 @@ table.invtable td,
 .guide .trynew-btn a,
 .clearfix .multi-page .item.on,
 .clearfix .multi-page .item:hover,
-.clearfix .multi-page .item
+.clearfix .multi-page .item,
+.new_list .vd_list li .title,
+.new_list .vd_list li .typename
 {
     color: #eee !important;
 }
@@ -695,7 +702,10 @@ table.invtable td,
 .fixed-nav-m .go-top,
 .clearfix .multi-page .item.on,
 .clearfix .multi-page .item:hover,
-.clearfix .multi-page .item
+.clearfix .multi-page .item,
+.new_list .vd_list li.l1,
+.container-body .newlist_info,
+.new_list .vd_list li .up
 {
     border-color: transparent !important;
 }
@@ -926,7 +936,8 @@ table.invtable td,
 .elecrank-header .rank-tab.active ,
 li.log-item .user-action .up-mark,
 .video-toolbar-module .app-download .qr-code-box .box .txt a,
-.video-toolbar-module .elec-btn
+.video-toolbar-module .elec-btn,
+.new_list .vd_list li .title:hover
 {
     color: var(--theme-color) !important;
 }
