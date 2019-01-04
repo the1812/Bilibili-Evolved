@@ -647,6 +647,17 @@
         event.initEvent(eventName, true, true);
         element.dispatchEvent(event);
     }
+    function contentLoaded(callback)
+    {
+        if (/complete|interactive|loaded/.test(document.readyState))
+        {
+            callback();
+        }
+        else
+        {
+            document.addEventListener("DOMContentLoaded", () => callback());
+        }
+    }
     function fixed(number, precision = 1)
     {
         const str = number.toString();
@@ -1384,7 +1395,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                         {
                             if (important)
                             {
-                                this.applyImportantStyle(key);
+                                contentLoaded(() => this.applyImportantStyle(key));
                             }
                             else
                             {
@@ -1594,14 +1605,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         resources.styleManager.fetchStyles();
 
         const applyScripts = () => resources.fetch().catch(error => logError(error));
-        if (/complete|interactive|loaded/.test(document.readyState))
-        {
-            applyScripts();
-        }
-        else
-        {
-            document.addEventListener("DOMContentLoaded", applyScripts);
-        }
+        contentLoaded(applyScripts);
     }
     catch (error)
     {

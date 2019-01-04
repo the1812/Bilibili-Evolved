@@ -646,6 +646,17 @@
         event.initEvent(eventName, true, true);
         element.dispatchEvent(event);
     }
+    function contentLoaded(callback)
+    {
+        if (/complete|interactive|loaded/.test(document.readyState))
+        {
+            callback();
+        }
+        else
+        {
+            document.addEventListener("DOMContentLoaded", () => callback());
+        }
+    }
     function fixed(number, precision = 1)
     {
         const str = number.toString();
@@ -1354,7 +1365,7 @@
                         {
                             if (important)
                             {
-                                this.applyImportantStyle(key);
+                                contentLoaded(() => this.applyImportantStyle(key));
                             }
                             else
                             {
@@ -1564,14 +1575,7 @@
         resources.styleManager.fetchStyles();
 
         const applyScripts = () => resources.fetch().catch(error => logError(error));
-        if (/complete|interactive|loaded/.test(document.readyState))
-        {
-            applyScripts();
-        }
-        else
-        {
-            document.addEventListener("DOMContentLoaded", applyScripts);
-        }
+        contentLoaded(applyScripts);
     }
     catch (error)
     {
