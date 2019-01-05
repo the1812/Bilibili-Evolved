@@ -53,7 +53,8 @@
 .elecrank-wrapper .elecrank-content .rank-item .msg,
 .elecrank-wrapper .elecrank-content .rank-item .item-num,
 .log-list li.log-item,
-.video-toolbar-module .share-box .share-popup .share-address ul li input
+.video-toolbar-module .share-box .share-popup .share-address ul li input,
+.face-g-list .mp-block .right ul li .mp-tips
 {
     background-color: #222 !important;
 }
@@ -174,7 +175,8 @@
 .bili-wrapper .online-list .ebox,
 .bili-wrapper .online-list .ebox .ol,
 .new_list .vd_list li.l1,
-.b-page-body .container-body .pagelistbox .p
+.b-page-body .container-body .pagelistbox .p,
+.detail-box-wrap .content-box .video-model
 {
     background-color: #444 !important;
 }
@@ -551,7 +553,9 @@ table.invtable td,
 .clearfix .multi-page .item:hover,
 .clearfix .multi-page .item,
 .new_list .vd_list li .title,
-.new_list .vd_list li .typename
+.new_list .vd_list li .typename,
+.face-g-list .mp-block .right ul li .mp-tips,
+.face-g-list .mp-block .right ul li .mp-tips .btn
 {
     color: #eee !important;
 }
@@ -705,7 +709,8 @@ table.invtable td,
 .clearfix .multi-page .item,
 .new_list .vd_list li.l1,
 .container-body .newlist_info,
-.new_list .vd_list li .up
+.new_list .vd_list li .up,
+.face-g-list .mp-block .right ul li .mp-tips
 {
     border-color: transparent !important;
 }
@@ -740,7 +745,8 @@ table.invtable td,
 .article-data-wrp .video-box,
 .article-net-charts .content-box,
 .el-radio-button__orig-radio:checked + .el-radio-button__inner,
-.guide .trynew-btn a
+.guide .trynew-btn a,
+.face-g-list .mp-block .right ul li .mp-tips
 {
     box-shadow: none !important;
 }
@@ -846,7 +852,9 @@ table.invtable td,
 .pop-live .pl__mask .pl__icon--live,
 .guide .trynew-btn a:hover,
 .clearfix .multi-page .item.on,
-.clearfix .multi-page .item:hover
+.clearfix .multi-page .item:hover,
+.face-g-list .mp-block .right ul li .mp-tips .btn,
+.face-g-list .mp-block .right ul li .mp-tips .btn:hover
 {
     background-color: var(--theme-color) !important;
 }
