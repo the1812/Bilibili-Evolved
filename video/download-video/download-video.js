@@ -12,7 +12,7 @@
         };
 
         const bangumiUrls = [];
-        $(document).ajaxSend((event, request, params) =>
+        unsafeWindow.$(unsafeWindow.document).ajaxSend((event, request, params) =>
         {
             if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
             {
