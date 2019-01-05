@@ -184,7 +184,8 @@
 .face-buy-step,
 .face-buy-header,
 .mask .popup-box,
-.d-outer.d-state-lock.d-state-visible.d-state-focus .d-outer
+.d-outer.d-state-lock.d-state-visible.d-state-focus .d-outer,
+.invitation-record-warp .invtable .inputdone
 {
     background-color: #444 !important;
 }

@@ -59,7 +59,8 @@ blockquote .color-yellow-04,
 .bp-popup-panel .title-ctnr .popup-title,
 .s-paging > ul > a.current,
 .s-paging > ul > span.current,
-.score-info .go-movie 
+.score-info .go-movie ,
+.invitation-record-warp .invtable .inputdone
 {
     color: #eee !important;
 }
