@@ -13,9 +13,12 @@
                         <i class="icon-settings"></i>
                     </div>
                 </div>`);
-            $(".gui-settings").on("click", () =>
+            $(".gui-settings").on("click", e =>
             {
-                $(".gui-settings-box,.gui-settings-mask").addClass("opened");
+                if (e.shiftKey === false)
+                {
+                    $(".gui-settings-box,.gui-settings-mask").addClass("opened");
+                }
             });
             $(".gui-settings-widgets").on("click", () =>
             {

@@ -85,7 +85,7 @@
         downloadDanmaku: true,
         useDefaultPlayerMode: true,
         useDefaultPlayerLayout: true,
-        about: false,
+        about: true,
         forceWide: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
         currentVersion: GM_info.script.version,

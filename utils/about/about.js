@@ -33,12 +33,22 @@
 
         function init()
         {
-            resources.applyStyle("aboutStyle");
-            $("#about-link,#about-close").on("click", () =>
+            $("#about-close").on("click", () =>
             {
                 $(".bilibili-evolved-about").toggleClass("opened");
             });
+            $(".gui-settings").on("click", e =>
+            {
+                if (e.shiftKey === true)
+                {
+                    $(".bilibili-evolved-about").toggleClass("opened");
+                }
+            });
         }
-        // TODO: add button to settings footer
+        return {
+            widget: {
+                success: init
+            }
+        };
     };
 })();
