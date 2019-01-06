@@ -186,7 +186,8 @@
 .mask .popup-box,
 .d-outer.d-state-lock.d-state-visible.d-state-focus .d-outer,
 .invitation-record-warp .invtable .inputdone,
-.sub-nav-m.report-wrap-module .sub-nav-m .tips
+.sub-nav-m.report-wrap-module .sub-nav-m .tips,
+.r-con .mobile-link-l
 {
     background-color: #444 !important;
 }
@@ -741,7 +742,8 @@ table.invtable td,
 .d-header .d-titleBar .d-title,
 .d-buttons .d-state-highlight,
 .d-buttons .d-button,
-.sub-nav-m.report-wrap-module .sub-nav-m .tips
+.sub-nav-m.report-wrap-module .sub-nav-m .tips,
+.r-con .mobile-link-l
 {
     border-color: transparent !important;
 }
@@ -809,7 +811,8 @@ table.invtable td,
 .bind-info .note-footer .btn-group .active-btn,
 .app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a,
 .elecrank-header .rank-tab.active,
-.s_tag .btn-add:hover 
+.s_tag .btn-add:hover ,
+.slider-ad-m .carousel-module .panel .trig span.on
 {
     border-color: var(--theme-color) !important;
 }
