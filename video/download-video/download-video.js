@@ -12,12 +12,15 @@
         };
 
         const bangumiUrls = [];
-        unsafeWindow.$(unsafeWindow.document).ajaxSend((event, request, params) =>
+        SpinQuery.unsafeJquery().then(() =>
         {
-            if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
+            unsafeWindow.$(unsafeWindow.document).ajaxSend((event, request, params) =>
             {
-                bangumiUrls.unshift(params.url);
-            }
+                if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
+                {
+                    bangumiUrls.unshift(params.url);
+                }
+            });
         });
         class Video
         {
