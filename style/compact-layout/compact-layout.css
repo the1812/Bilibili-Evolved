@@ -51,7 +51,8 @@
 }
 .storey-box .spread-module,
 .live-module .storey-box .card-live-module,
-.special-module
+.special-module,
+.video-item-biref
 {
     margin: 0 !important;
     width: 192px !important;
@@ -82,7 +83,8 @@
 .mod-1 .l .spread-module,
 .mod-3 .l .spread-module,
 .mod-2 .spread-module,
-.mod-2 li .l
+.mod-2 li .l,
+.video-item-biref .biref-img
 {
     width: 192px !important;
     height: 120px !important;
@@ -128,7 +130,8 @@
 }
 .spread-module .t,
 .live-module .storey-box .card-live-module .t,
-.special-module .pic .title
+.special-module .pic .title,
+.video-item-biref .biref-info .biref-title
 {
     padding-left: 4px;
     padding-right: 4px;
@@ -138,18 +141,32 @@
 {
     min-height: 288px;
 }
+.hot-recom-module
+{
+    height: auto !important;
+}
+.game-groom-box-m,
+.game-groom-box-m .game-groom-m
+{
+    height: 100% !important;
+}
 .spread-module .pic,
 .special-module .pic-box,
 .groom-module,
 .carousel-box .carousel-module .panel,
 .live-module .storey-box .card-live-module .pic,
 .card-live-module .pic .mask,
-.mod-3 .l-item
+.mod-3 .l-item,
+.carousel-wrapper,
+.video-item-biref .biref-img,
+.game-groom-box-m .game-groom-m
 {
     border-radius: 0 !important;
 }
 .rank-list .rank-item .ri-num,
-.card-timing-module .pic
+.card-timing-module .pic,
+.timeline-box .timeline-item .preview,
+.timeline-box .timeline-item .preview img
 {
     border-radius: 50% !important;
 }
@@ -245,6 +262,18 @@
     {
         width: 1248px !important;
     }
+    .cinema-home-wrapper
+    {
+        width: 1248px !important;
+    }
+    .block-area .block-left
+    {
+        width: 960px !important;
+    }
+    .timeline-box .timeline-item
+    {
+        padding-right: 32px !important;
+    }
     .elevator-module
     {
         margin-left: 630px !important;
@@ -273,12 +302,26 @@
     {
         width: 70px !important;
     }
+    .bangumi-timing-module .headline .bili-tab
+    {
+        width: 700px;
+        display: flex;
+        justify-content: space-evenly;
+    }
 }
 @media screen and (max-width: 1300px)
 {
     .bili-wrapper
     {
         width: 1056px !important;
+    }
+    .cinema-home-wrapper
+    {
+        width: 1056px !important;
+    }
+    .block-area .block-left
+    {
+        width: 768px !important;
     }
     .elevator-module
     {
