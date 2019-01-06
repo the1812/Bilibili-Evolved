@@ -217,14 +217,15 @@
 {
     background-image: none !important;
 }
-.help-subcontent p,
-.biliPager .page-li,
-.cover-chop-modal-v2-body .cover-chop-modal-v2-body-split,
-.my-album .line,
-#app .player-box .multi-page
-{
-    background-color: transparent !important;
-}
+    .help-subcontent p,
+    .biliPager .page-li,
+    .cover-chop-modal-v2-body .cover-chop-modal-v2-body-split,
+    .my-album .line,
+    #app .player-box .multi-page,
+    #app-news .comment-area
+    {
+        background-color: transparent !important;
+    }
 .article-header .filter-wrp .article-type .line,
 .article-header .filter-wrp .filter-article-type .line,
 .article-header .filter-wrp .filter-level .line,
