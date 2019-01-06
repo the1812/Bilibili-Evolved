@@ -57,8 +57,9 @@
 .face-g-list .mp-block .right ul li .mp-tips,
 .face-buy-footer .btn-mk2.primary,
 .popup-btn .btn-default,
-.d-buttons .d-state-highlight ,
-.d-buttons .d-button
+.d-buttons .d-state-highlight,
+.d-buttons .d-button,
+.groom-box-m.clearfix .groom-module .type-name
 {
     background-color: #222 !important;
 }
@@ -579,7 +580,8 @@ table.invtable td,
 .d-buttons .d-state-highlight:hover,
 .d-buttons .d-button,
 .d-buttons .d-button:hover,
-.sub-nav-m.report-wrap-module .sub-nav-m .tips
+.sub-nav-m.report-wrap-module .sub-nav-m .tips,
+.groom-box-m.clearfix .groom-module .type-name
 {
     color: #eee !important;
 }
