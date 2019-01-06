@@ -53,7 +53,12 @@
 .elecrank-wrapper .elecrank-content .rank-item .msg,
 .elecrank-wrapper .elecrank-content .rank-item .item-num,
 .log-list li.log-item,
-.video-toolbar-module .share-box .share-popup .share-address ul li input
+.video-toolbar-module .share-box .share-popup .share-address ul li input,
+.face-g-list .mp-block .right ul li .mp-tips,
+.face-buy-footer .btn-mk2.primary,
+.popup-btn .btn-default,
+.d-buttons .d-state-highlight ,
+.d-buttons .d-button
 {
     background-color: #222 !important;
 }
@@ -169,7 +174,18 @@
 .app-download .qr-code-box .div.box,
 .fixed-nav-m .mini,
 .fixed-nav-m .go-top,
-.guide .trynew-btn a
+.guide .trynew-btn a,
+.clearfix .multi-page .item,
+.bili-wrapper .online-list .ebox,
+.bili-wrapper .online-list .ebox .ol,
+.new_list .vd_list li.l1,
+.b-page-body .container-body .pagelistbox .p,
+.detail-box-wrap .content-box .video-model,
+.face-buy-step,
+.face-buy-header,
+.mask .popup-box,
+.d-outer.d-state-lock.d-state-visible.d-state-focus .d-outer,
+.invitation-record-warp .invtable .inputdone
 {
     background-color: #444 !important;
 }
@@ -200,7 +216,8 @@
 .help-subcontent p,
 .biliPager .page-li,
 .cover-chop-modal-v2-body .cover-chop-modal-v2-body-split,
-.my-album .line 
+.my-album .line,
+#app .player-box .multi-page
 {
     background-color: transparent !important;
 }
@@ -315,7 +332,12 @@ li.log-item .user-time,
 .elecrank-wrapper .elecrank-content.no-list .desc,
 .video-toolbar-module .app-download .qr-code-box .box .txt,
 .video-toolbar-module .share-box .s-text .num,
-.pop-live .pl__user
+.pop-live .pl__user,
+.newlist_info clearfix .b-head .b-head-s,
+.new_list .vd_list li .w_info i,
+.new_list .vd_list li .up,
+.year-vip-user .vippendant-title,
+.vippendant-descript
 {
     color: #aaa !important;
 }
@@ -535,9 +557,25 @@ table.invtable td,
 .video-toolbar-module .share-box .share-popup .share-address ul li .name,
 .video-toolbar-module .share-box .share-popup .share-address ul li .btn,
 .video-toolbar-module .share-box .share-popup .share-address ul li input,
-.fixed-nav-m .mini:hover,
-.fixed-nav-m .mini,
-.guide .trynew-btn a
+#fixnav_report .fixed-nav-m .mini:hover,
+#fixnav_report .fixed-nav-m .mini,
+.guide .trynew-btn a,
+.clearfix .multi-page .item.on,
+.clearfix .multi-page .item:hover,
+.clearfix .multi-page .item,
+.new_list .vd_list li .title,
+.new_list .vd_list li .typename,
+.face-g-list .mp-block .right ul li .mp-tips,
+.face-g-list .mp-block .right ul li .mp-tips .btn,
+.face-buy-name,
+.face-buy-footer .btn-mk2.primary,
+.popup-btn .btn-default,
+.d-header .d-titleBar .d-title,
+.d-buttons .d-state-highlight,
+.d-buttons .d-state-highlight:active,
+.d-buttons .d-state-highlight:hover,
+.d-buttons .d-button,
+.d-buttons .d-button:hover
 {
     color: #eee !important;
 }
@@ -685,7 +723,21 @@ table.invtable td,
 .video-toolbar-module .share-box .share-popup .or-code,
 .video-toolbar-module .app-download:hover .qr-code-box,
 .fixed-nav-m .mini,
-.fixed-nav-m .go-top
+.fixed-nav-m .go-top,
+.clearfix .multi-page .item.on,
+.clearfix .multi-page .item:hover,
+.clearfix .multi-page .item,
+.new_list .vd_list li.l1,
+.container-body .newlist_info,
+.new_list .vd_list li .up,
+.face-g-list .mp-block .right ul li .mp-tips,
+.face-buy-footer .btn-mk2.primary,
+.popup-box .popup-title,
+.popup-btn .btn-default,
+.popup-btn .btn-default:hover,
+.d-header .d-titleBar .d-title,
+.d-buttons .d-state-highlight,
+.d-buttons .d-button
 {
     border-color: transparent !important;
 }
@@ -720,7 +772,8 @@ table.invtable td,
 .article-data-wrp .video-box,
 .article-net-charts .content-box,
 .el-radio-button__orig-radio:checked + .el-radio-button__inner,
-.guide .trynew-btn a
+.guide .trynew-btn a,
+.face-g-list .mp-block .right ul li .mp-tips
 {
     box-shadow: none !important;
 }
@@ -824,7 +877,16 @@ table.invtable td,
 .video-toolbar-module .share-box .share-popup .share-address ul li .btn,
 .fixed-nav-m .mini:hover,
 .pop-live .pl__mask .pl__icon--live,
-.guide .trynew-btn a:hover
+.guide .trynew-btn a:hover,
+.clearfix .multi-page .item.on,
+.clearfix .multi-page .item:hover,
+.face-g-list .mp-block .right ul li .mp-tips .btn,
+.face-g-list .mp-block .right ul li .mp-tips .btn:hover,
+.face-buy-footer .btn-mk2.primary:hover,
+.popup-btn .btn-default:hover,
+.d-buttons .d-state-highlight:active,
+.d-buttons .d-state-highlight:hover,
+.d-buttons .d-button:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -914,7 +976,8 @@ table.invtable td,
 .elecrank-header .rank-tab.active ,
 li.log-item .user-action .up-mark,
 .video-toolbar-module .app-download .qr-code-box .box .txt a,
-.video-toolbar-module .elec-btn
+.video-toolbar-module .elec-btn,
+.new_list .vd_list li .title:hover
 {
     color: var(--theme-color) !important;
 }
