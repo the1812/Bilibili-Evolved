@@ -185,7 +185,8 @@
 .face-buy-header,
 .mask .popup-box,
 .d-outer.d-state-lock.d-state-visible.d-state-focus .d-outer,
-.invitation-record-warp .invtable .inputdone
+.invitation-record-warp .invtable .inputdone,
+.sub-nav-m.report-wrap-module .sub-nav-m .tips
 {
     background-color: #444 !important;
 }
@@ -209,7 +210,8 @@
 .video-info-m .number .fav b,
 .video-info-m .number .fav i,
 .elecrank-header .rank-tab .arr-up,
-.elecrank-wrapper .elecrank-content .rank-item .msg .arrow
+.elecrank-wrapper .elecrank-content .rank-item .msg .arrow,
+.sub-nav-m .tips .t-arrow
 {
     background-image: none !important;
 }
@@ -575,7 +577,8 @@ table.invtable td,
 .d-buttons .d-state-highlight:active,
 .d-buttons .d-state-highlight:hover,
 .d-buttons .d-button,
-.d-buttons .d-button:hover
+.d-buttons .d-button:hover,
+.sub-nav-m.report-wrap-module .sub-nav-m .tips
 {
     color: #eee !important;
 }
@@ -737,7 +740,8 @@ table.invtable td,
 .popup-btn .btn-default:hover,
 .d-header .d-titleBar .d-title,
 .d-buttons .d-state-highlight,
-.d-buttons .d-button
+.d-buttons .d-button,
+.sub-nav-m.report-wrap-module .sub-nav-m .tips
 {
     border-color: transparent !important;
 }
