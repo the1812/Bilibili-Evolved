@@ -520,7 +520,8 @@ svg.toast-card-dismiss path
 #page-channel-detail .watch-later-btn:hover,
 .error-container .error-panel .error-msg .error-img img,
 .leaveMsgUpload .btnarea .btnareaIcon,
-.coin-operated-m .like-checkbox input[type=checkbox]:checked+i
+.coin-operated-m .like-checkbox input[type=checkbox]:checked+i,
+.video-list .vl-hd .display-tab li.on
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -541,7 +542,8 @@ body>div.to-top.on,
 .sureWindow .close,
 .evaluateWether .evaluateno i,
 .evaluateWether .evaluateok i,
-.evaluateWether .operateType .unsolveActive span
+.evaluateWether .operateType .unsolveActive span,
+.video-list .vl-hd .display-tab li
 {
     filter: grayscale(1) !important;
 }
