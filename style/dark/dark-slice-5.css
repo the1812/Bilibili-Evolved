@@ -57,8 +57,10 @@
 .face-g-list .mp-block .right ul li .mp-tips,
 .face-buy-footer .btn-mk2.primary,
 .popup-btn .btn-default,
-.d-buttons .d-state-highlight ,
-.d-buttons .d-button
+.d-buttons .d-state-highlight,
+.d-buttons .d-button,
+.groom-box-m.clearfix .groom-module .type-name,
+.new_list .vd_list li.l1
 {
     background-color: #222 !important;
 }
@@ -178,14 +180,15 @@
 .clearfix .multi-page .item,
 .bili-wrapper .online-list .ebox,
 .bili-wrapper .online-list .ebox .ol,
-.new_list .vd_list li.l1,
 .b-page-body .container-body .pagelistbox .p,
 .detail-box-wrap .content-box .video-model,
 .face-buy-step,
 .face-buy-header,
 .mask .popup-box,
 .d-outer.d-state-lock.d-state-visible.d-state-focus .d-outer,
-.invitation-record-warp .invtable .inputdone
+.invitation-record-warp .invtable .inputdone,
+.sub-nav-m.report-wrap-module .sub-nav-m .tips,
+.r-con .mobile-link-l
 {
     background-color: #444 !important;
 }
@@ -209,18 +212,20 @@
 .video-info-m .number .fav b,
 .video-info-m .number .fav i,
 .elecrank-header .rank-tab .arr-up,
-.elecrank-wrapper .elecrank-content .rank-item .msg .arrow
+.elecrank-wrapper .elecrank-content .rank-item .msg .arrow,
+.sub-nav-m .tips .t-arrow
 {
     background-image: none !important;
 }
-.help-subcontent p,
-.biliPager .page-li,
-.cover-chop-modal-v2-body .cover-chop-modal-v2-body-split,
-.my-album .line,
-#app .player-box .multi-page
-{
-    background-color: transparent !important;
-}
+    .help-subcontent p,
+    .biliPager .page-li,
+    .cover-chop-modal-v2-body .cover-chop-modal-v2-body-split,
+    .my-album .line,
+    #app .player-box .multi-page,
+    #app-news .comment-area
+    {
+        background-color: transparent !important;
+    }
 .article-header .filter-wrp .article-type .line,
 .article-header .filter-wrp .filter-article-type .line,
 .article-header .filter-wrp .filter-level .line,
@@ -333,7 +338,7 @@ li.log-item .user-time,
 .video-toolbar-module .app-download .qr-code-box .box .txt,
 .video-toolbar-module .share-box .s-text .num,
 .pop-live .pl__user,
-.newlist_info clearfix .b-head .b-head-s,
+.newlist_info.clearfix .b-head .b-head-s,
 .new_list .vd_list li .w_info i,
 .new_list .vd_list li .up,
 .year-vip-user .vippendant-title,
@@ -575,7 +580,9 @@ table.invtable td,
 .d-buttons .d-state-highlight:active,
 .d-buttons .d-state-highlight:hover,
 .d-buttons .d-button,
-.d-buttons .d-button:hover
+.d-buttons .d-button:hover,
+.sub-nav-m.report-wrap-module .sub-nav-m .tips,
+.groom-box-m.clearfix .groom-module .type-name
 {
     color: #eee !important;
 }
@@ -737,7 +744,9 @@ table.invtable td,
 .popup-btn .btn-default:hover,
 .d-header .d-titleBar .d-title,
 .d-buttons .d-state-highlight,
-.d-buttons .d-button
+.d-buttons .d-button,
+.sub-nav-m.report-wrap-module .sub-nav-m .tips,
+.r-con .mobile-link-l
 {
     border-color: transparent !important;
 }
@@ -805,7 +814,8 @@ table.invtable td,
 .bind-info .note-footer .btn-group .active-btn,
 .app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a,
 .elecrank-header .rank-tab.active,
-.s_tag .btn-add:hover 
+.s_tag .btn-add:hover ,
+.slider-ad-m .carousel-module .panel .trig span.on
 {
     border-color: var(--theme-color) !important;
 }
