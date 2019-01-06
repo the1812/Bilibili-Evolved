@@ -488,7 +488,8 @@ svg.toast-card-dismiss path
 .compact .primary-menu .nav-menu .side-nav .side-link i.square,
 .compact .primary-menu .nav-menu .side-nav .side-link i.zhuanlan,
 .compact .primary-menu .nav-menu .side-nav .side-link i.live,
-.compact .primary-menu .nav-menu .side-nav .side-link i.blackroom
+.compact .primary-menu .nav-menu .side-nav .side-link i.blackroom,
+.change-push .icon
 {
     filter: brightness(0) invert(1) !important;
 }
