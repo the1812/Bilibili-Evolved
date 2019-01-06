@@ -5,7 +5,8 @@
 .home-app-download,
 .activity-m,
 .bilibili-player-promote-wrap,
-.bili-header-m .nav-menu .nav-con .nav-item .text-red
+.bili-header-m .nav-menu .nav-con .nav-item .text-red,
+.mobile-link-l
 {
     display: none !important;
 }
