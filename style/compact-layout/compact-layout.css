@@ -1,25 +1,29 @@
-.recommend-module .groom-module
+.groom-module
 {
     margin: 0 !important;
     width: 192px !important;
     height: 120px !important;
 }
 .bangumi-timing-module .card-timing,
-.recommend-module .groom-module
+.groom-module
 {
     -webkit-tap-highlight-color: transparent;
 }
-.chief-recommend-module .recommend-module
+.chief-recommend-module .recommend-module,
+.nominate-m .video-card-box,
+.groom-box-m
 {
     height: 240px !important;
 }
-.groom-module .pic
+.groom-module .pic,
+.groom-module .lazy-img
 {
     width: 100% !important;
     height: 100% !important;
     transition: all .2s;
 }
-.groom-module:hover .pic
+.groom-module:hover .pic,
+.groom-module:hover .lazy-img
 {
     filter: blur(8px);
 }
@@ -39,7 +43,13 @@
     height: 240px !important;
     width: 480px !important;
 }
-.new-comers-module .storey-box .spread-module,
+.nominate-m .carousel-box,
+.nominate-m .carousel-box img
+{
+    height: 240px !important;
+    width: 672px !important;
+}
+.storey-box .spread-module,
 .live-module .storey-box .card-live-module,
 .special-module
 {
@@ -67,10 +77,47 @@
 }
 .spread-module .pic,
 .live-module .storey-box .card-live-module .pic,
-.special-module .pic-box
+.special-module .pic-box,
+.mod-3 .l-item .l,
+.mod-1 .l .spread-module,
+.mod-3 .l .spread-module,
+.mod-2 .spread-module,
+.mod-2 li .l
 {
     width: 192px !important;
     height: 120px !important;
+}
+.mod-2 li .l-item
+{
+    height: auto;
+}
+.mod-3 .l-item,
+.mod-3 li
+{
+    width: 192px !important;
+}
+.mod-3 .l .spread-module
+{
+    margin: 0 !important;
+}
+.mod-3 li,
+.mod-1 li,
+.mod-1 .r,
+.mod-2 li .l-item
+{
+    padding: 0 !important;
+}
+.mod-3 .r .v-info,
+.mod-3 .r .up-info,
+.mod-3 .r .title
+{
+    padding-top: 4px !important;
+    margin-top: 0px !important;
+}
+.mod-2 li .r .v-desc
+{
+    padding: 0 !important;
+    margin: 10px 0 !important;
 }
 .spread-module .num,
 .live-module .storey-box .card-live-module .num
@@ -93,10 +140,11 @@
 }
 .spread-module .pic,
 .special-module .pic-box,
-.recommend-module .groom-module,
-.chief-recommend-module .carousel-box .carousel-module .panel,
+.groom-module,
+.carousel-box .carousel-module .panel,
 .live-module .storey-box .card-live-module .pic,
-.card-live-module .pic .mask
+.card-live-module .pic .mask,
+.mod-3 .l-item
 {
     border-radius: 0 !important;
 }
@@ -187,7 +235,8 @@
 }
 .primary-menu .nav-menu .sub-nav
 {
-    top: 42px;
+    top: 36px;
+    padding-top: 4px;
 }
 
 @media screen and (min-width: 1300px)
@@ -212,6 +261,18 @@
     {
         padding-top: 0;
     }
+    .mod-1 li .r
+    {
+        width: 750px !important;
+    }
+    .mod-2 li .r
+    {
+        width: 245px !important;
+    }
+    .mod-2 li .r .up-info .v-author, .mod-2 li .r .v-info .v-info-i
+    {
+        width: 70px !important;
+    }
 }
 @media screen and (max-width: 1300px)
 {
@@ -235,5 +296,17 @@
     {
         width: 260px !important;
         transform: translatex(28px);
+    }
+    .mod-1 li .r
+    {
+        width: 530px !important;
+    }
+    .mod-2 li .r
+    {
+        width: 160px !important;
+    }
+    .mod-2 li .r .up-info .v-author, .mod-2 li .r .v-info .v-info-i
+    {
+        width: 50px !important;
     }
 }
