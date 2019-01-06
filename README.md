@@ -271,4 +271,6 @@
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 
+[捐赠入口](donate.md)
+
 [返回顶部](#Bilibili-Evolved)
