@@ -126,6 +126,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     8: "special",
                 };
                 this.margin = 10;
+                this.nextDanmakuDelay = 0.1;
                 this.generateTracks();
             }
             generateTracks()
@@ -135,7 +136,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 const height = metrics.emHeightAscent + metrics.emHeightDescent;
                 this.danmakuHeight = height;
                 this.trackHeight = this.margin * 2 + height;
-                this.trackCount = fixed(this.resolution.y / this.trackHeight, 0);
+                this.trackCount = parseInt(fixed(this.resolution.y / this.trackHeight, 0));
             }
             getTextSize(danmaku)
             {
@@ -148,20 +149,35 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             {
                 const [x, y] = this.getTextSize(danmaku);
                 const width = x * 2;
-                const time = this.duration * width / (this.resolution.x + width) + 0.5;
+                const time = this.duration * width / (this.resolution.x + width) + this.nextDanmakuDelay;
                 let track = 0;
                 let closestDanmaku = null;
+                const notSuitable = () =>
+                {
+                    if (closestDanmaku)
+                    {
+                        if (closestDanmaku.width < width) // 弹幕比前面的弹幕长
+                        {
+                            return closestDanmaku.end > danmaku.time; // 必须等前面弹幕走完
+                        }
+                        else
+                        {
+                            return closestDanmaku.visible > danmaku.time;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                };
                 // 寻找已发送弹幕中可能重叠的
                 do
                 {
-                    closestDanmaku = this.horizontalTrack.find(it => it.track === track && it.end > danmaku.time);
+                    closestDanmaku = this.horizontalTrack.find(
+                        it => it.track === track && it.end > danmaku.time);
                     track++;
                 }
-                // 当前轨道不能放弹幕的条件
-                while (closestDanmaku && (
-                    closestDanmaku.start < danmaku.time ||
-                    closestDanmaku.width < width) &&
-                    track <= this.trackCount);
+                while (notSuitable() && track <= this.trackCount);
 
                 // 如果弹幕过多, 此条就不显示了
                 if (track > this.trackCount)
@@ -172,7 +188,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 this.horizontalTrack.push({
                     width: width,
                     start: danmaku.time,
-                    end: danmaku.time + time,
+                    visible: danmaku.time + time,
+                    end: danmaku.time + this.duration,
                     track: track
                 });
                 return `\\move(${this.resolution.x + x}, ${track * this.trackHeight + this.margin + y}, ${-x}, ${track * this.trackHeight + this.margin + y}, 0, ${this.duration * 1000})`;
