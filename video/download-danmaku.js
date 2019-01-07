@@ -15,7 +15,7 @@
                 title,
                 font: "Micorosoft Yahei UI",
                 alpha: 0.6,
-                duration: 10,
+                duration: 5,
                 blockTypes: [],
                 resolution: {
                     x: 1920,

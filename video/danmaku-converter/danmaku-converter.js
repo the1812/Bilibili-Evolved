@@ -100,10 +100,12 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
         class DanmakuStack
         {
-            constructor(font, resolution)
+            constructor(font, resolution, duration)
             {
                 this.horizontal = [];
                 this.vertical = [];
+                this.resolution = resolution;
+                this.duration = duration * 1000; // 毫秒
                 this.canvas = document.createElement("canvas");
                 this.context = this.canvas.getContext("2d");
                 // XML字体大小到实际大小的表
@@ -121,16 +123,34 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     7: "special",
                     8: "special",
                 };
+                this.margin = 10;
+            }
+            getTextSize(danmaku)
+            {
+                this.context.font = this.fontSizes[danmaku.fontSize];
+                const metrics = this.context.measureText(danmaku.content);
+                const x = metrics.width / 2;
+                const y = (metrics.emHeightAscent + metrics.emHeightDescent) / 2;
+                return [x, y];
             }
             getHorizonalTags(danmaku)
             {
                 // TODO: place horizontal tags
-                return `\\pos(960, 540)`;
+                const [x, y] = this.getTextSize(danmaku);
+                return `\\move(${this.resolution.x + x}, ${this.margin + y}, ${-x}, ${this.margin + y}, 0, ${this.duration})`;
             }
             getVerticalTags(danmaku)
             {
                 // TODO: place verizontal tags
-                return `\\pos(960, 540)`;
+                const [, y] = this.getTextSize(danmaku);
+                if (this.danmakuType[danmaku.type] === "top")
+                {
+                    return `\\pos(${this.resolution.x / 2}, ${this.margin + y})`;
+                }
+                else
+                {
+                    return `\\pos(${this.resolution.x / 2}, ${this.resolution.y - this.margin - y})`;
+                }
             }
             push(danmaku)
             {
