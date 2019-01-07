@@ -180,7 +180,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                         type: xmlDanmaku.type,
                         fontSize: xmlDanmaku.fontSize,
                         color: xmlDanmaku.color,
-                        typeTag: this.convertType(xmlDanmaku.type),
+                        typeTag: this.convertType(xmlDanmaku),
                         colorTag: this.convertColor(xmlDanmaku.color),
                     }));
                 }
@@ -191,9 +191,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     fontStyles: this.fontStyles,
                 });
             }
-            convertType(type)
+            convertType(danmaku)
             {
-                // TODO: Convert type
+                return this.danmakuStack.push(danmaku).tags;
             }
             convertColor(decColor)
             {
@@ -233,5 +233,16 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 return [secondsToTime(startTime), secondsToTime(startTime + duration)];
             }
         }
+        return {
+            export: {
+                AssDanmaku,
+                AssDanmakuDocument,
+                Danmaku,
+                DanmakuConverter,
+                DanmakuStack,
+                XmlDanmaku,
+                xmlDanmakuDocument,
+            },
+        };
     };
 })();
