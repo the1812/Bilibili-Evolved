@@ -56,6 +56,10 @@
             }
             text(fontStyles)
             {
+                if (this.type === 7 || this.type === 8)
+                {
+                    return "";
+                }
                 const style = fontStyles[this.fontSize].match(/Dialogue.*?,.*?,.*?,(.*?),/)[1].trim();
                 return `Dialogue: 0,${this.time},${this.endTime},${style},,0,0,0,,{${this.typeTag}\\c&H${this.color}&}${this.content}`;
             }
@@ -87,7 +91,7 @@ ${Object.values(fontStyles).join("\n")}
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 `.trim();
-                return meta + "\n" + danmakus.map(it => it.text(fontStyles)).join("\n");
+                return meta + "\n" + danmakus.map(it => it.text(fontStyles)).filter(it => it !== "").join("\n");
             }
         }
     };
