@@ -2,7 +2,8 @@
 {
     return (settings, resources) =>
     {
-        const DanmakuInfo = resources.attributes.videoInfo.export.DanmakuInfo;
+        const { DanmakuInfo } = resources.import("videoInfo");
+        const { DanmakuConverter, XmlDanmakuDocument } = resources.import("danmakuConverter");
         async function downloadDanmaku(timeout)
         {
             const title = document.title
@@ -10,7 +11,19 @@
                 .replace("_番剧_bilibili_哔哩哔哩", "");
             const danmaku = new DanmakuInfo((unsafeWindow || window).cid);
             await danmaku.fetchInfo();
-            const blob = new Blob([danmaku.rawXML], {
+            const converter = new DanmakuConverter({
+                title,
+                font: "Micorosoft Yahei UI",
+                alpha: 0.6,
+                duration: 10,
+                blockTypes: [],
+                resolution: {
+                    x: 1920,
+                    y: 1080,
+                },
+            });
+            const assDocument = converter.convertToAssDocument(new XmlDanmakuDocument(danmaku.rawXML));
+            const blob = new Blob([assDocument.generateAss()], {
                 type: 'text/plain'
             });
             const url = URL.createObjectURL(blob);
@@ -22,7 +35,7 @@
             }
             clearTimeout(timeout);
             document.querySelector("#download-danmaku>span").innerHTML = "下载弹幕";
-            link.attr("download", `${title}.xml`).attr("href", url).get(0).click();
+            link.attr("download", `${title}.ass`).attr("href", url).get(0).click();
         }
         return {
             widget: {

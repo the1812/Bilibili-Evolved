@@ -32,7 +32,7 @@
             static parse(element)
             {
                 const pData = element.getAttribute("p");
-                [time, type, fontSize, color, timeStamp, pool, userHash, rowId] = pData.split(",");
+                const [time, type, fontSize, color, timeStamp, pool, userHash, rowId] = pData.split(",");
                 const content = element.innerText;
                 return new XmlDanmaku({ content, time, type, fontSize, color, timeStamp, pool, userHash, rowId });
             }
@@ -43,7 +43,7 @@
             {
                 this.xml = xml;
                 const document = new DOMParser().parseFromString(xml, "application/xml").documentElement;
-                this.danmakus = [...document.querySelectorAll("d[p]")].map(it => new XmlDanmaku(it));
+                this.danmakus = [...document.querySelectorAll("d[p]")].map(it => XmlDanmaku.parse(it));
             }
         }
         class AssDanmaku extends Danmaku
@@ -105,7 +105,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 this.horizontal = [];
                 this.vertical = [];
                 this.canvas = document.createElement("canvas");
-                this.context = canvas.getContext("2d");
+                this.context = this.canvas.getContext("2d");
                 // XML字体大小到实际大小的表
                 this.fontSizes = {
                     25: `36pt ${font}`,
@@ -124,11 +124,13 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             }
             getHorizonalTags(danmaku)
             {
-
+                // TODO: place horizontal tags
+                return `\\pos(0, -999)`;
             }
             getVerticalTags(danmaku)
             {
-
+                // TODO: place verizontal tags
+                return `\\pos(0, -999)`;
             }
             push(danmaku)
             {

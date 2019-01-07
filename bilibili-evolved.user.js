@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.29
+// @version      1.6.30
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -458,10 +458,14 @@
                 path: "min/download-danmaku.min.js",
                 dependencies: [
                     "videoInfo",
+                    "danmakuConverter",
                 ],
                 displayNames: {
                     "downloadDanmaku": "下载弹幕",
                 },
+            },
+            danmakuConverter: {
+                path: "min/danmaku-converter.min.js"
             },
             videoInfo: {
                 path: "min/video-info.min.js",
@@ -592,7 +596,7 @@
                 displayNames: {
                     compactLayout: "首页使用紧凑布局",
                 }
-            }
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
@@ -1099,7 +1103,7 @@
                             <span>$4</span>
                         </label>
                     </li>
-                `).replace(/<dropdown\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/dropdown>/g,`
+                `).replace(/<dropdown\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/dropdown>/g, `
                     <li class="indent-$1">
                         <label>
                             <span class="gui-settings-dropdown-span">$4</span>
@@ -1196,50 +1200,50 @@
                         .concat(flattenStyles.map(it => Resource.all[it]))
                         .map(r => r.download())
                     )
-                    .then(() =>
-                    {
-                        // +#Offline build placeholder
-                        if (settings.useCache)
+                        .then(() =>
                         {
-                            const cache = this.loadCache(key);
-                            if (cache !== null)
+                            // +#Offline build placeholder
+                            if (settings.useCache)
                             {
-                                this.text = cache;
-                                resolve(cache);
-                            }
-                            downloadText(this.url, text =>
-                            {
-                                this.text = this.type.preprocessor(text);
-                                if (text === null)
+                                const cache = this.loadCache(key);
+                                if (cache !== null)
                                 {
-                                    reject("download failed");
+                                    this.text = cache;
+                                    resolve(cache);
                                 }
-                                if (cache !== this.text)
-                                {
-                                    if (cache === null)
-                                    {
-                                        resolve(this.text);
-                                    }
-                                    if (typeof offlineData === "undefined")
-                                    {
-                                        settings.cache[key] = this.text;
-                                        saveSettings(settings);
-                                    }
-                                }
-                            }, error => reject(error));
-                        }
-                        else
-                        {
-                            downloadText(this.url,
-                                text =>
+                                downloadText(this.url, text =>
                                 {
                                     this.text = this.type.preprocessor(text);
-                                    resolve(this.text);
-                                },
-                                error => reject(error));
-                        }
-                        // -#Offline build placeholder
-                    });
+                                    if (text === null)
+                                    {
+                                        reject("download failed");
+                                    }
+                                    if (cache !== this.text)
+                                    {
+                                        if (cache === null)
+                                        {
+                                            resolve(this.text);
+                                        }
+                                        if (typeof offlineData === "undefined")
+                                        {
+                                            settings.cache[key] = this.text;
+                                            saveSettings(settings);
+                                        }
+                                    }
+                                }, error => reject(error));
+                            }
+                            else
+                            {
+                                downloadText(this.url,
+                                    text =>
+                                    {
+                                        this.text = this.type.preprocessor(text);
+                                        resolve(this.text);
+                                    },
+                                    error => reject(error));
+                            }
+                            // -#Offline build placeholder
+                        });
                 }
             });
         }
@@ -1425,6 +1429,10 @@
             styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
             styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
             this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(";")}}</style>`);
+        }
+        import(compnentName)
+        {
+            return this.attributes[compnentName].export;
         }
         async fetchByKey(key)
         {
