@@ -97,6 +97,53 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             }
         }
 
+        class DanmakuStack
+        {
+            constructor(font)
+            {
+                this.horizontal = [];
+                this.vertical = [];
+                this.canvas = document.createElement("canvas");
+                this.context = canvas.getContext("2d");
+                // XML字体大小到实际大小的表
+                this.fontSizes = {
+                    25: `36pt ${font}`,
+                    18: `26pt ${font}`,
+                };
+                this.danmakuType = {
+                    1: "normal",
+                    2: "normal",
+                    3: "normal",
+                    4: "bottom",
+                    5: "top",
+                    6: "reversed",
+                    7: "special",
+                    8: "special",
+                };
+            }
+
+            push(danmaku)
+            {
+                switch (this.danmakuType[danmaku.type])
+                {
+                    case "normal":
+                    case "reversed":
+                        {
+                            break;
+                        }
+                    case "top":
+                    case "bottom":
+                        {
+                            break;
+                        }
+                    case "special":
+                    default:
+                        {
+                            throw new Error("Danmaku type not supported");
+                        }
+                }
+            }
+        }
         class DanmakuConverter
         {
             constructor({ title, font, alpha, duration, blockTypes })
@@ -106,6 +153,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 this.alpha = Math.round(alpha * 100);
                 this.duration = duration;
                 this.blockTypes = blockTypes;
+                this.danmakuStack = new DanmakuStack(font);
             }
             get fontStyles()
             {
