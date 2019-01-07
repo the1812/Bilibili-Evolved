@@ -33,7 +33,7 @@
             {
                 const pData = element.getAttribute("p");
                 const [time, type, fontSize, color, timeStamp, pool, userHash, rowId] = pData.split(",");
-                const content = element.innerText;
+                const content = element.innerHTML;
                 return new XmlDanmaku({ content, time, type, fontSize, color, timeStamp, pool, userHash, rowId });
             }
         }
@@ -125,12 +125,12 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             getHorizonalTags(danmaku)
             {
                 // TODO: place horizontal tags
-                return `\\pos(0, -999)`;
+                return `\\pos(960, 540)`;
             }
             getVerticalTags(danmaku)
             {
                 // TODO: place verizontal tags
-                return `\\pos(0, -999)`;
+                return `\\pos(960, 540)`;
             }
             push(danmaku)
             {
@@ -141,7 +141,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     case "normal":
                     case "reversed":
                         {
-                            tags = this.gegetHorizonalTagstTags(danmaku);
+                            tags = this.getHorizonalTags(danmaku);
                             stack = this.horizontal;
                             break;
                         }
@@ -180,8 +180,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             get fontStyles()
             {
                 return {
-                    25: `Medium,${this.font},36,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,0`,
-                    18: `Small,${this.font},26,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,0`,
+                    25: `Style: Medium,${this.font},52,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,0`,
+                    18: `Style: Small,${this.font},36,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,0`,
                 };
             }
             convertToAssDocument(xmlDanmakuDocument)
@@ -194,7 +194,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     {
                         continue;
                     }
-                    const [startTime, endTime] = this.convertTime(xmlDanmaku.time, this.duration);
+                    const [startTime, endTime] = this.convertTime(parseFloat(xmlDanmaku.time), this.duration);
                     assDanmakus.push(new AssDanmaku({
                         content: xmlDanmaku.content,
                         time: startTime,
@@ -203,7 +203,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                         fontSize: xmlDanmaku.fontSize,
                         color: xmlDanmaku.color,
                         typeTag: this.convertType(xmlDanmaku),
-                        colorTag: this.convertColor(xmlDanmaku.color),
+                        colorTag: this.convertColor(parseInt(xmlDanmaku.color)),
                     }));
                 }
                 return new AssDanmakuDocument({
