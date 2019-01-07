@@ -7,7 +7,7 @@
             constructor(content, time, type, fontSize, color)
             {
                 this.content = content;
-                this.time = parseFloat(time);
+                this.time = time;
                 this.type = parseInt(type);
                 this.fontSize = parseFloat(fontSize);
                 this.color = parseInt(color);
@@ -22,6 +22,7 @@
                 this.pool = parseInt(pool);
                 this.userHash = userHash;
                 this.rowId = parseInt(rowId);
+                this.time = parseFloat(this.time);
                 this.pDataArray = [time, type, fontSize, color, timeStamp, pool, userHash, rowId];
             }
             text()
@@ -156,10 +157,12 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     closestDanmaku = this.horizontalTrack.find(it => it.track === track && it.end > danmaku.time);
                     track++;
                 }
-                while (closestDanmaku &&
-                closestDanmaku.start < danmaku.time &&
-                closestDanmaku.halfWidth > width &&
+                // 当前轨道不能放弹幕的条件
+                while (closestDanmaku && (
+                    closestDanmaku.start < danmaku.time ||
+                    closestDanmaku.width < width) &&
                     track <= this.trackCount);
+
                 // 如果弹幕过多, 此条就不显示了
                 if (track > this.trackCount)
                 {
@@ -167,7 +170,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 }
                 track--; // 减回最后的自增
                 this.horizontalTrack.push({
-                    halfWidth: x,
+                    width: width,
                     start: danmaku.time,
                     end: danmaku.time + time,
                     track: track
@@ -288,10 +291,6 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             }
             convertTime(startTime, duration)
             {
-                function round(number)
-                {
-                    return Math.round(number * 100) / 100;
-                }
                 function secondsToTime(seconds)
                 {
                     let hours = 0;
@@ -306,7 +305,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                         minutes -= 60;
                         hours++;
                     }
-                    return `${hours}:${minutes.toString().padStart(2, "0")}:${round(seconds).toString().padStart(4, "0")}`;
+                    return `${hours}:${minutes}:${seconds}`;
                 }
                 return [secondsToTime(startTime), secondsToTime(startTime + duration)];
             }
