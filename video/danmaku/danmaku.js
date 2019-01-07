@@ -55,12 +55,8 @@
                 this.colorTag = colorTag;
                 this.endTime = endTime;
             }
-            text(fontStyles, blockTypes)
+            text(fontStyles)
             {
-                if (blockTypes.concat(7, 8).indexOf(this.type) !== -1)
-                {
-                    return "";
-                }
                 const styleName = fontStyles[this.fontSize].match(/Style:(.*?),/)[1].trim();
                 return `Dialogue: 0,${this.time},${this.endTime},${styleName},,0,0,0,,{${this.typeTag}${this.colorTag}}${this.content}`;
             }
@@ -123,7 +119,22 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 const assDanmakus = [];
                 for (const xmlDanmaku of xmlDanmakuDocument.danmakus)
                 {
-
+                    // 跳过高级弹幕和设置为屏蔽的弹幕类型
+                    if (this.blockTypes.concat(7, 8).indexOf(xmlDanmaku.type) !== -1)
+                    {
+                        continue;
+                    }
+                    const [startTime, endTime] = this.convertTime(xmlDanmaku.time, this.duration);
+                    assDanmakus.push(new AssDanmaku({
+                        content: xmlDanmaku.content,
+                        time: startTime,
+                        endTime: endTime,
+                        type: xmlDanmaku.type,
+                        fontSize: xmlDanmaku.fontSize,
+                        color: xmlDanmaku.color,
+                        typeTag: this.convertType(xmlDanmaku.type),
+                        colorTag: this.convertColor(xmlDanmaku.color),
+                    }));
                 }
                 return new AssDanmakuDocument({
                     danmakus: assDanmakus,
@@ -131,6 +142,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     blockTypes: this.blockTypes,
                     fontStyles: this.fontStyles,
                 });
+            }
+            convertType(type)
+            {
+                // TODO: Convert type
             }
             convertColor(decColor)
             {
