@@ -7,10 +7,10 @@
             constructor(content, time, type, fontSize, color)
             {
                 this.content = content;
-                this.time = time;
-                this.type = type;
-                this.fontSize = fontSize;
-                this.color = color;
+                this.time = parseFloat(time);
+                this.type = parseInt(type);
+                this.fontSize = parseFloat(fontSize);
+                this.color = parseInt(color);
             }
         }
         class XmlDanmaku extends Danmaku
@@ -18,10 +18,10 @@
             constructor({ content, time, type, fontSize, color, timeStamp, pool, userHash, rowId })
             {
                 super(content, time, type, fontSize, color);
-                this.timeStamp = timeStamp;
-                this.pool = pool;
+                this.timeStamp = parseInt(timeStamp);
+                this.pool = parseInt(pool);
                 this.userHash = userHash;
-                this.rowId = rowId;
+                this.rowId = parseInt(rowId);
                 this.pDataArray = [time, type, fontSize, color, timeStamp, pool, userHash, rowId];
             }
             text()
@@ -103,15 +103,16 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             constructor(font, resolution, duration)
             {
                 this.horizontal = [];
+                this.horizontalTrack = [];
                 this.vertical = [];
                 this.resolution = resolution;
-                this.duration = duration * 1000; // 毫秒
+                this.duration = duration;
                 this.canvas = document.createElement("canvas");
                 this.context = this.canvas.getContext("2d");
                 // XML字体大小到实际大小的表
                 this.fontSizes = {
-                    25: `36pt ${font}`,
-                    18: `26pt ${font}`,
+                    25: `52px ${font}`,
+                    18: `36px ${font}`,
                 };
                 this.danmakuType = {
                     1: "normal",
@@ -124,20 +125,54 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     8: "special",
                 };
                 this.margin = 10;
+                this.generateTracks();
+            }
+            generateTracks()
+            {
+                this.context.font = this.fontSizes[25];
+                const metrics = this.context.measureText("Lorem ipsum");
+                const height = metrics.emHeightAscent + metrics.emHeightDescent;
+                this.danmakuHeight = height;
+                this.trackHeight = this.margin * 2 + height;
+                this.trackCount = fixed(this.resolution.y / this.trackHeight, 0);
             }
             getTextSize(danmaku)
             {
                 this.context.font = this.fontSizes[danmaku.fontSize];
                 const metrics = this.context.measureText(danmaku.content);
                 const x = metrics.width / 2;
-                const y = (metrics.emHeightAscent + metrics.emHeightDescent) / 2;
-                return [x, y];
+                return [x, this.danmakuHeight];
             }
             getHorizonalTags(danmaku)
             {
-                // TODO: place horizontal tags
                 const [x, y] = this.getTextSize(danmaku);
-                return `\\move(${this.resolution.x + x}, ${this.margin + y}, ${-x}, ${this.margin + y}, 0, ${this.duration})`;
+                const width = x * 2;
+                const time = this.duration * width / (this.resolution.x + width) + 0.5;
+                let track = 0;
+                let closestDanmaku = null;
+                // 寻找已发送弹幕中可能重叠的
+                do
+                {
+                    closestDanmaku = this.horizontalTrack.find(it => it.track === track && it.end > danmaku.time);
+                    track++;
+                }
+                while (closestDanmaku &&
+                closestDanmaku.start < danmaku.time &&
+                closestDanmaku.halfWidth > width &&
+                    track <= this.trackCount);
+                // 如果弹幕过多, 此条就不显示了
+                if (track > this.trackCount)
+                {
+                    return "";
+                }
+                track--; // 减回最后的自增
+                this.horizontalTrack.push({
+                    halfWidth: x,
+                    start: danmaku.time,
+                    end: danmaku.time + time,
+                    track: track
+                });
+                return `\\move(${this.resolution.x + x}, ${track * this.trackHeight + this.margin + y}, ${-x}, ${track * this.trackHeight + this.margin + y}, 0, ${this.duration * 1000})`;
             }
             getVerticalTags(danmaku)
             {
@@ -195,7 +230,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 this.duration = duration;
                 this.blockTypes = blockTypes;
                 this.resolution = resolution;
-                this.danmakuStack = new DanmakuStack(font, resolution);
+                this.danmakuStack = new DanmakuStack(font, resolution, duration);
             }
             get fontStyles()
             {
@@ -207,14 +242,14 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             convertToAssDocument(xmlDanmakuDocument)
             {
                 const assDanmakus = [];
-                for (const xmlDanmaku of xmlDanmakuDocument.danmakus)
+                for (const xmlDanmaku of xmlDanmakuDocument.danmakus.sort((a, b) => a.time - b.time))
                 {
                     // 跳过高级弹幕和设置为屏蔽的弹幕类型
                     if (this.blockTypes.concat(7, 8).indexOf(xmlDanmaku.type) !== -1)
                     {
                         continue;
                     }
-                    const [startTime, endTime] = this.convertTime(parseFloat(xmlDanmaku.time), this.duration);
+                    const [startTime, endTime] = this.convertTime(xmlDanmaku.time, this.duration);
                     assDanmakus.push(new AssDanmaku({
                         content: xmlDanmaku.content,
                         time: startTime,
@@ -223,7 +258,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                         fontSize: xmlDanmaku.fontSize,
                         color: xmlDanmaku.color,
                         typeTag: this.convertType(xmlDanmaku),
-                        colorTag: this.convertColor(parseInt(xmlDanmaku.color)),
+                        colorTag: this.convertColor(xmlDanmaku.color),
                     }));
                 }
                 return new AssDanmakuDocument({
