@@ -241,7 +241,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 DanmakuConverter,
                 DanmakuStack,
                 XmlDanmaku,
-                xmlDanmakuDocument,
+                XmlDanmakuDocument,
             },
         };
     };
