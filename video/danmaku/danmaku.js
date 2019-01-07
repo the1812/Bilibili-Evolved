@@ -63,12 +63,13 @@
         }
         class AssDanmakuDocument
         {
-            constructor({ danmakus, title, fontStyles, blockTypes })
+            constructor({ danmakus, title, fontStyles, blockTypes, resolution })
             {
                 this.danmakus = danmakus;
                 this.title = title;
                 this.fontStyles = fontStyles;
                 this.blockTypes = blockTypes;
+                this.resolution = resolution;
             }
             generateAss()
             {
@@ -78,8 +79,8 @@
 ; https://github.com/the1812/Bilibili-Evolved/
 Title: ${this.title}
 ScriptType: v4.00+
-PlayResX: 1920
-PlayResY: 1080
+PlayResX: ${this.resolution.x}
+PlayResY: ${this.resolution.y}
 Timer: 10.0000
 WrapStyle: 2
 ScaledBorderAndShadow: no
@@ -99,7 +100,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
         class DanmakuStack
         {
-            constructor(font)
+            constructor(font, resolution)
             {
                 this.horizontal = [];
                 this.vertical = [];
@@ -121,19 +122,32 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     8: "special",
                 };
             }
+            getHorizonalTags(danmaku)
+            {
 
+            }
+            getVerticalTags(danmaku)
+            {
+
+            }
             push(danmaku)
             {
+                let tags = null;
+                let stack = null;
                 switch (this.danmakuType[danmaku.type])
                 {
                     case "normal":
                     case "reversed":
                         {
+                            tags = this.gegetHorizonalTagstTags(danmaku);
+                            stack = this.horizontal;
                             break;
                         }
                     case "top":
                     case "bottom":
                         {
+                            tags = this.getVerticalTags(danmaku);
+                            stack = this.vertical;
                             break;
                         }
                     case "special":
@@ -142,18 +156,24 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                             throw new Error("Danmaku type not supported");
                         }
                 }
+                const info = {
+                    tags
+                };
+                stack.push(info);
+                return info;
             }
         }
         class DanmakuConverter
         {
-            constructor({ title, font, alpha, duration, blockTypes })
+            constructor({ title, font, alpha, duration, blockTypes, resolution })
             {
                 this.title = title;
                 this.font = font;
                 this.alpha = Math.round(alpha * 100);
                 this.duration = duration;
                 this.blockTypes = blockTypes;
-                this.danmakuStack = new DanmakuStack(font);
+                this.resolution = resolution;
+                this.danmakuStack = new DanmakuStack(font, resolution);
             }
             get fontStyles()
             {
@@ -189,6 +209,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     title: this.title,
                     blockTypes: this.blockTypes,
                     fontStyles: this.fontStyles,
+                    resolution: this.resolution
                 });
             }
             convertType(danmaku)
