@@ -195,6 +195,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             {
                 const [, y] = this.getTextSize(danmaku);
                 const isTop = this.danmakuType[danmaku.type] === "top";
+                let closestDanmaku = null;
                 let track = isTop ? 0 : this.trackCount - 1;
                 const nextTrack = isTop ? 1 : -1;
                 const isClosestDanmaku = it =>
@@ -333,6 +334,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             }
             convertTime(startTime, duration)
             {
+                function round(number)
+                {
+                    return String(Math.round(number * 100) / 100).padStart(5, "0");
+                }
                 function secondsToTime(seconds)
                 {
                     let hours = 0;
@@ -347,7 +352,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                         minutes -= 60;
                         hours++;
                     }
-                    return `${hours}:${minutes}:${seconds}`;
+                    return `${hours}:${String(minutes).padStart(2, "0")}:${round(seconds)}`;
                 }
                 return [secondsToTime(startTime), secondsToTime(startTime + duration)];
             }

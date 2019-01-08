@@ -13,7 +13,7 @@
             await danmaku.fetchInfo();
             const converter = new DanmakuConverter({
                 title,
-                font: "Micorosoft YaHei UI",
+                font: "Microsoft YaHei UI",
                 alpha: 0.6,
                 duration: 5,
                 blockTypes: [],
