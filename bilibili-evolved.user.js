@@ -591,6 +591,13 @@
                     {
                         key: "compactLayoutStyle",
                         important: true,
+                        condition()
+                        {
+                            return [
+                                "https://www.bilibili.com/",
+                                "https://www.bilibili.com/watchlater/#/list",
+                            ].indexOf(location.href.replace(location.search, '')) !== -1;
+                        },
                     },
                 ],
                 displayNames: {

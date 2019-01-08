@@ -217,15 +217,15 @@
 {
     background-image: none !important;
 }
-    .help-subcontent p,
-    .biliPager .page-li,
-    .cover-chop-modal-v2-body .cover-chop-modal-v2-body-split,
-    .my-album .line,
-    #app .player-box .multi-page,
-    #app-news .comment-area
-    {
-        background-color: transparent !important;
-    }
+.help-subcontent p,
+.biliPager .page-li,
+.cover-chop-modal-v2-body .cover-chop-modal-v2-body-split,
+.my-album .line,
+#app .player-box .multi-page,
+#app-news .comment-area
+{
+    background-color: transparent !important;
+}
 .article-header .filter-wrp .article-type .line,
 .article-header .filter-wrp .filter-article-type .line,
 .article-header .filter-wrp .filter-level .line,
@@ -342,7 +342,8 @@ li.log-item .user-time,
 .new_list .vd_list li .w_info i,
 .new_list .vd_list li .up,
 .year-vip-user .vippendant-title,
-.vippendant-descript
+.vippendant-descript,
+#page-fav .fav-sidenav .num
 {
     color: #aaa !important;
 }
@@ -754,7 +755,8 @@ table.invtable td,
 .add-cover,
 .cc-article-wrp .article-card .meta-title .typename,
 .text-area-box-v2-container,
-.check-radio-v2-container .check-radio-v2-box
+.check-radio-v2-container .check-radio-v2-box,
+#page-fav .fav-main .filter-item.search 
 {
     border-color: #aaa !important;
 }
