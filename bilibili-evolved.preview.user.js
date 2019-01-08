@@ -585,14 +585,14 @@
                 path: "min/compact-layout.min.js",
                 styles: [
                     {
-                        key: "",
+                        key: "compactLayoutStyle",
                         important: true,
                         condition()
                         {
                             return [
                                 "https://www.bilibili.com/",
                                 "https://www.bilibili.com/watchlater/#/list",
-                            ].indexOf(document.URL) !== -1;
+                            ].indexOf(location.href.replace(location.search, '')) !== -1;
                         },
                     },
                 ],
