@@ -4,29 +4,43 @@
     {
         const { DanmakuInfo } = resources.import("videoInfo");
         const { DanmakuConverter, XmlDanmakuDocument } = resources.import("danmakuConverter");
-        async function downloadDanmaku(timeout)
+        async function downloadDanmaku(timeout, ass)
         {
             const title = document.title
                 .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
                 .replace("_番剧_bilibili_哔哩哔哩", "");
             const danmaku = new DanmakuInfo((unsafeWindow || window).cid);
             await danmaku.fetchInfo();
-            const converter = new DanmakuConverter({
-                title,
-                font: "Microsoft YaHei UI",
-                alpha: 0.6,
-                duration: 5,
-                blockTypes: [],
-                resolution: {
-                    x: 1920,
-                    y: 1080,
-                },
-                bottomMarginPercent: 0.1,
-            });
-            const assDocument = converter.convertToAssDocument(new XmlDanmakuDocument(danmaku.rawXML));
-            const blob = new Blob([assDocument.generateAss()], {
-                type: 'text/plain'
-            });
+            const blob = (() =>
+            {
+                if (ass === true)
+                {
+                    const xmlDocument = new XmlDanmakuDocument(danmaku.rawXML);
+                    // TODO: 从播放器里获取弹幕偏好
+                    const converter = new DanmakuConverter({
+                        title,
+                        font: "Microsoft YaHei UI",
+                        alpha: 0.6,
+                        duration: 5,
+                        blockTypes: [],
+                        resolution: {
+                            x: 1920,
+                            y: 1080,
+                        },
+                        bottomMarginPercent: 0.1,
+                    });
+                    const assDocument = converter.convertToAssDocument(xmlDocument);
+                    return new Blob([assDocument.generateAss()], {
+                        type: 'text/plain'
+                    });
+                }
+                else
+                {
+                    return new Blob([danmaku.rawXML], {
+                        type: 'text/plain'
+                    });
+                }
+            })();
             const url = URL.createObjectURL(blob);
             const link = $("#danmaku-link");
             const oldUrl = link.attr("href");
@@ -66,7 +80,7 @@
                             const timeout = setTimeout(
                                 () => document.querySelector("#download-danmaku>span").innerHTML = "请稍侯...",
                                 200);
-                            downloadDanmaku(timeout);
+                            downloadDanmaku(timeout, e.shiftKey);
                         }
                     });
                 },
