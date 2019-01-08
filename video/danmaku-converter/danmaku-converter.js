@@ -178,7 +178,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 // 如果弹幕过多, 此条就不显示了
                 if (track > this.trackCount)
                 {
-                    return `\\pos(0, -999)`;
+                    return `\\pos(0,-999)`;
                 }
                 track--; // 减回最后的自增
                 this.horizontalTrack.push({
@@ -188,7 +188,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     end: danmaku.time + this.duration(danmaku),
                     track: track
                 });
-                return `\\move(${this.resolution.x + x}, ${track * this.trackHeight + this.margin + y}, ${-x}, ${track * this.trackHeight + this.margin + y}, 0, ${this.duration(danmaku) * 1000})`;
+                return `\\move(${this.resolution.x + x},${track * this.trackHeight + this.margin + y},${-x},${track * this.trackHeight + this.margin + y},0,${this.duration(danmaku) * 1000})`;
             }
             getVerticalTags(danmaku)
             {
@@ -213,7 +213,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 while (closestDanmaku && track <= this.trackCount && track >= 0);
                 if (track > this.trackCount || track < 0)
                 {
-                    return `\\pos(0, -999)`;
+                    return `\\pos(0,-999)`;
                 }
                 track -= nextTrack;
                 this.verticalTrack.push({
@@ -223,11 +223,11 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 });
                 if (isTop)
                 {
-                    return `\\pos(${this.resolution.x / 2}, ${track * this.trackHeight + this.margin + y})`;
+                    return `\\pos(${this.resolution.x / 2},${track * this.trackHeight + this.margin + y})`;
                 }
                 else
                 {
-                    return `\\pos(${this.resolution.x / 2}, ${this.resolution.y - this.margin - y - (this.trackCount - 1 - track) * this.trackHeight})`;
+                    return `\\pos(${this.resolution.x / 2},${this.resolution.y - this.margin - y - (this.trackCount - 1 - track) * this.trackHeight})`;
                 }
             }
             push(danmaku)
@@ -253,7 +253,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     case "special": // 高级弹幕也鸽了先
                     default:
                         {
-                            throw new Error("Danmaku type not supported");
+                            return {
+                                tags: `\\pos(0,-999)`,
+                            };
                         }
                 }
                 const info = {
@@ -288,8 +290,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 const assDanmakus = [];
                 for (const xmlDanmaku of xmlDanmakuDocument.danmakus.sort((a, b) => a.time - b.time))
                 {
-                    // 跳过高级弹幕和设置为屏蔽的弹幕类型
-                    if (this.blockTypes.concat(7, 8).indexOf(xmlDanmaku.type) !== -1)
+                    // 跳过设置为屏蔽的弹幕类型
+                    if (this.blockTypes.indexOf(xmlDanmaku.type) !== -1)
                     {
                         continue;
                     }

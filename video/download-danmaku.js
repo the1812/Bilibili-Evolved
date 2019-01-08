@@ -89,7 +89,14 @@
                             const timeout = setTimeout(
                                 () => document.querySelector("#download-danmaku>span").innerHTML = "请稍侯...",
                                 200);
-                            downloadDanmaku(timeout, e.shiftKey);
+                            try
+                            {
+                                downloadDanmaku(timeout, e.shiftKey);
+                            }
+                            catch (error)
+                            {
+                                logError(error);
+                            }
                         }
                     });
                 },
