@@ -180,7 +180,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 // 如果弹幕过多, 此条就不显示了
                 if (track > this.trackCount)
                 {
-                    return `\\alpha&HFF`;
+                    return `\\pos(0, -999)`;
                 }
                 track--; // 减回最后的自增
                 this.horizontalTrack.push({
@@ -215,7 +215,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 while (closestDanmaku && track <= this.trackCount && track >= 0);
                 if (track > this.trackCount || track < 0)
                 {
-                    return `\\alpha&HFF`;
+                    return `\\pos(0, -999)`;
                 }
                 track -= nextTrack;
                 this.verticalTrack.push({
