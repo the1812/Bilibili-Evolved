@@ -103,9 +103,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         {
             constructor(font, resolution, duration)
             {
-                this.horizontal = [];
+                this.horizontalDanmakus = [];
                 this.horizontalTrack = [];
-                this.vertical = [];
+                this.verticalDanmakus = [];
+                this.verticalTrack = [];
                 this.resolution = resolution;
                 this.duration = duration;
                 this.canvas = document.createElement("canvas");
@@ -192,15 +193,43 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             }
             getVerticalTags(danmaku)
             {
-                // TODO: place verizontal tags
                 const [, y] = this.getTextSize(danmaku);
-                if (this.danmakuType[danmaku.type] === "top")
+                const isTop = this.danmakuType[danmaku.type] === "top";
+                let track = isTop ? 0 : this.trackCount - 1;
+                const nextTrack = isTop ? 1 : -1;
+                const isClosestDanmaku = it =>
                 {
-                    return `\\pos(${this.resolution.x / 2}, ${this.margin + y})`;
+                    if (it.track !== track)
+                    {
+                        return false;
+                    }
+                    return it.end > danmaku.time;
+                };
+                // 寻找已发送弹幕中可能重叠的
+                do
+                {
+                    closestDanmaku = this.verticalTrack.find(isClosestDanmaku);
+                    track += nextTrack;
+                }
+                while (closestDanmaku && track <= this.trackCount && track >= 0);
+                // 如果弹幕过多, 此条就不显示了
+                if (track > this.trackCount || track < 0)
+                {
+                    return `\\alpha&HFF`;
+                }
+
+                this.verticalTrack.push({
+                    start: danmaku.time,
+                    end: danmaku.time + this.duration,
+                    track: track
+                });
+                if (isTop)
+                {
+                    return `\\pos(${this.resolution.x / 2}, ${track * this.trackHeight + this.margin + y})`;
                 }
                 else
                 {
-                    return `\\pos(${this.resolution.x / 2}, ${this.resolution.y - this.margin - y})`;
+                    return `\\pos(${this.resolution.x / 2}, ${track * this.trackHeight + this.resolution.y - this.margin - y})`;
                 }
             }
             push(danmaku)
@@ -210,20 +239,20 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 switch (this.danmakuType[danmaku.type])
                 {
                     case "normal":
-                    case "reversed":
+                    case "reversed": // 反向先鸽了, 直接当正向了
                         {
                             tags = this.getHorizonalTags(danmaku);
-                            stack = this.horizontal;
+                            stack = this.horizontalDanmakus;
                             break;
                         }
                     case "top":
                     case "bottom":
                         {
                             tags = this.getVerticalTags(danmaku);
-                            stack = this.vertical;
+                            stack = this.verticalDanmakus;
                             break;
                         }
-                    case "special":
+                    case "special": // 高级弹幕也鸽了先
                     default:
                         {
                             throw new Error("Danmaku type not supported");
