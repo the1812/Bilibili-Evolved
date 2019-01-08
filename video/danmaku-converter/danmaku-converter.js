@@ -101,7 +101,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
         class DanmakuStack
         {
-            constructor(font, resolution, duration)
+            constructor(font, resolution, duration, bottomMarginPercent)
             {
                 this.horizontalDanmakus = [];
                 this.horizontalTrack = [];
@@ -126,6 +126,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     7: "special",
                     8: "special",
                 };
+                this.bottomMarginPercent = bottomMarginPercent;
                 this.margin = 10;
                 this.nextDanmakuDelay = 0.1;
                 this.generateTracks();
@@ -137,7 +138,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 const height = metrics.emHeightAscent + metrics.emHeightDescent;
                 this.danmakuHeight = height;
                 this.trackHeight = this.margin * 2 + height;
-                this.trackCount = parseInt(fixed(this.resolution.y / this.trackHeight, 0));
+                this.trackCount = parseInt(fixed(this.resolution.y * (1 - this.bottomMarginPercent) / this.trackHeight, 0));
             }
             getTextSize(danmaku)
             {
@@ -206,19 +207,17 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     }
                     return it.end > danmaku.time;
                 };
-                // 寻找已发送弹幕中可能重叠的
                 do
                 {
                     closestDanmaku = this.verticalTrack.find(isClosestDanmaku);
                     track += nextTrack;
                 }
                 while (closestDanmaku && track <= this.trackCount && track >= 0);
-                // 如果弹幕过多, 此条就不显示了
                 if (track > this.trackCount || track < 0)
                 {
                     return `\\alpha&HFF`;
                 }
-
+                track -= nextTrack;
                 this.verticalTrack.push({
                     start: danmaku.time,
                     end: danmaku.time + this.duration,
@@ -268,7 +267,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         }
         class DanmakuConverter
         {
-            constructor({ title, font, alpha, duration, blockTypes, resolution })
+            constructor({ title, font, alpha, duration, blockTypes, resolution, bottomMarginPercent })
             {
                 this.title = title;
                 this.font = font;
@@ -276,7 +275,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 this.duration = duration;
                 this.blockTypes = blockTypes;
                 this.resolution = resolution;
-                this.danmakuStack = new DanmakuStack(font, resolution, duration);
+                this.danmakuStack = new DanmakuStack(font, resolution, duration, bottomMarginPercent);
             }
             get fontStyles()
             {

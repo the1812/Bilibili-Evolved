@@ -21,6 +21,7 @@
                     x: 1920,
                     y: 1080,
                 },
+                bottomMarginPercent: 0.25,
             });
             const assDocument = converter.convertToAssDocument(new XmlDanmakuDocument(danmaku.rawXML));
             const blob = new Blob([assDocument.generateAss()], {
