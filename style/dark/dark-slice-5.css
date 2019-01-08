@@ -61,7 +61,9 @@
 .d-buttons .d-button,
 .groom-box-m.clearfix .groom-module .type-name,
 .new_list .vd_list li.l1,
-.album-content .my-album .link-panigation .panigation
+.album-content .my-album .link-panigation .panigation,
+.attention-live .switch-btn:active,
+.attention-live .switch-btn:hover
 {
     background-color: #222 !important;
 }
@@ -215,7 +217,9 @@
 .video-info-m .number .fav i,
 .elecrank-header .rank-tab .arr-up,
 .elecrank-wrapper .elecrank-content .rank-item .msg .arrow,
-.sub-nav-m .tips .t-arrow
+.sub-nav-m .tips .t-arrow,
+.attention-live .switch-btn:active,
+.attention-live .switch-btn:hover
 {
     background-image: none !important;
 }
