@@ -60,7 +60,8 @@
 .d-buttons .d-state-highlight,
 .d-buttons .d-button,
 .groom-box-m.clearfix .groom-module .type-name,
-.new_list .vd_list li.l1
+.new_list .vd_list li.l1,
+.album-content .my-album .link-panigation .panigation
 {
     background-color: #222 !important;
 }
@@ -188,7 +189,8 @@
 .d-outer.d-state-lock.d-state-visible.d-state-focus .d-outer,
 .invitation-record-warp .invtable .inputdone,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
-.r-con .mobile-link-l
+.r-con .mobile-link-l,
+.col-full.clearfix .album-content .my-album .pagination
 {
     background-color: #444 !important;
 }
