@@ -229,7 +229,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 }
                 else
                 {
-                    return `\\pos(${this.resolution.x / 2}, ${track * this.trackHeight + this.resolution.y - this.margin - y})`;
+                    return `\\pos(${this.resolution.x / 2}, ${this.resolution.y - this.margin - y - (this.trackCount - 1 - track) * this.trackHeight})`;
                 }
             }
             push(danmaku)
