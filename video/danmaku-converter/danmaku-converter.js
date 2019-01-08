@@ -149,7 +149,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             {
                 const [x, y] = this.getTextSize(danmaku);
                 const width = x * 2;
-                const time = this.duration * width / (this.resolution.x + width) + this.nextDanmakuDelay;
+                const time = this.duration(danmaku) * width / (this.resolution.x + width) + this.nextDanmakuDelay;
                 let track = 0;
                 let closestDanmaku = null;
                 const isClosestDanmaku = it =>
@@ -185,10 +185,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     width: width,
                     start: danmaku.time,
                     visible: danmaku.time + time,
-                    end: danmaku.time + this.duration,
+                    end: danmaku.time + this.duration(danmaku),
                     track: track
                 });
-                return `\\move(${this.resolution.x + x}, ${track * this.trackHeight + this.margin + y}, ${-x}, ${track * this.trackHeight + this.margin + y}, 0, ${this.duration * 1000})`;
+                return `\\move(${this.resolution.x + x}, ${track * this.trackHeight + this.margin + y}, ${-x}, ${track * this.trackHeight + this.margin + y}, 0, ${this.duration(danmaku) * 1000})`;
             }
             getVerticalTags(danmaku)
             {
@@ -218,7 +218,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 track -= nextTrack;
                 this.verticalTrack.push({
                     start: danmaku.time,
-                    end: danmaku.time + this.duration,
+                    end: danmaku.time + this.duration(danmaku),
                     track: track
                 });
                 if (isTop)
@@ -282,8 +282,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     18: `Style: Small,${this.font},36,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,0`,
                 };
             }
-            convertToAssDocument(xmlDanmakuDocument)
+            convertToAssDocument(xml)
             {
+                const xmlDanmakuDocument = new XmlDanmakuDocument(xml);
                 const assDanmakus = [];
                 for (const xmlDanmaku of xmlDanmakuDocument.danmakus.sort((a, b) => a.time - b.time))
                 {
@@ -292,7 +293,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     {
                         continue;
                     }
-                    const [startTime, endTime] = this.convertTime(xmlDanmaku.time, this.duration);
+                    const [startTime, endTime] = this.convertTime(xmlDanmaku.time, this.duration(xmlDanmaku));
                     assDanmakus.push(new AssDanmaku({
                         content: xmlDanmaku.content,
                         time: startTime,

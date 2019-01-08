@@ -3,7 +3,7 @@
     return (settings, resources) =>
     {
         const { DanmakuInfo } = resources.import("videoInfo");
-        const { DanmakuConverter, XmlDanmakuDocument } = resources.import("danmakuConverter");
+        const { DanmakuConverter } = resources.import("danmakuConverter");
         async function downloadDanmaku(timeout, ass)
         {
             const title = document.title
@@ -15,21 +15,30 @@
             {
                 if (ass === true)
                 {
-                    const xmlDocument = new XmlDanmakuDocument(danmaku.rawXML);
                     // TODO: 从播放器里获取弹幕偏好
                     const converter = new DanmakuConverter({
                         title,
                         font: "Microsoft YaHei UI",
                         alpha: 0.6,
-                        duration: 5,
+                        duration(danmaku)
+                        {
+                            switch (danmaku.type)
+                            {
+                                case 4:
+                                case 5:
+                                    return 4;
+                                default:
+                                    return 10;
+                            }
+                        },
                         blockTypes: [],
                         resolution: {
                             x: 1920,
                             y: 1080,
                         },
-                        bottomMarginPercent: 0.1,
+                        bottomMarginPercent: 0.15,
                     });
-                    const assDocument = converter.convertToAssDocument(xmlDocument);
+                    const assDocument = converter.convertToAssDocument(danmaku.rawXML);
                     return new Blob([assDocument.generateAss()], {
                         type: 'text/plain'
                     });
