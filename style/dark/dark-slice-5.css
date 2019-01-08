@@ -345,7 +345,8 @@ li.log-item .user-time,
 .new_list .vd_list li .up,
 .year-vip-user .vippendant-title,
 .vippendant-descript,
-#page-fav .fav-sidenav .num
+#page-fav .fav-sidenav .num,
+.h .report-popup-tip
 {
     color: #aaa !important;
 }
@@ -585,7 +586,8 @@ table.invtable td,
 .d-buttons .d-button,
 .d-buttons .d-button:hover,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
-.groom-box-m.clearfix .groom-module .type-name
+.groom-box-m.clearfix .groom-module .type-name,
+.h .report-popup-item-text
 {
     color: #eee !important;
 }
@@ -749,7 +751,8 @@ table.invtable td,
 .d-buttons .d-state-highlight,
 .d-buttons .d-button,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
-.r-con .mobile-link-l
+.r-con .mobile-link-l,
+.h .report-popup-item.checked .report-popup-item-checkbox
 {
     border-color: transparent !important;
 }
@@ -900,7 +903,8 @@ table.invtable td,
 .popup-btn .btn-default:hover,
 .d-buttons .d-state-highlight:active,
 .d-buttons .d-state-highlight:hover,
-.d-buttons .d-button:hover
+.d-buttons .d-button:hover,
+.h .report-popup-item.checked .report-popup-item-checkbox
 {
     background-color: var(--theme-color) !important;
 }
