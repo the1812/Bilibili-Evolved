@@ -50,7 +50,7 @@
             }
             clearTimeout(timeout);
             document.querySelector("#download-danmaku>span").innerHTML = "下载弹幕";
-            link.attr("download", `${title}.ass`).attr("href", url).get(0).click();
+            link.attr("download", `${title}.${(ass ? "ass" : "xml")}`).attr("href", url).get(0).click();
         }
         return {
             widget: {
