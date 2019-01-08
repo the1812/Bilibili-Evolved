@@ -133,9 +133,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             }
             generateTracks()
             {
-                this.context.font = this.fontSizes[25];
-                const metrics = this.context.measureText("Lorem ipsum");
-                const height = metrics.emHeightAscent + metrics.emHeightDescent;
+                const height = 52;
                 this.danmakuHeight = height;
                 this.trackHeight = this.margin * 2 + height;
                 this.trackCount = parseInt(fixed(this.resolution.y * (1 - this.bottomMarginPercent) / this.trackHeight, 0));
