@@ -583,11 +583,17 @@
             },
             compactLayout: {
                 path: "min/compact-layout.min.js",
-                styles: [
+                dependencies: [
                     {
-                        key: "compactLayoutStyle",
+                        key: "",
                         important: true,
-                        condition: () => document.URL === "https://www.bilibili.com/",
+                        condition()
+                        {
+                            return [
+                                "https://www.bilibili.com/",
+                                "https://www.bilibili.com/watchlater/#/list",
+                            ].indexOf(document.URL) !== -1;
+                        },
                     },
                 ],
                 displayNames: {
