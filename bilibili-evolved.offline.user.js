@@ -584,7 +584,7 @@
             },
             compactLayout: {
                 path: "min/compact-layout.min.js",
-                dependencies: [
+                styles: [
                     {
                         key: "",
                         important: true,
