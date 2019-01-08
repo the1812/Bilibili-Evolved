@@ -143,7 +143,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 this.context.font = this.fontSizes[danmaku.fontSize];
                 const metrics = this.context.measureText(danmaku.content);
                 const x = metrics.width / 2;
-                return [x, this.danmakuHeight];
+                return [x, this.danmakuHeight / 2];
             }
             getHorizonalTags(danmaku)
             {
@@ -152,37 +152,33 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 const time = this.duration * width / (this.resolution.x + width) + this.nextDanmakuDelay;
                 let track = 0;
                 let closestDanmaku = null;
-                const notSuitable = () =>
+                const isClosestDanmaku = it =>
                 {
-                    if (closestDanmaku)
+                    if (it.track !== track)
                     {
-                        if (closestDanmaku.width < width) // 弹幕比前面的弹幕长
-                        {
-                            return closestDanmaku.end > danmaku.time; // 必须等前面弹幕走完
-                        }
-                        else
-                        {
-                            return closestDanmaku.visible > danmaku.time;
-                        }
+                        return false;
+                    }
+                    if (it.width < width) // 弹幕比前面的弹幕长
+                    {
+                        return it.end > danmaku.time; // 必须等前面弹幕走完
                     }
                     else
                     {
-                        return false;
+                        return it.visible > danmaku.time;
                     }
                 };
                 // 寻找已发送弹幕中可能重叠的
                 do
                 {
-                    closestDanmaku = this.horizontalTrack.find(
-                        it => it.track === track && it.end > danmaku.time);
+                    closestDanmaku = this.horizontalTrack.find(isClosestDanmaku);
                     track++;
                 }
-                while (notSuitable() && track <= this.trackCount);
+                while (closestDanmaku && track <= this.trackCount);
 
                 // 如果弹幕过多, 此条就不显示了
                 if (track > this.trackCount)
                 {
-                    return "";
+                    return `\\alpha&HFF`;
                 }
                 track--; // 减回最后的自增
                 this.horizontalTrack.push({
