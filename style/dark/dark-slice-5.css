@@ -352,7 +352,8 @@ li.log-item .user-time,
 .vippendant-descript,
 #page-fav .fav-sidenav .num,
 .h .report-popup-tip,
-#page-follows .modal-container .content-tip
+#page-follows .modal-container .content-tip,
+.viptable .history-remark
 {
     color: #aaa !important;
 }
@@ -594,7 +595,10 @@ table.invtable td,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .groom-box-m.clearfix .groom-module .type-name,
 .h .report-popup-item-text,
-#page-follows .modal-container .content-text
+#page-follows .modal-container .content-text,
+table.viptable td,
+.viptable .history-th,
+.big-history-title
 {
     color: #eee !important;
 }
