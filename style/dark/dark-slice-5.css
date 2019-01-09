@@ -357,7 +357,8 @@ li.log-item .user-time,
 .voucher-right-condition,
 .voucher-right-order,
 .voucher-right-time,
-.voucher-bottom-txt
+.voucher-bottom-txt,
+.no-data-voucher
 {
     color: #aaa !important;
 }
