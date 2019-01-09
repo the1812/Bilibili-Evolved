@@ -353,7 +353,11 @@ li.log-item .user-time,
 #page-fav .fav-sidenav .num,
 .h .report-popup-tip,
 #page-follows .modal-container .content-tip,
-.viptable .history-remark
+.viptable .history-remark,
+.voucher-right-condition,
+.voucher-right-order,
+.voucher-right-time,
+.voucher-bottom-txt
 {
     color: #aaa !important;
 }
@@ -598,7 +602,8 @@ table.invtable td,
 #page-follows .modal-container .content-text,
 table.viptable td,
 .viptable .history-th,
-.big-history-title
+.big-history-title,
+.voucher-right-name
 {
     color: #eee !important;
 }
@@ -772,7 +777,9 @@ table.viptable td,
 .cc-article-wrp .article-card .meta-title .typename,
 .text-area-box-v2-container,
 .check-radio-v2-container .check-radio-v2-box,
-#page-fav .fav-main .filter-item.search
+#page-fav .fav-main .filter-item.search,
+.voucher-list-wrapper.voucher-ing .voucher-right,
+.voucher-content-outside .voucher-list-wrapper
 {
     border-color: #aaa !important;
 }
@@ -832,8 +839,10 @@ table.viptable td,
 .bind-info .note-footer .btn-group .active-btn,
 .app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a,
 .elecrank-header .rank-tab.active,
-.s_tag .btn-add:hover ,
-.slider-ad-m .carousel-module .panel .trig span.on
+.s_tag .btn-add:hover,
+.slider-ad-m .carousel-module .panel .trig span.on,
+.voucher-content-outside .voucher-ing,
+.voucher-content-outside .voucher-no-used
 {
     border-color: var(--theme-color) !important;
 }
@@ -1007,7 +1016,8 @@ li.log-item .user-action .up-mark,
 .video-toolbar-module .app-download .qr-code-box .box .txt a,
 .video-toolbar-module .elec-btn,
 .new_list .vd_list li .title:hover,
-#page-follows .modal-container .content-text em
+#page-follows .modal-container .content-text em,
+.voucher-right-ing 
 {
     color: var(--theme-color) !important;
 }

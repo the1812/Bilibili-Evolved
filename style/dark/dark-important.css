@@ -92,7 +92,11 @@ blockquote .color-yellow-04,
 .left-nav-ul .left-nav-item.active i.active,
 .left-nav-ul .left-nav-list.on .left-nav-item .icon,
 .left-nav-ul .left-nav-list.on .left-nav-item,
-.drop-list-v2-container .drop-list-v2-item-selected .drop-list-v2-item-cont p.item-cont-main 
+.drop-list-v2-container .drop-list-v2-item-selected .drop-list-v2-item-cont p.item-cont-main,
+.voucher-ing .voucher-left-money,
+.voucher-ing .voucher-left-money:before,
+.voucher-no-used .voucher-left-money,
+.voucher-no-used .voucher-left-money:before 
 {
     color: var(--theme-color) !important;
 }
