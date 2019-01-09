@@ -361,7 +361,9 @@ li.log-item .user-time,
 .voucher-right-time,
 .voucher-bottom-txt,
 .no-data-voucher,
-.share-qr-hint
+.share-qr-hint,
+#page-fav .search-empty-hint p,
+.my-album .error .text
 {
     color: #aaa !important;
 }
