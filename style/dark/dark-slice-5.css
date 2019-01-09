@@ -193,7 +193,8 @@
 .invitation-record-warp .invtable .inputdone,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .r-con .mobile-link-l,
-.col-full.clearfix .album-content .my-album .pagination
+.col-full.clearfix .album-content .my-album .pagination,
+.share-addr-wrapper
 {
     background-color: #444 !important;
 }
@@ -359,7 +360,8 @@ li.log-item .user-time,
 .voucher-right-order,
 .voucher-right-time,
 .voucher-bottom-txt,
-.no-data-voucher
+.no-data-voucher,
+.share-qr-hint
 {
     color: #aaa !important;
 }
@@ -606,7 +608,9 @@ table.viptable td,
 .viptable .history-th,
 .big-history-title,
 .voucher-right-name,
-.multi-page .cur-list .module-box li
+.multi-page .cur-list .module-box li,
+.share-addr-name,
+.share-addr-wrapper
 {
     color: #eee !important;
 }
@@ -772,7 +776,8 @@ table.viptable td,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .r-con .mobile-link-l,
 .h .report-popup-item.checked .report-popup-item-checkbox,
-.multi-page .cur-list .module-box li
+.multi-page .cur-list .module-box li,
+.share-addr-wrapper
 {
     border-color: transparent !important;
 }
