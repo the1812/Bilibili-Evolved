@@ -351,7 +351,8 @@ li.log-item .user-time,
 .year-vip-user .vippendant-title,
 .vippendant-descript,
 #page-fav .fav-sidenav .num,
-.h .report-popup-tip
+.h .report-popup-tip,
+#page-follows .modal-container .content-tip
 {
     color: #aaa !important;
 }
@@ -592,7 +593,8 @@ table.invtable td,
 .d-buttons .d-button:hover,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .groom-box-m.clearfix .groom-module .type-name,
-.h .report-popup-item-text
+.h .report-popup-item-text,
+#page-follows .modal-container .content-text
 {
     color: #eee !important;
 }
@@ -996,11 +998,12 @@ table.invtable td,
 .player-limit-wrap .limit_not_start_wrap .not_start_info span,
 .video-info-m .tm-info a:hover,
 .s_tag .btn-view-tag a:hover,
-.elecrank-header .rank-tab.active ,
+.elecrank-header .rank-tab.active,
 li.log-item .user-action .up-mark,
 .video-toolbar-module .app-download .qr-code-box .box .txt a,
 .video-toolbar-module .elec-btn,
-.new_list .vd_list li .title:hover
+.new_list .vd_list li .title:hover,
+#page-follows .modal-container .content-text em 
 {
     color: var(--theme-color) !important;
 }
