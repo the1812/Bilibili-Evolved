@@ -229,7 +229,7 @@
 .my-album .line,
 #app .player-box .multi-page,
 #app-news .comment-area,
-.col-full .section subs .s-space .wrapper .content
+.col-full .section.subs .clearfix.content.s-space.wrapper
 {
     background-color: transparent !important;
 }
