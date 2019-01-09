@@ -458,10 +458,14 @@
                 path: "min/download-danmaku.min.js",
                 dependencies: [
                     "videoInfo",
+                    "danmakuConverter",
                 ],
                 displayNames: {
                     "downloadDanmaku": "下载弹幕",
                 },
+            },
+            danmakuConverter: {
+                path: "min/danmaku-converter.min.js"
             },
             videoInfo: {
                 path: "min/video-info.min.js",
@@ -599,7 +603,7 @@
                 displayNames: {
                     compactLayout: "首页使用紧凑布局",
                 }
-            }
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};
@@ -1432,6 +1436,10 @@
             styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
             styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
             this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(";")}}</style>`);
+        }
+        import(compnentName)
+        {
+            return this.attributes[compnentName].export;
         }
         async fetchByKey(key)
         {
