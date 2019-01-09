@@ -63,7 +63,8 @@
 .new_list .vd_list li.l1,
 .album-content .my-album .link-panigation .panigation,
 .attention-live .switch-btn:active,
-.attention-live .switch-btn:hover
+.attention-live .switch-btn:hover,
+.multi-page .cur-list .module-box li 
 {
     background-color: #222 !important;
 }
@@ -604,7 +605,8 @@ table.invtable td,
 table.viptable td,
 .viptable .history-th,
 .big-history-title,
-.voucher-right-name
+.voucher-right-name,
+.multi-page .cur-list .module-box li
 {
     color: #eee !important;
 }
@@ -769,7 +771,8 @@ table.viptable td,
 .d-buttons .d-button,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .r-con .mobile-link-l,
-.h .report-popup-item.checked .report-popup-item-checkbox
+.h .report-popup-item.checked .report-popup-item-checkbox,
+.multi-page .cur-list .module-box li
 {
     border-color: transparent !important;
 }
@@ -843,7 +846,9 @@ table.viptable td,
 .s_tag .btn-add:hover,
 .slider-ad-m .carousel-module .panel .trig span.on,
 .voucher-content-outside .voucher-ing,
-.voucher-content-outside .voucher-no-used
+.voucher-content-outside .voucher-no-used,
+.multi-page .cur-list .module-box li:hover,
+.multi-page .cur-list .module-box li.on 
 {
     border-color: var(--theme-color) !important;
 }
