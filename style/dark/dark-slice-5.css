@@ -229,7 +229,7 @@
 .my-album .line,
 #app .player-box .multi-page,
 #app-news .comment-area,
-.col-full .section.subs .clearfix.content.s-space.wrapper
+#page-subs .content
 {
     background-color: transparent !important;
 }
@@ -768,7 +768,7 @@ table.invtable td,
 .cc-article-wrp .article-card .meta-title .typename,
 .text-area-box-v2-container,
 .check-radio-v2-container .check-radio-v2-box,
-#page-fav .fav-main .filter-item.search 
+#page-fav .fav-main .filter-item.search
 {
     border-color: #aaa !important;
 }
@@ -787,7 +787,7 @@ table.invtable td,
 {
     filter: brightness(0) invert(1) !important;
 }
-.main-c .main-head 
+.main-c .main-head
 {
     filter: brightness(0.5) contrast(3) !important;
 }
@@ -1003,7 +1003,7 @@ li.log-item .user-action .up-mark,
 .video-toolbar-module .app-download .qr-code-box .box .txt a,
 .video-toolbar-module .elec-btn,
 .new_list .vd_list li .title:hover,
-#page-follows .modal-container .content-text em 
+#page-follows .modal-container .content-text em
 {
     color: var(--theme-color) !important;
 }
