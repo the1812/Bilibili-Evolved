@@ -127,8 +127,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     8: "special",
                 };
                 this.bottomMarginPercent = bottomMarginPercent;
-                this.margin = 10;
-                this.nextDanmakuDelay = 0.1;
+                this.margin = 4;
+                this.nextDanmakuDelay = 0.05;
                 this.generateTracks();
             }
             generateTracks()
@@ -160,7 +160,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     }
                     if (it.width < width) // 弹幕比前面的弹幕长
                     {
-                        return it.end > danmaku.time; // 必须等前面弹幕走完
+                        // 必须等前面弹幕走完
+                        return this.duration(danmaku) * this.resolution.x / (this.resolution.x + width) <= it.end - danmaku.time;
+                        //return it.end > danmaku.time;
                     }
                     else
                     {

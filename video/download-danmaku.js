@@ -28,7 +28,7 @@
                                 case 5:
                                     return 4;
                                 default:
-                                    return 10;
+                                    return 6;
                             }
                         },
                         blockTypes: [],
