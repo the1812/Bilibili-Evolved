@@ -194,7 +194,7 @@
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .r-con .mobile-link-l,
 .col-full.clearfix .album-content .my-album .pagination,
-.share-addr-wrapper,
+.share-addr-item .share-addr-wrapper,
 .media-tab-content .nav-tools .tool-item
 {
     background-color: #444 !important;
@@ -366,7 +366,8 @@ li.log-item .user-time,
 #page-fav .search-empty-hint p,
 .my-album .error .text,
 .sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group span,
-.sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group label
+.sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group label,
+.report-reason-pic-row .report-pic-description
 {
     color: #aaa !important;
 }
@@ -614,9 +615,10 @@ table.viptable td,
 .big-history-title,
 .voucher-right-name,
 .multi-page .cur-list .module-box li,
-.share-addr-name,
-.share-addr-wrapper,
-.media-tab-content .nav-tools .tool-item:hover
+.share-addr-item .share-addr-name,
+.share-addr-item .share-addr-wrapper,
+.media-tab-content .nav-tools .tool-item:hover,
+.reportImage-candidate-item.dp-i-block.bg-cover.bg-center.bg-no-repeat.ts-dot-3.pointer.p-relative .upload-hint
 {
     color: #eee !important;
 }
@@ -783,7 +785,7 @@ table.viptable td,
 .r-con .mobile-link-l,
 .h .report-popup-item.checked .report-popup-item-checkbox,
 .multi-page .cur-list .module-box li,
-.share-addr-wrapper,
+.share-addr-item .share-addr-wrapper,
 .media-tab-content .nav-tools .tool-item:hover,
 .media-tab-content .nav-tools .tool-item
 {
