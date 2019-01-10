@@ -6,6 +6,7 @@
 - [浏览设置项](#设置)
 - [浏览器兼容性](#兼容性)
 - [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
+- [捐赠入口](donate.md)
 - [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/Coming-Features)
 
 # 安装
@@ -90,7 +91,8 @@
     - 32位限制: 614MB
 
 ### 下载弹幕
-在视频播放页面中, `下载弹幕`按钮将在`附加功能`中启用, 点击可以下载XML格式的弹幕. XML格式可以在[其他站点](https://tiansh.github.io/us-danmaku/bilibili/)转换为ASS格式.
+在视频播放页面中, `下载弹幕`按钮将在`附加功能`中启用, 点击可以下载XML格式的弹幕.
+> 点击时若按住`Shift`将下载ASS格式的弹幕, 此功能尚未完善, 完善后会跟XML的操作方式互换.
 
 ### 查看封面
 在视频播放页面/直播间中, `查看封面`按钮将在`附加功能`中启用, 点击可以查看或保存封面. (其实还可以看专栏的封面, 不过专栏的封面本来就显示在标题上方了)
@@ -270,7 +272,5 @@
 
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
-
-[捐赠入口](donate.md)
 
 [返回顶部](#Bilibili-Evolved)
