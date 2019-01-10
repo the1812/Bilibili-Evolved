@@ -63,7 +63,8 @@
 .new_list .vd_list li.l1,
 .album-content .my-album .link-panigation .panigation,
 .attention-live .switch-btn:active,
-.attention-live .switch-btn:hover
+.attention-live .switch-btn:hover,
+.multi-page .cur-list .module-box li 
 {
     background-color: #222 !important;
 }
@@ -192,7 +193,8 @@
 .invitation-record-warp .invtable .inputdone,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .r-con .mobile-link-l,
-.col-full.clearfix .album-content .my-album .pagination
+.col-full.clearfix .album-content .my-album .pagination,
+.share-addr-wrapper
 {
     background-color: #444 !important;
 }
@@ -352,7 +354,16 @@ li.log-item .user-time,
 .vippendant-descript,
 #page-fav .fav-sidenav .num,
 .h .report-popup-tip,
-#page-follows .modal-container .content-tip
+#page-follows .modal-container .content-tip,
+.viptable .history-remark,
+.voucher-right-condition,
+.voucher-right-order,
+.voucher-right-time,
+.voucher-bottom-txt,
+.no-data-voucher,
+.share-qr-hint,
+#page-fav .search-empty-hint p,
+.my-album .error .text
 {
     color: #aaa !important;
 }
@@ -594,7 +605,14 @@ table.invtable td,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .groom-box-m.clearfix .groom-module .type-name,
 .h .report-popup-item-text,
-#page-follows .modal-container .content-text
+#page-follows .modal-container .content-text,
+table.viptable td,
+.viptable .history-th,
+.big-history-title,
+.voucher-right-name,
+.multi-page .cur-list .module-box li,
+.share-addr-name,
+.share-addr-wrapper
 {
     color: #eee !important;
 }
@@ -759,7 +777,9 @@ table.invtable td,
 .d-buttons .d-button,
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .r-con .mobile-link-l,
-.h .report-popup-item.checked .report-popup-item-checkbox
+.h .report-popup-item.checked .report-popup-item-checkbox,
+.multi-page .cur-list .module-box li,
+.share-addr-wrapper
 {
     border-color: transparent !important;
 }
@@ -768,7 +788,9 @@ table.invtable td,
 .cc-article-wrp .article-card .meta-title .typename,
 .text-area-box-v2-container,
 .check-radio-v2-container .check-radio-v2-box,
-#page-fav .fav-main .filter-item.search
+#page-fav .fav-main .filter-item.search,
+.voucher-list-wrapper.voucher-ing .voucher-right,
+.voucher-content-outside .voucher-list-wrapper
 {
     border-color: #aaa !important;
 }
@@ -828,8 +850,12 @@ table.invtable td,
 .bind-info .note-footer .btn-group .active-btn,
 .app-ctnr .live-helper .main-content .menu-item .menu-txt .download .down-item a,
 .elecrank-header .rank-tab.active,
-.s_tag .btn-add:hover ,
-.slider-ad-m .carousel-module .panel .trig span.on
+.s_tag .btn-add:hover,
+.slider-ad-m .carousel-module .panel .trig span.on,
+.voucher-content-outside .voucher-ing,
+.voucher-content-outside .voucher-no-used,
+.multi-page .cur-list .module-box li:hover,
+.multi-page .cur-list .module-box li.on 
 {
     border-color: var(--theme-color) !important;
 }
@@ -1003,7 +1029,8 @@ li.log-item .user-action .up-mark,
 .video-toolbar-module .app-download .qr-code-box .box .txt a,
 .video-toolbar-module .elec-btn,
 .new_list .vd_list li .title:hover,
-#page-follows .modal-container .content-text em
+#page-follows .modal-container .content-text em,
+.voucher-right-ing 
 {
     color: var(--theme-color) !important;
 }
