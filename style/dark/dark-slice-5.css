@@ -194,7 +194,8 @@
 .sub-nav-m.report-wrap-module .sub-nav-m .tips,
 .r-con .mobile-link-l,
 .col-full.clearfix .album-content .my-album .pagination,
-.share-addr-wrapper
+.share-addr-wrapper,
+.media-tab-content .nav-tools .tool-item
 {
     background-color: #444 !important;
 }
@@ -363,7 +364,9 @@ li.log-item .user-time,
 .no-data-voucher,
 .share-qr-hint,
 #page-fav .search-empty-hint p,
-.my-album .error .text
+.my-album .error .text,
+.sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group span,
+.sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group label
 {
     color: #aaa !important;
 }
@@ -612,7 +615,8 @@ table.viptable td,
 .voucher-right-name,
 .multi-page .cur-list .module-box li,
 .share-addr-name,
-.share-addr-wrapper
+.share-addr-wrapper,
+.media-tab-content .nav-tools .tool-item:hover
 {
     color: #eee !important;
 }
@@ -779,7 +783,9 @@ table.viptable td,
 .r-con .mobile-link-l,
 .h .report-popup-item.checked .report-popup-item-checkbox,
 .multi-page .cur-list .module-box li,
-.share-addr-wrapper
+.share-addr-wrapper,
+.media-tab-content .nav-tools .tool-item:hover,
+.media-tab-content .nav-tools .tool-item
 {
     border-color: transparent !important;
 }
@@ -937,7 +943,8 @@ table.viptable td,
 .d-buttons .d-state-highlight:active,
 .d-buttons .d-state-highlight:hover,
 .d-buttons .d-button:hover,
-.h .report-popup-item.checked .report-popup-item-checkbox
+.h .report-popup-item.checked .report-popup-item-checkbox,
+.media-tab-content .nav-tools .tool-item:hover
 {
     background-color: var(--theme-color) !important;
 }
