@@ -329,9 +329,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     return "";
                 }
                 const hex = decColor.toString(16);
-                const red = hex.substring(4, 6);
+                const red = hex.substring(0, 2);
                 const green = hex.substring(2, 4);
-                const blue = hex.substring(0, 2);
+                const blue = hex.substring(4, 6);
                 return `\\c&H${blue}${green}${red}&`;
             }
             convertTime(startTime, duration)
