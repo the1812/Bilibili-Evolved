@@ -64,7 +64,12 @@
 .album-content .my-album .link-panigation .panigation,
 .attention-live .switch-btn:active,
 .attention-live .switch-btn:hover,
-.multi-page .cur-list .module-box li 
+.multi-page .cur-list .module-box li,
+.works-ctnr .header-ctnr .works-count,
+.album-radio::before,
+.panel-block input,
+.album-popup .album-pop-bottom ul li.disable,
+.album-popup .album-pop-bottom ul li.disable:hover 
 {
     background-color: #222 !important;
 }
@@ -195,7 +200,10 @@
 .r-con .mobile-link-l,
 .col-full.clearfix .album-content .my-album .pagination,
 .share-addr-item .share-addr-wrapper,
-.media-tab-content .nav-tools .tool-item
+.media-tab-content .nav-tools .tool-item,
+.album-popup,
+.privacy-panel,
+.privacy-panel-other
 {
     background-color: #444 !important;
 }
@@ -222,7 +230,9 @@
 .elecrank-wrapper .elecrank-content .rank-item .msg .arrow,
 .sub-nav-m .tips .t-arrow,
 .attention-live .switch-btn:active,
-.attention-live .switch-btn:hover
+.attention-live .switch-btn:hover,
+.album-radio.active::before,
+.album-radio::before
 {
     background-image: none !important;
 }
@@ -232,7 +242,11 @@
 .my-album .line,
 #app .player-box .multi-page,
 #app-news .comment-area,
-#page-subs .content
+#page-subs .content,
+.album-report-ctn.ps.ps--active-y .ps__rail-x:hover,
+.album-report-ctn.ps.ps--active-y .ps__rail-y:hover,
+.album-report-ctn.ps.ps--active-y .ps__rail-x:focus,
+.album-report-ctn.ps.ps--active-y .ps__rail-y:focus
 {
     background-color: transparent !important;
 }
@@ -367,7 +381,8 @@ li.log-item .user-time,
 .my-album .error .text,
 .sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group span,
 .sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group label,
-.report-reason-pic-row .report-pic-description
+.report-reason-pic-row .report-pic-description,
+.album-report .tip
 {
     color: #aaa !important;
 }
@@ -618,7 +633,16 @@ table.viptable td,
 .share-addr-item .share-addr-name,
 .share-addr-item .share-addr-wrapper,
 .media-tab-content .nav-tools .tool-item:hover,
-.reportImage-candidate-item.dp-i-block.bg-cover.bg-center.bg-no-repeat.ts-dot-3.pointer.p-relative .upload-hint
+.reportImage-candidate-item.dp-i-block.bg-cover.bg-center.bg-no-repeat.ts-dot-3.pointer.p-relative .upload-hint,
+.works-ctnr .header-ctnr .works-count,
+.album-report .report-title,
+.choices .album-radio,
+.panel-block h4,
+.panel-block input,
+.album-popup .album-pop-bottom ul li.disable,
+.album-popup .album-pop-bottom ul li.disable:hover,
+.album-popup .album-pop-bottom ul li.normal,
+.album-popup .album-pop-bottom ul li:hover
 {
     color: #eee !important;
 }
@@ -787,7 +811,14 @@ table.viptable td,
 .multi-page .cur-list .module-box li,
 .share-addr-item .share-addr-wrapper,
 .media-tab-content .nav-tools .tool-item:hover,
-.media-tab-content .nav-tools .tool-item
+.media-tab-content .nav-tools .tool-item,
+.privacy-panel,
+.panel-block input,
+.privacy-panel-other,
+.album-popup .album-pop-bottom ul li.disable,
+.album-popup .album-pop-bottom ul li.disable:hover,
+.album-popup .album-pop-bottom ul li.normal,
+.album-popup .album-pop-bottom ul li:hover
 {
     border-color: transparent !important;
 }
@@ -946,7 +977,10 @@ table.viptable td,
 .d-buttons .d-state-highlight:hover,
 .d-buttons .d-button:hover,
 .h .report-popup-item.checked .report-popup-item-checkbox,
-.media-tab-content .nav-tools .tool-item:hover
+.media-tab-content .nav-tools .tool-item:hover,
+.album-radio.active::before,
+.album-popup .album-pop-bottom ul li.normal,
+.album-popup .album-pop-bottom ul li:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -1039,7 +1073,8 @@ li.log-item .user-action .up-mark,
 .video-toolbar-module .elec-btn,
 .new_list .vd_list li .title:hover,
 #page-follows .modal-container .content-text em,
-.voucher-right-ing 
+.voucher-right-ing ,
+.album-radio.active
 {
     color: var(--theme-color) !important;
 }
