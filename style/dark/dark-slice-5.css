@@ -69,7 +69,9 @@
 .album-radio::before,
 .panel-block input,
 .album-popup .album-pop-bottom ul li.disable,
-.album-popup .album-pop-bottom ul li.disable:hover 
+.album-popup .album-pop-bottom ul li.disable:hover,
+.media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span.disabled,
+.media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span 
 {
     background-color: #222 !important;
 }
@@ -642,7 +644,8 @@ table.viptable td,
 .album-popup .album-pop-bottom ul li.disable,
 .album-popup .album-pop-bottom ul li.disable:hover,
 .album-popup .album-pop-bottom ul li.normal,
-.album-popup .album-pop-bottom ul li:hover
+.album-popup .album-pop-bottom ul li:hover,
+.misl-ep-item .mark-icon
 {
     color: #eee !important;
 }
@@ -980,7 +983,12 @@ table.viptable td,
 .media-tab-content .nav-tools .tool-item:hover,
 .album-radio.active::before,
 .album-popup .album-pop-bottom ul li.normal,
-.album-popup .album-pop-bottom ul li:hover
+.album-popup .album-pop-bottom ul li:hover,
+.media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span.disabled:hover,
+.media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span:hover,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow:hover,
+.media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow,
+.misl-ep-item .mark-icon.badge-pink
 {
     background-color: var(--theme-color) !important;
 }
