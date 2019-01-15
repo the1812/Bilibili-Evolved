@@ -205,7 +205,8 @@
 .media-tab-content .nav-tools .tool-item,
 .album-popup,
 .privacy-panel,
-.privacy-panel-other
+.privacy-panel-other,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow li:hover
 {
     background-color: #444 !important;
 }
@@ -645,7 +646,8 @@ table.viptable td,
 .album-popup .album-pop-bottom ul li.disable:hover,
 .album-popup .album-pop-bottom ul li.normal,
 .album-popup .album-pop-bottom ul li:hover,
-.misl-ep-item .mark-icon
+.misl-ep-item .mark-icon,
+.bangumi-collection-card .bangumi-funcs .btn-unfollow li:hover
 {
     color: #eee !important;
 }
