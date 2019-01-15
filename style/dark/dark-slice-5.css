@@ -71,7 +71,8 @@
 .album-popup .album-pop-bottom ul li.disable,
 .album-popup .album-pop-bottom ul li.disable:hover,
 .media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span.disabled,
-.media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span 
+.media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span,
+.col-4-med.col-4 .song-change
 {
     background-color: #222 !important;
 }
@@ -178,7 +179,7 @@
 .elecrank-wrapper.report-wrap-module.report-scroll-module .elecrank-header,
 .elecrank-wrapper .elecrank-content,
 .video-toolbar-module .share-box:hover,
-.video-toolbar-module .app-download:hover ,
+.video-toolbar-module .app-download:hover,
 .video-toolbar-module .share-box .share-popup,
 .bili-wrapper .del-log-content,
 .video-toolbar-module .share-box:after,
@@ -206,7 +207,9 @@
 .album-popup,
 .privacy-panel,
 .privacy-panel-other,
-.bangumi-collection-card .bangumi-funcs .btn-unfollow li:hover
+.bangumi-collection-card .bangumi-funcs .btn-unfollow li:hover,
+.mycollect-info .mycollect-li.odd,
+.mycollect-info .mycollect-li.even
 {
     background-color: #444 !important;
 }
@@ -385,7 +388,11 @@ li.log-item .user-time,
 .sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group span,
 .sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group label,
 .report-reason-pic-row .report-pic-description,
-.album-report .tip
+.album-report .tip,
+.mycollect-padding .mycollect-publish,
+.mycollect-theme span,
+.creation-li .creation-right .creation-publish,
+.mycollect-info .mycollect-li .song-title .song-float
 {
     color: #aaa !important;
 }
@@ -494,7 +501,7 @@ table.invtable td,
 .bp_user_box .bp_user_box_bk,
 .list-wrap.hot-forum-lft-con .s-imgUnit a,
 .sponsor-pay-dialog-v2 .sp-quick-pay .sponsor-pay-body .sponsor-control-group,
-#gameCenter .look-around .s-imgUnit .s-imgUnit-text ,
+#gameCenter .look-around .s-imgUnit .s-imgUnit-text,
 .s-paging > ul > a,
 .s-paging > ul > span,
 .s-paging > ul > a:not(.disabled):not(.current):hover,
@@ -647,7 +654,18 @@ table.viptable td,
 .album-popup .album-pop-bottom ul li.normal,
 .album-popup .album-pop-bottom ul li:hover,
 .misl-ep-item .mark-icon,
-.bangumi-collection-card .bangumi-funcs .btn-unfollow li:hover
+.bangumi-collection-card .bangumi-funcs .btn-unfollow li:hover,
+.mycollect-padding .mycollect-title,
+.mycollect-padding .mycollect-upname,
+.mycollect-theme,
+.creation-title,
+.song-li .song-right .song-theme,
+.mycollect-padding .mycollect-board .mycollect-playbtn,
+.mycollect-info .mycollect-li .song-sort,
+.mycollect-info .mycollect-li .song-title .song-normal,
+.mycollect-info .mycollect-li .song-uname,
+.col-4-med.col-4 .song-change,
+.song-change .font12
 {
     color: #eee !important;
 }
@@ -730,7 +748,7 @@ table.viptable td,
 .stm-ly .ct .stm-filter li.on,
 .stm-lst-item .share,
 .security-right .sr-record,
-.drawer-pop-ctn.pop-ctn-4 .draw-list ,
+.drawer-pop-ctn.pop-ctn-4 .draw-list,
 .news-detail-content .sepatator,
 .left-side .categories-bar,
 .nav-warp2 .nav-item3,
@@ -823,7 +841,8 @@ table.viptable td,
 .album-popup .album-pop-bottom ul li.disable,
 .album-popup .album-pop-bottom ul li.disable:hover,
 .album-popup .album-pop-bottom ul li.normal,
-.album-popup .album-pop-bottom ul li:hover
+.album-popup .album-pop-bottom ul li:hover,
+.mycollect-info
 {
     border-color: transparent !important;
 }
@@ -899,7 +918,8 @@ table.viptable td,
 .voucher-content-outside .voucher-ing,
 .voucher-content-outside .voucher-no-used,
 .multi-page .cur-list .module-box li:hover,
-.multi-page .cur-list .module-box li.on 
+.multi-page .cur-list .module-box li.on,
+.creation-li .creation-left .creation-shadow
 {
     border-color: var(--theme-color) !important;
 }
@@ -990,7 +1010,10 @@ table.viptable td,
 .media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span:hover,
 .media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow:hover,
 .media-info-wrp .media-info-content .media-info-inner .media-info-r .media-info-btns .bangumi-btn .btn-follow,
-.misl-ep-item .mark-icon.badge-pink
+.misl-ep-item .mark-icon.badge-pink,
+.mycollect-padding .mycollect-board .mycollect-playbtn,
+.mycollect-padding .mycollect-board .mycollect-playbtn:hover,
+.col-4-med.col-4 .song-change:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -1083,8 +1106,11 @@ li.log-item .user-action .up-mark,
 .video-toolbar-module .elec-btn,
 .new_list .vd_list li .title:hover,
 #page-follows .modal-container .content-text em,
-.voucher-right-ing ,
-.album-radio.active
+.voucher-right-ing,
+.album-radio.active,
+.mycollect-info .mycollect-li .song-title .song-normal:hover,
+.mycollect-info .mycollect-li .song-title .song-collection.font-blue,
+.mycollect-info .mycollect-li .song-title .song-float:hover
 {
     color: var(--theme-color) !important;
 }
