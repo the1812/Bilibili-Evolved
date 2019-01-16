@@ -680,7 +680,12 @@ table.viptable td,
 .song-change .font12,
 #dyn_wnd .dyn_menu,
 .mini-wnd .read-all,
-.mini-wnd .play-all
+.mini-wnd .play-all,
+.mainly-automatic dl,
+.mainly-automatic h2,
+.mainly-question h2,
+.q-box .q-title a,
+.q-c-div dl
 {
     color: #eee !important;
 }
@@ -1143,7 +1148,9 @@ li.log-item .user-action .up-mark,
 .mycollect-info .mycollect-li .song-title .song-float:hover,
 #dyn_wnd .dyn_menu li.on,
 #dyn_wnd .dyn_menu li:hover,
-.mini-wnd .list li a:hover 
+.mini-wnd .list li a:hover,
+.q-title a.active,
+.q-c-div dl.active dt
 {
     color: var(--theme-color) !important;
 }
