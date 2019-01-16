@@ -401,7 +401,10 @@ li.log-item .user-time,
 .mycollect-theme span,
 .creation-li .creation-right .creation-publish,
 .mycollect-info .mycollect-li .song-title .song-float,
-#dyn_wnd .dyn_list li.loading
+#dyn_wnd .dyn_list li.loading,
+.voucher-left-money,
+.voucher-left-txt,
+.voucher-left-money:before
 {
     color: #aaa !important;
 }
