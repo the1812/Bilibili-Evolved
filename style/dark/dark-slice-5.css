@@ -217,7 +217,8 @@
 #dyn_wnd .wnd_bottom a.btn-live-more,
 #dyn_wnd .wnd_bottom a.btn-article-more,
 .mini-wnd .read-all,
-.mini-wnd .play-all
+.mini-wnd .play-all,
+.song-complain-bg .song-complain
 {
     background-color: #444 !important;
 }
@@ -405,7 +406,9 @@ li.log-item .user-time,
 .voucher-left-money,
 .voucher-left-txt,
 .voucher-left-money:before,
-.privacy-panel .tip
+.privacy-panel .tip,
+.song-li .song-right .song-right-bottom .song-num,
+.similar-song-menu .similar-right .song-num
 {
     color: #aaa !important;
 }
@@ -687,7 +690,12 @@ table.viptable td,
 .mainly-question h2,
 .q-box .q-title a,
 .q-c-div dl,
-.privacy-type .album-radio.bp-album-radio
+.privacy-type .album-radio.bp-album-radio,
+.song-complain-bg .song-complain .complain-title,
+.song-complain-bg .song-complain .complain-text,
+.song-complain-bg .song-complain .complain-btn,
+.song-li .song-right .song-right-title,
+song-right-title a
 {
     color: #eee !important;
 }
@@ -872,7 +880,8 @@ table.viptable td,
 #dyn_wnd .wnd_bottom a.btn-article-more,
 .mini-wnd,
 .mini-wnd .read-all,
-.mini-wnd .play-all
+.mini-wnd .play-all,
+.song-complain-bg .song-complain .complain-title
 {
     border-color: transparent !important;
 }
@@ -1050,7 +1059,8 @@ table.viptable td,
 #dyn_wnd .wnd_bottom a.btn-live-more:hover,
 #dyn_wnd .wnd_bottom a.btn-article-more:hover,
 .mini-wnd .read-all:hover,
-.mini-wnd .play-all:hover
+.mini-wnd .play-all:hover,
+.song-complain-bg .song-complain .complain-btn
 {
     background-color: var(--theme-color) !important;
 }
