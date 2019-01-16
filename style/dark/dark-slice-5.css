@@ -404,7 +404,8 @@ li.log-item .user-time,
 #dyn_wnd .dyn_list li.loading,
 .voucher-left-money,
 .voucher-left-txt,
-.voucher-left-money:before
+.voucher-left-money:before,
+.privacy-panel .tip
 {
     color: #aaa !important;
 }
@@ -685,7 +686,8 @@ table.viptable td,
 .mainly-automatic h2,
 .mainly-question h2,
 .q-box .q-title a,
-.q-c-div dl
+.q-c-div dl,
+.privacy-type .album-radio.bp-album-radio
 {
     color: #eee !important;
 }
