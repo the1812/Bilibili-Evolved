@@ -63,7 +63,11 @@ div#square.container,
 .gui-settings-widgets-box,
 .user-panel-ctnr .user-avatar,
 .link-popover-ctnr .link-popover,
-.medal-get-box, .medal-message-box
+.medal-get-box,
+.medal-message-box,
+.main-container .plp-l .player-mask .bar-wrapper .left-bar,
+.main-container .plp-l .player-mask .bar-wrapper .right-bar,
+.twp-mask .twp-wrapper
 {
     background-color: #222 !important;
 }
@@ -138,7 +142,8 @@ body>div.to-top.on,
 .bili-share-pc .share-weixin-qr,
 .bili-share-pc .weixin-hover .qr-before,
 .form-login .input-box .item input,
-.form-login .input-box .btn-box .btn
+.form-login .input-box .btn-box .btn,
+.main-container .plp-l .player-mask .bar-wrapper
 {
     background-color: #444 !important;
 }
@@ -358,7 +363,9 @@ body>div.to-top.on,
 .form-login .input-box .remember,
 .form-login .input-box .item input,
 .form-login .input-box .btn-box .btn,
-.popularize-module .online a
+.popularize-module .online a,
+.twp-mask .twp-wrapper .twp-container .twp-text .twp-title,
+.main-container .tool-bar .share-info i
 {
     color: #eee !important;
 }
@@ -423,7 +430,10 @@ body>div.to-top.on,
 .title-line,
 .form-login .input-box .item input,
 .form-login .input-box .btn-box .btn-login,
-.form-login .input-box .btn-box .btn
+.form-login .input-box .btn-box .btn,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip
 {
     border-color: transparent !important;
 }
@@ -584,7 +594,8 @@ body>div.to-top.on,
 .nav-header-wrapper .nav-header .user-panel .user-uname,
 .nav-header-wrapper .nav-header .user-panel .panel-list,
 .demo-app .detail .category,
-.main_body .pick_up .pick_list .pick_block .pic
+.main_body .pick_up .pick_list .pick_block .pic,
+.main-container .entry-old .btn-old
 {
     box-shadow: none !important;
 }
@@ -735,7 +746,11 @@ body>div.to-top.on
 .receive-list-prev i,
 .receive-list-next i,
 .receive-list-page,
-.form-login .input-box .btn-box .btn-login
+.form-login .input-box .btn-box .btn-login,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
+.main-container .pay-bar .vip .btn-pay
 {
     background-color: var(--theme-color) !important;
 }
@@ -865,7 +880,11 @@ body>div.to-top.on
 .coin-wrap .coin-sure,
 .up-feedback .up-fb-btn:hover,
 .user-info > .uid,
-.form-login .input-box .btn-box .btn-login
+.form-login .input-box .btn-box .btn-login,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
+.main-container .pay-bar .vip .btn-pay
 {
     color: var(--foreground-color) !important;
 }

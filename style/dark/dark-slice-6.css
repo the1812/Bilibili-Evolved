@@ -8,14 +8,13 @@
 {
     background-color: #222 !important;
 }
-/* a
+.main-container .review-module .review-list .review-item .review-body
 {
     background-color: #333 !important;
-} */
+}
 .main-container .ep-list-wrapper,
 .player-module .stardust-player.mini-player .drag-bar span,
 .player-module .stardust-player.mini-player .drag-bar i,
-.main-container .review-module .review-list .review-item .review-body,
 .main-container .media-info .media-right .media-tool-bar .btn-rating,
 .short-review-masker .short-review-content,
 .main-container .nav-tools .tool-item,
@@ -123,7 +122,7 @@
 .main-container .sponsor-module
 {
     border-color: #444 !important
-} 
+}
 /* a
 {
     border-color: white !important;
@@ -244,8 +243,8 @@
 .main-container .tool-bar .coin-info:hover span,
 .main-container .tool-bar .coin-info.active i,
 .main-container .tool-bar .coin-info:hover i,
-.main-container .tool-bar .share-info:hover i,
-.main-container .tool-bar .share-info:hover span,
+.main-container .tool-bar .share-info:hover>i,
+.main-container .tool-bar .share-info:hover>span,
 .main-container .tool-bar .mobile-info:hover i,
 .main-container .tool-bar .mobile-info:hover span,
 .main-container .media-info .media-right .media-title:hover,
