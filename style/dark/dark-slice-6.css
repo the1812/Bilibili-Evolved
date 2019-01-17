@@ -4,7 +4,8 @@
 .section-ep-wrapper .ep-item.cursor,
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item,
 .short-review-masker .short-review-content .review-body-wrap .mr-btn,
-.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title
 {
     background-color: #222 !important;
 }
@@ -24,7 +25,13 @@
 .sponsor-rank-item.pos-rank-module .sp-right .sp-msg,
 .main-container .season-list .ss-list-wrapper .expand-more,
 .main-container .pay-bar .sponsor .btn-pay,
-#app .main .content-wrp
+#app .main .content-wrp,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child,
+.player-module .player-tool-bar,
+.main-container .media-info .media-cover,
+.main-container .pre-mask,
+.main-container .season-list .ss-list-wrapper .ss-item .ss-cover,
+.z-top-container.has-stardust
 {
     background-color: #444 !important;
 }
@@ -89,7 +96,11 @@
 .main-container .season-list .ss-list-wrapper .expand-more,
 .main-container .recom-wrapper .recom-title,
 .main-container .sponsor-module .sponsor-info .btn-sponsor,
-#app .main .side-bar li a
+#app .main .side-bar li a,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
+.main-container .tool-bar .coin-info i,
+.main-container .tool-bar .share-info i,
+.main-container .tool-bar .mobile-info i
 {
     color: #eee !important;
 }
@@ -108,7 +119,8 @@
 .main-container .tool-bar .share-info .share-more,
 .main-container .tool-bar .mobile-info .mobile-more,
 .sponsor-rank-item.pos-rank-module .sp-right .sp-msg,
-#app .main .content-wrp
+#app .main .content-wrp,
+.player-auxiliary-area .player-auxiliary-panel-title
 {
     border-color: transparent !important;
 }
@@ -259,7 +271,8 @@
 .main-container .tool-bar .mobile-info .mobile-more p a,
 #app .main .side-bar li a.router-link-active,
 #app .main .side-bar li a:hover,
-.detail-content p span a
+.detail-content p span a,
+.player-auxiliary-area .player-auxiliary-panel-title .player-auxiliary-panel-close:hover
 {
     color: var(--theme-color) !important;
 }
