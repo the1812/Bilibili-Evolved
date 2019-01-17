@@ -72,7 +72,9 @@
 .album-popup .album-pop-bottom ul li.disable:hover,
 .media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span.disabled,
 .media-tab-module-wrp .media-tab-module-content .sl-ep-nav .slider-contro span,
-.col-4-med.col-4 .song-change
+.col-4-med.col-4 .song-change,
+#i_menu_msg_btn #dyn_wnd,
+.mini-wnd
 {
     background-color: #222 !important;
 }
@@ -209,7 +211,14 @@
 .privacy-panel-other,
 .bangumi-collection-card .bangumi-funcs .btn-unfollow li:hover,
 .mycollect-info .mycollect-li.odd,
-.mycollect-info .mycollect-li.even
+.mycollect-info .mycollect-li.even,
+#dyn_wnd .wnd_bottom a.read-more,
+#dyn_wnd .wnd_bottom a.btn-ignore-all,
+#dyn_wnd .wnd_bottom a.btn-live-more,
+#dyn_wnd .wnd_bottom a.btn-article-more,
+.mini-wnd .read-all,
+.mini-wnd .play-all,
+.song-complain-bg .song-complain
 {
     background-color: #444 !important;
 }
@@ -392,7 +401,14 @@ li.log-item .user-time,
 .mycollect-padding .mycollect-publish,
 .mycollect-theme span,
 .creation-li .creation-right .creation-publish,
-.mycollect-info .mycollect-li .song-title .song-float
+.mycollect-info .mycollect-li .song-title .song-float,
+#dyn_wnd .dyn_list li.loading,
+.voucher-left-money,
+.voucher-left-txt,
+.voucher-left-money:before,
+.privacy-panel .tip,
+.song-li .song-right .song-right-bottom .song-num,
+.similar-song-menu .similar-right .song-num
 {
     color: #aaa !important;
 }
@@ -665,7 +681,21 @@ table.viptable td,
 .mycollect-info .mycollect-li .song-title .song-normal,
 .mycollect-info .mycollect-li .song-uname,
 .col-4-med.col-4 .song-change,
-.song-change .font12
+.song-change .font12,
+#dyn_wnd .dyn_menu,
+.mini-wnd .read-all,
+.mini-wnd .play-all,
+.mainly-automatic dl,
+.mainly-automatic h2,
+.mainly-question h2,
+.q-box .q-title a,
+.q-c-div dl,
+.privacy-type .album-radio.bp-album-radio,
+.song-complain-bg .song-complain .complain-title,
+.song-complain-bg .song-complain .complain-text,
+.song-complain-bg .song-complain .complain-btn,
+.song-li .song-right .song-right-title,
+song-right-title a
 {
     color: #eee !important;
 }
@@ -842,7 +872,16 @@ table.viptable td,
 .album-popup .album-pop-bottom ul li.disable:hover,
 .album-popup .album-pop-bottom ul li.normal,
 .album-popup .album-pop-bottom ul li:hover,
-.mycollect-info
+.mycollect-info,
+#i_menu_msg_btn #dyn_wnd,
+#dyn_wnd .wnd_bottom a.read-more,
+#dyn_wnd .wnd_bottom a.btn-ignore-all,
+#dyn_wnd .wnd_bottom a.btn-live-more,
+#dyn_wnd .wnd_bottom a.btn-article-more,
+.mini-wnd,
+.mini-wnd .read-all,
+.mini-wnd .play-all,
+.song-complain-bg .song-complain .complain-title
 {
     border-color: transparent !important;
 }
@@ -919,7 +958,8 @@ table.viptable td,
 .voucher-content-outside .voucher-no-used,
 .multi-page .cur-list .module-box li:hover,
 .multi-page .cur-list .module-box li.on,
-.creation-li .creation-left .creation-shadow
+.creation-li .creation-left .creation-shadow,
+#dyn_wnd .dyn_menu .line:before 
 {
     border-color: var(--theme-color) !important;
 }
@@ -1013,7 +1053,14 @@ table.viptable td,
 .misl-ep-item .mark-icon.badge-pink,
 .mycollect-padding .mycollect-board .mycollect-playbtn,
 .mycollect-padding .mycollect-board .mycollect-playbtn:hover,
-.col-4-med.col-4 .song-change:hover
+.col-4-med.col-4 .song-change:hover,
+#dyn_wnd .wnd_bottom a.read-more:hover,
+#dyn_wnd .wnd_bottom a.btn-ignore-all:hover,
+#dyn_wnd .wnd_bottom a.btn-live-more:hover,
+#dyn_wnd .wnd_bottom a.btn-article-more:hover,
+.mini-wnd .read-all:hover,
+.mini-wnd .play-all:hover,
+.song-complain-bg .song-complain .complain-btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -1110,14 +1157,20 @@ li.log-item .user-action .up-mark,
 .album-radio.active,
 .mycollect-info .mycollect-li .song-title .song-normal:hover,
 .mycollect-info .mycollect-li .song-title .song-collection.font-blue,
-.mycollect-info .mycollect-li .song-title .song-float:hover
+.mycollect-info .mycollect-li .song-title .song-float:hover,
+#dyn_wnd .dyn_menu li.on,
+#dyn_wnd .dyn_menu li:hover,
+.mini-wnd .list li a:hover,
+.q-title a.active,
+.q-c-div dl.active dt
 {
     color: var(--theme-color) !important;
 }
 .data-card .data-box .tab .fan-tab.current:after,
 .data-card .fans-box .tab .fan-tab.current:after,
 .section-item .diff-wrp .diff-text:before,
-.tabs-tab-active:before
+.tabs-tab-active:before,
+#dyn_wnd .dyn_menu .line:before
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
