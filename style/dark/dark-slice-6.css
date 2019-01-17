@@ -22,7 +22,10 @@
 .main-container .entry-old .btn-old,
 .main-container .entry-old .feedback .btn,
 .main-container .tool-bar .share-info .share-more,
-.main-container .tool-bar .mobile-info .mobile-more
+.main-container .tool-bar .mobile-info .mobile-more,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-msg,
+.main-container .season-list .ss-list-wrapper .expand-more,
+.main-container .pay-bar .sponsor .btn-pay
 {
     background-color: #444 !important;
 }
@@ -46,7 +49,8 @@
 .main-container .review-module .review-list .review-item .pub-time,
 .short-review-masker .short-review-content .dialog-close,
 .main-container .media-info .media-right .media-rating p,
-.main-container .media-info .media-right .media-count
+.main-container .media-info .media-right .media-count,
+.main-container .sponsor-module .sponsor-info .sponsor-count
 {
     color: #aaa !important;
 }
@@ -79,7 +83,13 @@
 .main-container .entry-old .btn-old:hover,
 .main-container .tool-bar .share-info .share-more .share-wrapper .share-btn span,
 .main-container .tool-bar .mobile-info .mobile-more p,
-.main-container .media-info .media-right .media-tool-bar .btn-rating .star-wrapper li i
+.main-container .media-info .media-right .media-tool-bar .btn-rating .star-wrapper li i,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-msg,
+.main-container .sponsor-module .sponsor-info .sponsor-count span,
+.main-container .review-module .module-title,
+.main-container .season-list .ss-list-wrapper .expand-more,
+.main-container .recom-wrapper .recom-title,
+.main-container .sponsor-module .sponsor-info .btn-sponsor
 {
     color: #eee !important;
 }
@@ -96,7 +106,8 @@
 .main-container .entry-old .btn-old,
 .main-container .entry-old .btn-old:hover,
 .main-container .tool-bar .share-info .share-more,
-.main-container .tool-bar .mobile-info .mobile-more
+.main-container .tool-bar .mobile-info .mobile-more,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-msg
 {
     border-color: transparent !important;
 }
@@ -106,7 +117,8 @@
 } */
 .main-container .media-info,
 .main-container .review-module,
-.main-container .plp-l .comment-wrapper
+.main-container .plp-l .comment-wrapper,
+.main-container .sponsor-module
 {
     border-color: #444 !important
 } 
@@ -205,7 +217,9 @@
 .main-container .nav-tools .tool-item:hover,
 .main-container .entry-old .feedback .btn:hover,
 .main-container .entry-old .btn-old:hover,
-.main-container .season-list .ss-list-wrapper .ss-item .ss-cover .ss-badge.pink
+.main-container .season-list .ss-list-wrapper .ss-item .ss-cover .ss-badge.pink,
+.main-container .pay-bar .sponsor .btn-pay:hover,
+.main-container .sponsor-module .sponsor-info .btn-sponsor
 {
     background-color: var(--theme-color) !important;
 }
