@@ -56,6 +56,9 @@
 .short-review-masker .short-review-content .dialog-close,
 .main-container .media-info .media-right .media-rating p,
 .main-container .media-info .media-right .media-count,
+.main-container .tool-bar .mobile-info span,
+.main-container .tool-bar .coin-info span,
+.main-container .tool-bar .share-info span,
 .main-container .sponsor-module .sponsor-info .sponsor-count
 {
     color: #aaa !important;
@@ -68,9 +71,6 @@
 .section-ep-wrapper .ep-item .badge,
 .main-container .season-list .series-title,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-info .ss-title,
-.main-container .tool-bar .mobile-info span,
-.main-container .tool-bar .coin-info span,
-.main-container .tool-bar .share-info span,
 .main-container .media-info .media-right .media-title,
 .main-container .media-info .media-right .media-desc,
 .main-container .media-info .media-right .pub-wrapper .home-link,
@@ -100,7 +100,8 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
 .main-container .tool-bar .coin-info i,
 .main-container .tool-bar .share-info i,
-.main-container .tool-bar .mobile-info i
+.main-container .tool-bar .mobile-info i,
+.main-container .plp-l .media-wrapper h1
 {
     color: #eee !important;
 }
