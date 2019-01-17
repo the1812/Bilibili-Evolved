@@ -339,7 +339,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 function round(number)
                 {
                     const [integer, decimal = "00"] = String(number).split(".");
-                    return `${integer.padStart(2, "0")}.${decimal.substr(0, 2).padRight(2, "0")}`;
+                    return `${integer.padStart(2, "0")}.${decimal.substr(0, 2).padEnd(2, "0")}`;
                 }
                 function secondsToTime(seconds)
                 {
