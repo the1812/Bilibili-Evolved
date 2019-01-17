@@ -20,7 +20,6 @@
 .short-review-masker .short-review-content,
 .main-container .nav-tools .tool-item,
 .main-container .entry-old .btn-old,
-.main-container .entry-old .feedback .btn,
 .main-container .tool-bar .share-info .share-more,
 .main-container .tool-bar .mobile-info .mobile-more,
 .sponsor-rank-item.pos-rank-module .sp-right .sp-msg,
@@ -218,12 +217,12 @@
 .main-container .media-info .media-right .media-tool-bar .btn-follow,
 .main-container .media-info .media-right .media-tool-bar .btn-follow:hover,
 .main-container .nav-tools .tool-item:hover,
+.main-container .entry-old .feedback .btn,
 .main-container .entry-old .feedback .btn:hover,
 .main-container .entry-old .btn-old:hover,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-cover .ss-badge.pink,
 .main-container .pay-bar .sponsor .btn-pay:hover,
-.main-container .sponsor-module .sponsor-info .btn-sponsor
-{
+.main-container .sponsor-module .sponsor-info .btn-sponsor {
     background-color: var(--theme-color) !important;
 }
 /* a
