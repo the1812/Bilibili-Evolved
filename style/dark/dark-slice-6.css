@@ -25,7 +25,8 @@
 .main-container .tool-bar .mobile-info .mobile-more,
 .sponsor-rank-item.pos-rank-module .sp-right .sp-msg,
 .main-container .season-list .ss-list-wrapper .expand-more,
-.main-container .pay-bar .sponsor .btn-pay
+.main-container .pay-bar .sponsor .btn-pay,
+#app .main .content-wrp
 {
     background-color: #444 !important;
 }
@@ -89,7 +90,8 @@
 .main-container .review-module .module-title,
 .main-container .season-list .ss-list-wrapper .expand-more,
 .main-container .recom-wrapper .recom-title,
-.main-container .sponsor-module .sponsor-info .btn-sponsor
+.main-container .sponsor-module .sponsor-info .btn-sponsor,
+#app .main .side-bar li a
 {
     color: #eee !important;
 }
@@ -107,7 +109,8 @@
 .main-container .entry-old .btn-old:hover,
 .main-container .tool-bar .share-info .share-more,
 .main-container .tool-bar .mobile-info .mobile-more,
-.sponsor-rank-item.pos-rank-module .sp-right .sp-msg
+.sponsor-rank-item.pos-rank-module .sp-right .sp-msg,
+#app .main .content-wrp
 {
     border-color: transparent !important;
 }
@@ -255,7 +258,10 @@
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
 .main-container .tool-bar .share-info .share-more .share-wrapper .share-btn:hover i,
 .main-container .tool-bar .share-info .share-more .share-wrapper .share-btn:hover span,
-.main-container .tool-bar .mobile-info .mobile-more p a
+.main-container .tool-bar .mobile-info .mobile-more p a,
+#app .main .side-bar li a.router-link-active,
+#app .main .side-bar li a:hover,
+.detail-content p span a
 {
     color: var(--theme-color) !important;
 }
