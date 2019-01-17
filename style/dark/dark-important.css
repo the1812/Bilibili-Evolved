@@ -1,7 +1,7 @@
 .link-footer,
 .payment-active,
 .app-body .section-block,
-.bl-button--primary:disabled 
+.bl-button--primary:disabled
 {
     background-color: #222 !important;
 }
@@ -15,7 +15,9 @@
 .app-body .section-block.with-radius,
 .pagination-container li.pagination,
 .main-container .pay-bar .vip .btn-pay.active,
-.main-container .media-info .media-right .media-tool-bar .btn-follow.active
+.main-container .media-info .media-right .media-tool-bar .btn-follow.active,
+.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled,
+.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover
 {
     background-color: #444 !important;
 }
@@ -49,7 +51,9 @@ blockquote .color-yellow-01,
 blockquote .color-yellow-02,
 blockquote .color-yellow-03,
 blockquote .color-yellow-04,
-.status_box .status_btn.disabled
+.status_box .status_btn.disabled,
+.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled,
+.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover
 {
     color: #aaa !important;
 }
@@ -73,7 +77,7 @@ blockquote .color-yellow-04,
 .ui-input-textarea.focus,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
 .tabs-bar,
-.score-info .go-movie 
+.score-info .go-movie
 {
     border-color: transparent !important;
 }

@@ -67,7 +67,8 @@ div#square.container,
 .medal-message-box,
 .main-container .plp-l .player-mask .bar-wrapper .left-bar,
 .main-container .plp-l .player-mask .bar-wrapper .right-bar,
-.twp-mask .twp-wrapper
+.twp-mask .twp-wrapper,
+.open-dialog-masker .open-dialog-content
 {
     background-color: #222 !important;
 }
@@ -143,7 +144,8 @@ body>div.to-top.on,
 .bili-share-pc .weixin-hover .qr-before,
 .form-login .input-box .item input,
 .form-login .input-box .btn-box .btn,
-.main-container .plp-l .player-mask .bar-wrapper
+.main-container .plp-l .player-mask .bar-wrapper,
+.open-dialog-masker .btn-normal
 {
     background-color: #444 !important;
 }
@@ -199,7 +201,8 @@ body>div.to-top.on,
 #song_detail_click_upper~div .pager .pages .page-item button,
 .filter-wrap .sub-filter,
 .title-line .tit,
-.popularize-module .online
+.popularize-module .online,
+.main-container .review-module .module-title .more-link
 {
     background-color: transparent !important;
 }
@@ -263,7 +266,9 @@ body>div.to-top.on,
 .user-info .user-info-desc,
 .qrcode-login .qrcode-footer .app-link,
 .qrcode-login .qrcode-footer .suc-txt,
-.form-login .input-box .sns .btn
+.form-login .input-box .sns .btn,
+.open-dialog-masker .open-body ul li i,
+.open-dialog-masker .open-footer .open-agree
 {
     color: #aaa !important;
 }
@@ -365,7 +370,11 @@ body>div.to-top.on,
 .form-login .input-box .btn-box .btn,
 .popularize-module .online a,
 .twp-mask .twp-wrapper .twp-container .twp-text .twp-title,
-.main-container .tool-bar .share-info i
+.main-container .tool-bar .share-info i,
+.open-dialog-masker .__dialog-header p,
+.open-dialog-masker .open-body p,
+.open-dialog-masker .open-body ul li span,
+.open-dialog-masker .btn-normal
 {
     color: #eee !important;
 }
@@ -433,13 +442,15 @@ body>div.to-top.on,
 .form-login .input-box .btn-box .btn,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
-.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
+.open-dialog-masker .btn-normal
 {
     border-color: transparent !important;
 }
 .bili-radio+span::before,
 .channel-info .c-count,
-.popularize-module .online em
+.popularize-module .online em,
+.open-dialog-masker .open-body ul li i
 {
     border-color: #aaa !important;
 }
@@ -458,7 +469,8 @@ body>div.to-top.on,
 .leftMsg .msgDiv:before,
 .leaveMsg .leaveMsgHeader,
 .medal-receive-title,
-.login-box .line
+.login-box .line,
+.open-dialog-masker .__dialog-header
 {
     border-color: #444 !important
 }
@@ -680,7 +692,8 @@ body>div.to-top.on
 .container .hot-list .music-menu-list .menu-type .type-triangle,
 .bili-radio:checked+span::before,
 .rightMsg .msgDiv::before,
-#index-player-vm .item-border
+#index-player-vm .item-border,
+.open-dialog-masker .open-body ul li i.icon-complete
 {
     border-color: var(--theme-color) !important;
 }
@@ -750,7 +763,8 @@ body>div.to-top.on
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
-.main-container .pay-bar .vip .btn-pay
+.main-container .pay-bar .vip .btn-pay,
+.open-dialog-masker .btn-normal.confirm
 {
     background-color: var(--theme-color) !important;
 }
@@ -845,7 +859,12 @@ body>div.to-top.on
 #community_msg .dyn_menu li a:hover,
 .form-login .remember a,
 .app-link a,
-.popularize-module .online a:hover
+.popularize-module .online a:hover,
+.open-dialog-masker .__dialog-header .mr-close:hover,
+.open-dialog-masker .open-body ul li i.icon-complete,
+.open-dialog-masker .open-footer .open-agree i.icon-chk-full,
+.open-dialog-masker .open-footer .open-agree a,
+.main-container .review-module .module-title .more-link:hover
 {
     color: var(--theme-color) !important;
 }
@@ -884,7 +903,8 @@ body>div.to-top.on
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
-.main-container .pay-bar .vip .btn-pay
+.main-container .pay-bar .vip .btn-pay,
+.open-dialog-masker .btn-normal.confirm
 {
     color: var(--foreground-color) !important;
 }

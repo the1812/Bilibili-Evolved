@@ -59,6 +59,9 @@
 .main-container .tool-bar .mobile-info span,
 .main-container .tool-bar .coin-info span,
 .main-container .tool-bar .share-info span,
+.main-container .tool-bar .coin-info i,
+.main-container .tool-bar .share-info i,
+.main-container .tool-bar .mobile-info i,
 .main-container .sponsor-module .sponsor-info .sponsor-count
 {
     color: #aaa !important;
@@ -98,9 +101,6 @@
 .main-container .sponsor-module .sponsor-info .btn-sponsor,
 #app .main .side-bar li a,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
-.main-container .tool-bar .coin-info i,
-.main-container .tool-bar .share-info i,
-.main-container .tool-bar .mobile-info i,
 .main-container .plp-l .media-wrapper h1
 {
     color: #eee !important;
