@@ -1,15 +1,31 @@
-/* a
+.ep-list-wrapper .ep-item:hover,
+.section-ep-wrapper .ep-item:hover,
+.ep-list-wrapper .ep-item.cursor,
+.section-ep-wrapper .ep-item.cursor,
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item,
+.short-review-masker .short-review-content .review-body-wrap .mr-btn,
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor
 {
     background-color: #222 !important;
-} */
+}
 /* a
 {
     background-color: #333 !important;
 } */
-/* a
+.main-container .ep-list-wrapper,
+.player-module .stardust-player.mini-player .drag-bar span,
+.player-module .stardust-player.mini-player .drag-bar i,
+.main-container .review-module .review-list .review-item .review-body,
+.main-container .media-info .media-right .media-tool-bar .btn-rating,
+.short-review-masker .short-review-content,
+.main-container .nav-tools .tool-item,
+.main-container .entry-old .btn-old,
+.main-container .entry-old .feedback .btn,
+.main-container .tool-bar .share-info .share-more,
+.main-container .tool-bar .mobile-info .mobile-more
 {
     background-color: #444 !important;
-} */
+}
 /* a
 {
     background-image: none !important;
@@ -22,30 +38,78 @@
 {
     background: #fff !important;
 } */
-/* a
+.main-container .ep-list-wrapper .list-title .ep-list-progress,
+.main-container .season-list .ss-list-wrapper .ss-item .ss-info .pub-info,
+.main-container .media-info .media-right .pub-wrapper,
+.main-container .recom-wrapper .recom-list .recom-item .info-wrapper .video-count,
+.main-container .recom-wrapper .recom-list .recom-item .info-wrapper .video-uper,
+.main-container .review-module .review-list .review-item .pub-time,
+.short-review-masker .short-review-content .dialog-close,
+.main-container .media-info .media-right .media-rating p,
+.main-container .media-info .media-right .media-count
 {
     color: #aaa !important;
-} */
-/* a
+}
+.main-container .pay-bar .vip .btn-pay.active,
+.main-container .ep-list-wrapper .list-title h4,
+.ep-list-wrapper .ep-item,
+.section-ep-wrapper .ep-item,
+.ep-list-wrapper .ep-item .badge,
+.section-ep-wrapper .ep-item .badge,
+.main-container .season-list .series-title,
+.main-container .season-list .ss-list-wrapper .ss-item .ss-info .ss-title,
+.main-container .tool-bar .mobile-info span,
+.main-container .tool-bar .coin-info span,
+.main-container .tool-bar .share-info span,
+.main-container .media-info .media-right .media-title,
+.main-container .media-info .media-right .media-desc,
+.main-container .media-info .media-right .pub-wrapper .home-link,
+.main-container .media-info .media-right .pub-wrapper .av-link,
+.main-container .review-module .review-list .review-item .review-title,
+.main-container .review-module .review-list .review-item .review-content,
+.main-container .media-info .media-right .media-tool-bar .btn-rating,
+.review-edit-header .review-edit-media-info h4,
+.review-edit-header .review-edit-media-info .rate-tip,
+.short-review-masker .short-review-content .review-body-wrap .mr-btn.active,
+.main-container .media-info .media-right .media-tool-bar .btn-follow.active,
+.main-container .media-info .media-right .media-tool-bar .btn-follow,
+.main-container .nav-tools .tool-item:hover,
+.main-container .entry-old .feedback .btn,
+.main-container .entry-old .btn-old,
+.main-container .entry-old .btn-old:hover,
+.main-container .tool-bar .share-info .share-more .share-wrapper .share-btn span,
+.main-container .tool-bar .mobile-info .mobile-more p,
+.main-container .media-info .media-right .media-tool-bar .btn-rating .star-wrapper li i
 {
     color: #eee !important;
-} */
+}
 /* a
 {
     color: #fff !important;
 } */
-/* a
+.main-container .pay-bar .vip .btn-pay.active,
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item,
+.main-container .media-info .media-right .media-tool-bar .btn-rating,
+.short-review-masker .short-review-content .review-body-wrap,
+.main-container .nav-tools .tool-item,
+.main-container .nav-tools .tool-item:hover,
+.main-container .entry-old .btn-old,
+.main-container .entry-old .btn-old:hover,
+.main-container .tool-bar .share-info .share-more,
+.main-container .tool-bar .mobile-info .mobile-more
 {
     border-color: transparent !important;
-} */
+}
 /* a
 {
     border-color: #aaa !important;
 } */
-/* a
+.main-container .media-info,
+.main-container .review-module,
+.main-container .plp-l .comment-wrapper
 {
     border-color: #444 !important
-} */
+} 
 /* a
 {
     border-color: white !important;
@@ -94,10 +158,10 @@
 {
     background-image: none !important;
 } */
-/* a
+.main-container .entry-old .feedback .btn
 {
     box-shadow: none !important;
-} */
+}
 /* a
 {
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
@@ -110,10 +174,11 @@
 {
     display: none !important;
 } */
-/* a
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:hover,
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor
 {
     border-color: var(--theme-color) !important;
-} */
+}
 /* a
 {
     border-top-color: var(--theme-color) !important;
@@ -130,10 +195,20 @@
 {
     border: 1px solid var(--theme-color) !important;
 } */
-/* a
+.ep-list-wrapper .ep-item .badge.pink,
+.section-ep-wrapper .ep-item .badge.pink,
+.main-container .media-info .media-right .media-tool-bar .btn-rating:hover,
+.short-review-masker .short-review-content .review-body-wrap .mr-btn.active,
+.short-review-masker .short-review-content .review-body-wrap .mr-btn.active:hover,
+.main-container .media-info .media-right .media-tool-bar .btn-follow,
+.main-container .media-info .media-right .media-tool-bar .btn-follow:hover,
+.main-container .nav-tools .tool-item:hover,
+.main-container .entry-old .feedback .btn:hover,
+.main-container .entry-old .btn-old:hover,
+.main-container .season-list .ss-list-wrapper .ss-item .ss-cover .ss-badge.pink
 {
     background-color: var(--theme-color) !important;
-} */
+}
 /* a
 {
     background-color: var(--theme-color-60) !important;
@@ -142,10 +217,34 @@
 {
     background-color: var(--theme-color-90) !important;
 } */
-/* a
+.ep-list-wrapper .ep-item.cursor,
+.section-ep-wrapper .ep-item.cursor,
+.ep-list-wrapper .ep-item i,
+.section-ep-wrapper .ep-item i,
+.main-container .ep-list-wrapper .list-title .mode-change:hover,
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:hover,
+.main-container .season-list .ss-list-wrapper .ss-item .ss-info .ss-title:hover,
+.main-container .tool-bar .coin-info.active span,
+.main-container .tool-bar .coin-info:hover span,
+.main-container .tool-bar .coin-info.active i,
+.main-container .tool-bar .coin-info:hover i,
+.main-container .tool-bar .share-info:hover i,
+.main-container .tool-bar .share-info:hover span,
+.main-container .tool-bar .mobile-info:hover i,
+.main-container .tool-bar .mobile-info:hover span,
+.main-container .media-info .media-right .media-title:hover,
+.main-container .media-info .media-right .pub-wrapper .av-link:hover,
+.main-container .media-info .media-right .pub-wrapper .home-link:hover,
+.main-container .review-module .review-list .review-item:hover .review-title,
+.short-review-masker .short-review-content .mr-long-review,
+.short-review-masker .short-review-content .dialog-close:hover,
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
+.main-container .tool-bar .share-info .share-more .share-wrapper .share-btn:hover i,
+.main-container .tool-bar .share-info .share-more .share-wrapper .share-btn:hover span,
+.main-container .tool-bar .mobile-info .mobile-more p a
 {
     color: var(--theme-color) !important;
-} */
+}
 /* a
 {
     color: var(--foreground-color) !important;
