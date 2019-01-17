@@ -299,7 +299,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     }
                     const [startTime, endTime] = this.convertTime(xmlDanmaku.time, this.duration(xmlDanmaku));
                     assDanmakus.push(new AssDanmaku({
-                        content: xmlDanmaku.content,
+                        content: this.convertText(xmlDanmaku.content),
                         time: startTime,
                         endTime: endTime,
                         type: xmlDanmaku.type,
@@ -316,6 +316,23 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     fontStyles: this.fontStyles,
                     resolution: this.resolution
                 });
+            }
+            convertText(text)
+            {
+                const map = {
+                    "{": "｛",
+                    "}": "｝",
+                    "&amp;": "&",
+                    "&lt;": "<",
+                    "&gt;": ">",
+                    "&quot;": '"',
+                    "&apos;": "'",
+                };
+                for (const [key, value] of Object.entries(map))
+                {
+                    text = text.replace(new RegExp(key, "g"), value);
+                }
+                return text;
             }
             convertType(danmaku)
             {
