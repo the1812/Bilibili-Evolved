@@ -1060,7 +1060,8 @@ song-right-title a
 #dyn_wnd .wnd_bottom a.btn-article-more:hover,
 .mini-wnd .read-all:hover,
 .mini-wnd .play-all:hover,
-.song-complain-bg .song-complain .complain-btn
+.song-complain-bg .song-complain .complain-btn,
+#dyn_wnd .dyn_menu .line
 {
     background-color: var(--theme-color) !important;
 }
