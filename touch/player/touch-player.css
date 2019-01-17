@@ -281,6 +281,10 @@ div.bilibili-player-video-control
 {
     bottom: 1px !important;
 }
+#bofqi *
+{
+    -webkit-tap-highlight-color: transparent !important;
+}
 
 
 @media screen and (min-width: 750px)
