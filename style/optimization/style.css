@@ -124,7 +124,8 @@ a.t>i.bili-icon,
 .nav-search-submit,
 .b-icon-app,
 .title-icon,
-.blp-red-tip::after
+.blp-red-tip::after,
+.main-container .entry-old
 {
     display: none !important;
 }
@@ -218,6 +219,7 @@ div.up-load
 {
     color: #222 !important;
     width: 120px !important;
+    padding-right: 32px;
 }
 
 .stardust-video .nav-con #nav_searchform,
