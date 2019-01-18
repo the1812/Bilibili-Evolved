@@ -101,7 +101,8 @@
 .main-container .sponsor-module .sponsor-info .btn-sponsor,
 #app .main .side-bar li a,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
-.main-container .plp-l .media-wrapper h1
+.main-container .plp-l .media-wrapper h1,
+.bilibili-player-pgcinfo-follow .bilibili-player-pgcinfo-follow-binge-watching
 {
     color: #eee !important;
 }
