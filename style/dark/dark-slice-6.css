@@ -5,7 +5,9 @@
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item,
 .short-review-masker .short-review-content .review-body-wrap .mr-btn,
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
+.send-vip-content,
+.bili-pay-payment-wrapper-gift
 {
     background-color: #222 !important;
 }
@@ -102,7 +104,10 @@
 #app .main .side-bar li a,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
 .main-container .plp-l .media-wrapper h1,
-.bilibili-player-pgcinfo-follow .bilibili-player-pgcinfo-follow-binge-watching
+.bilibili-player-pgcinfo-follow .bilibili-player-pgcinfo-follow-binge-watching,
+.send-tabs-item,
+.friend-name,
+.bili-pay-header-wrapper .bili-pay-gift-info
 {
     color: #eee !important;
 }
@@ -122,7 +127,11 @@
 .main-container .tool-bar .mobile-info .mobile-more,
 .sponsor-rank-item.pos-rank-module .sp-right .sp-msg,
 #app .main .content-wrp,
-.player-auxiliary-area .player-auxiliary-panel-title
+.player-auxiliary-area .player-auxiliary-panel-title,
+.send-tabs,
+.send-tabs-item,
+.send-wrapper,
+.bili-pay-payment-wrapper-gift
 {
     border-color: transparent !important;
 }
@@ -202,7 +211,8 @@
     display: none !important;
 } */
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:hover,
-.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
+.send-tabs-item-active
 {
     border-color: var(--theme-color) !important;
 }
@@ -274,7 +284,8 @@
 #app .main .side-bar li a.router-link-active,
 #app .main .side-bar li a:hover,
 .detail-content p span a,
-.player-auxiliary-area .player-auxiliary-panel-title .player-auxiliary-panel-close:hover
+.player-auxiliary-area .player-auxiliary-panel-title .player-auxiliary-panel-close:hover,
+.send-tabs-item-active
 {
     color: var(--theme-color) !important;
 }
