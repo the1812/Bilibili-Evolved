@@ -8,7 +8,8 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
 .send-vip-content,
 .bili-pay-payment-wrapper-gift,
-.backdrop .extension-wrapper #app
+.backdrop .extension-wrapper #app,
+.media-tab-module-content .sl-ep-list .section-item
 {
     background-color: #222 !important;
 }
@@ -108,7 +109,9 @@
 .bilibili-player-pgcinfo-follow .bilibili-player-pgcinfo-follow-binge-watching,
 .send-tabs-item,
 .friend-name,
-.bili-pay-header-wrapper .bili-pay-gift-info
+.bili-pay-header-wrapper .bili-pay-gift-info,
+.media-tab-module-wrp .media-tab-module-content .sl-ep-nav-title,
+.section-item .section-text .section-index
 {
     color: #eee !important;
 }
@@ -132,7 +135,8 @@
 .send-tabs,
 .send-tabs-item,
 .send-wrapper,
-.bili-pay-payment-wrapper-gift
+.bili-pay-payment-wrapper-gift,
+.media-tab-module-content .sl-ep-list .section-item
 {
     border-color: transparent !important;
 }
@@ -286,7 +290,9 @@
 #app .main .side-bar li a:hover,
 .detail-content p span a,
 .player-auxiliary-area .player-auxiliary-panel-title .player-auxiliary-panel-close:hover,
-.send-tabs-item-active
+.send-tabs-item-active,
+.section-item:hover .section-text .section-index,
+.section-item:hover .section-text .section-title
 {
     color: var(--theme-color) !important;
 }
