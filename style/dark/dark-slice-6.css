@@ -70,7 +70,8 @@
 .main-container .tool-bar .share-info i,
 .main-container .tool-bar .mobile-info i,
 .main-container .sponsor-module .sponsor-info .sponsor-count,
-.main-content-page .record-login-descript.record-group.clearfix p
+.main-content-page .record-login-descript.record-group.clearfix p,
+.main-content-page .coin-no-log
 {
     color: #aaa !important;
 }
