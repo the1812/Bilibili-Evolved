@@ -36,7 +36,8 @@
 .main-container .media-info .media-cover,
 .main-container .pre-mask,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-cover,
-.z-top-container.has-stardust
+.z-top-container.has-stardust,
+.ep-section-module
 {
     background-color: #444 !important;
 }
@@ -112,7 +113,9 @@
 .friend-name,
 .bili-pay-header-wrapper .bili-pay-gift-info,
 .media-tab-module-wrp .media-tab-module-content .sl-ep-nav-title,
-.section-item .section-text .section-index
+.section-item .section-text .section-index,
+.main-container.clearfix .plp-r .ep-section-module .section-title,
+.main-container .review-module .review-list .review-item .review-header .review-author
 {
     color: #eee !important;
 }
@@ -293,7 +296,9 @@
 .player-auxiliary-area .player-auxiliary-panel-title .player-auxiliary-panel-close:hover,
 .send-tabs-item-active,
 .section-item:hover .section-text .section-index,
-.section-item:hover .section-text .section-title
+.section-item:hover .section-text .section-title,
+.up-info .btn-follow-up,
+.main-container .review-module .review-list .review-item .review-header .review-author:hover
 {
     color: var(--theme-color) !important;
 }
