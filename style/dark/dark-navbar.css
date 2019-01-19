@@ -7,6 +7,7 @@
     background-color: #222;
 }
 .bili-header-m .nav-menu .nav-mask,
+.bili-header-m .nav-menu.blur-black .nav-mask,
 #navbar-vm>.link-navbar,
 #link-navbar-vm>.link-navbar,
 #app>.link-navbar,

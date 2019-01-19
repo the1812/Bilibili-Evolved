@@ -120,7 +120,7 @@
 {
     font-size: 16pt;
 }
-.gui-settings-search
+.gui-settings-search[type=text]
 {
     flex: 0 0.5 40%;
     height: 100%;
@@ -133,6 +133,7 @@
     color: inherit;
     background: transparent;
     box-sizing: border-box;
+    outline: none !important;
 }
 .gui-settings-close
 {

@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.25
+// @version      1.6.31
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
-// @run-at       document-end
+// @run-at       document-start
 // @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js
 // @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js
 // @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
@@ -28,6 +28,7 @@
     const settings = {
         useDarkStyle: false,
         useNewStyle: true,
+        compactLayout: false,
         showBanner: true,
         overrideNavBar: true,
         expandDanmakuList: true,
@@ -37,7 +38,6 @@
         touchVideoPlayer: false,
         customControlBackgroundOpacity: 0.64,
         customControlBackground: true,
-        forceWide: false,
         darkScheduleStart: "18:00",
         darkScheduleEnd: "6:00",
         darkSchedule: false,
@@ -69,6 +69,7 @@
         },
         defaultPlayerLayout: "新版",
         skipChargeList: false,
+        comboLike: false,
         autoLightOff: false,
         useCache: true,
         autoContinue: false,
@@ -77,18 +78,15 @@
     };
     const fixedSettings = {
         guiSettings: true,
-        comboLike: false,
-        doubleCoins: false,
         viewCover: true,
         notifyNewVersion: true,
         clearCache: true,
-        fixFullscreen: false,
         downloadVideo: true,
         downloadDanmaku: true,
         useDefaultPlayerMode: true,
         useDefaultPlayerLayout: true,
-        about: false,
-        blurSettingsPanel: false,
+        about: true,
+        forceWide: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
         currentVersion: GM_info.script.version,
     };
@@ -192,9 +190,6 @@
                 path: "min/blur-video-control.min.css",
                 order: 20,
             },
-            forceWideStyle: {
-                path: "min/force-wide.min.css",
-            },
             downloadVideoStyle: {
                 path: "min/download-video.min.css",
             },
@@ -227,7 +222,7 @@
             },
             settingsTooltip: {
                 path: "min/settings-tooltip.min.js",
-                styles: [
+                dependencies: [
                     "settingsTooltipStyle"
                 ],
             },
@@ -246,7 +241,10 @@
                 ],
                 styles: [
                     "guiSettingsStyle",
-                    "iconsStyle",
+                    {
+                        key: "iconsStyle",
+                        important: true,
+                    },
                 ],
                 displayNames: {
                     guiSettings: "设置",
@@ -437,20 +435,6 @@
                     darkScheduleEnd: "结束时间",
                 },
             },
-            forceWide: {
-                path: "min/force-wide.min.js",
-                styles: [
-                    {
-                        key: "forceWideStyle",
-                        important: true,
-                        condition: () => true,
-                    },
-                ],
-                displayNames: {
-                    forceWide: "强制宽屏",
-                    forceWideMinWidth: "触发宽度",
-                },
-            },
             clearCache: {
                 path: "min/clear-cache.min.js",
                 displayNames: {
@@ -474,10 +458,14 @@
                 path: "min/download-danmaku.min.js",
                 dependencies: [
                     "videoInfo",
+                    "danmakuConverter",
                 ],
                 displayNames: {
                     "downloadDanmaku": "下载弹幕",
                 },
+            },
+            danmakuConverter: {
+                path: "min/danmaku-converter.min.js"
             },
             videoInfo: {
                 path: "min/video-info.min.js",
@@ -540,17 +528,10 @@
                     items: ["1080P60", "1080P+", "1080P", "720P60", "720P", "480P", "360P", "自动"],
                 },
             },
-            comboLikeStyle: {
-                path: "min/combo-like.min.css",
-            },
             comboLike: {
                 path: "min/combo-like.min.js",
-                styles: [
-                    "comboLikeStyle",
-                ],
                 displayNames: {
-                    comboLike: "启用素质三连",
-                    doubleCoins: "为原创视频投2个币"
+                    comboLike: "素质三连触摸支持",
                 },
             },
             autoContinue: {
@@ -600,7 +581,29 @@
                     key: "defaultPlayerLayout",
                     items: ["旧版", "新版"]
                 },
-            }
+            },
+            compactLayoutStyle: {
+                path: "min/compact-layout.min.css",
+            },
+            compactLayout: {
+                path: "min/compact-layout.min.js",
+                styles: [
+                    {
+                        key: "compactLayoutStyle",
+                        important: true,
+                        condition()
+                        {
+                            return [
+                                "https://www.bilibili.com/",
+                                "https://www.bilibili.com/watchlater/#/list",
+                            ].indexOf(location.href.replace(location.search, '')) !== -1;
+                        },
+                    },
+                ],
+                displayNames: {
+                    compactLayout: "首页使用紧凑布局",
+                }
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
@@ -637,7 +640,7 @@
         if (load !== undefined) // callback
         {
             xhr.addEventListener("load", () => load && load(xhr.responseText));
-            xhr.addEventListener("error", () => error && error(xhr.responseText));
+            xhr.addEventListener("error", () => error && error(xhr.status));
             xhr.send();
         }
         else
@@ -645,7 +648,7 @@
             return new Promise((resolve, reject) =>
             {
                 xhr.addEventListener("load", () => resolve(xhr.responseText));
-                xhr.addEventListener("error", () => reject(xhr.responseText));
+                xhr.addEventListener("error", () => reject(xhr.status));
                 xhr.send();
             });
         }
@@ -655,6 +658,17 @@
         const event = document.createEvent("HTMLEvents");
         event.initEvent(eventName, true, true);
         element.dispatchEvent(event);
+    }
+    function contentLoaded(callback)
+    {
+        if (/complete|interactive|loaded/.test(document.readyState))
+        {
+            callback();
+        }
+        else
+        {
+            document.addEventListener("DOMContentLoaded", () => callback());
+        }
     }
     function fixed(number, precision = 1)
     {
@@ -1096,7 +1110,7 @@
                             <span>$4</span>
                         </label>
                     </li>
-                `).replace(/<dropdown\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/dropdown>/g,`
+                `).replace(/<dropdown\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/dropdown>/g, `
                     <li class="indent-$1">
                         <label>
                             <span class="gui-settings-dropdown-span">$4</span>
@@ -1193,50 +1207,50 @@
                         .concat(flattenStyles.map(it => Resource.all[it]))
                         .map(r => r.download())
                     )
-                    .then(() =>
-                    {
-                        // +#Offline build placeholder
-                        if (settings.useCache)
+                        .then(() =>
                         {
-                            const cache = this.loadCache(key);
-                            if (cache !== null)
+                            // +#Offline build placeholder
+                            if (settings.useCache)
                             {
-                                this.text = cache;
-                                resolve(cache);
-                            }
-                            downloadText(this.url, text =>
-                            {
-                                this.text = this.type.preprocessor(text);
-                                if (text === null)
+                                const cache = this.loadCache(key);
+                                if (cache !== null)
                                 {
-                                    reject("download failed");
+                                    this.text = cache;
+                                    resolve(cache);
                                 }
-                                if (cache !== this.text)
-                                {
-                                    if (cache === null)
-                                    {
-                                        resolve(this.text);
-                                    }
-                                    if (typeof offlineData === "undefined")
-                                    {
-                                        settings.cache[key] = this.text;
-                                        saveSettings(settings);
-                                    }
-                                }
-                            }, error => reject(error));
-                        }
-                        else
-                        {
-                            downloadText(this.url,
-                                text =>
+                                downloadText(this.url, text =>
                                 {
                                     this.text = this.type.preprocessor(text);
-                                    resolve(this.text);
-                                },
-                                error => reject(error));
-                        }
-                        // -#Offline build placeholder
-                    });
+                                    if (text === null)
+                                    {
+                                        reject("download failed");
+                                    }
+                                    if (cache !== this.text)
+                                    {
+                                        if (cache === null)
+                                        {
+                                            resolve(this.text);
+                                        }
+                                        if (typeof offlineData === "undefined")
+                                        {
+                                            settings.cache[key] = this.text;
+                                            saveSettings(settings);
+                                        }
+                                    }
+                                }, error => reject(error));
+                            }
+                            else
+                            {
+                                downloadText(this.url,
+                                    text =>
+                                    {
+                                        this.text = this.type.preprocessor(text);
+                                        resolve(this.text);
+                                    },
+                                    error => reject(error));
+                            }
+                            // -#Offline build placeholder
+                        });
                 }
             });
         }
@@ -1254,15 +1268,15 @@
             }
             return `<style ${attributes}>${style}</style>`;
         }
-        getPriorStyle(root)
+        getPriorStyle()
         {
             if (this.priority !== undefined)
             {
                 let insertPosition = this.priority - 1;
-                let formerStyle = root.find(`style[priority='${insertPosition}']`);
+                let formerStyle = $(`style[priority='${insertPosition}']`);
                 while (insertPosition >= 0 && formerStyle.length === 0)
                 {
-                    formerStyle = root.find(`style[priority='${insertPosition}']`);
+                    formerStyle = $(`style[priority='${insertPosition}']`);
                     insertPosition--;
                 }
                 if (insertPosition < 0)
@@ -1284,17 +1298,16 @@
             if ($(`#${id}`).length === 0)
             {
                 const element = this.getStyle(id);
-                const root = important ? $("body") : $("head");
-                const priorStyle = this.getPriorStyle(root);
+                const priorStyle = this.getPriorStyle();
                 if (priorStyle === null)
                 {
                     if (important)
                     {
-                        root.after(element);
+                        $("html").append(element);
                     }
                     else
                     {
-                        root.prepend(element);
+                        $("head").prepend(element);
                     }
                 }
                 else
@@ -1304,12 +1317,97 @@
             }
         }
     }
+    class StyleManager
+    {
+        constructor(resources)
+        {
+            this.resources = resources;
+        }
+        getDefaultStyleId(key)
+        {
+            return key.replace(/([a-z][A-Z])/g,
+                g => `${g[0]}-${g[1].toLowerCase()}`);
+        }
+        applyStyle(key, id)
+        {
+            if (id === undefined)
+            {
+                id = this.getDefaultStyleId(key);
+            }
+            Resource.all[key].applyStyle(id, false);
+        }
+        removeStyle(key)
+        {
+            $(`#${this.getDefaultStyleId(key)}`).remove();
+        }
+        applyImportantStyle(key, id)
+        {
+            if (id === undefined)
+            {
+                id = this.getDefaultStyleId(key);
+            }
+            Resource.all[key].applyStyle(id, true);
+        }
+        applyStyleFromText(text)
+        {
+            $("head").prepend(text);
+        }
+        applyImportantStyleFromText(text)
+        {
+            $("html").append(text);
+        }
+        getStyle(key, id)
+        {
+            return Resource.all[key].getStyle(id);
+        }
+        fetchStyleByKey(key)
+        {
+            if (settings[key] !== true)
+            {
+                return;
+            }
+            Resource.all[key].styles
+                .filter(it => it.condition !== undefined ? it.condition() : true)
+                .forEach(it =>
+                {
+                    const important = typeof it === "object" ? it.important : false;
+                    const key = typeof it === "object" ? it.key : it;
+                    Resource.all[key].download().then(() =>
+                    {
+                        if (important)
+                        {
+                            contentLoaded(() => this.applyImportantStyle(key));
+                        }
+                        else
+                        {
+                            this.applyStyle(key);
+                        }
+                    });
+                });
+        }
+        fetchStyles()
+        {
+            for (const key in Resource.all)
+            {
+                this.fetchStyleByKey(key);
+            }
+        }
+    }
     class ResourceManager
     {
         constructor()
         {
             this.data = Resource.all;
             this.attributes = {};
+            this.styleManager = new StyleManager(this);
+            const styleMethods = Object.getOwnPropertyNames(StyleManager.prototype).filter(it => it !== "constructor");
+            for (const key of styleMethods)
+            {
+                this[key] = function (...params)
+                {
+                    this.styleManager[key](...params);
+                };
+            }
             this.setupColors();
         }
         setupColors()
@@ -1339,6 +1437,10 @@
             styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
             this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(";")}}</style>`);
         }
+        import(compnentName)
+        {
+            return this.attributes[compnentName].export;
+        }
         async fetchByKey(key)
         {
             const resource = Resource.all[key];
@@ -1350,30 +1452,18 @@
             {
                 console.error(`Download error, XHR status: ${reason}`);
                 let toastMessage = `无法下载组件<span>${Resource.all[key].displayName}</span>`;
-                if (settings.toastInternalError && "stack" in reason)
+                if (settings.toastInternalError)
                 {
-                    toastMessage += "\n" + reason.stack;
+                    toastMessage += "\n" + reason;
                 }
                 Toast.error(toastMessage, "错误");
             });
             await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "script")
                 .map(it => this.fetchByKey(it.key)));
-            resource.styles
-                .filter(it => it.condition !== undefined ? it.condition() : true)
-                .forEach(it =>
-                {
-                    const important = typeof it === "object" ? it.important : false;
-                    const key = typeof it === "object" ? it.key : it;
-                    if (important)
-                    {
-                        this.applyImportantStyle(key);
-                    }
-                    else
-                    {
-                        this.applyStyle(key);
-                    }
-                });
+            await Promise.all(resource.dependencies
+                .filter(it => it.type.name === "style")
+                .map(it => this.styleManager.fetchStyleByKey(it.key)));
             this.applyComponent(key, text);
         }
         async fetch()
@@ -1415,9 +1505,9 @@
                 {
                     console.error(`Failed to apply feature "${key}": ${error}`);
                     let toastMessage = `加载组件<span>${Resource.all[key].displayName}</span>失败`;
-                    if (settings.toastInternalError && "stack" in error)
+                    if (settings.toastInternalError)
                     {
-                        toastMessage += "\n" + error.stack;
+                        toastMessage += "\n" + error;
                     }
                     Toast.error(toastMessage, "错误");
                 }
@@ -1475,43 +1565,6 @@
                 .map(it => applyDropdownOption(it.dropdown))
             );
         }
-        getDefaultStyleId(key)
-        {
-            return key.replace(/([a-z][A-Z])/g,
-                g => `${g[0]}-${g[1].toLowerCase()}`);
-        }
-        applyStyle(key, id)
-        {
-            if (id === undefined)
-            {
-                id = this.getDefaultStyleId(key);
-            }
-            Resource.all[key].applyStyle(id, false);
-        }
-        removeStyle(key)
-        {
-            $(`#${this.getDefaultStyleId(key)}`).remove();
-        }
-        applyImportantStyle(key, id)
-        {
-            if (id === undefined)
-            {
-                id = this.getDefaultStyleId(key);
-            }
-            Resource.all[key].applyStyle(id, true);
-        }
-        applyStyleFromText(text)
-        {
-            $("head").prepend(text);
-        }
-        applyImportantStyleFromText(text)
-        {
-            $("body").after(text);
-        }
-        getStyle(key, id)
-        {
-            return Resource.all[key].getStyle(id);
-        }
         validateCache()
         {
             if (settings.cache.version !== settings.currentVersion)
@@ -1543,7 +1596,10 @@
             monkeyInfo: GM_info
         };
         const resources = new ResourceManager();
-        resources.fetch().catch(error => logError(error));
+        resources.styleManager.fetchStyles();
+
+        const applyScripts = () => resources.fetch().catch(error => logError(error));
+        contentLoaded(applyScripts);
     }
     catch (error)
     {

@@ -63,7 +63,12 @@ div#square.container,
 .gui-settings-widgets-box,
 .user-panel-ctnr .user-avatar,
 .link-popover-ctnr .link-popover,
-.medal-get-box, .medal-message-box
+.medal-get-box,
+.medal-message-box,
+.main-container .plp-l .player-mask .bar-wrapper .left-bar,
+.main-container .plp-l .player-mask .bar-wrapper .right-bar,
+.twp-mask .twp-wrapper,
+.open-dialog-masker .open-dialog-content
 {
     background-color: #222 !important;
 }
@@ -138,7 +143,9 @@ body>div.to-top.on,
 .bili-share-pc .share-weixin-qr,
 .bili-share-pc .weixin-hover .qr-before,
 .form-login .input-box .item input,
-.form-login .input-box .btn-box .btn
+.form-login .input-box .btn-box .btn,
+.main-container .plp-l .player-mask .bar-wrapper,
+.open-dialog-masker .btn-normal
 {
     background-color: #444 !important;
 }
@@ -193,7 +200,9 @@ body>div.to-top.on,
 #song_detail_click_upper~div .pager .pages .page-item.active button,
 #song_detail_click_upper~div .pager .pages .page-item button,
 .filter-wrap .sub-filter,
-.title-line .tit
+.title-line .tit,
+.popularize-module .online,
+.main-container .review-module .module-title .more-link
 {
     background-color: transparent !important;
 }
@@ -257,7 +266,9 @@ body>div.to-top.on,
 .user-info .user-info-desc,
 .qrcode-login .qrcode-footer .app-link,
 .qrcode-login .qrcode-footer .suc-txt,
-.form-login .input-box .sns .btn
+.form-login .input-box .sns .btn,
+.open-dialog-masker .open-body ul li i,
+.open-dialog-masker .open-footer .open-agree
 {
     color: #aaa !important;
 }
@@ -356,7 +367,14 @@ body>div.to-top.on,
 .bili-share-pc .share-weixin-qr h4,
 .form-login .input-box .remember,
 .form-login .input-box .item input,
-.form-login .input-box .btn-box .btn
+.form-login .input-box .btn-box .btn,
+.popularize-module .online a,
+.twp-mask .twp-wrapper .twp-container .twp-text .twp-title,
+.main-container .tool-bar .share-info i,
+.open-dialog-masker .__dialog-header p,
+.open-dialog-masker .open-body p,
+.open-dialog-masker .open-body ul li span,
+.open-dialog-masker .btn-normal
 {
     color: #eee !important;
 }
@@ -421,12 +439,18 @@ body>div.to-top.on,
 .title-line,
 .form-login .input-box .item input,
 .form-login .input-box .btn-box .btn-login,
-.form-login .input-box .btn-box .btn
+.form-login .input-box .btn-box .btn,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
+.open-dialog-masker .btn-normal
 {
     border-color: transparent !important;
 }
 .bili-radio+span::before,
-.channel-info .c-count
+.channel-info .c-count,
+.popularize-module .online em,
+.open-dialog-masker .open-body ul li i
 {
     border-color: #aaa !important;
 }
@@ -445,7 +469,8 @@ body>div.to-top.on,
 .leftMsg .msgDiv:before,
 .leaveMsg .leaveMsgHeader,
 .medal-receive-title,
-.login-box .line
+.login-box .line,
+.open-dialog-masker .__dialog-header
 {
     border-color: #444 !important
 }
@@ -480,7 +505,13 @@ svg.toast-card-dismiss path
 .error-container .error.split,
 .leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn,
 .nav-header-wrapper .nav-header .user-panel .panel-list .icon,
-[class^=icon-]::after
+[class^=icon-]::after,
+.compact .primary-menu .nav-menu>li.home>a,
+.compact .primary-menu .nav-menu .side-nav .side-link i.square,
+.compact .primary-menu .nav-menu .side-nav .side-link i.zhuanlan,
+.compact .primary-menu .nav-menu .side-nav .side-link i.live,
+.compact .primary-menu .nav-menu .side-nav .side-link i.blackroom,
+.change-push .icon
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -512,7 +543,8 @@ svg.toast-card-dismiss path
 #page-channel-detail .watch-later-btn:hover,
 .error-container .error-panel .error-msg .error-img img,
 .leaveMsgUpload .btnarea .btnareaIcon,
-.coin-operated-m .like-checkbox input[type=checkbox]:checked+i
+.coin-operated-m .like-checkbox input[type=checkbox]:checked+i,
+.video-list .vl-hd .display-tab li.on
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -533,7 +565,8 @@ body>div.to-top.on,
 .sureWindow .close,
 .evaluateWether .evaluateno i,
 .evaluateWether .evaluateok i,
-.evaluateWether .operateType .unsolveActive span
+.evaluateWether .operateType .unsolveActive span,
+.video-list .vl-hd .display-tab li
 {
     filter: grayscale(1) !important;
 }
@@ -573,7 +606,8 @@ body>div.to-top.on,
 .nav-header-wrapper .nav-header .user-panel .user-uname,
 .nav-header-wrapper .nav-header .user-panel .panel-list,
 .demo-app .detail .category,
-.main_body .pick_up .pick_list .pick_block .pic
+.main_body .pick_up .pick_list .pick_block .pic,
+.main-container .entry-old .btn-old
 {
     box-shadow: none !important;
 }
@@ -658,7 +692,8 @@ body>div.to-top.on
 .container .hot-list .music-menu-list .menu-type .type-triangle,
 .bili-radio:checked+span::before,
 .rightMsg .msgDiv::before,
-#index-player-vm .item-border
+#index-player-vm .item-border,
+.open-dialog-masker .open-body ul li i.icon-complete
 {
     border-color: var(--theme-color) !important;
 }
@@ -724,7 +759,12 @@ body>div.to-top.on
 .receive-list-prev i,
 .receive-list-next i,
 .receive-list-page,
-.form-login .input-box .btn-box .btn-login
+.form-login .input-box .btn-box .btn-login,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
+.main-container .pay-bar .vip .btn-pay,
+.open-dialog-masker .btn-normal.confirm
 {
     background-color: var(--theme-color) !important;
 }
@@ -818,7 +858,13 @@ body>div.to-top.on
 .coin-wrap .coin-nav .coin-checkbox.on .lable,
 #community_msg .dyn_menu li a:hover,
 .form-login .remember a,
-.app-link a
+.app-link a,
+.popularize-module .online a:hover,
+.open-dialog-masker .__dialog-header .mr-close:hover,
+.open-dialog-masker .open-body ul li i.icon-complete,
+.open-dialog-masker .open-footer .open-agree i.icon-chk-full,
+.open-dialog-masker .open-footer .open-agree a,
+.main-container .review-module .module-title .more-link:hover
 {
     color: var(--theme-color) !important;
 }
@@ -853,7 +899,12 @@ body>div.to-top.on
 .coin-wrap .coin-sure,
 .up-feedback .up-fb-btn:hover,
 .user-info > .uid,
-.form-login .input-box .btn-box .btn-login
+.form-login .input-box .btn-box .btn-login,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
+.main-container .pay-bar .vip .btn-pay,
+.open-dialog-masker .btn-normal.confirm
 {
     color: var(--foreground-color) !important;
 }

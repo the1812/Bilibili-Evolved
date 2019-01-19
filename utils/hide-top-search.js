@@ -10,7 +10,7 @@
         {
             new SpinQuery(
                 () => $(selector),
-                it => it.length > 0 && it.attr("placeholder").length > 0,
+                it => it !== undefined && it.length > 0 && it.attr("placeholder").length > 0,
                 textBox => textBox.attr("placeholder", "搜索")
             ).start();
         }

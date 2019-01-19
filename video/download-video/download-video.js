@@ -8,17 +8,12 @@
             entity: null,
             aid: undefined,
             cid: undefined,
-            isBangumi: false,
+            isOldBangumi: false,
+            isStardustBangumi: false,
         };
 
         const bangumiUrls = [];
-        $(document).ajaxSend((event, request, params) =>
-        {
-            if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
-            {
-                bangumiUrls.unshift(params.url);
-            }
-        });
+
         class Video
         {
             constructor()
@@ -69,9 +64,9 @@
         }
         class Bangumi extends Video
         {
-            constructor(menuPanel)
+            constructor()
             {
-                super(menuPanel);
+                super();
                 this.menuClasses = ["action", "progress"];
                 this.currentMenuClass = "action";
             }
@@ -80,6 +75,20 @@
                 const url = await SpinQuery.select(() => bangumiUrls[0])
                     .catch(() => logError("获取番剧下载链接失败."));
                 return url;
+            }
+        }
+        class StardustBangumi extends Video
+        {
+            async getUrl(quality)
+            {
+                if (quality)
+                {
+                    return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`;
+                }
+                else
+                {
+                    return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=&otype=json`;
+                }
             }
         }
         class VideoFormat
@@ -110,7 +119,7 @@
                             {
                                 reject("获取清晰度信息失败.");
                             }
-                            const data = json.data || json;
+                            const data = json.data || json.result || json;
                             const qualities = data.accept_quality;
                             const internalNames = data.accept_format.split(",");
                             const displayNames = data.accept_description;
@@ -166,8 +175,8 @@
                         xhr.addEventListener("load", () =>
                         {
                             const json = JSON.parse(xhr.responseText.replace(/http:/g, "https:"));
-                            const data = json.data || json;
-                            if (!pageData.isBangumi && data.quality !== this.format.quality)
+                            const data = json.data || json.result || json;
+                            if (!pageData.isOldBangumi && data.quality !== this.format.quality)
                             {
                                 reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
                             }
@@ -340,8 +349,26 @@
             pageData.cid = cid;
             if (document.URL.indexOf("bangumi") !== -1)
             {
-                pageData.isBangumi = true;
-                pageData.entity = new Bangumi();
+                // Old bangumi fallback
+                const player = await SpinQuery.select(() => document.querySelector("#bofqi"));
+                if (!player.classList.contains("stardust-player"))
+                {
+                    pageData.isOldBangumi = true;
+                    pageData.entity = new Bangumi();
+                    await SpinQuery.unsafeJquery();
+                    unsafeWindow.$(unsafeWindow.document).ajaxSend((event, request, params) =>
+                    {
+                        if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
+                        {
+                            bangumiUrls.unshift(params.url);
+                        }
+                    });
+                }
+                else
+                {
+                    pageData.isStardustBangumi = true;
+                    pageData.entity = new StardustBangumi();
+                }
             }
             else
             {
