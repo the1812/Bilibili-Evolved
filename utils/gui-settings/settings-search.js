@@ -2,7 +2,7 @@
 {
     return (settings, resources) =>
     {
-        const toolTips = resources.attributes.settingsTooltip.export;
+        const toolTips = resources.import("settingsTooltip");
         class SettingsSearch
         {
             constructor()

@@ -2,9 +2,9 @@
 {
     return (settings, resources) =>
     {
-        const Validator = resources.attributes.textValidate.export.Validator;
-        const Search = resources.attributes.settingsSearch.export;
-        const ThemeColors = resources.attributes.themeColors.export;
+        const { Validator } = resources.import("textValidate");
+        const Search = resources.import("settingsSearch");
+        const ThemeColors = resources.import("themeColors");
         const themeColors = new ThemeColors();
         const settingsBox = resources.data.guiSettingsDom.text;
 
