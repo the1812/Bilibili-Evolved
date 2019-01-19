@@ -9,7 +9,8 @@
 .send-vip-content,
 .bili-pay-payment-wrapper-gift,
 .backdrop .extension-wrapper #app,
-.media-tab-module-content .sl-ep-list .section-item
+.media-tab-module-content .sl-ep-list .section-item,
+.media-tab-module-content .mtlr-list-wrp .block-relate-wrp .pagelistbox .custom-right .custom-right-inner.custompage
 {
     background-color: #222 !important;
 }
