@@ -71,7 +71,10 @@
 .main-container .tool-bar .mobile-info i,
 .main-container .sponsor-module .sponsor-info .sponsor-count,
 .main-content-page .record-login-descript.record-group.clearfix p,
-.main-content-page .coin-no-log
+.main-content-page .coin-no-log,
+.count-wrapper div.up-info a,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-danmaku-number,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching
 {
     color: #aaa !important;
 }
@@ -302,7 +305,8 @@
 .section-item:hover .section-text .section-index,
 .section-item:hover .section-text .section-title,
 .up-info .btn-follow-up,
-.main-container .review-module .review-list .review-item .review-header .review-author:hover
+.main-container .review-module .review-list .review-item .review-header .review-author:hover,
+.count-wrapper div.up-info a:hover
 {
     color: var(--theme-color) !important;
 }
