@@ -292,7 +292,7 @@
             {
                 if (!this.cidData)
                 {
-                    downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`, response =>
+                    downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`).then(response =>
                     {
                         this.cidData = JSON.parse(response).data;
                         this.getVideoshot(currentTime, done);

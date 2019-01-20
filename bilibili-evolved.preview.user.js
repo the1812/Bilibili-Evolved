@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.33
+// @version      1.6.34
 // @description  增强哔哩哔哩Web端体验(预览版分支): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -646,7 +646,47 @@
             }
         }
     }
-    function downloadText(url, load, error)
+    class Ajax
+    {
+        static send(xhr, body)
+        {
+            return new Promise((resolve, reject) =>
+            {
+                xhr.addEventListener("load", () => resolve(xhr.responseText));
+                xhr.addEventListener("error", () => reject(xhr.status));
+                xhr.send(body);
+            });
+        }
+        static getText(url)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            return send(xhr);
+        }
+        static getTextWithCredentials(url)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            xhr.withCredentials = true;
+            return send(xhr);
+        }
+        static postText(url, body)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            return send(xhr, body);
+        }
+        static postTextWithCredentials(url)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            return send(xhr, body);
+        }
+    }
+    function downloadText(url, load, error) // The old method for compatibility
     {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url);
@@ -1232,7 +1272,7 @@
                                     this.text = cache;
                                     resolve(cache);
                                 }
-                                downloadText(this.url, text =>
+                                downloadText(this.url).then(text =>
                                 {
                                     this.text = this.type.preprocessor(text);
                                     if (text === null)
@@ -1251,17 +1291,17 @@
                                             saveSettings(settings);
                                         }
                                     }
-                                }, error => reject(error));
+                                }).catch(error => reject(error));
                             }
                             else
                             {
-                                downloadText(this.url,
-                                    text =>
+                                downloadText(this.url)
+                                    .then(text =>
                                     {
                                         this.text = this.type.preprocessor(text);
                                         resolve(this.text);
-                                    },
-                                    error => reject(error));
+                                    })
+                                    .catch(error => reject(error));
                             }
                             // -#Offline build placeholder
                         });
