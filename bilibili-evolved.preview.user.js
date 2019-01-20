@@ -86,6 +86,7 @@
         downloadVideo: true,
         downloadDanmaku: true,
         useDefaultPlayerMode: true,
+        medalHelper: true,
         about: true,
         forceWide: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
@@ -661,29 +662,29 @@
         {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url);
-            return send(xhr);
+            return this.send(xhr);
         }
         static getTextWithCredentials(url)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url);
             xhr.withCredentials = true;
-            return send(xhr);
+            return this.send(xhr);
         }
         static postText(url, body)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            return send(xhr, body);
+            return this.send(xhr, body);
         }
-        static postTextWithCredentials(url)
+        static postTextWithCredentials(url, body)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.withCredentials = true;
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            return send(xhr, body);
+            return this.send(xhr, body);
         }
     }
     function downloadText(url, load, error) // The old method for compatibility
