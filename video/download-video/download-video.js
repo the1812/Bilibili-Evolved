@@ -244,7 +244,7 @@
                         xhr.send();
                         this.workingXhr.push(xhr);
                     }));
-                    startByte = Math.round(startByte + partialLength);
+                    startByte = Math.round(startByte + partialLength) + 1;
                 }
                 return Promise.all(promises);
             }
