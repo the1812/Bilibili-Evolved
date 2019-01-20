@@ -68,7 +68,7 @@
                 }
                 useOldLayout()
                 {
-                    this.clearCookie(this.cookieKey);
+                    this.setCookie(this.cookieKey, 0);
                 }
             }
 
