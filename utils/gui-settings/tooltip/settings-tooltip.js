@@ -4,10 +4,10 @@
     {
         const toolTips = {
             defaultPlayerMode: `设置默认的播放器模式, 可以为<span>常规</span>, <span>宽屏</span>或<span>网页全屏</span>(<span>全屏</span>还未完成). 默认模式将在进入视频页面的首次播放时应用.`,
-            defaultPlayerLayout: `设置视频页(非番剧/电影)默认的播放器布局.
-- 旧版: 传统布局/番剧区使用的布局
+            defaultPlayerLayout: `设置默认的播放器布局.
+- 旧版: 传统布局
 - 新版: 视频区默认的新版布局
-注: 更改此设置将立即刷新页面; 旧版布局中, 很多功能将不适用, 如夜间模式, 样式调整, 历史纪录点播放等.`,
+注: 旧版布局中, 很多脚本功能将不适用.`,
             useDefaultVideoQuality: `进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.`,
             defaultVideoQuality: `设定自动选择的视频画质.`,
             autoLightOff: `首次播放时, 自动进入关灯模式.`,
