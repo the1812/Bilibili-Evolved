@@ -68,6 +68,7 @@
             special: false,
         },
         defaultPlayerLayout: "新版",
+        defaultBangumiLayout: "旧版",
         useDefaultPlayerLayout: false,
         skipChargeList: false,
         comboLike: false,
@@ -581,12 +582,19 @@
                 path: "min/default-player-layout.min.js",
                 displayNames: {
                     "useDefaultPlayerLayout": "指定播放器布局",
-                    "defaultPlayerLayout": "播放器布局",
+                    "defaultPlayerLayout": "视频区布局",
+                    "defaultBangumiLayout": "番剧区布局",
                 },
-                dropdown: {
-                    key: "defaultPlayerLayout",
-                    items: ["旧版", "新版"]
-                },
+                dropdown: [
+                    {
+                        key: "defaultPlayerLayout",
+                        items: ["旧版", "新版"]
+                    },
+                    {
+                        key: "defaultBangumiLayout",
+                        items: ["旧版", "新版"]
+                    },
+                ],
             },
             compactLayoutStyle: {
                 path: "min/compact-layout.min.css",
@@ -1553,18 +1561,25 @@
         {
             async function applyDropdownOption(info)
             {
-                const dropdown = await SpinQuery.any(
-                    () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
-                const list = dropdown.find("ul");
-                const input = dropdown.find("input");
-                info.items.forEach(item =>
+                if (Array.isArray(info))
                 {
-                    $(`<li>${item}</li>`).appendTo(list)
-                        .on("click", () =>
-                        {
-                            input.val(item).trigger("input").change();
-                        });
-                });
+                    await Promise.all(info.map(applyDropdownOption));
+                }
+                else
+                {
+                    const dropdown = await SpinQuery.any(
+                        () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
+                    const list = dropdown.find("ul");
+                    const input = dropdown.find("input");
+                    info.items.forEach(item =>
+                    {
+                        $(`<li>${item}</li>`).appendTo(list)
+                            .on("click", () =>
+                            {
+                                input.val(item).trigger("input").change();
+                            });
+                    });
+                }
             }
             await Promise.all(Object.values(Resource.manifest)
                 .filter(it => it.dropdown)

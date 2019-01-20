@@ -4,9 +4,11 @@
     {
         (async () =>
         {
-            const dropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultPlayerLayout]`));
-            if (!dropdown)
+            const videoDropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultPlayerLayout]`));
+            const bangumiDropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultBangumiLayout]`));
+            if (!videoDropdown || !bangumiDropdown)
             {
+                logError("无法加载播放器布局选项.");
                 return;
             }
             class LayoutCookie
@@ -31,13 +33,6 @@
                     {
                         this.useOldLayout();
                     }
-                }
-                static getAll()
-                {
-                    return [
-                        new VideoLayoutCookie(),
-                        new BangumiLayoutCookie(),
-                    ];
                 }
             }
             class VideoLayoutCookie extends LayoutCookie
@@ -73,10 +68,15 @@
                 }
             }
 
-            const cookies = LayoutCookie.getAll();
-            $(dropdown).on("change", () =>
+            const videoCookie = new VideoLayoutCookie();
+            $(videoDropdown).on("change", () =>
             {
-                cookies.forEach(it => it.setLayout(dropdown.value === "新版"));
+                videoCookie.setLayout(videoDropdown.value === "新版");
+            });
+            const bangumiCookie = new BangumiLayoutCookie();
+            $(bangumiDropdown).on("change", () =>
+            {
+                bangumiCookie.setLayout(bangumiDropdown.value === "新版");
             });
         })();
     };
