@@ -41,10 +41,24 @@
             }
             class VideoLayoutCookie extends LayoutCookie
             {
+                checkCookies()
+                {
+                    const value = this.getValue(this.cookieKey);
+                    if (value === "" || parseInt(value) < 0)
+                    {
+                        settings.defaultPlayerLayout = "旧版";
+                    }
+                    else
+                    {
+                        settings.defaultPlayerLayout = "新版";
+                    }
+                    saveSettings(settings);
+                }
                 constructor()
                 {
                     super();
                     this.cookieKey = "stardustvideo";
+                    this.checkCookies();
                 }
                 useNewLayout()
                 {
@@ -57,10 +71,24 @@
             }
             class BangumiLayoutCookie extends LayoutCookie
             {
+                checkCookies()
+                {
+                    const value = this.getValue(this.cookieKey);
+                    if (value === "" || parseInt(value) <= 0)
+                    {
+                        settings.defaultBangumiLayout = "旧版";
+                    }
+                    else
+                    {
+                        settings.defaultBangumiLayout = "新版";
+                    }
+                    saveSettings(settings);
+                }
                 constructor()
                 {
                     super();
                     this.cookieKey = "stardustpgcv";
+                    this.checkCookies();
                 }
                 useNewLayout()
                 {
