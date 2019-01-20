@@ -2,7 +2,6 @@
 {
     return (settings, resources) =>
     {
-        const toolTips = resources.import("settingsTooltip");
         class SettingsSearch
         {
             constructor()
@@ -17,6 +16,7 @@
             keywordChange()
             {
                 const value = this.input.value.trim();
+                const toolTips = resources.import("settingsTooltip");
                 if (!value)
                 {
                     this.categories.concat(this.items).forEach(it => it.classList.add("folded"));
