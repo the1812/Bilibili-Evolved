@@ -168,6 +168,11 @@
         resources.applyStyle("guiSettingsStyle");
         const settingsBox = resources.data.guiSettingsDom.text;
         $("body").append(settingsBox);
+        new SpinQuery(
+            () => $("body"),
+            it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
+            _ => $(".gui-settings-icon-panel").css("display", "none")
+        ).start();
 
         setupEvents();
         checkOfflineData();
@@ -177,16 +182,10 @@
         foldAllCategories();
         checkCompatibility();
 
-        const Search = resources.import("settingsSearch");
-        new Search();
-
         const ThemeColors = resources.import("themeColors");
         new ThemeColors().setupDom();
 
-        new SpinQuery(
-            () => $("body"),
-            it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
-            _ => $(".gui-settings-icon-panel").css("display", "none")
-        ).start();
+        const Search = resources.import("settingsSearch");
+        new Search();
     };
 })();
