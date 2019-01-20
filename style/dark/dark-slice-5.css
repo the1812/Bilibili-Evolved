@@ -695,7 +695,7 @@ table.viptable td,
 .song-complain-bg .song-complain .complain-text,
 .song-complain-bg .song-complain .complain-btn,
 .song-li .song-right .song-right-title,
-song-right-title a
+.song-right-title a
 {
     color: #eee !important;
 }
@@ -1163,7 +1163,8 @@ li.log-item .user-action .up-mark,
 #dyn_wnd .dyn_menu li:hover,
 .mini-wnd .list li a:hover,
 .q-title a.active,
-.q-c-div dl.active dt
+.q-c-div dl.active dt,
+.song-li .song-right .song-right-title a:hover
 {
     color: var(--theme-color) !important;
 }

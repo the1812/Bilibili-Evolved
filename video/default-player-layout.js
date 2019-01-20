@@ -13,12 +13,11 @@
             const oldLayout = "旧版";
             const newLayout = "新版";
             const cookieValues = {
-                [oldLayout]: 0,
-                // "新版1": 1,
-                [newLayout]: 2,
+                [oldLayout]: -1,
+                [newLayout]: 1,
             };
             const currentLayout = document.cookie.split(";")
-                .filter(it => it.includes(cookieKey + "=0")).length > 0 ? oldLayout : newLayout;
+                .filter(it => it.includes(cookieKey + "=" + cookieValues.oldLayout)).length > 0 ? oldLayout : newLayout;
 
             function setLayout(layoutName)
             {

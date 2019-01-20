@@ -37,7 +37,8 @@
 .main-container .pre-mask,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-cover,
 .z-top-container.has-stardust,
-.ep-section-module
+.ep-section-module,
+.main-container .recom-wrapper .expand-more
 {
     background-color: #444 !important;
 }
@@ -68,7 +69,9 @@
 .main-container .tool-bar .coin-info i,
 .main-container .tool-bar .share-info i,
 .main-container .tool-bar .mobile-info i,
-.main-container .sponsor-module .sponsor-info .sponsor-count
+.main-container .sponsor-module .sponsor-info .sponsor-count,
+.main-content-page .record-login-descript.record-group.clearfix p,
+.main-content-page .coin-no-log
 {
     color: #aaa !important;
 }
@@ -115,7 +118,8 @@
 .media-tab-module-wrp .media-tab-module-content .sl-ep-nav-title,
 .section-item .section-text .section-index,
 .main-container.clearfix .plp-r .ep-section-module .section-title,
-.main-container .review-module .review-list .review-item .review-header .review-author
+.main-container .review-module .review-list .review-item .review-header .review-author,
+.main-container .recom-wrapper .expand-more
 {
     color: #eee !important;
 }

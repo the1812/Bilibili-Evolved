@@ -2,12 +2,6 @@
 {
     return (settings, resources) =>
     {
-        const Validator = resources.attributes.textValidate.export.Validator;
-        const Search = resources.attributes.settingsSearch.export;
-        const ThemeColors = resources.attributes.themeColors.export;
-        const themeColors = new ThemeColors();
-        const settingsBox = resources.data.guiSettingsDom.text;
-
         function getCategoriyItems(category)
         {
             let element = category.nextElementSibling;
@@ -71,6 +65,7 @@
         }
         function listenSettingsChange()
         {
+            const { Validator } = resources.import("textValidate");
             const reloadChanges = (key) =>
             {
                 // const reloadableKey = Resource.reloadables[key];
@@ -171,21 +166,26 @@
         }
 
         resources.applyStyle("guiSettingsStyle");
+        const settingsBox = resources.data.guiSettingsDom.text;
         $("body").append(settingsBox);
-        setupEvents();
-        checkOfflineData();
-        syncGui();
-        listenDependencies();
-        themeColors.setupDom();
-        listenSettingsChange();
-        foldAllCategories();
-        checkCompatibility();
-
-        new Search();
         new SpinQuery(
             () => $("body"),
             it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
             _ => $(".gui-settings-icon-panel").css("display", "none")
         ).start();
+
+        setupEvents();
+        checkOfflineData();
+        syncGui();
+        listenDependencies();
+        listenSettingsChange();
+        foldAllCategories();
+        checkCompatibility();
+
+        const ThemeColors = resources.import("themeColors");
+        new ThemeColors().setupDom();
+
+        const Search = resources.import("settingsSearch");
+        new Search();
     };
 })();
