@@ -10,7 +10,8 @@
 .bili-pay-payment-wrapper-gift,
 .backdrop .extension-wrapper #app,
 .media-tab-module-content .sl-ep-list .section-item,
-.media-tab-module-content .mtlr-list-wrp .block-relate-wrp .pagelistbox .custom-right .custom-right-inner.custompage
+.media-tab-module-content .mtlr-list-wrp .block-relate-wrp .pagelistbox .custom-right .custom-right-inner.custompage,
+.bilibili-player-feedback
 {
     background-color: #222 !important;
 }
@@ -38,7 +39,9 @@
 .main-container .season-list .ss-list-wrapper .ss-item .ss-cover,
 .z-top-container.has-stardust,
 .ep-section-module,
-.main-container .recom-wrapper .expand-more
+.main-container .recom-wrapper .expand-more,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable
 {
     background-color: #444 !important;
 }
@@ -122,7 +125,13 @@
 .section-item .section-text .section-index,
 .main-container.clearfix .plp-r .ep-section-module .section-title,
 .main-container .review-module .review-list .review-item .review-header .review-author,
-.main-container .recom-wrapper .expand-more
+.main-container .recom-wrapper .expand-more,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-hint,
+.bilibili-player-feedback-title,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-tabmenu,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable
 {
     color: #eee !important;
 }
@@ -147,7 +156,10 @@
 .send-tabs-item,
 .send-wrapper,
 .bili-pay-payment-wrapper-gift,
-.media-tab-module-content .sl-ep-list .section-item
+.media-tab-module-content .sl-ep-list .section-item,
+.bilibili-player-feedback,
+.bilibili-player-feedback-title,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input
 {
     border-color: transparent !important;
 }
@@ -261,7 +273,10 @@
 .main-container .entry-old .btn-old:hover,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-cover .ss-badge.pink,
 .main-container .pay-bar .sponsor .btn-pay:hover,
-.main-container .sponsor-module .sponsor-info .btn-sponsor {
+.main-container .sponsor-module .sponsor-info .btn-sponsor,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable:hover,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit:hover
+{
     background-color: var(--theme-color) !important;
 }
 /* a
@@ -306,7 +321,8 @@
 .section-item:hover .section-text .section-title,
 .up-info .btn-follow-up,
 .main-container .review-module .review-list .review-item .review-header .review-author:hover,
-.count-wrapper div.up-info a:hover
+.count-wrapper div.up-info a:hover,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a:hover
 {
     color: var(--theme-color) !important;
 }
