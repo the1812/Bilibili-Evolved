@@ -12,17 +12,46 @@
                 this.name = medalName;
                 this.upName = uname;
             }
-            static async getList()
+            static parseJson(text, { successAction, errorMessage, errorAction })
             {
-                const json = JSON.parse(await Ajax.getTextWithCredentials("https://api.live.bilibili.com/i/api/medal?page=1&pageSize=256"));
+                const json = JSON.parse(text);
                 if (json.code !== 0)
                 {
-                    logError("无法获取勋章列表.");
-                    return [];
+                    logError(`${errorMessage} 错误码:${json.code} ${json.message || ""}`);
+                    return errorAction(json);
                 }
-                return json.data.fansMedalList.map(it => new Medal(it));
+                return successAction(json);
             }
-
+            static async getList()
+            {
+                return Medal.parseJson(
+                    await Ajax.getTextWithCredentials("https://api.live.bilibili.com/i/api/medal?page=1&pageSize=256"),
+                    {
+                        successAction: json => json.data.fansMedalList.map(it => new Medal(it)),
+                        errorAction: () => [],
+                        errorMessage: "无法获取勋章列表.",
+                    });
+            }
+            async activate()
+            {
+                return Medal.parseJson(
+                    await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearFansMedal?medal_id=${this.id}`),
+                    {
+                        successAction: () => true,
+                        errorAction: () => false,
+                        errorMessage: "佩戴勋章失败.",
+                    });
+            }
+            async deactivate()
+            {
+                return Medal.parseJson(
+                    await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWear`),
+                    {
+                        successAction: () => true,
+                        errorAction: () => false,
+                        errorMessage: "卸下勋章失败.",
+                    });
+            }
         }
     };
 })();
