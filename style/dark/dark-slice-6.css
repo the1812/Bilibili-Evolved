@@ -131,7 +131,8 @@
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-tabmenu,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit
 {
     color: #eee !important;
 }
@@ -275,7 +276,8 @@
 .main-container .pay-bar .sponsor .btn-pay:hover,
 .main-container .sponsor-module .sponsor-info .btn-sponsor,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable:hover,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit:hover
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit:hover,
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit
 {
     background-color: var(--theme-color) !important;
 }
