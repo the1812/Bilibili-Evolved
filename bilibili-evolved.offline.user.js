@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      188.25
+// @version      188.38
 // @description  增强哔哩哔哩Web端体验(离线版): 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2018, Grant Howrad (https://github.com/the1812)
@@ -87,6 +87,7 @@
         downloadVideo: true,
         downloadDanmaku: true,
         useDefaultPlayerMode: true,
+        medalHelper: true,
         about: true,
         forceWide: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js",
@@ -619,6 +620,20 @@
                     compactLayout: "首页使用紧凑布局",
                 }
             },
+            medalHelper: {
+                path: "min/medal-helper.min.js",
+                styles: ["medalHelperStyle"],
+                dependencies: ["medalHelperDom"],
+                displayNames: {
+                    medalHelper: "直播勋章快速更换"
+                }
+            },
+            medalHelperStyle: {
+                path: "min/medal-helper.min.css",
+            },
+            medalHelperDom: {
+                path: "min/medal-helper.min.html",
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
@@ -662,29 +677,29 @@
         {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url);
-            return send(xhr);
+            return this.send(xhr);
         }
         static getTextWithCredentials(url)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url);
             xhr.withCredentials = true;
-            return send(xhr);
+            return this.send(xhr);
         }
         static postText(url, body)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            return send(xhr, body);
+            return this.send(xhr, body);
         }
-        static postTextWithCredentials(url)
+        static postTextWithCredentials(url, body)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.withCredentials = true;
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            return send(xhr, body);
+            return this.send(xhr, body);
         }
     }
     function downloadText(url, load, error) // The old method for compatibility
@@ -1177,6 +1192,9 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/default-player-layout.min.js"] = (()=>{return(e,t)=>{(async()=>{const t=await SpinQuery.select(()=>document.querySelector(`input[key=defaultPlayerLayout]`));const o=await SpinQuery.select(()=>document.querySelector(`input[key=defaultBangumiLayout]`));if(!t||!o){logError("无法加载播放器布局选项.");return}class s{setCookie(e,t){document.cookie=`${e}=${t};path=/;domain=.bilibili.com;max-age=31536000`}clearCookie(e){document.cookie=`${e}=;path=/;domain=.bilibili.com;max-age=0`}getValue(e){return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${e}\\s*\\=\\s*([^;]*).*$)|^.*$`),"$1")}useNewLayout(){}useOldLayout(){}setLayout(e){if(e){this.useNewLayout()}else{this.useOldLayout()}}}class i extends s{checkCookies(){const t=this.getValue(this.cookieKey);if(t===""||parseInt(t)<0){e.defaultPlayerLayout="旧版"}else{e.defaultPlayerLayout="新版"}saveSettings(e)}constructor(){super();this.cookieKey="stardustvideo";this.checkCookies()}useNewLayout(){this.setCookie(this.cookieKey,1)}useOldLayout(){this.setCookie(this.cookieKey,-1)}}class u extends s{checkCookies(){const t=this.getValue(this.cookieKey);if(t===""||parseInt(t)<=0){e.defaultBangumiLayout="旧版"}else{e.defaultBangumiLayout="新版"}saveSettings(e)}constructor(){super();this.cookieKey="stardustpgcv";this.checkCookies()}useNewLayout(){this.setCookie(this.cookieKey,"0606")}useOldLayout(){this.setCookie(this.cookieKey,0)}}const a=new i;$(t).on("input",()=>{a.setLayout(t.value==="新版")});const c=new u;$(o).on("input",()=>{c.setLayout(o.value==="新版")})})()}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/compact-layout.min.css"] = `.groom-module{margin:0!important;width:192px!important;height:120px!important;}.bangumi-timing-module .card-timing,.groom-module{-webkit-tap-highlight-color:transparent;}.chief-recommend-module .recommend-module,.nominate-m .video-card-box,.groom-box-m{height:240px!important;}.groom-module .pic,.groom-module .lazy-img{width:100%!important;height:100%!important;transition:all .2s;}.groom-module:hover .pic,.groom-module:hover .lazy-img{filter:blur(8px);}.groom-module .card-mark{width:calc(100% - 20px)!important;top:88px;padding:10px!important;}.groom-module:hover .card-mark{top:0!important;}.chief-recommend-module .carousel-box,.chief-recommend-module .carousel-box img{height:240px!important;width:480px!important;}.nominate-m .carousel-box,.nominate-m .carousel-box img{height:240px!important;width:672px!important;}.storey-box .spread-module,.live-module .storey-box .card-live-module,.special-module,.video-item-biref{margin:0!important;width:192px!important;height:168px!important;-webkit-tap-highlight-color:transparent;}.special-module{height:192px!important;}.special-module .pic .title{line-height:unset!important;height:auto!important;}.special-recommend-module .storey-box{height:180px!important;}.special-module .user{transform:translatey(24px);}.spread-module .pic,.live-module .storey-box .card-live-module .pic,.special-module .pic-box,.mod-3 .l-item .l,.mod-1 .l .spread-module,.mod-3 .l .spread-module,.mod-2 .spread-module,.mod-2 li .l,.video-item-biref .biref-img{width:192px!important;height:120px!important;}.mod-2 li .l-item{height:auto;}.mod-3 .l-item,.mod-3 li{width:192px!important;}.mod-3 .l .spread-module{margin:0!important;}.mod-3 li,.mod-1 li,.mod-1 .r,.mod-2 li .l-item{padding:0!important;}.mod-3 .r .v-info,.mod-3 .r .up-info,.mod-3 .r .title{padding-top:4px!important;margin-top:0px!important;}.mod-2 li .r .v-desc{padding:0!important;margin:10px 0!important;}.spread-module .num,.live-module .storey-box .card-live-module .num{padding-left:8px;padding-right:8px;bottom:6px;}.spread-module .t,.live-module .storey-box .card-live-module .t,.special-module .pic .title,.video-item-biref .biref-info .biref-title{padding-left:4px;padding-right:4px;padding-top:4px;}.sec-rank .rank-list-wrap .rank-list{min-height:288px;}.hot-recom-module{height:auto!important;}.game-groom-box-m,.game-groom-box-m .game-groom-m{height:100%!important;}.spread-module .pic,.special-module .pic-box,.groom-module,.carousel-box .carousel-module .panel,.live-module .storey-box .card-live-module .pic,.card-live-module .pic .mask,.mod-3 .l-item,.carousel-wrapper,.video-item-biref .biref-img,.game-groom-box-m .game-groom-m{border-radius:0!important;}.rank-list .rank-item .ri-num,.card-timing-module .pic,.timeline-box .timeline-item .preview,.timeline-box .timeline-item .preview img{border-radius:50%!important;}.cover-preview-module .cover{width:160px;transform-origin:left top 0px;transform:scale(1.3);}.bangumi-timing-module .card-timing{width:205px;}.card-timing-module .r-text{width:120px;}.recommend-module .rec-btn.prev{left:0!important;}.primary-menu{display:flex;align-items:center;margin:0;width:100%;}.primary-menu .nav-menu{flex:1 0 auto;display:flex;justify-content:space-between;align-items:center;margin-right:28px;}.primary-menu .nav-menu>li .num-wrap span{padding:2.5px;line-height:unset;height:auto;min-width:30px;}.primary-menu .nav-menu>li.home>a,.primary-menu .nav-menu .side-nav .side-link i.square,.primary-menu .nav-menu .side-nav .side-link i.zhuanlan,.primary-menu .nav-menu .side-nav .side-link i.live,.primary-menu .nav-menu .side-nav .side-link i.blackroom{background-size:contain;background-repeat:no-repeat;background-position:initial;}.primary-menu .nav-menu>li .num-wrap{top:0;}.primary-menu .nav-menu>li .num-wrap{position:static;height:auto;}.primary-menu .nav-menu li .nav-name{line-height:unset;height:auto;}.primary-menu .nav-menu>li:not(.home) .nav-name{height:auto;padding:0;}.nav-gif{position:static;flex:0 0 auto;}.primary-menu .nav-menu li.home>a .nav-name{visibility:hidden;display:block;position:static;}.primary-menu .nav-menu .sub-nav{top:36px;padding-top:4px;}@media screen and (min-width: 1300px){.bili-wrapper{width:1248px!important;}.cinema-home-wrapper{width:1248px!important;}.block-area .block-left{width:960px!important;}.timeline-box .timeline-item{padding-right:32px!important;}.elevator-module{margin-left:630px!important;}.bili-wrapper .l-con{width:988px!important;}.bangumi-timing-module .card-timing{padding:36px 30px 0 0;}.bangumi-timing-module .card-timing:nth-child(4):nth-child(4){padding-top:0;}.mod-1 li .r{width:750px!important;}.mod-2 li .r{width:245px!important;}    .mod-2 li .r .up-info .v-author,.mod-2 li .r .v-info .v-info-i{width:70px!important;}.bangumi-timing-module .headline .bili-tab{width:700px;display:flex;justify-content:space-evenly;}}@media screen and (max-width: 1300px){.bili-wrapper{width:1056px!important;}.cinema-home-wrapper{width:1056px!important;}.block-area .block-left{width:768px!important;}.elevator-module{margin-left:540px!important;}.bili-wrapper .l-con{width:768px!important;}.bangumi-timing-module .card-timing{padding:36px 36px 0 0;}#ranking_guochuang{width:260px!important;transform:translatex(28px);}.mod-1 li .r{width:530px!important;}.mod-2 li .r{width:160px!important;}    .mod-2 li .r .up-info .v-author,.mod-2 li .r .v-info .v-info-i{width:50px!important;}}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/compact-layout.min.js"] = (()=>{return(t,i)=>{const c=["https://www.bilibili.com/","https://www.bilibili.com/watchlater/#/list"];if(c.indexOf(location.href.replace(location.search,""))!==-1){document.documentElement.classList.add("compact")}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/medal-helper.min.js"] = (()=>{return(e,i)=>{class t{constructor(e){this.isActive=e}static parseJson(e,{successAction:i,errorMessage:t,errorAction:a}){const s=JSON.parse(e);if(s.code!==0){logError(`${t} 错误码:${s.code} ${s.message||""}`);return a(s)}return i(s)}}class a extends t{constructor({medal_id:e,status:i,level:t,medalName:a,uname:s}){super(i===1);this.id=e;this.level=t;this.name=a;this.upName=s}static async getList(){return t.parseJson(await Ajax.getTextWithCredentials("https://api.live.bilibili.com/i/api/medal?page=1&pageSize=256"),{successAction:e=>e.data.fansMedalList.map(e=>new a(e)),errorAction:()=>[],errorMessage:"无法获取勋章列表."})}async activate(){return t.parseJson(await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearFansMedal?medal_id=${this.id}`),{successAction:()=>true,errorAction:()=>false,errorMessage:"佩戴勋章失败."})}async deactivate(){return t.parseJson(await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWear`),{successAction:()=>true,errorAction:()=>false,errorMessage:"卸下勋章失败."})}}class s extends t{constructor({id:e,cid:i,wear:t,css:a,name:r,source:c}){super(t);this.id=e;this.cid=i;this.imageId=a;this.name=r;this.source=c;s.getImageMap().then(e=>{this.imageUrl=e[this.imageId]})}static async getImageMap(){if(s.imageMap===undefined){return t.parseJson(await Ajax.getTextWithCredentials("https://api.live.bilibili.com/rc/v1/Title/webTitles"),{successAction(e){s.imageMap={};e.data.forEach(e=>{s.imageMap[e.identification]=e.web_pic_url});return s.imageMap},errorAction:()=>{return{}},errorMessage:"获取头衔图片失败."})}else{return s.imageMap}}static async getList(){return t.parseJson(await Ajax.getTextWithCredentials("https://api.live.bilibili.com/i/api/ajaxTitleInfo?page=1&pageSize=256&had=1"),{successAction:e=>e.data.list.map(e=>new s(e)),errorAction:()=>[],errorMessage:"无法获取头衔列表."})}async activate(){return t.parseJson(await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearTitle`,`id=${this.id}&cid=${this.cid}`),{successAction:()=>true,errorAction:()=>false,errorMessage:"佩戴头衔失败."})}async deactivate(){return t.parseJson(await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWearTitle`,""),{successAction:()=>true,errorAction:()=>false,errorMessage:"卸下头衔失败."})}}return{export:{Badge:t,Medal:a,Title:s},widget:{condition:()=>document.domain==="live.bilibili.com",content:i.data.medalHelperDom.text,success:()=>{}}}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/medal-helper.min.css"] = ``;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/medal-helper.min.html"] = ``;
 
     class ResourceType
     {

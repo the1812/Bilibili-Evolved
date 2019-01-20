@@ -86,6 +86,7 @@
         downloadVideo: true,
         downloadDanmaku: true,
         useDefaultPlayerMode: true,
+        medalHelper: true,
         about: true,
         forceWide: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
@@ -618,6 +619,20 @@
                     compactLayout: "首页使用紧凑布局",
                 }
             },
+            medalHelper: {
+                path: "min/medal-helper.min.js",
+                styles: ["medalHelperStyle"],
+                dependencies: ["medalHelperDom"],
+                displayNames: {
+                    medalHelper: "直播勋章快速更换"
+                }
+            },
+            medalHelperStyle: {
+                path: "min/medal-helper.min.css",
+            },
+            medalHelperDom: {
+                path: "min/medal-helper.min.html",
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
@@ -661,29 +676,29 @@
         {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url);
-            return send(xhr);
+            return this.send(xhr);
         }
         static getTextWithCredentials(url)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url);
             xhr.withCredentials = true;
-            return send(xhr);
+            return this.send(xhr);
         }
         static postText(url, body)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            return send(xhr, body);
+            return this.send(xhr, body);
         }
-        static postTextWithCredentials(url)
+        static postTextWithCredentials(url, body)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.withCredentials = true;
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            return send(xhr, body);
+            return this.send(xhr, body);
         }
     }
     function downloadText(url, load, error) // The old method for compatibility

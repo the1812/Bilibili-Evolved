@@ -137,6 +137,14 @@
                 Medal,
                 Title,
             },
+            widget: {
+                condition: () => document.domain === "live.bilibili.com",
+                content: resources.data.medalHelperDom.text,
+                success: () =>
+                {
+
+                },
+            }
         };
     };
 })();

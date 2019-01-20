@@ -619,6 +619,20 @@
                     compactLayout: "首页使用紧凑布局",
                 }
             },
+            medalHelper: {
+                path: "min/medal-helper.min.js",
+                styles: ["medalHelperStyle"],
+                dependencies: ["medalHelperDom"],
+                displayNames: {
+                    medalHelper: "直播勋章快速更换"
+                }
+            },
+            medalHelperStyle: {
+                path: "min/medal-helper.min.css",
+            },
+            medalHelperDom: {
+                path: "min/medal-helper.min.html",
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};
