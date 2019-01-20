@@ -21,6 +21,10 @@
                 {
                     document.cookie = `${key}=;path=/;domain=.bilibili.com;max-age=0`;
                 }
+                getValue(key)
+                {
+                    return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${key}\\s*\\=\\s*([^;]*).*$)|^.*$`), "$1");
+                }
                 useNewLayout() { }
                 useOldLayout() { }
                 setLayout(newLayout)
@@ -69,12 +73,12 @@
             }
 
             const videoCookie = new VideoLayoutCookie();
-            $(videoDropdown).on("change", () =>
+            $(videoDropdown).on("input", () =>
             {
                 videoCookie.setLayout(videoDropdown.value === "新版");
             });
             const bangumiCookie = new BangumiLayoutCookie();
-            $(bangumiDropdown).on("change", () =>
+            $(bangumiDropdown).on("input", () =>
             {
                 bangumiCookie.setLayout(bangumiDropdown.value === "新版");
             });
