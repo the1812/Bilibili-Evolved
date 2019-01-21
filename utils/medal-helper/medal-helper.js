@@ -151,11 +151,21 @@
         {
             const medalList = $("#medal-helper .popup ul");
             const medals = await Medal.getList();
-            const updateList = () =>
+            const updateList = async () =>
             {
+                const medals = await Medal.getList();
                 medals.forEach(medal =>
                 {
-                    medalList.find(`li[data-id=${medal.id}] input`).prop("checked", medal.isActive);
+                    const li = medalList.find(`li[data-id=${medal.id}]`);
+                    if (medal.isActive)
+                    {
+                        li.addClass("active");
+                    }
+                    else
+                    {
+                        li.removeClass("active");
+                    }
+                    li.find(`input`).prop("checked", medal.isActive);
                 });
             };
             medals.forEach(medal =>
@@ -163,7 +173,6 @@
                 const item = $(`<li data-id=${medal.id}>
                 <label title=${medal.upName}>
                     <input name="medal" type="radio" ${medal.isActive ? "checked" : ""}>
-                    <i class="icon-ok"></i>
                     <div class="fans-medal-item level-${medal.level}">
                         <span class="label">${medal.name}</span>
                         <span class="level">${medal.level}</span>
@@ -171,7 +180,7 @@
                 </label>
                 </li>`);
                 medalList.append(item);
-                item.on("click", () =>
+                item.on("click", e =>
                 {
                     if (medal.isActive)
                     {
@@ -181,6 +190,7 @@
                     {
                         medal.activate().then(updateList);
                     }
+                    e.stopPropagation();
                 });
             });
         }
@@ -198,8 +208,14 @@
                     $(".medal-helper").each((_, it) =>
                     {
                         const $it = $(it);
-                        const popup = $it.find(".popup");
-                        $it.on("click", () => popup.toggleClass("opened"));
+                        const popup = $it.find(".popup")[0];
+                        $it.on("click", e =>
+                        {
+                            if (!popup.contains(e.target))
+                            {
+                                popup.classList.toggle("opened");
+                            }
+                        });
                     });
                     loadMedals();
                 },

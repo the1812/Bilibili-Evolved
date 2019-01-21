@@ -8,8 +8,6 @@
     background: white;
     box-shadow: 0px 3px 20px 2px #0004;
     z-index: 100;
-    max-width: 150%;
-    min-width: 110%;
 }
 .popup.opened
 {
@@ -24,6 +22,18 @@
     list-style: none;
     margin: 0;
     padding: 0;
+}
+.popup ul>li
+{
+    cursor: pointer;
+}
+.popup ul>li.active
+{
+    box-shadow: 0 0 4px 0 var(--theme-color);
+}
+.popup ul>li:hover
+{
+    background-color: rgba(0,0,0,0.16);
 }
 .popup label
 {
