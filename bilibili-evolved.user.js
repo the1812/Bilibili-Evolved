@@ -1493,7 +1493,9 @@
             styles.push("--theme-color:" + settings.customStyleColor);
             for (let opacity = 10; opacity <= 90; opacity += 10)
             {
-                styles.push(`--theme-color-${opacity}:` + hexToRgba(settings.customStyleColor + opacity.toString(16)));
+                const color = hexToRgba(settings.customStyleColor);
+                color.a = opacity / 100;
+                styles.push(`--theme-color-${opacity}:` + this.color.rgbToString(color));
             }
             styles.push("--foreground-color:" + settings.foreground);
             styles.push("--foreground-color-b:" + hexToRgba(settings.foreground + "b"));
