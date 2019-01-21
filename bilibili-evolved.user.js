@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.34
+// @version      1.6.35
 // @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
-// @copyright    2018, Grant Howrad (https://github.com/the1812)
+// @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
@@ -86,6 +86,7 @@
         downloadVideo: true,
         downloadDanmaku: true,
         useDefaultPlayerMode: true,
+        medalHelper: true,
         about: true,
         forceWide: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
@@ -618,6 +619,20 @@
                     compactLayout: "首页使用紧凑布局",
                 }
             },
+            medalHelper: {
+                path: "min/medal-helper.min.js",
+                styles: ["medalHelperStyle"],
+                dependencies: ["medalHelperDom"],
+                displayNames: {
+                    medalHelper: "直播勋章快速更换"
+                }
+            },
+            medalHelperStyle: {
+                path: "min/medal-helper.min.css",
+            },
+            medalHelperDom: {
+                path: "min/medal-helper.min.html",
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
@@ -661,29 +676,29 @@
         {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url);
-            return send(xhr);
+            return this.send(xhr);
         }
         static getTextWithCredentials(url)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url);
             xhr.withCredentials = true;
-            return send(xhr);
+            return this.send(xhr);
         }
         static postText(url, body)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            return send(xhr, body);
+            return this.send(xhr, body);
         }
-        static postTextWithCredentials(url)
+        static postTextWithCredentials(url, body)
         {
             const xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.withCredentials = true;
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            return send(xhr, body);
+            return this.send(xhr, body);
         }
     }
     function downloadText(url, load, error) // The old method for compatibility
@@ -1478,7 +1493,9 @@
             styles.push("--theme-color:" + settings.customStyleColor);
             for (let opacity = 10; opacity <= 90; opacity += 10)
             {
-                styles.push(`--theme-color-${opacity}:` + hexToRgba(settings.customStyleColor + opacity));
+                const color = this.color.hexToRgba(settings.customStyleColor);
+                color.a = opacity / 100;
+                styles.push(`--theme-color-${opacity}:` + this.color.rgbToString(color));
             }
             styles.push("--foreground-color:" + settings.foreground);
             styles.push("--foreground-color-b:" + hexToRgba(settings.foreground + "b"));
@@ -1654,6 +1671,15 @@
             ResourceManager,
             Resource,
             ResourceType,
+            Ajax,
+            loadSettings,
+            saveSettings,
+            onSettingsChange,
+            logError,
+            raiseEvent,
+            contentLoaded,
+            fixed,
+            settings,
             monkeyInfo: GM_info
         };
         const resources = new ResourceManager();

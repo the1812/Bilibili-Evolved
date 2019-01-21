@@ -20,7 +20,7 @@ namespace BilibiliEvolved.Build
                 { SourcePath, OutputPath },
                 { @"// settings.guiSettings = true;", @"settings.guiSettings = true;" },
                 { @"Bilibili Evolved (Preview)", @"Bilibili Evolved" },
-                { @"增强哔哩哔哩Web端体验(预览版分支):", @"增强哔哩哔哩Web端体验:" },
+                { Description.Preview, Description.Master },
                 { @"settings.debug = true;", @"settings.debug = false;" },
             };
             replaceMap.ForEach(item => master = master.Replace(item.Key, item.Value));

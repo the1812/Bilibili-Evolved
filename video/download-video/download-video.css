@@ -1,6 +1,6 @@
 .download-video-panel.opened
 {
-    transform: scaleY(1);
+    transform: scaleY(1) translateX(-50%);
 }
 .download-video-panel
 {
@@ -8,10 +8,11 @@
     top: calc(100% + 2px);
     transition: all .16s ease-out;
     transform-origin: top;
-    transform: scaleY(0);
+    transform: scaleY(0) translateX(-50%);
     background: white;
     box-shadow: 0px 3px 20px 2px #0004;
     z-index: 100;
+    left: 50%;
 }
 ol.video-quality li,
 .video-action>div

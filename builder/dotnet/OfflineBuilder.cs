@@ -95,7 +95,7 @@ namespace BilibiliEvolved.Build
             var replaceMap = new Dictionary<string, string>
                 {
                     { "Bilibili Evolved", "Bilibili Evolved (Offline)" },
-                    { "增强哔哩哔哩Web端体验:", "增强哔哩哔哩Web端体验(离线版):" },
+                    { Description.Master, Description.Offline },
                     { $"master/{config.Master}", $"master/{config.Offline}" },
                     { $"// ==/UserScript==", $"// ==/UserScript=={Environment.NewLine}/* eslint-disable */"},
                 };
@@ -106,7 +106,7 @@ namespace BilibiliEvolved.Build
             var replaceMap = new Dictionary<string, string>
                 {
                     { "Bilibili Evolved", "Bilibili Evolved (Preview Offline)" },
-                    { "增强哔哩哔哩Web端体验:", "增强哔哩哔哩Web端体验(预览离线版):" },
+                    { Description.Master, Description.PreviewOffline },
                     { $"master/{config.Master}", $"preview/{config.PreviewOffline}" },
                     { $"// ==/UserScript==", $"// ==/UserScript=={Environment.NewLine}/* eslint-disable */"},
                 };
