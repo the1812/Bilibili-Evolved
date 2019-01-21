@@ -131,6 +131,44 @@
                     });
             }
         }
+        async function loadMedals()
+        {
+            const medalList = $("#medal-helper .popup ul");
+            const medals = await Medal.getList();
+            const updateList = () =>
+            {
+                medals.forEach(medal =>
+                {
+                    medalList.find(`li[data-id=${medal.id}] input`).prop("checked", medal.isActive);
+                });
+            };
+            medals.forEach(medal =>
+            {
+                const item = $(`<li data-id=${medal.id}>
+                <label>
+                    <input name="medal" type="radio" ${medal.isActive ? "checked" : ""}>
+                    <div class="fans-medal-item level-${medal.level}">
+                        <span class="label">${medal.name}</span>
+                        <span class="level">${medal.level}</span>
+                    </div>
+                    <span>${medal.upName}</span>
+                    <i class="icon-ok"></i>
+                </label>
+                </li>`);
+                medalList.append(item);
+                item.on("click", () =>
+                {
+                    if (medal === activatedMedal)
+                    {
+                        medal.deactivate().then(updateList);
+                    }
+                    else
+                    {
+                        medal.activate().then(updateList);
+                    }
+                });
+            });
+        }
         return {
             export: {
                 Badge,
@@ -148,6 +186,7 @@
                         const popup = $it.find(".popup");
                         $it.on("click", () => popup.toggleClass("opened"));
                     });
+                    loadMedals();
                 },
             }
         };
