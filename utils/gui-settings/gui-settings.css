@@ -499,17 +499,16 @@ li.category.folded i.icon-arrow
     color: black;
     cursor: pointer;
     transition: all .2s ease-out;
-    transform-origin: center;
     font-size: 10pt;
 }
-/* .gui-settings-flat-button:hover
+.gui-settings-flat-button:hover
 {
-    transform: scale(1.02);
+    border-bottom-color: var(--theme-color-90);
 }
 .gui-settings-flat-button:active
 {
-    transform: scale(0.98);
-} */
+    border-bottom-color: var(--theme-color);
+}
 .gui-settings-flat-button:focus
 {
     outline: none;
@@ -520,7 +519,7 @@ li.category.folded i.icon-arrow
 }
 .gui-settings-widgets-box .gui-settings-flat-button
 {
-    border-bottom: 2px solid var(--theme-color);
+    border-bottom: 2px solid var(--theme-color-70);
     flex: 0 0 auto;
     margin: 4px;
 }
