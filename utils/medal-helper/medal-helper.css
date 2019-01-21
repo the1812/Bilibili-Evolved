@@ -1,4 +1,4 @@
-.popup
+.medal-popup
 {
     position: absolute;
     top: calc(100% + 2px);
@@ -10,29 +10,29 @@
     box-shadow: 0px 3px 20px 2px #0004;
     z-index: 100;
 }
-.popup.opened
+.medal-popup.opened
 {
     transform: scaleY(1) translateX(-50%);
 }
-.popup *
+.medal-popup *
 {
     transition: all 0.2s;
 }
-.popup ul
+.medal-popup ul
 {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-.popup ul>li.active
+.medal-popup ul>li.active
 {
     box-shadow: 0 0 4px 0 var(--theme-color);
 }
-.popup ul>li:hover
+.medal-popup ul>li:hover
 {
     background-color: rgba(0,0,0,0.16);
 }
-.popup label
+.medal-popup label
 {
     display: flex;
     align-items: center;
@@ -40,28 +40,28 @@
     cursor: pointer;
     padding: 8px;
 }
-.popup label>*
+.medal-popup label>*
 {
     flex-shrink: 0;
 }
-.popup input[type=radio]
+.medal-popup input[type=radio]
 {
     visibility: collapse;
     width: 0;
     margin: 0;
     padding: 0;
 }
-.popup input[type=radio] ~ i
+.medal-popup input[type=radio] ~ i
 {
     opacity: 0;
     transform: scale(0.8);
     margin: 0;
 }
-.popup input[type=radio] ~ .fans-medal-item
+.medal-popup input[type=radio] ~ .fans-medal-item
 {
     margin: 0 8px;
 }
-.popup input[type=radio]:checked ~ i
+.medal-popup input[type=radio]:checked ~ i
 {
     opacity: 1;
 }
