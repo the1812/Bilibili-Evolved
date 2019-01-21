@@ -142,7 +142,12 @@
                 content: resources.data.medalHelperDom.text,
                 success: () =>
                 {
-
+                    $(".medal-helper").each((_, it) =>
+                    {
+                        const $it = $(it);
+                        const popup = $it.find(".popup");
+                        $it.on("click", () => popup.toggleClass("opened"));
+                    });
                 },
             }
         };
