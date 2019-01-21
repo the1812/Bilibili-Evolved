@@ -23,10 +23,6 @@
     margin: 0;
     padding: 0;
 }
-.popup ul>li
-{
-    cursor: pointer;
-}
 .popup ul>li.active
 {
     box-shadow: 0 0 4px 0 var(--theme-color);
@@ -40,6 +36,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     padding: 8px;
 }
 .popup label>*

@@ -170,18 +170,23 @@
             };
             medals.forEach(medal =>
             {
-                const item = $(`<li data-id=${medal.id}>
-                <label title=${medal.upName}>
-                    <input name="medal" type="radio" ${medal.isActive ? "checked" : ""}>
-                    <div class="fans-medal-item level-${medal.level}">
-                        <span class="label">${medal.name}</span>
-                        <span class="level">${medal.level}</span>
+                const item = $(`<li data-id='${medal.id}' ${medal.isActive ? "class='active'" : ""}>
+                <label title='${medal.upName}'>
+                    <input name='medal' type='radio' ${medal.isActive ? "checked" : ""}>
+                    <div class='fans-medal-item level-${medal.level}'>
+                        <span class='label'>${medal.name}</span>
+                        <span class='level'>${medal.level}</span>
                     </div>
                 </label>
                 </li>`);
                 medalList.append(item);
+                const input = item.find("input")[0];
                 item.on("click", e =>
                 {
+                    if (e.target === input)
+                    {
+                        return;
+                    }
                     if (medal.isActive)
                     {
                         medal.deactivate().then(updateList);
@@ -190,7 +195,6 @@
                     {
                         medal.activate().then(updateList);
                     }
-                    e.stopPropagation();
                 });
             });
         }
