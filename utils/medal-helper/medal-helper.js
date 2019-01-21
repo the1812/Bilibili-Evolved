@@ -193,6 +193,11 @@
                     }
                     else
                     {
+                        const activeMedal = medals.find(it => it.isActive);
+                        if (activeMedal)
+                        {
+                            activeMedal.isActive = false;
+                        }
                         medal.activate().then(updateList);
                     }
                 });
