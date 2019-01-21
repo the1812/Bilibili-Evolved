@@ -49,7 +49,7 @@
     transform: scale(0.8);
     margin: 0;
 }
-.popup input[type=radio] ~ span
+.popup input[type=radio] ~ .fans-medal-item
 {
     margin: 0 8px;
 }

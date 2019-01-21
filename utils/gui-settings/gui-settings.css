@@ -502,14 +502,14 @@ li.category.folded i.icon-arrow
     transform-origin: center;
     font-size: 10pt;
 }
-.gui-settings-flat-button:hover
+/* .gui-settings-flat-button:hover
 {
     transform: scale(1.02);
 }
 .gui-settings-flat-button:active
 {
     transform: scale(0.98);
-}
+} */
 .gui-settings-flat-button:focus
 {
     outline: none;

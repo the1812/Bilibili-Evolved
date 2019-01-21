@@ -44,7 +44,11 @@
                 return Badge.parseJson(
                     await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearFansMedal?medal_id=${this.id}`),
                     {
-                        successAction: () => true,
+                        successAction: () =>
+                        {
+                            this.isActive = true;
+                            return true;
+                        },
                         errorAction: () => false,
                         errorMessage: "佩戴勋章失败.",
                     });
@@ -54,7 +58,11 @@
                 return Badge.parseJson(
                     await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWear`),
                     {
-                        successAction: () => true,
+                        successAction: () =>
+                        {
+                            this.isActive = false;
+                            return true;
+                        },
                         errorAction: () => false,
                         errorMessage: "卸下勋章失败.",
                     });
@@ -115,7 +123,11 @@
                 return Badge.parseJson(
                     await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearTitle`, `id=${this.id}&cid=${this.cid}`),
                     {
-                        successAction: () => true,
+                        successAction: () =>
+                        {
+                            this.isActive = true;
+                            return true;
+                        },
                         errorAction: () => false,
                         errorMessage: "佩戴头衔失败.",
                     });
@@ -125,7 +137,11 @@
                 return Badge.parseJson(
                     await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWearTitle`, ""),
                     {
-                        successAction: () => true,
+                        successAction: () =>
+                        {
+                            this.isActive = false;
+                            return true;
+                        },
                         errorAction: () => false,
                         errorMessage: "卸下头衔失败.",
                     });
@@ -145,20 +161,19 @@
             medals.forEach(medal =>
             {
                 const item = $(`<li data-id=${medal.id}>
-                <label>
+                <label title=${medal.upName}>
                     <input name="medal" type="radio" ${medal.isActive ? "checked" : ""}>
+                    <i class="icon-ok"></i>
                     <div class="fans-medal-item level-${medal.level}">
                         <span class="label">${medal.name}</span>
                         <span class="level">${medal.level}</span>
                     </div>
-                    <span>${medal.upName}</span>
-                    <i class="icon-ok"></i>
                 </label>
                 </li>`);
                 medalList.append(item);
                 item.on("click", () =>
                 {
-                    if (medal === activatedMedal)
+                    if (medal.isActive)
                     {
                         medal.deactivate().then(updateList);
                     }
