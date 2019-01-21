@@ -500,6 +500,9 @@ li.category.folded i.icon-arrow
     cursor: pointer;
     transition: all .2s ease-out;
     font-size: 10pt;
+    border-bottom: 2px solid var(--theme-color-70);
+    flex: 0 0 auto;
+    margin: 4px;
 }
 .gui-settings-flat-button:hover
 {
@@ -516,12 +519,6 @@ li.category.folded i.icon-arrow
 .gui-settings-flat-button i
 {
     margin-right: 8px;
-}
-.gui-settings-widgets-box .gui-settings-flat-button
-{
-    border-bottom: 2px solid var(--theme-color-70);
-    flex: 0 0 auto;
-    margin: 4px;
 }
 
 .gui-settings-checkbox
