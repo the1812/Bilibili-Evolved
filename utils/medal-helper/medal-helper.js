@@ -135,12 +135,21 @@
             }
             static getContainer()
             {
-                return $("#medal-helper .popup ul");
+                return $("#title-helper .popup ul");
+            }
+            static getItemTemplate(title)
+            {
+                return `<li data-id='${title.id}' ${title.isActive ? "class='active'" : ""}>
+                <label title='${title.name}'>
+                    <input name='medal' type='radio' ${title.isActive ? "checked" : ""}>
+                    <img src='${title.imageUrl}' class="title-image">
+                </label>
+                </li>`;
             }
             async activate()
             {
                 return Badge.parseJson(
-                    await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearTitle`, `id=${this.id}&cid=${this.cid}`),
+                    await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearTitle`, `id=${this.tid}&cid=${this.cid}`),
                     {
                         successAction: () =>
                         {
@@ -238,7 +247,8 @@
                         });
                     });
                     loadBadges(Medal);
-                    // loadBadges(Title);
+                    Title.getImageMap(); // start download image map
+                    loadBadges(Title);
                 },
             }
         };

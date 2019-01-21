@@ -65,6 +65,12 @@
 {
     opacity: 1;
 }
+.title-image
+{
+    display: inline-block;
+    vertical-align: middle;
+    height: 20px;
+}
 .fans-medal-item .label
 {
     width: 40px;
@@ -96,7 +102,7 @@
     white-space: nowrap;
     border-radius: 2px;
     flex-shrink: 0;
-    font-size: 12px
+    font-size: 12px;
 }
 .level-1, .level-2, .level-3, .level-4 {
     border-color: #61decb
