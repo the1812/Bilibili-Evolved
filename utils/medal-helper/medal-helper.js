@@ -247,8 +247,7 @@
                         });
                     });
                     loadBadges(Medal);
-                    Title.getImageMap(); // start download image map
-                    loadBadges(Title);
+                    Title.getImageMap().then(() => loadBadges(Title));
                 },
             }
         };
