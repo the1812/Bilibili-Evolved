@@ -4,9 +4,10 @@
     {
         class Badge
         {
-            constructor(isActive)
+            constructor(isActive, id)
             {
                 this.isActive = isActive;
+                this.id = id;
             }
             static parseJson(text, { successAction, errorMessage, errorAction })
             {
@@ -23,8 +24,7 @@
         {
             constructor({ medal_id, status, level, medalName, uname })
             {
-                super(status === 1);
-                this.id = medal_id;
+                super(status === 1, medal_id);
                 this.level = level;
                 this.name = medalName;
                 this.upName = uname;
@@ -38,6 +38,22 @@
                         errorAction: () => [],
                         errorMessage: "无法获取勋章列表.",
                     });
+            }
+            static getContainer()
+            {
+                return $("#medal-helper .popup ul");
+            }
+            static getItemTemplate(medal)
+            {
+                return `<li data-id='${medal.id}' ${medal.isActive ? "class='active'" : ""}>
+                <label title='${medal.upName}'>
+                    <input name='medal' type='radio' ${medal.isActive ? "checked" : ""}>
+                    <div class='fans-medal-item level-${medal.level}'>
+                        <span class='label'>${medal.name}</span>
+                        <span class='level'>${medal.level}</span>
+                    </div>
+                </label>
+                </li>`;
             }
             async activate()
             {
@@ -72,15 +88,14 @@
         {
             constructor({ id, cid, wear, css, name, source })
             {
-                super(wear);
-                this.id = id;
+                super(wear, css);
+                this.tid = id;
                 this.cid = cid;
-                this.imageId = css;
                 this.name = name;
                 this.source = source;
                 Title.getImageMap().then(it =>
                 {
-                    this.imageUrl = it[this.imageId];
+                    this.imageUrl = it[this.id];
                 });
             }
             static async getImageMap()
@@ -118,6 +133,10 @@
                         errorMessage: "无法获取头衔列表.",
                     });
             }
+            static getContainer()
+            {
+                return $("#medal-helper .popup ul");
+            }
             async activate()
             {
                 return Badge.parseJson(
@@ -147,17 +166,17 @@
                     });
             }
         }
-        async function loadMedals()
+        async function loadBadges(BadgeClass)
         {
-            const medalList = $("#medal-helper .popup ul");
-            const medals = await Medal.getList();
+            const badgeContainer = BadgeClass.getContainer();
+            const badges = await BadgeClass.getList();
             const updateList = async () =>
             {
-                const medals = await Medal.getList();
-                medals.forEach(medal =>
+                const badges = await BadgeClass.getList();
+                badges.forEach(badge =>
                 {
-                    const li = medalList.find(`li[data-id=${medal.id}]`);
-                    if (medal.isActive)
+                    const li = badgeContainer.find(`li[data-id=${badge.id}]`);
+                    if (badge.isActive)
                     {
                         li.addClass("active");
                     }
@@ -165,21 +184,13 @@
                     {
                         li.removeClass("active");
                     }
-                    li.find(`input`).prop("checked", medal.isActive);
+                    li.find(`input`).prop("checked", badge.isActive);
                 });
             };
-            medals.forEach(medal =>
+            badges.forEach(badge =>
             {
-                const item = $(`<li data-id='${medal.id}' ${medal.isActive ? "class='active'" : ""}>
-                <label title='${medal.upName}'>
-                    <input name='medal' type='radio' ${medal.isActive ? "checked" : ""}>
-                    <div class='fans-medal-item level-${medal.level}'>
-                        <span class='label'>${medal.name}</span>
-                        <span class='level'>${medal.level}</span>
-                    </div>
-                </label>
-                </li>`);
-                medalList.append(item);
+                const item = $(BadgeClass.getItemTemplate(badge));
+                badgeContainer.append(item);
                 const input = item.find("input")[0];
                 item.on("click", e =>
                 {
@@ -187,18 +198,18 @@
                     {
                         return;
                     }
-                    if (medal.isActive)
+                    if (badge.isActive)
                     {
-                        medal.deactivate().then(updateList);
+                        badge.deactivate().then(updateList);
                     }
                     else
                     {
-                        const activeMedal = medals.find(it => it.isActive);
-                        if (activeMedal)
+                        const activeBadge = badges.find(it => it.isActive);
+                        if (activeBadge)
                         {
-                            activeMedal.isActive = false;
+                            activeBadge.isActive = false;
                         }
-                        medal.activate().then(updateList);
+                        badge.activate().then(updateList);
                     }
                 });
             });
@@ -226,7 +237,8 @@
                             }
                         });
                     });
-                    loadMedals();
+                    loadBadges(Medal);
+                    // loadBadges(Title);
                 },
             }
         };
