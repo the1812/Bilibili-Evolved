@@ -49,10 +49,10 @@
 {
     background-image: none !important;
 } */
-/* a
+.upper-right-ctnr.p-absolute.none-select .btn.primary
 {
     background-color: transparent !important;
-} */
+}
 /* a
 {
     background: #fff !important;
@@ -77,7 +77,9 @@
 .main-content-page .coin-no-log,
 .count-wrapper div.up-info a,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-danmaku-number,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching,
+.area-text.dp-i-block.v-middle .child-area,
+.area-text.dp-i-block.v-middle .area-link
 {
     color: #aaa !important;
 }
@@ -160,7 +162,8 @@
 .media-tab-module-content .sl-ep-list .section-item,
 .bilibili-player-feedback,
 .bilibili-player-feedback-title,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
+.room-introduction .edit-button
 {
     border-color: transparent !important;
 }
