@@ -151,7 +151,8 @@
 .area-category-selector .area-category-item,
 .rank-main .rank-box .child-nav li,
 .rank-main .rank-box .child-nav li.active,
-li.normal-item .uname
+li.normal-item .uname,
+li.log-item .txt-block
 {
     color: #eee !important;
 }
