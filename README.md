@@ -214,6 +214,8 @@
 ![关闭时](images/full-tweets-title-off.png)
 - 启用时, 不管名称多长, 总是完全展开up主和视频的标题.
 ![启用时](images/full-tweets-title-on.png)
+### 显示失效视频信息
+在空间的收藏夹中, 为已失效视频恢复标题和封面.
 
 ## 触摸
 ### 顶栏

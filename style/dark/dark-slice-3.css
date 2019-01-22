@@ -269,7 +269,8 @@ body>div.to-top.on,
 .qrcode-login .qrcode-footer .suc-txt,
 .form-login .input-box .sns .btn,
 .open-dialog-masker .open-body ul li i,
-.open-dialog-masker .open-footer .open-agree
+.open-dialog-masker .open-footer .open-agree,
+.small-item .meta
 {
     color: #aaa !important;
 }

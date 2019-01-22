@@ -48,6 +48,7 @@
             watchLaterRedirect: `将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`,
             hideTopSearch: `将搜索框的推荐词替换为<span>搜索</span>.`,
             fullTweetsTitle: `在顶栏的动态预览框中, 总是展开完整的标题.`,
+            showDeadVideoTitle: `在空间的收藏夹中, 为已失效视频恢复标题和封面.`,
             touchNavBar: `删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`,
             comboLike: `为素质三连(长按点赞)启用触摸支持.`,
             touchVideoPlayer: `增大控制栏的按钮间距, 使触摸操作更准确. 并为播放器启用触摸支持:
