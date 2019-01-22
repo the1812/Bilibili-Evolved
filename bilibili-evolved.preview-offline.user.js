@@ -1708,6 +1708,11 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
     {
         loadResources();
         loadSettings();
+        const resources = new ResourceManager();
+        resources.styleManager.fetchStyles();
+        const applyScripts = () => resources.fetch().catch(error => logError(error));
+        contentLoaded(applyScripts);
+
         unsafeWindow.bilibiliEvolved = {
             SpinQuery,
             Toast,
@@ -1729,11 +1734,6 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             resources,
             monkeyInfo: GM_info
         };
-        const resources = new ResourceManager();
-        resources.styleManager.fetchStyles();
-
-        const applyScripts = () => resources.fetch().catch(error => logError(error));
-        contentLoaded(applyScripts);
     }
     catch (error)
     {
