@@ -5,7 +5,7 @@
         const playerModes = [
             {
                 name: "常规",
-                action: () => {},
+                action: () => { },
             },
             {
                 name: "宽屏",
@@ -87,9 +87,19 @@
                         info.action();
                     }
                     lightOff();
-                    video.removeEventListener("play", onplay);
+                    if (settings.applyPlayerModeOnPlay)
+                    {
+                        video.removeEventListener("play", onplay);
+                    }
                 };
-                video.addEventListener("play", onplay);
+                if (settings.applyPlayerModeOnPlay)
+                {
+                    video.addEventListener("play", onplay);
+                }
+                else
+                {
+                    onplay();
+                }
             }
         }
         (Observer.childList || Observer.subtree)("#bofqi", () => main());

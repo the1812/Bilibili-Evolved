@@ -54,6 +54,8 @@
         customStyleColor: "#00A0D8",
         preserveRank: true,
         blurBackgroundOpacity: 0.382,
+        useDefaultPlayerMode: false,
+        applyPlayerModeOnPlay: true,
         defaultPlayerMode: "常规",
         useDefaultVideoQuality: false,
         defaultVideoQuality: "自动",
@@ -86,7 +88,6 @@
         clearCache: true,
         downloadVideo: true,
         downloadDanmaku: true,
-        useDefaultPlayerMode: true,
         medalHelper: true,
         about: true,
         forceWide: false,
@@ -516,9 +517,10 @@
             useDefaultPlayerMode: {
                 path: "min/default-player-mode.min.js",
                 displayNames: {
-                    useDefaultPlayerMode: "默认播放器模式",
+                    useDefaultPlayerMode: "使用默认播放器模式",
                     defaultPlayerMode: "默认播放器模式",
                     autoLightOff: "播放时自动关灯",
+                    applyPlayerModeOnPlay: "播放时应用模式",
                 },
                 dropdown: {
                     key: "defaultPlayerMode",

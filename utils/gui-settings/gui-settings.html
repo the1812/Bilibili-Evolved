@@ -17,7 +17,9 @@
   <div class="gui-settings-content">
     <ul>
       <category icon="video">视频</category>
-      <dropdown indent="0" key="defaultPlayerMode" dependencies=""></dropdown>
+      <checkbox indent="0" key="useDefaultPlayerMode" dependencies=""></checkbox>
+      <dropdown indent="1" key="defaultPlayerMode" dependencies="useDefaultPlayerMode"></dropdown>
+      <checkbox indent="1" key="applyPlayerModeOnPlay" dependencies="useDefaultPlayerMode"></checkbox>
       <checkbox indent="0" key="useDefaultPlayerLayout" dependencies=""></checkbox>
       <dropdown indent="1" key="defaultPlayerLayout" dependencies="useDefaultPlayerLayout"></dropdown>
       <dropdown indent="1" key="defaultBangumiLayout" dependencies="useDefaultPlayerLayout"></dropdown>
