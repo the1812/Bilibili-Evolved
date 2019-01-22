@@ -1248,7 +1248,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             {
                 for (const [key, name] of Object.entries(Resource.displayNames))
                 {
-                    html = html.replace(new RegExp(`(<(.+)\\s*?indent="[\\d]+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</\\2>)`, "g"),
+                    html = html.replace(new RegExp(`(<(.+)\\s*?indent="?[\\d]+?"?\\s*?key="?${key}"?\\s*?dependencies="?.*?"?>)[^\\0]*?(</\\2>)`, "g"),
                         `$1${name}$3`);
                 }
                 return html.replace(/<category\s*?icon="?(.+?)"?>([^\0]*?)<\/category>/g, `
