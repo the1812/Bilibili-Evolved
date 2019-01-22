@@ -11,7 +11,9 @@
 .backdrop .extension-wrapper #app,
 .media-tab-module-content .sl-ep-list .section-item,
 .media-tab-module-content .mtlr-list-wrp .block-relate-wrp .pagelistbox .custom-right .custom-right-inner.custompage,
-.bilibili-player-feedback
+.bilibili-player-feedback,
+#app-ctnr .content #comment,
+#app-ctnr .content
 {
     background-color: #222 !important;
 }
@@ -41,7 +43,12 @@
 .ep-section-module,
 .main-container .recom-wrapper .expand-more,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable,
+.rank-main .rank-box .child-nav,
+.top3 li div.content-detail,
+.rank-detail .top50,
+.rank-detail .top50 li:nth-child(2n),
+.rank-detail .my-info
 {
     background-color: #444 !important;
 }
@@ -49,7 +56,10 @@
 {
     background-image: none !important;
 } */
-.upper-right-ctnr.p-absolute.none-select .btn.primary
+.upper-right-ctnr.p-absolute.none-select .btn.primary,
+.area-category-item.dp-i-block.p-relative.t-center.pointer .category-divider,
+#app-ctnr .content .container,
+.rank-main .rank-box .child-nav .nav-remind
 {
     background-color: transparent !important;
 }
@@ -79,7 +89,10 @@
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-danmaku-number,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching,
 .area-text.dp-i-block.v-middle .child-area,
-.area-text.dp-i-block.v-middle .area-link
+.area-text.dp-i-block.v-middle .area-link,
+.room-info-upper-row.p-relative .upper-right-ctnr.p-absolute.none-select .btn.primary,
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
+.content-detail .container a
 {
     color: #aaa !important;
 }
@@ -134,7 +147,12 @@
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit,
+.area-category-selector .area-category-item,
+.rank-main .rank-box .child-nav li,
+.rank-main .rank-box .child-nav li.active,
+li.normal-item .uname,
+li.log-item .txt-block
 {
     color: #eee !important;
 }
@@ -163,14 +181,15 @@
 .bilibili-player-feedback,
 .bilibili-player-feedback-title,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
-.room-introduction .edit-button
+.room-introduction .edit-button,
+.area-category-selector
 {
     border-color: transparent !important;
 }
-/* a
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item
 {
     border-color: #aaa !important;
-} */
+}
 .main-container .media-info,
 .main-container .review-module,
 .main-container .plp-l .comment-wrapper,
@@ -244,7 +263,9 @@
 } */
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:hover,
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
-.send-tabs-item-active
+.send-tabs-item-active,
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover,
+.container .live
 {
     border-color: var(--theme-color) !important;
 }
@@ -280,7 +301,8 @@
 .main-container .sponsor-module .sponsor-info .btn-sponsor,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable:hover,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit:hover,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit,
+.rank-main .rank-box .child-nav li.active
 {
     background-color: var(--theme-color) !important;
 }
@@ -327,7 +349,13 @@
 .up-info .btn-follow-up,
 .main-container .review-module .review-list .review-item .review-header .review-author:hover,
 .count-wrapper div.up-info a:hover,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a:hover
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a:hover,
+.area-category-selector .area-category-item.active,
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover,
+.rank-main .rank-box .child-nav li:hover,
+.rank-main .rank-box .child-nav .nav-remind,
+li.normal-item a:hover .uname,
+.container .live
 {
     color: var(--theme-color) !important;
 }
