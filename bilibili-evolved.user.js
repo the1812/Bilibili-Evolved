@@ -1176,13 +1176,13 @@
                     html = html.replace(new RegExp(`(<(.+)\\s*?indent="[\\d]+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</\\2>)`, "g"),
                         `$1${name}$3`);
                 }
-                return html.replace(/<category\s*?icon="(.+?)">([^\0]*?)<\/category>/g, `
+                return html.replace(/<category\s*?icon="?(.+?)"?>([^\0]*?)<\/category>/g, `
                     <li class="indent-center category">
                         <i class="icon-$1" style="margin-right:8px"></i>
                         <span class="settings-category">$2</span>
                         <i class="icon-arrow" style="margin-left:8px"></i>
                     </li>
-                `).replace(/<checkbox\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/checkbox>/g, `
+                `).replace(/<checkbox\s*?indent="?(.+?)"?\s*?key="?(.+?)"?\s*?dependencies="?(.*?)"?>([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
                             <input key="$2" type="checkbox" dependencies="$3" checked/>
@@ -1190,7 +1190,7 @@
                             <span>$4</span>
                         </label>
                     </li>
-                `).replace(/<dropdown\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/dropdown>/g, `
+                `).replace(/<dropdown\s*?indent="?(.+?)"?\s*?key="?(.+?)"?\s*?dependencies="?(.*?)"?>([^\0]*?)<\/dropdown>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-dropdown-container">
                             <span class="gui-settings-dropdown-span">$4</span>
@@ -1201,7 +1201,7 @@
                             </div>
                         </label>
                     </li>
-                `).replace(/<textbox\s*?indent="(.+?)"\s*key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/textbox>/g, `
+                `).replace(/<textbox\s*?indent="?(.+?)"?\s*key="?(.+?)"?\s*?dependencies="?(.*?)"?>([^\0]*?)<\/textbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-textbox-container">
                             <span>$4</span>

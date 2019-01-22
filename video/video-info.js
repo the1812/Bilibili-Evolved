@@ -2,7 +2,6 @@
 {
     return () =>
     {
-        //
         class VideoInfo
         {
             constructor(aid)

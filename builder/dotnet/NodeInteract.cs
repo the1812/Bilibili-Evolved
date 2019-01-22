@@ -9,24 +9,24 @@ namespace BilibiliEvolved.Build
 {
     abstract class NodeInteract
     {
-        public static readonly string LocalBinPath = @"node_modules/.bin/";
-        public static readonly string GlobalBinPath = Environment.GetEnvironmentVariable("AppData") + @"/npm/";
-        protected abstract string BinaryPath { get; }
+        public static readonly string LocalModulePath = @"node_modules/";
+        public static readonly string GlobalModulePath = Environment.GetEnvironmentVariable("AppData") + @"/npm/node_modules/";
+        protected abstract string ExecutablePath { get; }
         protected abstract string Arguments { get; }
         public string Run(string input)
         {
             var filename = "";
-            if (File.Exists(LocalBinPath + BinaryPath))
+            if (File.Exists(LocalModulePath + ExecutablePath))
             {
-                filename = LocalBinPath + BinaryPath;
+                filename = LocalModulePath + ExecutablePath;
             }
-            else if (File.Exists(GlobalBinPath + BinaryPath))
+            else if (File.Exists(GlobalModulePath + ExecutablePath))
             {
-                filename = GlobalBinPath + BinaryPath;
+                filename = GlobalModulePath + ExecutablePath;
             }
             else
             {
-                throw new FileNotFoundException($"Binary file not found: {BinaryPath}");
+                throw new FileNotFoundException($"Binary file not found: {ExecutablePath}");
             }
             var processInfo = new ProcessStartInfo
             {
@@ -51,7 +51,17 @@ namespace BilibiliEvolved.Build
     }
     sealed class UglifyJs : NodeInteract
     {
-        protected override string BinaryPath => "node_modules/uglify-es/bin/uglifyjs";
+        protected override string ExecutablePath => "uglify-es/bin/uglifyjs";
         protected override string Arguments => "-m";
+    }
+    sealed class UglifyCss : NodeInteract
+    {
+        protected override string ExecutablePath => "uglifycss/uglifycss";
+        protected override string Arguments => "";
+    }
+    sealed class UglifyHtml : NodeInteract
+    {
+        protected override string ExecutablePath => "html-minifier/cli.js";
+        protected override string Arguments => "--collapse-whitespace --collapse-inline-tag-whitespace --remove-comments --remove-attribute-quotes --remove-optional-tags --remove-tag-whitespace --use-short-doctype";
     }
 }
