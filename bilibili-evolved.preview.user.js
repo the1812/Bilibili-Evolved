@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.37
+// @version      1.6.38
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -78,6 +78,7 @@
         useCache: true,
         autoContinue: false,
         showDeadVideoTitle: false,
+        useBiliplusRedirect: false,
         toastInternalError: false,
         cache: {},
     };
@@ -640,6 +641,7 @@
                 path: "min/show-dead-video-title.min.js",
                 displayNames: {
                     showDeadVideoTitle: "显示失效视频信息",
+                    useBiliplusRedirect: "失效视频重定向",
                 },
             },
         };

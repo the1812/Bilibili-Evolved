@@ -10,13 +10,24 @@
                 const $it = $(it);
                 const aid = $it.attr("data-aid");
                 const title = $it.find("img").attr("alt");
+                const link = (() =>
+                {
+                    if (settings.useBiliplusRedirect)
+                    {
+                        return `https://www.biliplus.com/video/av${aid}`;
+                    }
+                    else
+                    {
+                        return `//www.bilibili.com/video/av${aid}`;
+                    }
+                })();
                 $it.find("a.cover")
                     .attr("target", "_blank")
-                    .attr("href", `//www.bilibili.com/video/av${aid}`);
+                    .attr("href", link);
                 $it.find("a.title")
                     .attr("title", title)
                     .attr("target", "_blank")
-                    .attr("href", `//www.bilibili.com/video/av${aid}`)
+                    .attr("href", link)
                     .text(title);
             });
         }
