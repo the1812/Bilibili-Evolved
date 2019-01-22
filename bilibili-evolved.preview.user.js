@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.36
+// @version      1.6.37
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1190,7 +1190,7 @@
                     </li>
                 `).replace(/<dropdown\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/dropdown>/g, `
                     <li class="indent-$1">
-                        <label>
+                        <label class="gui-settings-dropdown-container">
                             <span class="gui-settings-dropdown-span">$4</span>
                             <div class="gui-settings-dropdown popup">
                                 <input readonly type="text" spellcheck="false" key="$2" dependencies="$3">

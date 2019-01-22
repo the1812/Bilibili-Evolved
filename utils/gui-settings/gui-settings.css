@@ -350,6 +350,11 @@ li.category.folded i.icon-arrow
 {
     transform: rotate(180deg);
 }
+.gui-settings-dropdown-container
+{
+    display: flex;
+    align-items: center;
+}
 .gui-settings-dropdown
 {
     position: relative;
@@ -358,6 +363,7 @@ li.category.folded i.icon-arrow
     background-color: #8884;
     display: inline-flex;
     align-items: center;
+    height: 32px;
 }
 .gui-settings-dropdown>i
 {
