@@ -49,7 +49,8 @@
 {
     background-image: none !important;
 } */
-.upper-right-ctnr.p-absolute.none-select .btn.primary
+.upper-right-ctnr.p-absolute.none-select .btn.primary,
+.area-category-item.dp-i-block.p-relative.t-center.pointer .category-divider
 {
     background-color: transparent !important;
 }
@@ -79,7 +80,9 @@
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-danmaku-number,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-info .bilibili-player-watching,
 .area-text.dp-i-block.v-middle .child-area,
-.area-text.dp-i-block.v-middle .area-link
+.area-text.dp-i-block.v-middle .area-link,
+.room-info-upper-row.p-relative .upper-right-ctnr.p-absolute.none-select .btn.primary,
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item
 {
     color: #aaa !important;
 }
@@ -134,7 +137,8 @@
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit,
+.area-category-selector .area-category-item
 {
     color: #eee !important;
 }
@@ -163,14 +167,15 @@
 .bilibili-player-feedback,
 .bilibili-player-feedback-title,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
-.room-introduction .edit-button
+.room-introduction .edit-button,
+.area-category-selector
 {
     border-color: transparent !important;
 }
-/* a
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item
 {
     border-color: #aaa !important;
-} */
+}
 .main-container .media-info,
 .main-container .review-module,
 .main-container .plp-l .comment-wrapper,
@@ -244,7 +249,8 @@
 } */
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:hover,
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
-.send-tabs-item-active
+.send-tabs-item-active,
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -327,7 +333,9 @@
 .up-info .btn-follow-up,
 .main-container .review-module .review-list .review-item .review-header .review-author:hover,
 .count-wrapper div.up-info a:hover,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a:hover
+.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a:hover,
+.area-category-selector .area-category-item.active,
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover
 {
     color: var(--theme-color) !important;
 }
