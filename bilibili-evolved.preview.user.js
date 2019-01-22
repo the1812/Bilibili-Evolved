@@ -1691,6 +1691,7 @@
             contentLoaded,
             fixed,
             settings,
+            resources,
             monkeyInfo: GM_info
         };
         const resources = new ResourceManager();

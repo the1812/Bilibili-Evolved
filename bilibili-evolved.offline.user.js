@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      190.03
+// @version      190.24
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1726,6 +1726,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             contentLoaded,
             fixed,
             settings,
+            resources,
             monkeyInfo: GM_info
         };
         const resources = new ResourceManager();
