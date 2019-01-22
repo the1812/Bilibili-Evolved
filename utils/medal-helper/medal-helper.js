@@ -41,7 +41,7 @@
             }
             static getContainer()
             {
-                return $("#medal-helper .popup ul");
+                return $("#medal-helper .medal-popup ul");
             }
             static getItemTemplate(medal)
             {
@@ -135,7 +135,7 @@
             }
             static getContainer()
             {
-                return $("#title-helper .popup ul");
+                return $("#title-helper .medal-popup ul");
             }
             static getItemTemplate(title)
             {
@@ -237,7 +237,7 @@
                     $(".medal-helper").each((_, it) =>
                     {
                         const $it = $(it);
-                        const popup = $it.find(".popup")[0];
+                        const popup = $it.find(".medal-popup")[0];
                         $it.on("click", e =>
                         {
                             if (!popup.contains(e.target))

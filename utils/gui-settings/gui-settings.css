@@ -500,7 +500,7 @@ li.category.folded i.icon-arrow
     cursor: pointer;
     transition: all .2s ease-out;
     font-size: 10pt;
-    border-bottom: 2px solid var(--theme-color-70);
+    border-bottom: 2px solid var(--theme-color-50);
     flex: 0 0 auto;
     margin: 4px;
 }
