@@ -56,8 +56,8 @@ namespace BilibiliEvolved.Build
     }
     sealed class UglifyCss : NodeInteract
     {
-        protected override string ExecutablePath => "uglifycss/uglifycss";
-        protected override string Arguments => "";
+        protected override string ExecutablePath => "clean-css-cli/bin/cleancss";
+        protected override string Arguments => "-O2";
     }
     sealed class UglifyHtml : NodeInteract
     {

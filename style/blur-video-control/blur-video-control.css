@@ -1,3 +1,4 @@
+/**/ a {}
 @supports (backdrop-filter: blur(48px)) or (-webkit-backdrop-filter: blur(48px))
 {
     .video-control-blur-layer
