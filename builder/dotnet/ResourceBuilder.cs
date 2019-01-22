@@ -139,49 +139,49 @@ namespace BilibiliEvolved.Build
     }
     sealed class JavascriptMinifier : ResourceMinifier
     {
-        private static readonly string UglifyEsArguments = @"-m";
-        private static readonly string NodePath = "node";
+        // private static readonly string UglifyEsArguments = @"-m";
+        // private static readonly string NodePath = "node";
 
-        private static string uglifyEsAbsolutePath = null;
-        private static string UglifyEsAbsolutePath
-        {
-            get
-            {
-                if (uglifyEsAbsolutePath is null)
-                {
-                    uglifyEsAbsolutePath = getUglifyEsPath();
-                }
-                return uglifyEsAbsolutePath;
-            }
-            set => uglifyEsAbsolutePath = value;
-        }
-        private static string getUglifyEsPath()
-        {
-            var uglifyEsPath = @"\uglify-es\bin\uglifyjs";
-            var localPath = @"\node_modules" + uglifyEsPath;
-            var globalPath = Environment.GetEnvironmentVariable("AppData") + @"\npm\node_modules" + uglifyEsPath;
+        // private static string uglifyEsAbsolutePath = null;
+        // private static string UglifyEsAbsolutePath
+        // {
+        //     get
+        //     {
+        //         if (uglifyEsAbsolutePath is null)
+        //         {
+        //             uglifyEsAbsolutePath = getUglifyEsPath();
+        //         }
+        //         return uglifyEsAbsolutePath;
+        //     }
+        //     set => uglifyEsAbsolutePath = value;
+        // }
+        // private static string getUglifyEsPath()
+        // {
+        //     var uglifyEsPath = @"\uglify-es\bin\uglifyjs";
+        //     var localPath = @"\node_modules" + uglifyEsPath;
+        //     var globalPath = Environment.GetEnvironmentVariable("AppData") + @"\npm\node_modules" + uglifyEsPath;
 
-            if (File.Exists(localPath))
-            {
-                return localPath;
-            }
-            else if (File.Exists(globalPath))
-            {
-                return globalPath;
-            }
-            else
-            {
-                return "";
-            }
-        }
+        //     if (File.Exists(localPath))
+        //     {
+        //         return localPath;
+        //     }
+        //     else if (File.Exists(globalPath))
+        //     {
+        //         return globalPath;
+        //     }
+        //     else
+        //     {
+        //         return "";
+        //     }
+        // }
 
-        public JavascriptMinifier()
-        {
-            if (!File.Exists(UglifyEsAbsolutePath))
-            {
-                throw new FileNotFoundException("Node.js module \"uglify-es\" not found.");
-            }
-        }
+        // public JavascriptMinifier()
+        // {
+        //     if (!File.Exists(UglifyEsAbsolutePath))
+        //     {
+        //         throw new FileNotFoundException("Node.js module \"uglify-es\" not found.");
+        //     }
+        // }
 
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
@@ -195,25 +195,27 @@ namespace BilibiliEvolved.Build
 
         public override string Minify(string input)
         {
-            var processInfo = new ProcessStartInfo
-            {
-                FileName = NodePath,
-                Arguments = $"{UglifyEsAbsolutePath} {UglifyEsArguments}",
-                UseShellExecute = false,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-            };
-            var process = Process.Start(processInfo);
-            using (var writer = new StreamWriter(process.StandardInput.BaseStream, Encoding.UTF8))
-            {
-                writer.Write(input);
-                writer.Flush();
-                writer.Close();
-                using (var reader = new StreamReader(process.StandardOutput.BaseStream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd().Trim();
-                }
-            }
+            // var processInfo = new ProcessStartInfo
+            // {
+            //     FileName = NodePath,
+            //     Arguments = $"{UglifyEsAbsolutePath} {UglifyEsArguments}",
+            //     UseShellExecute = false,
+            //     RedirectStandardInput = true,
+            //     RedirectStandardOutput = true,
+            // };
+            // var process = Process.Start(processInfo);
+            // using (var writer = new StreamWriter(process.StandardInput.BaseStream, Encoding.UTF8))
+            // {
+            //     writer.Write(input);
+            //     writer.Flush();
+            //     writer.Close();
+            //     using (var reader = new StreamReader(process.StandardOutput.BaseStream, Encoding.UTF8))
+            //     {
+            //         return reader.ReadToEnd().Trim();
+            //     }
+            // }
+            var uglifyjs = new UglifyJs();
+            return uglifyjs.Run(input);
         }
     }
     sealed class HtmlMinifier : ResourceMinifier
