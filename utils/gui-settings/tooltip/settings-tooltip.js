@@ -3,7 +3,9 @@
     return (settings, resources) =>
     {
         const toolTips = {
-            defaultPlayerMode: `设置默认的播放器模式, 可以为<span>常规</span>, <span>宽屏</span>或<span>网页全屏</span>(<span>全屏</span>还未完成). 默认模式将在进入视频页面的首次播放时应用.`,
+            useDefaultPlayerMode: `控制是否使用默认播放器模式, 可以为<span>常规</span>, <span>宽屏</span>或<span>网页全屏</span>(<span>全屏</span>还未完成).`,
+            defaultPlayerMode: `设置默认的播放器模式.`,
+            applyPlayerModeOnPlay: `是否在播放时应用模式, 若选择否就会在未开始播放时就应用.`,
             useDefaultPlayerLayout: `设置默认的播放器布局.
 - 旧版: 传统布局
 - 新版: 视频区默认的新版布局
