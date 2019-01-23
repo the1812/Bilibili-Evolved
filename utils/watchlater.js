@@ -17,16 +17,16 @@
         const redirectLinks = items =>
         {
             const watchlaterList = items
-                .map((_, it) =>
+                .map(it =>
                 {
-                    const href = $(it).attr("href");
+                    const href = it.getAttribute("href");
                     if (href && href.match(/.*watchlater.*|javascript:;/g))
                     {
                         return getRedirectLink(href);
                     }
                     return "javascript:;";
                 });
-            items.each((index, it) => $(it)
+            items.forEach((it, index) => $(it)
                 .attr("href", watchlaterList[index])
                 .attr("target", "_blank"));
         };
@@ -34,9 +34,9 @@
         {
             for (const selector of selectors)
             {
-                SpinQuery.any(
-                    () => $(selector),
-                    it => redirectLinks(it),
+                SpinQuery.select(
+                    () => document.querySelectorAll(selector),
+                    it => redirectLinks([...it]),
                 );
             }
         };
@@ -57,6 +57,10 @@
                                 window.location.replace(url);
                             }
                         }
+                    );
+                    SpinQuery.any(
+                        () => $("#viewlater-app .s-btn[href='#/']"),
+                        it => it.remove(),
                     );
                     redirectSelectors(".av-pic", ".av-about>a");
                 });
