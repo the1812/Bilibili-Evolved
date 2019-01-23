@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      190.98
+// @version      191.09
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1556,6 +1556,11 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         }
         import(compnentName)
         {
+            if (this.attributes[compnentName] === undefined)
+            {
+                console.error(`Import failed: component "${compnentName}" is not loaded.`);
+                return null;
+            }
             return this.attributes[compnentName].export;
         }
         async fetchByKey(key)

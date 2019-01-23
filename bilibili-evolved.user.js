@@ -1521,6 +1521,11 @@
         }
         import(compnentName)
         {
+            if (this.attributes[compnentName] === undefined)
+            {
+                console.error(`Import failed: component "${compnentName}" is not loaded.`);
+                return null;
+            }
             return this.attributes[compnentName].export;
         }
         async fetchByKey(key)
