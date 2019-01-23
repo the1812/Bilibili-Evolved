@@ -13,7 +13,8 @@
 .media-tab-module-content .mtlr-list-wrp .block-relate-wrp .pagelistbox .custom-right .custom-right-inner.custompage,
 .bilibili-player-feedback,
 #app-ctnr .content #comment,
-#app-ctnr .content
+#app-ctnr .content,
+.lottery-box .title
 {
     background-color: #222 !important;
 }
@@ -48,7 +49,10 @@
 .top3 li div.content-detail,
 .rank-detail .top50,
 .rank-detail .top50 li:nth-child(2n),
-.rank-detail .my-info
+.rank-detail .my-info,
+.pk-result .winner-info,
+.pk-result .mvp-info,
+.pk-container.p-absolute.normal-pk .pk-result
 {
     background-color: #444 !important;
 }
@@ -152,7 +156,9 @@
 .rank-main .rank-box .child-nav li,
 .rank-main .rank-box .child-nav li.active,
 li.normal-item .uname,
-li.log-item .txt-block
+li.log-item .txt-block,
+.lottery-box .title,
+.up-info>a .up-name
 {
     color: #eee !important;
 }
@@ -182,7 +188,8 @@ li.log-item .txt-block
 .bilibili-player-feedback-title,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
 .room-introduction .edit-button,
-.area-category-selector
+.area-category-selector,
+.lottery-box
 {
     border-color: transparent !important;
 }
@@ -355,7 +362,9 @@ li.log-item .txt-block
 .rank-main .rank-box .child-nav li:hover,
 .rank-main .rank-box .child-nav .nav-remind,
 li.normal-item a:hover .uname,
-.container .live
+.container .live,
+.mvp-info .user-info .title,
+.up-info>a .up-name:hover
 {
     color: var(--theme-color) !important;
 }
