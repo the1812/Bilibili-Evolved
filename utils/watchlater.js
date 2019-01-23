@@ -16,30 +16,37 @@
         };
         const redirectLinks = items =>
         {
-            if (items.attr("href").match(/.*watchlater.*|javascript:;/g))
-            {
-                const watchlaterList = items
-                    .map((_, it) =>
+            const watchlaterList = items
+                .map((_, it) =>
+                {
+                    const href = $(it).attr("href");
+                    if (href && href.match(/.*watchlater.*|javascript:;/g))
                     {
-                        const href = $(it).attr("href");
-                        if (href)
-                        {
-                            return getRedirectLink(href);
-                        }
-                        return "javascript:;";
-                    });
-                items.each((index, it) => $(it)
-                    .attr("href", watchlaterList[index])
-                    .attr("target", "_blank"));
+                        return getRedirectLink(href);
+                    }
+                    return "javascript:;";
+                });
+            items.each((index, it) => $(it)
+                .attr("href", watchlaterList[index])
+                .attr("target", "_blank"));
+        };
+        const redirectSelectors = (...selectors) =>
+        {
+            for (const selector of selectors)
+            {
+                SpinQuery.any(
+                    () => $(selector),
+                    it => redirectLinks(it),
+                );
             }
         };
         SpinQuery.any(
             () => $(".watch-later-list"),
             () =>
             {
-                (Observer.childListSubtree || Observer.subtree)(".watch-later-list", () =>
+                (Observer.childListSubtree || Observer.subtree)("#viewlater-app", () =>
                 {
-                    new SpinQuery(
+                    SpinQuery.condition(
                         () => document.URL.match(/(av[\d]+)\/p([\d]+)/),
                         it => it && document.URL.indexOf("watchlater") !== -1,
                         () =>
@@ -50,11 +57,8 @@
                                 window.location.replace(url);
                             }
                         }
-                    ).start();
-                    SpinQuery.any(
-                        () => $(".av-pic"),
-                        it => redirectLinks(it),
                     );
+                    redirectSelectors(".av-pic", ".av-about>a");
                 });
             }
         );
@@ -64,18 +68,7 @@
             {
                 (Observer.childListSubtree || Observer.subtree)("li.nav-item[report-id*=watchlater]", () =>
                 {
-                    SpinQuery.any(
-                        () => $(".av-item>a"),
-                        items => redirectLinks(items)
-                    );
-                    SpinQuery.any(
-                        () => $(".av-about>a"),
-                        items => redirectLinks(items)
-                    );
-                    SpinQuery.any(
-                        () => $("div.watch-later-m>ul>div>li>a"),
-                        items => redirectLinks(items)
-                    );
+                    redirectSelectors(".av-item>a", ".av-about>a", "div.watch-later-m>ul>div>li>a");
                     SpinQuery.any(
                         () => $(".read-more.mr"),
                         it => it.remove()
