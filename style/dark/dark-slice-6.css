@@ -157,7 +157,8 @@
 .rank-main .rank-box .child-nav li.active,
 li.normal-item .uname,
 li.log-item .txt-block,
-.lottery-box .title
+.lottery-box .title,
+.up-info>a .up-name
 {
     color: #eee !important;
 }
@@ -362,7 +363,8 @@ li.log-item .txt-block,
 .rank-main .rank-box .child-nav .nav-remind,
 li.normal-item a:hover .uname,
 .container .live,
-.mvp-info .user-info .title
+.mvp-info .user-info .title,
+.up-info>a .up-name:hover
 {
     color: var(--theme-color) !important;
 }
