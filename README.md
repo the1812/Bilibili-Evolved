@@ -221,6 +221,8 @@
 ![关闭时](images/full-tweets-title-off.png)
 - 启用时, 不管名称多长, 总是完全展开up主和视频的标题.
 ![启用时](images/full-tweets-title-on.png)
+### 直播间勋章快速切换
+在直播区(live.bilibili.com)中, 可从`附加功能`中直接切换勋章和头衔.
 ### 显示失效视频信息
 在空间的收藏夹中, 为已失效视频恢复标题和封面. 也可以使用`失效视频重定向`转到BiliPlus观看.
 
