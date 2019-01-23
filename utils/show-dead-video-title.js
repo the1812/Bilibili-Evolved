@@ -21,6 +21,8 @@
                         return `//www.bilibili.com/video/av${aid}`;
                     }
                 })();
+                $it.find(".i-watchlater")
+                    .css("display", "none");
                 $it.find("a.cover")
                     .attr("target", "_blank")
                     .attr("href", link);
