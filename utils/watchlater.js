@@ -20,11 +20,18 @@
                 .map(it =>
                 {
                     const href = it.getAttribute("href");
-                    if (href && href.match(/.*watchlater.*|javascript:;/g))
+                    if (!href)
+                    {
+                        return "javascript:;";
+                    }
+                    if (href.match(/.*watchlater.*|javascript:;/g))
                     {
                         return getRedirectLink(href);
                     }
-                    return "javascript:;";
+                    if (href.indexOf("video/av") !== -1)
+                    {
+                        return href;
+                    }
                 });
             items.forEach((it, index) => $(it)
                 .attr("href", watchlaterList[index])
