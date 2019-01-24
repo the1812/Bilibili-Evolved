@@ -269,7 +269,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         }
         class DanmakuConverter
         {
-            constructor({ title, font, alpha, duration, blockTypes, resolution, bottomMarginPercent })
+            constructor({ title, font, alpha, duration, blockTypes, resolution, bottomMarginPercent, bold })
             {
                 this.title = title;
                 this.font = font;
@@ -277,14 +277,15 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 this.duration = duration;
                 this.blockTypes = blockTypes;
                 this.resolution = resolution;
+                this.bold = bold;
                 this.white = 16777215; // Dec color of white danmaku
                 this.danmakuStack = new DanmakuStack(font, resolution, duration, bottomMarginPercent);
             }
             get fontStyles()
             {
                 return {
-                    25: `Style: Medium,${this.font},52,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,0`,
-                    18: `Style: Small,${this.font},36,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,0`,
+                    25: `Style: Medium,${this.font},52,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? "1" : "0"},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`,
+                    18: `Style: Small,${this.font},36,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? "1" : "0"},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`,
                 };
             }
             convertToAssDocument(xml)

@@ -65,8 +65,9 @@
                         }
                         return result;
                     })();
-                    const resolutionFactor = [2, 1.5, 1, 0.75, 0.5][getSliderIndex(".bilibili-player-setting-fontsize .bui-thumb")]; // 改变分辨率来调整字体大小
+                    const resolutionFactor = [1.4, 1.2, 1, 0.8, 0.6][getSliderIndex(".bilibili-player-setting-fontsize .bui-thumb")]; // 改变分辨率来调整字体大小
                     const bottomMarginPercent = [0.75, 0.5, 0.25, 0.15, 0.15][getSliderIndex(".bilibili-player-setting-area .bui-thumb")];
+                    const bold = document.querySelector(".bilibili-player-video-danmaku-setting-right-font-bold input").checked;
                     const converter = new DanmakuConverter({
                         title,
                         font,
@@ -78,6 +79,7 @@
                             y: 1080 * resolutionFactor,
                         },
                         bottomMarginPercent,
+                        bold
                     });
                     const assDocument = converter.convertToAssDocument(danmaku.rawXML);
                     return new Blob([assDocument.generateAss()], {
