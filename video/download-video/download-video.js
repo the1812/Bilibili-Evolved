@@ -13,6 +13,7 @@
         };
 
         const bangumiUrls = [];
+        let ajaxHooked = false;
 
         class Video
         {
@@ -355,14 +356,18 @@
                 {
                     pageData.isOldBangumi = true;
                     pageData.entity = new Bangumi();
-                    await SpinQuery.unsafeJquery();
-                    unsafeWindow.$(unsafeWindow.document).ajaxSend((event, request, params) =>
+                    if (ajaxHooked === false)
                     {
-                        if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
+                        await SpinQuery.unsafeJquery();
+                        unsafeWindow.$(unsafeWindow.document).ajaxSend((event, request, params) =>
                         {
-                            bangumiUrls.unshift(params.url);
-                        }
-                    });
+                            if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
+                            {
+                                bangumiUrls.unshift(params.url);
+                            }
+                        });
+                        ajaxHooked = true;
+                    }
                 }
                 else
                 {
@@ -378,7 +383,7 @@
         }
         async function loadWidget()
         {
-            await loadPageData();
+            Observer.childListSubtree("#bofqi", loadPageData);
             const formats = await VideoFormat.availableFormats;
             let [selectedFormat] = formats;
             const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
