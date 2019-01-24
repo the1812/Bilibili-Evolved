@@ -71,6 +71,6 @@
             }
             video.addEventListener("play", onplay);
         }
-        (Observer.childList || Observer.subtree)("#bofqi", () => applyQuality());
+        Observer.childListSubtree("#bofqi", () => applyQuality());
     };
 })();
