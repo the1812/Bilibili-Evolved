@@ -56,7 +56,7 @@
                             ".bilibili-player-block-filter-type[ftype=special]": [7, 8],
                         };
 
-                        for (const [type, value] in Object.entries(blockValues))
+                        for (const [type, value] of Object.entries(blockValues))
                         {
                             if (document.querySelector(type).classList.contains("disabled"))
                             {
