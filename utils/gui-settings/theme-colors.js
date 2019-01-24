@@ -47,8 +47,6 @@
                         html.style.setProperty("--foreground-color-d", hexToRgba(color.foreground + "d"));
                         html.style.setProperty("--blue-image-filter", color.blueImageFilter);
                         html.style.setProperty("--pink-image-filter", color.pinkImageFilter);
-                        html.style.setProperty("--black-image-filter", color.blackImageFilter);
-                        html.style.setProperty("--white-image-filter", color.whiteImageFilter);
                         html.style.setProperty("--brightness", color.brightness);
                         html.style.setProperty("--invert-filter", color.filterInvert);
                     };

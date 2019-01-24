@@ -1109,13 +1109,13 @@
         }
         makeImageFilter(originalRgb)
         {
-            const { h, s, b, } = this.rgbToHsb(originalRgb);
+            const { h, s, } = this.rgbToHsb(originalRgb);
             const targetColor = this.hsb;
 
             const hue = targetColor.h - h;
-            const saturate = (s - targetColor.s) / 100 + 100;
-            const brightness = (b - targetColor.b) / 100 + 100;
-            const filter = `hue-rotate(${hue}deg) saturate(${saturate}%) brightness(${brightness}%)`;
+            const saturate = ((targetColor.s - s) / 100 + 1) * 100;
+            // const brightness = ((targetColor.b - b) / 100 + 1) * 100;
+            const filter = `hue-rotate(${hue}deg) saturate(${saturate}%)`;
             return filter;
         }
         get blueImageFilter()
@@ -1135,14 +1135,6 @@
                 b: 152,
             };
             return this.makeImageFilter(pinkColor);
-        }
-        get blackImageFilter()
-        {
-            return this.makeImageFilter({ r: 0, g: 0, b: 0 });
-        }
-        get whiteImageFilter()
-        {
-            return this.makeImageFilter({ r: 255, g: 255, b: 255 });
         }
         get brightness()
         {
@@ -1534,8 +1526,6 @@
             styles.push("--foreground-color-d:" + hexToRgba(settings.foreground + "d"));
             styles.push("--blue-image-filter:" + settings.blueImageFilter);
             styles.push("--pink-image-filter:" + settings.pinkImageFilter);
-            styles.push("--black-image-filter:" + settings.blackImageFilter);
-            styles.push("--white-image-filter:" + settings.whiteImageFilter);
             styles.push("--brightness:" + settings.brightness);
             styles.push("--invert-filter:" + settings.filterInvert);
             styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
