@@ -11,32 +11,73 @@
                 .replace("_番剧_bilibili_哔哩哔哩", "");
             const danmaku = new DanmakuInfo((unsafeWindow || window).cid);
             await danmaku.fetchInfo();
-            const blob = (() =>
+            const blob = await (async () =>
             {
                 if (ass === true)
                 {
-                    // TODO: 从播放器里获取弹幕偏好
-                    const converter = new DanmakuConverter({
-                        title,
-                        font: "Microsoft YaHei UI",
-                        alpha: 0.6,
-                        duration(danmaku)
+                    await loadLazyPanel(".bilibili-player-video-danmaku-setting");
+                    const getSliderIndex = (selector) =>
+                    {
+                        const transform = parseFloat(document.querySelector(selector).style.transform.replace(/translateX\(([\d\.]+)/, "$1"));
+                        const index = {
+                            0: 0,
+                            44: 1,
+                            94: 2,
+                            144: 3,
+                            188: 4,
+                        }[transform];
+                        return index;
+                    };
+                    const font = document.querySelector(".bilibili-player-video-danmaku-setting-right-font .bui-select-result").innerText;
+                    const alpha = parseFloat(document.querySelector(".bilibili-player-setting-opacity .bui-bar").style.transform.replace(/scaleX\(([\d\.]+)\)/, "$1"));
+                    const duration = (() =>
+                    {
+                        const scrollDuration = [10, 8, 6, 4, 2][getSliderIndex(".bilibili-player-setting-speedplus .bui-thumb")];
+                        return danmaku =>
                         {
                             switch (danmaku.type)
                             {
                                 case 4:
                                 case 5:
-                                    return 4;
+                                    return 4; // stickyDuration
                                 default:
-                                    return 6;
+                                    return scrollDuration;
                             }
-                        },
-                        blockTypes: [],
+                        };
+                    })();
+                    const blockTypes = (() =>
+                    {
+                        let result = [];
+                        const blockValues = {
+                            ".bilibili-player-block-filter-type[ftype=scroll]": [1, 2, 3],
+                            ".bilibili-player-block-filter-type[ftype=top]": [5],
+                            ".bilibili-player-block-filter-type[ftype=bottom]": [4],
+                            ".bilibili-player-block-filter-type[ftype=color]": ["color"],
+                            ".bilibili-player-block-filter-type[ftype=special]": [7, 8],
+                        };
+
+                        for (const [type, value] in Object.entries(blockValues))
+                        {
+                            if (document.querySelector(type).classList.contains("disabled"))
+                            {
+                                result = result.concat(value);
+                            }
+                        }
+                        return result;
+                    })();
+                    const resolutionFactor = [2, 1.5, 1, 0.75, 0.5][getSliderIndex(".bilibili-player-setting-fontsize .bui-thumb")]; // 改变分辨率来调整字体大小
+                    const bottomMarginPercent = [0.75, 0.5, 0.25, 0.15, 0.15][getSliderIndex(".bilibili-player-setting-area .bui-thumb")];
+                    const converter = new DanmakuConverter({
+                        title,
+                        font,
+                        alpha,
+                        duration,
+                        blockTypes,
                         resolution: {
-                            x: 1920,
-                            y: 1080,
+                            x: 1920 * resolutionFactor,
+                            y: 1080 * resolutionFactor,
                         },
-                        bottomMarginPercent: 0.15,
+                        bottomMarginPercent,
                     });
                     const assDocument = converter.convertToAssDocument(danmaku.rawXML);
                     return new Blob([assDocument.generateAss()], {

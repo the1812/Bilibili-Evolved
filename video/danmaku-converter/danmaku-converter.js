@@ -277,6 +277,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 this.duration = duration;
                 this.blockTypes = blockTypes;
                 this.resolution = resolution;
+                this.white = 16777215; // Dec color of white danmaku
                 this.danmakuStack = new DanmakuStack(font, resolution, duration, bottomMarginPercent);
             }
             get fontStyles()
@@ -293,7 +294,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 for (const xmlDanmaku of xmlDanmakuDocument.danmakus.sort((a, b) => a.time - b.time))
                 {
                     // 跳过设置为屏蔽的弹幕类型
-                    if (this.blockTypes.indexOf(xmlDanmaku.type) !== -1)
+                    if (this.blockTypes.indexOf(xmlDanmaku.type) !== -1 ||
+                        this.blockTypes.indexOf("color") !== -1 && xmlDanmaku.color !== this.white)
                     {
                         continue;
                     }
@@ -340,8 +342,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             }
             convertColor(decColor)
             {
-                const white = 16777215;
-                if (decColor === white)
+                if (decColor === this.white)
                 {
                     return "";
                 }

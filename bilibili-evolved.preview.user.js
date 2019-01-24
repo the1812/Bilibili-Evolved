@@ -746,6 +746,12 @@
         event.initEvent(eventName, true, true);
         element.dispatchEvent(event);
     }
+    async function loadLazyPanel(selector)
+    {
+        await SpinQuery.unsafeJquery();
+        const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+        panel.mouseover().mouseout();
+    }
     function contentLoaded(callback)
     {
         if (/complete|interactive|loaded/.test(document.readyState))
