@@ -1747,6 +1747,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             onSettingsChange,
             logError,
             raiseEvent,
+            loadLazyPanel,
             contentLoaded,
             fixed,
             settings,
