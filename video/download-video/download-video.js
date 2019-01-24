@@ -19,9 +19,12 @@
         {
             constructor()
             {
-                this.menuPanel = document.querySelector(".download-video-panel");
                 this.menuClasses = ["quality", "action", "progress"];
                 this.currentMenuClass = "quality";
+            }
+            get menuPanel()
+            {
+                return document.querySelector(".download-video-panel");
             }
             addMenuClass()
             {
@@ -383,9 +386,26 @@
         }
         async function loadWidget()
         {
-            Observer.childListSubtree("#bofqi", loadPageData);
-            const formats = await VideoFormat.availableFormats;
+            let formats = await VideoFormat.availableFormats;
             let [selectedFormat] = formats;
+            const loadQualities = async () =>
+            {
+                await loadPageData();
+                formats = await VideoFormat.availableFormats;
+                const list = $("ol.video-quality");
+                list.html("");
+                formats.forEach(format =>
+                {
+                    $(`<li>${format.displayName}</li>`)
+                        .on("click", () =>
+                        {
+                            selectedFormat = format;
+                            pageData.entity.nextMenuClass();
+                        })
+                        .prependTo(list);
+                });
+            };
+            Observer.childListSubtree("#bofqi", loadQualities);
             const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
             {
                 pageData.entity.addError();
@@ -437,16 +457,6 @@
             }
             $(".video-action>#video-action-download").on("click", download);
             $(".video-action>#video-action-copy").on("click", copyLink);
-            formats.forEach(format =>
-            {
-                $(`<li>${format.displayName}</li>`)
-                    .on("click", () =>
-                    {
-                        selectedFormat = format;
-                        pageData.entity.nextMenuClass();
-                    })
-                    .prependTo("ol.video-quality");
-            });
             resources.applyStyle("downloadVideoStyle");
             const downloadPanel = document.querySelector(".download-video-panel");
             const togglePopup = () => $(".download-video-panel").toggleClass("opened");
@@ -462,7 +472,7 @@
                 $(".video-error").text("");
                 pageData.entity.removeError();
             });
-
+            await SpinQuery.select(() => document.querySelector(".download-video-panel"));
             pageData.entity.addMenuClass();
         }
         return {
