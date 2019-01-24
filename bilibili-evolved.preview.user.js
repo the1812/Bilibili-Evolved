@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.6.39
+// @version      1.6.40
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1136,6 +1136,14 @@
             };
             return this.makeImageFilter(pinkColor);
         }
+        get blackImageFilter()
+        {
+            return this.makeImageFilter({ r: 0, g: 0, b: 0 });
+        }
+        get whiteImageFilter()
+        {
+            return this.makeImageFilter({ r: 255, g: 255, b: 255 });
+        }
         get brightness()
         {
             return `${this.foreground === "#000" ? "100" : "0"}%`;
@@ -1526,6 +1534,8 @@
             styles.push("--foreground-color-d:" + hexToRgba(settings.foreground + "d"));
             styles.push("--blue-image-filter:" + settings.blueImageFilter);
             styles.push("--pink-image-filter:" + settings.pinkImageFilter);
+            styles.push("--black-image-filter:" + settings.blackImageFilter);
+            styles.push("--white-image-filter:" + settings.whiteImageFilter);
             styles.push("--brightness:" + settings.brightness);
             styles.push("--invert-filter:" + settings.filterInvert);
             styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
