@@ -1741,6 +1741,17 @@
             fixed,
             settings,
             resources,
+            theWorld: waitTime =>
+            {
+                if (waitTime > 0)
+                {
+                    setTimeout(() => { debugger; }, waitTime);
+                }
+                else
+                {
+                    debugger;
+                }
+            },
             monkeyInfo: GM_info
         };
     }
