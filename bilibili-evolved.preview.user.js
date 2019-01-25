@@ -80,6 +80,7 @@
         autoPlay: false,
         showDeadVideoTitle: false,
         useBiliplusRedirect: false,
+        useCommentStyle: true,
         toastInternalError: false,
         cache: {},
     };
@@ -650,7 +651,31 @@
                 displayNames: {
                     autoPlay: "自动播放视频",
                 }
-            }
+            },
+            useCommentStyle: {
+                path: "min/comment.min.js",
+                styles: [
+                    {
+                        key: "commentStyle",
+                        important: true,
+                        condition: () => true,
+                    },
+                    {
+                        key: "commentDarkStyle",
+                        important: true,
+                        condition: () => settings.useDarkStyle,
+                    },
+                ],
+                displayNames: {
+                    useCommentStyle: "简洁化评论区",
+                },
+            },
+            commentStyle: {
+                path: "min/comment.min.css"
+            },
+            commentDarkStyle: {
+                path: "min/comment-dark.min.css"
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
         Resource.all = {};

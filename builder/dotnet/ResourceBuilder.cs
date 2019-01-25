@@ -106,8 +106,8 @@ namespace BilibiliEvolved.Build
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
             return !file.FullName.Contains(".min")
-                && !file.FullName.Contains("dark.css")
-                && !file.FullName.Contains("dark-template")
+                && file.Name != "dark.css"
+                && file.Name != "dark-template.css"
                 && (file.Extension == ".css");
         };
 
