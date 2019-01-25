@@ -9,7 +9,7 @@
     top: 0;
     left: 0;
     width: 24px;
-    z-index: 99999;
+    z-index: 299;
 }
 .gui-settings,
 .gui-settings-widgets
