@@ -494,7 +494,7 @@
                         finalVolume = 0;
                         change = originalVolume;
                     }
-                    const result = `${originalVolume} → ${finalVolume}`;
+                    const result = `${originalVolume} 👉 ${finalVolume}`;
                     setVolume(finalVolume);
                     const html = `
                         <div class='touch-row'>
