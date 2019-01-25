@@ -24,7 +24,7 @@
 设置项的说明见[功能](#功能)一节.
 
 **设置保存后, 需要刷新网页才能生效.**
-![设置](images/gui-settings.png)
+![设置](images/compressed/gui-settings.jpg)
 ## 默认值
 ### 视频
 - 指定播放器布局: `关闭`
@@ -106,7 +106,7 @@
 ### 查看封面
 在视频播放页面/直播间中, `查看封面`按钮将在`附加功能`中启用, 点击可以查看或保存封面. (其实还可以看专栏的封面, 不过专栏的封面本来就显示在标题上方了)
 
-![查看封面与下载视频](images/download-video-view-cover.png)
+![查看封面/下载视频/下载弹幕](images/compressed/download-video-view-cover.jpg)
 
 ### 指定播放器布局
 设置默认的播放器布局, 可分别设置视频区和番剧区. 尽量在相应的页面里设置(比如在番剧播放页面设置番剧播放器布局), 否则可能没有效果.
@@ -140,12 +140,12 @@
 ## 样式
 ### 主题颜色
 设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(`#rrggbb`或`#rgb`).
-![颜色设置](images/theme-color.png)
-![粉色](images/new-navbar-stardust.png)
-![紫色](images/new-navbar-purple.png)
-![蓝色](images/new-navbar-lightBlue.png)
-![绿色](images/new-navbar-teal.png)
-![暗蓝色](images/new-navbar-blueGrey.png)
+![颜色设置](images/compressed/theme-color.jpg)
+![粉色](images/compressed/new-navbar-stardust.jpg)
+![紫色](images/compressed/new-navbar-purple.jpg)
+![蓝色](images/compressed/new-navbar-lightBlue.jpg)
+![绿色](images/compressed/new-navbar-teal.jpg)
+![暗蓝色](images/compressed/new-navbar-blueGrey.jpg)
 ### 样式调整
 **主要**会改变顶栏的样式, 并有一些其他地方的界面微调:
 - 为播放器增加主题色投影
@@ -155,25 +155,25 @@
 - 隐藏播放页面的"返回旧版"侧栏
 - 修复直播间一些文字初始状态不正确
 #### 顶栏效果
-![主站](images/new-navbar.png)
-![播放](images/new-navbar-stardust.png)
+![主站](images/compressed/new-navbar.jpg)
+![播放](images/compressed/new-navbar-stardust.jpg)
 ### 夜间模式
 夜间模式更适合光线暗的环境, 并会大量应用主题颜色.
 
 目前仅支持部分常用页面, 其他页面会陆续添加, 不支持推广板块(会被`删除广告`功能去除的部分).
 #### 启用前
-![日间](images/light-style.png)
+![日间](images/compressed/light-style.jpg)
 #### 启用后
-![夜间](images/dark-style.png)
+![夜间](images/compressed/dark-style.jpg)
 #### 夜间模式计划时段
 设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式.
 > 结束时间小于起始时间时将视为次日, 如`18:00`至`6:00`表示晚上18:00到次日6:00.
 ### 首页使用紧凑布局(实验性)
 设置首页是否使用紧凑布局, 视频的间距会减小并削去圆角, 番剧的图片和排名序号会变成圆形, 分区栏的图标会使用高清重制版. 目前仅支持首页, 其他分区的样式后续会添加.
 #### 启用前
-![原版布局](images/compact-layout-disabled.png)
+![原版布局](images/compressed/compact-layout-disabled.jpg)
 #### 启用后
-![紧凑布局](images/compact-layout.png)
+![紧凑布局](images/compressed/compact-layout.jpg)
 ### 简洁化评论区
 - 删除热评头像下方的关注按钮
 - 删除用户的等级标识
@@ -186,56 +186,48 @@
 ### 搜索栏置顶
 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示. 仅对常用页面有效, 部分页面可能会有点布局错乱.
 #### 启用前
-![不调整](images/original-navbar.png)
+![不调整](images/compressed/original-navbar.jpg)
 #### 启用后
-![调整](images/override-navbar.png)
+![调整](images/compressed/override-navbar.jpg)
 #### 显示顶部横幅
 在搜索栏置顶启用的时候, 还可以使用此功能显示/隐藏顶部横幅.
-![不移除](images/override-navbar.png)
-![移除](images/no-banner.png)
+![不移除](images/compressed/override-navbar.jpg)
+![移除](images/compressed/no-banner.jpg)
 #### 显示排行榜图标
 在搜索栏置顶启用的时候, 还可以使用此功能显示/隐藏排行榜入口.
-![排行榜图标](images/ranklist.png)
+![排行榜图标](images/compressed/ranklist.jpg)
 ### 模糊视频控制栏背景
 模糊视频控制栏背景, 原版的阴影效果将无效.
 此功能需要浏览器支持背景模糊效果, 详情见[兼容性](#兼容性)一节.
 #### 启用前
-![不模糊背景](images/blur-video-control-disabled.png)
+![不模糊背景](images/compressed/original-control.jpg)
 #### 启用后
-![模糊背景](images/blur-video-control.png)
+![模糊背景](images/compressed/blur-video-control.jpg)
 ### 控制栏着色
 给视频控制栏附上半透明的黑色, 代替原来的阴影, 黑色的不透明度可在设置中调整.
 #### 启用前
-![原版](images/custom-control-background-disabled.png)
+![原版](images/compressed/original-control.jpg)
 #### 启用后
-![着色](images/custom-control-background.png)
+![着色](images/compressed/custom-control-background.jpg)
 ### 缩放直播看板娘
 根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度, DPI缩放为100%的用户不需要此功能.
 ### 删除直播水印
 删除观看直播时角落的水印.
-### 删除视频标题层
-删除视频里鼠标经过时出现在顶端的标题覆盖层.
-
-标题覆盖层的位置:
-![标题覆盖层](images/remove-top-mask.png)
+### 删除视频覆盖层
+删除视频里鼠标经过时出现在右上角的覆盖层.
+![覆盖层](images/compressed/remove-top-mask.jpg)
 
 ## 工具
 ### 删除广告
 删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.
-#### 删除前
-![删除前](images/remove-ads-before.png)
-#### 删除后
-![删除后](images/remove-ads-after.png)
+![删除广告](images/compressed/remove-ads.jpg)
 ### 稍后再看重定向
 将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.
 ### 隐藏搜索推荐
 将搜索框的推荐词替换为`搜索`.
 ### 展开动态标题
-在顶栏的动态预览框中:
-- 关闭时, 长名称的后半部分会用`...`代替.
-![关闭时](images/full-tweets-title-off.png)
-- 启用时, 不管名称多长, 总是完全展开up主和视频的标题.
-![启用时](images/full-tweets-title-on.png)
+在顶栏的动态预览框中, 不管名称多长, 总是完全展开up主和视频的标题.
+![展开动态标题](images/compressed/full-tweets-title.jpg)
 ### 直播间勋章快速切换
 在直播区(live.bilibili.com)中, 可从`附加功能`中直接切换勋章和头衔.
 ### 显示失效视频信息
@@ -248,29 +240,26 @@
 为素质三连(长按点赞)启用触摸支持.
 ### 播放器
 - 增大控制栏的按钮间距, 使触摸操作更准确.
+![放大前](images/compressed/player-buttons-original.jpg)
+![放大后](images/compressed/player-buttons-large.jpg)
 - 启用触摸手势
     - 左右滑动可调整进度
     - 上下滑动可调整音量
     - 进度调整可在左上角和右上角取消
     - 在不同位置滑动, 可以使用3档不同的灵敏度.
 
-![进度调整](images/adjust-playback.png)
-![音量调整](images/adjust-volume.png)
+![触摸调整](images/compressed/touch-player.gif)
 
 已知问题: 滑动调整的音量不会保存, 下次打开视频将恢复原音量.
 
 #### 启用双击控制
 将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.
-##### 启用前
-![放大前](images/player-buttons-original.png)
-##### 启用后
-![放大后](images/player-buttons-large.png)
 
 ## 其他
 关于脚本自身的一些设定.
 ### 显示消息
 允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.
-![消息](images/toast.png)
+![消息](images/compressed/toast.jpg)
 #### 显示内部错误消息
 开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.
 ### 启用缓存

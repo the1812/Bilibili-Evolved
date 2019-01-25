@@ -52,7 +52,7 @@
             customControlBackgroundOpacity: `设置控制栏着色的黑色不透明度(0~1), 数值越大黑色越浓.`,
             harunaScale: `根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度.`,
             removeLiveWatermark: `删除观看直播时角落的水印.`,
-            removeVideoTopMask: `删除视频里鼠标经过时出现在顶端的标题覆盖层.`,
+            removeVideoTopMask: `删除视频里鼠标经过时出现在右上角的覆盖层.`,
             removeAds: `删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.`,
             watchLaterRedirect: `将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`,
             hideTopSearch: `将搜索框的推荐词替换为<span>搜索</span>.`,
