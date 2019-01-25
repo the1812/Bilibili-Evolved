@@ -96,7 +96,7 @@
 .area-text.dp-i-block.v-middle .area-link,
 .room-info-upper-row.p-relative .upper-right-ctnr.p-absolute.none-select .btn.primary,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
-.content-detail .container a
+.container a
 {
     color: #aaa !important;
 }
@@ -272,7 +272,8 @@ li.log-item .txt-block,
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
 .send-tabs-item-active,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover,
-.container .live
+.container .live,
+.comment-bilibili-con .con input[type=radio]:checked+label:before
 {
     border-color: var(--theme-color) !important;
 }
@@ -309,7 +310,8 @@ li.log-item .txt-block,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable:hover,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit:hover,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit,
-.rank-main .rank-box .child-nav li.active
+.rank-main .rank-box .child-nav li.active,
+.comment-bilibili-con .con label:after
 {
     background-color: var(--theme-color) !important;
 }
