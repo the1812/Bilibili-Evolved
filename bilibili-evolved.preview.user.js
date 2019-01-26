@@ -773,8 +773,11 @@
     }
     async function loadLazyPanel(selector)
     {
-        await SpinQuery.unsafeJquery();
-        const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+        const panel = unsafeWindow.$(selector);
+        if (panel.length === 0)
+        {
+            throw new Error(`Panel not found:${selector}`);
+        }
         panel.mouseover().mouseout();
     }
     function contentLoaded(callback)

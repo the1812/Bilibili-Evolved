@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      193.99
+// @version      194.00
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -774,8 +774,11 @@
     }
     async function loadLazyPanel(selector)
     {
-        await SpinQuery.unsafeJquery();
-        const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+        const panel = unsafeWindow.$(selector);
+        if (panel.length === 0)
+        {
+            throw new Error(`Panel not found:${selector}`);
+        }
         panel.mouseover().mouseout();
     }
     function contentLoaded(callback)
