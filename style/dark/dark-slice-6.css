@@ -75,7 +75,8 @@
 .row .col-4-med.col-4 .pager .pages .page-item button:hover,
 .all-hot-list-warp .pager .pages .page-item button,
 .all-hot-list-warp .pager .pages .page-item.active button,
-.all-hot-list-warp .pager .pages .page-item button:hover
+.all-hot-list-warp .pager .pages .page-item button:hover,
+.row .col-4-med.col-4 .pager .pages .page-item button
 {
     background-color: transparent !important;
 }
