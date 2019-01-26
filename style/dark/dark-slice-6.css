@@ -52,7 +52,9 @@
 .rank-detail .my-info,
 .pk-result .winner-info,
 .pk-result .mvp-info,
-.pk-container.p-absolute.normal-pk .pk-result
+.pk-container.p-absolute.normal-pk .pk-result,
+.bb-comment .no-login .baffle,
+.bb-comment .no-login .comment-emoji
 {
     background-color: #444 !important;
 }
@@ -158,7 +160,8 @@
 li.normal-item .uname,
 li.log-item .txt-block,
 .lottery-box .title,
-.up-info>a .up-name
+.up-info>a .up-name,
+.bb-comment .no-login .baffle
 {
     color: #eee !important;
 }
