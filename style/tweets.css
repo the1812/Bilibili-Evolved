@@ -4,7 +4,6 @@
     color: var(--foreground-color-d) !important;
     transform: translateX(-125px);
     -webkit-tap-highlight-color: transparent;
-    right: 0 !important;
 }
 .nav-search-submit:hover
 {
@@ -30,7 +29,7 @@
 .showSearch #nav_searchform
 {
     box-shadow: 0px 2px 10px 1px #0002;
-    width: 240px !important;
+    width: 250px !important;
 }
 .showSearch .nav-search-submit,
 .showSearch .nav-search-submit:hover
