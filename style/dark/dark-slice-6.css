@@ -110,12 +110,12 @@
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
 .container a,
 #article-list-index .article-list-title,
-.list-type .list-padding,
 .list-padding .list-publish,
 .list-padding .list-intro,
 .row .list-theme span,
 .list-info .list-li .song-title .song-float,
-.list-info .list-li .song-title .song-collection
+.list-info .list-li .song-title .song-collection,
+.col-9-med.col-7 .list-padding
 {
     color: #aaa !important;
 }
@@ -187,7 +187,8 @@ li.log-item .txt-block,
 .list-info .list-li .song-sort,
 .song-title .container a,
 .list-info .list-li .song-uname,
-.change-song .container .iconfont
+.change-song .container .iconfont,
+.list-info .list-li .song-title .song-normal
 {
     color: #eee !important;
 }
