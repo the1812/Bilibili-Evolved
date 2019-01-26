@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.6.32
-// @description  增强哔哩哔哩Web端体验: 修复界面瑕疵, 删除广告, 使用夜间模式浏览; 下载视频,封面,弹幕, 以及增加对触屏设备的支持等.
+// @version      1.7.0
+// @description  增强哔哩哔哩Web端体验: 下载视频, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 删除广告, 使用夜间模式, 修复界面瑕疵; 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
-// @copyright    2018, Grant Howrad (https://github.com/the1812)
+// @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
@@ -54,6 +54,8 @@
         customStyleColor: "#00A0D8",
         preserveRank: true,
         blurBackgroundOpacity: 0.382,
+        useDefaultPlayerMode: false,
+        applyPlayerModeOnPlay: true,
         defaultPlayerMode: "常规",
         useDefaultVideoQuality: false,
         defaultVideoQuality: "自动",
@@ -68,11 +70,17 @@
             special: false,
         },
         defaultPlayerLayout: "新版",
+        defaultBangumiLayout: "旧版",
+        useDefaultPlayerLayout: false,
         skipChargeList: false,
         comboLike: false,
         autoLightOff: false,
         useCache: true,
         autoContinue: false,
+        autoPlay: false,
+        showDeadVideoTitle: false,
+        useBiliplusRedirect: false,
+        useCommentStyle: true,
         toastInternalError: false,
         cache: {},
     };
@@ -83,8 +91,7 @@
         clearCache: true,
         downloadVideo: true,
         downloadDanmaku: true,
-        useDefaultPlayerMode: true,
-        useDefaultPlayerLayout: true,
+        medalHelper: true,
         about: true,
         forceWide: false,
         latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
@@ -513,9 +520,10 @@
             useDefaultPlayerMode: {
                 path: "min/default-player-mode.min.js",
                 displayNames: {
-                    useDefaultPlayerMode: "默认播放器模式",
+                    useDefaultPlayerMode: "使用默认播放器模式",
                     defaultPlayerMode: "默认播放器模式",
                     autoLightOff: "播放时自动关灯",
+                    applyPlayerModeOnPlay: "播放时应用模式",
                 },
                 dropdown: {
                     key: "defaultPlayerMode",
@@ -580,12 +588,20 @@
             useDefaultPlayerLayout: {
                 path: "min/default-player-layout.min.js",
                 displayNames: {
-                    "defaultPlayerLayout": "默认播放器布局",
+                    "useDefaultPlayerLayout": "指定播放器布局",
+                    "defaultPlayerLayout": "视频区布局",
+                    "defaultBangumiLayout": "番剧区布局",
                 },
-                dropdown: {
-                    key: "defaultPlayerLayout",
-                    items: ["旧版", "新版"]
-                },
+                dropdown: [
+                    {
+                        key: "defaultPlayerLayout",
+                        items: ["旧版", "新版"]
+                    },
+                    {
+                        key: "defaultBangumiLayout",
+                        items: ["旧版", "新版"]
+                    },
+                ],
             },
             compactLayoutStyle: {
                 path: "min/compact-layout.min.css",
@@ -608,6 +624,57 @@
                 displayNames: {
                     compactLayout: "首页使用紧凑布局",
                 }
+            },
+            medalHelper: {
+                path: "min/medal-helper.min.js",
+                styles: ["medalHelperStyle"],
+                dependencies: ["medalHelperDom"],
+                displayNames: {
+                    medalHelper: "直播勋章快速更换"
+                }
+            },
+            medalHelperStyle: {
+                path: "min/medal-helper.min.css",
+            },
+            medalHelperDom: {
+                path: "min/medal-helper.min.html",
+            },
+            showDeadVideoTitle: {
+                path: "min/show-dead-video-title.min.js",
+                displayNames: {
+                    showDeadVideoTitle: "显示失效视频信息",
+                    useBiliplusRedirect: "失效视频重定向",
+                },
+            },
+            autoPlay: {
+                path: "min/auto-play.min.js",
+                displayNames: {
+                    autoPlay: "自动播放视频",
+                }
+            },
+            useCommentStyle: {
+                path: "min/comment.min.js",
+                styles: [
+                    {
+                        key: "commentStyle",
+                        important: true,
+                        condition: () => true,
+                    },
+                    {
+                        key: "commentDarkStyle",
+                        important: true,
+                        condition: () => settings.useDarkStyle,
+                    },
+                ],
+                displayNames: {
+                    useCommentStyle: "简洁化评论区",
+                },
+            },
+            commentStyle: {
+                path: "min/comment.min.css"
+            },
+            commentDarkStyle: {
+                path: "min/comment-dark.min.css"
             },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
@@ -637,7 +704,47 @@
             }
         }
     }
-    function downloadText(url, load, error)
+    class Ajax
+    {
+        static send(xhr, body)
+        {
+            return new Promise((resolve, reject) =>
+            {
+                xhr.addEventListener("load", () => resolve(xhr.responseText));
+                xhr.addEventListener("error", () => reject(xhr.status));
+                xhr.send(body);
+            });
+        }
+        static getText(url)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            return this.send(xhr);
+        }
+        static getTextWithCredentials(url)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            xhr.withCredentials = true;
+            return this.send(xhr);
+        }
+        static postText(url, body)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            return this.send(xhr, body);
+        }
+        static postTextWithCredentials(url, body)
+        {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            return this.send(xhr, body);
+        }
+    }
+    function downloadText(url, load, error) // The old method for compatibility
     {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url);
@@ -663,6 +770,16 @@
         const event = document.createEvent("HTMLEvents");
         event.initEvent(eventName, true, true);
         element.dispatchEvent(event);
+    }
+    async function loadLazyPanel(selector)
+    {
+        await SpinQuery.unsafeJquery();
+        const panel = unsafeWindow.$(selector);
+        if (panel.length === 0)
+        {
+            throw new Error(`Panel not found: ${selector}`);
+        }
+        panel.mouseover().mouseout();
     }
     function contentLoaded(callback)
     {
@@ -867,7 +984,7 @@
             {
                 return new Promise((resolve) =>
                 {
-                    new SpinQuery(query, condition, it => resolve(it)).start();
+                    new SpinQuery(query, condition, it => resolve(it), () => resolve(null)).start();
                 });
             }
         }
@@ -1021,13 +1138,13 @@
         }
         makeImageFilter(originalRgb)
         {
-            const { h, s, b, } = this.rgbToHsb(originalRgb);
+            const { h, s, } = this.rgbToHsb(originalRgb);
             const targetColor = this.hsb;
 
             const hue = targetColor.h - h;
-            const saturate = (s - targetColor.s) / 100 + 100;
-            const brightness = (b - targetColor.b) / 100 + 100;
-            const filter = `hue-rotate(${hue}deg) saturate(${saturate}%) brightness(${brightness}%)`;
+            const saturate = ((targetColor.s - s) / 100 + 1) * 100;
+            // const brightness = ((targetColor.b - b) / 100 + 1) * 100;
+            const filter = `hue-rotate(${hue}deg) saturate(${saturate}%)`;
             return filter;
         }
         get blueImageFilter()
@@ -1098,16 +1215,16 @@
             {
                 for (const [key, name] of Object.entries(Resource.displayNames))
                 {
-                    html = html.replace(new RegExp(`(<(.+)\\s*?indent="[\\d]+?"\\s*?key="${key}"\\s*?dependencies=".*?">)[^\\0]*?(</\\2>)`, "g"),
+                    html = html.replace(new RegExp(`(<(.+)\\s*?indent="?[\\d]+?"?\\s*?key="?${key}"?\\s*?dependencies="?.*?"?>)[^\\0]*?(</\\2>)`, "g"),
                         `$1${name}$3`);
                 }
-                return html.replace(/<category\s*?icon="(.+?)">([^\0]*?)<\/category>/g, `
+                return html.replace(/<category\s*?icon="?(.+?)"?>([^\0]*?)<\/category>/g, `
                     <li class="indent-center category">
                         <i class="icon-$1" style="margin-right:8px"></i>
                         <span class="settings-category">$2</span>
                         <i class="icon-arrow" style="margin-left:8px"></i>
                     </li>
-                `).replace(/<checkbox\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/checkbox>/g, `
+                `).replace(/<checkbox\s*?indent="?(.+?)"?\s*?key="?(.+?)"?\s*?dependencies="?(.*?)"?>([^\0]*?)<\/checkbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-checkbox-container">
                             <input key="$2" type="checkbox" dependencies="$3" checked/>
@@ -1115,9 +1232,9 @@
                             <span>$4</span>
                         </label>
                     </li>
-                `).replace(/<dropdown\s*?indent="(.+?)"\s*?key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/dropdown>/g, `
+                `).replace(/<dropdown\s*?indent="?(.+?)"?\s*?key="?(.+?)"?\s*?dependencies="?(.*?)"?>([^\0]*?)<\/dropdown>/g, `
                     <li class="indent-$1">
-                        <label>
+                        <label class="gui-settings-dropdown-container">
                             <span class="gui-settings-dropdown-span">$4</span>
                             <div class="gui-settings-dropdown popup">
                                 <input readonly type="text" spellcheck="false" key="$2" dependencies="$3">
@@ -1126,7 +1243,7 @@
                             </div>
                         </label>
                     </li>
-                `).replace(/<textbox\s*?indent="(.+?)"\s*key="(.+?)"\s*?dependencies="(.*?)">([^\0]*?)<\/textbox>/g, `
+                `).replace(/<textbox\s*?indent="?(.+?)"?\s*key="?(.+?)"?\s*?dependencies="?(.*?)"?>([^\0]*?)<\/textbox>/g, `
                     <li class="indent-$1">
                         <label class="gui-settings-textbox-container">
                             <span>$4</span>
@@ -1223,7 +1340,7 @@
                                     this.text = cache;
                                     resolve(cache);
                                 }
-                                downloadText(this.url, text =>
+                                downloadText(this.url).then(text =>
                                 {
                                     this.text = this.type.preprocessor(text);
                                     if (text === null)
@@ -1242,17 +1359,17 @@
                                             saveSettings(settings);
                                         }
                                     }
-                                }, error => reject(error));
+                                }).catch(error => reject(error));
                             }
                             else
                             {
-                                downloadText(this.url,
-                                    text =>
+                                downloadText(this.url)
+                                    .then(text =>
                                     {
                                         this.text = this.type.preprocessor(text);
                                         resolve(this.text);
-                                    },
-                                    error => reject(error));
+                                    })
+                                    .catch(error => reject(error));
                             }
                             // -#Offline build placeholder
                         });
@@ -1429,7 +1546,9 @@
             styles.push("--theme-color:" + settings.customStyleColor);
             for (let opacity = 10; opacity <= 90; opacity += 10)
             {
-                styles.push(`--theme-color-${opacity}:` + hexToRgba(settings.customStyleColor + opacity));
+                const color = this.color.hexToRgba(settings.customStyleColor);
+                color.a = opacity / 100;
+                styles.push(`--theme-color-${opacity}:` + this.color.rgbToString(color));
             }
             styles.push("--foreground-color:" + settings.foreground);
             styles.push("--foreground-color-b:" + hexToRgba(settings.foreground + "b"));
@@ -1444,6 +1563,11 @@
         }
         import(compnentName)
         {
+            if (this.attributes[compnentName] === undefined)
+            {
+                console.error(`Import failed: component "${compnentName}" is not loaded.`);
+                return null;
+            }
             return this.attributes[compnentName].export;
         }
         async fetchByKey(key)
@@ -1473,11 +1597,16 @@
         }
         async fetch()
         {
-            this.validateCache();
+            const isCacheValid = this.validateCache();
+            let loadingToast = null;
             if (settings.toast === true)
             {
                 await this.fetchByKey("toast");
-                Toast = this.attributes.toast.export;
+                unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export;
+                if (!isCacheValid)
+                {
+                    loadingToast = Toast.info(`<div class="loading"></div>正在初始化脚本`, "初始化");
+                }
             }
             const promises = [];
             for (const key in settings)
@@ -1492,9 +1621,13 @@
                 }
             }
             await Promise.all(promises);
-            await this.applyDropdownOptions();
-            await this.applyWidgets();
             saveSettings(settings);
+            if (loadingToast)
+            {
+                loadingToast.dismiss();
+            }
+            await this.applyDropdownOptions();
+            this.applyWidgets();
         }
         applyComponent(key, text)
         {
@@ -1552,18 +1685,25 @@
         {
             async function applyDropdownOption(info)
             {
-                const dropdown = await SpinQuery.any(
-                    () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
-                const list = dropdown.find("ul");
-                const input = dropdown.find("input");
-                info.items.forEach(item =>
+                if (Array.isArray(info))
                 {
-                    $(`<li>${item}</li>`).appendTo(list)
-                        .on("click", () =>
-                        {
-                            input.val(item).trigger("input").change();
-                        });
-                });
+                    await Promise.all(info.map(applyDropdownOption));
+                }
+                else
+                {
+                    const dropdown = await SpinQuery.any(
+                        () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
+                    const list = dropdown.find("ul");
+                    const input = dropdown.find("input");
+                    info.items.forEach(item =>
+                    {
+                        $(`<li>${item}</li>`).appendTo(list)
+                            .on("click", () =>
+                            {
+                                input.val(item).trigger("input").change();
+                            });
+                    });
+                }
             }
             await Promise.all(Object.values(Resource.manifest)
                 .filter(it => it.dropdown)
@@ -1572,16 +1712,27 @@
         }
         validateCache()
         {
-            if (settings.cache.version !== settings.currentVersion)
+            if (typeof offlineData !== "undefined") // offline version always has cache
             {
-                settings.cache = {};
-                saveSettings(settings);
+                return true;
             }
-            if (settings.cache.version === undefined)
+            if (Object.getOwnPropertyNames(settings.cache).length === 0) // has no cache
+            {
+                return false;
+            }
+            if (settings.cache.version === undefined) // Has newly downloaded cache
             {
                 settings.cache.version = settings.currentVersion;
                 saveSettings(settings);
+                return true;
             }
+            if (settings.cache.version !== settings.currentVersion) // Has old version cache
+            {
+                settings.cache = {};
+                saveSettings(settings);
+                return false;
+            }
+            return true; // Has cache
         }
     }
 
@@ -1589,6 +1740,11 @@
     {
         loadResources();
         loadSettings();
+        const resources = new ResourceManager();
+        resources.styleManager.fetchStyles();
+        const applyScripts = () => resources.fetch().catch(error => logError(error));
+        contentLoaded(applyScripts);
+
         unsafeWindow.bilibiliEvolved = {
             SpinQuery,
             Toast,
@@ -1598,13 +1754,30 @@
             ResourceManager,
             Resource,
             ResourceType,
+            Ajax,
+            loadSettings,
+            saveSettings,
+            onSettingsChange,
+            logError,
+            raiseEvent,
+            loadLazyPanel,
+            contentLoaded,
+            fixed,
+            settings,
+            resources,
+            theWorld: waitTime =>
+            {
+                if (waitTime > 0)
+                {
+                    setTimeout(() => { debugger; }, waitTime);
+                }
+                else
+                {
+                    debugger;
+                }
+            },
             monkeyInfo: GM_info
         };
-        const resources = new ResourceManager();
-        resources.styleManager.fetchStyles();
-
-        const applyScripts = () => resources.fetch().catch(error => logError(error));
-        contentLoaded(applyScripts);
     }
     catch (error)
     {

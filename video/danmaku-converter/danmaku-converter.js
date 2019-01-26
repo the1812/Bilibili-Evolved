@@ -145,92 +145,103 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 const x = metrics.width / 2;
                 return [x, this.danmakuHeight / 2];
             }
-            getHorizonalTags(danmaku)
+            getTags(danmaku, { targetTrack, initTrack, nextTrack, isClosestDanmaku, getTrackItem, getTag })
             {
                 const [x, y] = this.getTextSize(danmaku);
                 const width = x * 2;
-                const time = this.duration(danmaku) * width / (this.resolution.x + width) + this.nextDanmakuDelay;
-                let track = 0;
+                const visibleTime = this.duration(danmaku) * width / (this.resolution.x + width) + this.nextDanmakuDelay;
+                let track = initTrack;
                 let closestDanmaku = null;
-                const isClosestDanmaku = it =>
-                {
-                    if (it.track !== track)
-                    {
-                        return false;
-                    }
-                    if (it.width < width) // 弹幕比前面的弹幕长
-                    {
-                        // 必须等前面弹幕走完
-                        return this.duration(danmaku) * this.resolution.x / (this.resolution.x + width) <= it.end - danmaku.time;
-                        //return it.end > danmaku.time;
-                    }
-                    else
-                    {
-                        return it.visible > danmaku.time;
-                    }
-                };
                 // 寻找已发送弹幕中可能重叠的
                 do
                 {
-                    closestDanmaku = this.horizontalTrack.find(isClosestDanmaku);
-                    track++;
-                }
-                while (closestDanmaku && track <= this.trackCount);
-
-                // 如果弹幕过多, 此条就不显示了
-                if (track > this.trackCount)
-                {
-                    return `\\pos(0,-999)`;
-                }
-                track--; // 减回最后的自增
-                this.horizontalTrack.push({
-                    width: width,
-                    start: danmaku.time,
-                    visible: danmaku.time + time,
-                    end: danmaku.time + this.duration(danmaku),
-                    track: track
-                });
-                return `\\move(${this.resolution.x + x},${track * this.trackHeight + this.margin + y},${-x},${track * this.trackHeight + this.margin + y},0,${this.duration(danmaku) * 1000})`;
-            }
-            getVerticalTags(danmaku)
-            {
-                const [, y] = this.getTextSize(danmaku);
-                const isTop = this.danmakuType[danmaku.type] === "top";
-                let closestDanmaku = null;
-                let track = isTop ? 0 : this.trackCount - 1;
-                const nextTrack = isTop ? 1 : -1;
-                const isClosestDanmaku = it =>
-                {
-                    if (it.track !== track)
-                    {
-                        return false;
-                    }
-                    return it.end > danmaku.time;
-                };
-                do
-                {
-                    closestDanmaku = this.verticalTrack.find(isClosestDanmaku);
+                    closestDanmaku = targetTrack.find(it => isClosestDanmaku({ it, track, width }));
                     track += nextTrack;
                 }
                 while (closestDanmaku && track <= this.trackCount && track >= 0);
+
+                // 如果弹幕过多, 此条就不显示了
                 if (track > this.trackCount || track < 0)
                 {
                     return `\\pos(0,-999)`;
                 }
-                track -= nextTrack;
-                this.verticalTrack.push({
-                    start: danmaku.time,
-                    end: danmaku.time + this.duration(danmaku),
-                    track: track
+                track -= nextTrack; // 减回最后的自增
+                targetTrack.push(getTrackItem({ track, width, visibleTime }));
+                return getTag({ track, x, y });
+            }
+            getHorizonalTags(danmaku)
+            {
+                return this.getTags(danmaku, {
+                    targetTrack: this.horizontalTrack,
+                    initTrack: 0,
+                    nextTrack: 1,
+                    isClosestDanmaku: ({ it, track, width }) =>
+                    {
+                        if (it.track !== track)
+                        {
+                            return false;
+                        }
+                        if (it.width < width) // 弹幕比前面的弹幕长
+                        {
+                            // 必须等前面弹幕走完
+                            return this.duration(danmaku) * this.resolution.x / (this.resolution.x + width) <= it.end - danmaku.time;
+                        }
+                        else
+                        {
+                            return it.visible > danmaku.time;
+                        }
+                    },
+                    getTrackItem: ({ track, width, visibleTime }) =>
+                    {
+                        return {
+                            width: width,
+                            start: danmaku.time,
+                            visible: danmaku.time + visibleTime,
+                            end: danmaku.time + this.duration(danmaku),
+                            track: track
+                        };
+                    },
+                    getTag: ({ track, x, y }) =>
+                    {
+                        return `\\move(${this.resolution.x + x},${track * this.trackHeight + this.margin + y},${-x},${track * this.trackHeight + this.margin + y},0,${this.duration(danmaku) * 1000})`;
+                    },
                 });
-                if (isTop)
-                {
-                    return `\\pos(${this.resolution.x / 2},${track * this.trackHeight + this.margin + y})`;
-                }
-                else
-                {
-                    return `\\pos(${this.resolution.x / 2},${this.resolution.y - this.margin - y - (this.trackCount - 1 - track) * this.trackHeight})`;
-                }
+            }
+            getVerticalTags(danmaku)
+            {
+                const isTop = this.danmakuType[danmaku.type] === "top";
+                return this.getTags(danmaku, {
+                    targetTrack: this.verticalTrack,
+                    initTrack: isTop ? 0 : this.trackCount - 1,
+                    nextTrack: isTop ? 1 : -1,
+                    isClosestDanmaku: ({ it, track }) =>
+                    {
+                        if (it.track !== track)
+                        {
+                            return false;
+                        }
+                        return it.end > danmaku.time;
+                    },
+                    getTrackItem: ({ track }) =>
+                    {
+                        return {
+                            start: danmaku.time,
+                            end: danmaku.time + this.duration(danmaku),
+                            track: track
+                        };
+                    },
+                    getTag: ({ track, y }) =>
+                    {
+                        if (isTop)
+                        {
+                            return `\\pos(${this.resolution.x / 2},${track * this.trackHeight + this.margin + y})`;
+                        }
+                        else
+                        {
+                            return `\\pos(${this.resolution.x / 2},${this.resolution.y - this.margin - y - (this.trackCount - 1 - track) * this.trackHeight})`;
+                        }
+                    },
+                });
             }
             push(danmaku)
             {
@@ -269,21 +280,23 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         }
         class DanmakuConverter
         {
-            constructor({ title, font, alpha, duration, blockTypes, resolution, bottomMarginPercent })
+            constructor({ title, font, alpha, duration, blockTypes, resolution, bottomMarginPercent, bold })
             {
                 this.title = title;
                 this.font = font;
-                this.alpha = Math.round(alpha * 100);
+                this.alpha = Math.round(alpha * 100).toString(16).toUpperCase();
                 this.duration = duration;
                 this.blockTypes = blockTypes;
                 this.resolution = resolution;
+                this.bold = bold;
+                this.white = 16777215; // Dec color of white danmaku
                 this.danmakuStack = new DanmakuStack(font, resolution, duration, bottomMarginPercent);
             }
             get fontStyles()
             {
                 return {
-                    25: `Style: Medium,${this.font},52,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,0`,
-                    18: `Style: Small,${this.font},36,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,0,0,0,0,100,100,0,0,1,1,0,5,0,0,0,0`,
+                    25: `Style: Medium,${this.font},52,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? "1" : "0"},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`,
+                    18: `Style: Small,${this.font},36,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? "1" : "0"},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`,
                 };
             }
             convertToAssDocument(xml)
@@ -293,7 +306,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 for (const xmlDanmaku of xmlDanmakuDocument.danmakus.sort((a, b) => a.time - b.time))
                 {
                     // 跳过设置为屏蔽的弹幕类型
-                    if (this.blockTypes.indexOf(xmlDanmaku.type) !== -1)
+                    if (this.blockTypes.indexOf(xmlDanmaku.type) !== -1 ||
+                        this.blockTypes.indexOf("color") !== -1 && xmlDanmaku.color !== this.white)
                     {
                         continue;
                     }
@@ -340,8 +354,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             }
             convertColor(decColor)
             {
-                const white = 16777215;
-                if (decColor === white)
+                if (decColor === this.white)
                 {
                     return "";
                 }

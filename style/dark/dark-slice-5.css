@@ -987,7 +987,6 @@ table.viptable td,
 .tag-default:active,
 .tag-default:hover,
 .qa-index .help-list .collapse-item.collapse-item-active .collapse-title-icon,
-#bp_right .balance_bp_box .button,
 .ac-artilce-tabs .tabs-nav .active,
 .s-paging > ul > a.current,
 .s-paging > ul > span.current,
@@ -1064,6 +1063,10 @@ table.viptable td,
 #dyn_wnd .dyn_menu .line
 {
     background-color: var(--theme-color) !important;
+}
+#bp_right .balance_bp_box .button 
+{
+    background: var(--theme-color) !important;
 }
 .notice-ctnr .blink:hover,
 .notice .blink:hover,
@@ -1164,8 +1167,7 @@ li.log-item .user-action .up-mark,
 .mini-wnd .list li a:hover,
 .q-title a.active,
 .q-c-div dl.active dt,
-.song-li .song-right .song-right-title a:hover
-{
+.song-li .song-right .song-right-title a:hover {
     color: var(--theme-color) !important;
 }
 .data-card .data-box .tab .fan-tab.current:after,

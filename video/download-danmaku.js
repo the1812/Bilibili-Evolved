@@ -11,33 +11,97 @@
                 .replace("_番剧_bilibili_哔哩哔哩", "");
             const danmaku = new DanmakuInfo((unsafeWindow || window).cid);
             await danmaku.fetchInfo();
-            const blob = (() =>
+            const blob = await (async () =>
             {
                 if (ass === true)
                 {
-                    // TODO: 从播放器里获取弹幕偏好
-                    const converter = new DanmakuConverter({
-                        title,
-                        font: "Microsoft YaHei UI",
-                        alpha: 0.6,
-                        duration(danmaku)
+                    let config = {};
+                    try
+                    {
+                        await loadLazyPanel(".bilibili-player-video-danmaku-setting");
+                        const getSliderIndex = (selector) =>
                         {
-                            switch (danmaku.type)
+                            const transform = parseFloat(document.querySelector(selector).style.transform.replace(/translateX\(([\d\.]+)/, "$1"));
+                            const index = {
+                                0: 0,
+                                44: 1,
+                                94: 2,
+                                144: 3,
+                                188: 4,
+                            }[transform];
+                            return index;
+                        };
+                        config.font = document.querySelector(".bilibili-player-video-danmaku-setting-right-font .bui-select-result").innerText;
+                        config.alpha = parseFloat(document.querySelector(".bilibili-player-setting-opacity .bui-bar").style.transform.replace(/scaleX\(([\d\.]+)\)/, "$1"));
+                        config.duration = (() =>
+                        {
+                            const scrollDuration = [10, 8, 6, 4, 2][getSliderIndex(".bilibili-player-setting-speedplus .bui-thumb")];
+                            return danmaku =>
                             {
-                                case 4:
-                                case 5:
-                                    return 4;
-                                default:
-                                    return 6;
+                                switch (danmaku.type)
+                                {
+                                    case 4:
+                                    case 5:
+                                        return 4; // stickyDuration
+                                    default:
+                                        return scrollDuration;
+                                }
+                            };
+                        })();
+                        config.blockTypes = (() =>
+                        {
+                            let result = [];
+                            const blockValues = {
+                                ".bilibili-player-block-filter-type[ftype=scroll]": [1, 2, 3],
+                                ".bilibili-player-block-filter-type[ftype=top]": [5],
+                                ".bilibili-player-block-filter-type[ftype=bottom]": [4],
+                                ".bilibili-player-block-filter-type[ftype=color]": ["color"],
+                                ".bilibili-player-block-filter-type[ftype=special]": [7, 8],
+                            };
+
+                            for (const [type, value] of Object.entries(blockValues))
+                            {
+                                if (document.querySelector(type).classList.contains("disabled"))
+                                {
+                                    result = result.concat(value);
+                                }
                             }
-                        },
-                        blockTypes: [],
-                        resolution: {
-                            x: 1920,
-                            y: 1080,
-                        },
-                        bottomMarginPercent: 0.15,
-                    });
+                            return result;
+                        })();
+                        const resolutionFactor = [1.4, 1.2, 1, 0.8, 0.6][getSliderIndex(".bilibili-player-setting-fontsize .bui-thumb")]; // 改变分辨率来调整字体大小
+                        config.resolution = {
+                            x: 1920 * resolutionFactor,
+                            y: 1080 * resolutionFactor,
+                        };
+                        config.bottomMarginPercent = [0.75, 0.5, 0.25, 0.15, 0.15][getSliderIndex(".bilibili-player-setting-area .bui-thumb")];
+                        config.bold = document.querySelector(".bilibili-player-video-danmaku-setting-right-font-bold input").checked;
+                    }
+                    catch (error)
+                    {
+                        config = {
+                            font: "微软雅黑",
+                            alpha: 0.6,
+                            duration: danmaku =>
+                            {
+                                switch (danmaku.type)
+                                {
+                                    case 4:
+                                    case 5:
+                                        return 4;
+                                    default:
+                                        return 6;
+                                }
+                            },
+                            blockTypes: [],
+                            resolution: {
+                                x: 1920,
+                                y: 1080,
+                            },
+                            bottomMarginPercent: 0.15,
+                            bold: false,
+                        };
+                    }
+                    const converter = new DanmakuConverter(config);
                     const assDocument = converter.convertToAssDocument(danmaku.rawXML);
                     return new Blob([assDocument.generateAss()], {
                         type: 'text/plain'
@@ -73,11 +137,8 @@
                     </button>`,
                 condition: async () =>
                 {
-                    let cid = await SpinQuery.condition(
-                        () => (unsafeWindow || window).cid,
-                        it => it !== undefined,
-                    );
-                    return cid !== undefined;
+                    let cid = await SpinQuery.select(() => (unsafeWindow || window).cid);
+                    return Boolean(cid);
                 },
                 success: () =>
                 {
@@ -89,14 +150,7 @@
                             const timeout = setTimeout(
                                 () => document.querySelector("#download-danmaku>span").innerHTML = "请稍侯...",
                                 200);
-                            try
-                            {
-                                downloadDanmaku(timeout, e.shiftKey);
-                            }
-                            catch (error)
-                            {
-                                logError(error);
-                            }
+                            downloadDanmaku(timeout, e.shiftKey);
                         }
                     });
                 },

@@ -17,7 +17,8 @@
 .main-container .pay-bar .vip .btn-pay.active,
 .main-container .media-info .media-right .media-tool-bar .btn-follow.active,
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled,
-.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover
+.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover,
+.bb-comment .no-login .comment-submit
 {
     background-color: #444 !important;
 }
@@ -66,7 +67,8 @@ blockquote .color-yellow-04,
 .s-paging > ul > a.current,
 .s-paging > ul > span.current,
 .score-info .go-movie,
-.invitation-record-warp .invtable .inputdone
+.invitation-record-warp .invtable .inputdone,
+.bb-comment .no-login .comment-submit
 {
     color: #eee !important;
 }
@@ -77,7 +79,8 @@ blockquote .color-yellow-04,
 .ui-input-textarea.focus,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
 .tabs-bar,
-.score-info .go-movie
+.score-info .go-movie,
+.bb-comment .no-login .comment-submit
 {
     border-color: transparent !important;
 }
@@ -103,7 +106,10 @@ blockquote .color-yellow-04,
 .voucher-ing .voucher-left-money:before,
 .voucher-no-used .voucher-left-money,
 .voucher-no-used .voucher-left-money:before,
-.detail-wrp .detail-content[data-v-00c9b213] p a span
+.detail-wrp .detail-content[data-v-00c9b213] p a span,
+.room-info-down-row .icon-label.hover-text-blue:hover .label,
+.room-introduction .edit-button:hover>.icon-font,
+.room-introduction .edit-button:hover>span
 {
     color: var(--theme-color) !important;
 }

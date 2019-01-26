@@ -30,6 +30,10 @@
             {
                 await SpinQuery.unsafeJquery();
                 const settingsIcon = await SpinQuery.any(() => unsafeWindow.$(selectors.settingsIcon));
+                if (!settingsIcon)
+                {
+                    return;
+                }
                 settingsIcon.mouseover().mouseout();
 
                 for (const [type, value] of Object.entries(settings.danmakuBlockSettings))
@@ -45,7 +49,11 @@
             {
                 for (const type in settings.danmakuBlockSettings)
                 {
-                    const element = await SpinQuery.select(() =>document.querySelector(selectors[type]));
+                    const element = await SpinQuery.select(() => document.querySelector(selectors[type]));
+                    if (!element)
+                    {
+                        return;
+                    }
                     element.addEventListener("click", () =>
                     {
                         settings.danmakuBlockSettings[type] = element.classList.contains("disabled");

@@ -5,7 +5,7 @@
         const playerModes = [
             {
                 name: "常规",
-                action: () => {},
+                action: () => { },
             },
             {
                 name: "宽屏",
@@ -32,6 +32,10 @@
             {
                 await SpinQuery.unsafeJquery();
                 const settingsButton = await SpinQuery.any(() => unsafeWindow.$(".bilibili-player-video-btn-setting"));
+                if (!settingsButton)
+                {
+                    return;
+                }
                 settingsButton.mouseover().mouseout();
                 lightOff = () =>
                 {
@@ -55,7 +59,7 @@
                 it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"));
 
             const video = document.querySelector("video");
-            if (video.length === 0)
+            if (!video)
             {
                 return;
             }
@@ -87,11 +91,21 @@
                         info.action();
                     }
                     lightOff();
-                    video.removeEventListener("play", onplay);
+                    if (settings.applyPlayerModeOnPlay)
+                    {
+                        video.removeEventListener("play", onplay);
+                    }
                 };
-                video.addEventListener("play", onplay);
+                if (settings.applyPlayerModeOnPlay)
+                {
+                    video.addEventListener("play", onplay);
+                }
+                else
+                {
+                    onplay();
+                }
             }
         }
-        (Observer.childList || Observer.subtree)("#bofqi", () => main());
+        Observer.childList("#bofqi", () => main());
     };
 })();

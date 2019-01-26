@@ -103,6 +103,7 @@ div.up-load
 .nav-search-keyword
 {
     width: 130px !important;
+    margin-right: 32px !important;
 }
 #nav_searchform
 {

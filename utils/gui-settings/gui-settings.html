@@ -17,8 +17,12 @@
   <div class="gui-settings-content">
     <ul>
       <category icon="video">视频</category>
-      <dropdown indent="0" key="defaultPlayerMode" dependencies=""></dropdown>
-      <dropdown indent="0" key="defaultPlayerLayout" dependencies=""></dropdown>
+      <checkbox indent="0" key="useDefaultPlayerLayout" dependencies=""></checkbox>
+      <dropdown indent="1" key="defaultPlayerLayout" dependencies="useDefaultPlayerLayout"></dropdown>
+      <dropdown indent="1" key="defaultBangumiLayout" dependencies="useDefaultPlayerLayout"></dropdown>
+      <checkbox indent="0" key="useDefaultPlayerMode" dependencies=""></checkbox>
+      <dropdown indent="1" key="defaultPlayerMode" dependencies="useDefaultPlayerMode"></dropdown>
+      <checkbox indent="1" key="applyPlayerModeOnPlay" dependencies="useDefaultPlayerMode"></checkbox>
       <checkbox indent="0" key="useDefaultVideoQuality" dependencies=""></checkbox>
       <dropdown indent="1" key="defaultVideoQuality" dependencies="useDefaultVideoQuality"></dropdown>
       <checkbox indent="0" key="useDefaultDanmakuSettings" dependencies=""></checkbox>
@@ -28,6 +32,7 @@
       <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDescription" dependencies=""></checkbox>
       <checkbox indent="0" key="autoContinue" dependencies=""></checkbox>
+      <checkbox indent="0" key="autoPlay" dependencies=""></checkbox>
       <checkbox indent="0" key="skipChargeList" dependencies=""></checkbox>
       <category icon="style">样式</category>
       <li class="indent-0">
@@ -48,6 +53,7 @@
       <textbox indent="1" key="darkScheduleStart" dependencies="darkSchedule"></textbox>
       <textbox indent="1" key="darkScheduleEnd" dependencies="darkSchedule"></textbox>
       <checkbox indent="0" key="compactLayout" dependencies=""></checkbox>
+      <checkbox indent="0" key="useCommentStyle" dependencies=""></checkbox>
       <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox>
       <checkbox indent="1" key="showBanner" dependencies="overrideNavBar"></checkbox>
       <checkbox indent="1" key="preserveRank" dependencies="overrideNavBar"></checkbox>
@@ -62,6 +68,8 @@
       <checkbox indent="0" key="watchLaterRedirect" dependencies=""></checkbox>
       <checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox>
       <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
+      <checkbox indent="0" key="showDeadVideoTitle" dependencies=""></checkbox>
+      <checkbox indent="1" key="useBiliplusRedirect" dependencies="showDeadVideoTitle"></checkbox>
       <category icon="touch">触摸</category>
       <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
       <checkbox indent="0" key="comboLike" dependencies=""></checkbox>
@@ -76,3 +84,4 @@
   </div>
   <div class="gui-settings-tooltip"></div>
 </div>
+<!-- sss -->

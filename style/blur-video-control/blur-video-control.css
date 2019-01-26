@@ -1,31 +1,28 @@
-@supports (backdrop-filter: blur(48px)) or (-webkit-backdrop-filter: blur(48px))
+.video-control-blur-layer
 {
-    .video-control-blur-layer
-    {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        -webkit-backdrop-filter: blur(48px);
-        backdrop-filter: blur(48px);
-        z-index: -1;
-        top: 0;
-    }
-    .bilibili-player-video-control-mask
-    {
-        background: transparent !important;
-    }
-    .bilibili-player-video-control-bottom,
-    .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
-    {
-        background-color: transparent !important;
-    }
-    .bilibili-player-video-control-bottom
-    {
-        position: relative;
-    }
-    .bilibili-player-area .bilibili-player-video-control-wrap,
-    .bilibili-player-area .bilibili-player-video-control-bottom
-    {
-        transition: none !important;
-    }
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-backdrop-filter: blur(48px);
+    backdrop-filter: blur(48px);
+    z-index: -1;
+    top: 0;
+}
+.bilibili-player-video-control-mask
+{
+    background: transparent !important;
+}
+.bilibili-player-video-control-bottom,
+.bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap
+{
+    background-color: transparent !important;
+}
+.bilibili-player-video-control-bottom
+{
+    position: relative;
+}
+.bilibili-player-area .bilibili-player-video-control-wrap,
+.bilibili-player-area .bilibili-player-video-control-bottom
+{
+    transition: none !important;
 }

@@ -41,7 +41,7 @@
                         <i class="icon-cancel"></i>
                     </div>
                 </div>
-                <p class="toast-card-message">${this.message}</p>
+                <div class="toast-card-message">${this.message}</div>
                 </div>
                 `;
             }

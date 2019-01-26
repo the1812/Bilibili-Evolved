@@ -2,25 +2,21 @@
 {
     return (_, resources) =>
     {
-        // const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
-        // const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
         const pageData = {
             entity: null,
             aid: undefined,
             cid: undefined,
-            isOldBangumi: false,
-            isStardustBangumi: false,
         };
-
-        const bangumiUrls = [];
-
         class Video
         {
             constructor()
             {
-                this.menuPanel = document.querySelector(".download-video-panel");
                 this.menuClasses = ["quality", "action", "progress"];
                 this.currentMenuClass = "quality";
+            }
+            get menuPanel()
+            {
+                return document.querySelector(".download-video-panel");
             }
             addMenuClass()
             {
@@ -63,21 +59,6 @@
             }
         }
         class Bangumi extends Video
-        {
-            constructor()
-            {
-                super();
-                this.menuClasses = ["action", "progress"];
-                this.currentMenuClass = "action";
-            }
-            async getUrl()
-            {
-                const url = await SpinQuery.select(() => bangumiUrls[0])
-                    .catch(() => logError("获取番剧下载链接失败."));
-                return url;
-            }
-        }
-        class StardustBangumi extends Video
         {
             async getUrl(quality)
             {
@@ -176,7 +157,7 @@
                         {
                             const json = JSON.parse(xhr.responseText.replace(/http:/g, "https:"));
                             const data = json.data || json.result || json;
-                            if (!pageData.isOldBangumi && data.quality !== this.format.quality)
+                            if (data.quality !== this.format.quality)
                             {
                                 reject("获取下载链接失败, 请确认当前账号有下载权限后重试.");
                             }
@@ -244,7 +225,7 @@
                         xhr.send();
                         this.workingXhr.push(xhr);
                     }));
-                    startByte = Math.round(startByte + partialLength);
+                    startByte = Math.round(startByte + partialLength) + 1;
                 }
                 return Promise.all(promises);
             }
@@ -349,38 +330,36 @@
             pageData.cid = cid;
             if (document.URL.indexOf("bangumi") !== -1)
             {
-                // Old bangumi fallback
-                const player = await SpinQuery.select(() => document.querySelector("#bofqi"));
-                if (!player.classList.contains("stardust-player"))
-                {
-                    pageData.isOldBangumi = true;
-                    pageData.entity = new Bangumi();
-                    await SpinQuery.unsafeJquery();
-                    unsafeWindow.$(unsafeWindow.document).ajaxSend((event, request, params) =>
-                    {
-                        if (params.url.indexOf("https://bangumi.bilibili.com/player/web_api/v2/playurl") !== -1)
-                        {
-                            bangumiUrls.unshift(params.url);
-                        }
-                    });
-                }
-                else
-                {
-                    pageData.isStardustBangumi = true;
-                    pageData.entity = new StardustBangumi();
-                }
+                pageData.entity = new Bangumi();
             }
             else
             {
                 pageData.entity = new Video();
             }
-            return aid !== undefined && cid !== undefined;
+            return Boolean(aid && cid);
         }
         async function loadWidget()
         {
-            await loadPageData();
-            const formats = await VideoFormat.availableFormats;
+            let formats = await VideoFormat.availableFormats;
             let [selectedFormat] = formats;
+            const loadQualities = async () =>
+            {
+                await loadPageData();
+                formats = await VideoFormat.availableFormats;
+                const list = $("ol.video-quality");
+                list.html("");
+                formats.forEach(format =>
+                {
+                    $(`<li>${format.displayName}</li>`)
+                        .on("click", () =>
+                        {
+                            selectedFormat = format;
+                            pageData.entity.nextMenuClass();
+                        })
+                        .prependTo(list);
+                });
+            };
+            Observer.childList("#bofqi", loadQualities);
             const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
             {
                 pageData.entity.addError();
@@ -432,16 +411,6 @@
             }
             $(".video-action>#video-action-download").on("click", download);
             $(".video-action>#video-action-copy").on("click", copyLink);
-            formats.forEach(format =>
-            {
-                $(`<li>${format.displayName}</li>`)
-                    .on("click", () =>
-                    {
-                        selectedFormat = format;
-                        pageData.entity.nextMenuClass();
-                    })
-                    .prependTo("ol.video-quality");
-            });
             resources.applyStyle("downloadVideoStyle");
             const downloadPanel = document.querySelector(".download-video-panel");
             const togglePopup = () => $(".download-video-panel").toggleClass("opened");
@@ -457,7 +426,7 @@
                 $(".video-error").text("");
                 pageData.entity.removeError();
             });
-
+            await SpinQuery.select(() => document.querySelector(".download-video-panel"));
             pageData.entity.addMenuClass();
         }
         return {

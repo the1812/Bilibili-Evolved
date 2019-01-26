@@ -106,8 +106,8 @@ namespace BilibiliEvolved.Build
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
             return !file.FullName.Contains(".min")
-                && !file.FullName.Contains("dark.css")
-                && !file.FullName.Contains("dark-template")
+                && file.Name != "dark.css"
+                && file.Name != "dark-template.css"
                 && (file.Extension == ".css");
         };
 
@@ -115,20 +115,21 @@ namespace BilibiliEvolved.Build
 
         public override string Minify(string input)
         {
-            var commentRegex = new Regex(@"/\*[^\0]*?\*/|^\s*//.*$", RegexOptions.Multiline);
-            input = commentRegex.Replace(input, "");
+            // var commentRegex = new Regex(@"/\*[^\0]*?\*/|^\s*//.*$", RegexOptions.Multiline);
+            // input = commentRegex.Replace(input, "");
 
-            var selectorRegex = new Regex(@"[\s]*([^\0,}]+?)[\s]*({)|[\s]*([^\0}]+?)(,)" + Environment.NewLine);
-            input = selectorRegex.Replace(input, "$1$2$3$4");
+            // var selectorRegex = new Regex(@"[\s]*([^\0,}]+?)[\s]*({)|[\s]*([^\0}]+?)(,)" + Environment.NewLine);
+            // input = selectorRegex.Replace(input, "$1$2$3$4");
 
-            var ruleRegex = new Regex(@"[\s]*([a-z\-]+:)[ ]*(.*?)[ ]*(!important)?;[\s]*");
-            input = ruleRegex.Replace(input, "$1$2$3;");
+            // var ruleRegex = new Regex(@"[\s]*([a-z\-]+:)[ ]*(.*?)[ ]*(!important)?;[\s]*");
+            // input = ruleRegex.Replace(input, "$1$2$3;");
 
-            return input
-                .Replace(Environment.NewLine, "")
-                .Replace("\n", "")
-                .Replace("\r", "")
-                .Replace(", ", ",");
+            // return input
+            //     .Replace(Environment.NewLine, "")
+            //     .Replace("\n", "")
+            //     .Replace("\r", "")
+            //     .Replace(", ", ",");
+            return new UglifyCss().Run(input);
         }
 
         public override ProjectBuilder Build(ProjectBuilder builder)
@@ -139,50 +140,6 @@ namespace BilibiliEvolved.Build
     }
     sealed class JavascriptMinifier : ResourceMinifier
     {
-        private static readonly string UglifyEsArguments = @"-m";
-        private static readonly string NodePath = "node";
-
-        private static string uglifyEsAbsolutePath = null;
-        private static string UglifyEsAbsolutePath
-        {
-            get
-            {
-                if (uglifyEsAbsolutePath is null)
-                {
-                    uglifyEsAbsolutePath = getUglifyEsPath();
-                }
-                return uglifyEsAbsolutePath;
-            }
-            set => uglifyEsAbsolutePath = value;
-        }
-        private static string getUglifyEsPath()
-        {
-            var uglifyEsPath = @"\uglify-es\bin\uglifyjs";
-            var localPath = @"\node_modules" + uglifyEsPath;
-            var globalPath = Environment.GetEnvironmentVariable("AppData") + @"\npm\node_modules" + uglifyEsPath;
-
-            if (File.Exists(localPath))
-            {
-                return localPath;
-            }
-            else if (File.Exists(globalPath))
-            {
-                return globalPath;
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        public JavascriptMinifier()
-        {
-            if (!File.Exists(UglifyEsAbsolutePath))
-            {
-                throw new FileNotFoundException("Node.js module \"uglify-es\" not found.");
-            }
-        }
-
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
             return !file.FullName.Contains(".min")
@@ -195,25 +152,7 @@ namespace BilibiliEvolved.Build
 
         public override string Minify(string input)
         {
-            var processInfo = new ProcessStartInfo
-            {
-                FileName = NodePath,
-                Arguments = $"{UglifyEsAbsolutePath} {UglifyEsArguments}",
-                UseShellExecute = false,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-            };
-            var process = Process.Start(processInfo);
-            using (var writer = new StreamWriter(process.StandardInput.BaseStream, Encoding.UTF8))
-            {
-                writer.Write(input);
-                writer.Flush();
-                writer.Close();
-                using (var reader = new StreamReader(process.StandardOutput.BaseStream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd().Trim();
-                }
-            }
+            return new UglifyJs().Run(input);
         }
     }
     sealed class HtmlMinifier : ResourceMinifier
@@ -227,16 +166,17 @@ namespace BilibiliEvolved.Build
 
         public override string Minify(string input)
         {
-            var commentRegex = new Regex(@"<!--[^\0]*?-->", RegexOptions.Multiline);
-            input = commentRegex.Replace(input, "");
+            // var commentRegex = new Regex(@"<!--[^\0]*?-->", RegexOptions.Multiline);
+            // input = commentRegex.Replace(input, "");
 
-            var blankRegex = new Regex(@"(?<=>)[\s]*([^\s]*)[\s]*(?=<)|[\s]*(?=/>)", RegexOptions.Multiline);
-            input = blankRegex.Replace(input, "$1");
+            // var blankRegex = new Regex(@"(?<=>)[\s]*([^\s]*)[\s]*(?=<)|[\s]*(?=/>)", RegexOptions.Multiline);
+            // input = blankRegex.Replace(input, "$1");
 
-            return input
-                .Replace(Environment.NewLine, "")
-                .Replace("\n", "")
-                .Replace("\r", "");
+            // return input
+            //     .Replace(Environment.NewLine, "")
+            //     .Replace("\n", "")
+            //     .Replace("\r", "");
+            return new UglifyHtml().Run(input);
         }
     }
 }

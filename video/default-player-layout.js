@@ -4,34 +4,110 @@
     {
         (async () =>
         {
-            const dropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultPlayerLayout]`));
-            if (!dropdown)
+            const videoDropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultPlayerLayout]`));
+            const bangumiDropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultBangumiLayout]`));
+            if (!videoDropdown || !bangumiDropdown)
             {
+                logError("无法加载播放器布局选项.");
                 return;
             }
-            const cookieKey = "stardustvideo";
-            const oldLayout = "旧版";
-            const newLayout = "新版";
-            const cookieValues = {
-                [oldLayout]: -1,
-                [newLayout]: 1,
-            };
-            const currentLayout = document.cookie.split(";")
-                .filter(it => it.includes(cookieKey + "=" + cookieValues.oldLayout)).length > 0 ? oldLayout : newLayout;
+            class LayoutCookie
+            {
+                setCookie(key, value)
+                {
+                    document.cookie = `${key}=${value};path=/;domain=.bilibili.com;max-age=31536000`;
+                }
+                clearCookie(key)
+                {
+                    document.cookie = `${key}=;path=/;domain=.bilibili.com;max-age=0`;
+                }
+                getValue(key)
+                {
+                    return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${key}\\s*\\=\\s*([^;]*).*$)|^.*$`), "$1");
+                }
+                useNewLayout() { }
+                useOldLayout() { }
+                setLayout(newLayout)
+                {
+                    if (newLayout)
+                    {
+                        this.useNewLayout();
+                    }
+                    else
+                    {
+                        this.useOldLayout();
+                    }
+                }
+            }
+            class VideoLayoutCookie extends LayoutCookie
+            {
+                checkCookies()
+                {
+                    const value = this.getValue(this.cookieKey);
+                    if (value === "" || parseInt(value) < 0 && settings.defaultPlayerLayout !== "旧版")
+                    {
+                        this.useNewLayout();
+                    }
+                    else if (settings.defaultPlayerLayout !== "新版")
+                    {
+                        this.useOldLayout();
+                    }
+                }
+                constructor()
+                {
+                    super();
+                    this.cookieKey = "stardustvideo";
+                    this.checkCookies();
+                }
+                useNewLayout()
+                {
+                    this.setCookie(this.cookieKey, 1);
+                }
+                useOldLayout()
+                {
+                    this.setCookie(this.cookieKey, -1);
+                }
+            }
+            class BangumiLayoutCookie extends LayoutCookie
+            {
+                checkCookies()
+                {
+                    const value = this.getValue(this.cookieKey);
+                    if (value === "" || parseInt(value) <= 0 && settings.defaultBangumiLayout !== "旧版")
+                    {
+                        this.useNewLayout();
+                    }
+                    else if (settings.defaultBangumiLayout !== "新版")
+                    {
+                        this.useOldLayout();
+                    }
+                }
+                constructor()
+                {
+                    super();
+                    this.cookieKey = "stardustpgcv";
+                    this.checkCookies();
+                }
+                useNewLayout()
+                {
+                    this.setCookie(this.cookieKey, "0606");
+                }
+                useOldLayout()
+                {
+                    this.setCookie(this.cookieKey, 0);
+                }
+            }
 
-            function setLayout(layoutName)
+            const videoCookie = new VideoLayoutCookie();
+            $(videoDropdown).on("input", () =>
             {
-                document.cookie = `${cookieKey}=${cookieValues[layoutName]};path=/;domain=.bilibili.com;max-age=31536000`;
-                window.location.reload();
-            }
-            $(dropdown).on("change", () =>
-            {
-                setLayout(dropdown.value);
+                videoCookie.setLayout(videoDropdown.value === "新版");
             });
-            if (settings.defaultPlayerLayout !== currentLayout)
+            const bangumiCookie = new BangumiLayoutCookie();
+            $(bangumiDropdown).on("input", () =>
             {
-                setLayout(settings.defaultPlayerLayout);
-            }
+                bangumiCookie.setLayout(bangumiDropdown.value === "新版");
+            });
         })();
     };
 })();

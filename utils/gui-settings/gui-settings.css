@@ -9,7 +9,7 @@
     top: 0;
     left: 0;
     width: 24px;
-    z-index: 99999;
+    z-index: 299;
 }
 .gui-settings,
 .gui-settings-widgets
@@ -350,6 +350,11 @@ li.category.folded i.icon-arrow
 {
     transform: rotate(180deg);
 }
+.gui-settings-dropdown-container
+{
+    display: flex;
+    align-items: center;
+}
 .gui-settings-dropdown
 {
     position: relative;
@@ -358,6 +363,7 @@ li.category.folded i.icon-arrow
     background-color: #8884;
     display: inline-flex;
     align-items: center;
+    height: 32px;
 }
 .gui-settings-dropdown>i
 {
@@ -499,16 +505,18 @@ li.category.folded i.icon-arrow
     color: black;
     cursor: pointer;
     transition: all .2s ease-out;
-    transform-origin: center;
     font-size: 10pt;
+    border-bottom: 2px solid var(--theme-color-50);
+    flex: 0 0 auto;
+    margin: 4px;
 }
 .gui-settings-flat-button:hover
 {
-    transform: scale(1.02);
+    border-bottom-color: var(--theme-color-90);
 }
 .gui-settings-flat-button:active
 {
-    transform: scale(0.98);
+    border-bottom-color: var(--theme-color);
 }
 .gui-settings-flat-button:focus
 {
@@ -517,12 +525,6 @@ li.category.folded i.icon-arrow
 .gui-settings-flat-button i
 {
     margin-right: 8px;
-}
-.gui-settings-widgets-box .gui-settings-flat-button
-{
-    border-bottom: 2px solid var(--theme-color);
-    flex: 0 0 auto;
-    margin: 4px;
 }
 
 .gui-settings-checkbox

@@ -52,6 +52,7 @@ div#square.container,
 .nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list,
 .project-list .project-list-item .project-list-item-img,
 .download-video-panel,
+.medal-popup,
 .article-action .ops .share-container .weixin-holder,
 .coin-wrap,
 .bilibili-evolved-about,
@@ -268,7 +269,9 @@ body>div.to-top.on,
 .qrcode-login .qrcode-footer .suc-txt,
 .form-login .input-box .sns .btn,
 .open-dialog-masker .open-body ul li i,
-.open-dialog-masker .open-footer .open-agree
+.open-dialog-masker .open-footer .open-agree,
+.small-item .meta,
+.bangumi-rating-container .bangumi-rating-subtitle
 {
     color: #aaa !important;
 }
@@ -374,7 +377,8 @@ body>div.to-top.on,
 .open-dialog-masker .__dialog-header p,
 .open-dialog-masker .open-body p,
 .open-dialog-masker .open-body ul li span,
-.open-dialog-masker .btn-normal
+.open-dialog-masker .btn-normal,
+.bangumi-rating-container .bangumi-rating-title
 {
     color: #eee !important;
 }
@@ -443,7 +447,8 @@ body>div.to-top.on,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
-.open-dialog-masker .btn-normal
+.open-dialog-masker .btn-normal,
+.review-module .review-list .empty-wrapper .btn-go-write
 {
     border-color: transparent !important;
 }
@@ -544,7 +549,8 @@ svg.toast-card-dismiss path
 .error-container .error-panel .error-msg .error-img img,
 .leaveMsgUpload .btnarea .btnareaIcon,
 .coin-operated-m .like-checkbox input[type=checkbox]:checked+i,
-.video-list .vl-hd .display-tab li.on
+.video-list .vl-hd .display-tab li.on,
+.i-watchlater.has-select
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -764,7 +770,8 @@ body>div.to-top.on
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
 .main-container .pay-bar .vip .btn-pay,
-.open-dialog-masker .btn-normal.confirm
+.open-dialog-masker .btn-normal.confirm,
+.review-module .review-list .empty-wrapper .btn-go-write
 {
     background-color: var(--theme-color) !important;
 }
@@ -864,7 +871,8 @@ body>div.to-top.on
 .open-dialog-masker .open-body ul li i.icon-complete,
 .open-dialog-masker .open-footer .open-agree i.icon-chk-full,
 .open-dialog-masker .open-footer .open-agree a,
-.main-container .review-module .module-title .more-link:hover
+.main-container .review-module .module-title .more-link:hover,
+.bilibili-player-video-toast-top-lower-quality
 {
     color: var(--theme-color) !important;
 }
@@ -904,7 +912,8 @@ body>div.to-top.on
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
 .main-container .pay-bar .vip .btn-pay,
-.open-dialog-masker .btn-normal.confirm
+.open-dialog-masker .btn-normal.confirm,
+.review-module .review-list .empty-wrapper .btn-go-write
 {
     color: var(--foreground-color) !important;
 }

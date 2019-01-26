@@ -292,7 +292,7 @@
             {
                 if (!this.cidData)
                 {
-                    downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`, response =>
+                    downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`).then(response =>
                     {
                         this.cidData = JSON.parse(response).data;
                         this.getVideoshot(currentTime, done);
@@ -431,22 +431,23 @@
                 return sec =>
                 {
                     const current = video.prop("currentTime");
+                    const currentPercent = fixed(100 * current / videoDuration);
                     let finalTime = current + sec;
-                    let percent = fixed(100 * finalTime / videoDuration);
+                    let finalPercent = fixed(100 * finalTime / videoDuration);
                     let change = sec;
                     if (finalTime > videoDuration)
                     {
                         finalTime = videoDuration;
-                        percent = 100;
+                        finalPercent = 100;
                         change = videoDuration - current;
                     }
                     else if (finalTime < 0)
                     {
                         finalTime = 0;
-                        percent = 0;
+                        finalPercent = 0;
                         change = current;
                     }
-                    const result = `${secondsToHms(current)} →<br/>${secondsToHms(finalTime)} (${percent}%)`;
+                    const result = `${secondsToHms(current)} (${currentPercent}%)<br>👇<br>${secondsToHms(finalTime)} (${finalPercent}%)`;
                     const html = `
                         <div class='touch-row'>
                             <div class='touch-row-item'>
@@ -467,7 +468,7 @@
                         `;
                     text.innerHTML = html;
                     videoshot.getVideoshot(finalTime, style => $(".videoshot").css(style));
-                    $(".touch-progress").css("transform", `scaleX(${percent / 100})`);
+                    $(".touch-progress").css("transform", `scaleX(${finalPercent / 100})`);
                 };
             };
             swiper.action.lowSpeedBackward = speedChange("低");
@@ -493,7 +494,7 @@
                         finalVolume = 0;
                         change = originalVolume;
                     }
-                    const result = `${originalVolume} → ${finalVolume}`;
+                    const result = `${originalVolume} 👉 ${finalVolume}`;
                     setVolume(finalVolume);
                     const html = `
                         <div class='touch-row'>
@@ -599,7 +600,7 @@
             }
         }
 
-        (Observer.childList || Observer.subtree)("#bofqi", () => main());
+        Observer.childList("#bofqi", () => main());
         resources.applyStyle("touchPlayerStyle");
     };
 })();
