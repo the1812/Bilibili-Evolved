@@ -44,15 +44,14 @@
                 checkCookies()
                 {
                     const value = this.getValue(this.cookieKey);
-                    if (value === "" || parseInt(value) < 0)
+                    if (value === "" || parseInt(value) < 0 && settings.defaultPlayerLayout !== "旧版")
                     {
-                        settings.defaultPlayerLayout = "旧版";
+                        this.useNewLayout();
                     }
-                    else
+                    else if (settings.defaultPlayerLayout !== "新版")
                     {
-                        settings.defaultPlayerLayout = "新版";
+                        this.useOldLayout();
                     }
-                    saveSettings(settings);
                 }
                 constructor()
                 {
@@ -74,15 +73,14 @@
                 checkCookies()
                 {
                     const value = this.getValue(this.cookieKey);
-                    if (value === "" || parseInt(value) <= 0)
+                    if (value === "" || parseInt(value) <= 0 && settings.defaultBangumiLayout !== "旧版")
                     {
-                        settings.defaultBangumiLayout = "旧版";
+                        this.useNewLayout();
                     }
-                    else
+                    else if (settings.defaultBangumiLayout !== "新版")
                     {
-                        settings.defaultBangumiLayout = "新版";
+                        this.useOldLayout();
                     }
-                    saveSettings(settings);
                 }
                 constructor()
                 {
