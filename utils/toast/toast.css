@@ -139,7 +139,7 @@
     width: 14px;
     height: 14px;
     display: inline-block;
-    margin-right: 0 14px;
+    margin-right: 14px;
     position: relative;
 }
 .toast-card .loading::after
