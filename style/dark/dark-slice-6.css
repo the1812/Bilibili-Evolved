@@ -98,7 +98,8 @@
 .area-text.dp-i-block.v-middle .area-link,
 .room-info-upper-row.p-relative .upper-right-ctnr.p-absolute.none-select .btn.primary,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
-.container a
+.container a,
+#article-list-index .article-list-title
 {
     color: #aaa !important;
 }
@@ -161,7 +162,8 @@ li.normal-item .uname,
 li.log-item .txt-block,
 .lottery-box .title,
 .up-info>a .up-name,
-.bb-comment .no-login .baffle
+.bb-comment .no-login .baffle,
+#article-list-index .title-holder .title
 {
     color: #eee !important;
 }
