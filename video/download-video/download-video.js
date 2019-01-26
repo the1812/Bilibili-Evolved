@@ -2,17 +2,11 @@
 {
     return (_, resources) =>
     {
-        // const VideoInfo = resources.attributes.videoInfo.export.VideoInfo;
-        // const BangumiInfo = resources.attributes.videoInfo.export.BangumiInfo;
         const pageData = {
             entity: null,
             aid: undefined,
             cid: undefined,
         };
-
-        // const bangumiUrls = [];
-        // let ajaxHooked = false;
-
         class Video
         {
             constructor()
@@ -64,21 +58,6 @@
                 }
             }
         }
-        // class Bangumi extends Video
-        // {
-        //     constructor()
-        //     {
-        //         super();
-        //         this.menuClasses = ["action", "progress"];
-        //         this.currentMenuClass = "action";
-        //     }
-        //     async getUrl()
-        //     {
-        //         const url = await SpinQuery.select(() => bangumiUrls[0])
-        //             .catch(() => logError("获取番剧下载链接失败."));
-        //         return url;
-        //     }
-        // }
         class Bangumi extends Video
         {
             async getUrl(quality)
@@ -357,7 +336,7 @@
             {
                 pageData.entity = new Video();
             }
-            return aid !== undefined && cid !== undefined;
+            return Boolean(aid && cid);
         }
         async function loadWidget()
         {

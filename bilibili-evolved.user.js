@@ -776,7 +776,7 @@
         const panel = unsafeWindow.$(selector);
         if (panel.length === 0)
         {
-            throw new Error(`Panel not found:${selector}`);
+            throw new Error(`Panel not found: ${selector}`);
         }
         panel.mouseover().mouseout();
     }

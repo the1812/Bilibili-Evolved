@@ -32,6 +32,10 @@
             {
                 await SpinQuery.unsafeJquery();
                 const settingsButton = await SpinQuery.any(() => unsafeWindow.$(".bilibili-player-video-btn-setting"));
+                if (!settingsButton)
+                {
+                    return;
+                }
                 settingsButton.mouseover().mouseout();
                 lightOff = () =>
                 {
@@ -55,7 +59,7 @@
                 it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"));
 
             const video = document.querySelector("video");
-            if (video.length === 0)
+            if (!video)
             {
                 return;
             }

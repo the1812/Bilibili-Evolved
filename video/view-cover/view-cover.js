@@ -66,11 +66,8 @@
                         </button>`,
                     condition: async () =>
                     {
-                        const aid = await SpinQuery.condition(
-                            () => (unsafeWindow || window).aid,
-                            it => it !== undefined,
-                        );
-                        return aid !== "undefined";
+                        const aid = await SpinQuery.select(() => (unsafeWindow || window).aid);
+                        return Boolean(aid);
                     },
                     success: async () =>
                     {
@@ -107,8 +104,8 @@
                         </button>`,
                     condition: async () =>
                     {
-                        const coverLink = await SpinQuery.any(() => $(".header-info-ctnr .room-cover"));
-                        return typeof coverLink !== "undefined";
+                        const coverLink = await SpinQuery.select(() => document.querySelector(".header-info-ctnr .room-cover"));
+                        return Boolean(coverLink);
                     },
                     success: async () =>
                     {

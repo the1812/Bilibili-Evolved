@@ -5,6 +5,10 @@
         (async () =>
         {
             const likeButton = await SpinQuery.select(() => document.querySelector(".ops span.like"));
+            if (!likeButton)
+            {
+                return;
+            }
             likeButton.style.userSelect = "none";
             function mountEvent(name, args)
             {

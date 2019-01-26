@@ -137,10 +137,7 @@
                     </button>`,
                 condition: async () =>
                 {
-                    let cid = await SpinQuery.condition(
-                        () => (unsafeWindow || window).cid,
-                        it => it !== undefined,
-                    );
+                    let cid = await SpinQuery.select(() => (unsafeWindow || window).cid);
                     return cid !== undefined;
                 },
                 success: () =>
