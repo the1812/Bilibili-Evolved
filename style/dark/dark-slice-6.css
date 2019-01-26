@@ -54,7 +54,9 @@
 .pk-result .mvp-info,
 .pk-container.p-absolute.normal-pk .pk-result,
 .bb-comment .no-login .baffle,
-.bb-comment .no-login .comment-emoji
+.bb-comment .no-login .comment-emoji,
+.list-info .list-li.odd,
+.list-info .list-li.even
 {
     background-color: #444 !important;
 }
@@ -65,7 +67,12 @@
 .upper-right-ctnr.p-absolute.none-select .btn.primary,
 .area-category-item.dp-i-block.p-relative.t-center.pointer .category-divider,
 #app-ctnr .content .container,
-.rank-main .rank-box .child-nav .nav-remind
+.rank-main .rank-box .child-nav .nav-remind,
+.page-item.disabled .pager .pages .page-item button,
+.page-item.disabled .pager .pages .page-item .next, .pager .pages .page-item .next.disabled,
+.page-item.disabled .pager .pages .page-item .next.disabled:hover,
+.row .col-4-med.col-4 .pager .pages .page-item.active button,
+.row .col-4-med.col-4 .pager .pages .page-item button:hover
 {
     background-color: transparent !important;
 }
@@ -99,7 +106,13 @@
 .room-info-upper-row.p-relative .upper-right-ctnr.p-absolute.none-select .btn.primary,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
 .container a,
-#article-list-index .article-list-title
+#article-list-index .article-list-title,
+.list-type .list-padding,
+.list-padding .list-publish,
+.list-padding .list-intro,
+.row .list-theme span,
+.list-info .list-li .song-title .song-float,
+.list-info .list-li .song-title .song-collection
 {
     color: #aaa !important;
 }
@@ -163,7 +176,14 @@ li.log-item .txt-block,
 .lottery-box .title,
 .up-info>a .up-name,
 .bb-comment .no-login .baffle,
-#article-list-index .title-holder .title
+#article-list-index .title-holder .title,
+.list-gap .list-title,
+.list-padding .list-founder,
+.share-board .list-playbtn,
+.row .list-theme,
+.list-info .list-li .song-sort,
+.song-title .container a,
+.list-info .list-li .song-uname
 {
     color: #eee !important;
 }
@@ -194,7 +214,9 @@ li.log-item .txt-block,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
 .room-introduction .edit-button,
 .area-category-selector,
-.lottery-box
+.lottery-box,
+.row .list-info,
+.row .list-comment
 {
     border-color: transparent !important;
 }
@@ -316,7 +338,9 @@ li.log-item .txt-block,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit:hover,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit,
 .rank-main .rank-box .child-nav li.active,
-.comment-bilibili-con .con label:after
+.comment-bilibili-con .con label:after,
+.share-board .list-playbtn,
+.share-board .list-playbtn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -371,7 +395,12 @@ li.log-item .txt-block,
 li.normal-item a:hover .uname,
 .container .live,
 .mvp-info .user-info .title,
-.up-info>a .up-name:hover
+.up-info>a .up-name:hover,
+.list-info .list-li .song-title .song-collection.font-blue,
+.list-info .list-li .song-title .song-float:hover,
+.row .col-4-med.col-4 .pager .pages .page-item.active button,
+.row .col-4-med.col-4 .pager .pages .page-item button:hover,
+.creation-li .creation-right .creation-theme .creation-link:hover
 {
     color: var(--theme-color) !important;
 }
