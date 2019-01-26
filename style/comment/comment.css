@@ -79,24 +79,31 @@
     background-position: center !important;
     opacity: 0.5;
 }
+.bb-comment .comment-list .list-item .info .like span,
+.bb-comment .comment-list .list-item .info .hate span,
+.bb-comment .comment-send .comment-emoji span
+{
+    opacity: 0.5;
+}
 .bb-comment .comment-list .list-item .info .like.liked span,
 .bb-comment .comment-list .list-item .info .hate.hated span,
 .bb-comment .comment-list .list-item .info .like:hover span,
-.bb-comment .comment-list .list-item .info .hate:hover span
+.bb-comment .comment-list .list-item .info .hate:hover span,
+.bb-comment .comment-list .list-item .info .like span,
+.bb-comment .comment-list .list-item .info .hate span,
+.bb-comment .comment-send .comment-emoji span
 {
     color: black;
 }
 .bb-comment .comment-send .comment-emoji.open .face,
-.bb-comment .comment-send .comment-emoji .face
-{
-    opacity: 0.7;
-}
-.bb-comment .comment-list .list-item .info .like:hover i,
-.bb-comment .comment-list .list-item .info .hate:hover i,
-.bb-comment .comment-list .list-item .info .like.liked:hover i,
-.bb-comment .comment-list .list-item .info .like.liked i,
-.bb-comment .comment-list .list-item .info .like.hated:hover i,
-.bb-comment .comment-list .list-item .info .like.hated i,
+.bb-comment .comment-send .comment-emoji:hover .face,
+.bb-comment .comment-send .comment-emoji:hover span,
+.bb-comment .comment-list .list-item .info .like:hover>*,
+.bb-comment .comment-list .list-item .info .hate:hover>*,
+.bb-comment .comment-list .list-item .info .like.liked:hover>*,
+.bb-comment .comment-list .list-item .info .like.liked>*,
+.bb-comment .comment-list .list-item .info .like.hated:hover>*,
+.bb-comment .comment-list .list-item .info .like.hated>*,
 .bb-comment .comment-list .list-item .info .operation .spot:hover
 {
     opacity: 0.7;
