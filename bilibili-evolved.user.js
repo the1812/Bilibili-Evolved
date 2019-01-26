@@ -1708,9 +1708,13 @@
         }
         validateCache()
         {
-            if (typeof offlineData !== "undefined") // Offline version always has cache
+            if (typeof offlineData !== "undefined") // offline version always has cache
             {
                 return true;
+            }
+            if (Object.getOwnPropertyNames(settings.cache).length === 0) // has no cache
+            {
+                return false;
             }
             if (settings.cache.version === undefined) // Has newly downloaded cache
             {

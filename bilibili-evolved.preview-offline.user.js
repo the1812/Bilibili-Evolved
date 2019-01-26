@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      193.97
+// @version      193.98
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1747,9 +1747,13 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         }
         validateCache()
         {
-            if (typeof offlineData !== "undefined") // Offline version always has cache
+            if (typeof offlineData !== "undefined") // offline version always has cache
             {
                 return true;
+            }
+            if (Object.getOwnPropertyNames(settings.cache).length === 0) // has no cache
+            {
+                return false;
             }
             if (settings.cache.version === undefined) // Has newly downloaded cache
             {
