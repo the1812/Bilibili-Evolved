@@ -284,7 +284,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             {
                 this.title = title;
                 this.font = font;
-                this.alpha = Math.round(alpha * 100);
+                this.alpha = Math.round(alpha * 100).toString(16).toUpperCase();
                 this.duration = duration;
                 this.blockTypes = blockTypes;
                 this.resolution = resolution;
