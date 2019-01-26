@@ -980,7 +980,7 @@
             {
                 return new Promise((resolve) =>
                 {
-                    new SpinQuery(query, condition, it => resolve(it)).start();
+                    new SpinQuery(query, condition, it => resolve(it), () => resolve(null)).start();
                 });
             }
         }
