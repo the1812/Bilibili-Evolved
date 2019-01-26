@@ -54,6 +54,6 @@
                 it => continuePlay(it.filter((_, e) => e.innerText.indexOf("上次看到") !== -1)),
             );
         }
-        Observer.childListSubtree("#bofqi", findHistoryToast);
+        Observer.childList("#bofqi", findHistoryToast);
     };
 })();

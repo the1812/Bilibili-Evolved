@@ -102,6 +102,6 @@
                 }
             }
         }
-        Observer.childListSubtree("#bofqi", () => main());
+        Observer.childList("#bofqi", () => main());
     };
 })();

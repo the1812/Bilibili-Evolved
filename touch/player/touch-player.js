@@ -600,7 +600,7 @@
             }
         }
 
-        Observer.childListSubtree("#bofqi", () => main());
+        Observer.childList("#bofqi", () => main());
         resources.applyStyle("touchPlayerStyle");
     };
 })();

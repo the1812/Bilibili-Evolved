@@ -2,7 +2,7 @@
 {
     return (_, resources) =>
     {
-        Observer.childListSubtree("#bofqi", () =>
+        Observer.childList("#bofqi", () =>
         {
             SpinQuery.count(
                 () => $(".bui-slider .bui-track.bui-track-video-progress,.bilibili-player-video-control-bottom"),

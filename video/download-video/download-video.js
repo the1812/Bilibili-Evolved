@@ -405,7 +405,7 @@
                         .prependTo(list);
                 });
             };
-            Observer.childListSubtree("#bofqi", loadQualities);
+            Observer.childList("#bofqi", loadQualities);
             const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
             {
                 pageData.entity.addError();
