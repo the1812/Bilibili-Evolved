@@ -72,7 +72,10 @@
 .page-item.disabled .pager .pages .page-item .next, .pager .pages .page-item .next.disabled,
 .page-item.disabled .pager .pages .page-item .next.disabled:hover,
 .row .col-4-med.col-4 .pager .pages .page-item.active button,
-.row .col-4-med.col-4 .pager .pages .page-item button:hover
+.row .col-4-med.col-4 .pager .pages .page-item button:hover,
+.all-hot-list-warp .pager .pages .page-item button,
+.all-hot-list-warp .pager .pages .page-item.active button,
+.all-hot-list-warp .pager .pages .page-item button:hover
 {
     background-color: transparent !important;
 }
@@ -183,7 +186,8 @@ li.log-item .txt-block,
 .row .list-theme,
 .list-info .list-li .song-sort,
 .song-title .container a,
-.list-info .list-li .song-uname
+.list-info .list-li .song-uname,
+.change-song .container .iconfont
 {
     color: #eee !important;
 }
@@ -400,7 +404,9 @@ li.normal-item a:hover .uname,
 .list-info .list-li .song-title .song-float:hover,
 .row .col-4-med.col-4 .pager .pages .page-item.active button,
 .row .col-4-med.col-4 .pager .pages .page-item button:hover,
-.creation-li .creation-right .creation-theme .creation-link:hover
+.creation-li .creation-right .creation-theme .creation-link:hover,
+.all-hot-list-warp .pager .pages .page-item.active button,
+.all-hot-list-warp .pager .pages .page-item button:hover
 {
     color: var(--theme-color) !important;
 }
