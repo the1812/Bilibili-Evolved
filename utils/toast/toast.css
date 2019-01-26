@@ -73,6 +73,8 @@
     margin: 16px;
     margin-top: 0;
     white-space: pre-wrap;
+    display: flex;
+    align-items: center;
 }
 .toast-card.toast-default
 {
@@ -108,4 +110,49 @@
 .toast-card .link:active
 {
     background-color: rgba(0,0,0,.1);
+}
+@keyframes loading
+{
+    0%, 100%
+    {
+        top: 0%;
+        left: 50%;
+    }
+    25%
+    {
+        top: 50%;
+        left: 100%;
+    }
+    50%
+    {
+        top: 100%;
+        left: 50%;
+    }
+    75%
+    {
+        top: 50%;
+        left: 0%;
+    }
+}
+.toast-card .loading
+{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    margin-right: 0 14px;
+    position: relative;
+}
+.toast-card .loading::after
+{
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #8884;
+    border-radius: 50%;
+    display: block;
+    transform: translateX(-50%) translateY(-50%);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    animation: loading 1s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
 }

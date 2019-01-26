@@ -1593,11 +1593,16 @@
         }
         async fetch()
         {
-            this.validateCache();
+            const isCacheValid = this.validateCache();
+            let loadingToast = null;
             if (settings.toast === true)
             {
                 await this.fetchByKey("toast");
                 unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export;
+                if (!isCacheValid)
+                {
+                    loadingToast = Toast.info(`<div class="loading"></div>正在初始化脚本`, "初始化");
+                }
             }
             const promises = [];
             for (const key in settings)
@@ -1612,9 +1617,13 @@
                 }
             }
             await Promise.all(promises);
-            await this.applyDropdownOptions();
-            await this.applyWidgets();
             saveSettings(settings);
+            if (loadingToast)
+            {
+                loadingToast.dismiss();
+            }
+            await this.applyDropdownOptions();
+            this.applyWidgets();
         }
         applyComponent(key, text)
         {
@@ -1699,16 +1708,23 @@
         }
         validateCache()
         {
-            if (settings.cache.version !== settings.currentVersion)
+            if (typeof offlineData !== "undefined") // Offline version always has cache
             {
-                settings.cache = {};
-                saveSettings(settings);
+                return true;
             }
-            if (settings.cache.version === undefined)
+            if (settings.cache.version === undefined) // Has newly downloaded cache
             {
                 settings.cache.version = settings.currentVersion;
                 saveSettings(settings);
+                return true;
             }
+            if (settings.cache.version !== settings.currentVersion) // Has old version cache
+            {
+                settings.cache = {};
+                saveSettings(settings);
+                return false;
+            }
+            return true; // Has cache
         }
     }
 
