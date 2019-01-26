@@ -773,6 +773,7 @@
     }
     async function loadLazyPanel(selector)
     {
+        await SpinQuery.unsafeJquery();
         const panel = unsafeWindow.$(selector);
         if (panel.length === 0)
         {
