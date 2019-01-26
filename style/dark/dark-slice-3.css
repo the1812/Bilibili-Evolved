@@ -270,7 +270,8 @@ body>div.to-top.on,
 .form-login .input-box .sns .btn,
 .open-dialog-masker .open-body ul li i,
 .open-dialog-masker .open-footer .open-agree,
-.small-item .meta
+.small-item .meta,
+.bangumi-rating-container .bangumi-rating-subtitle
 {
     color: #aaa !important;
 }
@@ -376,7 +377,8 @@ body>div.to-top.on,
 .open-dialog-masker .__dialog-header p,
 .open-dialog-masker .open-body p,
 .open-dialog-masker .open-body ul li span,
-.open-dialog-masker .btn-normal
+.open-dialog-masker .btn-normal,
+.bangumi-rating-container .bangumi-rating-title
 {
     color: #eee !important;
 }
