@@ -25,7 +25,7 @@
                 this.items.forEach(item =>
                 {
                     const key = $(item).find("input").attr("key");
-                    const texts = item.innerText + toolTips[key].replace(/<span>|<\/span>/g, "");
+                    const texts = Resource.displayNames[key] + toolTips[key].replace(/<span>|<\/span>/g, "");
                     if (texts.includes(value))
                     {
                         item.classList.remove("folded");
