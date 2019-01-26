@@ -1597,7 +1597,7 @@
             if (settings.toast === true)
             {
                 await this.fetchByKey("toast");
-                Toast = this.attributes.toast.export;
+                unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export;
             }
             const promises = [];
             for (const key in settings)
