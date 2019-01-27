@@ -14,7 +14,8 @@
 .bilibili-player-feedback,
 #app-ctnr .content #comment,
 #app-ctnr .content,
-.lottery-box .title
+.lottery-box .title,
+.ban-app .case-tip .click-btn
 {
     background-color: #222 !important;
 }
@@ -189,7 +190,8 @@ li.log-item .txt-block,
 .song-title .container a,
 .list-info .list-li .song-uname,
 .change-song .container .iconfont,
-.list-info .list-li .song-title .song-normal
+.list-info .list-li .song-title .song-normal,
+.ban-app .case-tip .click-btn
 {
     color: #eee !important;
 }
@@ -346,7 +348,8 @@ li.log-item .txt-block,
 .rank-main .rank-box .child-nav li.active,
 .comment-bilibili-con .con label:after,
 .share-board .list-playbtn,
-.share-board .list-playbtn:hover
+.share-board .list-playbtn:hover,
+.ban-app .case-tip .click-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
