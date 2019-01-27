@@ -80,7 +80,9 @@
 .all-hot-list-warp .pager .pages .page-item button,
 .all-hot-list-warp .pager .pages .page-item.active button,
 .all-hot-list-warp .pager .pages .page-item button:hover,
-.row .col-4-med.col-4 .pager .pages .page-item button
+.row .col-4-med.col-4 .pager .pages .page-item button,
+.pk-container.p-absolute.normal-pk .player-area.p-absolute.init-player.normal-pk .player-area.init-player.normal-pk .pk-result,
+.pk-container.p-absolute.normal-pk .player-area.p-absolute.match-player.normal-pk .player-area.match-player.normal-pk .pk-result
 {
     background-color: transparent !important;
 }
