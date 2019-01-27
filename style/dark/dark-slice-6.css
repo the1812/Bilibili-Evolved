@@ -199,7 +199,8 @@ li.log-item .txt-block,
 .cases-wrap.clearfix .column.col2 a,
 .common-dialig-title,
 .common-dialig-right-btn,
-.common-dialig-left-btn
+.common-dialig-left-btn,
+#page-fav .fav-sidenav .num
 {
     color: #eee !important;
 }
