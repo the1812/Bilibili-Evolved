@@ -15,7 +15,8 @@
 #app-ctnr .content #comment,
 #app-ctnr .content,
 .lottery-box .title,
-.ban-app .case-tip .click-btn
+.ban-app .case-tip .click-btn,
+.common-dialig-left-btn
 {
     background-color: #222 !important;
 }
@@ -57,7 +58,9 @@
 .bb-comment .no-login .baffle,
 .bb-comment .no-login .comment-emoji,
 .list-info .list-li.odd,
-.list-info .list-li.even
+.list-info .list-li.even,
+.teach-last-list,
+.common-dialog-content
 {
     background-color: #444 !important;
 }
@@ -117,7 +120,8 @@
 .row .list-theme span,
 .list-info .list-li .song-title .song-float,
 .list-info .list-li .song-title .song-collection,
-.col-9-med.col-7 .list-padding
+.col-9-med.col-7 .list-padding,
+.common-dialig-sub-title
 {
     color: #aaa !important;
 }
@@ -191,7 +195,11 @@ li.log-item .txt-block,
 .list-info .list-li .song-uname,
 .change-song .container .iconfont,
 .list-info .list-li .song-title .song-normal,
-.ban-app .case-tip .click-btn
+.ban-app .case-tip .click-btn,
+.cases-wrap.clearfix .column.col2 a,
+.common-dialig-title,
+.common-dialig-right-btn,
+.common-dialig-left-btn
 {
     color: #eee !important;
 }
@@ -224,7 +232,8 @@ li.log-item .txt-block,
 .area-category-selector,
 .lottery-box,
 .row .list-info,
-.row .list-comment
+.row .list-comment,
+.common-dialig-left-btn
 {
     border-color: transparent !important;
 }
@@ -349,7 +358,8 @@ li.log-item .txt-block,
 .comment-bilibili-con .con label:after,
 .share-board .list-playbtn,
 .share-board .list-playbtn:hover,
-.ban-app .case-tip .click-btn:hover
+.ban-app .case-tip .click-btn:hover,
+.common-dialig-right-btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -411,7 +421,8 @@ li.normal-item a:hover .uname,
 .row .col-4-med.col-4 .pager .pages .page-item button:hover,
 .creation-li .creation-right .creation-theme .creation-link:hover,
 .all-hot-list-warp .pager .pages .page-item.active button,
-.all-hot-list-warp .pager .pages .page-item button:hover
+.all-hot-list-warp .pager .pages .page-item button:hover,
+.cases-wrap.clearfix .column.col2 a:hover
 {
     color: var(--theme-color) !important;
 }
