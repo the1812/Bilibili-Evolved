@@ -16,7 +16,8 @@
 #app-ctnr .content,
 .lottery-box .title,
 .ban-app .case-tip .click-btn,
-.common-dialig-left-btn
+.common-dialig-left-btn,
+.bnj-main>.content
 {
     background-color: #222 !important;
 }
@@ -59,7 +60,8 @@
 .list-info .list-li.odd,
 .list-info .list-li.even,
 .teach-last-list,
-.common-dialog-content
+.common-dialog-content,
+.bnj-reserve-progress .contact
 {
     background-color: #444 !important;
 }
@@ -89,6 +91,11 @@
 {
     background: #fff !important;
 } */
+.bnj-reserve .content h5,
+.operation .inner .bnj-button .content
+{
+    color: #222 !important;
+}
 .main-container .ep-list-wrapper .list-title .ep-list-progress,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-info .pub-info,
 .main-container .media-info .media-right .pub-wrapper,
@@ -235,7 +242,8 @@ li.log-item .txt-block,
 .lottery-box,
 .row .list-info,
 .row .list-comment,
-.common-dialig-left-btn
+.common-dialig-left-btn,
+.player .bilibili-player-video-bottom-area .bilibili-player-video-sendbar
 {
     border-color: transparent !important;
 }
