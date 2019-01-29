@@ -63,7 +63,10 @@
 .teach-last-list,
 .common-dialog-content,
 .bnj-reserve-progress .contact,
-#area-list ul li
+#area-list ul li,
+.user-card-m .loading .mc1,
+.user-card-m .loading .mc3,
+.user-card-m .loading .mc4
 {
     background-color: #444 !important;
 }
