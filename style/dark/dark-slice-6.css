@@ -17,7 +17,8 @@
 .lottery-box .title,
 .ban-app .case-tip .click-btn,
 .common-dialig-left-btn,
-.bnj-main>.content
+.bnj-main>.content,
+#area-list ul li:after
 {
     background-color: #222 !important;
 }
@@ -61,7 +62,8 @@
 .list-info .list-li.even,
 .teach-last-list,
 .common-dialog-content,
-.bnj-reserve-progress .contact
+.bnj-reserve-progress .contact,
+#area-list ul li
 {
     background-color: #444 !important;
 }
@@ -208,7 +210,8 @@ li.log-item .txt-block,
 .common-dialig-title,
 .common-dialig-right-btn,
 .common-dialig-left-btn,
-#page-fav .fav-sidenav .num
+#page-fav .fav-sidenav .num,
+#area-list ul li dl
 {
     color: #eee !important;
 }
@@ -432,7 +435,8 @@ li.normal-item a:hover .uname,
 .creation-li .creation-right .creation-theme .creation-link:hover,
 .all-hot-list-warp .pager .pages .page-item.active button,
 .all-hot-list-warp .pager .pages .page-item button:hover,
-.cases-wrap.clearfix .column.col2 a:hover
+.cases-wrap.clearfix .column.col2 a:hover,
+#area-list ul li dl:hover
 {
     color: var(--theme-color) !important;
 }
