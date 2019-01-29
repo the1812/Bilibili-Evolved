@@ -4,7 +4,7 @@
 - [安装](#安装)
 - [了解所有功能](#功能)
 - [浏览设置项](#设置)
-- [浏览器兼容性](#兼容性)
+- [兼容性](#兼容性)
 - [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
 - [捐赠入口](donate.md)
 - [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/Coming-Features)
@@ -269,16 +269,25 @@
 使用缓存以提高脚本的加载速度, 此选项只对非离线版有效, 可在`附加功能`中清除脚本的缓存.
 
 # 兼容性
-## Chrome
+## 脚本管理器
+### [Tampermonkey](https://tampermonkey.net/)
+完全兼容.
+### [Violentmonkey](https://violentmonkey.github.io/)
+不支持多标签页设置同步. (开两个标签页, 在其中一个里改动设置, 另一个标签页的设置不会更新)
+### [Greasemonkey](https://www.greasespot.net/)
+不支持, 请使用以上的两种管理器.
+
+## 浏览器
+### Chrome
 - 背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
 - 含有背景模糊效果的动画有掉帧现象.
-## Firefox
+### Firefox
 - 滚动条样式无效.
 - 背景模糊效果无效.
-- 触摸调整的进度预览有弹跳现象.(来自`transition: all 0.2s;`. 短时间内总是从原数值开始变化, 而不是当前数值)
-## Safari
+- 触摸调整的进度预览有弹跳现象.(来自`transition`. 短时间内总是从原数值开始变化, 而不是当前数值)
+### Safari
 - 尚未在Safari中测试.(流下了贫穷的泪水
-## Edge [**停止支持**]
+### Edge [**停止支持**]
 - 滚动条样式无效.
 - 由于Edge的CSS渲染bug(主要集中在`filter`和`color`), 部分主题颜色错乱.
 - 顶栏触摸体验不佳.
