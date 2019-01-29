@@ -14,7 +14,10 @@
 .bilibili-player-feedback,
 #app-ctnr .content #comment,
 #app-ctnr .content,
-.lottery-box .title
+.lottery-box .title,
+.ban-app .case-tip .click-btn,
+.common-dialig-left-btn,
+.bnj-main>.content
 {
     background-color: #222 !important;
 }
@@ -52,11 +55,13 @@
 .rank-detail .my-info,
 .pk-result .winner-info,
 .pk-result .mvp-info,
-.pk-container.p-absolute.normal-pk .pk-result,
 .bb-comment .no-login .baffle,
 .bb-comment .no-login .comment-emoji,
 .list-info .list-li.odd,
-.list-info .list-li.even
+.list-info .list-li.even,
+.teach-last-list,
+.common-dialog-content,
+.bnj-reserve-progress .contact
 {
     background-color: #444 !important;
 }
@@ -76,7 +81,9 @@
 .all-hot-list-warp .pager .pages .page-item button,
 .all-hot-list-warp .pager .pages .page-item.active button,
 .all-hot-list-warp .pager .pages .page-item button:hover,
-.row .col-4-med.col-4 .pager .pages .page-item button
+.row .col-4-med.col-4 .pager .pages .page-item button,
+.pk-container.p-absolute.normal-pk .player-area.p-absolute.init-player.normal-pk .player-area.init-player.normal-pk .pk-result,
+.pk-container.p-absolute.normal-pk .player-area.p-absolute.match-player.normal-pk .player-area.match-player.normal-pk .pk-result
 {
     background-color: transparent !important;
 }
@@ -84,6 +91,11 @@
 {
     background: #fff !important;
 } */
+.bnj-reserve .content h5,
+.operation .inner .bnj-button .content
+{
+    color: #222 !important;
+}
 .main-container .ep-list-wrapper .list-title .ep-list-progress,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-info .pub-info,
 .main-container .media-info .media-right .pub-wrapper,
@@ -116,7 +128,8 @@
 .row .list-theme span,
 .list-info .list-li .song-title .song-float,
 .list-info .list-li .song-title .song-collection,
-.col-9-med.col-7 .list-padding
+.col-9-med.col-7 .list-padding,
+.common-dialig-sub-title
 {
     color: #aaa !important;
 }
@@ -189,7 +202,13 @@ li.log-item .txt-block,
 .song-title .container a,
 .list-info .list-li .song-uname,
 .change-song .container .iconfont,
-.list-info .list-li .song-title .song-normal
+.list-info .list-li .song-title .song-normal,
+.ban-app .case-tip .click-btn,
+.cases-wrap.clearfix .column.col2 a,
+.common-dialig-title,
+.common-dialig-right-btn,
+.common-dialig-left-btn,
+#page-fav .fav-sidenav .num
 {
     color: #eee !important;
 }
@@ -222,7 +241,9 @@ li.log-item .txt-block,
 .area-category-selector,
 .lottery-box,
 .row .list-info,
-.row .list-comment
+.row .list-comment,
+.common-dialig-left-btn,
+.player .bilibili-player-video-bottom-area .bilibili-player-video-sendbar
 {
     border-color: transparent !important;
 }
@@ -346,7 +367,9 @@ li.log-item .txt-block,
 .rank-main .rank-box .child-nav li.active,
 .comment-bilibili-con .con label:after,
 .share-board .list-playbtn,
-.share-board .list-playbtn:hover
+.share-board .list-playbtn:hover,
+.ban-app .case-tip .click-btn:hover,
+.common-dialig-right-btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -408,7 +431,8 @@ li.normal-item a:hover .uname,
 .row .col-4-med.col-4 .pager .pages .page-item button:hover,
 .creation-li .creation-right .creation-theme .creation-link:hover,
 .all-hot-list-warp .pager .pages .page-item.active button,
-.all-hot-list-warp .pager .pages .page-item button:hover
+.all-hot-list-warp .pager .pages .page-item button:hover,
+.cases-wrap.clearfix .column.col2 a:hover
 {
     color: var(--theme-color) !important;
 }
