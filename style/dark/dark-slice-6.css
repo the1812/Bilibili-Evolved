@@ -17,7 +17,8 @@
 .lottery-box .title,
 .ban-app .case-tip .click-btn,
 .common-dialig-left-btn,
-.bnj-main>.content
+.bnj-main>.content,
+#area-list ul li:after
 {
     background-color: #222 !important;
 }
@@ -61,7 +62,14 @@
 .list-info .list-li.even,
 .teach-last-list,
 .common-dialog-content,
-.bnj-reserve-progress .contact
+.bnj-reserve-progress .contact,
+#area-list ul li,
+.user-card-m .loading .mc1,
+.user-card-m .loading .mc3,
+.user-card-m .loading .mc4,
+.draw-popup-warp .rules,
+.gift-items.col-2 .gift-item .gift-img,
+.winner-list .list-wrap
 {
     background-color: #444 !important;
 }
@@ -129,7 +137,14 @@
 .list-info .list-li .song-title .song-float,
 .list-info .list-li .song-title .song-collection,
 .col-9-med.col-7 .list-padding,
-.common-dialig-sub-title
+.common-dialig-sub-title,
+.lottery-notice-cntr .thx,
+.lottery-notice-cntr .win,
+.lottery-notice-cntr .ignore-notice,
+.lottery-notice-cntr .win .gift-name,
+.draw-popup-warp .rules .tips,
+.you-not-win .tips,
+.winner-list .gift-name
 {
     color: #aaa !important;
 }
@@ -208,7 +223,14 @@ li.log-item .txt-block,
 .common-dialig-title,
 .common-dialig-right-btn,
 .common-dialig-left-btn,
-#page-fav .fav-sidenav .num
+#page-fav .fav-sidenav .num,
+#area-list ul li dl,
+.gift-item.active,
+.gift-items.col-2 .gift-item,
+.draw-popup-warp .rules .title,
+.you-not-win .title,
+.you-win .gift-name,
+.winner-list
 {
     color: #eee !important;
 }
@@ -327,7 +349,8 @@ li.log-item .txt-block,
 .send-tabs-item-active,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover,
 .container .live,
-.comment-bilibili-con .con input[type=radio]:checked+label:before
+.comment-bilibili-con .con input[type=radio]:checked+label:before,
+.gift-item.active .gift-img
 {
     border-color: var(--theme-color) !important;
 }
@@ -432,7 +455,10 @@ li.normal-item a:hover .uname,
 .creation-li .creation-right .creation-theme .creation-link:hover,
 .all-hot-list-warp .pager .pages .page-item.active button,
 .all-hot-list-warp .pager .pages .page-item button:hover,
-.cases-wrap.clearfix .column.col2 a:hover
+.cases-wrap.clearfix .column.col2 a:hover,
+#area-list ul li dl:hover,
+.lottery-notice-cntr .win .uname,
+.winner-list .list-wrap .title
 {
     color: var(--theme-color) !important;
 }
