@@ -66,7 +66,9 @@
 #area-list ul li,
 .user-card-m .loading .mc1,
 .user-card-m .loading .mc3,
-.user-card-m .loading .mc4
+.user-card-m .loading .mc4,
+.draw-popup-warp .rules,
+.gift-items.col-2 .gift-item .gift-img
 {
     background-color: #444 !important;
 }
@@ -134,7 +136,12 @@
 .list-info .list-li .song-title .song-float,
 .list-info .list-li .song-title .song-collection,
 .col-9-med.col-7 .list-padding,
-.common-dialig-sub-title
+.common-dialig-sub-title,
+.lottery-notice-cntr .thx,
+.lottery-notice-cntr .win,
+.lottery-notice-cntr .ignore-notice,
+.lottery-notice-cntr .win .gift-name,
+.draw-popup-warp .rules .tips
 {
     color: #aaa !important;
 }
@@ -214,7 +221,10 @@ li.log-item .txt-block,
 .common-dialig-right-btn,
 .common-dialig-left-btn,
 #page-fav .fav-sidenav .num,
-#area-list ul li dl
+#area-list ul li dl,
+.gift-item.active,
+.gift-items.col-2 .gift-item,
+.draw-popup-warp .rules .title
 {
     color: #eee !important;
 }
@@ -333,7 +343,8 @@ li.log-item .txt-block,
 .send-tabs-item-active,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover,
 .container .live,
-.comment-bilibili-con .con input[type=radio]:checked+label:before
+.comment-bilibili-con .con input[type=radio]:checked+label:before,
+.gift-item.active .gift-img
 {
     border-color: var(--theme-color) !important;
 }
@@ -439,7 +450,8 @@ li.normal-item a:hover .uname,
 .all-hot-list-warp .pager .pages .page-item.active button,
 .all-hot-list-warp .pager .pages .page-item button:hover,
 .cases-wrap.clearfix .column.col2 a:hover,
-#area-list ul li dl:hover
+#area-list ul li dl:hover,
+.lottery-notice-cntr .win .uname
 {
     color: var(--theme-color) !important;
 }
