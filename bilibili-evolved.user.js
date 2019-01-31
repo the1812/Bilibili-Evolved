@@ -942,9 +942,9 @@
     {
         constructor(query, condition, action, failed)
         {
-            this.maxRetry = 30;
+            this.maxRetry = 15;
             this.retry = 0;
-            this.queryInterval = 500;
+            this.queryInterval = 1000;
             this.query = query;
             this.condition = condition;
             this.action = action;
@@ -1742,7 +1742,16 @@
         loadSettings();
         const resources = new ResourceManager();
         resources.styleManager.fetchStyles();
+
         const applyScripts = () => resources.fetch().catch(error => logError(error));
+        // if (window.requestIdleCallback)
+        // {
+        //     window.requestIdleCallback(applyScripts, { timeout: 15000 });
+        // }
+        // else
+        // {
+        //     contentLoaded(applyScripts);
+        // }
         contentLoaded(applyScripts);
 
         unsafeWindow.bilibiliEvolved = {
