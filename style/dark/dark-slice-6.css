@@ -145,7 +145,8 @@
 .lottery-notice-cntr .win .gift-name,
 .draw-popup-warp .rules .tips,
 .you-not-win .tips,
-.winner-list .gift-name
+.winner-list .gift-name,
+.user-list .up-item .up-info>span
 {
     color: #aaa !important;
 }
