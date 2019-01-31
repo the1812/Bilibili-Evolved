@@ -18,7 +18,8 @@
 .ban-app .case-tip .click-btn,
 .common-dialig-left-btn,
 .bnj-main>.content,
-#area-list ul li:after
+#area-list ul li:after,
+.live-room-app .app-content .link-footer-ctnr
 {
     background-color: #222 !important;
 }
