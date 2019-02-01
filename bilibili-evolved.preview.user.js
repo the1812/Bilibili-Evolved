@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.0
+// @version      1.7.1
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -44,6 +44,7 @@
         blurVideoControl: false,
         toast: true,
         fullTweetsTitle: true,
+        fullPageTitle: false,
         removeVideoTopMask: false,
         removeLiveWatermark: true,
         harunaScale: true,
@@ -390,6 +391,16 @@
                 ],
                 displayNames: {
                     fullTweetsTitle: "展开动态标题",
+                },
+            },
+            fullPageTitleStyle: {
+                path: "min/full-page-title.min.css",
+            },
+            fullPageTitle: {
+                path: "min/full-page-title.min.js",
+                dependencies: ["fullPageTitleStyle"],
+                displayNames: {
+                    fullPageTitle: "展开选集标题",
                 },
             },
             viewCover: {
