@@ -234,7 +234,7 @@
 ![展开动态标题](images/compressed/full-tweets-title.jpg)
 ### 展开选集标题
 在视频选集列表中, 当标题超出一行时, 另起一行以显示完整标题.
-![展开选集标题](images/compressed/full-tweets-title.jpg)
+![展开选集标题](images/compressed/full-page-title.jpg)
 ### 直播间勋章快速切换
 在直播区(live.bilibili.com)中, 可从`附加功能`中直接切换勋章和头衔.
 ### 显示失效视频信息
