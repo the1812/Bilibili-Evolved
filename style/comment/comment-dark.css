@@ -8,7 +8,13 @@
 .bb-comment .comment-list .list-item .info .operation .spot,
 .bb-comment .comment-send .comment-emoji .text,
 .dynamic-like i,
+.dynamic-like:hover i,
+.dynamic-liked i,
+.dynamic-liked:hover i,
 .dynamic-hate i,
+.dynamic-hate:hover i,
+.dynamic-hated i,
+.dynamic-hated:hover i,
 .dynamic-spot,
 .textarea-container .comm-tool .comm-emoji .icon-face
 {

@@ -25,7 +25,6 @@
 {
     transform: translateX(0%);
 }
-
 .bb-comment .comment-list .list-item>.con>.info
 {
     margin-top: 4px;
@@ -53,7 +52,8 @@
 .bb-comment .nameplate,
 .bb-comment .comment-list .list-item .user-face .hot-follow,
 .bb-comment .comment-header .tabs-order li.on:after,
-.comment-area .dynamic-level
+.comment-area .dynamic-level,
+.dynamic-list-item-wrap .info .plat
 {
     display: none;
 }
@@ -81,6 +81,10 @@
 {
     margin-right: 120px;
 }
+.reply-box .item-user .text
+{
+    display: block;
+}
 .bb-comment .comment-list .list-item .user .level
 {
     visibility: hidden;
@@ -94,7 +98,7 @@
 .dynamic-like i,
 .dynamic-hate i
 {
-     transition: all .2s ease-out;
+    transition: all .2s ease-out;
 }
 .bb-comment .comment-list .list-item .info .like i,
 .bb-comment .comment-list .list-item .info .hate i,
