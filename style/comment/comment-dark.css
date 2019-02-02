@@ -6,7 +6,11 @@
 .bb-comment .comment-list .list-item .info .like.liked>i,
 .bb-comment .comment-list .list-item .info .hate.hated>i,
 .bb-comment .comment-list .list-item .info .operation .spot,
-.bb-comment .comment-send .comment-emoji .text
+.bb-comment .comment-send .comment-emoji .text,
+.dynamic-like i,
+.dynamic-hate i,
+.dynamic-spot,
+.textarea-container .comm-tool .comm-emoji .icon-face
 {
     filter: brightness(0) invert(1) !important;
 }
