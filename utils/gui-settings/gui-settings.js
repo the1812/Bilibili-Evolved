@@ -163,6 +163,10 @@
                 settings.harunaScale = false;
                 saveSettings(settings);
             }
+            if (settings.defaultPlayerLayout === "旧版")
+            {
+                $("input[key=overrideNavBar]").prop("disabled", true).change();
+            }
         }
 
         resources.applyStyle("guiSettingsStyle");
