@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.1
+// @version      1.7.2
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1615,7 +1615,7 @@
             {
                 await this.fetchByKey("toast");
                 unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export;
-                if (!isCacheValid)
+                if (!isCacheValid && settings.useCache)
                 {
                     loadingToast = Toast.info(`<div class="loading"></div>正在初始化脚本`, "初始化");
                 }
