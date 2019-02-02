@@ -92,6 +92,7 @@
         clearCache: true,
         downloadVideo: true,
         downloadDanmaku: true,
+        playerLayout: true,
         medalHelper: true,
         about: true,
         forceWide: false,
@@ -596,12 +597,12 @@
                     skipChargeList: "跳过充电鸣谢",
                 }
             },
-            useDefaultPlayerLayout: {
+            playerLayout: {
                 path: "min/default-player-layout.min.js",
                 displayNames: {
-                    "useDefaultPlayerLayout": "指定播放器布局",
-                    "defaultPlayerLayout": "视频区布局",
-                    "defaultBangumiLayout": "番剧区布局",
+                    useDefaultPlayerLayout: "指定播放器布局",
+                    defaultPlayerLayout: "视频区布局",
+                    defaultBangumiLayout: "番剧区布局",
                 },
                 dropdown: [
                     {

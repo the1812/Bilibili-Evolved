@@ -6,6 +6,7 @@
         {
             const videoDropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultPlayerLayout]`));
             const bangumiDropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultBangumiLayout]`));
+            const navbarOption = await SpinQuery.select(() => document.querySelector(`input[key=overrideNavBar]`));
             if (!videoDropdown || !bangumiDropdown)
             {
                 logError("无法加载播放器布局选项.");
@@ -25,8 +26,31 @@
                 {
                     return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${key}\\s*\\=\\s*([^;]*).*$)|^.*$`), "$1");
                 }
-                useNewLayout() { }
-                useOldLayout() { }
+                checkSettings()
+                {
+                    return settings.useDefaultPlayerLayout;
+                }
+                checkCookies()
+                {
+                    if (!this.checkSettings())
+                    {
+                        return;
+                    }
+                }
+                useNewLayout()
+                {
+                    if (!this.checkSettings())
+                    {
+                        return;
+                    }
+                }
+                useOldLayout()
+                {
+                    if (!this.checkSettings())
+                    {
+                        return;
+                    }
+                }
                 setLayout(newLayout)
                 {
                     if (newLayout)
@@ -43,6 +67,7 @@
             {
                 checkCookies()
                 {
+                    super.checkCookies();
                     const value = this.getValue(this.cookieKey);
                     if (value === "" || parseInt(value) < 0 && settings.defaultPlayerLayout !== "旧版")
                     {
@@ -61,17 +86,31 @@
                 }
                 useNewLayout()
                 {
+                    super.useNewLayout();
                     this.setCookie(this.cookieKey, 1);
+                    navbarOption.disabled = false;
+                    $(navbarOption).change();
                 }
                 useOldLayout()
                 {
+                    super.useOldLayout();
                     this.setCookie(this.cookieKey, -1);
+                    if (settings.overrideNavBar)
+                    {
+                        navbarOption.checked = false;
+                        navbarOption.disabled = true;
+                        $(navbarOption).change();
+                        settings.overrideNavBar = false;
+                        saveSettings(settings);
+                        Toast.info(`已关闭<span>搜索栏置顶</span>功能, 因为旧版视频播放器布局不兼容此功能.`, "提示", 5000);
+                    }
                 }
             }
             class BangumiLayoutCookie extends LayoutCookie
             {
                 checkCookies()
                 {
+                    super.checkCookies();
                     const value = this.getValue(this.cookieKey);
                     if (value === "" || parseInt(value) <= 0 && settings.defaultBangumiLayout !== "旧版")
                     {
@@ -90,10 +129,12 @@
                 }
                 useNewLayout()
                 {
+                    super.useNewLayout();
                     this.setCookie(this.cookieKey, "0606");
                 }
                 useOldLayout()
                 {
+                    super.useOldLayout();
                     this.setCookie(this.cookieKey, 0);
                 }
             }
