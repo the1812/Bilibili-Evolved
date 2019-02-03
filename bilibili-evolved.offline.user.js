@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      201.94
+// @version      202.01
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1560,11 +1560,14 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                     });
                 });
         }
-        fetchStyles()
+        prefetchStyles()
         {
             for (const key in Resource.all)
             {
-                this.fetchStyleByKey(key);
+                if (typeof offlineData !== "undefined" || settings.useCache && settings.cache[key])
+                {
+                    this.fetchStyleByKey(key);
+                }
             }
         }
     }
@@ -1791,23 +1794,52 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 
     try
     {
+        const events = {};
+        for (const name of ["init", "styleLoaded", "scriptLoaded"])
+        {
+            events[name] = {
+                completed: false,
+                subscribers: [],
+                complete()
+                {
+                    this.completed = true;
+                    this.subscribers.forEach(it => it());
+                },
+            };
+        }
+        unsafeWindow.bilibiliEvolved = {
+            subscribe(type, callback)
+            {
+                const event = events[type];
+                if (callback)
+                {
+                    if (event && !event.completed)
+                    {
+                        event.subscribers.push(callback);
+                    }
+                    else
+                    {
+                        callback();
+                    }
+                }
+                else
+                {
+                    return new Promise((resolve) => this.subscribe(type, () => resolve()));
+                }
+            },
+        };
         loadResources();
         loadSettings();
         const resources = new ResourceManager();
-        resources.styleManager.fetchStyles();
+        events.init.complete();
+        resources.styleManager.prefetchStyles().then(() => events.styleLoaded.complete());
 
-        const applyScripts = () => resources.fetch().catch(error => logError(error));
-        // if (window.requestIdleCallback)
-        // {
-        //     window.requestIdleCallback(applyScripts, { timeout: 15000 });
-        // }
-        // else
-        // {
-        //     contentLoaded(applyScripts);
-        // }
+        const applyScripts = () => resources.fetch()
+            .then(() => events.scriptLoaded.complete())
+            .catch(error => logError(error));
         contentLoaded(applyScripts);
 
-        unsafeWindow.bilibiliEvolved = {
+        Object.assign(unsafeWindow.bilibiliEvolved, {
             SpinQuery,
             Toast,
             Observer,
@@ -1839,7 +1871,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 }
             },
             monkeyInfo: GM_info
-        };
+        });
     }
     catch (error)
     {

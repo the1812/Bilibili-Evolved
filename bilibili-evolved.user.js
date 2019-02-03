@@ -1519,11 +1519,14 @@
                     });
                 });
         }
-        fetchStyles()
+        prefetchStyles()
         {
             for (const key in Resource.all)
             {
-                this.fetchStyleByKey(key);
+                if (typeof offlineData !== "undefined" || settings.useCache && settings.cache[key])
+                {
+                    this.fetchStyleByKey(key);
+                }
             }
         }
     }
@@ -1750,23 +1753,52 @@
 
     try
     {
+        const events = {};
+        for (const name of ["init", "styleLoaded", "scriptLoaded"])
+        {
+            events[name] = {
+                completed: false,
+                subscribers: [],
+                complete()
+                {
+                    this.completed = true;
+                    this.subscribers.forEach(it => it());
+                },
+            };
+        }
+        unsafeWindow.bilibiliEvolved = {
+            subscribe(type, callback)
+            {
+                const event = events[type];
+                if (callback)
+                {
+                    if (event && !event.completed)
+                    {
+                        event.subscribers.push(callback);
+                    }
+                    else
+                    {
+                        callback();
+                    }
+                }
+                else
+                {
+                    return new Promise((resolve) => this.subscribe(type, () => resolve()));
+                }
+            },
+        };
         loadResources();
         loadSettings();
         const resources = new ResourceManager();
-        resources.styleManager.fetchStyles();
+        events.init.complete();
+        resources.styleManager.prefetchStyles().then(() => events.styleLoaded.complete());
 
-        const applyScripts = () => resources.fetch().catch(error => logError(error));
-        // if (window.requestIdleCallback)
-        // {
-        //     window.requestIdleCallback(applyScripts, { timeout: 15000 });
-        // }
-        // else
-        // {
-        //     contentLoaded(applyScripts);
-        // }
+        const applyScripts = () => resources.fetch()
+            .then(() => events.scriptLoaded.complete())
+            .catch(error => logError(error));
         contentLoaded(applyScripts);
 
-        unsafeWindow.bilibiliEvolved = {
+        Object.assign(unsafeWindow.bilibiliEvolved, {
             SpinQuery,
             Toast,
             Observer,
@@ -1798,7 +1830,7 @@
                 }
             },
             monkeyInfo: GM_info
-        };
+        });
     }
     catch (error)
     {
