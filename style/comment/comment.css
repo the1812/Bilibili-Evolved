@@ -2,19 +2,23 @@
 {
     position: relative;
 }
-.bb-comment .comment-list .list-item .info
+.bb-comment .comment-list .list-item .info,
+.dynamic-list-item-wrap .item-detail>.info
 {
     display: flex;
 }
-.bb-comment .comment-list .list-item .info .floor
+.bb-comment .comment-list .list-item .info .floor,
+.dynamic-list-item-wrap .item-detail>.info .floor
 {
     order: 1;
 }
-.bb-comment .comment-list .list-item .info .reply
+.bb-comment .comment-list .list-item .info .reply,
+.dynamic-list-item-wrap .item-detail>.info .reply
 {
     order: 2;
 }
-.bb-comment .comment-list .list-item .info .operation
+.bb-comment .comment-list .list-item .info .operation,
+.dynamic-list-item-wrap .item-detail>.info .operation
 {
     order: 3;
     flex-grow: 1;
