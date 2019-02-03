@@ -168,28 +168,62 @@
                 $("input[key=overrideNavBar]").prop("disabled", true).change();
             }
         }
+        function setDisplayNames()
+        {
+            for (const [key, name] of Object.entries(Resource.displayNames))
+            {
+                const input = document.querySelector(`input[key=${key}]`);
+                if (!input)
+                {
+                    continue;
+                }
+                switch (input.type)
+                {
+                    case "checkbox":
+                        input.nextElementSibling.nextElementSibling.innerHTML = name;
+                        break;
+                    case "text":
+                        const parent = input.parentElement;
+                        if (parent.classList.contains("gui-settings-textbox-container"))
+                        {
+                            input.previousElementSibling.innerHTML = name;
+                        }
+                        else if (parent.classList.contains("gui-settings-dropdown"))
+                        {
+                            parent.previousElementSibling.innerHTML = name;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
-        resources.applyStyle("guiSettingsStyle");
-        const settingsBox = resources.data.guiSettingsDom.text;
-        $("body").append(settingsBox);
-        new SpinQuery(
-            () => $("body"),
-            it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
-            _ => $(".gui-settings-icon-panel").css("display", "none")
-        ).start();
+        (async () =>
+        {
+            resources.applyStyle("guiSettingsStyle");
+            const settingsBox = resources.data.guiSettingsDom.text;
+            $("body").append(settingsBox);
+            new SpinQuery(
+                () => $("body"),
+                it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
+                _ => $(".gui-settings-icon-panel").css("display", "none")
+            ).start();
 
-        setupEvents();
-        checkOfflineData();
-        syncGui();
-        listenDependencies();
-        listenSettingsChange();
-        foldAllCategories();
-        checkCompatibility();
+            setupEvents();
+            checkOfflineData();
+            syncGui();
+            listenDependencies();
+            listenSettingsChange();
+            foldAllCategories();
+            checkCompatibility();
+            setDisplayNames();
 
-        const ThemeColors = resources.import("themeColors");
-        new ThemeColors().setupDom();
+            const ThemeColors = resources.import("themeColors");
+            new ThemeColors().setupDom();
 
-        const Search = resources.import("settingsSearch");
-        new Search();
+            const Search = resources.import("settingsSearch");
+            new Search();
+        })();
     };
 })();
