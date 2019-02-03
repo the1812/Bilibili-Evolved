@@ -679,7 +679,7 @@
                     },
                 ],
                 displayNames: {
-                    useCommentStyle: "简洁化评论区",
+                    useCommentStyle: "简化评论区",
                 },
             },
             commentStyle: {

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      202.02
+// @version      202.04
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -680,7 +680,7 @@
                     },
                 ],
                 displayNames: {
-                    useCommentStyle: "简洁化评论区",
+                    useCommentStyle: "简化评论区",
                 },
             },
             commentStyle: {
