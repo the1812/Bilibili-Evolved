@@ -1603,11 +1603,11 @@
                 Toast.error(toastMessage, "错误");
             });
             await Promise.all(resource.dependencies
-                .filter(it => it.type.name === "script")
-                .map(it => this.fetchByKey(it.key)));
-            await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "style")
                 .map(it => this.styleManager.fetchStyleByKey(it.key)));
+            await Promise.all(resource.dependencies
+                .filter(it => it.type.name === "script")
+                .map(it => this.fetchByKey(it.key)));
             this.applyComponent(key, text);
         }
         async fetch()
@@ -1791,7 +1791,8 @@
         loadSettings();
         const resources = new ResourceManager();
         events.init.complete();
-        resources.styleManager.prefetchStyles().then(() => events.styleLoaded.complete());
+        resources.styleManager.prefetchStyles();
+        events.styleLoaded.complete();
 
         const applyScripts = () => resources.fetch()
             .then(() => events.scriptLoaded.complete())

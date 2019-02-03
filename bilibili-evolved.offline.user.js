@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      202.01
+// @version      202.02
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1644,11 +1644,11 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 Toast.error(toastMessage, "错误");
             });
             await Promise.all(resource.dependencies
-                .filter(it => it.type.name === "script")
-                .map(it => this.fetchByKey(it.key)));
-            await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "style")
                 .map(it => this.styleManager.fetchStyleByKey(it.key)));
+            await Promise.all(resource.dependencies
+                .filter(it => it.type.name === "script")
+                .map(it => this.fetchByKey(it.key)));
             this.applyComponent(key, text);
         }
         async fetch()
@@ -1832,7 +1832,8 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         loadSettings();
         const resources = new ResourceManager();
         events.init.complete();
-        resources.styleManager.prefetchStyles().then(() => events.styleLoaded.complete());
+        resources.styleManager.prefetchStyles();
+        events.styleLoaded.complete();
 
         const applyScripts = () => resources.fetch()
             .then(() => events.scriptLoaded.complete())
