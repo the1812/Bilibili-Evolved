@@ -104,7 +104,8 @@
     background: #fff !important;
 } */
 .bnj-reserve .content h5,
-.operation .inner .bnj-button .content
+.operation .inner .bnj-button .content,
+.bnj-progress-inner-operation .operation .programme .show-programme .content
 {
     color: #222 !important;
 }
