@@ -272,7 +272,8 @@ body>div.to-top.on,
 .open-dialog-masker .open-body ul li i,
 .open-dialog-masker .open-footer .open-agree,
 .small-item .meta,
-.bangumi-rating-container .bangumi-rating-subtitle
+.bangumi-rating-container .bangumi-rating-subtitle,
+.s_tag .nothing
 {
     color: #aaa !important;
 }
