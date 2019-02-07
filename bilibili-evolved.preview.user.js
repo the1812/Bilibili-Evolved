@@ -951,7 +951,11 @@
         }
         static async videoChange(callback)
         {
-            await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
+            const player = await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
+            if (player === null)
+            {
+                return null;
+            }
             return Observer.childList("#bofqi,#bilibiliPlayer", callback);
         }
     }
