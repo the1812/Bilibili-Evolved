@@ -583,7 +583,6 @@ body>div.to-top.on,
 {
     filter: grayscale(1) !important;
 }
-.container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-title,
 #player-header .bg-image:hover
 {
     filter: brightness(0.7) !important;
