@@ -11,9 +11,11 @@
                 jumpButton && jumpButton.click();
             });
         }
-        SpinQuery.select(() => document.querySelector("#bofqi")).then(() =>
+        if (Observer.videoChange)
         {
-            Observer.childList("#bofqi", () => skipChargeList());
-        });
+            Observer.videoChange(skipChargeList);
+        }
+        else
+        { Observer.childList("#bofqi", skipChargeList); }
     };
 })();

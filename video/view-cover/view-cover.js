@@ -83,10 +83,16 @@
                         {
                             imageViewer.show();
                         });
-                        Observer.childList("#bofqi", async () =>
+                        const updateImage = async () =>
                         {
                             imageViewer = new ImageViewer(await getUrl());
-                        });
+                        };
+                        if (Observer.videoChange)
+                        {
+                            Observer.videoChange(updateImage);
+                        }
+                        else
+                        { Observer.childList("#bofqi", updateImage); }
                     },
                 },
             };

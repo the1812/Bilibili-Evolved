@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.3
+// @version      1.7.4
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -948,6 +948,11 @@
                 subtree: true,
                 attributes: true,
             });
+        }
+        static async videoChange(callback)
+        {
+            await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
+            return Observer.childList("#bofqi,#bilibiliPlayer", callback);
         }
     }
     class SpinQuery
