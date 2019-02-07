@@ -557,7 +557,8 @@ svg.toast-card-dismiss path
 .coin-operated-m .like-checkbox input[type=checkbox]:checked+i,
 .video-list .vl-hd .display-tab li.on,
 .i-watchlater.has-select,
-.block-effect-ctnr .item .cb-icon
+.block-effect-ctnr .item .cb-icon,
+.small-item.new .new-icon
 {
     filter: var(--blue-image-filter) !important;
 }
