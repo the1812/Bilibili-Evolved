@@ -2,9 +2,9 @@
 {
     return (settings, resources) =>
     {
-        function skipChargeList()
+        async function skipChargeList()
         {
-            const video = document.querySelector("video");
+            const video = await SpinQuery.select(() => document.querySelector("video"));
             video.addEventListener("ended", async () =>
             {
                 const jumpButton = await SpinQuery.select(() => document.querySelector(".bilibili-player-electric-panel-jump"));
