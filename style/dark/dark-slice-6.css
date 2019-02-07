@@ -150,7 +150,8 @@
 .draw-popup-warp .rules .tips,
 .you-not-win .tips,
 .winner-list .gift-name,
-.user-list .up-item .up-info>span
+.user-list .up-item .up-info>span,
+.gift-items.col-3 .gift-item
 {
     color: #aaa !important;
 }
