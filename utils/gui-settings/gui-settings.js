@@ -165,7 +165,14 @@
             }
             if (settings.defaultPlayerLayout === "旧版")
             {
-                $("input[key=overrideNavBar]").prop("disabled", true).change();
+                const navbarOption = $("input[key=overrideNavBar]");
+                navbarOption.prop("disabled", true).change();
+                if (settings.overrideNavBar)
+                {
+                    navbarOption.prop("checked", false).change();
+                    settings.overrideNavBar = false;
+                    saveSettings(settings);
+                }
             }
         }
         function setDisplayNames()
