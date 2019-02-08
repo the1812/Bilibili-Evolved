@@ -12,6 +12,7 @@
                 action: () =>
                 {
                     $(".bilibili-player-video-btn-widescreen").click();
+                    document.querySelector("#bofqi").scrollIntoView({ behavior: "smooth" });
                 },
             },
             {
