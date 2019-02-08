@@ -2,14 +2,20 @@
 {
     return (settings, resources) =>
     {
-        function skipChargeList()
+        async function skipChargeList()
         {
-            const jumpButton = document.querySelector(".bilibili-player-electric-panel-jump");
-            jumpButton && jumpButton.click();
+            const video = await SpinQuery.select(() => document.querySelector("video"));
+            video && video.addEventListener("ended", async () =>
+            {
+                const jumpButton = await SpinQuery.select(() => document.querySelector(".bilibili-player-electric-panel-jump"));
+                jumpButton && jumpButton.click();
+            });
         }
-        SpinQuery.select(() => document.querySelector("#bofqi")).then(() =>
+        if (Observer.videoChange)
         {
-            Observer.childListSubtree("#bofqi", () => skipChargeList());
-        });
+            Observer.videoChange(skipChargeList);
+        }
+        else
+        { Observer.childList("#bofqi", skipChargeList); }
     };
 })();

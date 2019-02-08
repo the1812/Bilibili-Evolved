@@ -69,7 +69,8 @@ div#square.container,
 .main-container .plp-l .player-mask .bar-wrapper .left-bar,
 .main-container .plp-l .player-mask .bar-wrapper .right-bar,
 .twp-mask .twp-wrapper,
-.open-dialog-masker .open-dialog-content
+.open-dialog-masker .open-dialog-content,
+.bnj-comment .page-comment
 {
     background-color: #222 !important;
 }
@@ -203,7 +204,8 @@ body>div.to-top.on,
 .filter-wrap .sub-filter,
 .title-line .tit,
 .popularize-module .online,
-.main-container .review-module .module-title .more-link
+.main-container .review-module .module-title .more-link,
+.i-frame
 {
     background-color: transparent !important;
 }
@@ -271,7 +273,8 @@ body>div.to-top.on,
 .open-dialog-masker .open-body ul li i,
 .open-dialog-masker .open-footer .open-agree,
 .small-item .meta,
-.bangumi-rating-container .bangumi-rating-subtitle
+.bangumi-rating-container .bangumi-rating-subtitle,
+.s_tag .nothing
 {
     color: #aaa !important;
 }
@@ -378,7 +381,10 @@ body>div.to-top.on,
 .open-dialog-masker .open-body p,
 .open-dialog-masker .open-body ul li span,
 .open-dialog-masker .btn-normal,
-.bangumi-rating-container .bangumi-rating-title
+.bangumi-rating-container .bangumi-rating-title,
+.block-effect-ctnr .item,
+.super-gift-item .gift-info .user-name,
+.super-gift-item .gift-info .user-name:hover
 {
     color: #eee !important;
 }
@@ -550,7 +556,9 @@ svg.toast-card-dismiss path
 .leaveMsgUpload .btnarea .btnareaIcon,
 .coin-operated-m .like-checkbox input[type=checkbox]:checked+i,
 .video-list .vl-hd .display-tab li.on,
-.i-watchlater.has-select
+.i-watchlater.has-select,
+.block-effect-ctnr .item .cb-icon,
+.small-item.new .new-icon
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -576,7 +584,6 @@ body>div.to-top.on,
 {
     filter: grayscale(1) !important;
 }
-.container .host-list-layout .hot-list-wrap .bg-wrap .hot-list-title,
 #player-header .bg-image:hover
 {
     filter: brightness(0.7) !important;

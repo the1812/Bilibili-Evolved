@@ -359,7 +359,12 @@
                         .prependTo(list);
                 });
             };
-            Observer.childList("#bofqi", loadQualities);
+            if (Observer.videoChange)
+            {
+                Observer.videoChange(loadQualities);
+            }
+            else
+            { Observer.childList("#bofqi", loadQualities); }
             const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
             {
                 pageData.entity.addError();

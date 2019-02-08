@@ -4,7 +4,7 @@
 - [安装](#安装)
 - [了解所有功能](#功能)
 - [浏览设置项](#设置)
-- [浏览器兼容性](#兼容性)
+- [兼容性](#兼容性)
 - [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
 - [捐赠入口](donate.md)
 - [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/Coming-Features)
@@ -53,7 +53,7 @@
     - 起始时间: `18:00`
     - 结束时间: `6:00`
 - 首页紧凑布局: `关闭`
-- 简洁化评论区: `开启`
+- 简化评论区: `开启`
 - 搜索栏置顶: `开启`
     - 显示顶部横幅: `开启`
     - 显示排行榜图标: `开启`
@@ -68,6 +68,7 @@
 - 稍后再看重定向: `开启`
 - 隐藏搜索推荐: `关闭`
 - 展开动态标题: `开启`
+- 展开选集标题: `关闭`
 - 显示失效视频信息: `关闭`
     - 失效视频重定向: `关闭`
 ### 触摸
@@ -174,7 +175,7 @@
 ![原版布局](images/compressed/compact-layout-disabled.jpg)
 #### 启用后
 ![紧凑布局](images/compressed/compact-layout.jpg)
-### 简洁化评论区
+### 简化评论区
 - 删除热评头像下方的关注按钮
 - 删除用户的等级标识
 - 删除发送源信息(`来自安卓客户端`这种)
@@ -182,10 +183,7 @@
 - 位图图标全部换用矢量图标, 高分屏不会模糊
 
 > 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看
-
-> 暂不支持动态里的评论, 以后会加
-
-![简洁化评论区](images/compressed/comments.jpg)
+![简化评论区](images/compressed/comments.jpg)
 ### 搜索栏置顶
 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示. 仅对常用页面有效, 部分页面可能会有点布局错乱.
 #### 启用前
@@ -231,6 +229,9 @@
 ### 展开动态标题
 在顶栏的动态预览框中, 不管名称多长, 总是完全展开up主和视频的标题.
 ![展开动态标题](images/compressed/full-tweets-title.jpg)
+### 展开选集标题
+在视频选集列表中, 当标题超出一行时, 另起一行以显示完整标题.
+![展开选集标题](images/compressed/full-page-title.jpg)
 ### 直播间勋章快速切换
 在直播区(live.bilibili.com)中, 可从`附加功能`中直接切换勋章和头衔.
 ### 显示失效视频信息
@@ -269,16 +270,25 @@
 使用缓存以提高脚本的加载速度, 此选项只对非离线版有效, 可在`附加功能`中清除脚本的缓存.
 
 # 兼容性
-## Chrome
+## 脚本管理器
+### [Tampermonkey](https://tampermonkey.net/)
+完全兼容.
+### [Violentmonkey](https://violentmonkey.github.io/)
+不支持多标签页设置同步. (开两个标签页, 在其中一个里改动设置, 另一个标签页的设置不会更新)
+### [Greasemonkey](https://www.greasespot.net/)
+不支持, 请使用以上的两种管理器.
+
+## 浏览器
+### Chrome
 - 背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
 - 含有背景模糊效果的动画有掉帧现象.
-## Firefox
+### Firefox
 - 滚动条样式无效.
 - 背景模糊效果无效.
-- 触摸调整的进度预览有弹跳现象.(来自`transition: all 0.2s;`. 短时间内总是从原数值开始变化, 而不是当前数值)
-## Safari
+- 触摸调整的进度预览有弹跳现象.(来自`transition`. 短时间内总是从原数值开始变化, 而不是当前数值)
+### Safari
 - 尚未在Safari中测试.(流下了贫穷的泪水
-## Edge [**停止支持**]
+### Edge [**停止支持**]
 - 滚动条样式无效.
 - 由于Edge的CSS渲染bug(主要集中在`filter`和`color`), 部分主题颜色错乱.
 - 顶栏触摸体验不佳.

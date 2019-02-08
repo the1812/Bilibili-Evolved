@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.7.0
+// @version      1.7.4
 // @description  增强哔哩哔哩Web端体验: 下载视频, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 删除广告, 使用夜间模式, 修复界面瑕疵; 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -44,6 +44,7 @@
         blurVideoControl: false,
         toast: true,
         fullTweetsTitle: true,
+        fullPageTitle: false,
         removeVideoTopMask: false,
         removeLiveWatermark: true,
         harunaScale: true,
@@ -91,6 +92,7 @@
         clearCache: true,
         downloadVideo: true,
         downloadDanmaku: true,
+        playerLayout: true,
         medalHelper: true,
         about: true,
         forceWide: false,
@@ -392,6 +394,16 @@
                     fullTweetsTitle: "展开动态标题",
                 },
             },
+            fullPageTitleStyle: {
+                path: "min/full-page-title.min.css",
+            },
+            fullPageTitle: {
+                path: "min/full-page-title.min.js",
+                dependencies: ["fullPageTitleStyle"],
+                displayNames: {
+                    fullPageTitle: "展开选集标题",
+                },
+            },
             viewCover: {
                 path: "min/view-cover.min.js",
                 dependencies: [
@@ -585,12 +597,12 @@
                     skipChargeList: "跳过充电鸣谢",
                 }
             },
-            useDefaultPlayerLayout: {
+            playerLayout: {
                 path: "min/default-player-layout.min.js",
                 displayNames: {
-                    "useDefaultPlayerLayout": "指定播放器布局",
-                    "defaultPlayerLayout": "视频区布局",
-                    "defaultBangumiLayout": "番剧区布局",
+                    useDefaultPlayerLayout: "指定播放器布局",
+                    defaultPlayerLayout: "视频区布局",
+                    defaultBangumiLayout: "番剧区布局",
                 },
                 dropdown: [
                     {
@@ -667,7 +679,7 @@
                     },
                 ],
                 displayNames: {
-                    useCommentStyle: "简洁化评论区",
+                    useCommentStyle: "简化评论区",
                 },
             },
             commentStyle: {
@@ -937,14 +949,23 @@
                 attributes: true,
             });
         }
+        static async videoChange(callback)
+        {
+            const player = await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
+            if (player === null)
+            {
+                return null;
+            }
+            return Observer.childList("#bofqi,#bilibiliPlayer", callback);
+        }
     }
     class SpinQuery
     {
         constructor(query, condition, action, failed)
         {
-            this.maxRetry = 30;
+            this.maxRetry = 15;
             this.retry = 0;
-            this.queryInterval = 500;
+            this.queryInterval = 1000;
             this.query = query;
             this.condition = condition;
             this.action = action;
@@ -1211,47 +1232,7 @@
         }
         static get html()
         {
-            return new ResourceType("html", html =>
-            {
-                for (const [key, name] of Object.entries(Resource.displayNames))
-                {
-                    html = html.replace(new RegExp(`(<(.+)\\s*?indent="?[\\d]+?"?\\s*?key="?${key}"?\\s*?dependencies="?.*?"?>)[^\\0]*?(</\\2>)`, "g"),
-                        `$1${name}$3`);
-                }
-                return html.replace(/<category\s*?icon="?(.+?)"?>([^\0]*?)<\/category>/g, `
-                    <li class="indent-center category">
-                        <i class="icon-$1" style="margin-right:8px"></i>
-                        <span class="settings-category">$2</span>
-                        <i class="icon-arrow" style="margin-left:8px"></i>
-                    </li>
-                `).replace(/<checkbox\s*?indent="?(.+?)"?\s*?key="?(.+?)"?\s*?dependencies="?(.*?)"?>([^\0]*?)<\/checkbox>/g, `
-                    <li class="indent-$1">
-                        <label class="gui-settings-checkbox-container">
-                            <input key="$2" type="checkbox" dependencies="$3" checked/>
-                            <div class="gui-settings-checkbox"></div>
-                            <span>$4</span>
-                        </label>
-                    </li>
-                `).replace(/<dropdown\s*?indent="?(.+?)"?\s*?key="?(.+?)"?\s*?dependencies="?(.*?)"?>([^\0]*?)<\/dropdown>/g, `
-                    <li class="indent-$1">
-                        <label class="gui-settings-dropdown-container">
-                            <span class="gui-settings-dropdown-span">$4</span>
-                            <div class="gui-settings-dropdown popup">
-                                <input readonly type="text" spellcheck="false" key="$2" dependencies="$3">
-                                <ul></ul>
-                                <i class="icon-arrow"></i>
-                            </div>
-                        </label>
-                    </li>
-                `).replace(/<textbox\s*?indent="?(.+?)"?\s*key="?(.+?)"?\s*?dependencies="?(.*?)"?>([^\0]*?)<\/textbox>/g, `
-                    <li class="indent-$1">
-                        <label class="gui-settings-textbox-container">
-                            <span>$4</span>
-                            <input key="$2" dependencies="$3" spellcheck="false" type="text" />
-                        </label>
-                    </li>
-                `);
-            });
+            return new ResourceType("html");
         }
         static get script()
         {
@@ -1507,11 +1488,14 @@
                     });
                 });
         }
-        fetchStyles()
+        prefetchStyles()
         {
             for (const key in Resource.all)
             {
-                this.fetchStyleByKey(key);
+                if (typeof offlineData !== "undefined" || settings.useCache && settings.cache[key])
+                {
+                    this.fetchStyleByKey(key);
+                }
             }
         }
     }
@@ -1588,11 +1572,11 @@
                 Toast.error(toastMessage, "错误");
             });
             await Promise.all(resource.dependencies
-                .filter(it => it.type.name === "script")
-                .map(it => this.fetchByKey(it.key)));
-            await Promise.all(resource.dependencies
                 .filter(it => it.type.name === "style")
                 .map(it => this.styleManager.fetchStyleByKey(it.key)));
+            await Promise.all(resource.dependencies
+                .filter(it => it.type.name === "script")
+                .map(it => this.fetchByKey(it.key)));
             this.applyComponent(key, text);
         }
         async fetch()
@@ -1603,7 +1587,7 @@
             {
                 await this.fetchByKey("toast");
                 unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export;
-                if (!isCacheValid)
+                if (!isCacheValid && settings.useCache)
                 {
                     loadingToast = Toast.info(`<div class="loading"></div>正在初始化脚本`, "初始化");
                 }
@@ -1738,14 +1722,53 @@
 
     try
     {
+        const events = {};
+        for (const name of ["init", "styleLoaded", "scriptLoaded"])
+        {
+            events[name] = {
+                completed: false,
+                subscribers: [],
+                complete()
+                {
+                    this.completed = true;
+                    this.subscribers.forEach(it => it());
+                },
+            };
+        }
+        unsafeWindow.bilibiliEvolved = {
+            subscribe(type, callback)
+            {
+                const event = events[type];
+                if (callback)
+                {
+                    if (event && !event.completed)
+                    {
+                        event.subscribers.push(callback);
+                    }
+                    else
+                    {
+                        callback();
+                    }
+                }
+                else
+                {
+                    return new Promise((resolve) => this.subscribe(type, () => resolve()));
+                }
+            },
+        };
         loadResources();
         loadSettings();
         const resources = new ResourceManager();
-        resources.styleManager.fetchStyles();
-        const applyScripts = () => resources.fetch().catch(error => logError(error));
+        events.init.complete();
+        resources.styleManager.prefetchStyles();
+        events.styleLoaded.complete();
+
+        const applyScripts = () => resources.fetch()
+            .then(() => events.scriptLoaded.complete())
+            .catch(error => logError(error));
         contentLoaded(applyScripts);
 
-        unsafeWindow.bilibiliEvolved = {
+        Object.assign(unsafeWindow.bilibiliEvolved, {
             SpinQuery,
             Toast,
             Observer,
@@ -1777,7 +1800,7 @@
                 }
             },
             monkeyInfo: GM_info
-        };
+        });
     }
     catch (error)
     {

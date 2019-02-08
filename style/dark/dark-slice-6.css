@@ -14,7 +14,13 @@
 .bilibili-player-feedback,
 #app-ctnr .content #comment,
 #app-ctnr .content,
-.lottery-box .title
+.lottery-box .title,
+.ban-app .case-tip .click-btn,
+.common-dialig-left-btn,
+.bnj-main>.content,
+#area-list ul li:after,
+.live-room-app .app-content .link-footer-ctnr,
+.group-helper-msg-list
 {
     background-color: #222 !important;
 }
@@ -52,11 +58,21 @@
 .rank-detail .my-info,
 .pk-result .winner-info,
 .pk-result .mvp-info,
-.pk-container.p-absolute.normal-pk .pk-result,
 .bb-comment .no-login .baffle,
 .bb-comment .no-login .comment-emoji,
 .list-info .list-li.odd,
-.list-info .list-li.even
+.list-info .list-li.even,
+.teach-last-list,
+.common-dialog-content,
+.bnj-reserve-progress .contact,
+#area-list ul li,
+.user-card-m .loading .mc1,
+.user-card-m .loading .mc3,
+.user-card-m .loading .mc4,
+.draw-popup-warp .rules,
+.gift-items.col-2 .gift-item .gift-img,
+.winner-list .list-wrap,
+.group-helper-msg-list:after
 {
     background-color: #444 !important;
 }
@@ -76,7 +92,10 @@
 .all-hot-list-warp .pager .pages .page-item button,
 .all-hot-list-warp .pager .pages .page-item.active button,
 .all-hot-list-warp .pager .pages .page-item button:hover,
-.row .col-4-med.col-4 .pager .pages .page-item button
+.row .col-4-med.col-4 .pager .pages .page-item button,
+.pk-container.p-absolute.normal-pk .player-area.p-absolute.init-player.normal-pk .player-area.init-player.normal-pk .pk-result,
+.pk-container.p-absolute.normal-pk .player-area.p-absolute.match-player.normal-pk .player-area.match-player.normal-pk .pk-result,
+.tab-list .tab-item.active:before
 {
     background-color: transparent !important;
 }
@@ -84,6 +103,12 @@
 {
     background: #fff !important;
 } */
+.bnj-reserve .content h5,
+.operation .inner .bnj-button .content,
+.bnj-progress-inner-operation .operation .programme .show-programme .content
+{
+    color: #222 !important;
+}
 .main-container .ep-list-wrapper .list-title .ep-list-progress,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-info .pub-info,
 .main-container .media-info .media-right .pub-wrapper,
@@ -116,7 +141,17 @@
 .row .list-theme span,
 .list-info .list-li .song-title .song-float,
 .list-info .list-li .song-title .song-collection,
-.col-9-med.col-7 .list-padding
+.col-9-med.col-7 .list-padding,
+.common-dialig-sub-title,
+.lottery-notice-cntr .thx,
+.lottery-notice-cntr .win,
+.lottery-notice-cntr .ignore-notice,
+.lottery-notice-cntr .win .gift-name,
+.draw-popup-warp .rules .tips,
+.you-not-win .tips,
+.winner-list .gift-name,
+.user-list .up-item .up-info>span,
+.gift-items.col-3 .gift-item
 {
     color: #aaa !important;
 }
@@ -189,7 +224,23 @@ li.log-item .txt-block,
 .song-title .container a,
 .list-info .list-li .song-uname,
 .change-song .container .iconfont,
-.list-info .list-li .song-title .song-normal
+.list-info .list-li .song-title .song-normal,
+.ban-app .case-tip .click-btn,
+.cases-wrap.clearfix .column.col2 a,
+.common-dialig-title,
+.common-dialig-right-btn,
+.common-dialig-left-btn,
+#page-fav .fav-sidenav .num,
+#area-list ul li dl,
+.gift-item.active,
+.gift-items.col-2 .gift-item,
+.draw-popup-warp .rules .title,
+.you-not-win .title,
+.you-win .gift-name,
+.winner-list,
+.button-box .item>button,
+.group-item .name-box .name,
+.group-helper-msg-list .tab-list
 {
     color: #eee !important;
 }
@@ -222,7 +273,9 @@ li.log-item .txt-block,
 .area-category-selector,
 .lottery-box,
 .row .list-info,
-.row .list-comment
+.row .list-comment,
+.common-dialig-left-btn,
+.player .bilibili-player-video-bottom-area .bilibili-player-video-sendbar
 {
     border-color: transparent !important;
 }
@@ -257,10 +310,10 @@ li.log-item .txt-block,
 {
     filter: brightness(0) invert(.7) !important;
 } */
-/* a
+.helper-btn.active:before
 {
     filter: var(--blue-image-filter) !important;
-} */
+}
 /* a
 {
     filter: var(--pink-image-filter) !important;
@@ -306,7 +359,10 @@ li.log-item .txt-block,
 .send-tabs-item-active,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover,
 .container .live,
-.comment-bilibili-con .con input[type=radio]:checked+label:before
+.comment-bilibili-con .con input[type=radio]:checked+label:before,
+.gift-item.active .gift-img,
+.tab-list .tab-item.active:before,
+.group-item .name-box .operate-btn
 {
     border-color: var(--theme-color) !important;
 }
@@ -346,7 +402,10 @@ li.log-item .txt-block,
 .rank-main .rank-box .child-nav li.active,
 .comment-bilibili-con .con label:after,
 .share-board .list-playbtn,
-.share-board .list-playbtn:hover
+.share-board .list-playbtn:hover,
+.ban-app .case-tip .click-btn:hover,
+.common-dialig-right-btn,
+.tab-list .tab-item.active:after
 {
     background-color: var(--theme-color) !important;
 }
@@ -408,7 +467,13 @@ li.normal-item a:hover .uname,
 .row .col-4-med.col-4 .pager .pages .page-item button:hover,
 .creation-li .creation-right .creation-theme .creation-link:hover,
 .all-hot-list-warp .pager .pages .page-item.active button,
-.all-hot-list-warp .pager .pages .page-item button:hover
+.all-hot-list-warp .pager .pages .page-item button:hover,
+.cases-wrap.clearfix .column.col2 a:hover,
+#area-list ul li dl:hover,
+.lottery-notice-cntr .win .uname,
+.winner-list .list-wrap .title,
+.group-item .name-box .operate-btn,
+.button-box .item>button.active
 {
     color: var(--theme-color) !important;
 }

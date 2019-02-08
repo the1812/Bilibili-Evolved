@@ -2,7 +2,7 @@
 {
     return () =>
     {
-        Observer.childList("#bofqi", () =>
+        const expand = () =>
         {
             SpinQuery.any(
                 () => $(".bui-collapse-header"),
@@ -15,6 +15,12 @@
                     }
                 }
             );
-        });
+        };
+        if (Observer.videoChange)
+        {
+            Observer.videoChange(expand);
+        }
+        else
+        { Observer.childList("#bofqi", expand); }
     };
 })();

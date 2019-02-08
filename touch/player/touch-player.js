@@ -577,7 +577,7 @@
             }
         }
 
-        function main()
+        const main = () =>
         {
             SpinQuery.any(
                 () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
@@ -599,8 +599,12 @@
                 ).start();
             }
         }
-
-        Observer.childList("#bofqi", () => main());
+        if (Observer.videoChange)
+        {
+            Observer.videoChange(main);
+        }
+        else
+        { Observer.childList("#bofqi", () => main()); }
         resources.applyStyle("touchPlayerStyle");
     };
 })();

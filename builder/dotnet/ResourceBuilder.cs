@@ -163,19 +163,56 @@ namespace BilibiliEvolved.Build
         };
 
         public override string ResourceType { get; } = "HTML";
-
+        static HtmlMinifier()
+        {
+            var patterns = new string[] {
+                @"<category\s*?icon=""?(.+?)""?>([^\0]*?)<\/category>",
+                @"<checkbox\s*?indent=""?(.+?)""?\s*?key=""?(.+?)""?\s*?dependencies=""?(.*?)""?>([^\0]*?)<\/checkbox>",
+                @"<dropdown\s*?indent=""?(.+?)""?\s*?key=""?(.+?)""?\s*?dependencies=""?(.*?)""?>([^\0]*?)<\/dropdown>",
+                @"<textbox\s*?indent=""?(.+?)""?\s*key=""?(.+?)""?\s*?dependencies=""?(.*?)""?>([^\0]*?)<\/textbox>",
+            };
+            var replacements = new string[] {
+                @"<li class='indent-center category'>
+                    <i class='icon-$1' style='margin-right:8px'></i>
+                    <span class='settings-category'>$2</span>
+                    <i class='icon-arrow' style='margin-left:8px'></i>
+                </li>",
+                @"<li class='indent-$1'>
+                    <label class='gui-settings-checkbox-container'>
+                        <input key='$2' type='checkbox' dependencies='$3' checked/>
+                        <div class='gui-settings-checkbox'></div>
+                        <span>$4</span>
+                    </label>
+                </li>",
+                @"<li class='indent-$1'>
+                    <label class='gui-settings-dropdown-container'>
+                        <span class='gui-settings-dropdown-span'>$4</span>
+                        <div class='gui-settings-dropdown popup'>
+                            <input readonly type='text' spellcheck='false' key='$2' dependencies='$3'>
+                            <ul></ul>
+                            <i class='icon-arrow'></i>
+                        </div>
+                    </label>
+                </li>",
+                @"<li class='indent-$1'>
+                    <label class='gui-settings-textbox-container'>
+                        <span>$4</span>
+                        <input key='$2' dependencies='$3' spellcheck='false' type='text' />
+                    </label>
+                </li>",
+            };
+            regices = patterns.Zip(replacements, (pattern, replacement) =>
+            {
+                return (new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase), replacement);
+            });
+        }
+        private static readonly IEnumerable<(Regex, string)> regices;
         public override string Minify(string input)
         {
-            // var commentRegex = new Regex(@"<!--[^\0]*?-->", RegexOptions.Multiline);
-            // input = commentRegex.Replace(input, "");
-
-            // var blankRegex = new Regex(@"(?<=>)[\s]*([^\s]*)[\s]*(?=<)|[\s]*(?=/>)", RegexOptions.Multiline);
-            // input = blankRegex.Replace(input, "$1");
-
-            // return input
-            //     .Replace(Environment.NewLine, "")
-            //     .Replace("\n", "")
-            //     .Replace("\r", "");
+            foreach (var (regex, replacement) in regices)
+            {
+                input = regex.Replace(input, replacement);
+            }
             return new UglifyHtml().Run(input);
         }
     }

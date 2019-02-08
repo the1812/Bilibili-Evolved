@@ -2,7 +2,7 @@
 {
     return (_, resources) =>
     {
-        Observer.childList("#bofqi", () =>
+        const blur = () =>
         {
             SpinQuery.count(
                 () => $(".bui-slider .bui-track.bui-track-video-progress,.bilibili-player-video-control-bottom"),
@@ -15,7 +15,13 @@
                         containers.prepend(`<div class="video-control-blur-layer"></div>`);
                     }
                 });
-        });
+        };
+        if (Observer.videoChange)
+        {
+            Observer.videoChange(blur);
+        }
+        else
+        { Observer.childList("#bofqi", blur); }
         resources.applyStyle("blurVideoControlStyle");
     };
 })();
