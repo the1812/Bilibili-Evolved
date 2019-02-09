@@ -4,8 +4,13 @@
     {
         function continuePlay(toastText)
         {
-            const regex = /((\d)*:)?(\d)*:(\d)*/g;
             const text = toastText.text();
+            if (/第(\d+)话/.test(text))
+            {
+                toastText.parent().find(".bilibili-player-video-toast-item-jump").click();
+                return;
+            }
+            const regex = /((\d)*:)?(\d)*:(\d)*/g;
             const match = text.match(regex);
             if (!match)
             {
