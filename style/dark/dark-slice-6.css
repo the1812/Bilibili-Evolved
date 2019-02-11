@@ -328,7 +328,8 @@ th.list-head-text,
 .feedback-dialog-content .ip-local,
 .btn-no-my-operate,
 .btn-my-operate,
-.table-normal.table-styleW .feedbtn
+.table-normal.table-styleW .feedbtn,
+.el-radio
 {
     color: #eee !important;
 }
@@ -483,7 +484,9 @@ th.list-head-text,
 .tab-list .tab-item.active:before,
 .group-item .name-box .operate-btn,
 #disable-popup-modal .vip-exchange .selector li:first-child,
-#vip-exchange-modal .vip-exchange .selector li:first-child
+#vip-exchange-modal .vip-exchange .selector li:first-child,
+.el-radio__inner:hover,
+.el-radio__input.is-checked .el-radio__inner
 {
     border-color: var(--theme-color) !important;
 }
@@ -538,7 +541,9 @@ th.list-head-text,
 .player-his-title div,
 .player-his-nav.active,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item[data-state-play=true] .bilibili-player-playlist-plist-play,
-.btn-no-my-operate
+.btn-no-my-operate,
+.el-radio__input.is-checked .el-radio__inner,
+.submit-btn
 {
     background-color: var(--theme-color) !important;
 }
