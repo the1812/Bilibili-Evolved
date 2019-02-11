@@ -97,7 +97,8 @@
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist,
 .core-player-video-panel,
 .core-player,
-.category-divider
+.category-divider,
+.notification
 {
     background-color: #444 !important;
 }
@@ -197,7 +198,8 @@
 .player-his-follow,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-info-other,
-.core-player-info
+.core-player-info,
+.notification .notification-group .notification-content
 {
     color: #aaa !important;
 }
@@ -312,7 +314,9 @@ li.log-item .txt-block,
 .elecrank-wrapper .elecrank-content .rank-item .item-name,
 .mng-type-item,
 th.list-head-text,
-.list-row .list-unit
+.list-row .list-unit,
+.notification .notification-group .notification-title,
+.notification-content a
 {
     color: #eee !important;
 }
@@ -611,7 +615,9 @@ li.normal-item a:hover .uname,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-random:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-reverse:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item:hover,
-.mng-type-item.active
+.mng-type-item.active,
+.notification-content .address,
+.notification-content a:hover
 {
     color: var(--theme-color) !important;
 }
