@@ -88,7 +88,8 @@
 .winner-list .list-wrap,
 .group-helper-msg-list:after,
 #disable-popup-modal .modal,
-#vip-exchange-modal .modal
+#vip-exchange-modal .modal,
+.uns_box li.u-i.b-post .s-menu
 {
     background-color: #444 !important;
 }
@@ -179,7 +180,8 @@
 #vip-exchange-modal .vip-exchange p#errorTips,
 #vip-exchange-modal .vip-exchange p.tips,
 #disable-popup-modal .vip-exchange a.help,
-#vip-exchange-modal .vip-exchange a.help
+#vip-exchange-modal .vip-exchange a.help,
+.uns_box li.u-i.b-post .s-menu li a
 {
     color: #aaa !important;
 }
@@ -387,10 +389,10 @@ li.log-item .txt-block,
 {
     filter: var(--blue-image-filter) !important;
 }
-/* a
+.z-top-container .b-icon
 {
     filter: var(--pink-image-filter) !important;
-} */
+}
 /* a
 {
     filter: grayscale(1) !important;
@@ -564,7 +566,8 @@ li.normal-item a:hover .uname,
 #vip-exchange-modal .vip-exchange .selector li:hover,
 #vip-exchange-modal .vip-exchange .selector li:hover p.cost,
 #disable-popup-modal .vip-exchange p.balance a:hover,
-#vip-exchange-modal .vip-exchange p.balance a:hover
+#vip-exchange-modal .vip-exchange p.balance a:hover,
+#dyn_wnd .dyn_list a:hover
 {
     color: var(--theme-color) !important;
 }
