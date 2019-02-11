@@ -20,7 +20,21 @@
 .bnj-main>.content,
 #area-list ul li:after,
 .live-room-app .app-content .link-footer-ctnr,
-.group-helper-msg-list
+.group-helper-msg-list,
+#disable-popup-modal .vip-exchange .selector li.current,
+#vip-exchange-modal .vip-exchange .selector li.current,
+#disable-popup-modal .vip-exchange a.btn.disabled,
+#vip-exchange-modal .vip-exchange a.btn.disabled,
+#disable-popup-modal .vip-exchange .months button,
+#vip-exchange-modal .vip-exchange .months button,
+#disable-popup-modal .vip-exchange .months #showMonths,
+#vip-exchange-modal .vip-exchange .months #showMonths,
+#disable-popup-modal .btn,
+#disable-popup-modal .btn-transparent,
+#disable-popup-modal .btn-white,
+#vip-exchange-modal .btn,
+#vip-exchange-modal .btn-transparent,
+#vip-exchange-modal .btn-white
 {
     background-color: #222 !important;
 }
@@ -72,7 +86,9 @@
 .draw-popup-warp .rules,
 .gift-items.col-2 .gift-item .gift-img,
 .winner-list .list-wrap,
-.group-helper-msg-list:after
+.group-helper-msg-list:after,
+#disable-popup-modal .modal,
+#vip-exchange-modal .modal
 {
     background-color: #444 !important;
 }
@@ -151,7 +167,19 @@
 .you-not-win .tips,
 .winner-list .gift-name,
 .user-list .up-item .up-info>span,
-.gift-items.col-3 .gift-item
+.gift-items.col-3 .gift-item,
+#disable-popup-modal .vip-exchange .selector li p.cost,
+#vip-exchange-modal .vip-exchange .selector li p.cost,
+#disable-popup-modal .vip-exchange p.totail,
+#vip-exchange-modal .vip-exchange p.totail,
+#disable-popup-modal .vip-exchange p.totail label,
+#vip-exchange-modal .vip-exchange p.totail label,
+#disable-popup-modal .vip-exchange p#errorTips,
+#disable-popup-modal .vip-exchange p.tips,
+#vip-exchange-modal .vip-exchange p#errorTips,
+#vip-exchange-modal .vip-exchange p.tips,
+#disable-popup-modal .vip-exchange a.help,
+#vip-exchange-modal .vip-exchange a.help
 {
     color: #aaa !important;
 }
@@ -241,7 +269,27 @@ li.log-item .txt-block,
 .button-box .item>button,
 .group-item .name-box .name,
 .group-helper-msg-list .tab-list,
-.list.dp-i-block.v-top .item .title
+.list.dp-i-block.v-top .item .title,
+#disable-popup-modal,
+#vip-exchange-modal,
+#disable-popup-modal .vip-exchange p.balance a,
+#vip-exchange-modal .vip-exchange p.balance a,
+#disable-popup-modal .vip-exchange p.totail strong,
+#vip-exchange-modal .vip-exchange p.totail strong,
+#disable-popup-modal .vip-exchange a.btn.disabled,
+#vip-exchange-modal .vip-exchange a.btn.disabled,
+#disable-popup-modal .vip-exchange .months button,
+#vip-exchange-modal .vip-exchange .months button,
+#disable-popup-modal .vip-exchange .months #showMonths,
+#vip-exchange-modal .vip-exchange .months #showMonths,
+#disable-popup-modal .vip-exchange .months button.disabled,
+#vip-exchange-modal .vip-exchange .months button.disabled,
+#disable-popup-modal .btn,
+#disable-popup-modal .btn-transparent,
+#disable-popup-modal .btn-white,
+#vip-exchange-modal .btn,
+#vip-exchange-modal .btn-transparent,
+#vip-exchange-modal .btn-white
 {
     color: #eee !important;
 }
@@ -276,7 +324,27 @@ li.log-item .txt-block,
 .row .list-info,
 .row .list-comment,
 .common-dialig-left-btn,
-.player .bilibili-player-video-bottom-area .bilibili-player-video-sendbar
+.player .bilibili-player-video-bottom-area .bilibili-player-video-sendbar,
+#disable-popup-modal .vip-exchange .title,
+#vip-exchange-modal .vip-exchange .title,
+#disable-popup-modal .vip-exchange a.btn.disabled,
+#vip-exchange-modal .vip-exchange a.btn.disabled,
+#disable-popup-modal .vip-exchange .months,
+#vip-exchange-modal .vip-exchange .months,
+#disable-popup-modal .vip-exchange p.totail,
+#vip-exchange-modal .vip-exchange p.totail,
+#disable-popup-modal .btn,
+#disable-popup-modal .btn-transparent,
+#disable-popup-modal .btn-white,
+#vip-exchange-modal .btn,
+#vip-exchange-modal .btn-transparent,
+#vip-exchange-modal .btn-white,
+#disable-popup-modal .btn-transparent:hover,
+#disable-popup-modal .btn-white:hover,
+#disable-popup-modal .btn:hover,
+#vip-exchange-modal .btn-transparent:hover,
+#vip-exchange-modal .btn-white:hover,
+#vip-exchange-modal .btn:hover
 {
     border-color: transparent !important;
 }
@@ -287,7 +355,9 @@ li.log-item .txt-block,
 .main-container .media-info,
 .main-container .review-module,
 .main-container .plp-l .comment-wrapper,
-.main-container .sponsor-module
+.main-container .sponsor-module,
+#disable-popup-modal .vip-exchange .months #showMonths,
+#vip-exchange-modal .vip-exchange .months #showMonths
 {
     border-color: #444 !important
 }
@@ -311,7 +381,9 @@ li.log-item .txt-block,
 {
     filter: brightness(0) invert(.7) !important;
 } */
-.helper-btn.active:before
+.helper-btn.active:before,
+#disable-popup-modal .modal-close,
+#vip-exchange-modal .modal-close
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -363,7 +435,9 @@ li.log-item .txt-block,
 .comment-bilibili-con .con input[type=radio]:checked+label:before,
 .gift-item.active .gift-img,
 .tab-list .tab-item.active:before,
-.group-item .name-box .operate-btn
+.group-item .name-box .operate-btn,
+#disable-popup-modal .vip-exchange .selector li:first-child,
+#vip-exchange-modal .vip-exchange .selector li:first-child
 {
     border-color: var(--theme-color) !important;
 }
@@ -406,7 +480,15 @@ li.log-item .txt-block,
 .share-board .list-playbtn:hover,
 .ban-app .case-tip .click-btn:hover,
 .common-dialig-right-btn,
-.tab-list .tab-item.active:after
+.tab-list .tab-item.active:after,
+#disable-popup-modal .vip-exchange .months button:hover,
+#vip-exchange-modal .vip-exchange .months button:hover,
+#disable-popup-modal .btn-transparent:hover,
+#disable-popup-modal .btn-white:hover,
+#disable-popup-modal .btn:hover,
+#vip-exchange-modal .btn-transparent:hover,
+#vip-exchange-modal .btn-white:hover,
+#vip-exchange-modal .btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -474,7 +556,15 @@ li.normal-item a:hover .uname,
 .lottery-notice-cntr .win .uname,
 .winner-list .list-wrap .title,
 .group-item .name-box .operate-btn,
-.button-box .item>button.active
+.button-box .item>button.active,
+#disable-popup-modal .vip-exchange .selector li.current p.cost,
+#disable-popup-modal .vip-exchange .selector li:hover,
+#disable-popup-modal .vip-exchange .selector li:hover p.cost,
+#vip-exchange-modal .vip-exchange .selector li.current p.cost,
+#vip-exchange-modal .vip-exchange .selector li:hover,
+#vip-exchange-modal .vip-exchange .selector li:hover p.cost,
+#disable-popup-modal .vip-exchange p.balance a:hover,
+#vip-exchange-modal .vip-exchange p.balance a:hover
 {
     color: var(--theme-color) !important;
 }
