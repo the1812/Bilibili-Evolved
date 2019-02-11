@@ -240,7 +240,8 @@ li.log-item .txt-block,
 .winner-list,
 .button-box .item>button,
 .group-item .name-box .name,
-.group-helper-msg-list .tab-list
+.group-helper-msg-list .tab-list,
+.list.dp-i-block.v-top .item .title
 {
     color: #eee !important;
 }
