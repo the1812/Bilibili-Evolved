@@ -96,7 +96,8 @@
 .player-his-nav-wrp,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist,
 .core-player-video-panel,
-.core-player
+.core-player,
+.category-divider
 {
     background-color: #444 !important;
 }
@@ -120,7 +121,9 @@
 .pk-container.p-absolute.normal-pk .player-area.p-absolute.init-player.normal-pk .player-area.init-player.normal-pk .pk-result,
 .pk-container.p-absolute.normal-pk .player-area.p-absolute.match-player.normal-pk .player-area.match-player.normal-pk .pk-result,
 .tab-list .tab-item.active:before,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-part-list:before
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-part-list:before,
+.list-row:nth-child(odd),
+.list-row:hover
 {
     background-color: transparent !important;
 }
@@ -306,7 +309,10 @@ li.log-item .txt-block,
 #vip-exchange-modal .btn-transparent,
 #vip-exchange-modal .btn-white,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-title,
-.elecrank-wrapper .elecrank-content .rank-item .item-name
+.elecrank-wrapper .elecrank-content .rank-item .item-name,
+.mng-type-item,
+th.list-head-text,
+.list-row .list-unit
 {
     color: #eee !important;
 }
@@ -604,7 +610,8 @@ li.normal-item a:hover .uname,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-positive:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-random:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-reverse:hover,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item:hover
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item:hover,
+.mng-type-item.active
 {
     color: var(--theme-color) !important;
 }
