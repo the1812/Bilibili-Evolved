@@ -6,7 +6,8 @@
             () => $(".head-content.bili-wrapper>div.search:not(.filter-item)"),
             textBox =>
             {
-                textBox.detach().insertAfter(".nav-con.fr");
+                const rightNavbar = $(document.querySelector(".nav-con.fr"));
+                textBox.detach().insertAfter(rightNavbar);
             },
         );
         if (settings.preserveRank)
@@ -19,13 +20,13 @@
                     if (searchForm.find("a.icons-enabled").length === 0)
                     {
                         searchForm.prepend(`
-                                    <a  title="排行榜"
-                                        class="icons-enabled"
-                                        href="https://www.bilibili.com/ranking"
-                                        target="_blank">
-                                        <i class="icon-rank"></i>
-                                    </a>
-                                `);
+                            <a  title="排行榜"
+                                class="icons-enabled"
+                                href="https://www.bilibili.com/ranking"
+                                target="_blank">
+                                <i class="icon-rank"></i>
+                            </a>
+                        `);
                     }
                 }
             );
