@@ -34,7 +34,8 @@
 #disable-popup-modal .btn-white,
 #vip-exchange-modal .btn,
 #vip-exchange-modal .btn-transparent,
-#vip-exchange-modal .btn-white
+#vip-exchange-modal .btn-white,
+.player-his-info
 {
     background-color: #222 !important;
 }
@@ -89,7 +90,8 @@
 .group-helper-msg-list:after,
 #disable-popup-modal .modal,
 #vip-exchange-modal .modal,
-.uns_box li.u-i.b-post .s-menu
+.uns_box li.u-i.b-post .s-menu,
+.player-his-nav-wrp
 {
     background-color: #444 !important;
 }
@@ -181,7 +183,9 @@
 #vip-exchange-modal .vip-exchange p.tips,
 #disable-popup-modal .vip-exchange a.help,
 #vip-exchange-modal .vip-exchange a.help,
-.uns_box li.u-i.b-post .s-menu li a
+.uns_box li.u-i.b-post .s-menu li a,
+.player-his-follow a,
+.player-his-follow
 {
     color: #aaa !important;
 }
@@ -490,7 +494,9 @@ li.log-item .txt-block,
 #disable-popup-modal .btn:hover,
 #vip-exchange-modal .btn-transparent:hover,
 #vip-exchange-modal .btn-white:hover,
-#vip-exchange-modal .btn:hover
+#vip-exchange-modal .btn:hover,
+.player-his-title div,
+.player-his-nav.active
 {
     background-color: var(--theme-color) !important;
 }
@@ -567,7 +573,8 @@ li.normal-item a:hover .uname,
 #vip-exchange-modal .vip-exchange .selector li:hover p.cost,
 #disable-popup-modal .vip-exchange p.balance a:hover,
 #vip-exchange-modal .vip-exchange p.balance a:hover,
-#dyn_wnd .dyn_list a:hover
+#dyn_wnd .dyn_list a:hover,
+.player-his-nav:hover
 {
     color: var(--theme-color) !important;
 }
