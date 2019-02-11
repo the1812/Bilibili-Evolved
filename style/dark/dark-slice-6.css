@@ -127,7 +127,8 @@
 .tab-list .tab-item.active:before,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-part-list:before,
 .list-row:nth-child(odd),
-.list-row:hover
+.list-row:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-list:before
 {
     background-color: transparent !important;
 }
