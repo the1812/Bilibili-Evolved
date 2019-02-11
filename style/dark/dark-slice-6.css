@@ -37,7 +37,8 @@
 #vip-exchange-modal .btn-white,
 .player-his-info,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item[data-state-play=true],
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover,
+.btn-my-operate
 {
     background-color: #222 !important;
 }
@@ -98,7 +99,9 @@
 .core-player-video-panel,
 .core-player,
 .category-divider,
-.notification
+.notification,
+.dialog-contnent,
+.feedback-content
 {
     background-color: #444 !important;
 }
@@ -199,7 +202,8 @@
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-info-other,
 .core-player-info,
-.notification .notification-group .notification-content
+.notification .notification-group .notification-content,
+.feedback-dialog-content p
 {
     color: #aaa !important;
 }
@@ -316,7 +320,15 @@ li.log-item .txt-block,
 th.list-head-text,
 .list-row .list-unit,
 .notification .notification-group .notification-title,
-.notification-content a
+.notification-content a,
+.feedback-dialog-txt,
+.feedback-dialog-title,
+.feedback-dialog-content .ip-info,
+.feedback-dialog-content .time-info,
+.feedback-dialog-content .ip-local,
+.btn-no-my-operate,
+.btn-my-operate,
+.table-normal.table-styleW .feedbtn
 {
     color: #eee !important;
 }
@@ -372,7 +384,9 @@ th.list-head-text,
 #vip-exchange-modal .btn-transparent:hover,
 #vip-exchange-modal .btn-white:hover,
 #vip-exchange-modal .btn:hover,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header,
+.btn-my-operate,
+.feedback-dialog-title
 {
     border-color: transparent !important;
 }
@@ -523,7 +537,8 @@ th.list-head-text,
 #vip-exchange-modal .btn:hover,
 .player-his-title div,
 .player-his-nav.active,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item[data-state-play=true] .bilibili-player-playlist-plist-play
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item[data-state-play=true] .bilibili-player-playlist-plist-play,
+.btn-no-my-operate
 {
     background-color: var(--theme-color) !important;
 }
@@ -617,7 +632,9 @@ li.normal-item a:hover .uname,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item:hover,
 .mng-type-item.active,
 .notification-content .address,
-.notification-content a:hover
+.notification-content a:hover,
+.btn-my-operate:hover,
+.table-normal.table-styleW .feedbtn:hover
 {
     color: var(--theme-color) !important;
 }
