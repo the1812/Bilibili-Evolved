@@ -94,7 +94,9 @@
 #vip-exchange-modal .modal,
 .uns_box li.u-i.b-post .s-menu,
 .player-his-nav-wrp,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist,
+.core-player-video-panel,
+.core-player
 {
     background-color: #444 !important;
 }
@@ -191,7 +193,8 @@
 .player-his-follow a,
 .player-his-follow,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-info-other
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-info-other,
+.core-player-info
 {
     color: #aaa !important;
 }
@@ -363,7 +366,10 @@ li.log-item .txt-block,
 {
     border-color: transparent !important;
 }
-.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
+.core-player-filter,
+.core-player-auxiliary-area,
+.core-player-video-control
 {
     border-color: #aaa !important;
 }
