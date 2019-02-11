@@ -35,7 +35,9 @@
 #vip-exchange-modal .btn,
 #vip-exchange-modal .btn-transparent,
 #vip-exchange-modal .btn-white,
-.player-his-info
+.player-his-info,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item[data-state-play=true],
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover
 {
     background-color: #222 !important;
 }
@@ -91,7 +93,8 @@
 #disable-popup-modal .modal,
 #vip-exchange-modal .modal,
 .uns_box li.u-i.b-post .s-menu,
-.player-his-nav-wrp
+.player-his-nav-wrp,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist
 {
     background-color: #444 !important;
 }
@@ -114,7 +117,8 @@
 .row .col-4-med.col-4 .pager .pages .page-item button,
 .pk-container.p-absolute.normal-pk .player-area.p-absolute.init-player.normal-pk .player-area.init-player.normal-pk .pk-result,
 .pk-container.p-absolute.normal-pk .player-area.p-absolute.match-player.normal-pk .player-area.match-player.normal-pk .pk-result,
-.tab-list .tab-item.active:before
+.tab-list .tab-item.active:before,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-part-list:before
 {
     background-color: transparent !important;
 }
@@ -185,7 +189,9 @@
 #vip-exchange-modal .vip-exchange a.help,
 .uns_box li.u-i.b-post .s-menu li a,
 .player-his-follow a,
-.player-his-follow
+.player-his-follow,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-info-other
 {
     color: #aaa !important;
 }
@@ -295,7 +301,9 @@ li.log-item .txt-block,
 #disable-popup-modal .btn-white,
 #vip-exchange-modal .btn,
 #vip-exchange-modal .btn-transparent,
-#vip-exchange-modal .btn-white
+#vip-exchange-modal .btn-white,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-title,
+.elecrank-wrapper .elecrank-content .rank-item .item-name
 {
     color: #eee !important;
 }
@@ -350,7 +358,8 @@ li.log-item .txt-block,
 #disable-popup-modal .btn:hover,
 #vip-exchange-modal .btn-transparent:hover,
 #vip-exchange-modal .btn-white:hover,
-#vip-exchange-modal .btn:hover
+#vip-exchange-modal .btn:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header
 {
     border-color: transparent !important;
 }
@@ -363,7 +372,8 @@ li.log-item .txt-block,
 .main-container .plp-l .comment-wrapper,
 .main-container .sponsor-module,
 #disable-popup-modal .vip-exchange .months #showMonths,
-#vip-exchange-modal .vip-exchange .months #showMonths
+#vip-exchange-modal .vip-exchange .months #showMonths,
+.elecrank-header
 {
     border-color: #444 !important
 }
@@ -496,7 +506,8 @@ li.log-item .txt-block,
 #vip-exchange-modal .btn-white:hover,
 #vip-exchange-modal .btn:hover,
 .player-his-title div,
-.player-his-nav.active
+.player-his-nav.active,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item[data-state-play=true] .bilibili-player-playlist-plist-play
 {
     background-color: var(--theme-color) !important;
 }
@@ -574,7 +585,20 @@ li.normal-item a:hover .uname,
 #disable-popup-modal .vip-exchange p.balance a:hover,
 #vip-exchange-modal .vip-exchange p.balance a:hover,
 #dyn_wnd .dyn_list a:hover,
-.player-his-nav:hover
+.player-his-nav:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-title:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-info-title,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-order-play,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-ownername:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-loop.bppl-state-selected,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-positive.bppl-state-selected,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-random.bppl-state-selected,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-reverse.bppl-state-selected,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-loop:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-positive:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-random:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-reverse:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item:hover
 {
     color: var(--theme-color) !important;
 }
