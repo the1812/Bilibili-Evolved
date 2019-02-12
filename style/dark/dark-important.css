@@ -1,7 +1,9 @@
 .link-footer,
 .payment-active,
 .app-body .section-block,
-.bl-button--primary:disabled
+.bl-button--primary:disabled,
+#disable-popup-modal .vip-exchange .months button.disabled,
+#vip-exchange-modal .vip-exchange .months button.disabled
 {
     background-color: #222 !important;
 }
