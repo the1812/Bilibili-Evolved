@@ -38,11 +38,18 @@
 .player-his-info,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item[data-state-play=true],
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover,
-.btn-my-operate
+.btn-my-operate,
+.range-picker.dp-i-block .range.active,
+.area-selector-ctnr.data-area-selector .area-selector,
+.date-picker-input,
+.pika-single.is-bound.left-aligned.bottom-aligned .pika-lendar,
+.pika-label
 {
     background-color: #222 !important;
 }
-.main-container .review-module .review-list .review-item .review-body
+.main-container .review-module .review-list .review-item .review-body,
+.pika-button:hover,
+.area-panel
 {
     background-color: #333 !important;
 }
@@ -101,7 +108,8 @@
 .category-divider,
 .notification,
 .dialog-contnent,
-.feedback-content
+.feedback-content,
+.pika-table thead
 {
     background-color: #444 !important;
 }
@@ -204,7 +212,8 @@
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-info-other,
 .core-player-info,
 .notification .notification-group .notification-content,
-.feedback-dialog-content p
+.feedback-dialog-content p,
+.is-disabled .pika-button
 {
     color: #aaa !important;
 }
@@ -330,7 +339,17 @@ th.list-head-text,
 .btn-no-my-operate,
 .btn-my-operate,
 .table-normal.table-styleW .feedbtn,
-.el-radio
+.el-radio,
+.data-overview,
+.range-picker.dp-i-block .range,
+.range-picker.dp-i-block .range.active,
+.area-selector-ctnr.data-area-selector .area-selector,
+.date-picker-input,
+.pika-button,
+.pika-label,
+.pika-button:hover,
+.is-selected .pika-button,
+.has-event .pika-button
 {
     color: #eee !important;
 }
@@ -388,7 +407,11 @@ th.list-head-text,
 #vip-exchange-modal .btn:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header,
 .btn-my-operate,
-.feedback-dialog-title
+.feedback-dialog-title,
+.area-selector-ctnr.data-area-selector .area-selector,
+.date-picker-input,
+.pika-table thead,
+.area-panel
 {
     border-color: transparent !important;
 }
@@ -421,10 +444,13 @@ th.list-head-text,
 {
     fill: #fff !important;
 } */
-/* a
+.pika-prev,
+.is-rtl .pika-next,
+.pika-next,
+.is-rtl .pika-prev
 {
     filter: brightness(0) invert(1) !important;
-} */
+}
 /* a
 {
     filter: brightness(0) invert(.7) !important;
@@ -488,7 +514,9 @@ th.list-head-text,
 #disable-popup-modal .vip-exchange .selector li:first-child,
 #vip-exchange-modal .vip-exchange .selector li:first-child,
 .el-radio__inner:hover,
-.el-radio__input.is-checked .el-radio__inner
+.el-radio__input.is-checked .el-radio__inner,
+.date-picker-input.active,
+.area-group-item.checked
 {
     border-color: var(--theme-color) !important;
 }
@@ -545,7 +573,9 @@ th.list-head-text,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item[data-state-play=true] .bilibili-player-playlist-plist-play,
 .btn-no-my-operate,
 .el-radio__input.is-checked .el-radio__inner,
-.submit-btn
+.submit-btn,
+.is-selected .pika-button,
+.has-event .pika-button
 {
     background-color: var(--theme-color) !important;
 }
@@ -641,7 +671,8 @@ li.normal-item a:hover .uname,
 .notification-content .address,
 .notification-content a:hover,
 .btn-my-operate:hover,
-.table-normal.table-styleW .feedbtn:hover
+.table-normal.table-styleW .feedbtn:hover,
+.area-group-item.checked
 {
     color: var(--theme-color) !important;
 }
