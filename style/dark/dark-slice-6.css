@@ -431,7 +431,8 @@ th.list-head-text,
 } */
 .helper-btn.active:before,
 #disable-popup-modal .modal-close,
-#vip-exchange-modal .modal-close
+#vip-exchange-modal .modal-close,
+.v-filter-line.clearfix .item.style .icon
 {
     filter: var(--blue-image-filter) !important;
 }
