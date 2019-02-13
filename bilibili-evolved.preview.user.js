@@ -62,13 +62,10 @@
         defaultVideoQuality: "自动",
         useDefaultDanmakuSettings: false,
         enableDanmaku: true,
-        rememberDanmakuBlock: false,
-        danmakuBlockSettings: {
-            scroll: false,
-            top: false,
-            bottom: false,
-            color: false,
-            special: false,
+        rememberDanmakuSettings: false,
+        danmakuSettings: {
+            subtitlesPreserve: false,
+            smartMask: false,
         },
         defaultPlayerLayout: "新版",
         defaultBangumiLayout: "旧版",
@@ -113,7 +110,15 @@
     {
         for (const key in settings)
         {
-            settings[key] = GM_getValue(key, settings[key]);
+            const value = GM_getValue(key, settings[key]);
+            if (settings[key] !== undefined && value.constructor === Object)
+            {
+                settings[key] = Object.assign(settings[key], value);
+            }
+            else
+            {
+                settings[key] = value;
+            }
         }
         for (const key in fixedSettings)
         {
@@ -582,11 +587,16 @@
             },
             useDefaultDanmakuSettings: {
                 path: "min/default-danmaku-settings.min.js",
-                styles: ["defaultDanmakuSettingsStyle"],
+                styles: [
+                    {
+                        key: "defaultDanmakuSettingsStyle",
+                        condition: () => settings.rememberDanmakuSettings,
+                    },
+                ],
                 displayNames: {
                     useDefaultDanmakuSettings: "使用默认弹幕设置",
                     enableDanmaku: "开启弹幕",
-                    rememberDanmakuBlock: "记住弹幕屏蔽类型",
+                    rememberDanmakuSettings: "记住弹幕设置",
                 },
             },
             skipChargeListStyle: {

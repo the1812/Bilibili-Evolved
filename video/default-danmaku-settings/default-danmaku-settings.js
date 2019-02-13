@@ -12,24 +12,27 @@
             checkbox.checked = value;
             raiseEvent(checkbox, "change");
         }
-        const selectors = {
-            enableDanmaku: ".bilibili-player-video-danmaku-switch>input",
-            settingsIcon: ".bilibili-player-video-danmaku-setting",
-        };
         if (!settings.enableDanmaku)
         {
-            setCheckState(selectors.enableDanmaku, false);
+            setCheckState(".bilibili-player-video-danmaku-switch>input", false);
         }
-        if (settings.rememberDanmakuBlock)
+        if (settings.rememberDanmakuSettings)
         {
-            for (const type in settings.danmakuBlockSettings)
-            {
-                selectors[type] = `.bilibili-player-block-filter-type[ftype=${type}]`;
-            }
-            async function applyBlockSettings()
+            // for (const type in settings.danmakuSettings)
+            // {
+            //     if (selectors[type] === undefined)
+            //     {
+            //         selectors[type] = `.bilibili-player-block-filter-type[ftype=${type}]`;
+            //     }
+            // }
+            const selectors = {
+                subtitlesPreserve: ".bilibili-player-video-danmaku-setting-left-preventshade input",
+                smartMask: ".bilibili-player-video-danmaku-setting-left-danmaku-mask input",
+            };
+            async function applyDanmakuSettings()
             {
                 await SpinQuery.unsafeJquery();
-                const settingsIcon = await SpinQuery.any(() => unsafeWindow.$(selectors.settingsIcon));
+                const settingsIcon = await SpinQuery.any(() => unsafeWindow.$(".bilibili-player-video-danmaku-setting"));
                 if (!settingsIcon)
                 {
                     return;
@@ -38,18 +41,18 @@
                 // bilibili will hides the panel after 200ms delay
                 setTimeout(() => resources.removeStyle("defaultDanmakuSettingsStyle"), 300);
 
-                for (const [type, value] of Object.entries(settings.danmakuBlockSettings))
+                for (const [type, value] of Object.entries(settings.danmakuSettings))
                 {
-                    if (value === true)
+                    const element = await SpinQuery.select(() => document.querySelector(selectors[type]));
+                    if (element.checked !== undefined && element.checked !== value)
                     {
-                        const element = await SpinQuery.select(() => document.querySelector(selectors[type]));
                         element.click();
                     }
                 }
             }
-            async function listenBlockSettingsChange()
+            async function listenDanmakuSettingsChange()
             {
-                for (const type in settings.danmakuBlockSettings)
+                for (const type in settings.danmakuSettings)
                 {
                     const element = await SpinQuery.select(() => document.querySelector(selectors[type]));
                     if (!element)
@@ -58,13 +61,13 @@
                     }
                     element.addEventListener("click", () =>
                     {
-                        settings.danmakuBlockSettings[type] = element.classList.contains("disabled");
+                        settings.danmakuSettings[type] = element.checked;
                         saveSettings(settings);
                     });
                 }
             }
-            applyBlockSettings();
-            listenBlockSettingsChange();
+            applyDanmakuSettings();
+            listenDanmakuSettingsChange();
         }
     };
 })();
