@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.5
+// @version      1.7.6
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -800,8 +800,8 @@
     async function loadLazyPanel(selector)
     {
         await SpinQuery.unsafeJquery();
-        const panel = unsafeWindow.$(selector);
-        if (panel.length === 0)
+        const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+        if (!panel)
         {
             throw new Error(`Panel not found: ${selector}`);
         }

@@ -38,7 +38,7 @@
                 for (const [type, value] of Object.entries(settings.danmakuSettings))
                 {
                     const element = await SpinQuery.select(() => document.querySelector(selectors[type]));
-                    if (element.checked !== undefined && element.checked !== value)
+                    if (element !== null && element.checked !== undefined && element.checked !== value)
                     {
                         element.click();
                     }
