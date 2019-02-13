@@ -274,7 +274,8 @@ body>div.to-top.on,
 .open-dialog-masker .open-footer .open-agree,
 .small-item .meta,
 .bangumi-rating-container .bangumi-rating-subtitle,
-.s_tag .nothing
+.s_tag .nothing,
+.article-holder .music-card .container
 {
     color: #aaa !important;
 }
@@ -384,7 +385,8 @@ body>div.to-top.on,
 .bangumi-rating-container .bangumi-rating-title,
 .block-effect-ctnr .item,
 .super-gift-item .gift-info .user-name,
-.super-gift-item .gift-info .user-name:hover
+.super-gift-item .gift-info .user-name:hover,
+.article-holder .music-card .container .title
 {
     color: #eee !important;
 }
@@ -454,7 +456,8 @@ body>div.to-top.on,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
 .open-dialog-masker .btn-normal,
-.review-module .review-list .empty-wrapper .btn-go-write
+.review-module .review-list .empty-wrapper .btn-go-write,
+.article-holder .music-card
 {
     border-color: transparent !important;
 }
@@ -562,7 +565,8 @@ svg.toast-card-dismiss path
 {
     filter: var(--blue-image-filter) !important;
 }
-.svg-icon.good-6-click
+.svg-icon.good-6-click,
+.article-holder .music-card .container .col-3 .card-label
 {
     filter: var(--pink-image-filter) !important;
 }
