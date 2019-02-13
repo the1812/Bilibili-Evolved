@@ -413,7 +413,8 @@ th.list-head-text,
 .area-selector-ctnr.data-area-selector .area-selector,
 .date-picker-input,
 .pika-table thead,
-.area-panel
+.area-panel,
+.popup-content-ctnr .content .report-input
 {
     border-color: transparent !important;
 }
