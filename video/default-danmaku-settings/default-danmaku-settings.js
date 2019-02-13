@@ -31,13 +31,7 @@
             };
             async function applyDanmakuSettings()
             {
-                await SpinQuery.unsafeJquery();
-                const settingsIcon = await SpinQuery.any(() => unsafeWindow.$(".bilibili-player-video-danmaku-setting"));
-                if (!settingsIcon)
-                {
-                    return;
-                }
-                settingsIcon.mouseover().mouseout();
+                await loadLazyPanel(".bilibili-player-video-danmaku-setting");
                 // bilibili will hides the panel after 200ms delay
                 setTimeout(() => resources.removeStyle("defaultDanmakuSettingsStyle"), 300);
 
