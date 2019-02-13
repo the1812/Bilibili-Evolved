@@ -35,6 +35,8 @@
                     return;
                 }
                 settingsIcon.mouseover().mouseout();
+                // bilibili will hides the panel after 200ms delay
+                setTimeout(() => resources.removeStyle("defaultDanmakuSettingsStyle"), 300);
 
                 for (const [type, value] of Object.entries(settings.danmakuBlockSettings))
                 {

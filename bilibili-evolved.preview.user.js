@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.4
+// @version      1.7.5
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -577,8 +577,12 @@
                     expandDescription: "自动展开视频简介"
                 }
             },
+            defaultDanmakuSettingsStyle: {
+                path: "min/default-danmaku-settings.min.css",
+            },
             useDefaultDanmakuSettings: {
                 path: "min/default-danmaku-settings.min.js",
+                styles: ["defaultDanmakuSettingsStyle"],
                 displayNames: {
                     useDefaultDanmakuSettings: "使用默认弹幕设置",
                     enableDanmaku: "开启弹幕",
