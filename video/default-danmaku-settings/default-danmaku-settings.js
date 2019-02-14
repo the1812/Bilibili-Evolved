@@ -31,6 +31,11 @@
             };
             async function applyDanmakuSettings()
             {
+                const panel = await SpinQuery.select(() => document.querySelector(".bilibili-player-video-danmaku-setting"));
+                if (!panel)
+                {
+                    reutrn;
+                }
                 await loadLazyPanel(".bilibili-player-video-danmaku-setting");
                 // bilibili will hides the panel after 200ms delay
                 setTimeout(() => resources.removeStyle("defaultDanmakuSettingsStyle"), 300);
