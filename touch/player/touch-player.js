@@ -366,7 +366,7 @@
             {
                 return;
             }
-            $(".bilibili-player-video-subtitle").before(`
+            $(".bilibili-player-video-subtitle").before(/*html*/`
                 <div class='touch-video-box-wrapper'>
                     <div class='touch-video-box adjust-closed'>
                         <div class='touch-video-info'></div>
@@ -391,26 +391,29 @@
                     volume = 1;
                 }
                 video.prop("volume", volume);
+                const playerSettings = JSON.parse(localStorage.bilibili_player_settings);
+                playerSettings.video_status.volume = volume;
+                localStorage.bilibili_player_settings = JSON.stringify(playerSettings);
                 $(".bilibili-player-video-volume-num").text(Math.round(volume * 100));
 
                 $(".bui-thumb").css("transform", `translateY(-${48 * volume}px)`);
                 $(".bui-track-vertical .bui-bar").css("transform", `scaleY(${volume})`);
                 if (volume === 0)
                 {
-                    $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-min");
-                    $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
+                    $(".bilibili-player-video-btn-volume").addClass("video-state-volume-min");
+                    $(".bilibili-player-video-btn-volume").removeClass("video-state-volume-max");
                     video.prop("muted", true);
                 }
                 else if (volume === 1)
                 {
-                    $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
-                    $(".bilibili-player-video-btn-volume").addClass(".video-state-volume-max");
+                    $(".bilibili-player-video-btn-volume").removeClass("video-state-volume-min");
+                    $(".bilibili-player-video-btn-volume").addClass("video-state-volume-max");
                     video.prop("muted", false);
                 }
                 else
                 {
-                    $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-min");
-                    $(".bilibili-player-video-btn-volume").removeClass(".video-state-volume-max");
+                    $(".bilibili-player-video-btn-volume").removeClass("video-state-volume-min");
+                    $(".bilibili-player-video-btn-volume").removeClass("video-state-volume-max");
                     video.prop("muted", false);
                 }
             };
@@ -448,7 +451,7 @@
                         change = current;
                     }
                     const result = `${secondsToHms(current)} (${currentPercent}%)<br>👇<br>${secondsToHms(finalTime)} (${finalPercent}%)`;
-                    const html = `
+                    const html = /*html*/`
                         <div class='touch-row'>
                             <div class='touch-row-item'>
                                 <span class='touch-speed'>${speed}速</span>
@@ -496,7 +499,7 @@
                     }
                     const result = `${originalVolume} 👉 ${finalVolume}`;
                     setVolume(finalVolume);
-                    const html = `
+                    const html = /*html*/`
                         <div class='touch-row'>
                             <div class='touch-row-item'>
                                 <span class='touch-speed'>${speed}速</span>
@@ -583,11 +586,11 @@
                 () => $(".bilibili-player-iconfont,.bilibili-player-video-quality-menu"),
                 unbindIconsClick
             );
-            new SpinQuery(
+            SpinQuery.condition(
                 () => $(".bilibili-player-video"),
                 it => it.length > 0 && $("video").length > 0 && $("video").prop("duration"),
                 setupTouchPlayer
-            ).start();
+            );
             if (settings.touchVideoPlayerDoubleTapControl)
             {
                 new SpinQuery(
@@ -598,7 +601,7 @@
                     overrideClickHandler
                 ).start();
             }
-        }
+        };
         if (Observer.videoChange)
         {
             Observer.videoChange(main);
