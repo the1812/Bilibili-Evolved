@@ -3,7 +3,7 @@
 // @version      1.7.6
 // @description  增强哔哩哔哩Web端体验: 下载视频, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 删除广告, 使用夜间模式, 修复界面瑕疵; 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
-// @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
@@ -1557,16 +1557,16 @@
             styles.push("--invert-filter:" + settings.filterInvert);
             styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
             styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
-            this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(";")}}</style>`);
+            this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
         }
-        import(compnentName)
+        import(componentName)
         {
-            if (this.attributes[compnentName] === undefined)
+            if (this.attributes[componentName] === undefined)
             {
-                console.error(`Import failed: component "${compnentName}" is not loaded.`);
+                console.error(`Import failed: component "${componentName}" is not loaded.`);
                 return null;
             }
-            return this.attributes[compnentName].export;
+            return this.attributes[componentName].export;
         }
         async fetchByKey(key)
         {

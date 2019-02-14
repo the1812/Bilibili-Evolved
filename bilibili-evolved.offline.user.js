@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      212.96
+// @version      213.27
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
-// @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
@@ -1599,16 +1599,16 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             styles.push("--invert-filter:" + settings.filterInvert);
             styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
             styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
-            this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(";")}}</style>`);
+            this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
         }
-        import(compnentName)
+        import(componentName)
         {
-            if (this.attributes[compnentName] === undefined)
+            if (this.attributes[componentName] === undefined)
             {
-                console.error(`Import failed: component "${compnentName}" is not loaded.`);
+                console.error(`Import failed: component "${componentName}" is not loaded.`);
                 return null;
             }
-            return this.attributes[compnentName].export;
+            return this.attributes[componentName].export;
         }
         async fetchByKey(key)
         {
