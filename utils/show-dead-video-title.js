@@ -4,7 +4,7 @@
     {
         function showTitle()
         {
-            const deadVideos = $(".fav-video-list>li.disabled,.video-list>li.disabled").removeClass("disabled");
+            const deadVideos = $(".disabled[data-aid]").removeClass("disabled");
             deadVideos.each((_, it) =>
             {
                 const $it = $(it);
@@ -33,10 +33,10 @@
                     .text(title);
             });
         }
-        SpinQuery.any(() => $(".fav-content"), () =>
-        {
-            Observer.childListSubtree(".fav-content", showTitle);
-        });
+        // SpinQuery.any(() => $(".fav-content"), () =>
+        // {
+        //     Observer.childListSubtree(".fav-content", showTitle);
+        // });
         SpinQuery.any(() => $("#app>.s-space"), () =>
         {
             Observer.childListSubtree("#app>.s-space", showTitle);

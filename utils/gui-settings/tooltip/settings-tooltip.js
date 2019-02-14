@@ -58,7 +58,7 @@
             hideTopSearch: `将搜索框的推荐词替换为<span>搜索</span>.`,
             fullTweetsTitle: `在顶栏的动态预览框中, 总是展开完整的标题.`,
             fullPageTitle: `在视频选集列表中, 总是展开完整的标题.`,
-            showDeadVideoTitle: `在空间的收藏夹和频道中, 为已失效视频恢复标题和封面.`,
+            showDeadVideoTitle: `在个人空间中, 为已失效视频恢复标题和封面.`,
             useBiliplusRedirect: `将失效视频重定向到BiliPlus.`,
             touchNavBar: `删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`,
             comboLike: `为素质三连(长按点赞)启用触摸支持.`,
