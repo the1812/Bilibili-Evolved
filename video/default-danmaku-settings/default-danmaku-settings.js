@@ -34,7 +34,7 @@
                 const panel = await SpinQuery.select(() => document.querySelector(".bilibili-player-video-danmaku-setting"));
                 if (!panel)
                 {
-                    reutrn;
+                    return;
                 }
                 await loadLazyPanel(".bilibili-player-video-danmaku-setting");
                 // bilibili will hides the panel after 200ms delay
