@@ -56,7 +56,7 @@
                                 ".bilibili-player-block-filter-type[ftype=top]": [5],
                                 ".bilibili-player-block-filter-type[ftype=bottom]": [4],
                                 ".bilibili-player-block-filter-type[ftype=color]": ["color"],
-                                ".bilibili-player-block-filter-type[ftype=special]": [7, 8],
+                                // ".bilibili-player-block-filter-type[ftype=special]": [7, 8],
                             };
 
                             for (const [type, value] of Object.entries(blockValues))
@@ -66,7 +66,7 @@
                                     result = result.concat(value);
                                 }
                             }
-                            return result;
+                            return result.concat(7, 8);
                         })();
                         const resolutionFactor = [1.4, 1.2, 1, 0.8, 0.6][getSliderIndex(".bilibili-player-setting-fontsize .bui-thumb")]; // 改变分辨率来调整字体大小
                         config.resolution = {
