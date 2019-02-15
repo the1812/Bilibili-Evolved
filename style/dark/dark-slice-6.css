@@ -112,7 +112,9 @@
 .feedback-content,
 .pika-table thead,
 .page-list-box .page-input,
-.page-list-box .page-item
+.page-list-box .page-item,
+.gather-wrap .cardhead .type,
+.gather-wrap .videos .item
 {
     background-color: #444 !important;
 }
@@ -361,7 +363,12 @@ th.list-head-text,
 .video-list .tab-wrap .tab-item,
 .content-list.clearfix .v .t,
 .page-list-box .page-input,
-.page-list-box .page-item a
+.page-list-box .page-item a,
+.gather-wrap .cardhead .type,
+.gather-wrap .videos .item a,
+.gather-wrap .videos .item,
+.gather-wrap .videos .item:hover,
+.gather-wrap .videos .item a:hover
 {
     color: #eee !important;
 }
@@ -428,7 +435,10 @@ th.list-head-text,
 .page-list-box .page-input,
 .page-list-box .page-item,
 .page-list-box .page-item:hover,
-.page-list-box .active
+.page-list-box .active,
+.gather-wrap .cardhead .type,
+.gather-wrap .videos .item,
+.gather-wrap .videos .item:hover
 {
     border-color: transparent !important;
 }
@@ -445,7 +455,8 @@ th.list-head-text,
 .main-container .sponsor-module,
 #disable-popup-modal .vip-exchange .months #showMonths,
 #vip-exchange-modal .vip-exchange .months #showMonths,
-.elecrank-header
+.elecrank-header,
+.gather-wrap .gather
 {
     border-color: #444 !important
 }
@@ -595,7 +606,8 @@ th.list-head-text,
 .is-selected .pika-button,
 .has-event .pika-button,
 .page-list-box .page-item:hover,
-.page-list-box .active
+.page-list-box .active,
+.gather-wrap .videos .item:hover
 {
     background-color: var(--theme-color) !important;
 }
