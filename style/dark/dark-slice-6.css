@@ -223,7 +223,8 @@
 .popup-content-ctnr .content .content-text,
 .content-list.clearfix .v .i span,
 .page-list-box .jump-input,
-.page-list-box .pageInfo
+.page-list-box .pageInfo,
+.article-wrap .article .so-icon a
 {
     color: #aaa !important;
 }
