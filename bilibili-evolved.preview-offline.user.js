@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      213.94
+// @version      213.97
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -22,7 +22,7 @@
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @icon         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAH0mlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdEV2dD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlRXZlbnQjIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAxOC0wMi0yNVQxNDo1NzozOCswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAxOC0wMi0yNVQxNDo1NzozOCswODowMCIgeG1wOk1vZGlmeURhdGU9IjIwMTgtMDItMjVUMTQ6NTc6MzgrMDg6MDAiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ODY3MDMzY2UtZjdlMy0wYTRiLWE5YWItODE3ZTI2ZmNlYTMyIiB4bXBNTTpEb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YWFhN2UzZTQtM2MzOS0yOTQ4LWI1OTgtYTEzM2ZjMTMxNDMyIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6YjRjNGFjZWUtZjQyYS0yMTQwLTlmMzgtY2NlZTc3YmY2ZTM1IiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkhpc3Rvcnk9IjIwMTgtMDItMjVUMTQ6NTc6MTArMDg6MDAmI3g5O+aWh+S7tiDmnKrmoIfpopgtMiDlt7LmiZPlvIAmI3hBO+W7uueriyYjeDk75paw5bu6OiDmlofmoaMmI3hBO0ZBTFNFJiN4QTvmqKHlvI86IFJHQiDpopzoibLmqKHlvI8mI3hBO+WuveW6pjogMi41IOiLseWvuCYjeEE76auY5bqmOiAyLjUg6Iux5a+4JiN4QTvmr4/oi7Hlr7gg5YiG6L6o546HOiA3MiYjeEE75YOP57Sg6ZW/5a695q+UOiAxJiN4QTvloavlhYU6IOmAj+aYjiYjeEE75rex5bqmOiA4JiN4QTvphY3nva7mlofku7Y6IOKAnG5vbmXigJ0mI3hBO+WPguiAg+e6vzog5pegJiN4QTsyMTcmI3hBOyYjeEE757KY6LS0JiN4QTvnspjotLQmI3g5O+a2iOmZpOmUr+m9vzog5pegJiN4QTvkuLo6IOWDj+e0oCYjeEE7JiN4QTsyMDE4LTAyLTI1VDE0OjU3OjM4KzA4OjAwJiN4OTvmlofku7YgQzpcVXNlcnNcVGhlMThcUGljdHVyZXNcR3JhcGhpY3NcYmlsaWJpbGkgbG9nbyBzbWFsbC5wbmcg5bey5a2Y5YKoJiN4QTvlrZjlgqgmI3g5OyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyI+IDx4bXBNTTpIaXN0b3J5PiA8cmRmOlNlcT4gPHJkZjpsaSBzdEV2dDphY3Rpb249ImNyZWF0ZWQiIHN0RXZ0Omluc3RhbmNlSUQ9InhtcC5paWQ6YjRjNGFjZWUtZjQyYS0yMTQwLTlmMzgtY2NlZTc3YmY2ZTM1IiBzdEV2dDp3aGVuPSIyMDE4LTAyLTI1VDE0OjU3OjM4KzA4OjAwIiBzdEV2dDpzb2Z0d2FyZUFnZW50PSJBZG9iZSBQaG90b3Nob3AgQ0MgKFdpbmRvd3MpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIg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
 // ==/UserScript==
-/* eslint-disable */
+/* eslint-disable */ /* spell-checker: disable */
 (self$ =>
 {
     const $ = unsafeWindow.$ || self$;
@@ -1051,6 +1051,10 @@
         {
             return this.hexToRgb(this.hex);
         }
+        get rgba()
+        {
+            return this.hexToRgba(this.hex);
+        }
         getHexRegex(alpha, shorthand)
         {
             const repeat = shorthand ? "" : "{2}";
@@ -1691,34 +1695,34 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 }
             }
         }
-        async applyWidgets()
+        async applyWidget(info)
         {
-            async function applyWidget(info)
+            let condition = true;
+            if (typeof info.condition === "function")
             {
-                let condition = true;
-                if (typeof info.condition === "function")
+                condition = info.condition();
+                if (condition instanceof Promise)
                 {
-                    condition = info.condition();
-                    if (condition instanceof Promise)
-                    {
-                        condition = await condition.catch(() => { return false; });
-                    }
-                }
-                if (condition === true)
-                {
-                    if (info.content)
-                    {
-                        $(".widgets-container").append($(info.content));
-                    }
-                    if (info.success)
-                    {
-                        info.success();
-                    }
+                    condition = await condition.catch(() => { return false; });
                 }
             }
+            if (condition === true)
+            {
+                if (info.content)
+                {
+                    $(".widgets-container").append($(info.content));
+                }
+                if (info.success)
+                {
+                    info.success();
+                }
+            }
+        }
+        async applyWidgets()
+        {
             await Promise.all(Object.values(this.attributes)
                 .filter(it => it.widget)
-                .map(it => applyWidget(it.widget))
+                .map(it => this.applyWidget(it.widget))
             );
         }
         async applyDropdownOptions()
@@ -1793,7 +1797,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         }
         if (unsafeWindow.bilibiliEvolved === undefined)
         {
-            unsafeWindow.bilibiliEvolved = {};
+            unsafeWindow.bilibiliEvolved = { addons: [] };
         }
         Object.assign(unsafeWindow.bilibiliEvolved, {
             subscribe(type, callback)
@@ -1822,11 +1826,6 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
         events.init.complete();
         resources.styleManager.prefetchStyles();
         events.styleLoaded.complete();
-
-        const applyScripts = () => resources.fetch()
-            .then(() => events.scriptLoaded.complete())
-            .catch(error => logError(error));
-        contentLoaded(applyScripts);
 
         Object.assign(unsafeWindow.bilibiliEvolved, {
             SpinQuery,
@@ -1867,6 +1866,34 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
                 addValueChangeListener: GM_addValueChangeListener
             },
         });
+        const applyScripts = () => resources.fetch()
+            .then(() =>
+            {
+                events.scriptLoaded.complete();
+                const addons = new Proxy(unsafeWindow.bilibiliEvolved.addons || [], {
+                    apply: function (target, thisArg, argumentsList)
+                    {
+                        return thisArg[target].apply(this, argumentsList);
+                    },
+                    deleteProperty: function (target, property)
+                    {
+                        return true;
+                    },
+                    set: function (target, property, value)
+                    {
+                        if (target[property] === undefined)
+                        {
+                            resources.applyWidget(value);
+                        }
+                        target[property] = value;
+                        return true;
+                    }
+                });
+                addons.forEach(it => resources.applyWidget(it));
+                Object.assign(unsafeWindow.bilibiliEvolved, { addons });
+            })
+            .catch(error => logError(error));
+        contentLoaded(applyScripts);
     }
     catch (error)
     {

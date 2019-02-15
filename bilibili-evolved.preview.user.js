@@ -1050,6 +1050,10 @@
         {
             return this.hexToRgb(this.hex);
         }
+        get rgba()
+        {
+            return this.hexToRgba(this.hex);
+        }
         getHexRegex(alpha, shorthand)
         {
             const repeat = shorthand ? "" : "{2}";
@@ -1649,34 +1653,34 @@
                 }
             }
         }
-        async applyWidgets()
+        async applyWidget(info)
         {
-            async function applyWidget(info)
+            let condition = true;
+            if (typeof info.condition === "function")
             {
-                let condition = true;
-                if (typeof info.condition === "function")
+                condition = info.condition();
+                if (condition instanceof Promise)
                 {
-                    condition = info.condition();
-                    if (condition instanceof Promise)
-                    {
-                        condition = await condition.catch(() => { return false; });
-                    }
-                }
-                if (condition === true)
-                {
-                    if (info.content)
-                    {
-                        $(".widgets-container").append($(info.content));
-                    }
-                    if (info.success)
-                    {
-                        info.success();
-                    }
+                    condition = await condition.catch(() => { return false; });
                 }
             }
+            if (condition === true)
+            {
+                if (info.content)
+                {
+                    $(".widgets-container").append($(info.content));
+                }
+                if (info.success)
+                {
+                    info.success();
+                }
+            }
+        }
+        async applyWidgets()
+        {
             await Promise.all(Object.values(this.attributes)
                 .filter(it => it.widget)
-                .map(it => applyWidget(it.widget))
+                .map(it => this.applyWidget(it.widget))
             );
         }
         async applyDropdownOptions()
@@ -1751,7 +1755,7 @@
         }
         if (unsafeWindow.bilibiliEvolved === undefined)
         {
-            unsafeWindow.bilibiliEvolved = {};
+            unsafeWindow.bilibiliEvolved = { addons: [] };
         }
         Object.assign(unsafeWindow.bilibiliEvolved, {
             subscribe(type, callback)
@@ -1780,11 +1784,6 @@
         events.init.complete();
         resources.styleManager.prefetchStyles();
         events.styleLoaded.complete();
-
-        const applyScripts = () => resources.fetch()
-            .then(() => events.scriptLoaded.complete())
-            .catch(error => logError(error));
-        contentLoaded(applyScripts);
 
         Object.assign(unsafeWindow.bilibiliEvolved, {
             SpinQuery,
@@ -1825,6 +1824,34 @@
                 addValueChangeListener: GM_addValueChangeListener
             },
         });
+        const applyScripts = () => resources.fetch()
+            .then(() =>
+            {
+                events.scriptLoaded.complete();
+                const addons = new Proxy(unsafeWindow.bilibiliEvolved.addons || [], {
+                    apply: function (target, thisArg, argumentsList)
+                    {
+                        return thisArg[target].apply(this, argumentsList);
+                    },
+                    deleteProperty: function (target, property)
+                    {
+                        return true;
+                    },
+                    set: function (target, property, value)
+                    {
+                        if (target[property] === undefined)
+                        {
+                            resources.applyWidget(value);
+                        }
+                        target[property] = value;
+                        return true;
+                    }
+                });
+                addons.forEach(it => resources.applyWidget(it));
+                Object.assign(unsafeWindow.bilibiliEvolved, { addons });
+            })
+            .catch(error => logError(error));
+        contentLoaded(applyScripts);
     }
     catch (error)
     {
