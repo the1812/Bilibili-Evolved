@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.6
+// @version      1.7.7
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1749,7 +1749,11 @@
                 },
             };
         }
-        unsafeWindow.bilibiliEvolved = {
+        if (unsafeWindow.bilibiliEvolved === undefined)
+        {
+            unsafeWindow.bilibiliEvolved = {};
+        }
+        Object.assign(unsafeWindow.bilibiliEvolved, {
             subscribe(type, callback)
             {
                 const event = events[type];
@@ -1769,7 +1773,7 @@
                     return new Promise((resolve) => this.subscribe(type, () => resolve()));
                 }
             },
-        };
+        });
         loadResources();
         loadSettings();
         const resources = new ResourceManager();
@@ -1813,7 +1817,13 @@
                     debugger;
                 }
             },
-            monkeyInfo: GM_info
+            monkeyInfo: GM_info,
+            monkeyApis: {
+                getValue: GM_getValue,
+                setValue: GM_setValue,
+                setClipboard: GM_setClipboard,
+                addValueChangeListener: GM_addValueChangeListener
+            },
         });
     }
     catch (error)
