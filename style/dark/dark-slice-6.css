@@ -110,7 +110,9 @@
 .notification,
 .dialog-contnent,
 .feedback-content,
-.pika-table thead
+.pika-table thead,
+.page-list-box .page-input,
+.page-list-box .page-item
 {
     background-color: #444 !important;
 }
@@ -137,7 +139,8 @@
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-part-list:before,
 .list-row:nth-child(odd),
 .list-row:hover,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-list:before
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-list:before,
+.change-container .video-list
 {
     background-color: transparent !important;
 }
@@ -215,7 +218,10 @@
 .notification .notification-group .notification-content,
 .feedback-dialog-content p,
 .is-disabled .pika-button,
-.popup-content-ctnr .content .content-text
+.popup-content-ctnr .content .content-text,
+.content-list.clearfix .v .i span,
+.page-list-box .jump-input,
+.page-list-box .pageInfo
 {
     color: #aaa !important;
 }
@@ -351,7 +357,11 @@ th.list-head-text,
 .pika-label,
 .pika-button:hover,
 .is-selected .pika-button,
-.has-event .pika-button
+.has-event .pika-button,
+.video-list .tab-wrap .tab-item,
+.content-list.clearfix .v .t,
+.page-list-box .page-input,
+.page-list-box .page-item a
 {
     color: #eee !important;
 }
@@ -414,7 +424,11 @@ th.list-head-text,
 .date-picker-input,
 .pika-table thead,
 .area-panel,
-.popup-content-ctnr .content .report-input
+.popup-content-ctnr .content .report-input,
+.page-list-box .page-input,
+.page-list-box .page-item,
+.page-list-box .page-item:hover,
+.page-list-box .active
 {
     border-color: transparent !important;
 }
@@ -520,7 +534,8 @@ th.list-head-text,
 .el-radio__input.is-checked .el-radio__inner,
 .date-picker-input.active,
 .area-group-item.checked,
-.group-item .operate-btn
+.group-item .operate-btn,
+.video-list .tab-wrap .tab-item.active
 {
     border-color: var(--theme-color) !important;
 }
@@ -528,10 +543,10 @@ th.list-head-text,
 {
     border-top-color: var(--theme-color) !important;
 } */
-/* a
+.tab-wrap .tab-item.active:after
 {
     border-bottom-color: var(--theme-color) !important;
-} */
+}
 /* a
 {
     border-right-color: var(--theme-color) !important;
@@ -578,7 +593,9 @@ th.list-head-text,
 .btn-no-my-operate,
 .el-radio__input.is-checked .el-radio__inner,
 .is-selected .pika-button,
-.has-event .pika-button
+.has-event .pika-button,
+.page-list-box .page-item:hover,
+.page-list-box .active
 {
     background-color: var(--theme-color) !important;
 }
@@ -676,7 +693,9 @@ li.normal-item a:hover .uname,
 .btn-my-operate:hover,
 .table-normal.table-styleW .feedbtn:hover,
 .area-group-item.checked,
-.group-item .operate-btn
+.group-item .operate-btn,
+.video-list .tab-wrap .tab-item.active,
+.content-list.clearfix .v:hover .t
 {
     color: var(--theme-color) !important;
 }

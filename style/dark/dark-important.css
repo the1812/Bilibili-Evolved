@@ -120,7 +120,9 @@ blockquote .color-yellow-04,
 .season-timeline .season-group.today .group-time::before,
 .aside-ctnr .author-info .communicate-btn,
 .tag-list li.tag-item.on,
-.tag-list li.tag-item:hover
+.tag-list li.tag-item:hover,
+.page-list-box .page-input:focus,
+.page-list-box .page-input:hover
 {
     border-color: var(--theme-color) !important;
 }
