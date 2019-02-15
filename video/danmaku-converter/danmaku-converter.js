@@ -169,7 +169,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 targetTrack.push(getTrackItem({ track, width, visibleTime }));
                 return getTag({ track, x, y });
             }
-            getHorizonalTags(danmaku)
+            getHorizontalTags(danmaku)
             {
                 return this.getTags(danmaku, {
                     targetTrack: this.horizontalTrack,
@@ -252,7 +252,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                     case "normal":
                     case "reversed": // 反向先鸽了, 直接当正向了
                         {
-                            tags = this.getHorizonalTags(danmaku);
+                            tags = this.getHorizontalTags(danmaku);
                             stack = this.horizontalDanmakus;
                             break;
                         }
