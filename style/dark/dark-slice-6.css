@@ -368,7 +368,8 @@ th.list-head-text,
 .gather-wrap .videos .item a,
 .gather-wrap .videos .item,
 .gather-wrap .videos .item:hover,
-.gather-wrap .videos .item a:hover
+.gather-wrap .videos .item a:hover,
+.vippendant-title
 {
     color: #eee !important;
 }
