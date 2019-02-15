@@ -487,7 +487,8 @@ th.list-head-text,
 .helper-btn.active:before,
 #disable-popup-modal .modal-close,
 #vip-exchange-modal .modal-close,
-.v-filter-line.clearfix .item.style .icon
+.v-filter-line.clearfix .item.style .icon,
+.home-wrap .home-suggest .title .delete-history .icon-garbage
 {
     filter: var(--blue-image-filter) !important;
 }
