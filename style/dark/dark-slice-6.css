@@ -43,8 +43,7 @@
 .area-selector-ctnr.data-area-selector .area-selector,
 .date-picker-input,
 .pika-single.is-bound.left-aligned.bottom-aligned .pika-lendar,
-.pika-label,
-.tab-list .tab-item.active:before
+.pika-label
 {
     background-color: #222 !important;
 }

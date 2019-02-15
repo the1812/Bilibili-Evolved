@@ -3,7 +3,8 @@
 .app-body .section-block,
 .bl-button--primary:disabled,
 #disable-popup-modal .vip-exchange .months button.disabled,
-#vip-exchange-modal .vip-exchange .months button.disabled
+#vip-exchange-modal .vip-exchange .months button.disabled,
+.tab-list .tab-item.active:before
 {
     background-color: #222 !important;
 }
