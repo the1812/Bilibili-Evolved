@@ -220,7 +220,13 @@
                             }
                         });
                         xhr.addEventListener("abort", () => reject("下载已取消."));
-                        xhr.addEventListener("error", () => reject(`下载失败.`));
+                        xhr.addEventListener("error", () =>
+                        {
+                            this.loaded -= loaded;
+                            loaded = 0;
+                            xhr.open("GET", fragment.url);
+                            xhr.send();
+                        });
                         xhr.setRequestHeader("Range", range);
                         xhr.send();
                         this.workingXhr.push(xhr);
