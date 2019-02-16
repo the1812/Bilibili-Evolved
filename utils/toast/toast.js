@@ -29,8 +29,8 @@ class Toast
     }
     get cardHtml()
     {
-        return `
-                <div class="toast-card icons-enabled toast-${this.type}">
+        return /*html*/`
+            <div class="toast-card icons-enabled toast-${this.type}">
                 <div class="toast-card-header">
                     <h1 class="toast-card-title">${this.title}</h1>
                     <div class="toast-card-dismiss">
@@ -38,8 +38,8 @@ class Toast
                     </div>
                 </div>
                 <div class="toast-card-message">${this.message}</div>
-                </div>
-                `;
+            </div>
+            `;
     }
     static get container()
     {
@@ -49,7 +49,7 @@ class Toast
     {
         if ($(".toast-card-container").length === 0)
         {
-            $("body").append(`<div class="toast-card-container"></div>`);
+            $("body").append(/*html*/`<div class="toast-card-container"></div>`);
         }
     }
     static internalShow(message, title, duration, type)
@@ -81,5 +81,5 @@ resources.applyStyle("toastStyle");
 Toast.createToastContainer();
 
 export default {
-    export: { Toast }
+    export: Toast
 };
