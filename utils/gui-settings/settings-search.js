@@ -1,4 +1,4 @@
-import { settingsTooltip as tooltip } from "./tooltip/settings-tooltip";
+import { toolTips } from "./tooltip/settings-tooltip";
 export class SettingsSearch
 {
     constructor()
@@ -21,7 +21,7 @@ export class SettingsSearch
         this.items.forEach(item =>
         {
             const key = $(item).find("input").attr("key");
-            const texts = Resource.displayNames[key] + tooltip[key].replace(/<span>|<\/span>/g, "");
+            const texts = Resource.displayNames[key] + toolTips[key].replace(/<span>|<\/span>/g, "");
             if (texts.includes(value))
             {
                 item.classList.remove("folded");
