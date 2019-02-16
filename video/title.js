@@ -1,4 +1,4 @@
-function getFriendlyTitle()
+export function getFriendlyTitle()
 {
     if (document.URL.indexOf("/bangumi") !== -1)
     {
@@ -19,5 +19,5 @@ function getFriendlyTitle()
     }
 }
 export default {
-    export: getFriendlyTitle,
+    export: { getFriendlyTitle },
 };

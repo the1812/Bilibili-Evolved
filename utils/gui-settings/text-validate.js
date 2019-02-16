@@ -1,4 +1,4 @@
-class Validator
+export class Validator
 {
     constructor(key)
     {
@@ -41,7 +41,7 @@ class Validator
         return result;
     }
 }
-class ColorValidator extends Validator
+export class ColorValidator extends Validator
 {
     isValidate(text)
     {
@@ -58,7 +58,7 @@ class ColorValidator extends Validator
         }
     }
 }
-class OpacityValidator extends Validator
+export class OpacityValidator extends Validator
 {
     isValidate(text)
     {
@@ -72,7 +72,7 @@ class OpacityValidator extends Validator
         }
     }
 }
-class DropDownValidator extends Validator
+export class DropDownValidator extends Validator
 {
     isValidate(text)
     {
@@ -85,7 +85,7 @@ class DropDownValidator extends Validator
         }
     }
 }
-class TimeValidator extends Validator
+export class TimeValidator extends Validator
 {
     isValidate(text)
     {

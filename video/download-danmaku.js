@@ -1,6 +1,6 @@
-const getFriendlyTitle = resources.import("title");
-const { DanmakuInfo } = resources.import("videoInfo");
-const { DanmakuConverter } = resources.import("danmakuConverter");
+import { getFriendlyTitle } from "./title";
+import { DanmakuInfo } from "./video-info";
+import { DanmakuConverter } from "./danmaku-converter/danmaku-converter";
 async function downloadDanmaku(timeout, ass)
 {
     const title = getFriendlyTitle();

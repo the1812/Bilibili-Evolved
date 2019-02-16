@@ -16,7 +16,7 @@ const colors = {
     grey: "#757575",
     blueGrey: "#78909C"
 };
-class ThemeColors
+export class ThemeColors
 {
     constructor()
     {
@@ -78,5 +78,5 @@ class ThemeColors
     }
 }
 export default {
-    export: ThemeColors
+    export: { ThemeColors }
 };

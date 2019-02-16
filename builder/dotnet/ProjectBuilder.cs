@@ -29,7 +29,7 @@ namespace BilibiliEvolved.Build
             var ratio = 100.0 * MinimizedResourceLength / OriginalResourceLength;
             File.WriteAllText(OutputPath, Output);
             WriteInfo();
-            WriteHint($"External resource size -{(100.0 - ratio):0.##}%");
+            // WriteHint($"External resource size -{(100.0 - ratio):0.##}%");
             WriteInfo("Build complete.", ConsoleColor.Green);
         }
         public void WriteInfo(string message = "", ConsoleColor color = ConsoleColor.Gray)

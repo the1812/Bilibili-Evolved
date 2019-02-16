@@ -100,5 +100,5 @@ function extractKey(listItem)
     });
 })();
 export default {
-    export: toolTips,
+    export: { toolTips },
 };

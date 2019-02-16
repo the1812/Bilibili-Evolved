@@ -1,4 +1,4 @@
-class Danmaku
+export class Danmaku
 {
     constructor(content, time, type, fontSize, color)
     {
@@ -9,7 +9,7 @@ class Danmaku
         this.color = parseInt(color);
     }
 }
-class XmlDanmaku extends Danmaku
+export class XmlDanmaku extends Danmaku
 {
     constructor({ content, time, type, fontSize, color, timeStamp, pool, userHash, rowId })
     {
@@ -34,7 +34,7 @@ class XmlDanmaku extends Danmaku
         return new XmlDanmaku({ content, time, type, fontSize, color, timeStamp, pool, userHash, rowId });
     }
 }
-class XmlDanmakuDocument
+export class XmlDanmakuDocument
 {
     constructor(xml)
     {
@@ -43,7 +43,7 @@ class XmlDanmakuDocument
         this.danmakus = [...document.querySelectorAll("d[p]")].map(it => XmlDanmaku.parse(it));
     }
 }
-class AssDanmaku extends Danmaku
+export class AssDanmaku extends Danmaku
 {
     constructor({ content, time, type, fontSize, color, typeTag, colorTag, endTime })
     {
@@ -58,7 +58,7 @@ class AssDanmaku extends Danmaku
         return `Dialogue: 0,${this.time},${this.endTime},${styleName},,0,0,0,,{${this.typeTag}${this.colorTag}}${this.content}`;
     }
 }
-class AssDanmakuDocument
+export class AssDanmakuDocument
 {
     constructor({ danmakus, title, fontStyles, blockTypes, resolution })
     {
@@ -94,8 +94,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             .filter(it => it !== "").join("\n");
     }
 }
-
-class DanmakuStack
+export class DanmakuStack
 {
     constructor(font, resolution, duration, bottomMarginPercent)
     {
@@ -274,7 +273,7 @@ class DanmakuStack
         return info;
     }
 }
-class DanmakuConverter
+export class DanmakuConverter
 {
     constructor({ title, font, alpha, duration, blockTypes, resolution, bottomMarginPercent, bold })
     {

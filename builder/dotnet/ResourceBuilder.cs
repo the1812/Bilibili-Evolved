@@ -88,7 +88,8 @@ namespace BilibiliEvolved.Build
                     File.WriteAllText(outputPath, result);
                     cache.AddCache(path);
 
-                    builder.WriteHint($"\t=> {outputPath.PadRight(48)}{(100.0 * result.Length / text.Length):0.##}%");
+                    builder.WriteHint($"\t=> {outputPath}");
+                    // builder.WriteHint($"\t=> {outputPath.PadRight(48)}{(100.0 * result.Length / text.Length):0.##}%");
                 });
                 cache.SaveCache();
             }
@@ -140,11 +141,28 @@ namespace BilibiliEvolved.Build
         {
             if (!input.StartsWith("(() =>"))
             {
+                var importRegex = new Regex(@"import (.*) from ""(.*)"";", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                while (true)
+                {
+                    var match = importRegex.Match(input);
+                    if (!match.Success)
+                    {
+                        break;
+                    }
+                    var imported = match.Groups[1].Value.Replace(" as ", ":");
+                    var source = match.Groups[2].Value;
+                    var index = source.LastIndexOf("/");
+                    if (index != -1)
+                    {
+                        source = source.Remove(0, index + 1);
+                    }
+                    input = input.Replace(match.Value, $"const {imported} = resources.import(\"{source}\");");
+                }
                 input = @"(() =>
 {
     return (settings, resources) =>
     {
-        " + input.Replace("export default", "return") + @"
+        " + input.Replace("export default ", "return").Replace("export ", "") + @"
     };
 })();";
             }

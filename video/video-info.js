@@ -1,4 +1,4 @@
-class VideoInfo
+export class VideoInfo
 {
     constructor(aid)
     {
@@ -40,7 +40,7 @@ class VideoInfo
         return this.danmaku.fetchInfo();
     }
 }
-class Danmaku
+export class Danmaku
 {
     constructor(text, p)
     {
@@ -48,7 +48,7 @@ class Danmaku
         this.p = p;
     }
 }
-class DanmakuInfo
+export class DanmakuInfo
 {
     constructor(cid)
     {
@@ -67,7 +67,7 @@ class DanmakuInfo
         });
     }
 }
-class BangumiInfo
+export class BangumiInfo
 {
     constructor(ep)
     {

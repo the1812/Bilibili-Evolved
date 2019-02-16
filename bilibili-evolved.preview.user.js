@@ -1569,12 +1569,38 @@
         }
         import(componentName)
         {
-            if (this.attributes[componentName] === undefined)
+            const resource = Resource.all[componentName];
+            if (resource && resource.type.name === "html")
             {
-                console.error(`Import failed: component "${componentName}" is not loaded.`);
-                return null;
+                if (!resource.downloaded)
+                {
+                    console.error(`Import failed: component "${componentName}" is not loaded.`);
+                    return null;
+                }
+                return resource.text;
             }
-            return this.attributes[componentName].export;
+            else
+            {
+                const asFileName = () =>
+                {
+                    const keyword = componentName + ".min.js";
+                    for (const [name, value] of Object.entries(Resource.all))
+                    {
+                        if (value.url.indexOf(keyword) !== -1)
+                        {
+                            return name;
+                        }
+                    }
+                    return componentName;
+                };
+                const attribute = this.attributes[componentName] || this.attributes[asFileName()];
+                if (attribute === undefined)
+                {
+                    console.error(`Import failed: component "${componentName}" is not loaded.`);
+                    return null;
+                }
+                return attribute.export;
+            }
         }
         async fetchByKey(key)
         {

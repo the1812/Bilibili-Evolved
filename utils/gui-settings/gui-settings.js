@@ -1,3 +1,6 @@
+import { ThemeColors } from "./theme-colors";
+import { SettingsSearch } from "./settings-search";
+import { Validator } from "./text-validate";
 function getCategoryItems(category)
 {
     let element = category.nextElementSibling;
@@ -9,7 +12,6 @@ function getCategoryItems(category)
     }
     return elements;
 }
-
 function settingsChange(key, value)
 {
     $(`input[type='checkbox'][key='${key}']`)
@@ -61,7 +63,6 @@ function setupEvents()
 }
 function listenSettingsChange()
 {
-    const { Validator } = resources.import("textValidate");
     const reloadChanges = (key) =>
     {
         // const reloadableKey = Resource.reloadables[key];
@@ -222,9 +223,6 @@ function setDisplayNames()
     checkCompatibility();
     setDisplayNames();
 
-    const ThemeColors = resources.import("themeColors");
     new ThemeColors().setupDom();
-
-    const Search = resources.import("settingsSearch");
-    new Search();
+    new SettingsSearch();
 })();

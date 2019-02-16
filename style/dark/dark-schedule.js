@@ -138,5 +138,5 @@ function checkTime()
 checkTime();
 
 export default {
-    export: ScheduleTime
+    export: { ScheduleTime }
 };

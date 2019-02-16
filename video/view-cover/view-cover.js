@@ -1,4 +1,4 @@
-const { VideoInfo } = resources.import("videoInfo");
+import { VideoInfo } from "../video-info";
 class ImageViewer
 {
     constructor(url)

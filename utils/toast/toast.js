@@ -81,5 +81,5 @@ resources.applyStyle("toastStyle");
 Toast.createToastContainer();
 
 export default {
-    export: Toast
+    export: { Toast }
 };

@@ -1,4 +1,5 @@
-class SettingsSearch
+import { settingsTooltip as tooltip } from "./tooltip/settings-tooltip";
+export class SettingsSearch
 {
     constructor()
     {
@@ -12,7 +13,6 @@ class SettingsSearch
     keywordChange()
     {
         const value = this.input.value.trim();
-        const toolTips = resources.import("settingsTooltip");
         if (!value)
         {
             this.categories.concat(this.items).forEach(it => it.classList.add("folded"));
@@ -21,7 +21,7 @@ class SettingsSearch
         this.items.forEach(item =>
         {
             const key = $(item).find("input").attr("key");
-            const texts = Resource.displayNames[key] + toolTips[key].replace(/<span>|<\/span>/g, "");
+            const texts = Resource.displayNames[key] + tooltip[key].replace(/<span>|<\/span>/g, "");
             if (texts.includes(value))
             {
                 item.classList.remove("folded");
@@ -55,5 +55,5 @@ class SettingsSearch
     }
 }
 export default {
-    export: SettingsSearch,
+    export: { SettingsSearch },
 };
