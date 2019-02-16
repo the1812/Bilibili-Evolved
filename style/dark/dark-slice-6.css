@@ -43,8 +43,7 @@
 .area-selector-ctnr.data-area-selector .area-selector,
 .date-picker-input,
 .pika-single.is-bound.left-aligned.bottom-aligned .pika-lendar,
-.pika-label,
-.tab-list .tab-item.active:before
+.pika-label
 {
     background-color: #222 !important;
 }
@@ -112,7 +111,10 @@
 .feedback-content,
 .pika-table thead,
 .page-list-box .page-input,
-.page-list-box .page-item
+.page-list-box .page-item,
+.gather-wrap .cardhead .type,
+.gather-wrap .videos .item,
+.d-outer
 {
     background-color: #444 !important;
 }
@@ -140,9 +142,19 @@
 .list-row:nth-child(odd),
 .list-row:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-list:before,
-.change-container .video-list
+.change-container .video-list,
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y:hover,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-y.ps--clicking
 {
     background-color: transparent !important;
+}
+.d-state-highlight
+{
+    background: transparent !important;
 }
 /* a
 {
@@ -221,7 +233,10 @@
 .popup-content-ctnr .content .content-text,
 .content-list.clearfix .v .i span,
 .page-list-box .jump-input,
-.page-list-box .pageInfo
+.page-list-box .pageInfo,
+.article-wrap .article .so-icon a,
+.face-buy-item,
+.face-buy-price
 {
     color: #aaa !important;
 }
@@ -361,7 +376,13 @@ th.list-head-text,
 .video-list .tab-wrap .tab-item,
 .content-list.clearfix .v .t,
 .page-list-box .page-input,
-.page-list-box .page-item a
+.page-list-box .page-item a,
+.gather-wrap .cardhead .type,
+.gather-wrap .videos .item a,
+.gather-wrap .videos .item,
+.gather-wrap .videos .item:hover,
+.gather-wrap .videos .item a:hover,
+.vippendant-title
 {
     color: #eee !important;
 }
@@ -428,14 +449,20 @@ th.list-head-text,
 .page-list-box .page-input,
 .page-list-box .page-item,
 .page-list-box .page-item:hover,
-.page-list-box .active
+.page-list-box .active,
+.gather-wrap .cardhead .type,
+.gather-wrap .videos .item,
+.gather-wrap .videos .item:hover,
+.setting .follow-setting
 {
     border-color: transparent !important;
 }
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
 .core-player-filter,
 .core-player-auxiliary-area,
-.core-player-video-control
+.core-player-video-control,
+.face-buy-item,
+.face-buy-price
 {
     border-color: #aaa !important;
 }
@@ -445,7 +472,8 @@ th.list-head-text,
 .main-container .sponsor-module,
 #disable-popup-modal .vip-exchange .months #showMonths,
 #vip-exchange-modal .vip-exchange .months #showMonths,
-.elecrank-header
+.elecrank-header,
+.gather-wrap .gather
 {
     border-color: #444 !important
 }
@@ -475,7 +503,10 @@ th.list-head-text,
 .helper-btn.active:before,
 #disable-popup-modal .modal-close,
 #vip-exchange-modal .modal-close,
-.v-filter-line.clearfix .item.style .icon
+.v-filter-line.clearfix .item.style .icon,
+.home-wrap .home-suggest .title .delete-history .icon-garbage,
+.face-buy-item.active,
+.face-buy-close
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -535,7 +566,9 @@ th.list-head-text,
 .date-picker-input.active,
 .area-group-item.checked,
 .group-item .operate-btn,
-.video-list .tab-wrap .tab-item.active
+.video-list .tab-wrap .tab-item.active,
+.face-buy-item.active,
+.face-buy-item:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -595,7 +628,8 @@ th.list-head-text,
 .is-selected .pika-button,
 .has-event .pika-button,
 .page-list-box .page-item:hover,
-.page-list-box .active
+.page-list-box .active,
+.gather-wrap .videos .item:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -695,7 +729,10 @@ li.normal-item a:hover .uname,
 .area-group-item.checked,
 .group-item .operate-btn,
 .video-list .tab-wrap .tab-item.active,
-.content-list.clearfix .v:hover .t
+.content-list.clearfix .v:hover .t,
+.face-buy-item.active,
+.face-buy-item:hover,
+face-buy-price a
 {
     color: var(--theme-color) !important;
 }
