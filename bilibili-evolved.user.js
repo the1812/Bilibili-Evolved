@@ -1634,10 +1634,10 @@
             if (settings.toast === true)
             {
                 await this.fetchByKey("toast");
-                unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export;
+                unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export.Toast;
                 if (!isCacheValid && settings.useCache)
                 {
-                    loadingToast = Toast.info(`<div class="loading"></div>正在初始化脚本`, "初始化");
+                    loadingToast = Toast.info(/*html*/`<div class="loading"></div>正在初始化脚本`, "初始化");
                 }
             }
             const promises = [];

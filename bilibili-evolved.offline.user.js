@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      215.23
+// @version      215.24
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1677,10 +1677,10 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
             if (settings.toast === true)
             {
                 await this.fetchByKey("toast");
-                unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export;
+                unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export.Toast;
                 if (!isCacheValid && settings.useCache)
                 {
-                    loadingToast = Toast.info(`<div class="loading"></div>正在初始化脚本`, "初始化");
+                    loadingToast = Toast.info(/*html*/`<div class="loading"></div>正在初始化脚本`, "初始化");
                 }
             }
             const promises = [];
