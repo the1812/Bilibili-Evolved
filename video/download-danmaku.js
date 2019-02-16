@@ -2,13 +2,12 @@
 {
     return (settings, resources) =>
     {
+        const getFriendlyTitle = resources.import("title");
         const { DanmakuInfo } = resources.import("videoInfo");
         const { DanmakuConverter } = resources.import("danmakuConverter");
         async function downloadDanmaku(timeout, ass)
         {
-            const title = document.title
-                .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
-                .replace("_番剧_bilibili_哔哩哔哩", "");
+            const title = getFriendlyTitle();
             const danmaku = new DanmakuInfo((unsafeWindow || window).cid);
             await danmaku.fetchInfo();
             const blob = await (async () =>

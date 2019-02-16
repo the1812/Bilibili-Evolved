@@ -24,7 +24,7 @@ namespace BilibiliEvolved.Build
         public abstract Predicate<FileInfo> FileFilter { get; }
         public abstract string ResourceType { get; }
         public abstract string Minify(string input);
-        protected string GetMinifiedFileName(string path)
+        protected string GetMinimizedFileName(string path)
         {
             var fileInfo = new FileInfo(path);
             return "min/" + fileInfo.Name.Insert(fileInfo.Name.LastIndexOf("."), ".min");
@@ -84,7 +84,7 @@ namespace BilibiliEvolved.Build
                     var text = File.ReadAllText(path);
                     var result = Minify(text);
 
-                    var outputPath = GetMinifiedFileName(path);
+                    var outputPath = GetMinimizedFileName(path);
                     File.WriteAllText(outputPath, result);
                     cache.AddCache(path);
 
@@ -95,7 +95,7 @@ namespace BilibiliEvolved.Build
             files.ForEach(file =>
             {
                 builder.OriginalResourceLength += new FileInfo(file).Length;
-                builder.MinifiedResourceLength += new FileInfo(GetMinifiedFileName(file)).Length;
+                builder.MinimizedResourceLength += new FileInfo(GetMinimizedFileName(file)).Length;
             });
             builder.WriteSuccess($"{ResourceType} minify complete.");
             return builder;
@@ -115,20 +115,6 @@ namespace BilibiliEvolved.Build
 
         public override string Minify(string input)
         {
-            // var commentRegex = new Regex(@"/\*[^\0]*?\*/|^\s*//.*$", RegexOptions.Multiline);
-            // input = commentRegex.Replace(input, "");
-
-            // var selectorRegex = new Regex(@"[\s]*([^\0,}]+?)[\s]*({)|[\s]*([^\0}]+?)(,)" + Environment.NewLine);
-            // input = selectorRegex.Replace(input, "$1$2$3$4");
-
-            // var ruleRegex = new Regex(@"[\s]*([a-z\-]+:)[ ]*(.*?)[ ]*(!important)?;[\s]*");
-            // input = ruleRegex.Replace(input, "$1$2$3;");
-
-            // return input
-            //     .Replace(Environment.NewLine, "")
-            //     .Replace("\n", "")
-            //     .Replace("\r", "")
-            //     .Replace(", ", ",");
             return new UglifyCss().Run(input);
         }
 
@@ -152,6 +138,16 @@ namespace BilibiliEvolved.Build
 
         public override string Minify(string input)
         {
+            if (!input.StartsWith("(() =>"))
+            {
+                input = @"(() =>
+{
+    return (settings, resources) =>
+    {
+        " + input + @"
+    };
+})();";
+            }
             return new UglifyJs().Run(input);
         }
     }
