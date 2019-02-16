@@ -142,7 +142,13 @@
 .list-row:nth-child(odd),
 .list-row:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-list:before,
-.change-container .video-list
+.change-container .video-list,
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y:hover,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-y.ps--clicking
 {
     background-color: transparent !important;
 }
