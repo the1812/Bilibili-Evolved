@@ -1,7 +1,1 @@
-(() =>
-{
-    return (settings, resources) =>
-    {
-
-    };
-})();
+resources.applyStyle("commentStyle");

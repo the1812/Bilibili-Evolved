@@ -144,7 +144,7 @@ namespace BilibiliEvolved.Build
 {
     return (settings, resources) =>
     {
-        " + input + @"
+        " + input.Replace("export default", "return") + @"
     };
 })();";
             }

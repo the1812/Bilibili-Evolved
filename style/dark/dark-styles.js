@@ -1,30 +1,24 @@
-(() =>
+if (settings.useDarkStyle)
 {
-    return (settings, resources) =>
+    resources.applyStyle("scrollbarStyle");
+    SpinQuery.any(
+        () => $(".custom-scrollbar"),
+        it => it.removeClass("custom-scrollbar")
+    );
+    if ($("#banner_link").length === 0 ||
+        $("#banner_link").length > 0 &&
+        settings.overrideNavBar &&
+        !settings.showBanner)
     {
-        if (settings.useDarkStyle)
-        {
-            resources.applyStyle("scrollbarStyle");
-            SpinQuery.any(
-                () => $(".custom-scrollbar"),
-                it => it.removeClass("custom-scrollbar")
-            );
-            if ($("#banner_link").length === 0 ||
-                $("#banner_link").length > 0 &&
-                settings.overrideNavBar &&
-                !settings.showBanner)
-            {
-                resources.applyImportantStyle("darkStyleNavBar");
-            }
-            resources.applyStyle("darkStyle");
-            resources.applyImportantStyle("darkStyleImportant");
-        }
-        else
-        {
-            resources.removeStyle("scrollbarStyle");
-            resources.removeStyle("darkStyleNavBar");
-            resources.removeStyle("darkStyle");
-            resources.removeStyle("darkStyleImportant");
-        }
-    };
-})();
+        resources.applyImportantStyle("darkStyleNavBar");
+    }
+    resources.applyStyle("darkStyle");
+    resources.applyImportantStyle("darkStyleImportant");
+}
+else
+{
+    resources.removeStyle("scrollbarStyle");
+    resources.removeStyle("darkStyleNavBar");
+    resources.removeStyle("darkStyle");
+    resources.removeStyle("darkStyleImportant");
+}

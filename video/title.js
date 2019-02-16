@@ -18,6 +18,6 @@ function getFriendlyTitle()
         }
     }
 }
-return {
+export default {
     export: getFriendlyTitle,
 };

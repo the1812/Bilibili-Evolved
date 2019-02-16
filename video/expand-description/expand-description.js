@@ -1,7 +1,1 @@
-(() =>
-{
-    return (settings, resources) =>
-    {
-        resources.applyStyle("expandDescriptionStyle");
-    };
-})();
+resources.applyStyle("expandDescriptionStyle");
