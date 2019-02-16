@@ -732,7 +732,7 @@ li.normal-item a:hover .uname,
 .content-list.clearfix .v:hover .t,
 .face-buy-item.active,
 .face-buy-item:hover,
-face-buy-price a
+.face-buy-price a
 {
     color: var(--theme-color) !important;
 }
