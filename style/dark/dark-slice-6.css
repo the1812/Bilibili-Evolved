@@ -225,7 +225,9 @@
 .content-list.clearfix .v .i span,
 .page-list-box .jump-input,
 .page-list-box .pageInfo,
-.article-wrap .article .so-icon a
+.article-wrap .article .so-icon a,
+.face-buy-item,
+.face-buy-price
 {
     color: #aaa !important;
 }
@@ -448,7 +450,9 @@ th.list-head-text,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
 .core-player-filter,
 .core-player-auxiliary-area,
-.core-player-video-control
+.core-player-video-control,
+.face-buy-item,
+.face-buy-price
 {
     border-color: #aaa !important;
 }
@@ -490,7 +494,9 @@ th.list-head-text,
 #disable-popup-modal .modal-close,
 #vip-exchange-modal .modal-close,
 .v-filter-line.clearfix .item.style .icon,
-.home-wrap .home-suggest .title .delete-history .icon-garbage
+.home-wrap .home-suggest .title .delete-history .icon-garbage,
+.face-buy-item.active,
+.face-buy-close
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -550,7 +556,9 @@ th.list-head-text,
 .date-picker-input.active,
 .area-group-item.checked,
 .group-item .operate-btn,
-.video-list .tab-wrap .tab-item.active
+.video-list .tab-wrap .tab-item.active,
+.face-buy-item.active,
+.face-buy-item:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -711,7 +719,10 @@ li.normal-item a:hover .uname,
 .area-group-item.checked,
 .group-item .operate-btn,
 .video-list .tab-wrap .tab-item.active,
-.content-list.clearfix .v:hover .t
+.content-list.clearfix .v:hover .t,
+.face-buy-item.active,
+.face-buy-item:hover,
+face-buy-price a
 {
     color: var(--theme-color) !important;
 }
