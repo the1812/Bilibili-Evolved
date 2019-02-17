@@ -148,7 +148,8 @@
 .ps .ps__rail-x:focus,
 .ps .ps__rail-y:focus,
 .ps .ps__rail-x.ps--clicking,
-.ps .ps__rail-y.ps--clicking
+.ps .ps__rail-y.ps--clicking,
+.body-contain .user-wrap .dropdown-wrap .select-wrap .bili-dropdown
 {
     background-color: transparent !important;
 }
