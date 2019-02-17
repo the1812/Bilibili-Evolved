@@ -385,7 +385,8 @@ th.list-head-text,
 .gather-wrap .videos .item:hover,
 .gather-wrap .videos .item a:hover,
 .vippendant-title,
-.pgc-list .synthetical .headline .pgc-label
+.pgc-list .synthetical .headline .pgc-label,
+.danmaku-report-panel
 {
     color: #eee !important;
 }
@@ -737,7 +738,8 @@ li.normal-item a:hover .uname,
 .content-list.clearfix .v:hover .t,
 .face-buy-item.active,
 .face-buy-item:hover,
-.face-buy-price a
+.face-buy-price a,
+.danmaku-report-panel .danmaku-content
 {
     color: var(--theme-color) !important;
 }
