@@ -568,7 +568,8 @@ th.list-head-text,
 .group-item .operate-btn,
 .video-list .tab-wrap .tab-item.active,
 .face-buy-item.active,
-.face-buy-item:hover
+.face-buy-item:hover,
+.stick.true-love .medal-level
 {
     border-color: var(--theme-color) !important;
 }
