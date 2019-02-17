@@ -114,7 +114,8 @@
 .page-list-box .page-item,
 .gather-wrap .cardhead .type,
 .gather-wrap .videos .item,
-.d-outer
+.d-outer,
+.pgc-list .synthetical .headline .pgc-label
 {
     background-color: #444 !important;
 }
@@ -383,7 +384,8 @@ th.list-head-text,
 .gather-wrap .videos .item,
 .gather-wrap .videos .item:hover,
 .gather-wrap .videos .item a:hover,
-.vippendant-title
+.vippendant-title,
+.pgc-list .synthetical .headline .pgc-label
 {
     color: #eee !important;
 }
@@ -454,7 +456,8 @@ th.list-head-text,
 .gather-wrap .cardhead .type,
 .gather-wrap .videos .item,
 .gather-wrap .videos .item:hover,
-.setting .follow-setting
+.setting .follow-setting,
+.pgc-list .synthetical .headline .pgc-label
 {
     border-color: transparent !important;
 }
