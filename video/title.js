@@ -1,20 +1,23 @@
-export function getFriendlyTitle()
+export function getFriendlyTitle(includesPageTitle = true)
 {
-    if (document.URL.indexOf("/bangumi") !== -1)
+    const title = document.title
+        .replace("_番剧_bilibili_哔哩哔哩", "")
+        .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+    if (!includesPageTitle || document.URL.indexOf("/bangumi") !== -1)
     {
-        return document.title.replace("_番剧_bilibili_哔哩哔哩", "");
+        return title;
     }
     else
     {
         const pageLink = document.querySelector("#multi_page .cur-list>ul li.on a");
         if (pageLink === null)
         {
-            return document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+            return title;
         }
         else
         {
             const pageTitle = pageLink.getAttribute("title");
-            return document.title.replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "") + " - " + pageTitle;
+            return title + " - " + pageTitle;
         }
     }
 }
