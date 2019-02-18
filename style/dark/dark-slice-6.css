@@ -43,7 +43,8 @@
 .area-selector-ctnr.data-area-selector .area-selector,
 .date-picker-input,
 .pika-single.is-bound.left-aligned.bottom-aligned .pika-lendar,
-.pika-label
+.pika-label,
+.ban-vote .vote-dialog .dialog-footer .white-btn
 {
     background-color: #222 !important;
 }
@@ -391,7 +392,11 @@ th.list-head-text,
 .pgc-list .synthetical .headline .pgc-label,
 .danmaku-report-panel,
 .collection-m .content .group-list .add-group .fav-add-tip,
-.collection-m .content .group-list .add-group .input-group .submit
+.collection-m .content .group-list .add-group .input-group .submit,
+.judgement .ban-app,
+.ban-vote .vote-dialog .dialog-main p,
+.ban-vote .vote-dialog .dialog-footer .white-btn,
+.ban-vote .vote-dialog .dialog-footer .blue-btn
 {
     color: #eee !important;
 }
@@ -463,7 +468,8 @@ th.list-head-text,
 .gather-wrap .videos .item,
 .gather-wrap .videos .item:hover,
 .setting .follow-setting,
-.pgc-list .synthetical .headline .pgc-label
+.pgc-list .synthetical .headline .pgc-label,
+.ban-vote .vote-dialog .dialog-footer .white-btn
 {
     border-color: transparent !important;
 }
@@ -473,7 +479,8 @@ th.list-head-text,
 .core-player-video-control,
 .face-buy-item,
 .face-buy-price,
-.wrap .state-null>.txt
+.wrap .state-null>.txt,
+.ban-vote .vote-dialog .dialog-header
 {
     border-color: #aaa !important;
 }
@@ -644,7 +651,9 @@ th.list-head-text,
 .page-list-box .page-item:hover,
 .page-list-box .active,
 .gather-wrap .videos .item:hover,
-.collection-m .content .group-list .add-group .fav-add-tip
+.collection-m .content .group-list .add-group .fav-add-tip,
+.ban-vote .vote-dialog .dialog-footer .blue-btn,
+.ban-vote .vote-dialog .dialog-footer .blue-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
