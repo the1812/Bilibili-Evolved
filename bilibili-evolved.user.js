@@ -414,6 +414,7 @@
                 dependencies: [
                     "imageViewerDom",
                     "videoInfo",
+                    "title",
                 ],
                 styles: [
                     "imageViewerStyle",
@@ -474,7 +475,7 @@
                 path: "min/download-video.min.js",
                 dependencies: [
                     "downloadVideoDom",
-                    // "videoInfo",
+                    "title",
                 ],
                 styles: [
                     "downloadVideoStyle",

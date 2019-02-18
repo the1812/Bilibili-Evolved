@@ -1,3 +1,5 @@
+import { getFriendlyTitle } from "../title";
+
 const pageData = {
     entity: null,
     aid: undefined,
@@ -261,17 +263,13 @@ class VideoDownloader
     {
         const [data] = downloadedData;
         const blob = this.makeBlob(data);
-        const filename = document.title
-            .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
-            .replace("_番剧_bilibili_哔哩哔哩", "") + this.extension();
+        const filename = getFriendlyTitle() + this.extension();
         return [blob, filename];
     }
     async downloadMultiple(downloadedData)
     {
         const zip = new JSZip();
-        const title = document.title
-            .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
-            .replace("_番剧_bilibili_哔哩哔哩", "");
+        const title = getFriendlyTitle();
         if (downloadedData.length > 1)
         {
             downloadedData.forEach((data, index) =>

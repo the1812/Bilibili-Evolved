@@ -1,4 +1,5 @@
 import { VideoInfo } from "../video-info";
+import { getFriendlyTitle } from "../title";
 class ImageViewer
 {
     constructor(url)
@@ -24,9 +25,7 @@ class ImageViewer
         xhr.responseType = "blob";
         xhr.onload = () =>
         {
-            const title = document.title
-                .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
-                .replace("_番剧_bilibili_哔哩哔哩", "");
+            const title = getFriendlyTitle();
             const data = URL.createObjectURL(xhr.response);
             this.imageData = data;
             this.viewer.find(".download")
