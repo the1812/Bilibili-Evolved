@@ -150,7 +150,9 @@
 .ps .ps__rail-y:focus,
 .ps .ps__rail-x.ps--clicking,
 .ps .ps__rail-y.ps--clicking,
-.body-contain .user-wrap .dropdown-wrap .select-wrap .bili-dropdown
+.body-contain .user-wrap .dropdown-wrap .select-wrap .bili-dropdown,
+.collection-m .content .group-list ul .collection-mask,
+.collection-m .content .group-list .add-group .input-group input
 {
     background-color: transparent !important;
 }
@@ -238,7 +240,8 @@
 .page-list-box .pageInfo,
 .article-wrap .article .so-icon a,
 .face-buy-item,
-.face-buy-price
+.face-buy-price,
+.wrap .state-null>.txt
 {
     color: #aaa !important;
 }
@@ -386,7 +389,9 @@ th.list-head-text,
 .gather-wrap .videos .item a:hover,
 .vippendant-title,
 .pgc-list .synthetical .headline .pgc-label,
-.danmaku-report-panel
+.danmaku-report-panel,
+.collection-m .content .group-list .add-group .fav-add-tip,
+.collection-m .content .group-list .add-group .input-group .submit
 {
     color: #eee !important;
 }
@@ -467,7 +472,8 @@ th.list-head-text,
 .core-player-auxiliary-area,
 .core-player-video-control,
 .face-buy-item,
-.face-buy-price
+.face-buy-price,
+.wrap .state-null>.txt
 {
     border-color: #aaa !important;
 }
@@ -511,7 +517,8 @@ th.list-head-text,
 .v-filter-line.clearfix .item.style .icon,
 .home-wrap .home-suggest .title .delete-history .icon-garbage,
 .face-buy-item.active,
-.face-buy-close
+.face-buy-close,
+.collection-m .content .group-list .add-group .fav-add-tip .blue-arrow
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -574,7 +581,8 @@ th.list-head-text,
 .video-list .tab-wrap .tab-item.active,
 .face-buy-item.active,
 .face-buy-item:hover,
-.stick.true-love .medal-level
+.stick.true-love .medal-level,
+.collection-m .content .group-list .add-group .input-group
 {
     border-color: var(--theme-color) !important;
 }
@@ -635,7 +643,8 @@ th.list-head-text,
 .has-event .pika-button,
 .page-list-box .page-item:hover,
 .page-list-box .active,
-.gather-wrap .videos .item:hover
+.gather-wrap .videos .item:hover,
+.collection-m .content .group-list .add-group .fav-add-tip
 {
     background-color: var(--theme-color) !important;
 }
