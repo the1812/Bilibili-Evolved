@@ -240,7 +240,8 @@
 .page-list-box .pageInfo,
 .article-wrap .article .so-icon a,
 .face-buy-item,
-.face-buy-price
+.face-buy-price,
+.wrap .state-null>.txt
 {
     color: #aaa !important;
 }
@@ -471,7 +472,8 @@ th.list-head-text,
 .core-player-auxiliary-area,
 .core-player-video-control,
 .face-buy-item,
-.face-buy-price
+.face-buy-price,
+.wrap .state-null>.txt
 {
     border-color: #aaa !important;
 }
