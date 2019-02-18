@@ -242,7 +242,8 @@
 .article-wrap .article .so-icon a,
 .face-buy-item,
 .face-buy-price,
-.wrap .state-null>.txt
+.wrap .state-null>.txt,
+.ban-app .case-tip .tips
 {
     color: #aaa !important;
 }
