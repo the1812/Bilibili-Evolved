@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.7.8
+// @version      1.7.9
 // @description  增强哔哩哔哩Web端体验: 下载视频, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 删除广告, 使用夜间模式, 修复界面瑕疵; 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -79,6 +79,7 @@
         showDeadVideoTitle: false,
         useBiliplusRedirect: false,
         useCommentStyle: true,
+        imageResolution: false,
         toastInternalError: false,
         cache: {},
     };
@@ -707,6 +708,12 @@
             title: {
                 path: "min/title.min.js"
             },
+            imageResolution: {
+                path: "min/image-resolution.min.js",
+                displayNames: {
+                    imageResolution: "总是显示原图",
+                },
+            },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
         Resource.all = {};
@@ -927,7 +934,7 @@
         }
         static observe(selector, callback, options)
         {
-            callback();
+            callback([]);
             return [...document.querySelectorAll(selector)].map(
                 it =>
                 {
