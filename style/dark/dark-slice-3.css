@@ -782,7 +782,8 @@ body>div.to-top.on
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
 .main-container .pay-bar .vip .btn-pay,
 .open-dialog-masker .btn-normal.confirm,
-.review-module .review-list .empty-wrapper .btn-go-write
+.review-module .review-list .empty-wrapper .btn-go-write,
+.be-tags-container .tag.new-tag
 {
     background-color: var(--theme-color) !important;
 }
@@ -924,7 +925,8 @@ body>div.to-top.on
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
 .main-container .pay-bar .vip .btn-pay,
 .open-dialog-masker .btn-normal.confirm,
-.review-module .review-list .empty-wrapper .btn-go-write
+.review-module .review-list .empty-wrapper .btn-go-write,
+.be-tags-container .tag.new-tag
 {
     color: var(--foreground-color) !important;
 }
