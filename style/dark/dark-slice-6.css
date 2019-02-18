@@ -44,7 +44,8 @@
 .date-picker-input,
 .pika-single.is-bound.left-aligned.bottom-aligned .pika-lendar,
 .pika-label,
-.ban-vote .vote-dialog .dialog-footer .white-btn
+.ban-vote .vote-dialog .dialog-footer .white-btn,
+.history-dlg .hsbtn .cancel
 {
     background-color: #222 !important;
 }
@@ -116,7 +117,8 @@
 .gather-wrap .cardhead .type,
 .gather-wrap .videos .item,
 .d-outer,
-.pgc-list .synthetical .headline .pgc-label
+.pgc-list .synthetical .headline .pgc-label,
+.dlg-contain .history-dlg
 {
     background-color: #444 !important;
 }
@@ -397,7 +399,11 @@ th.list-head-text,
 .judgement .ban-app,
 .ban-vote .vote-dialog .dialog-main p,
 .ban-vote .vote-dialog .dialog-footer .white-btn,
-.ban-vote .vote-dialog .dialog-footer .blue-btn
+.ban-vote .vote-dialog .dialog-footer .blue-btn,
+.history-dlg .dlg-txt,
+.history-dlg .hsbtn .sure,
+.history-dlg .hsbtn .cancel
+.history-dlg .hsbtn .cancel:hover
 {
     color: #eee !important;
 }
@@ -470,7 +476,10 @@ th.list-head-text,
 .gather-wrap .videos .item:hover,
 .setting .follow-setting,
 .pgc-list .synthetical .headline .pgc-label,
-.ban-vote .vote-dialog .dialog-footer .white-btn
+.ban-vote .vote-dialog .dialog-footer .white-btn,
+.dlg-contain .history-dlg,
+.history-dlg .hsbtn .cancel,
+.history-dlg .hsbtn .cancel:hover
 {
     border-color: transparent !important;
 }
@@ -654,7 +663,9 @@ th.list-head-text,
 .gather-wrap .videos .item:hover,
 .collection-m .content .group-list .add-group .fav-add-tip,
 .ban-vote .vote-dialog .dialog-footer .blue-btn,
-.ban-vote .vote-dialog .dialog-footer .blue-btn:hover
+.ban-vote .vote-dialog .dialog-footer .blue-btn:hover,
+.history-dlg .hsbtn .sure,
+.history-dlg .hsbtn .sure:hover
 {
     background-color: var(--theme-color) !important;
 }
