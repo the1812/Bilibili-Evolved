@@ -10,7 +10,7 @@ async function downloadDanmaku(timeout, ass)
     {
         if (ass === true)
         {
-            let config = {};
+            let config = { title };
             try
             {
                 await loadLazyPanel(".bilibili-player-video-danmaku-setting");
