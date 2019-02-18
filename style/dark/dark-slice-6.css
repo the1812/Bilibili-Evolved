@@ -114,7 +114,8 @@
 .page-list-box .page-item,
 .gather-wrap .cardhead .type,
 .gather-wrap .videos .item,
-.d-outer
+.d-outer,
+.pgc-list .synthetical .headline .pgc-label
 {
     background-color: #444 !important;
 }
@@ -148,7 +149,8 @@
 .ps .ps__rail-x:focus,
 .ps .ps__rail-y:focus,
 .ps .ps__rail-x.ps--clicking,
-.ps .ps__rail-y.ps--clicking
+.ps .ps__rail-y.ps--clicking,
+.body-contain .user-wrap .dropdown-wrap .select-wrap .bili-dropdown
 {
     background-color: transparent !important;
 }
@@ -382,7 +384,9 @@ th.list-head-text,
 .gather-wrap .videos .item,
 .gather-wrap .videos .item:hover,
 .gather-wrap .videos .item a:hover,
-.vippendant-title
+.vippendant-title,
+.pgc-list .synthetical .headline .pgc-label,
+.danmaku-report-panel
 {
     color: #eee !important;
 }
@@ -453,7 +457,8 @@ th.list-head-text,
 .gather-wrap .cardhead .type,
 .gather-wrap .videos .item,
 .gather-wrap .videos .item:hover,
-.setting .follow-setting
+.setting .follow-setting,
+.pgc-list .synthetical .headline .pgc-label
 {
     border-color: transparent !important;
 }
@@ -568,7 +573,8 @@ th.list-head-text,
 .group-item .operate-btn,
 .video-list .tab-wrap .tab-item.active,
 .face-buy-item.active,
-.face-buy-item:hover
+.face-buy-item:hover,
+.stick.true-love .medal-level
 {
     border-color: var(--theme-color) !important;
 }
@@ -732,7 +738,8 @@ li.normal-item a:hover .uname,
 .content-list.clearfix .v:hover .t,
 .face-buy-item.active,
 .face-buy-item:hover,
-.face-buy-price a
+.face-buy-price a,
+.danmaku-report-panel .danmaku-content
 {
     color: var(--theme-color) !important;
 }
