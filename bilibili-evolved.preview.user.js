@@ -952,6 +952,14 @@
                 attributes: false,
             });
         }
+        static attributes(selector, callback)
+        {
+            return Observer.observe(selector, callback, {
+                childList: false,
+                subtree: false,
+                attributes: true,
+            });
+        }
         static attributesSubtree(selector, callback)
         {
             return Observer.observe(selector, callback, {
