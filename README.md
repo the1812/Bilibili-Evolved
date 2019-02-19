@@ -7,7 +7,7 @@
 - [兼容性](#兼容性)
 - [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
 - [捐赠入口](donate.md)
-- [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/Coming-Features)
+- [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/将来可能会做的功能)
 
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
