@@ -45,7 +45,10 @@
 .pika-single.is-bound.left-aligned.bottom-aligned .pika-lendar,
 .pika-label,
 .ban-vote .vote-dialog .dialog-footer .white-btn,
-.history-dlg .hsbtn .cancel
+.history-dlg .hsbtn .cancel,
+.link-tag.custom,
+.link-tag.default,
+.link-tag.origin
 {
     background-color: #222 !important;
 }
@@ -245,7 +248,8 @@
 .face-buy-item,
 .face-buy-price,
 .wrap .state-null>.txt,
-.ban-app .case-tip .tips
+.ban-app .case-tip .tips,
+.article-content-ctnr .article-footer
 {
     color: #aaa !important;
 }
@@ -479,7 +483,10 @@ th.list-head-text,
 .ban-vote .vote-dialog .dialog-footer .white-btn,
 .dlg-contain .history-dlg,
 .history-dlg .hsbtn .cancel,
-.history-dlg .hsbtn .cancel:hover
+.history-dlg .hsbtn .cancel:hover,
+.link-tag.custom,
+.link-tag.default,
+.link-tag.origin
 {
     border-color: transparent !important;
 }
