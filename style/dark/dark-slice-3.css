@@ -652,7 +652,8 @@ body>div.to-top.on,
 .more .help .icon,
 .more .link .icon,
 .filter-wrap .icon-tid2-arr,
-.user-info .user-info-desc .arrow-left
+.user-info .user-info-desc .arrow-left,
+.side-bar-popup-cntr:after
 {
     display: none !important;
 }
