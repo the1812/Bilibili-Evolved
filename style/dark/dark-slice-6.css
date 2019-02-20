@@ -612,7 +612,8 @@ th.list-head-text,
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 } */
 .button-box .item .group-helper-msg-list,
-.emoji-box .static-popup
+.emoji-box .static-popup,
+.bp-vote-container.vote-box .create-vote
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
