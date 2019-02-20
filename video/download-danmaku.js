@@ -68,11 +68,16 @@ async function downloadDanmaku(timeout, ass)
                     x: 1920 * resolutionFactor,
                     y: 1080 * resolutionFactor,
                 };
-                config.bottomMarginPercent = [0.75, 0.5, 0.25, 0.15, 0.15][getSliderIndex(".bilibili-player-setting-area .bui-thumb")];
+                config.bottomMarginPercent = [0.75, 0.5, 0.25, 0, 0][getSliderIndex(".bilibili-player-setting-area .bui-thumb")];
+                if (config.bottomMarginPercent === 0 && document.querySelector(".bilibili-player-video-danmaku-setting-left-preventshade input").checked) // 无显示区域限制时要检查是否开启防挡字幕
+                {
+                    config.bottomMarginPercent = 0.15;
+                }
                 config.bold = document.querySelector(".bilibili-player-video-danmaku-setting-right-font-bold input").checked;
             }
             catch (error)
             {
+                // The default config
                 config = {
                     font: "微软雅黑",
                     alpha: 0.6,
@@ -87,7 +92,7 @@ async function downloadDanmaku(timeout, ass)
                                 return 6;
                         }
                     },
-                    blockTypes: [],
+                    blockTypes: [7, 8],
                     resolution: {
                         x: 1920,
                         y: 1080,
