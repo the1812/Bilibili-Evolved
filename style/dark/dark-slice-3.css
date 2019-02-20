@@ -386,7 +386,8 @@ body>div.to-top.on,
 .block-effect-ctnr .item,
 .super-gift-item .gift-info .user-name,
 .super-gift-item .gift-info .user-name:hover,
-.article-holder .music-card .container .title
+.article-holder .music-card .container .title,
+.history-dlg .hsbtn .cancel
 {
     color: #eee !important;
 }
