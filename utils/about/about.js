@@ -1,4 +1,4 @@
-$("body").append(resources.data.aboutDom.text);
+$("body").append((resources.data.aboutDom || resources.data.aboutHtml).text);
 const version = GM_info.script.name.replace("Bilibili Evolved", "").replace(/^[\(\) ]+|[\(\) ]+$/g, '') + " · " + settings.currentVersion;
 $(".bilibili-evolved-version").text(version);
 const openSourceComponents = [

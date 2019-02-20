@@ -206,7 +206,7 @@ function setDisplayNames()
 (async () =>
 {
     resources.applyStyle("guiSettingsStyle");
-    const settingsBox = resources.data.guiSettingsDom.text;
+    const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
     $("body").append(settingsBox);
     new SpinQuery(
         () => $("body"),

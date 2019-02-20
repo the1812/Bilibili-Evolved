@@ -227,14 +227,13 @@ export default {
     },
     widget: {
         condition: () => document.domain === "live.bilibili.com",
-        content: resources.data.medalHelperDom.text,
+        content: (resources.data.medalHelperDom || resources.data.medalHelperHtml).text,
         success: () =>
         {
-            $(".medal-helper").each((_, it) =>
+            document.querySelectorAll(".medal-helper").forEach(it =>
             {
-                const $it = $(it);
-                const popup = $it.find(".medal-popup")[0];
-                $it.on("click", e =>
+                const popup = it.querySelector(".medal-popup");
+                it.addEventListener("click", e =>
                 {
                     if (!popup.contains(e.target))
                     {

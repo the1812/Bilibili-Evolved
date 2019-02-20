@@ -7,14 +7,14 @@ class ImageViewer
         this.url = url;
         if ($(".image-viewer").length === 0)
         {
-            this.createDom();
+            this.createContainer();
         }
         this.viewer = $(".image-viewer-container");
         this.downloadImage();
     }
-    createDom()
+    createContainer()
     {
-        $("body").append(resources.data.imageViewerDom.text);
+        $("body").append((resources.data.imageViewerDom || resources.data.imageViewerHtml).text);
         $(".image-viewer-container .close").on("click", () => this.hide());
         resources.applyStyle("imageViewerStyle");
     }
@@ -27,6 +27,10 @@ class ImageViewer
         {
             const title = getFriendlyTitle();
             const data = URL.createObjectURL(xhr.response);
+            if (this.imageData)
+            {
+                URL.revokeObjectURL(this.imageData);
+            }
             this.imageData = data;
             this.viewer.find(".download")
                 .attr("href", data)
@@ -39,12 +43,10 @@ class ImageViewer
     show()
     {
         this.viewer.addClass("opened");
-        // $("html,body").addClass("image-viewer-opened");
     }
     hide()
     {
         this.viewer.removeClass("opened");
-        // $("html,body").removeClass("image-viewer-opened");
     }
 }
 

@@ -208,13 +208,13 @@
             downloadVideoStyle: {
                 path: "min/download-video.min.css",
             },
-            guiSettingsDom: {
+            guiSettingsHtml: {
                 path: "min/gui-settings.min.html",
             },
-            imageViewerDom: {
+            imageViewerHtml: {
                 path: "min/image-viewer.min.html",
             },
-            downloadVideoDom: {
+            downloadVideoHtml: {
                 path: "min/download-video.min.html",
             },
             latestVersion: {
@@ -250,7 +250,7 @@
             guiSettings: {
                 path: "min/gui-settings.min.js",
                 dependencies: [
-                    "guiSettingsDom",
+                    "guiSettingsHtml",
                     "textValidate",
                     "settingsSideBar",
                     "themeColors",
@@ -413,7 +413,7 @@
             viewCover: {
                 path: "min/view-cover.min.js",
                 dependencies: [
-                    "imageViewerDom",
+                    "imageViewerHtml",
                     "videoInfo",
                     "title",
                 ],
@@ -475,7 +475,7 @@
             downloadVideo: {
                 path: "min/download-video.min.js",
                 dependencies: [
-                    "downloadVideoDom",
+                    "downloadVideoHtml",
                     "title",
                 ],
                 styles: [
@@ -502,7 +502,7 @@
             videoInfo: {
                 path: "min/video-info.min.js",
             },
-            aboutDom: {
+            aboutHtml: {
                 path: "min/about.min.html",
             },
             aboutStyle: {
@@ -511,7 +511,7 @@
             about: {
                 path: "min/about.min.js",
                 dependencies: [
-                    "aboutDom",
+                    "aboutHtml",
                 ],
                 styles: [
                     "aboutStyle",
@@ -657,7 +657,7 @@
             medalHelper: {
                 path: "min/medal-helper.min.js",
                 styles: ["medalHelperStyle"],
-                dependencies: ["medalHelperDom"],
+                dependencies: ["medalHelperHtml"],
                 displayNames: {
                     medalHelper: "直播勋章快速更换"
                 }
@@ -665,7 +665,7 @@
             medalHelperStyle: {
                 path: "min/medal-helper.min.css",
             },
-            medalHelperDom: {
+            medalHelperHtml: {
                 path: "min/medal-helper.min.html",
             },
             showDeadVideoTitle: {
