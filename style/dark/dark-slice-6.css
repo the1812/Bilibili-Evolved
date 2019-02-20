@@ -621,6 +621,10 @@ th.list-head-text,
 {
     display: none !important;
 } */
+.textarea
+{
+    transition: all .2s;
+}
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:hover,
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
 .send-tabs-item-active,
@@ -647,7 +651,8 @@ th.list-head-text,
 .editor.active,
 .textarea:focus,
 .textarea:hover,
-.textarea.active
+.textarea.active,
+.p-rel.f-clear.publish-panel .textarea:focus-within
 {
     border-color: var(--theme-color) !important;
 }

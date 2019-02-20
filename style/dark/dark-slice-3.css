@@ -205,7 +205,8 @@ body>div.to-top.on,
 .title-line .tit,
 .popularize-module .online,
 .main-container .review-module .module-title .more-link,
-.i-frame
+.i-frame,
+.create-vote .bg-color
 {
     background-color: transparent !important;
 }
@@ -458,7 +459,8 @@ body>div.to-top.on,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
 .open-dialog-masker .btn-normal,
 .review-module .review-list .empty-wrapper .btn-go-write,
-.article-holder .music-card
+.article-holder .music-card,
+.bp-input .content-box::before
 {
     border-color: transparent !important;
 }
