@@ -48,7 +48,17 @@
 .history-dlg .hsbtn .cancel,
 .link-tag.custom,
 .link-tag.default,
-.link-tag.origin
+.link-tag.origin,
+.editor:focus,
+.editor:hover,
+.editor.active,
+.textarea:focus,
+.textarea:hover,
+.textarea.active,
+.emoji-box .static-popup,
+.p-rel.f-clear.publish-panel .textarea,
+.d-state-highlight,
+.bp-vote-container.vote-box .create-vote
 {
     background-color: #222 !important;
 }
@@ -121,7 +131,11 @@
 .gather-wrap .videos .item,
 .d-outer,
 .pgc-list .synthetical .headline .pgc-label,
-.dlg-contain .history-dlg
+.dlg-contain .history-dlg,
+.create-vote .button-bar .bp-button,
+.main-content .group .bp-input .content-box,
+.main-content .group .title .slot-right .bp-selector,
+.bp-input .content-box.textarea-box .textarea
 {
     background-color: #444 !important;
 }
@@ -158,11 +172,14 @@
 .ps .ps__rail-y.ps--clicking,
 .body-contain .user-wrap .dropdown-wrap .select-wrap .bili-dropdown,
 .collection-m .content .group-list ul .collection-mask,
-.collection-m .content .group-list .add-group .input-group input
+.collection-m .content .group-list .add-group .input-group input,
+.section-block .publish-panel .emoji-box,
+.main-content .group .bp-input .indicator
 {
     background-color: transparent !important;
 }
-.d-state-highlight
+.d-state-highlight,
+.static-popup.bp-arrow:before
 {
     background: transparent !important;
 }
@@ -249,7 +266,8 @@
 .face-buy-price,
 .wrap .state-null>.txt,
 .ban-app .case-tip .tips,
-.article-content-ctnr .article-footer
+.article-content-ctnr .article-footer,
+.main-content .group .bp-input .indicator
 {
     color: #aaa !important;
 }
@@ -407,7 +425,13 @@ th.list-head-text,
 .history-dlg .dlg-txt,
 .history-dlg .hsbtn .sure,
 .history-dlg .hsbtn .cancel
-.history-dlg .hsbtn .cancel:hover
+.history-dlg .hsbtn .cancel:hover,
+.p-rel.f-clear.publish-panel .textarea,
+.bp-vote-container.vote-box .create-vote .main-content .group .title .title-content,
+.title .slot-right .bp-radio,
+.create-vote .button-bar .bp-button,
+.main-content .group .bp-input .input,
+.main-content .group .title .slot-right .bp-selector .selector
 {
     color: #eee !important;
 }
@@ -486,7 +510,12 @@ th.list-head-text,
 .history-dlg .hsbtn .cancel:hover,
 .link-tag.custom,
 .link-tag.default,
-.link-tag.origin
+.link-tag.origin,
+.p-rel.f-clear.publish-panel .textarea,
+.emoji-box .static-popup,
+.bp-vote-container.vote-box .create-vote,
+.bp-upload:before,
+.button-bar:before
 {
     border-color: transparent !important;
 }
@@ -542,7 +571,10 @@ th.list-head-text,
 .home-wrap .home-suggest .title .delete-history .icon-garbage,
 .face-buy-item.active,
 .face-buy-close,
-.collection-m .content .group-list .add-group .fav-add-tip .blue-arrow
+.collection-m .content .group-list .add-group .fav-add-tip .blue-arrow,
+.icon-vote-create-btn.active,
+.main-content .group .bp-add-button .add-icon,
+.bp-input .option-delete
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -570,7 +602,8 @@ th.list-head-text,
 {
     background-image: none !important;
 } */
-.main-container .entry-old .feedback .btn
+.main-container .entry-old .feedback .btn,
+.section-block .publish-panel .emoji-box
 {
     box-shadow: none !important;
 }
@@ -578,7 +611,8 @@ th.list-head-text,
 {
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 } */
-.button-box .item .group-helper-msg-list
+.button-box .item .group-helper-msg-list,
+.emoji-box .static-popup
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -606,7 +640,13 @@ th.list-head-text,
 .face-buy-item.active,
 .face-buy-item:hover,
 .stick.true-love .medal-level,
-.collection-m .content .group-list .add-group .input-group
+.collection-m .content .group-list .add-group .input-group,
+.editor:focus,
+.editor:hover,
+.editor.active,
+.textarea:focus,
+.textarea:hover,
+.textarea.active
 {
     border-color: var(--theme-color) !important;
 }
@@ -672,7 +712,8 @@ th.list-head-text,
 .ban-vote .vote-dialog .dialog-footer .blue-btn,
 .ban-vote .vote-dialog .dialog-footer .blue-btn:hover,
 .history-dlg .hsbtn .sure,
-.history-dlg .hsbtn .sure:hover
+.history-dlg .hsbtn .sure:hover,
+.radio-icon.checked:before
 {
     background-color: var(--theme-color) !important;
 }
@@ -776,7 +817,8 @@ li.normal-item a:hover .uname,
 .face-buy-item.active,
 .face-buy-item:hover,
 .face-buy-price a,
-.danmaku-report-panel .danmaku-content
+.danmaku-report-panel .danmaku-content,
+.bp-add-button
 {
     color: var(--theme-color) !important;
 }
