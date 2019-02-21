@@ -214,6 +214,11 @@ body>div.to-top.on,
 {
     background: #fff !important;
 }
+.chat-history-panel .chat-history-list .chat-item.danmaku-item .admin-icon,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item .anchor-icon
+{
+    color: #444 !important;
+}
 .scroll-loading,
 .room-card-item .info .s-info,
 .fans-no-data::after,
@@ -888,7 +893,8 @@ body>div.to-top.on
 .open-dialog-masker .open-footer .open-agree i.icon-chk-full,
 .open-dialog-masker .open-footer .open-agree a,
 .main-container .review-module .module-title .more-link:hover,
-.bilibili-player-video-toast-top-lower-quality
+.bilibili-player-video-toast-top-lower-quality,
+.i-pin-reason
 {
     color: var(--theme-color) !important;
 }
