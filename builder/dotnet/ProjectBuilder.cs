@@ -18,7 +18,7 @@ namespace BilibiliEvolved.Build
             WriteInfo();
         }
         private BuilderConfig config;
-        public double MinifiedResourceLength { get; set; }
+        public double MinimizedResourceLength { get; set; }
         public double OriginalResourceLength { get; set; }
         public string Source { get; private set; }
         public string Output { get; private set; }
@@ -26,10 +26,10 @@ namespace BilibiliEvolved.Build
         public string OutputPath { get; set; } = "bilibili-evolved.user.js";
         public void BuildFinalOutput()
         {
-            var ratio = 100.0 * MinifiedResourceLength / OriginalResourceLength;
+            var ratio = 100.0 * MinimizedResourceLength / OriginalResourceLength;
             File.WriteAllText(OutputPath, Output);
             WriteInfo();
-            WriteHint($"External resource size -{(100.0 - ratio):0.##}%");
+            // WriteHint($"External resource size -{(100.0 - ratio):0.##}%");
             WriteInfo("Build complete.", ConsoleColor.Green);
         }
         public void WriteInfo(string message = "", ConsoleColor color = ConsoleColor.Gray)

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.4
+// @version      1.7.9
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
-// @copyright    2019, Grant Howrad (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @match        *://*.bilibili.com
@@ -62,13 +62,10 @@
         defaultVideoQuality: "自动",
         useDefaultDanmakuSettings: false,
         enableDanmaku: true,
-        rememberDanmakuBlock: false,
-        danmakuBlockSettings: {
-            scroll: false,
-            top: false,
-            bottom: false,
-            color: false,
-            special: false,
+        rememberDanmakuSettings: false,
+        danmakuSettings: {
+            subtitlesPreserve: false,
+            smartMask: false,
         },
         defaultPlayerLayout: "新版",
         defaultBangumiLayout: "旧版",
@@ -82,6 +79,7 @@
         showDeadVideoTitle: false,
         useBiliplusRedirect: false,
         useCommentStyle: true,
+        imageResolution: false,
         toastInternalError: false,
         cache: {},
     };
@@ -113,7 +111,15 @@
     {
         for (const key in settings)
         {
-            settings[key] = GM_getValue(key, settings[key]);
+            const value = GM_getValue(key, settings[key]);
+            if (settings[key] !== undefined && value.constructor === Object)
+            {
+                settings[key] = Object.assign(settings[key], value);
+            }
+            else
+            {
+                settings[key] = value;
+            }
         }
         for (const key in fixedSettings)
         {
@@ -202,13 +208,13 @@
             downloadVideoStyle: {
                 path: "min/download-video.min.css",
             },
-            guiSettingsDom: {
+            guiSettingsHtml: {
                 path: "min/gui-settings.min.html",
             },
-            imageViewerDom: {
+            imageViewerHtml: {
                 path: "min/image-viewer.min.html",
             },
-            downloadVideoDom: {
+            downloadVideoHtml: {
                 path: "min/download-video.min.html",
             },
             latestVersion: {
@@ -244,7 +250,7 @@
             guiSettings: {
                 path: "min/gui-settings.min.js",
                 dependencies: [
-                    "guiSettingsDom",
+                    "guiSettingsHtml",
                     "textValidate",
                     "settingsSideBar",
                     "themeColors",
@@ -407,8 +413,9 @@
             viewCover: {
                 path: "min/view-cover.min.js",
                 dependencies: [
-                    "imageViewerDom",
+                    "imageViewerHtml",
                     "videoInfo",
+                    "title",
                 ],
                 styles: [
                     "imageViewerStyle",
@@ -468,8 +475,8 @@
             downloadVideo: {
                 path: "min/download-video.min.js",
                 dependencies: [
-                    "downloadVideoDom",
-                    // "videoInfo",
+                    "downloadVideoHtml",
+                    "title",
                 ],
                 styles: [
                     "downloadVideoStyle",
@@ -481,6 +488,7 @@
             downloadDanmaku: {
                 path: "min/download-danmaku.min.js",
                 dependencies: [
+                    "title",
                     "videoInfo",
                     "danmakuConverter",
                 ],
@@ -494,7 +502,7 @@
             videoInfo: {
                 path: "min/video-info.min.js",
             },
-            aboutDom: {
+            aboutHtml: {
                 path: "min/about.min.html",
             },
             aboutStyle: {
@@ -503,7 +511,7 @@
             about: {
                 path: "min/about.min.js",
                 dependencies: [
-                    "aboutDom",
+                    "aboutHtml",
                 ],
                 styles: [
                     "aboutStyle",
@@ -577,12 +585,21 @@
                     expandDescription: "自动展开视频简介"
                 }
             },
+            defaultDanmakuSettingsStyle: {
+                path: "min/default-danmaku-settings.min.css",
+            },
             useDefaultDanmakuSettings: {
                 path: "min/default-danmaku-settings.min.js",
+                styles: [
+                    {
+                        key: "defaultDanmakuSettingsStyle",
+                        condition: () => settings.rememberDanmakuSettings,
+                    },
+                ],
                 displayNames: {
                     useDefaultDanmakuSettings: "使用默认弹幕设置",
                     enableDanmaku: "开启弹幕",
-                    rememberDanmakuBlock: "记住弹幕屏蔽类型",
+                    rememberDanmakuSettings: "记住弹幕设置",
                 },
             },
             skipChargeListStyle: {
@@ -640,7 +657,7 @@
             medalHelper: {
                 path: "min/medal-helper.min.js",
                 styles: ["medalHelperStyle"],
-                dependencies: ["medalHelperDom"],
+                dependencies: ["medalHelperHtml"],
                 displayNames: {
                     medalHelper: "直播勋章快速更换"
                 }
@@ -648,7 +665,7 @@
             medalHelperStyle: {
                 path: "min/medal-helper.min.css",
             },
-            medalHelperDom: {
+            medalHelperHtml: {
                 path: "min/medal-helper.min.html",
             },
             showDeadVideoTitle: {
@@ -687,6 +704,15 @@
             },
             commentDarkStyle: {
                 path: "min/comment-dark.min.css"
+            },
+            title: {
+                path: "min/title.min.js"
+            },
+            imageResolution: {
+                path: "min/image-resolution.min.js",
+                displayNames: {
+                    imageResolution: "总是显示原图",
+                },
             },
         };
         Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
@@ -786,8 +812,8 @@
     async function loadLazyPanel(selector)
     {
         await SpinQuery.unsafeJquery();
-        const panel = unsafeWindow.$(selector);
-        if (panel.length === 0)
+        const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+        if (!panel)
         {
             throw new Error(`Panel not found: ${selector}`);
         }
@@ -908,7 +934,7 @@
         }
         static observe(selector, callback, options)
         {
-            callback();
+            callback([]);
             return [...document.querySelectorAll(selector)].map(
                 it =>
                 {
@@ -931,6 +957,14 @@
                 childList: true,
                 subtree: true,
                 attributes: false,
+            });
+        }
+        static attributes(selector, callback)
+        {
+            return Observer.observe(selector, callback, {
+                childList: false,
+                subtree: false,
+                attributes: true,
             });
         }
         static attributesSubtree(selector, callback)
@@ -1035,6 +1069,10 @@
         get rgb()
         {
             return this.hexToRgb(this.hex);
+        }
+        get rgba()
+        {
+            return this.hexToRgba(this.hex);
         }
         getHexRegex(alpha, shorthand)
         {
@@ -1543,16 +1581,42 @@
             styles.push("--invert-filter:" + settings.filterInvert);
             styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
             styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
-            this.applyStyleFromText(`<style id="bilibili-evolved-vaiables">html{${styles.join(";")}}</style>`);
+            this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
         }
-        import(compnentName)
+        import(componentName)
         {
-            if (this.attributes[compnentName] === undefined)
+            const resource = Resource.all[componentName];
+            if (resource && resource.type.name === "html")
             {
-                console.error(`Import failed: component "${compnentName}" is not loaded.`);
-                return null;
+                if (!resource.downloaded)
+                {
+                    console.error(`Import failed: component "${componentName}" is not loaded.`);
+                    return null;
+                }
+                return resource.text;
             }
-            return this.attributes[compnentName].export;
+            else
+            {
+                const asFileName = () =>
+                {
+                    const keyword = componentName + ".min.js";
+                    for (const [name, value] of Object.entries(Resource.all))
+                    {
+                        if (value.url.indexOf(keyword) !== -1)
+                        {
+                            return name;
+                        }
+                    }
+                    return componentName;
+                };
+                const attribute = this.attributes[componentName] || this.attributes[asFileName()];
+                if (attribute === undefined)
+                {
+                    console.error(`Import failed: component "${componentName}" is not loaded.`);
+                    return null;
+                }
+                return attribute.export;
+            }
         }
         async fetchByKey(key)
         {
@@ -1586,10 +1650,10 @@
             if (settings.toast === true)
             {
                 await this.fetchByKey("toast");
-                unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export;
+                unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export.Toast || this.attributes.toast.export;
                 if (!isCacheValid && settings.useCache)
                 {
-                    loadingToast = Toast.info(`<div class="loading"></div>正在初始化脚本`, "初始化");
+                    loadingToast = Toast.info(/*html*/`<div class="loading"></div>正在初始化脚本`, "初始化");
                 }
             }
             const promises = [];
@@ -1635,34 +1699,34 @@
                 }
             }
         }
-        async applyWidgets()
+        async applyWidget(info)
         {
-            async function applyWidget(info)
+            let condition = true;
+            if (typeof info.condition === "function")
             {
-                let condition = true;
-                if (typeof info.condition === "function")
+                condition = info.condition();
+                if (condition instanceof Promise)
                 {
-                    condition = info.condition();
-                    if (condition instanceof Promise)
-                    {
-                        condition = await condition.catch(() => { return false; });
-                    }
-                }
-                if (condition === true)
-                {
-                    if (info.content)
-                    {
-                        $(".widgets-container").append($(info.content));
-                    }
-                    if (info.success)
-                    {
-                        info.success();
-                    }
+                    condition = await condition.catch(() => { return false; });
                 }
             }
+            if (condition === true)
+            {
+                if (info.content)
+                {
+                    $(".widgets-container").append($(info.content));
+                }
+                if (info.success)
+                {
+                    info.success();
+                }
+            }
+        }
+        async applyWidgets()
+        {
             await Promise.all(Object.values(this.attributes)
                 .filter(it => it.widget)
-                .map(it => applyWidget(it.widget))
+                .map(it => this.applyWidget(it.widget))
             );
         }
         async applyDropdownOptions()
@@ -1735,7 +1799,11 @@
                 },
             };
         }
-        unsafeWindow.bilibiliEvolved = {
+        if (unsafeWindow.bilibiliEvolved === undefined)
+        {
+            unsafeWindow.bilibiliEvolved = { addons: [] };
+        }
+        Object.assign(unsafeWindow.bilibiliEvolved, {
             subscribe(type, callback)
             {
                 const event = events[type];
@@ -1755,18 +1823,13 @@
                     return new Promise((resolve) => this.subscribe(type, () => resolve()));
                 }
             },
-        };
+        });
         loadResources();
         loadSettings();
         const resources = new ResourceManager();
         events.init.complete();
         resources.styleManager.prefetchStyles();
         events.styleLoaded.complete();
-
-        const applyScripts = () => resources.fetch()
-            .then(() => events.scriptLoaded.complete())
-            .catch(error => logError(error));
-        contentLoaded(applyScripts);
 
         Object.assign(unsafeWindow.bilibiliEvolved, {
             SpinQuery,
@@ -1799,8 +1862,42 @@
                     debugger;
                 }
             },
-            monkeyInfo: GM_info
+            monkeyInfo: GM_info,
+            monkeyApis: {
+                getValue: GM_getValue,
+                setValue: GM_setValue,
+                setClipboard: GM_setClipboard,
+                addValueChangeListener: GM_addValueChangeListener
+            },
         });
+        const applyScripts = () => resources.fetch()
+            .then(() =>
+            {
+                events.scriptLoaded.complete();
+                const addons = new Proxy(unsafeWindow.bilibiliEvolved.addons || [], {
+                    apply: function (target, thisArg, argumentsList)
+                    {
+                        return thisArg[target].apply(this, argumentsList);
+                    },
+                    deleteProperty: function (target, property)
+                    {
+                        return true;
+                    },
+                    set: function (target, property, value)
+                    {
+                        if (target[property] === undefined)
+                        {
+                            resources.applyWidget(value);
+                        }
+                        target[property] = value;
+                        return true;
+                    }
+                });
+                addons.forEach(it => resources.applyWidget(it));
+                Object.assign(unsafeWindow.bilibiliEvolved, { addons });
+            })
+            .catch(error => logError(error));
+        contentLoaded(applyScripts);
     }
     catch (error)
     {

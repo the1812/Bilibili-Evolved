@@ -10,7 +10,6 @@
   <div class="gui-settings-header">
     <i class="icon-settings"></i>
     <span class="gui-settings-title">设置</span>
-    <div style="flex: 1 0 auto"></div>
     <i class="icon-search" style="transform: scale(0.9); margin-right: 0"></i>
     <input class="gui-settings-search" placeholder="搜索设置项" type="text">
   </div>
@@ -27,7 +26,8 @@
       <dropdown indent="1" key="defaultVideoQuality" dependencies="useDefaultVideoQuality"></dropdown>
       <checkbox indent="0" key="useDefaultDanmakuSettings" dependencies=""></checkbox>
       <checkbox indent="1" key="enableDanmaku" dependencies="useDefaultDanmakuSettings"></checkbox>
-      <checkbox indent="1" key="rememberDanmakuBlock" dependencies="useDefaultDanmakuSettings enableDanmaku"></checkbox>
+      <checkbox indent="1" key="rememberDanmakuSettings" dependencies="useDefaultDanmakuSettings enableDanmaku">
+      </checkbox>
       <checkbox indent="0" key="autoLightOff" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDescription" dependencies=""></checkbox>
@@ -71,6 +71,7 @@
       <checkbox indent="0" key="fullPageTitle" dependencies=""></checkbox>
       <checkbox indent="0" key="showDeadVideoTitle" dependencies=""></checkbox>
       <checkbox indent="1" key="useBiliplusRedirect" dependencies="showDeadVideoTitle"></checkbox>
+      <!-- <checkbox indent="0" key="imageResolution" dependencies=""></checkbox> -->
       <category icon="touch">触摸</category>
       <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
       <checkbox indent="0" key="comboLike" dependencies=""></checkbox>

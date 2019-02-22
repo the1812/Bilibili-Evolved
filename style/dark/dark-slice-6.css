@@ -20,11 +20,51 @@
 .bnj-main>.content,
 #area-list ul li:after,
 .live-room-app .app-content .link-footer-ctnr,
-.group-helper-msg-list
+.group-helper-msg-list,
+#disable-popup-modal .vip-exchange .selector li.current,
+#vip-exchange-modal .vip-exchange .selector li.current,
+#disable-popup-modal .vip-exchange a.btn.disabled,
+#vip-exchange-modal .vip-exchange a.btn.disabled,
+#disable-popup-modal .vip-exchange .months button,
+#vip-exchange-modal .vip-exchange .months button,
+#disable-popup-modal .vip-exchange .months #showMonths,
+#vip-exchange-modal .vip-exchange .months #showMonths,
+#disable-popup-modal .btn,
+#disable-popup-modal .btn-transparent,
+#disable-popup-modal .btn-white,
+#vip-exchange-modal .btn,
+#vip-exchange-modal .btn-transparent,
+#vip-exchange-modal .btn-white,
+.player-his-info,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item[data-state-play=true],
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover,
+.btn-my-operate,
+.range-picker.dp-i-block .range.active,
+.area-selector-ctnr.data-area-selector .area-selector,
+.date-picker-input,
+.pika-single.is-bound.left-aligned.bottom-aligned .pika-lendar,
+.pika-label,
+.ban-vote .vote-dialog .dialog-footer .white-btn,
+.history-dlg .hsbtn .cancel,
+.link-tag.custom,
+.link-tag.default,
+.link-tag.origin,
+.editor:focus,
+.editor:hover,
+.editor.active,
+.textarea:focus,
+.textarea:hover,
+.textarea.active,
+.emoji-box .static-popup,
+.p-rel.f-clear.publish-panel .textarea,
+.d-state-highlight,
+.bp-vote-container.vote-box .create-vote
 {
     background-color: #222 !important;
 }
-.main-container .review-module .review-list .review-item .review-body
+.main-container .review-module .review-list .review-item .review-body,
+.pika-button:hover,
+.area-panel
 {
     background-color: #333 !important;
 }
@@ -72,7 +112,30 @@
 .draw-popup-warp .rules,
 .gift-items.col-2 .gift-item .gift-img,
 .winner-list .list-wrap,
-.group-helper-msg-list:after
+.group-helper-msg-list:after,
+#disable-popup-modal .modal,
+#vip-exchange-modal .modal,
+.uns_box li.u-i.b-post .s-menu,
+.player-his-nav-wrp,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist,
+.core-player-video-panel,
+.core-player,
+.category-divider,
+.notification,
+.dialog-contnent,
+.feedback-content,
+.pika-table thead,
+.page-list-box .page-input,
+.page-list-box .page-item,
+.gather-wrap .cardhead .type,
+.gather-wrap .videos .item,
+.d-outer,
+.pgc-list .synthetical .headline .pgc-label,
+.dlg-contain .history-dlg,
+.create-vote .button-bar .bp-button,
+.main-content .group .bp-input .content-box,
+.main-content .group .title .slot-right .bp-selector,
+.bp-input .content-box.textarea-box .textarea
 {
     background-color: #444 !important;
 }
@@ -95,9 +158,30 @@
 .row .col-4-med.col-4 .pager .pages .page-item button,
 .pk-container.p-absolute.normal-pk .player-area.p-absolute.init-player.normal-pk .player-area.init-player.normal-pk .pk-result,
 .pk-container.p-absolute.normal-pk .player-area.p-absolute.match-player.normal-pk .player-area.match-player.normal-pk .pk-result,
-.tab-list .tab-item.active:before
+.tab-list .tab-item.active:before,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-part-list:before,
+.list-row:nth-child(odd),
+.list-row:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-list:before,
+.change-container .video-list,
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y:hover,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-y.ps--clicking,
+.body-contain .user-wrap .dropdown-wrap .select-wrap .bili-dropdown,
+.collection-m .content .group-list ul .collection-mask,
+.collection-m .content .group-list .add-group .input-group input,
+.section-block .publish-panel .emoji-box,
+.main-content .group .bp-input .indicator
 {
     background-color: transparent !important;
+}
+.d-state-highlight,
+.static-popup.bp-arrow:before
+{
+    background: transparent !important;
 }
 /* a
 {
@@ -151,7 +235,39 @@
 .you-not-win .tips,
 .winner-list .gift-name,
 .user-list .up-item .up-info>span,
-.gift-items.col-3 .gift-item
+.gift-items.col-3 .gift-item,
+#disable-popup-modal .vip-exchange .selector li p.cost,
+#vip-exchange-modal .vip-exchange .selector li p.cost,
+#disable-popup-modal .vip-exchange p.totail,
+#vip-exchange-modal .vip-exchange p.totail,
+#disable-popup-modal .vip-exchange p.totail label,
+#vip-exchange-modal .vip-exchange p.totail label,
+#disable-popup-modal .vip-exchange p#errorTips,
+#disable-popup-modal .vip-exchange p.tips,
+#vip-exchange-modal .vip-exchange p#errorTips,
+#vip-exchange-modal .vip-exchange p.tips,
+#disable-popup-modal .vip-exchange a.help,
+#vip-exchange-modal .vip-exchange a.help,
+.uns_box li.u-i.b-post .s-menu li a,
+.player-his-follow a,
+.player-his-follow,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-info-other,
+.core-player-info,
+.notification .notification-group .notification-content,
+.feedback-dialog-content p,
+.is-disabled .pika-button,
+.popup-content-ctnr .content .content-text,
+.content-list.clearfix .v .i span,
+.page-list-box .jump-input,
+.page-list-box .pageInfo,
+.article-wrap .article .so-icon a,
+.face-buy-item,
+.face-buy-price,
+.wrap .state-null>.txt,
+.ban-app .case-tip .tips,
+.article-content-ctnr .article-footer,
+.main-content .group .bp-input .indicator
 {
     color: #aaa !important;
 }
@@ -240,7 +356,82 @@ li.log-item .txt-block,
 .winner-list,
 .button-box .item>button,
 .group-item .name-box .name,
-.group-helper-msg-list .tab-list
+.group-helper-msg-list .tab-list,
+.list.dp-i-block.v-top .item .title,
+#disable-popup-modal,
+#vip-exchange-modal,
+#disable-popup-modal .vip-exchange p.balance a,
+#vip-exchange-modal .vip-exchange p.balance a,
+#disable-popup-modal .vip-exchange p.totail strong,
+#vip-exchange-modal .vip-exchange p.totail strong,
+#disable-popup-modal .vip-exchange a.btn.disabled,
+#vip-exchange-modal .vip-exchange a.btn.disabled,
+#disable-popup-modal .vip-exchange .months button,
+#vip-exchange-modal .vip-exchange .months button,
+#disable-popup-modal .vip-exchange .months #showMonths,
+#vip-exchange-modal .vip-exchange .months #showMonths,
+#disable-popup-modal .vip-exchange .months button.disabled,
+#vip-exchange-modal .vip-exchange .months button.disabled,
+#disable-popup-modal .btn,
+#disable-popup-modal .btn-transparent,
+#disable-popup-modal .btn-white,
+#vip-exchange-modal .btn,
+#vip-exchange-modal .btn-transparent,
+#vip-exchange-modal .btn-white,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-title,
+.elecrank-wrapper .elecrank-content .rank-item .item-name,
+.mng-type-item,
+th.list-head-text,
+.list-row .list-unit,
+.notification .notification-group .notification-title,
+.notification-content a,
+.feedback-dialog-txt,
+.feedback-dialog-title,
+.feedback-dialog-content .ip-info,
+.feedback-dialog-content .time-info,
+.feedback-dialog-content .ip-local,
+.btn-no-my-operate,
+.btn-my-operate,
+.table-normal.table-styleW .feedbtn,
+.el-radio,
+.data-overview,
+.range-picker.dp-i-block .range,
+.range-picker.dp-i-block .range.active,
+.area-selector-ctnr.data-area-selector .area-selector,
+.date-picker-input,
+.pika-button,
+.pika-label,
+.pika-button:hover,
+.is-selected .pika-button,
+.has-event .pika-button,
+.video-list .tab-wrap .tab-item,
+.content-list.clearfix .v .t,
+.page-list-box .page-input,
+.page-list-box .page-item a,
+.gather-wrap .cardhead .type,
+.gather-wrap .videos .item a,
+.gather-wrap .videos .item,
+.gather-wrap .videos .item:hover,
+.gather-wrap .videos .item a:hover,
+.vippendant-title,
+.pgc-list .synthetical .headline .pgc-label,
+.danmaku-report-panel,
+.collection-m .content .group-list .add-group .fav-add-tip,
+.collection-m .content .group-list .add-group .input-group .submit,
+.judgement .ban-app,
+.ban-vote .vote-dialog .dialog-main p,
+.ban-vote .vote-dialog .dialog-footer .white-btn,
+.ban-vote .vote-dialog .dialog-footer .blue-btn,
+.history-dlg .dlg-txt,
+.history-dlg .hsbtn .sure,
+.history-dlg .hsbtn .cancel
+.history-dlg .hsbtn .cancel:hover,
+.p-rel.f-clear.publish-panel .textarea,
+.bp-vote-container.vote-box .create-vote .main-content .group .title .title-content,
+.title .slot-right .bp-radio,
+.create-vote .button-bar .bp-button,
+.main-content .group .bp-input .input,
+.main-content .group .title .slot-right .bp-selector .selector
 {
     color: #eee !important;
 }
@@ -275,18 +466,78 @@ li.log-item .txt-block,
 .row .list-info,
 .row .list-comment,
 .common-dialig-left-btn,
-.player .bilibili-player-video-bottom-area .bilibili-player-video-sendbar
+.player .bilibili-player-video-bottom-area .bilibili-player-video-sendbar,
+#disable-popup-modal .vip-exchange .title,
+#vip-exchange-modal .vip-exchange .title,
+#disable-popup-modal .vip-exchange a.btn.disabled,
+#vip-exchange-modal .vip-exchange a.btn.disabled,
+#disable-popup-modal .vip-exchange .months,
+#vip-exchange-modal .vip-exchange .months,
+#disable-popup-modal .vip-exchange p.totail,
+#vip-exchange-modal .vip-exchange p.totail,
+#disable-popup-modal .btn,
+#disable-popup-modal .btn-transparent,
+#disable-popup-modal .btn-white,
+#vip-exchange-modal .btn,
+#vip-exchange-modal .btn-transparent,
+#vip-exchange-modal .btn-white,
+#disable-popup-modal .btn-transparent:hover,
+#disable-popup-modal .btn-white:hover,
+#disable-popup-modal .btn:hover,
+#vip-exchange-modal .btn-transparent:hover,
+#vip-exchange-modal .btn-white:hover,
+#vip-exchange-modal .btn:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-header,
+.btn-my-operate,
+.feedback-dialog-title,
+.area-selector-ctnr.data-area-selector .area-selector,
+.date-picker-input,
+.pika-table thead,
+.area-panel,
+.popup-content-ctnr .content .report-input,
+.page-list-box .page-input,
+.page-list-box .page-item,
+.page-list-box .page-item:hover,
+.page-list-box .active,
+.gather-wrap .cardhead .type,
+.gather-wrap .videos .item,
+.gather-wrap .videos .item:hover,
+.setting .follow-setting,
+.pgc-list .synthetical .headline .pgc-label,
+.ban-vote .vote-dialog .dialog-footer .white-btn,
+.dlg-contain .history-dlg,
+.history-dlg .hsbtn .cancel,
+.history-dlg .hsbtn .cancel:hover,
+.link-tag.custom,
+.link-tag.default,
+.link-tag.origin,
+.p-rel.f-clear.publish-panel .textarea,
+.emoji-box .static-popup,
+.bp-vote-container.vote-box .create-vote,
+.bp-upload:before,
+.button-bar:before
 {
     border-color: transparent !important;
 }
-.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item
+.tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
+.core-player-filter,
+.core-player-auxiliary-area,
+.core-player-video-control,
+.face-buy-item,
+.face-buy-price,
+.wrap .state-null>.txt,
+.ban-vote .vote-dialog .dialog-header
 {
     border-color: #aaa !important;
 }
 .main-container .media-info,
 .main-container .review-module,
 .main-container .plp-l .comment-wrapper,
-.main-container .sponsor-module
+.main-container .sponsor-module,
+#disable-popup-modal .vip-exchange .months #showMonths,
+#vip-exchange-modal .vip-exchange .months #showMonths,
+.elecrank-header,
+.gather-wrap .gather
 {
     border-color: #444 !important
 }
@@ -302,22 +553,35 @@ li.log-item .txt-block,
 {
     fill: #fff !important;
 } */
-/* a
+.pika-prev,
+.is-rtl .pika-next,
+.pika-next,
+.is-rtl .pika-prev
 {
     filter: brightness(0) invert(1) !important;
-} */
+}
 /* a
 {
     filter: brightness(0) invert(.7) !important;
 } */
-.helper-btn.active:before
+.helper-btn.active:before,
+#disable-popup-modal .modal-close,
+#vip-exchange-modal .modal-close,
+.v-filter-line.clearfix .item.style .icon,
+.home-wrap .home-suggest .title .delete-history .icon-garbage,
+.face-buy-item.active,
+.face-buy-close,
+.collection-m .content .group-list .add-group .fav-add-tip .blue-arrow,
+.icon-vote-create-btn.active,
+.main-content .group .bp-add-button .add-icon,
+.bp-input .option-delete
 {
     filter: var(--blue-image-filter) !important;
 }
-/* a
+.z-top-container .b-icon
 {
     filter: var(--pink-image-filter) !important;
-} */
+}
 /* a
 {
     filter: grayscale(1) !important;
@@ -338,7 +602,8 @@ li.log-item .txt-block,
 {
     background-image: none !important;
 } */
-.main-container .entry-old .feedback .btn
+.main-container .entry-old .feedback .btn,
+.section-block .publish-panel .emoji-box
 {
     box-shadow: none !important;
 }
@@ -346,14 +611,20 @@ li.log-item .txt-block,
 {
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 } */
-/* a
+.button-box .item .group-helper-msg-list,
+.emoji-box .static-popup,
+.bp-vote-container.vote-box .create-vote
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
-} */
+}
 /* a
 {
     display: none !important;
 } */
+.textarea
+{
+    transition: all .2s;
+}
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:hover,
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
 .send-tabs-item-active,
@@ -362,7 +633,26 @@ li.log-item .txt-block,
 .comment-bilibili-con .con input[type=radio]:checked+label:before,
 .gift-item.active .gift-img,
 .tab-list .tab-item.active:before,
-.group-item .name-box .operate-btn
+.group-item .name-box .operate-btn,
+#disable-popup-modal .vip-exchange .selector li:first-child,
+#vip-exchange-modal .vip-exchange .selector li:first-child,
+.el-radio__inner:hover,
+.el-radio__input.is-checked .el-radio__inner,
+.date-picker-input.active,
+.area-group-item.checked,
+.group-item .operate-btn,
+.video-list .tab-wrap .tab-item.active,
+.face-buy-item.active,
+.face-buy-item:hover,
+.stick.true-love .medal-level,
+.collection-m .content .group-list .add-group .input-group,
+.editor:focus,
+.editor:hover,
+.editor.active,
+.textarea:focus,
+.textarea:hover,
+.textarea.active,
+.p-rel.f-clear.publish-panel .textarea:focus-within
 {
     border-color: var(--theme-color) !important;
 }
@@ -370,10 +660,10 @@ li.log-item .txt-block,
 {
     border-top-color: var(--theme-color) !important;
 } */
-/* a
+.tab-wrap .tab-item.active:after
 {
     border-bottom-color: var(--theme-color) !important;
-} */
+}
 /* a
 {
     border-right-color: var(--theme-color) !important;
@@ -405,7 +695,31 @@ li.log-item .txt-block,
 .share-board .list-playbtn:hover,
 .ban-app .case-tip .click-btn:hover,
 .common-dialig-right-btn,
-.tab-list .tab-item.active:after
+.tab-list .tab-item.active:after,
+#disable-popup-modal .vip-exchange .months button:hover,
+#vip-exchange-modal .vip-exchange .months button:hover,
+#disable-popup-modal .btn-transparent:hover,
+#disable-popup-modal .btn-white:hover,
+#disable-popup-modal .btn:hover,
+#vip-exchange-modal .btn-transparent:hover,
+#vip-exchange-modal .btn-white:hover,
+#vip-exchange-modal .btn:hover,
+.player-his-title div,
+.player-his-nav.active,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item[data-state-play=true] .bilibili-player-playlist-plist-play,
+.btn-no-my-operate,
+.el-radio__input.is-checked .el-radio__inner,
+.is-selected .pika-button,
+.has-event .pika-button,
+.page-list-box .page-item:hover,
+.page-list-box .active,
+.gather-wrap .videos .item:hover,
+.collection-m .content .group-list .add-group .fav-add-tip,
+.ban-vote .vote-dialog .dialog-footer .blue-btn,
+.ban-vote .vote-dialog .dialog-footer .blue-btn:hover,
+.history-dlg .hsbtn .sure,
+.history-dlg .hsbtn .sure:hover,
+.radio-icon.checked:before
 {
     background-color: var(--theme-color) !important;
 }
@@ -473,7 +787,44 @@ li.normal-item a:hover .uname,
 .lottery-notice-cntr .win .uname,
 .winner-list .list-wrap .title,
 .group-item .name-box .operate-btn,
-.button-box .item>button.active
+.button-box .item>button.active,
+#disable-popup-modal .vip-exchange .selector li.current p.cost,
+#disable-popup-modal .vip-exchange .selector li:hover,
+#disable-popup-modal .vip-exchange .selector li:hover p.cost,
+#vip-exchange-modal .vip-exchange .selector li.current p.cost,
+#vip-exchange-modal .vip-exchange .selector li:hover,
+#vip-exchange-modal .vip-exchange .selector li:hover p.cost,
+#disable-popup-modal .vip-exchange p.balance a:hover,
+#vip-exchange-modal .vip-exchange p.balance a:hover,
+#dyn_wnd .dyn_list a:hover,
+.player-his-nav:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-title:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-info-title,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-order-play,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-ownername:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-loop.bppl-state-selected,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-positive.bppl-state-selected,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-random.bppl-state-selected,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-reverse.bppl-state-selected,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-loop:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-positive:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-random:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-reverse:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item:hover,
+.mng-type-item.active,
+.notification-content .address,
+.notification-content a:hover,
+.btn-my-operate:hover,
+.table-normal.table-styleW .feedbtn:hover,
+.area-group-item.checked,
+.group-item .operate-btn,
+.video-list .tab-wrap .tab-item.active,
+.content-list.clearfix .v:hover .t,
+.face-buy-item.active,
+.face-buy-item:hover,
+.face-buy-price a,
+.danmaku-report-panel .danmaku-content,
+.bp-add-button
 {
     color: var(--theme-color) !important;
 }

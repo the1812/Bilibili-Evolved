@@ -205,13 +205,19 @@ body>div.to-top.on,
 .title-line .tit,
 .popularize-module .online,
 .main-container .review-module .module-title .more-link,
-.i-frame
+.i-frame,
+.create-vote .bg-color
 {
     background-color: transparent !important;
 }
 .coin-wrap .coin-nav .coin-checkbox
 {
     background: #fff !important;
+}
+.chat-history-panel .chat-history-list .chat-item.danmaku-item .admin-icon,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item .anchor-icon
+{
+    color: #444 !important;
 }
 .scroll-loading,
 .room-card-item .info .s-info,
@@ -274,7 +280,8 @@ body>div.to-top.on,
 .open-dialog-masker .open-footer .open-agree,
 .small-item .meta,
 .bangumi-rating-container .bangumi-rating-subtitle,
-.s_tag .nothing
+.s_tag .nothing,
+.article-holder .music-card .container
 {
     color: #aaa !important;
 }
@@ -384,7 +391,9 @@ body>div.to-top.on,
 .bangumi-rating-container .bangumi-rating-title,
 .block-effect-ctnr .item,
 .super-gift-item .gift-info .user-name,
-.super-gift-item .gift-info .user-name:hover
+.super-gift-item .gift-info .user-name:hover,
+.article-holder .music-card .container .title,
+.history-dlg .hsbtn .cancel
 {
     color: #eee !important;
 }
@@ -454,7 +463,9 @@ body>div.to-top.on,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
 .open-dialog-masker .btn-normal,
-.review-module .review-list .empty-wrapper .btn-go-write
+.review-module .review-list .empty-wrapper .btn-go-write,
+.article-holder .music-card,
+.bp-input .content-box::before
 {
     border-color: transparent !important;
 }
@@ -562,7 +573,8 @@ svg.toast-card-dismiss path
 {
     filter: var(--blue-image-filter) !important;
 }
-.svg-icon.good-6-click
+.svg-icon.good-6-click,
+.article-holder .music-card .container .col-3 .card-label
 {
     filter: var(--pink-image-filter) !important;
 }
@@ -647,7 +659,8 @@ body>div.to-top.on,
 .more .help .icon,
 .more .link .icon,
 .filter-wrap .icon-tid2-arr,
-.user-info .user-info-desc .arrow-left
+.user-info .user-info-desc .arrow-left,
+.side-bar-popup-cntr:after
 {
     display: none !important;
 }
@@ -778,7 +791,8 @@ body>div.to-top.on
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
 .main-container .pay-bar .vip .btn-pay,
 .open-dialog-masker .btn-normal.confirm,
-.review-module .review-list .empty-wrapper .btn-go-write
+.review-module .review-list .empty-wrapper .btn-go-write,
+.be-tags-container .tag.new-tag
 {
     background-color: var(--theme-color) !important;
 }
@@ -879,7 +893,8 @@ body>div.to-top.on
 .open-dialog-masker .open-footer .open-agree i.icon-chk-full,
 .open-dialog-masker .open-footer .open-agree a,
 .main-container .review-module .module-title .more-link:hover,
-.bilibili-player-video-toast-top-lower-quality
+.bilibili-player-video-toast-top-lower-quality,
+.i-pin-reason
 {
     color: var(--theme-color) !important;
 }
@@ -920,7 +935,8 @@ body>div.to-top.on
 .twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
 .main-container .pay-bar .vip .btn-pay,
 .open-dialog-masker .btn-normal.confirm,
-.review-module .review-list .empty-wrapper .btn-go-write
+.review-module .review-list .empty-wrapper .btn-go-write,
+.be-tags-container .tag.new-tag
 {
     color: var(--foreground-color) !important;
 }

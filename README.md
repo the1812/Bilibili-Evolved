@@ -7,7 +7,7 @@
 - [兼容性](#兼容性)
 - [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
 - [捐赠入口](donate.md)
-- [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/Coming-Features)
+- [🕊](https://github.com/the1812/Bilibili-Evolved/wiki/将来可能会做的功能)
 
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
@@ -92,7 +92,6 @@
 
 #### 注意事项
 - 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换.
-- 在旧版页面下载番剧/电影时, 不会出现画质选择菜单, 画质将与播放器里选中的画质相同.
 - **分段**的视频会把所有视频打包成`.zip`格式.
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
 - 下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=当前视频网址`**
@@ -124,7 +123,7 @@
 
 > 官方于2018.12.27已正式支持记忆画质
 ### 默认弹幕设置
-设置默认是否开启弹幕, 以及是否记住弹幕屏蔽类型.
+设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.
 ### 播放时自动关灯
 首次播放时, 自动进入关灯模式.
 ### 自动展开弹幕列表
@@ -183,6 +182,7 @@
 - 位图图标全部换用矢量图标, 高分屏不会模糊
 
 > 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看
+
 ![简化评论区](images/compressed/comments.jpg)
 ### 搜索栏置顶
 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示. 仅对常用页面有效, 部分页面可能会有点布局错乱.
@@ -231,11 +231,13 @@
 ![展开动态标题](images/compressed/full-tweets-title.jpg)
 ### 展开选集标题
 在视频选集列表中, 当标题超出一行时, 另起一行以显示完整标题.
+> 因为番剧选集用的绝对布局, 所以此功能在番剧区无效.
+
 ![展开选集标题](images/compressed/full-page-title.jpg)
 ### 直播间勋章快速切换
 在直播区(live.bilibili.com)中, 可从`附加功能`中直接切换勋章和头衔.
 ### 显示失效视频信息
-在空间的收藏夹中, 为已失效视频恢复标题和封面. 也可以使用`失效视频重定向`转到BiliPlus观看.
+在个人空间中, 为已失效视频恢复标题和封面. 也可以使用`失效视频重定向`转到[BiliPlus](https://biliplus.com)观看.
 
 ## 触摸
 ### 顶栏
@@ -253,9 +255,6 @@
     - 在不同位置滑动, 可以使用3档不同的灵敏度.
 
 ![触摸调整](images/compressed/touch-player.gif)
-
-已知问题: 滑动调整的音量不会保存, 下次打开视频将恢复原音量.
-
 #### 启用双击控制
 将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.
 
@@ -280,12 +279,12 @@
 
 ## 浏览器
 ### Chrome
-- 背景模糊效果(`backdrop-filter`)需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
+- 背景模糊效果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
 - 含有背景模糊效果的动画有掉帧现象.
 ### Firefox
 - 滚动条样式无效.
 - 背景模糊效果无效.
-- 触摸调整的进度预览有弹跳现象.(来自`transition`. 短时间内总是从原数值开始变化, 而不是当前数值)
+- 触摸调整的进度预览有弹跳现象.(来自CSS `transition`. 短时间内总是从原数值开始变化, 而不是当前数值)
 ### Safari
 - 尚未在Safari中测试.(流下了贫穷的泪水
 ### Edge [**停止支持**]

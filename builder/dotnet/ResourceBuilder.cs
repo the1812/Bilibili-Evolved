@@ -24,7 +24,7 @@ namespace BilibiliEvolved.Build
         public abstract Predicate<FileInfo> FileFilter { get; }
         public abstract string ResourceType { get; }
         public abstract string Minify(string input);
-        protected string GetMinifiedFileName(string path)
+        protected string GetMinimizedFileName(string path)
         {
             var fileInfo = new FileInfo(path);
             return "min/" + fileInfo.Name.Insert(fileInfo.Name.LastIndexOf("."), ".min");
@@ -84,18 +84,19 @@ namespace BilibiliEvolved.Build
                     var text = File.ReadAllText(path);
                     var result = Minify(text);
 
-                    var outputPath = GetMinifiedFileName(path);
+                    var outputPath = GetMinimizedFileName(path);
                     File.WriteAllText(outputPath, result);
                     cache.AddCache(path);
 
-                    builder.WriteHint($"\t=> {outputPath.PadRight(48)}{(100.0 * result.Length / text.Length):0.##}%");
+                    builder.WriteHint($"\t=> {outputPath}");
+                    // builder.WriteHint($"\t=> {outputPath.PadRight(48)}{(100.0 * result.Length / text.Length):0.##}%");
                 });
                 cache.SaveCache();
             }
             files.ForEach(file =>
             {
                 builder.OriginalResourceLength += new FileInfo(file).Length;
-                builder.MinifiedResourceLength += new FileInfo(GetMinifiedFileName(file)).Length;
+                builder.MinimizedResourceLength += new FileInfo(GetMinimizedFileName(file)).Length;
             });
             builder.WriteSuccess($"{ResourceType} minify complete.");
             return builder;
@@ -115,20 +116,6 @@ namespace BilibiliEvolved.Build
 
         public override string Minify(string input)
         {
-            // var commentRegex = new Regex(@"/\*[^\0]*?\*/|^\s*//.*$", RegexOptions.Multiline);
-            // input = commentRegex.Replace(input, "");
-
-            // var selectorRegex = new Regex(@"[\s]*([^\0,}]+?)[\s]*({)|[\s]*([^\0}]+?)(,)" + Environment.NewLine);
-            // input = selectorRegex.Replace(input, "$1$2$3$4");
-
-            // var ruleRegex = new Regex(@"[\s]*([a-z\-]+:)[ ]*(.*?)[ ]*(!important)?;[\s]*");
-            // input = ruleRegex.Replace(input, "$1$2$3;");
-
-            // return input
-            //     .Replace(Environment.NewLine, "")
-            //     .Replace("\n", "")
-            //     .Replace("\r", "")
-            //     .Replace(", ", ",");
             return new UglifyCss().Run(input);
         }
 
@@ -152,6 +139,33 @@ namespace BilibiliEvolved.Build
 
         public override string Minify(string input)
         {
+            if (!input.StartsWith("(() =>"))
+            {
+                var importRegex = new Regex(@"import (.*) from ""(.*)"";", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                while (true)
+                {
+                    var match = importRegex.Match(input);
+                    if (!match.Success)
+                    {
+                        break;
+                    }
+                    var imported = match.Groups[1].Value.Replace(" as ", ":");
+                    var source = match.Groups[2].Value;
+                    var index = source.LastIndexOf("/");
+                    if (index != -1)
+                    {
+                        source = source.Remove(0, index + 1);
+                    }
+                    input = input.Replace(match.Value, $"const {imported} = resources.import(\"{source}\");");
+                }
+                input = @"(() =>
+{
+    return (settings, resources) =>
+    {
+        " + input.Replace("export default ", "return").Replace("export ", "") + @"
+    };
+})();";
+            }
             return new UglifyJs().Run(input);
         }
     }

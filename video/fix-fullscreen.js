@@ -1,12 +1,6 @@
-(() =>
+unsafeWindow.Element.ALLOW_KEYBOARD_INPUT = {};
+const originalRequestFullscreen = unsafeWindow.Element.prototype.requestFullscreen;
+unsafeWindow.Element.prototype.requestFullscreen = function ()
 {
-    return () =>
-    {
-        unsafeWindow.Element.ALLOW_KEYBOARD_INPUT = {};
-        const originalRequsetFullscreen = unsafeWindow.Element.prototype.requestFullscreen;
-        unsafeWindow.Element.prototype.requestFullscreen = function ()
-        {
-            originalRequsetFullscreen.call(this);
-        };
-    };
-})();
+    originalRequestFullscreen.call(this);
+};

@@ -1,7 +1,10 @@
 .link-footer,
 .payment-active,
 .app-body .section-block,
-.bl-button--primary:disabled
+.bl-button--primary:disabled,
+#disable-popup-modal .vip-exchange .months button.disabled,
+#vip-exchange-modal .vip-exchange .months button.disabled,
+.tab-list .tab-item.active:before
 {
     background-color: #222 !important;
 }
@@ -118,7 +121,9 @@ blockquote .color-yellow-04,
 .season-timeline .season-group.today .group-time::before,
 .aside-ctnr .author-info .communicate-btn,
 .tag-list li.tag-item.on,
-.tag-list li.tag-item:hover
+.tag-list li.tag-item:hover,
+.page-list-box .page-input:focus,
+.page-list-box .page-input:hover
 {
     border-color: var(--theme-color) !important;
 }

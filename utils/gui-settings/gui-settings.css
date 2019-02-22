@@ -119,15 +119,17 @@
 .gui-settings-title
 {
     font-size: 16pt;
+    flex: 0 0 auto;
+    margin-right: 64px;
 }
 .gui-settings-search[type=text]
 {
-    flex: 0 0.5 40%;
+    flex: 1 0 auto;
     height: 100%;
     border: none;
     padding: 6px;
     font-size: 12pt;
-    width: 100%;
+    width: 40%;
     border-bottom: 1px solid #8884;
     transition: all .2s;
     color: inherit;

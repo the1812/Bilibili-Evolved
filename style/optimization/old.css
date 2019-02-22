@@ -134,7 +134,7 @@ div.up-load
     opacity: var(--blur-background-opacity) !important;
     filter: blur(20px) !important;
 }
-.cancel
+.suggest-item .cancel
 {
     width: 28px !important;
 }
@@ -147,7 +147,7 @@ li.suggest-item>a
 {
     max-width: 155px !important;
 }
-div.num
+.nav-item div.num
 {
     box-shadow: 0 0.5px 4px 0 #0004 !important;
 }
