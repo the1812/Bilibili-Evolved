@@ -826,7 +826,8 @@ li.normal-item a:hover .uname,
 .face-buy-item:hover,
 .face-buy-price a,
 .danmaku-report-panel .danmaku-content,
-.bp-add-button
+.bp-add-button,
+.seeds-wrap .item.btn
 {
     color: var(--theme-color) !important;
 }
