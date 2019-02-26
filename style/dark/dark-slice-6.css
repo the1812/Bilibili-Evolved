@@ -174,7 +174,9 @@
 .collection-m .content .group-list ul .collection-mask,
 .collection-m .content .group-list .add-group .input-group input,
 .section-block .publish-panel .emoji-box,
-.main-content .group .bp-input .indicator
+.main-content .group .bp-input .indicator,
+.chat-history-panel,
+.live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel
 {
     background-color: transparent !important;
 }
