@@ -58,7 +58,8 @@
 .emoji-box .static-popup,
 .p-rel.f-clear.publish-panel .textarea,
 .d-state-highlight,
-.bp-vote-container.vote-box .create-vote
+.bp-vote-container.vote-box .create-vote,
+.chat-input-ctnr.p-relative .block-panel
 {
     background-color: #222 !important;
 }
@@ -269,7 +270,8 @@
 .wrap .state-null>.txt,
 .ban-app .case-tip .tips,
 .article-content-ctnr .article-footer,
-.main-content .group .bp-input .indicator
+.main-content .group .bp-input .indicator,
+.chat-input-ctnr.p-relative .block-panel
 {
     color: #aaa !important;
 }
@@ -517,7 +519,8 @@ th.list-head-text,
 .emoji-box .static-popup,
 .bp-vote-container.vote-box .create-vote,
 .bp-upload:before,
-.button-bar:before
+.button-bar:before,
+.chat-input-ctnr.p-relative .chat-input
 {
     border-color: transparent !important;
 }
