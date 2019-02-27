@@ -59,7 +59,9 @@
 .p-rel.f-clear.publish-panel .textarea,
 .d-state-highlight,
 .bp-vote-container.vote-box .create-vote,
-.chat-input-ctnr.p-relative .block-panel
+.chat-input-ctnr.p-relative .block-panel,
+.favInfo-box .favInfo-details .fav-options .fav-play,
+.edit-media-list .edit-mask .edit-board
 {
     background-color: #222 !important;
 }
@@ -136,7 +138,8 @@
 .create-vote .button-bar .bp-button,
 .main-content .group .bp-input .content-box,
 .main-content .group .title .slot-right .bp-selector,
-.bp-input .content-box.textarea-box .textarea
+.bp-input .content-box.textarea-box .textarea,
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input
 {
     background-color: #444 !important;
 }
@@ -272,7 +275,9 @@
 .ban-app .case-tip .tips,
 .article-content-ctnr .article-footer,
 .main-content .group .bp-input .indicator,
-.chat-input-ctnr.p-relative .block-panel
+.chat-input-ctnr.p-relative .block-panel,
+.wrapper .fav-guide .sub-title,
+.edit-media-list .edit-mask .edit-board .edit-info .media-list-type
 {
     color: #aaa !important;
 }
@@ -436,7 +441,15 @@ th.list-head-text,
 .title .slot-right .bp-radio,
 .create-vote .button-bar .bp-button,
 .main-content .group .bp-input .input,
-.main-content .group .title .slot-right .bp-selector .selector
+.main-content .group .title .slot-right .bp-selector .selector,
+.wrapper .fav-guide .main-title,
+.favInfo-box .favInfo-details .fav-name,
+.favInfo-box .favInfo-details .fav-options .fav-play,
+#page-fav .fav-sidenav .favlist-title,
+#page-fav .fav-sidenav .watch-later,
+.edit-media-list .edit-mask .edit-board .head,
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .title,
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input
 {
     color: #eee !important;
 }
@@ -521,7 +534,11 @@ th.list-head-text,
 .bp-vote-container.vote-box .create-vote,
 .bp-upload:before,
 .button-bar:before,
-.chat-input-ctnr.p-relative .chat-input
+.chat-input-ctnr.p-relative .chat-input,
+#page-fav .fav-main .favList-info,
+#page-fav .fav-sidenav .watch-later,
+.edit-media-list .edit-mask .edit-board .head,
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input
 {
     border-color: transparent !important;
 }
@@ -584,7 +601,8 @@ th.list-head-text,
 .collection-m .content .group-list .add-group .fav-add-tip .blue-arrow,
 .icon-vote-create-btn.active,
 .main-content .group .bp-add-button .add-icon,
-.bp-input .option-delete
+.bp-input .option-delete,
+.edit-media-list .edit-mask .edit-board .edit-info .media-list-type .icon-check
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -729,7 +747,10 @@ th.list-head-text,
 .ban-vote .vote-dialog .dialog-footer .blue-btn:hover,
 .history-dlg .hsbtn .sure,
 .history-dlg .hsbtn .sure:hover,
-.radio-icon.checked:before
+.radio-icon.checked:before,
+.favInfo-box .favInfo-details .fav-options .fav-play:hover,
+.edit-media-list .edit-mask .edit-board .edit-info .submit-btn,
+.edit-media-list .edit-mask .edit-board .edit-info .submit-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -835,7 +856,8 @@ li.normal-item a:hover .uname,
 .face-buy-price a,
 .danmaku-report-panel .danmaku-content,
 .bp-add-button,
-.seeds-wrap .item.btn
+.seeds-wrap .item.btn,
+.favInfo-box .favInfo-details .fav-name:hover
 {
     color: var(--theme-color) !important;
 }
