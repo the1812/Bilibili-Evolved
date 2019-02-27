@@ -491,7 +491,8 @@ th.list-head-text,
 .play-list .rightside-content .source-list .source-item .source-index,
 .player-auxiliary-playlist-item-title,
 .player-auxiliary-playlist-item-p-item,
-.play-list .leftside-content .upper-info .followed-btn
+.play-list .leftside-content .upper-info .followed-btn,
+.play-list .leftside-content .upper-info .upper-name
 {
     color: #eee !important;
 }
@@ -939,7 +940,8 @@ li.normal-item a:hover .uname,
 .player-auxiliary-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title,
 .player-auxiliary-playlist-item-p-item:hover,
 .container .left-container .play-options .play-options-ul li .blue,
-.favInfo-box .favInfo-details .fav-options .meta.selected
+.favInfo-box .favInfo-details .fav-options .meta.selected,
+.play-list .leftside-content .upper-info .upper-name:hover
 {
     color: var(--theme-color) !important;
 }
