@@ -294,7 +294,8 @@
 .play-list .leftside-content .oprate-panel .oprate-item,
 .play-list .rightside-content .source-list .source-item .more-oprate,
 .edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type,
-.player-auxiliary-playlist-count
+.player-auxiliary-playlist-count,
+.favInfo-box .favInfo-details .fav-options .meta
 {
     color: #aaa !important;
 }
@@ -937,7 +938,8 @@ li.normal-item a:hover .uname,
 .play-list .rightside-content .batch-operation .all-checked,
 .player-auxiliary-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title,
 .player-auxiliary-playlist-item-p-item:hover,
-.container .left-container .play-options .play-options-ul li .blue
+.container .left-container .play-options .play-options-ul li .blue,
+.favInfo-box .favInfo-details .fav-options .meta.selected
 {
     color: var(--theme-color) !important;
 }
