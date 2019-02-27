@@ -149,7 +149,8 @@
 .edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.cancel,
 .confirm-window .mask .confirm-board .btn-wrap .btn.cancel,
 .play-list .rightside-content .batch-operation .batch-btn,
-.play-list .rightside-content .batch-operation .delete-btn
+.play-list .rightside-content .batch-operation .delete-btn,
+.play-list .leftside-content .upper-info .followed-btn
 {
     background-color: #444 !important;
 }
@@ -488,7 +489,8 @@ th.list-head-text,
 .play-list .rightside-content .batch-operation .delete-btn,
 .play-list .rightside-content .source-list .source-item .source-index,
 .player-auxiliary-playlist-item-title,
-.player-auxiliary-playlist-item-p-item
+.player-auxiliary-playlist-item-p-item,
+.play-list .leftside-content .upper-info .followed-btn
 {
     color: #eee !important;
 }
