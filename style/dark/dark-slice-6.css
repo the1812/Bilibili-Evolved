@@ -660,7 +660,8 @@ th.list-head-text,
 .main-content .group .bp-add-button .add-icon,
 .bp-input .option-delete,
 .edit-media-list .edit-mask .edit-board .edit-info .media-list-type .icon-check,
-#app .header .close:hover
+#app .header .close:hover,
+.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type .icon-check
 {
     filter: var(--blue-image-filter) !important;
 }
