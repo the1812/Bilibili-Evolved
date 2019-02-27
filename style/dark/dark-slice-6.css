@@ -177,7 +177,8 @@
 .section-block .publish-panel .emoji-box,
 .main-content .group .bp-input .indicator,
 .chat-history-panel,
-.live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel
+.live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item.guard-level-2:before
 {
     background-color: transparent !important;
 }
