@@ -61,7 +61,9 @@
 .bp-vote-container.vote-box .create-vote,
 .chat-input-ctnr.p-relative .block-panel,
 .favInfo-box .favInfo-details .fav-options .fav-play,
-.edit-media-list .edit-mask .edit-board
+.edit-media-list .edit-mask .edit-board,
+.edit-media-list .edit-mask .default-edit,
+.confirm-window .mask .confirm-board
 {
     background-color: #222 !important;
 }
@@ -139,7 +141,14 @@
 .main-content .group .bp-input .content-box,
 .main-content .group .title .slot-right .bp-selector,
 .bp-input .content-box.textarea-box .textarea,
-.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input,
+.play-list .rightside-content .source-list .source-item .collect,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window,
+.edit-media-list .edit-mask .default-edit .default-edit-info .info-wrap .name-input,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.cancel,
+.confirm-window .mask .confirm-board .btn-wrap .btn.cancel,
+.play-list .rightside-content .batch-operation .batch-btn,
+.play-list .rightside-content .batch-operation .delete-btn
 {
     background-color: #444 !important;
 }
@@ -277,7 +286,12 @@
 .main-content .group .bp-input .indicator,
 .chat-input-ctnr.p-relative .block-panel,
 .wrapper .fav-guide .sub-title,
-.edit-media-list .edit-mask .edit-board .edit-info .media-list-type
+.edit-media-list .edit-mask .edit-board .edit-info .media-list-type,
+.play-list .leftside-content .list-info,
+.play-list .leftside-content .oprate-panel .oprate-item .iconfont,
+.play-list .leftside-content .oprate-panel .oprate-item,
+.play-list .rightside-content .source-list .source-item .more-oprate,
+.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type
 {
     color: #aaa !important;
 }
@@ -449,7 +463,28 @@ th.list-head-text,
 #page-fav .fav-sidenav .watch-later,
 .edit-media-list .edit-mask .edit-board .head,
 .edit-media-list .edit-mask .edit-board .edit-info .info-wrap .title,
-.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input,
+.play-list .rightside-content .source-list .source-item .source-info .source-name,
+.play-list .leftside-content .list-title,
+.play-list .leftside-content .play-btn,
+.play-list .rightside-content .batch-operation .manage-btn,
+.play-list .rightside-content .batch-operation .manage-btn:hover,
+.play-list .rightside-content .source-list .source-item .collect .collect-item,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window .window-item,
+.edit-media-list .edit-mask .default-edit .head,
+.edit-media-list .edit-mask .default-edit .default-edit-info .info-wrap .title,
+.edit-media-list .edit-mask .default-edit .default-edit-info .info-wrap .name-input,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.confirm,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.cancel,
+.confirm-window .mask .confirm-board .head,
+.confirm-window .mask .confirm-board .btn-wrap .btn.confrim,
+.confirm-window .mask .confirm-board .btn-wrap .btn.cancel,
+.play-list .rightside-content .batch-operation .cancel-batch,
+.play-list .rightside-content .batch-operation .delete-btn.delete-check,
+.play-list .rightside-content .batch-operation .batch-btn,
+.play-list .rightside-content .batch-operation .clear-btn:hover,
+.play-list .rightside-content .batch-operation .delete-btn,
+.play-list .rightside-content .source-list .source-item .source-index
 {
     color: #eee !important;
 }
@@ -538,7 +573,19 @@ th.list-head-text,
 #page-fav .fav-main .favList-info,
 #page-fav .fav-sidenav .watch-later,
 .edit-media-list .edit-mask .edit-board .head,
-.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input,
+.play-list .rightside-content .source-list .source-item .collect,
+.play-list .rightside-content .source-list .source-item .collect .collect-item:first-child,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window .window-item,
+.edit-media-list .edit-mask .default-edit .head,
+.edit-media-list .edit-mask .default-edit .default-edit-info .info-wrap .name-input,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.cancel,
+.confirm-window .mask .confirm-board .head,
+.confirm-window .mask .confirm-board .btn-wrap .btn.cancel,
+.play-list .rightside-content .batch-operation .delete-btn.delete-check,
+.play-list .rightside-content .batch-operation .batch-btn,
+.play-list .rightside-content .batch-operation .clear-btn:hover
 {
     border-color: transparent !important;
 }
@@ -560,7 +607,9 @@ th.list-head-text,
 #disable-popup-modal .vip-exchange .months #showMonths,
 #vip-exchange-modal .vip-exchange .months #showMonths,
 .elecrank-header,
-.gather-wrap .gather
+.gather-wrap .gather,
+.play-list .rightside-content .source-list .source-item .source-right,
+.play-list .leftside-content .oprate-panel
 {
     border-color: #444 !important;
 }
@@ -602,7 +651,8 @@ th.list-head-text,
 .icon-vote-create-btn.active,
 .main-content .group .bp-add-button .add-icon,
 .bp-input .option-delete,
-.edit-media-list .edit-mask .edit-board .edit-info .media-list-type .icon-check
+.edit-media-list .edit-mask .edit-board .edit-info .media-list-type .icon-check,
+#app .header .close:hover
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -641,7 +691,9 @@ th.list-head-text,
 } */
 .button-box .item .group-helper-msg-list,
 .emoji-box .static-popup,
-.bp-vote-container.vote-box .create-vote
+.bp-vote-container.vote-box .create-vote,
+.play-list .rightside-content .source-list .source-item .collect,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -750,7 +802,17 @@ th.list-head-text,
 .radio-icon.checked:before,
 .favInfo-box .favInfo-details .fav-options .fav-play:hover,
 .edit-media-list .edit-mask .edit-board .edit-info .submit-btn,
-.edit-media-list .edit-mask .edit-board .edit-info .submit-btn:hover
+.edit-media-list .edit-mask .edit-board .edit-info .submit-btn:hover,
+.play-list .leftside-content .play-btn,
+.play-list .leftside-content .play-btn:hover,
+.play-list .rightside-content .batch-operation .manage-btn,
+.play-list .rightside-content .batch-operation .manage-btn:hover,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.confirm,
+.confirm-window .mask .confirm-board .btn-wrap .btn.confrim,
+.play-list .rightside-content .batch-operation .cancel-batch,
+.play-list .rightside-content .batch-operation .cancel-batch:hover,
+.play-list .rightside-content .batch-operation .delete-btn.delete-check,
+.play-list .rightside-content .batch-operation .clear-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -857,7 +919,16 @@ li.normal-item a:hover .uname,
 .danmaku-report-panel .danmaku-content,
 .bp-add-button,
 .seeds-wrap .item.btn,
-.favInfo-box .favInfo-details .fav-name:hover
+.favInfo-box .favInfo-details .fav-name:hover,
+.play-list .rightside-content .source-list .source-item .source-info .source-name:hover,
+.play-list .rightside-content .source-list .source-item .source-info .source-upper-name:hover,
+.play-list .leftside-content .list-title:hover,
+.play-list .rightside-content .source-list .source-item .more-oprate:hover,
+.play-list .rightside-content .source-list .source-item .collect .collect-item:hover,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window .window-item:hover,
+.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type .blue-icon,
+.play-list .rightside-content .source-list .source-item .source-checked,
+.play-list .rightside-content .batch-operation .all-checked
 {
     color: var(--theme-color) !important;
 }
