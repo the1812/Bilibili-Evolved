@@ -63,7 +63,8 @@
 .favInfo-box .favInfo-details .fav-options .fav-play,
 .edit-media-list .edit-mask .edit-board,
 .edit-media-list .edit-mask .default-edit,
-.confirm-window .mask .confirm-board
+.confirm-window .mask .confirm-board,
+.player-auxiliary-playlist-item-p-item:hover
 {
     background-color: #222 !important;
 }
@@ -195,7 +196,8 @@
     background-color: transparent !important;
 }
 .d-state-highlight,
-.static-popup.bp-arrow:before
+.static-popup.bp-arrow:before,
+.player-auxiliary-area .player-auxiliary-collapse-playlist .bui-collapse-body
 {
     background: transparent !important;
 }
@@ -291,7 +293,8 @@
 .play-list .leftside-content .oprate-panel .oprate-item .iconfont,
 .play-list .leftside-content .oprate-panel .oprate-item,
 .play-list .rightside-content .source-list .source-item .more-oprate,
-.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type
+.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type,
+.player-auxiliary-playlist-count
 {
     color: #aaa !important;
 }
@@ -484,7 +487,9 @@ th.list-head-text,
 .play-list .rightside-content .batch-operation .batch-btn,
 .play-list .rightside-content .batch-operation .clear-btn:hover,
 .play-list .rightside-content .batch-operation .delete-btn,
-.play-list .rightside-content .source-list .source-item .source-index
+.play-list .rightside-content .source-list .source-item .source-index,
+.player-auxiliary-playlist-item-title,
+.player-auxiliary-playlist-item-p-item
 {
     color: #eee !important;
 }
@@ -928,7 +933,10 @@ li.normal-item a:hover .uname,
 .play-list .leftside-content .oprate-panel .oprate-item .oprate-window .window-item:hover,
 .edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type .blue-icon,
 .play-list .rightside-content .source-list .source-item .source-checked,
-.play-list .rightside-content .batch-operation .all-checked
+.play-list .rightside-content .batch-operation .all-checked,
+.player-auxiliary-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title,
+.player-auxiliary-playlist-item-p-item:hover,
+.container .left-container .play-options .play-options-ul li .blue
 {
     color: var(--theme-color) !important;
 }
