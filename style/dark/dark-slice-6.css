@@ -196,8 +196,7 @@
     background-color: transparent !important;
 }
 .d-state-highlight,
-.static-popup.bp-arrow:before,
-.player-auxiliary-area .player-auxiliary-collapse-playlist .bui-collapse-body
+.static-popup.bp-arrow:before
 {
     background: transparent !important;
 }

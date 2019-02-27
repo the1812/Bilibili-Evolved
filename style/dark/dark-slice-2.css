@@ -231,8 +231,8 @@ a.bp_box_bot_click,
 {
     background-color: #444 !important;
 }
-.player-auxiliary-auxiliary-area .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
-.player-auxiliary-auxiliary-area .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar
 {
     background-color: #555 !important;
 }
