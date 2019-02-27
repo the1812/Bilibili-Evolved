@@ -139,7 +139,7 @@ class VideoDownloader
         this.format = format;
         this.fragments = fragments || [];
         this.progress = null;
-        this.loaded = 0;
+        // this.loaded = 0;
         this.totalSize = null;
         this.workingXhr = null;
         this.fragmentSplitFactor = 6 * 5;
@@ -173,6 +173,12 @@ class VideoDownloader
             });
         });
     }
+    updateProgress()
+    {
+        const progress = this.progressMap ?
+            [...this.progressMap.values()].reduce((a, b) => a + b, 0) / this.totalSize : 0;
+        this.progress && this.progress(progress);
+    }
     cancelDownload()
     {
         if ("forEach" in this.workingXhr)
@@ -188,6 +194,8 @@ class VideoDownloader
     {
         const promises = [];
         this.workingXhr = [];
+        this.progressMap = new Map();
+        this.updateProgress();
         const partialLength = Math.round(fragment.size / this.fragmentSplitFactor);
         let startByte = 0;
         while (startByte < fragment.size)
@@ -195,16 +203,14 @@ class VideoDownloader
             const range = `bytes=${startByte}-${Math.min(fragment.size - 1, Math.round(startByte + partialLength))}`;
             promises.push(new Promise((resolve, reject) =>
             {
-                let loaded = 0;
                 const xhr = new XMLHttpRequest();
                 xhr.open("GET", fragment.url);
                 xhr.responseType = "arraybuffer";
                 xhr.withCredentials = false;
                 xhr.addEventListener("progress", (e) =>
                 {
-                    this.loaded += e.loaded - loaded;
-                    loaded = e.loaded;
-                    this.progress && this.progress(this.loaded / this.totalSize);
+                    this.progressMap.set(xhr, e.loaded);
+                    this.updateProgress();
                 });
                 xhr.addEventListener("load", () =>
                 {
@@ -220,14 +226,15 @@ class VideoDownloader
                 xhr.addEventListener("abort", () => reject("下载已取消."));
                 xhr.addEventListener("error", () =>
                 {
-                    this.loaded -= loaded;
-                    loaded = 0;
+                    this.progressMap.set(xhr, 0);
+                    this.updateProgress();
                     xhr.open("GET", fragment.url);
                     xhr.send();
                 });
                 xhr.setRequestHeader("Range", range);
                 xhr.send();
                 this.workingXhr.push(xhr);
+                this.progressMap.set(xhr, 0);
             }));
             startByte = Math.round(startByte + partialLength) + 1;
         }
@@ -290,7 +297,6 @@ class VideoDownloader
     async download()
     {
         const downloadedData = [];
-        this.loaded = 0;
         this.totalSize = this.fragments.map(it => it.size).reduce((acc, it) => acc + it);
         for (const fragment of this.fragments)
         {
@@ -313,8 +319,8 @@ class VideoDownloader
             [blob, filename] = await this.downloadMultiple(downloadedData);
         }
 
-        const blobUrl = URL.createObjectURL(blob);
         this.cleanUpOldBlobUrl();
+        const blobUrl = URL.createObjectURL(blob);
         this.progress && this.progress(0);
         return {
             url: blobUrl,
