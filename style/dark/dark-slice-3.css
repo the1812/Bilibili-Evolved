@@ -72,7 +72,8 @@ div#square.container,
 .twp-mask .twp-wrapper,
 .open-dialog-masker .open-dialog-content,
 .bnj-comment .page-comment,
-.play-options .play-options-more .play-options-content .play-option
+.play-options .play-options-more .play-options-content .play-option,
+.play-options .share-box
 {
     background-color: #222 !important;
 }
@@ -152,7 +153,8 @@ body>div.to-top.on,
 .open-dialog-masker .btn-normal,
 .play-up-info .play-up-intro .play-up-follow .play-up-followed,
 .play-options .play-options-more .play-options-content .play-option:hover,
-.player-auxiliary-area .player-auxiliary-collapse-playlist .bui-collapse-body
+.player-auxiliary-area .player-auxiliary-collapse-playlist .bui-collapse-body,
+.share-box .share-popup .share-address ul li input
 {
     background-color: #444 !important;
 }
@@ -291,7 +293,9 @@ body>div.to-top.on,
 .s_tag .nothing,
 .article-holder .music-card .container,
 .play-up-introduction .play-up-sign,
-.container .left-container .play-up-info .play-up-self-btn
+.container .left-container .play-up-info .play-up-self-btn,
+.play-options .share-box .share-btn ul .bili-share,
+.container .left-container .play-options
 {
     color: #aaa !important;
 }
@@ -410,7 +414,8 @@ body>div.to-top.on,
 .play-up-info .play-up-intro .play-up-follow .play-up-followed,
 .play-options .play-options-more .play-options-content .play-option,
 .media-upper .media-upper-info .media-upper-name,
-.media-info .media-content .media-title a
+.media-info .media-content .media-title a,
+.share-box .share-popup .share-address ul li input
 {
     color: #eee !important;
 }
@@ -487,7 +492,9 @@ body>div.to-top.on,
 .container .left-container .media-comment,
 .play-options .play-options-more .play-options-content,
 .play-options .play-options-more .play-options-content .play-option,
-.container .right-container .media-theme
+.container .right-container .media-theme,
+.play-options .share-box,
+.share-box .share-popup .share-address ul li input
 {
     border-color: transparent !important;
 }
@@ -819,7 +826,8 @@ body>div.to-top.on
 .main-container .pay-bar .vip .btn-pay,
 .open-dialog-masker .btn-normal.confirm,
 .review-module .review-list .empty-wrapper .btn-go-write,
-.be-tags-container .tag.new-tag
+.be-tags-container .tag.new-tag,
+.share-box .share-popup .share-address ul li .btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -922,7 +930,8 @@ body>div.to-top.on
 .main-container .review-module .module-title .more-link:hover,
 .bilibili-player-video-toast-top-lower-quality,
 .i-pin-reason,
-.container .left-container .play-up-info .play-up-self-btn:hover
+.container .left-container .play-up-info .play-up-self-btn:hover,
+.play-options .share-box .share-btn ul .bili-share:hover
 {
     color: var(--theme-color) !important;
 }
@@ -964,7 +973,8 @@ body>div.to-top.on
 .main-container .pay-bar .vip .btn-pay,
 .open-dialog-masker .btn-normal.confirm,
 .review-module .review-list .empty-wrapper .btn-go-write,
-.be-tags-container .tag.new-tag
+.be-tags-container .tag.new-tag,
+.share-box .share-popup .share-address ul li .btn
 {
     color: var(--foreground-color) !important;
 }
