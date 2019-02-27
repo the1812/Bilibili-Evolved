@@ -827,7 +827,8 @@ body>div.to-top.on
 .open-dialog-masker .btn-normal.confirm,
 .review-module .review-list .empty-wrapper .btn-go-write,
 .be-tags-container .tag.new-tag,
-.share-box .share-popup .share-address ul li .btn
+.share-box .share-popup .share-address ul li .btn,
+.play-up-intro .play-up-follow .play-up-not-follow
 {
     background-color: var(--theme-color) !important;
 }
@@ -975,7 +976,8 @@ body>div.to-top.on
 .open-dialog-masker .btn-normal.confirm,
 .review-module .review-list .empty-wrapper .btn-go-write,
 .be-tags-container .tag.new-tag,
-.share-box .share-popup .share-address ul li .btn
+.share-box .share-popup .share-address ul li .btn,
+.play-up-intro .play-up-follow .play-up-not-follow
 {
     color: var(--foreground-color) !important;
 }
