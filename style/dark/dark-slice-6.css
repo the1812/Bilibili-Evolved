@@ -545,7 +545,7 @@ th.list-head-text,
 .elecrank-header,
 .gather-wrap .gather
 {
-    border-color: #444 !important
+    border-color: #444 !important;
 }
 /* a
 {
@@ -553,7 +553,7 @@ th.list-head-text,
 } */
 .chat-history-panel .chat-history-list .chat-item.danmaku-item.guard-level-2:before
 {
-    border-image:none !important
+    border-image: none !important;
 }
 /* a
 {
