@@ -931,7 +931,8 @@ body>div.to-top.on
 .bilibili-player-video-toast-top-lower-quality,
 .i-pin-reason,
 .container .left-container .play-up-info .play-up-self-btn:hover,
-.play-options .share-box .share-btn ul .bili-share:hover
+.play-options .share-box .share-btn ul .bili-share:hover,
+.comment-list a
 {
     color: var(--theme-color) !important;
 }

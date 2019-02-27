@@ -1,8 +1,10 @@
-.video-desc .info
+.video-desc .info,
+.play-up-info .play-up-self
 {
     height: auto !important;
 }
-.video-desc .btn
+.video-desc .btn,
+.play-up-info .play-up-self-btn
 {
     display: none !important;
 }
