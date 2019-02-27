@@ -551,6 +551,10 @@ th.list-head-text,
 {
     border-color: white !important;
 } */
+.chat-history-panel .chat-history-list .chat-item.danmaku-item.guard-level-2:before
+{
+    border-image:none !important
+}
 /* a
 {
     fill: #aaa !important;
