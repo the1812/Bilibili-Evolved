@@ -198,7 +198,8 @@
     background-color: transparent !important;
 }
 .d-state-highlight,
-.static-popup.bp-arrow:before
+.static-popup.bp-arrow:before,
+.original-card-content .media-list .content .cover-box-cliper .cover-box
 {
     background: transparent !important;
 }
