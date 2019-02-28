@@ -157,7 +157,8 @@
 .play-list .leftside-content .upper-info .followed-btn,
 .container .right-container .media-upper .media-upper-follow .media-upper-followed,
 .container .play-coin-bg .play-coin .play-coin-btn,
-.share-content.plain .music-card
+.share-content.plain .music-card,
+.history-wrap .warn .btn
 {
     background-color: #444 !important;
 }
@@ -525,7 +526,8 @@ th.list-head-text,
 .container .qr-code-bg .qr-code-box .box .qr-info,
 #app-container .main .share-step .title,
 .share-content.plain .music-card .up-info .name,
-.share-step .btn-field .share-btn
+.share-step .btn-field .share-btn,
+.history-wrap .warn .btn
 {
     color: #eee !important;
 }
@@ -873,7 +875,8 @@ th.list-head-text,
 .container .right-container .media-upper .media-upper-follow .media-upper-not-follow,
 .container .right-container .media-upper .media-upper-follow .media-upper-not-follow:hover,
 .container .play-coin-bg .play-coin .play-coin-btn:hover,
-.share-step .btn-field .clickable
+.share-step .btn-field .clickable,
+.history-wrap .warn .btn:hover
 {
     background-color: var(--theme-color) !important;
 }
