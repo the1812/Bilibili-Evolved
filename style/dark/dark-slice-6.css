@@ -64,7 +64,9 @@
 .edit-media-list .edit-mask .edit-board,
 .edit-media-list .edit-mask .default-edit,
 .confirm-window .mask .confirm-board,
-.player-auxiliary-playlist-item-p-item:hover
+.player-auxiliary-playlist-item-p-item:hover,
+.container .play-coin-bg .play-coin,
+.container .qr-code-bg .qr-code-box
 {
     background-color: #222 !important;
 }
@@ -150,7 +152,9 @@
 .confirm-window .mask .confirm-board .btn-wrap .btn.cancel,
 .play-list .rightside-content .batch-operation .batch-btn,
 .play-list .rightside-content .batch-operation .delete-btn,
-.play-list .leftside-content .upper-info .followed-btn
+.play-list .leftside-content .upper-info .followed-btn,
+.container .right-container .media-upper .media-upper-follow .media-upper-followed,
+.container .play-coin-bg .play-coin .play-coin-btn
 {
     background-color: #444 !important;
 }
@@ -199,7 +203,10 @@
 }
 .d-state-highlight,
 .static-popup.bp-arrow:before,
-.original-card-content .media-list .content .cover-box-cliper .cover-box
+.original-card-content .media-list .content .cover-box-cliper .cover-box,
+.follow-dialog-wrap .follow-dialog-window .content .group-list ul .follow-group-mask,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit
 {
     background: transparent !important;
 }
@@ -299,7 +306,10 @@
 .player-auxiliary-playlist-count,
 .favInfo-box .favInfo-details .fav-options .meta,
 .media-list .content .text-box .description,
-.media-list .content .text-box .count-box
+.media-list .content .text-box .count-box,
+.container .play-coin-bg .play-coin .play-coin-exp,
+.container .right-container .media-info .media-content .media-playnum,
+.container .right-container .media-upper .media-upper-info .media-upper-time
 {
     color: #aaa !important;
 }
@@ -497,7 +507,16 @@ th.list-head-text,
 .player-auxiliary-playlist-item-p-item,
 .play-list .leftside-content .upper-info .followed-btn,
 .play-list .leftside-content .upper-info .upper-name,
-.media-list .content .text-box .title
+.media-list .content .text-box .title,
+.container .right-container .media-upper .media-upper-follow .media-upper-not-follow,
+.container .right-container .media-upper .media-upper-follow .media-upper-followed,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
+.collection-bg .collection-m .content .group-list .add-group .input-group input,
+.container .play-coin-bg .play-coin .play-coin-title,
+.container .play-coin-bg .play-coin .play-coin-btn,
+.container .qr-code-bg .qr-code-box .qr-code-title,
+.container .qr-code-bg .qr-code-box .box .qr-info
 {
     color: #eee !important;
 }
@@ -599,7 +618,9 @@ th.list-head-text,
 .play-list .rightside-content .batch-operation .delete-btn.delete-check,
 .play-list .rightside-content .batch-operation .batch-btn,
 .play-list .rightside-content .batch-operation .clear-btn:hover,
-.original-card-content .media-list .content
+.original-card-content .media-list .content,
+.container .right-container .media-upper .media-upper-follow .media-upper-followed,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit
 {
     border-color: transparent !important;
 }
@@ -623,7 +644,9 @@ th.list-head-text,
 .elecrank-header,
 .gather-wrap .gather,
 .play-list .rightside-content .source-list .source-item .source-right,
-.play-list .leftside-content .oprate-panel
+.play-list .leftside-content .oprate-panel,
+.left-container .play-options .play-options-ul .share-box .or-code,
+.container .qr-code-bg .qr-code-box .qr-code-title
 {
     border-color: #444 !important;
 }
@@ -708,7 +731,9 @@ th.list-head-text,
 .emoji-box .static-popup,
 .bp-vote-container.vote-box .create-vote,
 .play-list .rightside-content .source-list .source-item .collect,
-.play-list .leftside-content .oprate-panel .oprate-item .oprate-window
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window,
+.left-container .play-options .play-options-ul .share-box,
+.container .left-container .play-options .play-options-more .play-options-content .play-option:hover
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -747,7 +772,10 @@ th.list-head-text,
 .textarea:focus,
 .textarea:hover,
 .textarea.active,
-.p-rel.f-clear.publish-panel .textarea:focus-within
+.p-rel.f-clear.publish-panel .textarea:focus-within,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group,
+.container .play-coin-bg .play-coin .play-coin-content .play-one-coin:hover,
+.container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active
 {
     border-color: var(--theme-color) !important;
 }
@@ -827,7 +855,10 @@ th.list-head-text,
 .play-list .rightside-content .batch-operation .cancel-batch,
 .play-list .rightside-content .batch-operation .cancel-batch:hover,
 .play-list .rightside-content .batch-operation .delete-btn.delete-check,
-.play-list .rightside-content .batch-operation .clear-btn:hover
+.play-list .rightside-content .batch-operation .clear-btn:hover,
+.container .right-container .media-upper .media-upper-follow .media-upper-not-follow,
+.container .right-container .media-upper .media-upper-follow .media-upper-not-follow:hover,
+.container .play-coin-bg .play-coin .play-coin-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -948,7 +979,9 @@ li.normal-item a:hover .uname,
 .player-auxiliary-playlist-item-p-item:hover,
 .container .left-container .play-options .play-options-ul li .blue,
 .favInfo-box .favInfo-details .fav-options .meta.selected,
-.play-list .leftside-content .upper-info .upper-name:hover
+.play-list .leftside-content .upper-info .upper-name:hover,
+.container .play-coin-bg .play-coin .play-coin-title .play-coin-number,
+.container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active
 {
     color: var(--theme-color) !important;
 }
