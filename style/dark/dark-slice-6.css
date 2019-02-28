@@ -66,7 +66,9 @@
 .confirm-window .mask .confirm-board,
 .player-auxiliary-playlist-item-p-item:hover,
 .container .play-coin-bg .play-coin,
-.container .qr-code-bg .qr-code-box
+.container .qr-code-bg .qr-code-box,
+#app-container .main .share-step,
+#app-container .main .share-success
 {
     background-color: #222 !important;
 }
@@ -154,7 +156,8 @@
 .play-list .rightside-content .batch-operation .delete-btn,
 .play-list .leftside-content .upper-info .followed-btn,
 .container .right-container .media-upper .media-upper-follow .media-upper-followed,
-.container .play-coin-bg .play-coin .play-coin-btn
+.container .play-coin-bg .play-coin .play-coin-btn,
+.share-content.plain .music-card
 {
     background-color: #444 !important;
 }
@@ -197,7 +200,8 @@
 .chat-history-panel,
 .live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel,
 .chat-history-panel .chat-history-list .chat-item.danmaku-item.guard-level-2:before,
-.original-card-content .media-list .content
+.original-card-content .media-list .content,
+.share-content.plain .music-card .media-list.share-media-list .content
 {
     background-color: transparent !important;
 }
@@ -309,7 +313,9 @@
 .media-list .content .text-box .count-box,
 .container .play-coin-bg .play-coin .play-coin-exp,
 .container .right-container .media-info .media-content .media-playnum,
-.container .right-container .media-upper .media-upper-info .media-upper-time
+.container .right-container .media-upper .media-upper-info .media-upper-time,
+.share-content.plain .music-card .up-info .tip,
+.share-step .btn-field .count
 {
     color: #aaa !important;
 }
@@ -516,7 +522,10 @@ th.list-head-text,
 .container .play-coin-bg .play-coin .play-coin-title,
 .container .play-coin-bg .play-coin .play-coin-btn,
 .container .qr-code-bg .qr-code-box .qr-code-title,
-.container .qr-code-bg .qr-code-box .box .qr-info
+.container .qr-code-bg .qr-code-box .box .qr-info,
+#app-container .main .share-step .title,
+.share-content.plain .music-card .up-info .name,
+.share-step .btn-field .share-btn
 {
     color: #eee !important;
 }
@@ -620,7 +629,10 @@ th.list-head-text,
 .play-list .rightside-content .batch-operation .clear-btn:hover,
 .original-card-content .media-list .content,
 .container .right-container .media-upper .media-upper-follow .media-upper-followed,
-.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
+.share-content.plain .music-card .media-list.share-media-list .content,
+#app-container .main .share-step,
+#app-container .main .share-success
 {
     border-color: transparent !important;
 }
@@ -719,7 +731,9 @@ th.list-head-text,
     background-image: none !important;
 } */
 .main-container .entry-old .feedback .btn,
-.section-block .publish-panel .emoji-box
+.section-block .publish-panel .emoji-box,
+#app-container .main .share-step,
+#app-container .main .share-success
 {
     box-shadow: none !important;
 }
@@ -858,7 +872,8 @@ th.list-head-text,
 .play-list .rightside-content .batch-operation .clear-btn:hover,
 .container .right-container .media-upper .media-upper-follow .media-upper-not-follow,
 .container .right-container .media-upper .media-upper-follow .media-upper-not-follow:hover,
-.container .play-coin-bg .play-coin .play-coin-btn:hover
+.container .play-coin-bg .play-coin .play-coin-btn:hover,
+.share-step .btn-field .clickable
 {
     background-color: var(--theme-color) !important;
 }
