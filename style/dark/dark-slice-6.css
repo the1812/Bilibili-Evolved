@@ -1,3 +1,4 @@
+/* spell-checker: disable */
 .ep-list-wrapper .ep-item:hover,
 .section-ep-wrapper .ep-item:hover,
 .ep-list-wrapper .ep-item.cursor,
@@ -199,17 +200,16 @@
 .section-block .publish-panel .emoji-box,
 .main-content .group .bp-input .indicator,
 .chat-history-panel,
+.original-card-content .media-list .content .cover-box-cliper .cover-box,
 .live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item.guard-level-2:before,
 .original-card-content .media-list .content,
 .share-content.plain .music-card .media-list.share-media-list .content,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item.guard-level-1:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
 {
     background-color: transparent !important;
 }
 .d-state-highlight,
 .static-popup.bp-arrow:before,
-.original-card-content .media-list .content .cover-box-cliper .cover-box,
 .follow-dialog-wrap .follow-dialog-window .content .group-list ul .follow-group-mask,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit
