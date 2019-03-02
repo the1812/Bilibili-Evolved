@@ -36,8 +36,15 @@ html.image-viewer-opened, body.image-viewer-opened
     height: 90%;
     display: grid;
     grid-template-columns: auto 48px;
-    grid-template-rows: 48px auto 48px;
-    grid-template-areas: "image close" "image ." "image download";
+    grid-template-rows: 48px auto 48px 12px 48px 12px 48px;
+    grid-template-areas:
+        "image close"
+        "image ."
+        "image copy-link"
+        "image ."
+        "image new-tab"
+        "image ."
+        "image download";
     grid-column-gap: 12px;
     justify-items: center;
     justify-content: stretch;
@@ -60,6 +67,16 @@ html.image-viewer-opened, body.image-viewer-opened
 {
     grid-area: download;
 }
+.image-viewer .copy-link
+{
+    grid-area: copy-link;
+    transform: scale(0.85);
+}
+.image-viewer .new-tab
+{
+    grid-area: new-tab;
+    transform: scale(0.85);
+}
 .image-viewer-icon
 {
     cursor: pointer;
@@ -80,5 +97,5 @@ html.image-viewer-opened, body.image-viewer-opened
 .image-viewer-icon:hover path
 {
     fill: var(--theme-color);
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
