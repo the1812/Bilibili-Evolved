@@ -104,6 +104,11 @@ function logError(message)
     }
     console.error(message);
 }
+window.addEventListener("error", e =>
+{
+    logError(`${e.message}
+${e.filename} ${e.lineno}:${e.colno}`);
+});
 function loadSettings()
 {
     for (const key in settings)
