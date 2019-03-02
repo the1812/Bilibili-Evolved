@@ -94,6 +94,10 @@ const fixedSettings = {
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
     currentVersion: GM_info.script.version,
 };
+if (typeof GM_addValueChangeListener === "undefined")
+{
+    GM_addValueChangeListener = function () { };
+}
 function logError(message)
 {
     if (settings.toastInternalError)
@@ -137,10 +141,6 @@ function saveSettings(newSettings)
 }
 function onSettingsChange(change)
 {
-    if (typeof GM_addValueChangeListener === "undefined")
-    {
-        return;
-    }
     for (const key in settings)
     {
         GM_addValueChangeListener(key, change);
@@ -1877,7 +1877,7 @@ try
             getValue: GM_getValue,
             setValue: GM_setValue,
             setClipboard: GM_setClipboard,
-            addValueChangeListener: typeof GM_addValueChangeListener === "undefined" ? undefined : GM_addValueChangeListener,
+            addValueChangeListener: GM_addValueChangeListener,
         },
     });
     const applyScripts = () => resources.fetch()
