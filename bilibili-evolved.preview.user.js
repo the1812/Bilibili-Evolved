@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.11
+// @version      1.7.12
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -108,11 +108,11 @@ function logError(message)
     }
     console.error(message);
 }
-window.addEventListener("error", e =>
-{
-    logError(`${e.message}
-${e.filename} ${e.lineno}:${e.colno}`);
-});
+// window.addEventListener("error", e =>
+// {
+//     logError(`${e.message}
+// ${e.filename} ${e.lineno}:${e.colno}`);
+// });
 function loadSettings()
 {
     for (const key in settings)

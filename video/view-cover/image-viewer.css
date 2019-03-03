@@ -36,7 +36,7 @@ html.image-viewer-opened, body.image-viewer-opened
     height: 90%;
     display: grid;
     grid-template-columns: auto 48px;
-    grid-template-rows: 48px auto 48px 12px 48px 12px 48px;
+    grid-template-rows: 48px auto 48px 12px 48px 18px 48px;
     grid-template-areas:
         "image close"
         "image ."
@@ -70,7 +70,7 @@ html.image-viewer-opened, body.image-viewer-opened
 .image-viewer .copy-link
 {
     grid-area: copy-link;
-    transform: scale(0.85);
+    transform: scale(0.95);
 }
 .image-viewer .new-tab
 {
