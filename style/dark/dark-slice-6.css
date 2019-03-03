@@ -217,7 +217,7 @@
 .live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel,
 .original-card-content .media-list .content,
 .share-content.plain .music-card .media-list.share-media-list .content,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
 {
     background-color: transparent !important;
 }
@@ -226,7 +226,7 @@
 .follow-dialog-wrap .follow-dialog-window .content .group-list ul .follow-group-mask,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
 {
     background: transparent !important;
 }
@@ -704,7 +704,7 @@ th.list-head-text,
 {
     border-color: white !important;
 } */
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
 {
     border-image: none !important;
 }
