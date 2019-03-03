@@ -72,7 +72,10 @@
 #app-container .main .share-success,
 #page-channel-detail .channel-detail .channel-action-row .be-dropdown,
 #page-channel-detail .channel-option .modify-channel,
-#page-channel-detail .channel-add-video
+#page-channel-detail .channel-add-video,
+.video-list .vl-hd .float_window,
+.datepicker.range_start.hasDatepicker .datepicker-popup,
+.calendar-table td.disabled
 {
     background-color: #222 !important;
 }
@@ -162,7 +165,14 @@
 .container .right-container .media-upper .media-upper-follow .media-upper-followed,
 .container .play-coin-bg .play-coin .play-coin-btn,
 .share-content.plain .music-card,
-.history-wrap .warn .btn
+.history-wrap .warn .btn,
+.video-list .vl-hd .float_window .selet-datebox .sse a:hover,
+.datepicker.range_start.hasDatepicker .input,
+.video-list .vl-hd .vl-hd-sub .selector-block .date-select,
+.calendar-month>a:hover,
+.calendar-table td.inrange,
+.calendar-table td:hover,
+.calendar-year>a:hover
 {
     background-color: #444 !important;
 }
@@ -322,7 +332,8 @@
 .container .right-container .media-upper .media-upper-info .media-upper-time,
 .share-content.plain .music-card .up-info .tip,
 .share-step .btn-field .count,
-#pin-wrapper .pin-layer-header-counter
+#pin-wrapper .pin-layer-header-counter,
+.calendar-table td.disabled
 {
     color: #aaa !important;
 }
@@ -535,7 +546,16 @@ th.list-head-text,
 .share-step .btn-field .share-btn,
 .history-wrap .warn .btn,
 #pin-wrapper .pin-layer-header-counter .count,
-#page-channel-detail .channel-option .modify-channel
+#page-channel-detail .channel-option .modify-channel,
+.video-list .vl-hd .float_window .selet-datebox .sse a,
+.video-list .vl-hd .float_window .selet-datebox .sse a.on,
+.datepicker.range_start.hasDatepicker .input,
+.video-list .vl-hd .vl-hd-sub .selector-block .date-select,
+.float_content .selet-datebox .inpt .datepicker,
+.calendar-month>a.current,
+.calendar-table td.current,
+.calendar-year>a.current,
+.calendar-content .calendar-table .today
 {
     color: #eee !important;
 }
@@ -643,7 +663,12 @@ th.list-head-text,
 .share-content.plain .music-card .media-list.share-media-list .content,
 #app-container .main .share-step,
 #app-container .main .share-success,
-#page-channel-detail .channel-detail .channel-action-row .be-dropdown
+#page-channel-detail .channel-detail .channel-action-row .be-dropdown,
+.video-list .vl-hd .float_window,
+.video-list .vl-hd .float_window .close,
+.video-list .vl-hd .float_window .close:hover,
+.datepicker.range_start.hasDatepicker .input,
+.datepicker.range_start.hasDatepicker .datepicker-popup
 {
     border-color: transparent !important;
 }
@@ -670,7 +695,8 @@ th.list-head-text,
 .play-list .leftside-content .oprate-panel,
 .left-container .play-options .play-options-ul .share-box .or-code,
 .container .qr-code-bg .qr-code-box .qr-code-title,
-#page-channel-detail .channel-add-video
+#page-channel-detail .channel-add-video,
+.video-list .vl-hd .float_window .float_content h3
 {
     border-color: #444 !important;
 }
@@ -693,7 +719,8 @@ th.list-head-text,
 .pika-prev,
 .is-rtl .pika-next,
 .pika-next,
-.is-rtl .pika-prev
+.is-rtl .pika-prev,
+.video-list .vl-hd .float_window .close
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -751,7 +778,8 @@ th.list-head-text,
 .main-container .entry-old .feedback .btn,
 .section-block .publish-panel .emoji-box,
 #app-container .main .share-step,
-#app-container .main .share-success
+#app-container .main .share-success,
+.video-list .vl-hd .float_window .close:hover
 {
     box-shadow: none !important;
 }
@@ -765,7 +793,9 @@ th.list-head-text,
 .play-list .rightside-content .source-list .source-item .collect,
 .play-list .leftside-content .oprate-panel .oprate-item .oprate-window,
 .left-container .play-options .play-options-ul .share-box,
-.container .left-container .play-options .play-options-more .play-options-content .play-option:hover
+.container .left-container .play-options .play-options-more .play-options-content .play-option:hover,
+.video-list .vl-hd .float_window,
+.datepicker.range_start.hasDatepicker .datepicker-popup
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -808,7 +838,10 @@ th.list-head-text,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group,
 .container .play-coin-bg .play-coin .play-coin-content .play-one-coin:hover,
 .container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active,
-#page-channel-detail .channel-add-video:hover
+#page-channel-detail .channel-add-video:hover,
+.video-list .vl-hd .float_window .selet-datebox .sse a,
+.video-list .vl-hd .float_window .selet-datebox .sse,
+.video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -894,7 +927,11 @@ th.list-head-text,
 .container .play-coin-bg .play-coin .play-coin-btn:hover,
 .share-step .btn-field .clickable,
 .history-wrap .warn .btn:hover,
-#page-channel-detail .channel-option .modify-channel:hover
+#page-channel-detail .channel-option .modify-channel:hover,
+.video-list .vl-hd .float_window .selet-datebox .sse a.on,
+.calendar-month>a.current,
+.calendar-table td.current,
+.calendar-year>a.current
 {
     background-color: var(--theme-color) !important;
 }
@@ -1019,7 +1056,8 @@ li.normal-item a:hover .uname,
 .container .play-coin-bg .play-coin .play-coin-title .play-coin-number,
 .container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active,
 #pin-wrapper .pin-layer-video-empty a,
-#page-channel-detail .channel-add-video:hover .text
+#page-channel-detail .channel-add-video:hover .text,
+.calendar-header>a:hover
 {
     color: var(--theme-color) !important;
 }
