@@ -1,3 +1,4 @@
+/* spell-checker: disable */
 .ep-list-wrapper .ep-item:hover,
 .section-ep-wrapper .ep-item:hover,
 .ep-list-wrapper .ep-item.cursor,
@@ -58,7 +59,23 @@
 .emoji-box .static-popup,
 .p-rel.f-clear.publish-panel .textarea,
 .d-state-highlight,
-.bp-vote-container.vote-box .create-vote
+.bp-vote-container.vote-box .create-vote,
+.chat-input-ctnr.p-relative .block-panel,
+.favInfo-box .favInfo-details .fav-options .fav-play,
+.edit-media-list .edit-mask .edit-board,
+.edit-media-list .edit-mask .default-edit,
+.confirm-window .mask .confirm-board,
+.player-auxiliary-playlist-item-p-item:hover,
+.container .play-coin-bg .play-coin,
+.container .qr-code-bg .qr-code-box,
+#app-container .main .share-step,
+#app-container .main .share-success,
+#page-channel-detail .channel-detail .channel-action-row .be-dropdown,
+#page-channel-detail .channel-option .modify-channel,
+#page-channel-detail .channel-add-video,
+.video-list .vl-hd .float_window,
+.datepicker.range_start.hasDatepicker .datepicker-popup,
+.calendar-table td.disabled
 {
     background-color: #222 !important;
 }
@@ -135,7 +152,27 @@
 .create-vote .button-bar .bp-button,
 .main-content .group .bp-input .content-box,
 .main-content .group .title .slot-right .bp-selector,
-.bp-input .content-box.textarea-box .textarea
+.bp-input .content-box.textarea-box .textarea,
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input,
+.play-list .rightside-content .source-list .source-item .collect,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window,
+.edit-media-list .edit-mask .default-edit .default-edit-info .info-wrap .name-input,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.cancel,
+.confirm-window .mask .confirm-board .btn-wrap .btn.cancel,
+.play-list .rightside-content .batch-operation .batch-btn,
+.play-list .rightside-content .batch-operation .delete-btn,
+.play-list .leftside-content .upper-info .followed-btn,
+.container .right-container .media-upper .media-upper-follow .media-upper-followed,
+.container .play-coin-bg .play-coin .play-coin-btn,
+.share-content.plain .music-card,
+.history-wrap .warn .btn,
+.video-list .vl-hd .float_window .selet-datebox .sse a:hover,
+.datepicker.range_start.hasDatepicker .input,
+.video-list .vl-hd .vl-hd-sub .selector-block .date-select,
+.calendar-month>a:hover,
+.calendar-table td.inrange,
+.calendar-table td:hover,
+.calendar-year>a:hover
 {
     background-color: #444 !important;
 }
@@ -174,12 +211,22 @@
 .collection-m .content .group-list ul .collection-mask,
 .collection-m .content .group-list .add-group .input-group input,
 .section-block .publish-panel .emoji-box,
-.main-content .group .bp-input .indicator
+.main-content .group .bp-input .indicator,
+.chat-history-panel,
+.original-card-content .media-list .content .cover-box-cliper .cover-box,
+.live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel,
+.original-card-content .media-list .content,
+.share-content.plain .music-card .media-list.share-media-list .content,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
 {
     background-color: transparent !important;
 }
 .d-state-highlight,
-.static-popup.bp-arrow:before
+.static-popup.bp-arrow:before,
+.follow-dialog-wrap .follow-dialog-window .content .group-list ul .follow-group-mask,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
 {
     background: transparent !important;
 }
@@ -267,7 +314,26 @@
 .wrap .state-null>.txt,
 .ban-app .case-tip .tips,
 .article-content-ctnr .article-footer,
-.main-content .group .bp-input .indicator
+.main-content .group .bp-input .indicator,
+.chat-input-ctnr.p-relative .block-panel,
+.wrapper .fav-guide .sub-title,
+.edit-media-list .edit-mask .edit-board .edit-info .media-list-type,
+.play-list .leftside-content .list-info,
+.play-list .leftside-content .oprate-panel .oprate-item .iconfont,
+.play-list .leftside-content .oprate-panel .oprate-item,
+.play-list .rightside-content .source-list .source-item .more-oprate,
+.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type,
+.player-auxiliary-playlist-count,
+.favInfo-box .favInfo-details .fav-options .meta,
+.media-list .content .text-box .description,
+.media-list .content .text-box .count-box,
+.container .play-coin-bg .play-coin .play-coin-exp,
+.container .right-container .media-info .media-content .media-playnum,
+.container .right-container .media-upper .media-upper-info .media-upper-time,
+.share-content.plain .music-card .up-info .tip,
+.share-step .btn-field .count,
+#pin-wrapper .pin-layer-header-counter,
+.calendar-table td.disabled
 {
     color: #aaa !important;
 }
@@ -431,7 +497,65 @@ th.list-head-text,
 .title .slot-right .bp-radio,
 .create-vote .button-bar .bp-button,
 .main-content .group .bp-input .input,
-.main-content .group .title .slot-right .bp-selector .selector
+.main-content .group .title .slot-right .bp-selector .selector,
+.wrapper .fav-guide .main-title,
+.favInfo-box .favInfo-details .fav-name,
+.favInfo-box .favInfo-details .fav-options .fav-play,
+#page-fav .fav-sidenav .favlist-title,
+#page-fav .fav-sidenav .watch-later,
+.edit-media-list .edit-mask .edit-board .head,
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .title,
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input,
+.play-list .rightside-content .source-list .source-item .source-info .source-name,
+.play-list .leftside-content .list-title,
+.play-list .leftside-content .play-btn,
+.play-list .rightside-content .batch-operation .manage-btn,
+.play-list .rightside-content .batch-operation .manage-btn:hover,
+.play-list .rightside-content .source-list .source-item .collect .collect-item,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window .window-item,
+.edit-media-list .edit-mask .default-edit .head,
+.edit-media-list .edit-mask .default-edit .default-edit-info .info-wrap .title,
+.edit-media-list .edit-mask .default-edit .default-edit-info .info-wrap .name-input,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.confirm,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.cancel,
+.confirm-window .mask .confirm-board .head,
+.confirm-window .mask .confirm-board .btn-wrap .btn.confrim,
+.confirm-window .mask .confirm-board .btn-wrap .btn.cancel,
+.play-list .rightside-content .batch-operation .cancel-batch,
+.play-list .rightside-content .batch-operation .delete-btn.delete-check,
+.play-list .rightside-content .batch-operation .batch-btn,
+.play-list .rightside-content .batch-operation .clear-btn:hover,
+.play-list .rightside-content .batch-operation .delete-btn,
+.play-list .rightside-content .source-list .source-item .source-index,
+.player-auxiliary-playlist-item-title,
+.player-auxiliary-playlist-item-p-item,
+.play-list .leftside-content .upper-info .followed-btn,
+.play-list .leftside-content .upper-info .upper-name,
+.media-list .content .text-box .title,
+.container .right-container .media-upper .media-upper-follow .media-upper-not-follow,
+.container .right-container .media-upper .media-upper-follow .media-upper-followed,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
+.collection-bg .collection-m .content .group-list .add-group .input-group input,
+.container .play-coin-bg .play-coin .play-coin-title,
+.container .play-coin-bg .play-coin .play-coin-btn,
+.container .qr-code-bg .qr-code-box .qr-code-title,
+.container .qr-code-bg .qr-code-box .box .qr-info,
+#app-container .main .share-step .title,
+.share-content.plain .music-card .up-info .name,
+.share-step .btn-field .share-btn,
+.history-wrap .warn .btn,
+#pin-wrapper .pin-layer-header-counter .count,
+#page-channel-detail .channel-option .modify-channel,
+.video-list .vl-hd .float_window .selet-datebox .sse a,
+.video-list .vl-hd .float_window .selet-datebox .sse a.on,
+.datepicker.range_start.hasDatepicker .input,
+.video-list .vl-hd .vl-hd-sub .selector-block .date-select,
+.float_content .selet-datebox .inpt .datepicker,
+.calendar-month>a.current,
+.calendar-table td.current,
+.calendar-year>a.current,
+.calendar-content .calendar-table .today
 {
     color: #eee !important;
 }
@@ -515,7 +639,36 @@ th.list-head-text,
 .emoji-box .static-popup,
 .bp-vote-container.vote-box .create-vote,
 .bp-upload:before,
-.button-bar:before
+.button-bar:before,
+.chat-input-ctnr.p-relative .chat-input,
+#page-fav .fav-main .favList-info,
+#page-fav .fav-sidenav .watch-later,
+.edit-media-list .edit-mask .edit-board .head,
+.edit-media-list .edit-mask .edit-board .edit-info .info-wrap .name-input,
+.play-list .rightside-content .source-list .source-item .collect,
+.play-list .rightside-content .source-list .source-item .collect .collect-item:first-child,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window .window-item,
+.edit-media-list .edit-mask .default-edit .head,
+.edit-media-list .edit-mask .default-edit .default-edit-info .info-wrap .name-input,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.cancel,
+.confirm-window .mask .confirm-board .head,
+.confirm-window .mask .confirm-board .btn-wrap .btn.cancel,
+.play-list .rightside-content .batch-operation .delete-btn.delete-check,
+.play-list .rightside-content .batch-operation .batch-btn,
+.play-list .rightside-content .batch-operation .clear-btn:hover,
+.original-card-content .media-list .content,
+.container .right-container .media-upper .media-upper-follow .media-upper-followed,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
+.share-content.plain .music-card .media-list.share-media-list .content,
+#app-container .main .share-step,
+#app-container .main .share-success,
+#page-channel-detail .channel-detail .channel-action-row .be-dropdown,
+.video-list .vl-hd .float_window,
+.video-list .vl-hd .float_window .close,
+.video-list .vl-hd .float_window .close:hover,
+.datepicker.range_start.hasDatepicker .input,
+.datepicker.range_start.hasDatepicker .datepicker-popup
 {
     border-color: transparent !important;
 }
@@ -537,14 +690,24 @@ th.list-head-text,
 #disable-popup-modal .vip-exchange .months #showMonths,
 #vip-exchange-modal .vip-exchange .months #showMonths,
 .elecrank-header,
-.gather-wrap .gather
+.gather-wrap .gather,
+.play-list .rightside-content .source-list .source-item .source-right,
+.play-list .leftside-content .oprate-panel,
+.left-container .play-options .play-options-ul .share-box .or-code,
+.container .qr-code-bg .qr-code-box .qr-code-title,
+#page-channel-detail .channel-add-video,
+.video-list .vl-hd .float_window .float_content h3
 {
-    border-color: #444 !important
+    border-color: #444 !important;
 }
 /* a
 {
     border-color: white !important;
 } */
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
+{
+    border-image: none !important;
+}
 /* a
 {
     fill: #aaa !important;
@@ -556,7 +719,8 @@ th.list-head-text,
 .pika-prev,
 .is-rtl .pika-next,
 .pika-next,
-.is-rtl .pika-prev
+.is-rtl .pika-prev,
+.video-list .vl-hd .float_window .close
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -574,7 +738,16 @@ th.list-head-text,
 .collection-m .content .group-list .add-group .fav-add-tip .blue-arrow,
 .icon-vote-create-btn.active,
 .main-content .group .bp-add-button .add-icon,
-.bp-input .option-delete
+.bp-input .option-delete,
+.edit-media-list .edit-mask .edit-board .edit-info .media-list-type .icon-check,
+#app .header .close:hover,
+.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type .icon-check,
+.pin-layer-body .pin-layer-search #browser-version-tip #close-browser-tip,
+.pin-layer-body .pin-layer-search .icon,
+.pin-layer-header #browser-version-tip #close-browser-tip,
+.pin-layer-header .icon,
+.channel-item.channel-add-video .add-covers-meta #browser-version-tip #close-browser-tip,
+.channel-item.channel-add-video .add-covers-meta .icon
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -603,7 +776,10 @@ th.list-head-text,
     background-image: none !important;
 } */
 .main-container .entry-old .feedback .btn,
-.section-block .publish-panel .emoji-box
+.section-block .publish-panel .emoji-box,
+#app-container .main .share-step,
+#app-container .main .share-success,
+.video-list .vl-hd .float_window .close:hover
 {
     box-shadow: none !important;
 }
@@ -613,7 +789,13 @@ th.list-head-text,
 } */
 .button-box .item .group-helper-msg-list,
 .emoji-box .static-popup,
-.bp-vote-container.vote-box .create-vote
+.bp-vote-container.vote-box .create-vote,
+.play-list .rightside-content .source-list .source-item .collect,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window,
+.left-container .play-options .play-options-ul .share-box,
+.container .left-container .play-options .play-options-more .play-options-content .play-option:hover,
+.video-list .vl-hd .float_window,
+.datepicker.range_start.hasDatepicker .datepicker-popup
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -652,7 +834,14 @@ th.list-head-text,
 .textarea:focus,
 .textarea:hover,
 .textarea.active,
-.p-rel.f-clear.publish-panel .textarea:focus-within
+.p-rel.f-clear.publish-panel .textarea:focus-within,
+.follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group,
+.container .play-coin-bg .play-coin .play-coin-content .play-one-coin:hover,
+.container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active,
+#page-channel-detail .channel-add-video:hover,
+.video-list .vl-hd .float_window .selet-datebox .sse a,
+.video-list .vl-hd .float_window .selet-datebox .sse,
+.video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -719,7 +908,30 @@ th.list-head-text,
 .ban-vote .vote-dialog .dialog-footer .blue-btn:hover,
 .history-dlg .hsbtn .sure,
 .history-dlg .hsbtn .sure:hover,
-.radio-icon.checked:before
+.radio-icon.checked:before,
+.favInfo-box .favInfo-details .fav-options .fav-play:hover,
+.edit-media-list .edit-mask .edit-board .edit-info .submit-btn,
+.edit-media-list .edit-mask .edit-board .edit-info .submit-btn:hover,
+.play-list .leftside-content .play-btn,
+.play-list .leftside-content .play-btn:hover,
+.play-list .rightside-content .batch-operation .manage-btn,
+.play-list .rightside-content .batch-operation .manage-btn:hover,
+.edit-media-list .edit-mask .default-edit .default-edit-info .default-btn-wrap .default-btn.confirm,
+.confirm-window .mask .confirm-board .btn-wrap .btn.confrim,
+.play-list .rightside-content .batch-operation .cancel-batch,
+.play-list .rightside-content .batch-operation .cancel-batch:hover,
+.play-list .rightside-content .batch-operation .delete-btn.delete-check,
+.play-list .rightside-content .batch-operation .clear-btn:hover,
+.container .right-container .media-upper .media-upper-follow .media-upper-not-follow,
+.container .right-container .media-upper .media-upper-follow .media-upper-not-follow:hover,
+.container .play-coin-bg .play-coin .play-coin-btn:hover,
+.share-step .btn-field .clickable,
+.history-wrap .warn .btn:hover,
+#page-channel-detail .channel-option .modify-channel:hover,
+.video-list .vl-hd .float_window .selet-datebox .sse a.on,
+.calendar-month>a.current,
+.calendar-table td.current,
+.calendar-year>a.current
 {
     background-color: var(--theme-color) !important;
 }
@@ -824,7 +1036,28 @@ li.normal-item a:hover .uname,
 .face-buy-item:hover,
 .face-buy-price a,
 .danmaku-report-panel .danmaku-content,
-.bp-add-button
+.bp-add-button,
+.seeds-wrap .item.btn,
+.favInfo-box .favInfo-details .fav-name:hover,
+.play-list .rightside-content .source-list .source-item .source-info .source-name:hover,
+.play-list .rightside-content .source-list .source-item .source-info .source-upper-name:hover,
+.play-list .leftside-content .list-title:hover,
+.play-list .rightside-content .source-list .source-item .more-oprate:hover,
+.play-list .rightside-content .source-list .source-item .collect .collect-item:hover,
+.play-list .leftside-content .oprate-panel .oprate-item .oprate-window .window-item:hover,
+.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type .blue-icon,
+.play-list .rightside-content .source-list .source-item .source-checked,
+.play-list .rightside-content .batch-operation .all-checked,
+.player-auxiliary-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title,
+.player-auxiliary-playlist-item-p-item:hover,
+.container .left-container .play-options .play-options-ul li .blue,
+.favInfo-box .favInfo-details .fav-options .meta.selected,
+.play-list .leftside-content .upper-info .upper-name:hover,
+.container .play-coin-bg .play-coin .play-coin-title .play-coin-number,
+.container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active,
+#pin-wrapper .pin-layer-video-empty a,
+#page-channel-detail .channel-add-video:hover .text,
+.calendar-header>a:hover
 {
     color: var(--theme-color) !important;
 }

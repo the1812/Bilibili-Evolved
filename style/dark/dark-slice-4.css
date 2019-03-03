@@ -191,7 +191,7 @@ body #app .marquee,
 {
     background-color: #444 !important;
 }
-.player-auxiliary-area
+.player-auxiliary-area .bui-collapse
 {
     background-color: #555 !important;
 }

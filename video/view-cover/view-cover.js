@@ -35,6 +35,10 @@ class ImageViewer
             this.viewer.find(".download")
                 .attr("href", data)
                 .attr("download", title);
+            this.viewer.find(".copy-link")
+                .on("click", () => GM_setClipboard(this.url));
+            this.viewer.find(".new-tab")
+                .attr("href", this.url);
             this.viewer.find(".image")
                 .prop("src", data);
         };

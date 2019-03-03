@@ -222,7 +222,6 @@ function setDisplayNames()
     foldAllCategories();
     checkCompatibility();
     setDisplayNames();
-
     new ThemeColors().setupDom();
     new SettingsSearch();
 })();
