@@ -69,7 +69,10 @@
 .container .play-coin-bg .play-coin,
 .container .qr-code-bg .qr-code-box,
 #app-container .main .share-step,
-#app-container .main .share-success
+#app-container .main .share-success,
+#page-channel-detail .channel-detail .channel-action-row .be-dropdown,
+#page-channel-detail .channel-option .modify-channel,
+#page-channel-detail .channel-add-video
 {
     background-color: #222 !important;
 }
@@ -318,7 +321,8 @@
 .container .right-container .media-info .media-content .media-playnum,
 .container .right-container .media-upper .media-upper-info .media-upper-time,
 .share-content.plain .music-card .up-info .tip,
-.share-step .btn-field .count
+.share-step .btn-field .count,
+#pin-wrapper .pin-layer-header-counter
 {
     color: #aaa !important;
 }
@@ -529,7 +533,9 @@ th.list-head-text,
 #app-container .main .share-step .title,
 .share-content.plain .music-card .up-info .name,
 .share-step .btn-field .share-btn,
-.history-wrap .warn .btn
+.history-wrap .warn .btn,
+#pin-wrapper .pin-layer-header-counter .count,
+#page-channel-detail .channel-option .modify-channel
 {
     color: #eee !important;
 }
@@ -636,7 +642,8 @@ th.list-head-text,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
 .share-content.plain .music-card .media-list.share-media-list .content,
 #app-container .main .share-step,
-#app-container .main .share-success
+#app-container .main .share-success,
+#page-channel-detail .channel-detail .channel-action-row .be-dropdown
 {
     border-color: transparent !important;
 }
@@ -662,7 +669,8 @@ th.list-head-text,
 .play-list .rightside-content .source-list .source-item .source-right,
 .play-list .leftside-content .oprate-panel,
 .left-container .play-options .play-options-ul .share-box .or-code,
-.container .qr-code-bg .qr-code-box .qr-code-title
+.container .qr-code-bg .qr-code-box .qr-code-title,
+#page-channel-detail .channel-add-video
 {
     border-color: #444 !important;
 }
@@ -706,7 +714,13 @@ th.list-head-text,
 .bp-input .option-delete,
 .edit-media-list .edit-mask .edit-board .edit-info .media-list-type .icon-check,
 #app .header .close:hover,
-.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type .icon-check
+.edit-media-list .edit-mask .default-edit .default-edit-info .media-list-type .icon-check,
+.pin-layer-body .pin-layer-search #browser-version-tip #close-browser-tip,
+.pin-layer-body .pin-layer-search .icon,
+.pin-layer-header #browser-version-tip #close-browser-tip,
+.pin-layer-header .icon,
+.channel-item.channel-add-video .add-covers-meta #browser-version-tip #close-browser-tip,
+.channel-item.channel-add-video .add-covers-meta .icon
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -793,7 +807,8 @@ th.list-head-text,
 .p-rel.f-clear.publish-panel .textarea:focus-within,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group,
 .container .play-coin-bg .play-coin .play-coin-content .play-one-coin:hover,
-.container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active
+.container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active,
+#page-channel-detail .channel-add-video:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -878,7 +893,8 @@ th.list-head-text,
 .container .right-container .media-upper .media-upper-follow .media-upper-not-follow:hover,
 .container .play-coin-bg .play-coin .play-coin-btn:hover,
 .share-step .btn-field .clickable,
-.history-wrap .warn .btn:hover
+.history-wrap .warn .btn:hover,
+#page-channel-detail .channel-option .modify-channel:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -1001,7 +1017,9 @@ li.normal-item a:hover .uname,
 .favInfo-box .favInfo-details .fav-options .meta.selected,
 .play-list .leftside-content .upper-info .upper-name:hover,
 .container .play-coin-bg .play-coin .play-coin-title .play-coin-number,
-.container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active
+.container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active,
+#pin-wrapper .pin-layer-video-empty a,
+#page-channel-detail .channel-add-video:hover .text
 {
     color: var(--theme-color) !important;
 }
