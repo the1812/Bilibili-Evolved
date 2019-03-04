@@ -71,7 +71,7 @@ export const toolTips = {
 };
 function extractKey(listItem)
 {
-    const input = $(listItem).find("input");
+    const input = listItem.querySelector("input");
     if (input.length > 0)
     {
         return input.attr("key");

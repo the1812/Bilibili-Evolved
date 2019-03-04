@@ -20,7 +20,7 @@ export class SettingsSearch
         }
         this.items.forEach(item =>
         {
-            const key = $(item).find("input").attr("key");
+            const key = item.querySelector("input").getAttribute("key");
             const texts = Resource.displayNames[key] + toolTips[key].replace(/<span>|<\/span>/g, "");
             if (texts.includes(value))
             {
