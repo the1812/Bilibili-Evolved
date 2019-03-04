@@ -677,7 +677,8 @@ th.list-head-text,
 .datepicker.range_start.hasDatepicker .input,
 .datepicker.range_start.hasDatepicker .datepicker-popup,
 .sub-nav-m .tips,
-.narrowscreen .ov-box
+.narrowscreen .ov-box,
+.change-content .feed-wrap .feed-tag .card
 {
     border-color: transparent !important;
 }
@@ -758,7 +759,8 @@ th.list-head-text,
 .channel-item.channel-add-video .add-covers-meta #browser-version-tip #close-browser-tip,
 .channel-item.channel-add-video .add-covers-meta .icon,
 .slidesjs-pagination li a.active,
-.slidesjs-pagination li a:hover
+.slidesjs-pagination li a:hover,
+.popup-content-ctnr .content .selector-box .type-selector .radio-selected
 {
     filter: var(--blue-image-filter) !important;
 }
