@@ -459,7 +459,8 @@ li.category.folded i.icon-arrow
 }
 .gui-settings-widgets-box
 {
-    width: 200px;
+    min-width: 200px;
+    width: auto;
 }
 .gui-settings-widgets-box.opened,
 .gui-settings-box.opened
