@@ -120,6 +120,9 @@
 {
     font-size: 16pt;
     flex: 0 0 auto;
+}
+.gui-settings-box .gui-settings-title
+{
     margin-right: 64px;
 }
 .gui-settings-search[type=text]
@@ -487,8 +490,12 @@ li.category.folded i.icon-arrow
 }
 .gui-settings-widgets-box>.widgets-container:empty::after
 {
-    content: "当前页面没有可用的附加功能.";
+    content: "空空如也哦...";
     font-size: 10pt;
+}
+.gui-settings-widgets-box>.gui-settings-header
+{
+    justify-content: start;
 }
 .gui-settings-flat-button,
 .gui-settings-flat-button a,
