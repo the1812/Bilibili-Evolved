@@ -129,7 +129,10 @@ a.t>i.bili-icon,
 {
     display: none !important;
 }
-
+.bilibili-player-video-inputbar
+{
+    display: flex !important;
+}
 
 /*.i-face>.face
 {
