@@ -7,8 +7,8 @@ const main = async () =>
         return;
     }
     const video = await SpinQuery.select(() => document.querySelector("video"));
-    const leftControlBar = await SpinQuery.select(() => document.querySelector(".bilibili-player-video-control-bottom-left"));
-    leftControlBar.insertAdjacentHTML("beforeend", html);
+    const time = await SpinQuery.select(() => document.querySelector(".bilibili-player-video-time"));
+    time.insertAdjacentHTML("afterend", html);
     const quality = parseInt(await SpinQuery.select(() => document.querySelector(".bilibili-player-video-quality-menu .bui-select-item-active")));
     const fps = (() =>
     {
@@ -17,10 +17,10 @@ const main = async () =>
             // 60fps
             case 116:
             case 74:
-                return 60;
+                return 60000 / 1001;
             // 30fps
             default:
-                return 30;
+                return 30000 / 1001;
         }
     })();
     const frameTime = 1 / fps;

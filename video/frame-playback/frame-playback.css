@@ -5,3 +5,33 @@
     padding-left: 8px;
     cursor: pointer;
 }
+.frame-playback i
+{
+    transition: all .4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.frame-playback.prev-frame i
+{
+    transform: scale(1.3) rotate(-90deg);
+}
+.frame-playback.prev-frame:hover i
+{
+    transform: scale(1.4) rotate(-90deg);
+}
+.frame-playback.prev-frame:active i
+{
+    transform: scale(1.25) rotate(-90deg);
+}
+
+.frame-playback.next-frame i
+{
+    transform: scale(1.3) rotate(90deg);
+}
+.frame-playback.next-frame:hover i
+{
+    transform: scale(1.4) rotate(90deg);
+}
+.frame-playback.next-frame:active i
+{
+    transform: scale(1.25) rotate(90deg);
+}
