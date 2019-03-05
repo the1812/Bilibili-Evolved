@@ -172,7 +172,9 @@
 .calendar-month>a:hover,
 .calendar-table td.inrange,
 .calendar-table td:hover,
-.calendar-year>a:hover
+.calendar-year>a:hover,
+.sub-nav-m .tips,
+.narrowscreen .ov-box
 {
     background-color: #444 !important;
 }
@@ -333,7 +335,10 @@
 .share-content.plain .music-card .up-info .tip,
 .share-step .btn-field .count,
 #pin-wrapper .pin-layer-header-counter,
-.calendar-table td.disabled
+.calendar-table td.disabled,
+.narrowscreen .ov-box .v-info,
+.narrowscreen .ov-box .v-preview .txt,
+.narrowscreen .ov-box .v-data span
 {
     color: #aaa !important;
 }
@@ -555,7 +560,9 @@ th.list-head-text,
 .calendar-month>a.current,
 .calendar-table td.current,
 .calendar-year>a.current,
-.calendar-content .calendar-table .today
+.calendar-content .calendar-table .today,
+.sub-nav-m .tips,
+.narrowscreen .ov-box .title
 {
     color: #eee !important;
 }
@@ -668,7 +675,10 @@ th.list-head-text,
 .video-list .vl-hd .float_window .close,
 .video-list .vl-hd .float_window .close:hover,
 .datepicker.range_start.hasDatepicker .input,
-.datepicker.range_start.hasDatepicker .datepicker-popup
+.datepicker.range_start.hasDatepicker .datepicker-popup,
+.sub-nav-m .tips,
+.narrowscreen .ov-box,
+.change-content .feed-wrap .feed-tag .card
 {
     border-color: transparent !important;
 }
@@ -747,7 +757,10 @@ th.list-head-text,
 .pin-layer-header #browser-version-tip #close-browser-tip,
 .pin-layer-header .icon,
 .channel-item.channel-add-video .add-covers-meta #browser-version-tip #close-browser-tip,
-.channel-item.channel-add-video .add-covers-meta .icon
+.channel-item.channel-add-video .add-covers-meta .icon,
+.slidesjs-pagination li a.active,
+.slidesjs-pagination li a:hover,
+.popup-content-ctnr .content .selector-box .type-selector .radio-selected
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -795,7 +808,9 @@ th.list-head-text,
 .left-container .play-options .play-options-ul .share-box,
 .container .left-container .play-options .play-options-more .play-options-content .play-option:hover,
 .video-list .vl-hd .float_window,
-.datepicker.range_start.hasDatepicker .datepicker-popup
+.datepicker.range_start.hasDatepicker .datepicker-popup,
+.sub-nav-m .tips,
+.narrowscreen .ov-box
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }

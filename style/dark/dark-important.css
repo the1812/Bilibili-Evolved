@@ -112,7 +112,8 @@ blockquote .color-yellow-04,
 .detail-wrp .detail-content[data-v-00c9b213] p a span,
 .room-info-down-row .icon-label.hover-text-blue:hover .label,
 .room-introduction .edit-button:hover>.icon-font,
-.room-introduction .edit-button:hover>span
+.room-introduction .edit-button:hover>span,
+.im-popup .bp-popup-panel .title-ctnr .popup-title
 {
     color: var(--theme-color) !important;
 }
