@@ -76,6 +76,7 @@ const settings = {
     showDeadVideoTitle: false,
     useBiliplusRedirect: false,
     biliplusRedirect: false,
+    framePlayback: true,
     useCommentStyle: true,
     imageResolution: false,
     toastInternalError: false,
@@ -722,6 +723,22 @@ function loadResources()
             displayNames: {
                 biliplusRedirect: "BiliPlus跳转支持",
             }
+        },
+        framePlaybackHtml: {
+            path: "min/frame-playback.min.html",
+        },
+        framePlaybackStyle: {
+            path: "min/frame-playback.min.css",
+        },
+        framePlayback: {
+            path: "min/frame-playback.min.js",
+            dependencies: [
+                "framePlaybackHtml",
+                "framePlaybackStyle"
+            ],
+            displayNames: {
+                framePlayback: "启用逐帧调整",
+            },
         },
     };
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";

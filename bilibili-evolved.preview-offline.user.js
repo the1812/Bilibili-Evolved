@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      231.88
+// @version      231.95
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -77,6 +77,7 @@ const settings = {
     showDeadVideoTitle: false,
     useBiliplusRedirect: false,
     biliplusRedirect: false,
+    framePlayback: true,
     useCommentStyle: true,
     imageResolution: false,
     toastInternalError: false,
@@ -724,6 +725,22 @@ function loadResources()
                 biliplusRedirect: "BiliPlus跳转支持",
             }
         },
+        framePlaybackHtml: {
+            path: "min/frame-playback.min.html",
+        },
+        framePlaybackStyle: {
+            path: "min/frame-playback.min.css",
+        },
+        framePlayback: {
+            path: "min/frame-playback.min.js",
+            dependencies: [
+                "framePlaybackHtml",
+                "framePlaybackStyle"
+            ],
+            displayNames: {
+                framePlayback: "启用逐帧调整",
+            },
+        },
     };
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
     Resource.all = {};
@@ -1327,6 +1344,21 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/title.min.js"] = (()=>{return(e,t)=>{function i(e=true){const t=document.title.replace("_番剧_bilibili_哔哩哔哩","").replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili","");if(!e||document.URL.indexOf("/bangumi")!==-1){return t}else{const e=document.querySelector("#multi_page .cur-list>ul li.on a");if(e===null){return t}else{const i=e.getAttribute("title");return t+" - "+i}}}return{export:{getFriendlyTitle:i}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/image-resolution.min.js"] = (()=>{return(t,e)=>{const r=/(.*?)@(.*)\./;const o=["certify-img1","certify-img2"];const s=8;function i(t){if(o.includes(t.id)){return}let e=0;const i=new Observer(t,()=>{e++;if(e>s){i.stop();return}const o=t.getAttribute("src");const c=o.match(r);if(c&&c[1]){i.stop();t.setAttribute("src",c[1])}});i.options={childList:false,attributes:true,subtree:false};i.start()}document.querySelectorAll("img").forEach(t=>i(t));Observer.childListSubtree("body",t=>{for(const e of t){for(const t of e.addedNodes){if(t.nodeName.toLowerCase()==="img"){i(t)}t.querySelectorAll&&t.querySelectorAll("img").forEach(t=>i(t))}}});return{export:{imageResolution:i}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/biliplus-redirect.min.js"] = (()=>{return(i,l)=>{const c=["bilibili.com/video/av","bilibili.com/bangumi/play","bilibili.com/bangumi/media","space.bilibili.com"];return{widget:{condition:()=>{return c.some(i=>document.URL.includes(i))},content:`\n            <button class="gui-settings-flat-button" id="biliplus-redirect">\n                <i class="icon-biliplus"></i>\n                <span>转到BiliPlus</span>\n            </button>`,success:()=>{const i=document.querySelector("#biliplus-redirect");i.addEventListener("click",()=>{if(location.host==="space.bilibili.com"){location.replace(document.URL.replace("space.bilibili.com/","www.biliplus.com/space/"))}else{location.host="www.biliplus.com"}})}}}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/frame-playback.min.html"] = `<div class="frame-playback prev-frame"title=上一帧><svg version=1.1 xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink x=0px y=0px viewBox="0 0 22 22"style="width: 22px; height: 22px"><style type=text/css>.st0 {
+                fill: none;
+                stroke: #FFFFFF;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-miterlimit: 10;
+            }</style><line class=st0 x1=16.27 y1=4.62 x2=5.71 y2=11.04 /><line class=st0 x1=16.29 y1=17.38 x2=5.71 y2=11.04 /></svg></div><div class="frame-playback next-frame"title=下一帧><svg version=1.1 xmlns=http://www.w3.org/2000/svg xmlns:xlink=http://www.w3.org/1999/xlink x=0px y=0px viewBox="0 0 22 22"style="width: 22px; height: 22px"><style type=text/css>.st0 {
+                fill: none;
+                stroke: #FFFFFF;
+                stroke-width: 2;
+                stroke-linecap: round;
+                stroke-miterlimit: 10;
+            }</style><line class=st0 x1=5.73 y1=4.62 x2=16.29 y2=11.04 /><line class=st0 x1=5.71 y1=17.38 x2=16.29 y2=11.04 /></svg></div>`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/frame-playback.min.css"] = `.frame-playback{display:flex;align-items:center;padding-left:8px;cursor:pointer}`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/frame-playback.min.js"] = (()=>{return(e,t)=>{const r=t.import("framePlaybackHtml");t.applyStyle("framePlaybackStyle");const c=async()=>{if(document.querySelector(".frame-playback")){return}const e=await SpinQuery.select(()=>document.querySelector("video"));const t=await SpinQuery.select(()=>document.querySelector(".bilibili-player-video-control-bottom-left"));t.insertAdjacentHTML("beforeend",r);const c=parseInt(await SpinQuery.select(()=>document.querySelector(".bilibili-player-video-quality-menu .bui-select-item-active")));const n=(()=>{switch(c){case 116:case 74:return 60;default:return 30}})();const i=1/n;document.querySelector(".prev-frame").addEventListener("click",()=>e.currentTime-=i);document.querySelector(".next-frame").addEventListener("click",()=>e.currentTime+=i)};Observer.videoChange(c)}})();
 
 class ResourceType
 {
