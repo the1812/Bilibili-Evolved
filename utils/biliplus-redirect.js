@@ -22,8 +22,7 @@ export default {
             {
                 if (location.host === "space.bilibili.com")
                 {
-                    const uid = location.host.match(/space.bilibili.com\/([\d]+)/)[1];
-                    location.replace(`www.biliplus.com/space/${uid}`);
+                    location.replace(document.URL.replace("space.bilibili.com/", "www.biliplus.com/space/"));
                 }
                 else
                 {
