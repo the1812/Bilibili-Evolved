@@ -295,7 +295,8 @@ body>div.to-top.on,
 .play-up-introduction .play-up-sign,
 .container .left-container .play-up-info .play-up-self-btn,
 .play-options .share-box .share-btn ul .bili-share,
-.container .left-container .play-options
+.container .left-container .play-options,
+.twp-mask .twp-wrapper .twp-container .twp-text .twp-desc
 {
     color: #aaa !important;
 }
@@ -933,7 +934,8 @@ body>div.to-top.on
 .i-pin-reason,
 .container .left-container .play-up-info .play-up-self-btn:hover,
 .play-options .share-box .share-btn ul .bili-share:hover,
-.comment-list a
+.comment-list a,
+.bilibili-player-context-menu-container.black ul>li a>.active
 {
     color: var(--theme-color) !important;
 }
