@@ -5,7 +5,8 @@
 #disable-popup-modal .vip-exchange .months button.disabled,
 #vip-exchange-modal .vip-exchange .months button.disabled,
 .tab-list .tab-item.active:before,
-.live-skin-coloration-area .live-skin-separate-area
+.live-skin-coloration-area .live-skin-separate-area,
+.live-skin-coloration-area .live-skin-separate-area-hover:hover
 {
     background-color: #222 !important;
 }
@@ -58,7 +59,11 @@ blockquote .color-yellow-03,
 blockquote .color-yellow-04,
 .status_box .status_btn.disabled,
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled,
-.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover
+.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover,
+.live-skin-coloration-area .live-skin-normal-a-text:link,
+.live-skin-normal-a-text:visited,
+.live-skin-coloration-area .live-skin-normal-a-text,
+.live-skin-coloration-area .live-skin-normal-text
 {
     color: #aaa !important;
 }
@@ -74,10 +79,6 @@ blockquote .color-yellow-04,
 .invitation-record-warp .invtable .inputdone,
 .bb-comment .no-login .comment-submit,
 .live-skin-coloration-area .live-skin-main-text,
-.live-skin-coloration-area .live-skin-normal-a-text:link,
-.live-skin-normal-a-text:visited,
-.live-skin-coloration-area .live-skin-normal-a-text,
-.live-skin-coloration-area .live-skin-normal-text,
 .live-skin-coloration-area .live-skin-highlight-text
 {
     color: #eee !important;
@@ -152,8 +153,7 @@ blockquote .color-yellow-04,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
 .user-my-btn .el-button--primary,
-.live-skin-coloration-area .live-skin-highlight-bg,
-.live-skin-coloration-area .live-skin-separate-area-hover:hover
+.live-skin-coloration-area .live-skin-highlight-bg
 {
     background-color: var(--theme-color) !important;
 }
