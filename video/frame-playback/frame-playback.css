@@ -4,10 +4,12 @@
     align-items: center;
     padding-left: 8px;
     cursor: pointer;
+    filter: brightness(0) invert(1) !important;
 }
 .frame-playback i
 {
     transition: all .4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    opacity: 0.9;
 }
 
 .frame-playback.prev-frame i
@@ -17,10 +19,12 @@
 .frame-playback.prev-frame:hover i
 {
     transform: scale(1.4) rotate(-90deg);
+    opacity: 1;
 }
 .frame-playback.prev-frame:active i
 {
     transform: scale(1.25) rotate(-90deg);
+    opacity: 1;
 }
 
 .frame-playback.next-frame i
@@ -30,8 +34,10 @@
 .frame-playback.next-frame:hover i
 {
     transform: scale(1.4) rotate(90deg);
+    opacity: 1;
 }
 .frame-playback.next-frame:active i
 {
     transform: scale(1.25) rotate(90deg);
+    opacity: 1;
 }
