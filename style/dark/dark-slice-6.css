@@ -178,10 +178,12 @@
 {
     background-color: #444 !important;
 }
-/* a
+#head-info-vm,
+#gift-control-vm,
+#rank-list-ctnr-box
 {
     background-image: none !important;
-} */
+}
 .upper-right-ctnr.p-absolute.none-select .btn.primary,
 .area-category-item.dp-i-block.p-relative.t-center.pointer .category-divider,
 #app-ctnr .content .container,
@@ -337,7 +339,9 @@
 .calendar-table td.disabled,
 .narrowscreen .ov-box .v-info,
 .narrowscreen .ov-box .v-preview .txt,
-.narrowscreen .ov-box .v-data span
+.narrowscreen .ov-box .v-data span,
+.t-center.glory-item.dp-i-block.v-middle .glory-activity-name,
+.t-center.glory-item.dp-i-block.v-middle .glory-create-time
 {
     color: #aaa !important;
 }
@@ -561,7 +565,8 @@ th.list-head-text,
 .calendar-year>a.current,
 .calendar-content .calendar-table .today,
 .sub-nav-m .tips,
-.narrowscreen .ov-box .title
+.narrowscreen .ov-box .title,
+.t-center.glory-item.dp-i-block.v-middle .glory-name
 {
     color: #eee !important;
 }

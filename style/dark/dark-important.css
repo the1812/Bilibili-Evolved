@@ -4,7 +4,8 @@
 .bl-button--primary:disabled,
 #disable-popup-modal .vip-exchange .months button.disabled,
 #vip-exchange-modal .vip-exchange .months button.disabled,
-.tab-list .tab-item.active:before
+.tab-list .tab-item.active:before,
+.live-skin-coloration-area .live-skin-separate-area
 {
     background-color: #222 !important;
 }
@@ -71,7 +72,13 @@ blockquote .color-yellow-04,
 .s-paging > ul > span.current,
 .score-info .go-movie,
 .invitation-record-warp .invtable .inputdone,
-.bb-comment .no-login .comment-submit
+.bb-comment .no-login .comment-submit,
+.live-skin-coloration-area .live-skin-main-text,
+.live-skin-coloration-area .live-skin-normal-a-text:link,
+.live-skin-normal-a-text:visited,
+.live-skin-coloration-area .live-skin-normal-a-text,
+.live-skin-coloration-area .live-skin-normal-text,
+.live-skin-coloration-area .live-skin-highlight-text
 {
     color: #eee !important;
 }
@@ -83,7 +90,9 @@ blockquote .color-yellow-04,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
 .tabs-bar,
 .score-info .go-movie,
-.bb-comment .no-login .comment-submit
+.bb-comment .no-login .comment-submit,
+.live-skin-coloration-area .live-skin-highlight-border,
+.live-skin-coloration-area .live-skin-separate-border
 {
     border-color: transparent !important;
 }
@@ -113,7 +122,10 @@ blockquote .color-yellow-04,
 .room-info-down-row .icon-label.hover-text-blue:hover .label,
 .room-introduction .edit-button:hover>.icon-font,
 .room-introduction .edit-button:hover>span,
-.im-popup .bp-popup-panel .title-ctnr .popup-title
+.im-popup .bp-popup-panel .title-ctnr .popup-title,
+.live-skin-coloration-area .live-skin-highlight-text,
+.live-skin-coloration-area .live-skin-normal-a-text:hover,
+.live-skin-normal-a-text:active
 {
     color: var(--theme-color) !important;
 }
@@ -124,7 +136,8 @@ blockquote .color-yellow-04,
 .tag-list li.tag-item.on,
 .tag-list li.tag-item:hover,
 .page-list-box .page-input:focus,
-.page-list-box .page-input:hover
+.page-list-box .page-input:hover,
+.live-skin-coloration-area .live-skin-highlight-border
 {
     border-color: var(--theme-color) !important;
 }
@@ -138,7 +151,9 @@ blockquote .color-yellow-04,
 .tag-list li.tag-item.on,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
-.user-my-btn .el-button--primary
+.user-my-btn .el-button--primary,
+.live-skin-coloration-area .live-skin-highlight-bg,
+.live-skin-coloration-area .live-skin-separate-area-hover:hover
 {
     background-color: var(--theme-color) !important;
 }
