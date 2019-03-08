@@ -12,15 +12,22 @@ namespace BilibiliEvolved.Build
         private string offlineText;
         private string offlineVersion;
 
+        private string readAsBase64Image(string path)
+        {
+            var bytes = File.ReadAllBytes(path);
+            return $"data:image/png;base64,{Convert.ToBase64String(bytes)}";
+        }
         private void replaceInfo(Dictionary<string, string> map)
         {
-            var logoBytes = File.ReadAllBytes(config.LogoPath);
-            var logoBase64 = $"data:image/png;base64,{Convert.ToBase64String(logoBytes)}";
             map.ForEach(item => offlineText = offlineText.Replace(item.Key, item.Value));
             offlineText = ownerRegex.Replace(offlineText, "${1}" + config.Owner + "${3}");
+
             offlineText = offlineText.Replace(
-                $"@icon         https://raw.githubusercontent.com/{config.Owner}/Bilibili-Evolved/master/images/logo.png",
-                $"@icon         {logoBase64}");
+                $"@icon         https://raw.githubusercontent.com/{config.Owner}/Bilibili-Evolved/master/{config.SmallLogoPath}",
+                $"@icon         {readAsBase64Image(config.SmallLogoPath)}");
+            offlineText = offlineText.Replace(
+                $"@icon64       https://raw.githubusercontent.com/{config.Owner}/Bilibili-Evolved/master/{config.LogoPath}",
+                $"@icon64       {readAsBase64Image(config.LogoPath)}");
         }
         private void generateVersion()
         {
