@@ -13,7 +13,6 @@ function showTitle()
             {
                 const titles = response.data.map(it => it.part);
                 [title] = titles;
-
             }
             else
             {
