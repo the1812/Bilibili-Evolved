@@ -417,7 +417,8 @@ body>div.to-top.on,
 .play-options .play-options-more .play-options-content .play-option,
 .media-upper .media-upper-info .media-upper-name,
 .media-info .media-content .media-title a,
-.share-box .share-popup .share-address ul li input
+.share-box .share-popup .share-address ul li input,
+.link-progress-tv
 {
     color: #eee !important;
 }
