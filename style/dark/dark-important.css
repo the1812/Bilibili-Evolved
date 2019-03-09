@@ -137,8 +137,7 @@ blockquote .color-yellow-04,
 .tag-list li.tag-item.on,
 .tag-list li.tag-item:hover,
 .page-list-box .page-input:focus,
-.page-list-box .page-input:hover,
-.live-skin-coloration-area .live-skin-highlight-border
+.page-list-box .page-input:hover
 {
     border-color: var(--theme-color) !important;
 }
