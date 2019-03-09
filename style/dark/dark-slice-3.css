@@ -546,7 +546,8 @@ i.settings-category-arrow::after,
 {
     fill: #aaa !important;
 }
-svg.toast-card-dismiss path
+svg.toast-card-dismiss path,
+.audioplayer .ap-play-button svg path
 {
     fill: #fff !important;
 }
