@@ -520,11 +520,16 @@ li.category.folded i.icon-arrow
     flex: 0 0 auto;
     margin: 4px;
 }
-.gui-settings-flat-button:hover
+.gui-settings-flat-button:disabled
+{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.gui-settings-flat-button:hover:not(:disabled)
 {
     border-bottom-color: var(--theme-color-90);
 }
-.gui-settings-flat-button:active
+.gui-settings-flat-button:active:not(:disabled)
 {
     border-bottom-color: var(--theme-color);
 }
