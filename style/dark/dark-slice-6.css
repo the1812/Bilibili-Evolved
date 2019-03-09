@@ -341,7 +341,8 @@
 .narrowscreen .ov-box .v-preview .txt,
 .narrowscreen .ov-box .v-data span,
 .t-center.glory-item.dp-i-block.v-middle .glory-activity-name,
-.t-center.glory-item.dp-i-block.v-middle .glory-create-time
+.t-center.glory-item.dp-i-block.v-middle .glory-create-time,
+.bb-comment .comment-list .list-item .con .vote-container .text-area .text-desc
 {
     color: #aaa !important;
 }
@@ -566,7 +567,8 @@ th.list-head-text,
 .calendar-content .calendar-table .today,
 .sub-nav-m .tips,
 .narrowscreen .ov-box .title,
-.t-center.glory-item.dp-i-block.v-middle .glory-name
+.t-center.glory-item.dp-i-block.v-middle .glory-name,
+.bb-comment .comment-list .list-item .con .vote-container .text-area .text-content
 {
     color: #eee !important;
 }
@@ -764,7 +766,8 @@ th.list-head-text,
 .channel-item.channel-add-video .add-covers-meta .icon,
 .slidesjs-pagination li a.active,
 .slidesjs-pagination li a:hover,
-.popup-content-ctnr .content .selector-box .type-selector .radio-selected
+.popup-content-ctnr .content .selector-box .type-selector .radio-selected,
+.bb-comment .comment-list .list-item .text .vote-link img
 {
     filter: var(--blue-image-filter) !important;
 }
