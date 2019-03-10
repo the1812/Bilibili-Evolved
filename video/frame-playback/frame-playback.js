@@ -36,7 +36,7 @@ const main = async () =>
     });
     document.addEventListener("keydown", e =>
     {
-        if (e.shiftKey)
+        if (e.shiftKey && !["input", "textarea"].includes(document.activeElement.nodeName.toLowerCase()))
         {
             if (e.key === "ArrowLeft")
             {
