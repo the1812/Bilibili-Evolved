@@ -23,7 +23,8 @@ const playerModes = [
     // },
 ];
 let lightOff = () => { };
-async function initLightOff()
+let lightOn = () => { };
+async function initLights()
 {
     if (settings.autoLightOff)
     {
@@ -34,23 +35,20 @@ async function initLightOff()
             return;
         }
         settingsButton.mouseover().mouseout();
-        lightOff = () =>
+        const setLight = async lightOff =>
         {
-            SpinQuery.any(
-                () => $(".bilibili-player-video-btn-setting-panel-others-content-lightoff .bui-checkbox-input"),
-                checkbox =>
-                {
-                    const lightOffCheckBox = checkbox[0];
-                    lightOffCheckBox.checked = true;
-                    raiseEvent(lightOffCheckBox, "change");
-                }
-            );
-        };
+            const checkbox = await SpinQuery.select(
+                () => document.querySelector(".bilibili-player-video-btn-setting-panel-others-content-lightoff .bui-checkbox-input"));
+            checkbox.checked = lightOff;
+            raiseEvent(checkbox, "change");
+        }
+        lightOff = () => setLight(true);
+        lightOn = () => setLight(false);
     }
 }
 async function main()
 {
-    await initLightOff();
+    await initLights();
     await SpinQuery.condition(
         () => $(".bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area"),
         it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"));
@@ -87,11 +85,12 @@ async function main()
             {
                 info.action();
             }
-            lightOff();
             if (settings.applyPlayerModeOnPlay)
             {
                 video.removeEventListener("play", onplay);
             }
+            video.addEventListener("play", lightOff);
+            video.addEventListener("ended", lightOn);
         };
         if (settings.applyPlayerModeOnPlay)
         {

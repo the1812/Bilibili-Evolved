@@ -10,7 +10,7 @@ export const toolTips = {
     defaultBangumiLayout: `设置番剧区的布局.`,
     useDefaultVideoQuality: `进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.`,
     defaultVideoQuality: `设定自动选择的视频画质.`,
-    autoLightOff: `首次播放时, 自动进入关灯模式.`,
+    autoLightOff: `首次播放时, 自动进入关灯模式, 并在播放结束后自动开灯.`,
     useDefaultDanmakuSettings: `设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.`,
     enableDanmaku: `控制弹幕是否默认开启.`,
     rememberDanmakuSettings: `控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`,
