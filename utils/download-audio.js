@@ -46,6 +46,7 @@ export default {
                 id="download-audio">
                 <i class="icon-download"></i>
                 <span>${buttonText}</span>
+                <a id="download-audio-link" style="display: none"></a>
             </button>`,
         condition: () => document.URL.includes("bilibili.com/audio"),
         success: async () =>
@@ -58,10 +59,10 @@ export default {
             {
                 text.innerHTML = `${Math.round(progress)}%`;
             };
-            const link = document.createElement("a");
-            downloadButton.addEventListener("click", async () =>
+            const link = document.querySelector("#download-audio-link");
+            downloadButton.addEventListener("click", async e =>
             {
-                if (downloader.sid === null)
+                if (downloader.sid === null || e.target === link)
                 {
                     return;
                 }
