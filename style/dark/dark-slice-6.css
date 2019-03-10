@@ -342,7 +342,9 @@
 .narrowscreen .ov-box .v-data span,
 .t-center.glory-item.dp-i-block.v-middle .glory-activity-name,
 .t-center.glory-item.dp-i-block.v-middle .glory-create-time,
-.bb-comment .comment-list .list-item .con .vote-container .text-area .text-desc
+.bb-comment .comment-list .list-item .con .vote-container .text-area .text-desc,
+.card .focus-btn .focus .focus-text,
+.textarea-container .comm-tool .comm-emoji
 {
     color: #aaa !important;
 }
@@ -568,7 +570,8 @@ th.list-head-text,
 .sub-nav-m .tips,
 .narrowscreen .ov-box .title,
 .t-center.glory-item.dp-i-block.v-middle .glory-name,
-.bb-comment .comment-list .list-item .con .vote-container .text-area .text-content
+.bb-comment .comment-list .list-item .con .vote-container .text-area .text-content,
+.textarea-container .comm-tool .comm-emoji:hover .comm-text
 {
     color: #eee !important;
 }
@@ -1079,7 +1082,8 @@ li.normal-item a:hover .uname,
 .container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active,
 #pin-wrapper .pin-layer-video-empty a,
 #page-channel-detail .channel-add-video:hover .text,
-.calendar-header>a:hover
+.calendar-header>a:hover,
+.card .focus-btn .focus .focus-text:hover
 {
     color: var(--theme-color) !important;
 }
