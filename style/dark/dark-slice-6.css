@@ -75,7 +75,8 @@
 #page-channel-detail .channel-add-video,
 .video-list .vl-hd .float_window,
 .datepicker.range_start.hasDatepicker .datepicker-popup,
-.calendar-table td.disabled
+.calendar-table td.disabled,
+.coin-dialog-mask .coin-operated
 {
     background-color: #222 !important;
 }
@@ -174,7 +175,8 @@
 .calendar-table td:hover,
 .calendar-year>a:hover,
 .sub-nav-m .tips,
-.narrowscreen .ov-box
+.narrowscreen .ov-box,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn
 {
     background-color: #444 !important;
 }
@@ -344,7 +346,8 @@
 .t-center.glory-item.dp-i-block.v-middle .glory-create-time,
 .bb-comment .comment-list .list-item .con .vote-container .text-area .text-desc,
 .card .focus-btn .focus .focus-text,
-.textarea-container .comm-tool .comm-emoji
+.textarea-container .comm-tool .comm-emoji,
+.coin-dialog-mask .coin-operated .coin-bottom .tips
 {
     color: #aaa !important;
 }
@@ -571,7 +574,9 @@ th.list-head-text,
 .narrowscreen .ov-box .title,
 .t-center.glory-item.dp-i-block.v-middle .glory-name,
 .bb-comment .comment-list .list-item .con .vote-container .text-area .text-content,
-.textarea-container .comm-tool .comm-emoji:hover .comm-text
+.textarea-container .comm-tool .comm-emoji:hover .comm-text,
+.coin-dialog-mask .coin-operated .coin-title,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn
 {
     color: #eee !important;
 }
@@ -687,7 +692,9 @@ th.list-head-text,
 .datepicker.range_start.hasDatepicker .datepicker-popup,
 .sub-nav-m .tips,
 .narrowscreen .ov-box,
-.change-content .feed-wrap .feed-tag .card
+.change-content .feed-wrap .feed-tag .card,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover
 {
     border-color: transparent !important;
 }
@@ -866,7 +873,8 @@ th.list-head-text,
 #page-channel-detail .channel-add-video:hover,
 .video-list .vl-hd .float_window .selet-datebox .sse a,
 .video-list .vl-hd .float_window .selet-datebox .sse,
-.video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover
+.video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover,
+.coin-dialog-mask .coin-operated .mc .mc-box
 {
     border-color: var(--theme-color) !important;
 }
@@ -956,7 +964,8 @@ th.list-head-text,
 .video-list .vl-hd .float_window .selet-datebox .sse a.on,
 .calendar-month>a.current,
 .calendar-table td.current,
-.calendar-year>a.current
+.calendar-year>a.current,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -1083,7 +1092,9 @@ li.normal-item a:hover .uname,
 #pin-wrapper .pin-layer-video-empty a,
 #page-channel-detail .channel-add-video:hover .text,
 .calendar-header>a:hover,
-.card .focus-btn .focus .focus-text:hover
+.card .focus-btn .focus .focus-text:hover,
+.coin-dialog-mask .coin-operated .mc .mc-box .c-num,
+.coin-dialog-mask .coin-operated .coin-title span
 {
     color: var(--theme-color) !important;
 }
