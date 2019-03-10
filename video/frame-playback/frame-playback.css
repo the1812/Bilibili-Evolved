@@ -1,10 +1,14 @@
 .frame-playback
 {
-    display: flex;
+    display: none !important;
     align-items: center;
     padding-left: 8px;
     cursor: pointer;
     filter: brightness(0) invert(1) !important;
+}
+.bilibili-player-video-control-bottom .frame-playback
+{
+    display: flex !important;
 }
 .frame-playback i
 {
