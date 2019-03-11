@@ -50,10 +50,8 @@ async function initLights()
         lightOn = () => setLight(false);
     }
 }
-async function main(args)
+async function main()
 {
-    console.log("default player mode main executed");
-    console.log(args);
     await initLights();
     await SpinQuery.condition(
         () => $(".bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area"),
