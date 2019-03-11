@@ -91,7 +91,14 @@ async function main(args)
             {
                 info.action();
             }
-            video.addEventListener("play", lightOff, { once: true });
+            if (settings.autoPlay)
+            {
+                lightOff();
+            }
+            else
+            {
+                video.addEventListener("play", lightOff, { once: true });
+            }
             video.addEventListener("ended", lightOn, { once: true });
         };
         if (settings.applyPlayerModeOnPlay && !settings.autoPlay)
