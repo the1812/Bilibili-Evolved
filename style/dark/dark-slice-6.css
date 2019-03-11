@@ -347,7 +347,10 @@
 .bb-comment .comment-list .list-item .con .vote-container .text-area .text-desc,
 .card .focus-btn .focus .focus-text,
 .textarea-container .comm-tool .comm-emoji,
-.coin-dialog-mask .coin-operated .coin-bottom .tips
+.coin-dialog-mask .coin-operated .coin-bottom .tips,
+.progress-outer-ctnr .lv-text,
+.progress-outer-ctnr .next-text,
+.common-popup-wrap.arrow-top.drop-bubble-ctnr .score-introduction
 {
     color: #aaa !important;
 }
@@ -874,7 +877,8 @@ th.list-head-text,
 .video-list .vl-hd .float_window .selet-datebox .sse a,
 .video-list .vl-hd .float_window .selet-datebox .sse,
 .video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover,
-.coin-dialog-mask .coin-operated .mc .mc-box
+.coin-dialog-mask .coin-operated .mc .mc-box,
+.score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute
 {
     border-color: var(--theme-color) !important;
 }
