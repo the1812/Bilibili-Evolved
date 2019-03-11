@@ -603,7 +603,9 @@ svg.toast-card-dismiss path,
 .video-list .vl-hd .display-tab li.on,
 .i-watchlater.has-select,
 .block-effect-ctnr .item .cb-icon,
-.small-item.new .new-icon
+.small-item.new .new-icon,
+#article-list-index .title-holder .icon-close,
+#article-list-index .index-holder .article-item.on .point
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -684,7 +686,8 @@ body>.player #bilibiliPlayer
 .project-list .project-list-item:hover,
 .publish-panel .hash-popup,
 #app .toolbar-wrapper,
-.article-action .ops .share-container .weixin-holder
+.article-action .ops .share-container .weixin-holder,
+#article-list-index
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
