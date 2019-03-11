@@ -1043,8 +1043,8 @@ class Observer
     }
     static async videoChange(callback)
     {
-        const video = await SpinQuery.select(() => document.querySelector("video"));
-        if (video === null)
+        const player = await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
+        if (player === null)
         {
             return null;
         }
