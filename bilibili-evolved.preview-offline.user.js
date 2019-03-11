@@ -1517,10 +1517,10 @@ class Resource
             logError("Attempt to get style which is not downloaded.");
         }
         let attributes = `id='${id}'`;
-        if (this.priority !== undefined)
-        {
-            attributes += ` priority='${this.priority}'`;
-        }
+        // if (this.priority !== undefined)
+        // {
+        //     attributes += ` priority='${this.priority}'`;
+        // }
         return `<style ${attributes}>${style}</style>`;
     }
     getPriorStyle()
@@ -1550,24 +1550,32 @@ class Resource
     }
     applyStyle(id, important)
     {
-        if ($(`#${id}`).length === 0)
+        if (!document.querySelector(`#${id}`))
         {
             const element = this.getStyle(id);
-            const priorStyle = this.getPriorStyle();
-            if (priorStyle === null)
+            // const priorStyle = this.getPriorStyle();
+            // if (priorStyle === null)
+            // {
+            //     if (important)
+            //     {
+            //         $("html").append(element);
+            //     }
+            //     else
+            //     {
+            //         $("head").prepend(element);
+            //     }
+            // }
+            // else
+            // {
+            //     priorStyle.after(element);
+            // }
+            if (important)
             {
-                if (important)
-                {
-                    $("html").append(element);
-                }
-                else
-                {
-                    $("head").prepend(element);
-                }
+                $("html").append(element);
             }
             else
             {
-                priorStyle.after(element);
+                $("head").prepend(element);
             }
         }
     }
