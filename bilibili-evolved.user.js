@@ -553,7 +553,7 @@ function loadResources()
             },
             dropdown: {
                 key: "defaultPlayerMode",
-                items: ["常规", "宽屏", "网页全屏"],
+                items: ["常规", "宽屏", "网页全屏", "全屏"],
             },
         },
         useDefaultVideoQuality: {
@@ -1042,12 +1042,20 @@ class Observer
     }
     static async videoChange(callback)
     {
-        const player = await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
-        if (player === null)
+        const video = await SpinQuery.select(() => document.querySelector("video"));
+        if (video === null)
         {
             return null;
         }
-        return Observer.childList("#bofqi,#bilibiliPlayer", callback);
+        callback([]);
+        return Observer.childList("#bofqi,#bilibiliPlayer", records =>
+        {
+            const isMenuAttached = records.every(it => [...it.addedNodes].some(e => e.classList.contains("bilibili-player-context-menu-container")));
+            if (!isMenuAttached)
+            {
+                callback(records);
+            }
+        });
     }
 }
 class SpinQuery

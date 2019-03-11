@@ -7,7 +7,7 @@ const playerModes = [
         name: "宽屏",
         action: () =>
         {
-            $(".bilibili-player-video-btn-widescreen").click();
+            document.querySelector(".bilibili-player-video-btn-widescreen").click();
             document.querySelector("#bofqi").scrollIntoView({ behavior: "smooth" });
         },
     },
@@ -15,12 +15,16 @@ const playerModes = [
         name: "网页全屏",
         action: () =>
         {
-            $(".bilibili-player-video-web-fullscreen").click();
+            document.querySelector(".bilibili-player-video-web-fullscreen").click();
         },
     },
-    // {
-    //     name: "全屏",
-    // },
+    {
+        name: "全屏",
+        action: () =>
+        {
+            document.querySelector(".bilibili-player-video-btn-fullscreen").click();
+        },
+    },
 ];
 let lightOff = () => { };
 let lightOn = () => { };
@@ -41,13 +45,15 @@ async function initLights()
                 () => document.querySelector(".bilibili-player-video-btn-setting-panel-others-content-lightoff .bui-checkbox-input"));
             checkbox.checked = lightOff;
             raiseEvent(checkbox, "change");
-        }
+        };
         lightOff = () => setLight(true);
         lightOn = () => setLight(false);
     }
 }
-async function main()
+async function main(args)
 {
+    console.log("default player mode main executed");
+    console.log(args);
     await initLights();
     await SpinQuery.condition(
         () => $(".bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area"),
@@ -59,25 +65,25 @@ async function main()
         return;
     }
     const info = playerModes.find(it => it.name === settings.defaultPlayerMode);
-    if (info.name === "全屏")
-    {
-        const unsafe$ = await SpinQuery.unsafeJquery();
-        const playButton = document.querySelector(".bilibili-player-video-btn-start");
-        const playerButtonClick = () =>
-        {
-            const events = unsafe$(".bilibili-player-video-btn-fullscreen").data("events");
-            if (events.click && events.click[0] && events.click[0].handler)
-            {
-                const handler = unsafe$(".bilibili-player-video-btn-fullscreen").data("events").click[0].handler;
-                console.log(handler);
-                handler();
-            }
+    // if (info.name === "全屏")
+    // {
+    //     const unsafe$ = await SpinQuery.unsafeJquery();
+    //     const playButton = document.querySelector(".bilibili-player-video-btn-start");
+    //     const playerButtonClick = () =>
+    //     {
+    //         const events = unsafe$(".bilibili-player-video-btn-fullscreen").data("events");
+    //         if (events.click && events.click[0] && events.click[0].handler)
+    //         {
+    //             const handler = unsafe$(".bilibili-player-video-btn-fullscreen").data("events").click[0].handler;
+    //             console.log(handler);
+    //             handler();
+    //         }
 
-            playButton.removeEventListener("click", playerButtonClick);
-        };
-        playButton.addEventListener("click", playerButtonClick);
-    }
-    else
+    //         playButton.removeEventListener("click", playerButtonClick);
+    //     };
+    //     playButton.addEventListener("click", playerButtonClick);
+    // }
+    // else
     {
         const onplay = () =>
         {
@@ -85,16 +91,12 @@ async function main()
             {
                 info.action();
             }
-            if (settings.applyPlayerModeOnPlay)
-            {
-                video.removeEventListener("play", onplay);
-            }
-            video.addEventListener("play", lightOff);
-            video.addEventListener("ended", lightOn);
+            video.addEventListener("play", lightOff, { once: true });
+            video.addEventListener("ended", lightOn, { once: true });
         };
-        if (settings.applyPlayerModeOnPlay)
+        if (settings.applyPlayerModeOnPlay && !settings.autoPlay)
         {
-            video.addEventListener("play", onplay);
+            video.addEventListener("play", onplay, { once: true });
         }
         else
         {
@@ -102,9 +104,4 @@ async function main()
         }
     }
 }
-if (Observer.videoChange)
-{
-    Observer.videoChange(main);
-}
-else
-{ Observer.childList("#bofqi", () => main()); }
+Observer.videoChange(main);

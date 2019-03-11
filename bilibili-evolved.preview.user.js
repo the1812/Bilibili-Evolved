@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.14
+// @version      1.7.15
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -553,7 +553,7 @@ function loadResources()
             },
             dropdown: {
                 key: "defaultPlayerMode",
-                items: ["常规", "宽屏", "网页全屏"],
+                items: ["常规", "宽屏", "网页全屏", "全屏"],
             },
         },
         useDefaultVideoQuality: {
@@ -1042,12 +1042,20 @@ class Observer
     }
     static async videoChange(callback)
     {
-        const player = await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
-        if (player === null)
+        const video = await SpinQuery.select(() => document.querySelector("video"));
+        if (video === null)
         {
             return null;
         }
-        return Observer.childList("#bofqi,#bilibiliPlayer", callback);
+        callback([]);
+        return Observer.childList("#bofqi,#bilibiliPlayer", records =>
+        {
+            const isMenuAttached = records.every(it => [...it.addedNodes].some(e => e.classList.contains("bilibili-player-context-menu-container")));
+            if (!isMenuAttached)
+            {
+                callback(records);
+            }
+        });
     }
 }
 class SpinQuery
