@@ -223,7 +223,8 @@
 .live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel,
 .original-card-content .media-list .content,
 .share-content.plain .music-card .media-list.share-media-list .content,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
+.info-wrap .bk-text-con p span
 {
     background-color: transparent !important;
 }
