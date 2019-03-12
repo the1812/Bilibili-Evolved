@@ -225,7 +225,7 @@
 .share-content.plain .music-card .media-list.share-media-list .content,
 .chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
 .info-wrap .bk-text-con p span,
-.report-wrap-module.ban-modal.pub-list.init-end .info
+.report-wrap-module.ban-modal.pub-list.init-end .info dl dt p span
 {
     background-color: transparent !important;
 }
