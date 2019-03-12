@@ -7,6 +7,11 @@
     cursor: pointer;
     filter: brightness(0) invert(1) !important;
 }
+.frame-playback.touch span
+{
+    display: flex;
+    align-items: center;
+}
 .bilibili-player-video-control-bottom .frame-playback
 {
     display: flex !important;

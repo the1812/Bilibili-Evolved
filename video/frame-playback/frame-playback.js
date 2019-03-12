@@ -54,5 +54,9 @@ const main = async () =>
     });
     document.querySelector(".prev-frame").addEventListener("click", prevFrame);
     document.querySelector(".next-frame").addEventListener("click", nextFrame);
+    if (settings.touchVideoPlayer)
+    {
+        document.querySelectorAll(".frame-playback").forEach(it => it.classList.add("touch"));
+    }
 };
 Observer.videoChange(main);
