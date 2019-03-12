@@ -583,8 +583,9 @@ li.category.folded i.icon-arrow
     margin-right: 8px;
 }
 
-/* Fix bangumi player z-index */
-.player-mode-webfullscreen .player-module
+/* Fix bangumi and live player z-index */
+.player-mode-webfullscreen .player-module,
+.player-full-win .app-content
 {
     z-index: 100000 !important;
 }
