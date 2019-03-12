@@ -1,6 +1,7 @@
 .frame-playback
 {
     display: none !important;
+    height: 100%;
     align-items: center;
     padding-left: 8px;
     cursor: pointer;
