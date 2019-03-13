@@ -1100,7 +1100,8 @@ li.normal-item a:hover .uname,
 .calendar-header>a:hover,
 .card .focus-btn .focus .focus-text:hover,
 .coin-dialog-mask .coin-operated .mc .mc-box .c-num,
-.coin-dialog-mask .coin-operated .coin-title span
+.coin-dialog-mask .coin-operated .coin-title span,
+.edit-media-list .edit-mask .edit-board .edit-info .media-list-type .blue-icon
 {
     color: var(--theme-color) !important;
 }
