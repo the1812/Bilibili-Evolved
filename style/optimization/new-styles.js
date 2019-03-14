@@ -16,7 +16,8 @@ const newStyles = {
         "#link-navbar-vm",
         ".link-navbar",
         ".nav-header-wrapper",
-        ".z_top .z_header"
+        ".z_top .z_header",
+        ".stardust-video .nav-menu"
     ],
     get allSelectors()
     {
