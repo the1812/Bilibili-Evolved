@@ -786,7 +786,8 @@ th.list-head-text,
 .slidesjs-pagination li a.active,
 .slidesjs-pagination li a:hover,
 .popup-content-ctnr .content .selector-box .type-selector .radio-selected,
-.bb-comment .comment-list .list-item .text .vote-link img
+.bb-comment .comment-list .list-item .text .vote-link img,
+.aside-area-toggle-btn .btn-ctnr .restore-btn
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -977,7 +978,8 @@ input[type=radio]:checked+.custom-radio
 .calendar-table td.current,
 .calendar-year>a.current,
 .coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover,
-.danmaku-item.pointer .custom-radio:after
+.danmaku-item.pointer .custom-radio:after,
+.aside-area-toggle-btn .btn-ctnr:hover .btn-slider
 {
     background-color: var(--theme-color) !important;
 }
