@@ -176,7 +176,8 @@
 .calendar-year>a:hover,
 .sub-nav-m .tips,
 .narrowscreen .ov-box,
-.coin-dialog-mask .coin-operated .coin-bottom .coin-btn
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
+input[type=radio]:checked+.custom-radio
 {
     background-color: #444 !important;
 }
@@ -352,7 +353,9 @@
 .coin-dialog-mask .coin-operated .coin-bottom .tips,
 .progress-outer-ctnr .lv-text,
 .progress-outer-ctnr .next-text,
-.common-popup-wrap.arrow-top.drop-bubble-ctnr .score-introduction
+.common-popup-wrap.arrow-top.drop-bubble-ctnr .score-introduction,
+.gift-component-effect-rule,
+.rhythm-master-gift-panel .rhythm-danmaku .danmaku-item
 {
     color: #aaa !important;
 }
@@ -581,7 +584,8 @@ th.list-head-text,
 .bb-comment .comment-list .list-item .con .vote-container .text-area .text-content,
 .textarea-container .comm-tool .comm-emoji:hover .comm-text,
 .coin-dialog-mask .coin-operated .coin-title,
-.coin-dialog-mask .coin-operated .coin-bottom .coin-btn
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
+.chat-history-panel .chat-history-list .chat-item.misc-msg.guard-buy .count
 {
     color: #eee !important;
 }
@@ -880,7 +884,8 @@ th.list-head-text,
 .video-list .vl-hd .float_window .selet-datebox .sse,
 .video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover,
 .coin-dialog-mask .coin-operated .mc .mc-box,
-.score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute
+.score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute,
+input[type=radio]:checked+.custom-radio
 {
     border-color: var(--theme-color) !important;
 }
@@ -971,7 +976,8 @@ th.list-head-text,
 .calendar-month>a.current,
 .calendar-table td.current,
 .calendar-year>a.current,
-.coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover,
+.danmaku-item.pointer .custom-radio:after
 {
     background-color: var(--theme-color) !important;
 }
