@@ -1049,7 +1049,8 @@ class Observer
         }
         return Observer.childList("#bofqi,#bilibiliPlayer", records =>
         {
-            const isMenuAttached = records.length > 0 && records.every(it => [...it.addedNodes].some(e => e.classList.contains("bilibili-player-context-menu-container")));
+            // console.log(records);
+            const isMenuAttached = records.length > 0 && records.every(it => [...it.addedNodes].some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
             if (!isMenuAttached)
             {
                 callback(records);

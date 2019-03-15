@@ -69,15 +69,9 @@ if ([
 }
 else
 {
-    SpinQuery.select(() => document.querySelector(".bili-header-m")).then(header =>
-    {
-        if (header.classList.contains("stardust-video"))
-        {
-            resources.applyStyle("style", "bilibili-style-optimization");
-        }
-        else
-        {
-            resources.applyStyle("oldStyle", "bilibili-style-optimization");
-        }
-    });
+    Promise.race([
+        SpinQuery.select(() => document.querySelector(".bili-header-m"))
+            .then(header => header !== null && header.classList.contains("stardust-video")),
+        SpinQuery.select(() => document.querySelector("body>#Header")).then(header => header !== null)
+    ]).then(supportsNewStyle => resources.applyStyle(supportsNewStyle ? "style" : "oldStyle", "bilibili-style-optimization"));
 }

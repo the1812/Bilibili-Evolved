@@ -60,7 +60,8 @@ a.t>i.bili-icon
 .title-icon,
 .z_top .z_top_nav li .new,
 .z_top .z_top_nav li .beta,
-.uns_box li.u-i.b-post .up-new
+.uns_box li.u-i.b-post .up-new,
+body>#Header
 {
     display: none !important;
 }

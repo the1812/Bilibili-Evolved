@@ -135,7 +135,8 @@ a.t>i.bili-icon,
 .b-icon-app,
 .title-icon,
 .blp-red-tip::after,
-.main-container .entry-old
+.main-container .entry-old,
+body>#Header
 {
     display: none !important;
 }
