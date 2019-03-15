@@ -154,7 +154,8 @@ body>div.to-top.on,
 .play-up-info .play-up-intro .play-up-follow .play-up-followed,
 .play-options .play-options-more .play-options-content .play-option:hover,
 .player-auxiliary-area .player-auxiliary-collapse-playlist .bui-collapse-body,
-.share-box .share-popup .share-address ul li input
+.share-box .share-popup .share-address ul li input,
+.bilibili-live-player-ending-panel-recommend-card
 {
     background-color: #444 !important;
 }
