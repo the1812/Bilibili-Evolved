@@ -34,7 +34,7 @@ class ImageViewer
             this.imageData = data;
             this.viewer.find(".download")
                 .attr("href", data)
-                .attr("download", title);
+                .attr("download", title + this.url.substring(this.url.lastIndexOf(".")));
             this.viewer.find(".copy-link")
                 .on("click", () => GM_setClipboard(this.url));
             this.viewer.find(".new-tab")
