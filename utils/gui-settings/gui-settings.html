@@ -22,18 +22,19 @@
       <checkbox indent="0" key="useDefaultPlayerMode" dependencies=""></checkbox>
       <dropdown indent="1" key="defaultPlayerMode" dependencies="useDefaultPlayerMode"></dropdown>
       <checkbox indent="1" key="applyPlayerModeOnPlay" dependencies="useDefaultPlayerMode"></checkbox>
+      <checkbox indent="1" key="autoLightOff" dependencies="useDefaultPlayerMode"></checkbox>
       <checkbox indent="0" key="useDefaultVideoQuality" dependencies=""></checkbox>
       <dropdown indent="1" key="defaultVideoQuality" dependencies="useDefaultVideoQuality"></dropdown>
       <checkbox indent="0" key="useDefaultDanmakuSettings" dependencies=""></checkbox>
       <checkbox indent="1" key="enableDanmaku" dependencies="useDefaultDanmakuSettings"></checkbox>
       <checkbox indent="1" key="rememberDanmakuSettings" dependencies="useDefaultDanmakuSettings enableDanmaku">
       </checkbox>
-      <checkbox indent="0" key="autoLightOff" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDescription" dependencies=""></checkbox>
       <checkbox indent="0" key="autoContinue" dependencies=""></checkbox>
       <checkbox indent="0" key="autoPlay" dependencies=""></checkbox>
       <checkbox indent="0" key="skipChargeList" dependencies=""></checkbox>
+      <checkbox indent="0" key="framePlayback" dependencies=""></checkbox>
       <category icon="style">样式</category>
       <li class="indent-0">
         <label class="gui-settings-textbox-container">
@@ -69,8 +70,9 @@
       <checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox>
       <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
       <checkbox indent="0" key="fullPageTitle" dependencies=""></checkbox>
-      <checkbox indent="0" key="showDeadVideoTitle" dependencies=""></checkbox>
-      <checkbox indent="1" key="useBiliplusRedirect" dependencies="showDeadVideoTitle"></checkbox>
+      <!-- <checkbox indent="0" key="showDeadVideoTitle" dependencies=""></checkbox> -->
+      <!-- <checkbox indent="1" key="useBiliplusRedirect" dependencies="showDeadVideoTitle"></checkbox> -->
+      <checkbox indent="0" key="biliplusRedirect" dependencies=""></checkbox>
       <!-- <checkbox indent="0" key="imageResolution" dependencies=""></checkbox> -->
       <category icon="touch">触摸</category>
       <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>

@@ -4,7 +4,9 @@
 .bl-button--primary:disabled,
 #disable-popup-modal .vip-exchange .months button.disabled,
 #vip-exchange-modal .vip-exchange .months button.disabled,
-.tab-list .tab-item.active:before
+.tab-list .tab-item.active:before,
+.live-skin-coloration-area .live-skin-separate-area,
+.live-skin-coloration-area .live-skin-separate-area-hover:hover
 {
     background-color: #222 !important;
 }
@@ -21,7 +23,8 @@
 .main-container .media-info .media-right .media-tool-bar .btn-follow.active,
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled,
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover,
-.bb-comment .no-login .comment-submit
+.bb-comment .no-login .comment-submit,
+.main-container .media-info .media-right .media-tool-bar .btn-follow.active
 {
     background-color: #444 !important;
 }
@@ -57,7 +60,11 @@ blockquote .color-yellow-03,
 blockquote .color-yellow-04,
 .status_box .status_btn.disabled,
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled,
-.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover
+.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover,
+.live-skin-coloration-area .live-skin-normal-a-text:link,
+.live-skin-normal-a-text:visited,
+.live-skin-coloration-area .live-skin-normal-a-text,
+.live-skin-coloration-area .live-skin-normal-text
 {
     color: #aaa !important;
 }
@@ -71,7 +78,9 @@ blockquote .color-yellow-04,
 .s-paging > ul > span.current,
 .score-info .go-movie,
 .invitation-record-warp .invtable .inputdone,
-.bb-comment .no-login .comment-submit
+.bb-comment .no-login .comment-submit,
+.live-skin-coloration-area .live-skin-main-text,
+.live-skin-coloration-area .live-skin-highlight-text
 {
     color: #eee !important;
 }
@@ -83,7 +92,9 @@ blockquote .color-yellow-04,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
 .tabs-bar,
 .score-info .go-movie,
-.bb-comment .no-login .comment-submit
+.bb-comment .no-login .comment-submit,
+.live-skin-coloration-area .live-skin-highlight-border,
+.live-skin-coloration-area .live-skin-separate-border
 {
     border-color: transparent !important;
 }
@@ -112,7 +123,11 @@ blockquote .color-yellow-04,
 .detail-wrp .detail-content[data-v-00c9b213] p a span,
 .room-info-down-row .icon-label.hover-text-blue:hover .label,
 .room-introduction .edit-button:hover>.icon-font,
-.room-introduction .edit-button:hover>span
+.room-introduction .edit-button:hover>span,
+.im-popup .bp-popup-panel .title-ctnr .popup-title,
+.live-skin-coloration-area .live-skin-highlight-text,
+.live-skin-coloration-area .live-skin-normal-a-text:hover,
+.live-skin-normal-a-text:active
 {
     color: var(--theme-color) !important;
 }
@@ -137,7 +152,8 @@ blockquote .color-yellow-04,
 .tag-list li.tag-item.on,
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
-.user-my-btn .el-button--primary
+.user-my-btn .el-button--primary,
+.live-skin-coloration-area .live-skin-highlight-bg
 {
     background-color: var(--theme-color) !important;
 }

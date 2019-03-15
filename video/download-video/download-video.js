@@ -177,6 +177,11 @@ class VideoDownloader
     {
         const progress = this.progressMap ?
             [...this.progressMap.values()].reduce((a, b) => a + b, 0) / this.totalSize : 0;
+        if (progress > 1 || progress < 0)
+        {
+            console.error(`[下载视频] 进度异常: ${progress}`);
+            console.error(this.progressMap);
+        }
         this.progress && this.progress(progress);
     }
     cancelDownload()

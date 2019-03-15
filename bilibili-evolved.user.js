@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.7.12
-// @description  增强哔哩哔哩Web端体验: 下载视频, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 删除广告, 使用夜间模式, 修复界面瑕疵; 以及增加对触屏设备的支持等.
+// @version      1.7.16
+// @description  增强哔哩哔哩Web端体验: 下载视频, 音乐, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 删除广告, 使用夜间模式, 修复界面瑕疵; 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
@@ -20,7 +20,8 @@
 // @grant        GM_info
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
-// @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo.png
+// @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo-small.png
+// @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo.png
 // ==/UserScript==
 const settings = {
     useDarkStyle: false,
@@ -75,6 +76,8 @@ const settings = {
     autoPlay: false,
     showDeadVideoTitle: false,
     useBiliplusRedirect: false,
+    biliplusRedirect: false,
+    framePlayback: true,
     useCommentStyle: true,
     imageResolution: false,
     toastInternalError: false,
@@ -87,6 +90,7 @@ const fixedSettings = {
     clearCache: true,
     downloadVideo: true,
     downloadDanmaku: true,
+    downloadAudio: true,
     playerLayout: true,
     medalHelper: true,
     about: true,
@@ -549,7 +553,7 @@ function loadResources()
             },
             dropdown: {
                 key: "defaultPlayerMode",
-                items: ["常规", "宽屏", "网页全屏"],
+                items: ["常规", "宽屏", "网页全屏", "全屏"],
             },
         },
         useDefaultVideoQuality: {
@@ -716,6 +720,34 @@ function loadResources()
                 imageResolution: "总是显示原图",
             },
         },
+        biliplusRedirect: {
+            path: "min/biliplus-redirect.min.js",
+            displayNames: {
+                biliplusRedirect: "BiliPlus跳转支持",
+            }
+        },
+        framePlaybackHtml: {
+            path: "min/frame-playback.min.html",
+        },
+        framePlaybackStyle: {
+            path: "min/frame-playback.min.css",
+        },
+        framePlayback: {
+            path: "min/frame-playback.min.js",
+            dependencies: [
+                "framePlaybackHtml",
+                "framePlaybackStyle"
+            ],
+            displayNames: {
+                framePlayback: "启用逐帧调整",
+            },
+        },
+        downloadAudio: {
+            path: "min/download-audio.min.js",
+            displayNames: {
+                downloadAudio: "下载音频",
+            },
+        },
     };
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
     Resource.all = {};
@@ -746,14 +778,37 @@ function loadResources()
 }
 class Ajax
 {
-    static send(xhr, body)
+    static send(xhr, body, text = true)
     {
         return new Promise((resolve, reject) =>
         {
-            xhr.addEventListener("load", () => resolve(xhr.responseText));
+            xhr.addEventListener("load", () => resolve(text ? xhr.responseText : xhr.response));
             xhr.addEventListener("error", () => reject(xhr.status));
             xhr.send(body);
         });
+    }
+    static getBlob(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.open("GET", url);
+        return this.send(xhr, undefined, false);
+    }
+    static getBlobWithCredentials(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.open("GET", url);
+        xhr.withCredentials = true;
+        return this.send(xhr, undefined, false);
+    }
+    static async getJson(url)
+    {
+        return JSON.parse(await this.getText(url));
+    }
+    static async getJsonWithCredentials(url)
+    {
+        return JSON.parse(await this.getTextWithCredentials(url));
     }
     static getText(url)
     {
@@ -992,7 +1047,14 @@ class Observer
         {
             return null;
         }
-        return Observer.childList("#bofqi,#bilibiliPlayer", callback);
+        return Observer.childList("#bofqi,#bilibiliPlayer", records =>
+        {
+            const isMenuAttached = records.length > 0 && records.every(it => [...it.addedNodes].some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
+            if (!isMenuAttached)
+            {
+                callback(records);
+            }
+        });
     }
 }
 class SpinQuery
@@ -1405,10 +1467,10 @@ class Resource
             logError("Attempt to get style which is not downloaded.");
         }
         let attributes = `id='${id}'`;
-        if (this.priority !== undefined)
-        {
-            attributes += ` priority='${this.priority}'`;
-        }
+        // if (this.priority !== undefined)
+        // {
+        //     attributes += ` priority='${this.priority}'`;
+        // }
         return `<style ${attributes}>${style}</style>`;
     }
     getPriorStyle()
@@ -1438,24 +1500,32 @@ class Resource
     }
     applyStyle(id, important)
     {
-        if ($(`#${id}`).length === 0)
+        if (!document.querySelector(`#${id}`))
         {
             const element = this.getStyle(id);
-            const priorStyle = this.getPriorStyle();
-            if (priorStyle === null)
+            // const priorStyle = this.getPriorStyle();
+            // if (priorStyle === null)
+            // {
+            //     if (important)
+            //     {
+            //         $("html").append(element);
+            //     }
+            //     else
+            //     {
+            //         $("head").prepend(element);
+            //     }
+            // }
+            // else
+            // {
+            //     priorStyle.after(element);
+            // }
+            if (important)
             {
-                if (important)
-                {
-                    $("html").append(element);
-                }
-                else
-                {
-                    $("head").prepend(element);
-                }
+                $("html").append(element);
             }
             else
             {
-                priorStyle.after(element);
+                $("head").prepend(element);
             }
         }
     }

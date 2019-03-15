@@ -120,6 +120,9 @@
 {
     font-size: 16pt;
     flex: 0 0 auto;
+}
+.gui-settings-box .gui-settings-title
+{
     margin-right: 64px;
 }
 .gui-settings-search[type=text]
@@ -459,7 +462,8 @@ li.category.folded i.icon-arrow
 }
 .gui-settings-widgets-box
 {
-    width: 200px;
+    min-width: 200px;
+    width: auto;
 }
 .gui-settings-widgets-box.opened,
 .gui-settings-box.opened
@@ -486,8 +490,12 @@ li.category.folded i.icon-arrow
 }
 .gui-settings-widgets-box>.widgets-container:empty::after
 {
-    content: "当前页面没有可用的附加功能.";
+    content: "空空如也哦...";
     font-size: 10pt;
+}
+.gui-settings-widgets-box>.gui-settings-header
+{
+    justify-content: start;
 }
 .gui-settings-flat-button,
 .gui-settings-flat-button a,
@@ -512,11 +520,16 @@ li.category.folded i.icon-arrow
     flex: 0 0 auto;
     margin: 4px;
 }
-.gui-settings-flat-button:hover
+.gui-settings-flat-button:disabled
+{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.gui-settings-flat-button:hover:not(:disabled)
 {
     border-bottom-color: var(--theme-color-90);
 }
-.gui-settings-flat-button:active
+.gui-settings-flat-button:active:not(:disabled)
 {
     border-bottom-color: var(--theme-color);
 }
@@ -568,4 +581,11 @@ li.category.folded i.icon-arrow
 .gui-settings-header>i
 {
     margin-right: 8px;
+}
+
+/* Fix bangumi and live player z-index */
+.player-mode-webfullscreen .player-module,
+.player-full-win .app-content
+{
+    z-index: 100000 !important;
 }

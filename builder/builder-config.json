@@ -3,6 +3,7 @@
     "offline": "bilibili-evolved.offline.user.js",
     "previewOffline": "bilibili-evolved.preview-offline.user.js",
     "master": "bilibili-evolved.user.js",
+    "smallLogoPath": "images/logo-small.png",
     "logoPath": "images/logo.png",
     "owner": "the1812"
 }

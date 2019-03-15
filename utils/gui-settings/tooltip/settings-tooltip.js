@@ -1,5 +1,5 @@
 export const toolTips = {
-    useDefaultPlayerMode: `控制是否使用默认播放器模式, 可以为<span>常规</span>, <span>宽屏</span>或<span>网页全屏</span>(<span>全屏</span>还未完成).`,
+    useDefaultPlayerMode: `控制是否使用默认播放器模式, 可以为<span>常规</span>, <span>宽屏</span>, <span>网页全屏</span>或<span>全屏</span>.`,
     defaultPlayerMode: `设置默认的播放器模式.`,
     applyPlayerModeOnPlay: `是否在播放时应用模式, 若选择否就会在未开始播放时就应用.`,
     useDefaultPlayerLayout: `设置默认的播放器布局, 尽量在相应的页面里设置(比如在番剧播放页面设置番剧播放器布局), 否则可能没有效果.
@@ -10,7 +10,7 @@ export const toolTips = {
     defaultBangumiLayout: `设置番剧区的布局.`,
     useDefaultVideoQuality: `进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.`,
     defaultVideoQuality: `设定自动选择的视频画质.`,
-    autoLightOff: `首次播放时, 自动进入关灯模式.`,
+    autoLightOff: `首次播放时, 自动进入关灯模式, 并在播放结束后自动开灯.`,
     useDefaultDanmakuSettings: `设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.`,
     enableDanmaku: `控制弹幕是否默认开启.`,
     rememberDanmakuSettings: `控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`,
@@ -19,6 +19,7 @@ export const toolTips = {
     autoPlay: `进入视频页面时自动开始播放视频.`,
     autoContinue: `播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`,
     skipChargeList: `自动跳过视频结尾的充电鸣谢.`,
+    framePlayback: `在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<span>Shift + 左/右方向键</span>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`,
     customStyleColor: `设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`,
     useNewStyle: `<span>主要</span>会改变顶栏的样式, 并有一些其他地方的界面微调:
 - 为播放器增加主题色投影
@@ -26,7 +27,8 @@ export const toolTips = {
 - 使播放器按钮垂直对齐
 - 使部分搜索栏的提示文字的颜色更清晰
 - 隐藏播放页面的"返回旧版"侧栏
-- 修复直播间一些文字初始状态不正确`,
+- 修复直播间一些文字初始状态不正确
+- 窄屏幕下强制保留弹幕发送栏`,
     blurBackgroundOpacity: `设置顶栏对横幅的透明度(0~1), 数值越高顶栏越淡, 当横幅关闭时此选项无效.`,
     useDarkStyle: `夜间模式更适合光线暗的环境, 并会大量应用主题颜色.`,
     darkSchedule: `设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式.
@@ -56,6 +58,7 @@ export const toolTips = {
     fullPageTitle: `在视频选集列表中, 总是展开完整的标题.`,
     showDeadVideoTitle: `在个人空间中, 为已失效视频恢复标题和封面.`,
     useBiliplusRedirect: `将失效视频重定向到BiliPlus.`,
+    biliplusRedirect: `在视频/番剧/空间中, 附加功能<span>"转到BiliPlus"</span>, 点击可以转到BiliPlus上对应的页面.`,
     touchNavBar: `删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`,
     comboLike: `为素质三连(长按点赞)启用触摸支持.`,
     touchVideoPlayer: `增大控制栏的按钮间距, 使触摸操作更准确. 并为播放器启用触摸支持:
@@ -71,10 +74,10 @@ export const toolTips = {
 };
 function extractKey(listItem)
 {
-    const input = $(listItem).find("input");
-    if (input.length > 0)
+    const input = listItem.querySelector("input");
+    if (input)
     {
-        return input.attr("key");
+        return input.getAttribute("key");
     }
     return null;
 }

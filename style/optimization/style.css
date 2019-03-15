@@ -6,8 +6,12 @@
     height: 50px !important;
 }
 .bili-header-m>.nav-menu,
-.link-navbar,
-.link-navbar .main-ctnr .nav-items-ctnr,
+.link-navbar-ctnr .link-navbar,
+.link-navbar-ctnr .link-navbar .main-ctnr .nav-items-ctnr,
+.navbar-vm .link-navbar,
+.navbar-vm .link-navbar .main-ctnr .nav-items-ctnr,
+#navbar-vm .link-navbar,
+#navbar-vm .link-navbar .main-ctnr .nav-items-ctnr,
 .nav-header-wrapper
 {
     background: var(--theme-color) !important;
@@ -77,8 +81,12 @@ div.stardust-player
 }
 
 li.nav-item:not(.profile-info):hover,
-.link-navbar .nav-item:hover,
-.shortcuts-ctnr .shortcut-item:hover,
+.navbar-vm .link-navbar .nav-item:hover,
+.navbar-vm .shortcuts-ctnr .shortcut-item:hover,
+#navbar-vm .link-navbar .nav-item:hover,
+#navbar-vm .shortcuts-ctnr .shortcut-item:hover,
+.link-navbar-ctnr .link-navbar .nav-item:hover,
+.link-navbar-ctnr .shortcuts-ctnr .shortcut-item:hover,
 .my-link-btn:hover,
 .publish-btn:hover
 {
@@ -86,7 +94,9 @@ li.nav-item:not(.profile-info):hover,
 }
 
 li.nav-item.home:hover,
-.link-navbar .nav-item:hover .nav-link .label,
+.navbar-vm .link-navbar .nav-item:hover .nav-link .label,
+#navbar-vm .link-navbar .nav-item:hover .nav-link .label,
+.link-navbar-ctnr .link-navbar .nav-item:hover .nav-link .label,
 .shortcuts-ctnr .shortcut-item .label-wrapper .text:hover,
 .publish-btn:hover::after,
 .my-link-btn .label:hover
@@ -125,11 +135,15 @@ a.t>i.bili-icon,
 .b-icon-app,
 .title-icon,
 .blp-red-tip::after,
-.main-container .entry-old
+.main-container .entry-old,
+body>#Header
 {
     display: none !important;
 }
-
+.bilibili-player-video-inputbar
+{
+    display: flex !important;
+}
 
 /*.i-face>.face
 {

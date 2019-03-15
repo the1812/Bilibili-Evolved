@@ -154,7 +154,8 @@ body>div.to-top.on,
 .play-up-info .play-up-intro .play-up-follow .play-up-followed,
 .play-options .play-options-more .play-options-content .play-option:hover,
 .player-auxiliary-area .player-auxiliary-collapse-playlist .bui-collapse-body,
-.share-box .share-popup .share-address ul li input
+.share-box .share-popup .share-address ul li input,
+.bilibili-live-player-ending-panel-recommend-card
 {
     background-color: #444 !important;
 }
@@ -295,7 +296,9 @@ body>div.to-top.on,
 .play-up-introduction .play-up-sign,
 .container .left-container .play-up-info .play-up-self-btn,
 .play-options .share-box .share-btn ul .bili-share,
-.container .left-container .play-options
+.container a,
+.container .left-container .play-options,
+.twp-mask .twp-wrapper .twp-container .twp-text .twp-desc
 {
     color: #aaa !important;
 }
@@ -415,7 +418,8 @@ body>div.to-top.on,
 .play-options .play-options-more .play-options-content .play-option,
 .media-upper .media-upper-info .media-upper-name,
 .media-info .media-content .media-title a,
-.share-box .share-popup .share-address ul li input
+.share-box .share-popup .share-address ul li input,
+.link-progress-tv
 {
     color: #eee !important;
 }
@@ -543,7 +547,8 @@ i.settings-category-arrow::after,
 {
     fill: #aaa !important;
 }
-svg.toast-card-dismiss path
+svg.toast-card-dismiss path,
+.audioplayer .ap-play-button svg path
 {
     fill: #fff !important;
 }
@@ -599,7 +604,9 @@ svg.toast-card-dismiss path
 .video-list .vl-hd .display-tab li.on,
 .i-watchlater.has-select,
 .block-effect-ctnr .item .cb-icon,
-.small-item.new .new-icon
+.small-item.new .new-icon,
+#article-list-index .title-holder .icon-close,
+#article-list-index .index-holder .article-item.on .point
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -680,7 +687,8 @@ body>.player #bilibiliPlayer
 .project-list .project-list-item:hover,
 .publish-panel .hash-popup,
 #app .toolbar-wrapper,
-.article-action .ops .share-container .weixin-holder
+.article-action .ops .share-container .weixin-holder,
+#article-list-index
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -933,7 +941,8 @@ body>div.to-top.on
 .i-pin-reason,
 .container .left-container .play-up-info .play-up-self-btn:hover,
 .play-options .share-box .share-btn ul .bili-share:hover,
-.comment-list a
+.comment-list a,
+.bilibili-player-context-menu-container.black ul>li a>.active
 {
     color: var(--theme-color) !important;
 }

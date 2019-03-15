@@ -75,7 +75,8 @@
 #page-channel-detail .channel-add-video,
 .video-list .vl-hd .float_window,
 .datepicker.range_start.hasDatepicker .datepicker-popup,
-.calendar-table td.disabled
+.calendar-table td.disabled,
+.coin-dialog-mask .coin-operated
 {
     background-color: #222 !important;
 }
@@ -172,14 +173,20 @@
 .calendar-month>a:hover,
 .calendar-table td.inrange,
 .calendar-table td:hover,
-.calendar-year>a:hover
+.calendar-year>a:hover,
+.sub-nav-m .tips,
+.narrowscreen .ov-box,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
+input[type=radio]:checked+.custom-radio
 {
     background-color: #444 !important;
 }
-/* a
+#head-info-vm,
+#gift-control-vm,
+#rank-list-ctnr-box
 {
     background-image: none !important;
-} */
+}
 .upper-right-ctnr.p-absolute.none-select .btn.primary,
 .area-category-item.dp-i-block.p-relative.t-center.pointer .category-divider,
 #app-ctnr .content .container,
@@ -217,7 +224,9 @@
 .live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel,
 .original-card-content .media-list .content,
 .share-content.plain .music-card .media-list.share-media-list .content,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
+.info-wrap .bk-text-con p span,
+.report-wrap-module.ban-modal.pub-list.init-end .info dl dt p span
 {
     background-color: transparent !important;
 }
@@ -226,7 +235,7 @@
 .follow-dialog-wrap .follow-dialog-window .content .group-list ul .follow-group-mask,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
 {
     background: transparent !important;
 }
@@ -265,7 +274,6 @@
 .area-text.dp-i-block.v-middle .area-link,
 .room-info-upper-row.p-relative .upper-right-ctnr.p-absolute.none-select .btn.primary,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
-.container a,
 #article-list-index .article-list-title,
 .list-padding .list-publish,
 .list-padding .list-intro,
@@ -333,7 +341,21 @@
 .share-content.plain .music-card .up-info .tip,
 .share-step .btn-field .count,
 #pin-wrapper .pin-layer-header-counter,
-.calendar-table td.disabled
+.calendar-table td.disabled,
+.narrowscreen .ov-box .v-info,
+.narrowscreen .ov-box .v-preview .txt,
+.narrowscreen .ov-box .v-data span,
+.t-center.glory-item.dp-i-block.v-middle .glory-activity-name,
+.t-center.glory-item.dp-i-block.v-middle .glory-create-time,
+.bb-comment .comment-list .list-item .con .vote-container .text-area .text-desc,
+.card .focus-btn .focus .focus-text,
+.textarea-container .comm-tool .comm-emoji,
+.coin-dialog-mask .coin-operated .coin-bottom .tips,
+.progress-outer-ctnr .lv-text,
+.progress-outer-ctnr .next-text,
+.common-popup-wrap.arrow-top.drop-bubble-ctnr .score-introduction,
+.gift-component-effect-rule,
+.rhythm-master-gift-panel .rhythm-danmaku .danmaku-item
 {
     color: #aaa !important;
 }
@@ -555,7 +577,15 @@ th.list-head-text,
 .calendar-month>a.current,
 .calendar-table td.current,
 .calendar-year>a.current,
-.calendar-content .calendar-table .today
+.calendar-content .calendar-table .today,
+.sub-nav-m .tips,
+.narrowscreen .ov-box .title,
+.t-center.glory-item.dp-i-block.v-middle .glory-name,
+.bb-comment .comment-list .list-item .con .vote-container .text-area .text-content,
+.textarea-container .comm-tool .comm-emoji:hover .comm-text,
+.coin-dialog-mask .coin-operated .coin-title,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
+.chat-history-panel .chat-history-list .chat-item.misc-msg.guard-buy .count
 {
     color: #eee !important;
 }
@@ -668,7 +698,12 @@ th.list-head-text,
 .video-list .vl-hd .float_window .close,
 .video-list .vl-hd .float_window .close:hover,
 .datepicker.range_start.hasDatepicker .input,
-.datepicker.range_start.hasDatepicker .datepicker-popup
+.datepicker.range_start.hasDatepicker .datepicker-popup,
+.sub-nav-m .tips,
+.narrowscreen .ov-box,
+.change-content .feed-wrap .feed-tag .card,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover
 {
     border-color: transparent !important;
 }
@@ -704,7 +739,7 @@ th.list-head-text,
 {
     border-color: white !important;
 } */
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class^='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
 {
     border-image: none !important;
 }
@@ -747,7 +782,12 @@ th.list-head-text,
 .pin-layer-header #browser-version-tip #close-browser-tip,
 .pin-layer-header .icon,
 .channel-item.channel-add-video .add-covers-meta #browser-version-tip #close-browser-tip,
-.channel-item.channel-add-video .add-covers-meta .icon
+.channel-item.channel-add-video .add-covers-meta .icon,
+.slidesjs-pagination li a.active,
+.slidesjs-pagination li a:hover,
+.popup-content-ctnr .content .selector-box .type-selector .radio-selected,
+.bb-comment .comment-list .list-item .text .vote-link img,
+.aside-area-toggle-btn .btn-ctnr .restore-btn
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -795,7 +835,9 @@ th.list-head-text,
 .left-container .play-options .play-options-ul .share-box,
 .container .left-container .play-options .play-options-more .play-options-content .play-option:hover,
 .video-list .vl-hd .float_window,
-.datepicker.range_start.hasDatepicker .datepicker-popup
+.datepicker.range_start.hasDatepicker .datepicker-popup,
+.sub-nav-m .tips,
+.narrowscreen .ov-box
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -841,7 +883,10 @@ th.list-head-text,
 #page-channel-detail .channel-add-video:hover,
 .video-list .vl-hd .float_window .selet-datebox .sse a,
 .video-list .vl-hd .float_window .selet-datebox .sse,
-.video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover
+.video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover,
+.coin-dialog-mask .coin-operated .mc .mc-box,
+.score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute,
+input[type=radio]:checked+.custom-radio
 {
     border-color: var(--theme-color) !important;
 }
@@ -931,7 +976,10 @@ th.list-head-text,
 .video-list .vl-hd .float_window .selet-datebox .sse a.on,
 .calendar-month>a.current,
 .calendar-table td.current,
-.calendar-year>a.current
+.calendar-year>a.current,
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover,
+.danmaku-item.pointer .custom-radio:after,
+.aside-area-toggle-btn .btn-ctnr:hover .btn-slider
 {
     background-color: var(--theme-color) !important;
 }
@@ -1057,7 +1105,11 @@ li.normal-item a:hover .uname,
 .container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active,
 #pin-wrapper .pin-layer-video-empty a,
 #page-channel-detail .channel-add-video:hover .text,
-.calendar-header>a:hover
+.calendar-header>a:hover,
+.card .focus-btn .focus .focus-text:hover,
+.coin-dialog-mask .coin-operated .mc .mc-box .c-num,
+.coin-dialog-mask .coin-operated .coin-title span,
+.edit-media-list .edit-mask .edit-board .edit-info .media-list-type .blue-icon
 {
     color: var(--theme-color) !important;
 }

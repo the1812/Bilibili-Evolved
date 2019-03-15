@@ -6,6 +6,11 @@
 {
     background-color: #222;
 }
+.link-navbar .nav-item:hover,
+.shortcuts-ctnr .shortcut-item:hover
+{
+    background-color: #222 !important;
+}
 .bili-header-m .nav-menu .nav-mask,
 .bili-header-m .nav-menu.blur-black .nav-mask,
 #navbar-vm>.link-navbar,
@@ -15,6 +20,10 @@
 .b-header-mask-wrp .b-header-mask
 {
     background-color: #444;
+}
+.link-navbar
+{
+    background-color: #444 !important;
 }
 .z_top .i-link:hover,
 .z_top .z_top_nav ul li.home:hover
@@ -42,12 +51,14 @@
 .uns_box li.u-i a.i-link,
 .shortcuts-ctnr .shortcut-item,
 .link-navbar .main-ctnr .custom-link>a,
-.search-bar-ctnr .search-bar input
+.search-bar-ctnr .search-bar input,
+.shortcut-item .list-item span
 {
     color: #eee;
 }
 .search-bar-ctnr .search-bar .placeholder,
-.search-bar-ctnr .search-bar .search-btn
+.search-bar-ctnr .search-bar .search-btn,
+.search-bar-ctnr .search-bar input::placeholder
 {
     color: #878787;
 }

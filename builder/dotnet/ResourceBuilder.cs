@@ -141,7 +141,7 @@ namespace BilibiliEvolved.Build
         {
             if (!input.StartsWith("(() =>"))
             {
-                var importRegex = new Regex(@"import (.*) from ""(.*)"";", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                var importRegex = new Regex(@"import (.*) from [""'](.*)[""'];", RegexOptions.Compiled | RegexOptions.IgnoreCase);
                 while (true)
                 {
                     var match = importRegex.Match(input);
