@@ -177,7 +177,8 @@
 .sub-nav-m .tips,
 .narrowscreen .ov-box,
 .coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
-input[type=radio]:checked+.custom-radio
+input[type=radio]:checked+.custom-radio,
+.player-his-round div
 {
     background-color: #444 !important;
 }
@@ -355,7 +356,10 @@ input[type=radio]:checked+.custom-radio
 .progress-outer-ctnr .next-text,
 .common-popup-wrap.arrow-top.drop-bubble-ctnr .score-introduction,
 .gift-component-effect-rule,
-.rhythm-master-gift-panel .rhythm-danmaku .danmaku-item
+.rhythm-master-gift-panel .rhythm-danmaku .danmaku-item,
+.player-his-notice-content,
+.player-his-notice-content b,
+.player-his-tip .player-his-tip-des
 {
     color: #aaa !important;
 }
@@ -585,7 +589,12 @@ th.list-head-text,
 .textarea-container .comm-tool .comm-emoji:hover .comm-text,
 .coin-dialog-mask .coin-operated .coin-title,
 .coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
-.chat-history-panel .chat-history-list .chat-item.misc-msg.guard-buy .count
+.chat-history-panel .chat-history-list .chat-item.misc-msg.guard-buy .count,
+.player-his-info .player-his-title,
+.player-his-notice .player-his-title,
+.player-his-notice-content a,
+.player-his-main .player-his-title,
+.player-his-tip .player-his-tip-title
 {
     color: #eee !important;
 }
@@ -732,7 +741,9 @@ th.list-head-text,
 .left-container .play-options .play-options-ul .share-box .or-code,
 .container .qr-code-bg .qr-code-box .qr-code-title,
 #page-channel-detail .channel-add-video,
-.video-list .vl-hd .float_window .float_content h3
+.video-list .vl-hd .float_window .float_content h3,
+.player-his-tip-date .player-his-round,
+.player-his-tip .player-his-tip-des
 {
     border-color: #444 !important;
 }
@@ -1112,7 +1123,8 @@ li.normal-item a:hover .uname,
 .coin-dialog-mask .coin-operated .coin-title span,
 .edit-media-list .edit-mask .edit-board .edit-info .media-list-type .blue-icon,
 .block-wrap #activity .activity-info a,
-.block-wrap #activity .activity-info a:hover
+.block-wrap #activity .activity-info a:hover,
+.player-his-notice-content a:hover
 {
     color: var(--theme-color) !important;
 }
