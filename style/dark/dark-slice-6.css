@@ -703,7 +703,8 @@ th.list-head-text,
 .narrowscreen .ov-box,
 .change-content .feed-wrap .feed-tag .card,
 .coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
-.coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover
+.coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover,
+#edit-page .original-editor-wrap
 {
     border-color: transparent !important;
 }
@@ -1109,7 +1110,9 @@ li.normal-item a:hover .uname,
 .card .focus-btn .focus .focus-text:hover,
 .coin-dialog-mask .coin-operated .mc .mc-box .c-num,
 .coin-dialog-mask .coin-operated .coin-title span,
-.edit-media-list .edit-mask .edit-board .edit-info .media-list-type .blue-icon
+.edit-media-list .edit-mask .edit-board .edit-info .media-list-type .blue-icon,
+.block-wrap #activity .activity-info a,
+.block-wrap #activity .activity-info a:hover
 {
     color: var(--theme-color) !important;
 }
