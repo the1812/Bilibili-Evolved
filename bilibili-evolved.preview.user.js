@@ -288,10 +288,10 @@ function loadResources()
                     important: true,
                     condition()
                     {
-                        return $("#banner_link").length === 0 ||
+                        return !settings.useNewStyle && ($("#banner_link").length === 0 ||
                             $("#banner_link").length > 0 &&
                             settings.overrideNavBar &&
-                            !settings.showBanner;
+                            !settings.showBanner);
                     }
                 },
                 {

@@ -52,30 +52,32 @@
 .shortcuts-ctnr .shortcut-item,
 .link-navbar .main-ctnr .custom-link>a,
 .search-bar-ctnr .search-bar input,
-.shortcut-item .list-item span,
-.link-navbar .main-ctnr .nav-logo
+.shortcut-item .list-item span
 {
     color: #eee;
+}
+.link-navbar .main-ctnr .nav-logo
+{
+    color: #eee !important;
 }
 .search-bar-ctnr .search-bar .placeholder,
 .search-bar-ctnr .search-bar .search-btn,
 .search-bar-ctnr .search-bar input::placeholder
 {
-    color: #878787;
+    color: #878787 !important;
 }
 .uns_box li.u-i:hover a.i-link,
 .z_top .i-link:hover
 {
     color: var(--theme-color);
 }
-#link-navbar-vm>.link-navbar-ctnr,
-#app>.link-navbar
+.link-navbar-ctnr,
+.link-navbar
 {
-    box-shadow: none;
+    box-shadow: none !important;
 }
-#link-navbar-vm>.link-navbar .main-ctnr .nav-logo::before,
-#app>.link-navbar .main-ctnr .nav-logo::before,
-#app>.nav-header-wrapper .nav-header .order-icon
+.link-navbar .main-ctnr .nav-logo::before,
+.nav-header-wrapper .nav-header .order-icon
 {
     filter: brightness(0) invert(1) !important;
 }

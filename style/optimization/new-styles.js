@@ -62,7 +62,8 @@ SpinQuery.any(
 // });
 if ([
     "h.bilibili.com",
-    "live.bilibili.com"
+    "live.bilibili.com",
+    "link.bilibili.com"
 ].some(it => document.URL.includes(it)))
 {
     resources.applyStyle("style", "bilibili-style-optimization");
