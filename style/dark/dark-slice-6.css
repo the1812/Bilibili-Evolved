@@ -241,7 +241,8 @@ input[type=radio]:checked+.custom-radio,
 .chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
 .info-wrap .bk-text-con p span,
 .report-wrap-module.ban-modal.pub-list.init-end .info dl dt p span,
-.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper
+.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper,
+.live-item .live-item-link .live-img-box
 {
     background-color: transparent !important;
 }
@@ -940,7 +941,8 @@ th.list-head-text,
 .video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover,
 .coin-dialog-mask .coin-operated .mc .mc-box,
 .score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute,
-input[type=radio]:checked+.custom-radio
+input[type=radio]:checked+.custom-radio,
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark
 {
     border-color: var(--theme-color) !important;
 }
@@ -1035,7 +1037,8 @@ input[type=radio]:checked+.custom-radio
 .danmaku-item.pointer .custom-radio:after,
 .aside-area-toggle-btn .btn-ctnr:hover .btn-slider,
 ul.navigation li span:after,
-.sidebar-wrapper .sidebar .feedlist-wrapper .more:hover
+.sidebar-wrapper .sidebar .feedlist-wrapper .more:hover,
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark .white-dot
 {
     background-color: var(--theme-color) !important;
 }
@@ -1177,7 +1180,8 @@ li.normal-item a:hover .uname,
 .vc-item .item-top .detail p a.tag,
 .item-footer .button-line .button-wrapper:hover .button-item .label,
 .item-footer .button-line .button-wrapper:hover .button-item .num,
-.pic-item .content-wrapper .main-content .article:hover
+.pic-item .content-wrapper .main-content .article:hover,
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark
 {
     color: var(--theme-color) !important;
 }
