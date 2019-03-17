@@ -187,7 +187,8 @@ input[type=radio]:checked+.custom-radio,
 #app-ctnr .content .nav-wrapper,
 .sidebar-wrapper .sidebar .profile-wrapper .info-wrapper,
 .sidebar-wrapper .sidebar .feedlist-wrapper,
-.slot-ctnr.p-relative .nav-panel-live
+.slot-ctnr.p-relative .nav-panel-live,
+.main-content .list .all-list .vc-item
 {
     background-color: #444 !important;
 }
@@ -370,7 +371,9 @@ input[type=radio]:checked+.custom-radio,
 .player-his-notice-content b,
 .player-his-tip .player-his-tip-des,
 .profile-wrapper .info-wrapper .relationship,
-.profile-wrapper .info-wrapper .relationship .followings:after
+.profile-wrapper .info-wrapper .relationship .followings:after,
+.item-footer .button-line .button-wrapper a,
+.vc-item .item-top .detail .time
 {
     color: #aaa !important;
 }
@@ -609,7 +612,8 @@ th.list-head-text,
 .sidebar-wrapper .sidebar .feedlist-wrapper .title,
 .sidebar-wrapper .sidebar .feedlist-wrapper .title .number,
 .feedlist-wrapper .list-content .list-item .right .username,
-.sidebar-wrapper .sidebar .feedlist-wrapper .more
+.sidebar-wrapper .sidebar .feedlist-wrapper .more,
+.vc-item .item-top .detail p a.description
 {
     color: #eee !important;
 }
@@ -731,7 +735,9 @@ th.list-head-text,
 #edit-page .original-editor-wrap,
 #app-ctnr .content .nav-wrapper,
 .sidebar-wrapper .sidebar .profile-wrapper .info-wrapper,
-.sidebar-wrapper .sidebar .feedlist-wrapper
+.sidebar-wrapper .sidebar .feedlist-wrapper,
+.main-content .list .all-list .vc-item,
+.main-content .list .all-list .vc-item .footer-wrapper
 {
     border-color: transparent !important;
 }
@@ -742,7 +748,8 @@ th.list-head-text,
 .face-buy-item,
 .face-buy-price,
 .wrap .state-null>.txt,
-.ban-vote .vote-dialog .dialog-header
+.ban-vote .vote-dialog .dialog-header,
+.item-footer .button-line .button-wrapper .button-item
 {
     border-color: #aaa !important;
 }
@@ -1152,7 +1159,11 @@ li.normal-item a:hover .uname,
 .feedlist-wrapper .list-content .list-item:hover .right .username,
 .profile-wrapper .info-wrapper .relationship .followings:hover,
 .link-navbar .nav-item:hover .nav-link,
-.link-navbar .nav-item:hover .icon-font
+.link-navbar .nav-item:hover .icon-font,
+.vc-item .item-top .detail p a.description:hover,
+.vc-item .item-top .detail p a.tag,
+.item-footer .button-line .button-wrapper:hover .button-item .label,
+.item-footer .button-line .button-wrapper:hover .button-item .num
 {
     color: var(--theme-color) !important;
 }
