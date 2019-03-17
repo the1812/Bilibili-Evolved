@@ -240,7 +240,8 @@ input[type=radio]:checked+.custom-radio,
 .share-content.plain .music-card .media-list.share-media-list .content,
 .chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
 .info-wrap .bk-text-con p span,
-.report-wrap-module.ban-modal.pub-list.init-end .info dl dt p span
+.report-wrap-module.ban-modal.pub-list.init-end .info dl dt p span,
+.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper
 {
     background-color: transparent !important;
 }
@@ -747,7 +748,8 @@ th.list-head-text,
 .main-content .list .all-list .pic-item,
 .main-content .list .all-list .pic-item .footer-wrapper,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
-.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
+.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper
 {
     border-color: transparent !important;
 }
@@ -1174,7 +1176,8 @@ li.normal-item a:hover .uname,
 .vc-item .item-top .detail p a.description:hover,
 .vc-item .item-top .detail p a.tag,
 .item-footer .button-line .button-wrapper:hover .button-item .label,
-.item-footer .button-line .button-wrapper:hover .button-item .num
+.item-footer .button-line .button-wrapper:hover .button-item .num,
+.pic-item .content-wrapper .main-content .article:hover
 {
     color: var(--theme-color) !important;
 }
