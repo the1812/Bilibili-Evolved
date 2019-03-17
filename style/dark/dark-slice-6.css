@@ -81,7 +81,9 @@
 .sidebar-wrapper .sidebar .feedlist-wrapper .more,
 .nav-panel-live .area-list-item:hover,
 .nav-panel-live .static-link:hover,
-.link-btn-ctnr.dp-i-block.v-middle .my-link-btn:before
+.link-btn-ctnr.dp-i-block.v-middle .my-link-btn:before,
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow
 {
     background-color: #222 !important;
 }
@@ -188,7 +190,8 @@ input[type=radio]:checked+.custom-radio,
 .sidebar-wrapper .sidebar .profile-wrapper .info-wrapper,
 .sidebar-wrapper .sidebar .feedlist-wrapper,
 .slot-ctnr.p-relative .nav-panel-live,
-.main-content .list .all-list .vc-item
+.main-content .list .all-list .vc-item,
+.main-content .list .all-list .pic-item
 {
     background-color: #444 !important;
 }
@@ -373,7 +376,8 @@ input[type=radio]:checked+.custom-radio,
 .profile-wrapper .info-wrapper .relationship,
 .profile-wrapper .info-wrapper .relationship .followings:after,
 .item-footer .button-line .button-wrapper a,
-.vc-item .item-top .detail .time
+.vc-item .item-top .detail .time,
+.pic-item .content-wrapper .main-content .datetime
 {
     color: #aaa !important;
 }
@@ -613,7 +617,9 @@ th.list-head-text,
 .sidebar-wrapper .sidebar .feedlist-wrapper .title .number,
 .feedlist-wrapper .list-content .list-item .right .username,
 .sidebar-wrapper .sidebar .feedlist-wrapper .more,
-.vc-item .item-top .detail p a.description
+.vc-item .item-top .detail p a.description,
+.pic-item .content-wrapper .main-content .article,
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip
 {
     color: #eee !important;
 }
@@ -737,7 +743,11 @@ th.list-head-text,
 .sidebar-wrapper .sidebar .profile-wrapper .info-wrapper,
 .sidebar-wrapper .sidebar .feedlist-wrapper,
 .main-content .list .all-list .vc-item,
-.main-content .list .all-list .vc-item .footer-wrapper
+.main-content .list .all-list .vc-item .footer-wrapper,
+.main-content .list .all-list .pic-item,
+.main-content .list .all-list .pic-item .footer-wrapper,
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow
 {
     border-color: transparent !important;
 }
@@ -878,7 +888,8 @@ th.list-head-text,
 .video-list .vl-hd .float_window,
 .datepicker.range_start.hasDatepicker .datepicker-popup,
 .sub-nav-m .tips,
-.narrowscreen .ov-box
+.narrowscreen .ov-box,
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
