@@ -5,10 +5,10 @@ if (settings.useDarkStyle)
         () => $(".custom-scrollbar"),
         it => it.removeClass("custom-scrollbar")
     );
-    if ($("#banner_link").length === 0 ||
+    if (!settings.useNewStyle && ($("#banner_link").length === 0 ||
         $("#banner_link").length > 0 &&
         settings.overrideNavBar &&
-        !settings.showBanner)
+        !settings.showBanner))
     {
         resources.applyImportantStyle("darkStyleNavBar");
     }

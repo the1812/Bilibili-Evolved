@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.16
+// @version      1.7.17
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -288,10 +288,10 @@ function loadResources()
                     important: true,
                     condition()
                     {
-                        return $("#banner_link").length === 0 ||
+                        return !settings.useNewStyle && ($("#banner_link").length === 0 ||
                             $("#banner_link").length > 0 &&
                             settings.overrideNavBar &&
-                            !settings.showBanner;
+                            !settings.showBanner);
                     }
                 },
                 {

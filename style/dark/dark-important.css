@@ -99,7 +99,6 @@ blockquote .color-yellow-04,
     border-color: transparent !important;
 }
 
-
 .home-page .sticky-bar .bar-content .message:hover,
 .other a a:hover,
 .more-data a:hover,
@@ -138,7 +137,8 @@ blockquote .color-yellow-04,
 .tag-list li.tag-item.on,
 .tag-list li.tag-item:hover,
 .page-list-box .page-input:focus,
-.page-list-box .page-input:hover
+.page-list-box .page-input:hover,
+.live-skin-coloration-area .room-info-ctnr .info-section .live-skin-highlight-border
 {
     border-color: var(--theme-color) !important;
 }
