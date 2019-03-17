@@ -52,7 +52,8 @@
 .shortcuts-ctnr .shortcut-item,
 .link-navbar .main-ctnr .custom-link>a,
 .search-bar-ctnr .search-bar input,
-.shortcut-item .list-item span
+.shortcut-item .list-item span,
+.link-navbar .main-ctnr .nav-logo
 {
     color: #eee;
 }
