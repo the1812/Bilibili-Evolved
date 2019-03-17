@@ -585,7 +585,8 @@ li.category.folded i.icon-arrow
 
 /* Fix bangumi and live player z-index */
 .player-mode-webfullscreen .player-module,
-.player-full-win .app-content
+.player-full-win .app-content,
+.player-full-win .live-room-app .app-content
 {
     z-index: 100000 !important;
 }
