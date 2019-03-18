@@ -191,7 +191,8 @@ input[type=radio]:checked+.custom-radio,
 .sidebar-wrapper .sidebar .feedlist-wrapper,
 .slot-ctnr.p-relative .nav-panel-live,
 .main-content .list .all-list .vc-item,
-.main-content .list .all-list .pic-item
+.main-content .list .all-list .pic-item,
+.feed-topic .publish-panel-container
 {
     background-color: #444 !important;
 }
@@ -379,7 +380,8 @@ input[type=radio]:checked+.custom-radio,
 .profile-wrapper .info-wrapper .relationship .followings:after,
 .item-footer .button-line .button-wrapper a,
 .vc-item .item-top .detail .time,
-.pic-item .content-wrapper .main-content .datetime
+.pic-item .content-wrapper .main-content .datetime,
+.page-container.p-rel .tab-nav .tab .tab-text
 {
     color: #aaa !important;
 }
@@ -750,7 +752,9 @@ th.list-head-text,
 .main-content .list .all-list .pic-item .footer-wrapper,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
-.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper
+.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper,
+.feed-topic .separater-line,
+.feed-topic .hot-content .card.card-offset
 {
     border-color: transparent !important;
 }
@@ -1038,7 +1042,8 @@ input[type=radio]:checked+.custom-radio,
 .aside-area-toggle-btn .btn-ctnr:hover .btn-slider,
 ul.navigation li span:after,
 .sidebar-wrapper .sidebar .feedlist-wrapper .more:hover,
-.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark .white-dot
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark .white-dot,
+.page-container.p-rel .tab-nav .line
 {
     background-color: var(--theme-color) !important;
 }
