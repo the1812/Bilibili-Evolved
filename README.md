@@ -254,7 +254,7 @@
 不支持, 请使用以上的两种管理器.
 
 ## 浏览器
-> ⚠ 不保证脚本能在"国产套壳类浏览器"中完美运行.
+> ⚠ 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)中完美运行.
 
 ### Chrome
 - 背景模糊效果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
