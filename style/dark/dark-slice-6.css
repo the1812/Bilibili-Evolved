@@ -83,7 +83,8 @@
 .nav-panel-live .static-link:hover,
 .link-btn-ctnr.dp-i-block.v-middle .my-link-btn:before,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
-.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
+#ssr-app.wrap
 {
     background-color: #222 !important;
 }
@@ -192,7 +193,9 @@ input[type=radio]:checked+.custom-radio,
 .slot-ctnr.p-relative .nav-panel-live,
 .main-content .list .all-list .vc-item,
 .main-content .list .all-list .pic-item,
-.feed-topic .publish-panel-container
+.feed-topic .publish-panel-container,
+.recommend-box .section-title .action-tab,
+.side-box .side-title.f-clear .action-tab
 {
     background-color: #444 !important;
 }
@@ -381,7 +384,8 @@ input[type=radio]:checked+.custom-radio,
 .item-footer .button-line .button-wrapper a,
 .vc-item .item-top .detail .time,
 .pic-item .content-wrapper .main-content .datetime,
-.page-container.p-rel .tab-nav .tab .tab-text
+.page-container.p-rel .tab-nav .tab .tab-text,
+.side-box .list .item .info a
 {
     color: #aaa !important;
 }
@@ -623,7 +627,11 @@ th.list-head-text,
 .sidebar-wrapper .sidebar .feedlist-wrapper .more,
 .vc-item .item-top .detail p a.description,
 .pic-item .content-wrapper .main-content .article,
-.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
+.recommend-box .section-title .category-name,
+.recommend-box .section-title .action-tab,
+.recommend-box .section-title .action-tab a,
+.side-box .side-title.f-clear .action-tab
 {
     color: #eee !important;
 }
@@ -754,7 +762,9 @@ th.list-head-text,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
 .sidebar-wrapper .sidebar .profile-wrapper .img-wrapper,
 .feed-topic .separater-line,
-.feed-topic .hot-content .card.card-offset
+.feed-topic .hot-content .card.card-offset,
+.recommend-box .section-title .action-tab,
+.side-box .side-title.f-clear .action-tab
 {
     border-color: transparent !important;
 }
@@ -946,7 +956,9 @@ th.list-head-text,
 .coin-dialog-mask .coin-operated .mc .mc-box,
 .score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute,
 input[type=radio]:checked+.custom-radio,
-.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark,
+.sub-area em.active,
+.sub-area em:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -1186,7 +1198,15 @@ li.normal-item a:hover .uname,
 .item-footer .button-line .button-wrapper:hover .button-item .label,
 .item-footer .button-line .button-wrapper:hover .button-item .num,
 .pic-item .content-wrapper .main-content .article:hover,
-.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark,
+.sub-area em.active,
+.sub-area em:hover,
+.recommend-box .section-title .action-tab a:hover,
+.recommend-box .section-title .action-tab a:hover .icon-font,
+.recommend-box .section-title .action-tab:hover,
+.recommend-box .section-title .action-tab:hover .icon-replace,
+.side-box .side-title.f-clear .action-tab:hover,
+.side-box .side-title.f-clear .action-tab:hover .icon-replace
 {
     color: var(--theme-color) !important;
 }
