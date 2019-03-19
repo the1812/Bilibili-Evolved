@@ -1,6 +1,6 @@
 (async () =>
 {
-    const { map: englishMap } = await import("./i18n.en-US");
+    const map = await import(`./i18n.${settings.i18nLanguage}`);
     // https://stackoverflow.com/questions/10730309/find-all-text-nodes-in-html-page
     const getAllTextNodes = rootElement =>
     {
@@ -16,10 +16,21 @@
     };
     const translateTextNode = textNode =>
     {
-        const translation = englishMap.get(textNode.nodeValue.trim());
+        const translation = map.get(textNode.nodeValue.trim());
         if (translation !== undefined)
         {
-            textNode.nodeValue = translation;
+            if (typeof translation === "string")
+            {
+                textNode.nodeValue = translation;
+            }
+            else
+            {
+                const { text, selector } = translation;
+                if (textNode.parentElement.matches(selector))
+                {
+                    textNode.nodeValue = text;
+                }
+            }
         }
     };
     getAllTextNodes(document.body).forEach(translateTextNode);
