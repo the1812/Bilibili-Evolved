@@ -265,11 +265,12 @@ class VideoDownloader
     }
     cleanUpOldBlobUrl()
     {
-        const oldBlobUrl = $("a#video-complete").attr("href");
-        if (oldBlobUrl && $(`.link[href=${oldBlobUrl}]`).length === 0)
+        const oldBlobUrl = document.querySelector("a#video-complete").getAttribute("href");
+        if (oldBlobUrl && !document.querySelector(`.link[href="${oldBlobUrl}"]`))
         {
             URL.revokeObjectURL(oldBlobUrl);
         }
+        [...document.querySelectorAll(".toast-card-header")].filter(it => it.innerText.includes("下载视频")).forEach(it => it.querySelector(".toast-card-dismiss").click());
     }
     downloadSingle(downloadedData)
     {
