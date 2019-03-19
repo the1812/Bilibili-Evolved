@@ -1930,7 +1930,6 @@ try
         SpinQuery,
         Toast,
         Observer,
-        ColorProcessor,
         DoubleClickEvent,
         StyleManager,
         ResourceManager,
