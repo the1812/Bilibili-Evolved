@@ -28,6 +28,10 @@
 {
     background-color: #444 !important;
 }
+.m-recommend-item div.box
+{
+    background-color: transparent !important;
+}
 
 blockquote,
 blockquote *,

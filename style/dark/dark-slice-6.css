@@ -83,7 +83,8 @@
 .nav-panel-live .static-link:hover,
 .link-btn-ctnr.dp-i-block.v-middle .my-link-btn:before,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
-.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
+#ssr-app.wrap
 {
     background-color: #222 !important;
 }
@@ -191,7 +192,10 @@ input[type=radio]:checked+.custom-radio,
 .sidebar-wrapper .sidebar .feedlist-wrapper,
 .slot-ctnr.p-relative .nav-panel-live,
 .main-content .list .all-list .vc-item,
-.main-content .list .all-list .pic-item
+.main-content .list .all-list .pic-item,
+.feed-topic .publish-panel-container,
+.recommend-box .section-title .action-tab,
+.side-box .side-title.f-clear .action-tab
 {
     background-color: #444 !important;
 }
@@ -379,7 +383,9 @@ input[type=radio]:checked+.custom-radio,
 .profile-wrapper .info-wrapper .relationship .followings:after,
 .item-footer .button-line .button-wrapper a,
 .vc-item .item-top .detail .time,
-.pic-item .content-wrapper .main-content .datetime
+.pic-item .content-wrapper .main-content .datetime,
+.page-container.p-rel .tab-nav .tab .tab-text,
+.side-box .list .item .info a
 {
     color: #aaa !important;
 }
@@ -621,7 +627,11 @@ th.list-head-text,
 .sidebar-wrapper .sidebar .feedlist-wrapper .more,
 .vc-item .item-top .detail p a.description,
 .pic-item .content-wrapper .main-content .article,
-.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
+.recommend-box .section-title .category-name,
+.recommend-box .section-title .action-tab,
+.recommend-box .section-title .action-tab a,
+.side-box .side-title.f-clear .action-tab
 {
     color: #eee !important;
 }
@@ -750,7 +760,11 @@ th.list-head-text,
 .main-content .list .all-list .pic-item .footer-wrapper,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
-.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper
+.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper,
+.feed-topic .separater-line,
+.feed-topic .hot-content .card.card-offset,
+.recommend-box .section-title .action-tab,
+.side-box .side-title.f-clear .action-tab
 {
     border-color: transparent !important;
 }
@@ -942,7 +956,9 @@ th.list-head-text,
 .coin-dialog-mask .coin-operated .mc .mc-box,
 .score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute,
 input[type=radio]:checked+.custom-radio,
-.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark,
+.sub-area em.active,
+.sub-area em:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -1038,7 +1054,8 @@ input[type=radio]:checked+.custom-radio,
 .aside-area-toggle-btn .btn-ctnr:hover .btn-slider,
 ul.navigation li span:after,
 .sidebar-wrapper .sidebar .feedlist-wrapper .more:hover,
-.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark .white-dot
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark .white-dot,
+.page-container.p-rel .tab-nav .line
 {
     background-color: var(--theme-color) !important;
 }
@@ -1181,7 +1198,15 @@ li.normal-item a:hover .uname,
 .item-footer .button-line .button-wrapper:hover .button-item .label,
 .item-footer .button-line .button-wrapper:hover .button-item .num,
 .pic-item .content-wrapper .main-content .article:hover,
-.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark,
+.sub-area em.active,
+.sub-area em:hover,
+.recommend-box .section-title .action-tab a:hover,
+.recommend-box .section-title .action-tab a:hover .icon-font,
+.recommend-box .section-title .action-tab:hover,
+.recommend-box .section-title .action-tab:hover .icon-replace,
+.side-box .side-title.f-clear .action-tab:hover,
+.side-box .side-title.f-clear .action-tab:hover .icon-replace
 {
     color: var(--theme-color) !important;
 }
