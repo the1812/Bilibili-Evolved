@@ -1706,8 +1706,20 @@ class ResourceManager
     {
         return new Promise(resolve =>
         {
-            const imported = this.import(componentName);
-            resolve(imported);
+            const resource = Resource.all[componentName];
+            if (!resource)
+            {
+                this.skippedImport.push(componentName);
+                resolve();
+            }
+            if (!resource.downloaded)
+            {
+                resource.download().then(() => resolve(this.import(componentName)));
+            }
+            else
+            {
+                resolve(this.import(componentName));
+            }
         });
     }
     import(componentName)
@@ -1718,7 +1730,7 @@ class ResourceManager
             this.skippedImport.push(componentName);
             return;
         }
-        if (resource.type.name === "html")
+        if (resource.type.name === "html" || resource.type.name === "style")
         {
             if (!resource.downloaded)
             {
