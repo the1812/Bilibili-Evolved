@@ -131,7 +131,6 @@ function onSettingsChange(change)
         GM_addValueChangeListener(key, change);
     }
 }
-
 if (typeof GM_addValueChangeListener === "undefined")
 {
     GM_addValueChangeListener = function () { };
@@ -146,6 +145,138 @@ function logError(message)
     }
     console.error(message);
 }
+function raiseEvent(element, eventName)
+{
+    const event = document.createEvent("HTMLEvents");
+    event.initEvent(eventName, true, true);
+    element.dispatchEvent(event);
+}
+async function loadLazyPanel(selector)
+{
+    await SpinQuery.unsafeJquery();
+    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+    if (!panel)
+    {
+        throw new Error(`Panel not found: ${selector}`);
+    }
+    panel.mouseover().mouseout();
+}
+function contentLoaded(callback)
+{
+    if (/complete|interactive|loaded/.test(document.readyState))
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener("DOMContentLoaded", () => callback());
+    }
+}
+function fixed(number, precision = 1)
+{
+    const str = number.toString();
+    const index = str.indexOf(".");
+    if (index !== -1)
+    {
+        if (str.length - index > precision + 1)
+        {
+            return str.substring(0, index + precision + 1);
+        }
+        else
+        {
+            return str;
+        }
+    }
+    else
+    {
+        return str + ".0";
+    }
+}
+class Ajax
+{
+    static send(xhr, body, text = true)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            xhr.addEventListener("load", () => resolve(text ? xhr.responseText : xhr.response));
+            xhr.addEventListener("error", () => reject(xhr.status));
+            xhr.send(body);
+        });
+    }
+    static getBlob(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.open("GET", url);
+        return this.send(xhr, undefined, false);
+    }
+    static getBlobWithCredentials(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.open("GET", url);
+        xhr.withCredentials = true;
+        return this.send(xhr, undefined, false);
+    }
+    static async getJson(url)
+    {
+        return JSON.parse(await this.getText(url));
+    }
+    static async getJsonWithCredentials(url)
+    {
+        return JSON.parse(await this.getTextWithCredentials(url));
+    }
+    static getText(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        return this.send(xhr);
+    }
+    static getTextWithCredentials(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.withCredentials = true;
+        return this.send(xhr);
+    }
+    static postText(url, body)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        return this.send(xhr, body);
+    }
+    static postTextWithCredentials(url, body)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.withCredentials = true;
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        return this.send(xhr, body);
+    }
+}
+function downloadText(url, load, error) // The old method for compatibility
+{
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+
+    if (load !== undefined) // callback
+    {
+        xhr.addEventListener("load", () => load && load(xhr.responseText));
+        xhr.addEventListener("error", () => error && error(xhr.status));
+        xhr.send();
+    }
+    else
+    {
+        return new Promise((resolve, reject) =>
+        {
+            xhr.addEventListener("load", () => resolve(xhr.responseText));
+            xhr.addEventListener("error", () => reject(xhr.status));
+            xhr.send();
+        });
+    }
+}
+
 function loadResources()
 {
     const resourceManifest = {
@@ -772,137 +903,7 @@ function loadResources()
         }
     }
 }
-class Ajax
-{
-    static send(xhr, body, text = true)
-    {
-        return new Promise((resolve, reject) =>
-        {
-            xhr.addEventListener("load", () => resolve(text ? xhr.responseText : xhr.response));
-            xhr.addEventListener("error", () => reject(xhr.status));
-            xhr.send(body);
-        });
-    }
-    static getBlob(url)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "blob";
-        xhr.open("GET", url);
-        return this.send(xhr, undefined, false);
-    }
-    static getBlobWithCredentials(url)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "blob";
-        xhr.open("GET", url);
-        xhr.withCredentials = true;
-        return this.send(xhr, undefined, false);
-    }
-    static async getJson(url)
-    {
-        return JSON.parse(await this.getText(url));
-    }
-    static async getJsonWithCredentials(url)
-    {
-        return JSON.parse(await this.getTextWithCredentials(url));
-    }
-    static getText(url)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        return this.send(xhr);
-    }
-    static getTextWithCredentials(url)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        xhr.withCredentials = true;
-        return this.send(xhr);
-    }
-    static postText(url, body)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", url);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        return this.send(xhr, body);
-    }
-    static postTextWithCredentials(url, body)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", url);
-        xhr.withCredentials = true;
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        return this.send(xhr, body);
-    }
-}
-function downloadText(url, load, error) // The old method for compatibility
-{
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
 
-    if (load !== undefined) // callback
-    {
-        xhr.addEventListener("load", () => load && load(xhr.responseText));
-        xhr.addEventListener("error", () => error && error(xhr.status));
-        xhr.send();
-    }
-    else
-    {
-        return new Promise((resolve, reject) =>
-        {
-            xhr.addEventListener("load", () => resolve(xhr.responseText));
-            xhr.addEventListener("error", () => reject(xhr.status));
-            xhr.send();
-        });
-    }
-}
-function raiseEvent(element, eventName)
-{
-    const event = document.createEvent("HTMLEvents");
-    event.initEvent(eventName, true, true);
-    element.dispatchEvent(event);
-}
-async function loadLazyPanel(selector)
-{
-    await SpinQuery.unsafeJquery();
-    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
-    if (!panel)
-    {
-        throw new Error(`Panel not found: ${selector}`);
-    }
-    panel.mouseover().mouseout();
-}
-function contentLoaded(callback)
-{
-    if (/complete|interactive|loaded/.test(document.readyState))
-    {
-        callback();
-    }
-    else
-    {
-        document.addEventListener("DOMContentLoaded", () => callback());
-    }
-}
-function fixed(number, precision = 1)
-{
-    const str = number.toString();
-    const index = str.indexOf(".");
-    if (index !== -1)
-    {
-        if (str.length - index > precision + 1)
-        {
-            return str.substring(0, index + precision + 1);
-        }
-        else
-        {
-            return str;
-        }
-    }
-    else
-    {
-        return str + ".0";
-    }
-}
 // Placeholder class for Toast
 class Toast
 {
@@ -1913,6 +1914,7 @@ try
         Observer,
         ColorProcessor,
         DoubleClickEvent,
+        StyleManager,
         ResourceManager,
         Resource,
         ResourceType,
