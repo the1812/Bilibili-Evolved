@@ -1653,16 +1653,32 @@ class ResourceManager
         styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
         this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
     }
+    resolveComponentName(componentName)
+    {
+        const keyword = "/" + componentName + ".min.js";
+        for (const [name, value] of Object.entries(Resource.all))
+        {
+            if (value.url.endsWith(keyword))
+            {
+                return name;
+            }
+        }
+        return componentName;
+    }
+    resolveComponent(componentName)
+    {
+        const resource = Resource.all[this.resolveComponentName(componentName)];
+        if (!resource)
+        {
+            this.skippedImport.push(componentName);
+        }
+        return resource;
+    }
     importAsync(componentName)
     {
         return new Promise(resolve =>
         {
-            const resource = Resource.all[componentName];
-            if (!resource)
-            {
-                this.skippedImport.push(componentName);
-                resolve();
-            }
+            const resource = this.resolveComponent(componentName);
             if (!resource.downloaded)
             {
                 resource.download().then(() => resolve(this.import(componentName)));
@@ -1675,12 +1691,7 @@ class ResourceManager
     }
     import(componentName)
     {
-        const resource = Resource.all[componentName];
-        if (!resource)
-        {
-            this.skippedImport.push(componentName);
-            return;
-        }
+        const resource = this.resolveComponent(componentName);
         if (resource.type.name === "html" || resource.type.name === "style")
         {
             if (!resource.downloaded)
@@ -1692,19 +1703,8 @@ class ResourceManager
         }
         else
         {
-            const asFileName = () =>
-            {
-                const keyword = componentName + ".min.js";
-                for (const [name, value] of Object.entries(Resource.all))
-                {
-                    if (value.url.indexOf(keyword) !== -1)
-                    {
-                        return name;
-                    }
-                }
-                return componentName;
-            };
-            const attribute = this.attributes[componentName] || this.attributes[asFileName()];
+
+            const attribute = this.attributes[this.resolveComponentName(componentName)];
             if (attribute === undefined)
             {
                 console.error(`Import failed: component "${componentName}" is not loaded.`);
