@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      245.99
+// @version      246.06
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1660,6 +1660,7 @@ class ResourceManager
     constructor()
     {
         this.data = Resource.all;
+        this.skippedImport = [];
         this.attributes = {};
         this.styleManager = new StyleManager(this);
         const styleMethods = Object.getOwnPropertyNames(StyleManager.prototype).filter(it => it !== "constructor");
@@ -1712,7 +1713,12 @@ class ResourceManager
     import(componentName)
     {
         const resource = Resource.all[componentName];
-        if (resource && resource.type.name === "html")
+        if (!resource)
+        {
+            this.skippedImport.push(componentName);
+            return;
+        }
+        if (resource.type.name === "html")
         {
             if (!resource.downloaded)
             {

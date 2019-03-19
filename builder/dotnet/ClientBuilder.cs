@@ -12,17 +12,11 @@ namespace BilibiliEvolved.Build
         public ProjectBuilder BuildClient()
         {
             var source = File.ReadAllText("client/bilibili-evolved.js");
-            var importRegex = new Regex(@"import (.*) from [""'](.*)[""'];", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            while (true)
+            source = RegexReplacer.Replace(source, @"import (.*) from [""'](.*)[""'];", match =>
             {
-                var match = importRegex.Match(source);
-                if (!match.Success)
-                {
-                    break;
-                }
                 var module = File.ReadAllText("client/" + match.Groups[2].Value.Replace("./", "") + ".js").Replace("export ", "");
-                source = source.Replace(match.Value, module);
-            }
+                return module;
+            });
             File.WriteAllText(SourcePath, source);
             Source = File.ReadAllText(SourcePath);
             WriteSuccess("Client Build complete.");

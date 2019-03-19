@@ -3,6 +3,7 @@ export class ResourceManager
     constructor()
     {
         this.data = Resource.all;
+        this.skippedImport = [];
         this.attributes = {};
         this.styleManager = new StyleManager(this);
         const styleMethods = Object.getOwnPropertyNames(StyleManager.prototype).filter(it => it !== "constructor");
@@ -55,7 +56,12 @@ export class ResourceManager
     import(componentName)
     {
         const resource = Resource.all[componentName];
-        if (resource && resource.type.name === "html")
+        if (!resource)
+        {
+            this.skippedImport.push(componentName);
+            return;
+        }
+        if (resource.type.name === "html")
         {
             if (!resource.downloaded)
             {
