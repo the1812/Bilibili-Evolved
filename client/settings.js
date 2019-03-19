@@ -57,7 +57,7 @@ export const settings = {
     imageResolution: false,
     toastInternalError: false,
     i18n: false,
-    i18nLanguage: "en-US",
+    i18nLanguage: "ja-JP",
     cache: {},
 };
 const fixedSettings = {
