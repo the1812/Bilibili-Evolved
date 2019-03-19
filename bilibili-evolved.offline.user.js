@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      246.22
+// @version      246.24
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1394,7 +1394,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/frame-playback.min.js"] = (()=>{return(e,t)=>{const r=t.import("framePlaybackHtml");t.applyStyle("framePlaybackStyle");const a=async()=>{const t=await SpinQuery.select(()=>document.querySelector("video"));const a=await SpinQuery.select(()=>document.querySelector(".bilibili-player-video-time"));if(a===null||document.querySelector(".frame-playback")){return}a.insertAdjacentHTML("afterend",r);let i=0;const c=()=>t.currentTime-=i;const n=()=>t.currentTime+=i;Observer.attributesSubtree(".bilibili-player-video-quality-menu ul.bui-select-list",()=>{const e=document.querySelector(".bilibili-player-video-quality-menu .bui-select-item-active");const t=e?parseInt(e.getAttribute("data-value")):0;const r=(()=>{switch(t){case 116:case 74:return 6e4/1001;default:return 3e4/1001}})();i=1/r});document.addEventListener("keydown",e=>{if(e.shiftKey&&!["input","textarea"].includes(document.activeElement.nodeName.toLowerCase())){if(e.key==="ArrowLeft"){e.stopPropagation();e.preventDefault();c()}else if(e.key==="ArrowRight"){e.stopPropagation();e.preventDefault();n()}}});document.querySelector(".prev-frame").addEventListener("click",c);document.querySelector(".next-frame").addEventListener("click",n);if(e.touchVideoPlayer){document.querySelectorAll(".frame-playback").forEach(e=>e.classList.add("touch"))}};Observer.videoChange(a)}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/download-audio.min.js"] = (()=>{return(e,t)=>{class n{constructor(){this.sid=null;this.progress=null}async getDownloadUrl(){const e=`https://www.bilibili.com/audio/music-service-c/web/url?sid=${this.sid}&privilege=2&quality=2`;const t=await Ajax.getJsonWithCredentials(e);if(t.code===0){return t.data.cdns.shift()}else{logError("获取下载链接失败, 请确保当前账号有下载权限.","下载音频",1e4);return null}}async download(){const e=await this.getDownloadUrl();return new Promise((t,n)=>{const s=new XMLHttpRequest;s.open("GET",e);s.responseType="blob";s.addEventListener("load",()=>t(s.response));s.addEventListener("error",()=>n(s.status));s.addEventListener("progress",e=>this.progress&&this.progress(100*e.loaded/e.total));s.send()})}}const s="下载音频";return{export:n,widget:{content:`\n            <button\n                disabled\n                class="gui-settings-flat-button"\n                id="download-audio">\n                <i class="icon-download"></i>\n                <span>${s}</span>\n                <a id="download-audio-link" style="display: none"></a>\n            </button>`,condition:()=>document.URL.includes("bilibili.com/audio"),success:async()=>{await SpinQuery.select(()=>document.querySelector("#app"));const e=document.querySelector("#download-audio");const t=e.querySelector("span");const o=new n;o.progress=(e=>{t.innerHTML=`${Math.round(e)}%`});const i=document.querySelector("#download-audio-link");e.addEventListener("click",async e=>{if(o.sid===null||e.target===i){return}const n=await o.download();t.innerHTML=s;const r=i.getAttribute("href");if(r){URL.revokeObjectURL(r)}i.setAttribute("href",URL.createObjectURL(n));i.setAttribute("download",document.querySelector(".song-title").getAttribute("title")+".m4a");i.click()});Observer.childList("#app",()=>{const t=document.URL.match(/bilibili\.com\/audio\/au([\d]+)/);if(t&&t[1]){e.disabled=false;o.sid=t[1]}else{e.disabled=true}})}}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/i18n.en-US.min.js"] = (()=>{return(e,r)=>{const n=new Map([[`主站`,`Home`]]);return{export:{map:n}}}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/i18n.min.js"] = (()=>{return(e,o)=>{(async()=>{const{map:e}=await o.importAsync("i18n.en-US");const n=e=>{const o=[];const n=document.createTreeWalker(e,NodeFilter.SHOW_TEXT,null,false);let t=n.nextNode();while(t){o.push(t);t=n.nextNode()}return o};const t=o=>{console.log(`Translate ${o.nodeValue}`);const n=e.get(o.nodeValue);if(n!==undefined){o.nodeValue=n}};n(document.body).forEach(t);Observer.childListSubtree("body",e=>{e.forEach(e=>[...e.addedNodes].forEach(e=>{if(e.nodeType===Node.TEXT_NODE){t(e)}else{n(e).forEach(t)}}))})})()}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/i18n.min.js"] = (()=>{return(e,o)=>{(async()=>{const{map:e}=await o.importAsync("i18n.en-US");const n=e=>{const o=[];const n=document.createTreeWalker(e,NodeFilter.SHOW_TEXT,null,false);let t=n.nextNode();while(t){o.push(t);t=n.nextNode()}return o};const t=o=>{const n=e.get(o.nodeValue.trim());if(n!==undefined){o.nodeValue=n}};n(document.body).forEach(t);Observer.childListSubtree("body",e=>{e.forEach(e=>[...e.addedNodes].forEach(e=>{if(e.nodeType===Node.TEXT_NODE){t(e)}else{n(e).forEach(t)}}))})})()}})();
 
 class ResourceType
 {
@@ -1742,7 +1742,7 @@ class ResourceManager
             const resource = this.resolveComponent(componentName);
             if (!resource.downloaded)
             {
-                resource.download().then(() => resolve(this.import(componentName)));
+                this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
             }
             else
             {
@@ -1764,7 +1764,6 @@ class ResourceManager
         }
         else
         {
-
             const attribute = this.attributes[this.resolveComponentName(componentName)];
             if (attribute === undefined)
             {

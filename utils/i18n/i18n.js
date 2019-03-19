@@ -16,8 +16,7 @@
     };
     const translateTextNode = textNode =>
     {
-        console.log(`Translate ${textNode.nodeValue}`);
-        const translation = englishMap.get(textNode.nodeValue);
+        const translation = englishMap.get(textNode.nodeValue.trim());
         if (translation !== undefined)
         {
             textNode.nodeValue = translation;

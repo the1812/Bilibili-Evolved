@@ -1691,7 +1691,7 @@ class ResourceManager
             const resource = this.resolveComponent(componentName);
             if (!resource.downloaded)
             {
-                resource.download().then(() => resolve(this.import(componentName)));
+                this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
             }
             else
             {
@@ -1713,7 +1713,6 @@ class ResourceManager
         }
         else
         {
-
             const attribute = this.attributes[this.resolveComponentName(componentName)];
             if (attribute === undefined)
             {
