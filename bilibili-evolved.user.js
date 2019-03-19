@@ -98,25 +98,6 @@ const fixedSettings = {
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
     currentVersion: GM_info.script.version,
 };
-if (typeof GM_addValueChangeListener === "undefined")
-{
-    GM_addValueChangeListener = function () { };
-}
-function logError(message)
-{
-    if (settings.toastInternalError)
-    {
-        Toast.error(typeof message === "object" && "stack" in message
-            ? message.stack
-            : message, "错误");
-    }
-    console.error(message);
-}
-// window.addEventListener("error", e =>
-// {
-//     logError(`${e.message}
-// ${e.filename} ${e.lineno}:${e.colno}`);
-// });
 function loadSettings()
 {
     for (const key in settings)
@@ -149,6 +130,21 @@ function onSettingsChange(change)
     {
         GM_addValueChangeListener(key, change);
     }
+}
+
+if (typeof GM_addValueChangeListener === "undefined")
+{
+    GM_addValueChangeListener = function () { };
+}
+function logError(message)
+{
+    if (settings.toastInternalError)
+    {
+        Toast.error(typeof message === "object" && "stack" in message
+            ? message.stack
+            : message, "错误");
+    }
+    console.error(message);
 }
 function loadResources()
 {

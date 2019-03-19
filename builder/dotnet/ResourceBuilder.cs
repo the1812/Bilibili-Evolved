@@ -129,9 +129,10 @@ namespace BilibiliEvolved.Build
     {
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
-            return !file.FullName.Contains(".min")
-                && !file.FullName.Contains(@"builder\")
-                && !file.FullName.Contains("bilibili-evolved.")
+            return file.FullName.Contains(@"style\")
+                && file.FullName.Contains(@"touch\")
+                && file.FullName.Contains(@"utils\")
+                && file.FullName.Contains(@"video\")
                 && file.Extension == ".js";
         };
 

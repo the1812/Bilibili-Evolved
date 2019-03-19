@@ -12,7 +12,7 @@ namespace BilibiliEvolved.Build
         {
             this.config = config;
             SourcePath = config.Preview;
-            Source = File.ReadAllText(SourcePath);
+            // Source = File.ReadAllText(SourcePath);
             WriteInfo("[Bilibili Evolved] Project builder started.");
             WriteInfo($"Working directory: {Environment.CurrentDirectory}");
             WriteInfo();

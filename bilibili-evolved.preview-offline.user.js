@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      245.93
+// @version      245.98
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -99,25 +99,6 @@ const fixedSettings = {
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js",
     currentVersion: GM_info.script.version,
 };
-if (typeof GM_addValueChangeListener === "undefined")
-{
-    GM_addValueChangeListener = function () { };
-}
-function logError(message)
-{
-    if (settings.toastInternalError)
-    {
-        Toast.error(typeof message === "object" && "stack" in message
-            ? message.stack
-            : message, "错误");
-    }
-    console.error(message);
-}
-// window.addEventListener("error", e =>
-// {
-//     logError(`${e.message}
-// ${e.filename} ${e.lineno}:${e.colno}`);
-// });
 function loadSettings()
 {
     for (const key in settings)
@@ -150,6 +131,21 @@ function onSettingsChange(change)
     {
         GM_addValueChangeListener(key, change);
     }
+}
+
+if (typeof GM_addValueChangeListener === "undefined")
+{
+    GM_addValueChangeListener = function () { };
+}
+function logError(message)
+{
+    if (settings.toastInternalError)
+    {
+        Toast.error(typeof message === "object" && "stack" in message
+            ? message.stack
+            : message, "错误");
+    }
+    console.error(message);
 }
 function loadResources()
 {
