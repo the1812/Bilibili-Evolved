@@ -130,9 +130,9 @@ namespace BilibiliEvolved.Build
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
             return file.FullName.Contains(@"style\")
-                && file.FullName.Contains(@"touch\")
-                && file.FullName.Contains(@"utils\")
-                && file.FullName.Contains(@"video\")
+                || file.FullName.Contains(@"touch\")
+                || file.FullName.Contains(@"utils\")
+                || file.FullName.Contains(@"video\")
                 && file.Extension == ".js";
         };
 
@@ -157,7 +157,7 @@ namespace BilibiliEvolved.Build
                     var source = convertToRuntimeSource(match.Groups[2].Value);
                     return $"const {imported} = resources.import(\"{source}\");";
                 });
-                input = RegexReplacer.Replace(input, @" import\((.*)\)", match =>
+                input = RegexReplacer.Replace(input, @" import\(['""](.*)['""]\);", match =>
                 {
                     var source = convertToRuntimeSource(match.Groups[1].Value);
                     return $" resources.importAsync(\"{source}\");";

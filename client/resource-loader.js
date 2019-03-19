@@ -597,6 +597,15 @@ export function loadResources()
                 downloadAudio: "下载音频",
             },
         },
+        i18nEnglish: {
+            path: "min/i18n.en-US.min.js",
+        },
+        i18n: {
+            path: "min/i18n.min.js",
+            displayNames: {
+                i18n: "界面翻译"
+            },
+        }
     };
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
     Resource.all = {};

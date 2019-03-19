@@ -69,6 +69,7 @@ const fixedSettings = {
     playerLayout: true,
     medalHelper: true,
     about: true,
+    i18n: true,
     forceWide: false,
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
     currentVersion: GM_info.script.version,
