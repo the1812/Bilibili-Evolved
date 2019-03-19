@@ -1,6 +1,6 @@
 (async () =>
 {
-    const map = await import(`./i18n.${settings.i18nLanguage}`);
+    const { map } = await import(`./i18n.${settings.i18nLanguage}`);
     // https://stackoverflow.com/questions/10730309/find-all-text-nodes-in-html-page
     const getAllTextNodes = rootElement =>
     {
