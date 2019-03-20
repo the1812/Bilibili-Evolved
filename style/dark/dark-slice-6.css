@@ -199,6 +199,11 @@ input[type=radio]:checked+.custom-radio,
 {
     background-color: #444 !important;
 }
+.pgc-space-follow-item .pgc-item-info .type-and-area i,
+.pgc-space-follow-item .pgc-item-info .pgc-item-state i
+{
+    background-color: #aaa !important;
+}
 #head-info-vm,
 #gift-control-vm,
 #rank-list-ctnr-box
@@ -385,7 +390,10 @@ input[type=radio]:checked+.custom-radio,
 .vc-item .item-top .detail .time,
 .pic-item .content-wrapper .main-content .datetime,
 .page-container.p-rel .tab-nav .tab .tab-text,
-.side-box .list .item .info a
+.side-box .list .item .info a,
+.pgc-space-follow-item .pgc-item-info .pgc-item-desc,
+.pgc-space-follow-item .pgc-item-info .type-and-area,
+.pgc-space-follow-item .pgc-item-info .pgc-item-state
 {
     color: #aaa !important;
 }
@@ -631,7 +639,9 @@ th.list-head-text,
 .recommend-box .section-title .category-name,
 .recommend-box .section-title .action-tab,
 .recommend-box .section-title .action-tab a,
-.side-box .side-title.f-clear .action-tab
+.side-box .side-title.f-clear .action-tab,
+.s-space .wrapper .col-full .sub-tabs span,
+.pgc-space-follow-item .pgc-item-info .pgc-item-title
 {
     color: #eee !important;
 }
@@ -958,7 +968,9 @@ th.list-head-text,
 input[type=radio]:checked+.custom-radio,
 .live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark,
 .sub-area em.active,
-.sub-area em:hover
+.sub-area em:hover,
+.sub-tabs a.active,
+.sub-tabs a.active:before
 {
     border-color: var(--theme-color) !important;
 }
@@ -1055,7 +1067,8 @@ input[type=radio]:checked+.custom-radio,
 ul.navigation li span:after,
 .sidebar-wrapper .sidebar .feedlist-wrapper .more:hover,
 .live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark .white-dot,
-.page-container.p-rel .tab-nav .line
+.page-container.p-rel .tab-nav .line,
+.pgc-space-follow-item a.pgc-item-cover .badge.type_0
 {
     background-color: var(--theme-color) !important;
 }
@@ -1206,7 +1219,8 @@ li.normal-item a:hover .uname,
 .recommend-box .section-title .action-tab:hover,
 .recommend-box .section-title .action-tab:hover .icon-replace,
 .side-box .side-title.f-clear .action-tab:hover,
-.side-box .side-title.f-clear .action-tab:hover .icon-replace
+.side-box .side-title.f-clear .action-tab:hover .icon-replace,
+.s-space .wrapper .col-full .sub-tabs.clearfix a:hover
 {
     color: var(--theme-color) !important;
 }
@@ -1228,8 +1242,8 @@ li.normal-item a:hover .uname,
     border-top-color: transparent !important;
     border-left-color: transparent !important;
 } */
-/* a
+.sub-tabs a.active:before
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-} */
+}
