@@ -305,10 +305,14 @@ function setupAjaxHook()
                 fireHandlers("afterOnReadyStateChange", this, ...args);
             };
         }
-        this.addEventListener("load", (...args) =>
+        else
         {
-            fireHandlers("load", this, ...args);
-        });
+            this.onreadystatechange = (...args) =>
+            {
+                fireHandlers("beforeOnReadyStateChange", this, ...args);
+                fireHandlers("afterOnReadyStateChange", this, ...args);
+            };
+        }
         return hook("send", this, ...args);
     };
 }
