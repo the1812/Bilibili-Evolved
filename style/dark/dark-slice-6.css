@@ -84,7 +84,9 @@
 .link-btn-ctnr.dp-i-block.v-middle .my-link-btn:before,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
-#ssr-app.wrap
+#ssr-app.wrap,
+.bangumi-pagelistbox .p,
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage
 {
     background-color: #222 !important;
 }
@@ -251,7 +253,8 @@ input[type=radio]:checked+.custom-radio,
 .info-wrap .bk-text-con p span,
 .report-wrap-module.ban-modal.pub-list.init-end .info dl dt p span,
 .sidebar-wrapper .sidebar .profile-wrapper .img-wrapper,
-.live-item .live-item-link .live-img-box
+.live-item .live-item-link .live-img-box,
+.bangumi-pagelistbox.clearfix .custom-right .result
 {
     background-color: transparent !important;
 }
@@ -641,7 +644,12 @@ th.list-head-text,
 .recommend-box .section-title .action-tab a,
 .side-box .side-title.f-clear .action-tab,
 .s-space .wrapper .col-full .sub-tabs span,
-.pgc-space-follow-item .pgc-item-info .pgc-item-title
+.pgc-space-follow-item .pgc-item-info .pgc-item-title,
+.bangumi-pagelistbox .p,
+.bangumi-pagelistbox .p:hover,
+.bangumi-pagelistbox .p.active,
+.bangumi-pagelistbox .custom-right .custom-right-inner,
+.pgc-space-follow-item a.pgc-item-cover .badge
 {
     color: #eee !important;
 }
@@ -774,7 +782,11 @@ th.list-head-text,
 .feed-topic .separater-line,
 .feed-topic .hot-content .card.card-offset,
 .recommend-box .section-title .action-tab,
-.side-box .side-title.f-clear .action-tab
+.side-box .side-title.f-clear .action-tab,
+.bangumi-pagelistbox .p,
+.bangumi-pagelistbox .p:hover,
+.bangumi-pagelistbox .p.active,
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage
 {
     border-color: transparent !important;
 }
@@ -970,7 +982,8 @@ input[type=radio]:checked+.custom-radio,
 .sub-area em.active,
 .sub-area em:hover,
 .sub-tabs a.active,
-.sub-tabs a.active:before
+.sub-tabs a.active:before,
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -1068,7 +1081,9 @@ ul.navigation li span:after,
 .sidebar-wrapper .sidebar .feedlist-wrapper .more:hover,
 .live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark .white-dot,
 .page-container.p-rel .tab-nav .line,
-.pgc-space-follow-item a.pgc-item-cover .badge.type_0
+.pgc-space-follow-item a.pgc-item-cover .badge.type_0,
+.bangumi-pagelistbox .p:hover,
+.bangumi-pagelistbox .p.active
 {
     background-color: var(--theme-color) !important;
 }
@@ -1220,7 +1235,8 @@ li.normal-item a:hover .uname,
 .recommend-box .section-title .action-tab:hover .icon-replace,
 .side-box .side-title.f-clear .action-tab:hover,
 .side-box .side-title.f-clear .action-tab:hover .icon-replace,
-.s-space .wrapper .col-full .sub-tabs.clearfix a:hover
+.s-space .wrapper .col-full .sub-tabs.clearfix a:hover,
+.pgc-space-follow-item .pgc-item-info .pgc-item-title:hover
 {
     color: var(--theme-color) !important;
 }
