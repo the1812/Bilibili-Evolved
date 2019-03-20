@@ -93,7 +93,8 @@
 }
 .main-container .review-module .review-list .review-item .review-body,
 .pika-button:hover,
-.area-panel
+.area-panel,
+.rank-list-ctnr .tab-content
 {
     background-color: #333 !important;
 }
