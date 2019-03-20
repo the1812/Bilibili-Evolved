@@ -86,7 +86,8 @@
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
 #ssr-app.wrap,
 .bangumi-pagelistbox .p,
-.bangumi-pagelistbox .custom-right .custom-right-inner.custompage
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage,
+.container .content .comment-area
 {
     background-color: #222 !important;
 }
