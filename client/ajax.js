@@ -62,6 +62,7 @@ export class Ajax
     }
     static getHandlers(name)
     {
+        name = name.toLowerCase();
         let handlers = Ajax[name];
         if (handlers === undefined)
         {
@@ -71,12 +72,12 @@ export class Ajax
     }
     static addEventListener(type, handler)
     {
-        const handlers = Ajax.getHandlers(type.toLowerCase());
+        const handlers = Ajax.getHandlers(type);
         handlers.push(handler);
     }
     static removeEventListener(type, handler)
     {
-        const handlers = Ajax.getHandlers(type.toLowerCase());
+        const handlers = Ajax.getHandlers(type);
         handlers.splice(handlers.indexOf(handler), 1);
     }
 }
@@ -87,16 +88,16 @@ export function setupAjaxHook()
         open: XMLHttpRequest.prototype.open,
         send: XMLHttpRequest.prototype.send,
     };
-    const fireHandlers = (name, thisArg, ...args) => Ajax.getHandlers(name).forEach(it => it.apply(thisArg, args));
-    function open(...args)
+    const fireHandlers = (name, thisArg, ...args) => Ajax.getHandlers(name).forEach(it => it.call(thisArg, ...args));
+    const hook = (name, thisArgs, ...args) =>
     {
-        this.hookedUrl = args[1]; // args[1] == url
-        fireHandlers("beforeOpen", this, ...args);
-        const returnValue = original.open.apply(this, args);
-        fireHandlers("afterOpen", this, ...args);
+        fireHandlers("before" + name, thisArgs, ...args);
+        const returnValue = original[name].call(thisArgs, ...args);
+        fireHandlers("after" + name, thisArgs, ...args);
         return returnValue;
-    }
-    function send(...args)
+    };
+    XMLHttpRequest.prototype.open = function (...args) { return hook("open", this, ...args); };
+    XMLHttpRequest.prototype.send = function (...args)
     {
         if (this.onreadystatechange)
         {
@@ -108,14 +109,12 @@ export function setupAjaxHook()
                 fireHandlers("afterOnReadyStateChange", this, ...args);
             };
         }
-
-        fireHandlers("beforeSend", this, ...args);
-        const returnValue = original.send.apply(this, args);
-        fireHandlers("afterSend", this, ...args);
-        return returnValue;
-    }
-    XMLHttpRequest.prototype.open = open;
-    XMLHttpRequest.prototype.send = send;
+        this.addEventListener("load", (...args) =>
+        {
+            fireHandlers("load", this, ...args);
+        });
+        return hook("send", this, ...args);
+    };
 }
 export function downloadText(url, load, error) // The old method for compatibility
 {
