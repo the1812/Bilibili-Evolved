@@ -197,7 +197,8 @@ input[type=radio]:checked+.custom-radio,
 .main-content .list .all-list .pic-item,
 .feed-topic .publish-panel-container,
 .recommend-box .section-title .action-tab,
-.side-box .side-title.f-clear .action-tab
+.side-box .side-title.f-clear .action-tab,
+.up-info .btn-panel .following-charge-btn
 {
     background-color: #444 !important;
 }
@@ -396,7 +397,8 @@ input[type=radio]:checked+.custom-radio,
 .side-box .list .item .info a,
 .pgc-space-follow-item .pgc-item-info .pgc-item-desc,
 .pgc-space-follow-item .pgc-item-info .type-and-area,
-.pgc-space-follow-item .pgc-item-info .pgc-item-state
+.pgc-space-follow-item .pgc-item-info .pgc-item-state,
+.video-info .video-data .a-crumbs a
 {
     color: #aaa !important;
 }
@@ -649,7 +651,8 @@ th.list-head-text,
 .bangumi-pagelistbox .p:hover,
 .bangumi-pagelistbox .p.active,
 .bangumi-pagelistbox .custom-right .custom-right-inner,
-.pgc-space-follow-item a.pgc-item-cover .badge
+.pgc-space-follow-item a.pgc-item-cover .badge,
+.up-info .btn-panel .following-charge-btn
 {
     color: #eee !important;
 }
@@ -786,7 +789,9 @@ th.list-head-text,
 .bangumi-pagelistbox .p,
 .bangumi-pagelistbox .p:hover,
 .bangumi-pagelistbox .p.active,
-.bangumi-pagelistbox .custom-right .custom-right-inner.custompage
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage,
+.up-info .btn-panel .charge-btn,
+.up-info .btn-panel .following
 {
     border-color: transparent !important;
 }
@@ -1083,7 +1088,8 @@ ul.navigation li span:after,
 .page-container.p-rel .tab-nav .line,
 .pgc-space-follow-item a.pgc-item-cover .badge.type_0,
 .bangumi-pagelistbox .p:hover,
-.bangumi-pagelistbox .p.active
+.bangumi-pagelistbox .p.active,
+.up-info .btn-panel .following-charge-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -1236,7 +1242,10 @@ li.normal-item a:hover .uname,
 .side-box .side-title.f-clear .action-tab:hover,
 .side-box .side-title.f-clear .action-tab:hover .icon-replace,
 .s-space .wrapper .col-full .sub-tabs.clearfix a:hover,
-.pgc-space-follow-item .pgc-item-info .pgc-item-title:hover
+.pgc-space-follow-item .pgc-item-info .pgc-item-title:hover,
+.video-info .video-data .a-crumbs a:hover,
+.up-info .u-info .name .message:hover,
+.up-info .u-info .name .message:hover i
 {
     color: var(--theme-color) !important;
 }
