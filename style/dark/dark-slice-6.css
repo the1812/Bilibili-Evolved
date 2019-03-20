@@ -989,7 +989,8 @@ input[type=radio]:checked+.custom-radio,
 .sub-area em:hover,
 .sub-tabs a.active,
 .sub-tabs a.active:before,
-.bangumi-pagelistbox .custom-right .custom-right-inner.custompage:hover
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage:hover,
+.report-image-candidate-ctnr.t-center .upload-hint
 {
     border-color: var(--theme-color) !important;
 }
