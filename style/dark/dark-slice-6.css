@@ -86,13 +86,15 @@
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
 #ssr-app.wrap,
 .bangumi-pagelistbox .p,
-.bangumi-pagelistbox .custom-right .custom-right-inner.custompage
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage,
+.container .content .comment-area
 {
     background-color: #222 !important;
 }
 .main-container .review-module .review-list .review-item .review-body,
 .pika-button:hover,
-.area-panel
+.area-panel,
+.rank-list-ctnr .tab-content
 {
     background-color: #333 !important;
 }
@@ -255,7 +257,9 @@ input[type=radio]:checked+.custom-radio,
 .report-wrap-module.ban-modal.pub-list.init-end .info dl dt p span,
 .sidebar-wrapper .sidebar .profile-wrapper .img-wrapper,
 .live-item .live-item-link .live-img-box,
-.bangumi-pagelistbox.clearfix .custom-right .result
+.bangumi-pagelistbox.clearfix .custom-right .result,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after
 {
     background-color: transparent !important;
 }
@@ -264,7 +268,9 @@ input[type=radio]:checked+.custom-radio,
 .follow-dialog-wrap .follow-dialog-window .content .group-list ul .follow-group-mask,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after
 {
     background: transparent !important;
 }
@@ -831,7 +837,9 @@ th.list-head-text,
 {
     border-color: white !important;
 } */
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after
 {
     border-image: none !important;
 }
@@ -988,7 +996,8 @@ input[type=radio]:checked+.custom-radio,
 .sub-area em:hover,
 .sub-tabs a.active,
 .sub-tabs a.active:before,
-.bangumi-pagelistbox .custom-right .custom-right-inner.custompage:hover
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage:hover,
+.report-image-candidate-ctnr.t-center .upload-hint
 {
     border-color: var(--theme-color) !important;
 }
