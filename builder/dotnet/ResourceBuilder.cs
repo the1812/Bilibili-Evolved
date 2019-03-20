@@ -129,9 +129,10 @@ namespace BilibiliEvolved.Build
     {
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
-            return !file.FullName.Contains(".min")
-                && !file.FullName.Contains(@"builder\")
-                && !file.FullName.Contains("bilibili-evolved.")
+            return (file.FullName.Contains(@"style\")
+                || file.FullName.Contains(@"touch\")
+                || file.FullName.Contains(@"utils\")
+                || file.FullName.Contains(@"video\"))
                 && file.Extension == ".js";
         };
 
@@ -141,23 +142,26 @@ namespace BilibiliEvolved.Build
         {
             if (!input.StartsWith("(() =>"))
             {
-                var importRegex = new Regex(@"import (.*) from [""'](.*)[""'];", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                while (true)
+                Func<string, string> convertToRuntimeSource = source =>
                 {
-                    var match = importRegex.Match(input);
-                    if (!match.Success)
-                    {
-                        break;
-                    }
-                    var imported = match.Groups[1].Value.Replace(" as ", ":");
-                    var source = match.Groups[2].Value;
                     var index = source.LastIndexOf("/");
                     if (index != -1)
                     {
-                        source = source.Remove(0, index + 1);
+                        source = source.Remove(1, index);
                     }
-                    input = input.Replace(match.Value, $"const {imported} = resources.import(\"{source}\");");
-                }
+                    return source;
+                };
+                input = RegexReplacer.Replace(input, @"import (.*) from (.*);", match =>
+                {
+                    var imported = match.Groups[1].Value.Replace(" as ", ":");
+                    var source = convertToRuntimeSource(match.Groups[2].Value);
+                    return $"const {imported} = resources.import({source});";
+                });
+                input = RegexReplacer.Replace(input, @" import\((.*)\);", match =>
+                {
+                    var source = convertToRuntimeSource(match.Groups[1].Value);
+                    return $" resources.importAsync({source});";
+                });
                 input = @"(() =>
 {
     return (settings, resources) =>

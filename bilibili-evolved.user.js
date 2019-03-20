@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.7.17
+// @version      1.7.18
 // @description  增强哔哩哔哩Web端体验: 下载视频, 音乐, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 删除广告, 使用夜间模式, 修复界面瑕疵; 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -81,6 +81,8 @@ const settings = {
     useCommentStyle: true,
     imageResolution: false,
     toastInternalError: false,
+    i18n: false,
+    i18nLanguage: "ja-JP",
     cache: {},
 };
 const fixedSettings = {
@@ -98,25 +100,6 @@ const fixedSettings = {
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
     currentVersion: GM_info.script.version,
 };
-if (typeof GM_addValueChangeListener === "undefined")
-{
-    GM_addValueChangeListener = function () { };
-}
-function logError(message)
-{
-    if (settings.toastInternalError)
-    {
-        Toast.error(typeof message === "object" && "stack" in message
-            ? message.stack
-            : message, "错误");
-    }
-    console.error(message);
-}
-// window.addEventListener("error", e =>
-// {
-//     logError(`${e.message}
-// ${e.filename} ${e.lineno}:${e.colno}`);
-// });
 function loadSettings()
 {
     for (const key in settings)
@@ -150,6 +133,211 @@ function onSettingsChange(change)
         GM_addValueChangeListener(key, change);
     }
 }
+if (typeof GM_addValueChangeListener === "undefined")
+{
+    GM_addValueChangeListener = function () { };
+}
+function logError(message)
+{
+    if (settings.toastInternalError)
+    {
+        Toast.error(typeof message === "object" && "stack" in message
+            ? message.stack
+            : message, "错误");
+    }
+    console.error(message);
+}
+function raiseEvent(element, eventName)
+{
+    const event = document.createEvent("HTMLEvents");
+    event.initEvent(eventName, true, true);
+    element.dispatchEvent(event);
+}
+async function loadLazyPanel(selector)
+{
+    await SpinQuery.unsafeJquery();
+    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+    if (!panel)
+    {
+        throw new Error(`Panel not found: ${selector}`);
+    }
+    panel.mouseover().mouseout();
+}
+function contentLoaded(callback)
+{
+    if (/complete|interactive|loaded/.test(document.readyState))
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener("DOMContentLoaded", () => callback());
+    }
+}
+function fixed(number, precision = 1)
+{
+    const str = number.toString();
+    const index = str.indexOf(".");
+    if (index !== -1)
+    {
+        if (str.length - index > precision + 1)
+        {
+            return str.substring(0, index + precision + 1);
+        }
+        else
+        {
+            return str;
+        }
+    }
+    else
+    {
+        return str + ".0";
+    }
+}
+class Ajax
+{
+    static send(xhr, body, text = true)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            xhr.addEventListener("load", () => resolve(text ? xhr.responseText : xhr.response));
+            xhr.addEventListener("error", () => reject(xhr.status));
+            xhr.send(body);
+        });
+    }
+    static getBlob(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.open("GET", url);
+        return this.send(xhr, undefined, false);
+    }
+    static getBlobWithCredentials(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.open("GET", url);
+        xhr.withCredentials = true;
+        return this.send(xhr, undefined, false);
+    }
+    static async getJson(url)
+    {
+        return JSON.parse(await this.getText(url));
+    }
+    static async getJsonWithCredentials(url)
+    {
+        return JSON.parse(await this.getTextWithCredentials(url));
+    }
+    static getText(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        return this.send(xhr);
+    }
+    static getTextWithCredentials(url)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.withCredentials = true;
+        return this.send(xhr);
+    }
+    static postText(url, body)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        return this.send(xhr, body);
+    }
+    static postTextWithCredentials(url, body)
+    {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.withCredentials = true;
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        return this.send(xhr, body);
+    }
+    static getHandlers(name)
+    {
+        name = name.toLowerCase();
+        let handlers = Ajax[name];
+        if (handlers === undefined)
+        {
+            handlers = Ajax[name] = [];
+        }
+        return handlers;
+    }
+    static addEventListener(type, handler)
+    {
+        const handlers = Ajax.getHandlers(type);
+        handlers.push(handler);
+    }
+    static removeEventListener(type, handler)
+    {
+        const handlers = Ajax.getHandlers(type);
+        handlers.splice(handlers.indexOf(handler), 1);
+    }
+}
+// https://github.com/the1812/Bilibili-Evolved/issues/84
+function setupAjaxHook()
+{
+    const original = {
+        open: XMLHttpRequest.prototype.open,
+        send: XMLHttpRequest.prototype.send,
+    };
+    const fireHandlers = (name, thisArg, ...args) => Ajax.getHandlers(name).forEach(it => it.call(thisArg, ...args));
+    const hook = (name, thisArgs, ...args) =>
+    {
+        fireHandlers("before" + name, thisArgs, ...args);
+        const returnValue = original[name].call(thisArgs, ...args);
+        fireHandlers("after" + name, thisArgs, ...args);
+        return returnValue;
+    };
+    XMLHttpRequest.prototype.open = function (...args) { return hook("open", this, ...args); };
+    XMLHttpRequest.prototype.send = function (...args)
+    {
+        if (this.onreadystatechange)
+        {
+            const originalHandler = this.onreadystatechange;
+            this.onreadystatechange = (...args) =>
+            {
+                fireHandlers("beforeOnReadyStateChange", this, ...args);
+                originalHandler.apply(this, args);
+                fireHandlers("afterOnReadyStateChange", this, ...args);
+            };
+        }
+        else
+        {
+            this.onreadystatechange = (...args) =>
+            {
+                fireHandlers("beforeOnReadyStateChange", this, ...args);
+                fireHandlers("afterOnReadyStateChange", this, ...args);
+            };
+        }
+        return hook("send", this, ...args);
+    };
+}
+function downloadText(url, load, error) // The old method for compatibility
+{
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+
+    if (load !== undefined) // callback
+    {
+        xhr.addEventListener("load", () => load && load(xhr.responseText));
+        xhr.addEventListener("error", () => error && error(xhr.status));
+        xhr.send();
+    }
+    else
+    {
+        return new Promise((resolve, reject) =>
+        {
+            xhr.addEventListener("load", () => resolve(xhr.responseText));
+            xhr.addEventListener("error", () => reject(xhr.status));
+            xhr.send();
+        });
+    }
+}
+
 function loadResources()
 {
     const resourceManifest = {
@@ -748,6 +936,15 @@ function loadResources()
                 downloadAudio: "下载音频",
             },
         },
+        i18nEnglish: {
+            path: "min/i18n.en-US.min.js",
+        },
+        i18n: {
+            path: "min/i18n.min.js",
+            displayNames: {
+                i18n: "界面翻译"
+            },
+        }
     };
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
     Resource.all = {};
@@ -776,137 +973,7 @@ function loadResources()
         }
     }
 }
-class Ajax
-{
-    static send(xhr, body, text = true)
-    {
-        return new Promise((resolve, reject) =>
-        {
-            xhr.addEventListener("load", () => resolve(text ? xhr.responseText : xhr.response));
-            xhr.addEventListener("error", () => reject(xhr.status));
-            xhr.send(body);
-        });
-    }
-    static getBlob(url)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "blob";
-        xhr.open("GET", url);
-        return this.send(xhr, undefined, false);
-    }
-    static getBlobWithCredentials(url)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "blob";
-        xhr.open("GET", url);
-        xhr.withCredentials = true;
-        return this.send(xhr, undefined, false);
-    }
-    static async getJson(url)
-    {
-        return JSON.parse(await this.getText(url));
-    }
-    static async getJsonWithCredentials(url)
-    {
-        return JSON.parse(await this.getTextWithCredentials(url));
-    }
-    static getText(url)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        return this.send(xhr);
-    }
-    static getTextWithCredentials(url)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        xhr.withCredentials = true;
-        return this.send(xhr);
-    }
-    static postText(url, body)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", url);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        return this.send(xhr, body);
-    }
-    static postTextWithCredentials(url, body)
-    {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", url);
-        xhr.withCredentials = true;
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        return this.send(xhr, body);
-    }
-}
-function downloadText(url, load, error) // The old method for compatibility
-{
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
 
-    if (load !== undefined) // callback
-    {
-        xhr.addEventListener("load", () => load && load(xhr.responseText));
-        xhr.addEventListener("error", () => error && error(xhr.status));
-        xhr.send();
-    }
-    else
-    {
-        return new Promise((resolve, reject) =>
-        {
-            xhr.addEventListener("load", () => resolve(xhr.responseText));
-            xhr.addEventListener("error", () => reject(xhr.status));
-            xhr.send();
-        });
-    }
-}
-function raiseEvent(element, eventName)
-{
-    const event = document.createEvent("HTMLEvents");
-    event.initEvent(eventName, true, true);
-    element.dispatchEvent(event);
-}
-async function loadLazyPanel(selector)
-{
-    await SpinQuery.unsafeJquery();
-    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
-    if (!panel)
-    {
-        throw new Error(`Panel not found: ${selector}`);
-    }
-    panel.mouseover().mouseout();
-}
-function contentLoaded(callback)
-{
-    if (/complete|interactive|loaded/.test(document.readyState))
-    {
-        callback();
-    }
-    else
-    {
-        document.addEventListener("DOMContentLoaded", () => callback());
-    }
-}
-function fixed(number, precision = 1)
-{
-    const str = number.toString();
-    const index = str.indexOf(".");
-    if (index !== -1)
-    {
-        if (str.length - index > precision + 1)
-        {
-            return str.substring(0, index + precision + 1);
-        }
-        else
-        {
-            return str;
-        }
-    }
-    else
-    {
-        return str + ".0";
-    }
-}
 // Placeholder class for Toast
 class Toast
 {
@@ -1614,6 +1681,7 @@ class ResourceManager
     constructor()
     {
         this.data = Resource.all;
+        this.skippedImport = [];
         this.attributes = {};
         this.styleManager = new StyleManager(this);
         const styleMethods = Object.getOwnPropertyNames(StyleManager.prototype).filter(it => it !== "constructor");
@@ -1655,18 +1723,46 @@ class ResourceManager
         styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
         this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
     }
+    resolveComponentName(componentName)
+    {
+        const keyword = "/" + componentName + ".min.js";
+        for (const [name, value] of Object.entries(Resource.all))
+        {
+            if (value.url.endsWith(keyword))
+            {
+                return name;
+            }
+        }
+        return componentName;
+    }
+    resolveComponent(componentName)
+    {
+        const resource = Resource.all[this.resolveComponentName(componentName)];
+        if (!resource)
+        {
+            this.skippedImport.push(componentName);
+        }
+        return resource;
+    }
     importAsync(componentName)
     {
         return new Promise(resolve =>
         {
-            const imported = this.import(componentName);
-            resolve(imported);
+            const resource = this.resolveComponent(componentName);
+            if (!resource.downloaded)
+            {
+                this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
+            }
+            else
+            {
+                resolve(this.import(componentName));
+            }
         });
     }
     import(componentName)
     {
-        const resource = Resource.all[componentName];
-        if (resource && resource.type.name === "html")
+        const resource = this.resolveComponent(componentName);
+        if (resource.type.name === "html" || resource.type.name === "style")
         {
             if (!resource.downloaded)
             {
@@ -1677,19 +1773,7 @@ class ResourceManager
         }
         else
         {
-            const asFileName = () =>
-            {
-                const keyword = componentName + ".min.js";
-                for (const [name, value] of Object.entries(Resource.all))
-                {
-                    if (value.url.indexOf(keyword) !== -1)
-                    {
-                        return name;
-                    }
-                }
-                return componentName;
-            };
-            const attribute = this.attributes[componentName] || this.attributes[asFileName()];
+            const attribute = this.attributes[this.resolveComponentName(componentName)];
             if (attribute === undefined)
             {
                 console.error(`Import failed: component "${componentName}" is not loaded.`);
@@ -1866,6 +1950,7 @@ class ResourceManager
 
 try
 {
+    setupAjaxHook();
     const events = {};
     for (const name of ["init", "styleLoaded", "scriptLoaded"])
     {
@@ -1915,8 +2000,9 @@ try
         SpinQuery,
         Toast,
         Observer,
-        ColorProcessor,
         DoubleClickEvent,
+        ColorProcessor,
+        StyleManager,
         ResourceManager,
         Resource,
         ResourceType,
