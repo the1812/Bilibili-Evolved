@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      247.20
+// @version      247.25
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1800,6 +1800,10 @@ class ResourceManager
         return new Promise(resolve =>
         {
             const resource = this.resolveComponent(componentName);
+            if (!resource)
+            {
+                resolve(unsafeWindow.bilibiliEvolved);
+            }
             if (!resource.downloaded)
             {
                 this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
@@ -1813,6 +1817,10 @@ class ResourceManager
     import(componentName)
     {
         const resource = this.resolveComponent(componentName);
+        if (!resource)
+        {
+            return unsafeWindow.bilibiliEvolved;
+        }
         if (resource.type.name === "html" || resource.type.name === "style")
         {
             if (!resource.downloaded)

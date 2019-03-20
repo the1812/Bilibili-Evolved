@@ -1749,6 +1749,10 @@ class ResourceManager
         return new Promise(resolve =>
         {
             const resource = this.resolveComponent(componentName);
+            if (!resource)
+            {
+                resolve(unsafeWindow.bilibiliEvolved);
+            }
             if (!resource.downloaded)
             {
                 this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
@@ -1762,6 +1766,10 @@ class ResourceManager
     import(componentName)
     {
         const resource = this.resolveComponent(componentName);
+        if (!resource)
+        {
+            return unsafeWindow.bilibiliEvolved;
+        }
         if (resource.type.name === "html" || resource.type.name === "style")
         {
             if (!resource.downloaded)
