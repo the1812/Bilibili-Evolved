@@ -130,7 +130,8 @@ blockquote .color-yellow-04,
 .im-popup .bp-popup-panel .title-ctnr .popup-title,
 .live-skin-coloration-area .live-skin-highlight-text,
 .live-skin-coloration-area .live-skin-normal-a-text:hover,
-.live-skin-normal-a-text:active
+.live-skin-normal-a-text:active,
+.up-info .u-info .name .username.is-vip:hover
 {
     color: var(--theme-color) !important;
 }
