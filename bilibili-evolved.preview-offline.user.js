@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      246.30
+// @version      247.14
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -257,6 +257,62 @@ class Ajax
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         return this.send(xhr, body);
     }
+    static getHandlers(name)
+    {
+        let handlers = Ajax[name];
+        if (handlers === undefined)
+        {
+            handlers = Ajax[name] = [];
+        }
+        return handlers;
+    }
+    static addEventListener(type, handler)
+    {
+        const handlers = Ajax.getHandlers(type.toLowerCase());
+        handlers.push(handler);
+    }
+    static removeEventListener(type, handler)
+    {
+        const handlers = Ajax.getHandlers(type.toLowerCase());
+        handlers.splice(handlers.indexOf(handler), 1);
+    }
+}
+// https://github.com/the1812/Bilibili-Evolved/issues/84
+function setupAjaxHook()
+{
+    const original = {
+        open: XMLHttpRequest.prototype.open,
+        send: XMLHttpRequest.prototype.send,
+    };
+    const fireHandlers = (name, thisArg, ...args) => Ajax.getHandlers(name).forEach(it => it.apply(thisArg, args));
+    function open(...args)
+    {
+        this.hookedUrl = args[1]; // args[1] == url
+        fireHandlers("beforeOpen", this, ...args);
+        const returnValue = original.open.apply(this, args);
+        fireHandlers("afterOpen", this, ...args);
+        return returnValue;
+    }
+    function send(...args)
+    {
+        if (this.onreadystatechange)
+        {
+            const originalHandler = this.onreadystatechange;
+            this.onreadystatechange = (...args) =>
+            {
+                fireHandlers("beforeOnReadyStateChange", this, ...args);
+                originalHandler.apply(this, args);
+                fireHandlers("afterOnReadyStateChange", this, ...args);
+            };
+        }
+
+        fireHandlers("beforeSend", this, ...args);
+        const returnValue = original.send.apply(this, args);
+        fireHandlers("afterSend", this, ...args);
+        return returnValue;
+    }
+    XMLHttpRequest.prototype.open = open;
+    XMLHttpRequest.prototype.send = send;
 }
 function downloadText(url, load, error) // The old method for compatibility
 {
@@ -1942,6 +1998,7 @@ class ResourceManager
 
 try
 {
+    setupAjaxHook();
     const events = {};
     for (const name of ["init", "styleLoaded", "scriptLoaded"])
     {
@@ -1992,6 +2049,7 @@ try
         Toast,
         Observer,
         DoubleClickEvent,
+        ColorProcessor,
         StyleManager,
         ResourceManager,
         Resource,

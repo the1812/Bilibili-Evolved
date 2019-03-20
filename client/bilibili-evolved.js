@@ -25,7 +25,7 @@
 // ==/UserScript==
 import { settings, loadSettings, saveSettings, onSettingsChange } from './settings';
 import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed } from './utils';
-import { Ajax } from './ajax';
+import { Ajax, setupAjaxHook } from './ajax';
 import { loadResources } from './resource-loader';
 import { Toast } from './toast-holder';
 import { DoubleClickEvent } from './double-click-event';
@@ -40,6 +40,7 @@ import { ResourceManager } from './resource-manager';
 
 try
 {
+    setupAjaxHook();
     const events = {};
     for (const name of ["init", "styleLoaded", "scriptLoaded"])
     {
@@ -90,6 +91,7 @@ try
         Toast,
         Observer,
         DoubleClickEvent,
+        ColorProcessor,
         StyleManager,
         ResourceManager,
         Resource,
