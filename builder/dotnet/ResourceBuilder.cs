@@ -29,7 +29,7 @@ namespace BilibiliEvolved.Build
             var fileInfo = new FileInfo(path);
             return "min/" + fileInfo.Name.Insert(fileInfo.Name.LastIndexOf("."), ".min");
         }
-        protected IEnumerable<string> GetFiles(Predicate<FileInfo> filter)
+        public static IEnumerable<string> GetFiles(Predicate<FileInfo> filter)
         {
             string getRelativePath(string fullPath)
             {

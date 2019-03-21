@@ -552,12 +552,6 @@ Resource.manifest = {
             biliplusRedirect: "BiliPlus跳转支持",
         }
     },
-    // framePlaybackHtml: {
-    //     path: "frame-playback.min.html",
-    // },
-    // framePlaybackStyle: {
-    //     path: "frame-playback.min.css",
-    // },
     framePlayback: {
         path: "frame-playback.min.js",
         style: true,

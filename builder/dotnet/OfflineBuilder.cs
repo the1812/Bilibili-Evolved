@@ -39,11 +39,14 @@ namespace BilibiliEvolved.Build
         }
         private void compileOfflineData()
         {
-            var onlineRoot = new Regex(@"Resource.root = ""(.*)"";").Match(offlineText).Groups[1].Value;
-            var urlList = (from match in new Regex(@"path:\s*""(.*)""").Matches(offlineText)
-                           as IEnumerable<Match>
-                           select "min/" + match.Groups[1].Value.Trim()
-                          ).ToList();
+            var onlineRoot = $"https://raw.githubusercontent.com/{config.Owner}/Bilibili-Evolved/master/";
+            // var urlList = (from match in new Regex(@"path:\s*""(.*)""").Matches(offlineText)
+            //                as IEnumerable<Match>
+            //                select "min/" + match.Groups[1].Value.Trim()
+            //               ).ToList();
+            var urlList = from file in Directory.GetFiles("min")
+                          where !file.Contains("dark-slice")
+                          select file.Replace(@"\", "/");
 
             var downloadCodeStart = @"// \+#Offline build placeholder";
             var downloadCodeEnd = @"// \-#Offline build placeholder";

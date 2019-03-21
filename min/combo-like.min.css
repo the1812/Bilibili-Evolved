@@ -1,1 +1,0 @@
-.video-toolbar .ops{position:relative!important;}.video-toolbar .ops::after{content:"素质三连中";position:absolute;top:-8px;left:-16px;width:200px;background:#000a;height:calc(100% + 12px);padding-left:120px;padding-top:8px;transition:all .2s ease-out;opacity:0;pointer-events:none;}.video-toolbar .ops.combo-liking::after{opacity:1;pointer-events:initial;}
