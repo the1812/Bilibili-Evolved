@@ -4,11 +4,11 @@ export class Resource
     {
         return this.text !== null;
     }
-    constructor(url, priority, styles = [])
+    constructor(url, styles = [])
     {
-        this.url = Resource.root + url;
+        this.url = Resource.root + "min/" + url;
         this.dependencies = [];
-        this.priority = priority;
+        // this.priority = priority;
         this.styles = styles;
         this.text = null;
         this.key = null;

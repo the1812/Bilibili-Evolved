@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.18
+// @version      1.7.19
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -35,6 +35,7 @@ import { ColorProcessor } from './color-processor';
 // [Offline build placeholder]
 import { ResourceType } from './resource-type';
 import { Resource } from './resource';
+import { resourceManifest } from './resource-manifest';
 import { StyleManager } from './style-manager';
 import { ResourceManager } from './resource-manager';
 
@@ -97,6 +98,7 @@ try
         Resource,
         ResourceType,
         Ajax,
+        resourceManifest,
         loadSettings,
         saveSettings,
         onSettingsChange,

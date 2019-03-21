@@ -42,7 +42,7 @@ namespace BilibiliEvolved.Build
             var onlineRoot = new Regex(@"Resource.root = ""(.*)"";").Match(offlineText).Groups[1].Value;
             var urlList = (from match in new Regex(@"path:\s*""(.*)""").Matches(offlineText)
                            as IEnumerable<Match>
-                           select match.Groups[1].Value.Trim()
+                           select "min/" + match.Groups[1].Value.Trim()
                           ).ToList();
 
             var downloadCodeStart = @"// \+#Offline build placeholder";

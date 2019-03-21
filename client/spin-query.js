@@ -50,10 +50,20 @@ export class SpinQuery
     }
     static select(query, action, failed)
     {
+        if (typeof query === "string")
+        {
+            const selector = query;
+            query = () => document.querySelector(selector);
+        }
         return SpinQuery.condition(query, it => it !== null && it !== undefined, action, failed);
     }
     static any(query, action, failed)
     {
+        if (typeof query === "string")
+        {
+            const selector = query;
+            query = () => $(selector);
+        }
         return SpinQuery.condition(query, it => it.length > 0, action, failed);
     }
     static count(query, count, action, failed)
