@@ -142,10 +142,10 @@
 {
     background-color: var(--theme-color-90) !important;
 } */
-/* a
+#announcement-area .flip-view .action-arrow-ctnr:hover .icon-font
 {
     color: var(--theme-color) !important;
-} */
+}
 /* a
 {
     color: var(--foreground-color) !important;
