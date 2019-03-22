@@ -200,7 +200,8 @@ input[type=radio]:checked+.custom-radio,
 .feed-topic .publish-panel-container,
 .recommend-box .section-title .action-tab,
 .side-box .side-title.f-clear .action-tab,
-.up-info .btn-panel .following-charge-btn
+.up-info .btn-panel .following-charge-btn,
+.up-info .btn-panel .following
 {
     background-color: #444 !important;
 }
