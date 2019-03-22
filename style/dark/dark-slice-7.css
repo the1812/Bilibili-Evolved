@@ -21,8 +21,12 @@
 }
 .gift-rank-cntr .rank-cntr .item.own
 {
-    background: #fff !important;
+    background: transparent !important;
 }
+/* a
+{
+    background: #fff !important;
+} */
 #page-setting .setting-privacy-item .setting-privacy-switcher .be-switch-label
 {
     color: #aaa !important;
