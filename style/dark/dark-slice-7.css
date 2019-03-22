@@ -38,7 +38,8 @@
     color: #fff !important;
 } */
 .feed-topic .hot-content .card,
-.up-info .btn-panel .charge-btn
+.up-info .btn-panel .charge-btn,
+.feed-topic .top-content .card.card-offset
 {
     border-color: transparent !important;
 }
