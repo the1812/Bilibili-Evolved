@@ -95,7 +95,7 @@ const fixedSettings = {
     downloadAudio: true,
     playerLayout: true,
     medalHelper: true,
-    about: true,
+    about: false,
     forceWide: false,
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
     currentVersion: GM_info.script.version,
