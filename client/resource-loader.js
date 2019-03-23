@@ -20,6 +20,7 @@ export function loadResources()
         {
             const styleKey = key + "Style";
             const style = Resource.all[styleKey] = new Resource(data.path.replace(".js", ".css"));
+            style.key = styleKey;
             switch (data.style)
             {
                 case "instant":
@@ -44,7 +45,7 @@ export function loadResources()
                     {
                         if (typeof data.style === "object")
                         {
-                            resource.styles.push(data.style);
+                            resource.styles.push(Object.assign({ key: styleKey }, data.style));
                         }
                         break;
                     }
@@ -54,6 +55,7 @@ export function loadResources()
         {
             const htmlKey = key + "Html";
             const html = Resource.all[htmlKey] = new Resource(data.path.replace(".js", ".html"));
+            html.key = htmlKey;
             resource.dependencies.push(html);
         }
         Resource.all[key] = resource;
@@ -62,7 +64,7 @@ export function loadResources()
     {
         if (data.dependencies)
         {
-            Resource.all[key].dependencies = data.dependencies.map(name => Resource.all[name]);
+            Resource.all[key].dependencies.push(...data.dependencies.map(name => Resource.all[name]));
         }
     }
 }

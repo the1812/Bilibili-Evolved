@@ -26,35 +26,11 @@ Resource.manifest = {
     noBannerStyle: {
         path: "no-banner.min.css",
     },
-    removeAdsStyle: {
-        path: "remove-promotions.min.css",
-    },
-    guiSettingsStyle: {
-        path: "gui-settings.min.css",
-    },
-    fullTweetsTitleStyle: {
-        path: "full-tweets-title.min.css",
-    },
     imageViewerStyle: {
         path: "image-viewer.min.css",
     },
-    toastStyle: {
-        path: "toast.min.css",
-    },
-    blurVideoControlStyle: {
-        path: "blur-video-control.min.css",
-    },
-    downloadVideoStyle: {
-        path: "download-video.min.css",
-    },
-    guiSettingsHtml: {
-        path: "gui-settings.min.html",
-    },
     imageViewerHtml: {
         path: "image-viewer.min.html",
-    },
-    downloadVideoHtml: {
-        path: "download-video.min.html",
     },
     iconsStyle: {
         path: "icons.min.css",
@@ -85,8 +61,9 @@ Resource.manifest = {
     },
     guiSettings: {
         path: "gui-settings.min.js",
+        html: true,
+        style: "instant",
         dependencies: [
-            "guiSettingsHtml",
             "textValidate",
             "settingsSideBar",
             "themeColors",
@@ -94,7 +71,6 @@ Resource.manifest = {
             "settingsSearch",
         ],
         styles: [
-            "guiSettingsStyle",
             {
                 key: "iconsStyle",
                 important: true,
@@ -196,9 +172,7 @@ Resource.manifest = {
     },
     removeAds: {
         path: "remove-promotions.min.js",
-        styles: [
-            "removeAdsStyle",
-        ],
+        style: "instant",
         displayNames: {
             removeAds: "删除广告",
         },
@@ -229,19 +203,14 @@ Resource.manifest = {
     },
     fullTweetsTitle: {
         path: "full-tweets-title.min.js",
-        styles: [
-            "fullTweetsTitleStyle",
-        ],
+        style: "instant",
         displayNames: {
             fullTweetsTitle: "展开动态标题",
         },
     },
-    fullPageTitleStyle: {
-        path: "full-page-title.min.css",
-    },
     fullPageTitle: {
         path: "full-page-title.min.js",
-        dependencies: ["fullPageTitleStyle"],
+        style: "instant",
         displayNames: {
             fullPageTitle: "展开选集标题",
         },
@@ -268,9 +237,7 @@ Resource.manifest = {
     },
     toast: {
         path: "toast.min.js",
-        styles: [
-            "toastStyle",
-        ],
+        style: "instant",
         displayNames: {
             toast: "显示消息",
             toastInternalError: "显示内部错误消息",
@@ -284,9 +251,7 @@ Resource.manifest = {
     },
     blurVideoControl: {
         path: "blur-video-control.min.js",
-        styles: [
-            "blurVideoControlStyle",
-        ],
+        style: "instant",
         displayNames: {
             blurVideoControl: "模糊视频控制栏背景",
         },
@@ -307,13 +272,9 @@ Resource.manifest = {
     },
     downloadVideo: {
         path: "download-video.min.js",
-        dependencies: [
-            "downloadVideoHtml",
-            "title",
-        ],
-        styles: [
-            "downloadVideoStyle",
-        ],
+        html: true,
+        style: "instant",
+        dependencies: ["title"],
         displayNames: {
             "downloadVideo": "下载视频",
         },
@@ -335,35 +296,20 @@ Resource.manifest = {
     videoInfo: {
         path: "video-info.min.js",
     },
-    aboutHtml: {
-        path: "about.min.html",
-    },
-    aboutStyle: {
-        path: "about.min.css",
-    },
     about: {
         path: "about.min.js",
-        dependencies: [
-            "aboutHtml",
-        ],
-        styles: [
-            "aboutStyle",
-        ],
+        html: true,
+        style: "instant",
         displayNames: {
             "about": "关于",
         }
     },
-    customControlBackgroundStyle: {
-        path: "custom-control-background.min.css",
-    },
     customControlBackground: {
         path: "custom-control-background.min.js",
-        styles: [
-            {
-                key: "customControlBackgroundStyle",
-                condition: () => settings.customControlBackgroundOpacity > 0
-            },
-        ],
+        style: {
+            key: "customControlBackgroundStyle",
+            condition: () => settings.customControlBackgroundOpacity > 0,
+        },
         displayNames: {
             customControlBackground: "控制栏着色",
             customControlBackgroundOpacity: "不透明度",
@@ -405,14 +351,9 @@ Resource.manifest = {
             autoContinue: "自动从历史记录点播放",
         },
     },
-    expandDescriptionStyle: {
-        path: "expand-description.min.css"
-    },
     expandDescription: {
         path: "expand-description.min.js",
-        styles: [
-            "expandDescriptionStyle"
-        ],
+        style: "instant",
         displayNames: {
             expandDescription: "自动展开视频简介"
         }
@@ -434,14 +375,9 @@ Resource.manifest = {
             rememberDanmakuSettings: "记住弹幕设置",
         },
     },
-    skipChargeListStyle: {
-        path: "skip-charge-list.min.css",
-    },
     skipChargeList: {
         path: "skip-charge-list.min.js",
-        styles: [
-            "skipChargeListStyle",
-        ],
+        style: "instant",
         displayNames: {
             skipChargeList: "跳过充电鸣谢",
         }
@@ -464,41 +400,30 @@ Resource.manifest = {
             },
         ],
     },
-    compactLayoutStyle: {
-        path: "compact-layout.min.css",
-    },
     compactLayout: {
         path: "compact-layout.min.js",
-        styles: [
+        style:
+        {
+            important: true,
+            condition()
             {
-                key: "compactLayoutStyle",
-                important: true,
-                condition()
-                {
-                    return [
-                        "https://www.bilibili.com/",
-                        "https://www.bilibili.com/watchlater/#/list",
-                    ].indexOf(location.href.replace(location.search, '')) !== -1;
-                },
+                return [
+                    "https://www.bilibili.com/",
+                    "https://www.bilibili.com/watchlater/#/list",
+                ].indexOf(location.href.replace(location.search, '')) !== -1;
             },
-        ],
+        },
         displayNames: {
             compactLayout: "首页使用紧凑布局",
         }
     },
     medalHelper: {
         path: "medal-helper.min.js",
-        styles: ["medalHelperStyle"],
-        dependencies: ["medalHelperHtml"],
+        html: true,
+        style: "instant",
         displayNames: {
             medalHelper: "直播勋章快速更换"
         }
-    },
-    medalHelperStyle: {
-        path: "medal-helper.min.css",
-    },
-    medalHelperHtml: {
-        path: "medal-helper.min.html",
     },
     showDeadVideoTitle: {
         path: "show-dead-video-title.min.js",
@@ -515,12 +440,11 @@ Resource.manifest = {
     },
     useCommentStyle: {
         path: "comment.min.js",
+        style: {
+            important: true,
+            condition: () => true,
+        },
         styles: [
-            {
-                key: "commentStyle",
-                important: true,
-                condition: () => true,
-            },
             {
                 key: "commentDarkStyle",
                 important: true,
@@ -554,7 +478,7 @@ Resource.manifest = {
     },
     framePlayback: {
         path: "frame-playback.min.js",
-        style: true,
+        style: "instant",
         html: true,
         displayNames: {
             framePlayback: "启用逐帧调整",
