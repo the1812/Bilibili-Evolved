@@ -19,7 +19,8 @@ export class StyleManager
     }
     removeStyle(key)
     {
-        $(`#${this.getDefaultStyleId(key)}`).remove();
+        const style = document.querySelector(`#${this.getDefaultStyleId(key)}`);
+        style && style.remove();
     }
     applyImportantStyle(key, id)
     {
@@ -31,11 +32,11 @@ export class StyleManager
     }
     applyStyleFromText(text)
     {
-        $("head").prepend(text);
+        document.head.insertAdjacentHTML("afterbegin", text);
     }
     applyImportantStyleFromText(text)
     {
-        $("html").append(text);
+        document.body.insertAdjacentHTML("beforeend", text);
     }
     getStyle(key, id)
     {

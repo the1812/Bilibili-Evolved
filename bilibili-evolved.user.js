@@ -1013,7 +1013,7 @@ class Resource
     {
         if (!document.querySelector(`#${id}`))
         {
-            const element = this.getStyle(id);
+            const style = this.getStyle(id);
             // const priorStyle = this.getPriorStyle();
             // if (priorStyle === null)
             // {
@@ -1032,11 +1032,11 @@ class Resource
             // }
             if (important)
             {
-                $("html").append(element);
+                document.body.insertAdjacentHTML("beforeend", style);
             }
             else
             {
-                $("head").prepend(element);
+                document.head.insertAdjacentHTML("afterbegin", style);
             }
         }
     }
@@ -1565,7 +1565,8 @@ class StyleManager
     }
     removeStyle(key)
     {
-        $(`#${this.getDefaultStyleId(key)}`).remove();
+        const style = document.querySelector(`#${this.getDefaultStyleId(key)}`);
+        style && style.remove();
     }
     applyImportantStyle(key, id)
     {
@@ -1577,11 +1578,11 @@ class StyleManager
     }
     applyStyleFromText(text)
     {
-        $("head").prepend(text);
+        document.head.insertAdjacentHTML("afterbegin", text);
     }
     applyImportantStyleFromText(text)
     {
-        $("html").append(text);
+        document.body.insertAdjacentHTML("beforeend", text);
     }
     getStyle(key, id)
     {
@@ -1833,7 +1834,7 @@ class ResourceManager
         {
             if (info.content)
             {
-                $(".widgets-container").append($(info.content));
+                document.querySelector(".widgets-container").insertAdjacentHTML("beforeend", info.content);
             }
             if (info.success)
             {

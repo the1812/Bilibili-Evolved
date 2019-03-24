@@ -208,7 +208,7 @@ export class ResourceManager
         {
             if (info.content)
             {
-                $(".widgets-container").append($(info.content));
+                document.querySelector(".widgets-container").insertAdjacentHTML("beforeend", info.content);
             }
             if (info.success)
             {

@@ -151,7 +151,7 @@ export class Resource
     {
         if (!document.querySelector(`#${id}`))
         {
-            const element = this.getStyle(id);
+            const style = this.getStyle(id);
             // const priorStyle = this.getPriorStyle();
             // if (priorStyle === null)
             // {
@@ -170,11 +170,11 @@ export class Resource
             // }
             if (important)
             {
-                $("html").append(element);
+                document.body.insertAdjacentHTML("beforeend", style);
             }
             else
             {
-                $("head").prepend(element);
+                document.head.insertAdjacentHTML("afterbegin", style);
             }
         }
     }
