@@ -11,7 +11,9 @@
 .up-info .btn-panel .charge-btn,
 .content .rank-list,
 .link-tag-box .selector-wrap,
-.link-tag-box .selector-wrap ul
+.link-tag-box .selector-wrap ul,
+.tag.sky-blue,
+.tag.sky-blue:hover
 {
     background-color: #444 !important;
 }
@@ -46,7 +48,10 @@
 .link-tag-box .tab-wrap>ul li,
 .video-detail .item-title,
 .link-tag-box .selector-wrap,
-.link-tag-box .selector-wrap ul>li:hover
+.link-tag-box .selector-wrap ul>li:hover,
+.tag.sky-blue.activated,
+.tag.sky-blue,
+.tag.sky-blue:hover
 {
     color: #eee !important;
 }
@@ -59,7 +64,9 @@
 .feed-topic .top-content .card.card-offset,
 .link-tag-box .tab-wrap,
 .link-tag-box .selector-wrap div,
-.link-tag-box .selector-wrap ul
+.link-tag-box .selector-wrap ul,
+.tag.sky-blue.activated,
+.tag.sky-blue
 {
     border-color: transparent !important;
 }
@@ -135,10 +142,10 @@
 {
     display: none !important;
 } */
-/* a
+.tag.sky-blue:hover
 {
     border-color: var(--theme-color) !important;
-} */
+}
 /* a
 {
     border-top-color: var(--theme-color) !important;
@@ -156,7 +163,8 @@
     border: 1px solid var(--theme-color) !important;
 } */
 .up-info .btn-panel .not-follow-charge-btn:hover,
-.tab-wrap>ul li.selected a span:after
+.tab-wrap>ul li.selected a span:after,
+.tag.sky-blue.activated
 {
     background-color: var(--theme-color) !important;
 }
