@@ -16,7 +16,9 @@
     background-image: none !important;
 } */
 .rank-cntr .rank-list-ctnr .tip a,
-.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr
+.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
+.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr .more,
+.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr a:hover
 {
     background-color: transparent !important;
 }
