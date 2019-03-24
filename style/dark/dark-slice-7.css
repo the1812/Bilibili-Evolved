@@ -1,9 +1,12 @@
 .right-container.f-left .active-panel .show-more-button,
-.link-tag-box .selector-wrap ul>li:hover
+.link-tag-box .selector-wrap ul>li:hover,
+.video-card .labels-ctnr,
+.tab-selector-wrap .selector-wrap ul>li:hover
 {
     background-color: #222 !important;
 }
-.content .link-tag-box
+.content .link-tag-box,
+.content .tab-selector-wrap
 {
     background-color: #333 !important;
 }
@@ -13,7 +16,9 @@
 .link-tag-box .selector-wrap,
 .link-tag-box .selector-wrap ul,
 .tag.sky-blue,
-.tag.sky-blue:hover
+.tag.sky-blue:hover,
+.tab-selector-wrap .selector-wrap,
+.tab-selector-wrap .selector-wrap ul
 {
     background-color: #444 !important;
 }
@@ -38,7 +43,9 @@
 } */
 #page-setting .setting-privacy-item .setting-privacy-switcher .be-switch-label,
 .video-detail .item-number,
-.video-detail .item-time
+.video-detail .item-time,
+.video-card .labels-ctnr,
+.video-card .icons-label .text
 {
     color: #aaa !important;
 }
@@ -51,7 +58,10 @@
 .link-tag-box .selector-wrap ul>li:hover,
 .tag.sky-blue.activated,
 .tag.sky-blue,
-.tag.sky-blue:hover
+.tag.sky-blue:hover,
+.tab-selector-wrap .tab-wrap>ul li,
+.tab-selector-wrap .selector-wrap,
+.tab-selector-wrap .selector-wrap ul>li:hover
 {
     color: #eee !important;
 }
@@ -66,7 +76,9 @@
 .link-tag-box .selector-wrap div,
 .link-tag-box .selector-wrap ul,
 .tag.sky-blue.activated,
-.tag.sky-blue
+.tag.sky-blue,
+.tab-selector-wrap .selector-wrap div,
+.tab-selector-wrap .selector-wrap ul
 {
     border-color: transparent !important;
 }
