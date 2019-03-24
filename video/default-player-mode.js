@@ -1,3 +1,7 @@
+if (isEmbeddedPlayer())
+{
+    return;
+}
 const playerModes = [
     {
         name: "常规",

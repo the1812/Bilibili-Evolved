@@ -59,3 +59,7 @@ export function fixed(number, precision = 1)
         return str + ".0";
     }
 }
+export function isEmbeddedPlayer()
+{
+    return location.host === "player.bilibili.com";
+}

@@ -194,6 +194,10 @@ function fixed(number, precision = 1)
         return str + ".0";
     }
 }
+function isEmbeddedPlayer()
+{
+    return location.host === "player.bilibili.com";
+}
 class Ajax
 {
     static send(xhr, body, text = true)
