@@ -98,44 +98,49 @@ function listenSettingsChange()
 function listenDependencies()
 {
     const dependencies = {};
-    $(`input[dependencies]`).each((_, element) =>
+    document.querySelectorAll(`input[dependencies]`).forEach(element =>
     {
-        const dep = $(element).attr("dependencies");
+        const dep = element.getAttribute("dependencies");
         if (dep)
         {
-            dependencies[$(element).attr("key")] = dep;
+            dependencies[element.getAttribute("key")] = dep;
         }
     });
     const checkBoxChange = element =>
     {
-        const checked = element.prop("checked");
+        const checked = element.checked;
         for (const key in dependencies)
         {
             const dependency = dependencies[key].split(" ");
-            if (dependency.indexOf(element.attr("key")) !== -1)
+            if (dependency.indexOf(element.getAttribute("key")) !== -1)
             {
                 let disable = true;
                 if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
                 {
                     disable = false;
                 }
-                const li = $(`li:has(input[key='${key}'])`);
-                const action = disable ? "addClass" : "removeClass";
-                li[action]("disabled");
-                $(`input[key='${key}'][type='text']`).parent()[action]("disabled");
+                let li = document.querySelector(`input[key='${key}']`);
+                while (li.nodeName.toLowerCase() !== "li")
+                {
+                    li = li.parentElement;
+                }
+                const action = disable ? "add" : "remove";
+                li.classList[action]("disabled");
+                const text = document.querySelector(`input[key='${key}'][type='text']`);
+                text && text.parentElement.classList[action]("disabled");
             }
         }
     };
     $(`input[type='checkbox'][key]`)
-        .on("change", e => checkBoxChange($(e.target)))
-        .each((_, e) => checkBoxChange($(e)));
+        .on("change", e => checkBoxChange(e.target))
+        .each((_, e) => checkBoxChange(e));
 }
 function checkOfflineData()
 {
     if (typeof offlineData !== "undefined")
     {
-        $("li:has(input[key=useCache])").addClass("disabled");
-        $("input[key=useCache]").prop("disabled", true);
+        document.querySelector(".gui-settings-checkbox-container>input[key=useCache]").parentElement.parentElement.classList.add("disabled");
+        document.querySelector("input[key=useCache]").disabled = true;
     }
 }
 function foldAllCategories()

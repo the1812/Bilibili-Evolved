@@ -1858,10 +1858,10 @@ class ResourceManager
             }
             else
             {
-                const dropdown = await SpinQuery.any(
-                    () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
-                const list = dropdown.find("ul");
-                const input = dropdown.find("input");
+                const dropdownInput = await SpinQuery.select(`.gui-settings-dropdown input[key=${info.key}]`);
+                const dropdown = dropdownInput.parentElement;
+                const list = dropdown.querySelector("ul");
+                const input = dropdown.querySelector("input");
                 info.items.forEach(item =>
                 {
                     $(`<li>${item}</li>`).appendTo(list)
