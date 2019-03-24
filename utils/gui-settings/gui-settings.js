@@ -184,23 +184,25 @@ function checkCompatibility()
     if (!CSS.supports("backdrop-filter", "blur(24px)")
         && !CSS.supports("-webkit-backdrop-filter", "blur(24px)"))
     {
-        $("input[key=blurVideoControl]").prop("disabled", true);
+        document.querySelector("input[key=blurVideoControl]").disabled = true;
         settings.blurVideoControl = false;
         saveSettings(settings);
     }
     if (window.devicePixelRatio === 1)
     {
-        $("input[key=harunaScale]").prop("disabled", true);
+        document.querySelector("input[key=harunaScale]").disabled = true;
         settings.harunaScale = false;
         saveSettings(settings);
     }
     if (settings.defaultPlayerLayout === "旧版")
     {
-        const navbarOption = $("input[key=overrideNavBar]");
-        navbarOption.prop("disabled", true).change();
+        const navbarOption = document.querySelector("input[key=overrideNavBar]");
+        navbarOption.disabled = true;
+        raiseEvent(navbarOption, "change");
         if (settings.overrideNavBar)
         {
-            navbarOption.prop("checked", false).change();
+            navbarOption.checked = false;
+            raiseEvent(navbarOption, "change");
             settings.overrideNavBar = false;
             saveSettings(settings);
         }
@@ -243,9 +245,9 @@ function setDisplayNames()
     const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
     document.body.insertAdjacentHTML("beforeend", settingsBox);
     new SpinQuery(
-        () => $("body"),
-        it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
-        _ => $(".gui-settings-icon-panel").css("display", "none")
+        () => document.body,
+        it => it && !(unsafeWindow.parent.window === unsafeWindow),
+        _ => document.querySelector(".gui-settings-icon-panel").style.display = "none",
     ).start();
 
     setupEvents();
