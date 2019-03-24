@@ -29,9 +29,9 @@ export class ThemeColors
                 const hexToRgba = input => color.rgbToString(color.hexToRgba(input));
 
                 const shadowColor = color.hexToRgba(newColor + "70");
-                $("div.custom-color-preview")
-                    .css("background", newColor)
-                    .css("box-shadow", `0px 2px 8px 1px rgba(${shadowColor.r},${shadowColor.g},${shadowColor.b},${shadowColor.a})`);
+                const preview = document.querySelector("div.custom-color-preview");
+                preview.style.background = newColor;
+                preview.style.boxShadow = `0px 2px 8px 1px rgba(${shadowColor.r},${shadowColor.g},${shadowColor.b},${shadowColor.a})`;
 
                 html.style.setProperty("--theme-color", newColor);
                 for (let opacity = 10; opacity <= 90; opacity += 10)
@@ -50,30 +50,32 @@ export class ThemeColors
     }
     setupDom()
     {
-        $(`input[key='customStyleColor']`).on("change", () =>
+        const input = document.querySelector(`input[key='customStyleColor']`);
+        input.addEventListener("change", () =>
         {
-            this.reloadColor($(`input[key='customStyleColor']`).val());
+            this.reloadColor(input.value);
         });
-        const grid = $(".predefined-colors-grid");
+        const grid = document.querySelector(".predefined-colors-grid");
         for (const color of Object.values(colors))
         {
-            $(`<div class='predefined-colors-grid-block'></div>`)
-                .appendTo(grid)
-                .css("background", color)
-                .attr("data-color", color)
-                .on("click", e =>
-                {
-                    const newColor = $(e.target).attr("data-color");
-                    $(`input[key='customStyleColor']`)
-                        .val(newColor)
-                        .trigger("input").change();
-                    $("div.custom-color-preview").click();
-                });
+            const block = document.createElement("div");
+            grid.insertAdjacentElement("beforeend", block);
+            block.classList.add("predefined-colors-grid-block");
+            block.style.background = color;
+            block.setAttribute("data-color", color);
+            block.addEventListener("click", e =>
+            {
+                const newColor = e.target.getAttribute("data-color");
+                input.value = newColor;
+                raiseEvent(input, "input");
+                raiseEvent(input, "change");
+                // document.querySelector("div.custom-color-preview").click();
+            });
         }
-        $("div.custom-color-preview").on("click", () =>
+        const box = document.querySelector(".predefined-colors");
+        document.querySelector("div.custom-color-preview").addEventListener("click", () =>
         {
-            const box = $(".predefined-colors");
-            box.toggleClass("opened");
+            box.classList.toggle("opened");
         });
     }
 }

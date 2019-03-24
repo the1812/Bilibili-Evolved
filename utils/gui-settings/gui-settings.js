@@ -14,9 +14,18 @@ function getCategoryItems(category)
 }
 function settingsChange(key, value)
 {
-    $(`input[type='checkbox'][key='${key}']`)
-        .prop("checked", value);
-    $(`input[type='text'][key='${key}']`).val(value);
+    const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
+    if (checkbox)
+    {
+        checkbox.checked = value;
+        return;
+    }
+    const textbox = document.querySelector(`input[type='text'][key='${key}']`);
+    if (textbox)
+    {
+        textbox.value = value;
+        return;
+    }
 }
 function syncGui()
 {
@@ -27,37 +36,55 @@ function syncGui()
 }
 function setupEvents()
 {
-    $(".gui-settings-mask").on("click", () =>
+    document.querySelector(".gui-settings-mask").addEventListener("click", () =>
     {
-        $(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask").removeClass("opened");
+        document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask")
+            .forEach(it => it.classList.remove("opened"));
     });
-    $("input[type='text'][key]").each((_, element) =>
+    document.querySelectorAll("input[type='text'][key]").forEach(element =>
     {
-        $(element).attr("placeholder", settings[$(element).attr("key")]);
+        element.setAttribute("placeholder", settings[element.getAttribute("key")]);
     });
-    $(".gui-settings-content ul li.category").on("click", e =>
+    document.querySelectorAll(".gui-settings-content ul li.category").forEach(it =>
     {
-        const searchBox = document.querySelector(".gui-settings-search");
-        if (searchBox.value !== "")
+        it.addEventListener("click", e =>
         {
-            searchBox.value = "";
-            raiseEvent(searchBox, "input");
-        }
-        e.currentTarget.classList.toggle("folded");
-        getCategoryItems(e.currentTarget).forEach(it => it.classList.toggle("folded"));
+            const searchBox = document.querySelector(".gui-settings-search");
+            if (searchBox.value !== "")
+            {
+                searchBox.value = "";
+                raiseEvent(searchBox, "input");
+            }
+            e.currentTarget.classList.toggle("folded");
+            getCategoryItems(e.currentTarget).forEach(it => it.classList.toggle("folded"));
+        });
     });
-    $(".gui-settings-dropdown>input").on("click", e =>
+    document.querySelectorAll(".gui-settings-dropdown>input").forEach(it =>
     {
-        $(e.currentTarget).parent().toggleClass("opened");
+        it.addEventListener("click", e =>
+        {
+            e.currentTarget.parentElement.classList.toggle("opened");
+        });
     });
     onSettingsChange((key, _, value) =>
     {
         if (settings[key] !== value)
         {
             settings[key] = value;
-            $(`input[type='checkbox'][key='${key}']`)
-                .prop("checked", value).change();
-            $(`input[type='text'][key='${key}']`).val(value).change();
+            const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
+            if (checkbox)
+            {
+                checkbox.checked = value;
+                raiseEvent(checkbox, "change");
+                return;
+            }
+            const textbox = document.querySelector(`input[type='text'][key='${key}']`);
+            if (textbox)
+            {
+                textbox.value = value;
+                raiseEvent(textbox, "change");
+                return;
+            }
         }
     });
 }
@@ -71,9 +98,9 @@ function listenSettingsChange()
         //     resources.fetchByKey(reloadableKey);
         // }
     };
-    $("input[type='checkbox'][key]").each((_, element) =>
+    document.querySelectorAll("input[type='checkbox'][key]").forEach(element =>
     {
-        $(element).on("change", () =>
+        element.addEventListener("change", () =>
         {
             const key = element.getAttribute("key");
             const value = element.checked;
@@ -82,9 +109,9 @@ function listenSettingsChange()
             saveSettings(settings);
         });
     });
-    $("input[type='text'][key]").each((_, element) =>
+    document.querySelectorAll("input[type='text'][key]").forEach(element =>
     {
-        $(element).on("change", () =>
+        element.addEventListener("change", () =>
         {
             const key = element.getAttribute("key");
             const value = Validator.getValidator(key).validate(element.value);
@@ -115,7 +142,7 @@ function listenDependencies()
             if (dependency.indexOf(element.getAttribute("key")) !== -1)
             {
                 let disable = true;
-                if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
+                if (checked && dependency.every(k => document.querySelector(`input[key='${k}']`).checked))
                 {
                     disable = false;
                 }
@@ -131,9 +158,11 @@ function listenDependencies()
             }
         }
     };
-    $(`input[type='checkbox'][key]`)
-        .on("change", e => checkBoxChange(e.target))
-        .each((_, e) => checkBoxChange(e));
+    document.querySelectorAll(`input[type='checkbox'][key]`).forEach(element =>
+    {
+        element.addEventListener("change", e => checkBoxChange(e.target));
+        checkBoxChange(element);
+    });
 }
 function checkOfflineData()
 {
@@ -145,9 +174,9 @@ function checkOfflineData()
 }
 function foldAllCategories()
 {
-    $(".gui-settings-content ul li.category").each((_, e) =>
+    document.querySelectorAll(".gui-settings-content ul li.category").forEach(e =>
     {
-        $(e).click();
+        e.click();
     });
 }
 function checkCompatibility()
@@ -212,7 +241,7 @@ function setDisplayNames()
 {
     resources.applyStyle("guiSettingsStyle");
     const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
-    $("body").append(settingsBox);
+    document.body.insertAdjacentHTML("beforeend", settingsBox);
     new SpinQuery(
         () => $("body"),
         it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),

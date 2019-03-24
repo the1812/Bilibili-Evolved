@@ -34,7 +34,8 @@ else
         searchForm =>
         {
             searchForm.classList.remove("preserve-rank");
-            searchForm.querySelector("a.icons-enabled").remove();
+            const rankIcon = searchForm.querySelector("a.icons-enabled");
+            rankIcon && rankIcon.remove();
         }
     );
 }
