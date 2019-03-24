@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      250.83
+// @version      250.84
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -876,7 +876,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/override-navbar.min.css"] = `div.nav-menu{width:unset!important}body .bili-header-m .nav-menu div.bili-wrapper{width:1018px;margin:0 auto!important}.search{position:relative!important;float:right!important;margin:26px 12px 5px 0!important;width:130px!important;height:30px!important;background-color:transparent!important;padding:0!important}form.searchform{background-color:#fffb!important;box-shadow:0 2px 10px 1px #0002!important;height:30px!important}form.searchform:focus-within,form.searchform:hover{background-color:#fff!important}a.link-ranking,button.search-submit{display:none!important}input.search-keyword{width:110px!important;height:30px!important;padding:0 10px!important}.preserve-rank{display:flex!important}.preserve-rank>a{opacity:.382;filter:brightness(0);display:flex;align-items:center;justify-content:center;transform:scale(.64);cursor:pointer;width:30px;transition:.2s ease-out!important;flex-shrink:0}.preserve-rank>a:hover{opacity:.75}.preserve-rank>input{padding-left:0!important}@media only screen and (min-width:1291px){body .bili-header-m .nav-menu div.bili-wrapper{width:1234px!important}.search{width:250px!important;margin:26px 72px 5px 0!important}input.search-keyword{width:230px!important}}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/override-navbar.min.js"] = (()=>{return(e,n)=>{SpinQuery.any(()=>$(".head-content.bili-wrapper>div.search:not(.filter-item)"),e=>{const n=$(document.querySelector(".nav-con.fr"));e.detach().insertAfter(n)});if(e.preserveRank){SpinQuery.select(()=>document.querySelector(".nav-wrapper .searchform,.nav-con #nav_searchform"),e=>{e.classList.add("preserve-rank");if(!e.querySelector("a.icons-enabled")){e.insertAdjacentHTML("afterbegin",`\n                    <a  title="排行榜"\n                        class="icons-enabled"\n                        href="https://www.bilibili.com/ranking"\n                        target="_blank">\n                        <i class="icon-rank"></i>\n                    </a>\n                `)}})}else{SpinQuery.select(()=>document.querySelector(".nav-wrapper .searchform,.nav-con #nav_searchform"),e=>{e.classList.remove("preserve-rank");e.querySelector("a.icons-enabled").remove()})}SpinQuery.any(()=>$("#banner_link"),()=>n.removeStyle("tweetsStyle"));if(!e.showBanner){n.applyStyle("noBannerStyle")}else{n.removeStyle("noBannerStyle")}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-promotions.min.css"] = `#home_popularize .adpos,#home_popularize .l-con,#slide_ad,.activity-m,.bili-header-m .nav-menu .nav-con .nav-item .text-red,.bilibili-player-promote-wrap,.gg-floor-module,.home-app-download,.mobile-link-l,.video-page-game-card{display:none!important}#home_popularize{position:relative!important}.popularize-module .online{position:absolute!important;top:50%!important;right:.5%!important;transform:translateY(-100%)!important}`;
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-promotions.min.js"] = (()=>{return(n,i)=>{SpinQuery.any(()=>$(".gg-pic").parent("a"),n=>{n.css("display","none");n.each((n,i)=>{const e=$(i).index()+1;const c=$(i).parent().parent().find(`.pic li:nth-child(${e})`);$(c).css("visibility","hidden")})})}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-promotions.min.js"] = (()=>{return(e,n)=>{SpinQuery.any(()=>document.querySelectorAll(".gg-pic"),e=>{e.forEach(e=>{const n=e.parentElement;n.style.display="none";const t=[...n.parentElement.childNodes].indexOf(n)+1;const l=n.parentElement.parentElement.querySelector(`.pic li:nth-child(${t})`);if(l){l.style.visibility="hidden"}})})}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-top-mask.min.js"] = (()=>{return(i,n)=>{const l="bilibili-video-top-mask";if($(`#${l}`).length===0){n.applyStyleFromText(`\n        <style id='${l}'>\n            .bilibili-player-video-top\n            {\n                display: none !important;\n            }\n        </style>\n        `)}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-watermark.min.js"] = (()=>{return(i,l)=>{const n="bilibili-live-watermark";if($(`#${n}`).length===0){l.applyStyleFromText(`\n        <style id='${n}'>\n            .bilibili-live-player-video-logo\n            {\n                display: none !important;\n            }\n        </style>\n        `)}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/scrollbar.min.css"] = `::-webkit-scrollbar{width:5px!important;height:5px!important}::-webkit-scrollbar-corner,::-webkit-scrollbar-track{background:0 0!important}::-webkit-resizer,::-webkit-scrollbar-thumb{background:#aaa!important}::-webkit-scrollbar-thumb:hover{background:#888!important}`;
@@ -1914,14 +1914,16 @@ class ResourceManager
                 const dropdown = dropdownInput.parentElement;
                 const list = dropdown.querySelector("ul");
                 const input = dropdown.querySelector("input");
-                info.items.forEach(item =>
+                info.items.forEach(itemHtml =>
                 {
-                    $(`<li>${item}</li>`).appendTo(list)
-                        .on("click", () =>
-                        {
-                            input.val(item).trigger("input").change();
-                        });
+                    list.insertAdjacentHTML("beforeend", `<li>${itemHtml}</li>`);
                 });
+                list.querySelectorAll("li").forEach(li => li.addEventListener("click", () =>
+                {
+                    input.value = li.innerText;
+                    raiseEvent(input, "input");
+                    raiseEvent(input, "change");
+                }));
             }
         }
         await Promise.all(Object.values(Resource.manifest)

@@ -1862,14 +1862,16 @@ class ResourceManager
                 const dropdown = dropdownInput.parentElement;
                 const list = dropdown.querySelector("ul");
                 const input = dropdown.querySelector("input");
-                info.items.forEach(item =>
+                info.items.forEach(itemHtml =>
                 {
-                    $(`<li>${item}</li>`).appendTo(list)
-                        .on("click", () =>
-                        {
-                            input.val(item).trigger("input").change();
-                        });
+                    list.insertAdjacentHTML("beforeend", `<li>${itemHtml}</li>`);
                 });
+                list.querySelectorAll("li").forEach(li => li.addEventListener("click", () =>
+                {
+                    input.value = li.innerText;
+                    raiseEvent(input, "input");
+                    raiseEvent(input, "change");
+                }));
             }
         }
         await Promise.all(Object.values(Resource.manifest)
