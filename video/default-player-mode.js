@@ -1,4 +1,4 @@
-if (isEmbeddedPlayer())
+if (typeof isEmbeddedPlayer !== "undefined" && isEmbeddedPlayer())
 {
     return;
 }
