@@ -37,7 +37,7 @@ class Medal extends Badge
     }
     static getContainer()
     {
-        return $("#medal-helper .medal-popup ul");
+        return document.querySelector("#medal-helper .medal-popup ul");
     }
     static getItemTemplate(medal)
     {
@@ -131,7 +131,7 @@ class Title extends Badge
     }
     static getContainer()
     {
-        return $("#title-helper .medal-popup ul");
+        return document.querySelector("#title-helper .medal-popup ul");
     }
     static getItemTemplate(title)
     {
@@ -180,24 +180,25 @@ async function loadBadges(BadgeClass)
         const badges = await BadgeClass.getList();
         badges.forEach(badge =>
         {
-            const li = badgeContainer.find(`li[data-id=${badge.id}]`);
+            const li = badgeContainer.querySelector(`li[data-id='${badge.id}']`);
             if (badge.isActive)
             {
-                li.addClass("active");
+                li.classList.add("active");
             }
             else
             {
-                li.removeClass("active");
+                li.classList.remove("active");
             }
-            li.find(`input`).prop("checked", badge.isActive);
+            li.querySelector(`input`).checked = badge.isActive;
         });
     };
     badges.forEach(badge =>
     {
-        const item = $(BadgeClass.getItemTemplate(badge));
-        badgeContainer.append(item);
-        const input = item.find("input")[0];
-        item.on("click", e =>
+        const itemHtml = BadgeClass.getItemTemplate(badge);
+        badgeContainer.insertAdjacentHTML("beforeend", itemHtml);
+        const item = badgeContainer.querySelector(`li[data-id='${badge.id}']`);
+        const input = item.querySelector(`input`);
+        item.addEventListener("click", e =>
         {
             if (e.target === input)
             {
