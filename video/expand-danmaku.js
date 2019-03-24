@@ -1,3 +1,7 @@
+if (isEmbeddedPlayer())
+{
+    return;
+}
 const expand = () =>
 {
     SpinQuery.any(

@@ -96,27 +96,32 @@ export function setupAjaxHook()
         fireHandlers("after" + name, thisArgs, ...args);
         return returnValue;
     };
-    XMLHttpRequest.prototype.open = function (...args) { return hook("open", this, ...args); };
-    XMLHttpRequest.prototype.send = function (...args)
+    const hookOnEvent = (name, thisArg) =>
     {
-        if (this.onreadystatechange)
+        if (thisArg[name])
         {
-            const originalHandler = this.onreadystatechange;
-            this.onreadystatechange = (...args) =>
+            const originalHandler = thisArg[name];
+            thisArg[name] = (...args) =>
             {
-                fireHandlers("beforeOnReadyStateChange", this, ...args);
-                originalHandler.apply(this, args);
-                fireHandlers("afterOnReadyStateChange", this, ...args);
+                fireHandlers("before" + name, thisArg, ...args);
+                originalHandler.apply(thisArg, args);
+                fireHandlers("after" + name, thisArg, ...args);
             };
         }
         else
         {
-            this.onreadystatechange = (...args) =>
+            thisArg[name] = (...args) =>
             {
-                fireHandlers("beforeOnReadyStateChange", this, ...args);
-                fireHandlers("afterOnReadyStateChange", this, ...args);
+                fireHandlers("before" + name, thisArg, ...args);
+                fireHandlers("after" + name, thisArg, ...args);
             };
         }
+    };
+    XMLHttpRequest.prototype.open = function (...args) { return hook("open", this, ...args); };
+    XMLHttpRequest.prototype.send = function (...args)
+    {
+        hookOnEvent("onreadystatechange", this);
+        hookOnEvent("onload", this);
         return hook("send", this, ...args);
     };
 }

@@ -1,3 +1,7 @@
+if (isEmbeddedPlayer())
+{
+    return;
+}
 const playerModes = [
     {
         name: "常规",
@@ -89,15 +93,6 @@ async function main()
             {
                 info.action();
             }
-            if (settings.autoPlay)
-            {
-                lightOff();
-            }
-            else
-            {
-                video.addEventListener("play", lightOff, { once: true });
-            }
-            video.addEventListener("ended", lightOn, { once: true });
         };
         if (settings.applyPlayerModeOnPlay && !settings.autoPlay)
         {
@@ -107,6 +102,16 @@ async function main()
         {
             onplay();
         }
+
+        if (!settings.autoPlay)
+        {
+            video.addEventListener("play", lightOff, { once: true });
+        }
+        else
+        {
+            lightOff();
+        }
+        video.addEventListener("ended", lightOn, { once: true });
     }
 }
 Observer.videoChange(main);

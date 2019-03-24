@@ -208,7 +208,7 @@ export class ResourceManager
         {
             if (info.content)
             {
-                $(".widgets-container").append($(info.content));
+                document.querySelector(".widgets-container").insertAdjacentHTML("beforeend", info.content);
             }
             if (info.success)
             {
@@ -233,18 +233,20 @@ export class ResourceManager
             }
             else
             {
-                const dropdown = await SpinQuery.any(
-                    () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
-                const list = dropdown.find("ul");
-                const input = dropdown.find("input");
-                info.items.forEach(item =>
+                const dropdownInput = await SpinQuery.select(`.gui-settings-dropdown input[key=${info.key}]`);
+                const dropdown = dropdownInput.parentElement;
+                const list = dropdown.querySelector("ul");
+                const input = dropdown.querySelector("input");
+                info.items.forEach(itemHtml =>
                 {
-                    $(`<li>${item}</li>`).appendTo(list)
-                        .on("click", () =>
-                        {
-                            input.val(item).trigger("input").change();
-                        });
+                    list.insertAdjacentHTML("beforeend", `<li>${itemHtml}</li>`);
                 });
+                list.querySelectorAll("li").forEach(li => li.addEventListener("click", () =>
+                {
+                    input.value = li.innerText;
+                    raiseEvent(input, "input");
+                    raiseEvent(input, "change");
+                }));
             }
         }
         await Promise.all(Object.values(Resource.manifest)

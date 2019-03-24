@@ -6,7 +6,8 @@
 .activity-m,
 .bilibili-player-promote-wrap,
 .bili-header-m .nav-menu .nav-con .nav-item .text-red,
-.mobile-link-l
+.mobile-link-l,
+.video-page-game-card
 {
     display: none !important;
 }

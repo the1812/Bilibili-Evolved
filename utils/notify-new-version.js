@@ -49,15 +49,18 @@ class Version
         return this.compareTo(other) === CompareResult.equal;
     }
 }
-
-const latestVersion = new Version(resources.data.latestVersion.text);
-const currentVersion = new Version(settings.currentVersion);
-const hasNewVersion = latestVersion.greaterThan(currentVersion);
-if (hasNewVersion)
+async function checkNewVersion()
 {
-    const message = `新版本${latestVersion.versionString}已发布.  <a id="new-version-link" class="link" href="${settings.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;
-    const toast = Toast.info(message, "检查更新");
-    $("#new-version-link").on("click", () => toast && toast.dismiss());
+    const latestVersion = new Version(resources.data.latestVersion ? resources.data.latestVersion.text : await Ajax.getText(Resource.root + "version.txt"));
+    const currentVersion = new Version(settings.currentVersion);
+    const hasNewVersion = latestVersion.greaterThan(currentVersion);
+    if (hasNewVersion)
+    {
+        const message = `新版本${latestVersion.versionString}已发布.  <a id="new-version-link" class="link" href="${settings.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;
+        const toast = Toast.info(message, "检查更新");
+        $("#new-version-link").on("click", () => toast && toast.dismiss());
+    }
+    return hasNewVersion;
 }
 export default {
     widget:
@@ -78,13 +81,25 @@ export default {
                 <span>查看更新</span>
             </button>
         `,
-        condition: () => hasNewVersion,
+        condition: checkNewVersion,
         success: () =>
         {
-            $("#new-version-update").on("click",
-                () => document.querySelector("#new-version-update a").click());
-            $("#new-version-info").on("click",
-                () => document.querySelector("#new-version-info a").click());
+            document.querySelector("#new-version-update").addEventListener("click",
+                e =>
+                {
+                    if (e.target.nodeName.toLowerCase() !== "a")
+                    {
+                        document.querySelector("#new-version-update a").click();
+                    }
+                });
+            document.querySelector("#new-version-info").addEventListener("click",
+                e =>
+                {
+                    if (e.target.nodeName.toLowerCase() !== "a")
+                    {
+                        document.querySelector("#new-version-info a").click();
+                    }
+                });
         },
     },
 };

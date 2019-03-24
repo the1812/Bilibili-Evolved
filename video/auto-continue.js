@@ -1,3 +1,7 @@
+if (isEmbeddedPlayer())
+{
+    return;
+}
 function continuePlay(toastText)
 {
     const text = toastText.text();

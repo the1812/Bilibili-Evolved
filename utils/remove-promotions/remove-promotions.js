@@ -1,13 +1,17 @@
 SpinQuery.any(
-    () => $(".gg-pic").parent("a"),
+    () => document.querySelectorAll(".gg-pic"),
     it =>
     {
-        it.css("display", "none");
-        it.each((_, element) =>
+        it.forEach(element =>
         {
-            const index = $(element).index() + 1;
-            const selector = $(element).parent().parent().find(`.pic li:nth-child(${index})`);
-            $(selector).css("visibility", "hidden");
+            const a = element.parentElement;
+            a.style.display = "none";
+            const index = [...a.parentElement.childNodes].indexOf(a) + 1;
+            const picture = a.parentElement.parentElement.querySelector(`.pic li:nth-child(${index})`);
+            if (picture)
+            {
+                picture.style.visibility = "hidden";
+            }
         });
     }
 );

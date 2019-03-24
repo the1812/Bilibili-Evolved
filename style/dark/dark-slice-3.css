@@ -217,7 +217,8 @@ body>div.to-top.on,
 .create-vote .bg-color,
 #app>div>div>div.container,
 .play-options .play-options-more .play-options-content,
-.player-auxiliary-area
+.player-auxiliary-area,
+.bilibili-player-danmaku-report-panel .bui-radio-input:checked+.bui-radio-label
 {
     background-color: transparent !important;
 }
@@ -606,7 +607,8 @@ svg.toast-card-dismiss path,
 .block-effect-ctnr .item .cb-icon,
 .small-item.new .new-icon,
 #article-list-index .title-holder .icon-close,
-#article-list-index .index-holder .article-item.on .point
+#article-list-index .index-holder .article-item.on .point,
+.bui-radio-icon.bui-radio-icon-selected
 {
     filter: var(--blue-image-filter) !important;
 }
