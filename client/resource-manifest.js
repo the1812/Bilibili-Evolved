@@ -455,9 +455,6 @@ Resource.manifest = {
             useCommentStyle: "简化评论区",
         },
     },
-    commentStyle: {
-        path: "comment.min.css"
-    },
     commentDarkStyle: {
         path: "comment-dark.min.css"
     },
