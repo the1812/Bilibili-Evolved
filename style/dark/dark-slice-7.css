@@ -15,7 +15,8 @@
 {
     background-image: none !important;
 } */
-.rank-cntr .rank-list-ctnr .tip a
+.rank-cntr .rank-list-ctnr .tip a,
+.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr
 {
     background-color: transparent !important;
 }
