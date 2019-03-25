@@ -47,7 +47,7 @@ export class ResourceManager
     }
     resolveComponentName(componentName)
     {
-        const keyword = "/" + componentName + ".min.js";
+        const keyword = "/" + componentName.replace("./", "") + ".min.js";
         for (const [name, value] of Object.entries(Resource.all))
         {
             if (value.url.endsWith(keyword))

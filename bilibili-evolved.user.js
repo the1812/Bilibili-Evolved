@@ -1542,6 +1542,9 @@ Resource.manifest = {
     i18nEnglish: {
         path: "i18n.en-US.min.js",
     },
+    i18nJapanese: {
+        path: "i18n.ja-JP.min.js",
+    },
     i18n: {
         path: "i18n.min.js",
         displayNames: {
@@ -1679,7 +1682,7 @@ class ResourceManager
     }
     resolveComponentName(componentName)
     {
-        const keyword = "/" + componentName + ".min.js";
+        const keyword = "/" + componentName.replace("./", "") + ".min.js";
         for (const [name, value] of Object.entries(Resource.all))
         {
             if (value.url.endsWith(keyword))

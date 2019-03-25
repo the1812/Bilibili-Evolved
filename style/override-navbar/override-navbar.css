@@ -11,7 +11,7 @@ body .bili-header-m .nav-menu div.bili-wrapper
 {
     position: relative !important;
     float: right !important;
-    margin: 26px 12px 5px 0 !important;
+    margin: 26px 24px 5px 0 !important;
     width: 130px !important;
     height: 30px !important;
     background-color: transparent !important;
@@ -76,7 +76,7 @@ input.search-keyword
     .search
     {
         width: 250px !important;
-        margin: 26px 72px 5px 0 !important;
+        margin: 26px 24px 5px 0 !important;
     }
 
     input.search-keyword
