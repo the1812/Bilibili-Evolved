@@ -23,6 +23,29 @@
             {
                 textNode.nodeValue = translation;
             }
+            else if (Array.isArray(translation))
+            {
+                let finalTranslation = null;
+                for (const subTranslation of translation)
+                {
+                    if (typeof subTranslation === "string")
+                    {
+                        finalTranslation = subTranslation;
+                    }
+                    else
+                    {
+                        const { text, selector } = subTranslation;
+                        if (textNode.parentElement.matches(selector))
+                        {
+                            finalTranslation = text;
+                        }
+                    }
+                }
+                if (finalTranslation !== null)
+                {
+                    textNode.nodeValue = finalTranslation;
+                }
+            }
             else
             {
                 const { text, selector } = translation;
