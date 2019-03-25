@@ -82,7 +82,7 @@ const settings = {
     imageResolution: false,
     toastInternalError: false,
     i18n: false,
-    i18nLanguage: "ja-JP",
+    i18nLanguage: "日本語",
     cache: {},
 };
 const fixedSettings = {
