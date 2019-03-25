@@ -7,13 +7,12 @@ class Toast
         this.title = title;
         this.duration = 3000;
         this.element = $(this.cardHtml)[0];
-        this.$element = $(this.element);
-        $(".toast-card-container").append(this.$element);
+        document.querySelector(".toast-card-container").insertAdjacentElement("beforeend", this.element);
     }
     show()
     {
         this.element.classList.add("visible");
-        this.$element.find(".toast-card-dismiss").on("click", () => this.dismiss());
+        this.element.querySelector(".toast-card-dismiss").addEventListener("click", () => this.dismiss());
         if (this.duration)
         {
             setTimeout(() => this.dismiss(), this.duration);
@@ -23,7 +22,7 @@ class Toast
     {
         if (this.element.classList.contains("visible"))
         {
-            this.$element.on("transitionend", () => this.$element.remove());
+            this.element.addEventListener("transitionend", () => this.element.remove());
             this.element.classList.remove("visible");
         }
     }
@@ -43,13 +42,13 @@ class Toast
     }
     static get container()
     {
-        return $(".toast-card-container");
+        return document.querySelector(".toast-card-container");
     }
     static createToastContainer()
     {
-        if ($(".toast-card-container").length === 0)
+        if (!document.querySelector(".toast-card-container"))
         {
-            $("body").append(/*html*/`<div class="toast-card-container"></div>`);
+            document.body.insertAdjacentHTML("beforeend", /*html*/`<div class="toast-card-container"></div>`);
         }
     }
     static internalShow(message, title, duration, type)
