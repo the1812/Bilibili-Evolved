@@ -18,7 +18,10 @@
 .tag.sky-blue,
 .tag.sky-blue:hover,
 .tab-selector-wrap .selector-wrap,
-.tab-selector-wrap .selector-wrap ul
+.tab-selector-wrap .selector-wrap ul,
+.popup-content-ctnr .report-input,
+.share-wrap .content-wrap .input-wrap input,
+.emoji-box .emoji-tabs .tab-link:hover
 {
     background-color: #444 !important;
 }
@@ -45,7 +48,8 @@
 .video-detail .item-number,
 .video-detail .item-time,
 .video-card .labels-ctnr,
-.video-card .icons-label .text
+.video-card .icons-label .text,
+.share-wrap .content-wrap .qr-wrap .qr-title
 {
     color: #aaa !important;
 }
@@ -61,7 +65,12 @@
 .tag.sky-blue:hover,
 .tab-selector-wrap .tab-wrap>ul li,
 .tab-selector-wrap .selector-wrap,
-.tab-selector-wrap .selector-wrap ul>li:hover
+.tab-selector-wrap .selector-wrap ul>li:hover,
+.popup-content-ctnr .upload-box .upload-btn,
+.popup-content-ctnr .report-input,
+.share-wrap .content-wrap .input-wrap span,
+.share-wrap .content-wrap .input-wrap input,
+.share-wrap .content-wrap .input-wrap button
 {
     color: #eee !important;
 }
@@ -78,7 +87,9 @@
 .tag.sky-blue.activated,
 .tag.sky-blue,
 .tab-selector-wrap .selector-wrap div,
-.tab-selector-wrap .selector-wrap ul
+.tab-selector-wrap .selector-wrap ul,
+.popup-content-ctnr .report-input,
+.share-wrap .content-wrap .input-wrap input
 {
     border-color: transparent !important;
 }
@@ -176,7 +187,9 @@
 } */
 .up-info .btn-panel .not-follow-charge-btn:hover,
 .tab-wrap>ul li.selected a span:after,
-.tag.sky-blue.activated
+.tag.sky-blue.activated,
+.popup-content-ctnr .upload-box .upload-btn,
+.share-wrap .content-wrap .input-wrap button
 {
     background-color: var(--theme-color) !important;
 }
@@ -191,7 +204,8 @@
 #announcement-area .flip-view .action-arrow-ctnr:hover .icon-font,
 .rank-item:hover .item-title,
 .tab-wrap>ul li.selected a span,
-.tab-wrap>ul li a span:hover
+.tab-wrap>ul li a span:hover,
+.share-wrap .content-wrap .title
 {
     color: var(--theme-color) !important;
 }
