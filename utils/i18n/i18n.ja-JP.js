@@ -15,10 +15,7 @@ export const map = new Map([
     [`历史`, `視聴履歴`],
     [`投稿`, `投稿`],
     [`*`, [
-        {
-            selector: `#page-index .col-2 .section .user-auth.no-auth .no-auth-title span`,
-            text: `test`,
-        },
+
     ]],
 ]);
 export default {
