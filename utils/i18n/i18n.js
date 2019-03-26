@@ -6,17 +6,26 @@
     };
     const { map } = await import(`./i18n.${languageCodeMap[settings.i18nLanguage]}`);
     // https://stackoverflow.com/questions/10730309/find-all-text-nodes-in-html-page
-    const getAllTextNodes = rootElement =>
+    const forEachTextNode = (rootElement, action) =>
     {
-        const nodes = [];
         const walker = document.createTreeWalker(rootElement, NodeFilter.SHOW_TEXT, null, false);
         let node = walker.nextNode();
         while (node)
         {
-            nodes.push(node);
+            action(node);
             node = walker.nextNode();
         }
-        return nodes;
+    };
+    const translateCssMatches = () =>
+    {
+        for (const { selector, text } of map.get("*"))
+        {
+            const element = document.querySelector(selector);
+            if (element)
+            {
+                forEachTextNode(element, it => it.nodeValue = text);
+            }
+        }
     };
     const translateTextNode = textNode =>
     {
@@ -60,19 +69,27 @@
             }
         }
     };
-    getAllTextNodes(document.body).forEach(translateTextNode);
+    forEachTextNode(document.body, translateTextNode);
+    translateCssMatches();
     Observer.childListSubtree("body", records =>
     {
-        records.forEach(it => [...it.addedNodes].forEach(node =>
+        records.forEach(it =>
         {
-            if (node.nodeType === Node.TEXT_NODE)
+            if (it.addedNodes.length > 0)
             {
-                translateTextNode(node);
+                translateCssMatches();
             }
-            else
+            it.addedNodes.forEach(node =>
             {
-                getAllTextNodes(node).forEach(translateTextNode);
-            }
-        }));
+                if (node.nodeType === Node.TEXT_NODE)
+                {
+                    translateTextNode(node);
+                }
+                else
+                {
+                    forEachTextNode(node, translateTextNode);
+                }
+            });
+        });
     });
 })();
