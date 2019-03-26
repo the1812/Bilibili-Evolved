@@ -495,6 +495,7 @@ Resource.manifest = {
     },
     i18n: {
         path: "i18n.min.js",
+        style: "important",
         displayNames: {
             i18n: "界面翻译"
         },
