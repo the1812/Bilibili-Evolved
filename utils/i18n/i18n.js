@@ -17,7 +17,7 @@ export class Translator
         {
             return;
         }
-        const translation = map.get(value.trim());
+        const translation = Translator.map.get(value.trim());
         if (translation === undefined)
         {
             return;
@@ -89,7 +89,7 @@ export class Translator
     }
     static translateCssMatches()
     {
-        const selectors = map.get("*");
+        const selectors = Translator.map.get("*");
         if (!selectors)
         {
             return;
@@ -134,10 +134,12 @@ Translator.textNode = new TextNodeTranslator;
 Translator.title = new TitleTranslator;
 Translator.placeholder = new PlaceholderTranslator;
 Translator.allTranslators = [Translator.textNode, Translator.title, Translator.placeholder];
+Translator.map = null;
 
 (async () =>
 {
     const { map } = await import(`./i18n.${languageCodeMap[settings.i18nLanguage]}`);
+    Translator.map = map;
 
     Translator.translate(document.body);
     Translator.translateCssMatches();
