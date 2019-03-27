@@ -11,6 +11,7 @@ export function loadResources()
     {
         const resource = new Resource(data.path, data.styles);
         resource.key = key;
+        resource.dropdown = data.dropdown;
         if (data.displayNames)
         {
             resource.displayName = data.displayNames[key];

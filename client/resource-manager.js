@@ -250,6 +250,7 @@ export class ResourceManager
             }
         }
         await Promise.all(Object.values(Resource.manifest)
+            .concat(Object.values(Resource.all))
             .filter(it => it.dropdown)
             .map(it => applyDropdownOption(it.dropdown))
         );

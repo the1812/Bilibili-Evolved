@@ -493,6 +493,12 @@ Resource.manifest = {
     i18nJapanese: {
         path: "i18n.ja-JP.min.js",
     },
+    i18nTraditionalChinese: {
+        path: "i18n.zh-TW.min.js",
+    },
+    i18nGerman: {
+        path: "i18n.de-DE.min.js",
+    },
     i18n: {
         path: "i18n.min.js",
         style: "important",
