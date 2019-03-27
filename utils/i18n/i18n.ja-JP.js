@@ -14,7 +14,9 @@ export const map = new Map([
     [`收藏`, `お気に入り`],
     [`历史`, `視聴履歴`],
     [`投稿`, `投稿`],
+    /* Your translation here */
     [`*`, [
+        /* CSS translation here */
 
     ]],
 ]);

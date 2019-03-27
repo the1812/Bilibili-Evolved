@@ -63,8 +63,9 @@ export const map = new Map([
     [`正在直播`, `Live broadcasting`],
     [`投稿视频`, `Posted video`],
     [`展开全文`, `Expand`],
-
+    /* Your translation here */
     [`*`, [
+        /* CSS translation here */
 
     ]],
 ]);
