@@ -49,7 +49,16 @@ namespace BilibiliEvolved.Build
                 var list = new List<string>();
                 var currentDirectory = new DirectoryInfo(path);
                 list.AddRange(currentDirectory.EnumerateFiles()
-                    .Where(file => predicate(file))
+                    .Where(file =>
+                    {
+                        var fullName = file.FullName;
+                        return predicate(file)
+                        && !fullName.Contains(@".vs\")
+                        && !fullName.Contains(@".vscode\")
+                        && !fullName.Contains(@"build-scripts\")
+                        && !fullName.Contains(@"node_modules\")
+                        && !fullName.Contains(@".backup.");
+                    })
                     .Select(file => getRelativePath(file.FullName)));
                 foreach (var subDir in currentDirectory.EnumerateDirectories())
                 {
@@ -66,14 +75,7 @@ namespace BilibiliEvolved.Build
         }
         public virtual ProjectBuilder Build(ProjectBuilder builder)
         {
-            var files = GetFiles(file =>
-                FileFilter(file)
-                && !file.FullName.Contains(@".vs\")
-                && !file.FullName.Contains(@".vscode\")
-                && !file.FullName.Contains(@"build-scripts\")
-                && !file.FullName.Contains(@"node_modules\")
-                && !file.FullName.Contains(@".backup.")
-                );
+            var files = GetFiles(FileFilter);
             using (var cache = new BuildCache())
             {
                 var changedFiles = files.Where(file => !cache.Contains(file));
