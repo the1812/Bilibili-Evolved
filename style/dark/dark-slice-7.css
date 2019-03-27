@@ -49,7 +49,9 @@
 .video-detail .item-time,
 .video-card .labels-ctnr,
 .video-card .icons-label .text,
-.share-wrap .content-wrap .qr-wrap .qr-title
+.share-wrap .content-wrap .qr-wrap .qr-title,
+.article-card .article-info .data,
+.article-card .article-info .data a
 {
     color: #aaa !important;
 }
@@ -70,7 +72,8 @@
 .popup-content-ctnr .report-input,
 .share-wrap .content-wrap .input-wrap span,
 .share-wrap .content-wrap .input-wrap input,
-.share-wrap .content-wrap .input-wrap button
+.share-wrap .content-wrap .input-wrap button,
+.article-card .article-info .title
 {
     color: #eee !important;
 }
@@ -117,10 +120,11 @@
 {
     filter: brightness(0) invert(1) !important;
 } */
-/* a
+.article-card .article-info .data .comment .icon,
+.article-card .article-info .data .view .icon
 {
     filter: brightness(0) invert(.7) !important;
-} */
+}
 /* a
 {
     filter: var(--blue-image-filter) !important;
@@ -205,7 +209,8 @@
 .rank-item:hover .item-title,
 .tab-wrap>ul li.selected a span,
 .tab-wrap>ul li a span:hover,
-.share-wrap .content-wrap .title
+.share-wrap .content-wrap .title,
+.article-card .article-info .title:hover
 {
     color: var(--theme-color) !important;
 }
