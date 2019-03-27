@@ -3,7 +3,11 @@ export const map = new Map([
     [`画友`, `絵画`],
     [`音频`, `音楽`],
     [`游戏中心`, `ゲーム`],
-    [`直播`, `生放送`],
+    [`直播`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `生放送`,
+    }],
     [`会员购`, `ショップ`],
     [`漫画`, `漫画`],
     [`下载APP`, `アプリ`],

@@ -11,7 +11,7 @@ export class Translator {
     getElement(node) { return node; }
     translate(node) {
         const value = this.getValue(node);
-        if (!value || typeof value !== "string") {
+        if (!value || typeof value !== "string" || value === "*") {
             return;
         }
         const translation = Translator.map.get(value.trim());
@@ -28,8 +28,8 @@ export class Translator {
                     finalTranslation = subTranslation;
                 }
                 else {
-                    const { text, selector } = subTranslation;
-                    if (this.getElement(node).matches(selector)) {
+                    const { text, selector, not } = subTranslation;
+                    if (this.getElement(node).matches(selector) !== Boolean(not)) {
                         finalTranslation = text;
                     }
                 }
@@ -39,8 +39,8 @@ export class Translator {
             }
         }
         else {
-            const { text, selector } = translation;
-            if (this.getElement(node).matches(selector)) {
+            const { text, selector, not } = translation;
+            if (this.getElement(node).matches(selector) !== Boolean(not)) {
                 this.setValue(node, text);
             }
         }
