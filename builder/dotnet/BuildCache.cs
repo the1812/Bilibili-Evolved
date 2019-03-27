@@ -15,8 +15,8 @@ namespace BilibiliEvolved.Build
         private readonly DirectoryInfo cacheDirectory;
         private readonly SHA1Managed sha1;
 
-        public BuildCache() : this(Environment.CurrentDirectory) {}
-        public BuildCache(string path) : this(new DirectoryInfo(path)) {}
+        public BuildCache() : this(Environment.CurrentDirectory) { }
+        public BuildCache(string path) : this(new DirectoryInfo(path)) { }
         public BuildCache(DirectoryInfo path)
         {
             cacheDirectory = path;
@@ -54,7 +54,7 @@ namespace BilibiliEvolved.Build
         public void SaveCache()
         {
             var builder = new StringBuilder();
-            sha1Cache.ForEach(pair =>
+            sha1Cache.OrderBy(pair => pair.Key).ForEach(pair =>
             {
                 builder
                     .Append(pair.Key)
