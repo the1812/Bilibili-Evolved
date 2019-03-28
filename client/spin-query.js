@@ -25,7 +25,10 @@ export class SpinQuery
             }
             else
             {
-                this.retry++;
+                if (document.hasFocus())
+                {
+                    this.retry++;
+                }
                 setTimeout(() => this.tryQuery(query, condition, action, failed), this.queryInterval);
             }
         }
