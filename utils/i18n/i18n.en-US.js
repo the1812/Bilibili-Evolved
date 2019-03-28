@@ -43,7 +43,7 @@ export const map = new Map([
     [`查看全部`, `View more`],
     [`查看更多`, `View more`],
     [`视频`, `Video`],
-    [`专栏`, `Blog`],
+    [`专栏`, `Column`],
     [`转发`, `Forward`],
     [`评论`, `Reviews`],
     [`赞`, `Like`],
