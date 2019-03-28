@@ -14,6 +14,10 @@ export const map = new Map([
     [`收藏`, `收藏`],
     [`历史`, `歴史`],
     [`投稿`, `投稿`],
+    [`音乐`,`音楽`],
+    [`游戏`,`遊戲`],
+    [`娱乐`,`娯楽`],
+    [`广告`,`広告`],
     /* Your translation here */
     [`*`, [
         /* CSS translation here */
