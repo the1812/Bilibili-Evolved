@@ -505,6 +505,12 @@ Resource.manifest = {
         displayNames: {
             i18n: "界面翻译"
         },
-    }
+    },
+    playerFocus: {
+        path: "player-focus.min.js",
+        displayNames: {
+            playerFocus: "自动定位到播放器",
+        },
+    },
 };
 export const resourceManifest = Resource.manifest;

@@ -58,6 +58,7 @@ export const settings = {
     toastInternalError: false,
     i18n: false,
     i18nLanguage: "日本語",
+    playerFocus: false,
     cache: {},
 };
 const fixedSettings = {

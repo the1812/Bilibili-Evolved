@@ -83,6 +83,7 @@ const settings = {
     toastInternalError: false,
     i18n: false,
     i18nLanguage: "日本語",
+    playerFocus: false,
     cache: {},
 };
 const fixedSettings = {
@@ -1573,7 +1574,13 @@ Resource.manifest = {
         displayNames: {
             i18n: "界面翻译"
         },
-    }
+    },
+    playerFocus: {
+        path: "player-focus.min.js",
+        displayNames: {
+            playerFocus: "自动定位到播放器",
+        },
+    },
 };
 const resourceManifest = Resource.manifest;
 class StyleManager
