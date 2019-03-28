@@ -1895,11 +1895,15 @@ class ResourceManager
                 }));
             }
         }
-        await Promise.all(Object.values(Resource.manifest)
-            .concat(Object.values(Resource.all))
-            .filter(it => it.dropdown)
-            .map(it => applyDropdownOption(it.dropdown))
-        );
+        const manifests = Object.values(Resource.manifest).filter(it => it.dropdown).map(it => it.dropdown);
+        Object.values(Resource.all).filter(it => it.dropdown).map(it => it.dropdown).forEach(it =>
+        {
+            if (!manifests.some(m => m.key === it.key))
+            {
+                manifests.push(it);
+            }
+        });
+        await Promise.all(manifests.map(it => applyDropdownOption(it)));
     }
     validateCache()
     {
