@@ -3,7 +3,11 @@ export const map = new Map([
     [`画友`, `Painting`],
     [`音频`, `Music`],
     [`游戏中心`, `Game`],
-    [`直播`, `Live`],
+    [`直播`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Live`,
+    }],
     [`会员购`, `Shop`],
     [`漫画`, `Comic`],
     [`下载APP`, `APP`],
@@ -43,7 +47,11 @@ export const map = new Map([
     [`查看全部`, `View more`],
     [`查看更多`, `View more`],
     [`视频`, `Video`],
-    [`专栏`, `Column`],
+    [`专栏`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Column`,
+    }],
     [`转发`, `Forward`],
     [`评论`, `Reviews`],
     [`赞`, `Like`],
@@ -55,14 +63,109 @@ export const map = new Map([
     [`历史动态`, `History`],
     [`投稿了`, `posted`],
     [`更新了`, `updated`],
-    [`番剧`, `Bangumi`],
+    [`番剧`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Bangumi`,
+    }],
     [`样式`, `Style`],
     [`工具`, `Tools`],
     [`触摸`, `Touch`],
     [`其他`, `Other`],
+    [`附加功能`, `Add-on features`],
+    [`空空如也哦...`, `Nothing...`],
     [`正在直播`, `Live broadcasting`],
     [`投稿视频`, `Posted video`],
     [`展开全文`, `Expand`],
+    [`动画`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Anime`,
+    }],
+    [`科技`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Tech`,
+    }],
+    [`游戏`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Game`,
+    }],
+    [`生活`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Life`,
+    }],
+    [`国创`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Native`,
+    }],
+    [`音乐`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Music`,
+    }],
+    [`舞蹈`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Dance`,
+    }],
+    [`数码`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Digital`,
+    }],
+    [`鬼畜`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Kichiku`,
+    }],
+    [`时尚`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Fashion`,
+    }],
+    [`广告`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Ads`,
+    }],
+    [`娱乐`, [
+        {
+            selector: `.elevator-module .nav-list .item`,
+            not: true,
+            text: `Entertainment`,
+        },
+        {
+            selector: `.primary-menu .nav-menu li .nav-name`,
+            text: `Entmt`
+        },
+    ]],
+    [`电影`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Movie`,
+    }],
+    [`TV剧`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `TV drama`,
+    }],
+    [`影视`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Film`,
+    }],
+    [`纪录片`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `Documentary`,
+    }],
+    [`放映厅`, `Cinema`],
+    [`广场`, `Plaza`],
+    [`小黑屋`, `Blackroom`],
     /* Your translation here */
     [`*`, [
         /* CSS translation here */
