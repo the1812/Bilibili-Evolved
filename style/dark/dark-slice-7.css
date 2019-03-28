@@ -22,7 +22,8 @@
 .tab-selector-wrap .selector-wrap ul,
 .popup-content-ctnr .report-input,
 .share-wrap .content-wrap .input-wrap input,
-.emoji-box .emoji-tabs .tab-link:hover
+.emoji-box .emoji-tabs .tab-link:hover,
+.block-area .follow-wrapper .follow-head .follow-more
 {
     background-color: #444 !important;
 }
@@ -57,7 +58,9 @@
 .article-info-module .v-data span,
 .video-info-module .v-info,
 .video-info-module .v-preview .txt,
-.video-info-module .v-data span
+.video-info-module .v-data span,
+.follow-item .details .ep-info,
+ .follow-item .details .ep-intro
 {
     color: #aaa !important;
 }
@@ -79,7 +82,9 @@
 .share-wrap .content-wrap .input-wrap span,
 .share-wrap .content-wrap .input-wrap input,
 .share-wrap .content-wrap .input-wrap button,
-.article-card .article-info .title
+.article-card .article-info .title,
+.follow-item .details .season-title,
+.block-area .follow-wrapper .follow-head .follow-more
 {
     color: #eee !important;
 }
@@ -99,7 +104,8 @@
 .tab-selector-wrap .selector-wrap ul,
 .popup-content-ctnr .report-input,
 .share-wrap .content-wrap .input-wrap input,
-.article-info-module
+.article-info-module,
+.block-area .follow-wrapper .follow-head .follow-more
 {
     border-color: transparent !important;
 }
@@ -124,10 +130,10 @@
 {
     fill: #fff !important;
 } */
-/* a
+.block-area .follow-wrapper .follow-head .follow-more .icon
 {
     filter: brightness(0) invert(1) !important;
-} */
+}
 .article-card .article-info .data .icon,
 .article-info-module .v-data .icon,
 .video-info-module .v-data .icon
@@ -202,7 +208,8 @@
 .tab-wrap>ul li.selected a span:after,
 .tag.sky-blue.activated,
 .popup-content-ctnr .upload-box .upload-btn,
-.share-wrap .content-wrap .input-wrap button
+.share-wrap .content-wrap .input-wrap button,
+.block-area .follow-wrapper .follow-head .follow-more:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -219,7 +226,9 @@
 .tab-wrap>ul li.selected a span,
 .tab-wrap>ul li a span:hover,
 .share-wrap .content-wrap .title,
-.article-card .article-info .title:hover
+.article-card .article-info .title:hover,
+.follow-item .details .season-title:hover,
+.follow-item .details .highlight
 {
     color: var(--theme-color) !important;
 }
