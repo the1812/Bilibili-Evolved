@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      255.01
+// @version      255.02
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -559,10 +559,22 @@ class Observer
         {
             return null;
         }
+        const recordTest = (records, predicate) =>
+        {
+            if (records.length === 0)
+            {
+                return false;
+            }
+            return records.every(it => predicate(it));
+        };
         return Observer.childList("#bofqi,#bilibiliPlayer", records =>
         {
-            const isMenuAttached = records.length > 0 && records.every(it => [...it.addedNodes].some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
-            if (!isMenuAttached)
+            const isMenuAttached = recordTest(records, it => [...it.addedNodes]
+                .some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
+            const isMiniPlayer = recordTest(records, it => [...it.addedNodes]
+                .concat([...it.removedNodes])
+                .every(it => it.classList.contains("drag-bar")));
+            if (!isMenuAttached && !isMiniPlayer)
             {
                 callback(records);
             }

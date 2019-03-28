@@ -79,10 +79,22 @@ export class Observer
         {
             return null;
         }
+        const recordTest = (records, predicate) =>
+        {
+            if (records.length === 0)
+            {
+                return false;
+            }
+            return records.every(it => predicate(it));
+        };
         return Observer.childList("#bofqi,#bilibiliPlayer", records =>
         {
-            const isMenuAttached = records.length > 0 && records.every(it => [...it.addedNodes].some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
-            if (!isMenuAttached)
+            const isMenuAttached = recordTest(records, it => [...it.addedNodes]
+                .some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
+            const isMiniPlayer = recordTest(records, it => [...it.addedNodes]
+                .concat([...it.removedNodes])
+                .every(it => it.classList.contains("drag-bar")));
+            if (!isMenuAttached && !isMiniPlayer)
             {
                 callback(records);
             }
