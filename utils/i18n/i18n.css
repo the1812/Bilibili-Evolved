@@ -3,7 +3,7 @@
     width: auto !important;
     padding: 0 4px !important;
 }
-.primary-menu .nav-menu>li:not(.home) .nav-name
+.primary-menu .nav-menu .nav-name
 {
     white-space: pre !important;
 }
