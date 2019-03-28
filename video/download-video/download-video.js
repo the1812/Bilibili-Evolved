@@ -237,9 +237,9 @@ class VideoDownloader
                     xhr.send();
                 });
                 xhr.setRequestHeader("Range", range);
+                this.progressMap.set(xhr, 0);
                 xhr.send();
                 this.workingXhr.push(xhr);
-                this.progressMap.set(xhr, 0);
             }));
             startByte = Math.round(startByte + partialLength) + 1;
         }
