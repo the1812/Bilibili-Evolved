@@ -18,10 +18,10 @@ export const map = new Map([
     [`图片`,`ピクチャ`],
     [`视频`,`ビデオ`],
     [`音乐`,`音楽`],
-    [`时尚`,`ファッション`],
-    [`电影`,`映画`],
+    [`时尚`,`潮流`],
+    [`电影`,`劇場`],
+    [`影视`,`映画`],
     [`放映厅`,`映画館`],
-    [`娱乐`,`エンタメ`],
     [`广告`,`広告`],
     [`广场`,`広場`],
     [`发布`,`発表`],
@@ -79,6 +79,11 @@ export const map = new Map([
         selector: `.elevator-module .nav-list .item`,
         not: true,
         text: `デジタル`,
+    }],
+    [`娱乐`, {
+        selector: `.elevator-module .nav-list .item`,
+        not: true,
+        text: `エンタメ`,
     }],
     /* Your translation here */
     [`*`, [
