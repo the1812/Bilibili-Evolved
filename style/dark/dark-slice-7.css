@@ -2,7 +2,8 @@
 .link-tag-box .selector-wrap ul>li:hover,
 .video-card .labels-ctnr,
 .tab-selector-wrap .selector-wrap ul>li:hover,
-.article-info-module
+.article-info-module,
+.result.is-web .vote-result-comment
 {
     background-color: #222 !important;
 }
@@ -60,7 +61,9 @@
 .video-info-module .v-preview .txt,
 .video-info-module .v-data span,
 .follow-item .details .ep-info,
- .follow-item .details .ep-intro
+ .follow-item .details .ep-intro,
+ .vote-info-wrapper .user-name .text,
+ .option-content-wrapper .desc .option-vote
 {
     color: #aaa !important;
 }
@@ -84,7 +87,9 @@
 .share-wrap .content-wrap .input-wrap button,
 .article-card .article-info .title,
 .follow-item .details .season-title,
-.block-area .follow-wrapper .follow-head .follow-more
+.block-area .follow-wrapper .follow-head .follow-more,
+.vote-info-wrapper .user-name .name,
+.vote-info-wrapper .user-name .vote-to
 {
     color: #eee !important;
 }
@@ -114,7 +119,8 @@
 {
     border-color: #aaa !important;
 }
-.article-info-module .v-data
+.article-info-module .v-data,
+.web-box .expanded .user-li::after
 {
     border-color: #444 !important
 }
