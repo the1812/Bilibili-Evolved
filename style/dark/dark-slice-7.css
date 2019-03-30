@@ -26,7 +26,9 @@
 .emoji-box .emoji-tabs .tab-link:hover,
 .block-area .follow-wrapper .follow-head .follow-more,
 .list-container .list-info-block,
-.list-container .article-list-block
+.list-container .article-list-block,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
+.setting .public-setting .public-wrp .setting-item .circle-wrap
 {
     background-color: #444 !important;
 }
@@ -104,7 +106,10 @@
 .vote-info-wrapper .user-name .name,
 .vote-info-wrapper .vote-to,
 #page-article .article-lists .lists-item .item-right .item-name,
-.list-container .list-info-block .right-side .title
+.list-container .list-info-block .right-side .title,
+.setting .public-setting .public-wrp .setting-item,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok
 {
     color: #eee !important;
 }
@@ -127,7 +132,9 @@
 .article-info-module,
 .block-area .follow-wrapper .follow-head .follow-more,
 .list-container .list-info-block .right-side .up-info-block .follow-btn.on,
-.version-switch-section .bottom-border
+.version-switch-section .bottom-border,
+.cc-body .setting .follow-setting,
+.cc-body .setting .public-setting
 {
     border-color: transparent !important;
 }
@@ -214,7 +221,8 @@
 .data-card .data-wrp .tab .fan-tab.current:after,
 .data-card .fans-wrp .tab .fan-tab.current:after,
 .data-card .data-wrp .total .incr-num:before,
-.data-card .fans-wrp .total .incr-num:before
+.data-card .fans-wrp .total .incr-num:before,
+.setting .public-setting .public-wrp .setting-item .circle-wrap.active
 {
     border-color: var(--theme-color) !important;
 }
@@ -239,7 +247,9 @@
 .tag.sky-blue.activated,
 .popup-content-ctnr .upload-box .upload-btn,
 .share-wrap .content-wrap .input-wrap button,
-.block-area .follow-wrapper .follow-head .follow-more:hover
+.block-area .follow-wrapper .follow-head .follow-more:hover,
+.setting .public-setting .public-wrp .setting-item .circle-wrap .circle-inlie,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok
 {
     background-color: var(--theme-color) !important;
 }
