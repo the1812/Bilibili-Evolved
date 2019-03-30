@@ -24,7 +24,9 @@
 .popup-content-ctnr .report-input,
 .share-wrap .content-wrap .input-wrap input,
 .emoji-box .emoji-tabs .tab-link:hover,
-.block-area .follow-wrapper .follow-head .follow-more
+.block-area .follow-wrapper .follow-head .follow-more,
+.list-container .list-info-block,
+.list-container .article-list-block
 {
     background-color: #444 !important;
 }
@@ -35,11 +37,13 @@
 .rank-cntr .rank-list-ctnr .tip a,
 .live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
 .live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr .more,
-.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr a:hover
+.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr a:hover,
+.list-container .list-info-block .right-side .col .split-line
 {
     background-color: transparent !important;
 }
-.gift-rank-cntr .rank-cntr .item.own
+.gift-rank-cntr .rank-cntr .item.own,
+.list-container .article-list-block .article-item
 {
     background: transparent !important;
 }
@@ -65,7 +69,9 @@
 .vote-info-wrapper .user-name .text,
 .option-content-wrapper .desc .option-vote,
 #page-article .article-lists .lists-item .item-right .item-title,
-#page-article .article-lists .lists-item .item-right .item-info span
+#page-article .article-lists .lists-item .item-right .item-info span,
+.list-container .list-info-block .right-side .col,
+.list-container .list-info-block .right-side .summary
 {
     color: #aaa !important;
 }
@@ -92,7 +98,8 @@
 .block-area .follow-wrapper .follow-head .follow-more,
 .vote-info-wrapper .user-name .name,
 .vote-info-wrapper .vote-to,
-#page-article .article-lists .lists-item .item-right .item-name
+#page-article .article-lists .lists-item .item-right .item-name,
+.list-container .list-info-block .right-side .title
 {
     color: #eee !important;
 }
@@ -113,12 +120,14 @@
 .popup-content-ctnr .report-input,
 .share-wrap .content-wrap .input-wrap input,
 .article-info-module,
-.block-area .follow-wrapper .follow-head .follow-more
+.block-area .follow-wrapper .follow-head .follow-more,
+.list-container .list-info-block .right-side .up-info-block .follow-btn.on
 {
     border-color: transparent !important;
 }
 .article-info-module .v-info .line,
-.video-info-module .v-info .line
+.video-info-module .v-info .line,
+.list-container .article-list-block .article-item .item-holder .article-content .article-left-block
 {
     border-color: #aaa !important;
 }
