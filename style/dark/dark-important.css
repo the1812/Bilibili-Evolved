@@ -72,7 +72,7 @@ blockquote .color-yellow-04,
 {
     color: #aaa !important;
 }
-.sticky-bar .bar-content .message,
+.home-page .sticky-bar .bar-content .message,
 .cover .disabled-cover,
 .el-input__inner,
 .commnent-screen-wrap .el-input__inner,
@@ -84,7 +84,8 @@ blockquote .color-yellow-04,
 .invitation-record-warp .invtable .inputdone,
 .bb-comment .no-login .comment-submit,
 .live-skin-coloration-area .live-skin-main-text,
-.live-skin-coloration-area .live-skin-highlight-text
+.live-skin-coloration-area .live-skin-highlight-text,
+#app .sticky-bar .bar-content .message
 {
     color: #eee !important;
 }
@@ -103,7 +104,7 @@ blockquote .color-yellow-04,
     border-color: transparent !important;
 }
 
-.sticky-bar .bar-content .message:hover,
+.home-page .sticky-bar .bar-content .message:hover,
 .other a a:hover,
 .more-data a:hover,
 .rank-item .content .info .detail a a:hover,
@@ -131,7 +132,8 @@ blockquote .color-yellow-04,
 .live-skin-coloration-area .live-skin-highlight-text,
 .live-skin-coloration-area .live-skin-normal-a-text:hover,
 .live-skin-normal-a-text:active,
-.up-info .u-info .name .username.is-vip:hover
+.up-info .u-info .name .username.is-vip:hover,
+#app .sticky-bar .bar-content .message:hover
 {
     color: var(--theme-color) !important;
 }
