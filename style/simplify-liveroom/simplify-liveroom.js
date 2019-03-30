@@ -37,30 +37,58 @@ export default {
                 }
                 settingsList.classList.toggle("opened");
             });
+            let skinDisabled = settings.simplifyLiveroomSettings.skin;
+            const skinSelectors = [
+                "#head-info-vm",
+                "#gift-control-vm",
+                "#rank-list-vm",
+                "#rank-list-ctnr-box",
+                ".gift-panel.base-panel",
+                ".gift-panel.extend-panel",
+                ".seeds-wrap>div:first-child",
+                ".gift-section>div:last-child",
+                ".z-gift-package>div>div",
+                ".right-action"
+            ];
+            const skinClass = "live-skin-coloration-area";
+            skinSelectors.forEach(selector =>
+            {
+                SpinQuery.select(
+                    selector,
+                    skin =>
+                    {
+                        Observer.attributes(selector, records =>
+                        {
+                            records.forEach(record =>
+                            {
+                                if (record.attributeName === "class")
+                                {
+                                    // console.log("Observed class change: ", record);
+                                    if (skinDisabled && skin.classList.contains(skinClass))
+                                    {
+                                        skin.classList.remove(skinClass);
+                                    }
+                                    else if (!skinDisabled && !skin.classList.contains(skinClass))
+                                    {
+                                        skin.classList.add(skinClass);
+                                    }
+                                }
+                            });
+                        });
+                    });
+            });
             const setBodyClass = (checked, key) =>
             {
                 document.body.classList[checked ? "add" : "remove"](`simplify-${key}`);
                 if (key === "skin")
                 {
-                    [
-                        "#head-info-vm",
-                        "#gift-control-vm",
-                        "#rank-list-vm",
-                        "#rank-list-ctnr-box",
-                        ".gift-panel",
-                        ".seeds-wrap>div:first-child",
-                        ".gift-section>div:last-child",
-                        ".z-gift-package>div>div",
-                        ".right-action"
-                    ].forEach(it =>
+                    skinDisabled = checked;
+                    skinSelectors.forEach(selector =>
                     {
                         SpinQuery.select(
-                            checked ? it + ".live-skin-coloration-area" : it,
-                            skin =>
-                            {
-                                console.log(skin.classList);
-                                skin.classList[checked ? "remove" : "add"]("live-skin-coloration-area");
-                            });
+                            selector,
+                            skin => skin.classList[checked ? "remove" : "add"]("live-skin-coloration-area")
+                        );
                     });
                 }
             };
