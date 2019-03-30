@@ -1,0 +1,23 @@
+.simplify-vip .vip-icon,
+.simplify-fansMedal .fans-medal-item-ctnr,
+.simplify-title .title-label,
+.simplify-userLevel .user-level-icon,
+.simplify-guard i.guard-icon,
+.simplify-systemMessage .system-msg,
+.simplify-welcomeMessage .welcome-guard,
+.simplify-welcomeMessage .welcome-msg,
+.simplify-popup .chat-popups-section,
+.simplify-popup .link-popup-ctnr
+{
+    display: none !important;
+}
+.simplify-liveroom-settings>ul>li
+{
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+}
+.simplify-liveroom-settings>ul>li:hover
+{
+    background: rgba(0,0,0,0.16);
+}

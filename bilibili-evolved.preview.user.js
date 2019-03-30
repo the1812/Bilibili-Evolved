@@ -20,6 +20,7 @@
 // @grant        GM_info
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
+// @require      https://cdn.jsdelivr.net/npm/vue/dist/vue.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
@@ -85,6 +86,17 @@ const settings = {
     i18nLanguage: "日本語",
     playerFocus: false,
     oldTweets: false,
+    simplifyLiveroom: false,
+    simplifyLiveroomSettings: {
+        vip: true,
+        fansMedal: true,
+        title: true,
+        userLevel: true,
+        guard: true,
+        systemMessage: true,
+        welcomeMessage: true,
+        popup: false,
+    },
     cache: {},
 };
 const fixedSettings = {

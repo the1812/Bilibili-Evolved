@@ -73,7 +73,8 @@ div#square.container,
 .open-dialog-masker .open-dialog-content,
 .bnj-comment .page-comment,
 .play-options .play-options-more .play-options-content .play-option,
-.play-options .share-box
+.play-options .share-box,
+.gui-settings-flat-button .popup
 {
     background-color: #222 !important;
 }

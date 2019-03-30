@@ -60,6 +60,17 @@ export const settings = {
     i18nLanguage: "日本語",
     playerFocus: false,
     oldTweets: false,
+    simplifyLiveroom: false,
+    simplifyLiveroomSettings: {
+        vip: true,
+        fansMedal: true,
+        title: true,
+        userLevel: true,
+        guard: true,
+        systemMessage: true,
+        welcomeMessage: true,
+        popup: false,
+    },
     cache: {},
 };
 const fixedSettings = {
