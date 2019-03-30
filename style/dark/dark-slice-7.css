@@ -61,9 +61,11 @@
 .video-info-module .v-preview .txt,
 .video-info-module .v-data span,
 .follow-item .details .ep-info,
- .follow-item .details .ep-intro,
- .vote-info-wrapper .user-name .text,
- .option-content-wrapper .desc .option-vote
+.follow-item .details .ep-intro,
+.vote-info-wrapper .user-name .text,
+.option-content-wrapper .desc .option-vote,
+#page-article .article-lists .lists-item .item-right .item-title,
+#page-article .article-lists .lists-item .item-right .item-info span
 {
     color: #aaa !important;
 }
@@ -89,7 +91,8 @@
 .follow-item .details .season-title,
 .block-area .follow-wrapper .follow-head .follow-more,
 .vote-info-wrapper .user-name .name,
-.vote-info-wrapper .vote-to
+.vote-info-wrapper .vote-to,
+#page-article .article-lists .lists-item .item-right .item-name
 {
     color: #eee !important;
 }
@@ -234,7 +237,9 @@
 .share-wrap .content-wrap .title,
 .article-card .article-info .title:hover,
 .follow-item .details .season-title:hover,
-.follow-item .details .highlight
+.follow-item .details .highlight,
+#page-article .article-lists .lists-item .item-right .item-name a:hover,
+#page-article .article-lists .lists-item .item-right .item-title a:hover
 {
     color: var(--theme-color) !important;
 }
