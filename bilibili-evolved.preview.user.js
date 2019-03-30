@@ -84,6 +84,7 @@ const settings = {
     i18n: false,
     i18nLanguage: "日本語",
     playerFocus: false,
+    oldTweets: false,
     cache: {},
 };
 const fixedSettings = {
@@ -1579,6 +1580,19 @@ Resource.manifest = {
         path: "player-focus.min.js",
         displayNames: {
             playerFocus: "自动定位到播放器",
+        },
+    },
+    simplifyLiveroom: {
+        path: "simplify-liveroom.min.js",
+        style: "important",
+        displayNames: {
+            simplifyLiveroom: "简化直播间"
+        },
+    },
+    oldTweets: {
+        path: "old-tweets.min.js",
+        displayNames: {
+            oldTweets: "旧版动态跳转支持",
         },
     },
 };

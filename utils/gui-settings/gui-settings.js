@@ -244,6 +244,7 @@ function setDisplayNames()
     resources.applyStyle("guiSettingsStyle");
     const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
     document.body.insertAdjacentHTML("beforeend", settingsBox);
+    document.body.insertAdjacentHTML("afterbegin", `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);
     new SpinQuery(
         () => document.body,
         it => it && !(unsafeWindow.parent.window === unsafeWindow),

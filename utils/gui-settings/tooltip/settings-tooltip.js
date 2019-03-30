@@ -59,6 +59,7 @@ export const toolTips = {
     showDeadVideoTitle: `在个人空间中, 为已失效视频恢复标题和封面.`,
     useBiliplusRedirect: `将失效视频重定向到BiliPlus.`,
     biliplusRedirect: `在视频/番剧/空间中, 附加功能<span>"转到BiliPlus"</span>, 点击可以转到BiliPlus上对应的页面.`,
+    oldTweets: `将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.`,
     touchNavBar: `删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`,
     comboLike: `为素质三连(长按点赞)启用触摸支持.`,
     touchVideoPlayer: `增大控制栏的按钮间距, 使触摸操作更准确. 并为播放器启用触摸支持:

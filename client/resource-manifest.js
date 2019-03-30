@@ -512,5 +512,18 @@ Resource.manifest = {
             playerFocus: "自动定位到播放器",
         },
     },
+    simplifyLiveroom: {
+        path: "simplify-liveroom.min.js",
+        style: "important",
+        displayNames: {
+            simplifyLiveroom: "简化直播间"
+        },
+    },
+    oldTweets: {
+        path: "old-tweets.min.js",
+        displayNames: {
+            oldTweets: "旧版动态跳转支持",
+        },
+    },
 };
 export const resourceManifest = Resource.manifest;

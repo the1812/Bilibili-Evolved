@@ -59,6 +59,7 @@ export const settings = {
     i18n: false,
     i18nLanguage: "日本語",
     playerFocus: false,
+    oldTweets: false,
     cache: {},
 };
 const fixedSettings = {
