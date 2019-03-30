@@ -219,7 +219,8 @@ body>div.to-top.on,
 #app>div>div>div.container,
 .play-options .play-options-more .play-options-content,
 .player-auxiliary-area,
-.bilibili-player-danmaku-report-panel .bui-radio-input:checked+.bui-radio-label
+.bilibili-player-danmaku-report-panel .bui-radio-input:checked+.bui-radio-label,
+.rank-list-ctnr
 {
     background-color: transparent !important;
 }
