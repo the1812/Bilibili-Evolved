@@ -75,7 +75,8 @@
 .data-card .data-wrp .tip p,
 .data-card .fans-wrp .tip p,
 .data-card .data-wrp .tab .fan-tab,
-.data-card .fans-wrp .tab .fan-tab
+.data-card .fans-wrp .tab .fan-tab,
+#dc-section_behavior .follow-tool-box .follow-line-legend .legend-item .legend-text
 {
     color: #aaa !important;
 }
@@ -125,7 +126,8 @@
 .share-wrap .content-wrap .input-wrap input,
 .article-info-module,
 .block-area .follow-wrapper .follow-head .follow-more,
-.list-container .list-info-block .right-side .up-info-block .follow-btn.on
+.list-container .list-info-block .right-side .up-info-block .follow-btn.on,
+.version-switch-section .bottom-border
 {
     border-color: transparent !important;
 }
@@ -260,7 +262,8 @@
 #page-article .article-lists .lists-item .item-right .item-name a:hover,
 #page-article .article-lists .lists-item .item-right .item-title a:hover,
 .data-card .data-wrp .tab .fan-tab.current,
-.data-card .fans-wrp .tab .fan-tab.current
+.data-card .fans-wrp .tab .fan-tab.current,
+#dc-section_behavior .follow-tool-box .follow-line-legend .legend-item .icon-line
 {
     color: var(--theme-color) !important;
 }
