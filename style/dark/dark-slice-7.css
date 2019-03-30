@@ -24,7 +24,11 @@
 .popup-content-ctnr .report-input,
 .share-wrap .content-wrap .input-wrap input,
 .emoji-box .emoji-tabs .tab-link:hover,
-.block-area .follow-wrapper .follow-head .follow-more
+.block-area .follow-wrapper .follow-head .follow-more,
+.list-container .list-info-block,
+.list-container .article-list-block,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
+.setting .public-setting .public-wrp .setting-item .circle-wrap
 {
     background-color: #444 !important;
 }
@@ -35,11 +39,13 @@
 .rank-cntr .rank-list-ctnr .tip a,
 .live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
 .live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr .more,
-.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr a:hover
+.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr a:hover,
+.list-container .list-info-block .right-side .col .split-line
 {
     background-color: transparent !important;
 }
-.gift-rank-cntr .rank-cntr .item.own
+.gift-rank-cntr .rank-cntr .item.own,
+.list-container .article-list-block .article-item
 {
     background: transparent !important;
 }
@@ -61,9 +67,18 @@
 .video-info-module .v-preview .txt,
 .video-info-module .v-data span,
 .follow-item .details .ep-info,
- .follow-item .details .ep-intro,
- .vote-info-wrapper .user-name .text,
- .option-content-wrapper .desc .option-vote
+.follow-item .details .ep-intro,
+.vote-info-wrapper .user-name .text,
+.option-content-wrapper .desc .option-vote,
+#page-article .article-lists .lists-item .item-right .item-title,
+#page-article .article-lists .lists-item .item-right .item-info span,
+.list-container .list-info-block .right-side .col,
+.list-container .list-info-block .right-side .summary,
+.data-card .data-wrp .tip p,
+.data-card .fans-wrp .tip p,
+.data-card .data-wrp .tab .fan-tab,
+.data-card .fans-wrp .tab .fan-tab,
+#dc-section_behavior .follow-tool-box .follow-line-legend .legend-item .legend-text
 {
     color: #aaa !important;
 }
@@ -89,7 +104,12 @@
 .follow-item .details .season-title,
 .block-area .follow-wrapper .follow-head .follow-more,
 .vote-info-wrapper .user-name .name,
-.vote-info-wrapper .vote-to
+.vote-info-wrapper .vote-to,
+#page-article .article-lists .lists-item .item-right .item-name,
+.list-container .list-info-block .right-side .title,
+.setting .public-setting .public-wrp .setting-item,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok
 {
     color: #eee !important;
 }
@@ -110,12 +130,17 @@
 .popup-content-ctnr .report-input,
 .share-wrap .content-wrap .input-wrap input,
 .article-info-module,
-.block-area .follow-wrapper .follow-head .follow-more
+.block-area .follow-wrapper .follow-head .follow-more,
+.list-container .list-info-block .right-side .up-info-block .follow-btn.on,
+.version-switch-section .bottom-border,
+.cc-body .setting .follow-setting,
+.cc-body .setting .public-setting
 {
     border-color: transparent !important;
 }
 .article-info-module .v-info .line,
-.video-info-module .v-info .line
+.video-info-module .v-info .line,
+.list-container .article-list-block .article-item .item-holder .article-content .article-left-block
 {
     border-color: #aaa !important;
 }
@@ -190,7 +215,14 @@
 {
     display: none !important;
 } */
-.tag.sky-blue:hover
+.tag.sky-blue:hover,
+.data-card .data-wrp .tab .fan-tab.current,
+.data-card .fans-wrp .tab .fan-tab.current,
+.data-card .data-wrp .tab .fan-tab.current:after,
+.data-card .fans-wrp .tab .fan-tab.current:after,
+.data-card .data-wrp .total .incr-num:before,
+.data-card .fans-wrp .total .incr-num:before,
+.setting .public-setting .public-wrp .setting-item .circle-wrap.active
 {
     border-color: var(--theme-color) !important;
 }
@@ -215,7 +247,9 @@
 .tag.sky-blue.activated,
 .popup-content-ctnr .upload-box .upload-btn,
 .share-wrap .content-wrap .input-wrap button,
-.block-area .follow-wrapper .follow-head .follow-more:hover
+.block-area .follow-wrapper .follow-head .follow-more:hover,
+.setting .public-setting .public-wrp .setting-item .circle-wrap .circle-inlie,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok
 {
     background-color: var(--theme-color) !important;
 }
@@ -234,7 +268,11 @@
 .share-wrap .content-wrap .title,
 .article-card .article-info .title:hover,
 .follow-item .details .season-title:hover,
-.follow-item .details .highlight
+.follow-item .details .highlight,
+#page-article .article-lists .lists-item .item-right .item-name a:hover,
+#page-article .article-lists .lists-item .item-right .item-title a:hover,
+.data-card .data-wrp .tab .fan-tab.current,
+.data-card .fans-wrp .tab .fan-tab.current
 {
     color: var(--theme-color) !important;
 }
@@ -256,9 +294,12 @@
     border-top-color: transparent !important;
     border-left-color: transparent !important;
 } */
-/* a
+.data-card .data-wrp .tab .fan-tab.current:after,
+.data-card .fans-wrp .tab .fan-tab.current:after,
+.data-card .data-wrp .total .incr-num:before,
+.data-card .fans-wrp .total .incr-num:before
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-} */
+}
 /* line-ending test */
