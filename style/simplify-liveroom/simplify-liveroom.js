@@ -7,6 +7,7 @@ const displayNames = {
     systemMessage: "全区广播",
     welcomeMessage: "欢迎信息",
     popup: "抽奖提示",
+    skin: "房间皮肤",
 }
 export default {
     widget: {
@@ -38,8 +39,30 @@ export default {
             });
             const setBodyClass = (checked, key) =>
             {
-                const method = checked ? "add" : "remove";
-                document.body.classList[method](`simplify-${key}`);
+                document.body.classList[checked ? "add" : "remove"](`simplify-${key}`);
+                if (key === "skin")
+                {
+                    [
+                        "#head-info-vm",
+                        "#gift-control-vm",
+                        "#rank-list-vm",
+                        "#rank-list-ctnr-box",
+                        ".gift-panel",
+                        ".seeds-wrap>div:first-child",
+                        ".gift-section>div:last-child",
+                        ".z-gift-package>div>div",
+                        ".right-action"
+                    ].forEach(it =>
+                    {
+                        SpinQuery.select(
+                            checked ? it + ".live-skin-coloration-area" : it,
+                            skin =>
+                            {
+                                console.log(skin.classList);
+                                skin.classList[checked ? "remove" : "add"]("live-skin-coloration-area");
+                            });
+                    });
+                }
             };
             new Vue({
                 el: ".simplify-liveroom-settings",

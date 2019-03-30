@@ -11,6 +11,26 @@
 {
     display: none !important;
 }
+.simplify-skin #head-info-vm,
+.simplify-skin #gift-control-vm,
+.simplify-skin #rank-list-ctnr-box
+{
+    background-image: none !important;
+}
+.simplify-guard .guard-danmaku::before
+{
+    border-image: none !important;
+    background-color: transparent !important;
+}
+.simplify-guard .guard-danmaku
+{
+    margin: 0 !important;
+    padding: 4px 5px !important;
+}
+.simplify-guard .guard-danmaku::after
+{
+    background-image: none !important;
+}
 .simplify-liveroom-settings>ul>li
 {
     padding: 8px 12px;

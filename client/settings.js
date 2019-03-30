@@ -70,6 +70,7 @@ export const settings = {
         systemMessage: true,
         welcomeMessage: true,
         popup: false,
+        skin: false,
     },
     cache: {},
 };
