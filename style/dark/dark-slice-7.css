@@ -272,8 +272,7 @@
 #page-article .article-lists .lists-item .item-right .item-name a:hover,
 #page-article .article-lists .lists-item .item-right .item-title a:hover,
 .data-card .data-wrp .tab .fan-tab.current,
-.data-card .fans-wrp .tab .fan-tab.current,
-#dc-section_behavior .follow-tool-box .follow-line-legend .legend-item .icon-line
+.data-card .fans-wrp .tab .fan-tab.current
 {
     color: var(--theme-color) !important;
 }
