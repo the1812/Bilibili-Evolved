@@ -71,7 +71,11 @@
 #page-article .article-lists .lists-item .item-right .item-title,
 #page-article .article-lists .lists-item .item-right .item-info span,
 .list-container .list-info-block .right-side .col,
-.list-container .list-info-block .right-side .summary
+.list-container .list-info-block .right-side .summary,
+.data-card .data-wrp .tip p,
+.data-card .fans-wrp .tip p,
+.data-card .data-wrp .tab .fan-tab,
+.data-card .fans-wrp .tab .fan-tab
 {
     color: #aaa !important;
 }
@@ -202,7 +206,13 @@
 {
     display: none !important;
 } */
-.tag.sky-blue:hover
+.tag.sky-blue:hover,
+.data-card .data-wrp .tab .fan-tab.current,
+.data-card .fans-wrp .tab .fan-tab.current,
+.data-card .data-wrp .tab .fan-tab.current:after,
+.data-card .fans-wrp .tab .fan-tab.current:after,
+.data-card .data-wrp .total .incr-num:before,
+.data-card .fans-wrp .total .incr-num:before
 {
     border-color: var(--theme-color) !important;
 }
@@ -248,7 +258,9 @@
 .follow-item .details .season-title:hover,
 .follow-item .details .highlight,
 #page-article .article-lists .lists-item .item-right .item-name a:hover,
-#page-article .article-lists .lists-item .item-right .item-title a:hover
+#page-article .article-lists .lists-item .item-right .item-title a:hover,
+.data-card .data-wrp .tab .fan-tab.current,
+.data-card .fans-wrp .tab .fan-tab.current
 {
     color: var(--theme-color) !important;
 }
@@ -270,9 +282,12 @@
     border-top-color: transparent !important;
     border-left-color: transparent !important;
 } */
-/* a
+.data-card .data-wrp .tab .fan-tab.current:after,
+.data-card .fans-wrp .tab .fan-tab.current:after,
+.data-card .data-wrp .total .incr-num:before,
+.data-card .fans-wrp .total .incr-num:before
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-} */
+}
 /* line-ending test */
