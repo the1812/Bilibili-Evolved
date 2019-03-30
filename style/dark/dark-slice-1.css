@@ -2413,6 +2413,11 @@ a.s-btn:hover,
 {
     background: #333 !important;
 }
+.chat-history-panel .chat-history-list,
+.multi-page .cur-list ul
+{
+    scrollbar-color: #444 #222 !important;
+}
 
 ::-webkit-scrollbar-thumb,
 ::-webkit-resizer
@@ -2422,4 +2427,8 @@ a.s-btn:hover,
 ::-webkit-scrollbar-thumb:hover
 {
     background: #555 !important;
+}
+*
+{
+    scrollbar-color: #444 transparent !important;
 }
