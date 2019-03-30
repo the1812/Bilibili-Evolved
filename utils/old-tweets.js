@@ -1,14 +1,26 @@
 const selectors = [
     `a.read-more[href*='t.bilibili.com']`,
     `.link-navbar a[href*='t.bilibili.com']`,
+    `.bili-header-m .nav-menu .nav-con .nav-item [href*='t.bilibili.com']`,
 ];
 const oldUrl = `https://www.bilibili.com/account/dynamic`;
 const newUrl = `https://t.bilibili.com/`;
-for (const selector of selectors)
+const replaceUrl = () =>
 {
-    // document.querySelectorAll(selector).forEach(it => it.setAttribute("href", oldUrl));
-    SpinQuery.any(() => document.querySelectorAll(selector), links => links.forEach(it => it.setAttribute("href", oldUrl)));
-}
+    for (const selector of selectors)
+    {
+        // document.querySelectorAll(selector).forEach(it => it.setAttribute("href", oldUrl));
+        SpinQuery.any(() => document.querySelectorAll(selector), links => links.forEach(it => it.setAttribute("href", oldUrl)));
+    }
+};
+SpinQuery.select(".dynamic-m .wnd_bottom .r-l").then(it =>
+{
+    if (it !== null)
+    {
+        Observer.childList(".dynamic-m .wnd_bottom .r-l", replaceUrl);
+    }
+})
+replaceUrl();
 const isNewTweets = location.host === "t.bilibili.com";
 export default {
     widget: {
