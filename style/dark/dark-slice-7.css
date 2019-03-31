@@ -40,7 +40,8 @@
 .live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
 .live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr .more,
 .live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr a:hover,
-.list-container .list-info-block .right-side .col .split-line
+.list-container .list-info-block .right-side .col .split-line,
+.rank-list-cntr .tip.rank-desc.live-skin-normal-text a.more
 {
     background-color: transparent !important;
 }
