@@ -1,7 +1,6 @@
 const languageCodeMap = {
     "日本語": "ja-JP",
     "English": "en-US",
-    "正體中文": "zh-TW",
     "Deutsch": "de-DE",
 };
 export class Translator {

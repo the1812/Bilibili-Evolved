@@ -1,7 +1,6 @@
 const languageCodeMap: { [key: string]: string } = {
     "日本語": "ja-JP",
     "English": "en-US",
-    "正體中文": "zh-TW",
     "Deutsch": "de-DE",
 };
 export class Translator
@@ -173,6 +172,7 @@ export default {
     },
     // dropdown: {
     //     key: "i18nLanguage",
-    //     items: Object.keys(languageCodeMap),
+    //     // items: Object.keys(languageCodeMap),
+    //     items: [`日本語`, `English`],
     // },
 };
