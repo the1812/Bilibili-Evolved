@@ -28,7 +28,9 @@ export default {
         `,
         success: () =>
         {
-            document.querySelector("#simplify-liveroom").addEventListener("click", e =>
+            const button = document.querySelector("#simplify-liveroom");
+            const mask = document.querySelector(".gui-settings-mask");
+            button.addEventListener("click", e =>
             {
                 const settingsList = document.querySelector(".simplify-liveroom-settings");
                 if (settingsList.contains(e.target) || e.target === settingsList)
@@ -37,6 +39,8 @@ export default {
                 }
                 settingsList.classList.toggle("opened");
             });
+            button.addEventListener("pointerenter", () => mask.classList.add("transparent"));
+            button.addEventListener("pointerleave", () => mask.classList.remove("transparent"));
             let skinDisabled = settings.simplifyLiveroomSettings.skin;
             const skinSelectors = [
                 "#head-info-vm",

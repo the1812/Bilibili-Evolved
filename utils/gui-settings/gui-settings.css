@@ -443,6 +443,10 @@ li.category.folded i.icon-arrow
     opacity: 1;
     pointer-events: initial;
 }
+.gui-settings-mask.opened.transparent
+{
+    opacity: 0;
+}
 .gui-settings-widgets-box,
 .gui-settings-box
 {
