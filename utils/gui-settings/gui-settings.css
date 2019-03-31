@@ -446,6 +446,7 @@ li.category.folded i.icon-arrow
 .gui-settings-mask.opened.transparent
 {
     opacity: 0;
+    transition: all .3s cubic-bezier(0, 0.86, 0.58, 1) .3s;
 }
 .gui-settings-widgets-box,
 .gui-settings-box
