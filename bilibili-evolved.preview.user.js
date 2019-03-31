@@ -974,7 +974,7 @@ class Resource
                                 this.text = cache;
                                 resolve(cache);
                             }
-                            downloadText(this.url).then(text =>
+                            Ajax.getText(this.url).then(text =>
                             {
                                 this.text = this.type.preprocessor(text);
                                 if (text === null)
@@ -997,7 +997,7 @@ class Resource
                         }
                         else
                         {
-                            downloadText(this.url)
+                            Ajax.getText(this.url)
                                 .then(text =>
                                 {
                                     this.text = this.type.preprocessor(text);
