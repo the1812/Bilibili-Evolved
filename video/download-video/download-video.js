@@ -179,8 +179,7 @@ class VideoDownloader
             [...this.progressMap.values()].reduce((a, b) => a + b, 0) / this.totalSize : 0;
         if (progress > 1 || progress < 0)
         {
-            console.error(`[下载视频] 进度异常: ${progress}`);
-            console.error(this.progressMap);
+            console.error(`[下载视频] 进度异常: ${progress}`, this.progressMap.values());
         }
         this.progress && this.progress(progress);
     }
@@ -203,9 +202,12 @@ class VideoDownloader
         this.updateProgress();
         const partialLength = Math.round(fragment.size / this.fragmentSplitFactor);
         let startByte = 0;
+        const getPartNumber = xhr => [...this.progressMap.keys()].indexOf(xhr) + 1;
         while (startByte < fragment.size)
         {
-            const range = `bytes=${startByte}-${Math.min(fragment.size - 1, Math.round(startByte + partialLength))}`;
+            const endByte = Math.min(fragment.size - 1, Math.round(startByte + partialLength));
+            const range = `bytes=${startByte}-${endByte}`;
+            const rangeLength = endByte - startByte + 1;
             promises.push(new Promise((resolve, reject) =>
             {
                 const xhr = new XMLHttpRequest();
@@ -214,6 +216,7 @@ class VideoDownloader
                 xhr.withCredentials = false;
                 xhr.addEventListener("progress", (e) =>
                 {
+                    console.log(`[下载视频] 视频片段${getPartNumber(xhr)}下载进度: ${e.loaded}/${rangeLength} bytes loaded, ${range}`);
                     this.progressMap.set(xhr, e.loaded);
                     this.updateProgress();
                 });
@@ -231,6 +234,7 @@ class VideoDownloader
                 xhr.addEventListener("abort", () => reject("下载已取消."));
                 xhr.addEventListener("error", () =>
                 {
+                    console.error(`[下载视频] 视频片段${getPartNumber(xhr)}下载失败: ${range}`);
                     this.progressMap.set(xhr, 0);
                     this.updateProgress();
                     xhr.open("GET", fragment.url);
