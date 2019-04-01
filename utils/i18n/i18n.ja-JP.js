@@ -117,6 +117,9 @@ export const map = new Map([
     [`个人收益`,`個人収益`],
     [`同时转发到我的动态`,`同時に転送もする`],
     [`人气值`,`人気値`],
+    [`话题`,`話題`],
+    [`活动`,`活動`],
+    [`活动`,`活動中心`],
     [`动画`, {
         selector: `.elevator-module .nav-list .item`,
         not: true,
