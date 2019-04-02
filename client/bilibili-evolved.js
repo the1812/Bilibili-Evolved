@@ -15,7 +15,6 @@
 // @grant        unsafeWindow
 // @grant        GM_getValue
 // @grant        GM_setValue
-// @grant        GM_addValueChangeListener
 // @grant        GM_setClipboard
 // @grant        GM_info
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
@@ -126,7 +125,7 @@ try
             getValue: GM_getValue,
             setValue: GM_setValue,
             setClipboard: GM_setClipboard,
-            addValueChangeListener: GM_addValueChangeListener,
+            addValueChangeListener: () => console.warn("此功能已弃用."),
         },
     });
     const applyScripts = () => resources.fetch()

@@ -268,7 +268,7 @@
 ### [Tampermonkey](https://tampermonkey.net/)
 完全兼容.
 ### [Violentmonkey](https://violentmonkey.github.io/)
-不支持多标签页设置同步. (开两个标签页, 在其中一个里改动设置, 另一个标签页的设置不会更新)
+一些附加功能无法加载, 详见 [issue #90](https://github.com/the1812/Bilibili-Evolved/issues/90).
 ### [Greasemonkey](https://www.greasespot.net/)
 不支持, 请使用以上的两种管理器.
 

@@ -117,8 +117,8 @@ export function saveSettings(newSettings)
 }
 export function onSettingsChange(change)
 {
-    for (const key in settings)
-    {
-        GM_addValueChangeListener(key, change);
-    }
+    // for (const key in settings)
+    // {
+    //     GM_addValueChangeListener(key, change);
+    // }
 }

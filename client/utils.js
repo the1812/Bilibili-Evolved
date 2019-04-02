@@ -1,7 +1,7 @@
-if (typeof GM_addValueChangeListener === "undefined")
-{
-    GM_addValueChangeListener = function () { };
-}
+// if (typeof GM_addValueChangeListener === "undefined")
+// {
+//     GM_addValueChangeListener = function () { };
+// }
 export function logError(message)
 {
     if (settings.toastInternalError)
