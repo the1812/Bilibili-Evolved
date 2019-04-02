@@ -1,3 +1,8 @@
+if (document.querySelector(`.z_header`) !== null)
+{
+    resources.removeStyle("tweetsStyle");
+    return;
+}
 SpinQuery.any(
     () => $(".head-content.bili-wrapper>div.search:not(.filter-item)"),
     textBox =>

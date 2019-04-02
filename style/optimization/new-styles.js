@@ -2,6 +2,11 @@ if (document.URL === `https://h.bilibili.com/`)
 {
     return;
 }
+if (document.querySelector(`.z_header`) !== null)
+{
+    resources.removeStyle("tweetsStyle");
+    return;
+}
 SpinQuery.any(
     () => $(".custom-scrollbar"),
     it => it.removeClass("custom-scrollbar")

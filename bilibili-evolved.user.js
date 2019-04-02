@@ -1203,11 +1203,11 @@ Resource.manifest = {
             "oldStyle",
         ],
         styles: [
+            "tweetsStyle",
             {
                 key: "scrollbarStyle",
                 condition: () => document.URL !== `https://h.bilibili.com/`,
             },
-            "tweetsStyle",
         ],
         displayNames: {
             useNewStyle: "样式调整",
@@ -1217,12 +1217,12 @@ Resource.manifest = {
     overrideNavBar: {
         path: "override-navbar.min.js",
         styles: [
-            "navbarOverrideStyle",
             "tweetsStyle",
+            "navbarOverrideStyle",
             {
                 key: "noBannerStyle",
                 condition: () => !settings.showBanner
-            }
+            },
         ],
         displayNames: {
             overrideNavBar: "搜索栏置顶",
