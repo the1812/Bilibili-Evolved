@@ -74,7 +74,20 @@ export default {
                     URL.revokeObjectURL(oldURL);
                 }
                 link.setAttribute("href", URL.createObjectURL(blob));
-                link.setAttribute("download", document.querySelector(".song-title").getAttribute("title") + ".m4a");
+
+                const filename = (() =>
+                {
+                    const title = document.querySelector(".song-title");
+                    if (title)
+                    {
+                        return title.getAttribute("title");
+                    }
+                    else
+                    {
+                        return "神秘音频";
+                    }
+                })();
+                link.setAttribute("download", filename + ".m4a");
                 link.click();
             });
             Observer.childList("#app", () =>

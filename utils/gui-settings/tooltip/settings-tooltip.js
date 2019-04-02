@@ -42,6 +42,16 @@ export const toolTips = {
 - 发送时间移动到右上角
 - 位图图标全部换用矢量图标, 高分屏不会模糊
 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.`,
+    simplifyLiveroom: `- 隐藏姥爷图标
+- 隐藏粉丝勋章
+- 隐藏活动头衔
+- 隐藏用户等级
+- 隐藏舰长图标
+- 隐藏全区广播
+- 隐藏欢迎信息 (xxx姥爷进入直播间)
+- 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
+- 禁用直播间皮肤
+每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`,
     overrideNavBar: `开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`,
     showBanner: `控制是否显示主站顶部的横幅`,
     preserveRank: `控制是否在搜索框左侧显示排行榜图标.`,
@@ -59,6 +69,7 @@ export const toolTips = {
     showDeadVideoTitle: `在个人空间中, 为已失效视频恢复标题和封面.`,
     useBiliplusRedirect: `将失效视频重定向到BiliPlus.`,
     biliplusRedirect: `在视频/番剧/空间中, 附加功能<span>"转到BiliPlus"</span>, 点击可以转到BiliPlus上对应的页面.`,
+    oldTweets: `将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.`,
     touchNavBar: `删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`,
     comboLike: `为素质三连(长按点赞)启用触摸支持.`,
     touchVideoPlayer: `增大控制栏的按钮间距, 使触摸操作更准确. 并为播放器启用触摸支持:

@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ES2017",
+        "module": "ESNext",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "sourceMap": false,
+    },
+    "include": [
+        "**/*.ts"
+    ]
+}

@@ -443,6 +443,11 @@ li.category.folded i.icon-arrow
     opacity: 1;
     pointer-events: initial;
 }
+.gui-settings-mask.opened.transparent
+{
+    opacity: 0;
+    transition: all .3s cubic-bezier(0, 0.86, 0.58, 1) .3s;
+}
 .gui-settings-widgets-box,
 .gui-settings-box
 {
@@ -589,4 +594,34 @@ li.category.folded i.icon-arrow
 .player-full-win .live-room-app .app-content
 {
     z-index: 100000 !important;
+}
+.gui-settings-flat-button .popup
+{
+    position: absolute;
+    top: calc(100% + 2px);
+    transition: all .16s ease-out;
+    transform-origin: top;
+    transform: scaleY(0) translateX(-50%);
+    left: 50%;
+    background: white;
+    box-shadow: 0px 3px 20px 2px #0004;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+}
+.gui-settings-flat-button .popup *
+{
+    transition: all 0.2s;
+}
+.gui-settings-flat-button .popup.opened
+{
+    transform: scaleY(1) translateX(-50%);
+}
+.gui-settings-flat-button .popup ul
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }

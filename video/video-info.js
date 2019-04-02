@@ -6,7 +6,7 @@ export class VideoInfo
     }
     async fetchInfo()
     {
-        const json = JSON.parse(await downloadText(`https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`));
+        const json = JSON.parse(await Ajax.getText(`https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`));
         if (json.code !== 0)
         {
             throw new Error(json.message);
@@ -56,7 +56,7 @@ export class DanmakuInfo
     }
     async fetchInfo()
     {
-        const xml = await downloadText(`https://api.bilibili.com/x/v1/dm/list.so?oid=${this.cid}`);
+        const xml = await Ajax.getText(`https://api.bilibili.com/x/v1/dm/list.so?oid=${this.cid}`);
         this.rawXML = xml;
 
         const dom = new DOMParser().parseFromString(xml, "application/xml").documentElement;
@@ -76,7 +76,7 @@ export class BangumiInfo
     }
     async fetchInfo()
     {
-        const data = await downloadText(`https://www.bilibili.com/bangumi/play/ep${this.ep}/`);
+        const data = await Ajax.getText(`https://www.bilibili.com/bangumi/play/ep${this.ep}/`);
         const json = JSON.parse(data.match(/window\.__INITIAL_STATE__=(.*);\(function\(\){/)[1]);
         this.title = json.mediaInfo.title;
         this.cover = json.mediaInfo.cover;

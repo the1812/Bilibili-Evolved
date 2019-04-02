@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.17
+// @version      1.7.22
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -15,11 +15,11 @@
 // @grant        unsafeWindow
 // @grant        GM_getValue
 // @grant        GM_setValue
-// @grant        GM_addValueChangeListener
 // @grant        GM_setClipboard
 // @grant        GM_info
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
+// @require      https://cdn.jsdelivr.net/npm/vue/dist/vue.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
@@ -81,6 +81,22 @@ const settings = {
     useCommentStyle: true,
     imageResolution: false,
     toastInternalError: false,
+    i18n: false,
+    i18nLanguage: "日本語",
+    playerFocus: false,
+    oldTweets: false,
+    simplifyLiveroom: false,
+    simplifyLiveroomSettings: {
+        vip: true,
+        fansMedal: true,
+        title: true,
+        userLevel: true,
+        guard: true,
+        systemMessage: true,
+        welcomeMessage: true,
+        popup: false,
+        skin: false,
+    },
     cache: {},
 };
 const fixedSettings = {
@@ -93,30 +109,11 @@ const fixedSettings = {
     downloadAudio: true,
     playerLayout: true,
     medalHelper: true,
-    about: true,
+    about: false,
     forceWide: false,
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
     currentVersion: GM_info.script.version,
 };
-if (typeof GM_addValueChangeListener === "undefined")
-{
-    GM_addValueChangeListener = function () { };
-}
-function logError(message)
-{
-    if (settings.toastInternalError)
-    {
-        Toast.error(typeof message === "object" && "stack" in message
-            ? message.stack
-            : message, "错误");
-    }
-    console.error(message);
-}
-// window.addEventListener("error", e =>
-// {
-//     logError(`${e.message}
-// ${e.filename} ${e.lineno}:${e.colno}`);
-// });
 function loadSettings()
 {
     for (const key in settings)
@@ -145,636 +142,75 @@ function saveSettings(newSettings)
 }
 function onSettingsChange(change)
 {
-    for (const key in settings)
+    // for (const key in settings)
+    // {
+    //     GM_addValueChangeListener(key, change);
+    // }
+}
+// if (typeof GM_addValueChangeListener === "undefined")
+// {
+//     GM_addValueChangeListener = function () { };
+// }
+function logError(message)
+{
+    if (settings.toastInternalError)
     {
-        GM_addValueChangeListener(key, change);
+        Toast.error(typeof message === "object" && "stack" in message
+            ? message.stack
+            : message, "错误");
+    }
+    console.error(message);
+}
+function raiseEvent(element, eventName)
+{
+    const event = document.createEvent("HTMLEvents");
+    event.initEvent(eventName, true, true);
+    element.dispatchEvent(event);
+}
+async function loadLazyPanel(selector)
+{
+    await SpinQuery.unsafeJquery();
+    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+    if (!panel)
+    {
+        throw new Error(`Panel not found: ${selector}`);
+    }
+    panel.mouseover().mouseout();
+}
+function contentLoaded(callback)
+{
+    if (/complete|interactive|loaded/.test(document.readyState))
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener("DOMContentLoaded", () => callback());
     }
 }
-function loadResources()
+function fixed(number, precision = 1)
 {
-    const resourceManifest = {
-        style: {
-            path: "min/style.min.css",
-            order: 10,
-        },
-        oldStyle: {
-            path: "min/old.min.css",
-            order: 10,
-        },
-        scrollbarStyle: {
-            path: "min/scrollbar.min.css",
-            order: 10,
-        },
-        darkStyle: {
-            path: "min/dark.min.css",
-            order: 11,
-        },
-        darkStyleImportant: {
-            path: "min/dark-important.min.css",
-        },
-        darkStyleNavBar: {
-            path: "min/dark-navbar.min.css",
-        },
-        touchPlayerStyle: {
-            path: "min/touch-player.min.css",
-            order: 13,
-        },
-        navbarOverrideStyle: {
-            path: "min/override-navbar.min.css",
-            order: 14,
-        },
-        noBannerStyle: {
-            path: "min/no-banner.min.css",
-            order: 15,
-        },
-        removeAdsStyle: {
-            path: "min/remove-promotions.min.css",
-            order: 16,
-        },
-        guiSettingsStyle: {
-            path: "min/gui-settings.min.css",
-            order: 12,
-        },
-        fullTweetsTitleStyle: {
-            path: "min/full-tweets-title.min.css",
-            order: 17,
-        },
-        imageViewerStyle: {
-            path: "min/image-viewer.min.css",
-            order: 18,
-        },
-        toastStyle: {
-            path: "min/toast.min.css",
-            order: 19,
-        },
-        blurVideoControlStyle: {
-            path: "min/blur-video-control.min.css",
-            order: 20,
-        },
-        downloadVideoStyle: {
-            path: "min/download-video.min.css",
-        },
-        guiSettingsHtml: {
-            path: "min/gui-settings.min.html",
-        },
-        imageViewerHtml: {
-            path: "min/image-viewer.min.html",
-        },
-        downloadVideoHtml: {
-            path: "min/download-video.min.html",
-        },
-        latestVersion: {
-            path: "version.txt",
-        },
-        iconsStyle: {
-            path: "min/icons.min.css",
-        },
-        settingsSideBar: {
-            path: "min/settings-side-bar.min.js",
-        },
-        textValidate: {
-            path: "min/text-validate.min.js",
-        },
-        themeColors: {
-            path: "min/theme-colors.min.js",
-        },
-        settingsTooltipStyle: {
-            path: "min/settings-tooltip.min.css",
-        },
-        settingsTooltip: {
-            path: "min/settings-tooltip.min.js",
-            dependencies: [
-                "settingsTooltipStyle"
-            ],
-        },
-        settingsSearch: {
-            path: "min/settings-search.min.js",
-            dependencies: [
-                "settingsTooltip"
-            ],
-        },
-        guiSettings: {
-            path: "min/gui-settings.min.js",
-            dependencies: [
-                "guiSettingsHtml",
-                "textValidate",
-                "settingsSideBar",
-                "themeColors",
-                "settingsTooltip",
-                "settingsSearch",
-            ],
-            styles: [
-                "guiSettingsStyle",
-                {
-                    key: "iconsStyle",
-                    important: true,
-                },
-            ],
-            displayNames: {
-                guiSettings: "设置",
-                blurSettingsPanel: "模糊设置面板背景",
-                clearCache: "清除缓存",
-                settingsTooltip: "设置项帮助",
-                settingsSearch: "搜索设置",
-            },
-        },
-        useDarkStyle: {
-            path: "min/dark-styles.min.js",
-            styles: [
-                "darkStyle",
-                "scrollbarStyle",
-                {
-                    key: "darkStyleNavBar",
-                    important: true,
-                    condition()
-                    {
-                        return !settings.useNewStyle && ($("#banner_link").length === 0 ||
-                            $("#banner_link").length > 0 &&
-                            settings.overrideNavBar &&
-                            !settings.showBanner);
-                    }
-                },
-                {
-                    key: "darkStyleImportant",
-                    important: true,
-                    condition: () => true,
-                },
-            ],
-            displayNames: {
-                useDarkStyle: "夜间模式",
-            },
-        },
-        tweetsStyle: {
-            path: "min/tweets.min.css",
-        },
-        useNewStyle: {
-            path: "min/new-styles.min.js",
-            dependencies: [
-                "style",
-                "oldStyle",
-            ],
-            styles: [
-                {
-                    key: "scrollbarStyle",
-                    condition: () => document.URL !== `https://h.bilibili.com/`,
-                },
-                "tweetsStyle",
-            ],
-            displayNames: {
-                useNewStyle: "样式调整",
-                blurBackgroundOpacity: "顶栏(对横幅)透明度",
-            },
-        },
-        overrideNavBar: {
-            path: "min/override-navbar.min.js",
-            styles: [
-                "navbarOverrideStyle",
-                "tweetsStyle",
-                {
-                    key: "noBannerStyle",
-                    condition: () => !settings.showBanner
-                }
-            ],
-            displayNames: {
-                overrideNavBar: "搜索栏置顶",
-                showBanner: "显示顶部横幅",
-                preserveRank: "显示排行榜图标",
-            },
-        },
-        touchNavBar: {
-            path: "min/touch-navbar.min.js",
-            displayNames: {
-                touchNavBar: "顶栏触摸优化",
-            },
-        },
-        touchVideoPlayer: {
-            path: "min/touch-player.min.js",
-            styles: [
-                "touchPlayerStyle",
-            ],
-            displayNames: {
-                touchVideoPlayer: "播放器触摸支持",
-                touchVideoPlayerAnimation: "启用实验性动画效果",
-                touchVideoPlayerDoubleTapControl: "启用双击控制",
-            },
-        },
-        expandDanmakuList: {
-            path: "min/expand-danmaku.min.js",
-            displayNames: {
-                expandDanmakuList: "自动展开弹幕列表",
-            },
-        },
-        removeAds: {
-            path: "min/remove-promotions.min.js",
-            styles: [
-                "removeAdsStyle",
-            ],
-            displayNames: {
-                removeAds: "删除广告",
-            },
-        },
-        watchLaterRedirect: {
-            path: "min/watchlater.min.js",
-            displayNames: {
-                watchLaterRedirect: "稍后再看重定向",
-            },
-        },
-        hideTopSearch: {
-            path: "min/hide-top-search.min.js",
-            displayNames: {
-                hideTopSearch: "隐藏搜索推荐",
-            },
-        },
-        harunaScale: {
-            path: "min/haruna-scale.min.js",
-            displayNames: {
-                harunaScale: "缩放直播看板娘",
-            },
-        },
-        removeLiveWatermark: {
-            path: "min/remove-watermark.min.js",
-            displayNames: {
-                removeLiveWatermark: "删除直播水印",
-            },
-        },
-        fullTweetsTitle: {
-            path: "min/full-tweets-title.min.js",
-            styles: [
-                "fullTweetsTitleStyle",
-            ],
-            displayNames: {
-                fullTweetsTitle: "展开动态标题",
-            },
-        },
-        fullPageTitleStyle: {
-            path: "min/full-page-title.min.css",
-        },
-        fullPageTitle: {
-            path: "min/full-page-title.min.js",
-            dependencies: ["fullPageTitleStyle"],
-            displayNames: {
-                fullPageTitle: "展开选集标题",
-            },
-        },
-        viewCover: {
-            path: "min/view-cover.min.js",
-            dependencies: [
-                "imageViewerHtml",
-                "videoInfo",
-                "title",
-            ],
-            styles: [
-                "imageViewerStyle",
-            ],
-            displayNames: {
-                viewCover: "查看封面",
-            },
-        },
-        notifyNewVersion: {
-            path: "min/notify-new-version.min.js",
-            dependencies: [
-                "latestVersion",
-            ],
-            displayNames: {
-                notifyNewVersion: "检查更新",
-            },
-        },
-        toast: {
-            path: "min/toast.min.js",
-            styles: [
-                "toastStyle",
-            ],
-            displayNames: {
-                toast: "显示消息",
-                toastInternalError: "显示内部错误消息",
-            },
-        },
-        removeVideoTopMask: {
-            path: "min/remove-top-mask.min.js",
-            displayNames: {
-                removeVideoTopMask: "删除视频标题层",
-            },
-        },
-        blurVideoControl: {
-            path: "min/blur-video-control.min.js",
-            styles: [
-                "blurVideoControlStyle",
-            ],
-            displayNames: {
-                blurVideoControl: "模糊视频控制栏背景",
-            },
-        },
-        darkSchedule: {
-            path: "min/dark-schedule.min.js",
-            displayNames: {
-                darkSchedule: "夜间模式计划时段",
-                darkScheduleStart: "起始时间",
-                darkScheduleEnd: "结束时间",
-            },
-        },
-        clearCache: {
-            path: "min/clear-cache.min.js",
-            displayNames: {
-                useCache: "启用缓存",
-            },
-        },
-        downloadVideo: {
-            path: "min/download-video.min.js",
-            dependencies: [
-                "downloadVideoHtml",
-                "title",
-            ],
-            styles: [
-                "downloadVideoStyle",
-            ],
-            displayNames: {
-                "downloadVideo": "下载视频",
-            },
-        },
-        downloadDanmaku: {
-            path: "min/download-danmaku.min.js",
-            dependencies: [
-                "title",
-                "videoInfo",
-                "danmakuConverter",
-            ],
-            displayNames: {
-                "downloadDanmaku": "下载弹幕",
-            },
-        },
-        danmakuConverter: {
-            path: "min/danmaku-converter.min.js"
-        },
-        videoInfo: {
-            path: "min/video-info.min.js",
-        },
-        aboutHtml: {
-            path: "min/about.min.html",
-        },
-        aboutStyle: {
-            path: "min/about.min.css",
-        },
-        about: {
-            path: "min/about.min.js",
-            dependencies: [
-                "aboutHtml",
-            ],
-            styles: [
-                "aboutStyle",
-            ],
-            displayNames: {
-                "about": "关于",
-            }
-        },
-        customControlBackgroundStyle: {
-            path: "min/custom-control-background.min.css",
-            order: 21
-        },
-        customControlBackground: {
-            path: "min/custom-control-background.min.js",
-            styles: [
-                {
-                    key: "customControlBackgroundStyle",
-                    condition: () => settings.customControlBackgroundOpacity > 0
-                },
-            ],
-            displayNames: {
-                customControlBackground: "控制栏着色",
-                customControlBackgroundOpacity: "不透明度",
-            },
-        },
-        useDefaultPlayerMode: {
-            path: "min/default-player-mode.min.js",
-            displayNames: {
-                useDefaultPlayerMode: "使用默认播放器模式",
-                defaultPlayerMode: "默认播放器模式",
-                autoLightOff: "播放时自动关灯",
-                applyPlayerModeOnPlay: "播放时应用模式",
-            },
-            dropdown: {
-                key: "defaultPlayerMode",
-                items: ["常规", "宽屏", "网页全屏", "全屏"],
-            },
-        },
-        useDefaultVideoQuality: {
-            path: "min/default-video-quality.min.js",
-            displayNames: {
-                useDefaultVideoQuality: "使用默认视频画质",
-                defaultVideoQuality: "画质设定",
-            },
-            dropdown: {
-                key: "defaultVideoQuality",
-                items: ["1080P60", "1080P+", "1080P", "720P60", "720P", "480P", "360P", "自动"],
-            },
-        },
-        comboLike: {
-            path: "min/combo-like.min.js",
-            displayNames: {
-                comboLike: "素质三连触摸支持",
-            },
-        },
-        autoContinue: {
-            path: "min/auto-continue.min.js",
-            displayNames: {
-                autoContinue: "自动从历史记录点播放",
-            },
-        },
-        expandDescriptionStyle: {
-            path: "min/expand-description.min.css"
-        },
-        expandDescription: {
-            path: "min/expand-description.min.js",
-            styles: [
-                "expandDescriptionStyle"
-            ],
-            displayNames: {
-                expandDescription: "自动展开视频简介"
-            }
-        },
-        defaultDanmakuSettingsStyle: {
-            path: "min/default-danmaku-settings.min.css",
-        },
-        useDefaultDanmakuSettings: {
-            path: "min/default-danmaku-settings.min.js",
-            styles: [
-                {
-                    key: "defaultDanmakuSettingsStyle",
-                    condition: () => settings.rememberDanmakuSettings,
-                },
-            ],
-            displayNames: {
-                useDefaultDanmakuSettings: "使用默认弹幕设置",
-                enableDanmaku: "开启弹幕",
-                rememberDanmakuSettings: "记住弹幕设置",
-            },
-        },
-        skipChargeListStyle: {
-            path: "min/skip-charge-list.min.css",
-        },
-        skipChargeList: {
-            path: "min/skip-charge-list.min.js",
-            styles: [
-                "skipChargeListStyle",
-            ],
-            displayNames: {
-                skipChargeList: "跳过充电鸣谢",
-            }
-        },
-        playerLayout: {
-            path: "min/default-player-layout.min.js",
-            displayNames: {
-                useDefaultPlayerLayout: "指定播放器布局",
-                defaultPlayerLayout: "视频区布局",
-                defaultBangumiLayout: "番剧区布局",
-            },
-            dropdown: [
-                {
-                    key: "defaultPlayerLayout",
-                    items: ["旧版", "新版"]
-                },
-                {
-                    key: "defaultBangumiLayout",
-                    items: ["旧版", "新版"]
-                },
-            ],
-        },
-        compactLayoutStyle: {
-            path: "min/compact-layout.min.css",
-        },
-        compactLayout: {
-            path: "min/compact-layout.min.js",
-            styles: [
-                {
-                    key: "compactLayoutStyle",
-                    important: true,
-                    condition()
-                    {
-                        return [
-                            "https://www.bilibili.com/",
-                            "https://www.bilibili.com/watchlater/#/list",
-                        ].indexOf(location.href.replace(location.search, '')) !== -1;
-                    },
-                },
-            ],
-            displayNames: {
-                compactLayout: "首页使用紧凑布局",
-            }
-        },
-        medalHelper: {
-            path: "min/medal-helper.min.js",
-            styles: ["medalHelperStyle"],
-            dependencies: ["medalHelperHtml"],
-            displayNames: {
-                medalHelper: "直播勋章快速更换"
-            }
-        },
-        medalHelperStyle: {
-            path: "min/medal-helper.min.css",
-        },
-        medalHelperHtml: {
-            path: "min/medal-helper.min.html",
-        },
-        showDeadVideoTitle: {
-            path: "min/show-dead-video-title.min.js",
-            displayNames: {
-                showDeadVideoTitle: "显示失效视频信息",
-                useBiliplusRedirect: "失效视频重定向",
-            },
-        },
-        autoPlay: {
-            path: "min/auto-play.min.js",
-            displayNames: {
-                autoPlay: "自动播放视频",
-            }
-        },
-        useCommentStyle: {
-            path: "min/comment.min.js",
-            styles: [
-                {
-                    key: "commentStyle",
-                    important: true,
-                    condition: () => true,
-                },
-                {
-                    key: "commentDarkStyle",
-                    important: true,
-                    condition: () => settings.useDarkStyle,
-                },
-            ],
-            displayNames: {
-                useCommentStyle: "简化评论区",
-            },
-        },
-        commentStyle: {
-            path: "min/comment.min.css"
-        },
-        commentDarkStyle: {
-            path: "min/comment-dark.min.css"
-        },
-        title: {
-            path: "min/title.min.js"
-        },
-        imageResolution: {
-            path: "min/image-resolution.min.js",
-            displayNames: {
-                imageResolution: "总是显示原图",
-            },
-        },
-        biliplusRedirect: {
-            path: "min/biliplus-redirect.min.js",
-            displayNames: {
-                biliplusRedirect: "BiliPlus跳转支持",
-            }
-        },
-        framePlaybackHtml: {
-            path: "min/frame-playback.min.html",
-        },
-        framePlaybackStyle: {
-            path: "min/frame-playback.min.css",
-        },
-        framePlayback: {
-            path: "min/frame-playback.min.js",
-            dependencies: [
-                "framePlaybackHtml",
-                "framePlaybackStyle"
-            ],
-            displayNames: {
-                framePlayback: "启用逐帧调整",
-            },
-        },
-        downloadAudio: {
-            path: "min/download-audio.min.js",
-            displayNames: {
-                downloadAudio: "下载音频",
-            },
-        },
-    };
-    Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
-    Resource.all = {};
-    Resource.displayNames = {};
-    Resource.reloadables = {
-        useDarkStyle: "useDarkStyle",
-        showBanner: "overrideNavBar",
-    };
-    Resource.manifest = resourceManifest;
-    for (const [key, data] of Object.entries(resourceManifest))
+    const str = number.toString();
+    const index = str.indexOf(".");
+    if (index !== -1)
     {
-        const resource = new Resource(data.path, data.order, data.styles);
-        resource.key = key;
-        if (data.displayNames)
+        if (str.length - index > precision + 1)
         {
-            resource.displayName = data.displayNames[key];
-            Object.assign(Resource.displayNames, data.displayNames);
+            return str.substring(0, index + precision + 1);
         }
-        Resource.all[key] = resource;
-    }
-    for (const [key, data] of Object.entries(resourceManifest))
-    {
-        if (data.dependencies)
+        else
         {
-            Resource.all[key].dependencies = data.dependencies.map(name => Resource.all[name]);
+            return str;
         }
     }
+    else
+    {
+        return str + ".0";
+    }
+}
+function isEmbeddedPlayer()
+{
+    return location.host === "player.bilibili.com";
 }
 class Ajax
 {
@@ -838,6 +274,70 @@ class Ajax
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         return this.send(xhr, body);
     }
+    static getHandlers(name)
+    {
+        name = name.toLowerCase();
+        let handlers = Ajax[name];
+        if (handlers === undefined)
+        {
+            handlers = Ajax[name] = [];
+        }
+        return handlers;
+    }
+    static addEventListener(type, handler)
+    {
+        const handlers = Ajax.getHandlers(type);
+        handlers.push(handler);
+    }
+    static removeEventListener(type, handler)
+    {
+        const handlers = Ajax.getHandlers(type);
+        handlers.splice(handlers.indexOf(handler), 1);
+    }
+}
+// https://github.com/the1812/Bilibili-Evolved/issues/84
+function setupAjaxHook()
+{
+    const original = {
+        open: XMLHttpRequest.prototype.open,
+        send: XMLHttpRequest.prototype.send,
+    };
+    const fireHandlers = (name, thisArg, ...args) => Ajax.getHandlers(name).forEach(it => it.call(thisArg, ...args));
+    const hook = (name, thisArgs, ...args) =>
+    {
+        fireHandlers("before" + name, thisArgs, ...args);
+        const returnValue = original[name].call(thisArgs, ...args);
+        fireHandlers("after" + name, thisArgs, ...args);
+        return returnValue;
+    };
+    const hookOnEvent = (name, thisArg) =>
+    {
+        if (thisArg[name])
+        {
+            const originalHandler = thisArg[name];
+            thisArg[name] = (...args) =>
+            {
+                fireHandlers("before" + name, thisArg, ...args);
+                originalHandler.apply(thisArg, args);
+                fireHandlers("after" + name, thisArg, ...args);
+            };
+        }
+        else
+        {
+            thisArg[name] = (...args) =>
+            {
+                fireHandlers("before" + name, thisArg, ...args);
+                fireHandlers("after" + name, thisArg, ...args);
+            };
+        }
+    };
+    XMLHttpRequest.prototype.open = function (...args) { return hook("open", this, ...args); };
+    XMLHttpRequest.prototype.send = function (...args)
+    {
+        hookOnEvent("onreadystatechange", this);
+        hookOnEvent("onload", this);
+        return hook("send", this, ...args);
+    };
 }
 function downloadText(url, load, error) // The old method for compatibility
 {
@@ -860,53 +360,78 @@ function downloadText(url, load, error) // The old method for compatibility
         });
     }
 }
-function raiseEvent(element, eventName)
+function loadResources()
 {
-    const event = document.createEvent("HTMLEvents");
-    event.initEvent(eventName, true, true);
-    element.dispatchEvent(event);
-}
-async function loadLazyPanel(selector)
-{
-    await SpinQuery.unsafeJquery();
-    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
-    if (!panel)
+    Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
+    Resource.all = {};
+    Resource.displayNames = {};
+    // Resource.reloadables = {
+    //     useDarkStyle: "useDarkStyle",
+    //     showBanner: "overrideNavBar",
+    // };
+    for (const [key, data] of Object.entries(Resource.manifest))
     {
-        throw new Error(`Panel not found: ${selector}`);
-    }
-    panel.mouseover().mouseout();
-}
-function contentLoaded(callback)
-{
-    if (/complete|interactive|loaded/.test(document.readyState))
-    {
-        callback();
-    }
-    else
-    {
-        document.addEventListener("DOMContentLoaded", () => callback());
-    }
-}
-function fixed(number, precision = 1)
-{
-    const str = number.toString();
-    const index = str.indexOf(".");
-    if (index !== -1)
-    {
-        if (str.length - index > precision + 1)
+        const resource = new Resource(data.path, data.styles);
+        resource.key = key;
+        resource.dropdown = data.dropdown;
+        if (data.displayNames)
         {
-            return str.substring(0, index + precision + 1);
+            resource.displayName = data.displayNames[key];
+            Object.assign(Resource.displayNames, data.displayNames);
         }
-        else
+        if (data.style)
         {
-            return str;
+            const styleKey = key + "Style";
+            const style = Resource.all[styleKey] = new Resource(data.path.replace(".js", ".css"));
+            style.key = styleKey;
+            switch (data.style)
+            {
+                case "instant":
+                    {
+                        resource.styles.push(styleKey);
+                        break;
+                    }
+                case true:
+                    {
+                        resource.dependencies.push(style);
+                        break;
+                    }
+                case "important":
+                    {
+                        resource.styles.push({
+                            key: styleKey,
+                            important: true,
+                        });
+                        break;
+                    }
+                default:
+                    {
+                        if (typeof data.style === "object")
+                        {
+                            resource.styles.push(Object.assign({ key: styleKey }, data.style));
+                        }
+                        break;
+                    }
+            }
         }
+        if (data.html === true)
+        {
+            const htmlKey = key + "Html";
+            const html = Resource.all[htmlKey] = new Resource(data.path.replace(".js", ".html"));
+            html.key = htmlKey;
+            resource.dependencies.push(html);
+        }
+        Resource.all[key] = resource;
     }
-    else
+    for (const [key, data] of Object.entries(Resource.manifest))
     {
-        return str + ".0";
+        if (data.dependencies)
+        {
+            Resource.all[key].dependencies.push(...data.dependencies.map(name => Resource.all[name]));
+        }
     }
 }
+
 // Placeholder class for Toast
 class Toast
 {
@@ -1047,10 +572,22 @@ class Observer
         {
             return null;
         }
+        const recordTest = (records, predicate) =>
+        {
+            if (records.length === 0)
+            {
+                return false;
+            }
+            return records.every(it => predicate(it));
+        };
         return Observer.childList("#bofqi,#bilibiliPlayer", records =>
         {
-            const isMenuAttached = records.length > 0 && records.every(it => [...it.addedNodes].some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
-            if (!isMenuAttached)
+            const isMenuAttached = recordTest(records, it => [...it.addedNodes]
+                .some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
+            const isMiniPlayer = recordTest(records, it => [...it.addedNodes]
+                .concat([...it.removedNodes])
+                .every(it => it.classList.contains("drag-bar")));
+            if (!isMenuAttached && !isMiniPlayer)
             {
                 callback(records);
             }
@@ -1084,7 +621,10 @@ class SpinQuery
             }
             else
             {
-                this.retry++;
+                if (document.hasFocus())
+                {
+                    this.retry++;
+                }
                 setTimeout(() => this.tryQuery(query, condition, action, failed), this.queryInterval);
             }
         }
@@ -1109,10 +649,20 @@ class SpinQuery
     }
     static select(query, action, failed)
     {
+        if (typeof query === "string")
+        {
+            const selector = query;
+            query = () => document.querySelector(selector);
+        }
         return SpinQuery.condition(query, it => it !== null && it !== undefined, action, failed);
     }
     static any(query, action, failed)
     {
+        if (typeof query === "string")
+        {
+            const selector = query;
+            query = () => $(selector);
+        }
         return SpinQuery.condition(query, it => it.length > 0, action, failed);
     }
     static count(query, count, action, failed)
@@ -1355,11 +905,11 @@ class Resource
     {
         return this.text !== null;
     }
-    constructor(url, priority, styles = [])
+    constructor(url, styles = [])
     {
-        this.url = Resource.root + url;
+        this.url = Resource.root + "min/" + url;
         this.dependencies = [];
-        this.priority = priority;
+        // this.priority = priority;
         this.styles = styles;
         this.text = null;
         this.key = null;
@@ -1423,7 +973,7 @@ class Resource
                                 this.text = cache;
                                 resolve(cache);
                             }
-                            downloadText(this.url).then(text =>
+                            Ajax.getText(this.url).then(text =>
                             {
                                 this.text = this.type.preprocessor(text);
                                 if (text === null)
@@ -1446,7 +996,7 @@ class Resource
                         }
                         else
                         {
-                            downloadText(this.url)
+                            Ajax.getText(this.url)
                                 .then(text =>
                                 {
                                     this.text = this.type.preprocessor(text);
@@ -1502,7 +1052,7 @@ class Resource
     {
         if (!document.querySelector(`#${id}`))
         {
-            const element = this.getStyle(id);
+            const style = this.getStyle(id);
             // const priorStyle = this.getPriorStyle();
             // if (priorStyle === null)
             // {
@@ -1521,15 +1071,544 @@ class Resource
             // }
             if (important)
             {
-                $("html").append(element);
+                document.body.insertAdjacentHTML("beforeend", style);
             }
             else
             {
-                $("head").prepend(element);
+                document.head.insertAdjacentHTML("afterbegin", style);
             }
         }
     }
 }
+Resource.manifest = {
+    style: {
+        path: "style.min.css",
+    },
+    oldStyle: {
+        path: "old.min.css",
+    },
+    scrollbarStyle: {
+        path: "scrollbar.min.css",
+    },
+    darkStyle: {
+        path: "dark.min.css",
+    },
+    darkStyleImportant: {
+        path: "dark-important.min.css",
+    },
+    darkStyleNavBar: {
+        path: "dark-navbar.min.css",
+    },
+    touchPlayerStyle: {
+        path: "touch-player.min.css",
+    },
+    navbarOverrideStyle: {
+        path: "override-navbar.min.css",
+    },
+    noBannerStyle: {
+        path: "no-banner.min.css",
+    },
+    imageViewerStyle: {
+        path: "image-viewer.min.css",
+    },
+    imageViewerHtml: {
+        path: "image-viewer.min.html",
+    },
+    iconsStyle: {
+        path: "icons.min.css",
+    },
+    settingsSideBar: {
+        path: "settings-side-bar.min.js",
+    },
+    textValidate: {
+        path: "text-validate.min.js",
+    },
+    themeColors: {
+        path: "theme-colors.min.js",
+    },
+    settingsTooltipStyle: {
+        path: "settings-tooltip.min.css",
+    },
+    settingsTooltip: {
+        path: "settings-tooltip.min.js",
+        dependencies: [
+            "settingsTooltipStyle"
+        ],
+    },
+    settingsSearch: {
+        path: "settings-search.min.js",
+        dependencies: [
+            "settingsTooltip"
+        ],
+    },
+    guiSettings: {
+        path: "gui-settings.min.js",
+        html: true,
+        style: "instant",
+        dependencies: [
+            "textValidate",
+            "settingsSideBar",
+            "themeColors",
+            "settingsTooltip",
+            "settingsSearch",
+        ],
+        styles: [
+            {
+                key: "iconsStyle",
+                important: true,
+            },
+        ],
+        displayNames: {
+            guiSettings: "设置",
+            blurSettingsPanel: "模糊设置面板背景",
+            clearCache: "清除缓存",
+            settingsTooltip: "设置项帮助",
+            settingsSearch: "搜索设置",
+        },
+    },
+    useDarkStyle: {
+        path: "dark-styles.min.js",
+        styles: [
+            "darkStyle",
+            "scrollbarStyle",
+            {
+                key: "darkStyleNavBar",
+                important: true,
+                condition()
+                {
+                    return !settings.useNewStyle && ($("#banner_link").length === 0 ||
+                        $("#banner_link").length > 0 &&
+                        settings.overrideNavBar &&
+                        !settings.showBanner);
+                }
+            },
+            {
+                key: "darkStyleImportant",
+                important: true,
+                condition: () => true,
+            },
+        ],
+        displayNames: {
+            useDarkStyle: "夜间模式",
+        },
+    },
+    tweetsStyle: {
+        path: "tweets.min.css",
+    },
+    useNewStyle: {
+        path: "new-styles.min.js",
+        dependencies: [
+            "style",
+            "oldStyle",
+        ],
+        styles: [
+            "tweetsStyle",
+            {
+                key: "scrollbarStyle",
+                condition: () => document.URL !== `https://h.bilibili.com/`,
+            },
+        ],
+        displayNames: {
+            useNewStyle: "样式调整",
+            blurBackgroundOpacity: "顶栏(对横幅)透明度",
+        },
+    },
+    overrideNavBar: {
+        path: "override-navbar.min.js",
+        styles: [
+            "tweetsStyle",
+            "navbarOverrideStyle",
+            {
+                key: "noBannerStyle",
+                condition: () => !settings.showBanner
+            },
+        ],
+        displayNames: {
+            overrideNavBar: "搜索栏置顶",
+            showBanner: "显示顶部横幅",
+            preserveRank: "显示排行榜图标",
+        },
+    },
+    touchNavBar: {
+        path: "touch-navbar.min.js",
+        displayNames: {
+            touchNavBar: "顶栏触摸优化",
+        },
+    },
+    touchVideoPlayer: {
+        path: "touch-player.min.js",
+        styles: [
+            "touchPlayerStyle",
+        ],
+        displayNames: {
+            touchVideoPlayer: "播放器触摸支持",
+            touchVideoPlayerAnimation: "启用实验性动画效果",
+            touchVideoPlayerDoubleTapControl: "启用双击控制",
+        },
+    },
+    expandDanmakuList: {
+        path: "expand-danmaku.min.js",
+        displayNames: {
+            expandDanmakuList: "自动展开弹幕列表",
+        },
+    },
+    removeAds: {
+        path: "remove-promotions.min.js",
+        style: "instant",
+        displayNames: {
+            removeAds: "删除广告",
+        },
+    },
+    watchLaterRedirect: {
+        path: "watchlater.min.js",
+        displayNames: {
+            watchLaterRedirect: "稍后再看重定向",
+        },
+    },
+    hideTopSearch: {
+        path: "hide-top-search.min.js",
+        displayNames: {
+            hideTopSearch: "隐藏搜索推荐",
+        },
+    },
+    harunaScale: {
+        path: "haruna-scale.min.js",
+        displayNames: {
+            harunaScale: "缩放直播看板娘",
+        },
+    },
+    removeLiveWatermark: {
+        path: "remove-watermark.min.js",
+        displayNames: {
+            removeLiveWatermark: "删除直播水印",
+        },
+    },
+    fullTweetsTitle: {
+        path: "full-tweets-title.min.js",
+        style: "instant",
+        displayNames: {
+            fullTweetsTitle: "展开动态标题",
+        },
+    },
+    fullPageTitle: {
+        path: "full-page-title.min.js",
+        style: "instant",
+        displayNames: {
+            fullPageTitle: "展开选集标题",
+        },
+    },
+    viewCover: {
+        path: "view-cover.min.js",
+        dependencies: [
+            "imageViewerHtml",
+            "videoInfo",
+            "title",
+        ],
+        styles: [
+            "imageViewerStyle",
+        ],
+        displayNames: {
+            viewCover: "查看封面",
+        },
+    },
+    notifyNewVersion: {
+        path: "notify-new-version.min.js",
+        displayNames: {
+            notifyNewVersion: "检查更新",
+        },
+    },
+    toast: {
+        path: "toast.min.js",
+        style: "instant",
+        displayNames: {
+            toast: "显示消息",
+            toastInternalError: "显示内部错误消息",
+        },
+    },
+    removeVideoTopMask: {
+        path: "remove-top-mask.min.js",
+        displayNames: {
+            removeVideoTopMask: "删除视频标题层",
+        },
+    },
+    blurVideoControl: {
+        path: "blur-video-control.min.js",
+        style: "instant",
+        displayNames: {
+            blurVideoControl: "模糊视频控制栏背景",
+        },
+    },
+    darkSchedule: {
+        path: "dark-schedule.min.js",
+        displayNames: {
+            darkSchedule: "夜间模式计划时段",
+            darkScheduleStart: "起始时间",
+            darkScheduleEnd: "结束时间",
+        },
+    },
+    clearCache: {
+        path: "clear-cache.min.js",
+        displayNames: {
+            useCache: "启用缓存",
+        },
+    },
+    downloadVideo: {
+        path: "download-video.min.js",
+        html: true,
+        style: "instant",
+        dependencies: ["title"],
+        displayNames: {
+            "downloadVideo": "下载视频",
+        },
+    },
+    downloadDanmaku: {
+        path: "download-danmaku.min.js",
+        dependencies: [
+            "title",
+            "videoInfo",
+            "danmakuConverter",
+        ],
+        displayNames: {
+            "downloadDanmaku": "下载弹幕",
+        },
+    },
+    danmakuConverter: {
+        path: "danmaku-converter.min.js"
+    },
+    videoInfo: {
+        path: "video-info.min.js",
+    },
+    about: {
+        path: "about.min.js",
+        html: true,
+        style: "instant",
+        displayNames: {
+            "about": "关于",
+        }
+    },
+    customControlBackground: {
+        path: "custom-control-background.min.js",
+        style: {
+            key: "customControlBackgroundStyle",
+            condition: () => settings.customControlBackgroundOpacity > 0,
+        },
+        displayNames: {
+            customControlBackground: "控制栏着色",
+            customControlBackgroundOpacity: "不透明度",
+        },
+    },
+    useDefaultPlayerMode: {
+        path: "default-player-mode.min.js",
+        displayNames: {
+            useDefaultPlayerMode: "使用默认播放器模式",
+            defaultPlayerMode: "默认播放器模式",
+            autoLightOff: "播放时自动关灯",
+            applyPlayerModeOnPlay: "播放时应用模式",
+        },
+        dropdown: {
+            key: "defaultPlayerMode",
+            items: ["常规", "宽屏", "网页全屏", "全屏"],
+        },
+    },
+    useDefaultVideoQuality: {
+        path: "default-video-quality.min.js",
+        displayNames: {
+            useDefaultVideoQuality: "使用默认视频画质",
+            defaultVideoQuality: "画质设定",
+        },
+        dropdown: {
+            key: "defaultVideoQuality",
+            items: ["1080P60", "1080P+", "1080P", "720P60", "720P", "480P", "360P", "自动"],
+        },
+    },
+    comboLike: {
+        path: "combo-like.min.js",
+        displayNames: {
+            comboLike: "素质三连触摸支持",
+        },
+    },
+    autoContinue: {
+        path: "auto-continue.min.js",
+        displayNames: {
+            autoContinue: "自动从历史记录点播放",
+        },
+    },
+    expandDescription: {
+        path: "expand-description.min.js",
+        style: "instant",
+        displayNames: {
+            expandDescription: "自动展开视频简介"
+        }
+    },
+    defaultDanmakuSettingsStyle: {
+        path: "default-danmaku-settings.min.css",
+    },
+    useDefaultDanmakuSettings: {
+        path: "default-danmaku-settings.min.js",
+        styles: [
+            {
+                key: "defaultDanmakuSettingsStyle",
+                condition: () => settings.rememberDanmakuSettings,
+            },
+        ],
+        displayNames: {
+            useDefaultDanmakuSettings: "使用默认弹幕设置",
+            enableDanmaku: "开启弹幕",
+            rememberDanmakuSettings: "记住弹幕设置",
+        },
+    },
+    skipChargeList: {
+        path: "skip-charge-list.min.js",
+        style: "instant",
+        displayNames: {
+            skipChargeList: "跳过充电鸣谢",
+        }
+    },
+    playerLayout: {
+        path: "default-player-layout.min.js",
+        displayNames: {
+            useDefaultPlayerLayout: "指定播放器布局",
+            defaultPlayerLayout: "视频区布局",
+            defaultBangumiLayout: "番剧区布局",
+        },
+        dropdown: [
+            {
+                key: "defaultPlayerLayout",
+                items: ["旧版", "新版"]
+            },
+            {
+                key: "defaultBangumiLayout",
+                items: ["旧版", "新版"]
+            },
+        ],
+    },
+    compactLayout: {
+        path: "compact-layout.min.js",
+        style:
+        {
+            important: true,
+            condition()
+            {
+                return [
+                    "https://www.bilibili.com/",
+                    "https://www.bilibili.com/watchlater/#/list",
+                ].indexOf(location.href.replace(location.search, '')) !== -1;
+            },
+        },
+        displayNames: {
+            compactLayout: "首页使用紧凑布局",
+        }
+    },
+    medalHelper: {
+        path: "medal-helper.min.js",
+        html: true,
+        style: "instant",
+        displayNames: {
+            medalHelper: "直播勋章快速更换"
+        }
+    },
+    showDeadVideoTitle: {
+        path: "show-dead-video-title.min.js",
+        displayNames: {
+            showDeadVideoTitle: "显示失效视频信息",
+            useBiliplusRedirect: "失效视频重定向",
+        },
+    },
+    autoPlay: {
+        path: "auto-play.min.js",
+        displayNames: {
+            autoPlay: "自动播放视频",
+        }
+    },
+    useCommentStyle: {
+        path: "comment.min.js",
+        style: {
+            important: true,
+            condition: () => true,
+        },
+        styles: [
+            {
+                key: "commentDarkStyle",
+                important: true,
+                condition: () => settings.useDarkStyle,
+            },
+        ],
+        displayNames: {
+            useCommentStyle: "简化评论区",
+        },
+    },
+    commentDarkStyle: {
+        path: "comment-dark.min.css"
+    },
+    title: {
+        path: "title.min.js"
+    },
+    imageResolution: {
+        path: "image-resolution.min.js",
+        displayNames: {
+            imageResolution: "总是显示原图",
+        },
+    },
+    biliplusRedirect: {
+        path: "biliplus-redirect.min.js",
+        displayNames: {
+            biliplusRedirect: "BiliPlus跳转支持",
+        }
+    },
+    framePlayback: {
+        path: "frame-playback.min.js",
+        style: "instant",
+        html: true,
+        displayNames: {
+            framePlayback: "启用逐帧调整",
+        },
+    },
+    downloadAudio: {
+        path: "download-audio.min.js",
+        displayNames: {
+            downloadAudio: "下载音频",
+        },
+    },
+    i18nEnglish: {
+        path: "i18n.en-US.min.js",
+    },
+    i18nJapanese: {
+        path: "i18n.ja-JP.min.js",
+    },
+    i18nTraditionalChinese: {
+        path: "i18n.zh-TW.min.js",
+    },
+    i18nGerman: {
+        path: "i18n.de-DE.min.js",
+    },
+    i18n: {
+        path: "i18n.min.js",
+        style: "important",
+        displayNames: {
+            i18n: "界面翻译"
+        },
+    },
+    playerFocus: {
+        path: "player-focus.min.js",
+        displayNames: {
+            playerFocus: "自动定位到播放器",
+        },
+    },
+    simplifyLiveroom: {
+        path: "simplify-liveroom.min.js",
+        style: "important",
+        displayNames: {
+            simplifyLiveroom: "简化直播间"
+        },
+    },
+    oldTweets: {
+        path: "old-tweets.min.js",
+        displayNames: {
+            oldTweets: "旧版动态跳转支持",
+        },
+    },
+};
+const resourceManifest = Resource.manifest;
 class StyleManager
 {
     constructor(resources)
@@ -1551,7 +1630,8 @@ class StyleManager
     }
     removeStyle(key)
     {
-        $(`#${this.getDefaultStyleId(key)}`).remove();
+        const style = document.querySelector(`#${this.getDefaultStyleId(key)}`);
+        style && style.remove();
     }
     applyImportantStyle(key, id)
     {
@@ -1563,11 +1643,11 @@ class StyleManager
     }
     applyStyleFromText(text)
     {
-        $("head").prepend(text);
+        document.head.insertAdjacentHTML("afterbegin", text);
     }
     applyImportantStyleFromText(text)
     {
-        $("html").append(text);
+        document.body.insertAdjacentHTML("beforeend", text);
     }
     getStyle(key, id)
     {
@@ -1614,6 +1694,7 @@ class ResourceManager
     constructor()
     {
         this.data = Resource.all;
+        this.skippedImport = [];
         this.attributes = {};
         this.styleManager = new StyleManager(this);
         const styleMethods = Object.getOwnPropertyNames(StyleManager.prototype).filter(it => it !== "constructor");
@@ -1655,18 +1736,54 @@ class ResourceManager
         styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
         this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
     }
+    resolveComponentName(componentName)
+    {
+        const keyword = "/" + componentName.replace("./", "") + ".min.js";
+        for (const [name, value] of Object.entries(Resource.all))
+        {
+            if (value.url.endsWith(keyword))
+            {
+                return name;
+            }
+        }
+        return componentName;
+    }
+    resolveComponent(componentName)
+    {
+        const resource = Resource.all[this.resolveComponentName(componentName)];
+        if (!resource)
+        {
+            this.skippedImport.push(componentName);
+        }
+        return resource;
+    }
     importAsync(componentName)
     {
         return new Promise(resolve =>
         {
-            const imported = this.import(componentName);
-            resolve(imported);
+            const resource = this.resolveComponent(componentName);
+            if (!resource)
+            {
+                resolve(unsafeWindow.bilibiliEvolved);
+            }
+            if (!resource.downloaded)
+            {
+                this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
+            }
+            else
+            {
+                resolve(this.import(componentName));
+            }
         });
     }
     import(componentName)
     {
-        const resource = Resource.all[componentName];
-        if (resource && resource.type.name === "html")
+        const resource = this.resolveComponent(componentName);
+        if (!resource)
+        {
+            return unsafeWindow.bilibiliEvolved;
+        }
+        if (resource.type.name === "html" || resource.type.name === "style")
         {
             if (!resource.downloaded)
             {
@@ -1677,19 +1794,7 @@ class ResourceManager
         }
         else
         {
-            const asFileName = () =>
-            {
-                const keyword = componentName + ".min.js";
-                for (const [name, value] of Object.entries(Resource.all))
-                {
-                    if (value.url.indexOf(keyword) !== -1)
-                    {
-                        return name;
-                    }
-                }
-                return componentName;
-            };
-            const attribute = this.attributes[componentName] || this.attributes[asFileName()];
+            const attribute = this.attributes[this.resolveComponentName(componentName)];
             if (attribute === undefined)
             {
                 console.error(`Import failed: component "${componentName}" is not loaded.`);
@@ -1794,7 +1899,7 @@ class ResourceManager
         {
             if (info.content)
             {
-                $(".widgets-container").append($(info.content));
+                document.querySelector(".widgets-container").insertAdjacentHTML("beforeend", info.content);
             }
             if (info.success)
             {
@@ -1819,24 +1924,31 @@ class ResourceManager
             }
             else
             {
-                const dropdown = await SpinQuery.any(
-                    () => $(`.gui-settings-dropdown:has(input[key=${info.key}])`));
-                const list = dropdown.find("ul");
-                const input = dropdown.find("input");
-                info.items.forEach(item =>
+                const dropdownInput = await SpinQuery.select(`.gui-settings-dropdown input[key=${info.key}]`);
+                const dropdown = dropdownInput.parentElement;
+                const list = dropdown.querySelector("ul");
+                const input = dropdown.querySelector("input");
+                info.items.forEach(itemHtml =>
                 {
-                    $(`<li>${item}</li>`).appendTo(list)
-                        .on("click", () =>
-                        {
-                            input.val(item).trigger("input").change();
-                        });
+                    list.insertAdjacentHTML("beforeend", `<li>${itemHtml}</li>`);
                 });
+                list.querySelectorAll("li").forEach(li => li.addEventListener("click", () =>
+                {
+                    input.value = li.innerText;
+                    raiseEvent(input, "input");
+                    raiseEvent(input, "change");
+                }));
             }
         }
-        await Promise.all(Object.values(Resource.manifest)
-            .filter(it => it.dropdown)
-            .map(it => applyDropdownOption(it.dropdown))
-        );
+        const manifests = Object.values(Resource.manifest).filter(it => it.dropdown).map(it => it.dropdown);
+        Object.values(Resource.all).filter(it => it.dropdown).map(it => it.dropdown).forEach(it =>
+        {
+            if (!manifests.some(m => m.key === it.key))
+            {
+                manifests.push(it);
+            }
+        });
+        await Promise.all(manifests.map(it => applyDropdownOption(it)));
     }
     validateCache()
     {
@@ -1866,6 +1978,7 @@ class ResourceManager
 
 try
 {
+    setupAjaxHook();
     const events = {};
     for (const name of ["init", "styleLoaded", "scriptLoaded"])
     {
@@ -1915,12 +2028,14 @@ try
         SpinQuery,
         Toast,
         Observer,
-        ColorProcessor,
         DoubleClickEvent,
+        ColorProcessor,
+        StyleManager,
         ResourceManager,
         Resource,
         ResourceType,
         Ajax,
+        resourceManifest,
         loadSettings,
         saveSettings,
         onSettingsChange,
@@ -1947,7 +2062,7 @@ try
             getValue: GM_getValue,
             setValue: GM_setValue,
             setClipboard: GM_setClipboard,
-            addValueChangeListener: GM_addValueChangeListener,
+            addValueChangeListener: () => console.warn("此功能已弃用."),
         },
     });
     const applyScripts = () => resources.fetch()

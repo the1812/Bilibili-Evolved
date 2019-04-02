@@ -83,13 +83,18 @@
 .nav-panel-live .static-link:hover,
 .link-btn-ctnr.dp-i-block.v-middle .my-link-btn:before,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
-.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
+#ssr-app.wrap,
+.bangumi-pagelistbox .p,
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage,
+.container .content .comment-area
 {
     background-color: #222 !important;
 }
 .main-container .review-module .review-list .review-item .review-body,
 .pika-button:hover,
-.area-panel
+.area-panel,
+.rank-list-ctnr .tab-content
 {
     background-color: #333 !important;
 }
@@ -191,9 +196,19 @@ input[type=radio]:checked+.custom-radio,
 .sidebar-wrapper .sidebar .feedlist-wrapper,
 .slot-ctnr.p-relative .nav-panel-live,
 .main-content .list .all-list .vc-item,
-.main-content .list .all-list .pic-item
+.main-content .list .all-list .pic-item,
+.feed-topic .publish-panel-container,
+.recommend-box .section-title .action-tab,
+.side-box .side-title.f-clear .action-tab,
+.up-info .btn-panel .following-charge-btn,
+.up-info .btn-panel .following
 {
     background-color: #444 !important;
+}
+.pgc-space-follow-item .pgc-item-info .type-and-area i,
+.pgc-space-follow-item .pgc-item-info .pgc-item-state i
+{
+    background-color: #aaa !important;
 }
 #head-info-vm,
 #gift-control-vm,
@@ -242,7 +257,10 @@ input[type=radio]:checked+.custom-radio,
 .info-wrap .bk-text-con p span,
 .report-wrap-module.ban-modal.pub-list.init-end .info dl dt p span,
 .sidebar-wrapper .sidebar .profile-wrapper .img-wrapper,
-.live-item .live-item-link .live-img-box
+.live-item .live-item-link .live-img-box,
+.bangumi-pagelistbox.clearfix .custom-right .result,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after
 {
     background-color: transparent !important;
 }
@@ -251,7 +269,9 @@ input[type=radio]:checked+.custom-radio,
 .follow-dialog-wrap .follow-dialog-window .content .group-list ul .follow-group-mask,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after
 {
     background: transparent !important;
 }
@@ -379,7 +399,13 @@ input[type=radio]:checked+.custom-radio,
 .profile-wrapper .info-wrapper .relationship .followings:after,
 .item-footer .button-line .button-wrapper a,
 .vc-item .item-top .detail .time,
-.pic-item .content-wrapper .main-content .datetime
+.pic-item .content-wrapper .main-content .datetime,
+.page-container.p-rel .tab-nav .tab .tab-text,
+.side-box .list .item .info a,
+.pgc-space-follow-item .pgc-item-info .pgc-item-desc,
+.pgc-space-follow-item .pgc-item-info .type-and-area,
+.pgc-space-follow-item .pgc-item-info .pgc-item-state,
+.video-info .video-data .a-crumbs a
 {
     color: #aaa !important;
 }
@@ -621,7 +647,19 @@ th.list-head-text,
 .sidebar-wrapper .sidebar .feedlist-wrapper .more,
 .vc-item .item-top .detail p a.description,
 .pic-item .content-wrapper .main-content .article,
-.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
+.recommend-box .section-title .category-name,
+.recommend-box .section-title .action-tab,
+.recommend-box .section-title .action-tab a,
+.side-box .side-title.f-clear .action-tab,
+.s-space .wrapper .col-full .sub-tabs span,
+.pgc-space-follow-item .pgc-item-info .pgc-item-title,
+.bangumi-pagelistbox .p,
+.bangumi-pagelistbox .p:hover,
+.bangumi-pagelistbox .p.active,
+.bangumi-pagelistbox .custom-right .custom-right-inner,
+.pgc-space-follow-item a.pgc-item-cover .badge,
+.up-info .btn-panel .following-charge-btn
 {
     color: #eee !important;
 }
@@ -750,7 +788,17 @@ th.list-head-text,
 .main-content .list .all-list .pic-item .footer-wrapper,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip,
 .item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tip-arrow,
-.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper
+.sidebar-wrapper .sidebar .profile-wrapper .img-wrapper,
+.feed-topic .separater-line,
+.feed-topic .hot-content .card.card-offset,
+.recommend-box .section-title .action-tab,
+.side-box .side-title.f-clear .action-tab,
+.bangumi-pagelistbox .p,
+.bangumi-pagelistbox .p:hover,
+.bangumi-pagelistbox .p.active,
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage,
+.up-info .btn-panel .charge-btn,
+.up-info .btn-panel .following
 {
     border-color: transparent !important;
 }
@@ -790,7 +838,9 @@ th.list-head-text,
 {
     border-color: white !important;
 } */
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after
 {
     border-image: none !important;
 }
@@ -942,7 +992,13 @@ th.list-head-text,
 .coin-dialog-mask .coin-operated .mc .mc-box,
 .score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute,
 input[type=radio]:checked+.custom-radio,
-.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark,
+.sub-area em.active,
+.sub-area em:hover,
+.sub-tabs a.active,
+.sub-tabs a.active:before,
+.bangumi-pagelistbox .custom-right .custom-right-inner.custompage:hover,
+.report-image-candidate-ctnr.t-center .upload-hint
 {
     border-color: var(--theme-color) !important;
 }
@@ -1038,7 +1094,12 @@ input[type=radio]:checked+.custom-radio,
 .aside-area-toggle-btn .btn-ctnr:hover .btn-slider,
 ul.navigation li span:after,
 .sidebar-wrapper .sidebar .feedlist-wrapper .more:hover,
-.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark .white-dot
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark .white-dot,
+.page-container.p-rel .tab-nav .line,
+.pgc-space-follow-item a.pgc-item-cover .badge.type_0,
+.bangumi-pagelistbox .p:hover,
+.bangumi-pagelistbox .p.active,
+.up-info .btn-panel .following-charge-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -1181,7 +1242,20 @@ li.normal-item a:hover .uname,
 .item-footer .button-line .button-wrapper:hover .button-item .label,
 .item-footer .button-line .button-wrapper:hover .button-item .num,
 .pic-item .content-wrapper .main-content .article:hover,
-.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark
+.live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark,
+.sub-area em.active,
+.sub-area em:hover,
+.recommend-box .section-title .action-tab a:hover,
+.recommend-box .section-title .action-tab a:hover .icon-font,
+.recommend-box .section-title .action-tab:hover,
+.recommend-box .section-title .action-tab:hover .icon-replace,
+.side-box .side-title.f-clear .action-tab:hover,
+.side-box .side-title.f-clear .action-tab:hover .icon-replace,
+.s-space .wrapper .col-full .sub-tabs.clearfix a:hover,
+.pgc-space-follow-item .pgc-item-info .pgc-item-title:hover,
+.video-info .video-data .a-crumbs a:hover,
+.up-info .u-info .name .message:hover,
+.up-info .u-info .name .message:hover i
 {
     color: var(--theme-color) !important;
 }
@@ -1203,8 +1277,8 @@ li.normal-item a:hover .uname,
     border-top-color: transparent !important;
     border-left-color: transparent !important;
 } */
-/* a
+.sub-tabs a.active:before
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-} */
+}

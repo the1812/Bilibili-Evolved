@@ -1,3 +1,8 @@
+if (document.querySelector(`.z_header`) !== null)
+{
+    resources.removeStyle("tweetsStyle");
+    return;
+}
 SpinQuery.any(
     () => $(".head-content.bili-wrapper>div.search:not(.filter-item)"),
     textBox =>
@@ -8,14 +13,14 @@ SpinQuery.any(
 );
 if (settings.preserveRank)
 {
-    SpinQuery.any(
-        () => $(".nav-wrapper .searchform,.nav-con #nav_searchform"),
+    SpinQuery.select(
+        () => document.querySelector(".nav-wrapper .searchform,.nav-con #nav_searchform"),
         searchForm =>
         {
-            searchForm.addClass("preserve-rank");
-            if (searchForm.find("a.icons-enabled").length === 0)
+            searchForm.classList.add("preserve-rank");
+            if (!searchForm.querySelector("a.icons-enabled"))
             {
-                searchForm.prepend(/*html*/`
+                searchForm.insertAdjacentHTML("afterbegin", /*html*/`
                     <a  title="排行榜"
                         class="icons-enabled"
                         href="https://www.bilibili.com/ranking"
@@ -29,12 +34,13 @@ if (settings.preserveRank)
 }
 else
 {
-    SpinQuery.any(
-        () => $(".nav-wrapper .searchform,.nav-con #nav_searchform"),
+    SpinQuery.select(
+        () => document.querySelector(".nav-wrapper .searchform,.nav-con #nav_searchform"),
         searchForm =>
         {
-            searchForm.removeClass("preserve-rank");
-            searchForm.find("a.icons-enabled").remove();
+            searchForm.classList.remove("preserve-rank");
+            const rankIcon = searchForm.querySelector("a.icons-enabled");
+            rankIcon && rankIcon.remove();
         }
     );
 }

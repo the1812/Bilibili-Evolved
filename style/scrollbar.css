@@ -17,3 +17,8 @@
 {
     background: #888 !important;
 }
+*
+{
+    scrollbar-color: #aaa transparent !important;
+    scrollbar-width: thin !important;
+}

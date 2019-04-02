@@ -126,7 +126,7 @@ export default (() =>
                     {
                         const uid = match[1];
                         const url = `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`;
-                        const text = await downloadText(url);
+                        const text = await Ajax.getText(url);
                         const coverUrl = JSON.parse(text).data.cover;
                         const imageViewer = new ImageViewer(coverUrl);
                         $("#view-cover").on("click", () =>

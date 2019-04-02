@@ -1,0 +1,306 @@
+.right-container.f-left .active-panel .show-more-button,
+.link-tag-box .selector-wrap ul>li:hover,
+.video-card .labels-ctnr,
+.tab-selector-wrap .selector-wrap ul>li:hover,
+.article-info-module,
+.result.is-web .vote-result-comment
+{
+    background-color: #222 !important;
+}
+.content .link-tag-box,
+.content .tab-selector-wrap
+{
+    background-color: #333 !important;
+}
+.main-container .media-info .media-right .media-desc i,
+.up-info .btn-panel .charge-btn,
+.content .rank-list,
+.link-tag-box .selector-wrap,
+.link-tag-box .selector-wrap ul,
+.tag.sky-blue,
+.tag.sky-blue:hover,
+.tab-selector-wrap .selector-wrap,
+.tab-selector-wrap .selector-wrap ul,
+.popup-content-ctnr .report-input,
+.share-wrap .content-wrap .input-wrap input,
+.emoji-box .emoji-tabs .tab-link:hover,
+.block-area .follow-wrapper .follow-head .follow-more,
+.list-container .list-info-block,
+.list-container .article-list-block,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
+.setting .public-setting .public-wrp .setting-item .circle-wrap
+{
+    background-color: #444 !important;
+}
+/* a
+{
+    background-image: none !important;
+} */
+.rank-cntr .rank-list-ctnr .tip a,
+.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
+.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr .more,
+.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr a:hover,
+.list-container .list-info-block .right-side .col .split-line,
+.rank-list-cntr .tip.rank-desc.live-skin-normal-text a.more
+{
+    background-color: transparent !important;
+}
+.gift-rank-cntr .rank-cntr .item.own,
+.list-container .article-list-block .article-item
+{
+    background: transparent !important;
+}
+/* a
+{
+    background: #fff !important;
+} */
+#page-setting .setting-privacy-item .setting-privacy-switcher .be-switch-label,
+.video-detail .item-number,
+.video-detail .item-time,
+.video-card .labels-ctnr,
+.video-card .icons-label .text,
+.share-wrap .content-wrap .qr-wrap .qr-title,
+.article-card .article-info .data,
+.article-card .article-info .data a,
+.article-info-module .v-info,
+.article-info-module .v-data span,
+.video-info-module .v-info,
+.video-info-module .v-preview .txt,
+.video-info-module .v-data span,
+.follow-item .details .ep-info,
+.follow-item .details .ep-intro,
+.vote-info-wrapper .user-name .text,
+.option-content-wrapper .desc .option-vote,
+#page-article .article-lists .lists-item .item-right .item-title,
+#page-article .article-lists .lists-item .item-right .item-info span,
+.list-container .list-info-block .right-side .col,
+.list-container .list-info-block .right-side .summary,
+.data-card .data-wrp .tip p,
+.data-card .fans-wrp .tip p,
+.data-card .data-wrp .tab .fan-tab,
+.data-card .fans-wrp .tab .fan-tab,
+#dc-section_behavior .follow-tool-box .follow-line-legend .legend-item .legend-text
+{
+    color: #aaa !important;
+}
+.main-container .media-info .media-right .media-desc i,
+.up-info .btn-panel .charge-btn,
+.up-info .btn-panel .not-follow-charge-btn:hover,
+.link-tag-box .tab-wrap>ul li,
+.video-detail .item-title,
+.link-tag-box .selector-wrap,
+.link-tag-box .selector-wrap ul>li:hover,
+.tag.sky-blue.activated,
+.tag.sky-blue,
+.tag.sky-blue:hover,
+.tab-selector-wrap .tab-wrap>ul li,
+.tab-selector-wrap .selector-wrap,
+.tab-selector-wrap .selector-wrap ul>li:hover,
+.popup-content-ctnr .upload-box .upload-btn,
+.popup-content-ctnr .report-input,
+.share-wrap .content-wrap .input-wrap span,
+.share-wrap .content-wrap .input-wrap input,
+.share-wrap .content-wrap .input-wrap button,
+.article-card .article-info .title,
+.follow-item .details .season-title,
+.block-area .follow-wrapper .follow-head .follow-more,
+.vote-info-wrapper .user-name .name,
+.vote-info-wrapper .vote-to,
+#page-article .article-lists .lists-item .item-right .item-name,
+.list-container .list-info-block .right-side .title,
+.setting .public-setting .public-wrp .setting-item,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok
+{
+    color: #eee !important;
+}
+/* a
+{
+    color: #fff !important;
+} */
+.feed-topic .hot-content .card,
+.up-info .btn-panel .charge-btn,
+.feed-topic .top-content .card.card-offset,
+.link-tag-box .tab-wrap,
+.link-tag-box .selector-wrap div,
+.link-tag-box .selector-wrap ul,
+.tag.sky-blue.activated,
+.tag.sky-blue,
+.tab-selector-wrap .selector-wrap div,
+.tab-selector-wrap .selector-wrap ul,
+.popup-content-ctnr .report-input,
+.share-wrap .content-wrap .input-wrap input,
+.article-info-module,
+.block-area .follow-wrapper .follow-head .follow-more,
+.list-container .list-info-block .right-side .up-info-block .follow-btn.on,
+.version-switch-section .bottom-border,
+.cc-body .setting .follow-setting,
+.cc-body .setting .public-setting
+{
+    border-color: transparent !important;
+}
+.article-info-module .v-info .line,
+.video-info-module .v-info .line,
+.list-container .article-list-block .article-item .item-holder .article-content .article-left-block
+{
+    border-color: #aaa !important;
+}
+.article-info-module .v-data,
+.web-box .expanded .user-li::after
+{
+    border-color: #444 !important
+}
+/* a
+{
+    border-color: white !important;
+} */
+/* a
+{
+    fill: #aaa !important;
+} */
+/* a
+{
+    fill: #fff !important;
+} */
+.block-area .follow-wrapper .follow-head .follow-more .icon
+{
+    filter: brightness(0) invert(1) !important;
+}
+.article-card .article-info .data .icon,
+.article-info-module .v-data .icon,
+.video-info-module .v-data .icon
+{
+    filter: brightness(0) invert(.7) !important;
+}
+/* a
+{
+    filter: var(--blue-image-filter) !important;
+} */
+/* a
+{
+    filter: var(--pink-image-filter) !important;
+} */
+/* a
+{
+    filter: grayscale(1) !important;
+} */
+/* a
+{
+    filter: brightness(0.7) !important;
+} */
+/* a
+{
+    filter: brightness(0.2) !important;
+} */
+/* a
+{
+    filter: brightness(0.5) !important;
+} */
+/* a
+{
+    background-image: none !important;
+} */
+/* a
+{
+    box-shadow: none !important;
+} */
+/* a
+{
+    box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
+} */
+.article-info-module
+{
+    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
+}
+/* a
+{
+    display: none !important;
+} */
+.tag.sky-blue:hover,
+.data-card .data-wrp .tab .fan-tab.current,
+.data-card .fans-wrp .tab .fan-tab.current,
+.data-card .data-wrp .tab .fan-tab.current:after,
+.data-card .fans-wrp .tab .fan-tab.current:after,
+.data-card .data-wrp .total .incr-num:before,
+.data-card .fans-wrp .total .incr-num:before,
+.setting .public-setting .public-wrp .setting-item .circle-wrap.active
+{
+    border-color: var(--theme-color) !important;
+}
+/* a
+{
+    border-top-color: var(--theme-color) !important;
+} */
+/* a
+{
+    border-bottom-color: var(--theme-color) !important;
+} */
+/* a
+{
+    border-right-color: var(--theme-color) !important;
+} */
+/* a
+{
+    border: 1px solid var(--theme-color) !important;
+} */
+.up-info .btn-panel .not-follow-charge-btn:hover,
+.tab-wrap>ul li.selected a span:after,
+.tag.sky-blue.activated,
+.popup-content-ctnr .upload-box .upload-btn,
+.share-wrap .content-wrap .input-wrap button,
+.block-area .follow-wrapper .follow-head .follow-more:hover,
+.setting .public-setting .public-wrp .setting-item .circle-wrap .circle-inlie,
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok
+{
+    background-color: var(--theme-color) !important;
+}
+/* a
+{
+    background-color: var(--theme-color-60) !important;
+} */
+/* a
+{
+    background-color: var(--theme-color-90) !important;
+} */
+#announcement-area .flip-view .action-arrow-ctnr:hover .icon-font,
+.rank-item:hover .item-title,
+.tab-wrap>ul li.selected a span,
+.tab-wrap>ul li a span:hover,
+.share-wrap .content-wrap .title,
+.article-card .article-info .title:hover,
+.follow-item .details .season-title:hover,
+.follow-item .details .highlight,
+#page-article .article-lists .lists-item .item-right .item-name a:hover,
+#page-article .article-lists .lists-item .item-right .item-title a:hover,
+.data-card .data-wrp .tab .fan-tab.current,
+.data-card .fans-wrp .tab .fan-tab.current
+{
+    color: var(--theme-color) !important;
+}
+/* a
+{
+    color: var(--foreground-color) !important;
+} */
+/* a
+{
+    fill: var(--theme-color) !important;
+} */
+/* a
+{
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+} */
+/* a
+{
+    border-top-color: transparent !important;
+    border-left-color: transparent !important;
+} */
+.data-card .data-wrp .tab .fan-tab.current:after,
+.data-card .fans-wrp .tab .fan-tab.current:after,
+.data-card .data-wrp .total .incr-num:before,
+.data-card .fans-wrp .total .incr-num:before
+{
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+}
+/* line-ending test */

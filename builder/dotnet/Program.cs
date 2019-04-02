@@ -26,8 +26,10 @@ namespace BilibiliEvolved.Build
 
                 var builder = new ProjectBuilder(config);
                 builder
+                    .BuildClient()
                     .BuildPreview()
                     .BuildMaster()
+                    .BuildTypeScripts()
                     .BuildResources()
                     .BuildPreviewOffline()
                     .BuildOffline()
@@ -36,7 +38,8 @@ namespace BilibiliEvolved.Build
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Error.WriteLine($"Unexcepted Error: {ex.Message}");
+                Console.Error.WriteLine($"Unexpected Error: {ex.Message}");
+                throw;
             }
         }
     }

@@ -29,7 +29,7 @@ namespace BilibiliEvolved.Build
             var fileInfo = new FileInfo(path);
             return "min/" + fileInfo.Name.Insert(fileInfo.Name.LastIndexOf("."), ".min");
         }
-        protected IEnumerable<string> GetFiles(Predicate<FileInfo> filter)
+        public static IEnumerable<string> GetFiles(Predicate<FileInfo> filter)
         {
             string getRelativePath(string fullPath)
             {
@@ -49,7 +49,16 @@ namespace BilibiliEvolved.Build
                 var list = new List<string>();
                 var currentDirectory = new DirectoryInfo(path);
                 list.AddRange(currentDirectory.EnumerateFiles()
-                    .Where(file => predicate(file))
+                    .Where(file =>
+                    {
+                        var fullName = file.FullName;
+                        return predicate(file)
+                        && !fullName.Contains(@".vs\")
+                        && !fullName.Contains(@".vscode\")
+                        && !fullName.Contains(@"build-scripts\")
+                        && !fullName.Contains(@"node_modules\")
+                        && !fullName.Contains(@".backup.");
+                    })
                     .Select(file => getRelativePath(file.FullName)));
                 foreach (var subDir in currentDirectory.EnumerateDirectories())
                 {
@@ -66,14 +75,7 @@ namespace BilibiliEvolved.Build
         }
         public virtual ProjectBuilder Build(ProjectBuilder builder)
         {
-            var files = GetFiles(file =>
-                FileFilter(file)
-                && !file.FullName.Contains(@".vs\")
-                && !file.FullName.Contains(@".vscode\")
-                && !file.FullName.Contains(@"build-scripts\")
-                && !file.FullName.Contains(@"node_modules\")
-                && !file.FullName.Contains(@".backup.")
-                );
+            var files = GetFiles(FileFilter);
             using (var cache = new BuildCache())
             {
                 var changedFiles = files.Where(file => !cache.Contains(file));
@@ -129,9 +131,10 @@ namespace BilibiliEvolved.Build
     {
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
-            return !file.FullName.Contains(".min")
-                && !file.FullName.Contains(@"builder\")
-                && !file.FullName.Contains("bilibili-evolved.")
+            return (file.FullName.Contains(@"style\")
+                || file.FullName.Contains(@"touch\")
+                || file.FullName.Contains(@"utils\")
+                || file.FullName.Contains(@"video\"))
                 && file.Extension == ".js";
         };
 
@@ -141,23 +144,26 @@ namespace BilibiliEvolved.Build
         {
             if (!input.StartsWith("(() =>"))
             {
-                var importRegex = new Regex(@"import (.*) from [""'](.*)[""'];", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                while (true)
+                Func<string, string> convertToRuntimeSource = source =>
                 {
-                    var match = importRegex.Match(input);
-                    if (!match.Success)
-                    {
-                        break;
-                    }
-                    var imported = match.Groups[1].Value.Replace(" as ", ":");
-                    var source = match.Groups[2].Value;
                     var index = source.LastIndexOf("/");
                     if (index != -1)
                     {
-                        source = source.Remove(0, index + 1);
+                        source = source.Remove(1, index);
                     }
-                    input = input.Replace(match.Value, $"const {imported} = resources.import(\"{source}\");");
-                }
+                    return source;
+                };
+                input = RegexReplacer.Replace(input, @"import (.*) from (.*);", match =>
+                {
+                    var imported = match.Groups[1].Value.Replace(" as ", ":");
+                    var source = convertToRuntimeSource(match.Groups[2].Value);
+                    return $"const {imported} = resources.import({source});";
+                });
+                input = RegexReplacer.Replace(input, @" import\((.*)\);", match =>
+                {
+                    var source = convertToRuntimeSource(match.Groups[1].Value);
+                    return $" resources.importAsync({source});";
+                });
                 input = @"(() =>
 {
     return (settings, resources) =>

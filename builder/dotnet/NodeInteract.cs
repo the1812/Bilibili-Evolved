@@ -13,7 +13,7 @@ namespace BilibiliEvolved.Build
         public static readonly string GlobalModulePath = Environment.GetEnvironmentVariable("AppData") + @"/npm/node_modules/";
         protected abstract string ExecutablePath { get; }
         protected abstract string Arguments { get; }
-        public string Run(string input)
+        public string Run(string input = "")
         {
             var filename = "";
             if (File.Exists(LocalModulePath + ExecutablePath))
@@ -34,6 +34,7 @@ namespace BilibiliEvolved.Build
                 Arguments = filename + " " + Arguments,
                 UseShellExecute = false,
                 RedirectStandardInput = true,
+                RedirectStandardError = true,
                 RedirectStandardOutput = true,
             };
             var process = Process.Start(processInfo);
@@ -42,9 +43,10 @@ namespace BilibiliEvolved.Build
                 writer.Write(input);
                 writer.Flush();
                 writer.Close();
-                using (var reader = new StreamReader(process.StandardOutput.BaseStream, Encoding.UTF8))
+                using (var outputReader = new StreamReader(process.StandardOutput.BaseStream, Encoding.UTF8))
+                using (var errorReader = new StreamReader(process.StandardError.BaseStream, Encoding.UTF8))
                 {
-                    return reader.ReadToEnd().Trim();
+                    return outputReader.ReadToEnd().Trim() + errorReader.ReadToEnd().Trim();
                 }
             }
         }
@@ -63,5 +65,10 @@ namespace BilibiliEvolved.Build
     {
         protected override string ExecutablePath => "html-minifier/cli.js";
         protected override string Arguments => "--collapse-whitespace --collapse-inline-tag-whitespace --remove-comments --remove-attribute-quotes --remove-optional-tags --remove-tag-whitespace --use-short-doctype";
+    }
+    sealed class TypeScriptCompiler : NodeInteract
+    {
+        protected override string ExecutablePath => "typescript/bin/tsc";
+        protected override string Arguments => "";
     }
 }

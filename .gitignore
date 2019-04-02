@@ -1,8 +1,8 @@
 .vscode/
 builder/node/
+builder/dotnet/Properties
 .node_modules/
 package-lock.json
-build.cache
 dark.scss
 dark.css
 dark-template.scss

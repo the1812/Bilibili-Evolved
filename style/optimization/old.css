@@ -200,7 +200,7 @@ input.nav-search-keyword::placeholder,
     .nav-search
     {
         width: 250px !important;
-        margin-right: 72px !important;
+        /* margin-right: 72px !important; */
     }
     .nav-search-keyword
     {

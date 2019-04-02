@@ -286,9 +286,13 @@ class VideoShot
     }
     getVideoshot(currentTime, done)
     {
+        if (!(this.aid && this.cid))
+        {
+            return;
+        }
         if (!this.cidData)
         {
-            downloadText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`).then(response =>
+            Ajax.getText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`).then(response =>
             {
                 this.cidData = JSON.parse(response).data;
                 this.getVideoshot(currentTime, done);

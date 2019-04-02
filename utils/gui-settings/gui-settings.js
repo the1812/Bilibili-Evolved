@@ -14,9 +14,18 @@ function getCategoryItems(category)
 }
 function settingsChange(key, value)
 {
-    $(`input[type='checkbox'][key='${key}']`)
-        .prop("checked", value);
-    $(`input[type='text'][key='${key}']`).val(value);
+    const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
+    if (checkbox)
+    {
+        checkbox.checked = value;
+        return;
+    }
+    const textbox = document.querySelector(`input[type='text'][key='${key}']`);
+    if (textbox)
+    {
+        textbox.value = value;
+        return;
+    }
 }
 function syncGui()
 {
@@ -27,37 +36,55 @@ function syncGui()
 }
 function setupEvents()
 {
-    $(".gui-settings-mask").on("click", () =>
+    document.querySelector(".gui-settings-mask").addEventListener("click", () =>
     {
-        $(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask").removeClass("opened");
+        document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask")
+            .forEach(it => it.classList.remove("opened"));
     });
-    $("input[type='text'][key]").each((_, element) =>
+    document.querySelectorAll("input[type='text'][key]").forEach(element =>
     {
-        $(element).attr("placeholder", settings[$(element).attr("key")]);
+        element.setAttribute("placeholder", settings[element.getAttribute("key")]);
     });
-    $(".gui-settings-content ul li.category").on("click", e =>
+    document.querySelectorAll(".gui-settings-content ul li.category").forEach(it =>
     {
-        const searchBox = document.querySelector(".gui-settings-search");
-        if (searchBox.value !== "")
+        it.addEventListener("click", e =>
         {
-            searchBox.value = "";
-            raiseEvent(searchBox, "input");
-        }
-        e.currentTarget.classList.toggle("folded");
-        getCategoryItems(e.currentTarget).forEach(it => it.classList.toggle("folded"));
+            const searchBox = document.querySelector(".gui-settings-search");
+            if (searchBox.value !== "")
+            {
+                searchBox.value = "";
+                raiseEvent(searchBox, "input");
+            }
+            e.currentTarget.classList.toggle("folded");
+            getCategoryItems(e.currentTarget).forEach(it => it.classList.toggle("folded"));
+        });
     });
-    $(".gui-settings-dropdown>input").on("click", e =>
+    document.querySelectorAll(".gui-settings-dropdown>input").forEach(it =>
     {
-        $(e.currentTarget).parent().toggleClass("opened");
+        it.addEventListener("click", e =>
+        {
+            e.currentTarget.parentElement.classList.toggle("opened");
+        });
     });
     onSettingsChange((key, _, value) =>
     {
         if (settings[key] !== value)
         {
             settings[key] = value;
-            $(`input[type='checkbox'][key='${key}']`)
-                .prop("checked", value).change();
-            $(`input[type='text'][key='${key}']`).val(value).change();
+            const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
+            if (checkbox)
+            {
+                checkbox.checked = value;
+                raiseEvent(checkbox, "change");
+                return;
+            }
+            const textbox = document.querySelector(`input[type='text'][key='${key}']`);
+            if (textbox)
+            {
+                textbox.value = value;
+                raiseEvent(textbox, "change");
+                return;
+            }
         }
     });
 }
@@ -71,9 +98,9 @@ function listenSettingsChange()
         //     resources.fetchByKey(reloadableKey);
         // }
     };
-    $("input[type='checkbox'][key]").each((_, element) =>
+    document.querySelectorAll("input[type='checkbox'][key]").forEach(element =>
     {
-        $(element).on("change", () =>
+        element.addEventListener("change", () =>
         {
             const key = element.getAttribute("key");
             const value = element.checked;
@@ -82,9 +109,9 @@ function listenSettingsChange()
             saveSettings(settings);
         });
     });
-    $("input[type='text'][key]").each((_, element) =>
+    document.querySelectorAll("input[type='text'][key]").forEach(element =>
     {
-        $(element).on("change", () =>
+        element.addEventListener("change", () =>
         {
             const key = element.getAttribute("key");
             const value = Validator.getValidator(key).validate(element.value);
@@ -98,51 +125,58 @@ function listenSettingsChange()
 function listenDependencies()
 {
     const dependencies = {};
-    $(`input[dependencies]`).each((_, element) =>
+    document.querySelectorAll(`input[dependencies]`).forEach(element =>
     {
-        const dep = $(element).attr("dependencies");
+        const dep = element.getAttribute("dependencies");
         if (dep)
         {
-            dependencies[$(element).attr("key")] = dep;
+            dependencies[element.getAttribute("key")] = dep;
         }
     });
     const checkBoxChange = element =>
     {
-        const checked = element.prop("checked");
+        const checked = element.checked;
         for (const key in dependencies)
         {
             const dependency = dependencies[key].split(" ");
-            if (dependency.indexOf(element.attr("key")) !== -1)
+            if (dependency.indexOf(element.getAttribute("key")) !== -1)
             {
                 let disable = true;
-                if (checked && dependency.every(k => $(`input[key='${k}']`).prop("checked")))
+                if (checked && dependency.every(k => document.querySelector(`input[key='${k}']`).checked))
                 {
                     disable = false;
                 }
-                const li = $(`li:has(input[key='${key}'])`);
-                const action = disable ? "addClass" : "removeClass";
-                li[action]("disabled");
-                $(`input[key='${key}'][type='text']`).parent()[action]("disabled");
+                let li = document.querySelector(`input[key='${key}']`);
+                while (li.nodeName.toLowerCase() !== "li")
+                {
+                    li = li.parentElement;
+                }
+                const action = disable ? "add" : "remove";
+                li.classList[action]("disabled");
+                const text = document.querySelector(`input[key='${key}'][type='text']`);
+                text && text.parentElement.classList[action]("disabled");
             }
         }
     };
-    $(`input[type='checkbox'][key]`)
-        .on("change", e => checkBoxChange($(e.target)))
-        .each((_, e) => checkBoxChange($(e)));
+    document.querySelectorAll(`input[type='checkbox'][key]`).forEach(element =>
+    {
+        element.addEventListener("change", e => checkBoxChange(e.target));
+        checkBoxChange(element);
+    });
 }
 function checkOfflineData()
 {
     if (typeof offlineData !== "undefined")
     {
-        $("li:has(input[key=useCache])").addClass("disabled");
-        $("input[key=useCache]").prop("disabled", true);
+        document.querySelector(".gui-settings-checkbox-container>input[key=useCache]").parentElement.parentElement.classList.add("disabled");
+        document.querySelector("input[key=useCache]").disabled = true;
     }
 }
 function foldAllCategories()
 {
-    $(".gui-settings-content ul li.category").each((_, e) =>
+    document.querySelectorAll(".gui-settings-content ul li.category").forEach(e =>
     {
-        $(e).click();
+        e.click();
     });
 }
 function checkCompatibility()
@@ -150,23 +184,25 @@ function checkCompatibility()
     if (!CSS.supports("backdrop-filter", "blur(24px)")
         && !CSS.supports("-webkit-backdrop-filter", "blur(24px)"))
     {
-        $("input[key=blurVideoControl]").prop("disabled", true);
+        document.querySelector("input[key=blurVideoControl]").disabled = true;
         settings.blurVideoControl = false;
         saveSettings(settings);
     }
     if (window.devicePixelRatio === 1)
     {
-        $("input[key=harunaScale]").prop("disabled", true);
+        document.querySelector("input[key=harunaScale]").disabled = true;
         settings.harunaScale = false;
         saveSettings(settings);
     }
     if (settings.defaultPlayerLayout === "旧版")
     {
-        const navbarOption = $("input[key=overrideNavBar]");
-        navbarOption.prop("disabled", true).change();
+        const navbarOption = document.querySelector("input[key=overrideNavBar]");
+        navbarOption.disabled = true;
+        raiseEvent(navbarOption, "change");
         if (settings.overrideNavBar)
         {
-            navbarOption.prop("checked", false).change();
+            navbarOption.checked = false;
+            raiseEvent(navbarOption, "change");
             settings.overrideNavBar = false;
             saveSettings(settings);
         }
@@ -207,11 +243,12 @@ function setDisplayNames()
 {
     resources.applyStyle("guiSettingsStyle");
     const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
-    $("body").append(settingsBox);
+    document.body.insertAdjacentHTML("beforeend", settingsBox);
+    document.body.insertAdjacentHTML("afterbegin", `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);
     new SpinQuery(
-        () => $("body"),
-        it => it.length > 0 && !(unsafeWindow.parent.window === unsafeWindow),
-        _ => $(".gui-settings-icon-panel").css("display", "none")
+        () => document.body,
+        it => it && !(unsafeWindow.parent.window === unsafeWindow),
+        _ => document.querySelector(".gui-settings-icon-panel").style.display = "none",
     ).start();
 
     setupEvents();

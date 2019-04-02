@@ -49,6 +49,10 @@ div.stardust-player
 {
     margin-left: -2em !important;
 }
+.nav-search-box
+{
+    margin: 9px 0 0 0 !important;
+}
 
 .bili-header-m .nav-menu .nav-con .nav-item .t,
 .link-navbar .main-ctnr .nav-logo,

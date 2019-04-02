@@ -28,6 +28,10 @@
 {
     background-color: #444 !important;
 }
+.m-recommend-item div.box
+{
+    background-color: transparent !important;
+}
 
 blockquote,
 blockquote *,
@@ -80,7 +84,8 @@ blockquote .color-yellow-04,
 .invitation-record-warp .invtable .inputdone,
 .bb-comment .no-login .comment-submit,
 .live-skin-coloration-area .live-skin-main-text,
-.live-skin-coloration-area .live-skin-highlight-text
+.live-skin-coloration-area .live-skin-highlight-text,
+#app .sticky-bar .bar-content .message
 {
     color: #eee !important;
 }
@@ -126,7 +131,9 @@ blockquote .color-yellow-04,
 .im-popup .bp-popup-panel .title-ctnr .popup-title,
 .live-skin-coloration-area .live-skin-highlight-text,
 .live-skin-coloration-area .live-skin-normal-a-text:hover,
-.live-skin-normal-a-text:active
+.live-skin-normal-a-text:active,
+.up-info .u-info .name .username.is-vip:hover,
+#app .sticky-bar .bar-content .message:hover
 {
     color: var(--theme-color) !important;
 }
