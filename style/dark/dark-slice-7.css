@@ -44,7 +44,8 @@
     background-color: transparent !important;
 }
 .gift-rank-cntr .rank-cntr .item.own,
-.list-container .article-list-block .article-item
+.list-container .article-list-block .article-item,
+.original-editor-wrap .float-toolbar .toolbar-list
 {
     background: transparent !important;
 }
@@ -170,10 +171,10 @@
 {
     filter: brightness(0) invert(.7) !important;
 }
-/* a
+.nav-upload-container .nav-upload-item>img
 {
     filter: var(--blue-image-filter) !important;
-} */
+}
 /* a
 {
     filter: var(--pink-image-filter) !important;
