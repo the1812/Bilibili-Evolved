@@ -133,7 +133,6 @@
 .error-body .error-container .song-wrap .change-song,
 .error-body .error-container .song-wrap .iconfont,
 .song-coin-bg .song-coin .song-coin-title,
-.song-coin-bg .song-coin .song-coin-content .song-two-coin.active,
 .song-coin-bg .song-coin .song-coin-btn,
 .share-board .song-share .song-share-ul,
 .share-board .share-btn .share-type,
@@ -330,7 +329,9 @@
 .share-board .song-share .song-share-ul li:hover,
 .collection-bg .collection-board .collection-list .collection-li .collection-checkbox .collection-checked,
 .collection-bg .collection-board .collection-list .collection-li:hover .collection-checkbox,
- .collection-bg .collection-board .collection-list .collection-li:hover .collection-name
+ .collection-bg .collection-board .collection-list .collection-li:hover .collection-name,
+ .song-coin-bg .song-coin .song-coin-content .song-one-coin.active,
+ .song-coin-bg .song-coin .song-coin-content .song-two-coin.active
 {
     color: var(--theme-color) !important;
 }
