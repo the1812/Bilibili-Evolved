@@ -45,7 +45,8 @@
 }
 .gift-rank-cntr .rank-cntr .item.own,
 .list-container .article-list-block .article-item,
-.original-editor-wrap .float-toolbar .toolbar-list
+.original-editor-wrap .float-toolbar .toolbar-list,
+.dc-page .version-switch-section
 {
     background: transparent !important;
 }
@@ -134,7 +135,8 @@
 .list-container .list-info-block .right-side .up-info-block .follow-btn.on,
 .version-switch-section .bottom-border,
 .cc-body .setting .follow-setting,
-.cc-body .setting .public-setting
+.cc-body .setting .public-setting,
+.dc-page .version-switch-section
 {
     border-color: transparent !important;
 }
