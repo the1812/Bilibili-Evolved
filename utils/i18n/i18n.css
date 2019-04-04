@@ -1,9 +1,11 @@
 .up-info .up-focus-btn,
 .textarea-container .comm-tool .comm-emoji,
-.textarea-container .comm-tool .comm-submit
+.textarea-container .comm-tool .comm-submit,
+.attention-btn-ctnr .left-part,
+.admin-list-cntr .rank-cntr .item .admin-icon
 {
     width: auto !important;
-    padding: 0 4px !important;
+    padding: 0 8px !important;
 }
 .bb-comment .comment-send .comment-emoji
 {
