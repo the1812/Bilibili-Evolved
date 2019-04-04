@@ -2,7 +2,8 @@
 .textarea-container .comm-tool .comm-emoji,
 .textarea-container .comm-tool .comm-submit,
 .attention-btn-ctnr .left-part,
-.admin-list-cntr .rank-cntr .item .admin-icon
+.admin-list-cntr .rank-cntr .item .admin-icon,
+.h .h-f-btn
 {
     width: auto !important;
     padding: 0 8px !important;
@@ -83,4 +84,13 @@
 .bili-search .rocket-con
 {
     margin-left: 40% !important;
+}
+#page-follows .follow-sidenav .text
+{
+    width: auto !important;
+    min-width: 78px !important;
+}
+.h .h-f-btn
+{
+    min-width: 76px !important;
 }
