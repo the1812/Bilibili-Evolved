@@ -127,7 +127,7 @@ export class TitleTranslator extends Translator
 }
 export class PlaceholderTranslator extends Translator
 {
-    accepts(node: Node) { return node.nodeName === "INPUT" && (node as HTMLInputElement).type.toUpperCase() === "TEXT" || node.nodeName === "TEXTAREA"; }
+    // accepts(node: Node) { return node.nodeName === "INPUT" && (node as HTMLInputElement).type.toUpperCase() === "TEXT" || node.nodeName === "TEXTAREA"; }
     getValue(node: Node) { return (node as Element).getAttribute("placeholder"); }
     setValue(node: Node, value: string)
     {
