@@ -41,6 +41,7 @@ import { ResourceManager } from './resource-manager';
 
 try
 {
+    Vue.config.productionTip = false;
     setupAjaxHook();
     const events = {};
     for (const name of ["init", "styleLoaded", "scriptLoaded"])
