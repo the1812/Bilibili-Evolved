@@ -10,7 +10,8 @@
     width: max-content !important;
     padding: 0 4px !important;
 }
-.primary-menu .nav-menu .nav-name
+.primary-menu .nav-menu .nav-name,
+.primary-menu .nav-menu .side-nav .side-link span
 {
     white-space: pre !important;
 }
