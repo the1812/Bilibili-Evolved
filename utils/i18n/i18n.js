@@ -107,16 +107,21 @@ Translator.allTranslators = [Translator.textNode, Translator.title, Translator.p
     Translator.map = map;
     Translator.translate(document.body);
     Translator.translateCssMatches();
-    Observer.childListSubtree("body", records => {
+    Observer.observe("body", records => {
         records.forEach(it => {
-            if (it.addedNodes.length > 0) {
-                Translator.translateCssMatches();
+            if (it.type === "childList") {
+                if (it.addedNodes.length > 0) {
+                    Translator.translateCssMatches();
+                }
+                it.addedNodes.forEach(node => {
+                    Translator.translate(node);
+                });
             }
-            it.addedNodes.forEach(node => {
-                Translator.translate(node);
-            });
+            else if (it.type === "characterData") {
+                Translator.textNode.translate(it.target);
+            }
         });
-    });
+    }, { characterData: true, childList: true, subtree: true });
 })();
 export default {
     export: {

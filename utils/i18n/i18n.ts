@@ -147,20 +147,27 @@ Translator.allTranslators = [Translator.textNode, Translator.title, Translator.p
 
     Translator.translate(document.body);
     Translator.translateCssMatches();
-    Observer.childListSubtree("body", records =>
+    Observer.observe("body", records =>
     {
         records.forEach(it =>
         {
-            if (it.addedNodes.length > 0)
+            if (it.type === "childList")
             {
-                Translator.translateCssMatches();
+                if (it.addedNodes.length > 0)
+                {
+                    Translator.translateCssMatches();
+                }
+                it.addedNodes.forEach(node =>
+                {
+                    Translator.translate(node);
+                });
             }
-            it.addedNodes.forEach(node =>
+            else if (it.type === "characterData")
             {
-                Translator.translate(node);
-            });
+                Translator.textNode.translate(it.target);
+            }
         });
-    });
+    }, { characterData: true, childList: true, subtree: true });
 })();
 
 export default {
