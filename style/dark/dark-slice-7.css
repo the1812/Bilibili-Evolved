@@ -110,7 +110,8 @@
 .list-container .list-info-block .right-side .title,
 .setting .public-setting .public-wrp .setting-item,
 .setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
-.setting .public-setting .public-wrp .button-wrap .btn-text.ok
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok,
+#page-fav .fav-main .fav-action-bottom .search-results-num
 {
     color: #eee !important;
 }
@@ -173,7 +174,8 @@
 {
     filter: brightness(0) invert(.7) !important;
 }
-.nav-upload-container .nav-upload-item>img
+.nav-upload-container .nav-upload-item>img,
+#page-fav .fav-main .search-input .icon-search:hover
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -274,7 +276,9 @@
 #page-article .article-lists .lists-item .item-right .item-name a:hover,
 #page-article .article-lists .lists-item .item-right .item-title a:hover,
 .data-card .data-wrp .tab .fan-tab.current,
-.data-card .fans-wrp .tab .fan-tab.current
+.data-card .fans-wrp .tab .fan-tab.current,
+#page-fav .fav-main .fav-action-bottom .search-results-num i,
+.small-item .search-keyword-highlight
 {
     color: var(--theme-color) !important;
 }
