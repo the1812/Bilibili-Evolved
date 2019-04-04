@@ -55,3 +55,7 @@
 {
     padding-left: 8px !important;
 }
+.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-spans>div
+{
+    align-items: center !important;
+}
