@@ -2038,6 +2038,7 @@ class ResourceManager
 try
 {
     Vue.config.productionTip = false;
+    Vue.config.devtools = false;
     setupAjaxHook();
     const events = {};
     for (const name of ["init", "styleLoaded", "scriptLoaded"])
