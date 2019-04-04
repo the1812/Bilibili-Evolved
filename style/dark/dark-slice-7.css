@@ -3,7 +3,10 @@
 .video-card .labels-ctnr,
 .tab-selector-wrap .selector-wrap ul>li:hover,
 .article-info-module,
-.result.is-web .vote-result-comment
+.result.is-web .vote-result-comment,
+.error-body .error-container .error-panel .audio-split,
+.error-body .error-container .song-wrap .image-split,
+.error-body .error-container .song-wrap .change-song
 {
     background-color: #222 !important;
 }
@@ -28,7 +31,8 @@
 .list-container .list-info-block,
 .list-container .article-list-block,
 .setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
-.setting .public-setting .public-wrp .setting-item .circle-wrap
+.setting .public-setting .public-wrp .setting-item .circle-wrap,
+.video .video-topic .video-list
 {
     background-color: #444 !important;
 }
@@ -79,7 +83,10 @@
 .data-card .fans-wrp .tip p,
 .data-card .data-wrp .tab .fan-tab,
 .data-card .fans-wrp .tab .fan-tab,
-#dc-section_behavior .follow-tool-box .follow-line-legend .legend-item .legend-text
+#dc-section_behavior .follow-tool-box .follow-line-legend .legend-item .legend-text,
+.error-body .error-container .error-panel .error-clue,
+.error-body .error-container .msg-text,
+.error-body .error-container .song-wrap .song-list .song-li .content .num
 {
     color: #aaa !important;
 }
@@ -111,7 +118,11 @@
 .setting .public-setting .public-wrp .setting-item,
 .setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
 .setting .public-setting .public-wrp .button-wrap .btn-text.ok,
-#page-fav .fav-main .fav-action-bottom .search-results-num
+#page-fav .fav-main .fav-action-bottom .search-results-num,
+.error-body .error-container .error-panel .audio-split,
+.error-body .error-container .song-wrap .image-split,
+.error-body .error-container .song-wrap .change-song,
+.error-body .error-container .song-wrap .iconfont
 {
     color: #eee !important;
 }
@@ -137,7 +148,9 @@
 .version-switch-section .bottom-border,
 .cc-body .setting .follow-setting,
 .cc-body .setting .public-setting,
-.dc-page .version-switch-section
+.dc-page .version-switch-section,
+.section-block.with-radius.p-relative .section-nav,
+.error-body .error-container .song-wrap .change-song
 {
     border-color: transparent !important;
 }
@@ -175,7 +188,8 @@
     filter: brightness(0) invert(.7) !important;
 }
 .nav-upload-container .nav-upload-item>img,
-#page-fav .fav-main .search-input .icon-search:hover
+#page-fav .fav-main .search-input .icon-search:hover,
+.error-body .error-container .error-panel .error-msg .error-img
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -226,7 +240,8 @@
 .data-card .fans-wrp .tab .fan-tab.current:after,
 .data-card .data-wrp .total .incr-num:before,
 .data-card .fans-wrp .total .incr-num:before,
-.setting .public-setting .public-wrp .setting-item .circle-wrap.active
+.setting .public-setting .public-wrp .setting-item .circle-wrap.active,
+.error-body .error-container .song-wrap .song-list .song-li .song-shadow
 {
     border-color: var(--theme-color) !important;
 }
