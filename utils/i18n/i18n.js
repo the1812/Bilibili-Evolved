@@ -92,7 +92,7 @@ export class TitleTranslator extends Translator {
     }
 }
 export class PlaceholderTranslator extends Translator {
-    accepts(node) { return node.nodeName === "INPUT" && node.type.toUpperCase() === "TEXT" || node.nodeName === "TEXTAREA"; }
+    // accepts(node: Node) { return node.nodeName === "INPUT" && (node as HTMLInputElement).type.toUpperCase() === "TEXT" || node.nodeName === "TEXTAREA"; }
     getValue(node) { return node.getAttribute("placeholder"); }
     setValue(node, value) {
         node.setAttribute("placeholder", value);
