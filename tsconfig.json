@@ -7,6 +7,10 @@
         "sourceMap": false,
     },
     "include": [
-        "**/*.ts"
+        "./client/*.ts",
+        "./style/**/*.ts",
+        "./touch/**/*.ts",
+        "./utils/**/*.ts",
+        "./videos/**/*.ts",
     ]
 }
