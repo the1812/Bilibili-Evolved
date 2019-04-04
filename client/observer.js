@@ -24,7 +24,16 @@ export class Observer
     static observe(selector, callback, options)
     {
         callback([]);
-        return [...document.querySelectorAll(selector)].map(
+        let elements = selector;
+        if (typeof selector === "string")
+        {
+            elements = [...document.querySelectorAll(selector)];
+        }
+        else if (!Array.isArray(selector))
+        {
+            elements = [selector];
+        }
+        return elements.map(
             it =>
             {
                 const observer = new Observer(it, callback);
