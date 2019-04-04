@@ -15,7 +15,8 @@
     white-space: pre !important;
 }
 .dynamic-m .dyn_menu .line,
-.tab-bar .line
+.tab-bar .line,
+.nav-wrap .hover-bar
 {
     display: none !important;
 }
@@ -42,7 +43,8 @@
 {
     width: 160px !important;
 }
-.link-navbar .main-ctnr
+.link-navbar .main-ctnr,
+.bili-search .contain
 {
     width: 90% !important;
 }
@@ -58,4 +60,20 @@
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-spans>div
 {
     align-items: center !important;
+}
+.bili-search .nav-wrap .wrap>.sub
+{
+    width: auto !important;
+}
+.bili-search .video.matrix:nth-child(5n)
+{
+    margin-right: 32px !important;
+}
+.bili-search .video.list
+{
+    width: calc(100% - 172px) !important;
+}
+.bili-search .video.list .des
+{
+    widows: 100% !important;
 }
