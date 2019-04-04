@@ -14,13 +14,25 @@
 {
     white-space: pre !important;
 }
-.dynamic-m .dyn_menu .line
+.dynamic-m .dyn_menu .line,
+.tab-bar .line
 {
     display: none !important;
 }
-.tag-panel .more-button
+.tab-bar .tab .tab-text.selected
+{
+    color: var(--theme-color) !important;
+    border-bottom: solid 2px var(--theme-color) !important;
+    box-sizing: border-box !important;
+}
+.tag-panel .more-button,
+.live-panel .more-button
 {
     width: 44px !important;
+}
+.live-panel .more-button
+{
+    transform: translateX(-9px) !important;
 }
 .link-navbar .main-ctnr .nav-logo
 {
