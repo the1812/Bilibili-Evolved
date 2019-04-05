@@ -72,6 +72,7 @@ export const settings = {
         popup: false,
         skin: false,
     },
+    customNavbar: false,
     cache: {},
 };
 const fixedSettings = {

@@ -525,5 +525,13 @@ Resource.manifest = {
             oldTweets: "旧版动态跳转支持",
         },
     },
+    customNavbar: {
+        path: "custom-navbar.min.js",
+        style: "instant",
+        html: true,
+        displayNames: {
+            customNavbar: "使用自定义顶栏",
+        },
+    },
 };
 export const resourceManifest = Resource.manifest;
