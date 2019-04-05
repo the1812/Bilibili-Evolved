@@ -10,15 +10,28 @@ const imageFormats = [
     ".gif",
     ".webp"
 ];
-export function imageResolution(element) {
-    const replaceSource = () => {
+const walk = (rootElement, action) => {
+    const walker = document.createTreeWalker(rootElement, NodeFilter.SHOW_ELEMENT, null, false);
+    let node = walker.nextNode();
+    while (node) {
+        action(node);
+        node = walker.nextNode();
+    }
+};
+export async function imageResolution(element) {
+    const replaceSource = (getValue, setValue) => {
+        const value = getValue(element);
+        if (value === null) {
+            return;
+        }
         if (excludeSelectors.some(it => element.matches(it))) {
             return;
         }
-        if (!imageFormats.some(it => element.src.endsWith(it))) {
-            return;
-        }
-        const match = element.src.match(regex);
+        // if (!imageFormats.some(it => value.endsWith(it)))
+        // {
+        //     return;
+        // }
+        const match = value.match(regex);
         if (!match) {
             return;
         }
@@ -33,21 +46,22 @@ export function imageResolution(element) {
         width = (dpi * parseInt(width)).toString();
         height = (dpi * parseInt(height)).toString();
         element.setAttribute("data-resolution-width", width);
-        element.src = element.src.replace(regex, `@${width}w_${height}h`);
+        setValue(element, value.replace(regex, `@${width}w_${height}h`));
     };
     Observer.observe(element, () => {
-        replaceSource();
-    }, { attributeFilter: ["src"], attributes: true });
+        replaceSource(e => e.getAttribute("src"), (e, v) => e.setAttribute("src", v));
+        replaceSource(e => e.style.backgroundImage, (e, v) => e.style.backgroundImage = v);
+    }, { attributeFilter: ["src", "style"], attributes: true });
 }
-document.querySelectorAll("img").forEach(it => imageResolution(it));
+walk(document.body, it => imageResolution(it));
 Observer.childListSubtree(document.body, records => {
     for (const record of records) {
         for (const node of record.addedNodes) {
-            if (node.nodeName.toLowerCase() === "img") {
+            if (node instanceof HTMLElement) {
                 imageResolution(node);
-            }
-            else if (node instanceof Element) {
-                node.querySelectorAll("img").forEach(it => imageResolution(it));
+                if (node.nodeName.toUpperCase() !== "IMG") {
+                    walk(node, it => imageResolution(it));
+                }
             }
         }
     }
