@@ -248,7 +248,7 @@ function setDisplayNames()
     if (isIframe)
     {
         document.querySelector(".gui-settings-icon-panel").style.display = "none";
-        return;
+        // return;
     }
 
     const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
