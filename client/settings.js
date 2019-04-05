@@ -55,6 +55,7 @@ export const settings = {
     framePlayback: true,
     useCommentStyle: true,
     imageResolution: false,
+    imageResolutionScale: "auto",
     toastInternalError: false,
     i18n: false,
     i18nLanguage: "日本語",
