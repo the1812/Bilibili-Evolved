@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.22
+// @version      1.7.23
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1565,7 +1565,7 @@ Resource.manifest = {
     imageResolution: {
         path: "image-resolution.min.js",
         displayNames: {
-            imageResolution: "总是显示原图",
+            imageResolution: "高分辨率图片",
         },
     },
     biliplusRedirect: {
