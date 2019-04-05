@@ -73,6 +73,10 @@ export const settings = {
         skin: false,
     },
     customNavbar: false,
+    customNavbarSettings: {
+        fill: true,
+        shadow: true,
+    },
     cache: {},
 };
 const fixedSettings = {
