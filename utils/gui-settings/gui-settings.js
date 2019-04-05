@@ -191,7 +191,9 @@ function checkCompatibility()
     if (window.devicePixelRatio === 1)
     {
         document.querySelector("input[key=harunaScale]").disabled = true;
+        document.querySelector("input[key=imageResolution]").disabled = true;
         settings.harunaScale = false;
+        settings.imageResolution = false;
         saveSettings(settings);
     }
     if (settings.defaultPlayerLayout === "旧版")
