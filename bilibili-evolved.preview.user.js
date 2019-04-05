@@ -97,6 +97,7 @@ const settings = {
         popup: false,
         skin: false,
     },
+    customNavbar: false,
     cache: {},
 };
 const fixedSettings = {
@@ -211,6 +212,10 @@ function fixed(number, precision = 1)
 function isEmbeddedPlayer()
 {
     return location.host === "player.bilibili.com";
+}
+function isIframe()
+{
+    return document.body && unsafeWindow.parent.window !== unsafeWindow;
 }
 class Ajax
 {
@@ -1614,6 +1619,14 @@ Resource.manifest = {
         path: "old-tweets.min.js",
         displayNames: {
             oldTweets: "旧版动态跳转支持",
+        },
+    },
+    customNavbar: {
+        path: "custom-navbar.min.js",
+        style: "instant",
+        html: true,
+        displayNames: {
+            customNavbar: "使用自定义顶栏",
         },
     },
 };

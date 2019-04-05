@@ -63,3 +63,7 @@ export function isEmbeddedPlayer()
 {
     return location.host === "player.bilibili.com";
 }
+export function isIframe()
+{
+    return document.body && unsafeWindow.parent.window !== unsafeWindow;
+}

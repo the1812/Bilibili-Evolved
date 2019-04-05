@@ -241,15 +241,19 @@ function setDisplayNames()
 
 (async () =>
 {
+    new ThemeColors().setupDom();
     resources.applyStyle("guiSettingsStyle");
+    document.body.insertAdjacentHTML("afterbegin", `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);
+
+    const isIframe = document.body && unsafeWindow.parent.window !== unsafeWindow;
+    if (isIframe)
+    {
+        document.querySelector(".gui-settings-icon-panel").style.display = "none";
+        return;
+    }
+
     const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
     document.body.insertAdjacentHTML("beforeend", settingsBox);
-    document.body.insertAdjacentHTML("afterbegin", `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);
-    new SpinQuery(
-        () => document.body,
-        it => it && !(unsafeWindow.parent.window === unsafeWindow),
-        _ => document.querySelector(".gui-settings-icon-panel").style.display = "none",
-    ).start();
 
     setupEvents();
     checkOfflineData();
@@ -259,6 +263,5 @@ function setDisplayNames()
     foldAllCategories();
     checkCompatibility();
     setDisplayNames();
-    new ThemeColors().setupDom();
     new SettingsSearch();
 })();
