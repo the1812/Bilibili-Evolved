@@ -58,7 +58,8 @@
 .bb-comment .comment-header .tabs-order li.on:after,
 .comment-area .dynamic-level,
 .dynamic-list-item-wrap .info .plat,
-.bb-comment .comment-list .list-item .con .vote-container
+.bb-comment .comment-list .list-item .con .vote-container,
+.bb-comment .nameplate
 {
     display: none;
 }
