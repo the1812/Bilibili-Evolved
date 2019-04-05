@@ -61,7 +61,7 @@
 .bb-comment .comment-list .list-item .con .vote-container,
 .bb-comment .nameplate
 {
-    display: none;
+    display: none !important;
 }
 .bb-comment .comment-list .reply-con
 {
