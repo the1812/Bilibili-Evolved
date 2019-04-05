@@ -24,7 +24,8 @@
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled,
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover,
 .bb-comment .no-login .comment-submit,
-.main-container .media-info .media-right .media-tool-bar .btn-follow.active
+.main-container .media-info .media-right .media-tool-bar .btn-follow.active,
+.coupon-content-con .coupon-btn-disable
 {
     background-color: #444 !important;
 }
@@ -85,7 +86,8 @@ blockquote .color-yellow-04,
 .bb-comment .no-login .comment-submit,
 .live-skin-coloration-area .live-skin-main-text,
 .live-skin-coloration-area .live-skin-highlight-text,
-#app .sticky-bar .bar-content .message
+#app .sticky-bar .bar-content .message,
+.coupon-content-con .coupon-btn-disable
 {
     color: #eee !important;
 }
