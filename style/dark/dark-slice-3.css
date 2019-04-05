@@ -74,7 +74,8 @@ div#square.container,
 .bnj-comment .page-comment,
 .play-options .play-options-more .play-options-content .play-option,
 .play-options .share-box,
-.gui-settings-flat-button .popup
+.gui-settings-flat-button .popup,
+.h5share-container .image-area .share-img
 {
     background-color: #222 !important;
 }
