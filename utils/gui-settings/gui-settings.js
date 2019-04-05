@@ -241,7 +241,6 @@ function setDisplayNames()
 
 (async () =>
 {
-    new ThemeColors().setupDom();
     resources.applyStyle("guiSettingsStyle");
     document.body.insertAdjacentHTML("afterbegin", `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);
 
@@ -263,5 +262,6 @@ function setDisplayNames()
     foldAllCategories();
     checkCompatibility();
     setDisplayNames();
+    new ThemeColors().setupDom();
     new SettingsSearch();
 })();
