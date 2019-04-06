@@ -182,7 +182,9 @@
 .answer-list .exam-list .exam-number,
 .answer-container .footer-bottom .btn-default,
 .bili-header-m .profile-m .grade .bar .num .v0,
-.carousel-wrp .panel .pic li a .card-info .title .headline
+.carousel-wrp .panel .pic li a .card-info .title .headline,
+.article-data-wrp .breadcrumb a,
+.article-data-wrp .breadcrumb .sign
 {
     color: #eee !important;
 }
@@ -224,7 +226,11 @@
 .answer-container .answer-list .exam-list,
 .answer-container .answer-list,
 .answer-container .footer-bottom .btn-default,
-.carousel-wrp .panel .pic li
+.carousel-wrp .panel .pic li,
+.videoCharts .stat-wrp,
+.article-net-charts .charts .play,
+.article-net-charts .charts .person,
+.article-net-charts .area
 {
     border-color: transparent !important;
 }
