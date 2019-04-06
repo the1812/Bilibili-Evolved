@@ -20,7 +20,8 @@
 .text-article-wrp .article-card .meta-view .data,
 .text-article-wrp .article-card .meta-view .menu,
 .text-article-wrp .article-card .meta-view .option,
-.cc-article-wrp .article-card .meta-title .typename
+.cc-article-wrp .article-card .meta-title .typename,
+.text-article-wrp .article-card .meta-view .menu-list
 {
     background-color: #222 !important;
 }
@@ -77,7 +78,8 @@
 .rank-list-ctnr a,
 .rank-list-ctnr a:hover,
 .list-container .list-info-block .right-side .col .split-line,
-.comment-list-item .ci-action span.date
+.comment-list-item .ci-action span.date,
+.text-article-wrp .article-card .meta-view .menu-list .menu-item:hover
 {
     background-color: transparent !important;
 }
@@ -230,7 +232,8 @@
 .cards-block .cards-list .card-item .card-case .title,
 .text-article-wrp .head-stat .section .title,
 .text-article-wrp .article-card .meta-title .typename,
-.cc-article-wrp .article-card .meta-title .typename
+.cc-article-wrp .article-card .meta-title .typename,
+.text-article-wrp .article-card .meta-view .menu-list .menu-item
 {
     color: #eee !important;
 }
@@ -375,7 +378,8 @@
 .article-info-module,
 .share-board .song-share .song-share-ul,
 .share-board .share-btn,
-.text-article-wrp .head-stat
+.text-article-wrp .head-stat,
+#root .nav-upload-container
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -481,7 +485,8 @@
 .electron-set-v2-hint a:hover,
 .comment-list-item .article-wrap .show-all,
 .icon-close:hover,
-.text-article-wrp .article-card .meta-status .status
+.text-article-wrp .article-card .meta-status .status,
+.text-article-wrp .article-card .meta-view .menu-list .menu-item:hover
 {
     color: var(--theme-color) !important;
 }
