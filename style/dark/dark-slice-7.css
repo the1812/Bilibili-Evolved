@@ -166,7 +166,9 @@
 .article-net-charts .area .empty-tips,
 #dc-section_summary .source-rank-list-item .video-info-pubdate,
 .live-user .user-item .item-right .info .star,
-.live-user .user-item .item-right .info .type
+.live-user .user-item .item-right .info .type,
+.bangumi-info-module .v-data span,
+.bangumi-info-module .v-preview .desc
 {
     color: #aaa !important;
 }
@@ -346,7 +348,8 @@
 .item-right .info.clearfix .icon-live-life,
 .item-right .info.clearfix .icon-live-mgame,
 .item-right .info.clearfix .icon-live-col,
-.item-right .info.clearfix .icon-live-compete
+.item-right .info.clearfix .icon-live-compete,
+.bangumi-info-module .v-data .icon
 {
     filter: brightness(0) invert(.7) !important;
 }
