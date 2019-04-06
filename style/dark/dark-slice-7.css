@@ -160,7 +160,8 @@
 .cc-article-wrp .article-card .meta-status .pubdate,
 .cc-article-wrp .article-card .meta-footer .view-stat,
 .tag-container .tag-item span,
-.article-net-charts .area .empty-tips
+.article-net-charts .area .empty-tips,
+#dc-section_summary .source-rank-list-item .video-info-pubdate
 {
     color: #aaa !important;
 }
