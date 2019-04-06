@@ -168,7 +168,9 @@
 .live-user .user-item .item-right .info .star,
 .live-user .user-item .item-right .info .type,
 .bangumi-info-module .v-data span,
-.bangumi-info-module .v-preview .desc
+.bangumi-info-module .v-preview .desc,
+.section.article .article-content .meta-col,
+.section.album .album-item .meta-col
 {
     color: #aaa !important;
 }
@@ -349,7 +351,10 @@
 .item-right .info.clearfix .icon-live-mgame,
 .item-right .info.clearfix .icon-live-col,
 .item-right .info.clearfix .icon-live-compete,
-.bangumi-info-module .v-data .icon
+.bangumi-info-module .v-data .icon,
+.col-1 .meta .icon,
+.article-content .meta-col .icon,
+.album-item .meta-col .icon
 {
     filter: brightness(0) invert(.7) !important;
 }
@@ -506,7 +511,8 @@
 .comment-list-item .article-wrap .show-all,
 .icon-close:hover,
 .text-article-wrp .article-card .meta-status .status,
-.text-article-wrp .article-card .meta-view .menu-list .menu-item:hover
+.text-article-wrp .article-card .meta-view .menu-list .menu-item:hover,
+.col-1 .article-wrap .article-con a:hover
 {
     color: var(--theme-color) !important;
 }
