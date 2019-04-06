@@ -10,7 +10,8 @@
 .share-board .song-share .song-share-ul li:hover,
 .collection-bg .collection-board .collection-submit,
 .security-right .game-package-wrapper .title-package-wrapper .title-right-link,
-.vip-package-wrapper .coupon-wrapper .coupon-content
+.vip-package-wrapper .coupon-wrapper .coupon-content,
+.normal-v2-container .normal-title-wrp>.template-op>.template-op-divide
 {
     background-color: #222 !important;
 }
@@ -184,7 +185,8 @@
 .bili-header-m .profile-m .grade .bar .num .v0,
 .carousel-wrp .panel .pic li a .card-info .title .headline,
 .article-data-wrp .breadcrumb a,
-.article-data-wrp .breadcrumb .sign
+.article-data-wrp .breadcrumb .sign,
+.normal-v2-container .normal-title-wrp>.template-op>p
 {
     color: #eee !important;
 }
@@ -230,7 +232,9 @@
 .videoCharts .stat-wrp,
 .article-net-charts .charts .play,
 .article-net-charts .charts .person,
-.article-net-charts .area
+.article-net-charts .area,
+.more-selector-v2-container .dividing-line,
+.normal-v2-container .normal-title-wrp>.template-op
 {
     border-color: transparent !important;
 }
@@ -410,7 +414,9 @@
 .register-hidden-gruop.text-right a,
 .rule-time span,
 .answer-container .header-top .header-tip,
-.bili-header-m .profile-m .grade .bar .num .v0:hover
+.bili-header-m .profile-m .grade .bar .num .v0:hover,
+.electron-set-v2-hint a
+.electron-set-v2-hint a:hover
 {
     color: var(--theme-color) !important;
 }
