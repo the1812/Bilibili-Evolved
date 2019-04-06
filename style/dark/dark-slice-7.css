@@ -86,7 +86,8 @@
 .original-editor-wrap .float-toolbar .toolbar-list,
 .vip-package-wrapper .coupon-wrapper,
 .register-container .report-wrap-module .back-fff,
-.cc-body .home-wrap .card
+.cc-body .home-wrap .card,
+.text-article-wrp .head-stat .section .count
 {
     background: transparent !important;
 }
@@ -155,7 +156,8 @@
 .text-article-wrp .article-card .meta-view .meta-item .icon-font,
 .text-article-wrp .article-card .meta-view .meta-item .iconfont,
 .cc-article-wrp .article-card .meta-status .pubdate,
-.cc-article-wrp .article-card .meta-footer .view-stat
+.cc-article-wrp .article-card .meta-footer .view-stat,
+.tag-container .tag-item span
 {
     color: #aaa !important;
 }
@@ -319,7 +321,8 @@
     fill: #fff !important;
 } */
 .block-area .follow-wrapper .follow-head .follow-more .icon,
-.game-package-wrapper .title-right-link .m-arrow-package
+.game-package-wrapper .title-right-link .m-arrow-package,
+.text-article-wrp .head-stat .section .iconarrow
 {
     filter: brightness(0) invert(1) !important;
 }
