@@ -2,8 +2,8 @@
     <ul>
         <li v-for="component of components" v-bind:class="{disabled: component.disabled}"
             v-bind:style="{flex: component.flex}">
-            <div class="content" v-on:click="togglePopup(component)" v-html="component.html"></div>
-            <div class="popup" v-if="component.popupHtml" v-show="component.showPopup" v-html="component.popupHtml">
+            <a class="main-content" v-bind:href="component.href" v-html="component.html"></a>
+            <div class="popup" v-if="component.popupHtml" v-html="component.popupHtml">
             </div>
         </li>
     </ul>
