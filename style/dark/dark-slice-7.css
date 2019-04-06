@@ -159,7 +159,8 @@
 .text-article-wrp .article-card .meta-view .meta-item .iconfont,
 .cc-article-wrp .article-card .meta-status .pubdate,
 .cc-article-wrp .article-card .meta-footer .view-stat,
-.tag-container .tag-item span
+.tag-container .tag-item span,
+.article-net-charts .area .empty-tips
 {
     color: #aaa !important;
 }
@@ -233,7 +234,8 @@
 .text-article-wrp .head-stat .section .title,
 .text-article-wrp .article-card .meta-title .typename,
 .cc-article-wrp .article-card .meta-title .typename,
-.text-article-wrp .article-card .meta-view .menu-list .menu-item
+.text-article-wrp .article-card .meta-view .menu-list .menu-item,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip
 {
     color: #eee !important;
 }
@@ -439,7 +441,8 @@
 .bili-header-m .mini-wnd-nav.history-wnd .top-login .loginbtn,
 .carousel-wrp .page .next.current,
 .author-container .attention-animation-holder .attention-btn,
-.cards-block .images-list .image-item .selected
+.cards-block .images-list .image-item .selected,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip
 {
     background-color: var(--theme-color) !important;
 }
