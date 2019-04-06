@@ -21,12 +21,14 @@
 .text-article-wrp .article-card .meta-view .menu,
 .text-article-wrp .article-card .meta-view .option,
 .cc-article-wrp .article-card .meta-title .typename,
-.text-article-wrp .article-card .meta-view .menu-list
+.text-article-wrp .article-card .meta-view .menu-list,
+.live-user .user-item .item-right .status
 {
     background-color: #222 !important;
 }
 .content .link-tag-box,
-.content .tab-selector-wrap
+.content .tab-selector-wrap,
+.live-user .user-item .item-right .tags>span
 {
     background-color: #333 !important;
 }
@@ -66,7 +68,8 @@
 .cropper-modal .modal,
 .cards-block .modal-wrap .btn-group button,
 .text-article-wrp .head-stat,
-.text-article-wrp .article-card
+.text-article-wrp .article-card,
+.live-user .user-item
 {
     background-color: #444 !important;
 }
@@ -161,7 +164,9 @@
 .cc-article-wrp .article-card .meta-footer .view-stat,
 .tag-container .tag-item span,
 .article-net-charts .area .empty-tips,
-#dc-section_summary .source-rank-list-item .video-info-pubdate
+#dc-section_summary .source-rank-list-item .video-info-pubdate,
+.live-user .user-item .item-right .info .star,
+.live-user .user-item .item-right .info .type
 {
     color: #aaa !important;
 }
@@ -236,7 +241,9 @@
 .text-article-wrp .article-card .meta-title .typename,
 .cc-article-wrp .article-card .meta-title .typename,
 .text-article-wrp .article-card .meta-view .menu-list .menu-item,
-.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip,
+.live-user .user-item .item-right .tags>span,
+.live-user .user-item .item-right .status
 {
     color: #eee !important;
 }
@@ -296,7 +303,8 @@
 .bili-modal.cropper-modal .modal-head .head-wrap,
 .text-article-wrp .article-card,
 .text-article-wrp .article-card .meta-title .typename,
-.cc-article-wrp .article-card .meta-title .typename
+.cc-article-wrp .article-card .meta-title .typename,
+.live-user .user-item .item-right .tags>span
 {
     border-color: transparent !important;
 }
@@ -334,7 +342,11 @@
 }
 .article-card .article-info .data .icon,
 .article-info-module .v-data .icon,
-.video-info-module .v-data .icon
+.video-info-module .v-data .icon,
+.item-right .info.clearfix .icon-live-life,
+.item-right .info.clearfix .icon-live-mgame,
+.item-right .info.clearfix .icon-live-col,
+.item-right .info.clearfix .icon-live-compete
 {
     filter: brightness(0) invert(.7) !important;
 }
@@ -382,7 +394,8 @@
 .share-board .song-share .song-share-ul,
 .share-board .share-btn,
 .text-article-wrp .head-stat,
-#root .nav-upload-container
+#root .nav-upload-container,
+.live-user .user-item:hover
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
