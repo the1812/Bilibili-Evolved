@@ -54,7 +54,8 @@
 .report-wrap-module .form-group .el-input__inner,
 .container-left .answer-container,
 .carousel-wrp .panel .pic li,
-.ui-popup .popup-wrap
+.ui-popup .popup-wrap,
+.cc-container .nav-search .dropdown-btn
 {
     background-color: #444 !important;
 }
@@ -65,7 +66,8 @@
 .p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
 .rank-list-ctnr a,
 .rank-list-ctnr a:hover,
-.list-container .list-info-block .right-side .col .split-line
+.list-container .list-info-block .right-side .col .split-line,
+.comment-list-item .ci-action span.date
 {
     background-color: transparent !important;
 }
@@ -129,7 +131,10 @@
 .home-wrap .data-card .data-wrp .total,
 .home-wrap .data-card .fans-wrp .total,
 .carousel-wrp .panel .pic li a .card-info .detail,
-.ui-popup .popup-wrap .text-box .subtext
+.ui-popup .popup-wrap .text-box .subtext,
+.comment-list-item .ci-action,
+.comment-list-item .ci-parent-reply .cipr-footer,
+.cc-container .tips
 {
     color: #aaa !important;
 }
@@ -192,7 +197,12 @@
 .article-data-wrp .breadcrumb .sign,
 .normal-v2-container .normal-title-wrp>.template-op>p,
 .ui-popup .popup-wrap .text-box .text,
-.ui-popup.popup-cover .bili-btn.cancel
+.ui-popup.popup-cover .bili-btn.cancel,
+.comment-list-item .ci-content,
+.comment-list-item .article-wrap .name,
+.cc-container .nav-search .dropdown-btn,
+.cc-container .nav-search .search,
+.cc-container .nav-search .search input
 {
     color: #eee !important;
 }
@@ -243,7 +253,8 @@
 .normal-v2-container .normal-title-wrp>.template-op,
 .ui-popup .popup-wrap.shadow,
 .ui-popup.popup-cover .bili-btn.cancel,
-#bili-data-center .version-switch-section
+#bili-data-center .version-switch-section,
+.cc-container .nav-search .dropdown-btn
 {
     border-color: transparent !important;
 }
@@ -425,7 +436,8 @@
 .answer-container .header-top .header-tip,
 .bili-header-m .profile-m .grade .bar .num .v0:hover,
 .electron-set-v2-hint a
-.electron-set-v2-hint a:hover
+.electron-set-v2-hint a:hover,
+.comment-list-item .article-wrap .show-all
 {
     color: var(--theme-color) !important;
 }
