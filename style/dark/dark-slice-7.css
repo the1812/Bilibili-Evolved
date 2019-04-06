@@ -258,7 +258,8 @@
 .nav-upload-container .nav-upload-item>img,
 #page-fav .fav-main .search-input .icon-search:hover,
 .error-body .error-container .error-panel .error-msg .error-img,
-.register-agree .checkbox-bwxr.active
+.register-agree .checkbox-bwxr.active,
+.answer-list .key-list li.active:before
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -390,7 +391,8 @@
 .form-group.register-hidden-gruop.text-right a,
 .form-group .register-agree a,
 .register-hidden-gruop.text-right a,
-.rule-time span
+.rule-time span,
+.answer-container .header-top .header-tip
 {
     color: var(--theme-color) !important;
 }
