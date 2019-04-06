@@ -101,7 +101,8 @@ blockquote .color-yellow-04,
 .score-info .go-movie,
 .bb-comment .no-login .comment-submit,
 .live-skin-coloration-area .live-skin-highlight-border,
-.live-skin-coloration-area .live-skin-separate-border
+.live-skin-coloration-area .live-skin-separate-border,
+.select-box-v2-container .select-box-v2-controller-disabled
 {
     border-color: transparent !important;
 }
@@ -135,7 +136,8 @@ blockquote .color-yellow-04,
 .live-skin-coloration-area .live-skin-normal-a-text:hover,
 .live-skin-normal-a-text:active,
 .up-info .u-info .name .username.is-vip:hover,
-#app .sticky-bar .bar-content .message:hover
+#app .sticky-bar .bar-content .message:hover,
+.el-select-dropdown__item.selected
 {
     color: var(--theme-color) !important;
 }

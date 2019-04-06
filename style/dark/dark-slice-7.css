@@ -10,7 +10,9 @@
 .share-board .song-share .song-share-ul li:hover,
 .collection-bg .collection-board .collection-submit,
 .security-right .game-package-wrapper .title-package-wrapper .title-right-link,
-.vip-package-wrapper .coupon-wrapper .coupon-content
+.vip-package-wrapper .coupon-wrapper .coupon-content,
+.normal-v2-container .normal-title-wrp>.template-op>.template-op-divide,
+.ui-popup.popup-cover .bili-btn.cancel
 {
     background-color: #222 !important;
 }
@@ -41,7 +43,16 @@
 .share-board .song-share .song-share-ul,
 .share-board .share-btn,
 .collection-bg .collection-board,
-.vip-package-wrapper .coupon-content-con .coupon-btn
+.vip-package-wrapper .coupon-content-con .coupon-btn,
+.report-wrap-module .form-group .el-input-group>.el-input__inner,
+.report-wrap-module .code-input.el-input .el-input__inner,
+#app .el-button.is-disabled,
+#app .el-button.is-disabled:focus,
+#app .el-button.is-disabled:hover,
+.report-wrap-module .form-group .el-input__inner,
+.container-left .answer-container,
+.carousel-wrp .panel .pic li,
+.ui-popup .popup-wrap
 {
     background-color: #444 !important;
 }
@@ -60,7 +71,9 @@
 .list-container .article-list-block .article-item,
 .original-editor-wrap .float-toolbar .toolbar-list,
 .dc-page .version-switch-section,
-.vip-package-wrapper .coupon-wrapper
+.vip-package-wrapper .coupon-wrapper,
+.register-container .report-wrap-module .back-fff,
+.cc-body .home-wrap .card
 {
     background: transparent !important;
 }
@@ -105,7 +118,17 @@
 .game-item-container .game-package-item .game-package-gift,
 .game-item-container .game-package-item .game-package-price,
 .coupon-content-con .coupon-time,
-.coupon-content-con .coupon-type
+.coupon-content-con .coupon-type,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner:hover,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
+.container .form-group .form-message,
+.rule-description p,
+.home-wrap .data-card .data-wrp .total,
+.home-wrap .data-card .fans-wrp .total,
+.carousel-wrp .panel .pic li a .card-info .detail,
+.ui-popup .popup-wrap .text-box .subtext
 {
     color: #aaa !important;
 }
@@ -156,7 +179,19 @@
 .game-item-container .game-package-item .game-package-name,
 .game-package-wrapper .title-package-wrapper .title-right-link,
 .game-package-wrapper .title-package-wrapper .title-package-name,
-.vip-package-wrapper .coupon-content-con .coupon-btn
+.vip-package-wrapper .coupon-content-con .coupon-btn,
+.container .form-group .form-group-title,
+.container .form-group .mail-text,
+.container-left .answer-container .header-top h2,
+.answer-list .exam-list .exam-number,
+.answer-container .footer-bottom .btn-default,
+.bili-header-m .profile-m .grade .bar .num .v0,
+.carousel-wrp .panel .pic li a .card-info .title .headline,
+.article-data-wrp .breadcrumb a,
+.article-data-wrp .breadcrumb .sign,
+.normal-v2-container .normal-title-wrp>.template-op>p,
+.ui-popup .popup-wrap .text-box .text,
+.ui-popup.popup-cover .bili-btn.cancel
 {
     color: #eee !important;
 }
@@ -192,7 +227,21 @@
 .security-right .vip-package-wrapper,
 .security-right .game-package-wrapper,
 .security-right .game-package-wrapper .game-item-container .game-package-item,
-.security-right .game-package-wrapper .title-package-wrapper .title-right-link
+.security-right .game-package-wrapper .title-package-wrapper .title-right-link,
+.container-left .answer-container,
+.container-left .header-top,
+.answer-container .answer-list .exam-list,
+.answer-container .answer-list,
+.answer-container .footer-bottom .btn-default,
+.carousel-wrp .panel .pic li,
+.videoCharts .stat-wrp,
+.article-net-charts .charts .play,
+.article-net-charts .charts .person,
+.article-net-charts .area,
+.more-selector-v2-container .dividing-line,
+.normal-v2-container .normal-title-wrp>.template-op,
+.ui-popup .popup-wrap.shadow,
+.ui-popup.popup-cover .bili-btn.cancel
 {
     border-color: transparent !important;
 }
@@ -233,14 +282,16 @@
 }
 .nav-upload-container .nav-upload-item>img,
 #page-fav .fav-main .search-input .icon-search:hover,
-.error-body .error-container .error-panel .error-msg .error-img
+.error-body .error-container .error-panel .error-msg .error-img,
+.register-agree .checkbox-bwxr.active,
+.answer-list .key-list li.active:before
 {
     filter: var(--blue-image-filter) !important;
 }
-/* a
+.container-right .rule-title .pink-icon
 {
     filter: var(--pink-image-filter) !important;
-} */
+}
 /* a
 {
     filter: grayscale(1) !important;
@@ -291,7 +342,8 @@
 .song-coin-bg .song-coin .song-coin-content .song-two-coin:hover,
 .song-coin-bg .song-coin .song-coin-content .song-two-coin.active,
 .song-coin-bg .song-coin .song-coin-content .song-one-coin:hover,
-.song-coin-bg .song-coin .song-coin-content .song-one-coin.active
+.song-coin-bg .song-coin .song-coin-content .song-one-coin.active,
+.carousel-wrp .page .next.current
 {
     border-color: var(--theme-color) !important;
 }
@@ -322,7 +374,13 @@
 .song-coin-bg .song-coin .song-coin-btn:hover,
 .song-coin-bg .song-coin .song-coin-btn,
 .collection-bg .collection-board .collection-submit.active,
-.vip-package-wrapper .coupon-content-con .coupon-btn:hover
+.vip-package-wrapper .coupon-content-con .coupon-btn:hover,
+#app .el-button--primary,
+#app .el-button--primary:focus,
+#app .el-button--primary:hover,
+.answer-container .footer-bottom .btn-default,
+.bili-header-m .mini-wnd-nav.history-wnd .top-login .loginbtn,
+.carousel-wrp .page .next.current
 {
     background-color: var(--theme-color) !important;
 }
@@ -357,7 +415,15 @@
 .song-coin-bg .song-coin .song-coin-content .song-two-coin.active,
 .game-package-item .game-package-type,
 .vip-package-wrapper .coupon-content-con .coupon-money,
-.coupon-money-2:before
+.coupon-money-2:before,
+.form-group.register-hidden-gruop.text-right a,
+.form-group .register-agree a,
+.register-hidden-gruop.text-right a,
+.rule-time span,
+.answer-container .header-top .header-tip,
+.bili-header-m .profile-m .grade .bar .num .v0:hover,
+.electron-set-v2-hint a
+.electron-set-v2-hint a:hover
 {
     color: var(--theme-color) !important;
 }
