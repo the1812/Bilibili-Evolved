@@ -12,7 +12,9 @@
 .security-right .game-package-wrapper .title-package-wrapper .title-right-link,
 .vip-package-wrapper .coupon-wrapper .coupon-content,
 .normal-v2-container .normal-title-wrp>.template-op>.template-op-divide,
-.ui-popup.popup-cover .bili-btn.cancel
+.ui-popup.popup-cover .bili-btn.cancel,
+.dc-page .version-switch-section,
+#bili-data-center .version-switch-section
 {
     background-color: #222 !important;
 }
@@ -70,7 +72,6 @@
 .gift-rank-cntr .rank-cntr .item.own,
 .list-container .article-list-block .article-item,
 .original-editor-wrap .float-toolbar .toolbar-list,
-.dc-page .version-switch-section,
 .vip-package-wrapper .coupon-wrapper,
 .register-container .report-wrap-module .back-fff,
 .cc-body .home-wrap .card
@@ -241,7 +242,8 @@
 .more-selector-v2-container .dividing-line,
 .normal-v2-container .normal-title-wrp>.template-op,
 .ui-popup .popup-wrap.shadow,
-.ui-popup.popup-cover .bili-btn.cancel
+.ui-popup.popup-cover .bili-btn.cancel,
+#bili-data-center .version-switch-section
 {
     border-color: transparent !important;
 }
