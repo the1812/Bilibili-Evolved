@@ -3,93 +3,16 @@
     font-family: "custom-navbar-font";
     src: url('//s1.hdslb.com/bfs/seed/jinkela/header/asserts/iconfont.ttf') format('truetype');
 }
-.custom-navbar-iconfont {
-  font-family: "custom-navbar-font" !important;
-  font-size: 16px;
+.custom-navbar-iconfont
+{
+    color: inherit;
+    font-family: "custom-navbar-font" !important;
+    font-size: 24px;
+    font-style: normal;
 }
-.custom-navbar-icon-music::before {
-  content: "\E601";
-}
-.custom-navbar-icon-game::before {
-  content: "\E603";
-}
-.custom-navbar-icon-dance::before {
-  content: "\E605";
-}
-.custom-navbar-icon-zhibo::before {
-  content: "\E606";
-}
-.custom-navbar-icon-ent::before {
-  content: "\E607";
-}
-.custom-navbar-icon-life::before {
-  content: "\E608";
-}
-.custom-navbar-icon-kichiku::before {
-  content: "\E609";
-}
-.custom-navbar-icon-guochuang::before {
-  content: "\E60A";
-}
-.custom-navbar-icon-fashion::before {
-  content: "\E60B";
-}
-.custom-navbar-icon-ad::before {
-  content: "\E60C";
-}
-.custom-navbar-icon-anime::before {
-  content: "\E60D";
-}
-.custom-navbar-icon-guochandonghuatuijian::before {
-  content: "\E612";
-}
-.custom-navbar-icon-technology::before {
-  content: "\E6AD";
-}
-.custom-navbar-icon-general_pullup_s::before {
-  content: "\E6EC";
-}
-.custom-navbar-icon-Navbar_mobile::before {
-  content: "\E724";
-}
-.custom-navbar-icon-Navbar_logo::before {
-  content: "\E725";
-}
-.custom-navbar-icon-bilibili-tv::before {
-  content: "\E668";
-}
-.custom-navbar-icon-general_upload::before {
-  content: "\E634";
-}
-.custom-navbar-icon-general_search::before {
-  content: "\E635";
-}
-.custom-navbar-icon-activit::before {
-  content: "\E63B";
-}
-.custom-navbar-icon-blackroom::before {
-  content: "\E63F";
-}
-.custom-navbar-icon-read::before {
-  content: "\E640";
-}
-.custom-navbar-icon-ic_partition_broadca::before {
-  content: "\E641";
-}
-.custom-navbar-icon-cinephile::before {
-  content: "\E642";
-}
-.custom-navbar-icon-cinema::before {
-  content: "\E643";
-}
-.custom-navbar-icon-topic::before {
-  content: "\E644";
-}
-.custom-navbar-icon-douga::before {
-  content: "\E645";
-}
-.custom-navbar-icon-digital::before {
-  content: "\E64E";
+.custom-navbar-icon-logo::before
+{
+    content: "\\E725";
 }
 
 .custom-navbar
@@ -100,8 +23,24 @@
     left: 0;
     height: var(--navbar-height);
     width: 100vw;
+    background: white;
     color: black;
     z-index: 10001;
+}
+.custom-navbar.shadow
+{
+    box-shadow: #0004 0px 2px 10px 1px;
+}
+.custom-navbar.dark:not(.fill),
+.custom-navbar .popup
+{
+    color: #eee;
+    background: #222;
+}
+.custom-navbar *,
+.custom-navbar
+{
+    transition: all .2s ease-out;
 }
 .custom-navbar.fill
 {
@@ -111,4 +50,65 @@
 .custom-navbar.fill.shadow
 {
     box-shadow: var(--theme-color-30) 0px 2px 10px 1px;
+}
+.custom-navbar>ul
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 5%;
+    height: 100%;
+}
+.custom-navbar>ul>li
+{
+    position: relative;
+    height: 100%;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+}
+.custom-navbar>ul>li:not(.disabled)
+{
+    cursor: pointer;
+}
+.custom-navbar>ul>li:not(.disabled):hover
+{
+    background: rgba(0,0,0,0.1);
+}
+.custom-navbar .popup
+{
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 16px;
+    box-shadow: #0002 0 4px 8px 8px;
+}
+.custom-navbar a
+{
+    color: inherit;
+}
+#custom-navbar-home-popup
+{
+    max-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100px;
+}
+#custom-navbar-home-popup .category-item
+{
+    font-size: 12pt;
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+#custom-navbar-home-popup .category-item:hover
+{
+    background-color: #0001;
+}
+#custom-navbar-home-popup .category-item>span
+{
+    opacity: 0.5;
 }

@@ -1,1 +1,1 @@
-<div class=custom-navbar></div>
+<div class=custom-navbar><ul><li v-for="component of components"v-bind:class="{disabled: component.disabled}"v-bind:style="{flex: component.flex}"><div class=content v-on:click=togglePopup(component) v-html=component.html></div><div class=popup v-if=component.popupHtml v-show=component.showPopup v-html=component.popupHtml></div></ul></div>
