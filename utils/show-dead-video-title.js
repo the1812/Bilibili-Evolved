@@ -24,7 +24,7 @@ function showTitle()
         {
             if (settings.useBiliplusRedirect)
             {
-                return `https://www.biliplus.com/video/av${aid}`;
+                return `https://hd.biliplus.com/video/av${aid}`;
             }
             else
             {
