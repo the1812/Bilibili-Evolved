@@ -12,12 +12,23 @@
 .security-right .game-package-wrapper .title-package-wrapper .title-right-link,
 .vip-package-wrapper .coupon-wrapper .coupon-content,
 .normal-v2-container .normal-title-wrp>.template-op>.template-op-divide,
-.ui-popup.popup-cover .bili-btn.cancel
+.ui-popup.popup-cover .bili-btn.cancel,
+.dc-page .version-switch-section,
+#bili-data-center .version-switch-section,
+.text-article-wrp .article-card .meta-title .typename,
+.text-article-wrp .article-card .meta-view .appeal,
+.text-article-wrp .article-card .meta-view .data,
+.text-article-wrp .article-card .meta-view .menu,
+.text-article-wrp .article-card .meta-view .option,
+.cc-article-wrp .article-card .meta-title .typename,
+.text-article-wrp .article-card .meta-view .menu-list,
+.live-user .user-item .item-right .status
 {
     background-color: #222 !important;
 }
 .content .link-tag-box,
-.content .tab-selector-wrap
+.content .tab-selector-wrap,
+.live-user .user-item .item-right .tags>span
 {
     background-color: #333 !important;
 }
@@ -52,7 +63,13 @@
 .report-wrap-module .form-group .el-input__inner,
 .container-left .answer-container,
 .carousel-wrp .panel .pic li,
-.ui-popup .popup-wrap
+.ui-popup .popup-wrap,
+.cc-container .nav-search .dropdown-btn,
+.cropper-modal .modal,
+.cards-block .modal-wrap .btn-group button,
+.text-article-wrp .head-stat,
+.text-article-wrp .article-card,
+.live-user .user-item
 {
     background-color: #444 !important;
 }
@@ -63,17 +80,19 @@
 .p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
 .rank-list-ctnr a,
 .rank-list-ctnr a:hover,
-.list-container .list-info-block .right-side .col .split-line
+.list-container .list-info-block .right-side .col .split-line,
+.comment-list-item .ci-action span.date,
+.text-article-wrp .article-card .meta-view .menu-list .menu-item:hover
 {
     background-color: transparent !important;
 }
 .gift-rank-cntr .rank-cntr .item.own,
 .list-container .article-list-block .article-item,
 .original-editor-wrap .float-toolbar .toolbar-list,
-.dc-page .version-switch-section,
 .vip-package-wrapper .coupon-wrapper,
 .register-container .report-wrap-module .back-fff,
-.cc-body .home-wrap .card
+.cc-body .home-wrap .card,
+.text-article-wrp .head-stat .section .count
 {
     background: transparent !important;
 }
@@ -128,7 +147,28 @@
 .home-wrap .data-card .data-wrp .total,
 .home-wrap .data-card .fans-wrp .total,
 .carousel-wrp .panel .pic li a .card-info .detail,
-.ui-popup .popup-wrap .text-box .subtext
+.ui-popup .popup-wrap .text-box .subtext,
+.comment-list-item .ci-action,
+.comment-list-item .ci-parent-reply .cipr-footer,
+.cc-container .tips,
+.cards-block .cards-list .card-item .card-case .other label,
+.block-wrap .classify .position,
+.text-article-wrp .head-stat .section .diff-wrp .diff-yeaterday,
+.text-article-wrp .head-stat .section .diff-wrp .diff-text,
+.read-list-component .empty-state .empty-tips,
+.text-article-wrp .article-card .meta-status .pubdate,
+.text-article-wrp .article-card .meta-footer .view-stat,
+.text-article-wrp .article-card .meta-view .meta-item .icon-font,
+.text-article-wrp .article-card .meta-view .meta-item .iconfont,
+.cc-article-wrp .article-card .meta-status .pubdate,
+.cc-article-wrp .article-card .meta-footer .view-stat,
+.tag-container .tag-item span,
+.article-net-charts .area .empty-tips,
+#dc-section_summary .source-rank-list-item .video-info-pubdate,
+.live-user .user-item .item-right .info .star,
+.live-user .user-item .item-right .info .type,
+.bangumi-info-module .v-data span,
+.bangumi-info-module .v-preview .desc
 {
     color: #aaa !important;
 }
@@ -191,7 +231,21 @@
 .article-data-wrp .breadcrumb .sign,
 .normal-v2-container .normal-title-wrp>.template-op>p,
 .ui-popup .popup-wrap .text-box .text,
-.ui-popup.popup-cover .bili-btn.cancel
+.ui-popup.popup-cover .bili-btn.cancel,
+.comment-list-item .ci-content,
+.comment-list-item .article-wrap .name,
+.cc-container .nav-search .dropdown-btn,
+.cc-container .nav-search .search,
+.cc-container .nav-search .search input,
+.author-container .attention-animation-holder .attention-btn,
+.cards-block .cards-list .card-item .card-case .title,
+.text-article-wrp .head-stat .section .title,
+.text-article-wrp .article-card .meta-title .typename,
+.cc-article-wrp .article-card .meta-title .typename,
+.text-article-wrp .article-card .meta-view .menu-list .menu-item,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip,
+.live-user .user-item .item-right .tags>span,
+.live-user .user-item .item-right .status
 {
     color: #eee !important;
 }
@@ -241,14 +295,27 @@
 .more-selector-v2-container .dividing-line,
 .normal-v2-container .normal-title-wrp>.template-op,
 .ui-popup .popup-wrap.shadow,
-.ui-popup.popup-cover .bili-btn.cancel
+.ui-popup.popup-cover .bili-btn.cancel,
+#bili-data-center .version-switch-section,
+.cc-container .nav-search .dropdown-btn,
+.cover-upload-box .modal-head .head-wrap,
+.modal-content.clearfix .img-clip-wrap .reset-img,
+.bili-modal.cropper-modal .modal-footer,
+.cards-block .modal-wrap .btn-group,
+.bili-modal.cropper-modal .modal-head .head-wrap,
+.text-article-wrp .article-card,
+.text-article-wrp .article-card .meta-title .typename,
+.cc-article-wrp .article-card .meta-title .typename,
+.live-user .user-item .item-right .tags>span
 {
     border-color: transparent !important;
 }
 .article-info-module .v-info .line,
 .video-info-module .v-info .line,
 .list-container .article-list-block .article-item .item-holder .article-content .article-left-block,
-.vip-package-wrapper .coupon-wrapper .coupon-content-con
+.vip-package-wrapper .coupon-wrapper .coupon-content-con,
+.modal .img-clip-wrap .container-box,
+.text-article-wrp .article-card .meta-status .pubdate
 {
     border-color: #aaa !important;
 }
@@ -270,13 +337,19 @@
     fill: #fff !important;
 } */
 .block-area .follow-wrapper .follow-head .follow-more .icon,
-.game-package-wrapper .title-right-link .m-arrow-package
+.game-package-wrapper .title-right-link .m-arrow-package,
+.text-article-wrp .head-stat .section .iconarrow
 {
     filter: brightness(0) invert(1) !important;
 }
 .article-card .article-info .data .icon,
 .article-info-module .v-data .icon,
-.video-info-module .v-data .icon
+.video-info-module .v-data .icon,
+.item-right .info.clearfix .icon-live-life,
+.item-right .info.clearfix .icon-live-mgame,
+.item-right .info.clearfix .icon-live-col,
+.item-right .info.clearfix .icon-live-compete,
+.bangumi-info-module .v-data .icon
 {
     filter: brightness(0) invert(.7) !important;
 }
@@ -322,7 +395,10 @@
 } */
 .article-info-module,
 .share-board .song-share .song-share-ul,
-.share-board .share-btn
+.share-board .share-btn,
+.text-article-wrp .head-stat,
+#root .nav-upload-container,
+.live-user .user-item:hover
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -380,7 +456,10 @@
 #app .el-button--primary:hover,
 .answer-container .footer-bottom .btn-default,
 .bili-header-m .mini-wnd-nav.history-wnd .top-login .loginbtn,
-.carousel-wrp .page .next.current
+.carousel-wrp .page .next.current,
+.author-container .attention-animation-holder .attention-btn,
+.cards-block .images-list .image-item .selected,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip
 {
     background-color: var(--theme-color) !important;
 }
@@ -423,7 +502,11 @@
 .answer-container .header-top .header-tip,
 .bili-header-m .profile-m .grade .bar .num .v0:hover,
 .electron-set-v2-hint a
-.electron-set-v2-hint a:hover
+.electron-set-v2-hint a:hover,
+.comment-list-item .article-wrap .show-all,
+.icon-close:hover,
+.text-article-wrp .article-card .meta-status .status,
+.text-article-wrp .article-card .meta-view .menu-list .menu-item:hover
 {
     color: var(--theme-color) !important;
 }
