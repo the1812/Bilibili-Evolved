@@ -14,7 +14,12 @@
 .normal-v2-container .normal-title-wrp>.template-op>.template-op-divide,
 .ui-popup.popup-cover .bili-btn.cancel,
 .dc-page .version-switch-section,
-#bili-data-center .version-switch-section
+#bili-data-center .version-switch-section,
+.text-article-wrp .article-card .meta-title .typename,
+.text-article-wrp .article-card .meta-view .appeal,
+.text-article-wrp .article-card .meta-view .data,
+.text-article-wrp .article-card .meta-view .menu,
+.text-article-wrp .article-card .meta-view .option
 {
     background-color: #222 !important;
 }
@@ -57,7 +62,9 @@
 .ui-popup .popup-wrap,
 .cc-container .nav-search .dropdown-btn,
 .cropper-modal .modal,
-.cards-block .modal-wrap .btn-group button
+.cards-block .modal-wrap .btn-group button,
+.text-article-wrp .head-stat,
+.text-article-wrp .article-card
 {
     background-color: #444 !important;
 }
@@ -138,7 +145,14 @@
 .comment-list-item .ci-parent-reply .cipr-footer,
 .cc-container .tips,
 .cards-block .cards-list .card-item .card-case .other label,
-.block-wrap .classify .position
+.block-wrap .classify .position,
+.text-article-wrp .head-stat .section .diff-wrp .diff-yeaterday,
+.text-article-wrp .head-stat .section .diff-wrp .diff-text,
+.read-list-component .empty-state .empty-tips,
+.text-article-wrp .article-card .meta-status .pubdate,
+.text-article-wrp .article-card .meta-footer .view-stat,
+.text-article-wrp .article-card .meta-view .meta-item .icon-font,
+.text-article-wrp .article-card .meta-view .meta-item .iconfont
 {
     color: #aaa !important;
 }
@@ -208,7 +222,9 @@
 .cc-container .nav-search .search,
 .cc-container .nav-search .search input,
 .author-container .attention-animation-holder .attention-btn,
-.cards-block .cards-list .card-item .card-case .title
+.cards-block .cards-list .card-item .card-case .title,
+.text-article-wrp .head-stat .section .title,
+.text-article-wrp .article-card .meta-title .typename
 {
     color: #eee !important;
 }
@@ -265,7 +281,9 @@
 .modal-content.clearfix .img-clip-wrap .reset-img,
 .bili-modal.cropper-modal .modal-footer,
 .cards-block .modal-wrap .btn-group,
-.bili-modal.cropper-modal .modal-head .head-wrap
+.bili-modal.cropper-modal .modal-head .head-wrap,
+.text-article-wrp .article-card,
+.text-article-wrp .article-card .meta-title .typename
 {
     border-color: transparent !important;
 }
@@ -273,7 +291,8 @@
 .video-info-module .v-info .line,
 .list-container .article-list-block .article-item .item-holder .article-content .article-left-block,
 .vip-package-wrapper .coupon-wrapper .coupon-content-con,
-.modal .img-clip-wrap .container-box
+.modal .img-clip-wrap .container-box,
+.text-article-wrp .article-card .meta-status .pubdate
 {
     border-color: #aaa !important;
 }
@@ -347,7 +366,8 @@
 } */
 .article-info-module,
 .share-board .song-share .song-share-ul,
-.share-board .share-btn
+.share-board .share-btn,
+.text-article-wrp .head-stat
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -452,7 +472,8 @@
 .electron-set-v2-hint a
 .electron-set-v2-hint a:hover,
 .comment-list-item .article-wrap .show-all,
-.icon-close:hover
+.icon-close:hover,
+.text-article-wrp .article-card .meta-status .status
 {
     color: var(--theme-color) !important;
 }
