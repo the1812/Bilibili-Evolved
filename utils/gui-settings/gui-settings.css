@@ -128,7 +128,7 @@
 .gui-settings-search[type=text]
 {
     flex: 1 0 auto;
-    height: 100%;
+    height: auto;
     border: none;
     padding: 6px;
     font-size: 12pt;
@@ -168,7 +168,7 @@
 {
     border: none;
     height: 100%;
-    max-width: 80px;
+    max-width: 90px;
     padding: 4px 8px;
     background: #8884;
     transition: all 0.2s;
