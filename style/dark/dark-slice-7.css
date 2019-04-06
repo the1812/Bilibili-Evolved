@@ -47,7 +47,8 @@
 #app .el-button.is-disabled,
 #app .el-button.is-disabled:focus,
 #app .el-button.is-disabled:hover,
-.report-wrap-module .form-group .el-input__inner
+.report-wrap-module .form-group .el-input__inner,
+.container-left .answer-container
 {
     background-color: #444 !important;
 }
@@ -112,7 +113,13 @@
 .game-item-container .game-package-item .game-package-gift,
 .game-item-container .game-package-item .game-package-price,
 .coupon-content-con .coupon-time,
-.coupon-content-con .coupon-type
+.coupon-content-con .coupon-type,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner:hover,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
+.container .form-group .form-message,
+.rule-description p
 {
     color: #aaa !important;
 }
@@ -163,7 +170,12 @@
 .game-item-container .game-package-item .game-package-name,
 .game-package-wrapper .title-package-wrapper .title-right-link,
 .game-package-wrapper .title-package-wrapper .title-package-name,
-.vip-package-wrapper .coupon-content-con .coupon-btn
+.vip-package-wrapper .coupon-content-con .coupon-btn,
+.container .form-group .form-group-title,
+.container .form-group .mail-text,
+.container-left .answer-container .header-top h2,
+.answer-list .exam-list .exam-number,
+.answer-container .footer-bottom .btn-default
 {
     color: #eee !important;
 }
@@ -199,7 +211,12 @@
 .security-right .vip-package-wrapper,
 .security-right .game-package-wrapper,
 .security-right .game-package-wrapper .game-item-container .game-package-item,
-.security-right .game-package-wrapper .title-package-wrapper .title-right-link
+.security-right .game-package-wrapper .title-package-wrapper .title-right-link,
+.container-left .answer-container,
+.container-left .header-top,
+.answer-container .answer-list .exam-list,
+.answer-container .answer-list,
+.answer-container .footer-bottom .btn-default
 {
     border-color: transparent !important;
 }
@@ -245,10 +262,10 @@
 {
     filter: var(--blue-image-filter) !important;
 }
-/* a
+.container-right .rule-title .pink-icon
 {
     filter: var(--pink-image-filter) !important;
-} */
+}
 /* a
 {
     filter: grayscale(1) !important;
@@ -333,7 +350,8 @@
 .vip-package-wrapper .coupon-content-con .coupon-btn:hover,
 #app .el-button--primary,
 #app .el-button--primary:focus,
-#app .el-button--primary:hover
+#app .el-button--primary:hover,
+.answer-container .footer-bottom .btn-default
 {
     background-color: var(--theme-color) !important;
 }
@@ -371,7 +389,8 @@
 .coupon-money-2:before,
 .form-group.register-hidden-gruop.text-right a,
 .form-group .register-agree a,
-.register-hidden-gruop.text-right a
+.register-hidden-gruop.text-right a,
+.rule-time span
 {
     color: var(--theme-color) !important;
 }
