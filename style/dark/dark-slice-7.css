@@ -48,7 +48,8 @@
 #app .el-button.is-disabled:focus,
 #app .el-button.is-disabled:hover,
 .report-wrap-module .form-group .el-input__inner,
-.container-left .answer-container
+.container-left .answer-container,
+.carousel-wrp .panel .pic li
 {
     background-color: #444 !important;
 }
@@ -68,7 +69,8 @@
 .original-editor-wrap .float-toolbar .toolbar-list,
 .dc-page .version-switch-section,
 .vip-package-wrapper .coupon-wrapper,
-.register-container .report-wrap-module .back-fff
+.register-container .report-wrap-module .back-fff,
+.cc-body .home-wrap .card
 {
     background: transparent !important;
 }
@@ -119,7 +121,10 @@
 .el-breadcrumb__item:last-child .el-breadcrumb__inner a,
 .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
 .container .form-group .form-message,
-.rule-description p
+.rule-description p,
+.home-wrap .data-card .data-wrp .total,
+.home-wrap .data-card .fans-wrp .total,
+.carousel-wrp .panel .pic li a .card-info .detail
 {
     color: #aaa !important;
 }
@@ -176,7 +181,8 @@
 .container-left .answer-container .header-top h2,
 .answer-list .exam-list .exam-number,
 .answer-container .footer-bottom .btn-default,
-.bili-header-m .profile-m .grade .bar .num .v0
+.bili-header-m .profile-m .grade .bar .num .v0,
+.carousel-wrp .panel .pic li a .card-info .title .headline
 {
     color: #eee !important;
 }
@@ -217,7 +223,8 @@
 .container-left .header-top,
 .answer-container .answer-list .exam-list,
 .answer-container .answer-list,
-.answer-container .footer-bottom .btn-default
+.answer-container .footer-bottom .btn-default,
+.carousel-wrp .panel .pic li
 {
     border-color: transparent !important;
 }
@@ -318,7 +325,8 @@
 .song-coin-bg .song-coin .song-coin-content .song-two-coin:hover,
 .song-coin-bg .song-coin .song-coin-content .song-two-coin.active,
 .song-coin-bg .song-coin .song-coin-content .song-one-coin:hover,
-.song-coin-bg .song-coin .song-coin-content .song-one-coin.active
+.song-coin-bg .song-coin .song-coin-content .song-one-coin.active,
+.carousel-wrp .page .next.current
 {
     border-color: var(--theme-color) !important;
 }
@@ -354,7 +362,8 @@
 #app .el-button--primary:focus,
 #app .el-button--primary:hover,
 .answer-container .footer-bottom .btn-default,
-.bili-header-m .mini-wnd-nav.history-wnd .top-login .loginbtn
+.bili-header-m .mini-wnd-nav.history-wnd .top-login .loginbtn,
+.carousel-wrp .page .next.current
 {
     background-color: var(--theme-color) !important;
 }
