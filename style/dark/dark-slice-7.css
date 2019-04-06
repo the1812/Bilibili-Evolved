@@ -175,7 +175,8 @@
 .container .form-group .mail-text,
 .container-left .answer-container .header-top h2,
 .answer-list .exam-list .exam-number,
-.answer-container .footer-bottom .btn-default
+.answer-container .footer-bottom .btn-default,
+.bili-header-m .profile-m .grade .bar .num .v0
 {
     color: #eee !important;
 }
@@ -352,7 +353,8 @@
 #app .el-button--primary,
 #app .el-button--primary:focus,
 #app .el-button--primary:hover,
-.answer-container .footer-bottom .btn-default
+.answer-container .footer-bottom .btn-default,
+.bili-header-m .mini-wnd-nav.history-wnd .top-login .loginbtn
 {
     background-color: var(--theme-color) !important;
 }
@@ -392,7 +394,8 @@
 .form-group .register-agree a,
 .register-hidden-gruop.text-right a,
 .rule-time span,
-.answer-container .header-top .header-tip
+.answer-container .header-top .header-tip,
+.bili-header-m .profile-m .grade .bar .num .v0:hover
 {
     color: var(--theme-color) !important;
 }
