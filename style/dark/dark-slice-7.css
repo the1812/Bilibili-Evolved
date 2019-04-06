@@ -55,7 +55,9 @@
 .container-left .answer-container,
 .carousel-wrp .panel .pic li,
 .ui-popup .popup-wrap,
-.cc-container .nav-search .dropdown-btn
+.cc-container .nav-search .dropdown-btn,
+.cropper-modal .modal,
+.cards-block .modal-wrap .btn-group button
 {
     background-color: #444 !important;
 }
@@ -134,7 +136,9 @@
 .ui-popup .popup-wrap .text-box .subtext,
 .comment-list-item .ci-action,
 .comment-list-item .ci-parent-reply .cipr-footer,
-.cc-container .tips
+.cc-container .tips,
+.cards-block .cards-list .card-item .card-case .other label,
+.block-wrap .classify .position
 {
     color: #aaa !important;
 }
@@ -202,7 +206,9 @@
 .comment-list-item .article-wrap .name,
 .cc-container .nav-search .dropdown-btn,
 .cc-container .nav-search .search,
-.cc-container .nav-search .search input
+.cc-container .nav-search .search input,
+.author-container .attention-animation-holder .attention-btn,
+.cards-block .cards-list .card-item .card-case .title
 {
     color: #eee !important;
 }
@@ -254,14 +260,20 @@
 .ui-popup .popup-wrap.shadow,
 .ui-popup.popup-cover .bili-btn.cancel,
 #bili-data-center .version-switch-section,
-.cc-container .nav-search .dropdown-btn
+.cc-container .nav-search .dropdown-btn,
+.cover-upload-box .modal-head .head-wrap,
+.modal-content.clearfix .img-clip-wrap .reset-img,
+.bili-modal.cropper-modal .modal-footer,
+.cards-block .modal-wrap .btn-group,
+.bili-modal.cropper-modal .modal-head .head-wrap
 {
     border-color: transparent !important;
 }
 .article-info-module .v-info .line,
 .video-info-module .v-info .line,
 .list-container .article-list-block .article-item .item-holder .article-content .article-left-block,
-.vip-package-wrapper .coupon-wrapper .coupon-content-con
+.vip-package-wrapper .coupon-wrapper .coupon-content-con,
+.modal .img-clip-wrap .container-box
 {
     border-color: #aaa !important;
 }
@@ -393,7 +405,9 @@
 #app .el-button--primary:hover,
 .answer-container .footer-bottom .btn-default,
 .bili-header-m .mini-wnd-nav.history-wnd .top-login .loginbtn,
-.carousel-wrp .page .next.current
+.carousel-wrp .page .next.current,
+.author-container .attention-animation-holder .attention-btn,
+.cards-block .images-list .image-item .selected
 {
     background-color: var(--theme-color) !important;
 }
@@ -437,7 +451,8 @@
 .bili-header-m .profile-m .grade .bar .num .v0:hover,
 .electron-set-v2-hint a
 .electron-set-v2-hint a:hover,
-.comment-list-item .article-wrap .show-all
+.comment-list-item .article-wrap .show-all,
+.icon-close:hover
 {
     color: var(--theme-color) !important;
 }
