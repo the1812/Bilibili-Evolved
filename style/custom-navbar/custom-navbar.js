@@ -73,6 +73,7 @@ class Category extends NavbarComponent
     {
         super();
         this.html = `主站`;
+        this.requestedPopup = true;
         this.popupHtml = /*html*/`
         <ul id="custom-navbar-home-popup">
             <li class="category-item" v-for="item of info">
@@ -188,7 +189,7 @@ class Category extends NavbarComponent
 }
 class Iframe extends NavbarComponent
 {
-    constructor(name, link, { src, width, height })
+    constructor(name, link, { src, width, height, lazy })
     {
         super();
         this.html = name;
@@ -197,6 +198,7 @@ class Iframe extends NavbarComponent
             <iframe src="${src}" frameborder="0" width="${width}" height="${height}"></iframe>
         `;
         this.noPadding = true;
+        this.requestedPopup = lazy ? false : true;
     }
 }
 
@@ -225,11 +227,13 @@ class Iframe extends NavbarComponent
             src: `https://www.bilibili.com/page-proxy/game-nav.html`,
             width: `680px`,
             height: `260px`,
+            lazy: true,
         }),
         new Iframe("直播", "https://live.bilibili.com", {
             src: `https://live.bilibili.com/blackboard/dropdown-menu.html`,
             width: `528px`,
             height: `266px`,
+            lazy: true,
         }),
         new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web"),
         new SimpleLink("漫画", "https://manga.bilibili.com"),
@@ -238,11 +242,13 @@ class Iframe extends NavbarComponent
             src: `https://message.bilibili.com/pages/nav/index`,
             width: `110px`,
             height: `210px`,
+            lazy: false,
         }),
         new Iframe("动态", "https://t.bilibili.com/", {
             src: `https://t.bilibili.com/pages/nav/index`,
             width: `380px`,
             height: `422px`,
+            lazy: true,
         }),
         new Upload,
     ];
