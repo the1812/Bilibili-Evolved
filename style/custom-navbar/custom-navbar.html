@@ -3,7 +3,8 @@
         <li v-for="component of components" v-bind:class="{disabled: component.disabled}"
             v-bind:style="{flex: component.flex}">
             <a class="main-content" v-bind:href="component.href" v-html="component.html"></a>
-            <div class="popup" v-if="component.popupHtml" v-html="component.popupHtml">
+            <div class="popup" v-bind:class="{'no-padding': component.noPadding}" v-if="component.popupHtml"
+                v-html="component.popupHtml">
             </div>
         </li>
     </ul>

@@ -177,6 +177,7 @@ class Iframe extends NavbarComponent
         this.popupHtml = /*html*/`
             <iframe src="${src}" frameborder="0" width="${width}" height="${height}"></iframe>
         `;
+        this.noPadding = true;
     }
 }
 
@@ -214,6 +215,16 @@ class Iframe extends NavbarComponent
         new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web"),
         new SimpleLink("漫画", "https://manga.bilibili.com"),
         new Blank,
+        new Iframe("消息", "https://message.bilibili.com/pages/nav/index", {
+            src: `https://message.bilibili.com/pages/nav/index`,
+            width: `110px`,
+            height: `210px`,
+        }),
+        new Iframe("动态", "", {
+            src: `https://t.bilibili.com/pages/nav/index`,
+            width: `380px`,
+            height: `422px`,
+        })
     ];
     new Vue({
         el: navbar,

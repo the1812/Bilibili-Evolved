@@ -99,6 +99,10 @@
     transform-origin: top;
     transition: all 0.15s cubic-bezier(0.18, 0.89, 0.38, 1.15);
 }
+.custom-navbar .popup.no-padding
+{
+    padding: 0;
+}
 .custom-navbar>ul>li:not(.disabled):hover>.popup,
 #custom-navbar-home-popup .category-item:hover .popup
 {
