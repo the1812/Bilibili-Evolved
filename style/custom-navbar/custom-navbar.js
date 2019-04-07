@@ -48,6 +48,24 @@ class SimpleLink extends NavbarComponent
         this.href = link;
     }
 }
+class Upload extends NavbarComponent
+{
+    constructor()
+    {
+        super();
+        this.href = "https://member.bilibili.com/v2#/upload/video/frame";
+        this.html = /*html*/`<i class="mdi mdi-upload mdi-24px"></i><div id="upload-button">投稿</div>`;
+        this.popupHtml = /*html*/`
+        <ul id="upload-actions">
+            <li><a href="https://member.bilibili.com/v2#/upload/text/apply">专栏投稿</a></li>
+            <li><a href="https://member.bilibili.com/v2#/upload/audio/">音频投稿</a></li>
+            <li><a href="https://member.bilibili.com/v2#/upload/video/frame">视频投稿</a></li>
+            <li><a href="https://member.bilibili.com/v2#/upload-manager/article">投稿管理</a></li>
+            <li><a href="https://member.bilibili.com/v2#/home">创作中心</a></li>
+        </ul>
+        `;
+    }
+}
 class Category extends NavbarComponent
 {
     constructor()
@@ -202,7 +220,7 @@ class Iframe extends NavbarComponent
         new Category,
         new SimpleLink("画友", "https://h.bilibili.com"),
         new SimpleLink("音频", "https://www.bilibili.com/audio/home/?type=10"),
-        new Iframe("游戏中心", "https://live.bilibili.com", {
+        new Iframe("游戏中心", "https://game.bilibili.com/", {
             src: `https://www.bilibili.com/page-proxy/game-nav.html`,
             width: `680px`,
             height: `260px`,
@@ -215,16 +233,17 @@ class Iframe extends NavbarComponent
         new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web"),
         new SimpleLink("漫画", "https://manga.bilibili.com"),
         new Blank,
-        new Iframe("消息", "https://message.bilibili.com/pages/nav/index", {
+        new Iframe("消息", "https://message.bilibili.com/", {
             src: `https://message.bilibili.com/pages/nav/index`,
             width: `110px`,
             height: `210px`,
         }),
-        new Iframe("动态", "", {
+        new Iframe("动态", "https://t.bilibili.com/", {
             src: `https://t.bilibili.com/pages/nav/index`,
             width: `380px`,
             height: `422px`,
-        })
+        }),
+        new Upload,
     ];
     new Vue({
         el: navbar,
