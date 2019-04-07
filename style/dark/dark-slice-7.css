@@ -354,7 +354,12 @@
 .bangumi-info-module .v-data .icon,
 .col-1 .meta .icon,
 .article-content .meta-col .icon,
-.album-item .meta-col .icon
+.album-item .meta-col .icon,
+.col-1 .i-pin-info .icon,
+.cube .meta .icon,
+.album-card .info .view-count .icon-view,
+.album-card .info .like-num .icon-like,
+.col-full .meta .icon
 {
     filter: brightness(0) invert(.7) !important;
 }
