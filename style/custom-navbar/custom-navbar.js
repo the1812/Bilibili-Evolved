@@ -167,6 +167,18 @@ class Category extends NavbarComponent
         };
     }
 }
+class Iframe extends NavbarComponent
+{
+    constructor(name, link, { src, width, height })
+    {
+        super();
+        this.html = name;
+        this.href = link;
+        this.popupHtml = /*html*/`
+            <iframe src="${src}" frameborder="0" width="${width}" height="${height}"></iframe>
+        `;
+    }
+}
 
 (async () =>
 {
@@ -189,6 +201,16 @@ class Category extends NavbarComponent
         new Category,
         new SimpleLink("画友", "https://h.bilibili.com"),
         new SimpleLink("音频", "https://www.bilibili.com/audio/home/?type=10"),
+        new Iframe("游戏中心", "https://live.bilibili.com", {
+            src: `https://www.bilibili.com/page-proxy/game-nav.html`,
+            width: `680px`,
+            height: `260px`,
+        }),
+        new Iframe("直播", "https://live.bilibili.com", {
+            src: `https://live.bilibili.com/blackboard/dropdown-menu.html`,
+            width: `528px`,
+            height: `266px`,
+        }),
         new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web"),
         new SimpleLink("漫画", "https://manga.bilibili.com"),
         new Blank,
