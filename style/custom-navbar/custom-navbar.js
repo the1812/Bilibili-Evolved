@@ -18,6 +18,7 @@ class NavbarComponent
         this.popupHtml = ``;
         this.flex = `0 0 auto`;
         this.disabled = false;
+        this.requestedPopup = false;
         this.href = ``;
     }
 }
@@ -249,6 +250,15 @@ class Iframe extends NavbarComponent
         el: navbar,
         data: {
             components,
+        },
+        methods: {
+            requestPopup(component)
+            {
+                if (!component.requestedPopup)
+                {
+                    this.$set(component, `requestedPopup`, true);
+                }
+            }
         },
     });
 })();
