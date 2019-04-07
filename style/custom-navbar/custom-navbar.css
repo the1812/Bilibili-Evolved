@@ -156,3 +156,7 @@
 {
     opacity: 0.5;
 }
+.im-list-box
+{
+    border-radius: 0 !important;
+}
