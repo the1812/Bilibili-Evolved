@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      264.06
+// @version      264.82
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -217,7 +217,7 @@ function fixed(number, precision = 1)
 }
 function isEmbeddedPlayer()
 {
-    return location.host === "player.bilibili.com";
+    return location.host === "player.bilibili.com" || document.URL.startsWith("https://www.bilibili.com/html/player.html");
 }
 function isIframe()
 {

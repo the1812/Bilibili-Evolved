@@ -216,7 +216,7 @@ function fixed(number, precision = 1)
 }
 function isEmbeddedPlayer()
 {
-    return location.host === "player.bilibili.com";
+    return location.host === "player.bilibili.com" || document.URL.startsWith("https://www.bilibili.com/html/player.html");
 }
 function isIframe()
 {
