@@ -4,6 +4,9 @@ export const map = new Map([
         /* CSS translation here */
     ]],
 ]);
+export const regex = new Map([
+    /* Regex translation here */
+]);
 export default {
-    export: { map },
+    export: { map, regex },
 };

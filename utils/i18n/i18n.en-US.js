@@ -172,6 +172,9 @@ export const map = new Map([
 
     ]],
 ]);
+export const regex = new Map([
+    /* Regex translation here */
+]);
 export default {
-    export: { map },
+    export: { map, regex },
 };

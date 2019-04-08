@@ -44,6 +44,10 @@
 {
     width: 100% !important;
 }
+.gui-settings-box
+{
+    width: 450px !important;
+}
 #page-follows .follow-sidenav .text
 {
     min-width: 78px !important;
@@ -82,7 +86,7 @@
 }
 .dashboard li.collection
 {
-    margin: 0px 24px 0 8px !important;
+    margin: 0 10px 0 0px !important;
 }
 .bili-search .rocket-con
 {
@@ -141,4 +145,8 @@
 .author-info .communicate-btn:active
 {
     font-size: 12px !important;
+}
+.dashboard li.like
+{
+    border-color: transparent !important;
 }

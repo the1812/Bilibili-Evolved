@@ -15,9 +15,13 @@ export class Translator {
         }
         const translation = Translator.map.get(value.trim());
         if (translation === undefined) {
-            return;
+            const result = Translator.regex.find(([r]) => r.test(value));
+            if (result) {
+                const [regex, replacement] = result;
+                this.setValue(node, value.replace(regex, replacement));
+            }
         }
-        if (typeof translation === "string") {
+        else if (typeof translation === "string") {
             this.setValue(node, translation);
         }
         else if (Array.isArray(translation)) {
@@ -103,8 +107,9 @@ Translator.title = new TitleTranslator;
 Translator.placeholder = new PlaceholderTranslator;
 Translator.allTranslators = [Translator.textNode, Translator.title, Translator.placeholder];
 (async () => {
-    const { map } = await import(`./i18n.${languageCodeMap[settings.i18nLanguage]}`);
+    const { map, regex } = await import(`./i18n.${languageCodeMap[settings.i18nLanguage]}`);
     Translator.map = map;
+    Translator.regex = [...regex.entries()];
     Translator.translate(document.body);
     Translator.translateCssMatches();
     Observer.observe("body", records => {
