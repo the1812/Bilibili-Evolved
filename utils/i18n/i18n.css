@@ -7,7 +7,9 @@
 .h .h-f-btn,
 .n .n-data,
 .bili-search .nav-wrap .wrap>.sub,
-#page-follows .follow-sidenav .text
+#page-follows .follow-sidenav .text,
+.author-info .favourite-btn,
+.dashboard li.like
 {
     width: auto !important;
 }
@@ -103,7 +105,22 @@
 {
     align-items: center !important;
 }
+.user-panel-ctnr .user-panel .content-ctnr .section-block
+{
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: column !important;
+}
+.user-panel-ctnr .user-panel .content-ctnr .ctrl-btn
+{
+    float: none !important;
+}
 #area-list ul li dd
 {
     font-size: 18px !important;
+}
+.author-info .favourite-btn,
+.author-info .favourite-btn:active
+{
+    font-size: 12px !important;
 }
