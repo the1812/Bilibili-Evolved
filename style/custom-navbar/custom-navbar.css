@@ -27,6 +27,15 @@
     color: black;
     z-index: 10001;
 }
+.custom-navbar path,
+.custom-navbar.dark:not(.fill) path
+{
+    fill: black;
+}
+.custom-navbar.fill path
+{
+    fill: #fffd;
+}
 .custom-navbar.shadow
 {
     box-shadow: #0004 0px 2px 10px 1px;

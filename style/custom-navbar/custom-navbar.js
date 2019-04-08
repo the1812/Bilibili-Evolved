@@ -55,7 +55,11 @@ class Upload extends NavbarComponent
     {
         super();
         this.href = "https://member.bilibili.com/v2#/upload/video/frame";
-        this.html = /*html*/`<i class="mdi mdi-upload mdi-24px"></i><div id="upload-button">投稿</div>`;
+        this.html = /*html*/`
+        <svg style="width:18px;height:18px" viewBox="0 0 24 24">
+            <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" />
+        </svg>
+        <div id="upload-button">投稿</div>`;
         this.popupHtml = /*html*/`
         <ul id="upload-actions">
             <li><a href="https://member.bilibili.com/v2#/upload/text/apply">专栏投稿</a></li>
