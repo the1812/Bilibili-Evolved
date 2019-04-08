@@ -9,6 +9,7 @@
 .bili-search .nav-wrap .wrap>.sub,
 #page-follows .follow-sidenav .text,
 .author-info .favourite-btn,
+.author-info .communicate-btn,
 .dashboard li.like
 {
     width: auto !important;
@@ -75,6 +76,14 @@
 {
     padding-left: 8px !important;
 }
+.dashboard li.share .text
+{
+    padding-top: 15px !important;
+}
+.dashboard li.collection
+{
+    margin: 0px 24px 0 8px !important;
+}
 .bili-search .rocket-con
 {
     margin-left: 40% !important;
@@ -105,9 +114,16 @@
 {
     align-items: center !important;
 }
-.user-panel-ctnr .user-panel .content-ctnr .section-block
+.user-panel-ctnr .user-panel .content-ctnr .section-block,
+.dashboard li.collection>div:first-child
 {
     display: flex !important;
+    align-items: center !important;
+    flex-direction: column !important;
+}
+.dashboard li.share
+{
+    display: inline-flex !important;
     align-items: center !important;
     flex-direction: column !important;
 }
@@ -120,7 +136,9 @@
     font-size: 18px !important;
 }
 .author-info .favourite-btn,
-.author-info .favourite-btn:active
+.author-info .favourite-btn:active,
+.author-info .communicate-btn,
+.author-info .communicate-btn:active
 {
     font-size: 12px !important;
 }
