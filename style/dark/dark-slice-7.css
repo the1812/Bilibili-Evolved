@@ -520,7 +520,8 @@
 .icon-close:hover,
 .text-article-wrp .article-card .meta-status .status,
 .text-article-wrp .article-card .meta-view .menu-list .menu-item:hover,
-.col-1 .article-wrap .article-con a:hover
+.col-1 .article-wrap .article-con a:hover,
+.pgc-space-follow-item .pgc-item-info .pgc-item-state .publish-state.is-new
 {
     color: var(--theme-color) !important;
 }
