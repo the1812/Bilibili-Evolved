@@ -742,6 +742,14 @@ body>div.to-top.on
 {
     border-radius: 0 !important;
 }
+.qrcode-login .qrcode-con .qrcode-box .qrcode-img
+{
+    border: 10px solid white !important;
+}
+.qrcode-login .qrcode-con .qrcode-box .status
+{
+    border: 10px solid transparent !important;
+}
 .card-list .card
 {
     border: none !important;
