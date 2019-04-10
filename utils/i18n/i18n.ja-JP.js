@@ -257,7 +257,7 @@ export const map = new Map([
             text: `履歴`,
             selector: `.nav-con.fr .nav-item .t`
         },
-    ]]
+    ]],
     [`登录`, `ログイン`],
     [`注册`, `登録`],
     [`我的直播间`, `私のスタジオ`],
