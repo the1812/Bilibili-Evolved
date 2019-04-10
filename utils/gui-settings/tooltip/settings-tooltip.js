@@ -63,6 +63,7 @@ export const toolTips = {
     removeVideoTopMask: `删除视频里鼠标经过时出现在右上角的覆盖层.`,
     removeAds: `删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.`,
     watchLaterRedirect: `将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`,
+    favoritesRedirect: `将个人空间收藏夹里的视频重定向为直链, 而不是收藏夹播单链接.`,
     hideTopSearch: `将搜索框的推荐词替换为<span>搜索</span>.`,
     fullTweetsTitle: `在顶栏的动态预览框中, 总是展开完整的标题.`,
     fullPageTitle: `在视频选集列表中, 总是展开完整的标题.`,
