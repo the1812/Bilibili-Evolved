@@ -361,7 +361,7 @@
 .cube .meta .icon,
 .album-card .info .view-count .icon-view,
 .album-card .info .like-num .icon-like,
-.col-full .meta .icon
+.section-block .col-full .meta .icon
 {
     filter: brightness(0) invert(.7) !important;
 }
@@ -369,7 +369,8 @@
 #page-fav .fav-main .search-input .icon-search:hover,
 .error-body .error-container .error-panel .error-msg .error-img,
 .register-agree .checkbox-bwxr.active,
-.answer-list .key-list li.active:before
+.answer-list .key-list li.active:before,
+.self-icon-vote-create-btn.active
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -521,7 +522,8 @@
 .text-article-wrp .article-card .meta-status .status,
 .text-article-wrp .article-card .meta-view .menu-list .menu-item:hover,
 .col-1 .article-wrap .article-con a:hover,
-.pgc-space-follow-item .pgc-item-info .pgc-item-state .publish-state.is-new
+.pgc-space-follow-item .pgc-item-info .pgc-item-state .publish-state.is-new,
+.article-content-ctnr .supporting-info .category:hover
 {
     color: var(--theme-color) !important;
 }
