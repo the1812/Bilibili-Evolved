@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      267.90
+// @version      267.91
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -104,6 +104,7 @@ const settings = {
         fill: true,
         shadow: true,
     },
+    favoritesRedirect: true,
     cache: {},
 };
 const fixedSettings = {
@@ -907,6 +908,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/expand-danmaku.min.js"] = (()=>{return(e,i)=>{if(typeof isEmbeddedPlayer!=="undefined"&&isEmbeddedPlayer()){return}const r=()=>{SpinQuery.any(()=>$(".bui-collapse-header"),e=>{if(parseInt($(".bui-collapse-body").css("height"))===0&&$(".bui-collapse-arrow-text").text()==="展开"){e.click()}})};if(Observer.videoChange){Observer.videoChange(r)}else{Observer.childList("#bofqi",r)}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/expand-description.min.css"] = `.play-up-info .play-up-self,.video-desc .info{height:auto!important}.play-up-info .play-up-self-btn,.video-desc .btn{display:none!important}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/expand-description.min.js"] = (()=>{return(e,p)=>{p.applyStyle("expandDescriptionStyle")}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/favorites-redirect.min.js"] = (()=>{return(t,e)=>{function i(){const t=document.querySelectorAll("li[data-aid]>a");t.forEach(t=>{const e=t.getAttribute("href");if(e===null||!e.includes("medialist")){return}const i=t.parentElement.getAttribute("data-aid");t.setAttribute("href",`https://www.bilibili.com/video/av${i}`)})}(async()=>{const t=await SpinQuery.select("#app>.s-space");if(t!==null){Observer.childListSubtree("#app>.s-space",i)}})()}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/fix-fullscreen.min.js"] = (()=>{return(e,n)=>{unsafeWindow.Element.ALLOW_KEYBOARD_INPUT={};const t=unsafeWindow.Element.prototype.requestFullscreen;unsafeWindow.Element.prototype.requestFullscreen=function(){t.call(this)}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/frame-playback.min.css"] = `.frame-playback{display:none!important;height:100%;align-items:center;padding-left:8px;cursor:pointer;filter:brightness(0) invert(1)!important}.frame-playback.touch span{display:flex;align-items:center}.bilibili-player-video-control-bottom .frame-playback{display:flex!important}.frame-playback i{transition:.4s cubic-bezier(.18,.89,.32,1.28);opacity:.9}.frame-playback.prev-frame i{transform:scale(1.3) rotate(-90deg)}.frame-playback.prev-frame:hover i{transform:scale(1.4) rotate(-90deg);opacity:1}.frame-playback.prev-frame:active i{transform:scale(1.25) rotate(-90deg);opacity:1}.frame-playback.next-frame i{transform:scale(1.3) rotate(90deg)}.frame-playback.next-frame:hover i{transform:scale(1.4) rotate(90deg);opacity:1}.frame-playback.next-frame:active i{transform:scale(1.25) rotate(90deg);opacity:1}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/frame-playback.min.html"] = `<div class="frame-playback prev-frame icons-enabled"title=上一帧><span><i class=icon-arrow></i></span></div><div class="frame-playback next-frame icons-enabled"title=下一帧><span><i class=icon-arrow></i></span></div>`;
@@ -1666,7 +1668,11 @@ Resource.manifest = {
         path: "i18n.min.js",
         style: "important",
         displayNames: {
-            i18n: "界面翻译"
+            i18n: "界面翻译",
+            i18nEnglish: "英语翻译模块",
+            i18nJapanese: "日语翻译模块",
+            i18nGerman: "德语翻译模块",
+            i18nTraditionalChinese: "繁体翻译模块",
         },
     },
     playerFocus: {
@@ -1696,6 +1702,12 @@ Resource.manifest = {
             customNavbar: "使用自定义顶栏",
         },
     },
+    favoritesRedirect: {
+        path: "favorites-redirect.min.js",
+        displayNames: {
+            favoritesRedirect: "收藏夹视频重定向",
+        }
+    }
 };
 const resourceManifest = Resource.manifest;
 class StyleManager

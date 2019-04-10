@@ -503,7 +503,11 @@ Resource.manifest = {
         path: "i18n.min.js",
         style: "important",
         displayNames: {
-            i18n: "界面翻译"
+            i18n: "界面翻译",
+            i18nEnglish: "英语翻译模块",
+            i18nJapanese: "日语翻译模块",
+            i18nGerman: "德语翻译模块",
+            i18nTraditionalChinese: "繁体翻译模块",
         },
     },
     playerFocus: {
@@ -533,5 +537,11 @@ Resource.manifest = {
             customNavbar: "使用自定义顶栏",
         },
     },
+    favoritesRedirect: {
+        path: "favorites-redirect.min.js",
+        displayNames: {
+            favoritesRedirect: "收藏夹视频重定向",
+        }
+    }
 };
 export const resourceManifest = Resource.manifest;

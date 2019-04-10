@@ -78,6 +78,7 @@ export const settings = {
         fill: true,
         shadow: true,
     },
+    favoritesRedirect: true,
     cache: {},
 };
 const fixedSettings = {

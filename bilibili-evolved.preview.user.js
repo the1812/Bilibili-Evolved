@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.24
+// @version      1.7.25
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -103,6 +103,7 @@ const settings = {
         fill: true,
         shadow: true,
     },
+    favoritesRedirect: true,
     cache: {},
 };
 const fixedSettings = {
@@ -1604,7 +1605,11 @@ Resource.manifest = {
         path: "i18n.min.js",
         style: "important",
         displayNames: {
-            i18n: "界面翻译"
+            i18n: "界面翻译",
+            i18nEnglish: "英语翻译模块",
+            i18nJapanese: "日语翻译模块",
+            i18nGerman: "德语翻译模块",
+            i18nTraditionalChinese: "繁体翻译模块",
         },
     },
     playerFocus: {
@@ -1634,6 +1639,12 @@ Resource.manifest = {
             customNavbar: "使用自定义顶栏",
         },
     },
+    favoritesRedirect: {
+        path: "favorites-redirect.min.js",
+        displayNames: {
+            favoritesRedirect: "收藏夹视频重定向",
+        }
+    }
 };
 const resourceManifest = Resource.manifest;
 class StyleManager
