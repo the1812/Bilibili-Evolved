@@ -605,7 +605,7 @@ class Observer
                 .some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
             const isMiniPlayer = recordTest(records, it => [...it.addedNodes]
                 .concat([...it.removedNodes])
-                .every(it => it.classList.contains("drag-bar")));
+                .every(it => it.classList && it.classList.contains("drag-bar")));
             if (!isMenuAttached && !isMiniPlayer)
             {
                 callback(records);

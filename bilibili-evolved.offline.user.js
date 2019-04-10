@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      267.86
+// @version      267.90
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -606,7 +606,7 @@ class Observer
                 .some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
             const isMiniPlayer = recordTest(records, it => [...it.addedNodes]
                 .concat([...it.removedNodes])
-                .every(it => it.classList.contains("drag-bar")));
+                .every(it => it.classList && it.classList.contains("drag-bar")));
             if (!isMenuAttached && !isMiniPlayer)
             {
                 callback(records);
