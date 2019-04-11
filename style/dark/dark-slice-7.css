@@ -249,7 +249,8 @@
 .bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip,
 .live-user .user-item .item-right .tags>span,
 .live-user .user-item .item-right .status,
-.common .bb-comment .no-login .baffle .b-btn:hover
+.common .bb-comment .no-login .baffle .b-btn:hover,
+.list-filter-bar .item-text
 {
     color: #eee !important;
 }
@@ -432,7 +433,10 @@
 .song-coin-bg .song-coin .song-coin-content .song-two-coin.active,
 .song-coin-bg .song-coin .song-coin-content .song-one-coin:hover,
 .song-coin-bg .song-coin .song-coin-content .song-one-coin.active,
-.carousel-wrp .page .next.current
+.carousel-wrp .page .next.current,
+.list-filter-bar .item-text.active,
+.list-filter-bar .item-text.expand,
+.list-filter-bar .item-text:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -523,7 +527,10 @@
 .text-article-wrp .article-card .meta-view .menu-list .menu-item:hover,
 .col-1 .article-wrap .article-con a:hover,
 .pgc-space-follow-item .pgc-item-info .pgc-item-state .publish-state.is-new,
-.article-content-ctnr .supporting-info .category:hover
+.article-content-ctnr .supporting-info .category:hover,
+.list-filter-bar .item-text.active,
+.list-filter-bar .item-text.expand,
+.list-filter-bar .item-text:hover
 {
     color: var(--theme-color) !important;
 }
