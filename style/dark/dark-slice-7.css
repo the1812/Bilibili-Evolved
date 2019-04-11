@@ -23,7 +23,8 @@
 .cc-article-wrp .article-card .meta-title .typename,
 .text-article-wrp .article-card .meta-view .menu-list,
 .live-user .user-item .item-right .status,
-.common .bb-comment .no-login .baffle .b-btn
+.common .bb-comment .no-login .baffle .b-btn,
+.main-container .media-info .media-right .media-desc i
 {
     background-color: #222 !important;
 }
@@ -33,7 +34,6 @@
 {
     background-color: #333 !important;
 }
-.main-container .media-info .media-right .media-desc i,
 .up-info .btn-panel .charge-btn,
 .content .rank-list,
 .link-tag-box .selector-wrap,
