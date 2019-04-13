@@ -60,6 +60,7 @@ export const settings = {
     i18n: false,
     i18nLanguage: "日本語",
     playerFocus: false,
+    playerFocusOffset: -10,
     oldTweets: false,
     simplifyLiveroom: false,
     simplifyLiveroomSettings: {

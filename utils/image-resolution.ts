@@ -4,12 +4,12 @@ const excludeSelectors = [
     "#certify-img1",
     "#certify-img2",
 ];
-const imageFormats = [
-    ".jpg",
-    ".png",
-    ".gif",
-    ".webp"
-]
+// const imageFormats = [
+//     ".jpg",
+//     ".png",
+//     ".gif",
+//     ".webp"
+// ];
 const walk = (rootElement: Node, action: (node: HTMLElement) => void) =>
 {
     const walker = document.createTreeWalker(rootElement, NodeFilter.SHOW_ELEMENT, null, false);
