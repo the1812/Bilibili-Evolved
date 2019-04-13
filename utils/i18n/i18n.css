@@ -153,3 +153,7 @@
 {
     border-color: transparent !important;
 }
+.gui-settings-tooltip
+{
+    left: 470px !important;
+}
