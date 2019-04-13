@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.25
+// @version      1.7.26
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -85,7 +85,7 @@ const settings = {
     i18n: false,
     i18nLanguage: "日本語",
     playerFocus: false,
-    playerFocusOffset: 0,
+    playerFocusOffset: -10,
     oldTweets: false,
     simplifyLiveroom: false,
     simplifyLiveroomSettings: {
