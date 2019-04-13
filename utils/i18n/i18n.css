@@ -10,7 +10,9 @@
 #page-follows .follow-sidenav .text,
 .author-info .favourite-btn,
 .author-info .communicate-btn,
-.dashboard li.like
+.dashboard li.like,
+.history-wrap .history-btn,
+.media-info .media-right .media-tool-bar .btn-follow
 {
     width: auto !important;
 }
@@ -68,7 +70,8 @@
 .attention-btn-ctnr .left-part,
 .admin-list-cntr .rank-cntr .item .admin-icon,
 .h .h-f-btn,
-.bb-comment .comment-send .comment-emoji
+.bb-comment .comment-send .comment-emoji,
+.media-info .media-right .media-tool-bar .btn-follow
 {
     padding: 0 8px !important;
 }
