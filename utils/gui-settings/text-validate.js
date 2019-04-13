@@ -23,6 +23,8 @@ export class Validator
             case "darkScheduleStart":
             case "darkScheduleEnd":
                 return new TimeValidator(key);
+            case "playerFocusOffset":
+                return new NumberValidator(key);
             default:
                 return new Validator(key);
         }
@@ -118,6 +120,17 @@ export class TimeValidator extends Validator
         }
     }
 }
+export class NumberValidator extends Validator
+{
+    isValidate(text)
+    {
+        const number = parseInt(text);
+        if (!isNaN(number))
+        {
+            return number;
+        }
+    }
+}
 export default {
     export: {
         Validator,
@@ -125,5 +138,6 @@ export default {
         DropDownValidator,
         OpacityValidator,
         TimeValidator,
+        NumberValidator,
     },
 };

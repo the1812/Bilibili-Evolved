@@ -514,6 +514,7 @@ Resource.manifest = {
         path: "player-focus.min.js",
         displayNames: {
             playerFocus: "自动定位到播放器",
+            playerFocusOffset: "定位偏移量",
         },
     },
     simplifyLiveroom: {
