@@ -738,6 +738,10 @@ body>div.to-top.on
 {
     margin-bottom: 10px !important;
 }
+#jfContent
+{
+    filter: invert(1);
+}
 .activity.topic-preview-wrapper .s-bottom
 {
     border-radius: 0 !important;

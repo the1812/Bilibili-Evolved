@@ -18,19 +18,28 @@
 .custom-navbar
 {
     --navbar-height: 50px;
+    --navbar-foreground: black;
+    --navbar-background: white;
     position: absolute;
     top: 0;
     left: 0;
     height: var(--navbar-height);
     width: 100%;
-    background: white;
-    color: black;
+    background-color: var(--navbar-background);
+    color: var(--navbar-foreground);
     z-index: 10001;
 }
-.custom-navbar path,
-.custom-navbar.dark:not(.fill) path
+.custom-navbar:not(.fill) .custom-navbar-iconfont
+{
+    color: var(--theme-color);
+}
+.custom-navbar path
 {
     fill: black;
+}
+.custom-navbar.dark:not(.fill) path
+{
+    fill: #eee;
 }
 .custom-navbar.fill path
 {
@@ -40,7 +49,11 @@
 {
     box-shadow: #0004 0px 2px 10px 1px;
 }
-.custom-navbar.dark:not(.fill),
+.custom-navbar.dark:not(.fill)
+{
+    --navbar-background: #222;
+    --navbar-foreground: #eee;
+}
 .custom-navbar .popup
 {
     color: #eee;
@@ -53,8 +66,8 @@
 }
 .custom-navbar.fill
 {
-    background-color: var(--theme-color);
-    color: #fffd;
+    --navbar-background: var(--theme-color);
+    --navbar-foreground: #fffd;
 }
 .custom-navbar.fill.shadow
 {
@@ -189,4 +202,46 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
 #upload-actions
 {
     width: max-content;
+}
+.custom-navbar form
+{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    --submit-button-size: 30px;
+}
+.custom-navbar form input
+{
+    border: none;
+    height: 60%;
+    background: transparent;
+    border-bottom: 2px solid var(--navbar-foreground) !important;
+    color: var(--navbar-foreground);
+    box-sizing: border-box;
+    width: 200px;
+    padding-right: var(--submit-button-size);
+    padding-left: 4px;
+}
+.custom-navbar form input:focus
+{
+    border-bottom: 2px solid var(--navbar-foreground) !important;
+}
+.custom-navbar form button[type="submit"]
+{
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    height: var(--submit-button-size);
+    width: var(--submit-button-size);
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);;
+}
+.custom-navbar form input[type="text"]::placeholder
+{
+    color: var(--navbar-foreground) !important;
+    opacity: 0.8;
 }

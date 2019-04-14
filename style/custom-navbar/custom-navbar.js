@@ -56,7 +56,7 @@ class Upload extends NavbarComponent
         super();
         this.href = "https://member.bilibili.com/v2#/upload/video/frame";
         this.html = /*html*/`
-        <svg style="width:18px;height:18px" viewBox="0 0 24 24">
+        <svg style="width:22px;height:22px" viewBox="0 0 24 24">
             <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" />
         </svg>
         <div id="upload-button">投稿</div>`;
@@ -191,6 +191,29 @@ class Category extends NavbarComponent
         };
     }
 }
+class UserInfo extends NavbarComponent
+{
+
+}
+class SearchBox extends NavbarComponent
+{
+    constructor()
+    {
+        super();
+        this.disabled = true;
+        this.html = /*html*/`
+            <form autocomplete="off" target="_blank" method="get" action="https://search.bilibili.com/all">
+                <input type="hidden" name="from_source" value="banner_search">
+                <input type="text" placeholder="搜索" name="keyword">
+                <button type="submit" title="搜索">
+                    <svg style="width:22px;height:22px" viewBox="0 0 24 24">
+                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+                    </svg>
+                </button>
+            </form>
+        `;
+    }
+}
 class Iframe extends NavbarComponent
 {
     constructor(name, link, { src, width, height, lazy })
@@ -242,6 +265,7 @@ class Iframe extends NavbarComponent
         new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web"),
         new SimpleLink("漫画", "https://manga.bilibili.com"),
         new Blank,
+        new SearchBox,
         new Iframe("消息", "https://message.bilibili.com/", {
             src: `https://message.bilibili.com/pages/nav/index`,
             width: `110px`,
