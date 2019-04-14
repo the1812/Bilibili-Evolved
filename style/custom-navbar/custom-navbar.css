@@ -216,7 +216,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     border: none;
     height: 60%;
     background: transparent;
-    border-bottom: 2px solid var(--navbar-foreground) !important;
+    border-bottom: 1.5px solid var(--navbar-foreground) !important;
     color: var(--navbar-foreground);
     box-sizing: border-box;
     width: 250px;
@@ -225,7 +225,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
 }
 .custom-navbar form input:focus
 {
-    border-bottom: 2px solid var(--navbar-foreground) !important;
+    border-bottom-color: var(--navbar-foreground) !important;
 }
 .custom-navbar form button[type="submit"]
 {
@@ -243,5 +243,5 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
 .custom-navbar form input[type="text"]::placeholder
 {
     color: var(--navbar-foreground) !important;
-    opacity: 0.8;
+    opacity: 0.9;
 }
