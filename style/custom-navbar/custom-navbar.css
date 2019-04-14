@@ -219,7 +219,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     border-bottom: 2px solid var(--navbar-foreground) !important;
     color: var(--navbar-foreground);
     box-sizing: border-box;
-    width: 200px;
+    width: 250px;
     padding-right: var(--submit-button-size);
     padding-left: 4px;
 }

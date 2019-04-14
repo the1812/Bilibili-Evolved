@@ -202,9 +202,10 @@ class SearchBox extends NavbarComponent
         super();
         this.disabled = true;
         this.html = /*html*/`
-            <form autocomplete="off" target="_blank" method="get" action="https://search.bilibili.com/all">
+            <form id="custom-navbar-search" autocomplete="off" target="_blank" method="get" action="https://search.bilibili.com/all">
                 <input type="hidden" name="from_source" value="banner_search">
                 <input type="text" placeholder="搜索" name="keyword">
+                <a style="display: none" target="_blank" class="recommended-target"></a>
                 <button type="submit" title="搜索">
                     <svg style="width:22px;height:22px" viewBox="0 0 24 24">
                         <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
@@ -212,6 +213,38 @@ class SearchBox extends NavbarComponent
                 </button>
             </form>
         `;
+        this.init();
+    }
+    async init()
+    {
+        const form = await SpinQuery.select("#custom-navbar-search");
+        const keyword = form.querySelector("input[name='keyword']");
+        form.addEventListener("submit", e =>
+        {
+            if (keyword.value === "")
+            {
+                if (!settings.hideTopSearch)
+                {
+                    form.querySelector(".recommended-target").click();
+                }
+                e.preventDefault();
+                return false;
+            }
+            return true;
+        });
+        if (!settings.hideTopSearch)
+        {
+            const json = await Ajax.getJson("https://api.bilibili.com/x/web-interface/search/default");
+            if (json.code === 0)
+            {
+                keyword.setAttribute("placeholder", json.data.show_name);
+                form.querySelector(".recommended-target").setAttribute("href", `https://www.bilibili.com/${json.data.name}`)
+            }
+            else
+            {
+                console.error("[自定义顶栏] 获取搜索推荐词失败");
+            }
+        }
     }
 }
 class Iframe extends NavbarComponent
@@ -248,6 +281,7 @@ class Iframe extends NavbarComponent
     const components = [
         new Logo,
         new Category,
+        new SimpleLink("排行", "https://www.bilibili.com/ranking"),
         new SimpleLink("画友", "https://h.bilibili.com"),
         new SimpleLink("音频", "https://www.bilibili.com/audio/home/?type=10"),
         new Iframe("游戏中心", "https://game.bilibili.com/", {
