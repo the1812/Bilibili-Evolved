@@ -9,7 +9,7 @@
         "email_verified": 1,
         "face": "http://i2.hdslb.com/bfs/face/569398f8a5c48665e7fa1038c1fc26730dfc5d32.jpg",
         "level_info": {
-            "current_level": 5,
+            "current_level": 5, // 0 - 注册会员 >1 - 正式会员
             "current_min": 10800,
             "current_exp": 16029,
             "next_exp": 28800

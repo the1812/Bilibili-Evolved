@@ -113,13 +113,13 @@
     position: absolute;
     top: 100%;
     left: 50%;
-    transform: translateX(-50%) scale(0);
     padding: 16px;
     box-shadow: #0002 0 4px 8px 8px;
     pointer-events: none;
     opacity: 0;
-    transform-origin: top;
-    transition: all 0.15s cubic-bezier(0.18, 0.89, 0.38, 1.15) .2s;
+    transform: translateX(-50%);
+    /* transform-origin: top; */
+    /* transition: all 0.15s cubic-bezier(0.18, 0.89, 0.38, 1.15) .2s; */
 }
 .custom-navbar .popup.no-padding
 {
@@ -128,11 +128,12 @@
 .custom-navbar>ul>li:not(.disabled):hover>.popup,
 #custom-navbar-home-popup .category-item:hover .popup
 {
-    transform: translateX(-50%) scale(1);
+    /* transform: translateX(-50%) scale(1); */
     pointer-events: initial;
     opacity: 1;
 }
-.custom-navbar a
+.custom-navbar a,
+.custom-navbar a:hover
 {
     color: inherit;
 }
