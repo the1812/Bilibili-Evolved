@@ -287,7 +287,7 @@
 ## 浏览器
 > ⚠ 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)中完美运行.
 
-### Chrome
+### Chrome / Edge (Chromium)
 - 背景模糊效果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
 - 含有背景模糊效果的动画有掉帧现象.
 - 在Chrome 73版中, 如果您的屏幕DPI缩放大于100%, 或者改动了页面缩放倍数, 则模糊效果区域会错位. 详见[Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910).
@@ -296,7 +296,7 @@
 - 触摸调整的进度预览有弹跳现象.(源自CSS `transition`. 短时间内总是从原数值开始变化, 而不是当前数值)
 ### Safari
 - 尚未在Safari中测试.(流下了贫穷的泪水
-### Edge [**停止支持**]
+### Edge (UWP) [**停止支持**]
 - 滚动条样式无效.
 - 由于Edge的CSS渲染bug(主要集中在`filter`和`color`), 部分主题颜色错乱.
 - 顶栏触摸体验不佳.
