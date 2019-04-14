@@ -34,7 +34,7 @@
         "vipStatus": 1, // 1 - 大会员在有效期内  2 - 大会员已过期?
         "vipType": 2, // 1 - 大会员  2 - 年度大会员
         "vip_pay_type": 0, // ?
-        "vip_theme_type": 0, // 小会员活动
+        "vip_theme_type": 0, // 0 - 无活动  1 - 小会员活动
         "wallet": {
             "mid": 39717974,
             "bcoin_balance": 5, // B币余额

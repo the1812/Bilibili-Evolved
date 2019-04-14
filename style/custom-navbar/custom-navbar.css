@@ -246,3 +246,58 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     color: var(--navbar-foreground) !important;
     opacity: 0.9;
 }
+.user-face
+{
+    background-color: var(--navbar-background);
+    background-size: contain;
+    border-radius: 50%;
+    height: calc(var(--navbar-height) - 16px);
+    width: calc(var(--navbar-height) - 16px);
+}
+.user-info-panel
+{
+    width: 200px;
+}
+.user-info-panel>*
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 300px;
+}
+.user-info-panel .row
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.user-info-panel .name
+{
+    font-size: 14pt;
+}
+.user-info-panel .type
+{
+    padding: 4px;
+    background: var(--theme-color);
+    color: var(--foreground-color);
+}
+.user-info-panel .coins,
+.user-info-panel .b-coins,
+.user-info-panel .verifications
+{
+    display: flex;
+    flex: 1 0 33.3%;
+}
+.user-info-panel .coins::before
+{
+    content: "硬币";
+    color: var(--theme-color);
+    margin-right: 4px;
+}
+.user-info-panel .b-coins::before
+{
+    content: "B币";
+    color: var(--theme-color);
+    margin-right: 4px;
+}

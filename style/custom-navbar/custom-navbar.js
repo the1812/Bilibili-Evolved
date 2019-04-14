@@ -193,7 +193,77 @@ class Category extends NavbarComponent
 }
 class UserInfo extends NavbarComponent
 {
+    constructor()
+    {
+        super();
+        this.html = /*html*/`
+            <div class="user-face"></div>
+        `;
+        this.popupHtml = /*html*/`
+            <div class="user-info-panel">
+                <div v-if="isLogin" class="logged-in">
+                    <span class="name">{{uname}}</span>
+                    <span class="type">{{userType}}</span>
+                    <div class="row">
+                        <span class="coins">{{money}}</span>
+                        <span class="b-coins">{{wallet.bcoin_balance}}</span>
+                        <div class="verifications">
 
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="not-logged-in">
+
+                </div>
+            </div>
+        `;
+        this.requestedPopup = true;
+        this.init();
+    }
+    async init()
+    {
+        const panel = await SpinQuery.select(".user-info-panel");
+        const face = await SpinQuery.select(".user-face");
+        const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
+        // if (json.code !== 0 || json.code !== -101)
+        // {
+        //     logError("[自定义顶栏] 获取用户登录信息失败.");
+        //     return;
+        // }
+        const userInfo = json.data;
+        face.style.backgroundImage = `url('${userInfo.face}')`;
+        new Vue({
+            el: panel,
+            data: {
+                ...userInfo
+            },
+            computed: {
+                userType()
+                {
+                    if (!this.isLogin)
+                    {
+                        return "未登录";
+                    }
+                    if (this.level_info.current_level === 0)
+                    {
+                        return "注册会员";
+                    }
+                    if (this.vipStatus === 1)
+                    {
+                        if (this.vipType === 1)
+                        {
+                            return this.vip_theme_type ? "小会员" : "大会员";
+                        }
+                        else if (this.vipType === 2)
+                        {
+                            return this.vip_theme_type ? "年度小会员" : "年度大会员";
+                        }
+                    }
+                    return "正式会员";
+                },
+            },
+        });
+    }
 }
 class SearchBox extends NavbarComponent
 {
@@ -300,6 +370,7 @@ class Iframe extends NavbarComponent
         new SimpleLink("漫画", "https://manga.bilibili.com"),
         new Blank,
         new SearchBox,
+        new UserInfo,
         new Iframe("消息", "https://message.bilibili.com/", {
             src: `https://message.bilibili.com/pages/nav/index`,
             width: `110px`,
