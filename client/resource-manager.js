@@ -75,7 +75,7 @@ export class ResourceManager
             {
                 resolve(unsafeWindow.bilibiliEvolved);
             }
-            if (!resource.downloaded)
+            if (!Object.keys(this.attributes).includes(resource.key))
             {
                 this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
             }

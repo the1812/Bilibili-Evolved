@@ -224,6 +224,15 @@ function isIframe()
 {
     return document.body && unsafeWindow.parent.window !== unsafeWindow;
 }
+function getI18nKey()
+{
+    const languageCodeMap = {
+        "日本語": "ja-JP",
+        "English": "en-US",
+        "Deutsch": "de-DE",
+    };
+    return settings.i18n ? languageCodeMap[settings.i18nLanguage] : "zh-CN";
+}
 class Ajax
 {
     static send(xhr, body, text = true)
@@ -1155,17 +1164,20 @@ Resource.manifest = {
     settingsTooltipStyle: {
         path: "settings-tooltip.min.css",
     },
+    settingsTooltipJapanese: {
+        path: "settings-tooltip.ja-JP.min.js",
+    },
+    settingsTooltipChinese: {
+        path: "settings-tooltip.zh-CN.min.js",
+    },
     settingsTooltip: {
-        path: "settings-tooltip.min.js",
+        path: "settings-tooltip.loader.min.js",
         dependencies: [
             "settingsTooltipStyle"
         ],
     },
     settingsSearch: {
         path: "settings-search.min.js",
-        dependencies: [
-            "settingsTooltip"
-        ],
     },
     guiSettings: {
         path: "gui-settings.min.js",
@@ -1811,7 +1823,7 @@ class ResourceManager
             {
                 resolve(unsafeWindow.bilibiliEvolved);
             }
-            if (!resource.downloaded)
+            if (!Object.keys(this.attributes).includes(resource.key))
             {
                 this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
             }

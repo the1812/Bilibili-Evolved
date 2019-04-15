@@ -47,17 +47,20 @@ Resource.manifest = {
     settingsTooltipStyle: {
         path: "settings-tooltip.min.css",
     },
+    settingsTooltipJapanese: {
+        path: "settings-tooltip.ja-JP.min.js",
+    },
+    settingsTooltipChinese: {
+        path: "settings-tooltip.zh-CN.min.js",
+    },
     settingsTooltip: {
-        path: "settings-tooltip.min.js",
+        path: "settings-tooltip.loader.min.js",
         dependencies: [
             "settingsTooltipStyle"
         ],
     },
     settingsSearch: {
         path: "settings-search.min.js",
-        dependencies: [
-            "settingsTooltip"
-        ],
     },
     guiSettings: {
         path: "gui-settings.min.js",

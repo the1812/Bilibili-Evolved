@@ -67,3 +67,12 @@ export function isIframe()
 {
     return document.body && unsafeWindow.parent.window !== unsafeWindow;
 }
+export function getI18nKey()
+{
+    const languageCodeMap = {
+        "日本語": "ja-JP",
+        "English": "en-US",
+        "Deutsch": "de-DE",
+    };
+    return settings.i18n ? languageCodeMap[settings.i18nLanguage] : "zh-CN";
+}
