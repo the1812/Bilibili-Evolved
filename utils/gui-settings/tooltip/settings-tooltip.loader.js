@@ -9,6 +9,9 @@ function extractKey(listItem) {
     resources.applyStyle("settingsTooltipStyle");
     const { toolTips } = await import(`settings-tooltip.${getI18nKey()}`);
     const tooltip = await SpinQuery.select(".gui-settings-tooltip");
+    if (!tooltip) {
+        return;
+    }
     document.querySelectorAll(".gui-settings-content>ul>li").forEach(element => {
         element.addEventListener("mouseover", () => {
             const key = extractKey(element);

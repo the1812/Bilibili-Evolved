@@ -546,6 +546,13 @@ Resource.manifest = {
         displayNames: {
             favoritesRedirect: "收藏夹视频重定向",
         }
-    }
+    },
+    outerWatchlater: {
+        path: "outer-watchlater.min.js",
+        style: "important",
+        displayNames: {
+            outerWatchlater: "外置稍后再看",
+        },
+    },
 };
 export const resourceManifest = Resource.manifest;

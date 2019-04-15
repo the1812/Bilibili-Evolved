@@ -80,6 +80,7 @@ export const settings = {
         shadow: true,
     },
     favoritesRedirect: true,
+    outerWatchlater: true,
     cache: {},
 };
 const fixedSettings = {

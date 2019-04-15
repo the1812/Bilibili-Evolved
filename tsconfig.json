@@ -5,12 +5,16 @@
         "noImplicitAny": true,
         "strictNullChecks": true,
         "sourceMap": false,
+        "typeRoots": [
+            "./@types",
+            "./node_modules/@types"
+        ]
     },
     "include": [
         "./client/*.ts",
         "./style/**/*.ts",
         "./touch/**/*.ts",
         "./utils/**/*.ts",
-        "./videos/**/*.ts",
+        "./video/**/*.ts",
     ]
 }
