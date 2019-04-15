@@ -228,6 +228,7 @@ declare global
             shadow: boolean,
         },
         favoritesRedirect: boolean,
+        outerWatchlater: boolean,
         cache: {} | { version: string } | undefined,
         latestVersionLink: string,
         currentVersion: string,

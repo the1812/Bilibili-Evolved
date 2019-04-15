@@ -86,6 +86,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["toast", `允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.`],
     ["toastInternalError", `开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.`],
     ["useCache", `使用缓存以提高脚本的加载速度.`],
+    ["outerWatchlater", `将视频页面菜单里的<span>稍后再看</span>移到外面.`],
 ]);
 export default {
     export: { toolTips },
