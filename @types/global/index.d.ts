@@ -66,7 +66,7 @@ declare global
         static select<T>(query: string): HTMLElement | null;
         static any<T>(query: () => T, action: (queryResult: T) => void, failed: () => void): void;
         static any<T>(query: () => T): Promise<T>;
-        static any<T>(query: string): JQuery<HTMLElement> | null;
+        static any<T>(query: string): any;
         static count<T>(query: () => T, count: number, success: (queryResult: T) => void, failed: () => void): void;
         static count<T>(query: () => T, count: number): Promise<T>;
         static unsafeJquery(action: () => void, failed: () => void): void;
@@ -93,7 +93,7 @@ declare global
         constructor(url: string, styles?: Resource[]);
         download(): Promise<string>;
         getStyle(id: string): string;
-        getPriorStyle(): JQuery;
+        getPriorStyle(): any;
         applyStyle(id: string, important: boolean): void;
         static all: object;
         static displayNames: object;
