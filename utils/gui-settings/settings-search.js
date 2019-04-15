@@ -11,6 +11,11 @@ export class SettingsSearch
     }
     async importToolTips()
     {
+        if (typeof getI18nKey === "undefined")
+        {
+            console.error("请更新脚本后再使用设置搜索功能.");
+            return;
+        }
         const { toolTips } = await import(`settings-tooltip.${getI18nKey()}`);
         this.toolTips = toolTips;
     }
