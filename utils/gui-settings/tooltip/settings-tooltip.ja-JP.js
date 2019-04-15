@@ -1,13 +1,13 @@
 export const toolTips = new Map([
-    ["useDefaultPlayerMode", `[TEST] 控制是否使用默认播放器模式, 可以为<span>常规</span>, <span>宽屏</span>, <span>网页全屏</span>或<span>全屏</span>.`],
-    ["defaultPlayerMode", `设置默认的播放器模式.`],
-    ["applyPlayerModeOnPlay", `是否在播放时应用模式, 若选择否就会在未开始播放时就应用.`],
-    ["useDefaultPlayerLayout", `设置默认的播放器布局, 尽量在相应的页面里设置(比如在番剧播放页面设置番剧播放器布局), 否则可能没有效果.
-- 旧版: 传统布局
-- 新版: 视频区默认的新版布局
-注: 旧版布局中, 很多脚本功能将不适用.`],
-    ["defaultPlayerLayout", `设置视频区的布局.`],
-    ["defaultBangumiLayout", `设置番剧区的布局.`],
+    ["useDefaultPlayerMode", `デフォルト・プレーヤー・モードが使用するかどうかを制御する、 例えば<span>標準</span>, <span>シアターモード</span>, <span>ウェブの全画面</span>か<span>全画面</span>.`],
+    ["defaultPlayerMode", `デフォルト・プレーヤー・モードが設定する.`],
+    ["applyPlayerModeOnPlay", `再生時にモードを適用するかどうか、「いいえ」を選択すると、再生が開始されていないときに適用されます.`],
+    ["useDefaultPlayerLayout", `デフォルト・プレーヤー・レイアウトを設定する. できるだけ、適切なページに設定（例えば、番組の放送ページに番組プレーヤーのレイアウトを設定する）、そうでない場合は効果がない可能性があります.
+- 旧版: 伝統的なレイアウト
+- 新版: ビデオページに黙認の新版レイアウト
+注意: 伝統的なレイアウトでは、多くのスクリプト機能が適用されない.`],
+    ["defaultPlayerLayout", `ビデオプレーヤーレイアウトを設定する.`],
+    ["defaultBangumiLayout", `番組プレーヤーレイアウトを設定する.`],
     ["useDefaultVideoQuality", `进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.`],
     ["defaultVideoQuality", `设定自动选择的视频画质.`],
     ["autoLightOff", `首次播放时, 自动进入关灯模式, 并在播放结束后自动开灯.`],
