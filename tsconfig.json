@@ -6,8 +6,7 @@
         "strictNullChecks": true,
         "sourceMap": false,
         "typeRoots": [
-            "./@types",
-            "./node_modules/@types"
+            "./@types"
         ]
     },
     "include": [
