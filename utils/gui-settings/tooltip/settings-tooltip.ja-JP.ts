@@ -1,27 +1,28 @@
 export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
-    ["useDefaultPlayerMode", `デフォルト・プレーヤー・モードが使用するかどうかを制御する、 例えば<span>標準</span>、<span>シアターモード</span>、 <span>ウェブの全画面</span>か<span>全画面</span>.`],
-    ["defaultPlayerMode", `デフォルト・プレーヤー・モードが設定する.`],
-    ["applyPlayerModeOnPlay", `再生時にモードを適用するかどうか、「いいえ」を選択すると、再生が開始されていないときに適用されます.`],
     ["useDefaultPlayerLayout", `デフォルト・プレーヤー・レイアウトを設定する. できるだけ、適切なページに設定（例えば、番組の放送ページに番組プレーヤーのレイアウトを設定する）、そうでない場合は効果がない可能性があります.
 - 旧版: 伝統的なレイアウト
 - 新版: ビデオページに黙認の新版レイアウト
 注意: 伝統的なレイアウトでは、多くのスクリプト機能が適用されない.`],
     ["defaultPlayerLayout", `ビデオプレーヤーのレイアウトを設定する.`],
     ["defaultBangumiLayout", `番組プレーヤーのレイアウトを設定する.`],
+    ["useDefaultPlayerMode", `デフォルト・プレーヤー・モードが使用するかどうかを制御する、 例えば<span>標準</span>、<span>シアターモード</span>、 <span>ウェブの全画面</span>か<span>全画面</span>.`],
+    ["defaultPlayerMode", `デフォルト・プレーヤー・モードが設定する.`],
+    ["applyPlayerModeOnPlay", `再生時にモードを適用するかどうか、「いいえ」を選択すると、再生が開始されていないときに適用されます.`],
+    ["autoLightOff", `初回放送時には、自動的に消灯モードに入り、再生終了後に自動的に点灯します.`],
     ["useDefaultVideoQuality", `ビデオを開くときに指定された画質を自動的に選択する. 映像の最高画質が選択された画質より低ければ、映像の最高画質を使用する.`],
     ["defaultVideoQuality", `自動的に選択された映像画質を設定する.`],
-    ["autoLightOff", `初回放送時には、自動的に消灯モードに入り、再生終了後に自動的に点灯します.`],
     ["useDefaultDanmakuSettings", `设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.`],
     ["enableDanmaku", `控制弹幕是否默认开启.`],
     ["rememberDanmakuSettings", `控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`],
     ["expandDanmakuList", `新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.`],
     ["expandDescription", `长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.`],
-    ["autoPlay", `进入视频页面时自动开始播放视频.`],
     ["autoContinue", `播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`],
+    ["autoPlay", `进入视频页面时自动开始播放视频.`],
     ["skipChargeList", `自动跳过视频结尾的充电鸣谢.`],
     ["framePlayback", `在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<span>Shift + 左/右方向键</span>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
     ["playerFocus", `进入视频/番剧页面时, 自动定位到播放器.`],
     ["playerFocusOffset", `定位时的竖直偏移量, 单位为像素(px).`],
+    ["outerWatchlater", `将视频页面菜单里的<span>稍后再看</span>移到外面.`],
     ["customStyleColor", `设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],
     ["useNewStyle", `<span>主要</span>会改变顶栏的样式, 并有一些其他地方的界面微调:
 - 为播放器增加主题色投影
@@ -74,6 +75,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["biliplusRedirect", `在视频/番剧/空间中, 附加功能<span>"转到BiliPlus"</span>, 点击可以转到BiliPlus上对应的页面.`],
     ["imageResolution", `根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.`],
     ["oldTweets", `将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.`],
+    ["i18n", `インタフェースの一般的なテキストの翻訳を提供する.`],
+    ["i18nLanguage", `翻訳言語`],
     ["touchNavBar", `删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`],
     ["comboLike", `为素质三连(长按点赞)启用触摸支持.`],
     ["touchVideoPlayer", `增大控制栏的按钮间距, 使触摸操作更准确. 并为播放器启用触摸支持:
