@@ -14,10 +14,12 @@
         <span title="稍后再看" class="watchlater">
             <i class="mdi mdi-timetable"></i>
             稍后再看
+            <div class="tip"></div>
         </span>
     `);
     const watchlaterButton = document.querySelector(".ops .watchlater");
-    if (!watchlaterButton) {
+    const tip = document.querySelector(".ops .watchlater .tip");
+    if (!watchlaterButton || !tip) {
         return;
     }
     const aid = await SpinQuery.select(() => unsafeWindow.aid);
@@ -29,13 +31,35 @@
     if (watchlaterList.includes(parseInt(aid))) {
         watchlaterButton.classList.add("on");
     }
+    let tipShowing = 0;
+    const toggleWatchlater = async ({ url, tipText }) => {
+        const responseText = await Ajax.postTextWithCredentials(url, `aid=${aid}&csrf=${csrf}`);
+        const response = JSON.parse(responseText);
+        if (response.code !== 0) {
+            logError(`稍后再看操作失败: ${responseText}`);
+        }
+        else {
+            tip.innerHTML = tipText;
+            tip.classList.add("show");
+            if (tipShowing !== 0) {
+                clearTimeout(tipShowing);
+            }
+            tipShowing = setTimeout(() => tip.classList.remove("show"), 2000);
+        }
+    };
     watchlaterButton.addEventListener("click", () => {
         watchlaterButton.classList.toggle("on");
         if (watchlaterButton.classList.contains("on")) {
-            Ajax.postTextWithCredentials("https://api.bilibili.com/x/v2/history/toview/add", `aid=${aid}&csrf=${csrf}`);
+            toggleWatchlater({
+                url: "https://api.bilibili.com/x/v2/history/toview/add",
+                tipText: "已添加至稍后再看",
+            });
         }
         else {
-            Ajax.postTextWithCredentials("https://api.bilibili.com/x/v2/history/toview/del", `aid=${aid}&csrf=${csrf}`);
+            toggleWatchlater({
+                url: "https://api.bilibili.com/x/v2/history/toview/del",
+                tipText: "已从稍后再看移除",
+            });
         }
     });
 })();

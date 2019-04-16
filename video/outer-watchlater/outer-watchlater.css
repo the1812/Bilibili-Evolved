@@ -1,6 +1,25 @@
 .ops .watchlater
 {
     margin-right: 28px !important;
+    position: relative;
+}
+.ops .watchlater .tip
+{
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: #000d;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #eee;
+    transition: all .2s ease-out;
+    opacity: 0;
+}
+.watchlater .tip.show
+{
+    opacity: 1;
 }
 .ops .watchlater>i
 {
