@@ -148,9 +148,11 @@ Translator.allTranslators = [Translator.textNode, Translator.title, Translator.p
 
 (async () =>
 {
-    const { map, regex } = await import(`./i18n.${languageCodeMap[settings.i18nLanguage]}`);
-    Translator.map = map;
-    Translator.regex = [...regex.entries()];
+    const languageCode = languageCodeMap[settings.i18nLanguage];
+    const { map, regex } = await import(`./i18n.${languageCode}`);
+    document.documentElement.setAttribute("lang", languageCode);
+    Translator.map = map as Map<string, any>;
+    Translator.regex = [...regex.entries()] as Array<[RegExp, string]>;
 
     Translator.translate(document.body);
     Translator.translateCssMatches();
