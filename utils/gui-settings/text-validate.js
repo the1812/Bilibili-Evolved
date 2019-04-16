@@ -19,6 +19,7 @@ export class Validator
                 return new OpacityValidator(key);
             case "defaultPlayerMode":
             case "defaultVideoQuality":
+            case "i18nLanguage":
                 return new DropDownValidator(key);
             case "darkScheduleStart":
             case "darkScheduleEnd":

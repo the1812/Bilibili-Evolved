@@ -184,9 +184,9 @@ export default {
         TitleTranslator,
         PlaceholderTranslator,
     },
-    // dropdown: {
-    //     key: "i18nLanguage",
-    //     // items: Object.keys(languageCodeMap),
-    //     items: [`日本語`, `English`],
-    // },
+    dropdown: {
+        key: "i18nLanguage",
+        // items: Object.keys(languageCodeMap),
+        items: [`日本語`],
+    },
 };

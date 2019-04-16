@@ -87,6 +87,8 @@ export const toolTips = new Map([
     ["toastInternalError", `开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.`],
     ["useCache", `使用缓存以提高脚本的加载速度.`],
     ["outerWatchlater", `将视频页面菜单里的<span>稍后再看</span>移到外面.`],
+    ["i18n", `为界面中一些常用文本提供翻译.`],
+    ["i18nLanguage", `翻译的目标语言`],
 ]);
 export default {
     export: { toolTips },

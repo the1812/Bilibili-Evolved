@@ -250,13 +250,17 @@ export class ResourceManager
             }
         }
         const manifests = Object.values(Resource.manifest).filter(it => it.dropdown).map(it => it.dropdown);
-        Object.values(Resource.all).filter(it => it.dropdown).map(it => it.dropdown).forEach(it =>
-        {
-            if (!manifests.some(m => m.key === it.key))
+        Object.values(Resource.all)
+            .concat(Object.values(this.attributes))
+            .filter(it => it.dropdown)
+            .map(it => it.dropdown)
+            .forEach(it =>
             {
-                manifests.push(it);
-            }
-        });
+                if (!manifests.some(m => m.key === it.key))
+                {
+                    manifests.push(it);
+                }
+            });
         await Promise.all(manifests.map(it => applyDropdownOption(it)));
     }
     validateCache()

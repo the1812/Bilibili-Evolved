@@ -507,6 +507,7 @@ Resource.manifest = {
         style: "important",
         displayNames: {
             i18n: "界面翻译",
+            i18nLanguage: "语言",
             i18nEnglish: "英语翻译模块",
             i18nJapanese: "日语翻译模块",
             i18nGerman: "德语翻译模块",
