@@ -256,6 +256,20 @@ function setDisplayNames()
     const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
     document.body.insertAdjacentHTML("beforeend", settingsBox);
 
+    const widgetsContainer = document.querySelector(".widgets-container");
+    const emptyTip = widgetsContainer.querySelector(".empty-tip");
+    Observer.childList(widgetsContainer, () =>
+    {
+        if (widgetsContainer.childElementCount <= 1)
+        {
+            emptyTip.classList.add("show");
+        }
+        else
+        {
+            emptyTip.classList.remove("show");
+        }
+    });
+
     setupEvents();
     checkOfflineData();
     syncGui();

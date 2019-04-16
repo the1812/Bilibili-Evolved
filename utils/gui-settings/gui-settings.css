@@ -493,10 +493,14 @@ li.category.folded i.icon-arrow
     overflow: auto;
     height: 100%;
 }
-.gui-settings-widgets-box>.widgets-container:empty::after
+.gui-settings-widgets-box>.widgets-container .empty-tip
 {
-    content: "空空如也哦...";
     font-size: 10pt;
+    display: none;
+}
+.gui-settings-widgets-box>.widgets-container .empty-tip.show
+{
+    display: block;
 }
 .gui-settings-widgets-box>.gui-settings-header
 {
