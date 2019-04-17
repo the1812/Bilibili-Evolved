@@ -225,16 +225,28 @@ class UserInfo extends NavbarComponent
                         </div>
                     </div>
                     <div class="row operations">
-                        <a target="_blank" href="https://account.bilibili.com/account/home">个人中心</a>
-                        <a target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">投稿管理</a>
+                        <a target="_blank" href="https://account.bilibili.com/account/home">
+                            <i class="mdi mdi-account"></i>个人中心
+                        </a>
+                        <a target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">
+                            <i class="mdi mdi-square-edit-outline"></i>投稿管理
+                        </a>
                     </div>
                     <div class="row operations">
-                        <a target="_blank" href="https://pay.bilibili.com/">B币钱包</a>
-                        <a target="_blank" href="https://link.bilibili.com/p/center/index">直播中心</a>
+                        <a target="_blank" href="https://pay.bilibili.com/">
+                            <i class="mdi mdi-wallet"></i>B币钱包
+                        </a>
+                        <a target="_blank" href="https://link.bilibili.com/p/center/index">
+                            <i class="mdi mdi-video-input-antenna"></i>直播中心
+                        </a>
                     </div>
                     <div class="row operations">
-                        <a target="_blank" href="https://show.bilibili.com/orderlist">订单中心</a>
-                        <a href="https://account.bilibili.com/login?act=exit">退出登录</a>
+                        <a target="_blank" href="https://show.bilibili.com/orderlist">
+                            <i class="mdi mdi-ticket"></i>订单中心
+                        </a>
+                        <a href="https://account.bilibili.com/login?act=exit">
+                            <i class="mdi mdi-logout"></i>退出登录
+                        </a>
                     </div>
                 </div>
                 <div v-else class="not-logged-in">

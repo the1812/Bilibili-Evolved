@@ -362,7 +362,13 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     justify-content: center;
     align-items: center;
 }
-.user-info-panel .operations a:hover
+.user-info-panel .operations a:hover,
+.user-info-panel .operations a:hover i
 {
     color: var(--theme-color) !important;
+}
+.user-info-panel .operations i
+{
+    font-size: 16px;
+    margin-right: 4px;
 }
