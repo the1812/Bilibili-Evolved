@@ -43,7 +43,7 @@
 }
 .custom-navbar.fill path
 {
-    fill: #fffd;
+    fill: var(--foreground-color-d);
 }
 .custom-navbar.shadow
 {
@@ -72,7 +72,7 @@
 .custom-navbar.fill
 {
     --navbar-background: var(--theme-color);
-    --navbar-foreground: #fffd;
+    --navbar-foreground: var(--foreground-color-d);
 }
 .custom-navbar.fill.shadow
 {
@@ -199,7 +199,8 @@
     border-radius: 0 !important;
 }
 li.nav-item[report-id='playpage_dynamic'] iframe,
-li.nav-item[report-id='playpage_dynamic'] .i-frame
+li.nav-item[report-id='playpage_dynamic'] .i-frame,
+.i_menu_login
 {
     display: none !important;
 }
@@ -271,7 +272,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
 }
 .custom-navbar .user-face
 {
-    background-color: var(--navbar-background);
+    background-color: transparent;
+    background-image: url('https://static.hdslb.com/images/akari.jpg');
     background-size: contain;
     border-radius: 50%;
 }
@@ -297,6 +299,13 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     align-items: center;
     justify-content: space-between;
     height: 300px;
+}
+.user-info-panel .not-logged-in
+{
+    height: auto;
+    margin-top: 40px;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 .user-info-panel .row
 {
@@ -408,6 +417,23 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     font-size: 16px;
     margin-right: 4px;
 }
+.custom-navbar .not-logged-in .login,
+.custom-navbar .not-logged-in .sign-up
+{
+    padding: 8px 16px;
+}
+.custom-navbar .not-logged-in .login,
+.custom-navbar .not-logged-in .login:hover
+{
+    background-color: var(--theme-color);
+    color: var(--foreground-color);
+}
+.custom-navbar .not-logged-in .sign-up,
+.custom-navbar .not-logged-in .sign-up:hover
+{
+    background-color: #8884;
+}
+
 .custom-navbar li:hover .user-face,
 .custom-navbar li:hover .user-pendant
 {

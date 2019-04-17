@@ -257,25 +257,17 @@ class UserInfo extends NavbarComponent
                     </div>
                 </div>
                 <div v-else class="not-logged-in">
-
+                    <a href="https://passport.bilibili.com/login" class="login">登录</a>
+                    <a href="https://passport.bilibili.com/register/phone.html" class="sign-up">注册</a>
                 </div>
             </div>
         `;
-        // Login https://passport.bilibili.com/login
-        // Sign up https://passport.bilibili.com/register/phone.html
         this.requestedPopup = true;
         this.init();
     }
     async init()
     {
         const panel = await SpinQuery.select(".user-info-panel");
-        const face = await SpinQuery.select(".user-face");
-        const pendant = await SpinQuery.select(".user-pendant");
-        face.style.backgroundImage = `url('${userInfo.face}')`;
-        if (userInfo.pendant.image)
-        {
-            pendant.style.backgroundImage = `url('${userInfo.pendant.image}')`;
-        }
         new Vue({
             el: panel,
             data: {
@@ -314,6 +306,16 @@ class UserInfo extends NavbarComponent
                 }
             },
         });
+        if (userInfo.code === 0)
+        {
+            const face = await SpinQuery.select(".user-face");
+            const pendant = await SpinQuery.select(".user-pendant");
+            face.style.backgroundImage = `url('${userInfo.face}')`;
+            if (userInfo.pendant.image)
+            {
+                pendant.style.backgroundImage = `url('${userInfo.pendant.image}')`;
+            }
+        }
     }
 }
 class SearchBox extends NavbarComponent
