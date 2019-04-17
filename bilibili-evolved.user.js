@@ -1834,7 +1834,14 @@ class ResourceManager
             }
             if (!Object.keys(this.attributes).includes(resource.key))
             {
-                this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
+                if (resource.type.name === "html" || resource.type.name === "style")
+                {
+                    resource.download().then(() => resolve(this.import(componentName)));
+                }
+                else
+                {
+                    this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
+                }
             }
             else
             {

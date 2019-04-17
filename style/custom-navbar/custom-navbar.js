@@ -4,6 +4,7 @@ if (isIframe())
 }
 const supportedUrls = [
     "/www.bilibili.com",
+    "/t.bilibili.com",
 ];
 if (!supportedUrls.some(it => document.URL.includes(it)))
 {
@@ -205,11 +206,30 @@ class UserInfo extends NavbarComponent
                     <span class="name">{{uname}}</span>
                     <span class="type">{{userType}}</span>
                     <div class="row">
+                        <span class="level">LV{{level_info.current_level}}</span>
+                        <div class="level-progress">
+                            <div class="level-progress-thumb" v-bind:style="levelProgressStyle"></div>
+                        </div>
+                        <span class="level-progress-label">{{level_info.current_exp}} / {{level_info.next_exp}}</span>
+                    </div>
+                    <div class="row">
                         <span class="coins">{{money}}</span>
                         <span class="b-coins">{{wallet.bcoin_balance}}</span>
                         <div class="verifications">
 
                         </div>
+                    </div>
+                    <div class="row operations">
+                        <a target="_blank" href="https://account.bilibili.com/account/home">个人中心</a>
+                        <a target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">投稿管理</a>
+                    </div>
+                    <div class="row operations">
+                        <a target="_blank" href="https://pay.bilibili.com/">B币钱包</a>
+                        <a target="_blank" href="https://link.bilibili.com/p/center/index">直播中心</a>
+                    </div>
+                    <div class="row operations">
+                        <a target="_blank" href="https://show.bilibili.com/orderlist">订单中心</a>
+                        <a href="https://account.bilibili.com/login?act=exit">退出登录</a>
                     </div>
                 </div>
                 <div v-else class="not-logged-in">
@@ -217,6 +237,8 @@ class UserInfo extends NavbarComponent
                 </div>
             </div>
         `;
+        // Login https://passport.bilibili.com/login
+        // Sign up https://passport.bilibili.com/register/phone.html
         this.requestedPopup = true;
         this.init();
     }
@@ -235,7 +257,7 @@ class UserInfo extends NavbarComponent
         new Vue({
             el: panel,
             data: {
-                ...userInfo
+                ...userInfo,
             },
             computed: {
                 userType()
@@ -261,6 +283,13 @@ class UserInfo extends NavbarComponent
                     }
                     return "正式会员";
                 },
+                levelProgressStyle()
+                {
+                    const progress = (this.level_info.next_exp - this.level_info.current_exp) / (this.level_info.next_exp - this.level_info.current_min);
+                    return {
+                        transform: `scaleX(${progress})`
+                    };
+                }
             },
         });
     }
