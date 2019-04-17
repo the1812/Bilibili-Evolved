@@ -206,7 +206,7 @@ class UserInfo extends NavbarComponent
                     <span class="name">{{uname}}</span>
                     <span class="type">{{userType}}</span>
                     <div class="row">
-                        <span class="level">LV{{level_info.current_level}}</span>
+                        <span class="level">LV<strong>{{level_info.current_level}}</strong></span>
                         <div class="level-progress">
                             <div class="level-progress-thumb" v-bind:style="levelProgressStyle"></div>
                         </div>
@@ -216,7 +216,12 @@ class UserInfo extends NavbarComponent
                         <span class="coins">{{money}}</span>
                         <span class="b-coins">{{wallet.bcoin_balance}}</span>
                         <div class="verifications">
-
+                            <a target="_blank" href="https://passport.bilibili.com/account/security#/bindmail">
+                                <i class="mdi mdi-email" v-bind:class="{verified: email_verified }"></i>
+                            </a>
+                            <a target="_blank" href="https://passport.bilibili.com/account/security#/bindphone">
+                                <i class="mdi mdi-cellphone-android" v-bind:class="{verified: mobile_verified }"></i>
+                            </a>
                         </div>
                     </div>
                     <div class="row operations">
