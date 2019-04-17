@@ -19,7 +19,7 @@
 // @grant        GM_info
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
-// @require      https://vuejs.org/js/vue.min.js
+// @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
