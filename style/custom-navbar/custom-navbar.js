@@ -198,18 +198,18 @@ class UserInfo extends NavbarComponent
     {
         super();
         this.html = /*html*/`
-            <div class="user-face-container">
+            <a class="user-face-container" target="_blank" href="https://space.bilibili.com">
                 <div class="user-face"></div>
                 <div class="user-pendant"></div>
-            </div>
+            </a>
         `;
         this.popupHtml = /*html*/`
             <div class="user-info-panel">
                 <div v-if="isLogin" class="logged-in">
                     <span class="name">{{uname}}</span>
                     <div class="row">
-                        <span class="level">LV<strong>{{level_info.current_level}}</strong></span>
-                        <span class="type">{{userType}}</span>
+                        <a target="_blank" title="等级" href="https://account.bilibili.com/site/record?type=exp" class="level">LV<strong>{{level_info.current_level}}</strong></a>
+                        <a target="_blank" href="https://account.bilibili.com/account/big" class="type">{{userType}}</a>
                         <div class="level-progress">
                             <div class="level-progress-thumb" v-bind:style="levelProgressStyle"></div>
                         </div>
@@ -217,8 +217,8 @@ class UserInfo extends NavbarComponent
                     </div>
                     <div class="row">
                         <div class="coins-container">
-                            <span class="coins">{{money}}</span>
-                            <span class="b-coins">{{wallet.bcoin_balance}}</span>
+                            <a target="_blank" href="https://account.bilibili.com/site/coin" class="coins">{{money}}</a>
+                            <a target="_blank" href="https://pay.bilibili.com/bb_balance.html" class="b-coins">{{wallet.bcoin_balance}}</a>
                         </div>
                         <div class="verifications">
                             <a target="_blank" title="邮箱验证" href="https://passport.bilibili.com/account/security#/bindmail">

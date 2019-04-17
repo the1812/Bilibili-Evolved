@@ -354,7 +354,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     color: var(--theme-color);
     margin-right: 4px;
 }
-.user-info-panel .level
+.user-info-panel .level,
+.user-info-panel .level:hover
 {
     color: var(--theme-color);
 }
