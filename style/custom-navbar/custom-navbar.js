@@ -11,6 +11,7 @@ if (!supportedUrls.some(it => document.URL.includes(it)))
     return;
 }
 
+let userInfo = {};
 class NavbarComponent
 {
     constructor()
@@ -270,13 +271,6 @@ class UserInfo extends NavbarComponent
         const panel = await SpinQuery.select(".user-info-panel");
         const face = await SpinQuery.select(".user-face");
         const pendant = await SpinQuery.select(".user-pendant");
-        const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
-        // if (json.code !== 0 || json.code !== -101)
-        // {
-        //     logError("[自定义顶栏] 获取用户登录信息失败.");
-        //     return;
-        // }
-        const userInfo = json.data;
         face.style.backgroundImage = `url('${userInfo.face}')`;
         if (userInfo.pendant.image)
         {
@@ -365,7 +359,14 @@ class SearchBox extends NavbarComponent
             if (json.code === 0)
             {
                 keyword.setAttribute("placeholder", json.data.show_name);
-                form.querySelector(".recommended-target").setAttribute("href", `https://www.bilibili.com/${json.data.name}`)
+                if (json.data.name.startsWith("av"))
+                {
+                    form.querySelector(".recommended-target").setAttribute("href", `https://www.bilibili.com/${json.data.name}`);
+                }
+                else
+                {
+                    form.querySelector(".recommended-target").setAttribute("href", `https://search.bilibili.com/all?keyword=${json.data.name}`);
+                }
             }
             else
             {
@@ -398,7 +399,7 @@ class VideoList extends NavbarComponent
         this.requestedPopup = false;
         this.popupHtml = /*html*/`
             <ol class="video-list ${listName}">
-
+                <li class="loading">加载中...</li>
             </ol>
         `;
         this.onPopup = async () =>
@@ -422,6 +423,7 @@ class VideoList extends NavbarComponent
             videoListElement.insertAdjacentHTML("beforeend", videoList + /*html*/`
                 <li class="more"><a href="${mainUrl}">查看更多</a></li>
             `);
+            videoListElement.classList.add("loaded");
         };
     }
 }
@@ -439,7 +441,7 @@ class WatchlaterList extends VideoList
                 return json.data.list.slice(0, 6).map(item =>
                 {
                     return /*html*/`<li>
-                        <a target="_blank" href="https://www.bilibili.com/av${item.aid}">${item.title}</a>
+                        <a target="_blank" href="https://www.bilibili.com/video/av${item.aid}">${item.title}</a>
                     </li>`;
                 });
             },
@@ -452,7 +454,7 @@ class FavoritesList extends VideoList
     {
         super({
             name: "收藏",
-            mainUrl: "https://space.bilibili.com/favlist",
+            mainUrl: `https://space.bilibili.com/${userInfo.mid}/favlist`,
             apiUrl: "https://api.bilibili.com/medialist/gateway/coll/resource/recent",
             listName: "favorites",
             listMap: json =>
@@ -460,7 +462,7 @@ class FavoritesList extends VideoList
                 return json.data.map(item =>
                 {
                     return /*html*/`<li>
-                        <a target="_blank" href="https://www.bilibili.com/av${item.id}">${item.title}</a>
+                        <a target="_blank" href="https://www.bilibili.com/video/av${item.id}">${item.title}</a>
                     </li>`;
                 });
             },
@@ -471,6 +473,8 @@ class FavoritesList extends VideoList
 (async () =>
 {
     const html = await import("customNavbarHtml");
+    const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
+    userInfo = json.data;
     document.body.insertAdjacentHTML("beforeend", html);
     const navbar = document.querySelector(".custom-navbar");
     for (const [className, enabled] of Object.entries(settings.customNavbarSettings))
@@ -520,6 +524,7 @@ class FavoritesList extends VideoList
             lazy: true,
         }),
         new WatchlaterList,
+        new FavoritesList,
         new Upload,
     ];
     new Vue({
