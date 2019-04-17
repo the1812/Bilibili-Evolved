@@ -27,17 +27,30 @@
     {
         return;
     }
-    const aid = await SpinQuery.select(() => (unsafeWindow as any).aid);
-    const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/v2/history/toview/web");
-    if (json.code !== 0)
+    let aid: string;
+    const loadWatchlaterInfo = async () =>
     {
-        json.data = { list: [] };
-    }
-    const watchlaterList = json.data.list.map((it: any) => it.aid) as Array<number>;
-    if (watchlaterList.includes(parseInt(aid)))
+        const aid = await SpinQuery.select(() => (unsafeWindow as any).aid);
+        const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/v2/history/toview/web");
+        if (json.code !== 0)
+        {
+            json.data = { list: [] };
+        }
+        const watchlaterList = json.data.list.map((it: any) => it.aid) as Array<number>;
+        if (watchlaterList.includes(parseInt(aid)))
+        {
+            watchlaterButton.classList.add("on");
+        }
+        else
+        {
+            watchlaterButton.classList.remove("on");
+        }
+        return aid;
+    };
+    Observer.videoChange(async () =>
     {
-        watchlaterButton.classList.add("on");
-    }
+        aid = await loadWatchlaterInfo();
+    });
 
     let tipShowing = 0;
     const toggleWatchlater = async ({ url, tipText }: { url: string, tipText: string }) =>
