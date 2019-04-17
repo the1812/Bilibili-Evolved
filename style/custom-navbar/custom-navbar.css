@@ -126,6 +126,10 @@
     /* transform-origin: top; */
     /* transition: all 0.15s cubic-bezier(0.18, 0.89, 0.38, 1.15) .2s; */
 }
+.custom-navbar.dark .popup
+{
+    box-shadow: rgba(0,0,0,0.3) 0 4px 40px 20px;
+}
 .custom-navbar .popup.no-padding
 {
     padding: 0;
@@ -251,17 +255,39 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     color: var(--navbar-foreground) !important;
     opacity: 0.9;
 }
+.user-face-container
+{
+    position: relative;
+    height: calc(var(--navbar-height) - 16px);
+    width: calc(var(--navbar-height) - 16px);
+}
+.user-face,
+.user-pendant
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
 .user-face
 {
     background-color: var(--navbar-background);
     background-size: contain;
     border-radius: 50%;
-    height: calc(var(--navbar-height) - 16px);
-    width: calc(var(--navbar-height) - 16px);
+}
+.user-pendant
+{
+    background-color: transparent;
+    background-size: cover;
+    width: 170%;
+    height: 170%;
+    top: -12px;
+    left: -12px;
+    opacity: 0;
 }
 .user-info-panel
 {
-    width: 200px;
+    width: 240px;
+    font-size: 12px;
 }
 .user-info-panel>*
 {
@@ -282,25 +308,29 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
 .user-info-panel .name
 {
     font-size: 14pt;
+    margin-top: 40px;
 }
 .user-info-panel .type
 {
     padding: 4px;
     background: var(--theme-color);
     color: var(--foreground-color);
+    margin-bottom: 8px;
 }
 .user-info-panel .coins,
 .user-info-panel .b-coins,
+.user-info-panel .coins-container,
 .user-info-panel .verifications
 {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1 0 33.33%;
+    flex: 1 0 50%;
 }
+.user-info-panel .coins-container,
 .user-info-panel .verifications
 {
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 .user-info-panel .verifications i
 {
@@ -355,12 +385,16 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     transform-origin: left;
     background-color: var(--theme-color);
 }
+.user-info-panel  .row.operations
+{
+    transform: translateX(5%);
+}
 .user-info-panel .operations a
 {
-    flex: 1 0 50%;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
+    flex: 1 0 50%;
 }
 .user-info-panel .operations a:hover,
 .user-info-panel .operations a:hover i
@@ -371,4 +405,11 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
 {
     font-size: 16px;
     margin-right: 4px;
+}
+.custom-navbar li:hover .user-face,
+.custom-navbar li:hover .user-pendant
+{
+    transform: scale(2) translateY(10px);
+    z-index: 100;
+    opacity: 1;
 }

@@ -198,28 +198,33 @@ class UserInfo extends NavbarComponent
     {
         super();
         this.html = /*html*/`
-            <div class="user-face"></div>
+            <div class="user-face-container">
+                <div class="user-face"></div>
+                <div class="user-pendant"></div>
+            </div>
         `;
         this.popupHtml = /*html*/`
             <div class="user-info-panel">
                 <div v-if="isLogin" class="logged-in">
                     <span class="name">{{uname}}</span>
-                    <span class="type">{{userType}}</span>
                     <div class="row">
                         <span class="level">LV<strong>{{level_info.current_level}}</strong></span>
+                        <span class="type">{{userType}}</span>
                         <div class="level-progress">
                             <div class="level-progress-thumb" v-bind:style="levelProgressStyle"></div>
                         </div>
                         <span class="level-progress-label">{{level_info.current_exp}} / {{level_info.next_exp}}</span>
                     </div>
                     <div class="row">
-                        <span class="coins">{{money}}</span>
-                        <span class="b-coins">{{wallet.bcoin_balance}}</span>
+                        <div class="coins-container">
+                            <span class="coins">{{money}}</span>
+                            <span class="b-coins">{{wallet.bcoin_balance}}</span>
+                        </div>
                         <div class="verifications">
-                            <a target="_blank" href="https://passport.bilibili.com/account/security#/bindmail">
+                            <a target="_blank" title="邮箱验证" href="https://passport.bilibili.com/account/security#/bindmail">
                                 <i class="mdi mdi-email" v-bind:class="{verified: email_verified }"></i>
                             </a>
-                            <a target="_blank" href="https://passport.bilibili.com/account/security#/bindphone">
+                            <a target="_blank" title="手机验证" href="https://passport.bilibili.com/account/security#/bindphone">
                                 <i class="mdi mdi-cellphone-android" v-bind:class="{verified: mobile_verified }"></i>
                             </a>
                         </div>
@@ -263,6 +268,7 @@ class UserInfo extends NavbarComponent
     {
         const panel = await SpinQuery.select(".user-info-panel");
         const face = await SpinQuery.select(".user-face");
+        const pendant = await SpinQuery.select(".user-pendant");
         const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
         // if (json.code !== 0 || json.code !== -101)
         // {
@@ -271,6 +277,10 @@ class UserInfo extends NavbarComponent
         // }
         const userInfo = json.data;
         face.style.backgroundImage = `url('${userInfo.face}')`;
+        if (userInfo.pendant.image)
+        {
+            pendant.style.backgroundImage = `url('${userInfo.pendant.image}')`;
+        }
         new Vue({
             el: panel,
             data: {
