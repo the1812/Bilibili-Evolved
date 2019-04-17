@@ -20,6 +20,7 @@ class NavbarComponent
         this.flex = `0 0 auto`;
         this.disabled = false;
         this.requestedPopup = false;
+        this.onPopup = null;
         this.href = ``;
     }
 }
@@ -387,6 +388,85 @@ class Iframe extends NavbarComponent
         this.requestedPopup = lazy ? false : true;
     }
 }
+class VideoList extends NavbarComponent
+{
+    constructor({ mainUrl, name, apiUrl, listName, listMap })
+    {
+        super();
+        this.href = mainUrl;
+        this.html = name;
+        this.requestedPopup = false;
+        this.popupHtml = /*html*/`
+            <ol class="video-list ${listName}">
+
+            </ol>
+        `;
+        this.onPopup = async () =>
+        {
+            if (!listMap)
+            {
+                return;
+            }
+            const videoListElement = await SpinQuery.select(`.video-list.${listName}`);
+            if (videoListElement === null)
+            {
+                return;
+            }
+            const json = await Ajax.getJsonWithCredentials(apiUrl);
+            if (json.code !== 0)
+            {
+                logError(`加载${name}信息失败. 错误码: ${json.code} ${json.message}`);
+                return;
+            }
+            const videoList = listMap(json).join("");
+            videoListElement.insertAdjacentHTML("beforeend", videoList + /*html*/`
+                <li class="more"><a href="${mainUrl}">查看更多</a></li>
+            `);
+        };
+    }
+}
+class WatchlaterList extends VideoList
+{
+    constructor()
+    {
+        super({
+            name: "稍后再看",
+            mainUrl: "https://www.bilibili.com/watchlater/#/list",
+            apiUrl: "https://api.bilibili.com/x/v2/history/toview/web",
+            listName: "watchlater",
+            listMap: json =>
+            {
+                return json.data.list.slice(0, 6).map(item =>
+                {
+                    return /*html*/`<li>
+                        <a target="_blank" href="https://www.bilibili.com/av${item.aid}">${item.title}</a>
+                    </li>`;
+                });
+            },
+        });
+    }
+}
+class FavoritesList extends VideoList
+{
+    constructor()
+    {
+        super({
+            name: "收藏",
+            mainUrl: "https://space.bilibili.com/favlist",
+            apiUrl: "https://api.bilibili.com/medialist/gateway/coll/resource/recent",
+            listName: "favorites",
+            listMap: json =>
+            {
+                return json.data.map(item =>
+                {
+                    return /*html*/`<li>
+                        <a target="_blank" href="https://www.bilibili.com/av${item.id}">${item.title}</a>
+                    </li>`;
+                });
+            },
+        });
+    }
+}
 
 (async () =>
 {
@@ -439,6 +519,7 @@ class Iframe extends NavbarComponent
             height: `422px`,
             lazy: true,
         }),
+        new WatchlaterList,
         new Upload,
     ];
     new Vue({
@@ -452,6 +533,7 @@ class Iframe extends NavbarComponent
                 if (!component.requestedPopup)
                 {
                     this.$set(component, `requestedPopup`, true);
+                    component.onPopup && component.onPopup();
                 }
             }
         },

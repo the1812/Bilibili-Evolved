@@ -414,3 +414,25 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame
     z-index: 100;
     opacity: 1;
 }
+.custom-navbar .video-list
+{
+    width: 280px;
+    font-size: 12px;
+}
+.custom-navbar .video-list li:not(.more)
+{
+    padding: 4px 16px;
+    border-left: 2px solid var(--theme-color);
+    margin: 4px 0;
+}
+.custom-navbar .video-list li:hover
+{
+    background: rgba(0,0,0,0.1);
+}
+.custom-navbar .video-list li.more
+{
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid var(--theme-color);
+    padding: 4px;
+}

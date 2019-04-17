@@ -14,7 +14,7 @@
             "current_exp": 16029,
             "next_exp": 28800
         },
-        "mid": 39717974,
+        "mid": 39717974, // UID
         "mobile_verified": 1,
         "money": 10, // 硬币
         "moral": 70, // ?
@@ -36,7 +36,7 @@
         "vip_pay_type": 0, // ?
         "vip_theme_type": 0, // 0 - 无活动  1 - 小会员活动
         "wallet": {
-            "mid": 39717974,
+            "mid": 39717974, // UID
             "bcoin_balance": 5, // B币余额
             "coupon_balance": 5, // B币券余额
             "coupon_due_time": 0 // B币券过期时间?
