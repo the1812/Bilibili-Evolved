@@ -306,7 +306,7 @@ class UserInfo extends NavbarComponent
                 }
             },
         });
-        if (userInfo.code === 0)
+        if (userInfo.isLogin)
         {
             const face = await SpinQuery.select(".user-face");
             const pendant = await SpinQuery.select(".user-pendant");
@@ -513,22 +513,26 @@ class FavoritesList extends VideoList
         new Blank,
         new SearchBox,
         new UserInfo,
-        new Iframe("消息", "https://message.bilibili.com/", {
-            src: `https://message.bilibili.com/pages/nav/index`,
-            width: `110px`,
-            height: `210px`,
-            lazy: false,
-        }),
-        new Iframe("动态", "https://t.bilibili.com/", {
-            src: `https://t.bilibili.com/pages/nav/index`,
-            width: `380px`,
-            height: `422px`,
-            lazy: true,
-        }),
-        new WatchlaterList,
-        new FavoritesList,
-        new Upload,
     ];
+    if (userInfo.isLogin)
+    {
+        components.push(
+            new Iframe("消息", "https://message.bilibili.com/", {
+                src: `https://message.bilibili.com/pages/nav/index`,
+                width: `110px`,
+                height: `210px`,
+                lazy: false,
+            }),
+            new Iframe("动态", "https://t.bilibili.com/", {
+                src: `https://t.bilibili.com/pages/nav/index`,
+                width: `380px`,
+                height: `422px`,
+                lazy: true,
+            }),
+            new WatchlaterList,
+            new FavoritesList);
+    }
+    components.push(new Upload);
     new Vue({
         el: navbar,
         data: {
