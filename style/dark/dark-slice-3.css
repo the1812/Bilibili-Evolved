@@ -303,7 +303,8 @@ body>div.to-top.on,
 .play-options .share-box .share-btn ul .bili-share,
 .container a,
 .container .left-container .play-options,
-.twp-mask .twp-wrapper .twp-container .twp-text .twp-desc
+.twp-mask .twp-wrapper .twp-container .twp-text .twp-desc,
+.video-toolbar .appeal-text
 {
     color: #aaa !important;
 }
@@ -960,7 +961,8 @@ body>div.to-top.on
 .container .left-container .play-up-info .play-up-self-btn:hover,
 .play-options .share-box .share-btn ul .bili-share:hover,
 .comment-list a,
-.bilibili-player-context-menu-container.black ul>li a>.active
+.bilibili-player-context-menu-container.black ul>li a>.active,
+.video-toolbar .appeal-text:hover
 {
     color: var(--theme-color) !important;
 }
