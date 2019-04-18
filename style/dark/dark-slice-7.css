@@ -31,7 +31,9 @@
 .read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list,
 .bili-dialog-bomb .appeal-box .header,
 .bili-dialog-bomb .appeal-box .submit,
-.bili-dialog-bomb .appeal-box .wrap .container
+.bili-dialog-bomb .appeal-box .wrap .container,
+.m-layer.m-button,
+.m_layer.m-button
 {
     background-color: #222 !important;
 }
@@ -285,7 +287,10 @@
 .read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item,
 .bili-dialog-bomb .appeal-box .wrap .container .question,
 .bili-dialog-bomb .appeal-box .submit .cancel,
-.bili-dialog-bomb .appeal-box .submit .confirm
+.bili-dialog-bomb .appeal-box .submit .confirm,
+.m-layer.m-button,
+.m_layer.m-button,
+.m-layer .b-btn
 {
     color: #eee !important;
 }
@@ -350,7 +355,10 @@
 .read-list-modal-component hr,
 .read-list-modal-component .creat-read-list-box .input-box,
 .read-list-modal-component .creat-read-list-box .input-box button,
-.bili-dialog-bomb .appeal-box .submit .cancel
+.bili-dialog-bomb .appeal-box .submit .cancel,
+.m-layer.m-button,
+.m_layer.m-button,
+.m-layer .b-btn
 {
     border-color: transparent !important;
 }
@@ -456,7 +464,9 @@
 .text-article-wrp .head-stat,
 #root .nav-upload-container,
 .live-user .user-item:hover,
-.read-list-page .module-box
+.read-list-page .module-box,
+.m-layer.m-button,
+.m_layer.m-button
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -524,7 +534,8 @@
 .common .bb-comment .no-login .baffle .b-btn:hover,
 .text-article-wrp .article-card .meta-view .meta-item:hover,
 .bili-dialog-bomb .appeal-box .wrap .container .options .option .checkbox.checked:before,
-.bili-dialog-bomb .appeal-box .submit .confirm
+.bili-dialog-bomb .appeal-box .submit .confirm,
+.m-layer .b-btn
 {
     background-color: var(--theme-color) !important;
 }
