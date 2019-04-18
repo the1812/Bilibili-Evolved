@@ -86,9 +86,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 在不同位置滑动, 可以使用3档不同的灵敏度.`],
     ["touchVideoPlayerAnimation", `决定是否要对触摸调整的提示框使用出现/消失动画, 此动画可能导致掉帧.`],
     ["touchVideoPlayerDoubleTapControl", `将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.`],
-    ["toast", `允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.`],
-    ["toastInternalError", `开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.`],
-    ["useCache", `使用缓存以提高脚本的加载速度.`],
+    ["toast", `ウェブページの左下隅に表示スクリプトからのメッセージ、例えば更新通知の送信、エラーメッセージなどです.`],
+    ["toastInternalError", `オープンしたら、エラーメッセージは詳細な技術的エラー情報とスタック追跡を表示します.これは通常問題発生の原因を正確に確定するために使用されます.だから、問題を報告する時にこれらの情報はとても役に立ちます.`],
+    ["useCache", `スクリプトの読み込み速度を上げるためにキャッシュを使う.`],
 ]);
 export default {
     export: { toolTips },

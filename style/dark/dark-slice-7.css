@@ -171,7 +171,9 @@
 .bangumi-info-module .v-data span,
 .bangumi-info-module .v-preview .desc,
 .section.article .article-content .meta-col,
-.section.album .album-item .meta-col
+.section.album .album-item .meta-col,
+.case-list .info .comment,
+.case-list .info .jury-time
 {
     color: #aaa !important;
 }
@@ -250,7 +252,8 @@
 .live-user .user-item .item-right .tags>span,
 .live-user .user-item .item-right .status,
 .common .bb-comment .no-login .baffle .b-btn:hover,
-.list-filter-bar .item-text
+.list-filter-bar .item-text,
+.teach-last-list .teach-tv-text
 {
     color: #eee !important;
 }
@@ -362,7 +365,8 @@
 .cube .meta .icon,
 .album-card .info .view-count .icon-view,
 .album-card .info .like-num .icon-like,
-.section-block .col-full .meta .icon
+.section-block .col-full .meta .icon,
+.case-list .info .jury-time i
 {
     filter: brightness(0) invert(.7) !important;
 }
