@@ -55,10 +55,12 @@ export const settings = {
     framePlayback: true,
     useCommentStyle: true,
     imageResolution: false,
+    imageResolutionScale: "auto",
     toastInternalError: false,
     i18n: false,
     i18nLanguage: "日本語",
     playerFocus: false,
+    playerFocusOffset: -10,
     oldTweets: false,
     simplifyLiveroom: false,
     simplifyLiveroomSettings: {
@@ -72,6 +74,13 @@ export const settings = {
         popup: false,
         skin: false,
     },
+    customNavbar: false,
+    customNavbarSettings: {
+        fill: true,
+        shadow: true,
+    },
+    favoritesRedirect: true,
+    outerWatchlater: true,
     cache: {},
 };
 const fixedSettings = {

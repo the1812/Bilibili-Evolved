@@ -1,24 +1,27 @@
+.live-sidebar-ctnr .sidebar-btn,
 .up-info .up-focus-btn,
 .textarea-container .comm-tool .comm-emoji,
-.textarea-container .comm-tool .comm-submit
+.textarea-container .comm-tool .comm-submit,
+.attention-btn-ctnr .left-part,
+.admin-list-cntr .rank-cntr .item .admin-icon,
+.h .h-f-btn,
+.n .n-data,
+.bili-search .nav-wrap .wrap>.sub,
+#page-follows .follow-sidenav .text,
+.author-info .favourite-btn,
+.author-info .communicate-btn,
+.dashboard li.like,
+.history-wrap .history-btn,
+.media-info .media-right .media-tool-bar .btn-follow
 {
     width: auto !important;
-    padding: 0 4px !important;
 }
 .bb-comment .comment-send .comment-emoji
 {
     width: max-content !important;
-    padding: 0 4px !important;
 }
-.primary-menu .nav-menu .nav-name
-{
-    white-space: pre !important;
-}
-.dynamic-m .dyn_menu .line
-{
-    display: none !important;
-}
-.tag-panel .more-button
+.tag-panel .more-button,
+.live-panel .more-button
 {
     width: 44px !important;
 }
@@ -30,16 +33,127 @@
 {
     width: 160px !important;
 }
-.link-navbar .main-ctnr
+.link-navbar .main-ctnr,
+.bili-search .contain
 {
     width: 90% !important;
 }
+.bili-search .video.list
+{
+    width: calc(100% - 172px) !important;
+}
+.bili-search .video.list .des
+{
+    width: 100% !important;
+}
+.gui-settings-box
+{
+    width: 450px !important;
+}
+#page-follows .follow-sidenav .text
+{
+    min-width: 78px !important;
+}
+.h .h-f-btn
+{
+    min-width: 76px !important;
+}
+.primary-menu .nav-menu .nav-name,
+.primary-menu .nav-menu .side-nav .side-link span
+{
+    white-space: pre !important;
+}
+
+.up-info .up-focus-btn,
+.textarea-container .comm-tool .comm-emoji,
+.textarea-container .comm-tool .comm-submit,
+.attention-btn-ctnr .left-part,
+.admin-list-cntr .rank-cntr .item .admin-icon,
+.h .h-f-btn,
+.bb-comment .comment-send .comment-emoji,
+.media-info .media-right .media-tool-bar .btn-follow
+{
+    padding: 0 8px !important;
+}
 .n .n-data
 {
-    width: auto !important;
     padding: 10px 8px !important;
 }
 .user-panel-ctnr .user-panel .content-ctnr .ctrl-btn:nth-child(2n)
 {
     padding-left: 8px !important;
+}
+.dashboard li.share .text
+{
+    padding-top: 15px !important;
+}
+.dashboard li.collection
+{
+    margin: 0 10px 0 0px !important;
+}
+.bili-search .rocket-con
+{
+    margin-left: 40% !important;
+}
+.bili-search .video.matrix:nth-child(5n)
+{
+    margin-right: 32px !important;
+}
+
+.dynamic-m .dyn_menu .line,
+.tab-bar .line,
+.nav-wrap .hover-bar
+{
+    display: none !important;
+}
+
+.tab-bar .tab .tab-text.selected
+{
+    color: var(--theme-color) !important;
+    border-bottom: solid 2px var(--theme-color) !important;
+    box-sizing: border-box !important;
+}
+.live-panel .more-button
+{
+    transform: translateX(-9px) !important;
+}
+.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-spans>div
+{
+    align-items: center !important;
+}
+.user-panel-ctnr .user-panel .content-ctnr .section-block,
+.dashboard li.collection>div:first-child
+{
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: column !important;
+}
+.dashboard li.share
+{
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-direction: column !important;
+}
+.user-panel-ctnr .user-panel .content-ctnr .ctrl-btn
+{
+    float: none !important;
+}
+#area-list ul li dd
+{
+    font-size: 18px !important;
+}
+.author-info .favourite-btn,
+.author-info .favourite-btn:active,
+.author-info .communicate-btn,
+.author-info .communicate-btn:active
+{
+    font-size: 12px !important;
+}
+.dashboard li.like
+{
+    border-color: transparent !important;
+}
+.gui-settings-tooltip
+{
+    left: 470px !important;
 }

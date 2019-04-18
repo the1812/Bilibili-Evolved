@@ -1,4 +1,3 @@
-import { toolTips } from "./tooltip/settings-tooltip";
 export class SettingsSearch
 {
     constructor()
@@ -8,7 +7,17 @@ export class SettingsSearch
         const ifCategory = condition => item => item.classList.contains("category") === condition;
         this.categories = items.filter(ifCategory(true));
         this.items = items.filter(ifCategory(false));
-        this.input.addEventListener("input", () => this.keywordChange());
+        this.importToolTips().then(() => this.input.addEventListener("input", () => this.keywordChange()));
+    }
+    async importToolTips()
+    {
+        if (typeof getI18nKey === "undefined")
+        {
+            console.error("请更新脚本后再使用设置搜索功能.");
+            return;
+        }
+        const { toolTips } = await import(`settings-tooltip.${getI18nKey()}`);
+        this.toolTips = toolTips;
     }
     keywordChange()
     {
@@ -21,7 +30,7 @@ export class SettingsSearch
         this.items.forEach(item =>
         {
             const key = item.querySelector("input").getAttribute("key");
-            const texts = Resource.displayNames[key] + toolTips[key].replace(/<span>|<\/span>/g, "");
+            const texts = Resource.displayNames[key] + this.toolTips.get(key).replace(/<span>|<\/span>/g, "");
             if (texts.includes(value))
             {
                 item.classList.remove("folded");

@@ -34,6 +34,13 @@ namespace BilibiliEvolved.Build
                     .BuildPreviewOffline()
                     .BuildOffline()
                     .BuildFinalOutput();
+
+                if (config.CopyOnBuild)
+                {
+                    var text = File.ReadAllText(config.PreviewOffline);
+                    TextCopy.Clipboard.SetText(text);
+                    builder.WriteHint($"Copied {text.Length} characters");
+                }
             }
             catch (Exception ex)
             {

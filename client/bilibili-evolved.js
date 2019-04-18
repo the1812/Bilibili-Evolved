@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.22
+// @version      1.7.27
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -19,7 +19,7 @@
 // @grant        GM_info
 // @require      https://code.jquery.com/jquery-3.2.1.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
-// @require      https://cdn.jsdelivr.net/npm/vue/dist/vue.js
+// @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==

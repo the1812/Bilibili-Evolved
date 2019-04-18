@@ -3,16 +3,37 @@
 .video-card .labels-ctnr,
 .tab-selector-wrap .selector-wrap ul>li:hover,
 .article-info-module,
-.result.is-web .vote-result-comment
+.result.is-web .vote-result-comment,
+.error-body .error-container .error-panel .audio-split,
+.error-body .error-container .song-wrap .image-split,
+.error-body .error-container .song-wrap .change-song,
+.share-board .song-share .song-share-ul li:hover,
+.collection-bg .collection-board .collection-submit,
+.security-right .game-package-wrapper .title-package-wrapper .title-right-link,
+.vip-package-wrapper .coupon-wrapper .coupon-content,
+.normal-v2-container .normal-title-wrp>.template-op>.template-op-divide,
+.ui-popup.popup-cover .bili-btn.cancel,
+.dc-page .version-switch-section,
+#bili-data-center .version-switch-section,
+.text-article-wrp .article-card .meta-title .typename,
+.text-article-wrp .article-card .meta-view .appeal,
+.text-article-wrp .article-card .meta-view .data,
+.text-article-wrp .article-card .meta-view .menu,
+.text-article-wrp .article-card .meta-view .option,
+.cc-article-wrp .article-card .meta-title .typename,
+.text-article-wrp .article-card .meta-view .menu-list,
+.live-user .user-item .item-right .status,
+.common .bb-comment .no-login .baffle .b-btn,
+.main-container .media-info .media-right .media-desc i
 {
     background-color: #222 !important;
 }
 .content .link-tag-box,
-.content .tab-selector-wrap
+.content .tab-selector-wrap,
+.live-user .user-item .item-right .tags>span
 {
     background-color: #333 !important;
 }
-.main-container .media-info .media-right .media-desc i,
 .up-info .btn-panel .charge-btn,
 .content .rank-list,
 .link-tag-box .selector-wrap,
@@ -28,7 +49,28 @@
 .list-container .list-info-block,
 .list-container .article-list-block,
 .setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
-.setting .public-setting .public-wrp .setting-item .circle-wrap
+.setting .public-setting .public-wrp .setting-item .circle-wrap,
+.video .video-topic .video-list,
+.song-coin-bg .song-coin,
+.share-board .song-share .song-share-ul,
+.share-board .share-btn,
+.collection-bg .collection-board,
+.vip-package-wrapper .coupon-content-con .coupon-btn,
+.report-wrap-module .form-group .el-input-group>.el-input__inner,
+.report-wrap-module .code-input.el-input .el-input__inner,
+#app .el-button.is-disabled,
+#app .el-button.is-disabled:focus,
+#app .el-button.is-disabled:hover,
+.report-wrap-module .form-group .el-input__inner,
+.container-left .answer-container,
+.carousel-wrp .panel .pic li,
+.ui-popup .popup-wrap,
+.cc-container .nav-search .dropdown-btn,
+.cropper-modal .modal,
+.cards-block .modal-wrap .btn-group button,
+.text-article-wrp .head-stat,
+.text-article-wrp .article-card,
+.live-user .user-item
 {
     background-color: #444 !important;
 }
@@ -36,17 +78,22 @@
 {
     background-image: none !important;
 } */
-.rank-cntr .rank-list-ctnr .tip a,
 .p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
-.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr .more,
-.live-skin-coloration-area.p-relative.rank-list-section.z-rank-list .rank-list-ctnr a:hover,
+.rank-list-ctnr a,
+.rank-list-ctnr a:hover,
 .list-container .list-info-block .right-side .col .split-line,
-.rank-list-cntr .tip.rank-desc.live-skin-normal-text a.more
+.comment-list-item .ci-action span.date,
+.text-article-wrp .article-card .meta-view .menu-list .menu-item:hover
 {
     background-color: transparent !important;
 }
 .gift-rank-cntr .rank-cntr .item.own,
-.list-container .article-list-block .article-item
+.list-container .article-list-block .article-item,
+.original-editor-wrap .float-toolbar .toolbar-list,
+.vip-package-wrapper .coupon-wrapper,
+.register-container .report-wrap-module .back-fff,
+.cc-body .home-wrap .card,
+.text-article-wrp .head-stat .section .count
 {
     background: transparent !important;
 }
@@ -79,7 +126,54 @@
 .data-card .fans-wrp .tip p,
 .data-card .data-wrp .tab .fan-tab,
 .data-card .fans-wrp .tab .fan-tab,
-#dc-section_behavior .follow-tool-box .follow-line-legend .legend-item .legend-text
+#dc-section_behavior .follow-tool-box .follow-line-legend .legend-item .legend-text,
+.error-body .error-container .error-panel .error-clue,
+.error-body .error-container .msg-text,
+.error-body .error-container .song-wrap .song-list .song-li .content .num,
+.song-coin-bg .song-coin .song-coin-exp,
+.share-board .share-btn .bili-share div,
+.collection-bg .collection-board .collection-list .collection-li .collection-attr,
+.player-his-main .player-his-tip-date,
+.security-right .my-package-ruls p,
+.game-item-container .game-package-item .game-package-gift,
+.game-item-container .game-package-item .game-package-price,
+.coupon-content-con .coupon-time,
+.coupon-content-con .coupon-type,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner:hover,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a,
+.el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover,
+.container .form-group .form-message,
+.rule-description p,
+.home-wrap .data-card .data-wrp .total,
+.home-wrap .data-card .fans-wrp .total,
+.carousel-wrp .panel .pic li a .card-info .detail,
+.ui-popup .popup-wrap .text-box .subtext,
+.comment-list-item .ci-action,
+.comment-list-item .ci-parent-reply .cipr-footer,
+.cc-container .tips,
+.cards-block .cards-list .card-item .card-case .other label,
+.block-wrap .classify .position,
+.text-article-wrp .head-stat .section .diff-wrp .diff-yeaterday,
+.text-article-wrp .head-stat .section .diff-wrp .diff-text,
+.read-list-component .empty-state .empty-tips,
+.text-article-wrp .article-card .meta-status .pubdate,
+.text-article-wrp .article-card .meta-footer .view-stat,
+.text-article-wrp .article-card .meta-view .meta-item .icon-font,
+.text-article-wrp .article-card .meta-view .meta-item .iconfont,
+.cc-article-wrp .article-card .meta-status .pubdate,
+.cc-article-wrp .article-card .meta-footer .view-stat,
+.tag-container .tag-item span,
+.article-net-charts .area .empty-tips,
+#dc-section_summary .source-rank-list-item .video-info-pubdate,
+.live-user .user-item .item-right .info .star,
+.live-user .user-item .item-right .info .type,
+.bangumi-info-module .v-data span,
+.bangumi-info-module .v-preview .desc,
+.section.article .article-content .meta-col,
+.section.album .album-item .meta-col,
+.case-list .info .comment,
+.case-list .info .jury-time
 {
     color: #aaa !important;
 }
@@ -110,7 +204,56 @@
 .list-container .list-info-block .right-side .title,
 .setting .public-setting .public-wrp .setting-item,
 .setting .public-setting .public-wrp .button-wrap .btn-text.ok.is-disable,
-.setting .public-setting .public-wrp .button-wrap .btn-text.ok
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok,
+#page-fav .fav-main .fav-action-bottom .search-results-num,
+.error-body .error-container .error-panel .audio-split,
+.error-body .error-container .song-wrap .image-split,
+.error-body .error-container .song-wrap .change-song,
+.error-body .error-container .song-wrap .iconfont,
+.song-coin-bg .song-coin .song-coin-title,
+.song-coin-bg .song-coin .song-coin-btn,
+.share-board .song-share .song-share-ul,
+.share-board .share-btn .share-type,
+.collection-bg .collection-board .collection-theme,
+.collection-bg .collection-board .collection-list .collection-li .collection-name,
+.collection-bg .collection-board .collection-list .collection-li .collection-song-number,
+.collection-bg .collection-board .collection-submit,
+.collection-bg .collection-board .collection-submit.active,
+.player-his-main .player-his-nav,
+.vip-package-wrapper .title-package-name,
+.game-item-container .game-package-item .game-package-name,
+.game-package-wrapper .title-package-wrapper .title-right-link,
+.game-package-wrapper .title-package-wrapper .title-package-name,
+.vip-package-wrapper .coupon-content-con .coupon-btn,
+.container .form-group .form-group-title,
+.container .form-group .mail-text,
+.container-left .answer-container .header-top h2,
+.answer-list .exam-list .exam-number,
+.answer-container .footer-bottom .btn-default,
+.bili-header-m .profile-m .grade .bar .num .v0,
+.carousel-wrp .panel .pic li a .card-info .title .headline,
+.article-data-wrp .breadcrumb a,
+.article-data-wrp .breadcrumb .sign,
+.normal-v2-container .normal-title-wrp>.template-op>p,
+.ui-popup .popup-wrap .text-box .text,
+.ui-popup.popup-cover .bili-btn.cancel,
+.comment-list-item .ci-content,
+.comment-list-item .article-wrap .name,
+.cc-container .nav-search .dropdown-btn,
+.cc-container .nav-search .search,
+.cc-container .nav-search .search input,
+.author-container .attention-animation-holder .attention-btn,
+.cards-block .cards-list .card-item .card-case .title,
+.text-article-wrp .head-stat .section .title,
+.text-article-wrp .article-card .meta-title .typename,
+.cc-article-wrp .article-card .meta-title .typename,
+.text-article-wrp .article-card .meta-view .menu-list .menu-item,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip,
+.live-user .user-item .item-right .tags>span,
+.live-user .user-item .item-right .status,
+.common .bb-comment .no-login .baffle .b-btn:hover,
+.list-filter-bar .item-text,
+.teach-last-list .teach-tv-text
 {
     color: #eee !important;
 }
@@ -135,13 +278,52 @@
 .list-container .list-info-block .right-side .up-info-block .follow-btn.on,
 .version-switch-section .bottom-border,
 .cc-body .setting .follow-setting,
-.cc-body .setting .public-setting
+.cc-body .setting .public-setting,
+.dc-page .version-switch-section,
+.section-block.with-radius.p-relative .section-nav,
+.error-body .error-container .song-wrap .change-song,
+.share-board .song-share .song-share-ul,
+.share-board .song-share .song-share-ul li,
+.share-board .share-btn .share-type.song-border,
+.collection-bg .collection-board .collection-list,
+.security-right .vip-package-wrapper,
+.security-right .game-package-wrapper,
+.security-right .game-package-wrapper .game-item-container .game-package-item,
+.security-right .game-package-wrapper .title-package-wrapper .title-right-link,
+.container-left .answer-container,
+.container-left .header-top,
+.answer-container .answer-list .exam-list,
+.answer-container .answer-list,
+.answer-container .footer-bottom .btn-default,
+.carousel-wrp .panel .pic li,
+.videoCharts .stat-wrp,
+.article-net-charts .charts .play,
+.article-net-charts .charts .person,
+.article-net-charts .area,
+.more-selector-v2-container .dividing-line,
+.normal-v2-container .normal-title-wrp>.template-op,
+.ui-popup .popup-wrap.shadow,
+.ui-popup.popup-cover .bili-btn.cancel,
+#bili-data-center .version-switch-section,
+.cc-container .nav-search .dropdown-btn,
+.cover-upload-box .modal-head .head-wrap,
+.modal-content.clearfix .img-clip-wrap .reset-img,
+.bili-modal.cropper-modal .modal-footer,
+.cards-block .modal-wrap .btn-group,
+.bili-modal.cropper-modal .modal-head .head-wrap,
+.text-article-wrp .article-card,
+.text-article-wrp .article-card .meta-title .typename,
+.cc-article-wrp .article-card .meta-title .typename,
+.live-user .user-item .item-right .tags>span
 {
     border-color: transparent !important;
 }
 .article-info-module .v-info .line,
 .video-info-module .v-info .line,
-.list-container .article-list-block .article-item .item-holder .article-content .article-left-block
+.list-container .article-list-block .article-item .item-holder .article-content .article-left-block,
+.vip-package-wrapper .coupon-wrapper .coupon-content-con,
+.modal .img-clip-wrap .container-box,
+.text-article-wrp .article-card .meta-status .pubdate
 {
     border-color: #aaa !important;
 }
@@ -162,24 +344,45 @@
 {
     fill: #fff !important;
 } */
-.block-area .follow-wrapper .follow-head .follow-more .icon
+.block-area .follow-wrapper .follow-head .follow-more .icon,
+.game-package-wrapper .title-right-link .m-arrow-package,
+.text-article-wrp .head-stat .section .iconarrow
 {
     filter: brightness(0) invert(1) !important;
 }
 .article-card .article-info .data .icon,
 .article-info-module .v-data .icon,
-.video-info-module .v-data .icon
+.video-info-module .v-data .icon,
+.item-right .info.clearfix .icon-live-life,
+.item-right .info.clearfix .icon-live-mgame,
+.item-right .info.clearfix .icon-live-col,
+.item-right .info.clearfix .icon-live-compete,
+.bangumi-info-module .v-data .icon,
+.col-1 .meta .icon,
+.article-content .meta-col .icon,
+.album-item .meta-col .icon,
+.col-1 .i-pin-info .icon,
+.cube .meta .icon,
+.album-card .info .view-count .icon-view,
+.album-card .info .like-num .icon-like,
+.section-block .col-full .meta .icon,
+.case-list .info .jury-time i
 {
     filter: brightness(0) invert(.7) !important;
 }
-/* a
+.nav-upload-container .nav-upload-item>img,
+#page-fav .fav-main .search-input .icon-search:hover,
+.error-body .error-container .error-panel .error-msg .error-img,
+.register-agree .checkbox-bwxr.active,
+.answer-list .key-list li.active:before,
+.self-icon-vote-create-btn.active
 {
     filter: var(--blue-image-filter) !important;
-} */
-/* a
+}
+.container-right .rule-title .pink-icon
 {
     filter: var(--pink-image-filter) !important;
-} */
+}
 /* a
 {
     filter: grayscale(1) !important;
@@ -208,7 +411,12 @@
 {
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 } */
-.article-info-module
+.article-info-module,
+.share-board .song-share .song-share-ul,
+.share-board .share-btn,
+.text-article-wrp .head-stat,
+#root .nav-upload-container,
+.live-user .user-item:hover
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -223,7 +431,16 @@
 .data-card .fans-wrp .tab .fan-tab.current:after,
 .data-card .data-wrp .total .incr-num:before,
 .data-card .fans-wrp .total .incr-num:before,
-.setting .public-setting .public-wrp .setting-item .circle-wrap.active
+.setting .public-setting .public-wrp .setting-item .circle-wrap.active,
+.error-body .error-container .song-wrap .song-list .song-li .song-shadow,
+.song-coin-bg .song-coin .song-coin-content .song-two-coin:hover,
+.song-coin-bg .song-coin .song-coin-content .song-two-coin.active,
+.song-coin-bg .song-coin .song-coin-content .song-one-coin:hover,
+.song-coin-bg .song-coin .song-coin-content .song-one-coin.active,
+.carousel-wrp .page .next.current,
+.list-filter-bar .item-text.active,
+.list-filter-bar .item-text.expand,
+.list-filter-bar .item-text:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -250,7 +467,21 @@
 .share-wrap .content-wrap .input-wrap button,
 .block-area .follow-wrapper .follow-head .follow-more:hover,
 .setting .public-setting .public-wrp .setting-item .circle-wrap .circle-inlie,
-.setting .public-setting .public-wrp .button-wrap .btn-text.ok
+.setting .public-setting .public-wrp .button-wrap .btn-text.ok,
+.song-coin-bg .song-coin .song-coin-btn:hover,
+.song-coin-bg .song-coin .song-coin-btn,
+.collection-bg .collection-board .collection-submit.active,
+.vip-package-wrapper .coupon-content-con .coupon-btn:hover,
+#app .el-button--primary,
+#app .el-button--primary:focus,
+#app .el-button--primary:hover,
+.answer-container .footer-bottom .btn-default,
+.bili-header-m .mini-wnd-nav.history-wnd .top-login .loginbtn,
+.carousel-wrp .page .next.current,
+.author-container .attention-animation-holder .attention-btn,
+.cards-block .images-list .image-item .selected,
+.bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip,
+.common .bb-comment .no-login .baffle .b-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -273,7 +504,37 @@
 #page-article .article-lists .lists-item .item-right .item-name a:hover,
 #page-article .article-lists .lists-item .item-right .item-title a:hover,
 .data-card .data-wrp .tab .fan-tab.current,
-.data-card .fans-wrp .tab .fan-tab.current
+.data-card .fans-wrp .tab .fan-tab.current,
+#page-fav .fav-main .fav-action-bottom .search-results-num i,
+.small-item .search-keyword-highlight,
+.song-coin-bg .song-coin .song-coin-title .song-coin-number,
+.share-board .song-share .song-share-ul li:hover,
+.collection-bg .collection-board .collection-list .collection-li .collection-checkbox .collection-checked,
+.collection-bg .collection-board .collection-list .collection-li:hover .collection-checkbox,
+.collection-bg .collection-board .collection-list .collection-li:hover .collection-name,
+.song-coin-bg .song-coin .song-coin-content .song-one-coin.active,
+.song-coin-bg .song-coin .song-coin-content .song-two-coin.active,
+.game-package-item .game-package-type,
+.vip-package-wrapper .coupon-content-con .coupon-money,
+.coupon-money-2:before,
+.form-group.register-hidden-gruop.text-right a,
+.form-group .register-agree a,
+.register-hidden-gruop.text-right a,
+.rule-time span,
+.answer-container .header-top .header-tip,
+.bili-header-m .profile-m .grade .bar .num .v0:hover,
+.electron-set-v2-hint a
+.electron-set-v2-hint a:hover,
+.comment-list-item .article-wrap .show-all,
+.icon-close:hover,
+.text-article-wrp .article-card .meta-status .status,
+.text-article-wrp .article-card .meta-view .menu-list .menu-item:hover,
+.col-1 .article-wrap .article-con a:hover,
+.pgc-space-follow-item .pgc-item-info .pgc-item-state .publish-state.is-new,
+.article-content-ctnr .supporting-info .category:hover,
+.list-filter-bar .item-text.active,
+.list-filter-bar .item-text.expand,
+.list-filter-bar .item-text:hover
 {
     color: var(--theme-color) !important;
 }

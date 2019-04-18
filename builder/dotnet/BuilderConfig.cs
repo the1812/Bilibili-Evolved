@@ -13,5 +13,6 @@ namespace BilibiliEvolved.Build
         public string LogoPath { get; set; }
         public string SmallLogoPath { get; set; }
         public string Owner { get; set; }
+        public bool CopyOnBuild { get; set; }
     }
 }

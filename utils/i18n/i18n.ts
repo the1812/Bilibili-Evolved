@@ -10,6 +10,7 @@ export class Translator
     static placeholder: PlaceholderTranslator;
     static allTranslators: Translator[];
     static map: Map<string, any>;
+    static regex: [RegExp, string][];
 
     accepts(node: Node) { return node.nodeType === Node.ELEMENT_NODE; }
     getValue(node: Node) { return node.nodeValue; }
@@ -25,9 +26,14 @@ export class Translator
         const translation = Translator.map.get(value.trim());
         if (translation === undefined)
         {
-            return;
+            const result = Translator.regex.find(([r]) => r.test(value));
+            if (result)
+            {
+                const [regex, replacement] = result;
+                this.setValue(node, value.replace(regex, replacement));
+            }
         }
-        if (typeof translation === "string")
+        else if (typeof translation === "string")
         {
             this.setValue(node, translation);
         }
@@ -142,25 +148,35 @@ Translator.allTranslators = [Translator.textNode, Translator.title, Translator.p
 
 (async () =>
 {
-    const { map } = await import(`./i18n.${languageCodeMap[settings.i18nLanguage]}`);
-    Translator.map = map;
+    const languageCode = languageCodeMap[settings.i18nLanguage];
+    const { map, regex } = await import(`./i18n.${languageCode}`);
+    document.documentElement.setAttribute("lang", languageCode);
+    Translator.map = map as Map<string, any>;
+    Translator.regex = [...regex.entries()] as Array<[RegExp, string]>;
 
     Translator.translate(document.body);
     Translator.translateCssMatches();
-    Observer.childListSubtree("body", records =>
+    Observer.observe("body", records =>
     {
         records.forEach(it =>
         {
-            if (it.addedNodes.length > 0)
+            if (it.type === "childList")
             {
-                Translator.translateCssMatches();
+                if (it.addedNodes.length > 0)
+                {
+                    Translator.translateCssMatches();
+                }
+                it.addedNodes.forEach(node =>
+                {
+                    Translator.translate(node);
+                });
             }
-            it.addedNodes.forEach(node =>
+            else if (it.type === "characterData")
             {
-                Translator.translate(node);
-            });
+                Translator.textNode.translate(it.target);
+            }
         });
-    });
+    }, { characterData: true, childList: true, subtree: true });
 })();
 
 export default {
@@ -170,9 +186,9 @@ export default {
         TitleTranslator,
         PlaceholderTranslator,
     },
-    // dropdown: {
-    //     key: "i18nLanguage",
-    //     // items: Object.keys(languageCodeMap),
-    //     items: [`日本語`, `English`],
-    // },
+    dropdown: {
+        key: "i18nLanguage",
+        // items: Object.keys(languageCodeMap),
+        items: [`日本語`],
+    },
 };

@@ -47,17 +47,20 @@ Resource.manifest = {
     settingsTooltipStyle: {
         path: "settings-tooltip.min.css",
     },
+    settingsTooltipJapanese: {
+        path: "settings-tooltip.ja-JP.min.js",
+    },
+    settingsTooltipChinese: {
+        path: "settings-tooltip.zh-CN.min.js",
+    },
     settingsTooltip: {
-        path: "settings-tooltip.min.js",
+        path: "settings-tooltip.loader.min.js",
         dependencies: [
             "settingsTooltipStyle"
         ],
     },
     settingsSearch: {
         path: "settings-search.min.js",
-        dependencies: [
-            "settingsTooltip"
-        ],
     },
     guiSettings: {
         path: "gui-settings.min.js",
@@ -464,7 +467,7 @@ Resource.manifest = {
     imageResolution: {
         path: "image-resolution.min.js",
         displayNames: {
-            imageResolution: "总是显示原图",
+            imageResolution: "高分辨率图片",
         },
     },
     biliplusRedirect: {
@@ -503,13 +506,19 @@ Resource.manifest = {
         path: "i18n.min.js",
         style: "important",
         displayNames: {
-            i18n: "界面翻译"
+            i18n: "界面翻译",
+            i18nLanguage: "语言",
+            i18nEnglish: "英语翻译模块",
+            i18nJapanese: "日语翻译模块",
+            i18nGerman: "德语翻译模块",
+            i18nTraditionalChinese: "繁体翻译模块",
         },
     },
     playerFocus: {
         path: "player-focus.min.js",
         displayNames: {
             playerFocus: "自动定位到播放器",
+            playerFocusOffset: "定位偏移量",
         },
     },
     simplifyLiveroom: {
@@ -523,6 +532,27 @@ Resource.manifest = {
         path: "old-tweets.min.js",
         displayNames: {
             oldTweets: "旧版动态跳转支持",
+        },
+    },
+    customNavbar: {
+        path: "custom-navbar.min.js",
+        style: "instant",
+        html: true,
+        displayNames: {
+            customNavbar: "使用自定义顶栏",
+        },
+    },
+    favoritesRedirect: {
+        path: "favorites-redirect.min.js",
+        displayNames: {
+            favoritesRedirect: "收藏夹视频重定向",
+        }
+    },
+    outerWatchlater: {
+        path: "outer-watchlater.min.js",
+        style: "important",
+        displayNames: {
+            outerWatchlater: "外置稍后再看",
         },
     },
 };

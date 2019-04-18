@@ -20,6 +20,8 @@ export const toolTips = {
     autoContinue: `播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`,
     skipChargeList: `自动跳过视频结尾的充电鸣谢.`,
     framePlayback: `在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<span>Shift + 左/右方向键</span>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`,
+    playerFocus: `进入视频/番剧页面时, 自动定位到播放器.`,
+    playerFocusOffset: `定位时的竖直偏移量, 单位为像素(px).`,
     customStyleColor: `设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`,
     useNewStyle: `<span>主要</span>会改变顶栏的样式, 并有一些其他地方的界面微调:
 - 为播放器增加主题色投影
@@ -63,12 +65,14 @@ export const toolTips = {
     removeVideoTopMask: `删除视频里鼠标经过时出现在右上角的覆盖层.`,
     removeAds: `删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.`,
     watchLaterRedirect: `将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`,
+    favoritesRedirect: `将个人空间收藏夹里的视频重定向为直链, 而不是收藏夹播单链接.`,
     hideTopSearch: `将搜索框的推荐词替换为<span>搜索</span>.`,
     fullTweetsTitle: `在顶栏的动态预览框中, 总是展开完整的标题.`,
     fullPageTitle: `在视频选集列表中, 总是展开完整的标题.`,
     showDeadVideoTitle: `在个人空间中, 为已失效视频恢复标题和封面.`,
     useBiliplusRedirect: `将失效视频重定向到BiliPlus.`,
     biliplusRedirect: `在视频/番剧/空间中, 附加功能<span>"转到BiliPlus"</span>, 点击可以转到BiliPlus上对应的页面.`,
+    imageResolution: `根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.`,
     oldTweets: `将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.`,
     touchNavBar: `删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`,
     comboLike: `为素质三连(长按点赞)启用触摸支持.`,

@@ -15,9 +15,13 @@ export class Translator {
         }
         const translation = Translator.map.get(value.trim());
         if (translation === undefined) {
-            return;
+            const result = Translator.regex.find(([r]) => r.test(value));
+            if (result) {
+                const [regex, replacement] = result;
+                this.setValue(node, value.replace(regex, replacement));
+            }
         }
-        if (typeof translation === "string") {
+        else if (typeof translation === "string") {
             this.setValue(node, translation);
         }
         else if (Array.isArray(translation)) {
@@ -103,20 +107,28 @@ Translator.title = new TitleTranslator;
 Translator.placeholder = new PlaceholderTranslator;
 Translator.allTranslators = [Translator.textNode, Translator.title, Translator.placeholder];
 (async () => {
-    const { map } = await import(`./i18n.${languageCodeMap[settings.i18nLanguage]}`);
+    const languageCode = languageCodeMap[settings.i18nLanguage];
+    const { map, regex } = await import(`./i18n.${languageCode}`);
+    document.documentElement.setAttribute("lang", languageCode);
     Translator.map = map;
+    Translator.regex = [...regex.entries()];
     Translator.translate(document.body);
     Translator.translateCssMatches();
-    Observer.childListSubtree("body", records => {
+    Observer.observe("body", records => {
         records.forEach(it => {
-            if (it.addedNodes.length > 0) {
-                Translator.translateCssMatches();
+            if (it.type === "childList") {
+                if (it.addedNodes.length > 0) {
+                    Translator.translateCssMatches();
+                }
+                it.addedNodes.forEach(node => {
+                    Translator.translate(node);
+                });
             }
-            it.addedNodes.forEach(node => {
-                Translator.translate(node);
-            });
+            else if (it.type === "characterData") {
+                Translator.textNode.translate(it.target);
+            }
         });
-    });
+    }, { characterData: true, childList: true, subtree: true });
 })();
 export default {
     export: {
@@ -124,5 +136,10 @@ export default {
         TextNodeTranslator,
         TitleTranslator,
         PlaceholderTranslator,
+    },
+    dropdown: {
+        key: "i18nLanguage",
+        // items: Object.keys(languageCodeMap),
+        items: [`日本語`],
     },
 };
