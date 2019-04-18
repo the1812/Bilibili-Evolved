@@ -486,7 +486,34 @@ class HistoryList extends VideoList
             listName: "history",
             listMap: json =>
             {
-
+                return json.data.map(item =>
+                {
+                    let parameter = [];
+                    let description = "";
+                    const page = item.page.page;
+                    const progress = item.progress >= 0 ? item.progress / item.duration : 1;
+                    if (page !== 1)
+                    {
+                        parameter.push(`p=${page}`);
+                        description += `看到第${page}话`;
+                    }
+                    if (item.progress > 0 && item.progress < item.duration)
+                    {
+                        parameter.push(`t=${item.progress}`);
+                        description += ` ${Math.floor(progress * 100)}%`;
+                    }
+                    else
+                    {
+                        description += " 100%";
+                    }
+                    return /*html*/`<li class="history-item">
+                        <a target="_blank" href="https://www.bilibili.com/video/av${item.aid}?${parameter.join("&")}">
+                            <span class="title">${item.title}</span>
+                            <span class="description">${description}</span>
+                            <div class="progress" style="transform: scaleX(${progress})"></div>
+                        </a>
+                    </li>`;
+                });
             },
         });
     }
@@ -551,7 +578,7 @@ class HistoryList extends VideoList
             }),
             new WatchlaterList,
             new FavoritesList,
-            // new HistoryList,
+            new HistoryList,
         );
     }
     components.push(new Upload);

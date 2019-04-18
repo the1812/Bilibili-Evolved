@@ -462,7 +462,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .video-list li:hover
 {
     background: rgba(0,0,0,0.1);
-    border-left-width: 8px;
+    /* border-left-width: 8px; */
 }
 .custom-navbar .video-list li.more
 {
@@ -483,12 +483,45 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     display: flex;
     justify-content: center;
-    border-color: transparent;
+    border-color: transparent !important;
 }
 .custom-navbar .video-list.loaded .loading
 {
     display: none;
 }
+.custom-navbar .video-list.history .history-item
+{
+    border: none !important;
+}
+.custom-navbar .video-list.history li:not(.more) a
+{
+    justify-content: space-between;
+    position: relative;
+    padding: 6px 8px !important;
+}
+.custom-navbar .video-list.history a .description
+{
+    opacity: 0.6;
+    margin-left: 4px;
+    white-space: nowrap;
+}
+.custom-navbar .video-list.history a .progress
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--theme-color);
+    transform-origin: left;
+    opacity: 0.3;
+}
+.custom-navbar .video-list.history a:hover .progress
+{
+    opacity: 1;
+}
+
+
 
 @media screen and (max-width: 1400px)
 {
