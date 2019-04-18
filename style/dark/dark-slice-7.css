@@ -28,7 +28,10 @@
 .text-article-wrp .article-card .meta-view .meta-item.text-item,
 .read-list-page .read-list-name .info.right.show .col .split-line,
 .read-list-page.edit-page .read-list-name .cover,
-.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list
+.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list,
+.bili-dialog-bomb .appeal-box .header,
+.bili-dialog-bomb .appeal-box .submit,
+.bili-dialog-bomb .appeal-box .wrap .container
 {
     background-color: #222 !important;
 }
@@ -78,7 +81,8 @@
 .read-list-modal-component .creat-read-list-box .input-box button,
 .read-list-modal-component .creat-read-list-box .input-box button[disabled],
 .read-list-page .module-box,
-.read-list-page.edit-page .module-box
+.read-list-page.edit-page .module-box,
+.bili-dialog-bomb .appeal-box .submit .cancel
 {
     background-color: #444 !important;
 }
@@ -192,7 +196,9 @@
 .read-list-page .add-article-modal .article-list-box li label span.uptime,
 .read-list-page.edit-page header.header .link-btn,
 .read-list-page.edit-page .read-list-name .cover .empty-state,
-.ui-popup .popup-wrap .text-box .text .sub-tips
+.ui-popup .popup-wrap .text-box .text .sub-tips,
+.bili-dialog-bomb .appeal-box .wrap .container .img-text,
+.bili-dialog-bomb .appeal-box .wrap .container .textarea .textarea-wrap .limit
 {
     color: #aaa !important;
 }
@@ -276,7 +282,10 @@
 .read-list-modal-component .creat-read-list-box .input-box button,
 .text-article-wrp .article-card .meta-view .meta-item.text-item,
 .read-list-page .read-list-name .info.right.show .title,
-.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item
+.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item,
+.bili-dialog-bomb .appeal-box .wrap .container .question,
+.bili-dialog-bomb .appeal-box .submit .cancel,
+.bili-dialog-bomb .appeal-box .submit .confirm
 {
     color: #eee !important;
 }
@@ -340,7 +349,8 @@
 .live-user .user-item .item-right .tags>span,
 .read-list-modal-component hr,
 .read-list-modal-component .creat-read-list-box .input-box,
-.read-list-modal-component .creat-read-list-box .input-box button
+.read-list-modal-component .creat-read-list-box .input-box button,
+.bili-dialog-bomb .appeal-box .submit .cancel
 {
     border-color: transparent !important;
 }
@@ -355,7 +365,9 @@
 }
 .article-info-module .v-data,
 .web-box .expanded .user-li::after,
-.read-list-page .add-article-modal hr
+.read-list-page .add-article-modal hr,
+.bili-dialog-bomb .appeal-box .header,
+.bili-dialog-bomb .appeal-box .submit
 {
     border-color: #444 !important
 }
@@ -510,7 +522,9 @@
 .cards-block .images-list .image-item .selected,
 .bilibili-player .bilibili-player-area .bilibili-player-video-control .bilibili-player-video-btn .bilibili-player-video-quality-menu .bilibili-player-bigvip,
 .common .bb-comment .no-login .baffle .b-btn:hover,
-.text-article-wrp .article-card .meta-view .meta-item:hover
+.text-article-wrp .article-card .meta-view .meta-item:hover,
+.bili-dialog-bomb .appeal-box .wrap .container .options .option .checkbox.checked:before,
+.bili-dialog-bomb .appeal-box .submit .confirm
 {
     background-color: var(--theme-color) !important;
 }
