@@ -447,7 +447,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .video-list li:not(.more)
 {
-    border-left: 2px solid var(--theme-color);
+    border-left: 2px solid var(--theme-color-30);
 }
 .custom-navbar .video-list li:not(.more) a
 {
@@ -463,6 +463,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     background: rgba(0,0,0,0.1);
     /* border-left-width: 8px; */
+    border-color: var(--theme-color);
 }
 .custom-navbar .video-list li.more
 {

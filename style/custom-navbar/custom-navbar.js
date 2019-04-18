@@ -427,7 +427,7 @@ class VideoList extends NavbarComponent
             }
             const videoList = listMap(json).join("");
             videoListElement.insertAdjacentHTML("beforeend", videoList + /*html*/`
-                <li class="more"><a href="${mainUrl}">查看更多</a></li>
+                <li class="more"><a target="_blank" href="${mainUrl}">查看更多</a></li>
             `);
             videoListElement.classList.add("loaded");
         };
