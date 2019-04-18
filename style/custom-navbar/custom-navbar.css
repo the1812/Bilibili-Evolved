@@ -58,6 +58,7 @@
 {
     color: black;
     background: white;
+    transition: all .2s ease-out .2s;
 }
 .custom-navbar.dark .popup
 {
@@ -521,7 +522,28 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     opacity: 1;
 }
-
+.custom-navbar .notify-count
+{
+    position: absolute;
+    left: 50%;
+    top: 0;
+    background-color: var(--theme-color);
+    padding: 0 8px;
+    display: flex;
+    justify-content: center;
+    font-size: 11px;
+    transform: translateX(-50%);
+    border-radius: 0 0 8px 8px;
+    opacity: 0;
+}
+.custom-navbar.fill .notify-count
+{
+    background-color: rgba(0,0,0,0.3);
+}
+.custom-navbar .notify-count:not(:empty)
+{
+    opacity: 1;
+}
 
 
 @media screen and (max-width: 1400px)

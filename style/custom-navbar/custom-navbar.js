@@ -23,6 +23,11 @@ class NavbarComponent
         this.requestedPopup = false;
         this.onPopup = null;
         this.href = ``;
+        this.notifyCount = 0;
+    }
+    get name()
+    {
+        return this.html;
     }
 }
 class Blank extends NavbarComponent
@@ -33,6 +38,10 @@ class Blank extends NavbarComponent
         this.flex = "1 0 auto";
         this.disabled = true;
     }
+    get name()
+    {
+        return "空白";
+    }
 }
 class Logo extends NavbarComponent
 {
@@ -41,6 +50,10 @@ class Logo extends NavbarComponent
         super();
         this.href = `https://www.bilibili.com/`;
         this.html = /*html*/`<i class="custom-navbar-iconfont custom-navbar-icon-logo"></i>`;
+    }
+    get name()
+    {
+        return "Logo";
     }
 }
 class SimpleLink extends NavbarComponent
@@ -72,6 +85,10 @@ class Upload extends NavbarComponent
             <li><a href="https://member.bilibili.com/v2#/home">创作中心</a></li>
         </ul>
         `;
+    }
+    get name()
+    {
+        return "投稿";
     }
 }
 class Category extends NavbarComponent
@@ -321,6 +338,10 @@ class UserInfo extends NavbarComponent
             face.style.backgroundImage = `url('https://static.hdslb.com/images/akari.jpg')`;
         }
     }
+    get name()
+    {
+        return "用户信息";
+    }
 }
 class SearchBox extends NavbarComponent
 {
@@ -380,6 +401,10 @@ class SearchBox extends NavbarComponent
             }
         }
     }
+    get name()
+    {
+        return "搜索";
+    }
 }
 class Iframe extends NavbarComponent
 {
@@ -393,6 +418,33 @@ class Iframe extends NavbarComponent
         `;
         this.noPadding = true;
         this.requestedPopup = lazy ? false : true;
+    }
+}
+class Activities extends Iframe
+{
+    constructor()
+    {
+        super("动态", "https://t.bilibili.com/", {
+            src: `https://t.bilibili.com/pages/nav/index`,
+            width: `380px`,
+            height: `422px`,
+            lazy: true,
+        });
+        this.getNotifyCount();
+    }
+    async getNotifyCount()
+    {
+        const notifyElement = await SpinQuery.select(".custom-navbar li[data-name='动态'] .notify-count");
+        const updateNumber = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), "$1");
+        const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${updateNumber}&type_list=8,512,64`);
+        if (json.code === 0 && json.data.update_num !== 0)
+        {
+            notifyElement.innerHTML = json.data.update_num;
+            this.onPopup = () =>
+            {
+                notifyElement.innerHTML = '';
+            };
+        }
     }
 }
 class VideoList extends NavbarComponent
@@ -570,12 +622,7 @@ class HistoryList extends VideoList
                 height: `210px`,
                 lazy: false,
             }),
-            new Iframe("动态", "https://t.bilibili.com/", {
-                src: `https://t.bilibili.com/pages/nav/index`,
-                width: `380px`,
-                height: `422px`,
-                lazy: true,
-            }),
+            new Activities,
             new WatchlaterList,
             new FavoritesList,
             new HistoryList,
