@@ -420,7 +420,37 @@ class Iframe extends NavbarComponent
         this.requestedPopup = lazy ? false : true;
     }
 }
-class Activities extends Iframe
+class NotifyIframe extends Iframe
+{
+    constructor(...args)
+    {
+        super(...args);
+        this.getNotifyCount();
+    }
+    getApiUrl()
+    {
+        return null;
+    }
+    getCount(json)
+    {
+        return 0;
+    }
+    async getNotifyCount()
+    {
+        const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`);
+        const json = await Ajax.getJsonWithCredentials(this.getApiUrl());
+        const count = this.getCount(json);
+        if (json.code === 0 && count !== 0)
+        {
+            notifyElement.innerHTML = count;
+            this.onPopup = () =>
+            {
+                notifyElement.innerHTML = '';
+            };
+        }
+    }
+}
+class Activities extends NotifyIframe
 {
     constructor()
     {
@@ -430,21 +460,35 @@ class Activities extends Iframe
             height: `422px`,
             lazy: true,
         });
-        this.getNotifyCount();
     }
-    async getNotifyCount()
+    getApiUrl()
     {
-        const notifyElement = await SpinQuery.select(".custom-navbar li[data-name='动态'] .notify-count");
         const updateNumber = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), "$1");
-        const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${updateNumber}&type_list=8,512,64`);
-        if (json.code === 0 && json.data.update_num !== 0)
-        {
-            notifyElement.innerHTML = json.data.update_num;
-            this.onPopup = () =>
-            {
-                notifyElement.innerHTML = '';
-            };
-        }
+        return `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${updateNumber}&type_list=8,512,64`;
+    }
+    getCount(json)
+    {
+        return json.data.update_num;
+    }
+}
+class Messages extends NotifyIframe
+{
+    constructor()
+    {
+        super("消息", "https://message.bilibili.com/", {
+            src: `https://message.bilibili.com/pages/nav/index`,
+            width: `110px`,
+            height: `210px`,
+            lazy: false,
+        });
+    }
+    getApiUrl()
+    {
+        return "https://message.bilibili.com/api/notify/query.notify.count.do";
+    }
+    getCount(json)
+    {
+        return Object.values(json.data).reduce((a, b) => a + b, 0);
     }
 }
 class VideoList extends NavbarComponent
@@ -616,12 +660,7 @@ class HistoryList extends VideoList
     if (userInfo.isLogin)
     {
         components.push(
-            new Iframe("消息", "https://message.bilibili.com/", {
-                src: `https://message.bilibili.com/pages/nav/index`,
-                width: `110px`,
-                height: `210px`,
-                lazy: false,
-            }),
+            new Messages,
             new Activities,
             new WatchlaterList,
             new FavoritesList,
