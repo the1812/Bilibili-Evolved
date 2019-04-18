@@ -306,15 +306,19 @@ class UserInfo extends NavbarComponent
                 }
             },
         });
+        const face = await SpinQuery.select(".user-face");
         if (userInfo.isLogin)
         {
-            const face = await SpinQuery.select(".user-face");
             const pendant = await SpinQuery.select(".user-pendant");
             face.style.backgroundImage = `url('${userInfo.face}')`;
             if (userInfo.pendant.image)
             {
                 pendant.style.backgroundImage = `url('${userInfo.pendant.image}')`;
             }
+        }
+        else
+        {
+            face.style.backgroundImage = `url('https://static.hdslb.com/images/akari.jpg')`;
         }
     }
 }
@@ -471,6 +475,22 @@ class FavoritesList extends VideoList
         });
     }
 }
+class HistoryList extends VideoList
+{
+    constructor()
+    {
+        super({
+            name: "历史",
+            mainUrl: "https://www.bilibili.com/account/history",
+            apiUrl: "https://api.bilibili.com/x/v2/history?pn=1&ps=6",
+            listName: "history",
+            listMap: json =>
+            {
+
+            },
+        });
+    }
+}
 
 (async () =>
 {
@@ -530,7 +550,9 @@ class FavoritesList extends VideoList
                 lazy: true,
             }),
             new WatchlaterList,
-            new FavoritesList);
+            new FavoritesList,
+            // new HistoryList,
+        );
     }
     components.push(new Upload);
     new Vue({
