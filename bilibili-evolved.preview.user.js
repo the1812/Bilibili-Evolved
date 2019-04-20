@@ -513,6 +513,8 @@ class DoubleClickEvent
         element.removeEventListener("click", this.doubleClickHandler);
     }
 }
+let cidHooked = false;
+const videoChangeCallbacks = [];
 class Observer
 {
     constructor(element, callback)
@@ -598,31 +600,32 @@ class Observer
     }
     static async videoChange(callback)
     {
-        const player = await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
-        if (player === null)
+        const cid = await SpinQuery.select(() => unsafeWindow.cid);
+        if (cid === null)
         {
-            return null;
+            return;
         }
-        const recordTest = (records, predicate) =>
+        if (!cidHooked)
         {
-            if (records.length === 0)
-            {
-                return false;
-            }
-            return records.every(it => predicate(it));
-        };
-        return Observer.childList("#bofqi,#bilibiliPlayer", records =>
-        {
-            const isMenuAttached = recordTest(records, it => [...it.addedNodes]
-                .some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
-            const isMiniPlayer = recordTest(records, it => [...it.addedNodes]
-                .concat([...it.removedNodes])
-                .every(it => it.classList && it.classList.contains("drag-bar")));
-            if (!isMenuAttached && !isMiniPlayer)
-            {
-                callback(records);
-            }
-        });
+            let hookedCid = cid;
+            Object.defineProperty(unsafeWindow, "cid", {
+                get()
+                {
+                    return hookedCid;
+                },
+                set(newId)
+                {
+                    hookedCid = newId;
+                    if (!Array.isArray(newId))
+                    {
+                        videoChangeCallbacks.forEach(it => it());
+                    }
+                }
+            });
+            cidHooked = true;
+        }
+        callback();
+        videoChangeCallbacks.push(callback);
     }
 }
 class SpinQuery

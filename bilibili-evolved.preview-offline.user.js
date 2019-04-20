@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      277.88
+// @version      278.11
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -514,6 +514,8 @@ class DoubleClickEvent
         element.removeEventListener("click", this.doubleClickHandler);
     }
 }
+let cidHooked = false;
+const videoChangeCallbacks = [];
 class Observer
 {
     constructor(element, callback)
@@ -599,31 +601,32 @@ class Observer
     }
     static async videoChange(callback)
     {
-        const player = await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
-        if (player === null)
+        const cid = await SpinQuery.select(() => unsafeWindow.cid);
+        if (cid === null)
         {
-            return null;
+            return;
         }
-        const recordTest = (records, predicate) =>
+        if (!cidHooked)
         {
-            if (records.length === 0)
-            {
-                return false;
-            }
-            return records.every(it => predicate(it));
-        };
-        return Observer.childList("#bofqi,#bilibiliPlayer", records =>
-        {
-            const isMenuAttached = recordTest(records, it => [...it.addedNodes]
-                .some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
-            const isMiniPlayer = recordTest(records, it => [...it.addedNodes]
-                .concat([...it.removedNodes])
-                .every(it => it.classList && it.classList.contains("drag-bar")));
-            if (!isMenuAttached && !isMiniPlayer)
-            {
-                callback(records);
-            }
-        });
+            let hookedCid = cid;
+            Object.defineProperty(unsafeWindow, "cid", {
+                get()
+                {
+                    return hookedCid;
+                },
+                set(newId)
+                {
+                    hookedCid = newId;
+                    if (!Array.isArray(newId))
+                    {
+                        videoChangeCallbacks.forEach(it => it());
+                    }
+                }
+            });
+            cidHooked = true;
+        }
+        callback();
+        videoChangeCallbacks.push(callback);
     }
 }
 class SpinQuery
