@@ -238,6 +238,7 @@ class VideoDownloader
                     this.progressMap.set(xhr, 0);
                     this.updateProgress();
                     xhr.open("GET", fragment.url);
+                    xhr.setRequestHeader("Range", range);
                     xhr.send();
                 });
                 xhr.setRequestHeader("Range", range);

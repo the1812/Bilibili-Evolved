@@ -71,6 +71,11 @@ export class SpinQuery
     }
     static count(query, count, action, failed)
     {
+        if (typeof query === "string")
+        {
+            const selector = query;
+            query = () => document.querySelectorAll(selector);
+        }
         return SpinQuery.condition(query, it => it.length === count, action, failed);
     }
     static unsafeJquery(action, failed)

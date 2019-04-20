@@ -5,8 +5,15 @@
         "noImplicitAny": true,
         "strictNullChecks": true,
         "sourceMap": false,
+        "typeRoots": [
+            "./@types"
+        ]
     },
     "include": [
-        "**/*.ts"
+        "./client/*.ts",
+        "./style/**/*.ts",
+        "./touch/**/*.ts",
+        "./utils/**/*.ts",
+        "./video/**/*.ts",
     ]
 }

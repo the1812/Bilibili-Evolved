@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.22
+// @version      1.7.28
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -17,9 +17,9 @@
 // @grant        GM_setValue
 // @grant        GM_setClipboard
 // @grant        GM_info
-// @require      https://code.jquery.com/jquery-3.2.1.min.js
+// @require      https://code.jquery.com/jquery-3.4.0.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
-// @require      https://cdn.jsdelivr.net/npm/vue/dist/vue.js
+// @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
@@ -80,10 +80,12 @@ const settings = {
     framePlayback: true,
     useCommentStyle: true,
     imageResolution: false,
+    imageResolutionScale: "auto",
     toastInternalError: false,
     i18n: false,
     i18nLanguage: "日本語",
     playerFocus: false,
+    playerFocusOffset: -10,
     oldTweets: false,
     simplifyLiveroom: false,
     simplifyLiveroomSettings: {
@@ -97,6 +99,13 @@ const settings = {
         popup: false,
         skin: false,
     },
+    customNavbar: false,
+    customNavbarSettings: {
+        fill: true,
+        shadow: true,
+    },
+    favoritesRedirect: true,
+    outerWatchlater: true,
     cache: {},
 };
 const fixedSettings = {
@@ -210,7 +219,20 @@ function fixed(number, precision = 1)
 }
 function isEmbeddedPlayer()
 {
-    return location.host === "player.bilibili.com";
+    return location.host === "player.bilibili.com" || document.URL.startsWith("https://www.bilibili.com/html/player.html");
+}
+function isIframe()
+{
+    return document.body && unsafeWindow.parent.window !== unsafeWindow;
+}
+function getI18nKey()
+{
+    const languageCodeMap = {
+        "日本語": "ja-JP",
+        "English": "en-US",
+        "Deutsch": "de-DE",
+    };
+    return settings.i18n ? languageCodeMap[settings.i18nLanguage] : "zh-CN";
 }
 class Ajax
 {
@@ -491,6 +513,8 @@ class DoubleClickEvent
         element.removeEventListener("click", this.doubleClickHandler);
     }
 }
+let cidHooked = false;
+const videoChangeCallbacks = [];
 class Observer
 {
     constructor(element, callback)
@@ -517,7 +541,16 @@ class Observer
     static observe(selector, callback, options)
     {
         callback([]);
-        return [...document.querySelectorAll(selector)].map(
+        let elements = selector;
+        if (typeof selector === "string")
+        {
+            elements = [...document.querySelectorAll(selector)];
+        }
+        else if (!Array.isArray(selector))
+        {
+            elements = [selector];
+        }
+        return elements.map(
             it =>
             {
                 const observer = new Observer(it, callback);
@@ -567,31 +600,32 @@ class Observer
     }
     static async videoChange(callback)
     {
-        const player = await SpinQuery.select(() => document.querySelector("#bilibiliPlayer"));
-        if (player === null)
+        const cid = await SpinQuery.select(() => unsafeWindow.cid);
+        if (cid === null)
         {
-            return null;
+            return;
         }
-        const recordTest = (records, predicate) =>
+        if (!cidHooked)
         {
-            if (records.length === 0)
-            {
-                return false;
-            }
-            return records.every(it => predicate(it));
-        };
-        return Observer.childList("#bofqi,#bilibiliPlayer", records =>
-        {
-            const isMenuAttached = recordTest(records, it => [...it.addedNodes]
-                .some(e => e.classList && e.classList.contains("bilibili-player-context-menu-container")));
-            const isMiniPlayer = recordTest(records, it => [...it.addedNodes]
-                .concat([...it.removedNodes])
-                .every(it => it.classList.contains("drag-bar")));
-            if (!isMenuAttached && !isMiniPlayer)
-            {
-                callback(records);
-            }
-        });
+            let hookedCid = cid;
+            Object.defineProperty(unsafeWindow, "cid", {
+                get()
+                {
+                    return hookedCid;
+                },
+                set(newId)
+                {
+                    hookedCid = newId;
+                    if (!Array.isArray(newId))
+                    {
+                        videoChangeCallbacks.forEach(it => it());
+                    }
+                }
+            });
+            cidHooked = true;
+        }
+        callback();
+        videoChangeCallbacks.push(callback);
     }
 }
 class SpinQuery
@@ -667,6 +701,11 @@ class SpinQuery
     }
     static count(query, count, action, failed)
     {
+        if (typeof query === "string")
+        {
+            const selector = query;
+            query = () => document.querySelectorAll(selector);
+        }
         return SpinQuery.condition(query, it => it.length === count, action, failed);
     }
     static unsafeJquery(action, failed)
@@ -1129,17 +1168,20 @@ Resource.manifest = {
     settingsTooltipStyle: {
         path: "settings-tooltip.min.css",
     },
+    settingsTooltipJapanese: {
+        path: "settings-tooltip.ja-JP.min.js",
+    },
+    settingsTooltipChinese: {
+        path: "settings-tooltip.zh-CN.min.js",
+    },
     settingsTooltip: {
-        path: "settings-tooltip.min.js",
+        path: "settings-tooltip.loader.min.js",
         dependencies: [
             "settingsTooltipStyle"
         ],
     },
     settingsSearch: {
         path: "settings-search.min.js",
-        dependencies: [
-            "settingsTooltip"
-        ],
     },
     guiSettings: {
         path: "gui-settings.min.js",
@@ -1546,7 +1588,7 @@ Resource.manifest = {
     imageResolution: {
         path: "image-resolution.min.js",
         displayNames: {
-            imageResolution: "总是显示原图",
+            imageResolution: "高分辨率图片",
         },
     },
     biliplusRedirect: {
@@ -1585,13 +1627,19 @@ Resource.manifest = {
         path: "i18n.min.js",
         style: "important",
         displayNames: {
-            i18n: "界面翻译"
+            i18n: "界面翻译",
+            i18nLanguage: "语言",
+            i18nEnglish: "英语翻译模块",
+            i18nJapanese: "日语翻译模块",
+            i18nGerman: "德语翻译模块",
+            i18nTraditionalChinese: "繁体翻译模块",
         },
     },
     playerFocus: {
         path: "player-focus.min.js",
         displayNames: {
             playerFocus: "自动定位到播放器",
+            playerFocusOffset: "定位偏移量",
         },
     },
     simplifyLiveroom: {
@@ -1605,6 +1653,27 @@ Resource.manifest = {
         path: "old-tweets.min.js",
         displayNames: {
             oldTweets: "旧版动态跳转支持",
+        },
+    },
+    customNavbar: {
+        path: "custom-navbar.min.js",
+        style: "instant",
+        html: true,
+        displayNames: {
+            customNavbar: "使用自定义顶栏",
+        },
+    },
+    favoritesRedirect: {
+        path: "favorites-redirect.min.js",
+        displayNames: {
+            favoritesRedirect: "收藏夹视频重定向",
+        }
+    },
+    outerWatchlater: {
+        path: "outer-watchlater.min.js",
+        style: "important",
+        displayNames: {
+            outerWatchlater: "外置稍后再看",
         },
     },
 };
@@ -1766,9 +1835,16 @@ class ResourceManager
             {
                 resolve(unsafeWindow.bilibiliEvolved);
             }
-            if (!resource.downloaded)
+            if (!Object.keys(this.attributes).includes(resource.key))
             {
-                this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
+                if (resource.type.name === "html" || resource.type.name === "style")
+                {
+                    resource.download().then(() => resolve(this.import(componentName)));
+                }
+                else
+                {
+                    this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
+                }
             }
             else
             {
@@ -1941,13 +2017,17 @@ class ResourceManager
             }
         }
         const manifests = Object.values(Resource.manifest).filter(it => it.dropdown).map(it => it.dropdown);
-        Object.values(Resource.all).filter(it => it.dropdown).map(it => it.dropdown).forEach(it =>
-        {
-            if (!manifests.some(m => m.key === it.key))
+        Object.values(Resource.all)
+            .concat(Object.values(this.attributes))
+            .filter(it => it.dropdown)
+            .map(it => it.dropdown)
+            .forEach(it =>
             {
-                manifests.push(it);
-            }
-        });
+                if (!manifests.some(m => m.key === it.key))
+                {
+                    manifests.push(it);
+                }
+            });
         await Promise.all(manifests.map(it => applyDropdownOption(it)));
     }
     validateCache()
@@ -1978,6 +2058,8 @@ class ResourceManager
 
 try
 {
+    Vue.config.productionTip = false;
+    Vue.config.devtools = false;
     setupAjaxHook();
     const events = {};
     for (const name of ["init", "styleLoaded", "scriptLoaded"])

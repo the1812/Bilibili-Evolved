@@ -166,7 +166,8 @@
 .rank-list .rank-item .ri-num,
 .card-timing-module .pic,
 .timeline-box .timeline-item .preview,
-.timeline-box .timeline-item .preview img
+.timeline-box .timeline-item .preview img,
+.article-rank-list .rank-item .ri-num
 {
     border-radius: 50% !important;
 }

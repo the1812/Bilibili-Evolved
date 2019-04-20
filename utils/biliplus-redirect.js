@@ -1,3 +1,4 @@
+const host = `hd.biliplus.com`;
 const supportedUrls = [
     "bilibili.com/video/av",
     "bilibili.com/bangumi/play",
@@ -22,11 +23,11 @@ export default {
             {
                 if (location.host === "space.bilibili.com")
                 {
-                    location.replace(document.URL.replace("space.bilibili.com/", "www.biliplus.com/space/"));
+                    location.replace(document.URL.replace("space.bilibili.com/", `${host}/space/`));
                 }
                 else
                 {
-                    location.host = "www.biliplus.com";
+                    location.host = host;
                 }
             });
         },

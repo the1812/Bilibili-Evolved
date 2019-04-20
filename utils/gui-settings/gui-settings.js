@@ -191,7 +191,9 @@ function checkCompatibility()
     if (window.devicePixelRatio === 1)
     {
         document.querySelector("input[key=harunaScale]").disabled = true;
+        document.querySelector("input[key=imageResolution]").disabled = true;
         settings.harunaScale = false;
+        settings.imageResolution = false;
         saveSettings(settings);
     }
     if (settings.defaultPlayerLayout === "旧版")
@@ -242,14 +244,31 @@ function setDisplayNames()
 (async () =>
 {
     resources.applyStyle("guiSettingsStyle");
+    document.body.insertAdjacentHTML("afterbegin", `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);
+
+    const isIframe = document.body && unsafeWindow.parent.window !== unsafeWindow;
+    if (isIframe)
+    {
+        document.querySelector(".gui-settings-icon-panel").style.display = "none";
+        // return;
+    }
+
     const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
     document.body.insertAdjacentHTML("beforeend", settingsBox);
-    document.body.insertAdjacentHTML("afterbegin", `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);
-    new SpinQuery(
-        () => document.body,
-        it => it && !(unsafeWindow.parent.window === unsafeWindow),
-        _ => document.querySelector(".gui-settings-icon-panel").style.display = "none",
-    ).start();
+
+    const widgetsContainer = document.querySelector(".widgets-container");
+    const emptyTip = widgetsContainer.querySelector(".empty-tip");
+    Observer.childList(widgetsContainer, () =>
+    {
+        if (widgetsContainer.childElementCount <= 1)
+        {
+            emptyTip.classList.add("show");
+        }
+        else
+        {
+            emptyTip.classList.remove("show");
+        }
+    });
 
     setupEvents();
     checkOfflineData();
