@@ -22,8 +22,9 @@ class NavbarComponent
         this.disabled = false;
         this.requestedPopup = false;
         this.onPopup = null;
-        this.href = ``;
+        this.href = null;
         this.notifyCount = 0;
+        this.touch = settings.touchNavBar;
     }
     get name()
     {
@@ -50,6 +51,7 @@ class Logo extends NavbarComponent
         super();
         this.href = `https://www.bilibili.com/`;
         this.html = /*html*/`<i class="custom-navbar-iconfont custom-navbar-icon-logo"></i>`;
+        this.touch = false;
     }
     get name()
     {
@@ -63,6 +65,7 @@ class SimpleLink extends NavbarComponent
         super();
         this.html = name;
         this.href = link;
+        this.touch = false;
     }
 }
 class Upload extends NavbarComponent
@@ -216,16 +219,17 @@ class UserInfo extends NavbarComponent
     constructor()
     {
         super();
+        this.href = "https://space.bilibili.com";
         this.html = /*html*/`
-            <a class="user-face-container" target="_blank" href="https://space.bilibili.com">
+            <div class="user-face-container">
                 <div class="user-face"></div>
                 <div class="user-pendant"></div>
-            </a>
+            </div>
         `;
         this.popupHtml = /*html*/`
             <div class="user-info-panel">
                 <div v-if="isLogin" class="logged-in">
-                    <span class="name">{{uname}}</span>
+                    <a class="name" target="_blank" href="https://space.bilibili.com/">{{uname}}</a>
                     <div class="row">
                         <a target="_blank" title="等级" href="https://account.bilibili.com/site/record?type=exp" class="level">LV<strong>{{level_info.current_level}}</strong></a>
                         <a target="_blank" href="https://account.bilibili.com/account/big" class="type">{{userType}}</a>
@@ -418,6 +422,7 @@ class Iframe extends NavbarComponent
         `;
         this.noPadding = true;
         this.requestedPopup = lazy ? false : true;
+        this.touch = false;
     }
 }
 class NotifyIframe extends Iframe
@@ -425,6 +430,7 @@ class NotifyIframe extends Iframe
     constructor(...args)
     {
         super(...args);
+        this.touch = settings.touchNavBar;
         this.getNotifyCount();
     }
     getApiUrl()

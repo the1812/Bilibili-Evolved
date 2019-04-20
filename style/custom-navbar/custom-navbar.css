@@ -319,6 +319,11 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     font-size: 14pt;
     margin-top: 40px;
+    color: inherit;
+}
+.user-info-panel .name:hover
+{
+    color: var(--theme-color);
 }
 .user-info-panel .type
 {
