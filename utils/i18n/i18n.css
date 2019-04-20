@@ -12,7 +12,10 @@
 .author-info .communicate-btn,
 .dashboard li.like,
 .history-wrap .history-btn,
-.media-info .media-right .media-tool-bar .btn-follow
+.media-info .media-right .media-tool-bar .btn-follow,
+.article-action .ops .coin-btn,
+.article-action .ops .fav-btn,
+.article-action .ops .like-btn
 {
     width: auto !important;
 }
@@ -71,7 +74,10 @@
 .admin-list-cntr .rank-cntr .item .admin-icon,
 .h .h-f-btn,
 .bb-comment .comment-send .comment-emoji,
-.media-info .media-right .media-tool-bar .btn-follow
+.media-info .media-right .media-tool-bar .btn-follow,
+.article-action .ops .coin-btn,
+.article-action .ops .fav-btn,
+.article-action .ops .like-btn
 {
     padding: 0 8px !important;
 }

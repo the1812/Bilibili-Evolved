@@ -76,7 +76,8 @@ div#square.container,
 .play-options .share-box,
 .gui-settings-flat-button .popup,
 .h5share-container .image-area .share-img,
-.notice-panel .img-container .notice-img
+.notice-panel .img-container .notice-img,
+.withdraw-wrapper .withdraw-text
 {
     background-color: #222 !important;
 }
