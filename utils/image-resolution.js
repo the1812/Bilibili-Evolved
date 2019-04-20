@@ -48,10 +48,10 @@ export async function imageResolution(element) {
         element.setAttribute("data-resolution-width", width);
         setValue(element, value.replace(regex, `@${width}w_${height}h`));
     };
-    Observer.observe(element, () => {
+    Observer.attributes(element, () => {
         replaceSource(e => e.getAttribute("src"), (e, v) => e.setAttribute("src", v));
         replaceSource(e => e.style.backgroundImage, (e, v) => e.style.backgroundImage = v);
-    }, { attributeFilter: ["src", "style"], attributes: true });
+    });
 }
 walk(document.body, it => imageResolution(it));
 Observer.childListSubtree(document.body, records => {
