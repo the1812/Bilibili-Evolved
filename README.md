@@ -244,7 +244,7 @@
 根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.
 适用于2K, 4K等的显示屏, DPI缩放为100%的用户不需要此功能.
 
-![image-resolution](images/compressed/image-resolution.jpg);
+![image-resolution](images/compressed/image-resolution.jpg)
 
 ### 旧版动态跳转支持
 将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.

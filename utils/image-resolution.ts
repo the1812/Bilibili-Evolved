@@ -1,5 +1,5 @@
 const regex = /@(\d+)[Ww]_(\d+)[Hh]/;
-const dpi = settings.imageResolutionScale === "auto" ? window.devicePixelRatio : parseInt(settings.imageResolutionScale);
+const dpi = settings.imageResolutionScale === "auto" ? window.devicePixelRatio : parseFloat(settings.imageResolutionScale);
 const excludeSelectors = [
     "#certify-img1",
     "#certify-img2",
@@ -52,8 +52,8 @@ export async function imageResolution(element: HTMLElement)
         {
             element.setAttribute("width", width);
         }
-        width = (dpi * parseInt(width)).toString();
-        height = (dpi * parseInt(height)).toString();
+        width = Math.round(dpi * parseInt(width)).toString();
+        height = Math.round(dpi * parseInt(height)).toString();
         element.setAttribute("data-resolution-width", width);
         setValue(element, value.replace(regex, `@${width}w_${height}h`));
     };
