@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ES2017",
+        "target": "ESNext",
         "module": "ESNext",
         "noImplicitAny": true,
         "strictNullChecks": true,
