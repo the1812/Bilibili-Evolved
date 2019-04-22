@@ -1,3 +1,4 @@
+#!/usr/bin/node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const commandLineArgs = require("command-line-args");
@@ -8,6 +9,7 @@ const ProgressBar = require("progress");
 const optionDefinitions = [
     { name: 'info', alias: 'i', defaultOption: true, type: String, defaultValue: undefined },
     { name: 'parts', alias: 'p', type: Number, defaultValue: undefined },
+    { name: 'output', alias: 'o', type: String, defaultValue: '.' },
 ];
 const commandLineOptions = commandLineArgs(optionDefinitions);
 let options = commandLineOptions;
@@ -15,6 +17,7 @@ if (fs.existsSync("settings.json")) {
     const jsonOptions = JSON.parse(fs.readFileSync("settings.json").toString("utf-8"));
     options = Object.assign(jsonOptions, options);
 }
+process.chdir(options.output);
 if (options.parts < 1) {
     console.error("分段数不能小于1");
     process.exit();
@@ -121,8 +124,15 @@ class Downloader {
     else {
         jsonText = await clipboardy.read();
     }
+    let inputData = { urls: [], totalSize: 0, title: '' };
     try {
-        const inputData = JSON.parse(jsonText);
+        inputData = JSON.parse(jsonText);
+    }
+    catch (error) {
+        console.log(`未在剪贴板检测到有效数据, 也没有指定输入文件.`);
+        process.exit();
+    }
+    try {
         const progressBar = new ProgressBar(":percent [:bar]", {
             total: inputData.totalSize,
             width: 20,
