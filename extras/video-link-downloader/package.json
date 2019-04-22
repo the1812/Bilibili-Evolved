@@ -4,8 +4,12 @@
   "description": "下载从 Bilibili-Evolved 复制的视频链接",
   "main": "video-link-downloader.js",
   "dependencies": {
+    "@types/progress": "^2.0.3",
+    "@types/request": "^2.48.1",
     "clipboardy": "^2.0.0",
-    "command-line-args": "^5.1.1"
+    "command-line-args": "^5.1.1",
+    "progress": "^2.0.3",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "@types/command-line-args": "^5.0.0",
