@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const commandLineArgs = require("command-line-args");
@@ -8,15 +8,16 @@ const fs = require("fs");
 const ProgressBar = require("progress");
 const optionDefinitions = [
     { name: 'info', alias: 'i', defaultOption: true, type: String, defaultValue: undefined },
-    { name: 'parts', alias: 'p', type: Number, defaultValue: undefined },
+    { name: 'parts', alias: 'p', type: Number, defaultValue: 30 },
     { name: 'output', alias: 'o', type: String, defaultValue: '.' },
 ];
 const commandLineOptions = commandLineArgs(optionDefinitions);
 let options = commandLineOptions;
-if (fs.existsSync("settings.json")) {
-    const jsonOptions = JSON.parse(fs.readFileSync("settings.json").toString("utf-8"));
-    options = Object.assign(jsonOptions, options);
-}
+// if (fs.existsSync("settings.json"))
+// {
+//     const jsonOptions = JSON.parse(fs.readFileSync("settings.json").toString("utf-8")) as Settings;
+//     options = Object.assign(jsonOptions, options);
+// }
 process.chdir(options.output);
 if (options.parts < 1) {
     console.error("分段数不能小于1");
@@ -91,6 +92,9 @@ class Downloader {
             fs.renameSync(title + ".part0", dest);
         }
         else {
+            if (fs.existsSync(dest)) {
+                fs.unlinkSync(dest);
+            }
             const files = fs.readdirSync(".");
             const parts = files.filter(it => it.includes(title + ".part"));
             const partRegex = /.*\.part([\d]+)/;
@@ -116,7 +120,7 @@ class Downloader {
     }
 }
 (async () => {
-    console.log(`分段值: ${options.parts}`);
+    // console.log(`分段值: ${options.parts}`);
     let jsonText = '';
     if (fs.existsSync(options.info)) {
         jsonText = fs.readFileSync(options.info).toString("utf-8");

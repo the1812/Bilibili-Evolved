@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 import commandLineArgs = require("command-line-args");
 import clipboardy = require("clipboardy");
 import request = require("request");
@@ -20,16 +20,16 @@ interface Settings
 
 const optionDefinitions = [
     { name: 'info', alias: 'i', defaultOption: true, type: String, defaultValue: undefined },
-    { name: 'parts', alias: 'p', type: Number, defaultValue: undefined },
+    { name: 'parts', alias: 'p', type: Number, defaultValue: 30 },
     { name: 'output', alias: 'o', type: String, defaultValue: '.' },
 ];
 const commandLineOptions = commandLineArgs(optionDefinitions) as Settings;
 let options = commandLineOptions;
-if (fs.existsSync("settings.json"))
-{
-    const jsonOptions = JSON.parse(fs.readFileSync("settings.json").toString("utf-8")) as Settings;
-    options = Object.assign(jsonOptions, options);
-}
+// if (fs.existsSync("settings.json"))
+// {
+//     const jsonOptions = JSON.parse(fs.readFileSync("settings.json").toString("utf-8")) as Settings;
+//     options = Object.assign(jsonOptions, options);
+// }
 process.chdir(options.output);
 
 if (options.parts < 1)
@@ -122,6 +122,10 @@ class Downloader
         }
         else
         {
+            if (fs.existsSync(dest))
+            {
+                fs.unlinkSync(dest);
+            }
             const files = fs.readdirSync(".");
             const parts = files.filter(it => it.includes(title + ".part"));
             const partRegex = /.*\.part([\d]+)/;
@@ -153,7 +157,7 @@ class Downloader
 }
 (async () =>
 {
-    console.log(`分段值: ${options.parts}`);
+    // console.log(`分段值: ${options.parts}`);
     let jsonText = '';
     if (fs.existsSync(options.info))
     {
