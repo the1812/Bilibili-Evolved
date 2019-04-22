@@ -2,7 +2,8 @@ export function getFriendlyTitle(includesPageTitle = true)
 {
     const title = document.title
         .replace("_番剧_bilibili_哔哩哔哩", "")
-        .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "");
+        .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
+        .trim();
     if (!includesPageTitle || document.URL.indexOf("/bangumi") !== -1)
     {
         return title;

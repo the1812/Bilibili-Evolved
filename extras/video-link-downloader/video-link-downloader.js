@@ -15,6 +15,10 @@ if (fs.existsSync("settings.json")) {
     const jsonOptions = JSON.parse(fs.readFileSync("settings.json").toString("utf-8"));
     options = Object.assign(jsonOptions, options);
 }
+if (options.parts < 1) {
+    console.error("分段数不能小于1");
+    process.exit();
+}
 class Downloader {
     constructor(inputData, progress) {
         this.inputData = inputData;
@@ -79,22 +83,25 @@ class Downloader {
         }
         await Promise.all(promises);
         const dest = title + ".flv";
-        return await new Promise(resolve => {
-            fs.readdir(".", (_, files) => {
-                const parts = files.filter(it => it.includes(title + ".part"));
-                const partRegex = /.*\.part([\d]+)/;
-                const data = parts.sort((a, b) => {
-                    const partA = parseInt(a.replace(partRegex, "$1"));
-                    const partB = parseInt(b.replace(partRegex, "$1"));
-                    return partA - partB;
-                }).map(file => fs.readFileSync(file));
-                const stream = fs.createWriteStream(dest);
-                data.forEach(it => stream.write(it));
-                stream.close();
-                parts.forEach(file => fs.unlinkSync(file));
-                resolve(dest);
-            });
-        });
+        console.log("正在合并文件...");
+        if (options.parts === 1) {
+            fs.renameSync(title + ".part0", dest);
+        }
+        else {
+            const files = fs.readdirSync(".");
+            const parts = files.filter(it => it.includes(title + ".part"));
+            const partRegex = /.*\.part([\d]+)/;
+            const data = parts.sort((a, b) => {
+                const partA = parseInt(a.replace(partRegex, "$1"));
+                const partB = parseInt(b.replace(partRegex, "$1"));
+                return partA - partB;
+            }).map(file => fs.readFileSync(file));
+            const stream = fs.createWriteStream(dest);
+            data.forEach(it => stream.write(it));
+            stream.close();
+            parts.forEach(file => fs.unlinkSync(file));
+        }
+        return dest;
     }
     async download() {
         if (this.inputData.urls.length === 1) {

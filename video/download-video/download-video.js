@@ -255,6 +255,30 @@ class VideoDownloader
         const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + "\r\n" + it);
         GM_setClipboard(urls, "text");
     }
+    exportData(copy = false)
+    {
+        const data = JSON.stringify({
+            urls: this.fragments.map(it => it.url),
+            title: getFriendlyTitle(true),
+            totalSize: this.fragments.map(it => it.size).reduce((acc, it) => acc + it),
+        });
+        if (copy)
+        {
+            GM_setClipboard(data, "text");
+        }
+        else
+        {
+            const a = document.createElement("a");
+            const blob = new Blob([data], { type: "text/json" });
+            const url = URL.createObjectURL(blob);
+            a.setAttribute("href", url);
+            a.setAttribute("download", `cid${unsafeWindow.cid}.json`);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+    }
     extension(fragment)
     {
         return (fragment || this.fragments[0]).url
@@ -431,8 +455,29 @@ async function loadWidget()
         Toast.success("已复制链接到剪贴板.", "复制链接", 3000);
         pageData.entity.resetMenuClass();
     }
-    $(".video-action>#video-action-download").on("click", download);
-    $(".video-action>#video-action-copy").on("click", copyLink);
+    document.querySelector("#video-action-download").addEventListener("click", download);
+    document.querySelector("#video-action-copy").addEventListener("click", copyLink);
+    document.querySelector("#video-action-copy-data").addEventListener("click", async () =>
+    {
+        if (!selectedFormat)
+        {
+            return;
+        }
+        const info = await getVideoInfo();
+        info.exportData(true);
+        Toast.success("已复制数据到剪贴板.", "复制数据", 3000);
+        pageData.entity.resetMenuClass();
+    });
+    document.querySelector("#video-action-download-data").addEventListener("click", async () =>
+    {
+        if (!selectedFormat)
+        {
+            return;
+        }
+        const info = await getVideoInfo();
+        info.exportData(false);
+        pageData.entity.resetMenuClass();
+    });
     resources.applyStyle("downloadVideoStyle");
     const downloadPanel = document.querySelector(".download-video-panel");
     const togglePopup = () => $(".download-video-panel").toggleClass("opened");
