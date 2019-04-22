@@ -121,15 +121,16 @@ class Downloader
             const files = fs.readdirSync(".");
             const parts = files.filter(it => it.includes(title + ".part"));
             const partRegex = /.*\.part([\d]+)/;
-            const data = parts.sort((a, b) =>
+            parts.sort((a, b) =>
             {
                 const partA = parseInt(a.replace(partRegex, "$1"));
                 const partB = parseInt(b.replace(partRegex, "$1"));
                 return partA - partB;
-            }).map(file => fs.readFileSync(file));
-            const stream = fs.createWriteStream(dest);
-            data.forEach(it => stream.write(it));
-            stream.close();
+            }).forEach(file =>
+            {
+                const buffer = fs.readFileSync(file);
+                fs.appendFileSync(dest, buffer);
+            });
             parts.forEach(file => fs.unlinkSync(file));
         }
         return dest;
