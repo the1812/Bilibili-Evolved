@@ -4,10 +4,17 @@ const commandLineArgs = require("command-line-args");
 const clipboardy = require("clipboardy");
 const request = require("request");
 const fs = require("fs");
+const ProgressBar = require("progress");
 const optionDefinitions = [
-    { name: 'parts', alias: 'p', type: Number, defaultValue: 30 },
+    { name: 'info', alias: 'i', defaultOption: true, type: String, defaultValue: undefined },
+    { name: 'parts', alias: 'p', type: Number, defaultValue: undefined },
 ];
-const options = commandLineArgs(optionDefinitions);
+const commandLineOptions = commandLineArgs(optionDefinitions);
+let options = commandLineOptions;
+if (fs.existsSync("settings.json")) {
+    const jsonOptions = JSON.parse(fs.readFileSync("settings.json").toString("utf-8"));
+    options = Object.assign(jsonOptions, options);
+}
 class Downloader {
     constructor(inputData, progress) {
         this.inputData = inputData;
@@ -21,11 +28,14 @@ class Downloader {
     }
     cancelDownload() {
         [...this.progressMap.keys()].forEach(it => it.abort());
+        const files = fs.readdirSync(".");
+        const parts = files.filter(it => it.includes(this.inputData.title));
+        parts.forEach(file => fs.unlinkSync(file));
         console.log("已取消下载");
     }
     async downloadUrl(url, index = -1) {
         const partialLength = Math.round(this.inputData.totalSize / options.parts);
-        console.log(partialLength);
+        const title = (index === -1 ? this.inputData.title : this.inputData.title + " - " + index.toString());
         let startByte = 0;
         let part = 0;
         const promises = [];
@@ -59,7 +69,7 @@ class Downloader {
                         // makeRequest();
                         console.error(error);
                     });
-                    req.pipe(fs.createWriteStream(`${this.inputData.title}.part${part}`));
+                    req.pipe(fs.createWriteStream(`${title}.part${part}`));
                     return req;
                 };
                 this.progressMap.set(makeRequest(), 0);
@@ -68,43 +78,68 @@ class Downloader {
             part++;
         }
         await Promise.all(promises);
-        const dest = (index === -1 ? this.inputData.title : this.inputData.title + " - " + index.toString()) + ".flv";
-        await new Promise(resolve => {
+        const dest = title + ".flv";
+        return await new Promise(resolve => {
             fs.readdir(".", (_, files) => {
-                const parts = files.filter(it => it.includes(this.inputData.title));
-                const data = parts.map(file => fs.readFileSync(file));
+                const parts = files.filter(it => it.includes(title + ".part"));
+                const partRegex = /.*\.part([\d]+)/;
+                const data = parts.sort((a, b) => {
+                    const partA = parseInt(a.replace(partRegex, "$1"));
+                    const partB = parseInt(b.replace(partRegex, "$1"));
+                    return partA - partB;
+                }).map(file => fs.readFileSync(file));
                 const stream = fs.createWriteStream(dest);
                 data.forEach(it => stream.write(it));
                 stream.close();
                 parts.forEach(file => fs.unlinkSync(file));
-                resolve();
+                resolve(dest);
             });
         });
     }
     async download() {
         if (this.inputData.urls.length === 1) {
-            await this.downloadUrl(this.inputData.urls[0]);
+            return await this.downloadUrl(this.inputData.urls[0]);
         }
         else {
-            await Promise.all(this.inputData.urls.map((url, i) => this.downloadUrl(url, i)));
+            return await Promise.all(this.inputData.urls.map((url, i) => this.downloadUrl(url, i)));
         }
     }
 }
 (async () => {
-    console.log(options);
-    const jsonText = await clipboardy.read();
+    console.log(`分段值: ${options.parts}`);
+    let jsonText = '';
+    if (fs.existsSync(options.info)) {
+        jsonText = fs.readFileSync(options.info).toString("utf-8");
+    }
+    else {
+        jsonText = await clipboardy.read();
+    }
     try {
         const inputData = JSON.parse(jsonText);
+        const progressBar = new ProgressBar(":percent [:bar]", {
+            total: inputData.totalSize,
+            width: 20,
+            incomplete: ' ',
+        });
         const downloader = new Downloader(inputData, progress => {
-            console.log((progress * 100).toFixed(2) + "%");
+            progressBar.update(progress);
         });
         process.on("SIGINT", () => {
+            progressBar.terminate();
             downloader.cancelDownload();
             process.exit();
         });
-        await downloader.download();
+        progressBar.render();
+        const result = await downloader.download();
+        console.log(`下载完成: `);
+        if (typeof result === "string") {
+            console.log(result);
+        }
+        else {
+            result.forEach(console.log);
+        }
     }
     catch (error) {
-        console.error(`未在剪贴板找到足够的数据: ${error}`);
+        console.error(`错误: ${error}`);
     }
 })();

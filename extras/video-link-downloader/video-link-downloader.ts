@@ -10,11 +10,23 @@ interface InputData
     title: string;
     totalSize: number;
 }
+interface Settings
+{
+    parts: number;
+    info: string;
+}
 
 const optionDefinitions = [
-    { name: 'parts', alias: 'p', type: Number, defaultValue: 30 },
+    { name: 'info', alias: 'i', defaultOption: true, type: String, defaultValue: undefined },
+    { name: 'parts', alias: 'p', type: Number, defaultValue: undefined },
 ];
-const options = commandLineArgs(optionDefinitions) as { parts: number };
+const commandLineOptions = commandLineArgs(optionDefinitions) as Settings;
+let options = commandLineOptions;
+if (fs.existsSync("settings.json"))
+{
+    const jsonOptions = JSON.parse(fs.readFileSync("settings.json").toString("utf-8"));
+    options = Object.assign(jsonOptions, options);
+}
 
 type ProgressHandler = (p: number) => void;
 class Downloader
@@ -33,11 +45,9 @@ class Downloader
     cancelDownload()
     {
         [...this.progressMap.keys()].forEach(it => it.abort());
-        fs.readdir(".", (_, files) =>
-        {
-            const parts = files.filter(it => it.includes(this.inputData.title));
-            parts.forEach(file => fs.unlinkSync(file));
-        });
+        const files = fs.readdirSync(".");
+        const parts = files.filter(it => it.includes(this.inputData.title));
+        parts.forEach(file => fs.unlinkSync(file));
         console.log("已取消下载");
     }
     private async downloadUrl(url: string, index: number = -1)
@@ -100,7 +110,13 @@ class Downloader
             fs.readdir(".", (_, files) =>
             {
                 const parts = files.filter(it => it.includes(title + ".part"));
-                const data = parts.map(file => fs.readFileSync(file));
+                const partRegex = /.*\.part([\d]+)/;
+                const data = parts.sort((a, b) =>
+                {
+                    const partA = parseInt(a.replace(partRegex, "$1"));
+                    const partB = parseInt(b.replace(partRegex, "$1"));
+                    return partA - partB;
+                }).map(file => fs.readFileSync(file));
                 const stream = fs.createWriteStream(dest);
                 data.forEach(it => stream.write(it));
                 stream.close();
@@ -123,21 +139,32 @@ class Downloader
 }
 (async () =>
 {
-    console.log(options);
-    const jsonText = await clipboardy.read();
+    console.log(`分段值: ${options.parts}`);
+    let jsonText = '';
+    if (fs.existsSync(options.info))
+    {
+        jsonText = fs.readFileSync(options.info).toString("utf-8");
+    }
+    else
+    {
+        jsonText = await clipboardy.read();
+    }
     try
     {
         const inputData = JSON.parse(jsonText) as InputData;
-        const progressBar = new ProgressBar(":percent [:bar]", inputData.totalSize);
+        const progressBar = new ProgressBar(":percent [:bar]", {
+            total: inputData.totalSize,
+            width: 20,
+            incomplete: ' ',
+        });
         const downloader = new Downloader(inputData, progress =>
         {
-            // console.log((progress * 100).toFixed(2) + "%");
             progressBar.update(progress);
         });
         process.on("SIGINT", () =>
         {
-            downloader.cancelDownload();
             progressBar.terminate();
+            downloader.cancelDownload();
             process.exit();
         });
         progressBar.render();
