@@ -71,10 +71,10 @@ class Downloader {
                         this.progressMap.set(req, this.progressMap.get(req) + data.length);
                         this.updateProgress();
                     }).on("error", error => {
-                        this.progressMap.set(req, 0);
+                        this.progressMap.delete(req);
+                        this.progressMap.set(makeRequest(), 0);
                         this.updateProgress();
-                        // makeRequest();
-                        console.error(error);
+                        console.error(`片段下载失败: ${error} 重试中...`);
                     });
                     req.pipe(fs.createWriteStream(`${title}.part${part}`));
                     return req;
@@ -132,7 +132,7 @@ class Downloader {
         inputData = JSON.parse(jsonText);
     }
     catch (error) {
-        console.log(`未在剪贴板检测到有效数据, 也没有指定输入文件.`);
+        console.log(`[无数据] 未在剪贴板检测到有效数据/没有指定输入文件/输入文件的数据无效.`);
         process.exit();
     }
     try {
