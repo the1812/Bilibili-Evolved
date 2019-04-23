@@ -6,7 +6,11 @@
 #vip-exchange-modal .vip-exchange .months button.disabled,
 .tab-list .tab-item.active:before,
 .live-skin-coloration-area .live-skin-separate-area,
-.live-skin-coloration-area .live-skin-separate-area-hover:hover
+.live-skin-coloration-area .live-skin-separate-area-hover:hover,
+.action-row .sch-pub-btn.publishing,
+.action-row .sch-pub-btn.disabled,
+.action-row .publish-btn.publishing,
+.action-row .publish-btn.disabled
 {
     background-color: #222 !important;
 }
