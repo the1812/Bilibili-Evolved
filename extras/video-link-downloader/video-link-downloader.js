@@ -18,7 +18,6 @@ let options = commandLineOptions;
 //     const jsonOptions = JSON.parse(fs.readFileSync("settings.json").toString("utf-8")) as Settings;
 //     options = Object.assign(jsonOptions, options);
 // }
-process.chdir(options.output);
 if (options.parts < 1) {
     console.error("分段数不能小于1");
     process.exit();
@@ -137,6 +136,7 @@ class Downloader {
         process.exit();
     }
     try {
+        process.chdir(options.output);
         const progressBar = new ProgressBar(":percent [:bar]", {
             total: inputData.totalSize,
             width: 20,
