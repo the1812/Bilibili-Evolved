@@ -609,6 +609,10 @@ class HistoryList extends VideoList
                         parameter.push(`t=${item.progress}`);
                         description += ` ${Math.floor(progress * 100)}%`;
                     }
+                    else if (item.progress === 0)
+                    {
+                        description += ` 刚开始看`;
+                    }
                     else
                     {
                         description += " 100%";
