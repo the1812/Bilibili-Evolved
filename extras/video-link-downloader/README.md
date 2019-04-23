@@ -1,5 +1,4 @@
 # Bilibili Evolved 视频链接下载器
-**⚠ 目前只有预览通道的 Bilibili Evolved 拥有`复制数据`和`导出数据`的功能.**
 
 从 [Bilibili Evolved](https://github.com/the1812/Bilibili-Evolved/) 复制的视频数据下载视频, 用于解决 Chrome 无法下载超过 2GB 视频的限制, 以及 Firefox 内存占用过大导致标签页卡顿的问题.
 
@@ -15,10 +14,18 @@
 ```shell
 npm install -g bilibili-evolved-video-link-downloader
 ```
+> Windows 系统的终端可以从 **资源管理器** 里的 **文件** - **打开 Windows Powershell** 启动.
 
 安装完成后, 即可使用 `vld` 命令来下载视频.
 
+要卸载的话, 只需把 `install` 换成 `uninstall`.
+```shell
+npm uninstall -g bilibili-evolved-video-link-downloader
+```
+
 ## 使用
+**⚠ 目前只有预览通道的 Bilibili Evolved 拥有`复制数据`和`导出数据`的功能.**
+
 在网页中选择 附加功能-下载视频, 选择清晰度后选择`复制数据`或`导出数据`.
 
 然后在要保存视频的文件夹中打开终端.
