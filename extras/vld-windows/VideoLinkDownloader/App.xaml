@@ -1,0 +1,17 @@
+﻿<Application
+  x:Class="VideoLinkDownloader.App"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:VideoLinkDownloader"
+  xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+  StartupUri="MainWindow.xaml">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <!--  FluentWPF Controls  -->
+        <ResourceDictionary
+          Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>
