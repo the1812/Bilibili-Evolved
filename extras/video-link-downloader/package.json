@@ -1,7 +1,7 @@
 {
   "name": "bilibili-evolved-video-link-downloader",
   "version": "1.7.28",
-  "description": "下载从 Bilibili-Evolved 复制的视频链接",
+  "description": "Bilibili Evolved 视频链接下载器",
   "main": "video-link-downloader.js",
   "bin": {
     "vld": "video-link-downloader.js"
