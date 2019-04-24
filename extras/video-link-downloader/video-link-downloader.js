@@ -23,36 +23,42 @@ if (options.parts < 1) {
     process.exit();
 }
 class Downloader {
-    constructor(inputData, progress) {
+    constructor(inputData) {
         this.inputData = inputData;
-        this.progress = progress;
         this.progressMap = new Map();
+        this.progressBar = new ProgressBar(":percent [:bar]", {
+            total: this.inputData.totalSize,
+            width: 20,
+            incomplete: ' ',
+        });
+        Downloader.workingDownloader = this;
     }
     updateProgress() {
         const progress = this.progressMap ?
             [...this.progressMap.values()].reduce((a, b) => a + b, 0) / this.inputData.totalSize : 0;
-        this.progress && this.progress(progress);
+        this.progressBar.update(progress);
     }
     cancelDownload() {
         [...this.progressMap.keys()].forEach(it => it.abort());
+        this.progressBar.terminate();
         const files = fs.readdirSync(".");
         const parts = files.filter(it => it.includes(this.inputData.title));
         parts.forEach(file => fs.unlinkSync(file));
         console.log("已取消下载");
     }
-    async downloadUrl(url, index = -1) {
-        const partialLength = Math.round(this.inputData.totalSize / options.parts);
+    async downloadFragment(fragment, index = -1) {
+        const partialLength = Math.round(fragment.size / options.parts);
         const title = (index === -1 ? this.inputData.title : this.inputData.title + " - " + index.toString());
         let startByte = 0;
         let part = 0;
         const promises = [];
-        while (startByte < this.inputData.totalSize) {
-            const endByte = Math.min(this.inputData.totalSize - 1, Math.round(startByte + partialLength));
+        while (startByte < fragment.size) {
+            const endByte = Math.min(fragment.size - 1, Math.round(startByte + partialLength));
             const range = `bytes=${startByte}-${endByte}`;
             promises.push(new Promise((resolve, reject) => {
                 const makeRequest = () => {
                     const req = request({
-                        url,
+                        url: fragment.url,
                         method: "GET",
                         headers: {
                             Range: range,
@@ -74,7 +80,7 @@ class Downloader {
                         this.progressMap.delete(req);
                         this.progressMap.set(makeRequest(), 0);
                         this.updateProgress();
-                        console.error(`片段下载失败: ${error} 重试中...`);
+                        console.error(`\n片段下载失败: ${error} 重试中...`);
                     });
                     req.pipe(fs.createWriteStream(`${title}.part${part}`));
                     return req;
@@ -85,8 +91,16 @@ class Downloader {
             part++;
         }
         await Promise.all(promises);
+        return title;
+    }
+    async mergeFragment(title, index = -1) {
         const dest = title + ".flv";
-        console.log("正在合并文件...");
+        if (index !== -1) {
+            console.log("正在合并片段" + index.toString() + "...");
+        }
+        else {
+            console.log("正在合并文件...");
+        }
         if (options.parts === 1) {
             fs.renameSync(title + ".part0", dest);
         }
@@ -110,14 +124,26 @@ class Downloader {
         return dest;
     }
     async download() {
-        if (this.inputData.urls.length === 1) {
-            return await this.downloadUrl(this.inputData.urls[0]);
+        console.log(`正在下载: ${this.inputData.title}`);
+        this.progressBar.render();
+        let result;
+        if (this.inputData.fragments.length === 1) {
+            result = await this.mergeFragment(await this.downloadFragment(this.inputData.fragments[0]));
         }
         else {
-            return await Promise.all(this.inputData.urls.map((url, i) => this.downloadUrl(url, i)));
+            const titles = await Promise.all(this.inputData.fragments.map((f, i) => this.downloadFragment(f, i)));
+            result = await Promise.all(titles.map((t, i) => this.mergeFragment(t, i)));
+        }
+        console.log(`下载完成: `);
+        if (typeof result === "string") {
+            console.log(result);
+        }
+        else {
+            result.forEach(it => console.log(it));
         }
     }
 }
+Downloader.workingDownloader = null;
 (async () => {
     // console.log(`分段值: ${options.parts}`);
     let jsonText = '';
@@ -127,7 +153,7 @@ class Downloader {
     else {
         jsonText = await clipboardy.read();
     }
-    let inputData = { urls: [], totalSize: 0, title: '' };
+    let inputData = { fragments: [], totalSize: 0, title: '' };
     try {
         inputData = JSON.parse(jsonText);
     }
@@ -137,30 +163,15 @@ class Downloader {
     }
     try {
         process.chdir(options.output);
-        const progressBar = new ProgressBar(":percent [:bar]", {
-            total: inputData.totalSize,
-            width: 20,
-            incomplete: ' ',
-        });
-        const downloader = new Downloader(inputData, progress => {
-            progressBar.update(progress);
-        });
         process.on("SIGINT", () => {
-            progressBar.terminate();
-            downloader.cancelDownload();
+            Downloader.workingDownloader && Downloader.workingDownloader.cancelDownload();
             process.exit();
         });
-        progressBar.render();
-        const result = await downloader.download();
-        console.log(`下载完成: `);
-        if (typeof result === "string") {
-            console.log(result);
-        }
-        else {
-            result.forEach(console.log);
-        }
+        const downloader = new Downloader(inputData);
+        await downloader.download();
     }
     catch (error) {
-        console.error(`错误: ${error}`);
+        // Downloader.workingDownloader && Downloader.workingDownloader.cancelDownload();
+        console.error(`\n错误: ${error}`);
     }
 })();
