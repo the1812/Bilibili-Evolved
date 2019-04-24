@@ -150,7 +150,7 @@
 
 #custom-navbar-home-popup
 {
-    max-height: 75vh;
+    max-height: 80vh;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -171,11 +171,30 @@
 {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+#custom-navbar-home-popup .category-item svg
+{
+    width: 25px;
+    height: 25px;
+    fill: currentColor;
+    margin-right: 10px;
+}
+#custom-navbar-home-popup .category-item div
+{
+    flex: 1 0 auto;
+}
+#custom-navbar-home-popup .category-item.main
+{
+    min-width: 150px;
 }
 #custom-navbar-home-popup .category-item .popup
 {
     z-index: 10002;
     width: max-content;
+    transform: none;
+    left: 100%;
+    top: 0;
 }
 #custom-navbar-home-popup .category-item .popup a,
 #upload-actions a
