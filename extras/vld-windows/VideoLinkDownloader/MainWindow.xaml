@@ -7,10 +7,10 @@
   xmlns:local="clr-namespace:VideoLinkDownloader"
   xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
   mc:Ignorable="d"
-  TintColor="#afff"
-  FallbackColor="#afff"
+  TintColor="#0fff"
+  FallbackColor="#0fff"
   Foreground="Black"
-  NoiseOpacity="0.03"
+  NoiseOpacity="0.01"
   Title="MainWindow"
   ShowTitleBar="False"
   Height="450"
@@ -27,6 +27,7 @@
         Text="This is AcrylicWindow"
         TextWrapping="Wrap" />
       <Button
+        x:Name="button"
         Content="Button"
         HorizontalAlignment="Left"
         Margin="5"
