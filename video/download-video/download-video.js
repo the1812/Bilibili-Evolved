@@ -258,7 +258,7 @@ class VideoDownloader
     exportData(copy = false)
     {
         const data = JSON.stringify({
-            urls: this.fragments.map(it => it.url),
+            fragments: this.fragments,
             title: getFriendlyTitle(true),
             totalSize: this.fragments.map(it => it.size).reduce((acc, it) => acc + it),
         });
