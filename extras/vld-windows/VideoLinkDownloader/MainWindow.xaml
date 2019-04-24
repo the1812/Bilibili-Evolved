@@ -10,7 +10,7 @@
   TintColor="#0fff"
   FallbackColor="#0fff"
   Foreground="Black"
-  NoiseOpacity="0.01"
+  NoiseOpacity="0.05"
   Title="MainWindow"
   ShowTitleBar="False"
   Height="450"
