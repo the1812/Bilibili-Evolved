@@ -153,25 +153,31 @@ Downloader.workingDownloader = null;
     else {
         jsonText = await clipboardy.read();
     }
-    let inputData = { fragments: [], totalSize: 0, title: '' };
     try {
-        inputData = JSON.parse(jsonText);
+        const inputData = JSON.parse(jsonText);
+        try {
+            process.chdir(options.output);
+            process.on("SIGINT", () => {
+                Downloader.workingDownloader && Downloader.workingDownloader.cancelDownload();
+                process.exit();
+            });
+            if (Array.isArray(inputData)) {
+                for (const data of inputData) {
+                    const downloader = new Downloader(data);
+                    await downloader.download();
+                }
+            }
+            else {
+                const downloader = new Downloader(inputData);
+                await downloader.download();
+            }
+        }
+        catch (error) {
+            Downloader.workingDownloader && Downloader.workingDownloader.cancelDownload();
+            console.error(`\n错误: ${error}`);
+        }
     }
     catch (error) {
         console.log(`[无数据] 未在剪贴板检测到有效数据/没有指定输入文件/输入文件的数据无效.`);
-        process.exit();
-    }
-    try {
-        process.chdir(options.output);
-        process.on("SIGINT", () => {
-            Downloader.workingDownloader && Downloader.workingDownloader.cancelDownload();
-            process.exit();
-        });
-        const downloader = new Downloader(inputData);
-        await downloader.download();
-    }
-    catch (error) {
-        // Downloader.workingDownloader && Downloader.workingDownloader.cancelDownload();
-        console.error(`\n错误: ${error}`);
     }
 })();
