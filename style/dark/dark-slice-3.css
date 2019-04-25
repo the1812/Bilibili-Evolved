@@ -236,7 +236,8 @@ body>div.to-top.on,
 .input-section .schedule-panel,
 .date-input,
 .bb-comment .con,
-.bb-comment .list-item:hover
+.bb-comment .list-item:hover,
+.bb-comment .hot-line span
 {
     background-color: transparent !important;
 }
@@ -536,6 +537,7 @@ body>div.to-top.on,
 .input-section .schedule-panel .s-panel,
 .date-input > input,
 .date-input .date-panel,
+.bb-comment .hot-line,
 .bb-comment .bottom-page.center
 {
     border-color: transparent !important;
