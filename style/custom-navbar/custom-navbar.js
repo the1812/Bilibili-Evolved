@@ -298,8 +298,8 @@ class UserInfo extends NavbarComponent
         this.href = "https://space.bilibili.com";
         this.html = /*html*/`
             <div class="user-face-container">
-                <div class="user-face"></div>
-                <div class="user-pendant"></div>
+                <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-face"></img>
+                <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-pendant"></img>
             </div>
         `;
         this.popupHtml = /*html*/`
@@ -406,16 +406,32 @@ class UserInfo extends NavbarComponent
         const face = await SpinQuery.select(".user-face");
         if (userInfo.isLogin)
         {
-            const pendant = await SpinQuery.select(".user-pendant");
-            face.style.backgroundImage = `url('${userInfo.face}')`;
+            const faceUrl = userInfo.face.replace("http", "https");
+            // face.setAttribute("src", faceUrl);
+            const faceBaseSize = 68;
+            const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4];
+            face.setAttribute("srcset", dpis.reduce((acc, dpi) =>
+            {
+                return acc + `, ${faceUrl}@${parseInt(faceBaseSize * dpi)}w_${parseInt(faceBaseSize * dpi)}h.jpg ${dpi}x`;
+            }, ""));
+            // face.style.backgroundImage = `url('${userInfo.face}@68w_68h.jpg')`;
             if (userInfo.pendant.image)
             {
-                pendant.style.backgroundImage = `url('${userInfo.pendant.image}')`;
+                const pendant = await SpinQuery.select(".user-pendant");
+                const pendantUrl = userInfo.pendant.image.replace("http", "https");
+                // pendant.setAttribute("src", pendantUrl);
+                const pendantBaseSize = 116;
+                pendant.setAttribute("srcset", dpis.reduce((acc, dpi) =>
+                {
+                    return acc + `, ${pendantUrl}@${parseInt(pendantBaseSize * dpi)}w_${parseInt(pendantBaseSize * dpi)}h.jpg ${dpi}x`;
+                }, ""));
+                // pendant.style.backgroundImage = `url('${userInfo.pendant.image}@116w_116h.jpg')`;
             }
         }
         else
         {
-            face.style.backgroundImage = `url('https://static.hdslb.com/images/akari.jpg')`;
+            face.setAttribute("src", "https://static.hdslb.com/images/akari.jpg");
+            // face.style.backgroundImage = `url('https://static.hdslb.com/images/akari.jpg')`;
         }
     }
     get name()
