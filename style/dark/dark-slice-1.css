@@ -34,7 +34,6 @@ li.tag,
 form.ipt,
 .tag-info-pane,
 .bangumi-info-module,
-.bb-comment,
 .user-card-m,
 textarea,
 .bb-comment .hot-line span,
@@ -489,7 +488,8 @@ body,
 .divider,
 .fjw-point .line,
 font>span,
-.list-item .close .close-icon
+.list-item .close .close-icon,
+.bb-comment
 {
     background-color: transparent !important;
 }

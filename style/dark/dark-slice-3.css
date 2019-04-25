@@ -83,7 +83,8 @@ div#square.container,
 .input-section .schedule-panel .s-input,
 .input-section .schedule-panel .s-panel,
 .date-input > input,
-.date-input .date-panel
+.date-input .date-panel,
+.bb-comment .comment-emoji
 {
     background-color: #222 !important;
 }
@@ -233,7 +234,9 @@ body>div.to-top.on,
 .rank-list-ctnr,
 .input-section,
 .input-section .schedule-panel,
-.date-input
+.date-input,
+.bb-comment .con,
+.bb-comment .list-item:hover
 {
     background-color: transparent !important;
 }
@@ -317,7 +320,8 @@ body>div.to-top.on,
 .container .left-container .play-options,
 .twp-mask .twp-wrapper .twp-container .twp-text .twp-desc,
 .video-toolbar .appeal-text,
-.date-input .date-panel .week
+.date-input .date-panel .week,
+.bb-comment .bottom-page.center
 {
     color: #aaa !important;
 }
@@ -531,7 +535,8 @@ body>div.to-top.on,
 .input-section .schedule-panel .s-input,
 .input-section .schedule-panel .s-panel,
 .date-input > input,
-.date-input .date-panel
+.date-input .date-panel,
+.bb-comment .bottom-page.center
 {
     border-color: transparent !important;
 }
