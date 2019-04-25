@@ -423,7 +423,7 @@ class UserInfo extends NavbarComponent
                 const pendantBaseSize = 116;
                 pendant.setAttribute("srcset", dpis.reduce((acc, dpi) =>
                 {
-                    return acc + `, ${pendantUrl}@${parseInt(pendantBaseSize * dpi)}w_${parseInt(pendantBaseSize * dpi)}h.jpg ${dpi}x`;
+                    return acc + `, ${pendantUrl}@${parseInt(pendantBaseSize * dpi)}w_${parseInt(pendantBaseSize * dpi)}h.png ${dpi}x`;
                 }, ""));
                 // pendant.style.backgroundImage = `url('${userInfo.pendant.image}@116w_116h.jpg')`;
             }
