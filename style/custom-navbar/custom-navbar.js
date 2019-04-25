@@ -81,17 +81,77 @@ class Upload extends NavbarComponent
         <div id="upload-button">投稿</div>`;
         this.popupHtml = /*html*/`
         <ul id="upload-actions">
-            <li><a href="https://member.bilibili.com/v2#/upload/text/apply">专栏投稿</a></li>
-            <li><a href="https://member.bilibili.com/v2#/upload/audio/">音频投稿</a></li>
-            <li><a href="https://member.bilibili.com/v2#/upload/video/frame">视频投稿</a></li>
-            <li><a href="https://member.bilibili.com/v2#/upload-manager/article">投稿管理</a></li>
-            <li><a href="https://member.bilibili.com/v2#/home">创作中心</a></li>
+            <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/text/apply">专栏投稿</a></li>
+            <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/audio/">音频投稿</a></li>
+            <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/video/frame">视频投稿</a></li>
+            <li><a target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">投稿管理</a></li>
+            <li><a target="_blank" href="https://member.bilibili.com/v2#/home">创作中心</a></li>
         </ul>
         `;
     }
     get name()
     {
         return "投稿";
+    }
+}
+class Messages extends NavbarComponent
+{
+    constructor()
+    {
+        super();
+        this.href = "https://message.bilibili.com/";
+        this.html = "消息";
+        this.popupHtml = /*html*/`
+        <ul id="message-list">
+            <li><a data-name="reply_me" target="_blank" href="https://message.bilibili.com/#/reply">回复我的</a></li>
+            <li><a data-name="at_me" target="_blank" href="https://message.bilibili.com/#/at">@我的</a></li>
+            <li><a data-name="praise_me" target="_blank" href="https://message.bilibili.com/#/love">收到的赞</a></li>
+            <li><a data-name="notify_me" target="_blank" href="https://message.bilibili.com/#/system">系统通知</a></li>
+        </ul>
+        `;
+        this.requestedPopup = true;
+        this.init();
+    }
+    async init()
+    {
+        const json = await Ajax.getJsonWithCredentials("https://message.bilibili.com/api/notify/query.notify.count.do");
+        const list = await SpinQuery.select("#message-list");
+        const items = [...list.querySelectorAll("a[data-name]")];
+        const names = items.map(it => it.getAttribute("data-name"));
+
+        if (json.code !== 0)
+        {
+            return;
+        }
+        const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`);
+        let totalCount = names.reduce((acc, it) => acc + json.data[it], 0);
+        if (totalCount === 0)
+        {
+            return;
+        }
+        notifyElement.innerHTML = totalCount;
+        names.forEach((name, index) =>
+        {
+            const count = json.data[name];
+            if (count > 0)
+            {
+                items[index].setAttribute("data-count", count);
+            }
+            else
+            {
+                items[index].removeAttribute("data-count");
+            }
+        });
+        items.forEach(item =>
+        {
+            item.addEventListener("click", () =>
+            {
+                const count = item.getAttribute("data-count");
+                item.removeAttribute("data-count");
+                totalCount -= count;
+                notifyElement.innerHTML = totalCount || "";
+            });
+        })
     }
 }
 class Category extends NavbarComponent
@@ -493,26 +553,26 @@ class Activities extends NotifyIframe
         return json.data.update_num;
     }
 }
-class Messages extends NotifyIframe
-{
-    constructor()
-    {
-        super("消息", "https://message.bilibili.com/", {
-            src: `https://message.bilibili.com/pages/nav/index`,
-            width: `110px`,
-            height: `210px`,
-            lazy: false,
-        });
-    }
-    getApiUrl()
-    {
-        return "https://message.bilibili.com/api/notify/query.notify.count.do";
-    }
-    getCount(json)
-    {
-        return Object.values(json.data).reduce((a, b) => a + b, 0);
-    }
-}
+// class Messages extends NotifyIframe
+// {
+//     constructor()
+//     {
+//         super("消息", "https://message.bilibili.com/", {
+//             src: `https://message.bilibili.com/pages/nav/index`,
+//             width: `110px`,
+//             height: `210px`,
+//             lazy: false,
+//         });
+//     }
+//     getApiUrl()
+//     {
+//         return "https://message.bilibili.com/api/notify/query.notify.count.do";
+//     }
+//     getCount(json)
+//     {
+//         return Object.values(json.data).reduce((a, b) => a + b, 0);
+//     }
+// }
 class VideoList extends NavbarComponent
 {
     constructor({ mainUrl, name, apiUrl, listName, listMap })
