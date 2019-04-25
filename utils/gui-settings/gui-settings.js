@@ -66,27 +66,27 @@ function setupEvents()
             e.currentTarget.parentElement.classList.toggle("opened");
         });
     });
-    onSettingsChange((key, _, value) =>
-    {
-        if (settings[key] !== value)
-        {
-            settings[key] = value;
-            const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
-            if (checkbox)
-            {
-                checkbox.checked = value;
-                raiseEvent(checkbox, "change");
-                return;
-            }
-            const textbox = document.querySelector(`input[type='text'][key='${key}']`);
-            if (textbox)
-            {
-                textbox.value = value;
-                raiseEvent(textbox, "change");
-                return;
-            }
-        }
-    });
+    // onSettingsChange((key, _, value) =>
+    // {
+    //     if (settings[key] !== value)
+    //     {
+    //         settings[key] = value;
+    //         const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
+    //         if (checkbox)
+    //         {
+    //             checkbox.checked = value;
+    //             raiseEvent(checkbox, "change");
+    //             return;
+    //         }
+    //         const textbox = document.querySelector(`input[type='text'][key='${key}']`);
+    //         if (textbox)
+    //         {
+    //             textbox.value = value;
+    //             raiseEvent(textbox, "change");
+    //             return;
+    //         }
+    //     }
+    // });
 }
 function listenSettingsChange()
 {
