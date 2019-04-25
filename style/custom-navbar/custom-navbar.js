@@ -7,6 +7,10 @@ const supportedUrls = [
     "/t.bilibili.com",
     "/search.bilibili.com",
     "/space.bilibili.com",
+    "/account.bilibili.com",
+    "/pay.bilibili.com",
+    "/member.bilibili.com",
+    "/big.bilibili.com",
 ];
 if (!supportedUrls.some(it => document.URL.includes(it)))
 {
