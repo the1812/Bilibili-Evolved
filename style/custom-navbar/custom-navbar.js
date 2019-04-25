@@ -5,6 +5,8 @@ if (isIframe())
 const supportedUrls = [
     "/www.bilibili.com",
     "/t.bilibili.com",
+    "/search.bilibili.com",
+    "/space.bilibili.com",
 ];
 if (!supportedUrls.some(it => document.URL.includes(it)))
 {

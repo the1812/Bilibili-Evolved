@@ -149,12 +149,13 @@ function saveSettings(newSettings)
         GM_setValue(key, newSettings[key]);
     }
 }
-function onSettingsChange(change)
+function onSettingsChange()
 {
     // for (const key in settings)
     // {
     //     GM_addValueChangeListener(key, change);
     // }
+    console.warn("此功能已弃用.");
 }
 // if (typeof GM_addValueChangeListener === "undefined")
 // {
