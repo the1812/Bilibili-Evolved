@@ -192,9 +192,17 @@
 {
     z-index: 10002;
     width: max-content;
-    transform: none;
+    transform: scaleX(0);
+    transform-origin: left;
+    padding: 8px;
     left: 100%;
     top: 0;
+    transition-delay: .3s;
+    pointer-events: initial;
+}
+#custom-navbar-home-popup .category-item:hover .popup
+{
+    transform: scaleX(1);
 }
 #custom-navbar-home-popup .category-item .popup a,
 #upload-actions a
