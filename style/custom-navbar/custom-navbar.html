@@ -315,7 +315,8 @@
                 v-html="component.html"></a>
             <div class="main-content" v-else v-html="component.html"></div>
             <div class="notify-count"></div>
-            <div class="popup" v-if="component.popupHtml" v-bind:class="{'no-padding': component.noPadding}">
+            <div class="popup" v-if="component.popupHtml"
+                v-bind:class="{'no-padding': component.noPadding, 'transparent': component.transparent }">
                 <div v-if="component.requestedPopup" v-html="component.popupHtml"></div>
             </div>
         </li>

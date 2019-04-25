@@ -515,6 +515,7 @@ class Iframe extends NavbarComponent
         this.noPadding = true;
         this.requestedPopup = lazy ? false : true;
         this.touch = false;
+        this.transparent = true;
     }
 }
 class NotifyIframe extends Iframe

@@ -4,6 +4,11 @@
     width: 192px !important;
     height: 120px !important;
 }
+.compact.light .primary-menu .nav-menu>li.home>a,
+.compact.light .primary-menu .nav-menu .side-nav .side-link i
+{
+    opacity: 0.4;
+}
 .bangumi-timing-module .card-timing,
 .groom-module
 {

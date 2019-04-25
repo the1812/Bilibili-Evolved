@@ -135,6 +135,11 @@
 {
     padding: 0;
 }
+.custom-navbar .popup.transparent
+{
+    background-color: transparent !important;
+    box-shadow: none;
+}
 .custom-navbar>ul>li:not(.disabled):hover>.popup,
 #custom-navbar-home-popup .category-item:hover .popup
 {
@@ -316,6 +321,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     top: -12px;
     left: -12px;
     opacity: 0;
+    pointer-events: none;
 }
 .user-info-panel
 {

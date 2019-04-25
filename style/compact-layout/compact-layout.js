@@ -4,5 +4,9 @@ const suitableSites = [
 ];
 if (suitableSites.indexOf(location.href.replace(location.search, '')) !== -1)
 {
-    document.documentElement.classList.add("compact");
+    document.body.classList.add("compact");
+    if (!settings.useDarkStyle)
+    {
+        document.body.classList.add("light");
+    }
 }
