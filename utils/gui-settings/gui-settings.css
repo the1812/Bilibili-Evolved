@@ -554,6 +554,8 @@ li.category.folded i.icon-arrow
 .gui-settings-flat-button i
 {
     margin-right: 8px;
+    line-height: 24px;
+    height: 24px;
 }
 
 .gui-settings-checkbox
