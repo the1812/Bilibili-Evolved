@@ -614,6 +614,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     transform: translateX(-50%);
     border-radius: 0 0 8px 8px;
     opacity: 0;
+    line-height: 14px;
 }
 .custom-navbar.fill .notify-count
 {

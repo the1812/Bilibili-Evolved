@@ -461,9 +461,14 @@ li.category.folded i.icon-arrow
     z-index: 100000;
     transform: translateX(-100%);
     transition: all .3s cubic-bezier(0, 0.86, 0.58, 1);
-    display: flex;
+    display: none;
     flex-direction: column;
     box-shadow: 4px 0px 16px 0px #0000;
+}
+.gui-settings-widgets-box.loaded,
+.gui-settings-box.loaded
+{
+    display: flex;
 }
 .gui-settings-widgets-box
 {

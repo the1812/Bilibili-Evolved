@@ -799,3 +799,20 @@ class HistoryList extends VideoList
         },
     });
 })();
+
+export default {
+    widget: {
+        content: /*html*/`
+        <div class="gui-settings-flat-button" id="custom-navbar-settings">
+            <i class="mdi mdi-24px mdi-auto-fix"></i>
+            <span>自定义顶栏</span>
+        </div>`,
+        success: () =>
+        {
+            document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
+            {
+
+            });
+        },
+    },
+};
