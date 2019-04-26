@@ -62,6 +62,10 @@ body
 }
 .custom-navbar.shadow
 {
+    box-shadow: #0002 0 1px 10px 1px;
+}
+.custom-navbar.dark.shadow
+{
     box-shadow: #0004 0px 2px 10px 1px;
 }
 .custom-navbar.dark:not(.fill)
@@ -591,6 +595,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     left: 50%;
     top: 0;
     background-color: var(--theme-color);
+    color: var(--foreground-color);
     padding: 0 8px;
     display: flex;
     justify-content: center;
