@@ -33,7 +33,7 @@ body
 
 .custom-navbar
 {
-    --navbar-foreground: black;
+    --navbar-foreground: #555;
     --navbar-background: white;
     position: absolute;
     top: 0;
@@ -43,6 +43,8 @@ body
     background-color: var(--navbar-background);
     color: var(--navbar-foreground);
     z-index: 10001;
+    display: flex;
+    justify-content: center;
 }
 .custom-navbar:not(.fill) .custom-navbar-iconfont
 {
@@ -50,11 +52,7 @@ body
 }
 .custom-navbar path
 {
-    fill: black;
-}
-.custom-navbar.dark:not(.fill) path
-{
-    fill: #eee;
+    fill: var(--navbar-foreground);
 }
 .custom-navbar.fill path
 {
@@ -105,6 +103,7 @@ body
     justify-content: space-between;
     margin: 0 5%;
     height: 100%;
+    flex-grow: 1;
 }
 .custom-navbar ul
 {
@@ -239,7 +238,7 @@ body
 #upload-actions a,
 #message-list a
 {
-    padding: 8px 16px;
+    padding: 8px;
     display: flex;
     justify-content: start;
     border-bottom: 2px solid transparent;
@@ -283,6 +282,18 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     align-items: center;
     position: relative;
     --submit-button-size: 30px;
+    opacity: 0.4;
+}
+.custom-navbar.fill form
+{
+    opacity: 0.8;
+}
+.custom-navbar form:focus-within,
+.custom-navbar form:hover,
+.custom-navbar.fill form:focus-within,
+.custom-navbar.fill form:hover
+{
+    opacity: 1;
 }
 .custom-navbar form input
 {
