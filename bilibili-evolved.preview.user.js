@@ -1982,7 +1982,7 @@ class ResourceManager
         if (typeof info.condition === "function")
         {
             condition = info.condition();
-            if (condition instanceof Promise)
+            if (typeof condition === "object" && "then" in condition)
             {
                 condition = await condition.catch(() => { return false; });
             }
