@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      283.30
+// @version      283.99
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -128,15 +128,30 @@ function loadSettings()
 {
     for (const key in settings)
     {
-        const value = GM_getValue(key, settings[key]);
+        let value = GM_getValue(key, settings[key]);
         if (settings[key] !== undefined && value.constructor === Object)
         {
-            settings[key] = Object.assign(settings[key], value);
+            value = Object.assign(settings[key], value);
         }
-        else
-        {
-            settings[key] = value;
-        }
+        Object.defineProperty(settings, key, {
+            get()
+            {
+                return value;
+            },
+            set(newValue)
+            {
+                value = newValue;
+                GM_setValue(key, newValue);
+            },
+        });
+        // if (settings[key] !== undefined && value.constructor === Object)
+        // {
+        //     settings[key] = Object.assign(settings[key], value);
+        // }
+        // else
+        // {
+        //     settings[key] = value;
+        // }
     }
     for (const key in fixedSettings)
     {
@@ -145,10 +160,10 @@ function loadSettings()
 }
 function saveSettings(newSettings)
 {
-    for (const key in settings)
-    {
-        GM_setValue(key, newSettings[key]);
-    }
+    // for (const key in settings)
+    // {
+    //     GM_setValue(key, newSettings[key]);
+    // }
 }
 function onSettingsChange()
 {

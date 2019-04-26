@@ -127,15 +127,30 @@ function loadSettings()
 {
     for (const key in settings)
     {
-        const value = GM_getValue(key, settings[key]);
+        let value = GM_getValue(key, settings[key]);
         if (settings[key] !== undefined && value.constructor === Object)
         {
-            settings[key] = Object.assign(settings[key], value);
+            value = Object.assign(settings[key], value);
         }
-        else
-        {
-            settings[key] = value;
-        }
+        Object.defineProperty(settings, key, {
+            get()
+            {
+                return value;
+            },
+            set(newValue)
+            {
+                value = newValue;
+                GM_setValue(key, newValue);
+            },
+        });
+        // if (settings[key] !== undefined && value.constructor === Object)
+        // {
+        //     settings[key] = Object.assign(settings[key], value);
+        // }
+        // else
+        // {
+        //     settings[key] = value;
+        // }
     }
     for (const key in fixedSettings)
     {
@@ -144,10 +159,10 @@ function loadSettings()
 }
 function saveSettings(newSettings)
 {
-    for (const key in settings)
-    {
-        GM_setValue(key, newSettings[key]);
-    }
+    // for (const key in settings)
+    // {
+    //     GM_setValue(key, newSettings[key]);
+    // }
 }
 function onSettingsChange()
 {
