@@ -237,7 +237,8 @@ body>div.to-top.on,
 .date-input,
 .bb-comment .con,
 .bb-comment .list-item:hover,
-.bb-comment .hot-line span
+.bb-comment .hot-line span,
+.bb-comment .more-link:hover
 {
     background-color: transparent !important;
 }
@@ -1024,7 +1025,8 @@ body>div.to-top.on
 .bilibili-player-context-menu-container.black ul>li a>.active,
 .video-toolbar .appeal-text:hover,
 .input-section .schedule-panel .s-item:hover,
-.date-input .date-panel .day.active
+.date-input .date-panel .day.active,
+.bb-comment .more-link:hover
 {
     color: var(--theme-color) !important;
 }
