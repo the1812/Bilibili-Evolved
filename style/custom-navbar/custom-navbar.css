@@ -18,6 +18,8 @@
 body
 {
     --navbar-height: 50px;
+    --navbar-foreground: #555;
+    --navbar-background: white;
 }
 
 .bili-header-m>.nav-menu,
@@ -33,8 +35,6 @@ body
 
 .custom-navbar
 {
-    --navbar-foreground: #555;
-    --navbar-background: white;
     position: absolute;
     top: 0;
     left: 0;
@@ -641,6 +641,82 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     justify-content: center;
     font-size: 11pt;
     border-radius: 6px;
+}
+.custom-navbar-settings
+{
+    display: none;
+    width: 500px;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10001;
+    background: var(--navbar-background);
+    padding: 16px;
+}
+.custom-navbar-settings h1
+{
+    color: var(--navbar-foreground);
+    font-size: 16pt;
+}
+.custom-navbar-settings.show
+{
+    display: flex;
+}
+.custom-navbar-settings .navbar-preview
+{
+    height: 50px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    margin: 8px;
+    border: 2px solid transparent;
+}
+.custom-navbar-settings .navbar-preview i
+{
+    margin-right: 16px;
+}
+.custom-navbar-settings .navbar-preview .placeholder
+{
+    width: 50px;
+    height: 20px;
+    border-radius: 8px;
+    margin: 0 16px;
+}
+.custom-navbar-settings .style
+{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+.custom-navbar-settings .style input
+{
+    display: none;
+    width: 0;
+    height: 0;
+}
+.custom-navbar-settings .style input:checked ~ .navbar-preview
+{
+    border-color: var(--theme-color);
+}
+.custom-navbar-settings .style-fill .navbar-preview
+{
+    background: var(--theme-color);
+    color: var(--foreground-color-d);
+}
+.custom-navbar-settings .style-fill .navbar-preview .placeholder
+{
+    background: var(--foreground-color-d);
+}
+.custom-navbar-settings .style-color .navbar-preview
+{
+    background: var(--navbar-background);
+    color: var(--navbar-foreground);
 }
 
 

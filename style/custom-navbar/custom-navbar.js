@@ -18,6 +18,7 @@ if (!supportedUrls.some(it => document.URL.includes(it)))
 }
 
 let userInfo = {};
+let orders = {};
 class NavbarComponent
 {
     constructor()
@@ -807,11 +808,12 @@ export default {
             <i class="mdi mdi-24px mdi-auto-fix"></i>
             <span>自定义顶栏</span>
         </div>`,
-        success: () =>
+        success: async () =>
         {
+            const settings = await SpinQuery.select(".custom-navbar-settings");
             document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
             {
-
+                settings.classList.toggle("show");
             });
         },
     },
