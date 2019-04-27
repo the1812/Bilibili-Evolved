@@ -98,10 +98,10 @@ class Downloader {
     async mergeFragment(title, index = -1) {
         const dest = title + ".flv";
         if (index !== -1) {
-            console.log("正在合并片段" + index.toString() + "...".green);
+            console.log(`正在合并片段${index.toString()}...`.blue);
         }
         else {
-            console.log("正在合并文件...".green);
+            console.log("正在合并文件...".blue);
         }
         if (options.parts === 1) {
             fs.renameSync(title + ".part0", dest);

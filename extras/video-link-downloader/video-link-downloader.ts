@@ -138,11 +138,11 @@ class Downloader
         const dest = title + ".flv";
         if (index !== -1)
         {
-            console.log("正在合并片段" + index.toString() + "...".green);
+            console.log(`正在合并片段${index.toString()}...`.blue);
         }
         else
         {
-            console.log("正在合并文件...".green);
+            console.log("正在合并文件...".blue);
         }
         if (options.parts === 1)
         {
