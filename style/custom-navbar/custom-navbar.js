@@ -747,6 +747,7 @@ class HistoryList extends VideoList
     if (settings.useDarkStyle)
     {
         navbar.classList.add("dark");
+        document.querySelector(".custom-navbar-settings").classList.add("dark");
     }
     const components = [
         new Logo,
@@ -810,10 +811,35 @@ export default {
         </div>`,
         success: async () =>
         {
-            const settings = await SpinQuery.select(".custom-navbar-settings");
+            const settingsPanel = await SpinQuery.select(".custom-navbar-settings");
+            const customNavbar = document.querySelector(".custom-navbar");
             document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
             {
-                settings.classList.toggle("show");
+                settingsPanel.classList.toggle("show");
+                document.querySelector(".gui-settings-mask").click();
+            });
+            new Vue({
+                el: ".custom-navbar-settings .style",
+                data: {
+                    fill: settings.customNavbarSettings.fill,
+                    shadow: settings.customNavbarSettings.shadow,
+                },
+                watch: {
+                    fill(newValue)
+                    {
+                        settings.customNavbarSettings = Object.assign(settings.customNavbarSettings, {
+                            fill: newValue
+                        });
+                        customNavbar.classList[newValue ? "add" : "remove"]("fill");
+                    },
+                    shadow(newValue)
+                    {
+                        settings.customNavbarSettings = Object.assign(settings.customNavbarSettings, {
+                            shadow: newValue
+                        });
+                        customNavbar.classList[newValue ? "add" : "remove"]("shadow");
+                    },
+                }
             });
         },
     },

@@ -66,7 +66,8 @@ body
 {
     box-shadow: #0004 0px 2px 10px 1px;
 }
-.custom-navbar.dark:not(.fill)
+.custom-navbar.dark:not(.fill),
+.custom-navbar-settings.dark
 {
     --navbar-background: #222;
     --navbar-foreground: #eee;
@@ -83,7 +84,9 @@ body
     background: #222;
 }
 .custom-navbar *,
-.custom-navbar
+.custom-navbar,
+.custom-navbar-settings,
+.custom-navbar-settings *
 {
     transition: all .2s ease-out;
 }
@@ -653,7 +656,12 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     transform: translate(-50%, -50%);
     z-index: 10001;
     background: var(--navbar-background);
-    padding: 16px;
+    padding: 16px 24px;
+    box-shadow: #0002 0 1px 10px 1px;
+}
+.custom-navbar-settings.dark
+{
+    box-shadow: #0004 0px 2px 10px 1px;
 }
 .custom-navbar-settings h1
 {
@@ -663,27 +671,6 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar-settings.show
 {
     display: flex;
-}
-.custom-navbar-settings .navbar-preview
-{
-    height: 50px;
-    width: 200px;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    margin: 8px;
-    border: 2px solid transparent;
-}
-.custom-navbar-settings .navbar-preview i
-{
-    margin-right: 16px;
-}
-.custom-navbar-settings .navbar-preview .placeholder
-{
-    width: 50px;
-    height: 20px;
-    border-radius: 8px;
-    margin: 0 16px;
 }
 .custom-navbar-settings .style
 {
@@ -700,23 +687,32 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     width: 0;
     height: 0;
 }
-.custom-navbar-settings .style input:checked ~ .navbar-preview
+.custom-navbar-settings .style-label
 {
-    border-color: var(--theme-color);
+    font-size: 12pt;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
-.custom-navbar-settings .style-fill .navbar-preview
+.custom-navbar-settings .style input ~ span
 {
-    background: var(--theme-color);
-    color: var(--foreground-color-d);
-}
-.custom-navbar-settings .style-fill .navbar-preview .placeholder
-{
-    background: var(--foreground-color-d);
-}
-.custom-navbar-settings .style-color .navbar-preview
-{
-    background: var(--navbar-background);
     color: var(--navbar-foreground);
+}
+.custom-navbar-settings .style input:checked ~ span
+{
+    color: var(--theme-color);
+}
+.custom-navbar-settings .style input ~ i
+{
+    color: var(--theme-color);
+    font-size: 20px;
+    margin-right: 8px;
+    opacity: 0;
+}
+.custom-navbar-settings .style input:checked ~ i
+{
+    opacity: 1;
 }
 
 

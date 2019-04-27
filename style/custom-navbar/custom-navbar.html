@@ -324,18 +324,16 @@
 </div>
 <div class="custom-navbar-settings">
     <div class="style">
-        <h1>着色模式</h1>
-        <label for="style-fill" class="style-fill">
-            <input id="style-fill" type="radio">
-            <div class="navbar-preview">
-                <i class="custom-navbar-iconfont custom-navbar-icon-logo"></i>
-                <div class="placeholder"></div>
-                <div class="placeholder"></div>
-            </div>
+        <h1>样式</h1>
+        <label for="style-fill" class="style-label">
+            <input v-model="fill" id="style-fill" type="checkbox">
+            <i class="mdi mdi-checkbox-marked-circle-outline"></i>
+            <span>主题色填充</span>
         </label>
-        <label for="style-color" class="style-color">
-
-            <input id="style-color" type="radio">
+        <label for="style-shadow" class="style-label">
+            <input v-model="shadow" id="style-shadow" type="checkbox">
+            <i class="mdi mdi-checkbox-marked-circle-outline"></i>
+            <span>投影</span>
         </label>
     </div>
     <div class="orders"></div>
