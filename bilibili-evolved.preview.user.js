@@ -125,10 +125,20 @@ const fixedSettings = {
 };
 function loadSettings()
 {
+    for (const key in fixedSettings)
+    {
+        settings[key] = fixedSettings[key];
+        GM_setValue(key, fixedSettings[key]);
+    }
     for (const key in settings)
     {
-        let value = GM_getValue(key, settings[key]);
-        if (settings[key] !== undefined && value.constructor === Object)
+        let value = GM_getValue(key);
+        if (value === undefined)
+        {
+            value = settings[key];
+            GM_setValue(key, settings[key]);
+        }
+        else if (settings[key] !== undefined && value.constructor === Object)
         {
             value = Object.assign(settings[key], value);
         }
@@ -151,10 +161,6 @@ function loadSettings()
         // {
         //     settings[key] = value;
         // }
-    }
-    for (const key in fixedSettings)
-    {
-        settings[key] = fixedSettings[key];
     }
 }
 function saveSettings(newSettings)
@@ -1043,7 +1049,9 @@ class Resource
                                     }
                                     if (typeof offlineData === "undefined")
                                     {
-                                        settings.cache[key] = this.text;
+                                        settings.cache = Object.assign(settings.cache, {
+                                            [key]: this.text
+                                        });
                                         saveSettings(settings);
                                     }
                                 }

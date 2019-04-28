@@ -87,7 +87,9 @@ export class Resource
                                     }
                                     if (typeof offlineData === "undefined")
                                     {
-                                        settings.cache[key] = this.text;
+                                        settings.cache = Object.assign(settings.cache, {
+                                            [key]: this.text
+                                        });
                                         saveSettings(settings);
                                     }
                                 }
