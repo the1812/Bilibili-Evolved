@@ -89,7 +89,8 @@ div#square.container,
     background-color: #222 !important;
 }
 .article-holder .error-card .video-holder .video-cover,
-.article-holder .error-card .video-holder p
+.article-holder .error-card .video-holder p,
+.player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control
 {
     background-color: #333 !important;
 }
@@ -238,7 +239,8 @@ body>div.to-top.on,
 .bb-comment .con,
 .bb-comment .list-item:hover,
 .bb-comment .hot-line span,
-.bb-comment .more-link:hover
+.bb-comment .more-link:hover,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer
 {
     background-color: transparent !important;
 }
@@ -323,7 +325,8 @@ body>div.to-top.on,
 .twp-mask .twp-wrapper .twp-container .twp-text .twp-desc,
 .video-toolbar .appeal-text,
 .date-input .date-panel .week,
-.bb-comment .bottom-page.center
+.bb-comment .bottom-page.center,
+.bui-button.bui-button-gray3
 {
     color: #aaa !important;
 }
@@ -453,7 +456,8 @@ body>div.to-top.on,
 .input-section .schedule-panel .s-item,
 .date-input > input,
 .date-input .date-panel .ym,
-.date-input
+.date-input,
+.player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control-title
 {
     color: #eee !important;
 }

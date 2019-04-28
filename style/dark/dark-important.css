@@ -34,7 +34,13 @@
 {
     background-color: #444 !important;
 }
-.m-recommend-item div.box
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .bscroll-indicator
+{
+    background-color: #555 !important;
+}
+.m-recommend-item div.box,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .bscroll-vertical-scrollbar.mousedown,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap:hover .bscroll-vertical-scrollbar
 {
     background-color: transparent !important;
 }
