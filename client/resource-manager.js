@@ -282,7 +282,8 @@ export class ResourceManager
         }
         if (settings.cache.version === undefined) // Has newly downloaded cache
         {
-            settings.cache.version = settings.currentVersion;
+            settings.cache = Object.assign(settings.cache, { version: settings.currentVersion });
+            // settings.cache.version = settings.currentVersion;
             saveSettings(settings);
             return true;
         }

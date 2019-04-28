@@ -113,8 +113,12 @@ export default {
                     {
                         item.checked = !item.checked;
                         setBodyClass(item.checked, item.key);
-                        settings.simplifyLiveroomSettings[item.key] = item.checked;
-                        GM_setValue("simplifyLiveroomSettings", settings.simplifyLiveroomSettings);
+                        settings.simplifyLiveroomSettings = Object.assign(
+                            settings.simplifyLiveroomSettings, {
+                                [item.key]: item.checked,
+                            });
+                        // settings.simplifyLiveroomSettings[item.key] = item.checked;
+                        // GM_setValue("simplifyLiveroomSettings", settings.simplifyLiveroomSettings);
                     },
                 },
             });
