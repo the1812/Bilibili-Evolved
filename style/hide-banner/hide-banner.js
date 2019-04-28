@@ -1,0 +1,1 @@
+resources.applyStyle("hideBannerStyle");

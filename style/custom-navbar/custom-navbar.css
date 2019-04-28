@@ -21,6 +21,15 @@ body
     --navbar-foreground: #555;
     --navbar-background: white;
 }
+body.no-banner #banner_link,
+body.no-banner .z-top-container.has-banner>.header,
+.bili-header-m>#banner_link .search,
+li.nav-item[report-id='playpage_dynamic'] iframe,
+li.nav-item[report-id='playpage_dynamic'] .i-frame,
+.i_menu_login
+{
+    display: none !important;
+}
 
 .bili-header-m>.nav-menu,
 .z_top
@@ -260,12 +269,6 @@ body
 .im-list-box
 {
     border-radius: 0 !important;
-}
-li.nav-item[report-id='playpage_dynamic'] iframe,
-li.nav-item[report-id='playpage_dynamic'] .i-frame,
-.i_menu_login
-{
-    display: none !important;
 }
 #upload-button
 {

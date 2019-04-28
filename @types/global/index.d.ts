@@ -150,7 +150,7 @@ declare global
         useDarkStyle: boolean,
         useNewStyle: boolean,
         compactLayout: boolean,
-        showBanner: boolean,
+        hideBanner: boolean,
         overrideNavBar: boolean,
         expandDanmakuList: boolean,
         expandDescription: boolean,

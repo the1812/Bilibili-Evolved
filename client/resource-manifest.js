@@ -134,20 +134,27 @@ Resource.manifest = {
             blurBackgroundOpacity: "顶栏(对横幅)透明度",
         },
     },
-    overrideNavBar: {
-        path: "override-navbar.min.js",
-        styles: [
-            "tweetsStyle",
-            "navbarOverrideStyle",
-            {
-                key: "noBannerStyle",
-                condition: () => !settings.showBanner
-            },
-        ],
+    // overrideNavBar: {
+    //     path: "override-navbar.min.js",
+    //     styles: [
+    //         "tweetsStyle",
+    //         "navbarOverrideStyle",
+    //         {
+    //             key: "noBannerStyle",
+    //             condition: () => !settings.showBanner
+    //         },
+    //     ],
+    //     displayNames: {
+    //         overrideNavBar: "搜索栏置顶",
+    //         showBanner: "显示顶部横幅",
+    //         preserveRank: "显示排行榜图标",
+    //     },
+    // },
+    hideBanner: {
+        path: "hide-banner.min.js",
+        style: true,
         displayNames: {
-            overrideNavBar: "搜索栏置顶",
-            showBanner: "显示顶部横幅",
-            preserveRank: "显示排行榜图标",
+            hideBanner: "隐藏顶部横幅",
         },
     },
     touchNavBar: {

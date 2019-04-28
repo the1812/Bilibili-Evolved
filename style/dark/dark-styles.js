@@ -8,7 +8,7 @@ if (settings.useDarkStyle)
     if (!settings.useNewStyle && ($("#banner_link").length === 0 ||
         $("#banner_link").length > 0 &&
         settings.overrideNavBar &&
-        !settings.showBanner))
+        settings.hideBanner))
     {
         resources.applyImportantStyle("darkStyleNavBar");
     }
