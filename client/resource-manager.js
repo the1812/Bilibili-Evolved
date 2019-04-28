@@ -175,8 +175,52 @@ export class ResourceManager
         {
             loadingToast.dismiss();
         }
+        this.applyReloadables(); // reloadables run sync
         await this.applyDropdownOptions();
-        this.applyWidgets();
+        this.applyWidgets(); // No need to wait the widgets
+    }
+    applyReloadables()
+    {
+        const checkAttribute = (key, attributes) =>
+        {
+            if (attributes.reload && attributes.unload)
+            {
+                addSettingsListener(key, newValue =>
+                {
+                    if (newValue === true)
+                    {
+                        attributes.reload();
+                    }
+                    else
+                    {
+                        attributes.unload();
+                    }
+                });
+            }
+        };
+        for (const [key, targetKey] of Object.entries(Resource.reloadables))
+        {
+            const attributes = this.attributes[targetKey];
+            if (attributes === undefined)
+            {
+                const fetchListener = newValue =>
+                {
+                    if (newValue === true)
+                    {
+                        this.fetchByKey(targetKey).then(() =>
+                        {
+                            removeSettingsListener(key, fetchListener);
+                            checkAttribute(key, this.attributes[targetKey]);
+                        });
+                    }
+                };
+                addSettingsListener(key, fetchListener);
+            }
+            else
+            {
+                checkAttribute(key, attributes);
+            }
+        }
     }
     applyComponent(key, text)
     {

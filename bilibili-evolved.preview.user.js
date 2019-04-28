@@ -124,6 +124,27 @@ const fixedSettings = {
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
     currentVersion: GM_info.script.version,
 };
+const settingsChangeHandlers = {};
+function addSettingsListener(key, handler)
+{
+    if (!settingsChangeHandlers[key])
+    {
+        settingsChangeHandlers[key] = [handler];
+    }
+    else
+    {
+        settingsChangeHandlers[key].push(handler);
+    }
+}
+function removeSettingsListener(key, handler)
+{
+    const handlers = settingsChangeHandlers[key];
+    if (!handlers)
+    {
+        return;
+    }
+    handlers.splice(handlers.indexOf(handler), 1);
+}
 function loadSettings()
 {
     for (const key in fixedSettings)
@@ -150,6 +171,11 @@ function loadSettings()
             },
             set(newValue)
             {
+                const handlers = settingsChangeHandlers[key];
+                if (handlers)
+                {
+                    handlers.forEach(h => h(newValue, value));
+                }
                 value = newValue;
                 GM_setValue(key, newValue);
             },
@@ -410,10 +436,10 @@ function loadResources()
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
     Resource.all = {};
     Resource.displayNames = {};
-    // Resource.reloadables = {
-    //     useDarkStyle: "useDarkStyle",
-    //     showBanner: "overrideNavBar",
-    // };
+    Resource.reloadables = {
+        useDarkStyle: "useDarkStyle",
+        hideBanner: "hideBanner",
+    };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
         const resource = new Resource(data.path, data.styles);
@@ -1967,8 +1993,52 @@ class ResourceManager
         {
             loadingToast.dismiss();
         }
+        this.applyReloadables(); // reloadables run sync
         await this.applyDropdownOptions();
-        this.applyWidgets();
+        this.applyWidgets(); // No need to wait the widgets
+    }
+    applyReloadables()
+    {
+        const checkAttribute = (key, attributes) =>
+        {
+            if (attributes.reload && attributes.unload)
+            {
+                addSettingsListener(key, newValue =>
+                {
+                    if (newValue === true)
+                    {
+                        attributes.reload();
+                    }
+                    else
+                    {
+                        attributes.unload();
+                    }
+                });
+            }
+        };
+        for (const [key, targetKey] of Object.entries(Resource.reloadables))
+        {
+            const attributes = this.attributes[targetKey];
+            if (attributes === undefined)
+            {
+                const fetchListener = newValue =>
+                {
+                    if (newValue === true)
+                    {
+                        this.fetchByKey(targetKey).then(() =>
+                        {
+                            removeSettingsListener(key, fetchListener);
+                            checkAttribute(key, this.attributes[targetKey]);
+                        });
+                    }
+                };
+                addSettingsListener(key, fetchListener);
+            }
+            else
+            {
+                checkAttribute(key, attributes);
+            }
+        }
     }
     applyComponent(key, text)
     {
@@ -2160,6 +2230,7 @@ try
         contentLoaded,
         fixed,
         settings,
+        settingsChangeHandlers,
         resources,
         theWorld: waitTime =>
         {

@@ -23,7 +23,7 @@
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
-import { settings, loadSettings, saveSettings, onSettingsChange } from './settings';
+import { settings, loadSettings, saveSettings, onSettingsChange, settingsChangeHandlers } from './settings';
 import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed } from './utils';
 import { Ajax, setupAjaxHook } from './ajax';
 import { loadResources } from './resource-loader';
@@ -110,6 +110,7 @@ try
         contentLoaded,
         fixed,
         settings,
+        settingsChangeHandlers,
         resources,
         theWorld: waitTime =>
         {

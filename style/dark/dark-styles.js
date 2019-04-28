@@ -1,4 +1,8 @@
-if (settings.useDarkStyle)
+SpinQuery.any(
+    () => $(".custom-scrollbar"),
+    it => it.removeClass("custom-scrollbar")
+);
+const load = () =>
 {
     resources.applyStyle("scrollbarStyle");
     SpinQuery.any(
@@ -14,11 +18,15 @@ if (settings.useDarkStyle)
     }
     resources.applyStyle("darkStyle");
     resources.applyImportantStyle("darkStyleImportant");
-}
-else
-{
-    resources.removeStyle("scrollbarStyle");
-    resources.removeStyle("darkStyleNavBar");
-    resources.removeStyle("darkStyle");
-    resources.removeStyle("darkStyleImportant");
-}
+};
+load();
+export default {
+    reload: load,
+    unload: () =>
+    {
+        resources.removeStyle("scrollbarStyle");
+        resources.removeStyle("darkStyleNavBar");
+        resources.removeStyle("darkStyle");
+        resources.removeStyle("darkStyleImportant");
+    },
+};

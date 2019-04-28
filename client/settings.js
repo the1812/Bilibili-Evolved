@@ -99,6 +99,27 @@ const fixedSettings = {
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
     currentVersion: GM_info.script.version,
 };
+export const settingsChangeHandlers = {};
+export function addSettingsListener(key, handler)
+{
+    if (!settingsChangeHandlers[key])
+    {
+        settingsChangeHandlers[key] = [handler];
+    }
+    else
+    {
+        settingsChangeHandlers[key].push(handler);
+    }
+}
+export function removeSettingsListener(key, handler)
+{
+    const handlers = settingsChangeHandlers[key];
+    if (!handlers)
+    {
+        return;
+    }
+    handlers.splice(handlers.indexOf(handler), 1);
+}
 export function loadSettings()
 {
     for (const key in fixedSettings)
@@ -125,6 +146,11 @@ export function loadSettings()
             },
             set(newValue)
             {
+                const handlers = settingsChangeHandlers[key];
+                if (handlers)
+                {
+                    handlers.forEach(h => h(newValue, value));
+                }
                 value = newValue;
                 GM_setValue(key, newValue);
             },

@@ -744,11 +744,13 @@ class HistoryList extends VideoList
             navbar.classList.add(className);
         }
     }
-    if (settings.useDarkStyle)
+    const darkHandler = value =>
     {
-        navbar.classList.add("dark");
-        document.querySelector(".custom-navbar-settings").classList.add("dark");
-    }
+        document.querySelector(".custom-navbar").classList[value ? "add" : "remove"]("dark");
+        document.querySelector(".custom-navbar-settings").classList[value ? "add" : "remove"]("dark");
+    };
+    addSettingsListener("useDarkStyle", darkHandler);
+    darkHandler(settings.useDarkStyle);
     const components = [
         new Logo,
         new Category,

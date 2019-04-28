@@ -237,6 +237,8 @@ declare global
     function logError(message: Error | string): void;
     function loadSettings(): void
     function saveSettings(newSettings: BilibiliEvolvedSettings): void;
+    function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void;
+    function removeSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void;
     function onSettingsChange(change: (key: string, oldValue: any, newValue: any) => void): void;
     function downloadText(url: string, load: (text: string) => void, error: (text: string) => void): void;
     function downloadText(url: string): Promise<string>;
