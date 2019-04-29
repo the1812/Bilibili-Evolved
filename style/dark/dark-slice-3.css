@@ -458,7 +458,8 @@ body>div.to-top.on,
 .date-input > input,
 .date-input .date-panel .ym,
 .date-input,
-.player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control-title
+.player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control-title,
+#page-playlist-wrap .breadcrumb .item
 {
     color: #eee !important;
 }
