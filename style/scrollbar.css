@@ -11,14 +11,14 @@
 ::-webkit-resizer,
 ::-webkit-scrollbar-thumb
 {
-    background: #aaa !important;
+    background: #aaa;
 }
 ::-webkit-scrollbar-thumb:hover
 {
-    background: #888 !important;
+    background: #888;
 }
 *
 {
-    scrollbar-color: #aaa transparent !important;
+    scrollbar-color: #aaa transparent;
     scrollbar-width: thin !important;
 }

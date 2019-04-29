@@ -223,10 +223,8 @@ declare global
             skin: boolean,
         },
         customNavbar: boolean,
-        customNavbarSettings: {
-            fill: boolean,
-            shadow: boolean,
-        },
+        customNavbarFill: boolean,
+        customNavbarShadow: boolean,
         favoritesRedirect: boolean,
         outerWatchlater: boolean,
         cache: {} | { version: string } | undefined,

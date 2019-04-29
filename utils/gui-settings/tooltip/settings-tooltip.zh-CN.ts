@@ -54,8 +54,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
 - 禁用直播间皮肤
 每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`],
-    ["overrideNavBar", `开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`],
-    ["showBanner", `控制是否显示主站顶部的横幅`],
+    //["overrideNavBar", `开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`],
+    //["showBanner", `控制是否显示主站顶部的横幅`],
     ["preserveRank", `控制是否在搜索框左侧显示排行榜图标.`],
     ["blurVideoControl", `模糊视频控制栏背景, 原版的阴影效果将无效.`],
     ["customControlBackground", `给视频控制栏附上半透明的黑色, 代替原来的阴影.`],

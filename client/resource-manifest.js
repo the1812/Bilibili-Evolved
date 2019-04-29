@@ -547,6 +547,8 @@ Resource.manifest = {
         html: true,
         displayNames: {
             customNavbar: "使用自定义顶栏",
+            customNavbarFill: "主题色填充",
+            customNavbarShadow: "投影",
         },
     },
     favoritesRedirect: {

@@ -9,10 +9,7 @@ const load = () =>
         () => $(".custom-scrollbar"),
         it => it.removeClass("custom-scrollbar")
     );
-    if (!settings.useNewStyle && ($("#banner_link").length === 0 ||
-        $("#banner_link").length > 0 &&
-        settings.overrideNavBar &&
-        settings.hideBanner))
+    if (settings.hideBanner)
     {
         resources.applyImportantStyle("darkStyleNavBar");
     }

@@ -18,7 +18,9 @@ if (!supportedUrls.some(it => document.URL.includes(it)))
 }
 
 let userInfo = {};
-let orders = {};
+let orders = {
+
+};
 class NavbarComponent
 {
     constructor()
@@ -35,7 +37,7 @@ class NavbarComponent
     }
     get name()
     {
-        return this.html;
+        return "undefined";
     }
 }
 class Blank extends NavbarComponent
@@ -48,7 +50,7 @@ class Blank extends NavbarComponent
     }
     get name()
     {
-        return "空白";
+        return "blank";
     }
 }
 class Logo extends NavbarComponent
@@ -62,17 +64,22 @@ class Logo extends NavbarComponent
     }
     get name()
     {
-        return "Logo";
+        return "logo";
     }
 }
 class SimpleLink extends NavbarComponent
 {
-    constructor(name, link)
+    constructor(name, link, linkName)
     {
         super();
+        this.linkName = linkName;
         this.html = name;
         this.href = link;
         this.touch = false;
+    }
+    get name()
+    {
+        return this.linkName + "-link";
     }
 }
 class Upload extends NavbarComponent
@@ -98,7 +105,7 @@ class Upload extends NavbarComponent
     }
     get name()
     {
-        return "投稿";
+        return "upload";
     }
 }
 class Messages extends NavbarComponent
@@ -118,6 +125,10 @@ class Messages extends NavbarComponent
         `;
         this.requestedPopup = true;
         this.init();
+    }
+    get name()
+    {
+        return "messages";
     }
     async init()
     {
@@ -195,6 +206,10 @@ class Category extends NavbarComponent
                 },
             });
         });
+    }
+    get name()
+    {
+        return "category";
     }
     async getOnlineInfo()
     {
@@ -369,6 +384,10 @@ class UserInfo extends NavbarComponent
         this.requestedPopup = true;
         this.init();
     }
+    get name()
+    {
+        return "user-info";
+    }
     async init()
     {
         const panel = await SpinQuery.select(".user-info-panel");
@@ -441,10 +460,6 @@ class UserInfo extends NavbarComponent
             // face.style.backgroundImage = `url('https://static.hdslb.com/images/akari.jpg')`;
         }
     }
-    get name()
-    {
-        return "用户信息";
-    }
 }
 class SearchBox extends NavbarComponent
 {
@@ -506,14 +521,15 @@ class SearchBox extends NavbarComponent
     }
     get name()
     {
-        return "搜索";
+        return "search";
     }
 }
 class Iframe extends NavbarComponent
 {
-    constructor(name, link, { src, width, height, lazy })
+    constructor(name, link, { src, width, height, lazy, iframeName })
     {
         super();
+        this.iframeName = iframeName;
         this.html = name;
         this.href = link;
         this.popupHtml = /*html*/`
@@ -523,6 +539,10 @@ class Iframe extends NavbarComponent
         this.requestedPopup = lazy ? false : true;
         this.touch = false;
         this.transparent = true;
+    }
+    get name()
+    {
+        return "iframe-" + this.iframeName;
     }
 }
 class NotifyIframe extends Iframe
@@ -537,7 +557,7 @@ class NotifyIframe extends Iframe
     {
         return null;
     }
-    getCount(json)
+    getCount()
     {
         return 0;
     }
@@ -576,6 +596,10 @@ class Activities extends NotifyIframe
     {
         return json.data.update_num;
     }
+    get name()
+    {
+        return "activities";
+    }
 }
 // class Messages extends NotifyIframe
 // {
@@ -603,6 +627,7 @@ class VideoList extends NavbarComponent
     {
         super();
         this.href = mainUrl;
+        this.listName = listName;
         this.html = name;
         this.requestedPopup = false;
         this.popupHtml = /*html*/`
@@ -633,6 +658,10 @@ class VideoList extends NavbarComponent
             `);
             videoListElement.classList.add("loaded");
         };
+    }
+    get name()
+    {
+        return "list-" + this.listName;
     }
 }
 class WatchlaterList extends VideoList
@@ -736,13 +765,9 @@ class HistoryList extends VideoList
     const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
     userInfo = json.data;
     document.body.insertAdjacentHTML("beforeend", html);
-    const navbar = document.querySelector(".custom-navbar");
-    for (const [className, enabled] of Object.entries(settings.customNavbarSettings))
+    const classHandler = (key, value) =>
     {
-        if (enabled === true)
-        {
-            navbar.classList.add(className);
-        }
+        document.querySelector(".custom-navbar").classList[value ? "add" : "remove"](key.replace("customNavbar", "").toLowerCase());
     }
     const darkHandler = value =>
     {
@@ -750,27 +775,33 @@ class HistoryList extends VideoList
         document.querySelector(".custom-navbar-settings").classList[value ? "add" : "remove"]("dark");
     };
     addSettingsListener("useDarkStyle", darkHandler);
+    addSettingsListener("customNavbarFill", value => classHandler("customNavbarFill", value));
+    addSettingsListener("customNavbarShadow", value => classHandler("customNavbarShadow", value));
+    classHandler("customNavbarFill", settings.customNavbarFill);
+    classHandler("customNavbarShadow", settings.customNavbarShadow);
     darkHandler(settings.useDarkStyle);
     const components = [
         new Logo,
         new Category,
-        new SimpleLink("排行", "https://www.bilibili.com/ranking"),
-        new SimpleLink("画友", "https://h.bilibili.com"),
-        new SimpleLink("音频", "https://www.bilibili.com/audio/home/?type=10"),
+        new SimpleLink("排行", "https://www.bilibili.com/ranking", "ranking"),
+        new SimpleLink("画友", "https://h.bilibili.com", "drawing"),
+        new SimpleLink("音频", "https://www.bilibili.com/audio/home/?type=10", "music"),
         new Iframe("游戏中心", "https://game.bilibili.com/", {
             src: `https://www.bilibili.com/page-proxy/game-nav.html`,
             width: `680px`,
             height: `260px`,
             lazy: true,
+            iframeName: "games",
         }),
         new Iframe("直播", "https://live.bilibili.com", {
             src: `https://live.bilibili.com/blackboard/dropdown-menu.html`,
             width: `528px`,
             height: `266px`,
             lazy: true,
+            iframeName: "lives",
         }),
-        new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web"),
-        new SimpleLink("漫画", "https://manga.bilibili.com"),
+        new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web", "shop"),
+        new SimpleLink("漫画", "https://manga.bilibili.com", "manga"),
         new Blank,
         new SearchBox,
         new UserInfo,
@@ -787,7 +818,7 @@ class HistoryList extends VideoList
     }
     components.push(new Upload);
     new Vue({
-        el: navbar,
+        el: ".custom-navbar",
         data: {
             components,
         },
@@ -809,40 +840,32 @@ export default {
         content: /*html*/`
         <div class="gui-settings-flat-button" id="custom-navbar-settings">
             <i class="mdi mdi-24px mdi-auto-fix"></i>
-            <span>自定义顶栏</span>
+            <span>顶栏次序</span>
         </div>`,
         success: async () =>
         {
             const settingsPanel = await SpinQuery.select(".custom-navbar-settings");
-            const customNavbar = document.querySelector(".custom-navbar");
+            // const customNavbar = document.querySelector(".custom-navbar");
             document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
             {
                 settingsPanel.classList.toggle("show");
                 document.querySelector(".gui-settings-mask").click();
             });
             new Vue({
-                el: ".custom-navbar-settings .style",
+                el: ".custom-navbar-settings",
                 data: {
-                    fill: settings.customNavbarSettings.fill,
-                    shadow: settings.customNavbarSettings.shadow,
                 },
-                watch: {
-                    fill(newValue)
-                    {
-                        settings.customNavbarSettings = Object.assign(settings.customNavbarSettings, {
-                            fill: newValue
-                        });
-                        customNavbar.classList[newValue ? "add" : "remove"]("fill");
-                    },
-                    shadow(newValue)
-                    {
-                        settings.customNavbarSettings = Object.assign(settings.customNavbarSettings, {
-                            shadow: newValue
-                        });
-                        customNavbar.classList[newValue ? "add" : "remove"]("shadow");
-                    },
-                }
             });
         },
+    },
+    unload: () =>
+    {
+        document.querySelector(".custom-navbar").style.display = "none";
+        resources.removeStyle("customNavbarStyle");
+    },
+    reload: () =>
+    {
+        document.querySelector(".custom-navbar").style.display = "flex";
+        resources.applyImportantStyle("customNavbarStyle");
     },
 };

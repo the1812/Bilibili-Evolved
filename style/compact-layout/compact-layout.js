@@ -9,4 +9,5 @@ if (suitableSites.indexOf(location.href.replace(location.search, '')) !== -1)
     {
         document.body.classList.add("light");
     }
+    addSettingsListener("useDarkStyle", dark => document.body.classList[dark ? "remove" : "add"]("light"));
 }

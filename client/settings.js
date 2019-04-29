@@ -76,10 +76,8 @@ export const settings = {
         skin: false,
     },
     customNavbar: false,
-    customNavbarSettings: {
-        fill: true,
-        shadow: true,
-    },
+    customNavbarFill: true,
+    customNavbarShadow: true,
     favoritesRedirect: true,
     outerWatchlater: true,
     cache: {},
@@ -153,6 +151,18 @@ export function loadSettings()
                 }
                 value = newValue;
                 GM_setValue(key, newValue);
+                const input = document.querySelector(`input[key=${key}]`);
+                if (input !== null)
+                {
+                    if (input.type === "checkbox")
+                    {
+                        input.checked = newValue;
+                    }
+                    else if (input.type === "text")
+                    {
+                        input.value = newValue;
+                    }
+                }
             },
         });
         // if (settings[key] !== undefined && value.constructor === Object)

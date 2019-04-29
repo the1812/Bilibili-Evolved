@@ -101,10 +101,8 @@ const settings = {
         skin: false,
     },
     customNavbar: false,
-    customNavbarSettings: {
-        fill: true,
-        shadow: true,
-    },
+    customNavbarFill: true,
+    customNavbarShadow: true,
     favoritesRedirect: true,
     outerWatchlater: true,
     cache: {},
@@ -178,6 +176,18 @@ function loadSettings()
                 }
                 value = newValue;
                 GM_setValue(key, newValue);
+                const input = document.querySelector(`input[key=${key}]`);
+                if (input !== null)
+                {
+                    if (input.type === "checkbox")
+                    {
+                        input.checked = newValue;
+                    }
+                    else if (input.type === "text")
+                    {
+                        input.value = newValue;
+                    }
+                }
             },
         });
         // if (settings[key] !== undefined && value.constructor === Object)
@@ -439,6 +449,7 @@ function loadResources()
     Resource.reloadables = {
         useDarkStyle: "useDarkStyle",
         hideBanner: "hideBanner",
+        customNavbar: "customNavbar"
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
@@ -1719,6 +1730,8 @@ Resource.manifest = {
         html: true,
         displayNames: {
             customNavbar: "使用自定义顶栏",
+            customNavbarFill: "主题色填充",
+            customNavbarShadow: "投影",
         },
     },
     favoritesRedirect: {
