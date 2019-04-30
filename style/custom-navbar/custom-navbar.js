@@ -879,5 +879,4 @@ class HistoryList extends VideoList
         },
     });
 })();
-
-export default attributes;
+return attributes;
