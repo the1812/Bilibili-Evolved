@@ -260,6 +260,23 @@ function contentLoaded(callback)
         document.addEventListener("DOMContentLoaded", () => callback());
     }
 }
+function fullyLoaded(callback)
+{
+    if (document.readyState === "complete")
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener('readystatechange', () =>
+        {
+            if (document.readyState === "complete")
+            {
+                callback();
+            }
+        });
+    }
+}
 function fixed(number, precision = 1)
 {
     const str = number.toString();

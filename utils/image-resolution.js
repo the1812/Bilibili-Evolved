@@ -53,19 +53,21 @@ export async function imageResolution(element) {
         replaceSource(e => e.style.backgroundImage, (e, v) => e.style.backgroundImage = v);
     });
 }
-walk(document.body, it => imageResolution(it));
-Observer.childListSubtree(document.body, records => {
-    for (const record of records) {
-        for (const node of record.addedNodes) {
-            if (node instanceof HTMLElement) {
-                imageResolution(node);
-                if (node.nodeName.toUpperCase() !== "IMG") {
-                    walk(node, it => imageResolution(it));
+(async () => {
+    walk(document.body, it => imageResolution(it));
+    Observer.childListSubtree(document.body, records => {
+        for (const record of records) {
+            for (const node of record.addedNodes) {
+                if (node instanceof HTMLElement) {
+                    imageResolution(node);
+                    if (node.nodeName.toUpperCase() !== "IMG") {
+                        walk(node, it => imageResolution(it));
+                    }
                 }
             }
         }
-    }
-});
+    });
+})();
 export default {
     export: { imageResolution }
 };

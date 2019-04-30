@@ -65,6 +65,7 @@ const supportedUrls = [
     "/pay.bilibili.com",
     "/member.bilibili.com",
     "/big.bilibili.com",
+    "/message.bilibili.com",
 ];
 if (!supportedUrls.some(it => document.URL.includes(it)))
 {

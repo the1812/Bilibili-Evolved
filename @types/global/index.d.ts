@@ -246,6 +246,7 @@ declare global
     function raiseEvent(element: Element, eventName: string): void;
     function loadLazyPanel(selector: string): Promise<void>;
     function contentLoaded(callback: () => void): void;
+    function fullyLoaded(callback: () => void): void;
     function fixed(number: number, precision?: number): string;
     function isEmbeddedPlayer(): boolean;
     function isIframe(): boolean;

@@ -39,6 +39,23 @@ export function contentLoaded(callback)
         document.addEventListener("DOMContentLoaded", () => callback());
     }
 }
+export function fullyLoaded(callback)
+{
+    if (document.readyState === "complete")
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener('readystatechange', () =>
+        {
+            if (document.readyState === "complete")
+            {
+                callback();
+            }
+        });
+    }
+}
 export function fixed(number, precision = 1)
 {
     const str = number.toString();
