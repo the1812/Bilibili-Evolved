@@ -225,6 +225,8 @@ declare global
         customNavbar: boolean,
         customNavbarFill: boolean,
         customNavbarShadow: boolean,
+        playerShadow: boolean,
+        narrowDanmaku: boolean,
         favoritesRedirect: boolean,
         outerWatchlater: boolean,
         cache: {} | { version: string } | undefined,

@@ -1,10 +1,8 @@
 export const settings = {
     useDarkStyle: false,
-    useNewStyle: true,
     compactLayout: false,
     // showBanner: true,
     hideBanner: false,
-    overrideNavBar: true,
     expandDanmakuList: true,
     expandDescription: true,
     watchLaterRedirect: true,
@@ -78,6 +76,8 @@ export const settings = {
     customNavbar: false,
     customNavbarFill: true,
     customNavbarShadow: true,
+    playerShadow: false,
+    narrowDanmaku: true,
     favoritesRedirect: true,
     outerWatchlater: true,
     cache: {},
@@ -94,6 +94,8 @@ const fixedSettings = {
     medalHelper: true,
     about: false,
     forceWide: false,
+    useNewStyle: false,
+    overrideNavBar: false,
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
     currentVersion: GM_info.script.version,
 };

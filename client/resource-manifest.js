@@ -450,17 +450,14 @@ Resource.manifest = {
     },
     useCommentStyle: {
         path: "comment.min.js",
-        style: {
-            important: true,
-            condition: () => true,
-        },
-        styles: [
-            {
-                key: "commentDarkStyle",
-                important: true,
-                condition: () => settings.useDarkStyle,
-            },
-        ],
+        style: "important",
+        // styles: [
+        //     {
+        //         key: "commentDarkStyle",
+        //         important: true,
+        //         condition: () => settings.useDarkStyle,
+        //     },
+        // ],
         displayNames: {
             useCommentStyle: "简化评论区",
         },
@@ -562,6 +559,18 @@ Resource.manifest = {
         style: "important",
         displayNames: {
             outerWatchlater: "外置稍后再看",
+        },
+    },
+    playerShadow: {
+        path: "player-shadow.min.js",
+        displayNames: {
+            playerShadow: "播放器投影",
+        },
+    },
+    narrowDanmaku: {
+        path: "narrow-danmaku.min.js",
+        displayNames: {
+            narrowDanmaku: "强制保留弹幕栏",
         },
     },
 };

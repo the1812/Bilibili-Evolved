@@ -88,7 +88,12 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["useCache", `使用缓存以提高脚本的加载速度.`],
     ["outerWatchlater", `将视频页面菜单里的<span>稍后再看</span>移到外面.`],
     ["i18n", `为界面中一些常用文本提供翻译.`],
-    ["i18nLanguage", `翻译的目标语言`],
+    ["i18nLanguage", `翻译的目标语言.`],
+    ["customNavbar", `启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.`],
+    ["customNavbarFill", `是否使用主题色填充顶栏.`],
+    ["customNavbarShadow", `是否为顶栏添加一层阴影效果.`],
+    ["playerShadow", `为播放器添加主题色投影.`],
+    ["narrowDanmaku", `在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.`],
 ]);
 export default {
     export: { toolTips },

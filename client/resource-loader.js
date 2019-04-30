@@ -6,7 +6,9 @@ export function loadResources()
     Resource.reloadables = {
         useDarkStyle: "useDarkStyle",
         hideBanner: "hideBanner",
-        customNavbar: "customNavbar"
+        customNavbar: "customNavbar",
+        playerShadow: "playerShadow",
+        narrowDanmaku: "narrowDanmaku",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
