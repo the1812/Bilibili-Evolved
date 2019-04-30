@@ -100,6 +100,7 @@ const settings = {
     },
     customNavbar: true,
     customNavbarFill: true,
+    allNavbarFill: true,
     customNavbarShadow: true,
     playerShadow: false,
     narrowDanmaku: true,
@@ -1736,6 +1737,7 @@ Resource.manifest = {
             customNavbar: "使用自定义顶栏",
             customNavbarFill: "主题色填充",
             customNavbarShadow: "投影",
+            allNavbarFill: "填充所有顶栏",
         },
     },
     favoritesRedirect: {

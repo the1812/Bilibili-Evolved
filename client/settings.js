@@ -75,6 +75,7 @@ export const settings = {
     },
     customNavbar: true,
     customNavbarFill: true,
+    allNavbarFill: true,
     customNavbarShadow: true,
     playerShadow: false,
     narrowDanmaku: true,

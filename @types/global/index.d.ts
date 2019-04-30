@@ -224,6 +224,7 @@ declare global
         },
         customNavbar: boolean,
         customNavbarFill: boolean,
+        allNavbarFill: boolean,
         customNavbarShadow: boolean,
         playerShadow: boolean,
         narrowDanmaku: boolean,
