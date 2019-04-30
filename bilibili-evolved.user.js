@@ -171,13 +171,14 @@ function loadSettings()
             },
             set(newValue)
             {
+                value = newValue;
+                GM_setValue(key, newValue);
+
                 const handlers = settingsChangeHandlers[key];
                 if (handlers)
                 {
                     handlers.forEach(h => h(newValue, value));
                 }
-                value = newValue;
-                GM_setValue(key, newValue);
                 const input = document.querySelector(`input[key=${key}]`);
                 if (input !== null)
                 {
@@ -455,6 +456,7 @@ function loadResources()
         playerShadow: "playerShadow",
         narrowDanmaku: "narrowDanmaku",
         compactLayout: "compactLayout",
+        useCommentStyle: "useCommentStyle",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
@@ -1650,9 +1652,9 @@ Resource.manifest = {
             useCommentStyle: "简化评论区",
         },
     },
-    commentDarkStyle: {
-        path: "comment-dark.min.css"
-    },
+    // commentDarkStyle: {
+    //     path: "comment-dark.min.css"
+    // },
     title: {
         path: "title.min.js"
     },
@@ -2048,15 +2050,14 @@ class ResourceManager
             const attributes = this.attributes[targetKey];
             if (attributes === undefined)
             {
-                const fetchListener = newValue =>
+                const fetchListener = async newValue =>
                 {
                     if (newValue === true)
                     {
-                        this.fetchByKey(targetKey).then(() =>
-                        {
-                            removeSettingsListener(key, fetchListener);
-                            checkAttribute(key, this.attributes[targetKey]);
-                        });
+                        await this.styleManager.fetchStyleByKey(targetKey);
+                        await this.fetchByKey(targetKey);
+                        removeSettingsListener(key, fetchListener);
+                        checkAttribute(key, this.attributes[targetKey]);
                     }
                 };
                 addSettingsListener(key, fetchListener);

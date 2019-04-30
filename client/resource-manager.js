@@ -203,15 +203,14 @@ export class ResourceManager
             const attributes = this.attributes[targetKey];
             if (attributes === undefined)
             {
-                const fetchListener = newValue =>
+                const fetchListener = async newValue =>
                 {
                     if (newValue === true)
                     {
-                        this.fetchByKey(targetKey).then(() =>
-                        {
-                            removeSettingsListener(key, fetchListener);
-                            checkAttribute(key, this.attributes[targetKey]);
-                        });
+                        await this.styleManager.fetchStyleByKey(targetKey);
+                        await this.fetchByKey(targetKey);
+                        removeSettingsListener(key, fetchListener);
+                        checkAttribute(key, this.attributes[targetKey]);
                     }
                 };
                 addSettingsListener(key, fetchListener);

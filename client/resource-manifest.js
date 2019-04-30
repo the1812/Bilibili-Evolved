@@ -462,9 +462,9 @@ Resource.manifest = {
             useCommentStyle: "简化评论区",
         },
     },
-    commentDarkStyle: {
-        path: "comment-dark.min.css"
-    },
+    // commentDarkStyle: {
+    //     path: "comment-dark.min.css"
+    // },
     title: {
         path: "title.min.js"
     },

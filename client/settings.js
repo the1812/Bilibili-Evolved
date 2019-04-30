@@ -146,13 +146,14 @@ export function loadSettings()
             },
             set(newValue)
             {
+                value = newValue;
+                GM_setValue(key, newValue);
+
                 const handlers = settingsChangeHandlers[key];
                 if (handlers)
                 {
                     handlers.forEach(h => h(newValue, value));
                 }
-                value = newValue;
-                GM_setValue(key, newValue);
                 const input = document.querySelector(`input[key=${key}]`);
                 if (input !== null)
                 {

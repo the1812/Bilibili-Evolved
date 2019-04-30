@@ -842,6 +842,7 @@ export default {
             <i class="mdi mdi-24px mdi-auto-fix"></i>
             <span>顶栏次序</span>
         </div>`,
+        condition: () => false, // TODO: remove this line after complete
         success: async () =>
         {
             const settingsPanel = await SpinQuery.select(".custom-navbar-settings");
@@ -860,12 +861,20 @@ export default {
     },
     unload: () =>
     {
-        document.querySelector(".custom-navbar").style.display = "none";
+        const navbar = document.querySelector(".custom-navbar");
+        if (navbar !== null)
+        {
+            navbar.style.display = "none";
+        }
         resources.removeStyle("customNavbarStyle");
     },
     reload: () =>
     {
-        document.querySelector(".custom-navbar").style.display = "flex";
+        const navbar = document.querySelector(".custom-navbar");
+        if (navbar !== null)
+        {
+            navbar.style.display = "flex";
+        }
         resources.applyImportantStyle("customNavbarStyle");
     },
 };

@@ -10,6 +10,7 @@ export function loadResources()
         playerShadow: "playerShadow",
         narrowDanmaku: "narrowDanmaku",
         compactLayout: "compactLayout",
+        useCommentStyle: "useCommentStyle",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
