@@ -717,6 +717,55 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     opacity: 1;
 }
+body.all-navbar-fill .link-navbar
+{
+    background-color: var(--theme-color) !important;
+}
+body.all-navbar-fill .link-navbar .nav-item:first-child:before
+{
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.8666666;
+}
+body.all-navbar-fill .link-navbar .nav-item .nav-link .label,
+body.all-navbar-fill .link-navbar .nav-item:hover .nav-link .label,
+body.all-navbar-fill .shortcuts-ctnr .shortcut-item .label-wrapper .text,
+body.all-navbar-fill .shortcuts-ctnr .shortcut-item .label-wrapper .text:hover
+body.all-navbar-fill .link-navbar .publish-btn,
+body.all-navbar-fill .link-navbar .publish-btn:hover,
+body.all-navbar-fill .search-bar-ctnr .search-bar .placeholder,
+body.all-navbar-fill .search-bar-ctnr .search-bar .search-btn
+{
+    color: var(--foreground-color) !important;
+}
+body.all-navbar-fill .link-navbar .search-bar-ctnr .search-bar input,
+body.all-navbar-fill .link-navbar .search-bar-ctnr .search-bar input::placeholder
+{
+    color: white !important;
+}
+body.all-navbar-fill .link-navbar .search-bar-ctnr .search-bar input::placeholder
+{
+    opacity: 0.7 !important;
+}
+body.all-navbar-fill .link-navbar .nav-item:hover,
+body.all-navbar-fill .link-navbar .shortcuts-ctnr .shortcut-item:hover,
+body.all-navbar-fill .link-navbar .publish-btn,
+body.all-navbar-fill .link-navbar .publish-btn:hover:after,
+body.all-navbar-fill .link-navbar .search-bar-ctnr .search-bar,
+body.all-navbar-fill .link-navbar .search-bar-ctnr .search-bar:hover
+{
+    background-color: transparent !important;
+}
+body.all-navbar-fill .link-navbar .publish-btn
+{
+    background-image: none !important;
+    box-shadow: none !important;
+}
+body.all-navbar-fill .link-navbar .nav-item:hover .nav-link .label,
+body.all-navbar-fill .link-navbar .shortcuts-ctnr .shortcut-item .label-wrapper .text:hover
+body.all-navbar-fill .link-navbar .my-link-btn .label:hover
+{
+    background-color: rgba(0,0,0,0.1) !important;
+}
 
 
 @media screen and (max-width: 1400px)

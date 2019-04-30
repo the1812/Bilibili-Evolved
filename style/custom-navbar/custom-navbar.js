@@ -2,6 +2,60 @@ if (isIframe())
 {
     return;
 }
+const attributes = {
+    widget: {
+        content: /*html*/`
+        <div class="gui-settings-flat-button" id="custom-navbar-settings">
+            <i class="mdi mdi-24px mdi-auto-fix"></i>
+            <span>顶栏次序</span>
+        </div>`,
+        condition: () => false, // TODO: remove this line after complete
+        success: async () =>
+        {
+            const settingsPanel = await SpinQuery.select(".custom-navbar-settings");
+            // const customNavbar = document.querySelector(".custom-navbar");
+            document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
+            {
+                settingsPanel.classList.toggle("show");
+                document.querySelector(".gui-settings-mask").click();
+            });
+            new Vue({
+                el: ".custom-navbar-settings",
+                data: {
+                },
+            });
+        },
+    },
+    unload: () =>
+    {
+        const navbar = document.querySelector(".custom-navbar");
+        if (navbar !== null)
+        {
+            navbar.style.display = "none";
+        }
+        resources.removeStyle("customNavbarStyle");
+    },
+    reload: () =>
+    {
+        const navbar = document.querySelector(".custom-navbar");
+        if (navbar !== null)
+        {
+            navbar.style.display = "flex";
+        }
+        resources.applyImportantStyle("customNavbarStyle");
+    },
+};
+const classHandler = (key, value, element) =>
+{
+    element.classList[value ? "add" : "remove"](key);
+}
+const darkHandler = value =>
+{
+    document.querySelector(".custom-navbar").classList[value ? "add" : "remove"]("dark");
+    document.querySelector(".custom-navbar-settings").classList[value ? "add" : "remove"]("dark");
+};
+addSettingsListener("allNavbarFill", value => classHandler("all-navbar-fill", value, document.body));
+classHandler("all-navbar-fill", settings.allNavbarFill, document.body);
 const supportedUrls = [
     "/www.bilibili.com",
     "/t.bilibili.com",
@@ -14,7 +68,7 @@ const supportedUrls = [
 ];
 if (!supportedUrls.some(it => document.URL.includes(it)))
 {
-    return;
+    return attributes;
 }
 
 let userInfo = {};
@@ -765,21 +819,12 @@ class HistoryList extends VideoList
     const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
     userInfo = json.data;
     document.body.insertAdjacentHTML("beforeend", html);
-    const classHandler = (key, value) =>
-    {
-        document.querySelector(".custom-navbar").classList[value ? "add" : "remove"](key.replace("customNavbar", "").toLowerCase());
-    }
-    const darkHandler = value =>
-    {
-        document.querySelector(".custom-navbar").classList[value ? "add" : "remove"]("dark");
-        document.querySelector(".custom-navbar-settings").classList[value ? "add" : "remove"]("dark");
-    };
     addSettingsListener("useDarkStyle", darkHandler);
-    addSettingsListener("customNavbarFill", value => classHandler("customNavbarFill", value));
-    addSettingsListener("customNavbarShadow", value => classHandler("customNavbarShadow", value));
-    classHandler("customNavbarFill", settings.customNavbarFill);
-    classHandler("customNavbarShadow", settings.customNavbarShadow);
     darkHandler(settings.useDarkStyle);
+    addSettingsListener("customNavbarFill", value => classHandler("fill", value, document.querySelector(".custom-navbar")));
+    classHandler("fill", settings.customNavbarFill, document.querySelector(".custom-navbar"));
+    addSettingsListener("customNavbarShadow", value => classHandler("shadow", value, document.querySelector(".custom-navbar")));
+    classHandler("shadow", settings.customNavbarShadow, document.querySelector(".custom-navbar"));
     const components = [
         new Logo,
         new Category,
@@ -835,46 +880,4 @@ class HistoryList extends VideoList
     });
 })();
 
-export default {
-    widget: {
-        content: /*html*/`
-        <div class="gui-settings-flat-button" id="custom-navbar-settings">
-            <i class="mdi mdi-24px mdi-auto-fix"></i>
-            <span>顶栏次序</span>
-        </div>`,
-        condition: () => false, // TODO: remove this line after complete
-        success: async () =>
-        {
-            const settingsPanel = await SpinQuery.select(".custom-navbar-settings");
-            // const customNavbar = document.querySelector(".custom-navbar");
-            document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
-            {
-                settingsPanel.classList.toggle("show");
-                document.querySelector(".gui-settings-mask").click();
-            });
-            new Vue({
-                el: ".custom-navbar-settings",
-                data: {
-                },
-            });
-        },
-    },
-    unload: () =>
-    {
-        const navbar = document.querySelector(".custom-navbar");
-        if (navbar !== null)
-        {
-            navbar.style.display = "none";
-        }
-        resources.removeStyle("customNavbarStyle");
-    },
-    reload: () =>
-    {
-        const navbar = document.querySelector(".custom-navbar");
-        if (navbar !== null)
-        {
-            navbar.style.display = "flex";
-        }
-        resources.applyImportantStyle("customNavbarStyle");
-    },
-};
+export default attributes;
