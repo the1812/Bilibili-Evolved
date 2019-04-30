@@ -4,6 +4,7 @@ SpinQuery.any(
 );
 const load = () =>
 {
+    document.body.classList.add("dark");
     resources.applyStyle("scrollbarStyle");
     SpinQuery.any(
         () => $(".custom-scrollbar"),
@@ -25,5 +26,6 @@ export default {
         resources.removeStyle("darkStyleNavBar");
         resources.removeStyle("darkStyle");
         resources.removeStyle("darkStyleImportant");
+        document.body.classList.remove("dark");
     },
 };

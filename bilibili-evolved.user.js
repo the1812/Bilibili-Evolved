@@ -25,11 +25,9 @@
 // ==/UserScript==
 const settings = {
     useDarkStyle: false,
-    useNewStyle: true,
     compactLayout: false,
     // showBanner: true,
     hideBanner: false,
-    overrideNavBar: true,
     expandDanmakuList: true,
     expandDescription: true,
     watchLaterRedirect: true,
@@ -103,6 +101,8 @@ const settings = {
     customNavbar: false,
     customNavbarFill: true,
     customNavbarShadow: true,
+    playerShadow: false,
+    narrowDanmaku: true,
     favoritesRedirect: true,
     outerWatchlater: true,
     cache: {},
@@ -119,6 +119,8 @@ const fixedSettings = {
     medalHelper: true,
     about: false,
     forceWide: false,
+    useNewStyle: false,
+    overrideNavBar: false,
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
     currentVersion: GM_info.script.version,
 };
@@ -449,7 +451,9 @@ function loadResources()
     Resource.reloadables = {
         useDarkStyle: "useDarkStyle",
         hideBanner: "hideBanner",
-        customNavbar: "customNavbar"
+        customNavbar: "customNavbar",
+        playerShadow: "playerShadow",
+        narrowDanmaku: "narrowDanmaku",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
@@ -1633,17 +1637,14 @@ Resource.manifest = {
     },
     useCommentStyle: {
         path: "comment.min.js",
-        style: {
-            important: true,
-            condition: () => true,
-        },
-        styles: [
-            {
-                key: "commentDarkStyle",
-                important: true,
-                condition: () => settings.useDarkStyle,
-            },
-        ],
+        style: "important",
+        // styles: [
+        //     {
+        //         key: "commentDarkStyle",
+        //         important: true,
+        //         condition: () => settings.useDarkStyle,
+        //     },
+        // ],
         displayNames: {
             useCommentStyle: "简化评论区",
         },
@@ -1745,6 +1746,18 @@ Resource.manifest = {
         style: "important",
         displayNames: {
             outerWatchlater: "外置稍后再看",
+        },
+    },
+    playerShadow: {
+        path: "player-shadow.min.js",
+        displayNames: {
+            playerShadow: "播放器投影",
+        },
+    },
+    narrowDanmaku: {
+        path: "narrow-danmaku.min.js",
+        displayNames: {
+            narrowDanmaku: "强制保留弹幕栏",
         },
     },
 };

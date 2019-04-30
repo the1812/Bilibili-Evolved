@@ -724,10 +724,6 @@ body>div.to-top.on,
 {
     box-shadow: none !important;
 }
-#bilibiliPlayer
-{
-    box-shadow: 0 4px 8px 0 #0004 !important;
-}
 body>.player #bilibiliPlayer
 {
     box-shadow: none !important;

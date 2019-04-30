@@ -233,3 +233,35 @@
 {
     white-space: pre-wrap;
 }
+
+body.dark .bb-comment .comment-list .list-item>.con>.info>.time,
+body.dark .bb-comment .comment-list .reply-con>.info>.time,
+body.dark .bb-comment .comment-list .list-item>.con>.info>.floor,
+body.dark .bb-comment .comment-list .list-item .info .like>i,
+body.dark .bb-comment .comment-list .list-item .info .hate>i,
+body.dark .bb-comment .comment-list .list-item .info .like.liked>i,
+body.dark .bb-comment .comment-list .list-item .info .hate.hated>i,
+body.dark .bb-comment .comment-list .list-item .info .operation .spot,
+body.dark .bb-comment .comment-send .comment-emoji .text,
+body.dark .dynamic-like i,
+body.dark .dynamic-like:hover i,
+body.dark .dynamic-liked i,
+body.dark .dynamic-liked:hover i,
+body.dark .dynamic-hate i,
+body.dark .dynamic-hate:hover i,
+body.dark .dynamic-hated i,
+body.dark .dynamic-hated:hover i,
+body.dark .dynamic-spot,
+body.dark .textarea-container .comm-tool .comm-emoji .icon-face
+{
+    filter: brightness(0) invert(1) !important;
+}
+body.dark .bb-comment .comment-list .list-item .info .like span,
+body.dark .bb-comment .comment-list .list-item .info .hate span,
+body.dark .bb-comment .comment-list .list-item .info .like.liked span,
+body.dark .bb-comment .comment-list .list-item .info .hate.hated span,
+body.dark .bb-comment .comment-list .list-item .info .like:hover span,
+body.dark .bb-comment .comment-list .list-item .info .hate:hover span
+{
+    color: #eee !important;
+}
