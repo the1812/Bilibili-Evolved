@@ -9,6 +9,7 @@ export function loadResources()
         customNavbar: "customNavbar",
         playerShadow: "playerShadow",
         narrowDanmaku: "narrowDanmaku",
+        compactLayout: "compactLayout",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {

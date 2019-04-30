@@ -5,9 +5,16 @@ const suitableSites = [
 if (suitableSites.indexOf(location.href.replace(location.search, '')) !== -1)
 {
     document.body.classList.add("compact");
-    if (!settings.useDarkStyle)
+}
+export default {
+    reload: () =>
     {
-        document.body.classList.add("light");
+        document.body.classList.add("compact");
+        resources.applyImportantStyle("compactLayoutStyle");
+    },
+    unload: () =>
+    {
+        document.body.classList.remove("compact");
+        resources.removeStyle("compactLayoutStyle");
     }
-    addSettingsListener("useDarkStyle", dark => document.body.classList[dark ? "remove" : "add"]("light"));
 }
