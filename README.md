@@ -22,7 +22,7 @@
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置.
 设置项的说明见[功能](#功能)一节.
 
-**设置保存后, 需要刷新网页才能生效.**
+**绝大部分设置保存后, 需要刷新网页才能生效. 仅有一些样式设置可以立即生效.**
 ![设置](images/compressed/gui-settings.jpg)
 
 # 功能
@@ -107,7 +107,7 @@
 ![蓝色](images/compressed/new-navbar-lightBlue.jpg)
 ![绿色](images/compressed/new-navbar-teal.jpg)
 ![暗蓝色](images/compressed/new-navbar-blueGrey.jpg)
-### 样式调整
+<!-- ### 样式调整
 **主要**会改变顶栏的样式, 并有一些其他地方的界面微调:
 - 为播放器增加主题色投影
 - 可控制顶栏对横幅的透明度
@@ -119,7 +119,10 @@
 
 **顶栏效果**
 ![主站](images/compressed/new-navbar.jpg)
-![播放](images/compressed/new-navbar-stardust.jpg)
+![播放](images/compressed/new-navbar-stardust.jpg) -->
+### 自定义顶栏
+启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.
+
 ### 夜间模式
 夜间模式更适合光线暗的环境, 并会大量应用主题颜色.
 
@@ -171,22 +174,27 @@
 
 ![简化直播间](images/compressed/simplify-liveroom.jpg)
 
-### 搜索栏置顶
+<!-- ### 搜索栏置顶
 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示. 仅对常用页面有效, 部分页面可能会有点布局错乱.
 
 **启用前**
 ![不调整](images/compressed/original-navbar.jpg)
 
 **启用后**
-![调整](images/compressed/override-navbar.jpg)
+![调整](images/compressed/override-navbar.jpg) -->
 
-#### 显示顶部横幅
-在搜索栏置顶启用的时候, 还可以使用此功能显示/隐藏顶部横幅.
-![不移除](images/compressed/override-navbar.jpg)
-![移除](images/compressed/no-banner.jpg)
+### 隐藏顶部横幅
+隐藏主站顶部的横幅, 注意这会导致搜索框也被隐藏, 除非开启了自定义顶栏.
+<!--
 #### 显示排行榜图标
 在搜索栏置顶启用的时候, 还可以使用此功能显示/隐藏排行榜入口.
-![排行榜图标](images/compressed/ranklist.jpg)
+![排行榜图标](images/compressed/ranklist.jpg) -->
+### 播放器投影
+为播放器添加主题色投影.
+
+### 强制保留弹幕发送栏
+在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
+
 ### 模糊视频控制栏背景
 模糊视频控制栏背景, 原版的阴影效果将无效.
 此功能需要浏览器支持背景模糊效果, 详情见[兼容性](#兼容性)一节.
@@ -284,10 +292,8 @@
 
 # 兼容性
 ## 脚本管理器
-### [Tampermonkey](https://tampermonkey.net/)
+### [Tampermonkey](https://tampermonkey.net/) / [Violentmonkey](https://violentmonkey.github.io/)
 完全兼容.
-### [Violentmonkey](https://violentmonkey.github.io/)
-一些附加功能无法加载, 详见 [issue #90](https://github.com/the1812/Bilibili-Evolved/issues/90).
 ### [Greasemonkey](https://www.greasespot.net/)
 不支持, 请使用以上的两种管理器.
 
@@ -295,9 +301,9 @@
 > ⚠ 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)中完美运行.
 
 ### Chrome / Edge (Chromium)
-- 背景模糊效果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
+- 背景模糊效果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启. (Edge是`edge://flags...`)
 - 含有背景模糊效果的动画有掉帧现象.
-- 在Chrome 73版中, 如果您的屏幕DPI缩放大于100%, 或者改动了页面缩放倍数, 则模糊效果区域会错位. 详见[Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910).
+- 在Chrome >= 73版中, 如果您的屏幕DPI缩放大于100%, 或者改动了页面缩放倍数, 则模糊效果区域会错位. 详见[Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910).
 ### Firefox
 - 背景模糊效果无效, 详见[Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765).
 - 触摸调整的进度预览有弹跳现象.(源自CSS `transition`. 短时间内总是从原数值开始变化, 而不是当前数值)
