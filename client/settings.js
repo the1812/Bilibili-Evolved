@@ -73,7 +73,7 @@ export const settings = {
         popup: false,
         skin: false,
     },
-    customNavbar: false,
+    customNavbar: true,
     customNavbarFill: true,
     customNavbarShadow: true,
     playerShadow: false,
