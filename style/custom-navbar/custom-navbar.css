@@ -12,7 +12,7 @@
 }
 .custom-navbar-icon-logo::before
 {
-    content: "\\E725";
+    content: "\E725";
 }
 
 body
