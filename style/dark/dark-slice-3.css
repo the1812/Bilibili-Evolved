@@ -171,7 +171,9 @@ body>div.to-top.on,
 .card-timing-module .r-text .update a,
 .card .user-face,
 .result-list .user-face,
-.card .img-box
+.card .img-box,
+.player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-load-status,
+.act-card-wrap .act-card .type
 {
     background-color: #444 !important;
 }
@@ -463,7 +465,9 @@ body>div.to-top.on,
 .date-input .date-panel .ym,
 .date-input,
 .player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control-title,
-#page-playlist-wrap .breadcrumb .item
+#page-playlist-wrap .breadcrumb .item,
+.act-card-wrap .act-card .type,
+.act-card-wrap .act-card .title
 {
     color: #eee !important;
 }
@@ -549,7 +553,8 @@ body>div.to-top.on,
 .date-input > input,
 .date-input .date-panel,
 .bb-comment .hot-line,
-.bb-comment .bottom-page.center
+.bb-comment .bottom-page.center,
+.act-card-wrap .act-card .type
 {
     border-color: transparent !important;
 }
@@ -577,7 +582,8 @@ body>div.to-top.on,
 .medal-receive-title,
 .login-box .line,
 .open-dialog-masker .__dialog-header,
-.date-input .date-panel .ym
+.date-input .date-panel .ym,
+.act-card-wrap .act-card
 {
     border-color: #444 !important
 }
