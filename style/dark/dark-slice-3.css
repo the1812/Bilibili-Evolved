@@ -168,7 +168,10 @@ body>div.to-top.on,
 .player-auxiliary-area .player-auxiliary-collapse-playlist .bui-collapse-body,
 .share-box .share-popup .share-address ul li input,
 .bilibili-live-player-ending-panel-recommend-card,
-.card-timing-module .r-text .update a
+.card-timing-module .r-text .update a,
+.card .user-face,
+.result-list .user-face,
+.card .img-box
 {
     background-color: #444 !important;
 }
@@ -241,7 +244,8 @@ body>div.to-top.on,
 .bb-comment .hot-line span,
 .bb-comment .more-link:hover,
 .bb-comment .result,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer,
+.result .card
 {
     background-color: transparent !important;
 }
