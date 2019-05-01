@@ -546,7 +546,7 @@ Resource.manifest = {
             customNavbar: "使用自定义顶栏",
             customNavbarFill: "主题色填充",
             customNavbarShadow: "投影",
-            allNavbarFill: "填充所有顶栏",
+            allNavbarFill: "填充其他顶栏",
         },
     },
     favoritesRedirect: {
