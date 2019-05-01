@@ -255,6 +255,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     justify-content: start;
     border-bottom: 2px solid transparent;
     font-size: 11pt;
+    line-height: 16pt;
 }
 #custom-navbar-home-popup .category-item .popup a:hover,
 #upload-actions a:hover,
