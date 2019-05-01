@@ -741,7 +741,7 @@ body.all-navbar-fill .search-bar-ctnr .search-bar .search-btn,
 body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-mainsite,
 body.all-navbar-fill .nav-header-wrapper .nav-header .order-center
 {
-    color: var(--foreground-color) !important;
+    color: var(--foreground-color-d) !important;
 }
 body.all-navbar-fill .link-navbar .search-bar-ctnr .search-bar input,
 body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-search-bar,
@@ -779,7 +779,7 @@ body.all-navbar-fill .link-navbar .publish-btn
     box-shadow: none !important;
 }
 body.all-navbar-fill .link-navbar .nav-item:hover .nav-link .label,
-body.all-navbar-fill .link-navbar .shortcuts-ctnr .shortcut-item .label-wrapper .text:hover
+body.all-navbar-fill .link-navbar .shortcuts-ctnr .shortcut-item .label-wrapper .text:hover,
 body.all-navbar-fill .link-navbar .my-link-btn .label:hover,
 body.all-navbar-fill .live-room-app .link-navbar .nav-item:hover,
 body.all-navbar-fill .live-room-app .link-navbar .shortcuts-ctnr .shortcut-item:hover

@@ -67,7 +67,11 @@ const supportedUrls = [
     "/big.bilibili.com",
     "/message.bilibili.com",
 ];
-if (!supportedUrls.some(it => document.URL.includes(it)))
+const unsupportedUrls = [
+    "/t.bilibili.com/lottery/h5/index/#/result",
+]
+if (!supportedUrls.some(it => document.URL.includes(it))
+    || unsupportedUrls.some(it => document.URL.includes(it)))
 {
     return attributes;
 }
@@ -445,7 +449,7 @@ class UserInfo extends NavbarComponent
     }
     async init()
     {
-        const panel = await SpinQuery.select(".user-info-panel");
+        const panel = await SpinQuery.select(".custom-navbar .user-info-panel");
         new Vue({
             el: panel,
             data: {
@@ -484,7 +488,7 @@ class UserInfo extends NavbarComponent
                 }
             },
         });
-        const face = await SpinQuery.select(".user-face");
+        const face = await SpinQuery.select(".custom-navbar .user-face-container .user-face");
         if (userInfo.isLogin)
         {
             const faceUrl = userInfo.face.replace("http", "https");
@@ -498,7 +502,7 @@ class UserInfo extends NavbarComponent
             // face.style.backgroundImage = `url('${userInfo.face}@68w_68h.jpg')`;
             if (userInfo.pendant.image)
             {
-                const pendant = await SpinQuery.select(".user-pendant");
+                const pendant = await SpinQuery.select(".custom-navbar .user-face-container .user-pendant");
                 const pendantUrl = userInfo.pendant.image.replace("http", "https");
                 // pendant.setAttribute("src", pendantUrl);
                 const pendantBaseSize = 116;
