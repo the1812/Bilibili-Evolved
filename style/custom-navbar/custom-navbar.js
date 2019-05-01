@@ -528,8 +528,8 @@ class SearchBox extends NavbarComponent
         this.disabled = true;
         this.html = /*html*/`
             <form id="custom-navbar-search" autocomplete="off" target="_blank" method="get" action="https://search.bilibili.com/all">
-                <input type="hidden" name="from_source" value="banner_search">
                 <input type="text" placeholder="搜索" name="keyword">
+                <input type="hidden" name="from_source" value="banner_search">
                 <a style="display: none" target="_blank" class="recommended-target"></a>
                 <button type="submit" title="搜索">
                     <svg style="width:22px;height:22px" viewBox="0 0 24 24">
