@@ -33,7 +33,8 @@
 .bili-dialog-bomb .appeal-box .submit,
 .bili-dialog-bomb .appeal-box .wrap .container,
 .m-layer.m-button,
-.m_layer.m-button
+.m_layer.m-button,
+.section-block .bp-emoji-box .static-popup
 {
     background-color: #222 !important;
 }
@@ -290,7 +291,8 @@
 .bili-dialog-bomb .appeal-box .submit .confirm,
 .m-layer.m-button,
 .m_layer.m-button,
-.m-layer .b-btn
+.m-layer .b-btn,
+.bp-emoji-box .static-popup.common-font.bp-arrow .title
 {
     color: #eee !important;
 }
@@ -358,7 +360,8 @@
 .bili-dialog-bomb .appeal-box .submit .cancel,
 .m-layer.m-button,
 .m_layer.m-button,
-.m-layer .b-btn
+.m-layer .b-btn,
+.section-block .bp-emoji-box .static-popup
 {
     border-color: transparent !important;
 }
