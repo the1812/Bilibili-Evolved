@@ -96,7 +96,8 @@
 .pendant-mask .pendant-box .pendant-header,
 .error-container .video-details p.num,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item[data-state-play=true],
-.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active
 {
     background-color: #444 !important;
 }
@@ -410,7 +411,10 @@
 .face-container .record-table tbody td,
 .view-later-module .video-box-module,
 .view-later-module .up-info-module .b-btn,
-.view-later-module .video-toolbar-module
+.view-later-module .video-toolbar-module,
+.view-later-module .core-player-auxiliary-area,
+.view-later-module .core-player-video-control,
+.view-later-module .core-player-filter
 {
     border-color: transparent !important;
 }
@@ -472,7 +476,8 @@
 .album-card .info .view-count .icon-view,
 .album-card .info .like-num .icon-like,
 .section-block .col-full .meta .icon,
-.case-list .info .jury-time i
+.case-list .info .jury-time i,
+.view-later-module .share-box .s-text .icon
 {
     filter: brightness(0) invert(.7) !important;
 }
