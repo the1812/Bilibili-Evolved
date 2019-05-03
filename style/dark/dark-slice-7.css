@@ -39,7 +39,8 @@
 .face-container .pendant-list li,
 .pendant-mask .pendant-box .pendant-main .price-btn,
 .mask .popup-container .btn-primary,
-.face-container .pendant-list li>div
+.face-container .pendant-list li>div,
+.face-container .record-table thead th
 {
     background-color: #222 !important;
 }
@@ -312,7 +313,8 @@
 .mask .popup-container .title,
 .pendant-mask .pendant-main .pendant-info p,
 .pendant-main .pendant-btn,
-.face-container .pendant-list li .pendant-btn
+.face-container .pendant-list li .pendant-btn,
+.face-container .record-table
 {
     color: #eee !important;
 }
@@ -387,7 +389,8 @@
 .security-right-bottom .face-tool .tool-container .tool-uninstall-pendant,
 .security-right-bottom .face-tool .tool-container .tool-change-face,
 .face-container .pendant-list li,
-.face-container .pendant-list li>div
+.face-container .pendant-list li>div,
+.face-container .record-table tbody td
 {
     border-color: transparent !important;
 }
