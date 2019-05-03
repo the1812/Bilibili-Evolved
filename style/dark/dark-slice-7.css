@@ -34,7 +34,11 @@
 .bili-dialog-bomb .appeal-box .wrap .container,
 .m-layer.m-button,
 .m_layer.m-button,
-.section-block .bp-emoji-box .static-popup
+.section-block .bp-emoji-box .static-popup,
+.security-right-bottom .face-tool .tool-container .tool-uninstall-pendant,
+.face-container .pendant-list li,
+.pendant-mask .pendant-box .pendant-main .price-btn,
+.mask .popup-container .btn-primary
 {
     background-color: #222 !important;
 }
@@ -85,7 +89,9 @@
 .read-list-modal-component .creat-read-list-box .input-box button[disabled],
 .read-list-page .module-box,
 .read-list-page.edit-page .module-box,
-.bili-dialog-bomb .appeal-box .submit .cancel
+.bili-dialog-bomb .appeal-box .submit .cancel,
+.pendant-mask .pendant-box,
+.pendant-mask .pendant-box .pendant-header
 {
     background-color: #444 !important;
 }
@@ -201,7 +207,10 @@
 .read-list-page.edit-page .read-list-name .cover .empty-state,
 .ui-popup .popup-wrap .text-box .text .sub-tips,
 .bili-dialog-bomb .appeal-box .wrap .container .img-text,
-.bili-dialog-bomb .appeal-box .wrap .container .textarea .textarea-wrap .limit
+.bili-dialog-bomb .appeal-box .wrap .container .textarea .textarea-wrap .limit,
+.pendant-main .final-price,
+.pendant-main .unit-price li,
+.pendant-main .point-info
 {
     color: #aaa !important;
 }
@@ -292,7 +301,13 @@
 .m-layer.m-button,
 .m_layer.m-button,
 .m-layer .b-btn,
-.bp-emoji-box .static-popup.common-font.bp-arrow .title
+.bp-emoji-box .static-popup.common-font.bp-arrow .title,
+.security-right-bottom .face-nav>div a,
+.face-container .pendant-nav li div.active,
+.face-container .pendant-nav li div,
+.pendant-mask .pendant-box .pendant-main .price-btn,
+.security-right-bottom .tool-uninstall-pendant span,
+.mask .popup-container .title
 {
     color: #eee !important;
 }
@@ -361,7 +376,12 @@
 .m-layer.m-button,
 .m_layer.m-button,
 .m-layer .b-btn,
-.section-block .bp-emoji-box .static-popup
+.section-block .bp-emoji-box .static-popup,
+.security-right-bottom .face-nav,
+.security-right-bottom .face-tool .tool-container,
+.security-right-bottom .face-tool .tool-container .tool-uninstall-pendant,
+.security-right-bottom .face-tool .tool-container .tool-change-face,
+.face-container .pendant-list li
 {
     border-color: transparent !important;
 }
@@ -370,7 +390,9 @@
 .list-container .article-list-block .article-item .item-holder .article-content .article-left-block,
 .vip-package-wrapper .coupon-wrapper .coupon-content-con,
 .modal .img-clip-wrap .container-box,
-.text-article-wrp .article-card .meta-status .pubdate
+.text-article-wrp .article-card .meta-status .pubdate,
+.pendant-main .final-price,
+.pendant-main .unit-price li
 {
     border-color: #aaa !important;
 }
@@ -425,7 +447,10 @@
 .error-body .error-container .error-panel .error-msg .error-img,
 .register-agree .checkbox-bwxr.active,
 .answer-list .key-list li.active:before,
-.self-icon-vote-create-btn.active
+.self-icon-vote-create-btn.active,
+.security-right-bottom .face-nav>.active:after,
+.pendant-main .unit-price li.active,
+.pendant-pay-close
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -493,7 +518,11 @@
 .carousel-wrp .page .next.current,
 .list-filter-bar .item-text.active,
 .list-filter-bar .item-text.expand,
-.list-filter-bar .item-text:hover
+.list-filter-bar .item-text:hover,
+.security-right-bottom .face-nav>.active,
+.face-container .pendant-list li:hover,
+.pendant-main .unit-price li.active,
+.pendant-main .unit-price li:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -538,7 +567,9 @@
 .text-article-wrp .article-card .meta-view .meta-item:hover,
 .bili-dialog-bomb .appeal-box .wrap .container .options .option .checkbox.checked:before,
 .bili-dialog-bomb .appeal-box .submit .confirm,
-.m-layer .b-btn
+.m-layer .b-btn,
+.face-container .pendant-nav li div.active,
+.security-right-bottom .face-tool .tool-container .tool-change-face
 {
     background-color: var(--theme-color) !important;
 }
@@ -594,7 +625,11 @@
 .list-filter-bar .item-text:hover,
 .ui-checkbox input[type=checkbox]:active+.ui-checkbox-icon,
 .ui-checkbox input[type=checkbox]:hover+.ui-checkbox-icon,
-.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item:hover
+.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item:hover,
+.pendant-main .unit-price li.active,
+.pendant-main .unit-price li:hover,
+.pendant-main .final-price span,
+.pendant-main .point-info a
 {
     color: var(--theme-color) !important;
 }
