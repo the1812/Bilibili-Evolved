@@ -93,7 +93,8 @@
 .read-list-page.edit-page .module-box,
 .bili-dialog-bomb .appeal-box .submit .cancel,
 .pendant-mask .pendant-box,
-.pendant-mask .pendant-box .pendant-header
+.pendant-mask .pendant-box .pendant-header,
+.error-container .video-details p.num
 {
     background-color: #444 !important;
 }
@@ -427,7 +428,8 @@
 } */
 .block-area .follow-wrapper .follow-head .follow-more .icon,
 .game-package-wrapper .title-right-link .m-arrow-package,
-.text-article-wrp .head-stat .section .iconarrow
+.text-article-wrp .head-stat .section .iconarrow,
+.error-related .error.details
 {
     filter: brightness(0) invert(1) !important;
 }
