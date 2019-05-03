@@ -94,7 +94,9 @@
 .bili-dialog-bomb .appeal-box .submit .cancel,
 .pendant-mask .pendant-box,
 .pendant-mask .pendant-box .pendant-header,
-.error-container .video-details p.num
+.error-container .video-details p.num,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item[data-state-play=true],
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover
 {
     background-color: #444 !important;
 }
@@ -108,7 +110,10 @@
 .list-container .list-info-block .right-side .col .split-line,
 .comment-list-item .ci-action span.date,
 .text-article-wrp .article-card .meta-view .menu-list .menu-item:hover,
-.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item:hover
+.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item:hover,
+.view-later-module .video-box-module,
+.view-later-module .up-info-module,
+.view-later-module .video-info-module .number .fav i
 {
     background-color: transparent !important;
 }
@@ -119,7 +124,9 @@
 .register-container .report-wrap-module .back-fff,
 .cc-body .home-wrap .card,
 .text-article-wrp .head-stat .section .count,
-.read-list-modal-component .mask
+.view-later-module .read-list-modal-component .mask,
+.view-later-module .video-info-module .number .coin i,
+.view-later-module .video-info-module .number .fav i
 {
     background: transparent !important;
 }
@@ -214,7 +221,14 @@
 .pendant-main .final-price,
 .pendant-main .unit-price li,
 .pendant-main .point-info,
-.pendant-list li .pendant-expire
+.pendant-list li .pendant-expire,
+.view-later-module .video-info-module .tm-info,
+.view-later-module .video-info-module .tm-info a,
+.view-later-module .video-info-module .tm-info .btn-appeal,
+.view-later-module .video-info-module .tm-info time,
+.view-later-module .up-info-module .number,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-header,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-info-other
 {
     color: #aaa !important;
 }
@@ -315,7 +329,9 @@
 .pendant-mask .pendant-main .pendant-info p,
 .pendant-main .pendant-btn,
 .face-container .pendant-list li .pendant-btn,
-.face-container .record-table
+.face-container .record-table,
+.view-later-module .video-info-module h1,
+.view-later-module .up-info-module .b-btn
 {
     color: #eee !important;
 }
@@ -391,7 +407,10 @@
 .security-right-bottom .face-tool .tool-container .tool-change-face,
 .face-container .pendant-list li,
 .face-container .pendant-list li>div,
-.face-container .record-table tbody td
+.face-container .record-table tbody td,
+.view-later-module .video-box-module,
+.view-later-module .up-info-module .b-btn,
+.view-later-module .video-toolbar-module
 {
     border-color: transparent !important;
 }
@@ -410,7 +429,10 @@
 .web-box .expanded .user-li::after,
 .read-list-page .add-article-modal hr,
 .bili-dialog-bomb .appeal-box .header,
-.bili-dialog-bomb .appeal-box .submit
+.bili-dialog-bomb .appeal-box .submit,
+.view-later-module .video-info-module .number .line,
+.view-later-module .video-desc,
+.view-later-module .video-tag
 {
     border-color: #444 !important
 }
@@ -429,7 +451,8 @@
 .block-area .follow-wrapper .follow-head .follow-more .icon,
 .game-package-wrapper .title-right-link .m-arrow-package,
 .text-article-wrp .head-stat .section .iconarrow,
-.error-related .error.details
+.error-related .error.details,
+.video-toolbar-module .share-box .share-btn ul li
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -489,10 +512,10 @@
 {
     background-image: none !important;
 } */
-/* a
+.view-later-module .video-info-module
 {
     box-shadow: none !important;
-} */
+}
 /* a
 {
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
@@ -583,7 +606,8 @@
 .security-right-bottom .face-tool .tool-container .tool-change-face,
 .pendant-main .pendant-btn,
 .face-container .pendant-list li .pendant-btn,
-.face-container .pendant-list li .pendant-btn:hover
+.face-container .pendant-list li .pendant-btn:hover,
+.view-later-module .up-info-module .b-btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -643,7 +667,16 @@
 .pendant-main .unit-price li.active,
 .pendant-main .unit-price li:hover,
 .pendant-main .final-price span,
-.pendant-main .point-info a
+.pendant-main .point-info a,
+.view-later-module .video-info-module .tm-info a:hover,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-positive.bppl-state-selected,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-random.bppl-state-selected,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse.bppl-state-selected,
+.view-later-module .bilibili-player-iconfont.icon-12toview-play:before,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover .bilibili-player-watchlater-info-title,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-positive:hover,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-random:hover,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse:hover
 {
     color: var(--theme-color) !important;
 }
