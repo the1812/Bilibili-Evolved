@@ -38,7 +38,8 @@
 .security-right-bottom .face-tool .tool-container .tool-uninstall-pendant,
 .face-container .pendant-list li,
 .pendant-mask .pendant-box .pendant-main .price-btn,
-.mask .popup-container .btn-primary
+.mask .popup-container .btn-primary,
+.face-container .pendant-list li>div
 {
     background-color: #222 !important;
 }
@@ -210,7 +211,8 @@
 .bili-dialog-bomb .appeal-box .wrap .container .textarea .textarea-wrap .limit,
 .pendant-main .final-price,
 .pendant-main .unit-price li,
-.pendant-main .point-info
+.pendant-main .point-info,
+.pendant-list li .pendant-expire
 {
     color: #aaa !important;
 }
@@ -307,7 +309,10 @@
 .face-container .pendant-nav li div,
 .pendant-mask .pendant-box .pendant-main .price-btn,
 .security-right-bottom .tool-uninstall-pendant span,
-.mask .popup-container .title
+.mask .popup-container .title,
+.pendant-mask .pendant-main .pendant-info p,
+.pendant-main .pendant-btn,
+.face-container .pendant-list li .pendant-btn
 {
     color: #eee !important;
 }
@@ -381,7 +386,8 @@
 .security-right-bottom .face-tool .tool-container,
 .security-right-bottom .face-tool .tool-container .tool-uninstall-pendant,
 .security-right-bottom .face-tool .tool-container .tool-change-face,
-.face-container .pendant-list li
+.face-container .pendant-list li,
+.face-container .pendant-list li>div
 {
     border-color: transparent !important;
 }
@@ -569,7 +575,10 @@
 .bili-dialog-bomb .appeal-box .submit .confirm,
 .m-layer .b-btn,
 .face-container .pendant-nav li div.active,
-.security-right-bottom .face-tool .tool-container .tool-change-face
+.security-right-bottom .face-tool .tool-container .tool-change-face,
+.pendant-main .pendant-btn,
+.face-container .pendant-list li .pendant-btn,
+.face-container .pendant-list li .pendant-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
