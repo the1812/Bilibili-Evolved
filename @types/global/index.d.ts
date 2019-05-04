@@ -227,6 +227,7 @@ declare global
         allNavbarFill: boolean,
         customNavbarShadow: boolean,
         customNavbarCompact: boolean,
+        customNavbarBlur: boolean,
         playerShadow: boolean,
         narrowDanmaku: boolean,
         favoritesRedirect: boolean,

@@ -78,6 +78,7 @@ export const settings = {
     allNavbarFill: true,
     customNavbarShadow: true,
     customNavbarCompact: false,
+    customNavbarBlur: false,
     playerShadow: false,
     narrowDanmaku: true,
     favoritesRedirect: true,

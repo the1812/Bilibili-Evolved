@@ -826,11 +826,14 @@ class HistoryList extends VideoList
     document.body.insertAdjacentHTML("beforeend", html);
     addSettingsListener("useDarkStyle", darkHandler);
     darkHandler(settings.useDarkStyle);
-    ["Fill", "Shadow", "Compact"].forEach(item =>
+    ["Fill", "Shadow", "Compact", "Blur"].forEach(item =>
     {
         addSettingsListener("customNavbar" + item, value => classHandler(item.toLowerCase(), value, document.querySelector(".custom-navbar")));
         classHandler(item.toLowerCase(), settings["customNavbar" + item], document.querySelector(".custom-navbar"));
     });
+    SpinQuery.condition(() => document.getElementById("banner_link"),
+        banner => banner.style.backgroundImage,
+        banner => document.querySelector(".custom-navbar .blur-layer").style.backgroundImage = banner.style.backgroundImage);
 
     const components = [
         new Logo,

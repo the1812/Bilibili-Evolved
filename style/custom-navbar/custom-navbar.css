@@ -753,6 +753,28 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     opacity: 1;
 }
+
+.custom-navbar .blur-layer
+{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    filter: blur(36px);
+}
+.custom-navbar.dark .blur-layer
+{
+    filter: blur(54px);
+}
+.custom-navbar.blur .blur-layer
+{
+    display: block;
+}
+
 body.all-navbar-fill .link-navbar,
 body.all-navbar-fill .nav-header-wrapper,
 body.all-navbar-fill .link-navbar .main-ctnr .nav-items-ctnr
