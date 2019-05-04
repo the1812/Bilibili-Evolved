@@ -557,7 +557,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     margin: 6px 0;
     box-sizing: border-box;
     transition: all .2s ease-out .1s;
-    display: flex;
+    display: block;
     width: 100%;
     height: 100%;
 }
