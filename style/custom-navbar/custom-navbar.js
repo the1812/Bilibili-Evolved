@@ -832,7 +832,7 @@ class HistoryList extends VideoList
         classHandler(item.toLowerCase(), settings["customNavbar" + item], document.querySelector(".custom-navbar"));
     });
     SpinQuery.condition(() => document.getElementById("banner_link"),
-        banner => banner.style.backgroundImage,
+        banner => banner === null ? null : banner.style.backgroundImage,
         banner => document.querySelector(".custom-navbar .blur-layer").style.backgroundImage = banner.style.backgroundImage);
 
     const components = [
