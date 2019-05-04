@@ -11,6 +11,8 @@ export function loadResources()
         narrowDanmaku: "narrowDanmaku",
         compactLayout: "compactLayout",
         useCommentStyle: "useCommentStyle",
+        removeVideoTopMask: "removeVideoTopMask",
+        hideOldEntry: "hideOldEntry",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {

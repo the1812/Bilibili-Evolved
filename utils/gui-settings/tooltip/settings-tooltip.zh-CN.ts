@@ -97,6 +97,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["customNavbarBlur", `是否在顶部横幅存在时, 使用背景模糊效果.`],
     ["playerShadow", `为播放器添加主题色投影.`],
     ["narrowDanmaku", `在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.`],
+    ["hideOldEntry", `隐藏播放页右侧的<span>返回旧版</span>入口.`],
 ]);
 export default {
     export: { toolTips },

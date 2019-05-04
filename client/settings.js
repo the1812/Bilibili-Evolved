@@ -83,6 +83,7 @@ export const settings = {
     narrowDanmaku: true,
     favoritesRedirect: true,
     outerWatchlater: true,
+    hideOldEntry: true,
     cache: {},
 };
 const fixedSettings = {

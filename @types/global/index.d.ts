@@ -232,6 +232,7 @@ declare global
         narrowDanmaku: boolean,
         favoritesRedirect: boolean,
         outerWatchlater: boolean,
+        hideOldEntry: boolean,
         cache: {} | { version: string } | undefined,
         latestVersionLink: string,
         currentVersion: string,

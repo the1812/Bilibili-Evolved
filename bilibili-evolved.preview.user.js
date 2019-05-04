@@ -108,6 +108,7 @@ const settings = {
     narrowDanmaku: true,
     favoritesRedirect: true,
     outerWatchlater: true,
+    hideOldEntry: true,
     cache: {},
 };
 const fixedSettings = {
@@ -477,6 +478,8 @@ function loadResources()
         narrowDanmaku: "narrowDanmaku",
         compactLayout: "compactLayout",
         useCommentStyle: "useCommentStyle",
+        removeVideoTopMask: "removeVideoTopMask",
+        hideOldEntry: "hideOldEntry",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
@@ -1784,6 +1787,12 @@ Resource.manifest = {
         path: "narrow-danmaku.min.js",
         displayNames: {
             narrowDanmaku: "强制保留弹幕栏",
+        },
+    },
+    hideOldEntry: {
+        path: "hide-old-entry.min.js",
+        displayNames: {
+            hideOldEntry: "隐藏返回旧版",
         },
     },
 };

@@ -576,5 +576,11 @@ Resource.manifest = {
             narrowDanmaku: "强制保留弹幕栏",
         },
     },
+    hideOldEntry: {
+        path: "hide-old-entry.min.js",
+        displayNames: {
+            hideOldEntry: "隐藏返回旧版",
+        },
+    },
 };
 export const resourceManifest = Resource.manifest;
