@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.7.31
+// @version      1.7.32
 // @description  增强哔哩哔哩Web端体验: 下载视频, 音乐, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 删除广告, 使用夜间模式, 修复界面瑕疵; 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -102,10 +102,13 @@ const settings = {
     customNavbarFill: true,
     allNavbarFill: true,
     customNavbarShadow: true,
+    customNavbarCompact: false,
+    customNavbarBlur: false,
     playerShadow: false,
     narrowDanmaku: true,
     favoritesRedirect: true,
     outerWatchlater: true,
+    hideOldEntry: true,
     cache: {},
 };
 const fixedSettings = {
@@ -475,6 +478,8 @@ function loadResources()
         narrowDanmaku: "narrowDanmaku",
         compactLayout: "compactLayout",
         useCommentStyle: "useCommentStyle",
+        removeVideoTopMask: "removeVideoTopMask",
+        hideOldEntry: "hideOldEntry",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
@@ -1754,6 +1759,8 @@ Resource.manifest = {
             customNavbar: "使用自定义顶栏",
             customNavbarFill: "主题色填充",
             customNavbarShadow: "投影",
+            customNavbarCompact: "紧凑布局",
+            customNavbarBlur: "背景模糊",
             allNavbarFill: "填充其他顶栏",
         },
     },
@@ -1780,6 +1787,12 @@ Resource.manifest = {
         path: "narrow-danmaku.min.js",
         displayNames: {
             narrowDanmaku: "强制保留弹幕栏",
+        },
+    },
+    hideOldEntry: {
+        path: "hide-old-entry.min.js",
+        displayNames: {
+            hideOldEntry: "隐藏返回旧版",
         },
     },
 };

@@ -546,6 +546,8 @@ Resource.manifest = {
             customNavbar: "使用自定义顶栏",
             customNavbarFill: "主题色填充",
             customNavbarShadow: "投影",
+            customNavbarCompact: "紧凑布局",
+            customNavbarBlur: "背景模糊",
             allNavbarFill: "填充其他顶栏",
         },
     },
@@ -572,6 +574,12 @@ Resource.manifest = {
         path: "narrow-danmaku.min.js",
         displayNames: {
             narrowDanmaku: "强制保留弹幕栏",
+        },
+    },
+    hideOldEntry: {
+        path: "hide-old-entry.min.js",
+        displayNames: {
+            hideOldEntry: "隐藏返回旧版",
         },
     },
 };

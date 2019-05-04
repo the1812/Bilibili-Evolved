@@ -77,10 +77,13 @@ export const settings = {
     customNavbarFill: true,
     allNavbarFill: true,
     customNavbarShadow: true,
+    customNavbarCompact: false,
+    customNavbarBlur: false,
     playerShadow: false,
     narrowDanmaku: true,
     favoritesRedirect: true,
     outerWatchlater: true,
+    hideOldEntry: true,
     cache: {},
 };
 const fixedSettings = {

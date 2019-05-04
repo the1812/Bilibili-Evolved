@@ -1,15 +1,26 @@
 .gui-settings-icon-panel
 {
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 0;
+    top: 50%;
     left: 0;
-    width: 24px;
+    width: 32px;
     z-index: 99999;
+    transform: translateY(-50%);
+}
+.gui-settings-icon-panel i
+{
+    transition: all 0.2s;
+    transform: rotate(180deg);
+}
+.gui-settings:hover i,
+.gui-settings-widgets:hover i
+{
+    transform: rotate(0deg);
 }
 .gui-settings,
 .gui-settings-widgets
@@ -25,13 +36,21 @@
     transition: all 0.2s;
     opacity: 0.3;
     transform-origin: center !important;
-    transform: translateX(-12px) rotate(180deg);
+    transform: translateX(-16px);
+    background-color: rgba(255,255,255,0.75);
+    border-radius: 0 50% 50% 0;
+    padding: 6px;
+}
+body.dark .gui-settings,
+body.dark .gui-settings-widgets
+{
+    background-color: rgba(0,0,0,0.75);
 }
 .gui-settings:hover,
 .gui-settings-widgets:hover
 {
     opacity: 1;
-    transform: translateX(0px) rotate(0deg);
+    transform: translateX(0px);
 }
 .gui-settings-footer,
 .gui-settings-header

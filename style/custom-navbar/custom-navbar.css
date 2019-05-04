@@ -163,6 +163,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     /* transform-origin: top; */
     /* transition: all 0.15s cubic-bezier(0.18, 0.89, 0.38, 1.15) .2s; */
 }
+.custom-navbar.compact .popup
+{
+    padding: 8px;
+}
 .custom-navbar.dark .popup
 {
     box-shadow: rgba(0,0,0,0.3) 0 4px 40px 20px;
@@ -205,6 +209,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     cursor: pointer;
     position: relative;
 }
+.custom-navbar.compact #custom-navbar-home-popup .category-item
+{
+    padding: 6px;
+}
 #custom-navbar-home-popup .category-item:hover
 {
     background-color: #0001;
@@ -229,6 +237,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 #custom-navbar-home-popup .category-item.main
 {
     min-width: 150px;
+}
+.custom-navbar.compact #custom-navbar-home-popup .category-item.main
+{
+    min-width: 110px;
 }
 #custom-navbar-home-popup .category-item .popup
 {
@@ -256,6 +268,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     border-bottom: 2px solid transparent;
     font-size: 11pt;
     line-height: 16pt;
+}
+.custom-navbar.compact #custom-navbar-home-popup .category-item .popup a
+{
+    padding: 6px;
 }
 #custom-navbar-home-popup .category-item .popup a:hover,
 #upload-actions a:hover,
@@ -541,9 +557,13 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     margin: 6px 0;
     box-sizing: border-box;
     transition: all .2s ease-out .1s;
-    display: flex;
+    display: block;
     width: 100%;
     height: 100%;
+}
+.custom-navbar.compact .video-list li:not(.more) a
+{
+    padding: 6px 8px;
 }
 .custom-navbar .video-list li:hover
 {
@@ -561,6 +581,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 8px 0;
     display: flex;
     justify-content: center;
+}
+.custom-navbar.compact .video-list li.more a
+{
+    padding: 6px 0;
 }
 .custom-navbar .video-list li.more:hover
 {
@@ -580,11 +604,23 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     border: none !important;
 }
+.custom-navbar.compact .video-list.history .history-item .title,
+.custom-navbar.compact .video-list li:not(.more) a
+{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 .custom-navbar .video-list.history li:not(.more) a
 {
     justify-content: space-between;
     position: relative;
+    display: flex;
     padding: 6px 8px !important;
+}
+.custom-navbar.compact .video-list.history li:not(.more) a
+{
+    padding: 6px !important;
 }
 .custom-navbar .video-list.history a .description
 {
@@ -718,6 +754,28 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     opacity: 1;
 }
+
+.custom-navbar .blur-layer
+{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    filter: blur(36px);
+}
+.custom-navbar.dark .blur-layer
+{
+    filter: blur(54px);
+}
+.custom-navbar.blur .blur-layer
+{
+    display: block;
+}
+
 body.all-navbar-fill .link-navbar,
 body.all-navbar-fill .nav-header-wrapper,
 body.all-navbar-fill .link-navbar .main-ctnr .nav-items-ctnr

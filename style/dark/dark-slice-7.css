@@ -40,7 +40,8 @@
 .pendant-mask .pendant-box .pendant-main .price-btn,
 .mask .popup-container .btn-primary,
 .face-container .pendant-list li>div,
-.face-container .record-table thead th
+.face-container .record-table thead th,
+.feedback-mask .content .feedback-body .feedback-submit
 {
     background-color: #222 !important;
 }
@@ -97,7 +98,8 @@
 .error-container .video-details p.num,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item[data-state-play=true],
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active,
+.info-wrap .feedback-mask .content
 {
     background-color: #444 !important;
 }
@@ -332,7 +334,10 @@
 .face-container .pendant-list li .pendant-btn,
 .face-container .record-table,
 .view-later-module .video-info-module h1,
-.view-later-module .up-info-module .b-btn
+.view-later-module .up-info-module .b-btn,
+.feedback-mask .content .feedback-body .dl-item .dt-item,
+.feedback-mask .content .feedback-body .feedback-submit,
+.feedback-mask .content .feedback-body .feedback-submit.active
 {
     color: #eee !important;
 }
@@ -415,7 +420,8 @@
 .view-later-module .core-player-auxiliary-area,
 .view-later-module .core-player-video-control,
 .view-later-module .core-player-filter,
-.face-g-list#my-g-list .face-g-block .my-mp-block
+.face-g-list#my-g-list .face-g-block .my-mp-block,
+.info-wrap .feedback-mask .content .headline
 {
     border-color: transparent !important;
 }
@@ -490,7 +496,8 @@
 .self-icon-vote-create-btn.active,
 .security-right-bottom .face-nav>.active:after,
 .pendant-main .unit-price li.active,
-.pendant-pay-close
+.pendant-pay-close,
+.feedback-mask .content .feedback-body input[type=radio]:checked+.radio-icon
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -614,7 +621,8 @@
 .pendant-main .pendant-btn,
 .face-container .pendant-list li .pendant-btn,
 .face-container .pendant-list li .pendant-btn:hover,
-.view-later-module .up-info-module .b-btn
+.view-later-module .up-info-module .b-btn,
+.feedback-mask .content .feedback-body .feedback-submit.active
 {
     background-color: var(--theme-color) !important;
 }

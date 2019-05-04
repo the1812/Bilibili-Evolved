@@ -1,5 +1,5 @@
-const style = `.bilibili-player-video-top { display: none !important; }`;
-const id = "remove-top-mask-style";
+const style = `#entryOld, .main-container .entry-old { display: none !important; }`;
+const id = "hide-old-entry-style";
 const reload = () => resources.applyStyleFromText(/*html*/`<style id="${id}">${style}</style>`);
 const unload = () =>
 {

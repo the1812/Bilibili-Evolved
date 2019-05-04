@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.31
+// @version      1.7.32
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -102,10 +102,13 @@ const settings = {
     customNavbarFill: true,
     allNavbarFill: true,
     customNavbarShadow: true,
+    customNavbarCompact: false,
+    customNavbarBlur: false,
     playerShadow: false,
     narrowDanmaku: true,
     favoritesRedirect: true,
     outerWatchlater: true,
+    hideOldEntry: true,
     cache: {},
 };
 const fixedSettings = {
@@ -475,6 +478,8 @@ function loadResources()
         narrowDanmaku: "narrowDanmaku",
         compactLayout: "compactLayout",
         useCommentStyle: "useCommentStyle",
+        removeVideoTopMask: "removeVideoTopMask",
+        hideOldEntry: "hideOldEntry",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
@@ -1754,6 +1759,8 @@ Resource.manifest = {
             customNavbar: "使用自定义顶栏",
             customNavbarFill: "主题色填充",
             customNavbarShadow: "投影",
+            customNavbarCompact: "紧凑布局",
+            customNavbarBlur: "背景模糊",
             allNavbarFill: "填充其他顶栏",
         },
     },
@@ -1780,6 +1787,12 @@ Resource.manifest = {
         path: "narrow-danmaku.min.js",
         displayNames: {
             narrowDanmaku: "强制保留弹幕栏",
+        },
+    },
+    hideOldEntry: {
+        path: "hide-old-entry.min.js",
+        displayNames: {
+            hideOldEntry: "隐藏返回旧版",
         },
     },
 };
