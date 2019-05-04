@@ -93,6 +93,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["customNavbarFill", `是否使用主题色填充顶栏.`],
     ["allNavbarFill", `是否使用主题色填充其他的顶栏, 包括直播/相簿/会员购等.`],
     ["customNavbarShadow", `是否为顶栏添加一层阴影效果.`],
+    ["customNavbarCompact", `是否为顶栏使用更紧凑的布局.`],
     ["playerShadow", `为播放器添加主题色投影.`],
     ["narrowDanmaku", `在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.`],
 ]);

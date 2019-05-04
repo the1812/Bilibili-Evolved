@@ -546,6 +546,7 @@ Resource.manifest = {
             customNavbar: "使用自定义顶栏",
             customNavbarFill: "主题色填充",
             customNavbarShadow: "投影",
+            customNavbarCompact: "紧凑布局",
             allNavbarFill: "填充其他顶栏",
         },
     },

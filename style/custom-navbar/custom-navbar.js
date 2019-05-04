@@ -826,10 +826,12 @@ class HistoryList extends VideoList
     document.body.insertAdjacentHTML("beforeend", html);
     addSettingsListener("useDarkStyle", darkHandler);
     darkHandler(settings.useDarkStyle);
-    addSettingsListener("customNavbarFill", value => classHandler("fill", value, document.querySelector(".custom-navbar")));
-    classHandler("fill", settings.customNavbarFill, document.querySelector(".custom-navbar"));
-    addSettingsListener("customNavbarShadow", value => classHandler("shadow", value, document.querySelector(".custom-navbar")));
-    classHandler("shadow", settings.customNavbarShadow, document.querySelector(".custom-navbar"));
+    ["Fill", "Shadow", "Compact"].forEach(item =>
+    {
+        addSettingsListener("customNavbar" + item, value => classHandler(item.toLowerCase(), value, document.querySelector(".custom-navbar")));
+        classHandler(item.toLowerCase(), settings["customNavbar" + item], document.querySelector(".custom-navbar"));
+    });
+
     const components = [
         new Logo,
         new Category,
