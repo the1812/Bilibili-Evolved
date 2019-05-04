@@ -15,7 +15,8 @@
 .media-info .media-right .media-tool-bar .btn-follow,
 .article-action .ops .coin-btn,
 .article-action .ops .fav-btn,
-.article-action .ops .like-btn
+.article-action .ops .like-btn,
+.security-right .mp-mine-takedown
 {
     width: auto !important;
 }
