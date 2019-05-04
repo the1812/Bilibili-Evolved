@@ -35,6 +35,9 @@ class Downloader {
         });
         Downloader.workingDownloader = this;
     }
+    getExtension(fragment) {
+        this.extension = fragment.url.includes(".flv") ? ".flv" : ".mp4";
+    }
     updateProgress() {
         const progress = this.progressMap ?
             [...this.progressMap.values()].reduce((a, b) => a + b, 0) / this.inputData.totalSize : 0;
@@ -96,7 +99,7 @@ class Downloader {
         return title;
     }
     async mergeFragment(title, index = -1) {
-        const dest = title + ".flv";
+        const dest = title + this.extension;
         if (index !== -1) {
             console.log(`正在合并片段${index.toString()}...`.blue);
         }
@@ -129,8 +132,10 @@ class Downloader {
         console.log(`正在下载: ${this.inputData.title}`.green);
         this.progressBar.render();
         let result;
+        const [fragment] = this.inputData.fragments;
+        this.getExtension(fragment);
         if (this.inputData.fragments.length === 1) {
-            result = await this.mergeFragment(await this.downloadFragment(this.inputData.fragments[0]));
+            result = await this.mergeFragment(await this.downloadFragment(fragment));
         }
         else {
             const titles = await Promise.all(this.inputData.fragments.map((f, i) => this.downloadFragment(f, i)));

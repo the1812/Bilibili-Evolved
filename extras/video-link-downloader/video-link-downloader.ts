@@ -55,12 +55,17 @@ class Downloader
         width: 20,
         incomplete: ' ',
     });
+    private extension: string;
 
     constructor(
         private inputData: InputData,
     )
     {
         Downloader.workingDownloader = this;
+    }
+    private getExtension(fragment: Fragment)
+    {
+        this.extension = fragment.url.includes(".flv") ? ".flv" : ".mp4";
     }
     private updateProgress()
     {
@@ -135,7 +140,7 @@ class Downloader
     }
     private async mergeFragment(title: string, index = -1)
     {
-        const dest = title + ".flv";
+        const dest = title + this.extension;
         if (index !== -1)
         {
             console.log(`正在合并片段${index.toString()}...`.blue);
@@ -176,9 +181,11 @@ class Downloader
         console.log(`正在下载: ${this.inputData.title}`.green);
         this.progressBar.render();
         let result: string | string[];
+        const [fragment] = this.inputData.fragments;
+        this.getExtension(fragment);
         if (this.inputData.fragments.length === 1)
         {
-            result = await this.mergeFragment(await this.downloadFragment(this.inputData.fragments[0]));
+            result = await this.mergeFragment(await this.downloadFragment(fragment));
         }
         else
         {
