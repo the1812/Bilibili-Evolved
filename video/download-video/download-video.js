@@ -5,6 +5,7 @@ const pageData = {
     aid: undefined,
     cid: undefined,
 };
+let selectedFormat = null;
 class Video
 {
     constructor()
@@ -375,14 +376,33 @@ async function checkBatch()
         document.getElementById("download-video").classList.add("batch");
         document.getElementById("video-action-batch-data").addEventListener("click", async () =>
         {
-            const data = await extractor.collectData();
+            if (!selectedFormat)
+            {
+                return;
+            }
+            pageData.entity.resetMenuClass();
+            const toast = Toast.info("获取链接中...", "批量下载");
+            const data = await extractor.collectData(selectedFormat, toast);
+            if (!data)
+            {
+                return;
+            }
             GM_setClipboard(data, { type: "text/json" });
             Toast.success("已复制批量数据到剪贴板.", "复制批量数据", 3000);
-            pageData.entity.resetMenuClass();
         });
         document.getElementById("video-action-batch-download-data").addEventListener("click", async () =>
         {
-            const data = await extractor.collectData();
+            if (!selectedFormat)
+            {
+                return;
+            }
+            pageData.entity.resetMenuClass();
+            const toast = Toast.info("获取链接中...", "批量下载");
+            const data = await extractor.collectData(selectedFormat, toast);
+            if (!data)
+            {
+                return;
+            }
 
             const a = document.createElement("a");
             const blob = new Blob([data], { type: "text/json" });
@@ -394,7 +414,6 @@ async function checkBatch()
             a.remove();
             URL.revokeObjectURL(url);
 
-            pageData.entity.resetMenuClass();
         });
     }
 }
@@ -417,7 +436,7 @@ async function loadPageData()
 async function loadWidget()
 {
     let formats = await VideoFormat.availableFormats;
-    let [selectedFormat] = formats;
+    selectedFormat = formats[0];
     const loadQualities = async () =>
     {
         await loadPageData();
