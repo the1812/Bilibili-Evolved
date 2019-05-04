@@ -615,6 +615,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     justify-content: space-between;
     position: relative;
+    display: flex;
     padding: 6px 8px !important;
 }
 .custom-navbar.compact .video-list.history li:not(.more) a
