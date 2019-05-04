@@ -363,6 +363,41 @@ class VideoDownloader
         };
     }
 }
+async function checkBatch()
+{
+    const urls = [
+        "/www.bilibili.com/bangumi",
+    ];
+    if (urls.some(url => document.URL.includes(url)))
+    {
+        const { BatchExtractor } = await import("batchDownload");
+        const extractor = new BatchExtractor();
+        document.getElementById("download-video").classList.add("batch");
+        document.getElementById("video-action-batch-data").addEventListener("click", async () =>
+        {
+            const data = await extractor.collectData();
+            GM_setClipboard(data, { type: "text/json" });
+            Toast.success("已复制批量数据到剪贴板.", "复制批量数据", 3000);
+            pageData.entity.resetMenuClass();
+        });
+        document.getElementById("video-action-batch-download-data").addEventListener("click", async () =>
+        {
+            const data = await extractor.collectData();
+
+            const a = document.createElement("a");
+            const blob = new Blob([data], { type: "text/json" });
+            const url = URL.createObjectURL(blob);
+            a.setAttribute("href", url);
+            a.setAttribute("download", `export.json`);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+
+            pageData.entity.resetMenuClass();
+        });
+    }
+}
 async function loadPageData()
 {
     const aid = await SpinQuery.select(() => (unsafeWindow || window).aid);
@@ -495,6 +530,7 @@ async function loadWidget()
     });
     await SpinQuery.select(() => document.querySelector(".download-video-panel"));
     pageData.entity.addMenuClass();
+    checkBatch();
 }
 export default {
     widget:
