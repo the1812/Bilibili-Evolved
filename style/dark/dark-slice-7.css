@@ -231,7 +231,8 @@
 .view-later-module .video-info-module .tm-info time,
 .view-later-module .up-info-module .number,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-header,
-.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-info-other
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-info-other,
+.article-list-holder-block .article-list-name
 {
     color: #aaa !important;
 }
