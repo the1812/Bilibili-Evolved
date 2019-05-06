@@ -495,10 +495,10 @@ class UserInfo extends NavbarComponent
             // face.setAttribute("src", faceUrl);
             const faceBaseSize = 68;
             const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4];
-            face.setAttribute("srcset", dpis.reduce((acc, dpi) =>
+            face.setAttribute("srcset", dpis.map(dpi =>
             {
-                return acc + `, ${faceUrl}@${parseInt(faceBaseSize * dpi)}w_${parseInt(faceBaseSize * dpi)}h.jpg ${dpi}x`;
-            }, ""));
+                return `${faceUrl}@${parseInt(faceBaseSize * dpi)}w_${parseInt(faceBaseSize * dpi)}h.jpg ${dpi}x`;
+            }).join(","));
             // face.style.backgroundImage = `url('${userInfo.face}@68w_68h.jpg')`;
             if (userInfo.pendant.image)
             {
