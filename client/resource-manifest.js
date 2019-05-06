@@ -287,6 +287,7 @@ Resource.manifest = {
         dependencies: ["title"],
         displayNames: {
             "downloadVideo": "下载视频",
+            "batchDownload": "批量下载",
         },
     },
     downloadDanmaku: {
@@ -581,6 +582,9 @@ Resource.manifest = {
         displayNames: {
             hideOldEntry: "隐藏返回旧版",
         },
+    },
+    batchDownload: {
+        path: "batch-download.min.js",
     },
 };
 export const resourceManifest = Resource.manifest;

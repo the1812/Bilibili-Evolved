@@ -33,7 +33,9 @@ class Downloader {
             width: 20,
             incomplete: ' ',
         });
-        Downloader.workingDownloader = this;
+    }
+    getExtension(fragment) {
+        this.extension = fragment.url.includes(".flv") ? ".flv" : ".mp4";
     }
     updateProgress() {
         const progress = this.progressMap ?
@@ -51,6 +53,10 @@ class Downloader {
     async downloadFragment(fragment, index = -1) {
         const partialLength = Math.round(fragment.size / options.parts);
         const title = (index === -1 ? this.inputData.title : this.inputData.title + " - " + index.toString());
+        if (fs.existsSync(title + this.extension)) {
+            this.progressBar.interrupt(`跳过了已存在的文件 ${title + this.extension}`);
+            return title;
+        }
         let startByte = 0;
         let part = 0;
         const promises = [];
@@ -95,8 +101,24 @@ class Downloader {
         await Promise.all(promises);
         return title;
     }
+    async download() {
+        console.log(`正在下载: ${this.inputData.title}`.green);
+        Downloader.workingDownloader = this;
+        this.progressBar.render();
+        const [fragment] = this.inputData.fragments;
+        this.getExtension(fragment);
+        if (this.inputData.fragments.length === 1) {
+            this.title = await this.downloadFragment(fragment);
+        }
+        else {
+            this.title = await Promise.all(this.inputData.fragments.map((f, i) => this.downloadFragment(f, i)));
+        }
+    }
     async mergeFragment(title, index = -1) {
-        const dest = title + ".flv";
+        const dest = title + this.extension;
+        if (fs.existsSync(dest)) {
+            return dest;
+        }
         if (index !== -1) {
             console.log(`正在合并片段${index.toString()}...`.blue);
         }
@@ -125,18 +147,15 @@ class Downloader {
         }
         return dest;
     }
-    async download() {
-        console.log(`正在下载: ${this.inputData.title}`.green);
-        this.progressBar.render();
+    async merge() {
         let result;
-        if (this.inputData.fragments.length === 1) {
-            result = await this.mergeFragment(await this.downloadFragment(this.inputData.fragments[0]));
+        if (typeof this.title === "string") {
+            result = await this.mergeFragment(this.title);
         }
         else {
-            const titles = await Promise.all(this.inputData.fragments.map((f, i) => this.downloadFragment(f, i)));
-            result = await Promise.all(titles.map((t, i) => this.mergeFragment(t, i)));
+            result = await Promise.all(this.title.map((t, i) => this.mergeFragment(t, i)));
         }
-        console.log(`下载完成: `.green);
+        console.log(`完成: `.green);
         if (typeof result === "string") {
             console.log(result);
         }
@@ -173,14 +192,16 @@ Downloader.workingDownloader = null;
                 process.exit();
             });
             if (Array.isArray(inputData)) {
-                for (const data of inputData) {
-                    const downloader = new Downloader(data);
+                const downloaders = inputData.map(data => new Downloader(data));
+                for (const downloader of downloaders) {
                     await downloader.download();
+                    await downloader.merge();
                 }
             }
             else {
                 const downloader = new Downloader(inputData);
                 await downloader.download();
+                await downloader.merge();
             }
         }
         catch (error) {

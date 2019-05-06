@@ -5,6 +5,7 @@ const pageData = {
     aid: undefined,
     cid: undefined,
 };
+let selectedFormat = null;
 class Video
 {
     constructor()
@@ -363,6 +364,59 @@ class VideoDownloader
         };
     }
 }
+async function checkBatch()
+{
+    const urls = [
+        "/www.bilibili.com/bangumi",
+    ];
+    if (urls.some(url => document.URL.includes(url)))
+    {
+        const { BatchExtractor } = await import("batchDownload");
+        const extractor = new BatchExtractor();
+        document.getElementById("download-video").classList.add("batch");
+        document.getElementById("video-action-batch-data").addEventListener("click", async () =>
+        {
+            if (!selectedFormat)
+            {
+                return;
+            }
+            pageData.entity.resetMenuClass();
+            const toast = Toast.info("获取链接中...", "批量下载");
+            const data = await extractor.collectData(selectedFormat, toast);
+            if (!data)
+            {
+                return;
+            }
+            GM_setClipboard(data, { type: "text/json" });
+            Toast.success("已复制批量数据到剪贴板.", "复制批量数据", 3000);
+        });
+        document.getElementById("video-action-batch-download-data").addEventListener("click", async () =>
+        {
+            if (!selectedFormat)
+            {
+                return;
+            }
+            pageData.entity.resetMenuClass();
+            const toast = Toast.info("获取链接中...", "批量下载");
+            const data = await extractor.collectData(selectedFormat, toast);
+            if (!data)
+            {
+                return;
+            }
+
+            const a = document.createElement("a");
+            const blob = new Blob([data], { type: "text/json" });
+            const url = URL.createObjectURL(blob);
+            a.setAttribute("href", url);
+            a.setAttribute("download", `export.json`);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+
+        });
+    }
+}
 async function loadPageData()
 {
     const aid = await SpinQuery.select(() => (unsafeWindow || window).aid);
@@ -382,7 +436,7 @@ async function loadPageData()
 async function loadWidget()
 {
     let formats = await VideoFormat.availableFormats;
-    let [selectedFormat] = formats;
+    selectedFormat = formats[0];
     const loadQualities = async () =>
     {
         await loadPageData();
@@ -495,6 +549,7 @@ async function loadWidget()
     });
     await SpinQuery.select(() => document.querySelector(".download-video-panel"));
     pageData.entity.addMenuClass();
+    checkBatch();
 }
 export default {
     widget:

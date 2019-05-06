@@ -15,11 +15,13 @@
 .gui-settings-icon-panel i
 {
     transition: all 0.2s;
+    opacity: 0.6;
     transform: rotate(180deg);
 }
 .gui-settings:hover i,
 .gui-settings-widgets:hover i
 {
+    opacity: 0.75;
     transform: rotate(0deg);
 }
 .gui-settings,
@@ -34,7 +36,7 @@
     width: 24px;
     height: 24px;
     transition: all 0.2s;
-    opacity: 0.3;
+    opacity: 1;
     transform-origin: center !important;
     transform: translateX(-16px);
     background-color: rgba(255,255,255,0.75);

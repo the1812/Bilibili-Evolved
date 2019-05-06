@@ -99,7 +99,8 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item[data-state-play=true],
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active,
-.info-wrap .feedback-mask .content
+.info-wrap .feedback-mask .content,
+.abnormal-module .abnormal-item .btn-back
 {
     background-color: #444 !important;
 }
@@ -232,7 +233,8 @@
 .view-later-module .up-info-module .number,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-header,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-info-other,
-.article-list-holder-block .article-list-name
+.article-list-holder-block .article-list-name,
+.abnormal-module .abnormal-item .txt
 {
     color: #aaa !important;
 }
@@ -338,7 +340,8 @@
 .view-later-module .up-info-module .b-btn,
 .feedback-mask .content .feedback-body .dl-item .dt-item,
 .feedback-mask .content .feedback-body .feedback-submit,
-.feedback-mask .content .feedback-body .feedback-submit.active
+.feedback-mask .content .feedback-body .feedback-submit.active,
+.abnormal-module .abnormal-item .btn-back
 {
     color: #eee !important;
 }
@@ -623,7 +626,8 @@
 .face-container .pendant-list li .pendant-btn,
 .face-container .pendant-list li .pendant-btn:hover,
 .view-later-module .up-info-module .b-btn,
-.feedback-mask .content .feedback-body .feedback-submit.active
+.feedback-mask .content .feedback-body .feedback-submit.active,
+.abnormal-module .abnormal-item .btn-back:hover
 {
     background-color: var(--theme-color) !important;
 }
