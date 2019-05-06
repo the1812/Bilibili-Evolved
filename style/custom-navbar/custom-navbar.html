@@ -307,7 +307,11 @@
     </symbol>
 </svg>
 <div class="custom-navbar">
-    <div class="blur-layer"></div>
+    <div class="blur-layer-container">
+        <div class="blur-layer left-pad"></div>
+        <div class="blur-layer"></div>
+        <div class="blur-layer right-pad"></div>
+    </div>
     <ul>
         <li v-for="component of components" v-bind:data-name="component.name"
             v-bind:class="{disabled: component.disabled}" v-bind:style="{flex: component.flex}"

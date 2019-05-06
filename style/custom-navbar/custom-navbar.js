@@ -833,7 +833,18 @@ class HistoryList extends VideoList
     });
     SpinQuery.condition(() => document.getElementById("banner_link"),
         banner => banner === null ? null : banner.style.backgroundImage,
-        banner => document.querySelector(".custom-navbar .blur-layer").style.backgroundImage = banner.style.backgroundImage);
+        banner =>
+        {
+            Observer.attributes(banner, () =>
+            {
+                const blurLayers = document.querySelectorAll(".custom-navbar .blur-layer");
+                blurLayers.forEach(blurLayer =>
+                {
+                    blurLayer.style.backgroundImage = banner.style.backgroundImage;
+                    blurLayer.setAttribute("data-image", banner.style.backgroundImage);
+                });
+            });
+        });
 
     const components = [
         new Logo,

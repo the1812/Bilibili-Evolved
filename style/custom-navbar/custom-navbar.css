@@ -755,25 +755,49 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     opacity: 1;
 }
 
-.custom-navbar .blur-layer
+.custom-navbar .blur-layer-container
 {
+    overflow: hidden;
     display: none;
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
+}
+.custom-navbar.blur .blur-layer-container
+{
+    display: block;
+}
+.custom-navbar .blur-layer
+{
+    width: 100%;
+    height: 100%;
     background-position: center 0;
     background-repeat: no-repeat;
     filter: blur(36px);
 }
+.custom-navbar .blur-layer.left-pad
+{
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    width: 100%;
+    height: 100%;
+}
+.custom-navbar .blur-layer.right-pad
+{
+    position: absolute;
+    left: 0;
+    right: 0;
+    transform: translateX(100%);
+    width: 100%;
+    height: 100%;
+}
 .custom-navbar.dark .blur-layer
 {
     filter: blur(54px);
-}
-.custom-navbar.blur .blur-layer
-{
-    display: block;
 }
 
 body.all-navbar-fill .link-navbar,
