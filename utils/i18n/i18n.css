@@ -16,7 +16,9 @@
 .article-action .ops .coin-btn,
 .article-action .ops .fav-btn,
 .article-action .ops .like-btn,
-.security-right .mp-mine-takedown
+.security-right .mp-mine-takedown,
+.user-list .up-item .attention-btn.followed,
+.user-list .up-item .attention-btn.followed:hover
 {
     width: auto !important;
 }
