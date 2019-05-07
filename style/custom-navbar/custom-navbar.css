@@ -453,15 +453,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     opacity: 1;
     color: var(--theme-color);
 }
-.user-info-panel .coins::before
-{
-    content: "硬币";
-    color: var(--theme-color);
-    margin-right: 4px;
-}
+.user-info-panel .coins::before,
 .user-info-panel .b-coins::before
 {
-    content: "B币";
+    content: attr(title);
     color: var(--theme-color);
     margin-right: 4px;
 }

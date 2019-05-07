@@ -397,8 +397,8 @@ class UserInfo extends NavbarComponent
                     </div>
                     <div class="row">
                         <div class="coins-container">
-                            <a target="_blank" href="https://account.bilibili.com/site/coin" class="coins">{{money}}</a>
-                            <a target="_blank" href="https://pay.bilibili.com/bb_balance.html" class="b-coins">{{wallet.bcoin_balance}}</a>
+                            <a target="_blank" href="https://account.bilibili.com/site/coin" title="硬币" class="coins">{{money}}</a>
+                            <a target="_blank" href="https://pay.bilibili.com/bb_balance.html" title="B币" class="b-coins">{{wallet.bcoin_balance}}</a>
                         </div>
                         <div class="verifications">
                             <a target="_blank" title="邮箱验证" href="https://passport.bilibili.com/account/security#/bindmail">
