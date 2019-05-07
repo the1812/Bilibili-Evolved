@@ -334,7 +334,8 @@ body>div.to-top.on,
 .video-toolbar .appeal-text,
 .date-input .date-panel .week,
 .bb-comment .bottom-page.center,
-.bui-button.bui-button-gray3
+.bui-button.bui-button-gray3,
+.dynamic-m .dyn_list_wrapper .dyn_list li.loading
 {
     color: #aaa !important;
 }
