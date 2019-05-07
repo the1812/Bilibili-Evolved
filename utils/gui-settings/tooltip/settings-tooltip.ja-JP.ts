@@ -1,23 +1,23 @@
 export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["useDefaultPlayerLayout", `デフォルト・プレーヤー・レイアウトを設定する. できるだけ、適切なページに設定（例えば、番組の放送ページに番組プレーヤーのレイアウトを設定する）、そうでない場合は効果がない可能性があります.
 - 旧版: 伝統的なレイアウト
-- 新版: ビデオページに黙認の新版レイアウト
+- 新版: 動画ページに黙認の新版レイアウト
 注意: 伝統的なレイアウトでは、多くのスクリプト機能が適用されない.`],
-    ["defaultPlayerLayout", `ビデオプレーヤーのレイアウトを設定する.`],
+    ["defaultPlayerLayout", `動画プレーヤーのレイアウトを設定する.`],
     ["defaultBangumiLayout", `番組プレーヤーのレイアウトを設定する.`],
     ["useDefaultPlayerMode", `デフォルト・プレーヤー・モードが使用するかどうかを制御する、 例えば<span>常规</span>、<span>宽屏</span>、 <span>网页全屏</span>か<span>全屏</span>.`],
     ["defaultPlayerMode", `デフォルト・プレーヤー・モードが設定する.`],
     ["applyPlayerModeOnPlay", `再生時にモードを適用するかどうか、「いいえ」を選択すると、再生が開始されていないときに適用されます.`],
     ["autoLightOff", `初回放送時には、自動的に消灯モードに入り、再生終了後に自動的に点灯します.`],
-    ["useDefaultVideoQuality", `ビデオを開くときに指定された画質を自動的に選択する. 映像の最高画質が選択された画質より低ければ、映像の最高画質を使用する.`],
+    ["useDefaultVideoQuality", `動画を開くときに指定された画質を自動的に選択する. 映像の最高画質が選択された画質より低ければ、映像の最高画質を使用する.`],
     ["defaultVideoQuality", `自動的に選択された映像画質を設定する.`],
     ["useDefaultDanmakuSettings", `デフォルトで弾幕を開くかどうかを設定する.そして、「防挡字幕」と「智能防挡弹幕」を覚えておくかどうかを設定できる.`],
     ["enableDanmaku", `弾幕がデフォルトで開くかどうかを制御する.`],
     ["rememberDanmakuSettings", `控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`],
     ["expandDanmakuList", `新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.`],
     ["expandDescription", `长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.`],
-    ["autoContinue", `ビデオ再生時に視聴履歴が検出されると(<span>前回の见た...</span>情報)、自動的に対応する時間に再生される.`],
-    ["autoPlay", `ビデオページに入ると、自動的にビデオの再生が開始されます.`],
+    ["autoContinue", `動画再生時に視聴履歴が検出されると(<span>前回の见た...</span>情報)、自動的に対応する時間に再生される.`],
+    ["autoPlay", `動画ページに入ると、自動的に動画の再生が開始されます.`],
     ["skipChargeList", `エンディングの「充电鸣谢」を自動スキップ.`],
     ["framePlayback", `在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<span>Shift + 左/右方向键</span>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
     ["playerFocus", `进入视频/番剧页面时, 自动定位到播放器.`],
@@ -71,7 +71,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["customControlBackgroundOpacity", `设置控制栏着色的黑色不透明度(0~1), 数值越大黑色越浓.`],
     ["harunaScale", `根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度.`],
     ["removeLiveWatermark", `生放送時、隅の透かしを削除する.`],
-    ["removeVideoTopMask", `マウスが通過したら、ビデオの右上隅にあるタイトル層を削除します.`],
+    ["removeVideoTopMask", `マウスが通過したら、動画の右上隅にあるタイトル層を削除します.`],
     ["hideOldEntry", `隐藏播放页右侧的<span>返回旧版</span>入口.`],
     ["removeAds", `ビリビリのさまざまな広告を削除する.ホームページのプロモーションモジュール、モバイルアプリのおすすめ、動画ページの右側にある広告などが含まれます.`],
     ["watchLaterRedirect", `将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`],
