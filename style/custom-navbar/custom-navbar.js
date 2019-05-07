@@ -401,11 +401,11 @@ class UserInfo extends NavbarComponent
                             <a target="_blank" href="https://pay.bilibili.com/bb_balance.html" title="B币" class="b-coins">{{wallet.bcoin_balance}}</a>
                         </div>
                         <div class="verifications">
-                            <a target="_blank" title="邮箱验证" href="https://passport.bilibili.com/account/security#/bindmail">
-                                <i class="mdi mdi-email" v-bind:class="{verified: email_verified }"></i>
+                            <a target="_blank" v-bind:class="{verified: email_verified }" title="邮箱验证" href="https://passport.bilibili.com/account/security#/bindmail">
+                                <i class="mdi mdi-email"></i>
                             </a>
-                            <a target="_blank" title="手机验证" href="https://passport.bilibili.com/account/security#/bindphone">
-                                <i class="mdi mdi-cellphone-android" v-bind:class="{verified: mobile_verified }"></i>
+                            <a target="_blank" v-bind:class="{verified: mobile_verified }" title="手机验证" href="https://passport.bilibili.com/account/security#/bindphone">
+                                <i class="mdi mdi-cellphone-android"></i>
                             </a>
                         </div>
                     </div>

@@ -443,12 +443,36 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     justify-content: space-evenly;
 }
+.user-info-panel .coins-container>a
+{
+    margin: 4px 0;
+}
+.user-info-panel .coins-container
+{
+    flex-direction: column;
+    align-items: start;
+    padding-left: 10px;
+}
+.user-info-panel .verifications a
+{
+    border: 1px solid var(--navbar-foreground);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user-info-panel .verifications a.verified
+{
+    border-color: var(--theme-color);
+}
 .user-info-panel .verifications i
 {
     opacity: 0.6;
     font-size: 16px;
 }
-.user-info-panel .verifications i.verified
+.user-info-panel .verifications a.verified i
 {
     opacity: 1;
     color: var(--theme-color);
