@@ -518,6 +518,11 @@ Resource.manifest = {
             i18nGerman: "德语翻译模块",
             i18nTraditionalChinese: "繁体翻译模块",
         },
+        dropdown: {
+            key: "i18nLanguage",
+            // items: Object.keys(languageCodeMap),
+            items: [`日本語`],
+        },
     },
     playerFocus: {
         path: "player-focus.min.js",
