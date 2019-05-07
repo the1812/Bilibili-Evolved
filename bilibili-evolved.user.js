@@ -2189,7 +2189,7 @@ class ResourceManager
         }
         const manifests = Object.values(Resource.manifest).filter(it => it.dropdown).map(it => it.dropdown);
         Object.values(Resource.all)
-            .concat(Object.values(this.attributes))
+            //.concat(Object.values(this.attributes))
             .filter(it => it.dropdown)
             .map(it => it.dropdown)
             .forEach(it =>
