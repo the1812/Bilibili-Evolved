@@ -591,5 +591,11 @@ Resource.manifest = {
     batchDownload: {
         path: "batch-download.min.js",
     },
+    slip: {
+        path: "slip.min.js",
+        displayNames: {
+            slip: "Slip.js"
+        },
+    },
 };
 export const resourceManifest = Resource.manifest;

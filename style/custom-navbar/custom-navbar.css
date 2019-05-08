@@ -113,7 +113,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0;
+    margin: 0 5%;
     height: 100%;
     flex-grow: 1;
 }
@@ -812,6 +812,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     justify-content: space-between;
     align-items: center;
     user-select: none;
+    transition: opacity .2s ease-out;
 }
 .custom-navbar-settings .order-list li.hidden
 {

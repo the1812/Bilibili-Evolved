@@ -7,12 +7,13 @@ const attributes = {
         content: /*html*/`
         <div class="gui-settings-flat-button" id="custom-navbar-settings">
             <i class="mdi mdi-24px mdi-auto-fix"></i>
-            <span>顶栏次序</span>
+            <span>自定义顶栏</span>
         </div>`,
         condition: () => true, // TODO: remove this line after complete
         success: async () =>
         {
             await SpinQuery.select(".custom-navbar-settings");
+            await import("slip");
             // const customNavbar = document.querySelector(".custom-navbar");
             document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
             {
@@ -44,9 +45,8 @@ const attributes = {
             Vue.component("order-item", {
                 props: ["item"],
                 template: /*html*/`
-                    <li v-bind:style="{order: item.order}"
-                        v-on:pointerover="viewBorder(true)"
-                        v-on:pointerout="viewBorder(false)"
+                    <li v-on:pointerenter="viewBorder(true)"
+                        v-on:pointerleave="viewBorder(false)"
                         v-bind:class="{hidden: hidden()}">
                         <i class="mdi mdi-menu"></i>
                         {{item.displayName}}
@@ -98,7 +98,54 @@ const attributes = {
             });
             new Vue({
                 el: ".custom-navbar-settings",
-                data: {
+                mounted()
+                {
+                    const list = document.querySelector(".custom-navbar-settings .order-list");
+                    const reorder = ({ sourceItem, targetItem, orderBefore, orderAfter }) =>
+                    {
+                        if (orderBefore === orderAfter)
+                        {
+                            return;
+                        }
+                        const entires = Object.entries(settings.customNavbarOrder);
+                        const names = entires.sort((a, b) => a[1] - b[1]).map(it => it[0]);
+                        if (orderBefore < orderAfter)
+                        {
+                            for (let i = orderBefore + 1; i <= orderAfter; i++)
+                            {
+                                const name = names[i];
+                                settings.customNavbarOrder[name] = i - 1;
+                                document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i - 1;
+                            }
+                        }
+                        else
+                        {
+                            for (let i = orderBefore - 1; i >= orderAfter; i--)
+                            {
+                                const name = names[i];
+                                settings.customNavbarOrder[name] = i + 1;
+                                document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i + 1;
+                            }
+                        }
+                        settings.customNavbarOrder[names[orderBefore]] = orderAfter;
+                        document.querySelector(`.custom-navbar li[data-name='${names[orderBefore]}']`).style.order = orderAfter;
+                        settings.customNavbarOrder = settings.customNavbarOrder;
+                        list.insertBefore(sourceItem, targetItem);
+                    };
+                    new Slip(list);
+                    list.addEventListener("slip:beforewait", e => e.preventDefault(), false);
+                    list.addEventListener("slip:beforeswipe", e => e.preventDefault(), false);
+                    list.addEventListener("slip:reorder", e =>
+                    {
+                        reorder({
+                            sourceItem: e.target,
+                            targetItem: e.detail.insertBefore,
+                            orderBefore: e.detail.originalIndex,
+                            orderAfter: e.detail.spliceIndex,
+                        });
+                        // console.log(e.detail.originalIndex, e.detail.spliceIndex);
+                        return false;
+                    }, false);
                 },
                 computed: {
                     orderList()
