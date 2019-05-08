@@ -335,6 +335,8 @@
         </button>
     </div>
     <div class="orders">
-
+        <ul class="order-list">
+            <order-item v-for="item of orderList" v-bind:key="item.name" v-bind:item="item"></order-item>
+        </ul>
     </div>
 </div>

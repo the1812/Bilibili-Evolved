@@ -19,9 +19,88 @@ const attributes = {
                 document.querySelector(".custom-navbar-settings").classList.toggle("show");
                 document.querySelector(".gui-settings-mask").click();
             });
+            const displayNames = {
+                logo: "Logo",
+                category: "主站及分区",
+                rankingLink: "排行",
+                drawingLink: "画友",
+                musicLink: "音频",
+                gamesIframe: "游戏中心",
+                livesIframe: "直播",
+                shopLink: "会员购",
+                mangaLink: "漫画",
+                blank: "弹性空白",
+                search: "搜索框",
+                userInfo: "用户信息",
+                messages: "消息",
+                activities: "动态",
+                watchlaterList: "稍后再看",
+                favoritesList: "收藏",
+                historyList: "历史",
+                upload: "投稿入口",
+            };
+            Vue.component("order-item", {
+                props: ["item"],
+                template: /*html*/`
+                    <li v-bind:style="{order: item.order}"
+                        v-bind:class="{hidden: hidden()}">
+                        <i class="mdi mdi-menu"></i>
+                        {{item.displayName}}
+                        <button v-on:click="toggleHidden()">
+                            <i v-if="hidden()" class="mdi mdi-eye-off"></i>
+                            <i v-else class="mdi mdi-eye"></i>
+                        </button>
+                    </li>
+                `,
+                methods: {
+                    hidden()
+                    {
+                        return settings.customNavbarHidden.includes(this.item.name);
+                    },
+                    toggleHidden()
+                    {
+                        const isHidden = this.hidden();
+                        if (isHidden === false)
+                        {
+                            settings.customNavbarHidden.push(this.item.name);
+                            settings.customNavbarHidden = settings.customNavbarHidden;
+                        }
+                        else
+                        {
+                            const index = settings.customNavbarHidden.indexOf(this.item.name);
+                            if (index === -1)
+                            {
+                                return;
+                            }
+                            settings.customNavbarHidden.splice(index, 1);
+                            settings.customNavbarHidden = settings.customNavbarHidden;
+                        }
+                        this.$forceUpdate();
+                        const navbarItem = document.querySelector(`.custom-navbar li[data-name='${this.item.name}']`);
+                        if (navbarItem !== null)
+                        {
+                            navbarItem.style.display = isHidden ? "flex" : "none";
+                        }
+                    }
+                }
+            });
             new Vue({
                 el: ".custom-navbar-settings",
                 data: {
+                },
+                computed: {
+                    orderList()
+                    {
+                        const orders = Object.entries(settings.customNavbarOrder);
+                        return orders.sort((a, b) => a[1] - b[1]).map(it =>
+                        {
+                            return {
+                                displayName: displayNames[it[0]],
+                                name: it[0],
+                                order: it[1],
+                            };
+                        });
+                    },
                 },
                 methods: {
                     close()

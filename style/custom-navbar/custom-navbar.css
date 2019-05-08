@@ -711,15 +711,14 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     flex-direction: column;
     pointer-events: none;
     opacity: 0;
-    width: 500px;
-    height: 400px;
+    width: 300px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10001;
     background: var(--navbar-background);
-    padding: 16px 24px;
+    padding: 16px 0;
     box-shadow: #0002 0 1px 10px 1px;
 }
 .custom-navbar-settings.dark
@@ -744,18 +743,68 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     justify-content: space-between;
     align-items: center;
 }
-.custom-navbar-settings .close
+.custom-navbar-settings .header
+{
+    padding: 0 24px;
+}
+.custom-navbar-settings .orders
+{
+    flex-grow: 1;
+}
+.custom-navbar-settings .order-list
+{
+    padding: 0 24px;
+    max-height: 75vh;
+    overflow: auto;
+}
+.custom-navbar-settings .close,
+.custom-navbar-settings button
 {
     border: none;
     background-color: transparent;
     color: var(--navbar-foreground);
     padding: 8px;
-    font-size: 16pt;
     cursor: pointer;
+}
+.custom-navbar-settings .close
+{
+    font-size: 16pt;
+}
+.custom-navbar-settings button
+{
+    font-size: 14pt;
 }
 .custom-navbar-settings .close:hover
 {
     color: var(--theme-color);
+}
+.custom-navbar-settings .order-list
+{
+    list-style: none;
+    width: 100%;
+    margin: 16px 0;
+}
+.custom-navbar-settings .order-list li .mdi-menu
+{
+    padding: 8px;
+}
+.custom-navbar-settings .order-list i
+{
+    font-size: 14pt;
+}
+.custom-navbar-settings .order-list li
+{
+    color: var(--navbar-foreground);
+    font-size: 12pt;
+    cursor: move;
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+.custom-navbar-settings .order-list li.hidden
+{
+    opacity: 0.5;
 }
 
 .custom-navbar .blur-layer-container
