@@ -42,7 +42,8 @@
 .face-container .pendant-list li>div,
 .face-container .record-table thead th,
 .feedback-mask .content .feedback-body .feedback-submit,
-.info-line .status-attend.status-attend-hover
+.info-line .status-attend.status-attend-hover,
+.info-line .status-no-attend
 {
     background-color: #222 !important;
 }
@@ -433,7 +434,8 @@
 .view-later-module .core-player-filter,
 .face-g-list#my-g-list .face-g-block .my-mp-block,
 .info-wrap .feedback-mask .content .headline,
-.main-ctnr .qualify-drawer .draw-list
+.main-ctnr .qualify-drawer .draw-list,
+.main-ctnr .qualify-drawer .drawer-pop:after
 {
     border-color: transparent !important;
 }
