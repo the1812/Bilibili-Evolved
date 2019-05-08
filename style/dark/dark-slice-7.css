@@ -43,7 +43,8 @@
 .face-container .record-table thead th,
 .feedback-mask .content .feedback-body .feedback-submit,
 .info-line .status-attend.status-attend-hover,
-.info-line .status-no-attend
+.info-line .status-no-attend,
+.ssr-content .link-tag.activity
 {
     background-color: #222 !important;
 }
@@ -435,7 +436,8 @@
 .face-g-list#my-g-list .face-g-block .my-mp-block,
 .info-wrap .feedback-mask .content .headline,
 .main-ctnr .qualify-drawer .draw-list,
-.main-ctnr .qualify-drawer .drawer-pop:after
+.main-ctnr .qualify-drawer .drawer-pop:after,
+.ssr-content .link-tag.activity:active
 {
     border-color: transparent !important;
 }
@@ -585,7 +587,8 @@
 .face-container .pendant-list li:hover,
 .pendant-main .unit-price li.active,
 .pendant-main .unit-price li:hover,
-.info-line .status-attend
+.info-line .status-attend,
+.ssr-content .link-tag.activity
 {
     border-color: var(--theme-color) !important;
 }
@@ -638,7 +641,9 @@
 .face-container .pendant-list li .pendant-btn:hover,
 .view-later-module .up-info-module .b-btn,
 .feedback-mask .content .feedback-body .feedback-submit.active,
-.abnormal-module .abnormal-item .btn-back:hover
+.abnormal-module .abnormal-item .btn-back:hover,
+.ssr-content .link-tag.activity:hover,
+.ssr-content .link-tag.activity:active
 {
     background-color: var(--theme-color) !important;
 }
