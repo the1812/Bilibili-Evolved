@@ -18,7 +18,8 @@
 .article-action .ops .like-btn,
 .security-right .mp-mine-takedown,
 .user-list .up-item .attention-btn.followed,
-.user-list .up-item .attention-btn.followed:hover
+.user-list .up-item .attention-btn.followed:hover,
+.info-line .status-no-attend
 {
     width: auto !important;
 }

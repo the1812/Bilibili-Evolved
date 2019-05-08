@@ -41,7 +41,10 @@
 .mask .popup-container .btn-primary,
 .face-container .pendant-list li>div,
 .face-container .record-table thead th,
-.feedback-mask .content .feedback-body .feedback-submit
+.feedback-mask .content .feedback-body .feedback-submit,
+.info-line .status-attend.status-attend-hover,
+.info-line .status-no-attend,
+.ssr-content .link-tag.activity
 {
     background-color: #222 !important;
 }
@@ -100,9 +103,14 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active,
 .info-wrap .feedback-mask .content,
-.abnormal-module .abnormal-item .btn-back
+.abnormal-module .abnormal-item .btn-back,
+.main-ctnr .qualify-drawer .drawer-pop
 {
     background-color: #444 !important;
+}
+.ssr-content .cntr .check-all-ctn
+{
+    background-image: linear-gradient(rgba(242,243,245,0),#222 40%,#222) !important;
 }
 /* a
 {
@@ -117,7 +125,8 @@
 .read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item:hover,
 .view-later-module .video-box-module,
 .view-later-module .up-info-module,
-.view-later-module .video-info-module .number .fav i
+.view-later-module .video-info-module .number .fav i,
+.main-ctnr .qualify-drawer .draw-list
 {
     background-color: transparent !important;
 }
@@ -425,7 +434,10 @@
 .view-later-module .core-player-video-control,
 .view-later-module .core-player-filter,
 .face-g-list#my-g-list .face-g-block .my-mp-block,
-.info-wrap .feedback-mask .content .headline
+.info-wrap .feedback-mask .content .headline,
+.main-ctnr .qualify-drawer .draw-list,
+.main-ctnr .qualify-drawer .drawer-pop:after,
+.ssr-content .link-tag.activity:active
 {
     border-color: transparent !important;
 }
@@ -574,7 +586,9 @@
 .security-right-bottom .face-nav>.active,
 .face-container .pendant-list li:hover,
 .pendant-main .unit-price li.active,
-.pendant-main .unit-price li:hover
+.pendant-main .unit-price li:hover,
+.info-line .status-attend,
+.ssr-content .link-tag.activity
 {
     border-color: var(--theme-color) !important;
 }
@@ -627,7 +641,9 @@
 .face-container .pendant-list li .pendant-btn:hover,
 .view-later-module .up-info-module .b-btn,
 .feedback-mask .content .feedback-body .feedback-submit.active,
-.abnormal-module .abnormal-item .btn-back:hover
+.abnormal-module .abnormal-item .btn-back:hover,
+.ssr-content .link-tag.activity:hover,
+.ssr-content .link-tag.activity:active
 {
     background-color: var(--theme-color) !important;
 }
@@ -696,7 +712,9 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover .bilibili-player-watchlater-info-title,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-positive:hover,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-random:hover,
-.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse:hover
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse:hover,
+.cntr .sort-cntr .href-all:hover i,
+.cntr .sort-cntr .href-all:hover
 {
     color: var(--theme-color) !important;
 }
