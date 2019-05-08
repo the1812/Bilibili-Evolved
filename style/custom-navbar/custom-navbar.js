@@ -45,6 +45,8 @@ const attributes = {
                 props: ["item"],
                 template: /*html*/`
                     <li v-bind:style="{order: item.order}"
+                        v-on:pointerover="viewBorder(true)"
+                        v-on:pointerout="viewBorder(false)"
                         v-bind:class="{hidden: hidden()}">
                         <i class="mdi mdi-menu"></i>
                         {{item.displayName}}
@@ -58,6 +60,14 @@ const attributes = {
                     hidden()
                     {
                         return settings.customNavbarHidden.includes(this.item.name);
+                    },
+                    viewBorder(view)
+                    {
+                        const navbarItem = document.querySelector(`.custom-navbar li[data-name='${this.item.name}']`);
+                        if (navbarItem !== null)
+                        {
+                            navbarItem.classList[view ? "add" : "remove"]("view-border");
+                        }
                     },
                     toggleHidden()
                     {
