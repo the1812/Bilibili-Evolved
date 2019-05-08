@@ -55,6 +55,27 @@ declare global
         isIncognito: boolean;
         version: string;
     }
+    interface CustomNavbarComponents
+    {
+        logo: number;
+        category: number;
+        rankingLink: number;
+        drawingLink: number;
+        musicLink: number;
+        gamesIframe: number;
+        livesIframe: number;
+        shopLink: number;
+        mangaLink: number;
+        blank: number;
+        search: number;
+        userInfo: number;
+        messages: number;
+        activities: number;
+        watchlaterList: number;
+        favoritesList: number;
+        historyList: number;
+        upload: number;
+    }
     const GM_info: MonkeyInfo;
     const unsafeWindow: Window;
     class SpinQuery
@@ -228,6 +249,8 @@ declare global
         customNavbarShadow: boolean,
         customNavbarCompact: boolean,
         customNavbarBlur: boolean,
+        customNavbarOrder: { [key in keyof CustomNavbarComponents]: number },
+        customNavbarHidden: Array<keyof CustomNavbarComponents>,
         playerShadow: boolean,
         narrowDanmaku: boolean,
         favoritesRedirect: boolean,

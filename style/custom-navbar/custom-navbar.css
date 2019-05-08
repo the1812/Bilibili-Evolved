@@ -707,7 +707,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar-settings
 {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    opacity: 0;
     width: 500px;
     height: 400px;
     position: fixed;
@@ -727,52 +730,32 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     color: var(--navbar-foreground);
     font-size: 16pt;
+    font-weight: bold;
 }
 .custom-navbar-settings.show
 {
-    display: flex;
+    pointer-events: initial;
+    opacity: 1;
 }
-.custom-navbar-settings .style
+.custom-navbar-settings .header,
+.custom-navbar-settings .orders
 {
-    width: 50%;
-    height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: stretch;
-    align-items: stretch;
-}
-.custom-navbar-settings .style input
-{
-    display: none;
-    width: 0;
-    height: 0;
-}
-.custom-navbar-settings .style-label
-{
-    font-size: 12pt;
-    padding: 8px 0;
-    display: flex;
+    justify-content: space-between;
     align-items: center;
+}
+.custom-navbar-settings .close
+{
+    border: none;
+    background-color: transparent;
+    color: var(--navbar-foreground);
+    padding: 8px;
+    font-size: 16pt;
     cursor: pointer;
 }
-.custom-navbar-settings .style input ~ span
-{
-    color: var(--navbar-foreground);
-}
-.custom-navbar-settings .style input:checked ~ span
+.custom-navbar-settings .close:hover
 {
     color: var(--theme-color);
-}
-.custom-navbar-settings .style input ~ i
-{
-    color: var(--theme-color);
-    font-size: 20px;
-    margin-right: 8px;
-    opacity: 0;
-}
-.custom-navbar-settings .style input:checked ~ i
-{
-    opacity: 1;
 }
 
 .custom-navbar .blur-layer-container

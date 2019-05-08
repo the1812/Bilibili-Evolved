@@ -313,8 +313,8 @@
         <div class="blur-layer right-pad"></div>
     </div>
     <ul>
-        <li v-for="component of components" v-bind:data-name="component.name"
-            v-bind:class="{disabled: component.disabled}" v-bind:style="{flex: component.flex}"
+        <li v-for="component of components" v-bind:data-name="component.name" v-show="!component.hidden"
+            v-bind:class="{disabled: component.disabled}" v-bind:style="{flex: component.flex, order: component.order}"
             v-on:pointerover="requestPopup(component)">
             <a class="main-content" v-if="component.href" v-bind:href="!component.touch && component.href"
                 v-html="component.html"></a>
@@ -330,11 +330,11 @@
 <div class="custom-navbar-settings">
     <div class="header">
         <h1>调整顶栏元素的次序</h1>
-        <button class="close">
+        <button class="close" v-on:click="close">
             <i class="mdi mdi-close"></i>
         </button>
     </div>
-    <div>
+    <div class="orders">
 
     </div>
 </div>

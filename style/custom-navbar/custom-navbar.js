@@ -9,19 +9,25 @@ const attributes = {
             <i class="mdi mdi-24px mdi-auto-fix"></i>
             <span>顶栏次序</span>
         </div>`,
-        condition: () => false, // TODO: remove this line after complete
+        condition: () => true, // TODO: remove this line after complete
         success: async () =>
         {
-            const settingsPanel = await SpinQuery.select(".custom-navbar-settings");
+            await SpinQuery.select(".custom-navbar-settings");
             // const customNavbar = document.querySelector(".custom-navbar");
             document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
             {
-                settingsPanel.classList.toggle("show");
+                document.querySelector(".custom-navbar-settings").classList.toggle("show");
                 document.querySelector(".gui-settings-mask").click();
             });
             new Vue({
                 el: ".custom-navbar-settings",
                 data: {
+                },
+                methods: {
+                    close()
+                    {
+                        document.querySelector(".custom-navbar-settings").classList.remove("show");
+                    },
                 },
             });
         },
@@ -98,6 +104,14 @@ class NavbarComponent
     {
         return "undefined";
     }
+    get order()
+    {
+        return settings.customNavbarOrder[this.name];
+    }
+    get hidden()
+    {
+        return settings.customNavbarHidden.includes(this.name);
+    }
 }
 class Blank extends NavbarComponent
 {
@@ -138,7 +152,7 @@ class SimpleLink extends NavbarComponent
     }
     get name()
     {
-        return this.linkName + "-link";
+        return this.linkName + "Link";
     }
 }
 class Upload extends NavbarComponent
@@ -445,7 +459,7 @@ class UserInfo extends NavbarComponent
     }
     get name()
     {
-        return "user-info";
+        return "userInfo";
     }
     async init()
     {
@@ -601,7 +615,7 @@ class Iframe extends NavbarComponent
     }
     get name()
     {
-        return "iframe-" + this.iframeName;
+        return this.iframeName + "Iframe";
     }
 }
 class NotifyIframe extends Iframe
@@ -720,7 +734,7 @@ class VideoList extends NavbarComponent
     }
     get name()
     {
-        return "list-" + this.listName;
+        return this.listName + "List";
     }
 }
 class WatchlaterList extends VideoList
