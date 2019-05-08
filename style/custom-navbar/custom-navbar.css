@@ -125,6 +125,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar li
 {
     color: inherit;
+    list-style: none;
 }
 .custom-navbar>ul>li
 {
