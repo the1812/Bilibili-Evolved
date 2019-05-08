@@ -20,6 +20,7 @@ const attributes = {
                 document.querySelector(".gui-settings-mask").click();
             });
             const displayNames = {
+                blank1: "弹性空白1",
                 logo: "Logo",
                 category: "主站及分区",
                 rankingLink: "排行",
@@ -29,7 +30,7 @@ const attributes = {
                 livesIframe: "直播",
                 shopLink: "会员购",
                 mangaLink: "漫画",
-                blank: "弹性空白",
+                blank2: "弹性空白2",
                 search: "搜索框",
                 userInfo: "用户信息",
                 messages: "消息",
@@ -38,6 +39,7 @@ const attributes = {
                 favoritesList: "收藏",
                 historyList: "历史",
                 upload: "投稿入口",
+                blank3: "弹性空白3",
             };
             Vue.component("order-item", {
                 props: ["item"],
@@ -194,15 +196,16 @@ class NavbarComponent
 }
 class Blank extends NavbarComponent
 {
-    constructor()
+    constructor(number)
     {
         super();
+        this.number = number;
         this.flex = "1 0 auto";
         this.disabled = true;
     }
     get name()
     {
-        return "blank";
+        return "blank" + this.number;
     }
 }
 class Logo extends NavbarComponent
@@ -940,6 +943,7 @@ class HistoryList extends VideoList
         });
 
     const components = [
+        new Blank(1),
         new Logo,
         new Category,
         new SimpleLink("排行", "https://www.bilibili.com/ranking", "ranking"),
@@ -961,7 +965,7 @@ class HistoryList extends VideoList
         }),
         new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web", "shop"),
         new SimpleLink("漫画", "https://manga.bilibili.com", "manga"),
-        new Blank,
+        new Blank(2),
         new SearchBox,
         new UserInfo,
     ];
@@ -975,7 +979,7 @@ class HistoryList extends VideoList
             new HistoryList,
         );
     }
-    components.push(new Upload);
+    components.push(new Upload, new Blank(3));
     new Vue({
         el: ".custom-navbar",
         data: {

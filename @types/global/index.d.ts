@@ -57,6 +57,7 @@ declare global
     }
     interface CustomNavbarComponents
     {
+        blank1: number;
         logo: number;
         category: number;
         rankingLink: number;
@@ -66,7 +67,7 @@ declare global
         livesIframe: number;
         shopLink: number;
         mangaLink: number;
-        blank: number;
+        blank2: number;
         search: number;
         userInfo: number;
         messages: number;
@@ -75,6 +76,7 @@ declare global
         favoritesList: number;
         historyList: number;
         upload: number;
+        blank3: number;
     }
     const GM_info: MonkeyInfo;
     const unsafeWindow: Window;
