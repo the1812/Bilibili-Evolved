@@ -597,5 +597,11 @@ Resource.manifest = {
             slip: "Slip.js"
         },
     },
+    debounce: {
+        path: "debounce.min.js",
+        displayNames: {
+            slip: "debounce.js"
+        },
+    },
 };
 export const resourceManifest = Resource.manifest;

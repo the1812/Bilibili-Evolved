@@ -20,6 +20,7 @@ body
     --navbar-height: 50px;
     --navbar-foreground: #555;
     --navbar-background: white;
+    --navbar-bounds-padding: 0 5%;
 }
 body.no-banner #banner_link,
 body.no-banner .z-top-container.has-banner>.header,
@@ -114,7 +115,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 5%;
+    margin: var(--navbar-bounds-padding);
     height: 100%;
     flex-grow: 1;
 }
@@ -767,7 +768,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar-settings .order-list
 {
     padding: 0 24px;
-    max-height: 77vh;
+    max-height: 60vh;
     overflow: auto;
     overscroll-behavior: contain;
 }
@@ -823,6 +824,49 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar-settings .order-list li.hidden
 {
     opacity: 0.5;
+}
+.custom-navbar-settings .paddings
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    color: var(--navbar-foreground);
+}
+.custom-navbar-settings .paddings span
+{
+    min-width: 40px;
+}
+.custom-navbar-settings .paddings input
+{
+    flex-grow: 1;
+    margin-right: 16px;
+    -webkit-appearance: none;
+    background: transparent;
+    width: 100%;
+}
+.custom-navbar-settings .paddings input::-webkit-slider-thumb,
+.custom-navbar-settings .paddings input::-moz-range-thumb
+{
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    background: var(--theme-color);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px 0 var(--theme-color-50);
+    cursor: pointer;
+    border: none;
+}
+.custom-navbar-settings .paddings input::-webkit-slider-thumb
+{
+    transform: translateY(-7px);
+}
+.custom-navbar-settings .paddings input::-webkit-slider-runnable-track,
+.custom-navbar-settings .paddings input::-moz-range-track
+{
+    width: 100%;
+    background: #8884;
+    height: 4px;
 }
 
 .custom-navbar .blur-layer-container

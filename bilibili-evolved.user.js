@@ -127,6 +127,7 @@ const settings = {
         blank3: 19
     },
     customNavbarHidden: [],
+    customNavbarBoundsPadding: 5,
     playerShadow: false,
     narrowDanmaku: true,
     favoritesRedirect: true,
@@ -1831,6 +1832,12 @@ Resource.manifest = {
         path: "slip.min.js",
         displayNames: {
             slip: "Slip.js"
+        },
+    },
+    debounce: {
+        path: "debounce.min.js",
+        displayNames: {
+            slip: "debounce.js"
         },
     },
 };

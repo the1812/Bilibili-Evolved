@@ -15,6 +15,7 @@ const attributes = {
         {
             await SpinQuery.select(".custom-navbar-settings");
             await import("slip");
+            const { debounce } = await import("debounce");
             // const customNavbar = document.querySelector(".custom-navbar");
             document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
             {
@@ -97,6 +98,12 @@ const attributes = {
                     }
                 }
             });
+
+            const updateBoundsPadding = debounce(value =>
+            {
+                settings.customNavbarBoundsPadding = value;
+                document.body.style.setProperty("--navbar-bounds-padding", `0 ${value}%`);
+            }, 200);
             new Vue({
                 el: ".custom-navbar-settings",
                 mounted()
@@ -165,6 +172,15 @@ const attributes = {
                                 order: it[1],
                             };
                         });
+                    },
+                },
+                data: {
+                    boundsPadding: settings.customNavbarBoundsPadding,
+                },
+                watch: {
+                    boundsPadding(value)
+                    {
+                        updateBoundsPadding(value);
                     },
                 },
                 methods: {

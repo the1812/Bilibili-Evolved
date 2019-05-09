@@ -253,6 +253,7 @@ declare global
         customNavbarBlur: boolean,
         customNavbarOrder: { [key in keyof CustomNavbarComponents]: number },
         customNavbarHidden: Array<keyof CustomNavbarComponents>,
+        customNavbarBoundsPadding: number,
         playerShadow: boolean,
         narrowDanmaku: boolean,
         favoritesRedirect: boolean,

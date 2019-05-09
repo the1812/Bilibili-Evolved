@@ -334,8 +334,15 @@
             <i class="mdi mdi-close"></i>
         </button>
     </div>
-    <div class="header">
-        拖动可以改变它们的顺序, 点击眼睛图标可以显示/隐藏它们.
+    <div class="header paddings-desc">
+        边缘间距: 设定两侧边缘处的间距, 单位为百分比, 100%为整个顶栏的宽度. 允许设置的范围为 0% ~ 40%
+    </div>
+    <div class="paddings">
+        <input type="range" min="0" max="40" step="0.5" v-model="boundsPadding">
+        <span>{{boundsPadding}}%</span>
+    </div>
+    <div class="header orders-desc">
+        顺序与显示: 在左侧的条状图标上拖动可以改变它们的顺序, 或者按住名字一会再拖动也可以调顺序. 点击右侧的眼睛图标可以显示/隐藏它们.
     </div>
     <div class="orders">
         <ul class="order-list">

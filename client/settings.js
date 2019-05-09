@@ -102,6 +102,7 @@ export const settings = {
         blank3: 19
     },
     customNavbarHidden: [],
+    customNavbarBoundsPadding: 5,
     playerShadow: false,
     narrowDanmaku: true,
     favoritesRedirect: true,
