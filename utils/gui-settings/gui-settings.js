@@ -314,8 +314,8 @@ function setDisplayNames()
     new SettingsSearch();
 
     const boxes = document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box");
-    document.querySelector(".gui-settings-icon-panel").addEventListener("pointerover", () =>
+    document.querySelector(".gui-settings-icon-panel").addEventListener("mouseover", () =>
     {
         boxes.forEach(it => it.classList.add("loaded"));
-    });
+    }, { once: true });
 })();

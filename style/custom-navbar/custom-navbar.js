@@ -47,8 +47,8 @@ const attributes = {
             Vue.component("order-item", {
                 props: ["item"],
                 template: /*html*/`
-                    <li v-on:pointerenter="viewBorder(true)"
-                        v-on:pointerleave="viewBorder(false)"
+                    <li v-on:mouseenter="viewBorder(true)"
+                        v-on:mouseleave="viewBorder(false)"
                         v-bind:class="{hidden: hidden()}">
                         <i class="mdi mdi-menu"></i>
                         {{item.displayName}}

@@ -39,8 +39,8 @@ export default {
                 }
                 settingsList.classList.toggle("opened");
             });
-            button.addEventListener("pointerenter", () => mask.classList.add("transparent"));
-            button.addEventListener("pointerleave", () => mask.classList.remove("transparent"));
+            button.addEventListener("mouseenter", () => mask.classList.add("transparent"));
+            button.addEventListener("mouseleave", () => mask.classList.remove("transparent"));
             let skinDisabled = settings.simplifyLiveroomSettings.skin;
             const skinSelectors = [
                 "#head-info-vm",
