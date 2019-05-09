@@ -2,6 +2,7 @@ if (isIframe())
 {
     return;
 }
+let showWidget = true;
 const attributes = {
     widget: {
         content: /*html*/`
@@ -9,7 +10,7 @@ const attributes = {
             <i class="mdi mdi-24px mdi-auto-fix"></i>
             <span>自定义顶栏</span>
         </div>`,
-        condition: () => true, // TODO: remove this line after complete
+        condition: () => showWidget,
         success: async () =>
         {
             await SpinQuery.select(".custom-navbar-settings");
@@ -149,7 +150,6 @@ const attributes = {
                             orderBefore: e.detail.originalIndex,
                             orderAfter: e.detail.spliceIndex,
                         });
-                        // console.log(e.detail.originalIndex, e.detail.spliceIndex);
                         return false;
                     }, false);
                 },
@@ -223,6 +223,7 @@ const unsupportedUrls = [
 if (!supportedUrls.some(it => document.URL.includes(it))
     || unsupportedUrls.some(it => document.URL.includes(it)))
 {
+    showWidget = false;
     return attributes;
 }
 

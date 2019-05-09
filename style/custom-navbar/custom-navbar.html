@@ -313,9 +313,9 @@
         <div class="blur-layer right-pad"></div>
     </div>
     <ul>
-        <li v-for="component of components" v-bind:data-name="component.name" v-show="!component.hidden"
-            v-bind:class="{disabled: component.disabled}" v-bind:style="{flex: component.flex, order: component.order}"
-            v-on:pointerover="requestPopup(component)">
+        <li v-for="component of components" v-bind:key="component.name" v-bind:data-name="component.name"
+            v-show="!component.hidden" v-bind:class="{disabled: component.disabled}"
+            v-bind:style="{flex: component.flex, order: component.order}" v-on:pointerover="requestPopup(component)">
             <a class="main-content" v-if="component.href" v-bind:href="!component.touch && component.href"
                 v-html="component.html"></a>
             <div class="main-content" v-else v-html="component.html"></div>
