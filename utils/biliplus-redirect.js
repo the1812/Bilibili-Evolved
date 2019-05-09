@@ -25,6 +25,10 @@ export default {
                 {
                     location.replace(document.URL.replace("space.bilibili.com/", `${host}/space/`));
                 }
+                else if (document.URL.includes("/bangumi/"))
+                {
+                    location.replace(`https://www.biliplus.com/video/av${unsafeWindow.aid}/`);
+                }
                 else
                 {
                     location.host = host;
