@@ -27,7 +27,7 @@ export default {
                 }
                 else if (document.URL.includes("/bangumi/"))
                 {
-                    location.replace(`https://www.biliplus.com/video/av${unsafeWindow.aid}/`);
+                    location.replace(`https://${host}/video/av${unsafeWindow.aid}/`);
                 }
                 else
                 {
