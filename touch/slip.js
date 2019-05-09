@@ -108,6 +108,10 @@
     WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
     USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+/* Modifications by Grant Howard (https://github.com/the1812):
+    - Removed all transitions style due to discontinuous animations.
+    - Change slip:beforewait time from 300 to 100.
+*/
 
 window['Slip'] = (function ()
 {
