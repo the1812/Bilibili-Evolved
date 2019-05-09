@@ -110,7 +110,7 @@
 */
 /* Modifications by Grant Howard (https://github.com/the1812):
     - Removed all transitions style due to discontinuous animations.
-    - Change slip:beforewait time from 300 to 100.
+    - Change slip:beforewait time from 300 to 150.
 */
 
 window['Slip'] = (function ()
@@ -283,7 +283,7 @@ window['Slip'] = (function ()
                                 this.setState(this.states.reorder);
                             }
                         }
-                    }.bind(this), 100);
+                    }.bind(this), 150);
                 }
 
                 return {
