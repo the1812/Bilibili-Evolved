@@ -19,7 +19,8 @@
 .security-right .mp-mine-takedown,
 .user-list .up-item .attention-btn.followed,
 .user-list .up-item .attention-btn.followed:hover,
-.info-line .status-no-attend
+.info-line .status-no-attend,
+.bb-comment .comment-list .list-item .info .operation .opera-list
 {
     width: auto !important;
 }
