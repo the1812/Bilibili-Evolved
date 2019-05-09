@@ -8,7 +8,7 @@ const attributes = {
         content: /*html*/`
         <div class="gui-settings-flat-button" id="custom-navbar-settings">
             <i class="mdi mdi-24px mdi-auto-fix"></i>
-            <span>自定义顶栏</span>
+            <span>顶栏布局</span>
         </div>`,
         condition: () => showWidget,
         success: async () =>
