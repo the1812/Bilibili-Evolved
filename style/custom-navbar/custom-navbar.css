@@ -781,6 +781,11 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 8px;
     cursor: pointer;
 }
+.custom-navbar-settings button:focus,
+.custom-navbar-settings button:active
+{
+    outline: none;
+}
 .custom-navbar-settings .close
 {
     font-size: 16pt;
