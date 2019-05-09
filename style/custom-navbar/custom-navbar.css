@@ -781,10 +781,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 8px;
     cursor: pointer;
 }
-.custom-navbar-settings button:focus,
-.custom-navbar-settings button:active
+.custom-navbar-settings input
 {
-    outline: none;
+    outline: none !important;
 }
 .custom-navbar-settings .close
 {

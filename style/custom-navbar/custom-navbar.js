@@ -2,6 +2,7 @@ if (isIframe())
 {
     return;
 }
+document.body.style.setProperty("--navbar-bounds-padding", `0 ${settings.customNavbarBoundsPadding}%`);
 let showWidget = true;
 const attributes = {
     widget: {
