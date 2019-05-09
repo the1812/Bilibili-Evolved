@@ -133,7 +133,13 @@ const attributes = {
                         list.insertBefore(sourceItem, targetItem);
                     };
                     new Slip(list);
-                    list.addEventListener("slip:beforewait", e => e.preventDefault(), false);
+                    list.addEventListener("slip:beforewait", e =>
+                    {
+                        if (e.target.classList.contains("mdi-menu"))
+                        {
+                            e.preventDefault();
+                        }
+                    }, false);
                     list.addEventListener("slip:beforeswipe", e => e.preventDefault(), false);
                     list.addEventListener("slip:reorder", e =>
                     {

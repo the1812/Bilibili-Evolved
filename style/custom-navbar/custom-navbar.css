@@ -98,6 +98,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar-settings *
 {
     transition: all .2s ease-out;
+    -webkit-tap-highlight-color: transparent;
 }
 .custom-navbar.fill
 {
@@ -722,14 +723,14 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     flex-direction: column;
     pointer-events: none;
     opacity: 0;
-    width: 300px;
+    width: 370px;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -46%);
     z-index: 10001;
     background: var(--navbar-background);
-    padding: 16px 0;
+    padding-top: 16px;
     box-shadow: #0002 0 1px 10px 1px;
 }
 .custom-navbar-settings.dark
@@ -757,6 +758,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar-settings .header
 {
     padding: 0 24px;
+    font-size: 9pt;
 }
 .custom-navbar-settings .orders
 {
@@ -765,8 +767,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar-settings .order-list
 {
     padding: 0 24px;
-    max-height: 75vh;
+    max-height: 77vh;
     overflow: auto;
+    overscroll-behavior: contain;
 }
 .custom-navbar-settings .close,
 .custom-navbar-settings button
@@ -803,11 +806,14 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     font-size: 14pt;
 }
+.custom-navbar-settings .order-list i.mdi-menu
+{
+    cursor: move;
+}
 .custom-navbar-settings .order-list li
 {
     color: var(--navbar-foreground);
     font-size: 12pt;
-    cursor: move;
     display: flex !important;
     justify-content: space-between;
     align-items: center;
