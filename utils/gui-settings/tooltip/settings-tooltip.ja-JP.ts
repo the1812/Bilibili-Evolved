@@ -13,17 +13,17 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["defaultVideoQuality", `自動的に選択された映像画質を設定する.`],
     ["useDefaultDanmakuSettings", `デフォルトで弾幕を開くかどうかを設定する.そして、「防挡字幕」と「智能防挡弹幕」を覚えておくかどうかを設定できる.`],
     ["enableDanmaku", `弾幕がデフォルトで開くかどうかを制御する.`],
-    ["rememberDanmakuSettings", `控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`],
-    ["expandDanmakuList", `新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.`],
-    ["expandDescription", `长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.`],
+    ["rememberDanmakuSettings", `シールド設定を覚えるかどうかを制御する、「防挡字幕」と「智能防挡弹幕」を含まれています.これらの設定を動画制御欄で変更すると、すべでの動画にデフォルトでこれらの設定が使用されます.`],
+    ["expandDanmakuList", `新版レイアウトでは、他のおすすめ動画が表示されるようにデフォルトで弾幕リストが折りたたまれています.この機能を有効にすると、動画が読み込まれるたびに弾幕リストが自動的に展開されます.`],
+    ["expandDescription", `長すぎる動画概要欄はデフォルトで折りたたまれています、この機能を有効にすると完全な動画概要欄が強制的に展開されます.`],
     ["autoContinue", `動画再生時に視聴履歴が検出されると(<span>前回の见た...</span>情報)、自動的に対応する時間に再生される.`],
     ["autoPlay", `動画ページに入ると、自動的に動画の再生が開始されます.`],
     ["skipChargeList", `エンディングの「充电鸣谢」を自動スキップ.`],
-    ["framePlayback", `在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<span>Shift + 左/右方向键</span>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
-    ["playerFocus", `进入视频/番剧页面时, 自动定位到播放器.`],
-    ["playerFocusOffset", `定位时的竖直偏移量, 单位为像素(px).`],
-    ["outerWatchlater", `将视频页面菜单里的<span>稍后再看</span>移到外面.`],
-    ["customStyleColor", `设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],
+    ["framePlayback", `プレーヤーの時間に右側に2つのボタンが追加されました.動画の時間を細かく調整するために使用される. キーボードショートカットに対応します<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (伝統的なレイアウトでキーボードショートカットのみ使用でき、ボタンは表示されません)`],
+    ["playerFocus", `動画/番組の放送ページに入る時、プレーヤーに自動的に移動する.`],
+    ["playerFocusOffset", `移動時の垂直オフセット、単位はピクセル(px).`],
+    ["outerWatchlater", `動画放送ページの<span>稍后再看</span>を外に移動します.`],
+    ["customStyleColor", `頂欄(スタイルの調整が有効な場合）とダークテーマのテーマ色で埋める、カラープレビューサークルをクリックして、设定の16種類のテーマカラーにできるの、右側のテキストボックスに任意の有効な16進数のカラー値を直接入力することもできます.(<span>#rrggbb</span>或<span>#rgb</span>).`],
     ["useNewStyle", `<span>主要</span>会改变顶栏的样式, 并有一些其他地方的界面微调:
 - 为播放器增加主题色投影
 - 可控制顶栏对横幅的透明度
@@ -40,10 +40,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["customNavbarCompact", `是否为顶栏使用更紧凑的布局, 紧凑布局将使用更小的间距, 以及在视频标题过长时用...省略后面的部分.`],
     ["customNavbarBlur", `是否在顶部横幅存在时, 使用背景模糊效果.`],
     ["useDarkStyle", `ダークテーマでは、ページの明るい部分が暗い色に変わり、夜間の視聴に最適な表示になります.そして多くのテーマカラーを適用します.ぜひお試しください.`],
-    ["darkSchedule", `设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式.
-结束时间小于起始时间时将视为次日, 如<span>18:00</span>至<span>6:00</span>表示晚上18:00到次日6:00.`],
-    ["darkScheduleStart", `計画期間の開始時間を設定する.`],
-    ["darkScheduleEnd", `計画期間の終了時間を設定する.`],
+    ["darkSchedule", `ダークテーマを使用して计画タイムを設定する.この期間を開始または終了すると、ダークテーマは自動的にオンまたはオフになり、終了時刻は開始時刻より短く、翌日と見なされます.例えば<span>18:00</span>から<span>6:00</span>夜の18：00から翌日の6：00までを表しています.`],
+    ["darkScheduleStart", `計画期間の開始時刻を設定する.`],
+    ["darkScheduleEnd", `計画期間の終了時刻を設定する.`],
     ["compactLayout", `设置首页是否使用紧凑布局, 视频的间距会减小并削去圆角, 分区栏的图标会使用高清重制版. 目前仅支持首页, 其他分区的样式后续会添加.`],
     ["useCommentStyle", `- 删除热评头像下方的关注按钮
 - 删除用户的等级标识
@@ -60,7 +59,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 隐藏欢迎信息 (xxx姥爷进入直播间)
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
 - 禁用直播间皮肤
-各項目は、非表示にするかどうかを<span>追加機能</span>の中で個別に選択することができる.`],
+各項目は、非表示にするかどうかを<span>附加功能</span>の中で個別に選択することができる.`],
     //["overrideNavBar", `开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`],
     //["showBanner", `ホームページにトップの横断幕を表示するかどうかを制御します.`],
     ["preserveRank", `控制是否在搜索框左侧显示排行榜图标.`],
@@ -72,13 +71,13 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["harunaScale", `根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度.`],
     ["removeLiveWatermark", `生放送時、隅の透かしを削除する.`],
     ["removeVideoTopMask", `マウスが通過したら、動画の右上隅にあるタイトル層を削除します.`],
-    ["hideOldEntry", `隐藏播放页右侧的<span>返回旧版</span>入口.`],
+    ["hideOldEntry", `放送ページの右側<span>返回旧版</span>を隠す.`],
     ["removeAds", `ビリビリのさまざまな広告を削除する.ホームページのプロモーションモジュール、モバイルアプリのおすすめ、動画ページの右側にある広告などが含まれます.`],
     ["watchLaterRedirect", `将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`],
     ["favoritesRedirect", `将个人空间收藏夹里的视频重定向为直链, 而不是收藏夹播单链接.`],
-    ["hideTopSearch", `検索欄の推薦語を<span>検索</span>に置き換える.`],
-    ["fullTweetsTitle", `在顶栏的动态预览框中, 总是展开完整的标题.`],
-    ["fullPageTitle", `在视频选集列表中, 总是展开完整的标题.`],
+    ["hideTopSearch", `検索欄の推薦語を<span>搜索</span>に置き換える.`],
+    ["fullTweetsTitle", `頂欄の情報プレビューページでは、常に完全なタイトルが展開されます.`],
+    ["fullPageTitle", `動画選集一覧では、常に完全なタイトルが展開されます.`],
     ["showDeadVideoTitle", `在个人空间中, 为已失效视频恢复标题和封面.`],
     ["useBiliplusRedirect", `将失效视频重定向到BiliPlus.`],
     ["biliplusRedirect", `在视频/番剧/空间中, 附加功能<span>"转到BiliPlus"</span>, 点击可以转到BiliPlus上对应的页面.`],
