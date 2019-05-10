@@ -282,7 +282,7 @@ function setDisplayNames()
         // return;
     }
 
-    const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
+    const settingsBox = resources.data.guiSettingsHtml.text;
     document.body.insertAdjacentHTML("beforeend", settingsBox);
 
     const widgetsContainer = document.querySelector(".widgets-container");
@@ -299,23 +299,23 @@ function setDisplayNames()
         }
     });
 
-    inputs = [...document.querySelectorAll("input[key]")];
-    checkBoxes = inputs.filter(it => it.type === "checkbox");
-    textBoxes = inputs.filter(it => it.type === "text");
-    setupEvents();
-    checkOfflineData();
-    syncGui();
-    listenDependencies();
-    listenSettingsChange();
-    foldAllCategories();
-    checkCompatibility();
-    setDisplayNames();
     new ThemeColors().setupDom();
-    new SettingsSearch();
 
     const boxes = document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box");
     document.querySelector(".gui-settings-icon-panel").addEventListener("mouseover", () =>
     {
         boxes.forEach(it => it.classList.add("loaded"));
+        inputs = [...document.querySelectorAll("input[key]")];
+        checkBoxes = inputs.filter(it => it.type === "checkbox");
+        textBoxes = inputs.filter(it => it.type === "text");
+        setupEvents();
+        checkOfflineData();
+        syncGui();
+        listenDependencies();
+        listenSettingsChange();
+        foldAllCategories();
+        checkCompatibility();
+        setDisplayNames();
+        new SettingsSearch();
     }, { once: true });
 })();

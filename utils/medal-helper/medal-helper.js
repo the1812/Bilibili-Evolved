@@ -228,7 +228,7 @@ export default {
     },
     widget: {
         condition: () => document.domain === "live.bilibili.com",
-        content: (resources.data.medalHelperDom || resources.data.medalHelperHtml).text,
+        content: resources.data.medalHelperHtml.text,
         success: () =>
         {
             document.querySelectorAll(".medal-helper").forEach(it =>

@@ -554,7 +554,7 @@ async function loadWidget()
 export default {
     widget:
     {
-        content: (resources.data.downloadVideoDom || resources.data.downloadVideoHtml).text,
+        content: resources.data.downloadVideoHtml.text,
         condition: loadPageData,
         success: loadWidget,
     },
