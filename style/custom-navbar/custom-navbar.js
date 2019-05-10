@@ -28,7 +28,7 @@ const attributes = {
                 logo: "Logo",
                 category: "主站",
                 rankingLink: "排行",
-                drawingLink: "画友",
+                drawingLink: "相簿",
                 musicLink: "音频",
                 gamesIframe: "游戏中心",
                 livesIframe: "直播",

@@ -100,6 +100,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     transition: all .2s ease-out;
     -webkit-tap-highlight-color: transparent;
+    outline: none !important;
 }
 .custom-navbar.fill
 {
@@ -780,10 +781,6 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     color: var(--navbar-foreground);
     padding: 8px;
     cursor: pointer;
-}
-.custom-navbar-settings input
-{
-    outline: none !important;
 }
 .custom-navbar-settings .close
 {
