@@ -26,7 +26,7 @@ const attributes = {
             const displayNames = {
                 blank1: "弹性空白1",
                 logo: "Logo",
-                category: "主站及分区",
+                category: "主站",
                 rankingLink: "排行",
                 drawingLink: "画友",
                 musicLink: "音频",
@@ -1028,7 +1028,7 @@ class HistoryList extends VideoList
         new Logo,
         new Category,
         new SimpleLink("排行", "https://www.bilibili.com/ranking", "ranking"),
-        new SimpleLink("画友", "https://h.bilibili.com", "drawing"),
+        new SimpleLink("相簿", "https://h.bilibili.com", "drawing"),
         new SimpleLink("音频", "https://www.bilibili.com/audio/home/?type=10", "music"),
         new Iframe("游戏中心", "https://game.bilibili.com/", {
             src: `https://www.bilibili.com/page-proxy/game-nav.html`,
