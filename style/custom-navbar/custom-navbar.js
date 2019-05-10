@@ -189,6 +189,20 @@ const attributes = {
                     {
                         document.querySelector(".custom-navbar-settings").classList.remove("show");
                     },
+                    restoreDefault()
+                    {
+                        if (typeof customNavbarDefaultOrders === "undefined")
+                        {
+                            Toast.error("未找到默认值设定, 请更新您的脚本.");
+                            return;
+                        }
+                        if (confirm("确定要恢复默认顶栏布局吗? 恢复后页面将刷新."))
+                        {
+                            this.boundsPadding = 5;
+                            settings.customNavbarOrder = customNavbarDefaultOrders;
+                            location.reload();
+                        }
+                    },
                 },
             });
         },

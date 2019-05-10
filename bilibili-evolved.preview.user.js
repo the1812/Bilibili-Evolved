@@ -23,6 +23,28 @@
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
+const customNavbarDefaultOrders = {
+    blank1: 0,
+    logo: 1,
+    category: 2,
+    rankingLink: 3,
+    drawingLink: 4,
+    musicLink: 5,
+    gamesIframe: 6,
+    livesIframe: 7,
+    shopLink: 8,
+    mangaLink: 9,
+    blank2: 10,
+    search: 11,
+    userInfo: 12,
+    messages: 13,
+    activities: 14,
+    watchlaterList: 15,
+    favoritesList: 16,
+    historyList: 17,
+    upload: 18,
+    blank3: 19
+};
 const settings = {
     useDarkStyle: false,
     compactLayout: false,
@@ -104,28 +126,7 @@ const settings = {
     customNavbarShadow: true,
     customNavbarCompact: false,
     customNavbarBlur: false,
-    customNavbarOrder: {
-        blank1: 0,
-        logo: 1,
-        category: 2,
-        rankingLink: 3,
-        drawingLink: 4,
-        musicLink: 5,
-        gamesIframe: 6,
-        livesIframe: 7,
-        shopLink: 8,
-        mangaLink: 9,
-        blank2: 10,
-        search: 11,
-        userInfo: 12,
-        messages: 13,
-        activities: 14,
-        watchlaterList: 15,
-        favoritesList: 16,
-        historyList: 17,
-        upload: 18,
-        blank3: 19
-    },
+    customNavbarOrder: customNavbarDefaultOrders,
     customNavbarHidden: [],
     customNavbarBoundsPadding: 5,
     playerShadow: false,

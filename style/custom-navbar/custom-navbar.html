@@ -330,7 +330,11 @@
 <div class="custom-navbar-settings">
     <div class="header">
         <h1>顶栏布局</h1>
-        <button class="close" v-on:click="close">
+        <div class="header-blank"></div>
+        <button class="warning restore-default" title="恢复默认" v-on:click="restoreDefault">
+            <i class="mdi mdi-restore"></i>
+        </button>
+        <button class="close" title="关闭" v-on:click="close">
             <i class="mdi mdi-close"></i>
         </button>
     </div>

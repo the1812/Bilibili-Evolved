@@ -762,6 +762,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 0 24px;
     font-size: 9pt;
 }
+.custom-navbar-settings .header .header-blank
+{
+    flex-grow: 1;
+}
 .custom-navbar-settings .orders
 {
     flex-grow: 1;
@@ -773,7 +777,6 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     overflow: auto;
     overscroll-behavior: contain;
 }
-.custom-navbar-settings .close,
 .custom-navbar-settings button
 {
     border: none;
@@ -782,15 +785,11 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 8px;
     cursor: pointer;
 }
-.custom-navbar-settings .close
-{
-    font-size: 16pt;
-}
 .custom-navbar-settings button
 {
     font-size: 14pt;
 }
-.custom-navbar-settings .close:hover
+.custom-navbar-settings button:hover
 {
     color: var(--theme-color);
 }

@@ -78,6 +78,7 @@ declare global
         upload: number;
         blank3: number;
     }
+    type CustomNavbarOrders = { [key in keyof CustomNavbarComponents]: number };
     const GM_info: MonkeyInfo;
     const unsafeWindow: Window;
     class SpinQuery
@@ -251,7 +252,7 @@ declare global
         customNavbarShadow: boolean,
         customNavbarCompact: boolean,
         customNavbarBlur: boolean,
-        customNavbarOrder: { [key in keyof CustomNavbarComponents]: number },
+        customNavbarOrder: CustomNavbarOrders,
         customNavbarHidden: Array<keyof CustomNavbarComponents>,
         customNavbarBoundsPadding: number,
         playerShadow: boolean,
@@ -264,6 +265,7 @@ declare global
         currentVersion: string,
     }
     const settings: BilibiliEvolvedSettings;
+    const customNavbarDefaultOrders: CustomNavbarOrders;
     function logError(message: Error | string): void;
     function loadSettings(): void
     function saveSettings(newSettings: BilibiliEvolvedSettings): void;
