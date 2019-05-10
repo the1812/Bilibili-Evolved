@@ -9,11 +9,12 @@ export class Translator {
     setValue(node, value) { node.nodeValue = value; }
     getElement(node) { return node; }
     translate(node) {
-        const value = this.getValue(node);
+        let value = this.getValue(node);
         if (!value || typeof value !== "string" || value === "*") {
             return;
         }
-        const translation = Translator.map.get(value.trim());
+        value = value.trim();
+        const translation = Translator.map.get(value);
         if (translation === undefined) {
             const result = Translator.regex.find(([r]) => r.test(value));
             if (result) {
