@@ -108,6 +108,10 @@
 {
     background-color: #444 !important;
 }
+.follow-main .list-item:hover
+{
+    background-color: #3d3d3d !important;
+}
 .ssr-content .cntr .check-all-ctn
 {
     background-image: linear-gradient(rgba(242,243,245,0),#222 40%,#222) !important;
