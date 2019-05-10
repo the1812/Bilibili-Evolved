@@ -657,3 +657,12 @@ li.category.folded i.icon-arrow
     margin: 0;
     padding: 0;
 }
+.gui-settings-box kbd
+{
+    padding: 0 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    color: #ccc;
+    border-bottom-width: 3px;
+    margin: 0 4px;
+}
