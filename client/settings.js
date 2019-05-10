@@ -101,7 +101,7 @@ export const settings = {
     customNavbarShadow: true,
     customNavbarCompact: false,
     customNavbarBlur: false,
-    customNavbarOrder: customNavbarDefaultOrders,
+    customNavbarOrder: { ...customNavbarDefaultOrders },
     customNavbarHidden: [],
     customNavbarBoundsPadding: 5,
     playerShadow: false,
