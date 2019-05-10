@@ -18,36 +18,43 @@ const attributes = {
             await import("slip");
             const { debounce } = await import("debounce");
             // const customNavbar = document.querySelector(".custom-navbar");
-            document.querySelector("#custom-navbar-settings").addEventListener("click", () =>
+            const button = document.querySelector("#custom-navbar-settings");
+            button.addEventListener("click", async () =>
             {
-                document.querySelector(".custom-navbar-settings").classList.toggle("show");
-                document.querySelector(".gui-settings-mask").click();
+                const settingsPanel = await SpinQuery.select(".custom-navbar-settings");
+                if (settingsPanel)
+                {
+                    settingsPanel.classList.toggle("show");
+                    document.querySelector(".gui-settings-mask").click();
+                }
             });
-            const displayNames = {
-                blank1: "弹性空白1",
-                logo: "Logo",
-                category: "主站",
-                rankingLink: "排行",
-                drawingLink: "相簿",
-                musicLink: "音频",
-                gamesIframe: "游戏中心",
-                livesIframe: "直播",
-                shopLink: "会员购",
-                mangaLink: "漫画",
-                blank2: "弹性空白2",
-                search: "搜索框",
-                userInfo: "用户信息",
-                messages: "消息",
-                activities: "动态",
-                watchlaterList: "稍后再看",
-                favoritesList: "收藏",
-                historyList: "历史",
-                upload: "投稿入口",
-                blank3: "弹性空白3",
-            };
-            Vue.component("order-item", {
-                props: ["item"],
-                template: /*html*/`
+            button.addEventListener("mouseover", () =>
+            {
+                const displayNames = {
+                    blank1: "弹性空白1",
+                    logo: "Logo",
+                    category: "主站",
+                    rankingLink: "排行",
+                    drawingLink: "相簿",
+                    musicLink: "音频",
+                    gamesIframe: "游戏中心",
+                    livesIframe: "直播",
+                    shopLink: "会员购",
+                    mangaLink: "漫画",
+                    blank2: "弹性空白2",
+                    search: "搜索框",
+                    userInfo: "用户信息",
+                    messages: "消息",
+                    activities: "动态",
+                    watchlaterList: "稍后再看",
+                    favoritesList: "收藏",
+                    historyList: "历史",
+                    upload: "投稿入口",
+                    blank3: "弹性空白3",
+                };
+                Vue.component("order-item", {
+                    props: ["item"],
+                    template: /*html*/`
                     <li v-on:mouseenter="viewBorder(true)"
                         v-on:mouseleave="viewBorder(false)"
                         v-bind:class="{hidden: hidden()}">
@@ -59,152 +66,153 @@ const attributes = {
                         </button>
                     </li>
                 `,
-                methods: {
-                    hidden()
-                    {
-                        return settings.customNavbarHidden.includes(this.item.name);
-                    },
-                    viewBorder(view)
-                    {
-                        const navbarItem = document.querySelector(`.custom-navbar li[data-name='${this.item.name}']`);
-                        if (navbarItem !== null)
+                    methods: {
+                        hidden()
                         {
-                            navbarItem.classList[view ? "add" : "remove"]("view-border");
+                            return settings.customNavbarHidden.includes(this.item.name);
+                        },
+                        viewBorder(view)
+                        {
+                            const navbarItem = document.querySelector(`.custom-navbar li[data-name='${this.item.name}']`);
+                            if (navbarItem !== null)
+                            {
+                                navbarItem.classList[view ? "add" : "remove"]("view-border");
+                            }
+                        },
+                        toggleHidden()
+                        {
+                            const isHidden = this.hidden();
+                            if (isHidden === false)
+                            {
+                                settings.customNavbarHidden.push(this.item.name);
+                                settings.customNavbarHidden = settings.customNavbarHidden;
+                            }
+                            else
+                            {
+                                const index = settings.customNavbarHidden.indexOf(this.item.name);
+                                if (index === -1)
+                                {
+                                    return;
+                                }
+                                settings.customNavbarHidden.splice(index, 1);
+                                settings.customNavbarHidden = settings.customNavbarHidden;
+                            }
+                            this.$forceUpdate();
+                            const navbarItem = document.querySelector(`.custom-navbar li[data-name='${this.item.name}']`);
+                            if (navbarItem !== null)
+                            {
+                                navbarItem.style.display = isHidden ? "flex" : "none";
+                            }
                         }
-                    },
-                    toggleHidden()
+                    }
+                });
+
+                const updateBoundsPadding = debounce(value =>
+                {
+                    settings.customNavbarBoundsPadding = value;
+                    document.body.style.setProperty("--navbar-bounds-padding", `0 ${value}%`);
+                }, 200);
+                new Vue({
+                    el: ".custom-navbar-settings",
+                    mounted()
                     {
-                        const isHidden = this.hidden();
-                        if (isHidden === false)
+                        const list = document.querySelector(".custom-navbar-settings .order-list");
+                        const reorder = ({ sourceItem, targetItem, orderBefore, orderAfter }) =>
                         {
-                            settings.customNavbarHidden.push(this.item.name);
-                            settings.customNavbarHidden = settings.customNavbarHidden;
-                        }
-                        else
-                        {
-                            const index = settings.customNavbarHidden.indexOf(this.item.name);
-                            if (index === -1)
+                            if (orderBefore === orderAfter)
                             {
                                 return;
                             }
-                            settings.customNavbarHidden.splice(index, 1);
-                            settings.customNavbarHidden = settings.customNavbarHidden;
-                        }
-                        this.$forceUpdate();
-                        const navbarItem = document.querySelector(`.custom-navbar li[data-name='${this.item.name}']`);
-                        if (navbarItem !== null)
-                        {
-                            navbarItem.style.display = isHidden ? "flex" : "none";
-                        }
-                    }
-                }
-            });
-
-            const updateBoundsPadding = debounce(value =>
-            {
-                settings.customNavbarBoundsPadding = value;
-                document.body.style.setProperty("--navbar-bounds-padding", `0 ${value}%`);
-            }, 200);
-            new Vue({
-                el: ".custom-navbar-settings",
-                mounted()
-                {
-                    const list = document.querySelector(".custom-navbar-settings .order-list");
-                    const reorder = ({ sourceItem, targetItem, orderBefore, orderAfter }) =>
-                    {
-                        if (orderBefore === orderAfter)
-                        {
-                            return;
-                        }
-                        const entires = Object.entries(settings.customNavbarOrder);
-                        const names = entires.sort((a, b) => a[1] - b[1]).map(it => it[0]);
-                        if (orderBefore < orderAfter)
-                        {
-                            for (let i = orderBefore + 1; i <= orderAfter; i++)
+                            const entires = Object.entries(settings.customNavbarOrder);
+                            const names = entires.sort((a, b) => a[1] - b[1]).map(it => it[0]);
+                            if (orderBefore < orderAfter)
                             {
-                                const name = names[i];
-                                settings.customNavbarOrder[name] = i - 1;
-                                document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i - 1;
+                                for (let i = orderBefore + 1; i <= orderAfter; i++)
+                                {
+                                    const name = names[i];
+                                    settings.customNavbarOrder[name] = i - 1;
+                                    document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i - 1;
+                                }
                             }
-                        }
-                        else
-                        {
-                            for (let i = orderBefore - 1; i >= orderAfter; i--)
+                            else
                             {
-                                const name = names[i];
-                                settings.customNavbarOrder[name] = i + 1;
-                                document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i + 1;
+                                for (let i = orderBefore - 1; i >= orderAfter; i--)
+                                {
+                                    const name = names[i];
+                                    settings.customNavbarOrder[name] = i + 1;
+                                    document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i + 1;
+                                }
                             }
-                        }
-                        settings.customNavbarOrder[names[orderBefore]] = orderAfter;
-                        document.querySelector(`.custom-navbar li[data-name='${names[orderBefore]}']`).style.order = orderAfter;
-                        settings.customNavbarOrder = settings.customNavbarOrder;
-                        list.insertBefore(sourceItem, targetItem);
-                    };
-                    new Slip(list);
-                    list.addEventListener("slip:beforewait", e =>
-                    {
-                        if (e.target.classList.contains("mdi-menu"))
+                            settings.customNavbarOrder[names[orderBefore]] = orderAfter;
+                            document.querySelector(`.custom-navbar li[data-name='${names[orderBefore]}']`).style.order = orderAfter;
+                            settings.customNavbarOrder = settings.customNavbarOrder;
+                            list.insertBefore(sourceItem, targetItem);
+                        };
+                        new Slip(list);
+                        list.addEventListener("slip:beforewait", e =>
                         {
-                            e.preventDefault();
-                        }
-                    }, false);
-                    list.addEventListener("slip:beforeswipe", e => e.preventDefault(), false);
-                    list.addEventListener("slip:reorder", e =>
-                    {
-                        reorder({
-                            sourceItem: e.target,
-                            targetItem: e.detail.insertBefore,
-                            orderBefore: e.detail.originalIndex,
-                            orderAfter: e.detail.spliceIndex,
-                        });
-                        return false;
-                    }, false);
-                },
-                computed: {
-                    orderList()
-                    {
-                        const orders = Object.entries(settings.customNavbarOrder);
-                        return orders.sort((a, b) => a[1] - b[1]).map(it =>
+                            if (e.target.classList.contains("mdi-menu"))
+                            {
+                                e.preventDefault();
+                            }
+                        }, false);
+                        list.addEventListener("slip:beforeswipe", e => e.preventDefault(), false);
+                        list.addEventListener("slip:reorder", e =>
                         {
-                            return {
-                                displayName: displayNames[it[0]],
-                                name: it[0],
-                                order: it[1],
-                            };
-                        });
+                            reorder({
+                                sourceItem: e.target,
+                                targetItem: e.detail.insertBefore,
+                                orderBefore: e.detail.originalIndex,
+                                orderAfter: e.detail.spliceIndex,
+                            });
+                            return false;
+                        }, false);
                     },
-                },
-                data: {
-                    boundsPadding: settings.customNavbarBoundsPadding,
-                },
-                watch: {
-                    boundsPadding(value)
-                    {
-                        updateBoundsPadding(value);
-                    },
-                },
-                methods: {
-                    close()
-                    {
-                        document.querySelector(".custom-navbar-settings").classList.remove("show");
-                    },
-                    restoreDefault()
-                    {
-                        if (typeof customNavbarDefaultOrders === "undefined")
+                    computed: {
+                        orderList()
                         {
-                            Toast.error("未找到默认值设定, 请更新您的脚本.");
-                            return;
-                        }
-                        if (confirm("确定要恢复默认顶栏布局吗? 恢复后页面将刷新."))
-                        {
-                            this.boundsPadding = 5;
-                            settings.customNavbarOrder = customNavbarDefaultOrders;
-                            location.reload();
-                        }
+                            const orders = Object.entries(settings.customNavbarOrder);
+                            return orders.sort((a, b) => a[1] - b[1]).map(it =>
+                            {
+                                return {
+                                    displayName: displayNames[it[0]],
+                                    name: it[0],
+                                    order: it[1],
+                                };
+                            });
+                        },
                     },
-                },
-            });
+                    data: {
+                        boundsPadding: settings.customNavbarBoundsPadding,
+                    },
+                    watch: {
+                        boundsPadding(value)
+                        {
+                            updateBoundsPadding(value);
+                        },
+                    },
+                    methods: {
+                        close()
+                        {
+                            document.querySelector(".custom-navbar-settings").classList.remove("show");
+                        },
+                        restoreDefault()
+                        {
+                            if (typeof customNavbarDefaultOrders === "undefined")
+                            {
+                                Toast.error("未找到默认值设定, 请更新您的脚本.");
+                                return;
+                            }
+                            if (confirm("确定要恢复默认顶栏布局吗? 恢复后页面将刷新."))
+                            {
+                                this.boundsPadding = 5;
+                                settings.customNavbarOrder = customNavbarDefaultOrders;
+                                location.reload();
+                            }
+                        },
+                    },
+                });
+            }, { once: true });
         },
     },
     unload: () =>
