@@ -355,6 +355,10 @@ export const map = new Map([
             text: `履歴`,
             selector: `.nav-con.fr .nav-item .t`
         },
+        {
+            text: `履歴`,
+            selector: `.custom-navbar li[data-name='historyList']`
+        },
     ]],
     [`登录`, `ログイン`],
     [`注册`, `登録`],
