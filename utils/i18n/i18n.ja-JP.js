@@ -358,11 +358,7 @@ export const map = new Map([
         `歴史`,
         {
             text: `履歴`,
-            selector: `.nav-con.fr .nav-item .t`
-        },
-        {
-            text: `履歴`,
-            selector: `.custom-navbar li[data-name='historyList']`
+            selector: `.nav-con.fr .nav-item .t, .custom-navbar li[data-name='historyList'] .main-content, .custom-navbar-settings .orders li`
         },
     ]],
     [`登录`, `ログイン`],
