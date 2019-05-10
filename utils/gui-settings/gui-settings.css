@@ -309,7 +309,7 @@ button.gui-settings-button:focus
 {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    margin: 4px;
+    margin: 0;
     flex-grow: 1;
 }
 .predefined-colors-grid-block
