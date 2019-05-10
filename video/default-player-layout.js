@@ -2,7 +2,7 @@
 {
     const videoDropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultPlayerLayout]`));
     const bangumiDropdown = await SpinQuery.select(() => document.querySelector(`input[key=defaultBangumiLayout]`));
-    const navbarOption = await SpinQuery.select(() => document.querySelector(`input[key=overrideNavBar]`));
+    // const navbarOption = await SpinQuery.select(() => document.querySelector(`input[key=overrideNavBar]`));
     if (!videoDropdown || !bangumiDropdown)
     {
         logError("无法加载播放器布局选项.");
@@ -84,22 +84,22 @@
         {
             super.useNewLayout();
             this.setCookie(this.cookieKey, 1);
-            navbarOption.disabled = false;
-            $(navbarOption).change();
+            // navbarOption.disabled = false;
+            // $(navbarOption).change();
         }
         useOldLayout()
         {
             super.useOldLayout();
             this.setCookie(this.cookieKey, -1);
-            if (settings.overrideNavBar)
-            {
-                navbarOption.checked = false;
-                navbarOption.disabled = true;
-                $(navbarOption).change();
-                settings.overrideNavBar = false;
-                saveSettings(settings);
-                Toast.info(`已关闭<span>搜索栏置顶</span>功能, 因为旧版视频播放器布局不兼容此功能.`, "提示", 5000);
-            }
+            // if (settings.overrideNavBar)
+            // {
+            //     navbarOption.checked = false;
+            //     navbarOption.disabled = true;
+            //     $(navbarOption).change();
+            //     settings.overrideNavBar = false;
+            //     saveSettings(settings);
+            //     Toast.info(`已关闭<span>搜索栏置顶</span>功能, 因为旧版视频播放器布局不兼容此功能.`, "提示", 5000);
+            // }
         }
     }
     class BangumiLayoutCookie extends LayoutCookie
