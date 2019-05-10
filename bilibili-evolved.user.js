@@ -145,7 +145,7 @@ const fixedSettings = {
     downloadAudio: true,
     playerLayout: true,
     medalHelper: true,
-    about: false,
+    about: true,
     forceWide: false,
     useNewStyle: false,
     overrideNavBar: false,
@@ -1547,7 +1547,7 @@ Resource.manifest = {
     about: {
         path: "about.min.js",
         html: true,
-        style: "instant",
+        style: "important",
         displayNames: {
             "about": "关于",
         }

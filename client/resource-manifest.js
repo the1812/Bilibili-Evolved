@@ -310,7 +310,7 @@ Resource.manifest = {
     about: {
         path: "about.min.js",
         html: true,
-        style: "instant",
+        style: "important",
         displayNames: {
             "about": "关于",
         }

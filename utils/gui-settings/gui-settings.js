@@ -44,7 +44,7 @@ function setupEvents()
 {
     document.querySelector(".gui-settings-mask").addEventListener("click", () =>
     {
-        document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask")
+        document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask,.bilibili-evolved-about")
             .forEach(it => it.classList.remove("opened"));
     });
     textBoxes.forEach(element =>

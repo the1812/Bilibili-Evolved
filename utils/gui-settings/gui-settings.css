@@ -454,7 +454,7 @@ li.category.folded i.icon-arrow
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100000;
+    z-index: 99999;
     pointer-events: none;
     transition: all .3s cubic-bezier(0, 0.86, 0.58, 1);
     overscroll-behavior: contain;

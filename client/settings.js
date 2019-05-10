@@ -120,7 +120,7 @@ const fixedSettings = {
     downloadAudio: true,
     playerLayout: true,
     medalHelper: true,
-    about: false,
+    about: true,
     forceWide: false,
     useNewStyle: false,
     overrideNavBar: false,
