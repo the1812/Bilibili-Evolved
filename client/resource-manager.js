@@ -43,7 +43,7 @@ export class ResourceManager
         styles.push("--invert-filter:" + settings.filterInvert);
         styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
         styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
-        this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
+        this.applyStyleFromText(`html{${styles.join(";")}}`, "bilibili-evolved-variables");
     }
     resolveComponentName(componentName)
     {

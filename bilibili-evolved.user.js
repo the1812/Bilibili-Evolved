@@ -1172,12 +1172,16 @@ class Resource
         {
             logError("Attempt to get style which is not downloaded.");
         }
-        let attributes = `id='${id}'`;
+        // let attributes = `id='${id}'`;
         // if (this.priority !== undefined)
         // {
         //     attributes += ` priority='${this.priority}'`;
         // }
-        return `<style ${attributes}>${style}</style>`;
+        // return `<style ${attributes}>${style}</style>`;
+        const styleElement = document.createElement("style");
+        styleElement.id = id;
+        styleElement.innerText = style;
+        return styleElement;
     }
     getPriorStyle()
     {
@@ -1227,11 +1231,11 @@ class Resource
             // }
             if (important)
             {
-                document.body.insertAdjacentHTML("beforeend", style);
+                document.body.insertAdjacentElement("beforeend", style);
             }
             else
             {
-                document.head.insertAdjacentHTML("afterbegin", style);
+                document.head.insertAdjacentElement("afterbegin", style);
             }
         }
     }
@@ -1875,13 +1879,33 @@ class StyleManager
         }
         Resource.all[key].applyStyle(id, true);
     }
-    applyStyleFromText(text)
+    applyStyleFromText(text, id)
     {
-        document.head.insertAdjacentHTML("afterbegin", text);
+        if (!id)
+        {
+            document.head.insertAdjacentHTML("afterbegin", text);
+        }
+        else
+        {
+            const style = document.createElement("style");
+            style.id = id;
+            style.innerText = text;
+            document.head.insertAdjacentElement("afterbegin", style);
+        }
     }
-    applyImportantStyleFromText(text)
+    applyImportantStyleFromText(text, id)
     {
-        document.body.insertAdjacentHTML("beforeend", text);
+        if (!id)
+        {
+            document.body.insertAdjacentHTML("beforeend", text);
+        }
+        else
+        {
+            const style = document.createElement("style");
+            style.id = id;
+            style.innerText = text;
+            document.body.insertAdjacentElement("beforeend", style);
+        }
     }
     getStyle(key, id)
     {
@@ -1968,7 +1992,7 @@ class ResourceManager
         styles.push("--invert-filter:" + settings.filterInvert);
         styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
         styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
-        this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
+        this.applyStyleFromText(`html{${styles.join(";")}}`, "bilibili-evolved-variables");
     }
     resolveComponentName(componentName)
     {

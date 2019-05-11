@@ -131,8 +131,8 @@ declare global
         applyStyle(key: string, id?: string): void;
         removeStyle(key: string): void;
         applyImportantStyle(key: string, id?: string): void;
-        applyStyleFromText(text: string): void;
-        applyImportantStyleFromText(text: string): void;
+        applyStyleFromText(text: string, id: string): void;
+        applyImportantStyleFromText(text: string, id: string): void;
         getStyle(key: string, id?: string): void;
     }
     const resources: ResourceManager;
