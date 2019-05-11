@@ -2337,6 +2337,10 @@ try
         fixed,
         settings,
         settingsChangeHandlers,
+        addSettingsListener,
+        removeSettingsListener,
+        isEmbeddedPlayer,
+        isIframe,
         resources,
         theWorld: waitTime =>
         {
