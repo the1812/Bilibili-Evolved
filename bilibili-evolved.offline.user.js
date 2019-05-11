@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      298.85
+// @version      299.33
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -24,6 +24,106 @@
 // @icon64       data:image/png;base64,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
 // ==/UserScript==
 /* eslint-disable */ /* spell-checker: disable */
+// if (typeof GM_addValueChangeListener === "undefined")
+// {
+//     GM_addValueChangeListener = function () { };
+// }
+function logError(message)
+{
+    if (settings.toastInternalError)
+    {
+        Toast.error(typeof message === "object" && "stack" in message
+            ? message.stack
+            : message, "错误");
+    }
+    console.error(message);
+}
+function raiseEvent(element, eventName)
+{
+    const event = document.createEvent("HTMLEvents");
+    event.initEvent(eventName, true, true);
+    element.dispatchEvent(event);
+}
+async function loadLazyPanel(selector)
+{
+    await SpinQuery.unsafeJquery();
+    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+    if (!panel)
+    {
+        throw new Error(`Panel not found: ${selector}`);
+    }
+    panel.mouseover().mouseout();
+}
+function contentLoaded(callback)
+{
+    if (/complete|interactive|loaded/.test(document.readyState))
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener("DOMContentLoaded", () => callback());
+    }
+}
+function fullyLoaded(callback)
+{
+    if (document.readyState === "complete")
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener('readystatechange', () =>
+        {
+            if (document.readyState === "complete")
+            {
+                callback();
+            }
+        });
+    }
+}
+function fixed(number, precision = 1)
+{
+    const str = number.toString();
+    const index = str.indexOf(".");
+    if (index !== -1)
+    {
+        if (str.length - index > precision + 1)
+        {
+            return str.substring(0, index + precision + 1);
+        }
+        else
+        {
+            return str;
+        }
+    }
+    else
+    {
+        return str + ".0";
+    }
+}
+function isEmbeddedPlayer()
+{
+    return location.host === "player.bilibili.com" || document.URL.startsWith("https://www.bilibili.com/html/player.html");
+}
+function isIframe()
+{
+    return document.body && unsafeWindow.parent.window !== unsafeWindow;
+}
+const languageNameToCode = {
+    "日本語": "ja-JP",
+    "English": "en-US",
+    "Deutsch": "de-DE",
+};
+const languageCodeToName = {
+    "ja-JP": "日本語",
+    "en-US": "English",
+    "de-DE": "Deutsch",
+};
+function getI18nKey()
+{
+    return settings.i18n ? languageNameToCode[settings.i18nLanguage] : "zh-CN";
+}
 const customNavbarDefaultOrders = {
     blank1: 0,
     logo: 1,
@@ -182,6 +282,11 @@ function loadSettings()
         settings[key] = fixedSettings[key];
         GM_setValue(key, fixedSettings[key]);
     }
+    if (Object.keys(languageCodeToName).includes(navigator.language))
+    {
+        settings.i18n = true;
+        settings.i18n = languageCodeToName[navigator.language];
+    }
     for (const key in settings)
     {
         let value = GM_getValue(key);
@@ -247,101 +352,6 @@ function onSettingsChange()
     //     GM_addValueChangeListener(key, change);
     // }
     console.warn("此功能已弃用.");
-}
-// if (typeof GM_addValueChangeListener === "undefined")
-// {
-//     GM_addValueChangeListener = function () { };
-// }
-function logError(message)
-{
-    if (settings.toastInternalError)
-    {
-        Toast.error(typeof message === "object" && "stack" in message
-            ? message.stack
-            : message, "错误");
-    }
-    console.error(message);
-}
-function raiseEvent(element, eventName)
-{
-    const event = document.createEvent("HTMLEvents");
-    event.initEvent(eventName, true, true);
-    element.dispatchEvent(event);
-}
-async function loadLazyPanel(selector)
-{
-    await SpinQuery.unsafeJquery();
-    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
-    if (!panel)
-    {
-        throw new Error(`Panel not found: ${selector}`);
-    }
-    panel.mouseover().mouseout();
-}
-function contentLoaded(callback)
-{
-    if (/complete|interactive|loaded/.test(document.readyState))
-    {
-        callback();
-    }
-    else
-    {
-        document.addEventListener("DOMContentLoaded", () => callback());
-    }
-}
-function fullyLoaded(callback)
-{
-    if (document.readyState === "complete")
-    {
-        callback();
-    }
-    else
-    {
-        document.addEventListener('readystatechange', () =>
-        {
-            if (document.readyState === "complete")
-            {
-                callback();
-            }
-        });
-    }
-}
-function fixed(number, precision = 1)
-{
-    const str = number.toString();
-    const index = str.indexOf(".");
-    if (index !== -1)
-    {
-        if (str.length - index > precision + 1)
-        {
-            return str.substring(0, index + precision + 1);
-        }
-        else
-        {
-            return str;
-        }
-    }
-    else
-    {
-        return str + ".0";
-    }
-}
-function isEmbeddedPlayer()
-{
-    return location.host === "player.bilibili.com" || document.URL.startsWith("https://www.bilibili.com/html/player.html");
-}
-function isIframe()
-{
-    return document.body && unsafeWindow.parent.window !== unsafeWindow;
-}
-function getI18nKey()
-{
-    const languageCodeMap = {
-        "日本語": "ja-JP",
-        "English": "en-US",
-        "Deutsch": "de-DE",
-    };
-    return settings.i18n ? languageCodeMap[settings.i18nLanguage] : "zh-CN";
 }
 class Ajax
 {
@@ -1097,7 +1107,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/settings-tooltip.loader.min.js"] = (()=>{return(t,e)=>{function n(t){const e=t.querySelector("input");if(e){return e.getAttribute("key")}return null}(async()=>{e.applyStyle("settingsTooltipStyle");const{toolTips:t}=await e.importAsync(`settings-tooltip.${getI18nKey()}`);const s=await SpinQuery.select(".gui-settings-tooltip");if(!s){return}document.querySelectorAll(".gui-settings-content>ul>li").forEach(e=>{e.addEventListener("mouseover",()=>{const i=n(e);if(i===null||t===null){return}const o=t.get(i);if(o!==undefined){s.innerHTML=o;s.classList.add("show")}});e.addEventListener("mouseout",()=>{s.classList.remove("show")})})})()}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/settings-tooltip.min.css"] = `.gui-settings-tooltip{position:fixed;left:420px;color:#fff;background:#0008;padding:1rem;font-size:12pt;top:50%;transform:translateY(-50%);transition:.2s ease-out .8s;opacity:0;min-width:100%;max-height:60%;line-height:24px;white-space:pre-wrap;pointer-events:none}.gui-settings-tooltip.show{pointer-events:initial;opacity:1}.gui-settings-tooltip span{font-weight:700}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/settings-tooltip.min.js"] = (()=>{return(e,a)=>{const n={useDefaultPlayerMode:`控制是否使用默认播放器模式, 可以为<span>常规</span>, <span>宽屏</span>, <span>网页全屏</span>或<span>全屏</span>.`,defaultPlayerMode:`设置默认的播放器模式.`,applyPlayerModeOnPlay:`是否在播放时应用模式, 若选择否就会在未开始播放时就应用.`,useDefaultPlayerLayout:`设置默认的播放器布局, 尽量在相应的页面里设置(比如在番剧播放页面设置番剧播放器布局), 否则可能没有效果.\n- 旧版: 传统布局\n- 新版: 视频区默认的新版布局\n注: 旧版布局中, 很多脚本功能将不适用.`,defaultPlayerLayout:`设置视频区的布局.`,defaultBangumiLayout:`设置番剧区的布局.`,useDefaultVideoQuality:`进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.`,defaultVideoQuality:`设定自动选择的视频画质.`,autoLightOff:`首次播放时, 自动进入关灯模式, 并在播放结束后自动开灯.`,useDefaultDanmakuSettings:`设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.`,enableDanmaku:`控制弹幕是否默认开启.`,rememberDanmakuSettings:`控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`,expandDanmakuList:`新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.`,expandDescription:`长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.`,autoPlay:`进入视频页面时自动开始播放视频.`,autoContinue:`播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`,skipChargeList:`自动跳过视频结尾的充电鸣谢.`,framePlayback:`在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<span>Shift + 左/右方向键</span>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`,playerFocus:`进入视频/番剧页面时, 自动定位到播放器.`,playerFocusOffset:`定位时的竖直偏移量, 单位为像素(px).`,customStyleColor:`设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`,useNewStyle:`<span>主要</span>会改变顶栏的样式, 并有一些其他地方的界面微调:\n- 为播放器增加主题色投影\n- 可控制顶栏对横幅的透明度\n- 使播放器按钮垂直对齐\n- 使部分搜索栏的提示文字的颜色更清晰\n- 隐藏播放页面的"返回旧版"侧栏\n- 修复直播间一些文字初始状态不正确\n- 窄屏幕下强制保留弹幕发送栏`,blurBackgroundOpacity:`设置顶栏对横幅的透明度(0~1), 数值越高顶栏越淡, 当横幅关闭时此选项无效.`,useDarkStyle:`夜间模式更适合光线暗的环境, 并会大量应用主题颜色.`,darkSchedule:`设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式.\n结束时间小于起始时间时将视为次日, 如<span>18:00</span>至<span>6:00</span>表示晚上18:00到次日6:00.`,darkScheduleStart:`设置计划时段的起始时间.`,darkScheduleEnd:`设置计划时段的结束时间.`,compactLayout:`设置首页是否使用紧凑布局, 视频的间距会减小并削去圆角, 分区栏的图标会使用高清重制版. 目前仅支持首页, 其他分区的样式后续会添加.`,useCommentStyle:`- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(<span>来自安卓客户端</span>这种)\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.`,simplifyLiveroom:`- 隐藏姥爷图标\n- 隐藏粉丝勋章\n- 隐藏活动头衔\n- 隐藏用户等级\n- 隐藏舰长图标\n- 隐藏全区广播\n- 隐藏欢迎信息 (xxx姥爷进入直播间)\n- 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)\n- 禁用直播间皮肤\n每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`,overrideNavBar:`开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`,showBanner:`控制是否显示主站顶部的横幅`,preserveRank:`控制是否在搜索框左侧显示排行榜图标.`,blurVideoControl:`模糊视频控制栏背景, 原版的阴影效果将无效.`,customControlBackground:`给视频控制栏附上半透明的黑色, 代替原来的阴影.`,customControlBackgroundOpacity:`设置控制栏着色的黑色不透明度(0~1), 数值越大黑色越浓.`,harunaScale:`根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度.`,removeLiveWatermark:`删除观看直播时角落的水印.`,removeVideoTopMask:`删除视频里鼠标经过时出现在右上角的覆盖层.`,removeAds:`删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.`,watchLaterRedirect:`将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`,favoritesRedirect:`将个人空间收藏夹里的视频重定向为直链, 而不是收藏夹播单链接.`,hideTopSearch:`将搜索框的推荐词替换为<span>搜索</span>.`,fullTweetsTitle:`在顶栏的动态预览框中, 总是展开完整的标题.`,fullPageTitle:`在视频选集列表中, 总是展开完整的标题.`,showDeadVideoTitle:`在个人空间中, 为已失效视频恢复标题和封面.`,useBiliplusRedirect:`将失效视频重定向到BiliPlus.`,biliplusRedirect:`在视频/番剧/空间中, 附加功能<span>"转到BiliPlus"</span>, 点击可以转到BiliPlus上对应的页面.`,imageResolution:`根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.`,oldTweets:`将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.`,touchNavBar:`删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`,comboLike:`为素质三连(长按点赞)启用触摸支持.`,touchVideoPlayer:`增大控制栏的按钮间距, 使触摸操作更准确. 并为播放器启用触摸支持:\n- 左右滑动可调整进度\n- 上下滑动可调整音量\n- 进度调整可在左上角和右上角取消\n- 在不同位置滑动, 可以使用3档不同的灵敏度.`,touchVideoPlayerAnimation:`决定是否要对触摸调整的提示框使用出现/消失动画, 此动画可能导致掉帧.`,touchVideoPlayerDoubleTapControl:`将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.`,toast:`允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.`,toastInternalError:`开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.`,useCache:`使用缓存以提高脚本的加载速度.`};function t(e){const a=e.querySelector("input");if(a){return a.getAttribute("key")}return null}(async()=>{a.applyStyle("settingsTooltipStyle");const e=await SpinQuery.select(()=>document.querySelector(".gui-settings-tooltip"));document.querySelectorAll(".gui-settings-content>ul>li").forEach(a=>{a.addEventListener("mouseover",()=>{const s=n[t(a)];if(s!==undefined){e.innerHTML=s;e.classList.add("show")}});a.addEventListener("mouseout",()=>{e.classList.remove("show")})})})();return{export:{toolTips:n}}}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/settings-tooltip.zh-CN.min.js"] = (()=>{return(a,e)=>{const n=new Map([["useDefaultPlayerMode",`控制是否使用默认播放器模式, 可以为<span>常规</span>, <span>宽屏</span>, <span>网页全屏</span>或<span>全屏</span>.`],["defaultPlayerMode",`设置默认的播放器模式.`],["applyPlayerModeOnPlay",`是否在播放时应用模式, 若选择否就会在未开始播放时就应用.`],["useDefaultPlayerLayout",`设置默认的播放器布局, 尽量在相应的页面里设置(比如在番剧播放页面设置番剧播放器布局), 否则可能没有效果.\n- 旧版: 传统布局\n- 新版: 视频区默认的新版布局\n注: 旧版布局中, 很多脚本功能将不适用.`],["defaultPlayerLayout",`设置视频区的布局.`],["defaultBangumiLayout",`设置番剧区的布局.`],["useDefaultVideoQuality",`进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.`],["defaultVideoQuality",`设定自动选择的视频画质.`],["autoLightOff",`首次播放时, 自动进入关灯模式, 并在播放结束后自动开灯.`],["useDefaultDanmakuSettings",`设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.`],["enableDanmaku",`控制弹幕是否默认开启.`],["rememberDanmakuSettings",`控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`],["expandDanmakuList",`新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.`],["expandDescription",`长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.`],["autoPlay",`进入视频页面时自动开始播放视频.`],["autoContinue",`播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`],["skipChargeList",`自动跳过视频结尾的充电鸣谢.`],["framePlayback",`在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],["playerFocus",`进入视频/番剧页面时, 自动定位到播放器.`],["playerFocusOffset",`定位时的竖直偏移量, 单位为像素(px).`],["customStyleColor",`设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],["useNewStyle",`<span>主要</span>会改变顶栏的样式, 并有一些其他地方的界面微调:\n- 为播放器增加主题色投影\n- 可控制顶栏对横幅的透明度\n- 使播放器按钮垂直对齐\n- 使部分搜索栏的提示文字的颜色更清晰\n- 隐藏播放页面的"返回旧版"侧栏\n- 修复直播间一些文字初始状态不正确\n- 窄屏幕下强制保留弹幕发送栏`],["blurBackgroundOpacity",`设置顶栏对横幅的透明度(0~1), 数值越高顶栏越淡, 当横幅关闭时此选项无效.`],["useDarkStyle",`夜间模式更适合光线暗的环境, 并会大量应用主题颜色.`],["darkSchedule",`设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式.\n结束时间小于起始时间时将视为次日, 如<span>18:00</span>至<span>6:00</span>表示晚上18:00到次日6:00.`],["darkScheduleStart",`设置计划时段的起始时间.`],["darkScheduleEnd",`设置计划时段的结束时间.`],["compactLayout",`设置首页是否使用紧凑布局, 视频的间距会减小并削去圆角, 分区栏的图标会使用高清重制版. 目前仅支持首页, 其他分区的样式后续会添加.`],["useCommentStyle",`- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(<span>来自安卓客户端</span>这种)\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.`],["simplifyLiveroom",`- 隐藏姥爷图标\n- 隐藏粉丝勋章\n- 隐藏活动头衔\n- 隐藏用户等级\n- 隐藏舰长图标\n- 隐藏全区广播\n- 隐藏欢迎信息 (xxx姥爷进入直播间)\n- 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)\n- 禁用直播间皮肤\n每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`],["preserveRank",`控制是否在搜索框左侧显示排行榜图标.`],["blurVideoControl",`模糊视频控制栏背景, 原版的阴影效果将无效.`],["customControlBackground",`给视频控制栏附上半透明的黑色, 代替原来的阴影.`],["customControlBackgroundOpacity",`设置控制栏着色的黑色不透明度(0~1), 数值越大黑色越浓.`],["harunaScale",`根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度.`],["removeLiveWatermark",`删除观看直播时角落的水印.`],["removeVideoTopMask",`删除视频里鼠标经过时出现在右上角的覆盖层.`],["removeAds",`删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.`],["watchLaterRedirect",`将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`],["favoritesRedirect",`将个人空间收藏夹里的视频重定向为直链, 而不是收藏夹播单链接.`],["hideTopSearch",`将搜索框的推荐词替换为<span>搜索</span>.`],["fullTweetsTitle",`在顶栏的动态预览框中, 总是展开完整的标题.`],["fullPageTitle",`在视频选集列表中, 总是展开完整的标题.`],["showDeadVideoTitle",`在个人空间中, 为已失效视频恢复标题和封面.`],["useBiliplusRedirect",`将失效视频重定向到BiliPlus.`],["biliplusRedirect",`在视频/番剧/空间中, 附加功能<span>"转到BiliPlus"</span>, 点击可以转到BiliPlus上对应的页面.`],["imageResolution",`根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.`],["oldTweets",`将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.`],["touchNavBar",`删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`],["comboLike",`为素质三连(长按点赞)启用触摸支持.`],["touchVideoPlayer",`增大控制栏的按钮间距, 使触摸操作更准确. 并为播放器启用触摸支持:\n- 左右滑动可调整进度\n- 上下滑动可调整音量\n- 进度调整可在左上角和右上角取消\n- 在不同位置滑动, 可以使用3档不同的灵敏度.`],["touchVideoPlayerAnimation",`决定是否要对触摸调整的提示框使用出现/消失动画, 此动画可能导致掉帧.`],["touchVideoPlayerDoubleTapControl",`将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.`],["toast",`允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.`],["toastInternalError",`开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.`],["useCache",`使用缓存以提高脚本的加载速度.`],["outerWatchlater",`将视频页面菜单里的<span>稍后再看</span>移到外面.`],["i18n",`为界面中一些常用文本提供翻译.`],["i18nLanguage",`翻译的目标语言.`],["customNavbar",`启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.`],["customNavbarFill",`是否使用主题色填充顶栏.`],["allNavbarFill",`是否使用主题色填充其他的顶栏, 包括直播/相簿/会员购等.`],["customNavbarShadow",`是否为顶栏添加一层阴影效果.`],["customNavbarCompact",`是否为顶栏使用更紧凑的布局, 紧凑布局将使用更小的间距, 以及在视频标题过长时用...省略后面的部分.`],["customNavbarBlur",`是否在顶部横幅存在时, 使用背景模糊效果.`],["playerShadow",`为播放器添加主题色投影.`],["narrowDanmaku",`在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.`],["hideOldEntry",`隐藏播放页右侧的<span>返回旧版</span>入口.`]]);return{export:{toolTips:n}}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/settings-tooltip.zh-CN.min.js"] = (()=>{return(a,e)=>{const n=new Map([["useDefaultPlayerMode",`控制是否使用默认播放器模式, 可以为<span>常规</span>, <span>宽屏</span>, <span>网页全屏</span>或<span>全屏</span>.`],["defaultPlayerMode",`设置默认的播放器模式.`],["applyPlayerModeOnPlay",`是否在播放时应用模式, 若选择否就会在未开始播放时就应用.`],["useDefaultPlayerLayout",`设置默认的播放器布局, 尽量在相应的页面里设置(比如在番剧播放页面设置番剧播放器布局), 否则可能没有效果.\n- 旧版: 传统布局\n- 新版: 视频区默认的新版布局\n注: 旧版布局中, 很多脚本功能将不适用.`],["defaultPlayerLayout",`设置视频区的布局.`],["defaultBangumiLayout",`设置番剧区的布局.`],["useDefaultVideoQuality",`进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.`],["defaultVideoQuality",`设定自动选择的视频画质.`],["autoLightOff",`首次播放时, 自动进入关灯模式, 并在播放结束后自动开灯.`],["useDefaultDanmakuSettings",`设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.`],["enableDanmaku",`控制弹幕是否默认开启.`],["rememberDanmakuSettings",`控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`],["expandDanmakuList",`新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.`],["expandDescription",`长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.`],["autoPlay",`进入视频页面时自动开始播放视频.`],["autoContinue",`播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`],["skipChargeList",`自动跳过视频结尾的充电鸣谢.`],["framePlayback",`在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],["playerFocus",`进入视频/番剧页面时, 自动定位到播放器.`],["playerFocusOffset",`定位时的竖直偏移量, 单位为像素(px).`],["customStyleColor",`设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],["useNewStyle",`<span>主要</span>会改变顶栏的样式, 并有一些其他地方的界面微调:\n- 为播放器增加主题色投影\n- 可控制顶栏对横幅的透明度\n- 使播放器按钮垂直对齐\n- 使部分搜索栏的提示文字的颜色更清晰\n- 隐藏播放页面的"返回旧版"侧栏\n- 修复直播间一些文字初始状态不正确\n- 窄屏幕下强制保留弹幕发送栏`],["blurBackgroundOpacity",`设置顶栏对横幅的透明度(0~1), 数值越高顶栏越淡, 当横幅关闭时此选项无效.`],["useDarkStyle",`夜间模式更适合光线暗的环境, 并会大量应用主题颜色.`],["darkSchedule",`设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式.\n结束时间小于起始时间时将视为次日, 如<span>18:00</span>至<span>6:00</span>表示晚上18:00到次日6:00.`],["darkScheduleStart",`设置计划时段的起始时间.`],["darkScheduleEnd",`设置计划时段的结束时间.`],["compactLayout",`设置首页是否使用紧凑布局, 视频的间距会减小并削去圆角, 分区栏的图标会使用高清重制版. 目前仅支持首页, 其他分区的样式后续会添加.`],["useCommentStyle",`- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(<span>来自安卓客户端</span>这种)\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.`],["simplifyLiveroom",`- 隐藏姥爷图标\n- 隐藏粉丝勋章\n- 隐藏活动头衔\n- 隐藏用户等级\n- 隐藏舰长图标\n- 隐藏全区广播\n- 隐藏欢迎信息 (xxx姥爷进入直播间)\n- 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)\n- 禁用直播间皮肤\n每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`],["preserveRank",`控制是否在搜索框左侧显示排行榜图标.`],["blurVideoControl",`模糊视频控制栏背景, 原版的阴影效果将无效.`],["customControlBackground",`给视频控制栏附上半透明的黑色, 代替原来的阴影.`],["customControlBackgroundOpacity",`设置控制栏着色的黑色不透明度(0~1), 数值越大黑色越浓.`],["harunaScale",`根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度.`],["removeLiveWatermark",`删除观看直播时角落的水印.`],["removeVideoTopMask",`删除视频里鼠标经过时出现在右上角的覆盖层.`],["removeAds",`删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.`],["watchLaterRedirect",`将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`],["favoritesRedirect",`将个人空间收藏夹里的视频重定向为直链, 而不是收藏夹播单链接.`],["hideTopSearch",`将搜索框的推荐词替换为<span>搜索</span>.`],["fullTweetsTitle",`在顶栏的动态预览框中, 总是展开完整的标题.`],["fullPageTitle",`在视频选集列表中, 总是展开完整的标题.`],["showDeadVideoTitle",`在个人空间中, 为已失效视频恢复标题和封面.`],["useBiliplusRedirect",`将失效视频重定向到BiliPlus.`],["biliplusRedirect",`在视频/番剧/空间中, 附加功能<span>"转到BiliPlus"</span>, 点击可以转到BiliPlus上对应的页面.`],["imageResolution",`根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.`],["oldTweets",`将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.`],["touchNavBar",`删除顶栏右侧的一级链接(从<span>大会员</span>到<span>历史</span>), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的<span>查看更多</span>进入.`],["comboLike",`为素质三连(长按点赞)启用触摸支持.`],["touchVideoPlayer",`增大控制栏的按钮间距, 使触摸操作更准确. 并为播放器启用触摸支持:\n- 左右滑动可调整进度\n- 上下滑动可调整音量\n- 进度调整可在左上角和右上角取消\n- 在不同位置滑动, 可以使用3档不同的灵敏度.`],["touchVideoPlayerAnimation",`决定是否要对触摸调整的提示框使用出现/消失动画, 此动画可能导致掉帧.`],["touchVideoPlayerDoubleTapControl",`将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.`],["toast",`允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.`],["toastInternalError",`开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.`],["useCache",`使用缓存以提高脚本的加载速度.`],["outerWatchlater",`将视频页面菜单里的<span>稍后再看</span>移到外面.`],["i18n",`为界面中一些常用文本提供翻译.`],["i18nLanguage",`翻译的目标语言.`],["customNavbar",`启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.`],["customNavbarFill",`是否使用主题色填充顶栏.`],["allNavbarFill",`是否使用主题色填充其他的顶栏, 包括直播/相簿/会员购等.`],["customNavbarShadow",`是否为顶栏添加一层阴影效果.`],["customNavbarCompact",`是否为顶栏使用更紧凑的布局, 紧凑布局将使用更小的间距, 以及在视频标题过长时用...省略后面的部分.`],["customNavbarBlur",`是否在顶部横幅存在时, 使用背景模糊效果.`],["playerShadow",`为播放器添加主题色投影.`],["narrowDanmaku",`在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.`],["hideOldEntry",`隐藏播放页右侧的<span>返回旧版</span>入口.`],["hideBanner",`隐藏首页顶部横幅.`]]);return{export:{toolTips:n}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/show-dead-video-title.min.js"] = (()=>{return(t,a)=>{function e(){const a=$(".disabled[data-aid]").removeClass("disabled");a.each(async(a,e)=>{const i=$(e);const r=i.attr("data-aid");let s=i.find("img").attr("alt");if(s==="已失效视频"){const t=JSON.parse(await Ajax.getText(`https://api.bilibili.com/x/player/pagelist?aid=${r}`));if(t.code===0){const a=t.data.map(t=>t.part);[s]=a}else{console.warn("[显示失效视频信息] Page List API 未成功.");console.warn(t)}}const l=(()=>{if(t.useBiliplusRedirect){return`https://hd.biliplus.com/video/av${r}`}else{return`//www.bilibili.com/video/av${r}`}})();i.find("a.cover").attr("target","_blank").attr("href",l);i.find("a.title").attr("title",s).attr("target","_blank").attr("href",l).text(s)})}SpinQuery.any(()=>$("#app>.s-space"),()=>{Observer.childListSubtree("#app>.s-space",e)})}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/simplify-liveroom.min.css"] = `.simplify-fansMedal .fans-medal-item-ctnr,.simplify-guard i.guard-icon,.simplify-popup .chat-popups-section,.simplify-popup .link-popup-ctnr,.simplify-systemMessage .system-msg,.simplify-title .title-label,.simplify-userLevel .user-level-icon,.simplify-vip .vip-icon,.simplify-welcomeMessage .welcome-guard,.simplify-welcomeMessage .welcome-msg{display:none!important}.simplify-skin #gift-control-vm,.simplify-skin #head-info-vm,.simplify-skin #rank-list-ctnr-box{background-image:none!important}.simplify-guard .guard-danmaku::before{border-image:none!important;background-color:transparent!important}.simplify-guard .guard-danmaku{margin:0!important;padding:4px 5px!important}.simplify-guard .guard-danmaku::after{background-image:none!important}.simplify-liveroom-settings>ul>li{padding:8px 12px;display:flex;align-items:center}.simplify-liveroom-settings>ul>li:hover{background:rgba(0,0,0,.16)}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/simplify-liveroom.min.js"] = (()=>{return(e,i)=>{const s={vip:"姥爷图标",fansMedal:"粉丝勋章",title:"活动头衔",userLevel:"用户等级",guard:"舰长图标",systemMessage:"全区广播",welcomeMessage:"欢迎信息",popup:"抽奖提示",skin:"房间皮肤"};return{widget:{condition:()=>document.URL.startsWith(`https://live.bilibili.com/`),content:`\n            <div class="gui-settings-flat-button" style="position: relative" id="simplify-liveroom">\n                <i class="mdi mdi-24px mdi-settings"></i>\n                <span>简化直播间</span>\n                <div class="simplify-liveroom-settings popup">\n                    <ul>\n                        <li v-for="item in items" v-on:click="itemClick(item)">\n                            <i class="mdi mdi-18px" v-bind:class="{'mdi-eye': !item.checked, 'mdi-eye-off': item.checked}"></i>\n                            {{item.name}}\n                        </li>\n                    </ul>\n                </div>\n            </div>\n        `,success:()=>{const i=document.querySelector("#simplify-liveroom");const t=document.querySelector(".gui-settings-mask");i.addEventListener("click",e=>{const i=document.querySelector(".simplify-liveroom-settings");if(i.contains(e.target)||e.target===i){return}i.classList.toggle("opened")});i.addEventListener("mouseenter",()=>t.classList.add("transparent"));i.addEventListener("mouseleave",()=>t.classList.remove("transparent"));let n=e.simplifyLiveroomSettings.skin;const c=["#head-info-vm","#gift-control-vm","#rank-list-vm","#rank-list-ctnr-box",".gift-panel.base-panel",".gift-panel.extend-panel",".seeds-wrap>div:first-child",".gift-section>div:last-child",".z-gift-package>div>div",".right-action"];const o="live-skin-coloration-area";c.forEach(e=>{SpinQuery.select(e,i=>{Observer.attributes(e,e=>{e.forEach(e=>{if(e.attributeName==="class"){if(n&&i.classList.contains(o)){i.classList.remove(o)}else if(!n&&!i.classList.contains(o)){i.classList.add(o)}}})})})});const a=(e,i)=>{document.body.classList[e?"add":"remove"](`simplify-${i}`);if(i==="skin"){n=e;c.forEach(i=>{SpinQuery.select(i,i=>i.classList[e?"remove":"add"]("live-skin-coloration-area"))})}};new Vue({el:".simplify-liveroom-settings",data:{items:Object.entries(s).map(([i,s])=>{const t=e.simplifyLiveroomSettings[i];a(t,i);return{key:i,name:s,checked:t}})},methods:{itemClick(i){i.checked=!i.checked;a(i.checked,i.key);e.simplifyLiveroomSettings=Object.assign(e.simplifyLiveroomSettings,{[i.key]:i.checked})}}})}}}}})();
