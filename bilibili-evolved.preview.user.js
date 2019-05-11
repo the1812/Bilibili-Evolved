@@ -23,6 +23,106 @@
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
+// if (typeof GM_addValueChangeListener === "undefined")
+// {
+//     GM_addValueChangeListener = function () { };
+// }
+function logError(message)
+{
+    if (settings.toastInternalError)
+    {
+        Toast.error(typeof message === "object" && "stack" in message
+            ? message.stack
+            : message, "错误");
+    }
+    console.error(message);
+}
+function raiseEvent(element, eventName)
+{
+    const event = document.createEvent("HTMLEvents");
+    event.initEvent(eventName, true, true);
+    element.dispatchEvent(event);
+}
+async function loadLazyPanel(selector)
+{
+    await SpinQuery.unsafeJquery();
+    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+    if (!panel)
+    {
+        throw new Error(`Panel not found: ${selector}`);
+    }
+    panel.mouseover().mouseout();
+}
+function contentLoaded(callback)
+{
+    if (/complete|interactive|loaded/.test(document.readyState))
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener("DOMContentLoaded", () => callback());
+    }
+}
+function fullyLoaded(callback)
+{
+    if (document.readyState === "complete")
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener('readystatechange', () =>
+        {
+            if (document.readyState === "complete")
+            {
+                callback();
+            }
+        });
+    }
+}
+function fixed(number, precision = 1)
+{
+    const str = number.toString();
+    const index = str.indexOf(".");
+    if (index !== -1)
+    {
+        if (str.length - index > precision + 1)
+        {
+            return str.substring(0, index + precision + 1);
+        }
+        else
+        {
+            return str;
+        }
+    }
+    else
+    {
+        return str + ".0";
+    }
+}
+function isEmbeddedPlayer()
+{
+    return location.host === "player.bilibili.com" || document.URL.startsWith("https://www.bilibili.com/html/player.html");
+}
+function isIframe()
+{
+    return document.body && unsafeWindow.parent.window !== unsafeWindow;
+}
+const languageNameToCode = {
+    "日本語": "ja-JP",
+    "English": "en-US",
+    "Deutsch": "de-DE",
+};
+const languageCodeToName = {
+    "ja-JP": "日本語",
+    "en-US": "English",
+    "de-DE": "Deutsch",
+};
+function getI18nKey()
+{
+    return settings.i18n ? languageNameToCode[settings.i18nLanguage] : "zh-CN";
+}
 const customNavbarDefaultOrders = {
     blank1: 0,
     logo: 1,
@@ -181,6 +281,11 @@ function loadSettings()
         settings[key] = fixedSettings[key];
         GM_setValue(key, fixedSettings[key]);
     }
+    if (Object.keys(languageCodeToName).includes(navigator.language))
+    {
+        settings.i18n = true;
+        settings.i18n = languageCodeToName[navigator.language];
+    }
     for (const key in settings)
     {
         let value = GM_getValue(key);
@@ -246,101 +351,6 @@ function onSettingsChange()
     //     GM_addValueChangeListener(key, change);
     // }
     console.warn("此功能已弃用.");
-}
-// if (typeof GM_addValueChangeListener === "undefined")
-// {
-//     GM_addValueChangeListener = function () { };
-// }
-function logError(message)
-{
-    if (settings.toastInternalError)
-    {
-        Toast.error(typeof message === "object" && "stack" in message
-            ? message.stack
-            : message, "错误");
-    }
-    console.error(message);
-}
-function raiseEvent(element, eventName)
-{
-    const event = document.createEvent("HTMLEvents");
-    event.initEvent(eventName, true, true);
-    element.dispatchEvent(event);
-}
-async function loadLazyPanel(selector)
-{
-    await SpinQuery.unsafeJquery();
-    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
-    if (!panel)
-    {
-        throw new Error(`Panel not found: ${selector}`);
-    }
-    panel.mouseover().mouseout();
-}
-function contentLoaded(callback)
-{
-    if (/complete|interactive|loaded/.test(document.readyState))
-    {
-        callback();
-    }
-    else
-    {
-        document.addEventListener("DOMContentLoaded", () => callback());
-    }
-}
-function fullyLoaded(callback)
-{
-    if (document.readyState === "complete")
-    {
-        callback();
-    }
-    else
-    {
-        document.addEventListener('readystatechange', () =>
-        {
-            if (document.readyState === "complete")
-            {
-                callback();
-            }
-        });
-    }
-}
-function fixed(number, precision = 1)
-{
-    const str = number.toString();
-    const index = str.indexOf(".");
-    if (index !== -1)
-    {
-        if (str.length - index > precision + 1)
-        {
-            return str.substring(0, index + precision + 1);
-        }
-        else
-        {
-            return str;
-        }
-    }
-    else
-    {
-        return str + ".0";
-    }
-}
-function isEmbeddedPlayer()
-{
-    return location.host === "player.bilibili.com" || document.URL.startsWith("https://www.bilibili.com/html/player.html");
-}
-function isIframe()
-{
-    return document.body && unsafeWindow.parent.window !== unsafeWindow;
-}
-function getI18nKey()
-{
-    const languageCodeMap = {
-        "日本語": "ja-JP",
-        "English": "en-US",
-        "Deutsch": "de-DE",
-    };
-    return settings.i18n ? languageCodeMap[settings.i18nLanguage] : "zh-CN";
 }
 class Ajax
 {
