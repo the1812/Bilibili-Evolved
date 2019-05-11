@@ -266,6 +266,8 @@ declare global
     }
     const settings: BilibiliEvolvedSettings;
     const customNavbarDefaultOrders: CustomNavbarOrders;
+    const languageNameToCode: { [key: string]: string };
+    const languageCodeToName: { [key: string]: string };
     function logError(message: Error | string): void;
     function loadSettings(): void
     function saveSettings(newSettings: BilibiliEvolvedSettings): void;

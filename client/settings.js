@@ -156,6 +156,11 @@ export function loadSettings()
         settings[key] = fixedSettings[key];
         GM_setValue(key, fixedSettings[key]);
     }
+    if (Object.keys(languageCodeToName).includes(navigator.language))
+    {
+        settings.i18n = true;
+        settings.i18n = languageCodeToName[navigator.language];
+    }
     for (const key in settings)
     {
         let value = GM_getValue(key);
