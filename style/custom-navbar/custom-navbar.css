@@ -164,6 +164,11 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     align-items: center;
     padding: 0 16px;
+    color: var(--navbar-foreground);
+}
+.custom-navbar .main-content:hover
+{
+    color: var(--navbar-foreground) !important;
 }
 .custom-navbar .popup
 {
