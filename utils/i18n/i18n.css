@@ -98,6 +98,10 @@
 {
     padding-top: 15px !important;
 }
+.player-auxiliary-area .player-auxiliary-filter-menu
+{
+    margin: 0 !important;
+}
 .dashboard li.collection
 {
     margin: 0 10px 0 0px !important;

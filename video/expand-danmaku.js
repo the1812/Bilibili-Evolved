@@ -2,23 +2,12 @@ if (typeof isEmbeddedPlayer !== "undefined" && isEmbeddedPlayer())
 {
     return;
 }
-const expand = () =>
+Observer.videoChange(async () =>
 {
-    SpinQuery.any(
-        () => $(".bui-collapse-header"),
-        button =>
-        {
-            if (parseInt($(".bui-collapse-body").css("height")) === 0 &&
-                $(".bui-collapse-arrow-text").text() === "展开")
-            {
-                button.click();
-            }
-        }
-    );
-};
-if (Observer.videoChange)
-{
-    Observer.videoChange(expand);
-}
-else
-{ Observer.childList("#bofqi", expand); }
+    const danmakuBox = await SpinQuery.select(".bui-collapse-wrap");
+    if (danmakuBox.classList.contains("bui-collapse-wrap-folded"))
+    {
+        const button = await SpinQuery.select(".bui-collapse-header");
+        button.click();
+    }
+});
