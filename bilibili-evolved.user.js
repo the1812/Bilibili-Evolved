@@ -72,13 +72,7 @@ function fullyLoaded(callback)
     }
     else
     {
-        document.addEventListener('readystatechange', () =>
-        {
-            if (document.readyState === "complete")
-            {
-                callback();
-            }
-        });
+        unsafeWindow.addEventListener('load', () => callback());
     }
 }
 function fixed(number, precision = 1)

@@ -53,7 +53,7 @@ export async function imageResolution(element) {
         replaceSource(e => e.style.backgroundImage, (e, v) => e.style.backgroundImage = v);
     });
 }
-(async () => {
+const startResolution = async () => {
     walk(document.body, it => imageResolution(it));
     Observer.childListSubtree(document.body, records => {
         for (const record of records) {
@@ -67,7 +67,16 @@ export async function imageResolution(element) {
             }
         }
     });
-})();
+};
+startResolution();
+// if (document.readyState === "complete")
+// {
+//     startResolution();
+// }
+// else
+// {
+//     unsafeWindow.addEventListener('load', () => startResolution());
+// }
 export default {
     export: { imageResolution }
 };

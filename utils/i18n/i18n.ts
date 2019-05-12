@@ -147,7 +147,7 @@ Translator.title = new TitleTranslator;
 Translator.placeholder = new PlaceholderTranslator;
 Translator.allTranslators = [Translator.textNode, Translator.title, Translator.placeholder];
 
-(async () =>
+const startTranslate = async () =>
 {
     const languageCode = languageCodeMap[settings.i18nLanguage];
     const { map, regex } = await import(`./i18n.${languageCode}`);
@@ -178,7 +178,16 @@ Translator.allTranslators = [Translator.textNode, Translator.title, Translator.p
             }
         });
     }, { characterData: true, childList: true, subtree: true });
-})();
+};
+startTranslate();
+// if (document.readyState === "complete")
+// {
+//     startTranslate();
+// }
+// else
+// {
+//     unsafeWindow.addEventListener('load', () => startTranslate());
+// }
 
 export default {
     export: {

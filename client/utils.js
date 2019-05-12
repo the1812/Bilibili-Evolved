@@ -47,13 +47,7 @@ export function fullyLoaded(callback)
     }
     else
     {
-        document.addEventListener('readystatechange', () =>
-        {
-            if (document.readyState === "complete")
-            {
-                callback();
-            }
-        });
+        unsafeWindow.addEventListener('load', () => callback());
     }
 }
 export function fixed(number, precision = 1)
