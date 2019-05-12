@@ -986,7 +986,7 @@ class HistoryList extends VideoList
                 {
                     let parameter = [];
                     let description = "";
-                    const page = item.page.page;
+                    const page = item.page ? item.page.page : 1;
                     const progress = item.progress >= 0 ? item.progress / item.duration : 1;
                     if (page !== 1)
                     {
