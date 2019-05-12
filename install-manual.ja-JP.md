@@ -4,7 +4,7 @@
 ## 1. インストール前の準備
 ブラウザが「Bilibili-Evolved」の互換性を確保するよう、下記互換性情報をチェックしてください.
 
-> In short, Chrome, Edge (Chromium), Firefox and Safari are supported well. Most of attentions listed below won't affect functionalities.
+> 簡単に言えば、Chrome、Edge (Chromium)、Firefox、Safariがサポートされています.下记の注意事項のほとんどは、それらの機能に影響を与えません.
 
 ### Chrome / Edge (Chromium)
 - To use background blur effect ([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter)), you need enable it manually in `chrome://flags/#enable-experimental-web-platform-features`. (For Edge, change `chrome` to `edge`)
