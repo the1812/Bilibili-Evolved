@@ -838,12 +838,14 @@ class Activities extends NotifyIframe
 {
     constructor()
     {
-        super("动态", "https://t.bilibili.com/", {
-            src: `https://t.bilibili.com/pages/nav/index`,
-            width: `380px`,
-            height: `422px`,
-            lazy: true,
-        });
+        super("动态",
+            settings.oldTweets ? "https://www.bilibili.com/account/dynamic" : "https://t.bilibili.com/",
+            {
+                src: `https://t.bilibili.com/pages/nav/index`,
+                width: `380px`,
+                height: `422px`,
+                lazy: true,
+            });
     }
     getApiUrl()
     {
