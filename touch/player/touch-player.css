@@ -26,8 +26,7 @@
     border: 4px solid transparent;
     transform-origin: center;
 }
-.touch-video-box.animation,
-.bilibili-player-video-control-top
+.touch-video-box.animation
 {
     transition: all 0.2s;
 }
@@ -127,7 +126,7 @@
 }
 .disable-original-hover.touch-video-control-show .bilibili-player-video-control-bottom,
 .disable-original-hover .bilibili-player-video-control-wrap,
-.disable-original-hover.touch-video-control-show  .bilibili-player-video-control-mask
+.disable-original-hover.touch-video-control-show .bilibili-player-video-control-mask
 {
     opacity: 1 !important;
     visibility: visible !important;
@@ -281,6 +280,27 @@ div.bilibili-player-video-control
 .disable-original-hover.bilibili-player-area .bilibili-player-video-control .bilibili-player-video-progress-detail.show
 {
     bottom: 1px !important;
+}
+.disable-original-hover.bilibili-player-area .subtitle-position.subtitle-position-bc,
+.disable-original-hover.bilibili-player-area .subtitle-position.subtitle-position-bl,
+.disable-original-hover.bilibili-player-area .subtitle-position.subtitle-position-br
+{
+    bottom: 20px !important;
+}
+.disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-bc,
+.disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-bl,
+.disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-br
+{
+    bottom: 44px !important;
+}
+.bilibili-player.mode-fullscreen .disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-bc,
+.bilibili-player.mode-fullscreen .disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-bl,
+.bilibili-player.mode-fullscreen .disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-br,
+.bilibili-player.mode-webfullscreen .disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-bc,
+.bilibili-player.mode-webfullscreen .disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-bl,
+.bilibili-player.mode-webfullscreen .disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-br
+{
+    bottom: 60px !important;
 }
 #bofqi *
 {

@@ -18,15 +18,16 @@ export class Translator
     getElement(node: Node) { return node as Element; }
     translate(node: Node)
     {
-        const value = this.getValue(node);
+        let value = this.getValue(node);
         if (!value || typeof value !== "string" || value === "*")
         {
             return;
         }
-        const translation = Translator.map.get(value.trim());
+        value = value.trim();
+        const translation = Translator.map.get(value);
         if (translation === undefined)
         {
-            const result = Translator.regex.find(([r]) => r.test(value));
+            const result = Translator.regex.find(([r]) => r.test(value!));
             if (result)
             {
                 const [regex, replacement] = result;
@@ -146,7 +147,7 @@ Translator.title = new TitleTranslator;
 Translator.placeholder = new PlaceholderTranslator;
 Translator.allTranslators = [Translator.textNode, Translator.title, Translator.placeholder];
 
-(async () =>
+const startTranslate = async () =>
 {
     const languageCode = languageCodeMap[settings.i18nLanguage];
     const { map, regex } = await import(`./i18n.${languageCode}`);
@@ -177,7 +178,16 @@ Translator.allTranslators = [Translator.textNode, Translator.title, Translator.p
             }
         });
     }, { characterData: true, childList: true, subtree: true });
-})();
+};
+startTranslate();
+// if (document.readyState === "complete")
+// {
+//     startTranslate();
+// }
+// else
+// {
+//     unsafeWindow.addEventListener('load', () => startTranslate());
+// }
 
 export default {
     export: {

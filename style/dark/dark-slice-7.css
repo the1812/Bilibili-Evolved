@@ -33,7 +33,18 @@
 .bili-dialog-bomb .appeal-box .submit,
 .bili-dialog-bomb .appeal-box .wrap .container,
 .m-layer.m-button,
-.m_layer.m-button
+.m_layer.m-button,
+.section-block .bp-emoji-box .static-popup,
+.security-right-bottom .face-tool .tool-container .tool-uninstall-pendant,
+.face-container .pendant-list li,
+.pendant-mask .pendant-box .pendant-main .price-btn,
+.mask .popup-container .btn-primary,
+.face-container .pendant-list li>div,
+.face-container .record-table thead th,
+.feedback-mask .content .feedback-body .feedback-submit,
+.info-line .status-attend.status-attend-hover,
+.info-line .status-no-attend,
+.ssr-content .link-tag.activity
 {
     background-color: #222 !important;
 }
@@ -84,9 +95,26 @@
 .read-list-modal-component .creat-read-list-box .input-box button[disabled],
 .read-list-page .module-box,
 .read-list-page.edit-page .module-box,
-.bili-dialog-bomb .appeal-box .submit .cancel
+.bili-dialog-bomb .appeal-box .submit .cancel,
+.pendant-mask .pendant-box,
+.pendant-mask .pendant-box .pendant-header,
+.error-container .video-details p.num,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item[data-state-play=true],
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover,
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active,
+.info-wrap .feedback-mask .content,
+.abnormal-module .abnormal-item .btn-back,
+.main-ctnr .qualify-drawer .drawer-pop
 {
     background-color: #444 !important;
+}
+.follow-main .list-item:hover
+{
+    background-color: #3d3d3d !important;
+}
+.ssr-content .cntr .check-all-ctn
+{
+    background-image: linear-gradient(rgba(242,243,245,0),#222 40%,#222) !important;
 }
 /* a
 {
@@ -98,7 +126,11 @@
 .list-container .list-info-block .right-side .col .split-line,
 .comment-list-item .ci-action span.date,
 .text-article-wrp .article-card .meta-view .menu-list .menu-item:hover,
-.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item:hover
+.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item:hover,
+.view-later-module .video-box-module,
+.view-later-module .up-info-module,
+.view-later-module .video-info-module .number .fav i,
+.main-ctnr .qualify-drawer .draw-list
 {
     background-color: transparent !important;
 }
@@ -109,7 +141,9 @@
 .register-container .report-wrap-module .back-fff,
 .cc-body .home-wrap .card,
 .text-article-wrp .head-stat .section .count,
-.read-list-modal-component .mask
+.view-later-module .read-list-modal-component .mask,
+.view-later-module .video-info-module .number .coin i,
+.view-later-module .video-info-module .number .fav i
 {
     background: transparent !important;
 }
@@ -200,7 +234,20 @@
 .read-list-page.edit-page .read-list-name .cover .empty-state,
 .ui-popup .popup-wrap .text-box .text .sub-tips,
 .bili-dialog-bomb .appeal-box .wrap .container .img-text,
-.bili-dialog-bomb .appeal-box .wrap .container .textarea .textarea-wrap .limit
+.bili-dialog-bomb .appeal-box .wrap .container .textarea .textarea-wrap .limit,
+.pendant-main .final-price,
+.pendant-main .unit-price li,
+.pendant-main .point-info,
+.pendant-list li .pendant-expire,
+.view-later-module .video-info-module .tm-info,
+.view-later-module .video-info-module .tm-info a,
+.view-later-module .video-info-module .tm-info .btn-appeal,
+.view-later-module .video-info-module .tm-info time,
+.view-later-module .up-info-module .number,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-header,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-info-other,
+.article-list-holder-block .article-list-name,
+.abnormal-module .abnormal-item .txt
 {
     color: #aaa !important;
 }
@@ -290,7 +337,24 @@
 .bili-dialog-bomb .appeal-box .submit .confirm,
 .m-layer.m-button,
 .m_layer.m-button,
-.m-layer .b-btn
+.m-layer .b-btn,
+.bp-emoji-box .static-popup.common-font.bp-arrow .title,
+.security-right-bottom .face-nav>div a,
+.face-container .pendant-nav li div.active,
+.face-container .pendant-nav li div,
+.pendant-mask .pendant-box .pendant-main .price-btn,
+.security-right-bottom .tool-uninstall-pendant span,
+.mask .popup-container .title,
+.pendant-mask .pendant-main .pendant-info p,
+.pendant-main .pendant-btn,
+.face-container .pendant-list li .pendant-btn,
+.face-container .record-table,
+.view-later-module .video-info-module h1,
+.view-later-module .up-info-module .b-btn,
+.feedback-mask .content .feedback-body .dl-item .dt-item,
+.feedback-mask .content .feedback-body .feedback-submit,
+.feedback-mask .content .feedback-body .feedback-submit.active,
+.abnormal-module .abnormal-item .btn-back
 {
     color: #eee !important;
 }
@@ -358,7 +422,26 @@
 .bili-dialog-bomb .appeal-box .submit .cancel,
 .m-layer.m-button,
 .m_layer.m-button,
-.m-layer .b-btn
+.m-layer .b-btn,
+.section-block .bp-emoji-box .static-popup,
+.security-right-bottom .face-nav,
+.security-right-bottom .face-tool .tool-container,
+.security-right-bottom .face-tool .tool-container .tool-uninstall-pendant,
+.security-right-bottom .face-tool .tool-container .tool-change-face,
+.face-container .pendant-list li,
+.face-container .pendant-list li>div,
+.face-container .record-table tbody td,
+.view-later-module .video-box-module,
+.view-later-module .up-info-module .b-btn,
+.view-later-module .video-toolbar-module,
+.view-later-module .core-player-auxiliary-area,
+.view-later-module .core-player-video-control,
+.view-later-module .core-player-filter,
+.face-g-list#my-g-list .face-g-block .my-mp-block,
+.info-wrap .feedback-mask .content .headline,
+.main-ctnr .qualify-drawer .draw-list,
+.main-ctnr .qualify-drawer .drawer-pop:after,
+.ssr-content .link-tag.activity:active
 {
     border-color: transparent !important;
 }
@@ -367,7 +450,9 @@
 .list-container .article-list-block .article-item .item-holder .article-content .article-left-block,
 .vip-package-wrapper .coupon-wrapper .coupon-content-con,
 .modal .img-clip-wrap .container-box,
-.text-article-wrp .article-card .meta-status .pubdate
+.text-article-wrp .article-card .meta-status .pubdate,
+.pendant-main .final-price,
+.pendant-main .unit-price li
 {
     border-color: #aaa !important;
 }
@@ -375,7 +460,10 @@
 .web-box .expanded .user-li::after,
 .read-list-page .add-article-modal hr,
 .bili-dialog-bomb .appeal-box .header,
-.bili-dialog-bomb .appeal-box .submit
+.bili-dialog-bomb .appeal-box .submit,
+.view-later-module .video-info-module .number .line,
+.view-later-module .video-desc,
+.view-later-module .video-tag
 {
     border-color: #444 !important
 }
@@ -393,7 +481,9 @@
 } */
 .block-area .follow-wrapper .follow-head .follow-more .icon,
 .game-package-wrapper .title-right-link .m-arrow-package,
-.text-article-wrp .head-stat .section .iconarrow
+.text-article-wrp .head-stat .section .iconarrow,
+.error-related .error.details,
+.video-toolbar-module .share-box .share-btn ul li
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -413,7 +503,8 @@
 .album-card .info .view-count .icon-view,
 .album-card .info .like-num .icon-like,
 .section-block .col-full .meta .icon,
-.case-list .info .jury-time i
+.case-list .info .jury-time i,
+.view-later-module .share-box .s-text .icon
 {
     filter: brightness(0) invert(.7) !important;
 }
@@ -422,7 +513,11 @@
 .error-body .error-container .error-panel .error-msg .error-img,
 .register-agree .checkbox-bwxr.active,
 .answer-list .key-list li.active:before,
-.self-icon-vote-create-btn.active
+.self-icon-vote-create-btn.active,
+.security-right-bottom .face-nav>.active:after,
+.pendant-main .unit-price li.active,
+.pendant-pay-close,
+.feedback-mask .content .feedback-body input[type=radio]:checked+.radio-icon
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -450,10 +545,10 @@
 {
     background-image: none !important;
 } */
-/* a
+.view-later-module .video-info-module
 {
     box-shadow: none !important;
-} */
+}
 /* a
 {
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
@@ -466,7 +561,8 @@
 .live-user .user-item:hover,
 .read-list-page .module-box,
 .m-layer.m-button,
-.m_layer.m-button
+.m_layer.m-button,
+.face-g-list#my-g-list .face-g-block .my-mp-block:hover
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -490,7 +586,13 @@
 .carousel-wrp .page .next.current,
 .list-filter-bar .item-text.active,
 .list-filter-bar .item-text.expand,
-.list-filter-bar .item-text:hover
+.list-filter-bar .item-text:hover,
+.security-right-bottom .face-nav>.active,
+.face-container .pendant-list li:hover,
+.pendant-main .unit-price li.active,
+.pendant-main .unit-price li:hover,
+.info-line .status-attend,
+.ssr-content .link-tag.activity
 {
     border-color: var(--theme-color) !important;
 }
@@ -535,7 +637,17 @@
 .text-article-wrp .article-card .meta-view .meta-item:hover,
 .bili-dialog-bomb .appeal-box .wrap .container .options .option .checkbox.checked:before,
 .bili-dialog-bomb .appeal-box .submit .confirm,
-.m-layer .b-btn
+.m-layer .b-btn,
+.face-container .pendant-nav li div.active,
+.security-right-bottom .face-tool .tool-container .tool-change-face,
+.pendant-main .pendant-btn,
+.face-container .pendant-list li .pendant-btn,
+.face-container .pendant-list li .pendant-btn:hover,
+.view-later-module .up-info-module .b-btn,
+.feedback-mask .content .feedback-body .feedback-submit.active,
+.abnormal-module .abnormal-item .btn-back:hover,
+.ssr-content .link-tag.activity:hover,
+.ssr-content .link-tag.activity:active
 {
     background-color: var(--theme-color) !important;
 }
@@ -591,7 +703,22 @@
 .list-filter-bar .item-text:hover,
 .ui-checkbox input[type=checkbox]:active+.ui-checkbox-icon,
 .ui-checkbox input[type=checkbox]:hover+.ui-checkbox-icon,
-.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item:hover
+.read-list-page .read-list-name .info.right.show .right-float .ui-btn.grey-radius .menu-list .menu-item:hover,
+.pendant-main .unit-price li.active,
+.pendant-main .unit-price li:hover,
+.pendant-main .final-price span,
+.pendant-main .point-info a,
+.view-later-module .video-info-module .tm-info a:hover,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-positive.bppl-state-selected,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-random.bppl-state-selected,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse.bppl-state-selected,
+.view-later-module .bilibili-player-iconfont.icon-12toview-play:before,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-item:hover .bilibili-player-watchlater-info-title,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-positive:hover,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-random:hover,
+.view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse:hover,
+.cntr .sort-cntr .href-all:hover i,
+.cntr .sort-cntr .href-all:hover
 {
     color: var(--theme-color) !important;
 }

@@ -1,15 +1,28 @@
 .gui-settings-icon-panel
 {
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 0;
+    top: 50%;
     left: 0;
-    width: 24px;
+    width: 32px;
     z-index: 99999;
+    transform: translateY(-50%);
+}
+.gui-settings-icon-panel i
+{
+    transition: all 0.2s;
+    opacity: 0.6;
+    transform: rotate(180deg);
+}
+.gui-settings:hover i,
+.gui-settings-widgets:hover i
+{
+    opacity: 0.75;
+    transform: rotate(0deg);
 }
 .gui-settings,
 .gui-settings-widgets
@@ -23,15 +36,23 @@
     width: 24px;
     height: 24px;
     transition: all 0.2s;
-    opacity: 0.3;
+    opacity: 1;
     transform-origin: center !important;
-    transform: translateX(-12px) rotate(180deg);
+    transform: translateX(-16px);
+    background-color: rgba(255,255,255,0.75);
+    border-radius: 0 50% 50% 0;
+    padding: 6px;
+}
+body.dark .gui-settings,
+body.dark .gui-settings-widgets
+{
+    background-color: rgba(0,0,0,0.75);
 }
 .gui-settings:hover,
 .gui-settings-widgets:hover
 {
     opacity: 1;
-    transform: translateX(0px) rotate(0deg);
+    transform: translateX(0px);
 }
 .gui-settings-footer,
 .gui-settings-header
@@ -288,7 +309,7 @@ button.gui-settings-button:focus
 {
     display: grid;
     grid-template-columns: auto auto auto auto;
-    margin: 4px;
+    margin: 0;
     flex-grow: 1;
 }
 .predefined-colors-grid-block
@@ -433,7 +454,7 @@ li.category.folded i.icon-arrow
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100000;
+    z-index: 99999;
     pointer-events: none;
     transition: all .3s cubic-bezier(0, 0.86, 0.58, 1);
     overscroll-behavior: contain;
@@ -461,9 +482,14 @@ li.category.folded i.icon-arrow
     z-index: 100000;
     transform: translateX(-100%);
     transition: all .3s cubic-bezier(0, 0.86, 0.58, 1);
-    display: flex;
+    display: none;
     flex-direction: column;
     box-shadow: 4px 0px 16px 0px #0000;
+}
+.gui-settings-widgets-box.loaded,
+.gui-settings-box.loaded
+{
+    display: flex;
 }
 .gui-settings-widgets-box
 {
@@ -528,6 +554,7 @@ li.category.folded i.icon-arrow
     border-bottom: 2px solid var(--theme-color-50);
     flex: 0 0 auto;
     margin: 4px;
+    border-radius: 0;
 }
 .gui-settings-flat-button:disabled
 {
@@ -537,6 +564,7 @@ li.category.folded i.icon-arrow
 .gui-settings-flat-button:hover:not(:disabled)
 {
     border-bottom-color: var(--theme-color-90);
+    background: #8884;
 }
 .gui-settings-flat-button:active:not(:disabled)
 {
@@ -549,6 +577,8 @@ li.category.folded i.icon-arrow
 .gui-settings-flat-button i
 {
     margin-right: 8px;
+    line-height: 24px;
+    height: 24px;
 }
 
 .gui-settings-checkbox
@@ -628,4 +658,13 @@ li.category.folded i.icon-arrow
     list-style: none;
     margin: 0;
     padding: 0;
+}
+.gui-settings-box kbd
+{
+    padding: 0 4px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    color: #ccc;
+    border-bottom-width: 3px;
+    margin: 0 4px;
 }

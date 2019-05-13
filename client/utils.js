@@ -39,6 +39,17 @@ export function contentLoaded(callback)
         document.addEventListener("DOMContentLoaded", () => callback());
     }
 }
+export function fullyLoaded(callback)
+{
+    if (document.readyState === "complete")
+    {
+        callback();
+    }
+    else
+    {
+        unsafeWindow.addEventListener('load', () => callback());
+    }
+}
 export function fixed(number, precision = 1)
 {
     const str = number.toString();
@@ -67,12 +78,17 @@ export function isIframe()
 {
     return document.body && unsafeWindow.parent.window !== unsafeWindow;
 }
+export const languageNameToCode = {
+    "日本語": "ja-JP",
+    "English": "en-US",
+    "Deutsch": "de-DE",
+};
+export const languageCodeToName = {
+    "ja-JP": "日本語",
+    "en-US": "English",
+    "de-DE": "Deutsch",
+};
 export function getI18nKey()
 {
-    const languageCodeMap = {
-        "日本語": "ja-JP",
-        "English": "en-US",
-        "Deutsch": "de-DE",
-    };
-    return settings.i18n ? languageCodeMap[settings.i18nLanguage] : "zh-CN";
+    return settings.i18n ? languageNameToCode[settings.i18nLanguage] : "zh-CN";
 }

@@ -1,6 +1,10 @@
 import { ThemeColors } from "./theme-colors";
 import { SettingsSearch } from "./settings-search";
 import { Validator } from "./text-validate";
+
+let inputs = [];
+let checkBoxes = [];
+let textBoxes = [];
 function getCategoryItems(category)
 {
     let element = category.nextElementSibling;
@@ -12,36 +16,38 @@ function getCategoryItems(category)
     }
     return elements;
 }
-function settingsChange(key, value)
-{
-    const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
-    if (checkbox)
-    {
-        checkbox.checked = value;
-        return;
-    }
-    const textbox = document.querySelector(`input[type='text'][key='${key}']`);
-    if (textbox)
-    {
-        textbox.value = value;
-        return;
-    }
-}
+// function settingsChange(key, value)
+// {
+//     const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
+//     if (checkbox)
+//     {
+//         checkbox.checked = value;
+//         return;
+//     }
+//     const textbox = document.querySelector(`input[type='text'][key='${key}']`);
+//     if (textbox)
+//     {
+//         textbox.value = value;
+//         return;
+//     }
+// }
 function syncGui()
 {
-    for (const [key, value] of Object.entries(settings))
-    {
-        settingsChange(key, value);
-    }
+    textBoxes.forEach(it => it.value = settings[it.getAttribute("key")]);
+    checkBoxes.forEach(it => it.checked = settings[it.getAttribute("key")]);
+    // for (const [key, value] of Object.entries(settings))
+    // {
+    //     settingsChange(key, value);
+    // }
 }
 function setupEvents()
 {
     document.querySelector(".gui-settings-mask").addEventListener("click", () =>
     {
-        document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask")
+        document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask,.bilibili-evolved-about")
             .forEach(it => it.classList.remove("opened"));
     });
-    document.querySelectorAll("input[type='text'][key]").forEach(element =>
+    textBoxes.forEach(element =>
     {
         element.setAttribute("placeholder", settings[element.getAttribute("key")]);
     });
@@ -66,27 +72,27 @@ function setupEvents()
             e.currentTarget.parentElement.classList.toggle("opened");
         });
     });
-    onSettingsChange((key, _, value) =>
-    {
-        if (settings[key] !== value)
-        {
-            settings[key] = value;
-            const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
-            if (checkbox)
-            {
-                checkbox.checked = value;
-                raiseEvent(checkbox, "change");
-                return;
-            }
-            const textbox = document.querySelector(`input[type='text'][key='${key}']`);
-            if (textbox)
-            {
-                textbox.value = value;
-                raiseEvent(textbox, "change");
-                return;
-            }
-        }
-    });
+    // onSettingsChange((key, _, value) =>
+    // {
+    //     if (settings[key] !== value)
+    //     {
+    //         settings[key] = value;
+    //         const checkbox = document.querySelector(`input[type='checkbox'][key='${key}']`);
+    //         if (checkbox)
+    //         {
+    //             checkbox.checked = value;
+    //             raiseEvent(checkbox, "change");
+    //             return;
+    //         }
+    //         const textbox = document.querySelector(`input[type='text'][key='${key}']`);
+    //         if (textbox)
+    //         {
+    //             textbox.value = value;
+    //             raiseEvent(textbox, "change");
+    //             return;
+    //         }
+    //     }
+    // });
 }
 function listenSettingsChange()
 {
@@ -98,7 +104,7 @@ function listenSettingsChange()
         //     resources.fetchByKey(reloadableKey);
         // }
     };
-    document.querySelectorAll("input[type='checkbox'][key]").forEach(element =>
+    checkBoxes.forEach(element =>
     {
         element.addEventListener("change", () =>
         {
@@ -109,7 +115,7 @@ function listenSettingsChange()
             saveSettings(settings);
         });
     });
-    document.querySelectorAll("input[type='text'][key]").forEach(element =>
+    textBoxes.forEach(element =>
     {
         element.addEventListener("change", () =>
         {
@@ -124,45 +130,68 @@ function listenSettingsChange()
 }
 function listenDependencies()
 {
-    const dependencies = {};
-    document.querySelectorAll(`input[dependencies]`).forEach(element =>
+    const deps = inputs.map(it => [it.getAttribute("dependencies").split(" ").map(dep => inputs.find(input => input.getAttribute("key") === dep)), it]);
+    const li = element => element.nodeName.toUpperCase() === "LI" ? element : li(element.parentElement);
+    deps.forEach(([parents, child]) =>
     {
-        const dep = element.getAttribute("dependencies");
-        if (dep)
+        if (parents[0] === undefined)
         {
-            dependencies[element.getAttribute("key")] = dep;
+            return;
         }
-    });
-    const checkBoxChange = element =>
-    {
-        const checked = element.checked;
-        for (const key in dependencies)
+        const change = () =>
         {
-            const dependency = dependencies[key].split(" ");
-            if (dependency.indexOf(element.getAttribute("key")) !== -1)
+            if (parents.every(p => p.checked))
             {
-                let disable = true;
-                if (checked && dependency.every(k => document.querySelector(`input[key='${k}']`).checked))
-                {
-                    disable = false;
-                }
-                let li = document.querySelector(`input[key='${key}']`);
-                while (li.nodeName.toLowerCase() !== "li")
-                {
-                    li = li.parentElement;
-                }
-                const action = disable ? "add" : "remove";
-                li.classList[action]("disabled");
-                const text = document.querySelector(`input[key='${key}'][type='text']`);
-                text && text.parentElement.classList[action]("disabled");
+                li(child).classList.remove("disabled");
             }
-        }
-    };
-    document.querySelectorAll(`input[type='checkbox'][key]`).forEach(element =>
-    {
-        element.addEventListener("change", e => checkBoxChange(e.target));
-        checkBoxChange(element);
+            else
+            {
+                li(child).classList.add("disabled");
+            }
+        };
+        parents.forEach(it => it.addEventListener("change", change));
+        change();
     });
+
+    // const dependencies = {};
+    // document.querySelectorAll(`input[dependencies]`).forEach(element =>
+    // {
+    //     const dep = element.getAttribute("dependencies");
+    //     if (dep)
+    //     {
+    //         dependencies[element.getAttribute("key")] = dep;
+    //     }
+    // });
+    // const checkBoxChange = element =>
+    // {
+    //     const checked = element.checked;
+    //     for (const key in dependencies)
+    //     {
+    //         const dependency = dependencies[key].split(" ");
+    //         if (dependency.indexOf(element.getAttribute("key")) !== -1)
+    //         {
+    //             let disable = true;
+    //             if (checked && dependency.every(k => document.querySelector(`input[key='${k}']`).checked))
+    //             {
+    //                 disable = false;
+    //             }
+    //             let li = document.querySelector(`input[key='${key}']`);
+    //             while (li.nodeName.toLowerCase() !== "li")
+    //             {
+    //                 li = li.parentElement;
+    //             }
+    //             const action = disable ? "add" : "remove";
+    //             li.classList[action]("disabled");
+    //             const text = document.querySelector(`input[key='${key}'][type='text']`);
+    //             text && text.parentElement.classList[action]("disabled");
+    //         }
+    //     }
+    // };
+    // document.querySelectorAll(`input[type='checkbox'][key]`).forEach(element =>
+    // {
+    //     element.addEventListener("change", e => checkBoxChange(e.target));
+    //     checkBoxChange(element);
+    // });
 }
 function checkOfflineData()
 {
@@ -184,21 +213,21 @@ function checkCompatibility()
     if (!CSS.supports("backdrop-filter", "blur(24px)")
         && !CSS.supports("-webkit-backdrop-filter", "blur(24px)"))
     {
-        document.querySelector("input[key=blurVideoControl]").disabled = true;
+        inputs.find(it => it.getAttribute("key") === "blurVideoControl").disabled = true;
         settings.blurVideoControl = false;
         saveSettings(settings);
     }
     if (window.devicePixelRatio === 1)
     {
-        document.querySelector("input[key=harunaScale]").disabled = true;
-        document.querySelector("input[key=imageResolution]").disabled = true;
+        inputs.find(it => it.getAttribute("key") === "harunaScale").disabled = true;
+        inputs.find(it => it.getAttribute("key") === "imageResolution").disabled = true;
         settings.harunaScale = false;
         settings.imageResolution = false;
         saveSettings(settings);
     }
     if (settings.defaultPlayerLayout === "旧版")
     {
-        const navbarOption = document.querySelector("input[key=overrideNavBar]");
+        const navbarOption = inputs.find(it => it.getAttribute("key") === "overrideNavBar");
         navbarOption.disabled = true;
         raiseEvent(navbarOption, "change");
         if (settings.overrideNavBar)
@@ -214,7 +243,7 @@ function setDisplayNames()
 {
     for (const [key, name] of Object.entries(Resource.displayNames))
     {
-        const input = document.querySelector(`input[key=${key}]`);
+        const input = inputs.find(it => it.getAttribute("key") === key);
         if (!input)
         {
             continue;
@@ -253,7 +282,7 @@ function setDisplayNames()
         // return;
     }
 
-    const settingsBox = (resources.data.guiSettingsDom || resources.data.guiSettingsHtml).text;
+    const settingsBox = resources.data.guiSettingsHtml.text;
     document.body.insertAdjacentHTML("beforeend", settingsBox);
 
     const widgetsContainer = document.querySelector(".widgets-container");
@@ -270,14 +299,23 @@ function setDisplayNames()
         }
     });
 
-    setupEvents();
-    checkOfflineData();
-    syncGui();
-    listenDependencies();
-    listenSettingsChange();
-    foldAllCategories();
-    checkCompatibility();
-    setDisplayNames();
     new ThemeColors().setupDom();
-    new SettingsSearch();
+
+    const boxes = document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box");
+    document.querySelector(".gui-settings-icon-panel").addEventListener("mouseover", () =>
+    {
+        boxes.forEach(it => it.classList.add("loaded"));
+        inputs = [...document.querySelectorAll("input[key]")];
+        checkBoxes = inputs.filter(it => it.type === "checkbox");
+        textBoxes = inputs.filter(it => it.type === "text");
+        setupEvents();
+        checkOfflineData();
+        syncGui();
+        listenDependencies();
+        listenSettingsChange();
+        foldAllCategories();
+        checkCompatibility();
+        setDisplayNames();
+        new SettingsSearch();
+    }, { once: true });
 })();

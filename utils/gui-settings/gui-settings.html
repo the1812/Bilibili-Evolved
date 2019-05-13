@@ -5,7 +5,7 @@
     <span class="gui-settings-title">附加功能</span>
   </div>
   <div class="widgets-container">
-    <div class="empty-tip">空空如也哦...</div>
+    <div class="empty-tip">空空如也哦 =￣ω￣=</div>
   </div>
 </div>
 <div class="gui-settings-box icons-enabled">
@@ -52,8 +52,14 @@
           <input key="customStyleColor" dependencies="" spellcheck="false" type="text" />
         </label>
       </li>
-      <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox>
-      <textbox indent="1" key="blurBackgroundOpacity" dependencies="useNewStyle"></textbox>
+      <!-- <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox> -->
+      <!-- <textbox indent="1" key="blurBackgroundOpacity" dependencies="useNewStyle"></textbox> -->
+      <checkbox indent="0" key="customNavbar" dependencies=""></checkbox>
+      <checkbox indent="1" key="customNavbarFill" dependencies="customNavbar"></checkbox>
+      <checkbox indent="1" key="allNavbarFill" dependencies="customNavbar"></checkbox>
+      <checkbox indent="1" key="customNavbarShadow" dependencies="customNavbar"></checkbox>
+      <checkbox indent="1" key="customNavbarCompact" dependencies="customNavbar"></checkbox>
+      <checkbox indent="1" key="customNavbarBlur" dependencies="customNavbar"></checkbox>
       <checkbox indent="0" key="useDarkStyle" dependencies=""></checkbox>
       <checkbox indent="0" key="darkSchedule" dependencies=""></checkbox>
       <textbox indent="1" key="darkScheduleStart" dependencies="darkSchedule"></textbox>
@@ -61,15 +67,19 @@
       <checkbox indent="0" key="compactLayout" dependencies=""></checkbox>
       <checkbox indent="0" key="useCommentStyle" dependencies=""></checkbox>
       <checkbox indent="0" key="simplifyLiveroom" dependencies=""></checkbox>
-      <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox>
-      <checkbox indent="1" key="showBanner" dependencies="overrideNavBar"></checkbox>
-      <checkbox indent="1" key="preserveRank" dependencies="overrideNavBar"></checkbox>
+      <checkbox indent="0" key="hideBanner" dependencies=""></checkbox>
+      <checkbox indent="0" key="playerShadow" dependencies=""></checkbox>
+      <checkbox indent="0" key="narrowDanmaku" dependencies=""></checkbox>
+      <!-- <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox> -->
+      <!-- <checkbox indent="0" key="showBanner" dependencies=""></checkbox> -->
+      <!-- <checkbox indent="1" key="preserveRank" dependencies="overrideNavBar"></checkbox> -->
       <checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox>
       <checkbox indent="0" key="customControlBackground" dependencies=""></checkbox>
       <textbox indent="1" key="customControlBackgroundOpacity" dependencies="customControlBackground"></textbox>
       <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
       <checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox>
       <checkbox indent="0" key="removeVideoTopMask" dependencies=""></checkbox>
+      <checkbox indent="0" key="hideOldEntry" dependencies=""></checkbox>
       <category icon="tool">工具</category>
       <checkbox indent="0" key="removeAds" dependencies=""></checkbox>
       <checkbox indent="0" key="watchLaterRedirect" dependencies=""></checkbox>

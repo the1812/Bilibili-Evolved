@@ -1,7 +1,6 @@
 body,
 html,
 p.num,
-.bili-header-m.report-wrap-module,
 .bili-footer,
 .footer-wrp,
 div.box,
@@ -34,10 +33,8 @@ li.tag,
 form.ipt,
 .tag-info-pane,
 .bangumi-info-module,
-.bb-comment,
 .user-card-m,
 textarea,
-.bb-comment .hot-line span,
 .page-jump>input,
 .bilibili-player-video-inputbar,
 .bilibili-player-video-progress-detail-time,
@@ -489,7 +486,8 @@ body,
 .divider,
 .fjw-point .line,
 font>span,
-.list-item .close .close-icon
+.list-item .close .close-icon,
+.bb-comment
 {
     background-color: transparent !important;
 }
@@ -1366,7 +1364,6 @@ div.con,
 .float-nav .nav-menu .item,
 textarea,
 .comment-emoji,
-.bb-comment .hot-line,
 .page-jump>input,
 .bilibili-player-setting-menu-wrap,
 .opera-list,
@@ -2419,8 +2416,18 @@ a.s-btn:hover,
     scrollbar-color: #444 #222 !important;
 }
 
-::-webkit-scrollbar-thumb,
-::-webkit-resizer
+::-webkit-scrollbar
+{
+    width: 5px !important;
+    height: 5px !important;
+}
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track
+{
+    background: transparent !important;
+}
+::-webkit-resizer,
+::-webkit-scrollbar-thumb
 {
     background: #444 !important;
 }
@@ -2431,4 +2438,5 @@ a.s-btn:hover,
 *
 {
     scrollbar-color: #444 transparent !important;
+    scrollbar-width: thin !important;
 }

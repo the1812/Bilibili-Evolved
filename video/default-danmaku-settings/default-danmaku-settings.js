@@ -56,7 +56,10 @@ if (settings.rememberDanmakuSettings)
             }
             element.addEventListener("click", () =>
             {
-                settings.danmakuSettings[type] = element.checked;
+                settings.danmakuSettings = Object.assign(settings.danmakuSettings, {
+                    [type]: element.checked,
+                });
+                // settings.danmakuSettings[type] = element.checked;
                 saveSettings(settings);
             });
         }

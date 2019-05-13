@@ -1,12 +1,16 @@
-const id = "bilibili-video-top-mask";
-if ($(`#${id}`).length === 0)
+const style = `.bilibili-player-video-top { display: none !important; }`;
+const id = "remove-top-mask-style";
+const reload = () => resources.applyStyleFromText(/*html*/`<style id="${id}">${style}</style>`);
+const unload = () =>
 {
-    resources.applyStyleFromText(/*html*/`
-        <style id='${id}'>
-            .bilibili-player-video-top
-            {
-                display: none !important;
-            }
-        </style>
-        `);
+    const styleElement = document.getElementById(id);
+    if (styleElement)
+    {
+        styleElement.remove();
+    }
 }
+reload();
+export default {
+    reload,
+    unload,
+};

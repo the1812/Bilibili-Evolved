@@ -30,7 +30,7 @@ export class SettingsSearch
         this.items.forEach(item =>
         {
             const key = item.querySelector("input").getAttribute("key");
-            const texts = Resource.displayNames[key] + this.toolTips.get(key).replace(/<span>|<\/span>/g, "");
+            const texts = Resource.displayNames[key] + this.toolTips.get(key).replace(/<.*>|<\/.*>/g, "");
             if (texts.includes(value))
             {
                 item.classList.remove("folded");

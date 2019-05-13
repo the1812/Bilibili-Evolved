@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.7.28
+// @version      1.7.33
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -23,12 +23,127 @@
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
+// if (typeof GM_addValueChangeListener === "undefined")
+// {
+//     GM_addValueChangeListener = function () { };
+// }
+function logError(message)
+{
+    if (settings.toastInternalError)
+    {
+        Toast.error(typeof message === "object" && "stack" in message
+            ? message.stack
+            : message, "错误");
+    }
+    console.error(message);
+}
+function raiseEvent(element, eventName)
+{
+    const event = document.createEvent("HTMLEvents");
+    event.initEvent(eventName, true, true);
+    element.dispatchEvent(event);
+}
+async function loadLazyPanel(selector)
+{
+    await SpinQuery.unsafeJquery();
+    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
+    if (!panel)
+    {
+        throw new Error(`Panel not found: ${selector}`);
+    }
+    panel.mouseover().mouseout();
+}
+function contentLoaded(callback)
+{
+    if (/complete|interactive|loaded/.test(document.readyState))
+    {
+        callback();
+    }
+    else
+    {
+        document.addEventListener("DOMContentLoaded", () => callback());
+    }
+}
+function fullyLoaded(callback)
+{
+    if (document.readyState === "complete")
+    {
+        callback();
+    }
+    else
+    {
+        unsafeWindow.addEventListener('load', () => callback());
+    }
+}
+function fixed(number, precision = 1)
+{
+    const str = number.toString();
+    const index = str.indexOf(".");
+    if (index !== -1)
+    {
+        if (str.length - index > precision + 1)
+        {
+            return str.substring(0, index + precision + 1);
+        }
+        else
+        {
+            return str;
+        }
+    }
+    else
+    {
+        return str + ".0";
+    }
+}
+function isEmbeddedPlayer()
+{
+    return location.host === "player.bilibili.com" || document.URL.startsWith("https://www.bilibili.com/html/player.html");
+}
+function isIframe()
+{
+    return document.body && unsafeWindow.parent.window !== unsafeWindow;
+}
+const languageNameToCode = {
+    "日本語": "ja-JP",
+    "English": "en-US",
+    "Deutsch": "de-DE",
+};
+const languageCodeToName = {
+    "ja-JP": "日本語",
+    "en-US": "English",
+    "de-DE": "Deutsch",
+};
+function getI18nKey()
+{
+    return settings.i18n ? languageNameToCode[settings.i18nLanguage] : "zh-CN";
+}
+const customNavbarDefaultOrders = {
+    blank1: 0,
+    logo: 1,
+    category: 2,
+    rankingLink: 3,
+    drawingLink: 4,
+    musicLink: 5,
+    gamesIframe: 6,
+    livesIframe: 7,
+    shopLink: 8,
+    mangaLink: 9,
+    blank2: 10,
+    search: 11,
+    userInfo: 12,
+    messages: 13,
+    activities: 14,
+    watchlaterList: 15,
+    favoritesList: 16,
+    historyList: 17,
+    upload: 18,
+    blank3: 19
+};
 const settings = {
     useDarkStyle: false,
-    useNewStyle: true,
     compactLayout: false,
-    showBanner: true,
-    overrideNavBar: true,
+    // showBanner: true,
+    hideBanner: false,
     expandDanmakuList: true,
     expandDescription: true,
     watchLaterRedirect: true,
@@ -99,13 +214,20 @@ const settings = {
         popup: false,
         skin: false,
     },
-    customNavbar: false,
-    customNavbarSettings: {
-        fill: true,
-        shadow: true,
-    },
+    customNavbar: true,
+    customNavbarFill: true,
+    allNavbarFill: true,
+    customNavbarShadow: true,
+    customNavbarCompact: false,
+    customNavbarBlur: false,
+    customNavbarOrder: { ...customNavbarDefaultOrders },
+    customNavbarHidden: [],
+    customNavbarBoundsPadding: 5,
+    playerShadow: false,
+    narrowDanmaku: true,
     favoritesRedirect: true,
     outerWatchlater: true,
+    hideOldEntry: true,
     cache: {},
 };
 const fixedSettings = {
@@ -118,121 +240,111 @@ const fixedSettings = {
     downloadAudio: true,
     playerLayout: true,
     medalHelper: true,
-    about: false,
+    about: true,
     forceWide: false,
+    useNewStyle: false,
+    overrideNavBar: false,
     latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js",
     currentVersion: GM_info.script.version,
 };
+const settingsChangeHandlers = {};
+function addSettingsListener(key, handler)
+{
+    if (!settingsChangeHandlers[key])
+    {
+        settingsChangeHandlers[key] = [handler];
+    }
+    else
+    {
+        settingsChangeHandlers[key].push(handler);
+    }
+}
+function removeSettingsListener(key, handler)
+{
+    const handlers = settingsChangeHandlers[key];
+    if (!handlers)
+    {
+        return;
+    }
+    handlers.splice(handlers.indexOf(handler), 1);
+}
 function loadSettings()
 {
-    for (const key in settings)
-    {
-        const value = GM_getValue(key, settings[key]);
-        if (settings[key] !== undefined && value.constructor === Object)
-        {
-            settings[key] = Object.assign(settings[key], value);
-        }
-        else
-        {
-            settings[key] = value;
-        }
-    }
     for (const key in fixedSettings)
     {
         settings[key] = fixedSettings[key];
+        GM_setValue(key, fixedSettings[key]);
+    }
+    if (Object.keys(languageCodeToName).includes(navigator.language))
+    {
+        settings.i18n = true;
+        settings.i18n = languageCodeToName[navigator.language];
+    }
+    for (const key in settings)
+    {
+        let value = GM_getValue(key);
+        if (value === undefined)
+        {
+            value = settings[key];
+            GM_setValue(key, settings[key]);
+        }
+        else if (settings[key] !== undefined && value.constructor === Object)
+        {
+            value = Object.assign(settings[key], value);
+        }
+        Object.defineProperty(settings, key, {
+            get()
+            {
+                return value;
+            },
+            set(newValue)
+            {
+                value = newValue;
+                GM_setValue(key, newValue);
+
+                const handlers = settingsChangeHandlers[key];
+                if (handlers)
+                {
+                    handlers.forEach(h => h(newValue, value));
+                }
+                const input = document.querySelector(`input[key=${key}]`);
+                if (input !== null)
+                {
+                    if (input.type === "checkbox")
+                    {
+                        input.checked = newValue;
+                    }
+                    else if (input.type === "text")
+                    {
+                        input.value = newValue;
+                    }
+                }
+            },
+        });
+        // if (settings[key] !== undefined && value.constructor === Object)
+        // {
+        //     settings[key] = Object.assign(settings[key], value);
+        // }
+        // else
+        // {
+        //     settings[key] = value;
+        // }
     }
 }
 function saveSettings(newSettings)
 {
-    for (const key in settings)
-    {
-        GM_setValue(key, newSettings[key]);
-    }
+    // for (const key in settings)
+    // {
+    //     GM_setValue(key, newSettings[key]);
+    // }
 }
-function onSettingsChange(change)
+function onSettingsChange()
 {
     // for (const key in settings)
     // {
     //     GM_addValueChangeListener(key, change);
     // }
-}
-// if (typeof GM_addValueChangeListener === "undefined")
-// {
-//     GM_addValueChangeListener = function () { };
-// }
-function logError(message)
-{
-    if (settings.toastInternalError)
-    {
-        Toast.error(typeof message === "object" && "stack" in message
-            ? message.stack
-            : message, "错误");
-    }
-    console.error(message);
-}
-function raiseEvent(element, eventName)
-{
-    const event = document.createEvent("HTMLEvents");
-    event.initEvent(eventName, true, true);
-    element.dispatchEvent(event);
-}
-async function loadLazyPanel(selector)
-{
-    await SpinQuery.unsafeJquery();
-    const panel = await SpinQuery.any(() => unsafeWindow.$(selector));
-    if (!panel)
-    {
-        throw new Error(`Panel not found: ${selector}`);
-    }
-    panel.mouseover().mouseout();
-}
-function contentLoaded(callback)
-{
-    if (/complete|interactive|loaded/.test(document.readyState))
-    {
-        callback();
-    }
-    else
-    {
-        document.addEventListener("DOMContentLoaded", () => callback());
-    }
-}
-function fixed(number, precision = 1)
-{
-    const str = number.toString();
-    const index = str.indexOf(".");
-    if (index !== -1)
-    {
-        if (str.length - index > precision + 1)
-        {
-            return str.substring(0, index + precision + 1);
-        }
-        else
-        {
-            return str;
-        }
-    }
-    else
-    {
-        return str + ".0";
-    }
-}
-function isEmbeddedPlayer()
-{
-    return location.host === "player.bilibili.com" || document.URL.startsWith("https://www.bilibili.com/html/player.html");
-}
-function isIframe()
-{
-    return document.body && unsafeWindow.parent.window !== unsafeWindow;
-}
-function getI18nKey()
-{
-    const languageCodeMap = {
-        "日本語": "ja-JP",
-        "English": "en-US",
-        "Deutsch": "de-DE",
-    };
-    return settings.i18n ? languageCodeMap[settings.i18nLanguage] : "zh-CN";
+    console.warn("此功能已弃用.");
 }
 class Ajax
 {
@@ -387,10 +499,17 @@ function loadResources()
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
     Resource.all = {};
     Resource.displayNames = {};
-    // Resource.reloadables = {
-    //     useDarkStyle: "useDarkStyle",
-    //     showBanner: "overrideNavBar",
-    // };
+    Resource.reloadables = {
+        useDarkStyle: "useDarkStyle",
+        hideBanner: "hideBanner",
+        customNavbar: "customNavbar",
+        playerShadow: "playerShadow",
+        narrowDanmaku: "narrowDanmaku",
+        compactLayout: "compactLayout",
+        useCommentStyle: "useCommentStyle",
+        removeVideoTopMask: "removeVideoTopMask",
+        hideOldEntry: "hideOldEntry",
+    };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
         const resource = new Resource(data.path, data.styles);
@@ -1027,7 +1146,9 @@ class Resource
                                     }
                                     if (typeof offlineData === "undefined")
                                     {
-                                        settings.cache[key] = this.text;
+                                        settings.cache = Object.assign(settings.cache, {
+                                            [key]: this.text
+                                        });
                                         saveSettings(settings);
                                     }
                                 }
@@ -1055,12 +1176,16 @@ class Resource
         {
             logError("Attempt to get style which is not downloaded.");
         }
-        let attributes = `id='${id}'`;
+        // let attributes = `id='${id}'`;
         // if (this.priority !== undefined)
         // {
         //     attributes += ` priority='${this.priority}'`;
         // }
-        return `<style ${attributes}>${style}</style>`;
+        // return `<style ${attributes}>${style}</style>`;
+        const styleElement = document.createElement("style");
+        styleElement.id = id;
+        styleElement.innerText = style;
+        return styleElement;
     }
     getPriorStyle()
     {
@@ -1110,11 +1235,11 @@ class Resource
             // }
             if (important)
             {
-                document.body.insertAdjacentHTML("beforeend", style);
+                document.body.insertAdjacentElement("beforeend", style);
             }
             else
             {
-                document.head.insertAdjacentHTML("afterbegin", style);
+                document.head.insertAdjacentElement("afterbegin", style);
             }
         }
     }
@@ -1255,20 +1380,27 @@ Resource.manifest = {
             blurBackgroundOpacity: "顶栏(对横幅)透明度",
         },
     },
-    overrideNavBar: {
-        path: "override-navbar.min.js",
-        styles: [
-            "tweetsStyle",
-            "navbarOverrideStyle",
-            {
-                key: "noBannerStyle",
-                condition: () => !settings.showBanner
-            },
-        ],
+    // overrideNavBar: {
+    //     path: "override-navbar.min.js",
+    //     styles: [
+    //         "tweetsStyle",
+    //         "navbarOverrideStyle",
+    //         {
+    //             key: "noBannerStyle",
+    //             condition: () => !settings.showBanner
+    //         },
+    //     ],
+    //     displayNames: {
+    //         overrideNavBar: "搜索栏置顶",
+    //         showBanner: "显示顶部横幅",
+    //         preserveRank: "显示排行榜图标",
+    //     },
+    // },
+    hideBanner: {
+        path: "hide-banner.min.js",
+        style: true,
         displayNames: {
-            overrideNavBar: "搜索栏置顶",
-            showBanner: "显示顶部横幅",
-            preserveRank: "显示排行榜图标",
+            hideBanner: "隐藏顶部横幅",
         },
     },
     touchNavBar: {
@@ -1401,6 +1533,7 @@ Resource.manifest = {
         dependencies: ["title"],
         displayNames: {
             "downloadVideo": "下载视频",
+            "batchDownload": "批量下载",
         },
     },
     downloadDanmaku: {
@@ -1423,7 +1556,7 @@ Resource.manifest = {
     about: {
         path: "about.min.js",
         html: true,
-        style: "instant",
+        style: "important",
         displayNames: {
             "about": "关于",
         }
@@ -1564,24 +1697,21 @@ Resource.manifest = {
     },
     useCommentStyle: {
         path: "comment.min.js",
-        style: {
-            important: true,
-            condition: () => true,
-        },
-        styles: [
-            {
-                key: "commentDarkStyle",
-                important: true,
-                condition: () => settings.useDarkStyle,
-            },
-        ],
+        style: "important",
+        // styles: [
+        //     {
+        //         key: "commentDarkStyle",
+        //         important: true,
+        //         condition: () => settings.useDarkStyle,
+        //     },
+        // ],
         displayNames: {
             useCommentStyle: "简化评论区",
         },
     },
-    commentDarkStyle: {
-        path: "comment-dark.min.css"
-    },
+    // commentDarkStyle: {
+    //     path: "comment-dark.min.css"
+    // },
     title: {
         path: "title.min.js"
     },
@@ -1634,6 +1764,11 @@ Resource.manifest = {
             i18nGerman: "德语翻译模块",
             i18nTraditionalChinese: "繁体翻译模块",
         },
+        dropdown: {
+            key: "i18nLanguage",
+            // items: Object.keys(languageCodeMap),
+            items: [`日本語`],
+        },
     },
     playerFocus: {
         path: "player-focus.min.js",
@@ -1661,6 +1796,11 @@ Resource.manifest = {
         html: true,
         displayNames: {
             customNavbar: "使用自定义顶栏",
+            customNavbarFill: "主题色填充",
+            customNavbarShadow: "投影",
+            customNavbarCompact: "紧凑布局",
+            customNavbarBlur: "背景模糊",
+            allNavbarFill: "填充其他顶栏",
         },
     },
     favoritesRedirect: {
@@ -1674,6 +1814,39 @@ Resource.manifest = {
         style: "important",
         displayNames: {
             outerWatchlater: "外置稍后再看",
+        },
+    },
+    playerShadow: {
+        path: "player-shadow.min.js",
+        displayNames: {
+            playerShadow: "播放器投影",
+        },
+    },
+    narrowDanmaku: {
+        path: "narrow-danmaku.min.js",
+        displayNames: {
+            narrowDanmaku: "强制保留弹幕栏",
+        },
+    },
+    hideOldEntry: {
+        path: "hide-old-entry.min.js",
+        displayNames: {
+            hideOldEntry: "隐藏返回旧版",
+        },
+    },
+    batchDownload: {
+        path: "batch-download.min.js",
+    },
+    slip: {
+        path: "slip.min.js",
+        displayNames: {
+            slip: "Slip.js"
+        },
+    },
+    debounce: {
+        path: "debounce.min.js",
+        displayNames: {
+            slip: "debounce.js"
         },
     },
 };
@@ -1710,13 +1883,33 @@ class StyleManager
         }
         Resource.all[key].applyStyle(id, true);
     }
-    applyStyleFromText(text)
+    applyStyleFromText(text, id)
     {
-        document.head.insertAdjacentHTML("afterbegin", text);
+        if (!id)
+        {
+            document.head.insertAdjacentHTML("afterbegin", text);
+        }
+        else
+        {
+            const style = document.createElement("style");
+            style.id = id;
+            style.innerText = text;
+            document.head.insertAdjacentElement("afterbegin", style);
+        }
     }
-    applyImportantStyleFromText(text)
+    applyImportantStyleFromText(text, id)
     {
-        document.body.insertAdjacentHTML("beforeend", text);
+        if (!id)
+        {
+            document.body.insertAdjacentHTML("beforeend", text);
+        }
+        else
+        {
+            const style = document.createElement("style");
+            style.id = id;
+            style.innerText = text;
+            document.body.insertAdjacentElement("beforeend", style);
+        }
     }
     getStyle(key, id)
     {
@@ -1803,7 +1996,7 @@ class ResourceManager
         styles.push("--invert-filter:" + settings.filterInvert);
         styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
         styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
-        this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
+        this.applyStyleFromText(`html{${styles.join(";")}}`, "bilibili-evolved-variables");
     }
     resolveComponentName(componentName)
     {
@@ -1935,8 +2128,51 @@ class ResourceManager
         {
             loadingToast.dismiss();
         }
+        this.applyReloadables(); // reloadables run sync
         await this.applyDropdownOptions();
-        this.applyWidgets();
+        this.applyWidgets(); // No need to wait the widgets
+    }
+    applyReloadables()
+    {
+        const checkAttribute = (key, attributes) =>
+        {
+            if (attributes.reload && attributes.unload)
+            {
+                addSettingsListener(key, newValue =>
+                {
+                    if (newValue === true)
+                    {
+                        attributes.reload();
+                    }
+                    else
+                    {
+                        attributes.unload();
+                    }
+                });
+            }
+        };
+        for (const [key, targetKey] of Object.entries(Resource.reloadables))
+        {
+            const attributes = this.attributes[targetKey];
+            if (attributes === undefined)
+            {
+                const fetchListener = async newValue =>
+                {
+                    if (newValue === true)
+                    {
+                        await this.styleManager.fetchStyleByKey(targetKey);
+                        await this.fetchByKey(targetKey);
+                        removeSettingsListener(key, fetchListener);
+                        checkAttribute(key, this.attributes[targetKey]);
+                    }
+                };
+                addSettingsListener(key, fetchListener);
+            }
+            else
+            {
+                checkAttribute(key, attributes);
+            }
+        }
     }
     applyComponent(key, text)
     {
@@ -1966,7 +2202,7 @@ class ResourceManager
         if (typeof info.condition === "function")
         {
             condition = info.condition();
-            if (condition instanceof Promise)
+            if (typeof condition === "object" && "then" in condition)
             {
                 condition = await condition.catch(() => { return false; });
             }
@@ -2018,7 +2254,7 @@ class ResourceManager
         }
         const manifests = Object.values(Resource.manifest).filter(it => it.dropdown).map(it => it.dropdown);
         Object.values(Resource.all)
-            .concat(Object.values(this.attributes))
+            //.concat(Object.values(this.attributes))
             .filter(it => it.dropdown)
             .map(it => it.dropdown)
             .forEach(it =>
@@ -2042,7 +2278,8 @@ class ResourceManager
         }
         if (settings.cache.version === undefined) // Has newly downloaded cache
         {
-            settings.cache.version = settings.currentVersion;
+            settings.cache = Object.assign(settings.cache, { version: settings.currentVersion });
+            // settings.cache.version = settings.currentVersion;
             saveSettings(settings);
             return true;
         }
@@ -2127,6 +2364,11 @@ try
         contentLoaded,
         fixed,
         settings,
+        settingsChangeHandlers,
+        addSettingsListener,
+        removeSettingsListener,
+        isEmbeddedPlayer,
+        isIframe,
         resources,
         theWorld: waitTime =>
         {

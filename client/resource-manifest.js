@@ -134,20 +134,27 @@ Resource.manifest = {
             blurBackgroundOpacity: "顶栏(对横幅)透明度",
         },
     },
-    overrideNavBar: {
-        path: "override-navbar.min.js",
-        styles: [
-            "tweetsStyle",
-            "navbarOverrideStyle",
-            {
-                key: "noBannerStyle",
-                condition: () => !settings.showBanner
-            },
-        ],
+    // overrideNavBar: {
+    //     path: "override-navbar.min.js",
+    //     styles: [
+    //         "tweetsStyle",
+    //         "navbarOverrideStyle",
+    //         {
+    //             key: "noBannerStyle",
+    //             condition: () => !settings.showBanner
+    //         },
+    //     ],
+    //     displayNames: {
+    //         overrideNavBar: "搜索栏置顶",
+    //         showBanner: "显示顶部横幅",
+    //         preserveRank: "显示排行榜图标",
+    //     },
+    // },
+    hideBanner: {
+        path: "hide-banner.min.js",
+        style: true,
         displayNames: {
-            overrideNavBar: "搜索栏置顶",
-            showBanner: "显示顶部横幅",
-            preserveRank: "显示排行榜图标",
+            hideBanner: "隐藏顶部横幅",
         },
     },
     touchNavBar: {
@@ -280,6 +287,7 @@ Resource.manifest = {
         dependencies: ["title"],
         displayNames: {
             "downloadVideo": "下载视频",
+            "batchDownload": "批量下载",
         },
     },
     downloadDanmaku: {
@@ -302,7 +310,7 @@ Resource.manifest = {
     about: {
         path: "about.min.js",
         html: true,
-        style: "instant",
+        style: "important",
         displayNames: {
             "about": "关于",
         }
@@ -443,24 +451,21 @@ Resource.manifest = {
     },
     useCommentStyle: {
         path: "comment.min.js",
-        style: {
-            important: true,
-            condition: () => true,
-        },
-        styles: [
-            {
-                key: "commentDarkStyle",
-                important: true,
-                condition: () => settings.useDarkStyle,
-            },
-        ],
+        style: "important",
+        // styles: [
+        //     {
+        //         key: "commentDarkStyle",
+        //         important: true,
+        //         condition: () => settings.useDarkStyle,
+        //     },
+        // ],
         displayNames: {
             useCommentStyle: "简化评论区",
         },
     },
-    commentDarkStyle: {
-        path: "comment-dark.min.css"
-    },
+    // commentDarkStyle: {
+    //     path: "comment-dark.min.css"
+    // },
     title: {
         path: "title.min.js"
     },
@@ -513,6 +518,11 @@ Resource.manifest = {
             i18nGerman: "德语翻译模块",
             i18nTraditionalChinese: "繁体翻译模块",
         },
+        dropdown: {
+            key: "i18nLanguage",
+            // items: Object.keys(languageCodeMap),
+            items: [`日本語`],
+        },
     },
     playerFocus: {
         path: "player-focus.min.js",
@@ -540,6 +550,11 @@ Resource.manifest = {
         html: true,
         displayNames: {
             customNavbar: "使用自定义顶栏",
+            customNavbarFill: "主题色填充",
+            customNavbarShadow: "投影",
+            customNavbarCompact: "紧凑布局",
+            customNavbarBlur: "背景模糊",
+            allNavbarFill: "填充其他顶栏",
         },
     },
     favoritesRedirect: {
@@ -553,6 +568,39 @@ Resource.manifest = {
         style: "important",
         displayNames: {
             outerWatchlater: "外置稍后再看",
+        },
+    },
+    playerShadow: {
+        path: "player-shadow.min.js",
+        displayNames: {
+            playerShadow: "播放器投影",
+        },
+    },
+    narrowDanmaku: {
+        path: "narrow-danmaku.min.js",
+        displayNames: {
+            narrowDanmaku: "强制保留弹幕栏",
+        },
+    },
+    hideOldEntry: {
+        path: "hide-old-entry.min.js",
+        displayNames: {
+            hideOldEntry: "隐藏返回旧版",
+        },
+    },
+    batchDownload: {
+        path: "batch-download.min.js",
+    },
+    slip: {
+        path: "slip.min.js",
+        displayNames: {
+            slip: "Slip.js"
+        },
+    },
+    debounce: {
+        path: "debounce.min.js",
+        displayNames: {
+            slip: "debounce.js"
         },
     },
 };

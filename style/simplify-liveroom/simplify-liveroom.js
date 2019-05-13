@@ -39,8 +39,8 @@ export default {
                 }
                 settingsList.classList.toggle("opened");
             });
-            button.addEventListener("pointerenter", () => mask.classList.add("transparent"));
-            button.addEventListener("pointerleave", () => mask.classList.remove("transparent"));
+            button.addEventListener("mouseenter", () => mask.classList.add("transparent"));
+            button.addEventListener("mouseleave", () => mask.classList.remove("transparent"));
             let skinDisabled = settings.simplifyLiveroomSettings.skin;
             const skinSelectors = [
                 "#head-info-vm",
@@ -113,8 +113,12 @@ export default {
                     {
                         item.checked = !item.checked;
                         setBodyClass(item.checked, item.key);
-                        settings.simplifyLiveroomSettings[item.key] = item.checked;
-                        GM_setValue("simplifyLiveroomSettings", settings.simplifyLiveroomSettings);
+                        settings.simplifyLiveroomSettings = Object.assign(
+                            settings.simplifyLiveroomSettings, {
+                                [item.key]: item.checked,
+                            });
+                        // settings.simplifyLiveroomSettings[item.key] = item.checked;
+                        // GM_setValue("simplifyLiveroomSettings", settings.simplifyLiveroomSettings);
                     },
                 },
             });

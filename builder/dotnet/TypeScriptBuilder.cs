@@ -13,7 +13,8 @@ namespace BilibiliEvolved.Build
         {
             var tsc = new TypeScriptCompiler();
             var files = ResourceMinifier.GetFiles(file =>
-                file.Extension == ".ts" && !file.Name.EndsWith("d.ts")
+                file.Extension == ".ts" &&
+                !file.Name.EndsWith("d.ts")
             );
             using (var cache = new BuildCache())
             {

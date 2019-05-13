@@ -1,6 +1,6 @@
-if ($(".gui-settings-icon-panel").length === 0)
+if (document.querySelector(".gui-settings-icon-panel") === null)
 {
-    $("body").append(/*html*/`
+    document.body.insertAdjacentHTML("beforeend", /*html*/`
         <div class='gui-settings-icon-panel icons-enabled'>
             <div class='gui-settings-widgets' title='附加功能'>
                 <i class="icon-widgets"></i>
@@ -9,15 +9,19 @@ if ($(".gui-settings-icon-panel").length === 0)
                 <i class="icon-settings"></i>
             </div>
         </div>`);
-    $(".gui-settings").on("click", e =>
+    document.querySelector(".gui-settings").addEventListener("click", e =>
     {
         if (e.shiftKey === false)
         {
-            $(".gui-settings-box,.gui-settings-mask").addClass("opened");
+            document.querySelectorAll(".gui-settings-box,.gui-settings-mask").forEach(it => it.classList.add("opened"));
+        }
+        else
+        {
+            document.querySelectorAll(".bilibili-evolved-about,.gui-settings-mask").forEach(it => it.classList.add("opened"));
         }
     });
-    $(".gui-settings-widgets").on("click", () =>
+    document.querySelector(".gui-settings-widgets").addEventListener("click", () =>
     {
-        $(".gui-settings-widgets-box,.gui-settings-mask").addClass("opened");
+        document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-mask").forEach(it => it.classList.add("opened"));
     });
 }

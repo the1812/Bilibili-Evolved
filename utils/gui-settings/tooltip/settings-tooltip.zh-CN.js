@@ -19,7 +19,7 @@ export const toolTips = new Map([
     ["autoPlay", `进入视频页面时自动开始播放视频.`],
     ["autoContinue", `播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`],
     ["skipChargeList", `自动跳过视频结尾的充电鸣谢.`],
-    ["framePlayback", `在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<span>Shift + 左/右方向键</span>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
+    ["framePlayback", `在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
     ["playerFocus", `进入视频/番剧页面时, 自动定位到播放器.`],
     ["playerFocusOffset", `定位时的竖直偏移量, 单位为像素(px).`],
     ["customStyleColor", `设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],
@@ -54,8 +54,8 @@ export const toolTips = new Map([
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
 - 禁用直播间皮肤
 每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`],
-    ["overrideNavBar", `开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`],
-    ["showBanner", `控制是否显示主站顶部的横幅`],
+    //["overrideNavBar", `开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`],
+    //["showBanner", `控制是否显示主站顶部的横幅`],
     ["preserveRank", `控制是否在搜索框左侧显示排行榜图标.`],
     ["blurVideoControl", `模糊视频控制栏背景, 原版的阴影效果将无效.`],
     ["customControlBackground", `给视频控制栏附上半透明的黑色, 代替原来的阴影.`],
@@ -88,7 +88,17 @@ export const toolTips = new Map([
     ["useCache", `使用缓存以提高脚本的加载速度.`],
     ["outerWatchlater", `将视频页面菜单里的<span>稍后再看</span>移到外面.`],
     ["i18n", `为界面中一些常用文本提供翻译.`],
-    ["i18nLanguage", `翻译的目标语言`],
+    ["i18nLanguage", `翻译的目标语言.`],
+    ["customNavbar", `启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.`],
+    ["customNavbarFill", `是否使用主题色填充顶栏.`],
+    ["allNavbarFill", `是否使用主题色填充其他的顶栏, 包括直播/相簿/会员购等.`],
+    ["customNavbarShadow", `是否为顶栏添加一层阴影效果.`],
+    ["customNavbarCompact", `是否为顶栏使用更紧凑的布局, 紧凑布局将使用更小的间距, 以及在视频标题过长时用...省略后面的部分.`],
+    ["customNavbarBlur", `是否在顶部横幅存在时, 使用背景模糊效果.`],
+    ["playerShadow", `为播放器添加主题色投影.`],
+    ["narrowDanmaku", `在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.`],
+    ["hideOldEntry", `隐藏播放页右侧的<span>返回旧版</span>入口.`],
+    ["hideBanner", `隐藏首页顶部横幅.`],
 ]);
 export default {
     export: { toolTips },

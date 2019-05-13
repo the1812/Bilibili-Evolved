@@ -77,12 +77,20 @@ div#square.container,
 .gui-settings-flat-button .popup,
 .h5share-container .image-area .share-img,
 .notice-panel .img-container .notice-img,
-.withdraw-wrapper .withdraw-text
+.withdraw-wrapper .withdraw-text,
+.sch-pub-tips,
+.sch-pub-tips::after,
+.input-section .schedule-panel .s-input,
+.input-section .schedule-panel .s-panel,
+.date-input > input,
+.date-input .date-panel,
+.bb-comment .comment-emoji
 {
     background-color: #222 !important;
 }
 .article-holder .error-card .video-holder .video-cover,
-.article-holder .error-card .video-holder p
+.article-holder .error-card .video-holder p,
+.player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control
 {
     background-color: #333 !important;
 }
@@ -160,7 +168,12 @@ body>div.to-top.on,
 .player-auxiliary-area .player-auxiliary-collapse-playlist .bui-collapse-body,
 .share-box .share-popup .share-address ul li input,
 .bilibili-live-player-ending-panel-recommend-card,
-.card-timing-module .r-text .update a
+.card-timing-module .r-text .update a,
+.card .user-face,
+.result-list .user-face,
+.card .img-box,
+.player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-load-status,
+.act-card-wrap .act-card .type
 {
     background-color: #444 !important;
 }
@@ -224,7 +237,18 @@ body>div.to-top.on,
 .play-options .play-options-more .play-options-content,
 .player-auxiliary-area,
 .bilibili-player-danmaku-report-panel .bui-radio-input:checked+.bui-radio-label,
-.rank-list-ctnr
+.rank-list-ctnr,
+.input-section,
+.input-section .schedule-panel,
+.date-input,
+.bb-comment .con,
+.bb-comment .list-item:hover,
+.bb-comment .hot-line span,
+.bb-comment .more-link:hover,
+.bb-comment .result,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer,
+.result .card,
+.bili-header-m.report-wrap-module
 {
     background-color: transparent !important;
 }
@@ -233,7 +257,8 @@ body>div.to-top.on,
     background: #fff !important;
 }
 .chat-history-panel .chat-history-list .chat-item.danmaku-item .admin-icon,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item .anchor-icon
+.chat-history-panel .chat-history-list .chat-item.danmaku-item .anchor-icon,
+.date-input .date-panel .day.disabled
 {
     color: #444 !important;
 }
@@ -306,7 +331,12 @@ body>div.to-top.on,
 .container a,
 .container .left-container .play-options,
 .twp-mask .twp-wrapper .twp-container .twp-text .twp-desc,
-.video-toolbar .appeal-text
+.video-toolbar .appeal-text,
+.date-input .date-panel .week,
+.bb-comment .bottom-page.center,
+.bui-button.bui-button-gray3,
+.dynamic-m .dyn_list_wrapper .dyn_list li.loading,
+.elec-message-wrp .elec-count-wrp
 {
     color: #aaa !important;
 }
@@ -428,7 +458,19 @@ body>div.to-top.on,
 .media-info .media-content .media-title a,
 .share-box .share-popup .share-address ul li input,
 .link-progress-tv,
-.card-timing-module .r-text .update a
+.card-timing-module .r-text .update a,
+.sch-pub-tips,
+.input-section .schedule-panel .dp-label,
+.input-section .schedule-panel .s-label,
+.input-section .schedule-panel .s-input,
+.input-section .schedule-panel .s-item,
+.date-input > input,
+.date-input .date-panel .ym,
+.date-input,
+.player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control-title,
+#page-playlist-wrap .breadcrumb .item,
+.act-card-wrap .act-card .type,
+.act-card-wrap .act-card .title
 {
     color: #eee !important;
 }
@@ -507,7 +549,15 @@ body>div.to-top.on,
 .play-options .play-options-more .play-options-content .play-option,
 .container .right-container .media-theme,
 .play-options .share-box,
-.share-box .share-popup .share-address ul li input
+.share-box .share-popup .share-address ul li input,
+.input-section,
+.input-section .schedule-panel .s-input,
+.input-section .schedule-panel .s-panel,
+.date-input > input,
+.date-input .date-panel,
+.bb-comment .hot-line,
+.bb-comment .bottom-page.center,
+.act-card-wrap .act-card .type
 {
     border-color: transparent !important;
 }
@@ -534,7 +584,9 @@ body>div.to-top.on,
 .leaveMsg .leaveMsgHeader,
 .medal-receive-title,
 .login-box .line,
-.open-dialog-masker .__dialog-header
+.open-dialog-masker .__dialog-header,
+.date-input .date-panel .ym,
+.act-card-wrap .act-card
 {
     border-color: #444 !important
 }
@@ -556,7 +608,7 @@ i.settings-category-arrow::after,
 {
     fill: #aaa !important;
 }
-svg.toast-card-dismiss path,
+.toast-card-dismiss path,
 .audioplayer .ap-play-button svg path
 {
     fill: #fff !important;
@@ -616,7 +668,9 @@ svg.toast-card-dismiss path,
 .small-item.new .new-icon,
 #article-list-index .title-holder .icon-close,
 #article-list-index .index-holder .article-item.on .point,
-.bui-radio-icon.bui-radio-icon-selected
+.bui-radio-icon.bui-radio-icon-selected,
+.vote-create-btn:hover,
+.vote-create-btn.active
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -683,10 +737,6 @@ body>div.to-top.on,
 {
     box-shadow: none !important;
 }
-#bilibiliPlayer
-{
-    box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
-}
 body>.player #bilibiliPlayer
 {
     box-shadow: none !important;
@@ -698,7 +748,8 @@ body>.player #bilibiliPlayer
 .publish-panel .hash-popup,
 #app .toolbar-wrapper,
 .article-action .ops .share-container .weixin-holder,
-#article-list-index
+#article-list-index,
+.sch-pub-tips
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -712,7 +763,8 @@ body>.player #bilibiliPlayer
 .more .link .icon,
 .filter-wrap .icon-tid2-arr,
 .user-info .user-info-desc .arrow-left,
-.side-bar-popup-cntr:after
+.side-bar-popup-cntr:after,
+.date-input > img
 {
     display: none !important;
 }
@@ -746,6 +798,19 @@ body>div.to-top.on
 #jfContent
 {
     filter: invert(1);
+}
+.input-section:focus-within
+{
+    outline: none !important;
+}
+.input-section .textarea
+{
+    border-radius: 4px !important;
+    border: 1px solid transparent !important;
+}
+.input-section .textarea:focus-within
+{
+    border: 1px solid var(--theme-color) !important;
 }
 .activity.topic-preview-wrapper .s-bottom
 {
@@ -783,7 +848,13 @@ body>div.to-top.on
 .bili-radio:checked+span::before,
 .rightMsg .msgDiv::before,
 #index-player-vm .item-border,
-.open-dialog-masker .open-body ul li i.icon-complete
+.open-dialog-masker .open-body ul li i.icon-complete,
+.input-section:focus,
+.arrow-down.active,
+.input-section .s-input:focus,
+.date-input > input.active
+.date-input > input:focus,
+.date-input .date-panel .day.active
 {
     border-color: var(--theme-color) !important;
 }
@@ -859,7 +930,8 @@ body>div.to-top.on
 .be-tags-container .tag.new-tag,
 .share-box .share-popup .share-address ul li .btn,
 .play-up-intro .play-up-follow .play-up-not-follow,
-.card-timing-module .r-text .update .published
+.card-timing-module .r-text .update .published,
+.sch-pub-btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -966,7 +1038,10 @@ body>div.to-top.on
 .play-options .share-box .share-btn ul .bili-share:hover,
 .comment-list a,
 .bilibili-player-context-menu-container.black ul>li a>.active,
-.video-toolbar .appeal-text:hover
+.video-toolbar .appeal-text:hover,
+.input-section .schedule-panel .s-item:hover,
+.date-input .date-panel .day.active,
+.bb-comment .more-link:hover
 {
     color: var(--theme-color) !important;
 }
@@ -1011,7 +1086,8 @@ body>div.to-top.on
 .be-tags-container .tag.new-tag,
 .share-box .share-popup .share-address ul li .btn,
 .play-up-intro .play-up-follow .play-up-not-follow,
-.card-timing-module .r-text .update .published
+.card-timing-module .r-text .update .published,
+.sch-pub-btn
 {
     color: var(--foreground-color) !important;
 }

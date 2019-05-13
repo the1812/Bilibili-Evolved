@@ -3,10 +3,17 @@ export function loadResources()
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
     Resource.all = {};
     Resource.displayNames = {};
-    // Resource.reloadables = {
-    //     useDarkStyle: "useDarkStyle",
-    //     showBanner: "overrideNavBar",
-    // };
+    Resource.reloadables = {
+        useDarkStyle: "useDarkStyle",
+        hideBanner: "hideBanner",
+        customNavbar: "customNavbar",
+        playerShadow: "playerShadow",
+        narrowDanmaku: "narrowDanmaku",
+        compactLayout: "compactLayout",
+        useCommentStyle: "useCommentStyle",
+        removeVideoTopMask: "removeVideoTopMask",
+        hideOldEntry: "hideOldEntry",
+    };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
         const resource = new Resource(data.path, data.styles);

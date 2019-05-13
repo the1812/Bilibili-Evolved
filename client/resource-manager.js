@@ -43,7 +43,7 @@ export class ResourceManager
         styles.push("--invert-filter:" + settings.filterInvert);
         styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
         styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
-        this.applyStyleFromText(`<style id="bilibili-evolved-variables">html{${styles.join(";")}}</style>`);
+        this.applyStyleFromText(`html{${styles.join(";")}}`, "bilibili-evolved-variables");
     }
     resolveComponentName(componentName)
     {
@@ -175,8 +175,51 @@ export class ResourceManager
         {
             loadingToast.dismiss();
         }
+        this.applyReloadables(); // reloadables run sync
         await this.applyDropdownOptions();
-        this.applyWidgets();
+        this.applyWidgets(); // No need to wait the widgets
+    }
+    applyReloadables()
+    {
+        const checkAttribute = (key, attributes) =>
+        {
+            if (attributes.reload && attributes.unload)
+            {
+                addSettingsListener(key, newValue =>
+                {
+                    if (newValue === true)
+                    {
+                        attributes.reload();
+                    }
+                    else
+                    {
+                        attributes.unload();
+                    }
+                });
+            }
+        };
+        for (const [key, targetKey] of Object.entries(Resource.reloadables))
+        {
+            const attributes = this.attributes[targetKey];
+            if (attributes === undefined)
+            {
+                const fetchListener = async newValue =>
+                {
+                    if (newValue === true)
+                    {
+                        await this.styleManager.fetchStyleByKey(targetKey);
+                        await this.fetchByKey(targetKey);
+                        removeSettingsListener(key, fetchListener);
+                        checkAttribute(key, this.attributes[targetKey]);
+                    }
+                };
+                addSettingsListener(key, fetchListener);
+            }
+            else
+            {
+                checkAttribute(key, attributes);
+            }
+        }
     }
     applyComponent(key, text)
     {
@@ -206,7 +249,7 @@ export class ResourceManager
         if (typeof info.condition === "function")
         {
             condition = info.condition();
-            if (condition instanceof Promise)
+            if (typeof condition === "object" && "then" in condition)
             {
                 condition = await condition.catch(() => { return false; });
             }
@@ -258,7 +301,7 @@ export class ResourceManager
         }
         const manifests = Object.values(Resource.manifest).filter(it => it.dropdown).map(it => it.dropdown);
         Object.values(Resource.all)
-            .concat(Object.values(this.attributes))
+            //.concat(Object.values(this.attributes))
             .filter(it => it.dropdown)
             .map(it => it.dropdown)
             .forEach(it =>
@@ -282,7 +325,8 @@ export class ResourceManager
         }
         if (settings.cache.version === undefined) // Has newly downloaded cache
         {
-            settings.cache.version = settings.currentVersion;
+            settings.cache = Object.assign(settings.cache, { version: settings.currentVersion });
+            // settings.cache.version = settings.currentVersion;
             saveSettings(settings);
             return true;
         }

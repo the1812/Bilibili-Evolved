@@ -6,7 +6,7 @@
 - [功能](#功能)
 - [兼容性](#兼容性)
 - [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
-- [捐赠入口](donate.md)
+- [投喂](donate.md)
 
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
@@ -22,7 +22,7 @@
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置.
 设置项的说明见[功能](#功能)一节.
 
-**设置保存后, 需要刷新网页才能生效.**
+**绝大部分设置保存后, 需要刷新网页才能生效. 仅有一些样式设置可以立即生效.**
 ![设置](images/compressed/gui-settings.jpg)
 
 # 功能
@@ -34,10 +34,12 @@
 在视频播放页面中, `下载视频`按钮将在`附加功能`中启用, 点击可以选择清晰度并下载.
 
 #### 注意事项
+- 请尊重视频原作者的版权.
 - 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换.
 - **分段**的视频会把所有视频打包成`.zip`格式.
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
-- 下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=当前视频网址`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
+- 下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=https://www.bilibili.com`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
+- 针对上一条, 也可以使用我另外编写的[下载器](extras/video-link-downloader/README.md)解决内存占用问题.
 - Chrome浏览器对单个文件大小有[限制](https://chromium.googlesource.com/chromium/src/+/master/storage/browser/blob/README.md#example-limits), 如果在下载完成时浏览器发生崩溃, 请尝试适当降低画质, 或换用没有限制的Firefox浏览器.
     - 64位限制: 2GB
     - 32位限制: 614MB
@@ -61,9 +63,9 @@
 
 ### 默认播放器模式
 设置默认的播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 可以选择在进入页面的首次播放时应用, 或者一进入页面就应用. 还可以设置是否自动关灯.
-
+<!--
 > ⚠ 自动全屏的稳定性还有待观测, 目前仅有一定概率成功. 如果它在您的电脑上没有效果, 那么请无视这个`全屏`选项吧.
-
+-->
 ### 默认视频画质
 进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.
 
@@ -97,11 +99,14 @@
 ### 外置稍后再看
 将视频页面菜单里的`稍后再看`移到外面.
 
+![外置稍后再看](images/compressed/watchlater.jpg)
+
 ## 样式
 ### 主题颜色
-设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(`#rrggbb`或`#rgb`).
+设定顶栏和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(`#rrggbb`或`#rgb`).
+
 ![颜色设置](images/compressed/theme-color.jpg)
-![粉色](images/compressed/new-navbar-stardust.jpg)
+<!-- ![粉色](images/compressed/new-navbar-stardust.jpg)
 ![紫色](images/compressed/new-navbar-purple.jpg)
 ![蓝色](images/compressed/new-navbar-lightBlue.jpg)
 ![绿色](images/compressed/new-navbar-teal.jpg)
@@ -118,7 +123,28 @@
 
 **顶栏效果**
 ![主站](images/compressed/new-navbar.jpg)
-![播放](images/compressed/new-navbar-stardust.jpg)
+![播放](images/compressed/new-navbar-stardust.jpg) -->
+### 自定义顶栏
+启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 直播/相簿/会员购等仍使用原来的顶栏.
+
+可用的选项包括:
+- 使用主题色填充顶栏
+- 使用主题色填充其他的顶栏, 包括直播/相簿/会员购等
+- 为顶栏添加一层阴影效果
+- 为顶栏使用更紧凑的布局, 紧凑布局将使用更小的间距, 以及在视频标题过长时用...省略后面的部分
+- 在顶部横幅存在时, 使用背景模糊效果
+- 改变顶栏边缘两侧的间距
+- 改变顶栏里栏目的顺序和显示状态
+
+前五个是整体的外观设置, 可以在设置里直接开关, 后面两个是对顶栏里面内容的详细布局设定, 可以在`附加功能`里设置.
+
+下图展示了顶栏在不同设置下的整体外观: (从上到下依次为: 不使用主题色填充, 不填充+夜间模式, 填充主题色, 使用不同的主题色)
+![效果图](images/compressed/custom-navbar-effects.jpg)
+
+顶栏内容的布局也可以自定义, 可以通过此功能移除顶栏里不需要的组件, 或排列它们的顺序:
+![顶栏顺序自定义](images/compressed/custom-navbar-orders.jpg)
+
+
 ### 夜间模式
 夜间模式更适合光线暗的环境, 并会大量应用主题颜色.
 
@@ -170,22 +196,27 @@
 
 ![简化直播间](images/compressed/simplify-liveroom.jpg)
 
-### 搜索栏置顶
+<!-- ### 搜索栏置顶
 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示. 仅对常用页面有效, 部分页面可能会有点布局错乱.
 
 **启用前**
 ![不调整](images/compressed/original-navbar.jpg)
 
 **启用后**
-![调整](images/compressed/override-navbar.jpg)
+![调整](images/compressed/override-navbar.jpg) -->
 
-#### 显示顶部横幅
-在搜索栏置顶启用的时候, 还可以使用此功能显示/隐藏顶部横幅.
-![不移除](images/compressed/override-navbar.jpg)
-![移除](images/compressed/no-banner.jpg)
+### 隐藏顶部横幅
+隐藏主站顶部的横幅, 注意这会导致搜索框也被隐藏, 除非开启了自定义顶栏.
+<!--
 #### 显示排行榜图标
 在搜索栏置顶启用的时候, 还可以使用此功能显示/隐藏排行榜入口.
-![排行榜图标](images/compressed/ranklist.jpg)
+![排行榜图标](images/compressed/ranklist.jpg) -->
+### 播放器投影
+为播放器添加主题色投影.
+
+### 强制保留弹幕发送栏
+在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
+
 ### 模糊视频控制栏背景
 模糊视频控制栏背景, 原版的阴影效果将无效.
 此功能需要浏览器支持背景模糊效果, 详情见[兼容性](#兼容性)一节.
@@ -209,9 +240,11 @@
 根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度, DPI缩放为100%的用户不需要此功能.
 ### 删除直播水印
 删除观看直播时角落的水印.
-### 删除视频覆盖层
-删除视频里鼠标经过时出现在右上角的覆盖层.
+### 删除视频标题层
+删除视频里鼠标经过时出现在右上角的标题层.
 ![覆盖层](images/compressed/remove-top-mask.jpg)
+### 隐藏返回旧版
+隐藏播放页右侧的`返回旧版`入口.
 
 ## 工具
 ### 删除广告
@@ -283,10 +316,8 @@
 
 # 兼容性
 ## 脚本管理器
-### [Tampermonkey](https://tampermonkey.net/)
+### [Tampermonkey](https://tampermonkey.net/) / [Violentmonkey](https://violentmonkey.github.io/)
 完全兼容.
-### [Violentmonkey](https://violentmonkey.github.io/)
-一些附加功能无法加载, 详见 [issue #90](https://github.com/the1812/Bilibili-Evolved/issues/90).
 ### [Greasemonkey](https://www.greasespot.net/)
 不支持, 请使用以上的两种管理器.
 
@@ -294,9 +325,9 @@
 > ⚠ 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)中完美运行.
 
 ### Chrome / Edge (Chromium)
-- 背景模糊效果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启.
+- 背景模糊效果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启. (Edge要把`chrome`换成`edge`)
 - 含有背景模糊效果的动画有掉帧现象.
-- 在Chrome 73版中, 如果您的屏幕DPI缩放大于100%, 或者改动了页面缩放倍数, 则模糊效果区域会错位. 详见[Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910).
+- 在Chrome ≥ 73版中, 如果您的屏幕DPI缩放大于100%, 或者改动了页面缩放倍数, 则模糊效果区域会错位. 详见[Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910).
 ### Firefox
 - 背景模糊效果无效, 详见[Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765).
 - 触摸调整的进度预览有弹跳现象.(源自CSS `transition`. 短时间内总是从原数值开始变化, 而不是当前数值)

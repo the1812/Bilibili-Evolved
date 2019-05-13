@@ -14,7 +14,7 @@ class ImageViewer
     }
     createContainer()
     {
-        $("body").append((resources.data.imageViewerDom || resources.data.imageViewerHtml).text);
+        $("body").append(resources.data.imageViewerHtml.text);
         $(".image-viewer-container .close").on("click", () => this.hide());
         resources.applyStyle("imageViewerStyle");
     }

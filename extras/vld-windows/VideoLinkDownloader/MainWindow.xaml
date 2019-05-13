@@ -1,0 +1,39 @@
+﻿<fw:AcrylicWindow
+  x:Class="VideoLinkDownloader.MainWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:local="clr-namespace:VideoLinkDownloader"
+  xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+  mc:Ignorable="d"
+  TintColor="#0fff"
+  FallbackColor="#0fff"
+  Foreground="Black"
+  NoiseOpacity="0.05"
+  Title="MainWindow"
+  ShowTitleBar="False"
+  Height="450"
+  Width="800">
+  <Grid
+    fw:PointerTracker.Enabled="True"
+    Background="#0000">
+    <Grid
+      x:Name="grid">
+      <TextBlock
+        Margin="10"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Text="This is AcrylicWindow"
+        TextWrapping="Wrap" />
+      <Button
+        x:Name="button"
+        Content="Button"
+        HorizontalAlignment="Left"
+        Margin="5"
+        Width="75"
+        Height="32"
+        Style="{StaticResource ButtonRevealStyle}" />
+    </Grid>
+  </Grid>
+</fw:AcrylicWindow>

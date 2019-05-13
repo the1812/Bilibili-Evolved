@@ -1,0 +1,40 @@
+{
+  "name": "bilibili-evolved-video-link-downloader",
+  "version": "1.7.28.2",
+  "description": "Bilibili Evolved 视频链接下载器",
+  "main": "video-link-downloader.js",
+  "bin": {
+    "vld": "video-link-downloader.js"
+  },
+  "dependencies": {
+    "clipboardy": "^2.0.0",
+    "colors": "^1.3.3",
+    "command-line-args": "^5.1.1",
+    "progress": "^2.0.3",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "@types/progress": "^2.0.3",
+    "@types/request": "^2.48.1",
+    "@types/command-line-args": "^5.0.0",
+    "@types/node": "^11.13.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/the1812/Bilibili-Evolved.git"
+  },
+  "keywords": [
+    "bilibili",
+    "video",
+    "downloader"
+  ],
+  "author": "Grant Howard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/the1812/Bilibili-Evolved/issues"
+  },
+  "homepage": "https://github.com/the1812/Bilibili-Evolved/"
+}

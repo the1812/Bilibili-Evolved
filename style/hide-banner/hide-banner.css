@@ -1,5 +1,6 @@
 #banner_link,
-.z-top-container.has-banner>.header
+.z-top-container.has-banner>.header,
+.custom-navbar .blur-layer
 {
     display: none !important;
 }

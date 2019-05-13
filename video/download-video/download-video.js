@@ -5,6 +5,7 @@ const pageData = {
     aid: undefined,
     cid: undefined,
 };
+let selectedFormat = null;
 class Video
 {
     constructor()
@@ -255,6 +256,30 @@ class VideoDownloader
         const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + "\r\n" + it);
         GM_setClipboard(urls, "text");
     }
+    exportData(copy = false)
+    {
+        const data = JSON.stringify({
+            fragments: this.fragments,
+            title: getFriendlyTitle(true),
+            totalSize: this.fragments.map(it => it.size).reduce((acc, it) => acc + it),
+        });
+        if (copy)
+        {
+            GM_setClipboard(data, "text");
+        }
+        else
+        {
+            const a = document.createElement("a");
+            const blob = new Blob([data], { type: "text/json" });
+            const url = URL.createObjectURL(blob);
+            a.setAttribute("href", url);
+            a.setAttribute("download", `cid${unsafeWindow.cid}.json`);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+    }
     extension(fragment)
     {
         return (fragment || this.fragments[0]).url
@@ -339,6 +364,59 @@ class VideoDownloader
         };
     }
 }
+async function checkBatch()
+{
+    const urls = [
+        "/www.bilibili.com/bangumi",
+    ];
+    if (urls.some(url => document.URL.includes(url)))
+    {
+        const { BatchExtractor } = await import("batchDownload");
+        const extractor = new BatchExtractor();
+        document.getElementById("download-video").classList.add("batch");
+        document.getElementById("video-action-batch-data").addEventListener("click", async () =>
+        {
+            if (!selectedFormat)
+            {
+                return;
+            }
+            pageData.entity.resetMenuClass();
+            const toast = Toast.info("获取链接中...", "批量下载");
+            const data = await extractor.collectData(selectedFormat, toast);
+            if (!data)
+            {
+                return;
+            }
+            GM_setClipboard(data, { type: "text/json" });
+            Toast.success("已复制批量数据到剪贴板.", "复制批量数据", 3000);
+        });
+        document.getElementById("video-action-batch-download-data").addEventListener("click", async () =>
+        {
+            if (!selectedFormat)
+            {
+                return;
+            }
+            pageData.entity.resetMenuClass();
+            const toast = Toast.info("获取链接中...", "批量下载");
+            const data = await extractor.collectData(selectedFormat, toast);
+            if (!data)
+            {
+                return;
+            }
+
+            const a = document.createElement("a");
+            const blob = new Blob([data], { type: "text/json" });
+            const url = URL.createObjectURL(blob);
+            a.setAttribute("href", url);
+            a.setAttribute("download", `export.json`);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+
+        });
+    }
+}
 async function loadPageData()
 {
     const aid = await SpinQuery.select(() => (unsafeWindow || window).aid);
@@ -358,7 +436,7 @@ async function loadPageData()
 async function loadWidget()
 {
     let formats = await VideoFormat.availableFormats;
-    let [selectedFormat] = formats;
+    selectedFormat = formats[0];
     const loadQualities = async () =>
     {
         await loadPageData();
@@ -431,8 +509,29 @@ async function loadWidget()
         Toast.success("已复制链接到剪贴板.", "复制链接", 3000);
         pageData.entity.resetMenuClass();
     }
-    $(".video-action>#video-action-download").on("click", download);
-    $(".video-action>#video-action-copy").on("click", copyLink);
+    document.querySelector("#video-action-download").addEventListener("click", download);
+    document.querySelector("#video-action-copy").addEventListener("click", copyLink);
+    document.querySelector("#video-action-copy-data").addEventListener("click", async () =>
+    {
+        if (!selectedFormat)
+        {
+            return;
+        }
+        const info = await getVideoInfo();
+        info.exportData(true);
+        Toast.success("已复制数据到剪贴板.", "复制数据", 3000);
+        pageData.entity.resetMenuClass();
+    });
+    document.querySelector("#video-action-download-data").addEventListener("click", async () =>
+    {
+        if (!selectedFormat)
+        {
+            return;
+        }
+        const info = await getVideoInfo();
+        info.exportData(false);
+        pageData.entity.resetMenuClass();
+    });
     resources.applyStyle("downloadVideoStyle");
     const downloadPanel = document.querySelector(".download-video-panel");
     const togglePopup = () => $(".download-video-panel").toggleClass("opened");
@@ -450,11 +549,12 @@ async function loadWidget()
     });
     await SpinQuery.select(() => document.querySelector(".download-video-panel"));
     pageData.entity.addMenuClass();
+    checkBatch();
 }
 export default {
     widget:
     {
-        content: (resources.data.downloadVideoDom || resources.data.downloadVideoHtml).text,
+        content: resources.data.downloadVideoHtml.text,
         condition: loadPageData,
         success: loadWidget,
     },

@@ -62,7 +62,7 @@ namespace BilibiliEvolved.Build
                 }
                 else
                 {
-                    offlineData = offlineData + $"offlineData[\"{onlineRoot + url}\"] = `{text}`;" + Environment.NewLine;
+                    offlineData = offlineData + $"offlineData[\"{onlineRoot + url}\"] = `{text.Replace("\\", "\\\\")}`;" + Environment.NewLine;
                 }
             }
             offlineText = offlineText

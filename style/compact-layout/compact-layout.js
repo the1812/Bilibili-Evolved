@@ -4,5 +4,17 @@ const suitableSites = [
 ];
 if (suitableSites.indexOf(location.href.replace(location.search, '')) !== -1)
 {
-    document.documentElement.classList.add("compact");
+    document.body.classList.add("compact");
+}
+export default {
+    reload: () =>
+    {
+        document.body.classList.add("compact");
+        resources.applyImportantStyle("compactLayoutStyle");
+    },
+    unload: () =>
+    {
+        document.body.classList.remove("compact");
+        resources.removeStyle("compactLayoutStyle");
+    }
 }

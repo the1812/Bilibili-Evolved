@@ -55,6 +55,30 @@ declare global
         isIncognito: boolean;
         version: string;
     }
+    interface CustomNavbarComponents
+    {
+        blank1: number;
+        logo: number;
+        category: number;
+        rankingLink: number;
+        drawingLink: number;
+        musicLink: number;
+        gamesIframe: number;
+        livesIframe: number;
+        shopLink: number;
+        mangaLink: number;
+        blank2: number;
+        search: number;
+        userInfo: number;
+        messages: number;
+        activities: number;
+        watchlaterList: number;
+        favoritesList: number;
+        historyList: number;
+        upload: number;
+        blank3: number;
+    }
+    type CustomNavbarOrders = { [key in keyof CustomNavbarComponents]: number };
     const GM_info: MonkeyInfo;
     const unsafeWindow: Window;
     class SpinQuery
@@ -107,8 +131,8 @@ declare global
         applyStyle(key: string, id?: string): void;
         removeStyle(key: string): void;
         applyImportantStyle(key: string, id?: string): void;
-        applyStyleFromText(text: string): void;
-        applyImportantStyleFromText(text: string): void;
+        applyStyleFromText(text: string, id: string): void;
+        applyImportantStyleFromText(text: string, id: string): void;
         getStyle(key: string, id?: string): void;
     }
     const resources: ResourceManager;
@@ -150,7 +174,7 @@ declare global
         useDarkStyle: boolean,
         useNewStyle: boolean,
         compactLayout: boolean,
-        showBanner: boolean,
+        hideBanner: boolean,
         overrideNavBar: boolean,
         expandDanmakuList: boolean,
         expandDescription: boolean,
@@ -223,26 +247,39 @@ declare global
             skin: boolean,
         },
         customNavbar: boolean,
-        customNavbarSettings: {
-            fill: boolean,
-            shadow: boolean,
-        },
+        customNavbarFill: boolean,
+        allNavbarFill: boolean,
+        customNavbarShadow: boolean,
+        customNavbarCompact: boolean,
+        customNavbarBlur: boolean,
+        customNavbarOrder: CustomNavbarOrders,
+        customNavbarHidden: Array<keyof CustomNavbarComponents>,
+        customNavbarBoundsPadding: number,
+        playerShadow: boolean,
+        narrowDanmaku: boolean,
         favoritesRedirect: boolean,
         outerWatchlater: boolean,
+        hideOldEntry: boolean,
         cache: {} | { version: string } | undefined,
         latestVersionLink: string,
         currentVersion: string,
     }
     const settings: BilibiliEvolvedSettings;
+    const customNavbarDefaultOrders: CustomNavbarOrders;
+    const languageNameToCode: { [key: string]: string };
+    const languageCodeToName: { [key: string]: string };
     function logError(message: Error | string): void;
     function loadSettings(): void
     function saveSettings(newSettings: BilibiliEvolvedSettings): void;
+    function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void;
+    function removeSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void;
     function onSettingsChange(change: (key: string, oldValue: any, newValue: any) => void): void;
     function downloadText(url: string, load: (text: string) => void, error: (text: string) => void): void;
     function downloadText(url: string): Promise<string>;
     function raiseEvent(element: Element, eventName: string): void;
     function loadLazyPanel(selector: string): Promise<void>;
     function contentLoaded(callback: () => void): void;
+    function fullyLoaded(callback: () => void): void;
     function fixed(number: number, precision?: number): string;
     function isEmbeddedPlayer(): boolean;
     function isIframe(): boolean;

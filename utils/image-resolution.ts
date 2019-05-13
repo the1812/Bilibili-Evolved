@@ -63,24 +63,36 @@ export async function imageResolution(element: HTMLElement)
         replaceSource(e => e.style.backgroundImage, (e, v) => e.style.backgroundImage = v);
     });
 }
-walk(document.body, it => imageResolution(it));
-Observer.childListSubtree(document.body, records =>
+const startResolution = async () =>
 {
-    for (const record of records)
+    walk(document.body, it => imageResolution(it));
+    Observer.childListSubtree(document.body, records =>
     {
-        for (const node of record.addedNodes)
+        for (const record of records)
         {
-            if (node instanceof HTMLElement)
+            for (const node of record.addedNodes)
             {
-                imageResolution(node);
-                if (node.nodeName.toUpperCase() !== "IMG")
+                if (node instanceof HTMLElement)
                 {
-                    walk(node, it => imageResolution(it));
+                    imageResolution(node);
+                    if (node.nodeName.toUpperCase() !== "IMG")
+                    {
+                        walk(node, it => imageResolution(it));
+                    }
                 }
             }
         }
-    }
-});
+    });
+};
+startResolution();
+// if (document.readyState === "complete")
+// {
+//     startResolution();
+// }
+// else
+// {
+//     unsafeWindow.addEventListener('load', () => startResolution());
+// }
 export default {
     export: { imageResolution }
 };

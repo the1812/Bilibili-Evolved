@@ -30,13 +30,33 @@ export class StyleManager
         }
         Resource.all[key].applyStyle(id, true);
     }
-    applyStyleFromText(text)
+    applyStyleFromText(text, id)
     {
-        document.head.insertAdjacentHTML("afterbegin", text);
+        if (!id)
+        {
+            document.head.insertAdjacentHTML("afterbegin", text);
+        }
+        else
+        {
+            const style = document.createElement("style");
+            style.id = id;
+            style.innerText = text;
+            document.head.insertAdjacentElement("afterbegin", style);
+        }
     }
-    applyImportantStyleFromText(text)
+    applyImportantStyleFromText(text, id)
     {
-        document.body.insertAdjacentHTML("beforeend", text);
+        if (!id)
+        {
+            document.body.insertAdjacentHTML("beforeend", text);
+        }
+        else
+        {
+            const style = document.createElement("style");
+            style.id = id;
+            style.innerText = text;
+            document.body.insertAdjacentElement("beforeend", style);
+        }
     }
     getStyle(key, id)
     {

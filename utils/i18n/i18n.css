@@ -15,7 +15,12 @@
 .media-info .media-right .media-tool-bar .btn-follow,
 .article-action .ops .coin-btn,
 .article-action .ops .fav-btn,
-.article-action .ops .like-btn
+.article-action .ops .like-btn,
+.security-right .mp-mine-takedown,
+.user-list .up-item .attention-btn.followed,
+.user-list .up-item .attention-btn.followed:hover,
+.info-line .status-no-attend,
+.bb-comment .comment-list .list-item .info .operation .opera-list
 {
     width: auto !important;
 }
@@ -93,6 +98,10 @@
 {
     padding-top: 15px !important;
 }
+.player-auxiliary-area .player-auxiliary-filter-menu
+{
+    margin: 0 !important;
+}
 .dashboard li.collection
 {
     margin: 0 10px 0 0px !important;
@@ -127,7 +136,6 @@
 {
     align-items: center !important;
 }
-.user-panel-ctnr .user-panel .content-ctnr .section-block,
 .dashboard li.collection>div:first-child
 {
     display: flex !important;

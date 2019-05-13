@@ -87,7 +87,9 @@ export class Resource
                                     }
                                     if (typeof offlineData === "undefined")
                                     {
-                                        settings.cache[key] = this.text;
+                                        settings.cache = Object.assign(settings.cache, {
+                                            [key]: this.text
+                                        });
                                         saveSettings(settings);
                                     }
                                 }
@@ -115,12 +117,16 @@ export class Resource
         {
             logError("Attempt to get style which is not downloaded.");
         }
-        let attributes = `id='${id}'`;
+        // let attributes = `id='${id}'`;
         // if (this.priority !== undefined)
         // {
         //     attributes += ` priority='${this.priority}'`;
         // }
-        return `<style ${attributes}>${style}</style>`;
+        // return `<style ${attributes}>${style}</style>`;
+        const styleElement = document.createElement("style");
+        styleElement.id = id;
+        styleElement.innerText = style;
+        return styleElement;
     }
     getPriorStyle()
     {
@@ -170,11 +176,11 @@ export class Resource
             // }
             if (important)
             {
-                document.body.insertAdjacentHTML("beforeend", style);
+                document.body.insertAdjacentElement("beforeend", style);
             }
             else
             {
-                document.head.insertAdjacentHTML("afterbegin", style);
+                document.head.insertAdjacentElement("afterbegin", style);
             }
         }
     }
