@@ -225,19 +225,19 @@ function checkCompatibility()
         settings.imageResolution = false;
         saveSettings(settings);
     }
-    if (settings.defaultPlayerLayout === "旧版")
-    {
-        const navbarOption = inputs.find(it => it.getAttribute("key") === "overrideNavBar");
-        navbarOption.disabled = true;
-        raiseEvent(navbarOption, "change");
-        if (settings.overrideNavBar)
-        {
-            navbarOption.checked = false;
-            raiseEvent(navbarOption, "change");
-            settings.overrideNavBar = false;
-            saveSettings(settings);
-        }
-    }
+    // if (settings.defaultPlayerLayout === "旧版")
+    // {
+    //     const navbarOption = inputs.find(it => it.getAttribute("key") === "overrideNavBar");
+    //     navbarOption.disabled = true;
+    //     raiseEvent(navbarOption, "change");
+    //     if (settings.overrideNavBar)
+    //     {
+    //         navbarOption.checked = false;
+    //         raiseEvent(navbarOption, "change");
+    //         settings.overrideNavBar = false;
+    //         saveSettings(settings);
+    //     }
+    // }
 }
 function setDisplayNames()
 {
