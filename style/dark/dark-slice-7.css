@@ -517,7 +517,8 @@
 .security-right-bottom .face-nav>.active:after,
 .pendant-main .unit-price li.active,
 .pendant-pay-close,
-.feedback-mask .content .feedback-body input[type=radio]:checked+.radio-icon
+.feedback-mask .content .feedback-body input[type=radio]:checked+.radio-icon,
+.bui-radio .bui-radio-normal .bui-radio-item:hover .bui-radio-icon svg
 {
     filter: var(--blue-image-filter) !important;
 }
