@@ -22,7 +22,8 @@
 .info-line .status-no-attend,
 .bb-comment .comment-list .list-item .info .operation .opera-list,
 .player-auxiliary-area .player-auxiliary-setting-menu-wrap,
-.bilibili-player-video-sendbar .bilibili-player-video-hint
+.bilibili-player-video-sendbar .bilibili-player-video-hint,
+.bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku
 {
     width: auto !important;
 }
@@ -89,7 +90,8 @@
 .article-action .ops .coin-btn,
 .article-action .ops .fav-btn,
 .article-action .ops .like-btn,
-.player-auxiliary-area .player-auxiliary-setting-menu-list
+.player-auxiliary-area .player-auxiliary-setting-menu-list,
+.bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku
 {
     padding: 0 8px !important;
 }
