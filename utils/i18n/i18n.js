@@ -128,8 +128,16 @@ const startTranslate = async () => {
             else if (it.type === "characterData") {
                 Translator.textNode.translate(it.target);
             }
+            else if (it.type === "attributes") {
+                if (it.attributeName === "title") {
+                    Translator.title.translate(it.target);
+                }
+                else if (it.attributeName === "placeholder") {
+                    Translator.placeholder.translate(it.target);
+                }
+            }
         });
-    }, { characterData: true, childList: true, subtree: true });
+    }, { characterData: true, childList: true, subtree: true, attributes: true });
 };
 startTranslate();
 // if (document.readyState === "complete")

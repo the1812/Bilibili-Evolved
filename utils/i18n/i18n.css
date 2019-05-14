@@ -20,7 +20,9 @@
 .user-list .up-item .attention-btn.followed,
 .user-list .up-item .attention-btn.followed:hover,
 .info-line .status-no-attend,
-.bb-comment .comment-list .list-item .info .operation .opera-list
+.bb-comment .comment-list .list-item .info .operation .opera-list,
+.player-auxiliary-area .player-auxiliary-setting-menu-wrap,
+.bilibili-player-video-sendbar .bilibili-player-video-hint
 {
     width: auto !important;
 }
@@ -71,6 +73,10 @@
 {
     white-space: pre !important;
 }
+.player-auxiliary-area .player-auxiliary-setting-menu-list
+{
+    white-space: nowrap !important;
+}
 
 .up-info .up-focus-btn,
 .textarea-container .comm-tool .comm-emoji,
@@ -82,7 +88,8 @@
 .media-info .media-right .media-tool-bar .btn-follow,
 .article-action .ops .coin-btn,
 .article-action .ops .fav-btn,
-.article-action .ops .like-btn
+.article-action .ops .like-btn,
+.player-auxiliary-area .player-auxiliary-setting-menu-list
 {
     padding: 0 8px !important;
 }
@@ -101,6 +108,8 @@
 .player-auxiliary-area .player-auxiliary-filter-menu
 {
     margin: 0 !important;
+    position: relative !important;
+    left: 0 !important;
 }
 .dashboard li.collection
 {
@@ -117,7 +126,9 @@
 
 .dynamic-m .dyn_menu .line,
 .tab-bar .line,
-.nav-wrap .hover-bar
+.nav-wrap .hover-bar,
+.mode-webfullscreen .bilibili-player-video-sendbar .bilibili-player-video-hint,
+.mode-fullscreen .bilibili-player-video-sendbar .bilibili-player-video-hint
 {
     display: none !important;
 }
@@ -170,4 +181,9 @@
 .gui-settings-tooltip
 {
     left: 470px !important;
+}
+
+html[lang='ja-JP'] .player-auxiliary-area .danmaku-info-row-block::after
+{
+    content: "シールドしました" !important;
 }
