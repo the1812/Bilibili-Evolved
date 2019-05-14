@@ -966,7 +966,8 @@ body.all-navbar-fill .link-navbar .main-ctnr .nav-logo,
 body.all-navbar-fill .shortcuts-ctnr .shortcut-item,
 body.all-navbar-fill .my-link-btn,
 body.all-navbar-fill .link-navbar .main-ctnr .nav-switcher i,
-body.all-navbar-fill .link-navbar .main-ctnr .nav-switcher i:hover
+body.all-navbar-fill .link-navbar .main-ctnr .nav-switcher i:hover,
+body.all-navbar-fill .link-navbar.black .my-link-btn .label
 {
     color: var(--foreground-color-d) !important;
 }
