@@ -185,5 +185,5 @@
 
 html[lang='ja-JP'] .player-auxiliary-area .danmaku-info-row-block::after
 {
-    content: "シールドしました" !important;
+    content: "ブロック" !important;
 }
