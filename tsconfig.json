@@ -6,7 +6,8 @@
         "strictNullChecks": true,
         "sourceMap": false,
         "typeRoots": [
-            "./@types"
+            "./@types",
+            "./node_modules/vue/types"
         ]
     },
     "include": [
