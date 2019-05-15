@@ -20,6 +20,11 @@ class ImageViewer
     }
     downloadImage()
     {
+        document.querySelector("#view-cover").style.display = this.url ? "flex" : "none";
+        if (this.url === "")
+        {
+            return;
+        }
         const xhr = new XMLHttpRequest();
         xhr.open("GET", this.url.replace("http:", "https:"), true);
         xhr.responseType = "blob";
@@ -78,9 +83,16 @@ export default (() =>
                     {
                         const aid = (unsafeWindow || window).aid;
                         const videoInfo = new VideoInfo(aid);
-                        await videoInfo.fetchInfo();
+                        try
+                        {
+                            await videoInfo.fetchInfo();
+                        }
+                        catch (error)
+                        {
+                            return "";
+                        }
                         return videoInfo.coverUrl;
-                    }
+                    };
                     let imageViewer = new ImageViewer(await getUrl());
                     $("#view-cover").on("click", () =>
                     {

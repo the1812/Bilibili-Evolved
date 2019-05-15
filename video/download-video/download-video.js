@@ -5,6 +5,7 @@ const pageData = {
     aid: undefined,
     cid: undefined,
 };
+let formats = [];
 let selectedFormat = null;
 class Video
 {
@@ -98,6 +99,7 @@ class VideoFormat
                     if (json.code !== 0)
                     {
                         reject("获取清晰度信息失败.");
+                        return;
                     }
                     const data = json.data || json.result || json;
                     const qualities = data.accept_quality;
@@ -431,35 +433,44 @@ async function loadPageData()
     {
         pageData.entity = new Video();
     }
+    try
+    {
+        formats = await VideoFormat.availableFormats;
+    }
+    catch (error)
+    {
+        return false;
+    }
     return Boolean(aid && cid);
 }
 async function loadWidget()
 {
-    let formats = await VideoFormat.availableFormats;
     selectedFormat = formats[0];
     const loadQualities = async () =>
     {
-        await loadPageData();
-        formats = await VideoFormat.availableFormats;
-        const list = $("ol.video-quality");
-        list.html("");
+        const canDownload = await loadPageData();
+        document.querySelector("#download-video").style.display = canDownload ? "flex" : "none";
+        if (canDownload === false)
+        {
+            return;
+        }
+        // formats = await VideoFormat.availableFormats;
+
+        const list = document.querySelector("ol.video-quality");
+        list.childNodes.forEach(list.removeChild);
         formats.forEach(format =>
         {
-            $(`<li>${format.displayName}</li>`)
-                .on("click", () =>
-                {
-                    selectedFormat = format;
-                    pageData.entity.nextMenuClass();
-                })
-                .prependTo(list);
+            const item = document.createElement("li");
+            item.innerHTML = format.displayName;
+            item.addEventListener("click", () =>
+            {
+                selectedFormat = format;
+                pageData.entity.nextMenuClass();
+            });
+            list.insertAdjacentElement("afterbegin", item);
         });
     };
-    if (Observer.videoChange)
-    {
-        Observer.videoChange(loadQualities);
-    }
-    else
-    { Observer.childList("#bofqi", loadQualities); }
+    Observer.videoChange(loadQualities);
     const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
     {
         pageData.entity.addError();
@@ -535,19 +546,19 @@ async function loadWidget()
     resources.applyStyle("downloadVideoStyle");
     const downloadPanel = document.querySelector(".download-video-panel");
     const togglePopup = () => $(".download-video-panel").toggleClass("opened");
-    $("#download-video").on("click", e =>
+    document.querySelector("#download-video").addEventListener("click", e =>
     {
         if (!downloadPanel.contains(e.target))
         {
             togglePopup();
         }
     });
-    $(".video-error").on("click", () =>
+    document.querySelector(".video-error").addEventListener("click", () =>
     {
-        $(".video-error").text("");
+        document.querySelector(".video-error").innerHTML = "";
         pageData.entity.removeError();
     });
-    await SpinQuery.select(() => document.querySelector(".download-video-panel"));
+    await SpinQuery.select(".download-video-panel");
     pageData.entity.addMenuClass();
     checkBatch();
 }
