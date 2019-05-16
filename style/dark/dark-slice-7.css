@@ -566,7 +566,8 @@
 .read-list-page .module-box,
 .m-layer.m-button,
 .m_layer.m-button,
-.face-g-list#my-g-list .face-g-block .my-mp-block:hover
+.face-g-list#my-g-list .face-g-block .my-mp-block:hover,
+#app-ctnr .demo-app .category
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }

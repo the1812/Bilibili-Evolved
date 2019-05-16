@@ -27,7 +27,8 @@
 {
     width: auto !important;
 }
-.bb-comment .comment-send .comment-emoji
+.bb-comment .comment-send .comment-emoji,
+#app-ctnr .demo-app .category
 {
     width: max-content !important;
 }
