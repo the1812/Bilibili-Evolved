@@ -247,7 +247,8 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-header,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-info-other,
 .article-list-holder-block .article-list-name,
-.abnormal-module .abnormal-item .txt
+.abnormal-module .abnormal-item .txt,
+#navigator .v-switcher-header-item a span
 {
     color: #aaa !important;
 }
@@ -354,7 +355,8 @@
 .feedback-mask .content .feedback-body .dl-item .dt-item,
 .feedback-mask .content .feedback-body .feedback-submit,
 .feedback-mask .content .feedback-body .feedback-submit.active,
-.abnormal-module .abnormal-item .btn-back
+.abnormal-module .abnormal-item .btn-back,
+#navigator .v-switcher-header-item a
 {
     color: #eee !important;
 }
@@ -441,7 +443,8 @@
 .info-wrap .feedback-mask .content .headline,
 .main-ctnr .qualify-drawer .draw-list,
 .main-ctnr .qualify-drawer .drawer-pop:after,
-.ssr-content .link-tag.activity:active
+.ssr-content .link-tag.activity:active,
+#navigator .v-switcher-header-item
 {
     border-color: transparent !important;
 }
@@ -563,7 +566,8 @@
 .read-list-page .module-box,
 .m-layer.m-button,
 .m_layer.m-button,
-.face-g-list#my-g-list .face-g-block .my-mp-block:hover
+.face-g-list#my-g-list .face-g-block .my-mp-block:hover,
+#app-ctnr .demo-app .category
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -648,7 +652,8 @@
 .feedback-mask .content .feedback-body .feedback-submit.active,
 .abnormal-module .abnormal-item .btn-back:hover,
 .ssr-content .link-tag.activity:hover,
-.ssr-content .link-tag.activity:active
+.ssr-content .link-tag.activity:active,
+#navigator .v-switcher-header-anchor
 {
     background-color: var(--theme-color) !important;
 }
@@ -719,7 +724,8 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-random:hover,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse:hover,
 .cntr .sort-cntr .href-all:hover i,
-.cntr .sort-cntr .href-all:hover
+.cntr .sort-cntr .href-all:hover,
+#navigator .v-switcher-header-item a:hover
 {
     color: var(--theme-color) !important;
 }
