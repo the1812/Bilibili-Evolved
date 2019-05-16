@@ -63,13 +63,15 @@ export class Translator {
             Translator.textNode.translate(rootElement);
             return;
         }
-        Translator.walk(rootElement, node => {
+        const translateNode = (node) => {
             for (const translator of Translator.allTranslators) {
                 if (translator.accepts(node)) {
                     translator.translate(node);
                 }
             }
-        });
+        };
+        translateNode(rootElement);
+        Translator.walk(rootElement, translateNode);
     }
     static translateCssMatches() {
         const selectors = Translator.map.get("*");

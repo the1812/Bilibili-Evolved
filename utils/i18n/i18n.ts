@@ -88,7 +88,7 @@ export class Translator
             Translator.textNode.translate(rootElement);
             return;
         }
-        Translator.walk(rootElement, node =>
+        const translateNode = (node: Node) =>
         {
             for (const translator of Translator.allTranslators)
             {
@@ -97,7 +97,9 @@ export class Translator
                     translator.translate(node);
                 }
             }
-        });
+        };
+        translateNode(rootElement);
+        Translator.walk(rootElement, translateNode);
     }
     static translateCssMatches()
     {
