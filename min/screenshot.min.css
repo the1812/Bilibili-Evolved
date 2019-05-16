@@ -1,0 +1,1 @@
+.video-take-screenshot{padding-left:12px;height:100%;cursor:pointer}.video-take-screenshot span{display:flex;align-items:center;justify-content:center;height:100%;width:100%}.video-take-screenshot i{font-size:20px;color:#fff;transform:scale(1);opacity:.9;transition:.4s cubic-bezier(.18,.89,.32,1.28)}.video-take-screenshot:hover i{transform:scale(1.1);opacity:1}

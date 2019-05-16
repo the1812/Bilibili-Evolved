@@ -228,6 +228,7 @@ const settings = {
     favoritesRedirect: true,
     outerWatchlater: true,
     hideOldEntry: true,
+    videoScreenshot: false,
     cache: {},
 };
 const fixedSettings = {
@@ -1847,6 +1848,13 @@ Resource.manifest = {
         path: "debounce.min.js",
         displayNames: {
             slip: "debounce.js"
+        },
+    },
+    videoScreenshot: {
+        path: "screenshot.min.js",
+        style: true,
+        displayNames: {
+            videoScreenshot: "启用视频截图",
         },
     },
 };

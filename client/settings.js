@@ -109,6 +109,7 @@ export const settings = {
     favoritesRedirect: true,
     outerWatchlater: true,
     hideOldEntry: true,
+    videoScreenshot: false,
     cache: {},
 };
 const fixedSettings = {

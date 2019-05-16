@@ -603,5 +603,12 @@ Resource.manifest = {
             slip: "debounce.js"
         },
     },
+    videoScreenshot: {
+        path: "screenshot.min.js",
+        style: true,
+        displayNames: {
+            videoScreenshot: "启用视频截图",
+        },
+    },
 };
 export const resourceManifest = Resource.manifest;

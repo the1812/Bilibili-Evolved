@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      303.93
+// @version      304.09
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -229,6 +229,7 @@ const settings = {
     favoritesRedirect: true,
     outerWatchlater: true,
     hideOldEntry: true,
+    videoScreenshot: false,
     cache: {},
 };
 const fixedSettings = {
@@ -1094,6 +1095,8 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-promotions.min.js"] = (()=>{return(e,n)=>{SpinQuery.any(()=>document.querySelectorAll(".gg-pic"),e=>{e.forEach(e=>{const n=e.parentElement;n.style.display="none";const t=[...n.parentElement.childNodes].indexOf(n)+1;const l=n.parentElement.parentElement.querySelector(`.pic li:nth-child(${t})`);if(l){l.style.visibility="hidden"}})})}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-top-mask.min.js"] = (()=>{return(e,t)=>{const o=`.bilibili-player-video-top { display: none !important; }`;const n="remove-top-mask-style";const l=()=>t.applyStyleFromText(`<style id="${n}">${o}</style>`);const r=()=>{const e=document.getElementById(n);if(e){e.remove()}};l();return{reload:l,unload:r}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/remove-watermark.min.js"] = (()=>{return(i,l)=>{const n="bilibili-live-watermark";if($(`#${n}`).length===0){l.applyStyleFromText(`\n        <style id='${n}'>\n            .bilibili-live-player-video-logo\n            {\n                display: none !important;\n            }\n        </style>\n        `)}}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/screenshot.min.css"] = `.video-take-screenshot{padding-left:12px;height:100%;cursor:pointer}.video-take-screenshot span{display:flex;align-items:center;justify-content:center;height:100%;width:100%}.video-take-screenshot i{font-size:20px;color:#fff;transform:scale(1);opacity:.9;transition:.4s cubic-bezier(.18,.89,.32,1.28)}.video-take-screenshot:hover i{transform:scale(1.1);opacity:1}`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/screenshot.min.js"] = (()=>{return(e,t)=>{let n=null;let s=null;const o=e=>{if(n===null||s===null){n=document.createElement("canvas");n.width=e.videoWidth;n.height=e.videoHeight;s=n.getContext("2d")}return new Promise((t,o)=>{if(n===null||s===null){o("视频截图失败: canvas 未创建或创建失败.");return}s.drawImage(e,0,0);n.toBlob(e=>{if(e===null){o("视频截图失败: 创建 blob 失败.");return}t(e)},"image/png")})};t.applyStyle("videoScreenshotStyle");document.body.insertAdjacentHTML("beforeend",`\n    <div class="video-screenshot-list">\n        <video-screenshot v-for="screenshot of screenshots" v-bind:blob="screenshot"></video-screenshot>\n    </div>\n`);Vue.component("video-screenshot",{data(){return{objectUrl:""}},props:{blob:Blob},methods:{created(){this.objectUrl=URL.createObjectURL(this.blob)}},template:`<div class="video-screenshot-thumbnail">\n        <img v-bind:src="objectUrl">\n    </div>`});const i=new Vue({el:".video-screenshot-list",data:{screenshots:[]}});Observer.videoChange(async()=>{const e=await SpinQuery.select("#bofqi video");const t=await SpinQuery.select(".bilibili-player-video-time");if(e===null||t===null||document.querySelector(".video-take-screenshot")){return}t.insertAdjacentHTML("afterend",`\n    <div class="video-take-screenshot" title="截图">\n        <span><i class="mdi mdi-camera"></i></span>\n    </div>`);const n=document.querySelector(".video-take-screenshot");if(n===null){return}n.addEventListener("click",async()=>{const t=await o(e);i.screenshots.push(t)})});return{export:{takeScreenshot:o,screenShotsList:i}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/scrollbar.min.css"] = `::-webkit-scrollbar{width:5px!important;height:5px!important}::-webkit-scrollbar-corner,::-webkit-scrollbar-track{background:0 0!important}::-webkit-resizer,::-webkit-scrollbar-thumb{background:#aaa}::-webkit-scrollbar-thumb:hover{background:#888}*{scrollbar-color:#aaa transparent;scrollbar-width:thin!important}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/settings-search.min.js"] = (()=>{return(t,e)=>{class s{constructor(){this.input=document.querySelector(".gui-settings-search");const t=[...document.querySelectorAll(".gui-settings-content>ul>li")];const e=t=>e=>e.classList.contains("category")===t;this.categories=t.filter(e(true));this.items=t.filter(e(false));this.importToolTips().then(()=>this.input.addEventListener("input",()=>this.keywordChange()))}async importToolTips(){if(typeof getI18nKey==="undefined"){console.error("请更新脚本后再使用设置搜索功能.");return}const{toolTips:t}=await e.importAsync(`settings-tooltip.${getI18nKey()}`);this.toolTips=t}keywordChange(){const t=this.input.value.trim();if(!t){this.categories.concat(this.items).forEach(t=>t.classList.add("folded"));return}this.items.forEach(e=>{const s=e.querySelector("input").getAttribute("key");const i=Resource.displayNames[s]+this.toolTips.get(s).replace(/<.*>|<\/.*>/g,"");if(i.includes(t)){e.classList.remove("folded")}else{e.classList.add("folded")}});this.foldCategories()}foldCategories(){for(const e of this.categories){function t(){let t=e.nextElementSibling;while(t!==null&&!t.classList.contains("category")){if(!t.classList.contains("folded")){return"remove"}t=t.nextElementSibling}return"add"}e.classList[t()]("folded")}}}return{export:{SettingsSearch:s}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/settings-side-bar.min.js"] = (()=>{return(e,i)=>{if(document.querySelector(".gui-settings-icon-panel")===null){document.body.insertAdjacentHTML("beforeend",`\n        <div class='gui-settings-icon-panel icons-enabled'>\n            <div class='gui-settings-widgets' title='附加功能'>\n                <i class="icon-widgets"></i>\n            </div>\n            <div class='gui-settings' title='设置'>\n                <i class="icon-settings"></i>\n            </div>\n        </div>`);document.querySelector(".gui-settings").addEventListener("click",e=>{if(e.shiftKey===false){document.querySelectorAll(".gui-settings-box,.gui-settings-mask").forEach(e=>e.classList.add("opened"))}else{document.querySelectorAll(".bilibili-evolved-about,.gui-settings-mask").forEach(e=>e.classList.add("opened"))}});document.querySelector(".gui-settings-widgets").addEventListener("click",()=>{document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-mask").forEach(e=>e.classList.add("opened"))})}}})();
@@ -1921,6 +1924,13 @@ Resource.manifest = {
         path: "debounce.min.js",
         displayNames: {
             slip: "debounce.js"
+        },
+    },
+    videoScreenshot: {
+        path: "screenshot.min.js",
+        style: true,
+        displayNames: {
+            videoScreenshot: "启用视频截图",
         },
     },
 };

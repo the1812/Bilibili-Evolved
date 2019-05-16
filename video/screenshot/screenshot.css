@@ -1,0 +1,27 @@
+.video-take-screenshot
+{
+    padding-left: 12px;
+    height: 100%;
+    cursor: pointer;
+}
+.video-take-screenshot span
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+.video-take-screenshot i
+{
+    font-size: 20px;
+    color: white;
+    transform: scale(1);
+    opacity: 0.9;
+    transition: all .4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+.video-take-screenshot:hover i
+{
+    transform: scale(1.1);
+    opacity: 1;
+}
