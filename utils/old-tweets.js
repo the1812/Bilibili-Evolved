@@ -38,7 +38,7 @@ export default {
             const button = document.querySelector("#old-tweets");
             button.addEventListener("click", () =>
             {
-                location.replace(isNewTweets ? oldUrl : newUrl);
+                location.assign(isNewTweets ? oldUrl : newUrl);
             });
         },
     }
