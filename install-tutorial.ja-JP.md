@@ -4,10 +4,10 @@
 ## 1. インストール前の注意
 ブラウザが「Bilibili-Evolved」の互換性を確保するよう、下記互換性情報をチェックしてください.
 
-> 簡単に言えば、Chrome、Edge (Chromium)、Firefox、Safariがサポートされています.下记の注意事項のほとんどは、それらの機能に影響を与えません.
+> 簡単に言えば、Chrome、Edge (Chromium)、Firefox、Safariがサポートされています.下記の注意事項のほとんどは、それらの機能に影響を与えません.
 
 ### Chrome / Edge (Chromium)
-- 背景ぼかし効果を使用するには ([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))、 このページで手動で有効にする必要があります `chrome://flags/#enable-experimental-web-platform-features`. (For Edge, change `chrome` to `edge`)
+- 背景ぼかし効果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))を使用するには 、このページで手動で有効にする必要があります `chrome://flags/#enable-experimental-web-platform-features`. (For Edge, change `chrome` to `edge`)
 - 背景ぼかし効果は、アニメーションのフレームドロップを引き起こす可能性があります.
 - もし、君の Chrome のバージョンが ≥ 73と画面 DPI/ページのズームが 100% よりも大きい、背景ぼかし効果が正しく表示されない. 詳しい原因はこのページ [Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910) をご覧ください.
 ### Firefox
@@ -16,7 +16,7 @@
 ### Safari
 - Safari でテストされない. (私はMacを持っていません)
 ### Edge (UWP) [**サポート停止**]
-- 上記のブラウザを使用してください. あるいはこれに切り替えることができます[Chromium-based Edge](https://microsoftedgeinsider.com/).
+- 上記のブラウザを使用してください. あるいはこの[Chromium-based Edge](https://microsoftedgeinsider.com/)に切り替えることができます.
 
 下記のチュートリアルでは、例として Chrome を使用します:
 
@@ -50,12 +50,12 @@
 ![Install Offline version](images/original/install-script.zh-CN.png)
 
 
-## 4. 表示言語を変更する (オプション)
-> 表示言语は自分自身のブラウザのデフォルト言语に自动的に设定します.それがなければ、このステップに従って表示言语を変えることができます.
+## 4. 翻訳言語を変更する (オプション)
+> 翻訳言语は自分自身のブラウザのデフォルト言语に自动的に设定します.それがなければ、このステップに従って表示言语を変えることができます.
 
 ビリビリを访ねると、ページの左側に2つのアイコン(追加機能と设定)があるはずです.アイコンをクリックすることで設定を展開きます.
 
-現在の言語が簡体字中国語（デフォルトのフォールバック言語）であると仮定し、 `工具`(tools)を展開し、 `界面翻译`(インタフェース翻訳)を見つけます.
+今の言語が簡体字中国語（デフォルトのフォールバック言語）であると仮定し、 `工具`(道具)を展開し、 `界面翻译`(インタフェース翻訳)を見つけます.
 
 有効にして見たい翻訳言語を選択してからページを更新します.
 
