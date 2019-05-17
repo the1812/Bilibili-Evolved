@@ -279,7 +279,7 @@ function loadSettings()
     if (Object.keys(languageCodeToName).includes(navigator.language))
     {
         settings.i18n = true;
-        settings.i18n = languageCodeToName[navigator.language];
+        settings.i18nLanguage = languageCodeToName[navigator.language];
     }
     for (const key in settings)
     {
