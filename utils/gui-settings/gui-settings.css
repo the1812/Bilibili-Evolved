@@ -406,7 +406,7 @@ li.category.folded i.icon-arrow
     background: white;
     transform-origin: top;
     transform: scaleY(0);
-    transition: all .2s ease-out;
+    transition: .2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -428,6 +428,7 @@ li.category.folded i.icon-arrow
 .gui-settings-dropdown.opened>ul
 {
     transform: scaleY(1);
+    transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 .gui-settings-dropdown.opened>i
 {
@@ -633,7 +634,7 @@ li.category.folded i.icon-arrow
 {
     position: absolute;
     top: calc(100% + 2px);
-    transition: all .16s ease-out;
+    transition: .2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
     transform-origin: top;
     transform: scaleY(0) translateX(-50%);
     left: 50%;
@@ -652,6 +653,7 @@ li.category.folded i.icon-arrow
 .gui-settings-flat-button .popup.opened
 {
     transform: scaleY(1) translateX(-50%);
+    transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 .gui-settings-flat-button .popup ul
 {
