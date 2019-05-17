@@ -334,12 +334,7 @@
 ### Safari
 - 尚未在Safari中测试.(流下了贫穷的泪水
 ### Edge (UWP) [**停止支持**]
-- 滚动条样式无效.
-- 由于Edge的CSS渲染bug(主要集中在`filter`和`color`), 部分主题颜色错乱.
-- 顶栏触摸体验不佳.
-- 触摸功能需要手动在`about:flags`中开启.
-- 夜间模式部分无效.
-- 部分半透明颜色无效.
+- 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://microsoftedgeinsider.com/).
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 

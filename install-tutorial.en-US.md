@@ -4,7 +4,7 @@ This tutorial will help you install Bilibili-Evolved in your browser.
 ## 1. Before install
 Please check the compatibility information below to make sure your browser is compatible with Bilibili-Evolved.
 
-> In short, Chrome, Edge (Chromium), Firefox and Safari are supported well. Most of attentions listed below won't affect functionalities.
+> In short, Chrome, Edge (Chromium), Firefox and Safari are supported well. Most of attentions listed below won't affect functionalities. Doesn't support Edge (UWP).
 
 ### Chrome / Edge (Chromium)
 - To use background blur effect ([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter)), you need enable it manually in `chrome://flags/#enable-experimental-web-platform-features`. (For Edge, change `chrome` to `edge`)
@@ -16,12 +16,7 @@ Please check the compatibility information below to make sure your browser is co
 ### Safari
 - Not tested in Safari. (I don't own a Mac)
 ### Edge (UWP) [**Stopped supporting**]
-- Scrollbar style is not supported.
-- There are some rendering bugs (mainly about `filter` and `color`).
-- Bad touch support.
-- Touch events need to be manually enabled in `about:flags`.
-- Dark mode doesn't work well.
-- Some semitransparent colors defined in `#rrggbbaa` pattern are not supported.
+- Please use browsers listed above. Or you can try [Chromium-based Edge](https://microsoftedgeinsider.com/).
 
 In this tutorial, I'll use Chrome as example:
 
