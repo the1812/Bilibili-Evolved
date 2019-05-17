@@ -25,7 +25,7 @@
 ## 2. インストール前の準備
 > ユーザースクリプトマネージャ(user script manager)が既にある場合は、このステップをスキップします.
 
-「Bilibili-Evolved」は、JavaScriptコードスニペットとして提供されています。ビリビリにアクセスして個人設定を保持するたびにコードを実行できるように、ユーザースクリプトマネージャーが必要です.
+「Bilibili-Evolved」は、JavaScript code snippetsとして提供されています.ビリビリを访ねる時、個人設定を保持するたびにコードを実行できるように、ユーザースクリプトマネージャーが必要です.
 
 サポートされているマネージャ: [Tampermonkey](https://tampermonkey.net/) と [Violentmonkey](https://violentmonkey.github.io/).
 
@@ -59,7 +59,7 @@
 
 有効にして見たい翻訳言語を選択してからページを更新します.
 
-例えば、ターゲット言語として英語を選択してください
+例えば、翻訳言語として英語を選択する
 
 ![Open settings](images/original/settings-icon.en-US.png)
 ![Change settings](images/original/settings.en-US.png)
