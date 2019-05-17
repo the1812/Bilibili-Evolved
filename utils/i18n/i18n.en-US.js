@@ -1,6 +1,8 @@
 export const map = new Map([
     [`主站`, `Home`],
-    [`画友`, `Painting`],
+    [`排行`, `Ranking`],
+    [`画友`, `Photos`],
+    [`相簿`, `Photos`],
     [`音频`, `Music`],
     [`游戏中心`, `Game`],
     [`直播`, {
