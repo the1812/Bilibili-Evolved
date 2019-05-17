@@ -7,23 +7,18 @@
 > 簡単に言えば、Chrome、Edge (Chromium)、Firefox、Safariがサポートされています.下记の注意事項のほとんどは、それらの機能に影響を与えません.
 
 ### Chrome / Edge (Chromium)
-- To use background blur effect ([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter)), you need enable it manually in `chrome://flags/#enable-experimental-web-platform-features`. (For Edge, change `chrome` to `edge`)
-- Background blur effect may cause frame drops in animation.
-- If your Chrome version is ≥ 73, and screen DPI / page zoom is larger than 100%, the background blur effect will display incorrectly. See [Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910) for more information.
+- 背景ぼかし効果を使用するには ([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))、 このページで手動で有効にする必要があります `chrome://flags/#enable-experimental-web-platform-features`. (For Edge, change `chrome` to `edge`)
+- 背景ぼかし効果は、アニメーションのフレームドロップを引き起こす可能性があります.
+- もし、君の Chrome のバージョンが ≥ 73と画面 DPI/ページのズームが 100% よりも大きい、背景ぼかし効果が正しく表示されない. 詳しい原因はこのページ [Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910) をご覧ください.
 ### Firefox
-- Background blur effect is not supported, see [Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765) for more information.
-- There are some animation issues when using touch gestures. (Caused by CSS `transition`. Property value always transits from its initial value rather than current value)
+- 背景ぼかし効果が無効です、詳しい原因はこのページ [Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765) をご覧ください.
+- タッチジェスチャの使用時にアニメーションの現象があります. (原因は CSS `transition`. プロパティ値は現在値ではなく、常に初期値から変更する)
 ### Safari
-- Not tested in Safari. (I don't own a Mac)
-### Edge (UWP) [**Stopped supporting**]
-- Scrollbar style is not supported.
-- There are some rendering bugs (mainly about `filter` and `color`).
-- Bad touch support.
-- Touch events need to be manually enabled in `about:flags`.
-- Dark mode doesn't work well.
-- Some semitransparent colors defined in `#rrggbbaa` pattern are not supported.
+- Safari でテストされない. (私はMacを持っていません)
+### Edge (UWP) [**サポート停止**]
+- 上記のブラウザを使用してください. あるいはこれに切り替えることができます[Chromium-based Edge](https://microsoftedgeinsider.com/).
 
-In this tutorial, I'll use Chrome as example:
+下記のチュートリアルでは、例として Chrome を使用します:
 
 ![Chrome](images/original/chrome.en-US.png)
 
