@@ -1,6 +1,6 @@
 .video-take-screenshot
 {
-    padding-left: 12px;
+    padding: 0 6px 0 18px;
     height: 100%;
     cursor: pointer;
 }
@@ -24,4 +24,26 @@
 {
     transform: scale(1.1);
     opacity: 1;
+}
+.video-take-screenshot:active i
+{
+    transform: scale(0.9);
+    opacity: 1;
+}
+
+.video-screenshot-list
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 20000;
+    padding: 12px 0;
+}
+.video-screenshot-thumbnail img
+{
+    max-width: 240px;
+}
+.video-screenshot-thumbnail
+{
+    padding: 12px 24px;
 }

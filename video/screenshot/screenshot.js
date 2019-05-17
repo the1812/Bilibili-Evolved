@@ -1,5 +1,14 @@
 let canvas = null;
 let context = null;
+class Screenshot {
+    constructor(blob) {
+        this.blob = blob;
+        this.url = URL.createObjectURL(this.blob);
+    }
+    revoke() {
+        URL.revokeObjectURL(this.url);
+    }
+}
 export const takeScreenshot = (video) => {
     if (canvas === null || context === null) {
         canvas = document.createElement("canvas");
@@ -18,33 +27,24 @@ export const takeScreenshot = (video) => {
                 reject("视频截图失败: 创建 blob 失败.");
                 return;
             }
-            resolve(blob);
+            resolve(new Screenshot(blob));
         }, "image/png");
     });
 };
 resources.applyStyle("videoScreenshotStyle");
 document.body.insertAdjacentHTML("beforeend", /*html*/ `
     <div class="video-screenshot-list">
-        <video-screenshot v-for="screenshot of screenshots" v-bind:blob="screenshot"></video-screenshot>
+        <video-screenshot v-for="screenshot of screenshots" v-bind:object-url="screenshot.url" v-bind:key="screenshot.url"></video-screenshot>
     </div>
 `);
 Vue.component("video-screenshot", {
-    data() {
-        return {
-            objectUrl: "",
-        };
-    },
     props: {
-        blob: Blob
+        objectUrl: String
     },
-    methods: {
-        created() {
-            this.objectUrl = URL.createObjectURL(this.blob);
-        },
-    },
-    template: /*html*/ `<div class="video-screenshot-thumbnail">
-        <img v-bind:src="objectUrl">
-    </div>`,
+    template: /*html*/ `
+        <div class="video-screenshot-thumbnail">
+            <img v-bind:src="objectUrl">
+        </div>`,
 });
 const screenShotsList = new Vue({
     el: ".video-screenshot-list",
@@ -67,8 +67,8 @@ Observer.videoChange(async () => {
         return;
     }
     screenshotButton.addEventListener("click", async () => {
-        const blob = await takeScreenshot(video);
-        screenShotsList.screenshots.push(blob);
+        const screenshot = await takeScreenshot(video);
+        screenShotsList.screenshots.push(screenshot);
     });
 });
 export default {
