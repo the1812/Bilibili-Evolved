@@ -9,6 +9,9 @@
 - [投喂](donate.md)
 
 # 安装
+([English](install-tutorial.en-US.md))
+([日本語](install-tutorial.ja-JP.md))
+
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
 
 点击名称即可安装👇
