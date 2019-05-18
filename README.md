@@ -1,7 +1,7 @@
 # Bilibili Evolved
 增强哔哩哔哩Web端体验: 下载视频, 音乐, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 删除广告, 使用夜间模式, 修复界面瑕疵; 以及增加对触屏设备的支持等.
 
-- [安装](#安装)/[Install](install-tutorial.en-US.md)/[インストール](install-tutorial.ja-JP.md)
+- [安装](#安装) / [Install](install-tutorial.en-US.md) / [インストール](install-tutorial.ja-JP.md)
 - [设置](#设置)
 - [功能](#功能)
 - [兼容性](#兼容性)
