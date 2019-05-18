@@ -13,6 +13,7 @@ export function loadResources()
         useCommentStyle: "useCommentStyle",
         removeVideoTopMask: "removeVideoTopMask",
         hideOldEntry: "hideOldEntry",
+        hideBangumiReviews: "hideBangumiReviews",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {

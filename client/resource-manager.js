@@ -313,6 +313,25 @@ export class ResourceManager
             });
         await Promise.all(manifests.map(it => applyDropdownOption(it)));
     }
+    toggleStyle(content, id)
+    {
+        if (id === undefined) // content is resource name
+        {
+            this.styleManager.applyStyle(content);
+            return {
+                reload: () => this.styleManager.applyStyle(content),
+                unload: () => this.styleManager.removeStyle(content),
+            };
+        }
+        else // content is style text
+        {
+            this.styleManager.applyStyleFromText(content, id);
+            return {
+                reload: () => this.styleManager.applyStyleFromText(content, id),
+                unload: () => document.getElementById(id).remove(),
+            };
+        }
+    }
     validateCache()
     {
         if (typeof offlineData !== "undefined") // offline version always has cache

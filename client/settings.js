@@ -111,6 +111,7 @@ export const settings = {
     outerWatchlater: true,
     hideOldEntry: true,
     videoScreenshot: false,
+    hideBangumiReviews: false,
     cache: {},
 };
 const fixedSettings = {

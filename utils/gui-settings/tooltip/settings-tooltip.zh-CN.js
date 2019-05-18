@@ -100,6 +100,7 @@ export const toolTips = new Map([
     ["hideOldEntry", `隐藏播放页右侧的<span>返回旧版</span>入口.`],
     ["hideBanner", `隐藏首页顶部横幅.`],
     ["allowJumpContinue", `当历史记录的集数与当前打开的不一致时, 仍然自动跳转.`],
+    ["hideBangumiReviews", `隐藏番剧播放页面里的点评板块.`],
 ]);
 export default {
     export: { toolTips },

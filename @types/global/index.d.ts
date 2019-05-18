@@ -134,6 +134,8 @@ declare global
         applyStyleFromText(text: string, id: string): void;
         applyImportantStyleFromText(text: string, id: string): void;
         getStyle(key: string, id?: string): void;
+        toggleStyle(content: string, id: string): void;
+        toggleStyle(key: string): void;
     }
     const resources: ResourceManager;
     class DoubleClickEvent
@@ -261,6 +263,7 @@ declare global
         favoritesRedirect: boolean,
         outerWatchlater: boolean,
         hideOldEntry: boolean,
+        hideBangumiReviews: boolean,
         cache: {} | { version: string } | undefined,
         latestVersionLink: string,
         currentVersion: string,

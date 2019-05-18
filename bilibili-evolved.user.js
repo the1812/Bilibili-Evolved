@@ -230,6 +230,7 @@ const settings = {
     outerWatchlater: true,
     hideOldEntry: true,
     videoScreenshot: false,
+    hideBangumiReviews: false,
     cache: {},
 };
 const fixedSettings = {
@@ -511,6 +512,7 @@ function loadResources()
         useCommentStyle: "useCommentStyle",
         removeVideoTopMask: "removeVideoTopMask",
         hideOldEntry: "hideOldEntry",
+        hideBangumiReviews: "hideBangumiReviews",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
@@ -1862,6 +1864,12 @@ Resource.manifest = {
             "title",
         ],
     },
+    hideBangumiReviews: {
+        path: "hide-bangumi-reviews.min.js",
+        displayNames: {
+            hideBangumiReviews: "隐藏番剧点评",
+        },
+    },
 };
 const resourceManifest = Resource.manifest;
 class StyleManager
@@ -2278,6 +2286,25 @@ class ResourceManager
                 }
             });
         await Promise.all(manifests.map(it => applyDropdownOption(it)));
+    }
+    toggleStyle(content, id)
+    {
+        if (id === undefined) // content is resource name
+        {
+            this.styleManager.applyStyle(content);
+            return {
+                reload: () => this.styleManager.applyStyle(content),
+                unload: () => this.styleManager.removeStyle(content),
+            };
+        }
+        else // content is style text
+        {
+            this.styleManager.applyStyleFromText(content, id);
+            return {
+                reload: () => this.styleManager.applyStyleFromText(content, id),
+                unload: () => document.getElementById(id).remove(),
+            };
+        }
     }
     validateCache()
     {

@@ -614,5 +614,11 @@ Resource.manifest = {
             "title",
         ],
     },
+    hideBangumiReviews: {
+        path: "hide-bangumi-reviews.min.js",
+        displayNames: {
+            hideBangumiReviews: "隐藏番剧点评",
+        },
+    },
 };
 export const resourceManifest = Resource.manifest;
