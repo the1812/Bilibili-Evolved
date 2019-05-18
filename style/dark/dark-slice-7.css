@@ -104,7 +104,9 @@
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active,
 .info-wrap .feedback-mask .content,
 .abnormal-module .abnormal-item .btn-back,
-.main-ctnr .qualify-drawer .drawer-pop
+.main-ctnr .qualify-drawer .drawer-pop,
+.bangumi-list .bangumi-item .right-info .headline .bangumi-label,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item
 {
     background-color: #444 !important;
 }
@@ -248,7 +250,9 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-info-other,
 .article-list-holder-block .article-list-name,
 .abnormal-module .abnormal-item .txt,
-#navigator .v-switcher-header-item a span
+#navigator .v-switcher-header-item a span,
+.bangumi-list .bangumi-item .right-info .intros .label,
+.bangumi-list .bangumi-item .right-info .intros .value
 {
     color: #aaa !important;
 }
@@ -356,7 +360,11 @@
 .feedback-mask .content .feedback-body .feedback-submit,
 .feedback-mask .content .feedback-body .feedback-submit.active,
 .abnormal-module .abnormal-item .btn-back,
-#navigator .v-switcher-header-item a
+#navigator .v-switcher-header-item a,
+.bangumi-list .bangumi-item .right-info .headline .title,
+.bangumi-list .bangumi-item .right-info .headline .bangumi-label,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover
 {
     color: #eee !important;
 }
@@ -445,7 +453,10 @@
 .main-ctnr .qualify-drawer .drawer-pop:after,
 .ssr-content .link-tag.activity:active,
 #navigator .v-switcher-header-item,
-.s-space #page-fav .fav-sidenav
+.s-space #page-fav .fav-sidenav,
+.bangumi-list .bangumi-item,
+.bangumi-list .bangumi-item .right-info .headline .bangumi-label,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item
 {
     border-color: transparent !important;
 }
@@ -654,7 +665,8 @@
 .abnormal-module .abnormal-item .btn-back:hover,
 .ssr-content .link-tag.activity:hover,
 .ssr-content .link-tag.activity:active,
-#navigator .v-switcher-header-anchor
+#navigator .v-switcher-header-anchor,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -726,7 +738,8 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse:hover,
 .cntr .sort-cntr .href-all:hover i,
 .cntr .sort-cntr .href-all:hover,
-#navigator .v-switcher-header-item a:hover
+#navigator .v-switcher-header-item a:hover,
+.bangumi-list .bangumi-item .right-info .headline .title:hover
 {
     color: var(--theme-color) !important;
 }
