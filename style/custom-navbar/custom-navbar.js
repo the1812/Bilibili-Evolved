@@ -284,6 +284,7 @@ class NavbarComponent
         this.href = null;
         this.notifyCount = 0;
         this.touch = settings.touchNavBar;
+        this.active = false;
     }
     get name()
     {
@@ -383,6 +384,7 @@ class Messages extends NavbarComponent
         </ul>
         `;
         this.requestedPopup = true;
+        this.active = document.URL.startsWith("https://message.bilibili.com/");
         this.init();
     }
     get name()
@@ -847,6 +849,7 @@ class Activities extends NotifyIframe
                 height: `422px`,
                 lazy: true,
             });
+        this.active = document.URL === "https://t.bilibili.com/";
     }
     getApiUrl()
     {

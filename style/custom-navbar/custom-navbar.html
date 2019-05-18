@@ -314,7 +314,8 @@
     </div>
     <ul>
         <li v-for="component of components" v-bind:key="component.name" v-bind:data-name="component.name"
-            v-show="!component.hidden" v-bind:class="{disabled: component.disabled}"
+            v-show="!component.hidden"
+            v-bind:class="{disabled: component.disabled || component.active, active: component.active}"
             v-bind:style="{flex: component.flex, order: component.order}" v-on:mouseover="requestPopup(component)">
             <a class="main-content" v-if="component.href" v-bind:href="!component.touch && component.href"
                 v-html="component.html"></a>
@@ -324,6 +325,7 @@
                 v-bind:class="{'no-padding': component.noPadding, 'transparent': component.transparent }">
                 <div v-if="component.requestedPopup" v-html="component.popupHtml"></div>
             </div>
+            <div class="active-bar"></div>
         </li>
     </ul>
 </div>
