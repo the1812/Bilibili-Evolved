@@ -336,6 +336,7 @@ class SimpleLink extends NavbarComponent
         this.html = name;
         this.href = link;
         this.touch = false;
+        this.active = document.URL.startsWith(link);
     }
     get name()
     {
@@ -952,6 +953,7 @@ class WatchlaterList extends VideoList
                 });
             },
         });
+        this.active = document.URL.startsWith("https://www.bilibili.com/watchlater/");
     }
 }
 class FavoritesList extends VideoList
@@ -973,6 +975,7 @@ class FavoritesList extends VideoList
                 });
             },
         });
+        this.active = document.URL === `https://space.bilibili.com/${userInfo.mid}/favlist`;
     }
 }
 class HistoryList extends VideoList
@@ -1020,6 +1023,7 @@ class HistoryList extends VideoList
                 });
             },
         });
+        this.active = document.URL === "https://www.bilibili.com/account/history";
     }
 }
 
@@ -1057,7 +1061,7 @@ class HistoryList extends VideoList
         new Category,
         new SimpleLink("排行", "https://www.bilibili.com/ranking", "ranking"),
         new SimpleLink("相簿", "https://h.bilibili.com", "drawing"),
-        new SimpleLink("音频", "https://www.bilibili.com/audio/home/?type=10", "music"),
+        new SimpleLink("音频", "https://www.bilibili.com/audio/home/", "music"),
         new Iframe("游戏中心", "https://game.bilibili.com/", {
             src: `https://www.bilibili.com/page-proxy/game-nav.html`,
             width: `680px`,
@@ -1072,7 +1076,7 @@ class HistoryList extends VideoList
             lazy: true,
             iframeName: "lives",
         }),
-        new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web", "shop"),
+        new SimpleLink("会员购", "https://show.bilibili.com", "shop"),
         new SimpleLink("漫画", "https://manga.bilibili.com", "manga"),
         new Blank(2),
         new SearchBox,
