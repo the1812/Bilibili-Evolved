@@ -188,6 +188,7 @@ const settings = {
     autoLightOff: false,
     useCache: true,
     autoContinue: false,
+    allowJumpContinue: false,
     autoPlay: false,
     showDeadVideoTitle: false,
     useBiliplusRedirect: false,
@@ -1607,6 +1608,7 @@ Resource.manifest = {
         path: "auto-continue.min.js",
         displayNames: {
             autoContinue: "自动从历史记录点播放",
+            allowJumpContinue: "允许跨集跳转",
         },
     },
     expandDescription: {

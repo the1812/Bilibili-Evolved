@@ -69,6 +69,7 @@ export const settings = {
     autoLightOff: false,
     useCache: true,
     autoContinue: false,
+    allowJumpContinue: false,
     autoPlay: false,
     showDeadVideoTitle: false,
     useBiliplusRedirect: false,

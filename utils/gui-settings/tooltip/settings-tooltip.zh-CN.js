@@ -99,6 +99,7 @@ export const toolTips = new Map([
     ["narrowDanmaku", `在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.`],
     ["hideOldEntry", `隐藏播放页右侧的<span>返回旧版</span>入口.`],
     ["hideBanner", `隐藏首页顶部横幅.`],
+    ["allowJumpContinue", `当历史记录的集数与当前打开的不一致时, 仍然自动跳转.`],
 ]);
 export default {
     export: { toolTips },

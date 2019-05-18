@@ -7,12 +7,10 @@ function continuePlay(toastText)
     const text = toastText.text();
     if (/第(\d+)话/.test(text))
     {
-        toastText.parent().find(".bilibili-player-video-toast-item-jump").click();
-        SpinQuery.condition(
-            () => document.querySelector(".bilibili-player-video video"),
-            it => it && it.paused === true,
-            it => it.play(),
-        );
+        if (settings.allowJumpContinue)
+        {
+            toastText.parent().find(".bilibili-player-video-toast-item-jump").click();
+        }
         return;
     }
     const regex = /((\d)*:)?(\d)*:(\d)*/g;
@@ -64,9 +62,4 @@ function findHistoryToast()
         it => continuePlay(it.filter((_, e) => e.innerText.indexOf("上次看到") !== -1)),
     );
 }
-if (Observer.videoChange)
-{
-    Observer.videoChange(findHistoryToast);
-}
-else
-{ Observer.childList("#bofqi", findHistoryToast); }
+Observer.videoChange(findHistoryToast);

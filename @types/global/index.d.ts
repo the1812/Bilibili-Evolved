@@ -220,6 +220,7 @@ declare global
         autoLightOff: boolean,
         useCache: boolean,
         autoContinue: boolean,
+        allowJumpContinue: boolean,
         autoPlay: boolean,
         showDeadVideoTitle: boolean,
         useBiliplusRedirect: boolean,

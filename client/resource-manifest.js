@@ -360,6 +360,7 @@ Resource.manifest = {
         path: "auto-continue.min.js",
         displayNames: {
             autoContinue: "自动从历史记录点播放",
+            allowJumpContinue: "允许跨集跳转",
         },
     },
     expandDescription: {
