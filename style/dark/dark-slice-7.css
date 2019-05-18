@@ -444,7 +444,8 @@
 .main-ctnr .qualify-drawer .draw-list,
 .main-ctnr .qualify-drawer .drawer-pop:after,
 .ssr-content .link-tag.activity:active,
-#navigator .v-switcher-header-item
+#navigator .v-switcher-header-item,
+.s-space #page-fav .fav-sidenav
 {
     border-color: transparent !important;
 }
