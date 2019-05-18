@@ -302,6 +302,10 @@ div.bilibili-player-video-control
 {
     bottom: 60px !important;
 }
+.bilibili-player.mode-fullscreen .disable-original-hover .bilibili-player-video-control-top
+{
+    opacity: 1 !important;
+}
 #bofqi *
 {
     -webkit-tap-highlight-color: transparent !important;
