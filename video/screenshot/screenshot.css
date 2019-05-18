@@ -22,15 +22,20 @@
 }
 .video-take-screenshot:hover i
 {
-    transform: scale(1.1);
+    transform: scale(1.05);
     opacity: 1;
 }
 .video-take-screenshot:active i
 {
-    transform: scale(0.9);
+    transform: scale(0.95);
     opacity: 1;
 }
 
+.video-screenshot-list,
+.video-screenshot-list *
+{
+    transition: all .2s ease-out;
+}
 .video-screenshot-list
 {
     position: fixed;
@@ -38,12 +43,48 @@
     right: 0;
     z-index: 20000;
     padding: 12px 0;
+    pointer-events: none;
+}
+.video-screenshot-list *
+{
+    pointer-events: initial;
 }
 .video-screenshot-thumbnail img
 {
     max-width: 240px;
+    display: block;
 }
 .video-screenshot-thumbnail
 {
-    padding: 12px 24px;
+    margin: 12px 24px;
+    position: relative;
+}
+.video-screenshot-thumbnail .mask
+{
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0008;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.video-screenshot-thumbnail:hover .mask
+{
+    opacity: 1;
+}
+.video-screenshot-thumbnail .mask button
+{
+    background: #000a;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 24pt;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    outline: none !important;
 }

@@ -1,9 +1,14 @@
+import { getFriendlyTitle } from '../title';
 let canvas = null;
 let context = null;
 class Screenshot {
-    constructor(blob) {
+    constructor(blob, time) {
         this.blob = blob;
+        this.time = time;
         this.url = URL.createObjectURL(this.blob);
+    }
+    get filename() {
+        return getFriendlyTitle() + " @" + this.time.toString() + ".png";
     }
     revoke() {
         URL.revokeObjectURL(this.url);
@@ -16,6 +21,7 @@ export const takeScreenshot = (video) => {
         canvas.height = video.videoHeight;
         context = canvas.getContext("2d");
     }
+    const time = video.currentTime;
     return new Promise((resolve, reject) => {
         if (canvas === null || context === null) {
             reject("视频截图失败: canvas 未创建或创建失败.");
@@ -27,26 +33,29 @@ export const takeScreenshot = (video) => {
                 reject("视频截图失败: 创建 blob 失败.");
                 return;
             }
-            resolve(new Screenshot(blob));
+            resolve(new Screenshot(blob, time));
         }, "image/png");
     });
 };
 resources.applyStyle("videoScreenshotStyle");
 document.body.insertAdjacentHTML("beforeend", /*html*/ `
     <div class="video-screenshot-list">
-        <video-screenshot v-for="screenshot of screenshots" v-bind:object-url="screenshot.url" v-bind:key="screenshot.url"></video-screenshot>
+        <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename" v-bind:object-url="screenshot.url" v-bind:key="screenshot.url"></video-screenshot>
     </div>
 `);
 Vue.component("video-screenshot", {
     props: {
-        objectUrl: String
+        objectUrl: String,
+        filename: String,
     },
     template: /*html*/ `
         <div class="video-screenshot-thumbnail">
             <img v-bind:src="objectUrl">
             <div class="mask">
-                <button class="save"><i class="mdi mdi-content-save-outline"></button>
-                <button class="discard"><i class="mdi mdi-delete-forever-outline"></button>
+                <a v-bind:href="objectUrl" v-bind:download="filename" title="保存">
+                    <button class="save"><i class="mdi mdi-content-save-outline"></i></button>
+                </a>
+                <button title="丢弃" class="discard"><i class="mdi mdi-delete-forever-outline"></i></button>
             </div>
         </div>`,
 });

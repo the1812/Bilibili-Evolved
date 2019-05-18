@@ -1856,6 +1856,9 @@ Resource.manifest = {
         displayNames: {
             videoScreenshot: "启用视频截图",
         },
+        dependencies: [
+            "title",
+        ],
     },
 };
 const resourceManifest = Resource.manifest;
@@ -2008,7 +2011,7 @@ class ResourceManager
     }
     resolveComponentName(componentName)
     {
-        const keyword = "/" + componentName.replace("./", "") + ".min.js";
+        const keyword = "/" + componentName.replace("./", "").replace("../", "") + ".min.js";
         for (const [name, value] of Object.entries(Resource.all))
         {
             if (value.url.endsWith(keyword))

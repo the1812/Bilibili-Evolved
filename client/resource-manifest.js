@@ -609,6 +609,9 @@ Resource.manifest = {
         displayNames: {
             videoScreenshot: "启用视频截图",
         },
+        dependencies: [
+            "title",
+        ],
     },
 };
 export const resourceManifest = Resource.manifest;
