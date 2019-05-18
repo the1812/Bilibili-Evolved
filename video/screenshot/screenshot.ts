@@ -55,7 +55,7 @@ export const takeScreenshot = (video: HTMLVideoElement) =>
 resources.applyStyle("videoScreenshotStyle");
 document.body.insertAdjacentHTML("beforeend", /*html*/`
     <div class="video-screenshot-list">
-        <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename" v-bind:object-url="screenshot.url" v-bind:key="screenshot.url"></video-screenshot>
+        <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename" v-bind:object-url="screenshot.url" v-on:discard="discard(screenshot)" v-bind:key="screenshot.url"></video-screenshot>
     </div>
 `);
 Vue.component("video-screenshot", {
@@ -70,15 +70,28 @@ Vue.component("video-screenshot", {
                 <a v-bind:href="objectUrl" v-bind:download="filename" title="保存">
                     <button class="save"><i class="mdi mdi-content-save-outline"></i></button>
                 </a>
-                <button title="丢弃" class="discard"><i class="mdi mdi-delete-forever-outline"></i></button>
+                <button v-on:click="discard" title="丢弃" class="discard"><i class="mdi mdi-delete-forever-outline"></i></button>
             </div>
         </div>`,
+    methods: {
+        discard()
+        {
+            this.$emit("discard");
+        },
+    },
 });
 const screenShotsList = new Vue({
     el: ".video-screenshot-list",
     data: {
         screenshots: [] as Screenshot[],
     },
+    methods: {
+        discard(screenshot: Screenshot)
+        {
+            this.screenshots.splice(this.screenshots.indexOf(screenshot), 1);
+            screenshot.revoke();
+        }
+    }
 });
 Observer.videoChange(async () =>
 {
