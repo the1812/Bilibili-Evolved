@@ -44,6 +44,10 @@ Vue.component("video-screenshot", {
     template: /*html*/ `
         <div class="video-screenshot-thumbnail">
             <img v-bind:src="objectUrl">
+            <div class="mask">
+                <button class="save"><i class="mdi mdi-content-save-outline"></button>
+                <button class="discard"><i class="mdi mdi-delete-forever-outline"></button>
+            </div>
         </div>`,
 });
 const screenShotsList = new Vue({

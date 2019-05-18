@@ -149,8 +149,12 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     bottom: 0;
     background-color: var(--theme-color);
     width: 100%;
-    height: 2px;
+    height: 3px;
     display: none;
+}
+.custom-navbar.fill li .active-bar
+{
+    background-color: rgba(0,0,0,0.3);
 }
 .custom-navbar li.active .active-bar
 {
