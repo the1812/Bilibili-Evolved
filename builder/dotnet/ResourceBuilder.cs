@@ -169,7 +169,7 @@ namespace BilibiliEvolved.Build
 {
     return (settings, resources) =>
     {
-        " + input.Replace("export default ", "return").Replace("export ", "") + @"
+        " + input.Replace("export default ", "return ").Replace("export ", "") + @"
     };
 })();";
             }
