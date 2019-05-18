@@ -402,7 +402,7 @@ class Messages extends NavbarComponent
         }
         const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`);
         let totalCount = names.reduce((acc, it) => acc + json.data[it], 0);
-        if (totalCount === 0)
+        if (!totalCount)
         {
             return;
         }
@@ -825,7 +825,7 @@ class NotifyIframe extends Iframe
         const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`);
         const json = await Ajax.getJsonWithCredentials(this.getApiUrl());
         const count = this.getCount(json);
-        if (json.code === 0 && count !== 0)
+        if (json.code === 0 && count)
         {
             notifyElement.innerHTML = count;
             this.onPopup = () =>
