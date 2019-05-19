@@ -201,13 +201,13 @@ function checkOfflineData()
         document.querySelector("input[key=useCache]").disabled = true;
     }
 }
-function foldAllCategories()
-{
-    document.querySelectorAll(".gui-settings-content ul li.category").forEach(e =>
-    {
-        e.click();
-    });
-}
+// function foldAllCategories()
+// {
+//     document.querySelectorAll(".gui-settings-content ul li.category").forEach(e =>
+//     {
+//         e.click();
+//     });
+// }
 function checkCompatibility()
 {
     if (!CSS.supports("backdrop-filter", "blur(24px)")
@@ -313,7 +313,7 @@ function setDisplayNames()
         syncGui();
         listenDependencies();
         listenSettingsChange();
-        foldAllCategories();
+        // foldAllCategories();
         checkCompatibility();
         setDisplayNames();
         new SettingsSearch();

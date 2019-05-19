@@ -193,19 +193,19 @@ namespace BilibiliEvolved.Build
                 @"<textbox\s*?indent=""?(.+?)""?\s*key=""?(.+?)""?\s*?dependencies=""?(.*?)""?>([^\0]*?)<\/textbox>",
             };
             var replacements = new string[] {
-                @"<li class='indent-center category'>
+                @"<li class='indent-center category folded'>
                     <i class='icon-$1' style='margin-right:8px'></i>
                     <span class='settings-category'>$2</span>
                     <i class='icon-arrow' style='margin-left:8px'></i>
                 </li>",
-                @"<li class='indent-$1'>
+                @"<li class='indent-$1 folded'>
                     <label class='gui-settings-checkbox-container'>
                         <input key='$2' type='checkbox' dependencies='$3' checked/>
                         <div class='gui-settings-checkbox'></div>
                         <span>$4</span>
                     </label>
                 </li>",
-                @"<li class='indent-$1'>
+                @"<li class='indent-$1 folded'>
                     <label class='gui-settings-dropdown-container'>
                         <span class='gui-settings-dropdown-span'>$4</span>
                         <div class='gui-settings-dropdown popup'>
@@ -215,7 +215,7 @@ namespace BilibiliEvolved.Build
                         </div>
                     </label>
                 </li>",
-                @"<li class='indent-$1'>
+                @"<li class='indent-$1 folded'>
                     <label class='gui-settings-textbox-container'>
                         <span>$4</span>
                         <input key='$2' dependencies='$3' spellcheck='false' type='text' />
