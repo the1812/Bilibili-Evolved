@@ -24,3 +24,68 @@ body.dark .bilibili-evolved-about
     transform: translateX(0);
     box-shadow: 4px 0px 16px 0px #0005;
 }
+.about-header
+{
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.about-header i
+{
+    margin-right: 8px;
+    display: flex;
+}
+.about-title
+{
+    font-size: 16pt;
+}
+.about-content
+{
+    padding: 0 36px;
+    display: flex;
+    flex-direction: column;
+}
+.about-content .name
+{
+    font-size: 24pt;
+    display: flex;
+    align-items: center;
+}
+.about-content .name img
+{
+    margin-right: 18px;
+}
+.about-content .version
+{
+    font-size: 12pt;
+    opacity: 0.6;
+    margin-top: 6px;
+    margin-bottom: 36px;
+    align-self: center;
+}
+.about-content section
+{
+    font-size: 10pt;
+    margin-top: 16px;
+}
+.about-content section a,
+.about-content section .supporter
+{
+    color: var(--theme-color) !important;
+    margin: 0 2px;
+}
+.about-content section .supporter
+{
+    user-select: none;
+}
+.about-content section a:first-child,
+.about-content section .supporter:first-child
+{
+    margin-left: 6px;
+}
+.about-content section .supporter:not(:last-child)::after,
+.about-content section a:not(:last-child)::after
+{
+    content: ",";
+}
