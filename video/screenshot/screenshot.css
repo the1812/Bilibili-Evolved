@@ -63,12 +63,35 @@
 {
     max-width: 240px;
     display: block;
+    background-color: black;
 }
 .video-screenshot-thumbnail
 {
     margin: 12px 24px;
     position: relative;
     transition: .35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    width: 240px;
+    height: 135px;
+    background-color: black;
+}
+@keyframes spinner
+{
+    to {transform: translate(-50%, -50%) rotate(360deg);}
+}
+.video-screenshot-thumbnail .loading::before
+{
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 3px solid #8888;
+    border-top-color: var(--theme-color);
+    animation: spinner .6s linear infinite;
 }
 .video-screenshot-thumbnail.video-screenshot-list-leave-active
 {
