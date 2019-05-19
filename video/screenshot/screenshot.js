@@ -1,6 +1,5 @@
 import { getFriendlyTitle } from '../title';
-// let canvas: HTMLCanvasElement | null = null;
-// let context: CanvasRenderingContext2D | null = null;
+const canvas = document.createElement("canvas");
 class Screenshot {
     constructor(video, time) {
         this.url = "";
@@ -11,7 +10,6 @@ class Screenshot {
         this.createUrl();
     }
     async createUrl() {
-        const canvas = document.createElement("canvas");
         canvas.width = this.video.videoWidth;
         canvas.height = this.video.videoHeight;
         const context = canvas.getContext("2d");
@@ -23,11 +21,12 @@ class Screenshot {
             if (blob === null) {
                 throw new Error("视频截图失败: 创建 blob 失败.");
             }
+            this.blob = blob;
             this.url = URL.createObjectURL(blob);
         }, "image/png");
     }
     get filename() {
-        return getFriendlyTitle() + " @" + this.time.toString() + ".png";
+        return `${getFriendlyTitle()} @${this.time.toString()}:${this.timeStamp.toString()}.png`;
     }
     get id() {
         return this.time.toString() + this.timeStamp.toString();
@@ -37,16 +36,6 @@ class Screenshot {
     }
 }
 export const takeScreenshot = (video) => {
-    // if (canvas === null || context === null)
-    // {
-    //     canvas = document.createElement("canvas");
-    //     canvas.width = video.videoWidth;
-    //     canvas.height = video.videoHeight;
-    //     context = canvas.getContext("2d");
-    // }
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
     const time = video.currentTime;
     return new Screenshot(video, time);
     // return new Promise<Screenshot>((resolve, reject) =>
@@ -71,9 +60,20 @@ export const takeScreenshot = (video) => {
 };
 resources.applyStyle("videoScreenshotStyle");
 document.body.insertAdjacentHTML("beforeend", /*html*/ `
-    <transition-group class="video-screenshot-list" name="video-screenshot-list">
-        <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename" v-bind:object-url="screenshot.url" v-on:discard="discard(screenshot)" v-bind:key="screenshot.id"></video-screenshot>
-    </transition-group>
+    <div class="video-screenshot-container">
+        <transition-group class="video-screenshot-list" name="video-screenshot-list" tag="div">
+            <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename" v-bind:object-url="screenshot.url" v-on:discard="discard(screenshot)" v-bind:key="screenshot.id"></video-screenshot>
+        </transition-group>
+        <div v-show="showBatch" class="video-screenshot-batch">
+            <a class="batch-link" style="display:none" v-bind:download="batchFilename"></a>
+            <button v-on:click="saveAll">
+                <i class="mdi mdi-content-save"></i>全部保存
+            </button>
+            <button v-on:click="discardAll">
+                <i class="mdi mdi-delete-forever"></i>全部丢弃
+            </button>
+        </div>
+    </div>
 `);
 Vue.component("video-screenshot", {
     props: {
@@ -84,9 +84,8 @@ Vue.component("video-screenshot", {
         <div class="video-screenshot-thumbnail">
             <img v-if="objectUrl" v-bind:src="objectUrl">
             <div class="mask" v-if="objectUrl">
-                <a v-bind:href="objectUrl" v-bind:download="filename" title="保存">
-                    <button class="save"><i class="mdi mdi-content-save-outline"></i></button>
-                </a>
+                <a class="link" style="display:none" v-bind:href="objectUrl" v-bind:download="filename"></a>
+                <button v-on:click="save" class="save" title="保存"><i class="mdi mdi-content-save-outline"></i></button>
                 <button v-on:click="discard" title="丢弃" class="discard"><i class="mdi mdi-delete-forever-outline"></i></button>
             </div>
             <div class="loading" v-else>
@@ -96,19 +95,45 @@ Vue.component("video-screenshot", {
         discard() {
             this.$emit("discard");
         },
+        save() {
+            this.$el.querySelector(".link").click();
+            this.discard();
+        },
     },
 });
 const screenShotsList = new Vue({
-    el: ".video-screenshot-list",
+    el: ".video-screenshot-container",
     data: {
         screenshots: [],
+        batchFilename: getFriendlyTitle() + ".zip",
     },
     methods: {
         discard(screenshot) {
             this.screenshots.splice(this.screenshots.indexOf(screenshot), 1);
             screenshot.revoke();
-        }
-    }
+        },
+        async saveAll() {
+            const zip = new JSZip();
+            this.screenshots.forEach((it) => {
+                zip.file(it.filename, it.blob);
+            });
+            const blob = await zip.generateAsync({ type: "blob" });
+            const link = this.$el.querySelector(".batch-link");
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            URL.revokeObjectURL(link.href);
+            link.href = "";
+        },
+        discardAll() {
+            this.screenshots.forEach((it) => it.revoke());
+            this.screenshots = [];
+        },
+    },
+    computed: {
+        showBatch() {
+            return this.screenshots.length >= 2;
+        },
+    },
 });
 Observer.videoChange(async () => {
     const video = await SpinQuery.select("#bofqi video");
@@ -126,7 +151,7 @@ Observer.videoChange(async () => {
     }
     screenshotButton.addEventListener("click", () => {
         const screenshot = takeScreenshot(video);
-        screenShotsList.screenshots.push(screenshot);
+        screenShotsList.screenshots.unshift(screenshot);
     });
 });
 export default {

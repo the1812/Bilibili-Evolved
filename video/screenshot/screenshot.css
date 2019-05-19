@@ -31,19 +31,63 @@
     opacity: 1;
 }
 
-.video-screenshot-list,
-.video-screenshot-list *
+
+.video-screenshot-container
+{
+    position: relative;
+    --screenshot-width: 240px;
+    --screenshot-width-negative: calc(0px - var(--screenshot-width));
+    --screenshot-height: 135px;
+    --thumbnail-margin-vertical: 12px;
+    --thumbnail-margin-horizontal: 24px;
+    --screenshot-list-width: calc(2 * var(--thumbnail-margin-horizontal) + var(--screenshot-width));
+}
+.video-screenshot-batch
+{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 20000;
+    display: flex;
+    width: var(--screenshot-list-width);
+    align-items: center;
+    justify-content: space-evenly;
+}
+.video-screenshot-batch button
+{
+    background: #000c;
+    color: #fff;
+    border: none;
+    border-radius: 10px 10px 0 0;
+    font-size: 12pt;
+    cursor: pointer;
+    outline: 0!important;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.video-screenshot-batch button i
+{
+    font-size: 14pt;
+    margin-right: 4px;
+}
+.video-screenshot-container,
+.video-screenshot-container *
 {
     transition: all .2s ease-out;
 }
 .video-screenshot-list
 {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     z-index: 20000;
-    padding: 12px 0;
+    padding: var(--thumbnail-margin-vertical) 0;
     pointer-events: none;
+    height: calc(100% - 2 * var(--thumbnail-margin-vertical) - 48px);
+    width: var(--screenshot-list-width);
+    overflow: auto;
 }
 .video-screenshot-list *
 {
@@ -52,26 +96,26 @@
 .video-screenshot-list-enter
 {
     opacity: 0;
-    transform: translateX(-240px);
+    transform: translateX(var(--screenshot-width-negative));
 }
 .video-screenshot-list-leave-to
 {
     opacity: 0;
-    transform: translateX(240px);
+    transform: translateX(var(--screenshot-width));
 }
 .video-screenshot-thumbnail img
 {
-    max-width: 240px;
+    max-width: var(--screenshot-width);
     display: block;
     background-color: black;
 }
 .video-screenshot-thumbnail
 {
-    margin: 12px 24px;
+    margin: var(--thumbnail-margin-vertical) var(--thumbnail-margin-horizontal);
     position: relative;
     transition: .35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    width: 240px;
-    height: 135px;
+    width: var(--screenshot-width);
+    height: var(--screenshot-height);
     background-color: black;
 }
 @keyframes spinner
