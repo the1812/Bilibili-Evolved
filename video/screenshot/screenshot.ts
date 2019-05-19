@@ -54,9 +54,9 @@ export const takeScreenshot = (video: HTMLVideoElement) =>
 }
 resources.applyStyle("videoScreenshotStyle");
 document.body.insertAdjacentHTML("beforeend", /*html*/`
-    <div class="video-screenshot-list">
+    <transition-group class="video-screenshot-list" name="video-screenshot-list">
         <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename" v-bind:object-url="screenshot.url" v-on:discard="discard(screenshot)" v-bind:key="screenshot.url"></video-screenshot>
-    </div>
+    </transition-group>
 `);
 Vue.component("video-screenshot", {
     props: {
