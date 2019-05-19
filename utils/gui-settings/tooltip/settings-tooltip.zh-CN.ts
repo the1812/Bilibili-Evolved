@@ -101,6 +101,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["hideBanner", `隐藏首页顶部横幅.`],
     ["allowJumpContinue", `当历史记录的集数与当前打开的不一致时, 仍然自动跳转.`],
     ["hideBangumiReviews", `隐藏番剧播放页面里的点评板块.`],
+    ["videoScreenshot", `启用视频快速截图, 将在播放器的时间右边增加一个截图按钮.`],
 ]);
 export default {
     export: { toolTips },

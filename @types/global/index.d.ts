@@ -264,6 +264,7 @@ declare global
         outerWatchlater: boolean,
         hideOldEntry: boolean,
         hideBangumiReviews: boolean,
+        videoScreenshot: boolean,
         cache: {} | { version: string } | undefined,
         latestVersionLink: string,
         currentVersion: string,
