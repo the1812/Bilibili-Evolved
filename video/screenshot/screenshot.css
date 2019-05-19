@@ -20,6 +20,12 @@
     opacity: 0.9;
     transition: all .4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
+.bilibili-player.mode-fullscreen .video-take-screenshot i,
+.bilibili-player.mode-webfullscreen .video-take-screenshot i
+{
+    font-size: 24px;
+}
+
 .video-take-screenshot:hover i
 {
     transform: scale(1.05);

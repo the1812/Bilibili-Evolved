@@ -21,6 +21,15 @@
     transition: all .4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     opacity: 0.9;
 }
+.bilibili-player.mode-fullscreen .frame-playback span,
+.bilibili-player.mode-webfullscreen .frame-playback span
+{
+    transform: scale(1.2);
+}
+.bilibili-player.mode-webfullscreen .frame-playback
+{
+    margin-left: 16px;
+}
 
 .frame-playback.prev-frame i
 {
