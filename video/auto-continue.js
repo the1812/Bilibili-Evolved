@@ -46,7 +46,11 @@ function continuePlay(toastText)
         video.play();
         toastItem.find(".bilibili-player-video-toast-item-jump").remove();
         const restart = $(`<div class="bilibili-player-video-toast-item-jump">从头开始</div>`);
-        restart.appendTo(toastItem).on("click", () => video.currentTime = 0);
+        restart.appendTo(toastItem).on("click", () =>
+        {
+            video.currentTime = 0;
+            toastItem.find(".bilibili-player-video-toast-item-close").get(0).click();
+        });
         toastText.html(`<span>已跳转到上次历史记录</span><span>${match[0]}</span>`);
     }
     else
