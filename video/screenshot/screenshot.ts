@@ -163,7 +163,7 @@ Observer.videoChange(async () =>
 {
     const video = await SpinQuery.select("#bofqi video") as HTMLVideoElement;
     const time = await SpinQuery.select(".bilibili-player-video-time");
-    if (video === null || time === null || document.querySelector(".video-take-screenshot"))
+    if (time === null || document.querySelector(".video-take-screenshot"))
     {
         return;
     }
@@ -171,15 +171,24 @@ Observer.videoChange(async () =>
     <div class="video-take-screenshot" title="截图">
         <span><i class="mdi mdi-camera"></i></span>
     </div>`);
-    const screenshotButton = document.querySelector(".video-take-screenshot");
-    if (screenshotButton === null)
-    {
-        return;
-    }
+    const screenshotButton = document.querySelector(".video-take-screenshot") as HTMLElement;
     screenshotButton.addEventListener("click", () =>
     {
         const screenshot = takeScreenshot(video);
         screenShotsList.screenshots.unshift(screenshot);
+    });
+    document.addEventListener("keydown", e =>
+    {
+        if (document.activeElement && ["input", "textarea"].includes(document.activeElement.nodeName.toLowerCase()))
+        {
+            return;
+        }
+        if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "c")
+        {
+            e.stopPropagation();
+            e.preventDefault();
+            screenshotButton.click();
+        }
     });
 });
 export default {
@@ -188,7 +197,7 @@ export default {
         screenShotsList,
     },
     unload: () => document.querySelectorAll(".bilibili-player-video-control-bottom .video-take-screenshot,.video-screenshot-container")
-        .forEach(it => (it as HTMLElement).style.display = "none !important"),
+        .forEach(it => (it as HTMLElement).setAttribute("style", "display: none !important")),
     reload: () => document.querySelectorAll(".bilibili-player-video-control-bottom .video-take-screenshot,.video-screenshot-container")
-        .forEach(it => (it as HTMLElement).style.display = "flex !important"),
+        .forEach(it => (it as HTMLElement).setAttribute("style", "display: flex !important")),
 };
