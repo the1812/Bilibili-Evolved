@@ -106,7 +106,9 @@
 .abnormal-module .abnormal-item .btn-back,
 .main-ctnr .qualify-drawer .drawer-pop,
 .bangumi-list .bangumi-item .right-info .headline .bangumi-label,
-#pgc-navigate-wrap .ep-box .ep-sub .ep-item
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item,
+.pgc-list .pgc-item .right-info .headline .pgc-label,
+#pgc-navigate-wrap .play-btn
 {
     background-color: #444 !important;
 }
@@ -252,7 +254,9 @@
 .abnormal-module .abnormal-item .txt,
 #navigator .v-switcher-header-item a span,
 .bangumi-list .bangumi-item .right-info .intros .label,
-.bangumi-list .bangumi-item .right-info .intros .value
+.bangumi-list .bangumi-item .right-info .intros .value,
+.pgc-list .pgc-item .right-info .intros .value,
+.pgc-list .pgc-item .right-info .intros .label
 {
     color: #aaa !important;
 }
@@ -364,7 +368,11 @@
 .bangumi-list .bangumi-item .right-info .headline .title,
 .bangumi-list .bangumi-item .right-info .headline .bangumi-label,
 #pgc-navigate-wrap .ep-box .ep-sub .ep-item,
-#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover,
+.pgc-list .pgc-item .right-info .headline .title,
+.pgc-list .pgc-item .right-info .headline .pgc-label,
+#pgc-navigate-wrap .play-btn,
+#pgc-navigate-wrap .play-btn:hover
 {
     color: #eee !important;
 }
@@ -456,7 +464,11 @@
 .s-space #page-fav .fav-sidenav,
 .bangumi-list .bangumi-item,
 .bangumi-list .bangumi-item .right-info .headline .bangumi-label,
-#pgc-navigate-wrap .ep-box .ep-sub .ep-item
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item,
+.pgc-list .pgc-item .right-info .headline .pgc-label,
+.pgc-list .pgc-item,
+#pgc-navigate-wrap .play-btn,
+#pgc-navigate-wrap .play-btn:hover
 {
     border-color: transparent !important;
 }
@@ -498,7 +510,8 @@
 .game-package-wrapper .title-right-link .m-arrow-package,
 .text-article-wrp .head-stat .section .iconarrow,
 .error-related .error.details,
-.video-toolbar-module .share-box .share-btn ul li
+.video-toolbar-module .share-box .share-btn ul li,
+#pgc-navigate-wrap .play-btn .play-btn-svg
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -666,7 +679,8 @@
 .ssr-content .link-tag.activity:hover,
 .ssr-content .link-tag.activity:active,
 #navigator .v-switcher-header-anchor,
-#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover,
+#pgc-navigate-wrap .play-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -739,7 +753,8 @@
 .cntr .sort-cntr .href-all:hover i,
 .cntr .sort-cntr .href-all:hover,
 #navigator .v-switcher-header-item a:hover,
-.bangumi-list .bangumi-item .right-info .headline .title:hover
+.bangumi-list .bangumi-item .right-info .headline .title:hover,
+.pgc-list .pgc-item .right-info .headline .title:hover
 {
     color: var(--theme-color) !important;
 }
