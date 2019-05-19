@@ -104,7 +104,11 @@
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active,
 .info-wrap .feedback-mask .content,
 .abnormal-module .abnormal-item .btn-back,
-.main-ctnr .qualify-drawer .drawer-pop
+.main-ctnr .qualify-drawer .drawer-pop,
+.bangumi-list .bangumi-item .right-info .headline .bangumi-label,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item,
+.pgc-list .pgc-item .right-info .headline .pgc-label,
+#pgc-navigate-wrap .play-btn
 {
     background-color: #444 !important;
 }
@@ -248,7 +252,11 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-info-other,
 .article-list-holder-block .article-list-name,
 .abnormal-module .abnormal-item .txt,
-#navigator .v-switcher-header-item a span
+#navigator .v-switcher-header-item a span,
+.bangumi-list .bangumi-item .right-info .intros .label,
+.bangumi-list .bangumi-item .right-info .intros .value,
+.pgc-list .pgc-item .right-info .intros .value,
+.pgc-list .pgc-item .right-info .intros .label
 {
     color: #aaa !important;
 }
@@ -356,7 +364,15 @@
 .feedback-mask .content .feedback-body .feedback-submit,
 .feedback-mask .content .feedback-body .feedback-submit.active,
 .abnormal-module .abnormal-item .btn-back,
-#navigator .v-switcher-header-item a
+#navigator .v-switcher-header-item a,
+.bangumi-list .bangumi-item .right-info .headline .title,
+.bangumi-list .bangumi-item .right-info .headline .bangumi-label,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover,
+.pgc-list .pgc-item .right-info .headline .title,
+.pgc-list .pgc-item .right-info .headline .pgc-label,
+#pgc-navigate-wrap .play-btn,
+#pgc-navigate-wrap .play-btn:hover
 {
     color: #eee !important;
 }
@@ -445,7 +461,14 @@
 .main-ctnr .qualify-drawer .drawer-pop:after,
 .ssr-content .link-tag.activity:active,
 #navigator .v-switcher-header-item,
-.s-space #page-fav .fav-sidenav
+.s-space #page-fav .fav-sidenav,
+.bangumi-list .bangumi-item,
+.bangumi-list .bangumi-item .right-info .headline .bangumi-label,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item,
+.pgc-list .pgc-item .right-info .headline .pgc-label,
+.pgc-list .pgc-item,
+#pgc-navigate-wrap .play-btn,
+#pgc-navigate-wrap .play-btn:hover
 {
     border-color: transparent !important;
 }
@@ -487,7 +510,8 @@
 .game-package-wrapper .title-right-link .m-arrow-package,
 .text-article-wrp .head-stat .section .iconarrow,
 .error-related .error.details,
-.video-toolbar-module .share-box .share-btn ul li
+.video-toolbar-module .share-box .share-btn ul li,
+#pgc-navigate-wrap .play-btn .play-btn-svg
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -654,7 +678,9 @@
 .abnormal-module .abnormal-item .btn-back:hover,
 .ssr-content .link-tag.activity:hover,
 .ssr-content .link-tag.activity:active,
-#navigator .v-switcher-header-anchor
+#navigator .v-switcher-header-anchor,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover,
+#pgc-navigate-wrap .play-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -726,7 +752,9 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse:hover,
 .cntr .sort-cntr .href-all:hover i,
 .cntr .sort-cntr .href-all:hover,
-#navigator .v-switcher-header-item a:hover
+#navigator .v-switcher-header-item a:hover,
+.bangumi-list .bangumi-item .right-info .headline .title:hover,
+.pgc-list .pgc-item .right-info .headline .title:hover
 {
     color: var(--theme-color) !important;
 }

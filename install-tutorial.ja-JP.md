@@ -9,7 +9,7 @@
 ### Chrome / Edge (Chromium)
 - 背景ぼかし効果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))を使用するには 、このページで手動で有効にする必要があります `chrome://flags/#enable-experimental-web-platform-features`. (For Edge, change `chrome` to `edge`)
 - 背景ぼかし効果は、アニメーションのフレームドロップを引き起こす可能性があります.
-- もし、君の Chrome のバージョンが ≥ 73と画面 DPI/ページのズームが 100% よりも大きい、背景ぼかし効果が正しく表示されない. 詳しい原因はこのページ [Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910) をご覧ください.
+- もし、君の Chrome のバージョンが ≥ 73 と 画面のDPI/ページのズームが 100% よりも大きい、背景ぼかし効果が正しく表示されない. 詳しい原因はこのページ [Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910) をご覧ください.
 ### Firefox
 - 背景ぼかし効果が無効です、詳しい原因はこのページ [Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765) をご覧ください.
 - タッチジェスチャの使用時にアニメーションの現象があります. (原因は CSS `transition`. プロパティ値は現在値ではなく、常に初期値から変更する)
@@ -25,7 +25,7 @@
 ## 2. インストール前の準備
 > ユーザースクリプトマネージャ(user script manager)が既にある場合は、このステップをスキップします.
 
-「Bilibili-Evolved」は、JavaScript code snippetsとして提供されています.ビリビリを访ねる時、個人設定を保持するたびにコードを実行できるように、ユーザースクリプトマネージャーが必要です.
+「Bilibili-Evolved」は、JavaScript code snippetsとして提供されています.ビリビリを访ねる時、個人設定を保持するたびにコード(code)を実行できるように、ユーザースクリプトマネージャーが必要です.
 
 サポートされているマネージャ: [Tampermonkey](https://tampermonkey.net/) と [Violentmonkey](https://violentmonkey.github.io/).
 
@@ -51,18 +51,19 @@
 
 
 ## 4. 翻訳言語を変更する (オプション)
-> 翻訳言语は自分自身のブラウザのデフォルト言语に自动的に设定します.それがなければ、このステップに従って表示言语を変えることができます.
+> 翻訳言语は自分自身のブラウザのデフォルト言语に自动的に设定します.それがなければ、このステップに従って翻訳言语を変えることができます.
 
-ビリビリを访ねると、ページの左側に2つのアイコン(追加機能と设定)があるはずです.アイコンをクリックすることで設定を展開します.
+ビリビリを访ねると、ページの左側に2つのアイコン(追加機能と设定)があるはずです.アイコンをクリックすることで「設定」を展開します.
 
 今の言語が簡体字中国語（デフォルトのフォールバック言語）であると仮定し、 `工具`(道具)を展開し、 `界面翻译`(インタフェース翻訳)を見つけます.
 
 有効にして見たい翻訳言語を選択してからページを更新します.
 
-例えば、翻訳言語として英語を選択する
+例えば、翻訳言語として「英語」を選択する
 
 ![Open settings](images/original/settings-icon.en-US.png)
 ![Change settings](images/original/settings.en-US.png)
 
 ## 5. 最後
-今、準備万端です！ 設定や追加機能を探索して興味深い機能を発見できます.もし、新しい機能とバグを提案したり、私のGitHub repoに報告してください.
+今、準備万端です！ 設定や追加機能を探索して興味深い機能を発見できます.
+もし、新しい機能とバグを提案したり、私のGitHub repoに報告してください.
