@@ -31,7 +31,7 @@
     opacity: 1;
 }
 
-.video-screenshot-list
+.video-screenshot-list,
 .video-screenshot-list *
 {
     transition: all .2s ease-out;
@@ -117,6 +117,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    transition: none;
 }
 .video-screenshot-thumbnail:hover .mask
 {
