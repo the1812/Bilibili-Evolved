@@ -117,6 +117,7 @@
 .video-screenshot-thumbnail img
 {
     max-width: var(--screenshot-width);
+    max-height: var(--screenshot-height);
     display: block;
     background-color: black;
 }
