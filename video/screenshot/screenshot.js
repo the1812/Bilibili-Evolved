@@ -162,4 +162,8 @@ export default {
         takeScreenshot,
         screenShotsList,
     },
+    unload: () => document.querySelectorAll(".video-take-screenshot,.video-screenshot-container")
+        .forEach(it => it.style.display = "none"),
+    reload: () => document.querySelectorAll(".video-take-screenshot,.video-screenshot-container")
+        .forEach(it => it.style.display = "flex"),
 };

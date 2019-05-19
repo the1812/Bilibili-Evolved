@@ -513,6 +513,7 @@ function loadResources()
         removeVideoTopMask: "removeVideoTopMask",
         hideOldEntry: "hideOldEntry",
         hideBangumiReviews: "hideBangumiReviews",
+        videoScreenshot: "videoScreenshot",
     };
     for (const [key, data] of Object.entries(Resource.manifest))
     {
