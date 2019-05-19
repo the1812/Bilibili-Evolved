@@ -217,20 +217,14 @@ const attributes = {
     },
     unload: () =>
     {
-        const navbar = document.querySelector(".custom-navbar");
-        if (navbar !== null)
-        {
-            navbar.style.display = "none";
-        }
+        const navbar = document.querySelectorAll(".custom-navbar,.custom-navbar-settings");
+        navbar.forEach(it => it.style.display = "none");
         resources.removeStyle("customNavbarStyle");
     },
     reload: () =>
     {
-        const navbar = document.querySelector(".custom-navbar");
-        if (navbar !== null)
-        {
-            navbar.style.display = "flex";
-        }
+        const navbar = document.querySelector(".custom-navbar,.custom-navbar-settings");
+        navbar.forEach(it => it.style.display = "flex");
         resources.applyImportantStyle("customNavbarStyle");
     },
 };
@@ -259,6 +253,7 @@ const supportedUrls = [
 ];
 const unsupportedUrls = [
     "/t.bilibili.com/lottery/h5/index/#/result",
+    "/member.bilibili.com/video/upload",
 ]
 if (!supportedUrls.some(it => document.URL.includes(it))
     || unsupportedUrls.some(it => document.URL.includes(it)))

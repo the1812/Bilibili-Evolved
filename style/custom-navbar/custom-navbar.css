@@ -762,6 +762,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     background: var(--navbar-background);
     padding-top: 16px;
     box-shadow: #0002 0 1px 10px 1px;
+    font-size: 16px;
+    line-height: 1.5;
 }
 .custom-navbar-settings.dark
 {
