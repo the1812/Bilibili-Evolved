@@ -470,7 +470,8 @@ body>div.to-top.on,
 .player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control-title,
 #page-playlist-wrap .breadcrumb .item,
 .act-card-wrap .act-card .type,
-.act-card-wrap .act-card .title
+.act-card-wrap .act-card .title,
+.rec-list .info .title
 {
     color: #eee !important;
 }
