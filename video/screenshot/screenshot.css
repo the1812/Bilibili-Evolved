@@ -3,6 +3,11 @@
     padding: 0 6px 0 18px;
     height: 100%;
     cursor: pointer;
+    display: none !important;
+}
+.bilibili-player-video-control-bottom .video-take-screenshot
+{
+    display: flex !important;
 }
 .video-take-screenshot span
 {
