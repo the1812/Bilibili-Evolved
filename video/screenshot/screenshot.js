@@ -1,11 +1,11 @@
 import { getFriendlyTitle } from '../title';
 const canvas = document.createElement("canvas");
 class Screenshot {
-    constructor(video, time) {
+    constructor(video, videoTime) {
         this.url = "";
         this.timeStamp = new Date().getTime();
         this.video = video;
-        this.time = time;
+        this.videoTime = videoTime;
         // this.url = URL.createObjectURL(this.blob);
         this.createUrl();
     }
@@ -26,10 +26,10 @@ class Screenshot {
         }, "image/png");
     }
     get filename() {
-        return `${getFriendlyTitle()} @${this.time.toString()}:${this.timeStamp.toString()}.png`;
+        return `${getFriendlyTitle()} @${this.videoTime.toString()}:${this.timeStamp.toString()}.png`;
     }
     get id() {
-        return this.time.toString() + this.timeStamp.toString();
+        return this.videoTime.toString() + this.timeStamp.toString();
     }
     revoke() {
         URL.revokeObjectURL(this.url);
@@ -115,7 +115,9 @@ const screenShotsList = new Vue({
         async saveAll() {
             const zip = new JSZip();
             this.screenshots.forEach((it) => {
-                zip.file(it.filename, it.blob);
+                zip.file(it.filename, it.blob, {
+                    date: new Date(it.timeStamp),
+                });
             });
             const blob = await zip.generateAsync({ type: "blob" });
             const link = this.$el.querySelector(".batch-link");
@@ -123,6 +125,7 @@ const screenShotsList = new Vue({
             link.click();
             URL.revokeObjectURL(link.href);
             link.href = "";
+            this.discardAll();
         },
         discardAll() {
             this.screenshots.forEach((it) => it.revoke());
