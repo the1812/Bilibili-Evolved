@@ -1096,7 +1096,7 @@ class HistoryList extends VideoList
         methods: {
             requestPopup(component)
             {
-                if (!component.requestedPopup)
+                if (!component.requestedPopup && !component.disabled && !component.active)
                 {
                     this.$set(component, `requestedPopup`, true);
                     component.onPopup && component.onPopup();
