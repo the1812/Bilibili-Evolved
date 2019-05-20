@@ -27,7 +27,12 @@
                     link: "https://github.com/Etherrrr",
                 },
             ].sort(userSorter),
-            participants: [],
+            participants: [
+                {
+                    name: "Fetching participants...",
+                    link: null,
+                },
+            ],
             supporters: [
                 "*飞",
                 "N*v",
