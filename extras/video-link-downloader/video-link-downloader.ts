@@ -5,6 +5,7 @@ import request = require("request");
 import fs = require("fs");
 import ProgressBar = require("progress");
 import "colors";
+import { Stream } from "stream";
 
 interface Fragment
 {
@@ -49,7 +50,7 @@ if (options.parts < 1)
 class Downloader
 {
     static workingDownloader: Downloader | null = null;
-    private progressMap = new Map<request.Request, number>();
+    private progressMap = new Map<request.Request | string, number>();
     private progressBar = new ProgressBar(":percent [:bar]", {
         total: this.inputData.totalSize,
         width: 20,
@@ -74,12 +75,63 @@ class Downloader
     }
     cancelDownload()
     {
-        [...this.progressMap.keys()].forEach(it => it.abort());
+        [...this.progressMap.keys()].forEach(it =>
+        {
+            if (typeof it !== "string")
+            {
+                it.abort();
+            }
+        });
         this.progressBar.terminate();
         const files = fs.readdirSync(".");
         const parts = files.filter(it => it.includes(this.inputData.title));
         parts.forEach(file => fs.unlinkSync(file));
         console.log("已取消下载".blue);
+    }
+    private downloadFragmentPart(url: string, range: string, partFilename: string)
+    {
+        return new Promise((resolve, reject) =>
+        {
+            let stream: fs.WriteStream;
+            const makeRequest = () =>
+            {
+                const req = request({
+                    url: url,
+                    method: "GET",
+                    headers: {
+                        Range: range,
+                        Origin: "https://www.bilibili.com",
+                        Referer: "https://www.bilibili.com",
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
+                    },
+                }).on("complete", response =>
+                {
+                    if (response.statusCode.toString()[0] === "2")
+                    {
+                        resolve(response);
+                    }
+                    else
+                    {
+                        reject(`请求失败: ${response.statusCode}`);
+                    }
+                }).on("data", data =>
+                {
+                    this.progressMap.set(req, this.progressMap.get(req)! + data.length);
+                    this.updateProgress();
+                }).on("error", error =>
+                {
+                    stream.close();
+                    fs.unlinkSync(partFilename);
+                    this.progressMap.delete(req);
+                    this.progressMap.set(makeRequest(), 0);
+                    this.updateProgress();
+                    console.error(`\n片段下载失败: ${error} 重试中...`.yellow);
+                });
+                stream = req.pipe(fs.createWriteStream(partFilename));
+                return req;
+            };
+            this.progressMap.set(makeRequest(), 0);
+        });
     }
     private async downloadFragment(fragment: Fragment, index: number = -1)
     {
@@ -87,7 +139,8 @@ class Downloader
         const title = (index === -1 ? this.inputData.title : this.inputData.title + " - " + index.toString());
         if (fs.existsSync(title + this.extension))
         {
-            this.progressBar.interrupt(`跳过了已存在的文件 ${title + this.extension}`);
+            this.progressBar.terminate();
+            console.log(`跳过了已存在的文件 ${title + this.extension}`);
             return title;
         }
         let startByte = 0;
@@ -95,47 +148,18 @@ class Downloader
         const promises = [];
         while (startByte < fragment.size)
         {
-            const endByte = Math.min(fragment.size - 1, Math.round(startByte + partialLength));
-            const range = `bytes=${startByte}-${endByte}`;
-            promises.push(new Promise((resolve, reject) =>
+            const partFilename = `${title}.part${part}`;
+            if (fs.existsSync(partFilename))
             {
-                const makeRequest = () =>
-                {
-                    const req = request({
-                        url: fragment.url,
-                        method: "GET",
-                        headers: {
-                            Range: range,
-                            Origin: "https://www.bilibili.com",
-                            Referer: "https://www.bilibili.com",
-                            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
-                        },
-                    }).on("complete", response =>
-                    {
-                        if (response.statusCode.toString()[0] === "2")
-                        {
-                            resolve(response);
-                        }
-                        else
-                        {
-                            reject(`请求失败`);
-                        }
-                    }).on("data", data =>
-                    {
-                        this.progressMap.set(req, this.progressMap.get(req)! + data.length);
-                        this.updateProgress();
-                    }).on("error", error =>
-                    {
-                        this.progressMap.delete(req);
-                        this.progressMap.set(makeRequest(), 0);
-                        this.updateProgress();
-                        console.error(`\n片段下载失败: ${error} 重试中...`.yellow);
-                    });
-                    req.pipe(fs.createWriteStream(`${title}.part${part}`));
-                    return req;
-                };
-                this.progressMap.set(makeRequest(), 0);
-            }));
+                this.progressMap.set(partFilename, partialLength);
+                this.updateProgress();
+            }
+            else
+            {
+                const endByte = Math.min(fragment.size - 1, Math.round(startByte + partialLength));
+                const range = `bytes=${startByte}-${endByte}`;
+                promises.push(this.downloadFragmentPart(fragment.url, range, partFilename));
+            }
             startByte = Math.round(startByte + partialLength) + 1;
             part++;
         }
@@ -161,6 +185,11 @@ class Downloader
     private async mergeFragment(title: string, index = -1)
     {
         const dest = title + this.extension;
+        if (!this.progressBar.complete)
+        {
+            this.progressBar.update(1);
+            this.progressBar.terminate();
+        }
         if (fs.existsSync(dest))
         {
             return dest;
