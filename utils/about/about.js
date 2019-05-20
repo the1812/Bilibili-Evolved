@@ -29,12 +29,8 @@
                         link: "https://github.com/Etherrrr",
                     },
                 ].sort(userSorter),
-                participants: [
-                    {
-                        name: "Fetching participants...",
-                        link: null,
-                    },
-                ],
+                fetching: true,
+                participants: [],
                 supporters: [
                     "*飞",
                     "N*v",
@@ -83,7 +79,14 @@
                     let page = 1;
                     do
                     {
-                        issues = await Ajax.getJson(`https://api.github.com/repos/the1812/Bilibili-Evolved/issues?state=all&direction=asc&per_page=100&page=${page}`);
+                        issues = await Ajax.getJson(`https://api.github.com/repos/the1812/Bilibili-Evolved/issues?state=all&direction=asc&per_page=100&page=${page}`)
+                            .catch(() =>
+                            {
+                                issues = [{
+                                    name: "电波无法到达(´･_･`)",
+                                    link: null
+                                }];
+                            });
                         page++;
                         for (const issue of issues)
                         {
@@ -102,8 +105,9 @@
                         return !this.authors.some(it => it.link === link) &&
                             !this.contributors.some(it => it.link === link);
                     }).sort(userSorter);
+                    this.fetching = false;
                 },
             },
         });
-    }, {once: true});
+    }, { once: true });
 })();

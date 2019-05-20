@@ -95,3 +95,30 @@ body.dark .bilibili-evolved-about
 {
     content: ",";
 }
+@keyframes spinner
+{
+    to {transform: translate(-50%, -50%) rotate(360deg);}
+}
+.about-content section.participants .fetching
+{
+    margin-right: 8px;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+}
+.about-content section.participants .fetching::before
+{
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #8884;
+    border-top-color: var(--theme-color);
+    animation: spinner .6s linear infinite;
+}

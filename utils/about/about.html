@@ -21,6 +21,7 @@
         </section>
         <section class="participants">
             <span class="title">Participants</span>
+            <span class="fetching" v-if="fetching"></span>
             <a class="participant" target="_blank" v-for="participant of participants"
                 v-bind:href="participant.link">{{participant.name}}</a>
         </section>
