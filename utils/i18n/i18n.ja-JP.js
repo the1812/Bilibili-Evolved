@@ -346,6 +346,7 @@ export const map = new Map([
     [`下载音频`, `音楽をダウンロード`],
     [`更换勋章`, `勲章を入れ換える`],
     [`更换头衔`, `肩書きを入れ換える`],
+    [`关于`, `About`],
     [`动画`, {
         selector: `.elevator-module .nav-list .item`,
         not: true,
