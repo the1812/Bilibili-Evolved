@@ -42,7 +42,8 @@ body.dark .bilibili-evolved-about
 }
 .about-content
 {
-    padding: 16px 36px 36px 36px;
+    padding: 16px 36px 0 36px;
+    margin-bottom: 36px;
     display: flex;
     flex-direction: column;
     overflow: auto;
