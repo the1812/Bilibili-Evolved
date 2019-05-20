@@ -40,6 +40,34 @@
                 "*杨",
                 "*泽鹏",
             ].sort(nameSorter),
+            websites: [
+                {
+                    name: "GitHub",
+                    link: "https://github.com/the1812/Bilibili-Evolved/",
+                },
+                {
+                    name: "Greasy Fork",
+                    link: "https://greasyfork.org/zh-CN/scripts/373563-bilibili-evolved",
+                },
+            ],
+            components: [
+                {
+                    name: "Vue.js",
+                    link: "https://cn.vuejs.org/index.html",
+                },
+                {
+                    name: "JSZip",
+                    link: "https://stuk.github.io/jszip/",
+                },
+                {
+                    name: "jQuery",
+                    link: "http://jquery.com/",
+                },
+                {
+                    name: "debounce",
+                    link: "https://github.com/component/debounce/",
+                },
+            ],
         },
         mounted()
         {

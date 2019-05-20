@@ -42,9 +42,10 @@ body.dark .bilibili-evolved-about
 }
 .about-content
 {
-    padding: 0 36px;
+    padding: 16px 36px 36px 36px;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 .about-content .name
 {
@@ -69,21 +70,25 @@ body.dark .bilibili-evolved-about
     font-size: 10pt;
     margin-top: 16px;
 }
+.about-content section .title {
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 13pt;
+    letter-spacing: 3px;
+    margin: 8px 0 16px 0;
+}
 .about-content section a,
 .about-content section .supporter
 {
     color: var(--theme-color) !important;
-    margin: 0 2px;
+    margin-right: 8px;
     display: inline-flex;
 }
 .about-content section .supporter
 {
     user-select: none;
-}
-.about-content section a:first-child,
-.about-content section .supporter:first-child
-{
-    margin-left: 6px;
 }
 .about-content section .supporter:not(:last-child)::after,
 .about-content section a:not(:last-child)::after
