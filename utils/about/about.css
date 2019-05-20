@@ -74,6 +74,7 @@ body.dark .bilibili-evolved-about
 {
     color: var(--theme-color) !important;
     margin: 0 2px;
+    display: inline-flex;
 }
 .about-content section .supporter
 {
