@@ -62,8 +62,18 @@ body.dark .bilibili-evolved-about
     font-size: 12pt;
     opacity: 0.6;
     margin-top: 6px;
-    margin-bottom: 36px;
+    margin-bottom: 6px;
     align-self: center;
+}
+.about-content .love
+{
+    font-size: 10pt;
+    margin-bottom: 24px;
+    align-self: center;
+}
+.about-content .love a
+{
+    color: inherit !important;
 }
 .about-content section
 {
