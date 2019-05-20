@@ -308,7 +308,14 @@ function loadSettings()
                 const handlers = settingsChangeHandlers[key];
                 if (handlers)
                 {
-                    handlers.forEach(h => h(newValue, value));
+                    if (key === "useDarkStyle")
+                    {
+                        setTimeout(() => handlers.forEach(h => h(newValue, value)), 200);
+                    }
+                    else
+                    {
+                        handlers.forEach(h => h(newValue, value));
+                    }
                 }
                 const input = document.querySelector(`input[key=${key}]`);
                 if (input !== null)
