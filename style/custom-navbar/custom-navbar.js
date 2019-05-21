@@ -850,7 +850,7 @@ class Activities extends NotifyIframe
                 height: `422px`,
                 lazy: true,
             });
-        this.active = document.URL === "https://t.bilibili.com/";
+        this.active = document.URL.replace(/\?.*$/, "") === "https://t.bilibili.com/";
     }
     getApiUrl()
     {
@@ -975,7 +975,7 @@ class FavoritesList extends VideoList
                 });
             },
         });
-        this.active = document.URL === `https://space.bilibili.com/${userInfo.mid}/favlist`;
+        this.active = document.URL.replace(/\?.*$/, "") === `https://space.bilibili.com/${userInfo.mid}/favlist`;
     }
 }
 class HistoryList extends VideoList
@@ -1023,7 +1023,7 @@ class HistoryList extends VideoList
                 });
             },
         });
-        this.active = document.URL === "https://www.bilibili.com/account/history";
+        this.active = document.URL.replace(/\?.*$/, "") === "https://www.bilibili.com/account/history";
     }
 }
 

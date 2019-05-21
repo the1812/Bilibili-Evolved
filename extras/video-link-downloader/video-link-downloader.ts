@@ -5,7 +5,6 @@ import request = require("request");
 import fs = require("fs");
 import ProgressBar = require("progress");
 import "colors";
-import { Stream } from "stream";
 
 interface Fragment
 {
