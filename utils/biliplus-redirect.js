@@ -27,7 +27,7 @@ export default {
                 }
                 else if (document.URL.includes("/bangumi/"))
                 {
-                    const aid = unsafeWindow.aid || document.querySelector(".av-link").innerText.replace(/[aAvV]/g, "");
+                    const aid = unsafeWindow.aid || document.querySelector(".av-link,.info-sec-av").innerText.replace(/[aAvV]/g, "");
                     location.assign(`https://${host}/video/av${aid}/`);
                 }
                 else
