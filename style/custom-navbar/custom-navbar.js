@@ -3,7 +3,7 @@ if (isIframe())
     return;
 }
 document.body.style.setProperty("--navbar-bounds-padding", `0 ${settings.customNavbarBoundsPadding}%`);
-document.body.style.setProperty("--navbar-blur-opacity", settings.customNavbarBlurOpacity);
+document.body.style.setProperty("--navbar-blur-opacity", settings.customNavbarBlurOpacity || 0.7);
 addSettingsListener("customNavbarBlurOpacity", value =>
 {
     document.body.style.setProperty("--navbar-blur-opacity", value);
