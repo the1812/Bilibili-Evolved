@@ -555,6 +555,7 @@ Resource.manifest = {
             customNavbarShadow: "投影",
             customNavbarCompact: "紧凑布局",
             customNavbarBlur: "背景模糊",
+            customNavbarBlurOpacity: "模糊层不透明度",
             allNavbarFill: "填充其他顶栏",
         },
     },

@@ -255,6 +255,7 @@ declare global
         customNavbarShadow: boolean,
         customNavbarCompact: boolean,
         customNavbarBlur: boolean,
+        customNavbarBlurOpacity: number,
         customNavbarOrder: CustomNavbarOrders,
         customNavbarHidden: Array<keyof CustomNavbarComponents>,
         customNavbarBoundsPadding: number,

@@ -3,6 +3,11 @@ if (isIframe())
     return;
 }
 document.body.style.setProperty("--navbar-bounds-padding", `0 ${settings.customNavbarBoundsPadding}%`);
+document.body.style.setProperty("--navbar-blur-opacity", settings.customNavbarBlurOpacity);
+addSettingsListener("customNavbarBlurOpacity", value =>
+{
+    document.body.style.setProperty("--navbar-blur-opacity", value);
+});
 let showWidget = true;
 const attributes = {
     widget: {
@@ -223,7 +228,7 @@ const attributes = {
     },
     reload: () =>
     {
-        const navbar = document.querySelector(".custom-navbar,.custom-navbar-settings");
+        const navbar = document.querySelectorAll(".custom-navbar,.custom-navbar-settings");
         navbar.forEach(it => it.style.display = "flex");
         resources.applyImportantStyle("customNavbarStyle");
     },

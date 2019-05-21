@@ -16,6 +16,7 @@ export class Validator
                 return new ColorValidator(key);
             case "blurBackgroundOpacity":
             case "customControlBackgroundOpacity":
+            case "customNavbarBlurOpacity":
                 return new OpacityValidator(key);
             case "defaultPlayerMode":
             case "defaultVideoQuality":

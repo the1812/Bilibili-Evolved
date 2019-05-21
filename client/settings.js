@@ -102,6 +102,7 @@ export const settings = {
     customNavbarShadow: true,
     customNavbarCompact: false,
     customNavbarBlur: false,
+    customNavbarBlurOpacity: 0.7,
     customNavbarOrder: { ...customNavbarDefaultOrders },
     customNavbarHidden: [],
     customNavbarBoundsPadding: 5,
