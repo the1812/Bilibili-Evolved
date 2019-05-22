@@ -255,6 +255,7 @@ const supportedUrls = [
     "/big.bilibili.com",
     "/message.bilibili.com",
     "/app.bilibili.com",
+    "/passport.bilibili.com",
 ];
 const unsupportedUrls = [
     "/t.bilibili.com/lottery/h5/index/#/result",
