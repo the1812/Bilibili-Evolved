@@ -380,7 +380,7 @@
 .tabs .customize-tab .tab-title,
 .customize-wrp .steps-title,
 .steps .step-operate .step-bread .step-index,
-.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name:hover
+.title-library-wrap .title-status button
 {
     color: #eee !important;
 }
@@ -776,10 +776,10 @@
 #navigator .v-switcher-header-item a:hover,
 .bangumi-list .bangumi-item .right-info .headline .title:hover,
 .pgc-list .pgc-item .right-info .headline .title:hover,
-.title-library-wrap .title-status button,
 .steps .step-operate .step-bread .step-title.selected,
 .steps .step-operate .dropdown-btn .icon-text,
-.card-warpper .card-warpper-outside .card-item .learn.unlearn
+.card-warpper .card-warpper-outside .card-item .learn.unlearn,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name:hover
 {
     color: var(--theme-color) !important;
 }
