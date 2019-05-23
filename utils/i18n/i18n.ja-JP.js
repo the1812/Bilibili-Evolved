@@ -1,3 +1,4 @@
+const not = true;
 export const map = new Map([
     [`主站`, `ホーム`],
     [`画友`, `アルバム`],
@@ -177,7 +178,11 @@ export const map = new Map([
     [`推荐`, `推薦`],
     [`播放`, `再生`],
     [`播放数量`, `再生数`],
-    [`自动`, `自動`],
+    [`自动`, {
+        not,
+        selector: `.gui-settings-dropdown *`,
+        text: `自動`,
+    }],
     [`暂停`, `一時停止`],
     [`静音`, `消音`],
     [`弹幕`, `弾幕`],
@@ -349,62 +354,62 @@ export const map = new Map([
     [`关于`, `About`],
     [`动画`, {
         selector: `.elevator-module .nav-list .item`,
-        not: true,
+        not,
         text: `アニメ`,
     }],
     [`舞蹈`, {
         selector: `.elevator-module .nav-list .item`,
-        not: true,
+        not,
         text: `ダンス`,
     }],
     [`专栏`, {
         selector: `.elevator-module .nav-list .item`,
-        not: true,
+        not,
         text: `コラム`,
     }],
     [`游戏`, {
         selector: `.elevator-module .nav-list .item`,
-        not: true,
+        not,
         text: `ゲーム`,
     }],
     [`直播`, {
         selector: `.elevator-module .nav-list .item`,
-        not: true,
+        not,
         text: `生放送`,
     }],
     [`数码`, {
         selector: `.elevator-module .nav-list .item`,
-        not: true,
+        not,
         text: `デジタル`,
     }],
     [`纪录片`, {
         selector: `.elevator-module .nav-list .item`,
-        not: true,
+        not,
         text: `ドキュメンタリー`,
     }],
     [`娱乐`, {
         selector: `.elevator-module .nav-list .item`,
-        not: true,
+        not,
         text: `エンタメ`,
     }],
     [`常规`, {
         selector: `.gui-settings-dropdown *`,
-        not: true,
+        not,
         text: `標準`,
     }],
     [`宽屏`, {
         selector: `.gui-settings-dropdown *`,
-        not: true,
+        not,
         text: `シアターモード`,
     }],
     [`网页全屏`, {
         selector: `.gui-settings-dropdown *`,
-        not: true,
+        not,
         text: `ウェブの全画面`,
     }],
     [`全屏`, {
         selector: `.gui-settings-dropdown *`,
-        not: true,
+        not,
         text: `全画面`,
     }],
     [`历史`, [

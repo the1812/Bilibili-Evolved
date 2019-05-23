@@ -1,3 +1,4 @@
+const not = true;
 export const map = new Map([
     [`主站`, `Home`],
     [`画友`, `Photos`],
@@ -21,7 +22,6 @@ export const map = new Map([
     [`排行`, `Ranking`],
     [`图片`, `Photo`],
     [`视频`, `Video`],
-    [`番剧`, `Bangumi`],
     [`音乐`, `Music`],
     [`时尚`, `Fashion`],
     [`电影`, `Movie`],
@@ -167,7 +167,7 @@ export const map = new Map([
     [`点评`, `Reviews`],
     [`评论`, `Comments`],
     [`新番时间表`, `Bangumi Timetable`],
-    [`小黑屋`, `Judge room`],
+    [`小黑屋`, `Judge`],
     [`摄影`, `Photography`],
     [`插画`, `Illustration`],
     [`其他`, `Other`],
@@ -177,7 +177,11 @@ export const map = new Map([
     [`推荐`, `Recommended`],
     [`播放`, `Play`],
     [`播放数量`, `Plays`],
-    [`自动`, `Auto`],
+    [`自动`, {
+        not,
+        selector: `.gui-settings-dropdown *`,
+        text: `Auto`,
+    }],
     [`暂停`, `Pause`],
     [`静音`, `Mute`],
     [`弹幕`, `Danmaku`],
@@ -342,70 +346,56 @@ export const map = new Map([
     [`更换勋章`, `Change your badge`],
     [`更换头衔`, `Change your title`],
     [`关于`, `About`],
-    [`动画`, {
-        selector: `.elevator-module .nav-list .item`,
-        not: true,
-        text: `Anime`,
-    }],
-    [`舞蹈`, {
-        selector: `.elevator-module .nav-list .item`,
-        not: true,
-        text: `Dance`,
-    }],
-    [`专栏`, {
-        selector: `.elevator-module .nav-list .item`,
-        not: true,
-        text: `Column`,
-    }],
-    [`游戏`, {
-        selector: `.elevator-module .nav-list .item`,
-        not: true,
-        text: `Game`,
-    }],
-    [`直播`, {
-        selector: `.elevator-module .nav-list .item`,
-        not: true,
-        text: `Live`,
-    }],
-    [`数码`, {
-        selector: `.elevator-module .nav-list .item`,
-        not: true,
-        text: `Digital`,
-    }],
-    [`纪录片`, {
-        selector: `.elevator-module .nav-list .item`,
-        not: true,
-        text: `Documentary`,
-    }],
-    [`娱乐`, [
+    [`动画`, `Anime`],
+    [`舞蹈`, `Dance`],
+    [`国创`, `China`],
+    [`科技`, `Tech`],
+    [`生活`, `Life`],
+    [`鬼畜`, `Kichiku`],
+    [`专栏`, `Column`],
+    [`游戏`, `Game`],
+    [`直播`, `Live`],
+    [`数码`, `Digital`],
+    [`TV剧`, `TV`],
+    [`番剧`, [
+        `Bangumi`,
         {
             selector: `.elevator-module .nav-list .item`,
-            not: true,
-            text: `Entertainment`,
+            text: `Bangu`,
         },
+    ]],
+    [`纪录片`, [
+        `Documentary`,
         {
-            selector: `.primary-menu .nav-menu li .nav-name`,
+            selector: `.elevator-module .nav-list .item`,
+            text: `Doc`,
+        },
+    ]],
+    [`娱乐`, [
+        `Entertainment`,
+        {
+            selector: `.primary-menu .nav-menu li .nav-name, .elevator-module .nav-list .item`,
             text: `Entmt`
         },
     ]],
     [`常规`, {
         selector: `.gui-settings-dropdown *`,
-        not: true,
+        not,
         text: `Normal`,
     }],
     [`宽屏`, {
         selector: `.gui-settings-dropdown *`,
-        not: true,
+        not,
         text: `Widescreen`,
     }],
     [`网页全屏`, {
         selector: `.gui-settings-dropdown *`,
-        not: true,
+        not,
         text: `Web fullscreen`,
     }],
     [`全屏`, {
         selector: `.gui-settings-dropdown *`,
-        not: true,
+        not,
         text: `Fullscreen`,
     }],
     [`历史`, `History`],
