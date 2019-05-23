@@ -5,7 +5,8 @@
     </div>
     <div class="about-content">
         <p class="name">
-            <img v-bind:src="'https://github.com/the1812/Bilibili-Evolved/raw/' + branch + '/images/logo.png'"
+            <img v-if="branch"
+                v-bind:src="'https://github.com/the1812/Bilibili-Evolved/raw/' + branch + '/images/logo.png'"
                 width="50">
             Bilibili Evolved
         </p>
