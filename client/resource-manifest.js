@@ -525,7 +525,7 @@ Resource.manifest = {
         dropdown: {
             key: "i18nLanguage",
             // items: Object.keys(languageCodeMap),
-            items: [`日本語`, `English`],
+            items: [`日本語`],
         },
     },
     playerFocus: {
