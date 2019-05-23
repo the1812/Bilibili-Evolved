@@ -516,6 +516,7 @@ export const map = new Map([
     [`漫画`, `Manga`],
     [`投影`, `Drop shadow`],
     [`加载中...`, `Loading...`],
+    [`模糊层不透明度`, `Opacity`],
     [`*`, [
         {
             selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
