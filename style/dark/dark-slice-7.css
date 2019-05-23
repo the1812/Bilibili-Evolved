@@ -480,7 +480,8 @@
 .el-picker-panel__body .el-date-table th,
 .el-popper[x-placement^=bottom] .popper__arrow,
 .el-popper[x-placement^=bottom] .popper__arrow:after,
-.customize-wrp .customize-tab
+.customize-wrp .customize-tab,
+.live-category .category
 {
     border-color: transparent !important;
 }
@@ -491,8 +492,7 @@
 .modal .img-clip-wrap .container-box,
 .text-article-wrp .article-card .meta-status .pubdate,
 .pendant-main .final-price,
-.pendant-main .unit-price li,
-.live-category .category
+.pendant-main .unit-price li
 {
     border-color: #aaa !important;
 }
