@@ -44,7 +44,9 @@
 .feedback-mask .content .feedback-body .feedback-submit,
 .info-line .status-attend.status-attend-hover,
 .info-line .status-no-attend,
-.ssr-content .link-tag.activity
+.ssr-content .link-tag.activity,
+.advice-dialog-wrapper .input-style,
+.advice-dialog-wrapper .submit-btn
 {
     background-color: #222 !important;
 }
@@ -110,7 +112,8 @@
 .pgc-list .pgc-item .right-info .headline .pgc-label,
 #pgc-navigate-wrap .play-btn,
 .live-category .category,
-.customize-wrp .customize-tab
+.customize-wrp .customize-tab,
+.advice-dialog-wrapper
 {
     background-color: #444 !important;
 }
@@ -380,7 +383,12 @@
 .tabs .customize-tab .tab-title,
 .customize-wrp .steps-title,
 .steps .step-operate .step-bread .step-index,
-.title-library-wrap .title-status button
+.title-library-wrap .title-status button,
+.advice-dialog-wrapper .advice-title,
+.advice-dialog-wrapper .advice-info,
+.advice-dialog-wrapper .advice-item-title,
+.advice-dialog-wrapper .input-style,
+.advice-dialog-wrapper .advice-dialog-close
 {
     color: #eee !important;
 }
@@ -701,7 +709,8 @@
 #pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover,
 #pgc-navigate-wrap .play-btn:hover,
 .steps .step-operate .step-bread .step-index,
-.ac-article-wrp .tabs-nav .select
+.ac-article-wrp .tabs-nav .select,
+.advice-dialog-wrapper .submit-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
