@@ -559,7 +559,8 @@
 .pendant-pay-close,
 .feedback-mask .content .feedback-body input[type=radio]:checked+.radio-icon,
 .bui-radio .bui-radio-normal .bui-radio-item:hover .bui-radio-icon svg,
-.left-nav-ul .icon-customize.active
+.left-nav-ul .icon-customize.active,
+.left-nav-item:hover .icon-customize
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -698,7 +699,8 @@
 #navigator .v-switcher-header-anchor,
 #pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover,
 #pgc-navigate-wrap .play-btn:hover,
-.steps .step-operate .step-bread .step-index
+.steps .step-operate .step-bread .step-index,
+.ac-article-wrp .tabs-nav .select
 {
     background-color: var(--theme-color) !important;
 }
