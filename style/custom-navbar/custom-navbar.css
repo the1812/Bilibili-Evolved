@@ -244,7 +244,15 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    width: 300px;
+    width: 350px;
+}
+@media screen and (min-height: 1000px)
+{
+    #custom-navbar-home-popup
+    {
+        flex-wrap: nowrap;
+        width: 250px;
+    }
 }
 #custom-navbar-home-popup .category-item
 {
