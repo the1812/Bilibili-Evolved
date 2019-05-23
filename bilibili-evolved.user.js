@@ -1312,6 +1312,9 @@ Resource.manifest = {
     settingsTooltipChinese: {
         path: "settings-tooltip.zh-CN.min.js",
     },
+    settingsTooltipEnglish: {
+        path: "settings-tooltip.en-US.min.js",
+    },
     settingsTooltip: {
         path: "settings-tooltip.loader.min.js",
         dependencies: [
