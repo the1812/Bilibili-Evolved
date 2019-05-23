@@ -469,7 +469,10 @@
 .pgc-list .pgc-item .right-info .headline .pgc-label,
 .pgc-list .pgc-item,
 #pgc-navigate-wrap .play-btn,
-#pgc-navigate-wrap .play-btn:hover
+#pgc-navigate-wrap .play-btn:hover,
+.el-picker-panel__body .el-date-table th,
+.el-popper[x-placement^=bottom] .popper__arrow,
+.el-popper[x-placement^=bottom] .popper__arrow:after
 {
     border-color: transparent !important;
 }
