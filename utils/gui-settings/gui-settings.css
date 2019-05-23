@@ -11,6 +11,7 @@
     width: 32px;
     z-index: 99999;
     transform: translateY(-50%);
+    user-select: none;
 }
 .gui-settings-icon-panel i
 {
