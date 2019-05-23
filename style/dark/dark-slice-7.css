@@ -629,7 +629,8 @@
 .pendant-main .unit-price li:hover,
 .info-line .status-attend,
 .ssr-content .link-tag.activity,
-.live-category .category:hover
+.live-category .category:hover,
+.title-library-wrap .title-status button
 {
     border-color: var(--theme-color) !important;
 }
@@ -762,7 +763,8 @@
 #navigator .v-switcher-header-item a:hover,
 .bangumi-list .bangumi-item .right-info .headline .title:hover,
 .pgc-list .pgc-item .right-info .headline .title:hover,
-.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name:hover
+.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name:hover,
+.title-library-wrap .title-status button
 {
     color: var(--theme-color) !important;
 }
