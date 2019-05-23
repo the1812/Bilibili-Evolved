@@ -108,7 +108,8 @@
 .bangumi-list .bangumi-item .right-info .headline .bangumi-label,
 #pgc-navigate-wrap .ep-box .ep-sub .ep-item,
 .pgc-list .pgc-item .right-info .headline .pgc-label,
-#pgc-navigate-wrap .play-btn
+#pgc-navigate-wrap .play-btn,
+.live-category .category
 {
     background-color: #444 !important;
 }
@@ -483,7 +484,8 @@
 .modal .img-clip-wrap .container-box,
 .text-article-wrp .article-card .meta-status .pubdate,
 .pendant-main .final-price,
-.pendant-main .unit-price li
+.pendant-main .unit-price li,
+.live-category .category
 {
     border-color: #aaa !important;
 }
@@ -626,7 +628,8 @@
 .pendant-main .unit-price li.active,
 .pendant-main .unit-price li:hover,
 .info-line .status-attend,
-.ssr-content .link-tag.activity
+.ssr-content .link-tag.activity,
+.live-category .category:hover
 {
     border-color: var(--theme-color) !important;
 }
