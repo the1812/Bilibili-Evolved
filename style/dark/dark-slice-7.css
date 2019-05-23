@@ -372,7 +372,8 @@
 .pgc-list .pgc-item .right-info .headline .title,
 .pgc-list .pgc-item .right-info .headline .pgc-label,
 #pgc-navigate-wrap .play-btn,
-#pgc-navigate-wrap .play-btn:hover
+#pgc-navigate-wrap .play-btn:hover,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name
 {
     color: #eee !important;
 }
@@ -754,7 +755,8 @@
 .cntr .sort-cntr .href-all:hover,
 #navigator .v-switcher-header-item a:hover,
 .bangumi-list .bangumi-item .right-info .headline .title:hover,
-.pgc-list .pgc-item .right-info .headline .title:hover
+.pgc-list .pgc-item .right-info .headline .title:hover,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name:hover
 {
     color: var(--theme-color) !important;
 }
