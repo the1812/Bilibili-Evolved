@@ -388,7 +388,10 @@
 .advice-dialog-wrapper .advice-info,
 .advice-dialog-wrapper .advice-item-title,
 .advice-dialog-wrapper .input-style,
-.advice-dialog-wrapper .advice-dialog-close
+.advice-dialog-wrapper .advice-dialog-close,
+.right-content .customize-wrp .title,
+.right-content .reward-wrp .reward-title,
+.card-warpper .card-warpper-outside .card-item .info-text
 {
     color: #eee !important;
 }
