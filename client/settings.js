@@ -206,7 +206,7 @@ export function loadSettings()
                     {
                         input.checked = newValue;
                     }
-                    else if (input.type === "text")
+                    else if (input.type === "text" && !input.parentElement.classList.contains("gui-settings-dropdown"))
                     {
                         input.value = newValue;
                     }

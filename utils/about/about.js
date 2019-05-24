@@ -67,7 +67,7 @@
         },
         mounted()
         {
-            document.querySelector(".bilibili-evolved-about").addEventListener("be:load", () =>
+            document.querySelector(".bilibili-evolved-about").addEventListener("be:about-load", () =>
             {
                 this.init();
             }, { once: true });

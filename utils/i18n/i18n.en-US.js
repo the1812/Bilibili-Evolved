@@ -180,11 +180,6 @@ export const map = new Map([
     [`推荐`, `Recommended`],
     [`播放`, `Play`],
     [`播放数量`, `Plays`],
-    [`自动`, {
-        not,
-        selector: `.gui-settings-dropdown *`,
-        text: `Auto`,
-    }],
     [`暂停`, `Pause`],
     [`静音`, `Mute`],
     [`弹幕`, `Danmaku`],
@@ -381,26 +376,11 @@ export const map = new Map([
             text: `Entmt`
         },
     ]],
-    [`常规`, {
-        selector: `.gui-settings-dropdown *`,
-        not,
-        text: `Normal`,
-    }],
-    [`宽屏`, {
-        selector: `.gui-settings-dropdown *`,
-        not,
-        text: `Widescreen`,
-    }],
-    [`网页全屏`, {
-        selector: `.gui-settings-dropdown *`,
-        not,
-        text: `Web fullscreen`,
-    }],
-    [`全屏`, {
-        selector: `.gui-settings-dropdown *`,
-        not,
-        text: `Fullscreen`,
-    }],
+    [`自动`, `Auto`],
+    [`常规`, `Normal`],
+    [`宽屏`, `Widescreen`],
+    [`网页全屏`, `Web fullscreen`],
+    [`全屏`, `Fullscreen`],
     [`历史`, `History`],
     [`登录`, `Log in`],
     [`注册`, `Sign up`],

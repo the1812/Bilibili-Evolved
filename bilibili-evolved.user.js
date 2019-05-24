@@ -325,7 +325,7 @@ function loadSettings()
                     {
                         input.checked = newValue;
                     }
-                    else if (input.type === "text")
+                    else if (input.type === "text" && !input.parentElement.classList.contains("gui-settings-dropdown"))
                     {
                         input.value = newValue;
                     }
@@ -2271,18 +2271,20 @@ class ResourceManager
             else
             {
                 const dropdownInput = await SpinQuery.select(`.gui-settings-dropdown input[key=${info.key}]`);
+                dropdownInput.value = settings[info.key];
+                dropdownInput.setAttribute("data-name", settings[info.key]);
                 const dropdown = dropdownInput.parentElement;
                 const list = dropdown.querySelector("ul");
                 const input = dropdown.querySelector("input");
                 info.items.forEach(itemHtml =>
                 {
-                    list.insertAdjacentHTML("beforeend", `<li>${itemHtml}</li>`);
+                    list.insertAdjacentHTML("beforeend", `<li data-name="${itemHtml}">${itemHtml}</li>`);
                 });
                 list.querySelectorAll("li").forEach(li => li.addEventListener("click", () =>
                 {
                     input.value = li.innerText;
-                    raiseEvent(input, "input");
-                    raiseEvent(input, "change");
+                    input.setAttribute("data-name", li.getAttribute("data-name"));
+                    settings[info.key] = li.getAttribute("data-name");
                 }));
             }
         }

@@ -18,7 +18,7 @@ if (document.querySelector(".gui-settings-icon-panel") === null)
         else
         {
             document.querySelectorAll(".bilibili-evolved-about,.gui-settings-mask").forEach(it => it.classList.add("opened"));
-            raiseEvent(document.querySelector(".bilibili-evolved-about"), "be:load");
+            raiseEvent(document.querySelector(".bilibili-evolved-about"), "be:about-load");
         }
     });
     document.querySelector(".gui-settings-widgets").addEventListener("click", () =>

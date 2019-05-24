@@ -302,12 +302,14 @@ function setDisplayNames()
     new ThemeColors().setupDom();
 
     const boxes = document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box");
-    document.querySelector(".gui-settings-icon-panel").addEventListener("mouseover", () =>
+    const iconPanel = document.querySelector(".gui-settings-icon-panel");
+    iconPanel.addEventListener("mouseover", () =>
     {
+        raiseEvent(iconPanel, "be:load");
         boxes.forEach(it => it.classList.add("loaded"));
         inputs = [...document.querySelectorAll("input[key]")];
         checkBoxes = inputs.filter(it => it.type === "checkbox");
-        textBoxes = inputs.filter(it => it.type === "text");
+        textBoxes = inputs.filter(it => it.type === "text" && !it.parentElement.classList.contains("gui-settings-dropdown"));
         setupEvents();
         checkOfflineData();
         syncGui();
