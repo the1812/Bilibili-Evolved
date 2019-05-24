@@ -489,7 +489,7 @@ export const map = new Map([
     [`消息设置`, `Settings`],
     [`消息提醒样式`, `Style`],
     [`（不含应援团）`, `（Support groups are not included）`],
-    [`红点`, `Red point`],
+    [`红点`, `Red dot`],
     [`不提醒`, `Don't show`],
     [`推荐位申请`, `Apply for recommendation`],
     [`直播看板娘`, `Live showgirl`],
