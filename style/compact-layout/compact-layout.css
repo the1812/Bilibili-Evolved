@@ -169,7 +169,8 @@ body.dark .primary-menu .nav-menu .side-nav .side-link i
 .mod-3 .l-item,
 .carousel-wrapper,
 .video-item-biref .biref-img,
-.game-groom-box-m .game-groom-m
+.game-groom-box-m .game-groom-m,
+.rank-item .content .img .cover img
 {
     border-radius: 0 !important;
 }
@@ -265,6 +266,29 @@ body.dark .primary-menu .nav-menu .side-nav .side-link i
 {
     top: 36px;
     padding-top: 4px;
+}
+.main-inner
+{
+    width: 1160px;
+}
+.rank-item .content .img .cover
+{
+    width: 180px;
+    height: 110px;
+}
+.rank-item .content
+{
+    padding: 0 0 0 70px;
+    height: 110px;
+}
+.rank-item .content .info
+{
+    padding-top: 8px;
+    margin-left: 192px;
+}
+.rank-item .content .info .pts
+{
+    bottom: 50px;
 }
 
 @media screen and (min-width: 1300px)

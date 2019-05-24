@@ -417,17 +417,7 @@ Resource.manifest = {
     },
     compactLayout: {
         path: "compact-layout.min.js",
-        style:
-        {
-            important: true,
-            condition()
-            {
-                return [
-                    "https://www.bilibili.com/",
-                    "https://www.bilibili.com/watchlater/#/list",
-                ].indexOf(location.href.replace(location.search, '')) !== -1;
-            },
-        },
+        style: true,
         displayNames: {
             compactLayout: "首页使用紧凑布局",
         }
