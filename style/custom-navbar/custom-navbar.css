@@ -234,7 +234,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar a,
 .custom-navbar a:hover
 {
-    color: inherit;
+    color: inherit !important;
     text-decoration: none;
 }
 
