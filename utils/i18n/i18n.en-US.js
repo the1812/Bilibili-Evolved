@@ -497,6 +497,20 @@ export const map = new Map([
     [`投影`, `Drop shadow`],
     [`加载中...`, `Loading...`],
     [`模糊层不透明度`, `Opacity`],
+    [`新版`, [
+        `New version`,
+        {
+            selector: `.gui-settings-dropdown-container *`,
+            text: `New`,
+        }
+    ]],
+    [`旧版`, [
+        `Old version`,
+        {
+            selector: `.gui-settings-dropdown-container *`,
+            text: `Old`,
+        }
+    ]],
     [`*`, [
         {
             selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

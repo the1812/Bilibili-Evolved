@@ -447,6 +447,15 @@ li.category.folded i.icon-arrow
     font-size: 16px;
     background-color: transparent;
 }
+.gui-settings-dropdown input[key='defaultPlayerMode']
+{
+    max-width: 120px;
+}
+.gui-settings-dropdown input[key='defaultPlayerLayout'],
+.gui-settings-dropdown input[key='defaultBangumiLayout']
+{
+    max-width: 50px;
+}
 
 .gui-settings-mask
 {
