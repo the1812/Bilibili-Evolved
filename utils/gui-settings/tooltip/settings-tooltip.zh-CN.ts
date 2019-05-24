@@ -22,7 +22,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["framePlayback", `在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
     ["playerFocus", `进入视频/番剧页面时, 自动定位到播放器.`],
     ["playerFocusOffset", `定位时的竖直偏移量, 单位为像素(px).`],
-    ["customStyleColor", `设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],
+    ["customStyleColor", `设定顶栏(自定义顶栏启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],
     ["useNewStyle", `<span>主要</span>会改变顶栏的样式, 并有一些其他地方的界面微调:
 - 为播放器增加主题色投影
 - 可控制顶栏对横幅的透明度
