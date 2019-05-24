@@ -126,6 +126,10 @@
 {
     margin-right: 32px !important;
 }
+.follow-btn>span>span
+{
+    margin-left: 8px;
+}
 
 .dynamic-m .dyn_menu .line,
 .tab-bar .line,
