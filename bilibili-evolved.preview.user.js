@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.8.2
+// @version      1.8.3
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1784,7 +1784,7 @@ Resource.manifest = {
         dropdown: {
             key: "i18nLanguage",
             // items: Object.keys(languageCodeMap),
-            items: [`日本語`],
+            items: [`日本語`, `English`],
         },
     },
     playerFocus: {
