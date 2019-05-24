@@ -283,6 +283,7 @@ export const map = new Map([
     [`填充其他顶栏`, `他の頂欄を埋める`],
     [`紧凑布局`, `コンパクトなレイアウト`],
     [`背景模糊`, `背景がぼやける`],
+    [`模糊层不透明度`, `ぼかしの不透明度`],
     [`夜间模式`, `ダークテーマ`],
     [`夜间模式计划时段`, `ダークテーマ计画タイム`],
     [`起始时间`, `開始時刻`],
@@ -348,6 +349,7 @@ export const map = new Map([
     [`更换勋章`, `勲章を入れ換える`],
     [`更换头衔`, `肩書きを入れ換える`],
     [`关于`, `About`],
+    [`加载中...`, `ローディング中`],
     [`动画`, {
         selector: `.elevator-module .nav-list .item`,
         not,
@@ -514,6 +516,14 @@ export const map = new Map([
         {
             selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
             text: `何もないよ =￣ω￣=`,
+        },
+        {
+            selector: `.custom-navbar-settings .paddings-desc`,
+            text: `エッジの間隔：両側のエッジの間隔をパーセントで設定します.100％は頂欄全体の幅です.許容設定範囲は0％〜40％です.`,
+        },
+        {
+            selector: `.custom-navbar-settings .orders-desc`,
+            text: `順序と表示：左側の棒状アイコン上でドラッグすると順序が変更されるか、名前を押しながらドラッグすることで順序を変更することができます。右側の目のアイコンをクリックすると表示され、非表示になります.`,
         },
         /* CSS translation here */
 
