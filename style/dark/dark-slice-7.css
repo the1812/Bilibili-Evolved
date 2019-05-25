@@ -46,9 +46,7 @@
 .info-line .status-no-attend,
 .ssr-content .link-tag.activity,
 .advice-dialog-wrapper .input-style,
-.advice-dialog-wrapper .submit-btn,
-.r-con .members-info .up-card .attention--not,
-.r-con .members-info .up-card .attention
+.advice-dialog-wrapper .submit-btn
 {
     background-color: #222 !important;
 }
@@ -120,7 +118,9 @@
 {
     background-color: #444 !important;
 }
-.r-con .members-info__header
+.r-con .members-info__header,
+.r-con .members-info .up-card .attention--not,
+.r-con .members-info .up-card .attention
 {
     background-color: #555 !important;
 }
