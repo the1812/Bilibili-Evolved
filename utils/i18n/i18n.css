@@ -194,6 +194,13 @@
 {
     overflow-wrap: break-word;
 }
+.info-section .area-text>a
+{
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
 
 html[lang='ja-JP'] .player-auxiliary-area .danmaku-info-row-block::after
 {

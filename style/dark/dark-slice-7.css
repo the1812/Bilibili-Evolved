@@ -139,7 +139,8 @@
 .view-later-module .video-box-module,
 .view-later-module .up-info-module,
 .view-later-module .video-info-module .number .fav i,
-.main-ctnr .qualify-drawer .draw-list
+.main-ctnr .qualify-drawer .draw-list,
+.header-info-ctnr .normal-mode .area-link:active
 {
     background-color: transparent !important;
 }
