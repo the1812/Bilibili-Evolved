@@ -46,7 +46,9 @@
 .info-line .status-no-attend,
 .ssr-content .link-tag.activity,
 .advice-dialog-wrapper .input-style,
-.advice-dialog-wrapper .submit-btn
+.advice-dialog-wrapper .submit-btn,
+.r-con .members-info .up-card .attention--not,
+.r-con .members-info .up-card .attention
 {
     background-color: #222 !important;
 }
@@ -113,9 +115,14 @@
 #pgc-navigate-wrap .play-btn,
 .live-category .category,
 .customize-wrp .customize-tab,
-.advice-dialog-wrapper
+.advice-dialog-wrapper,
+.r-con .members-info__container
 {
     background-color: #444 !important;
+}
+.r-con .members-info__header
+{
+    background-color: #555 !important;
 }
 .follow-main .list-item:hover
 {
@@ -153,7 +160,9 @@
 .text-article-wrp .head-stat .section .count,
 .view-later-module .read-list-modal-component .mask,
 .view-later-module .video-info-module .number .coin i,
-.view-later-module .video-info-module .number .fav i
+.view-later-module .video-info-module .number .fav i,
+#member-container:hover::-webkit-scrollbar,
+#member-container:hover::-webkit-scrollbar-track
 {
     background: transparent !important;
 }
@@ -263,7 +272,8 @@
 .bangumi-list .bangumi-item .right-info .intros .value,
 .pgc-list .pgc-item .right-info .intros .value,
 .pgc-list .pgc-item .right-info .intros .label,
-.steps .step-operate
+.steps .step-operate,
+.r-con .members-info .up-card .info-title
 {
     color: #aaa !important;
 }
@@ -392,7 +402,12 @@
 .advice-dialog-wrapper .advice-dialog-close,
 .right-content .customize-wrp .title,
 .right-content .reward-wrp .reward-title,
-.card-warpper .card-warpper-outside .card-item .info-text
+.card-warpper .card-warpper-outside .card-item .info-text,
+.r-con .members-info__header .title,
+.r-con .members-info__header .btn,
+.r-con .members-info .up-card .info-name,
+.r-con .members-info .up-card .attention--not,
+.r-con .members-info .up-card .attention
 {
     color: #eee !important;
 }
@@ -493,7 +508,8 @@
 .el-popper[x-placement^=bottom] .popper__arrow,
 .el-popper[x-placement^=bottom] .popper__arrow:after,
 .customize-wrp .customize-tab,
-.live-category .category
+.live-category .category,
+.r-con .members-info .up-card .attention--not:hover
 {
     border-color: transparent !important;
 }
@@ -714,7 +730,8 @@
 #pgc-navigate-wrap .play-btn:hover,
 .steps .step-operate .step-bread .step-index,
 .ac-article-wrp .tabs-nav .select,
-.advice-dialog-wrapper .submit-btn:hover
+.advice-dialog-wrapper .submit-btn:hover,
+.r-con .members-info .up-card .attention--not:hover
 {
     background-color: var(--theme-color) !important;
 }

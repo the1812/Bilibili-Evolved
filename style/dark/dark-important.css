@@ -154,7 +154,8 @@ blockquote .color-yellow-04,
 .live-skin-normal-a-text:active,
 .up-info .u-info .name .username.is-vip:hover,
 #app .sticky-bar .bar-content .message:hover,
-.el-select-dropdown__item.selected
+.el-select-dropdown__item.selected,
+.members-info .up-card .info-name.is-vip:hover
 {
     color: var(--theme-color) !important;
 }
