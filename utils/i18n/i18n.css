@@ -208,6 +208,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
+    word-break: keep-all;
 }
 
 html[lang='ja-JP'] .player-auxiliary-area .danmaku-info-row-block::after
