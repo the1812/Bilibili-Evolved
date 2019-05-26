@@ -47,7 +47,8 @@
 .ssr-content .link-tag.activity,
 .advice-dialog-wrapper .input-style,
 .advice-dialog-wrapper .submit-btn,
-.home-pc .dialog .footer .apply-btn
+.home-pc .dialog .footer .apply-btn,
+.regist .toolbox
 {
     background-color: #222 !important;
 }
@@ -418,7 +419,10 @@
 .home-pc .application .application-body .application-item .p1,
 .home-pc .application .application-body button,
 .home-pc .dialog .header h1,
-.home-pc .dialog .footer .apply-btn
+.home-pc .dialog .footer .apply-btn,
+.regist .reg-main-title,
+.regist .reg-main-text,
+.regist .toolbox .reg-tip
 {
     color: #eee !important;
 }
