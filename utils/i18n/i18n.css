@@ -108,6 +108,14 @@
 {
     padding-top: 15px !important;
 }
+.cc-nav-wrp .nav-item
+{
+    padding: 0 0 0 40px !important;
+}
+.cc-nav-wrp .sub-nav a
+{
+    padding: 0 !important;
+}
 .player-auxiliary-area .player-auxiliary-filter-menu
 {
     margin: 0 !important;
