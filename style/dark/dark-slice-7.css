@@ -46,13 +46,15 @@
 .info-line .status-no-attend,
 .ssr-content .link-tag.activity,
 .advice-dialog-wrapper .input-style,
-.advice-dialog-wrapper .submit-btn
+.advice-dialog-wrapper .submit-btn,
+.home-pc .dialog .footer .apply-btn
 {
     background-color: #222 !important;
 }
 .content .link-tag-box,
 .content .tab-selector-wrap,
-.live-user .user-item .item-right .tags>span
+.live-user .user-item .item-right .tags>span,
+.home-pc .application .application-body .btn-color
 {
     background-color: #333 !important;
 }
@@ -114,7 +116,8 @@
 .live-category .category,
 .customize-wrp .customize-tab,
 .advice-dialog-wrapper,
-.r-con .members-info__container
+.r-con .members-info__container,
+.home-pc .application
 {
     background-color: #444 !important;
 }
@@ -273,7 +276,10 @@
 .pgc-list .pgc-item .right-info .intros .value,
 .pgc-list .pgc-item .right-info .intros .label,
 .steps .step-operate,
-.r-con .members-info .up-card .info-title
+.r-con .members-info .up-card .info-title,
+.home-pc .application .application-header p,
+.home-pc .application .application-body .fjw-tip,
+.home-pc .application .application-foot p
 {
     color: #aaa !important;
 }
@@ -407,7 +413,12 @@
 .r-con .members-info__header .btn,
 .r-con .members-info .up-card .info-name,
 .r-con .members-info .up-card .attention--not,
-.r-con .members-info .up-card .attention
+.r-con .members-info .up-card .attention,
+.home-pc .application .application-header .title span,
+.home-pc .application .application-body .application-item .p1,
+.home-pc .application .application-body button,
+.home-pc .dialog .header h1,
+.home-pc .dialog .footer .apply-btn
 {
     color: #eee !important;
 }
@@ -509,7 +520,8 @@
 .el-popper[x-placement^=bottom] .popper__arrow:after,
 .customize-wrp .customize-tab,
 .live-category .category,
-.r-con .members-info .up-card .attention--not:hover
+.r-con .members-info .up-card .attention--not:hover,
+.home-pc .application .application-foot
 {
     border-color: transparent !important;
 }
@@ -731,7 +743,9 @@
 .steps .step-operate .step-bread .step-index,
 .ac-article-wrp .tabs-nav .select,
 .advice-dialog-wrapper .submit-btn:hover,
-.r-con .members-info .up-card .attention--not:hover
+.r-con .members-info .up-card .attention--not:hover,
+.home-pc .application .application-body .btn-color:hover,
+.home-pc .dialog .footer .apply-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -809,7 +823,8 @@
 .steps .step-operate .step-bread .step-title.selected,
 .steps .step-operate .dropdown-btn .icon-text,
 .card-warpper .card-warpper-outside .card-item .learn.unlearn,
-.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name:hover
+.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name:hover,
+.home-pc .application .application-body .fjw-tip li:first-child
 {
     color: var(--theme-color) !important;
 }
