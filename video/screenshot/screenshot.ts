@@ -37,11 +37,18 @@ class Screenshot
     }
     get filename()
     {
-        return `${getFriendlyTitle()} @${this.videoTime.toString()}:${this.timeStamp.toString()}.png`;
+        return `${getFriendlyTitle()} @${this.time}-${this.timeStamp.toString()}.png`;
     }
     get id()
     {
         return this.videoTime.toString() + this.timeStamp.toString();
+    }
+    get time()
+    {
+        const hour = Math.trunc(this.videoTime / 3600).toString();
+        const minute = Math.trunc(this.videoTime / 60).toString();
+        const second = (this.videoTime % 60).toFixed(2);
+        return `${hour.padStart(2, "0")}:${minute.padStart(2, "0")}:${second.padStart(5, "0")}`;
     }
     revoke()
     {
@@ -57,7 +64,7 @@ resources.applyStyle("videoScreenshotStyle");
 document.body.insertAdjacentHTML("beforeend", /*html*/`
     <div class="video-screenshot-container">
         <transition-group class="video-screenshot-list" name="video-screenshot-list" tag="div">
-            <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename" v-bind:object-url="screenshot.url" v-on:discard="discard(screenshot)" v-bind:key="screenshot.id"></video-screenshot>
+            <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename" v-bind:object-url="screenshot.url" v-bind:time="screenshot.time" v-on:discard="discard(screenshot)" v-bind:key="screenshot.id"></video-screenshot>
         </transition-group>
         <div v-show="showBatch" class="video-screenshot-batch">
             <a class="batch-link" style="display:none" v-bind:download="batchFilename"></a>
@@ -74,6 +81,7 @@ Vue.component("video-screenshot", {
     props: {
         objectUrl: String,
         filename: String,
+        time: String,
     },
     template: /*html*/`
         <div class="video-screenshot-thumbnail">
@@ -82,6 +90,7 @@ Vue.component("video-screenshot", {
                 <a class="link" style="display:none" v-bind:href="objectUrl" v-bind:download="filename"></a>
                 <button v-on:click="save" class="save" title="保存"><i class="mdi mdi-content-save-outline"></i></button>
                 <button v-on:click="discard" title="丢弃" class="discard"><i class="mdi mdi-delete-forever-outline"></i></button>
+                <span class="time">{{time}}</span>
             </div>
             <div class="loading" v-else>
             </div>

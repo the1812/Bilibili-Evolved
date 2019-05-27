@@ -183,6 +183,14 @@
 {
     opacity: 1;
 }
+.video-screenshot-thumbnail .mask .time
+{
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    font-size: 10pt;
+}
 .video-screenshot-thumbnail .mask button
 {
     background: #000a;
