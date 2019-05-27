@@ -151,7 +151,8 @@
 .view-later-module .up-info-module,
 .view-later-module .video-info-module .number .fav i,
 .main-ctnr .qualify-drawer .draw-list,
-.header-info-ctnr .normal-mode .area-link:active
+.header-info-ctnr .normal-mode .area-link:active,
+.tab-bg.w-100.bg-white
 {
     background-color: transparent !important;
 }
@@ -525,7 +526,8 @@
 .customize-wrp .customize-tab,
 .live-category .category,
 .r-con .members-info .up-card .attention--not:hover,
-.home-pc .application .application-foot
+.home-pc .application .application-foot,
+.feed-topic .card
 {
     border-color: transparent !important;
 }
