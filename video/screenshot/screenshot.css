@@ -177,6 +177,7 @@
     justify-content: space-around;
     align-items: center;
     transition: none;
+    pointer-events: none;
 }
 .video-screenshot-thumbnail:hover .mask
 {
@@ -192,5 +193,6 @@
     cursor: pointer;
     width: 48px;
     height: 48px;
+    pointer-events: initial;
     outline: none !important;
 }
