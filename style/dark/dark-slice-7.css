@@ -50,7 +50,8 @@
 .home-pc .dialog .footer .apply-btn,
 .regist .toolbox,
 .song-info .info-wrap .type-list .item-list .type-item,
-.song-info .info-wrap .type-list .musicHoverType
+.song-info .info-wrap .type-list .musicHoverType,
+.protocol-modal .modal-wrap .modal-content .text-content
 {
     background-color: #222 !important;
 }
@@ -535,7 +536,8 @@
 .r-con .members-info .up-card .attention--not:hover,
 .home-pc .application .application-foot,
 .feed-topic .card,
-.song-info .info-wrap .type-list .item-list .type-item
+.song-info .info-wrap .type-list .item-list .type-item,
+.protocol-modal .cancel-btn
 {
     border-color: transparent !important;
 }
