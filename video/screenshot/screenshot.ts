@@ -52,25 +52,6 @@ export const takeScreenshot = (video: HTMLVideoElement) =>
 {
     const time = video.currentTime;
     return new Screenshot(video, time);
-    // return new Promise<Screenshot>((resolve, reject) =>
-    // {
-    //     const context = canvas.getContext("2d");
-    //     if (canvas === null || context === null)
-    //     {
-    //         reject("视频截图失败: canvas 未创建或创建失败.");
-    //         return;
-    //     }
-    //     context.drawImage(video, 0, 0);
-    //     canvas.toBlob(blob =>
-    //     {
-    //         if (blob === null)
-    //         {
-    //             reject("视频截图失败: 创建 blob 失败.");
-    //             return;
-    //         }
-    //         resolve(new Screenshot(blob, time));
-    //     }, "image/png");
-    // });
 }
 resources.applyStyle("videoScreenshotStyle");
 document.body.insertAdjacentHTML("beforeend", /*html*/`
@@ -159,18 +140,35 @@ const screenShotsList = new Vue({
         },
     },
 });
+const buttonHtml = /*html*/`
+    <div class="video-take-screenshot" title="截图">
+        <span><i class="mdi mdi-camera"></i></span>
+    </div>`;
 Observer.videoChange(async () =>
 {
     const video = await SpinQuery.select("#bofqi video") as HTMLVideoElement;
-    const time = await SpinQuery.select(".bilibili-player-video-time");
-    if (time === null || document.querySelector(".video-take-screenshot"))
+    if (video === null)
     {
         return;
     }
-    time.insertAdjacentHTML("afterend", /*html*/`
-    <div class="video-take-screenshot" title="截图">
-        <span><i class="mdi mdi-camera"></i></span>
-    </div>`);
+    if (settings.framePlayback)
+    {
+        const frameButton = await SpinQuery.select(".frame-playback.prev-frame");
+        if (frameButton === null || document.querySelector(".video-take-screenshot"))
+        {
+            return;
+        }
+        frameButton.insertAdjacentHTML("beforebegin", buttonHtml);
+    }
+    else
+    {
+        const time = await SpinQuery.select(".bilibili-player-video-time");
+        if (time === null || document.querySelector(".video-take-screenshot"))
+        {
+            return;
+        }
+        time.insertAdjacentHTML("afterend", buttonHtml);
+    }
     const screenshotButton = document.querySelector(".video-take-screenshot") as HTMLElement;
     screenshotButton.addEventListener("click", () =>
     {
