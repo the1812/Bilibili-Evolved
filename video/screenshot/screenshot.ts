@@ -170,8 +170,9 @@ Observer.videoChange(async () =>
         time.insertAdjacentHTML("afterend", buttonHtml);
     }
     const screenshotButton = document.querySelector(".video-take-screenshot") as HTMLElement;
-    screenshotButton.addEventListener("click", () =>
+    screenshotButton.addEventListener("click", async () =>
     {
+        const video = await SpinQuery.select("#bofqi video") as HTMLVideoElement;
         const screenshot = takeScreenshot(video);
         screenShotsList.screenshots.unshift(screenshot);
     });
