@@ -14,19 +14,21 @@ class Screenshot {
         canvas.height = this.video.videoHeight;
         const context = canvas.getContext("2d");
         if (context === null) {
-            throw new Error("视频截图失败: canvas 未创建或创建失败.");
+            logError("视频截图失败: canvas 未创建或创建失败.");
+            return;
         }
         context.drawImage(this.video, 0, 0);
         canvas.toBlob(blob => {
             if (blob === null) {
-                throw new Error("视频截图失败: 创建 blob 失败.");
+                logError("视频截图失败: 创建 blob 失败.");
+                return;
             }
             this.blob = blob;
             this.url = URL.createObjectURL(blob);
         }, "image/png");
     }
     get filename() {
-        return `${getFriendlyTitle()} @${this.time}-${this.timeStamp.toString()}.png`;
+        return `${getFriendlyTitle()} @${this.time.replace(/:/g, "-")} ${this.timeStamp.toString()}.png`;
     }
     get id() {
         return this.videoTime.toString() + this.timeStamp.toString();
