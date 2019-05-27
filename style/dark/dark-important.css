@@ -119,7 +119,8 @@ blockquote .color-yellow-04,
 .live-skin-coloration-area .live-skin-separate-border,
 .select-box-v2-container .select-box-v2-controller-disabled,
 .common .bb-comment .no-login .comment-submit,
-.popup-content-ctnr .bl-button--ghost:hover
+.popup-content-ctnr .bl-button--ghost:hover,
+.song-info .info-wrap .type-list .item-list .type-item.active
 {
     border-color: transparent !important;
 }
@@ -185,7 +186,8 @@ blockquote .color-yellow-04,
 .user-my-btn .el-button--primary,
 .live-skin-coloration-area .live-skin-highlight-bg,
 .popup-content-ctnr .bl-button--primary,
-.popup-content-ctnr .bl-button--ghost:hover
+.popup-content-ctnr .bl-button--ghost:hover,
+.song-info .info-wrap .type-list .item-list .type-item.active
 {
     background-color: var(--theme-color) !important;
 }
