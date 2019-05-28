@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import commandLineArgs = require("command-line-args");
 import clipboardy = require("clipboardy");
+// import request = require("requestretry");
 import request = require("request");
 import fs = require("fs");
 import ProgressBar = require("progress");
@@ -27,6 +28,7 @@ interface Settings
 }
 
 const optionDefinitions = [
+    { name: 'danmaku', alias: 'd', defaultValue: false, type: Boolean },
     { name: 'info', alias: 'i', defaultOption: true, type: String, defaultValue: undefined },
     { name: 'parts', alias: 'p', type: Number, defaultValue: 30 },
     { name: 'output', alias: 'o', type: String, defaultValue: '.' },
@@ -103,6 +105,8 @@ class Downloader
                         Referer: "https://www.bilibili.com",
                         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
                     },
+                    // maxAttempts: 8,
+                    // retryDelay: 1000,
                 }).on("complete", response =>
                 {
                     if (response.statusCode.toString()[0] === "2")
@@ -124,7 +128,7 @@ class Downloader
                     this.progressMap.delete(req);
                     this.progressMap.set(makeRequest(), 0);
                     this.updateProgress();
-                    console.error(`\n片段下载失败: ${error} 重试中...`.yellow);
+                    reject(`\n片段下载失败: ${error}`);
                 });
                 stream = req.pipe(fs.createWriteStream(partFilename));
                 return req;

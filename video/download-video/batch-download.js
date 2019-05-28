@@ -51,6 +51,7 @@ class BangumiBatch
                 fragments,
                 title: `${page.number} - ${page.title}`,
                 totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
+                cid: page.cid,
             });
         }
         return JSON.stringify(result);

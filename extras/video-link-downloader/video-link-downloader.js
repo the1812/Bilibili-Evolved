@@ -3,11 +3,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const commandLineArgs = require("command-line-args");
 const clipboardy = require("clipboardy");
+// import request = require("requestretry");
 const request = require("request");
 const fs = require("fs");
 const ProgressBar = require("progress");
 require("colors");
 const optionDefinitions = [
+    { name: 'danmaku', alias: 'd', defaultValue: false, type: Boolean },
     { name: 'info', alias: 'i', defaultOption: true, type: String, defaultValue: undefined },
     { name: 'parts', alias: 'p', type: Number, defaultValue: 30 },
     { name: 'output', alias: 'o', type: String, defaultValue: '.' },
@@ -83,7 +85,7 @@ class Downloader {
                     this.progressMap.delete(req);
                     this.progressMap.set(makeRequest(), 0);
                     this.updateProgress();
-                    console.error(`\n片段下载失败: ${error} 重试中...`.yellow);
+                    reject(`\n片段下载失败: ${error}`);
                 });
                 stream = req.pipe(fs.createWriteStream(partFilename));
                 return req;
