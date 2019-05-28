@@ -5,10 +5,9 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:local="clr-namespace:VideoLinkDownloader"
-  xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
   mc:Ignorable="d"
-  Background="#222"
-  Foreground="White"
+  Background="White"
+  Foreground="Black"
   Title="MainWindow"
   Height="450"
   Width="800">
@@ -16,20 +15,16 @@
     <WindowChrome
       GlassFrameThickness="1"
       ResizeBorderThickness="4"
-      CaptionHeight="0"
-      />
+      CaptionHeight="0" />
   </WindowChrome.WindowChrome>
   <Grid
-    fw:PointerTracker.Enabled="True"
-    Background="#0000">
+    Background="#222">
     <Button
-        x:Name="button"
-        Content="Button"
-        HorizontalAlignment="Left"
-        Margin="5"
-        Width="75"
-        Height="32"
-      Foreground="White"
-        Style="{StaticResource ButtonRevealStyle}" />
+      x:Name="button"
+      Content="Button"
+      HorizontalAlignment="Left"
+      Margin="5"
+      Width="75"
+      Height="32"/>
   </Grid>
 </Window>
