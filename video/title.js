@@ -37,7 +37,7 @@ export function getFriendlyTitle(includesPageTitle = true)
             .replace("_番剧_bilibili_哔哩哔哩", "")
             .replace("_电影_bilibili_哔哩哔哩", "")
             .replace("_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili", "")
-            .replace(" - 哔哩哔哩直播，二次元弹幕直播平台", "")
+            .replace(/(.*?) - (.*?) - 哔哩哔哩直播，二次元弹幕直播平台/, "$1")
             .trim(),
         ep: (() =>
         {

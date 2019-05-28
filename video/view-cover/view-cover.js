@@ -5,17 +5,22 @@ class ImageViewer
     constructor(url)
     {
         this.url = url;
-        if ($(".image-viewer").length === 0)
+        if (document.querySelector(".image-viewer") === null)
         {
             this.createContainer();
         }
-        this.viewer = $(".image-viewer-container");
+        this.viewer = document.querySelector(".image-viewer-container");
         this.downloadImage();
+        addSettingsListener("filenameFormat", () =>
+        {
+            this.viewer.querySelector(".download")
+                .setAttribute("download", this.filename);
+        });
     }
     createContainer()
     {
-        $("body").append(resources.data.imageViewerHtml.text);
-        $(".image-viewer-container .close").on("click", () => this.hide());
+        document.body.insertAdjacentHTML("beforeend", resources.import("imageViewerHtml"));
+        document.querySelector(".image-viewer-container .close").addEventListener("click", () => this.hide());
         resources.applyStyle("imageViewerStyle");
     }
     downloadImage()
@@ -37,31 +42,33 @@ class ImageViewer
                 URL.revokeObjectURL(this.imageData);
             }
             this.imageData = data;
-            this.viewer.find(".download")
-                .attr("href", data)
-                .attr("download", title + this.url.substring(this.url.lastIndexOf(".")));
-            this.viewer.find(".copy-link")
-                .on("click", () => GM_setClipboard(this.url));
-            this.viewer.find(".new-tab")
-                .attr("href", this.url);
-            this.viewer.find(".image")
-                .prop("src", data);
+            const link = this.viewer.querySelector(".download");
+            link.setAttribute("href", data);
+            link.setAttribute("download", this.filename);
+
+            this.viewer.querySelector(".copy-link").addEventListener("click", () => GM_setClipboard(this.url));
+            this.viewer.querySelector(".new-tab").setAttribute("href", this.url);
+            this.viewer.querySelector(".image").src = data;
         };
         xhr.send();
     }
     show()
     {
-        this.viewer.addClass("opened");
+        this.viewer.classList.add("opened");
     }
     hide()
     {
-        this.viewer.removeClass("opened");
+        this.viewer.classList.remove("opened");
+    }
+    get filename()
+    {
+        return getFriendlyTitle() + this.url.substring(this.url.lastIndexOf("."));
     }
 }
 
 export default (() =>
 {
-    if ($("meta[itemprop='image'],meta[property='og:image']").length > 0)
+    if (document.querySelector("meta[itemprop='image'],meta[property='og:image']") !== null)
     {
         return {
             widget: {
@@ -94,7 +101,7 @@ export default (() =>
                         return videoInfo.coverUrl;
                     };
                     let imageViewer = new ImageViewer(await getUrl());
-                    $("#view-cover").on("click", () =>
+                    document.querySelector("#view-cover").addEventListener("click", () =>
                     {
                         imageViewer.show();
                     });
@@ -102,12 +109,7 @@ export default (() =>
                     {
                         imageViewer = new ImageViewer(await getUrl());
                     };
-                    if (Observer.videoChange)
-                    {
-                        Observer.videoChange(updateImage);
-                    }
-                    else
-                    { Observer.childList("#bofqi", updateImage); }
+                    Observer.videoChange(updateImage);
                 },
             },
         };
@@ -130,18 +132,18 @@ export default (() =>
                 },
                 success: async () =>
                 {
-                    const coverLink = $(".header-info-ctnr .room-cover");
+                    const coverLink = document.querySelector(".header-info-ctnr .room-cover");
                     const match = coverLink
-                        .attr("href")
+                        .getAttribute("href")
                         .match(/space\.bilibili\.com\/([\d]+)/);
                     if (match && match[1])
                     {
                         const uid = match[1];
                         const url = `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`;
-                        const text = await Ajax.getText(url);
-                        const coverUrl = JSON.parse(text).data.cover;
+                        const json = await Ajax.getJson(url);
+                        const coverUrl = json.data.cover;
                         const imageViewer = new ImageViewer(coverUrl);
-                        $("#view-cover").on("click", () =>
+                        document.querySelector("#view-cover").addEventListener("click", () =>
                         {
                             imageViewer.show();
                         });
