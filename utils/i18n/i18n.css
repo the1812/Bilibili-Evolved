@@ -23,7 +23,8 @@
 .bb-comment .comment-list .list-item .info .operation .opera-list,
 .player-auxiliary-area .player-auxiliary-setting-menu-wrap,
 .bilibili-player-video-sendbar .bilibili-player-video-hint,
-.bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku
+.bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow
 {
     width: auto !important;
 }
