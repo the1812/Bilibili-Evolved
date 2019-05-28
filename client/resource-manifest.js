@@ -461,7 +461,10 @@ Resource.manifest = {
     //     path: "comment-dark.min.css"
     // },
     title: {
-        path: "title.min.js"
+        path: "title.min.js",
+        displayNames: {
+            filenameFormat: "文件命名格式",
+        },
     },
     imageResolution: {
         path: "image-resolution.min.js",

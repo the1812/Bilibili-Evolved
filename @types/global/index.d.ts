@@ -267,6 +267,7 @@ declare global
         hideBangumiReviews: boolean,
         videoScreenshot: boolean,
         cache: {} | { version: string } | undefined,
+        filenameFormat: string,
         latestVersionLink: string,
         currentVersion: string,
     }

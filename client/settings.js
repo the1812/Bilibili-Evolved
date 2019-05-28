@@ -113,6 +113,7 @@ export const settings = {
     hideOldEntry: true,
     videoScreenshot: false,
     hideBangumiReviews: false,
+    filenameFormat: "[title][ - ep]",
     cache: {},
 };
 const fixedSettings = {
