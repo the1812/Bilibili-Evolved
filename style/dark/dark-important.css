@@ -121,7 +121,7 @@ blockquote .color-yellow-04,
 .common .bb-comment .no-login .comment-submit,
 .popup-content-ctnr .bl-button--ghost:hover,
 .song-info .info-wrap .type-list .item-list .type-item.active,
-.password-input .pink-border
+.enter-failure .password-input .pink-border
 {
     border-color: transparent !important;
 }
