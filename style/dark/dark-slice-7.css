@@ -51,7 +51,8 @@
 .regist .toolbox,
 .song-info .info-wrap .type-list .item-list .type-item,
 .song-info .info-wrap .type-list .musicHoverType,
-.protocol-modal .modal-wrap .modal-content .text-content
+.protocol-modal .modal-wrap .modal-content .text-content,
+.enter-failure
 {
     background-color: #222 !important;
 }
@@ -121,7 +122,9 @@
 .customize-wrp .customize-tab,
 .advice-dialog-wrapper,
 .r-con .members-info__container,
-.home-pc .application
+.home-pc .application,
+.enter-failure .bl-button--primary:disabled,
+.enter-failure .link-input
 {
     background-color: #444 !important;
 }
@@ -431,7 +434,9 @@
 .song-info .info-wrap .type-list span,
 .song-info .info-wrap .current-selector .chosen-type,
 .song-info .info-wrap .type-list .item-list .type-item,
-.song-info .info-wrap .type-list .item-list .type-item.active:hover
+.song-info .info-wrap .type-list .item-list .type-item.active:hover,
+.enter-failure,
+.enter-failure .supporting-text
 {
     color: #eee !important;
 }
@@ -848,7 +853,8 @@
 .song-info .info-wrap .choose-type .selected,
 .song-info .info-wrap .type-list .item-list .type-item:hover,
 .song-info .info-wrap .type-list .fold-div,
-.song-info .info-wrap .current-selector .selector-list .font-blue
+.song-info .info-wrap .current-selector .selector-list .font-blue,
+.enter-failure .password-input .empty-hint
 {
     color: var(--theme-color) !important;
 }
