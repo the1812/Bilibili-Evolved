@@ -456,6 +456,10 @@ li.category.folded i.icon-arrow
 {
     max-width: 50px;
 }
+.gui-settings-box input[key='filenameFormat']
+{
+    max-width: 500px;
+}
 
 .gui-settings-mask
 {
