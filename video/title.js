@@ -56,6 +56,7 @@ export function getFriendlyTitle(includesPageTitle = true)
             }
         })(),
         aid: unsafeWindow.aid,
+        cid: unsafeWindow.cid,
         lid: document.URL.replace(/https:\/\/live\.bilibili\.com\/(\d+).*/, "$1"),
         // 年月日这方法名真够乱的
         y: now.getFullYear().toString(),
@@ -68,7 +69,7 @@ export function getFriendlyTitle(includesPageTitle = true)
     };
     const filename = Object.keys(data).reduce((result, name) =>
     {
-        return result.replace(new RegExp(`\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]`, "g"), data[name] ? `$1${data[name]}$2` : "");
+        return result.replace(new RegExp(`\\[(?<before>[^\\[\\]]*?)${name}(?<after>[^\\[\\]]*?)\\]`, "g"), data[name] ? `$<before>${data[name]}$<after>` : "");
     }, settings.filenameFormat);
     return filename.replace(/[\/\\:\*\?"<>\|]/g, "");
 }
