@@ -42,6 +42,14 @@
 {
     width: 70px !important;
 }
+.share-board .share-btn .bili-share
+{
+    width: 90px !important;
+}
+.share-board .song-share .song-share-ul li
+{
+    width: 120px !important;
+}
 .bili-header-m .profile-m .grade .bar
 {
     width: 160px !important;
