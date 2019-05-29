@@ -102,6 +102,21 @@ export const toolTips = new Map([
     ["allowJumpContinue", `当历史记录的集数与当前打开的不一致时, 仍然自动跳转.`],
     ["hideBangumiReviews", `隐藏番剧播放页面里的点评板块.`],
     ["videoScreenshot", `启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
+    ["filenameFormat", `自定义文件命名格式, 作用于<span>下载弹幕</span>, <span>下载视频</span>, <span>视频截图</span>, <span>查看封面</span>.
+可以使用的变量有:
+- <span>title</span>: 视频标题/直播间标题
+- <span>ep</span>: 选集标题
+- <span>aid</span>: AV号
+- <span>cid</span>: CID (每个视频的唯一编号, AV号对应的视频可能有多集)
+- <span>lid</span>: 直播间号
+- <span>y</span>/<span>M</span>/<span>d</span>: 年/月/日
+- <span>h</span>/<span>m</span>/<span>s</span>/<span>ms</span>: 时/分/秒/毫秒
+
+默认的格式是<span>[title][ - ep]</span>, 标题+选集标题, 当没有选集标题时则只有标题.
+
+变量要放在方括号里, 而方括号里的其他内容会在变量有效时出现. 比如格式如果写成<span>[title] - [ep]</span>, 那么即使没有选集标题, 中间那个<span> - </span>也会出现在文件名里. 如果像默认那样放在方括号里, 没有选集标题时, <span> - </span>也不会出现.
+
+例如, 想要标题+AV号+时间的格式, 可以设定为<span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>, 能够得到类似<span>xxxx AV23333 2019-05-29 19-59-44</span>的名字.`],
 ]);
 export default {
     export: { toolTips },
