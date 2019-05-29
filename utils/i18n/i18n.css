@@ -215,6 +215,32 @@ html[lang='ja-JP'] .player-auxiliary-area .danmaku-info-row-block::after
 {
     content: "ブロック" !important;
 }
+.season-list li.season-item .season-body .season-title span.follow
+{
+    background-image: none;
+    filter: none !important;
+    width: 24px;
+}
+.season-list li.season-item .season-body .season-title span.follow::after
+{
+    content: "\F8CF";
+
+    font: normal normal normal 24px/1 "Material Design Icons";
+    font-size: inherit;
+    text-rendering: auto;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    background-color: var(--theme-color);
+    color: var(--foreground-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    position: absolute;
+    padding: 0 4px;
+}
 
 @media screen and (max-width: 1400px)
 {
