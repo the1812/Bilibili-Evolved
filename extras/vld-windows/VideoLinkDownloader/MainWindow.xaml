@@ -6,8 +6,8 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:local="clr-namespace:VideoLinkDownloader"
   mc:Ignorable="d"
-  Background="White"
-  Foreground="Black"
+  Background="{DynamicResource Background}"
+  Foreground="{DynamicResource Foreground}"
   Title="MainWindow"
   Height="450"
   Width="800">
@@ -17,14 +17,10 @@
       ResizeBorderThickness="4"
       CaptionHeight="0" />
   </WindowChrome.WindowChrome>
-  <Grid
-    Background="#222">
-    <Button
-      x:Name="button"
-      Content="Button"
-      HorizontalAlignment="Left"
-      Margin="5"
-      Width="75"
-      Height="32"/>
+  <Grid>
+    <Frame
+      Background="Transparent"
+      Source="Pages/Main/MainPage.xaml"
+      NavigationUIVisibility="Hidden" />
   </Grid>
 </Window>
