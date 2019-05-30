@@ -862,7 +862,8 @@
 .song-info .info-wrap .current-selector .selector-list .font-blue,
 .enter-failure .password-input .empty-hint,
 .bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write:hover,
-.fold-box .fold-hoverable:hover
+.fold-box .fold-hoverable:hover,
+.photo-imager-container .image-count-hinter .count-hinter .current-index
 {
     color: var(--theme-color) !important;
 }
