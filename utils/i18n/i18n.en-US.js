@@ -513,6 +513,7 @@ export const map = new Map([
             text: `Old`,
         }
     ]],
+    [`文件命名格式`, `Filename format`],
     [`*`, [
         {
             selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

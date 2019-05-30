@@ -86,6 +86,21 @@ Tip: Every item can be toggled individually in Add-ons.`],
     ["allowJumpContinue", `Allow jump to episodes different from current.`],
     ["hideBangumiReviews", `Hide reviews on bangumi page.`],
     ["videoScreenshot", `Append screenshot button to the right of video time. Support keyboard shortcut <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (Old layout can only use keyboard shortcut)`],
+    ["filenameFormat", `Customize the filename format used by <span>Download danmaku</span>, <span>Download video</span>, <span>Video screenshot</span>, <span>View cover</span>.
+There are a few variables:
+- <span>title</span>: Video title / Live room title
+- <span>ep</span>: Episode title
+- <span>aid</span>: AV ID
+- <span>cid</span>: CID (The unique ID of video, as AV ID may contains multiple episodes)
+- <span>lid</span>: Live room ID
+- <span>y</span>/<span>M</span>/<span>d</span>: Year / Month / Day of month
+- <span>h</span>/<span>m</span>/<span>s</span>/<span>ms</span>: Hour / Minute / Second / Millisecond
+
+The default format is <span>[title][ - ep]</span>, representing video title and episode title. If episode title not exists, only video title is used.
+
+Put your variables inside square brackets, other contents inside brackets (like "<span> - </span>" in "<span>[ - ep]</span>") will only appear when the variable exists. For instance, if the format is <span>[title] - [ep]</span>. Even there's no episode title, that "<span> - </span>" will still appear in filename (which is meaningless). So in default format, when episode title not exists, "<span> - </span>" will also disappear.
+
+A more specific example: To use a "video title + AV ID + time" format, we can use <span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>. And get filenames like "<span>xxxx AV23333 2019-05-29 19-59-44</span>".`],
 ]);
 export default {
     export: { toolTips },
