@@ -12,6 +12,10 @@ namespace VideoLinkDownloader
         public VideoTask(Video video)
         {
             Downloader = new VideoDownloader(video);
+            Downloader.ProgressUpdate.Add(progress =>
+            {
+                Progress = progress;
+            });
         }
         public VideoDownloader Downloader { get; private set; }
 
@@ -23,8 +27,12 @@ namespace VideoLinkDownloader
             {
                 progress = value;
                 OnPropertyChanged(nameof(Progress));
+                OnPropertyChanged(nameof(SizeProgress));
             }
         }
+        public string Title => Downloader.Video.Title;
+        public string PercentProgress => $"{Math.Floor(Progress * 1000) / 10}%";
+        public string SizeProgress => $"{Downloader.DownloadedBytes.ToFileSize()} / {Downloader.Video.TotalSize.ToFileSize()}";
         public async Task Download()
         {
             await Downloader.Download();

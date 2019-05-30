@@ -8,9 +8,10 @@
   mc:Ignorable="d"
   Background="{DynamicResource Background}"
   Foreground="{DynamicResource Foreground}"
-  Title="MainWindow"
-  Height="450"
-  Width="800">
+  WindowStartupLocation="CenterScreen"
+  Title="Bilibili Evolved Video Link Downloader"
+  Height="800"
+  Width="600">
   <WindowChrome.WindowChrome>
     <WindowChrome
       GlassFrameThickness="1"

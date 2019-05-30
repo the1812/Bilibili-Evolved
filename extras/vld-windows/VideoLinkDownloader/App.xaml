@@ -10,6 +10,9 @@
         <ResourceDictionary
           Source="Theme.Dark.xaml" />
       </ResourceDictionary.MergedDictionaries>
+      <SolidColorBrush
+        x:Key="ThemeColor"
+        Color="#26a69a" />
     </ResourceDictionary>
   </Application.Resources>
 </Application>

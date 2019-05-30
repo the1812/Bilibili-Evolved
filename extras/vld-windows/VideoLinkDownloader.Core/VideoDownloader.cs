@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace VideoLinkDownloader.Core
 {
@@ -18,13 +20,24 @@ namespace VideoLinkDownloader.Core
     {
         public Video Video { get; private set; }
         public VideoDownloaderConfig Config { get; set; } = VideoDownloaderConfig.Default;
-        public ICollection<Action<double>> ProgressUpdate { get; } = new List<Action<double>>();
+        public List<Action<double>> ProgressUpdate { get; } = new List<Action<double>>();
+        public long DownloadedBytes
+        {
+            get
+            {
+                var entires = taskMap.ToArray();
+                return entires.Select(it => it.Value).Sum();
+            }
+        }
+        public double Progress => (double)DownloadedBytes / Video.TotalSize;
+        public bool Downloading { get; private set; } = false;
         public VideoDownloader(Video video)
         {
             Video = video;
         }
         public async Task<IEnumerable<VideoDownloadResult>> Download()
         {
+            taskMap = new Dictionary<Task, long>();
             var results = await Task.WhenAll(from fragment in Video.Fragments select downloadFragment(fragment));
             await Task.WhenAll(from fragment in Video.Fragments select mergeParts(fragment));
             return results;
@@ -33,10 +46,10 @@ namespace VideoLinkDownloader.Core
         {
             return Video.Fragments.Length == 1 ? Video.Title : $"{Video.Title} - {Array.IndexOf(Video.Fragments, fragment) + 1}";
         }
-        private Dictionary<Task, double> taskMap = new Dictionary<Task, double>();
+        private Dictionary<Task, long> taskMap = new Dictionary<Task, long>();
         private void updateProgress()
         {
-
+            ProgressUpdate.ForEach(it => it(Progress));
         }
         private async Task<VideoDownloadResult> downloadFragment(VideoFragment fragment)
         {
@@ -49,7 +62,6 @@ namespace VideoLinkDownloader.Core
             }
             var startByte = 0;
             var part = 0;
-            taskMap = new Dictionary<Task, double>();
             while (startByte < fragment.Size)
             {
                 var partFilename = $"{title}.part{part}";
@@ -57,34 +69,51 @@ namespace VideoLinkDownloader.Core
                 {
                     var endByte = Math.Min(fragment.Size, startByte + partialLength) - 1;
                     var range = $"bytes={startByte}-{endByte}";
-                    using (var webclient = new WebClient())
+                    var client = new HttpClient();
+                    client.DefaultRequestHeaders.Range = new RangeHeaderValue(startByte, endByte);
+                    client.DefaultRequestHeaders.Referrer = new Uri("https://www.bilibili.com", UriKind.Absolute);
+                    client.DefaultRequestHeaders.Add("Origin", "https://www.bilibili.com");
+                    client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36");
+                    //client.Headers[HttpRequestHeader.Range] = range;
+                    //client.Headers[HttpRequestHeader.Referer] = "https://www.bilibili.com";
+                    //client.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36";
+                    //client.Headers["Origin"] = "https://www.bilibili.com";
+                    Task task = null;
+                    try
                     {
-                        webclient.Headers[HttpRequestHeader.Range] = range;
-                        webclient.Headers[HttpRequestHeader.Referer] = "https://www.bilibili.com";
-                        webclient.Headers[HttpRequestHeader.UserAgent] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36";
-                        webclient.Headers["Origin"] = "https://www.bilibili.com";
-                        Task task = null;
-                        try
+                        task = Task.Run(async () =>
                         {
-                            task = webclient.DownloadFileTaskAsync(fragment.Url, partFilename);
-                            webclient.DownloadProgressChanged += (s, e) =>
+                            using (var response = await client.GetStreamAsync(fragment.Url))
+                            using (var file = File.OpenWrite(partFilename))
                             {
-                                taskMap[task] = e.BytesReceived;
-                            };
-                            taskMap.Add(task, 0.0);
-                        }
-                        catch (Exception ex)
-                        when (ex is WebException || ex is InvalidOperationException)
-                        {
-                            // TODO: handle web errors
-                            return VideoDownloadResult.Failed;
-                        }
+                                while (response.CanRead)
+                                {
+                                    file.WriteByte((byte)response.ReadByte());
+                                    taskMap[task]++;
+                                    updateProgress();
+                                }
+                            }
+                        });
+                        //task = client.DownloadFileTaskAsync(fragment.Url, partFilename);
+                        //client.DownloadProgressChanged += (s, e) =>
+                        //{
+                        //    taskMap[task] = e.BytesReceived;
+                        //};
+                        taskMap.Add(task, 0L);
+                    }
+                    catch (Exception ex)
+                    when (ex is WebException || ex is InvalidOperationException)
+                    {
+                        // TODO: handle web errors
+                        return VideoDownloadResult.Failed;
                     }
                 }
                 part++;
                 startByte = startByte + partialLength;
             }
+            Downloading = true;
             await Task.WhenAll(taskMap.Select(it => it.Key));
+            Downloading = false;
             return VideoDownloadResult.Success;
         }
         private async Task mergeParts(VideoFragment fragment)

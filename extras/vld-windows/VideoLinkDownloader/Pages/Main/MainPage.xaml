@@ -11,6 +11,59 @@
   Title="MainPage">
 
   <Grid>
-    
+    <ItemsControl 
+      Margin="30"
+      ItemsSource="{Binding VideoTasks}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="6*" />
+              <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+              <Style
+                TargetType="TextBlock">
+                <Setter
+                  Property="Foreground"
+                  Value="{StaticResource Foreground}" />
+                <Setter
+                  Property="HorizontalAlignment"
+                  Value="Center" />
+                <Setter
+                  Property="VerticalAlignment"
+                  Value="Center" />
+                <Setter
+                  Property="TextWrapping"
+                  Value="Wrap" />
+              </Style>
+            </Grid.Resources>
+            <TextBlock
+              Text="{Binding Title}" />
+            <TextBlock
+              Grid.Row="1"
+              Grid.Column="1"
+              Text="{Binding PercentProgress}" />
+            <TextBlock
+              Grid.Column="1"
+              Text="{Binding SizeProgress}" />
+            <ProgressBar
+              Grid.Row="1"
+              Maximum="1"
+              Minimum="0"
+              Height="2"
+              Margin="12,0"
+              BorderThickness="0"
+              Background="#4888"
+              Foreground="{StaticResource ThemeColor}"
+              Value="{Binding Progress}" />
+          </Grid>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
   </Grid>
 </Page>

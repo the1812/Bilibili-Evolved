@@ -7,7 +7,7 @@ namespace VideoLinkDownloader.Core
     public class Video
     {
         public string Title { get; set; }
-        public int TotalSize { get; set; }
+        public long TotalSize { get; set; }
         public VideoFragment[] Fragments { get; set; }
         public static (bool success, IEnumerable<Video> videos) Parse(string json)
         {

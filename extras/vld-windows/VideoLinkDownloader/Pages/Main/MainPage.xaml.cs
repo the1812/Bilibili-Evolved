@@ -12,17 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VideoLinkDownloader.Pages.Main;
 
 namespace VideoLinkDownloader.Pages
 {
-    /// <summary>
-    /// MainPage.xaml 的交互逻辑
-    /// </summary>
     public partial class MainPage : Page
     {
         public MainPage()
         {
             InitializeComponent();
+            DataContext = new MainPageViewModel();
         }
     }
 }

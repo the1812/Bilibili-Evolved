@@ -15,7 +15,8 @@ namespace VideoLinkDownloader
         {
             base.OnStartup(e);
             var registry = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
-            if (registry is null || (int) registry.GetValue("AppsUseLightTheme", 0) == 1)
+            // if (registry is null || (int) registry.GetValue("AppsUseLightTheme", 0) == 1)
+            if (true)
             {
                 Resources.MergedDictionaries.Remove(new ResourceDictionary
                 {
