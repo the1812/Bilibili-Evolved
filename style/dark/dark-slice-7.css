@@ -288,7 +288,8 @@
 .home-pc .application .application-header p,
 .home-pc .application .application-body .fjw-tip,
 .home-pc .application .application-foot p,
-.upload-cover-wrapper .upload-cover-suggest
+.upload-cover-wrapper .upload-cover-suggest,
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info
 {
     color: #aaa !important;
 }
@@ -436,7 +437,8 @@
 .song-info .info-wrap .type-list .item-list .type-item,
 .song-info .info-wrap .type-list .item-list .type-item.active:hover,
 .enter-failure,
-.enter-failure .supporting-text
+.enter-failure .supporting-text,
+.fold-box .fold-hoverable
 {
     color: #eee !important;
 }
@@ -542,7 +544,8 @@
 .home-pc .application .application-foot,
 .feed-topic .card,
 .song-info .info-wrap .type-list .item-list .type-item,
-.protocol-modal .cancel-btn
+.protocol-modal .cancel-btn,
+.home-content .card .fold-box
 {
     border-color: transparent !important;
 }
@@ -553,7 +556,8 @@
 .modal .img-clip-wrap .container-box,
 .text-article-wrp .article-card .meta-status .pubdate,
 .pendant-main .final-price,
-.pendant-main .unit-price li
+.pendant-main .unit-price li,
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write
 {
     border-color: #aaa !important;
 }
@@ -624,7 +628,8 @@
 .left-nav-ul .icon-customize.active,
 .left-nav-item:hover .icon-customize,
 .song-info .info-wrap .type-list .fold-div .foldStatus,
-.song-info .info-wrap .type-list .fold-div .unfoldStatus
+.song-info .info-wrap .type-list .fold-div .unfoldStatus,
+.fold-box .fold-hoverable:hover .fold-arrow
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -706,7 +711,8 @@
 .live-category .category:hover,
 .title-library-wrap .title-status button,
 .customize-wrp .select,
-.song-info .info-wrap .type-list .item-list .type-item:hover
+.song-info .info-wrap .type-list .item-list .type-item:hover,
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write:hover
 {
     border-color: var(--theme-color) !important;
 }
@@ -854,7 +860,9 @@
 .song-info .info-wrap .type-list .item-list .type-item:hover,
 .song-info .info-wrap .type-list .fold-div,
 .song-info .info-wrap .current-selector .selector-list .font-blue,
-.enter-failure .password-input .empty-hint
+.enter-failure .password-input .empty-hint,
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write:hover,
+.fold-box .fold-hoverable:hover
 {
     color: var(--theme-color) !important;
 }
