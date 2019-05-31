@@ -117,6 +117,8 @@ function getI18nKey()
 {
     return settings.i18n ? languageNameToCode[settings.i18nLanguage] : "zh-CN";
 }
+const dq = (selector) => document.querySelector(selector);
+const dqa = (selector) => [...document.querySelectorAll(selector)];
 const customNavbarDefaultOrders = {
     blank1: 0,
     logo: 1,
@@ -511,19 +513,21 @@ function loadResources()
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
     Resource.all = {};
     Resource.displayNames = {};
-    Resource.reloadables = {
-        useDarkStyle: "useDarkStyle",
-        hideBanner: "hideBanner",
-        customNavbar: "customNavbar",
-        playerShadow: "playerShadow",
-        narrowDanmaku: "narrowDanmaku",
-        compactLayout: "compactLayout",
-        useCommentStyle: "useCommentStyle",
-        removeVideoTopMask: "removeVideoTopMask",
-        hideOldEntry: "hideOldEntry",
-        hideBangumiReviews: "hideBangumiReviews",
-        videoScreenshot: "videoScreenshot",
-    };
+    Resource.reloadables = [
+        "useDarkStyle",
+        "hideBanner",
+        "customNavbar",
+        "playerShadow",
+        "narrowDanmaku",
+        "compactLayout",
+        "useCommentStyle",
+        "removeVideoTopMask",
+        "hideOldEntry",
+        "hideBangumiReviews",
+        "videoScreenshot",
+        "blurVideoControl",
+        "customControlBackground",
+    ];
     for (const [key, data] of Object.entries(Resource.manifest))
     {
         const resource = new Resource(data.path, data.styles);
@@ -2032,7 +2036,7 @@ class ResourceManager
         styles.push("--brightness:" + settings.brightness);
         styles.push("--invert-filter:" + settings.filterInvert);
         styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
-        styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
+         // styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
         this.applyStyleFromText(`html{${styles.join(";")}}`, "bilibili-evolved-variables");
     }
     resolveComponentName(componentName)
@@ -2188,19 +2192,19 @@ class ResourceManager
                 });
             }
         };
-        for (const [key, targetKey] of Object.entries(Resource.reloadables))
+        for (const key of Resource.reloadables)
         {
-            const attributes = this.attributes[targetKey];
+            const attributes = this.attributes[key];
             if (attributes === undefined)
             {
                 const fetchListener = async newValue =>
                 {
                     if (newValue === true)
                     {
-                        await this.styleManager.fetchStyleByKey(targetKey);
-                        await this.fetchByKey(targetKey);
+                        await this.styleManager.fetchStyleByKey(key);
+                        await this.fetchByKey(key);
                         removeSettingsListener(key, fetchListener);
-                        checkAttribute(key, this.attributes[targetKey]);
+                        checkAttribute(key, this.attributes[key]);
                     }
                 };
                 addSettingsListener(key, fetchListener);

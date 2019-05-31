@@ -87,12 +87,13 @@ declare global
         static condition<T>(query: () => T, condition: (queryResult: T) => boolean): Promise<T>;
         static select<T>(query: () => T, action: (queryResult: T) => void, failed: () => void): void;
         static select<T>(query: () => T): Promise<T>;
-        static select<T>(query: string): HTMLElement | null;
+        static select(query: string): Promise<HTMLElement | null>;
         static any<T>(query: () => T, action: (queryResult: T) => void, failed: () => void): void;
         static any<T>(query: () => T): Promise<T>;
-        static any<T>(query: string): any;
+        static any(query: string): Promise<any>;
         static count<T>(query: () => T, count: number, success: (queryResult: T) => void, failed: () => void): void;
         static count<T>(query: () => T, count: number): Promise<T>;
+        static count(query: string, count: number): Promise<NodeListOf<Element>>;
         static unsafeJquery(action: () => void, failed: () => void): void;
         static unsafeJquery(): Promise<void>;
     }
@@ -291,5 +292,7 @@ declare global
     function isEmbeddedPlayer(): boolean;
     function isIframe(): boolean;
     function getI18nKey(): string;
+    const dq: (selector: string) => Element | null;
+    const dqa: (selector: string) => Element[];
 }
 export { };

@@ -42,7 +42,7 @@ export class ResourceManager
         styles.push("--brightness:" + settings.brightness);
         styles.push("--invert-filter:" + settings.filterInvert);
         styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
-        styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
+         // styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
         this.applyStyleFromText(`html{${styles.join(";")}}`, "bilibili-evolved-variables");
     }
     resolveComponentName(componentName)
@@ -198,19 +198,19 @@ export class ResourceManager
                 });
             }
         };
-        for (const [key, targetKey] of Object.entries(Resource.reloadables))
+        for (const key of Resource.reloadables)
         {
-            const attributes = this.attributes[targetKey];
+            const attributes = this.attributes[key];
             if (attributes === undefined)
             {
                 const fetchListener = async newValue =>
                 {
                     if (newValue === true)
                     {
-                        await this.styleManager.fetchStyleByKey(targetKey);
-                        await this.fetchByKey(targetKey);
+                        await this.styleManager.fetchStyleByKey(key);
+                        await this.fetchByKey(key);
                         removeSettingsListener(key, fetchListener);
-                        checkAttribute(key, this.attributes[targetKey]);
+                        checkAttribute(key, this.attributes[key]);
                     }
                 };
                 addSettingsListener(key, fetchListener);
