@@ -1,12 +1,12 @@
+document.body.style.setProperty("--custom-control-background-opacity", settings.customControlBackgroundOpacity);
+addSettingsListener("customControlBackgroundOpacity", value =>
+{
+    document.body.style.setProperty("--custom-control-background-opacity", value);
+});
 const load = () => {
     if (settings.customControlBackgroundOpacity > 0)
     {
         resources.applyStyle("customControlBackgroundStyle");
-        document.body.style.setProperty("--custom-control-background-opacity", settings.customControlBackgroundOpacity);
-        addSettingsListener("customControlBackgroundOpacity", value =>
-        {
-            document.body.style.setProperty("--custom-control-background-opacity", value);
-        });
         if (!settings.touchVideoPlayer)
         {
             resources.applyImportantStyleFromText(/*html*/`

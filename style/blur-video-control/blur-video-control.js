@@ -19,9 +19,11 @@ export default {
     reload: () =>
     {
         document.querySelectorAll(".video-control-blur-layer").forEach(it => it.style.display = "block");
+        resources.applyStyle("blurVideoControlStyle");
     },
     unload: () =>
     {
         document.querySelectorAll(".video-control-blur-layer").forEach(it => it.style.display = "none");
+        resources.removeStyle("blurVideoControlStyle");
     },
 };
