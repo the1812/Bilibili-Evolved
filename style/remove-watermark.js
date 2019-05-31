@@ -1,12 +1,22 @@
-const id = "bilibili-live-watermark";
-if ($(`#${id}`).length === 0)
+const id = "remove-live-watermark";
+const load = () =>
 {
-    resources.applyStyleFromText(/*html*/`
-        <style id='${id}'>
+    if (document.getElementById(id) === null)
+    {
+        resources.applyStyleFromText(`
             .bilibili-live-player-video-logo
             {
                 display: none !important;
             }
-        </style>
-        `);
-}
+        `, id);
+    }
+};
+load();
+export default {
+    reload: load,
+    unload: () =>
+    {
+        const style = document.getElementById(id);
+        style && style.remove();
+    },
+};

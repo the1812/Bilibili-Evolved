@@ -527,6 +527,8 @@ function loadResources()
         "videoScreenshot",
         "blurVideoControl",
         "customControlBackground",
+        "harunaScale",
+        "removeLiveWatermark",
     ];
     for (const [key, data] of Object.entries(Resource.manifest))
     {
