@@ -162,24 +162,24 @@ Observer.videoChange(async () =>
     {
         return;
     }
-    if (settings.framePlayback)
+    // if (settings.framePlayback)
+    // {
+    //     const frameButton = await SpinQuery.select(".frame-playback.prev-frame");
+    //     if (frameButton === null || document.querySelector(".video-take-screenshot"))
+    //     {
+    //         return;
+    //     }
+    //     frameButton.insertAdjacentHTML("beforebegin", buttonHtml);
+    // }
+    // else
+    // {
+    const time = await SpinQuery.select(".bilibili-player-video-time");
+    if (time === null || document.querySelector(".video-take-screenshot"))
     {
-        const frameButton = await SpinQuery.select(".frame-playback.prev-frame");
-        if (frameButton === null || document.querySelector(".video-take-screenshot"))
-        {
-            return;
-        }
-        frameButton.insertAdjacentHTML("beforebegin", buttonHtml);
+        return;
     }
-    else
-    {
-        const time = await SpinQuery.select(".bilibili-player-video-time");
-        if (time === null || document.querySelector(".video-take-screenshot"))
-        {
-            return;
-        }
-        time.insertAdjacentHTML("afterend", buttonHtml);
-    }
+    time.insertAdjacentHTML("afterend", buttonHtml);
+    // }
     const screenshotButton = document.querySelector(".video-take-screenshot") as HTMLElement;
     screenshotButton.addEventListener("click", async () =>
     {

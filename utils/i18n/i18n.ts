@@ -203,8 +203,8 @@ const startTranslate = async () =>
             }
         });
     }, { characterData: true, childList: true, subtree: true, attributes: true });
-    const iconPanel = await SpinQuery.select(".gui-settings-icon-panel")!;
-    iconPanel.addEventListener("be:load", () =>
+    const iconPanel = await SpinQuery.select(".gui-settings-icon-panel");
+    iconPanel!.addEventListener("be:load", () =>
     {
         Translator.walk(document.querySelector(".gui-settings-box")!, node => Translator.settingsDropdown.translate(node));
     }, { once: true });

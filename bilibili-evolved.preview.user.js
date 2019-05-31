@@ -529,6 +529,7 @@ function loadResources()
         "customControlBackground",
         "harunaScale",
         "removeLiveWatermark",
+        "framePlayback",
     ];
     for (const [key, data] of Object.entries(Resource.manifest))
     {

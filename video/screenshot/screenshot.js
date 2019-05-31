@@ -138,20 +138,23 @@ Observer.videoChange(async () => {
     if (video === null) {
         return;
     }
-    if (settings.framePlayback) {
-        const frameButton = await SpinQuery.select(".frame-playback.prev-frame");
-        if (frameButton === null || document.querySelector(".video-take-screenshot")) {
-            return;
-        }
-        frameButton.insertAdjacentHTML("beforebegin", buttonHtml);
+    // if (settings.framePlayback)
+    // {
+    //     const frameButton = await SpinQuery.select(".frame-playback.prev-frame");
+    //     if (frameButton === null || document.querySelector(".video-take-screenshot"))
+    //     {
+    //         return;
+    //     }
+    //     frameButton.insertAdjacentHTML("beforebegin", buttonHtml);
+    // }
+    // else
+    // {
+    const time = await SpinQuery.select(".bilibili-player-video-time");
+    if (time === null || document.querySelector(".video-take-screenshot")) {
+        return;
     }
-    else {
-        const time = await SpinQuery.select(".bilibili-player-video-time");
-        if (time === null || document.querySelector(".video-take-screenshot")) {
-            return;
-        }
-        time.insertAdjacentHTML("afterend", buttonHtml);
-    }
+    time.insertAdjacentHTML("afterend", buttonHtml);
+    // }
     const screenshotButton = document.querySelector(".video-take-screenshot");
     screenshotButton.addEventListener("click", async () => {
         const video = await SpinQuery.select("#bofqi video");
