@@ -59,7 +59,8 @@
 .content .link-tag-box,
 .content .tab-selector-wrap,
 .live-user .user-item .item-right .tags>span,
-.home-pc .application .application-body .btn-color
+.home-pc .application .application-body .btn-color,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management
 {
     background-color: #333 !important;
 }
@@ -438,7 +439,9 @@
 .song-info .info-wrap .type-list .item-list .type-item.active:hover,
 .enter-failure,
 .enter-failure .supporting-text,
-.fold-box .fold-hoverable
+.fold-box .fold-hoverable,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management i
 {
     color: #eee !important;
 }
@@ -545,7 +548,8 @@
 .feed-topic .card,
 .song-info .info-wrap .type-list .item-list .type-item,
 .protocol-modal .cancel-btn,
-.home-content .card .fold-box
+.home-content .card .fold-box,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*
 {
     border-color: transparent !important;
 }
@@ -863,7 +867,9 @@
 .enter-failure .password-input .empty-hint,
 .bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write:hover,
 .fold-box .fold-hoverable:hover,
-.photo-imager-container .image-count-hinter .count-hinter .current-index
+.photo-imager-container .image-count-hinter .count-hinter .current-index,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>:hover,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>:hover i
 {
     color: var(--theme-color) !important;
 }
