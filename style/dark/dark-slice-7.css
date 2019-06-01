@@ -129,7 +129,8 @@
 .enter-failure .bl-button--primary:disabled,
 .enter-failure .link-input,
 .cc-content-body .select-box .select-item:hover,
-.cc-content-body .select-box .option-footer:hover
+.cc-content-body .select-box .option-footer:hover,
+.detail-wrp .detail-empty
 {
     background-color: #444 !important;
 }
@@ -294,7 +295,9 @@
 .home-pc .application .application-body .fjw-tip,
 .home-pc .application .application-foot p,
 .upload-cover-wrapper .upload-cover-suggest,
-.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info,
+.detail-wrp .detail-header .tips,
+.detail-wrp .detail-header .article-link
 {
     color: #aaa !important;
 }
@@ -447,7 +450,8 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management i,
 .cc-content-body .select-box .option-footer,
-.cc-content-body .select-box .select-item .text
+.cc-content-body .select-box .select-item .text,
+.detail-wrp .detail-empty
 {
     color: #eee !important;
 }
@@ -557,7 +561,8 @@
 .home-content .card .fold-box,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*,
 .cc-content-body .select-box,
-.cc-content-body .select-box .row
+.cc-content-body .select-box .row,
+.detail-wrp .detail-empty
 {
     border-color: transparent !important;
 }
@@ -690,7 +695,8 @@
 #app-ctnr .demo-app .category,
 .left-nav-wrapper,
 .charge-participate .part-btn,
-.cc-content-body .select-box
+.cc-content-body .select-box,
+.detail-wrp .detail-empty
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
