@@ -91,6 +91,21 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["toast", `ウェブページの左下隅に表示スクリプトからのメッセージ、例えば更新通知の送信、エラーメッセージなどです.`],
     ["toastInternalError", `オープンしたら、エラーメッセージは詳細な技術的エラー情報とスタック追跡を表示します.これは通常問題発生の原因を正確に確定するために使用されます.だから、問題を報告する時にこれらの情報はとても役に立ちます.`],
     ["useCache", `スクリプトの読み込み速度を上げるためにキャッシュを使う.`],
+    ["filenameFormat", `ファイルの命名形式をカスタマイズする、<span>下载弹幕</span>、<span>下载视频</span>、<span>视频截图</span>、<span>查看封面</span>に作用する.
+使用できる変数は:
+- <span>title</span>: 動画のタイトル/配信ルームのタイトル
+- <span>ep</span>: エピソードタイトル
+- <span>aid</span>: AV番号 (動画アドレス番号)
+- <span>cid</span>: CID (動画の唯一の番号、動画アドレス番号に対応するの動画アドレスは複数の動画を含み得る)
+- <span>lid</span>: 配信ルーム番号
+- <span>y</span>/<span>M</span>/<span>d</span>: 年/月/日
+- <span>h</span>/<span>m</span>/<span>s</span>/<span>ms</span>: 時間/分/秒/ミリ秒
+
+デフォルトの命名形式は<span>[title][ - ep]</span>、動画のタイトル+エピソードタイトル、エピソードタイトルがない場合は動画のタイトルを表示する.
+
+変数は角括弧内に配置され、角括弧内のその他の内容は変数が有効な場合に表示されます. 例えば、命名形式が<span>[title] - [ep]</span>書かれている場合ではエピソードタイトルがなくても、この<span> - </span>ファイル名にも表示されます. デフォルトとして角括弧で囲まれている場合、エピソードタイトルがない、<span> - </span>が表示されません.
+
+例えば、タイトル＋AV番号＋時間の命名形式が欲しい、<span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>に設定することができます. <span>xxxx AV23333 2019-06-1 22-22-22</span>ような名前をつけることができます.`],
 ]);
 export default {
     export: { toolTips },
