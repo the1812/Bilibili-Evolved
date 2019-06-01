@@ -52,7 +52,9 @@
 .song-info .info-wrap .type-list .item-list .type-item,
 .song-info .info-wrap .type-list .musicHoverType,
 .protocol-modal .modal-wrap .modal-content .text-content,
-.enter-failure
+.enter-failure,
+.cc-content-body .select-box,
+.cc-content-body .select-box .option-footer
 {
     background-color: #222 !important;
 }
@@ -125,7 +127,9 @@
 .r-con .members-info__container,
 .home-pc .application,
 .enter-failure .bl-button--primary:disabled,
-.enter-failure .link-input
+.enter-failure .link-input,
+.cc-content-body .select-box .select-item:hover,
+.cc-content-body .select-box .option-footer:hover
 {
     background-color: #444 !important;
 }
@@ -441,7 +445,9 @@
 .enter-failure .supporting-text,
 .fold-box .fold-hoverable,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management i
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management i,
+.cc-content-body .select-box .option-footer,
+.cc-content-body .select-box .select-item .text
 {
     color: #eee !important;
 }
@@ -549,7 +555,9 @@
 .song-info .info-wrap .type-list .item-list .type-item,
 .protocol-modal .cancel-btn,
 .home-content .card .fold-box,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*,
+.cc-content-body .select-box,
+.cc-content-body .select-box .row
 {
     border-color: transparent !important;
 }
@@ -681,7 +689,8 @@
 .face-g-list#my-g-list .face-g-block .my-mp-block:hover,
 #app-ctnr .demo-app .category,
 .left-nav-wrapper,
-.charge-participate .part-btn
+.charge-participate .part-btn,
+.cc-content-body .select-box
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -869,7 +878,11 @@
 .fold-box .fold-hoverable:hover,
 .photo-imager-container .image-count-hinter .count-hinter .current-index,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>:hover,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>:hover i
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>:hover i,
+.content-tag-v2-edit-mod-wrp p a,
+.content-tag-v2-edit-mod-wrp p a:hover,
+.electron-set-v2-hint a,
+.electron-set-v2-hint a:hover
 {
     color: var(--theme-color) !important;
 }
@@ -898,5 +911,9 @@
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
+}
+.cc-content-body .select-box .select-item:hover
+{
+    border-radius: 15px !important;
 }
 /* line-ending test */
