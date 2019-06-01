@@ -913,7 +913,8 @@
 .data-card .data-wrp .tab .fan-tab.current:after,
 .data-card .fans-wrp .tab .fan-tab.current:after,
 .data-card .data-wrp .total .incr-num:before,
-.data-card .fans-wrp .total .incr-num:before
+.data-card .fans-wrp .total .incr-num:before,
+.contri-condition .contri-select.active:after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
