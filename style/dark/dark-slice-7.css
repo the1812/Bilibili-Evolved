@@ -54,7 +54,8 @@
 .protocol-modal .modal-wrap .modal-content .text-content,
 .enter-failure,
 .cc-content-body .select-box,
-.cc-content-body .select-box .option-footer
+.cc-content-body .select-box .option-footer,
+.bp-emoji-box .static-popup
 {
     background-color: #222 !important;
 }
@@ -562,7 +563,8 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*,
 .cc-content-body .select-box,
 .cc-content-body .select-box .row,
-.detail-wrp .detail-empty
+.detail-wrp .detail-empty,
+.bp-emoji-box .static-popup
 {
     border-color: transparent !important;
 }
