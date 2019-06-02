@@ -22,7 +22,7 @@ about: 报告问题
 
 
 **错误信息**
-<!-- 脚本直接报告的内部错误信息, 或者浏览器开发者工具(F12 或 Ctrl+Shift+I 召唤)里Console一栏的输出 -->
+<!-- 脚本直接报告的内部错误信息, 或者浏览器开发者工具(F12 或 Ctrl+Shift+I 召唤)里Console一栏的输出, 详见 https://github.com/the1812/Bilibili-Evolved/wiki/查看浏览器输出的信息 -->
 
 
 **附加截图**

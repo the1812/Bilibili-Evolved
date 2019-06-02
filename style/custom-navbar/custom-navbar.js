@@ -3,6 +3,11 @@ if (isIframe())
     return;
 }
 document.body.style.setProperty("--navbar-bounds-padding", `0 ${settings.customNavbarBoundsPadding}%`);
+document.body.style.setProperty("--navbar-blur-opacity", settings.customNavbarBlurOpacity || 0.7);
+addSettingsListener("customNavbarBlurOpacity", value =>
+{
+    document.body.style.setProperty("--navbar-blur-opacity", value);
+});
 let showWidget = true;
 const attributes = {
     widget: {
@@ -217,20 +222,14 @@ const attributes = {
     },
     unload: () =>
     {
-        const navbar = document.querySelector(".custom-navbar");
-        if (navbar !== null)
-        {
-            navbar.style.display = "none";
-        }
+        const navbar = document.querySelectorAll(".custom-navbar,.custom-navbar-settings");
+        navbar.forEach(it => it.style.display = "none");
         resources.removeStyle("customNavbarStyle");
     },
     reload: () =>
     {
-        const navbar = document.querySelector(".custom-navbar");
-        if (navbar !== null)
-        {
-            navbar.style.display = "flex";
-        }
+        const navbar = document.querySelectorAll(".custom-navbar,.custom-navbar-settings");
+        navbar.forEach(it => it.style.display = "flex");
         resources.applyImportantStyle("customNavbarStyle");
     },
 };
@@ -256,9 +255,11 @@ const supportedUrls = [
     "/big.bilibili.com",
     "/message.bilibili.com",
     "/app.bilibili.com",
+    "/passport.bilibili.com",
 ];
 const unsupportedUrls = [
     "/t.bilibili.com/lottery/h5/index/#/result",
+    "/member.bilibili.com/video/upload",
 ]
 if (!supportedUrls.some(it => document.URL.includes(it))
     || unsupportedUrls.some(it => document.URL.includes(it)))
@@ -284,6 +285,7 @@ class NavbarComponent
         this.href = null;
         this.notifyCount = 0;
         this.touch = settings.touchNavBar;
+        this.active = false;
     }
     get name()
     {
@@ -335,6 +337,7 @@ class SimpleLink extends NavbarComponent
         this.html = name;
         this.href = link;
         this.touch = false;
+        this.active = document.URL.startsWith(link);
     }
     get name()
     {
@@ -383,6 +386,7 @@ class Messages extends NavbarComponent
         </ul>
         `;
         this.requestedPopup = true;
+        this.active = document.URL.startsWith("https://message.bilibili.com/");
         this.init();
     }
     get name()
@@ -402,7 +406,7 @@ class Messages extends NavbarComponent
         }
         const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`);
         let totalCount = names.reduce((acc, it) => acc + json.data[it], 0);
-        if (totalCount === 0)
+        if (!totalCount)
         {
             return;
         }
@@ -825,7 +829,7 @@ class NotifyIframe extends Iframe
         const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`);
         const json = await Ajax.getJsonWithCredentials(this.getApiUrl());
         const count = this.getCount(json);
-        if (json.code === 0 && count !== 0)
+        if (json.code === 0 && count)
         {
             notifyElement.innerHTML = count;
             this.onPopup = () =>
@@ -847,6 +851,7 @@ class Activities extends NotifyIframe
                 height: `422px`,
                 lazy: true,
             });
+        this.active = document.URL.replace(/\?.*$/, "") === "https://t.bilibili.com/";
     }
     getApiUrl()
     {
@@ -949,6 +954,7 @@ class WatchlaterList extends VideoList
                 });
             },
         });
+        this.active = document.URL.startsWith("https://www.bilibili.com/watchlater/");
     }
 }
 class FavoritesList extends VideoList
@@ -970,6 +976,7 @@ class FavoritesList extends VideoList
                 });
             },
         });
+        this.active = document.URL.replace(/\?.*$/, "") === `https://space.bilibili.com/${userInfo.mid}/favlist`;
     }
 }
 class HistoryList extends VideoList
@@ -1017,6 +1024,7 @@ class HistoryList extends VideoList
                 });
             },
         });
+        this.active = document.URL.replace(/\?.*$/, "") === "https://www.bilibili.com/account/history";
     }
 }
 
@@ -1054,7 +1062,7 @@ class HistoryList extends VideoList
         new Category,
         new SimpleLink("排行", "https://www.bilibili.com/ranking", "ranking"),
         new SimpleLink("相簿", "https://h.bilibili.com", "drawing"),
-        new SimpleLink("音频", "https://www.bilibili.com/audio/home/?type=10", "music"),
+        new SimpleLink("音频", "https://www.bilibili.com/audio/home/", "music"),
         new Iframe("游戏中心", "https://game.bilibili.com/", {
             src: `https://www.bilibili.com/page-proxy/game-nav.html`,
             width: `680px`,
@@ -1069,7 +1077,7 @@ class HistoryList extends VideoList
             lazy: true,
             iframeName: "lives",
         }),
-        new SimpleLink("会员购", "https://show.bilibili.com/platform/home.html?msource=pc_web", "shop"),
+        new SimpleLink("会员购", "https://show.bilibili.com", "shop"),
         new SimpleLink("漫画", "https://manga.bilibili.com", "manga"),
         new Blank(2),
         new SearchBox,
@@ -1094,7 +1102,7 @@ class HistoryList extends VideoList
         methods: {
             requestPopup(component)
             {
-                if (!component.requestedPopup)
+                if (!component.requestedPopup && !component.disabled && !component.active)
                 {
                     this.$set(component, `requestedPopup`, true);
                     component.onPopup && component.onPopup();

@@ -1,4 +1,4 @@
-.medal-popup
+/* .medal-popup
 {
     position: absolute;
     top: calc(100% + 2px);
@@ -13,7 +13,7 @@
 .medal-popup.opened
 {
     transform: scaleY(1) translateX(-50%);
-}
+} */
 .medal-popup *
 {
     transition: all 0.2s;

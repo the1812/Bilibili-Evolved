@@ -138,7 +138,8 @@
     right: 0 !important;
     bottom: 0px !important;
 }
-.bilibili-player-video-control-top
+.bilibili-player-video-control-top,
+.bilibili-player-video-progress-detail
 {
     bottom: 0 !important;
 }
@@ -301,6 +302,10 @@ div.bilibili-player-video-control
 .bilibili-player.mode-webfullscreen .disable-original-hover.touch-video-control-show .subtitle-position.subtitle-position-br
 {
     bottom: 60px !important;
+}
+.bilibili-player.mode-fullscreen .disable-original-hover .bilibili-player-video-control-top
+{
+    opacity: 1 !important;
 }
 #bofqi *
 {

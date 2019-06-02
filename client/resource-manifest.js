@@ -10,12 +10,15 @@ Resource.manifest = {
     },
     darkStyle: {
         path: "dark.min.css",
+        alwaysPreview: true,
     },
     darkStyleImportant: {
         path: "dark-important.min.css",
+        alwaysPreview: true,
     },
     darkStyleNavBar: {
         path: "dark-navbar.min.css",
+        alwaysPreview: true,
     },
     touchPlayerStyle: {
         path: "touch-player.min.css",
@@ -53,6 +56,9 @@ Resource.manifest = {
     settingsTooltipChinese: {
         path: "settings-tooltip.zh-CN.min.js",
     },
+    settingsTooltipEnglish: {
+        path: "settings-tooltip.en-US.min.js",
+    },
     settingsTooltip: {
         path: "settings-tooltip.loader.min.js",
         dependencies: [
@@ -89,6 +95,7 @@ Resource.manifest = {
     },
     useDarkStyle: {
         path: "dark-styles.min.js",
+        alwaysPreview: true,
         styles: [
             "darkStyle",
             "scrollbarStyle",
@@ -134,22 +141,6 @@ Resource.manifest = {
             blurBackgroundOpacity: "顶栏(对横幅)透明度",
         },
     },
-    // overrideNavBar: {
-    //     path: "override-navbar.min.js",
-    //     styles: [
-    //         "tweetsStyle",
-    //         "navbarOverrideStyle",
-    //         {
-    //             key: "noBannerStyle",
-    //             condition: () => !settings.showBanner
-    //         },
-    //     ],
-    //     displayNames: {
-    //         overrideNavBar: "搜索栏置顶",
-    //         showBanner: "显示顶部横幅",
-    //         preserveRank: "显示排行榜图标",
-    //     },
-    // },
     hideBanner: {
         path: "hide-banner.min.js",
         style: true,
@@ -360,6 +351,7 @@ Resource.manifest = {
         path: "auto-continue.min.js",
         displayNames: {
             autoContinue: "自动从历史记录点播放",
+            allowJumpContinue: "允许跨集跳转",
         },
     },
     expandDescription: {
@@ -413,17 +405,7 @@ Resource.manifest = {
     },
     compactLayout: {
         path: "compact-layout.min.js",
-        style:
-        {
-            important: true,
-            condition()
-            {
-                return [
-                    "https://www.bilibili.com/",
-                    "https://www.bilibili.com/watchlater/#/list",
-                ].indexOf(location.href.replace(location.search, '')) !== -1;
-            },
-        },
+        style: true,
         displayNames: {
             compactLayout: "首页使用紧凑布局",
         }
@@ -452,22 +434,15 @@ Resource.manifest = {
     useCommentStyle: {
         path: "comment.min.js",
         style: "important",
-        // styles: [
-        //     {
-        //         key: "commentDarkStyle",
-        //         important: true,
-        //         condition: () => settings.useDarkStyle,
-        //     },
-        // ],
         displayNames: {
             useCommentStyle: "简化评论区",
         },
     },
-    // commentDarkStyle: {
-    //     path: "comment-dark.min.css"
-    // },
     title: {
-        path: "title.min.js"
+        path: "title.min.js",
+        displayNames: {
+            filenameFormat: "文件命名格式",
+        },
     },
     imageResolution: {
         path: "image-resolution.min.js",
@@ -497,18 +472,23 @@ Resource.manifest = {
     },
     i18nEnglish: {
         path: "i18n.en-US.min.js",
+        alwaysPreview: true,
     },
     i18nJapanese: {
         path: "i18n.ja-JP.min.js",
+        alwaysPreview: true,
     },
     i18nTraditionalChinese: {
         path: "i18n.zh-TW.min.js",
+        alwaysPreview: true,
     },
     i18nGerman: {
         path: "i18n.de-DE.min.js",
+        alwaysPreview: true,
     },
     i18n: {
         path: "i18n.min.js",
+        alwaysPreview: true,
         style: "important",
         displayNames: {
             i18n: "界面翻译",
@@ -521,7 +501,7 @@ Resource.manifest = {
         dropdown: {
             key: "i18nLanguage",
             // items: Object.keys(languageCodeMap),
-            items: [`日本語`],
+            items: [`日本語`, `English`],
         },
     },
     playerFocus: {
@@ -554,6 +534,7 @@ Resource.manifest = {
             customNavbarShadow: "投影",
             customNavbarCompact: "紧凑布局",
             customNavbarBlur: "背景模糊",
+            customNavbarBlurOpacity: "模糊层不透明度",
             allNavbarFill: "填充其他顶栏",
         },
     },
@@ -601,6 +582,22 @@ Resource.manifest = {
         path: "debounce.min.js",
         displayNames: {
             slip: "debounce.js"
+        },
+    },
+    videoScreenshot: {
+        path: "screenshot.min.js",
+        style: true,
+        displayNames: {
+            videoScreenshot: "启用视频截图",
+        },
+        dependencies: [
+            "title",
+        ],
+    },
+    hideBangumiReviews: {
+        path: "hide-bangumi-reviews.min.js",
+        displayNames: {
+            hideBangumiReviews: "隐藏番剧点评",
         },
     },
 };

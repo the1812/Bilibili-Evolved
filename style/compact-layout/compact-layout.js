@@ -1,16 +1,21 @@
 const suitableSites = [
     "https://www.bilibili.com/",
     "https://www.bilibili.com/watchlater/#/list",
+    "https://www.bilibili.com/ranking",
 ];
-if (suitableSites.indexOf(location.href.replace(location.search, '')) !== -1)
+if (suitableSites.includes(location.href.replace(location.search, '')))
 {
     document.body.classList.add("compact");
+    resources.applyImportantStyle("compactLayoutStyle");
 }
 export default {
     reload: () =>
     {
-        document.body.classList.add("compact");
-        resources.applyImportantStyle("compactLayoutStyle");
+        if (suitableSites.includes(location.href.replace(location.search, '')))
+        {
+            document.body.classList.add("compact");
+            resources.applyImportantStyle("compactLayoutStyle");
+        }
     },
     unload: () =>
     {

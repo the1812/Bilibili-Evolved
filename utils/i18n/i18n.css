@@ -20,11 +20,16 @@
 .user-list .up-item .attention-btn.followed,
 .user-list .up-item .attention-btn.followed:hover,
 .info-line .status-no-attend,
-.bb-comment .comment-list .list-item .info .operation .opera-list
+.bb-comment .comment-list .list-item .info .operation .opera-list,
+.player-auxiliary-area .player-auxiliary-setting-menu-wrap,
+.bilibili-player-video-sendbar .bilibili-player-video-hint,
+.bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku,
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow
 {
     width: auto !important;
 }
-.bb-comment .comment-send .comment-emoji
+.bb-comment .comment-send .comment-emoji,
+#app-ctnr .demo-app .category
 {
     width: max-content !important;
 }
@@ -37,6 +42,14 @@
 {
     width: 70px !important;
 }
+.share-board .share-btn .bili-share
+{
+    width: 90px !important;
+}
+.share-board .song-share .song-share-ul li
+{
+    width: 120px !important;
+}
 .bili-header-m .profile-m .grade .bar
 {
     width: 160px !important;
@@ -44,7 +57,7 @@
 .link-navbar .main-ctnr,
 .bili-search .contain
 {
-    width: 90% !important;
+    width: 95% !important;
 }
 .bili-search .video.list
 {
@@ -71,6 +84,10 @@
 {
     white-space: pre !important;
 }
+.player-auxiliary-area .player-auxiliary-setting-menu-list
+{
+    white-space: nowrap !important;
+}
 
 .up-info .up-focus-btn,
 .textarea-container .comm-tool .comm-emoji,
@@ -82,7 +99,9 @@
 .media-info .media-right .media-tool-bar .btn-follow,
 .article-action .ops .coin-btn,
 .article-action .ops .fav-btn,
-.article-action .ops .like-btn
+.article-action .ops .like-btn,
+.player-auxiliary-area .player-auxiliary-setting-menu-list,
+.bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku
 {
     padding: 0 8px !important;
 }
@@ -98,9 +117,19 @@
 {
     padding-top: 15px !important;
 }
+.cc-nav-wrp .nav-item
+{
+    padding: 0 0 0 40px !important;
+}
+.cc-nav-wrp .sub-nav a
+{
+    padding: 0 !important;
+}
 .player-auxiliary-area .player-auxiliary-filter-menu
 {
     margin: 0 !important;
+    position: relative !important;
+    left: 0 !important;
 }
 .dashboard li.collection
 {
@@ -114,10 +143,16 @@
 {
     margin-right: 32px !important;
 }
+.follow-btn>span>span
+{
+    margin-left: 8px;
+}
 
 .dynamic-m .dyn_menu .line,
 .tab-bar .line,
-.nav-wrap .hover-bar
+.nav-wrap .hover-bar,
+.mode-webfullscreen .bilibili-player-video-sendbar .bilibili-player-video-hint,
+.mode-fullscreen .bilibili-player-video-sendbar .bilibili-player-video-hint
 {
     display: none !important;
 }
@@ -170,4 +205,56 @@
 .gui-settings-tooltip
 {
     left: 470px !important;
+}
+.bb-comment .comment-send .comment-submit,
+.comment-bilibili-fold .comment-send .comment-submit
+{
+    overflow-wrap: break-word;
+}
+.info-section .area-text>a
+{
+    max-width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+html[lang='ja-JP'] .player-auxiliary-area .danmaku-info-row-block::after
+{
+    content: "ブロック" !important;
+}
+.season-list li.season-item .season-body .season-title span.follow
+{
+    background-image: none;
+    filter: none !important;
+    width: 24px;
+}
+.season-list li.season-item .season-body .season-title span.follow::after
+{
+    content: "\F8CF";
+
+    font: normal normal normal 24px/1 "Material Design Icons";
+    font-size: inherit;
+    text-rendering: auto;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    background-color: var(--theme-color);
+    color: var(--foreground-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    position: absolute;
+    padding: 0 4px;
+}
+
+@media screen and (max-width: 1400px)
+{
+    .link-navbar .nav-item:not(:first-child) .label
+    {
+        padding: 0 12px !important;
+    }
 }

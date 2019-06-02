@@ -30,7 +30,8 @@
 .bb-comment .no-login .comment-submit,
 .main-container .media-info .media-right .media-tool-bar .btn-follow.active,
 .coupon-content-con .coupon-btn-disable,
-.common .bb-comment .no-login .comment-submit
+.common .bb-comment .no-login .comment-submit,
+.customize-wrp .select
 {
     background-color: #444 !important;
 }
@@ -100,7 +101,8 @@ blockquote .color-yellow-04,
 #app .sticky-bar .bar-content .message,
 .coupon-content-con .coupon-btn-disable,
 .common .bb-comment .no-login .comment-submit,
-.popup-content-ctnr .bl-button--ghost:hover
+.popup-content-ctnr .bl-button--ghost:hover,
+.customize-wrp .select
 {
     color: #eee !important;
 }
@@ -117,7 +119,9 @@ blockquote .color-yellow-04,
 .live-skin-coloration-area .live-skin-separate-border,
 .select-box-v2-container .select-box-v2-controller-disabled,
 .common .bb-comment .no-login .comment-submit,
-.popup-content-ctnr .bl-button--ghost:hover
+.popup-content-ctnr .bl-button--ghost:hover,
+.song-info .info-wrap .type-list .item-list .type-item.active,
+.enter-failure .password-input .pink-border
 {
     border-color: transparent !important;
 }
@@ -130,13 +134,13 @@ blockquote .color-yellow-04,
 .rank-item .content .more-data:hover,
 .edit-button:hover > .icon-font,
 .edit-button:hover > span .left-nav-item-childed:hover,
-.left-nav-ul .active .left-nav-item-child,
-.left-nav-ul .active,
-.left-nav-ul .advice-btn:hover,
-.left-nav-ul .left-nav-item.active,
-.left-nav-ul .left-nav-item.active i.active,
-.left-nav-ul .left-nav-list.on .left-nav-item .icon,
-.left-nav-ul .left-nav-list.on .left-nav-item,
+.left-nav-wrapper .active .left-nav-item-child,
+.left-nav-wrapper .active,
+.left-nav-wrapper .advice-btn:hover,
+.left-nav-wrapper .left-nav-item.active,
+.left-nav-wrapper .left-nav-item.active i.active,
+.left-nav-wrapper .left-nav-list.on .left-nav-item .icon,
+.left-nav-wrapper .left-nav-list.on .left-nav-item,
 .drop-list-v2-container .drop-list-v2-item-selected .drop-list-v2-item-cont p.item-cont-main,
 .voucher-ing .voucher-left-money,
 .voucher-ing .voucher-left-money:before,
@@ -152,7 +156,8 @@ blockquote .color-yellow-04,
 .live-skin-normal-a-text:active,
 .up-info .u-info .name .username.is-vip:hover,
 #app .sticky-bar .bar-content .message:hover,
-.el-select-dropdown__item.selected
+.el-select-dropdown__item.selected,
+.r-con .members-info .up-card .info-name.is-vip:hover
 {
     color: var(--theme-color) !important;
 }
@@ -182,7 +187,8 @@ blockquote .color-yellow-04,
 .user-my-btn .el-button--primary,
 .live-skin-coloration-area .live-skin-highlight-bg,
 .popup-content-ctnr .bl-button--primary,
-.popup-content-ctnr .bl-button--ghost:hover
+.popup-content-ctnr .bl-button--ghost:hover,
+.song-info .info-wrap .type-list .item-list .type-item.active
 {
     background-color: var(--theme-color) !important;
 }

@@ -1,7 +1,7 @@
 .gui-settings-tooltip
 {
     position: fixed;
-    left: 420px;
+    left: 440px;
     color: white;
     background: #0008;
     padding: 1rem;
@@ -11,7 +11,7 @@
     transition: all .2s ease-out .8s;
     opacity: 0;
     min-width: 100%;
-    max-height: 60%;
+    max-height: 100%;
     line-height: 24px;
     white-space: pre-wrap;
     pointer-events: none;

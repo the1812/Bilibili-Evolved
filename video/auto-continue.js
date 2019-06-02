@@ -7,12 +7,10 @@ function continuePlay(toastText)
     const text = toastText.text();
     if (/第(\d+)话/.test(text))
     {
-        toastText.parent().find(".bilibili-player-video-toast-item-jump").click();
-        SpinQuery.condition(
-            () => document.querySelector(".bilibili-player-video video"),
-            it => it && it.paused === true,
-            it => it.play(),
-        );
+        if (settings.allowJumpContinue)
+        {
+            toastText.parent().find(".bilibili-player-video-toast-item-jump").click();
+        }
         return;
     }
     const regex = /((\d)*:)?(\d)*:(\d)*/g;
@@ -48,7 +46,11 @@ function continuePlay(toastText)
         video.play();
         toastItem.find(".bilibili-player-video-toast-item-jump").remove();
         const restart = $(`<div class="bilibili-player-video-toast-item-jump">从头开始</div>`);
-        restart.appendTo(toastItem).on("click", () => video.currentTime = 0);
+        restart.appendTo(toastItem).on("click", () =>
+        {
+            video.currentTime = 0;
+            toastItem.find(".bilibili-player-video-toast-item-close").get(0).click();
+        });
         toastText.html(`<span>已跳转到上次历史记录</span><span>${match[0]}</span>`);
     }
     else
@@ -64,9 +66,4 @@ function findHistoryToast()
         it => continuePlay(it.filter((_, e) => e.innerText.indexOf("上次看到") !== -1)),
     );
 }
-if (Observer.videoChange)
-{
-    Observer.videoChange(findHistoryToast);
-}
-else
-{ Observer.childList("#bofqi", findHistoryToast); }
+Observer.videoChange(findHistoryToast);

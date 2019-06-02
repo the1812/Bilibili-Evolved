@@ -69,6 +69,7 @@ export const settings = {
     autoLightOff: false,
     useCache: true,
     autoContinue: false,
+    allowJumpContinue: false,
     autoPlay: false,
     showDeadVideoTitle: false,
     useBiliplusRedirect: false,
@@ -101,6 +102,7 @@ export const settings = {
     customNavbarShadow: true,
     customNavbarCompact: false,
     customNavbarBlur: false,
+    customNavbarBlurOpacity: 0.7,
     customNavbarOrder: { ...customNavbarDefaultOrders },
     customNavbarHidden: [],
     customNavbarBoundsPadding: 5,
@@ -109,6 +111,9 @@ export const settings = {
     favoritesRedirect: true,
     outerWatchlater: true,
     hideOldEntry: true,
+    videoScreenshot: false,
+    hideBangumiReviews: false,
+    filenameFormat: "[title][ - ep]",
     cache: {},
 };
 const fixedSettings = {
@@ -159,7 +164,7 @@ export function loadSettings()
     if (Object.keys(languageCodeToName).includes(navigator.language))
     {
         settings.i18n = true;
-        settings.i18n = languageCodeToName[navigator.language];
+        settings.i18nLanguage = languageCodeToName[navigator.language];
     }
     for (const key in settings)
     {
@@ -186,7 +191,14 @@ export function loadSettings()
                 const handlers = settingsChangeHandlers[key];
                 if (handlers)
                 {
-                    handlers.forEach(h => h(newValue, value));
+                    if (key === "useDarkStyle")
+                    {
+                        setTimeout(() => handlers.forEach(h => h(newValue, value)), 200);
+                    }
+                    else
+                    {
+                        handlers.forEach(h => h(newValue, value));
+                    }
                 }
                 const input = document.querySelector(`input[key=${key}]`);
                 if (input !== null)
@@ -195,7 +207,7 @@ export function loadSettings()
                     {
                         input.checked = newValue;
                     }
-                    else if (input.type === "text")
+                    else if (input.type === "text" && !input.parentElement.classList.contains("gui-settings-dropdown"))
                     {
                         input.value = newValue;
                     }

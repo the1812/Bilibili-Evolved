@@ -87,12 +87,13 @@ declare global
         static condition<T>(query: () => T, condition: (queryResult: T) => boolean): Promise<T>;
         static select<T>(query: () => T, action: (queryResult: T) => void, failed: () => void): void;
         static select<T>(query: () => T): Promise<T>;
-        static select<T>(query: string): HTMLElement | null;
+        static select(query: string): Promise<HTMLElement | null>;
         static any<T>(query: () => T, action: (queryResult: T) => void, failed: () => void): void;
         static any<T>(query: () => T): Promise<T>;
-        static any<T>(query: string): any;
+        static any(query: string): Promise<any>;
         static count<T>(query: () => T, count: number, success: (queryResult: T) => void, failed: () => void): void;
         static count<T>(query: () => T, count: number): Promise<T>;
+        static count(query: string, count: number): Promise<NodeListOf<Element>>;
         static unsafeJquery(action: () => void, failed: () => void): void;
         static unsafeJquery(): Promise<void>;
     }
@@ -134,6 +135,8 @@ declare global
         applyStyleFromText(text: string, id: string): void;
         applyImportantStyleFromText(text: string, id: string): void;
         getStyle(key: string, id?: string): void;
+        toggleStyle(content: string, id: string): void;
+        toggleStyle(key: string): void;
     }
     const resources: ResourceManager;
     class DoubleClickEvent
@@ -220,6 +223,7 @@ declare global
         autoLightOff: boolean,
         useCache: boolean,
         autoContinue: boolean,
+        allowJumpContinue: boolean,
         autoPlay: boolean,
         showDeadVideoTitle: boolean,
         useBiliplusRedirect: boolean,
@@ -252,6 +256,7 @@ declare global
         customNavbarShadow: boolean,
         customNavbarCompact: boolean,
         customNavbarBlur: boolean,
+        customNavbarBlurOpacity: number,
         customNavbarOrder: CustomNavbarOrders,
         customNavbarHidden: Array<keyof CustomNavbarComponents>,
         customNavbarBoundsPadding: number,
@@ -260,7 +265,10 @@ declare global
         favoritesRedirect: boolean,
         outerWatchlater: boolean,
         hideOldEntry: boolean,
+        hideBangumiReviews: boolean,
+        videoScreenshot: boolean,
         cache: {} | { version: string } | undefined,
+        filenameFormat: string,
         latestVersionLink: string,
         currentVersion: string,
     }
@@ -284,5 +292,7 @@ declare global
     function isEmbeddedPlayer(): boolean;
     function isIframe(): boolean;
     function getI18nKey(): string;
+    const dq: (selector: string) => Element | null;
+    const dqa: (selector: string) => Element[];
 }
 export { };

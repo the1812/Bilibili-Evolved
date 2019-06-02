@@ -8,7 +8,8 @@ export class Translator
     static textNode: TextNodeTranslator;
     static title: TitleTranslator;
     static placeholder: PlaceholderTranslator;
-    static allTranslators: Translator[];
+    static settingsDropdown: SettingsDropdownTranslator;
+    static sensitiveTranslators: Translator[];
     static map: Map<string, any>;
     static regex: [RegExp, string][];
 
@@ -88,16 +89,18 @@ export class Translator
             Translator.textNode.translate(rootElement);
             return;
         }
-        Translator.walk(rootElement, node =>
+        const translateNode = (node: Node) =>
         {
-            for (const translator of Translator.allTranslators)
+            for (const translator of Translator.sensitiveTranslators)
             {
                 if (translator.accepts(node))
                 {
                     translator.translate(node);
                 }
             }
-        });
+        };
+        translateNode(rootElement);
+        Translator.walk(rootElement, translateNode);
     }
     static translateCssMatches()
     {
@@ -142,10 +145,21 @@ export class PlaceholderTranslator extends Translator
     }
 }
 
+export class SettingsDropdownTranslator extends Translator
+{
+    accepts(node: Node) { return node instanceof HTMLInputElement && node.hasAttribute("key"); }
+    getValue(node: Node) { return (node as HTMLInputElement).value; }
+    setValue(node: Node, value: string)
+    {
+        (node as HTMLInputElement).value = value;
+    }
+}
+
 Translator.textNode = new TextNodeTranslator;
 Translator.title = new TitleTranslator;
 Translator.placeholder = new PlaceholderTranslator;
-Translator.allTranslators = [Translator.textNode, Translator.title, Translator.placeholder];
+Translator.settingsDropdown = new SettingsDropdownTranslator;
+Translator.sensitiveTranslators = [Translator.textNode, Translator.title, Translator.placeholder];
 
 const startTranslate = async () =>
 {
@@ -176,8 +190,24 @@ const startTranslate = async () =>
             {
                 Translator.textNode.translate(it.target);
             }
+            else if (it.type === "attributes")
+            {
+                if (it.attributeName === "title")
+                {
+                    Translator.title.translate(it.target);
+                }
+                else if (it.attributeName === "placeholder")
+                {
+                    Translator.placeholder.translate(it.target);
+                }
+            }
         });
-    }, { characterData: true, childList: true, subtree: true });
+    }, { characterData: true, childList: true, subtree: true, attributes: true });
+    const iconPanel = await SpinQuery.select(".gui-settings-icon-panel");
+    iconPanel!.addEventListener("be:load", () =>
+    {
+        Translator.walk(document.querySelector(".gui-settings-box")!, node => Translator.settingsDropdown.translate(node));
+    }, { once: true });
 };
 startTranslate();
 // if (document.readyState === "complete")

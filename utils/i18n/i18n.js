@@ -63,13 +63,15 @@ export class Translator {
             Translator.textNode.translate(rootElement);
             return;
         }
-        Translator.walk(rootElement, node => {
-            for (const translator of Translator.allTranslators) {
+        const translateNode = (node) => {
+            for (const translator of Translator.sensitiveTranslators) {
                 if (translator.accepts(node)) {
                     translator.translate(node);
                 }
             }
-        });
+        };
+        translateNode(rootElement);
+        Translator.walk(rootElement, translateNode);
     }
     static translateCssMatches() {
         const selectors = Translator.map.get("*");
@@ -103,10 +105,18 @@ export class PlaceholderTranslator extends Translator {
         node.setAttribute("placeholder", value);
     }
 }
+export class SettingsDropdownTranslator extends Translator {
+    accepts(node) { return node instanceof HTMLInputElement && node.hasAttribute("key"); }
+    getValue(node) { return node.value; }
+    setValue(node, value) {
+        node.value = value;
+    }
+}
 Translator.textNode = new TextNodeTranslator;
 Translator.title = new TitleTranslator;
 Translator.placeholder = new PlaceholderTranslator;
-Translator.allTranslators = [Translator.textNode, Translator.title, Translator.placeholder];
+Translator.settingsDropdown = new SettingsDropdownTranslator;
+Translator.sensitiveTranslators = [Translator.textNode, Translator.title, Translator.placeholder];
 const startTranslate = async () => {
     const languageCode = languageCodeMap[settings.i18nLanguage];
     const { map, regex } = await import(`./i18n.${languageCode}`);
@@ -128,8 +138,20 @@ const startTranslate = async () => {
             else if (it.type === "characterData") {
                 Translator.textNode.translate(it.target);
             }
+            else if (it.type === "attributes") {
+                if (it.attributeName === "title") {
+                    Translator.title.translate(it.target);
+                }
+                else if (it.attributeName === "placeholder") {
+                    Translator.placeholder.translate(it.target);
+                }
+            }
         });
-    }, { characterData: true, childList: true, subtree: true });
+    }, { characterData: true, childList: true, subtree: true, attributes: true });
+    const iconPanel = await SpinQuery.select(".gui-settings-icon-panel");
+    iconPanel.addEventListener("be:load", () => {
+        Translator.walk(document.querySelector(".gui-settings-box"), node => Translator.settingsDropdown.translate(node));
+    }, { once: true });
 };
 startTranslate();
 // if (document.readyState === "complete")

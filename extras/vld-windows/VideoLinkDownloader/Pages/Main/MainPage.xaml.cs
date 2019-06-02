@@ -10,25 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VideoLinkDownloader.Pages.Main;
 
-namespace VideoLinkDownloader
+namespace VideoLinkDownloader.Pages
 {
-    /// <summary>
-    /// TestWindow.xaml 的交互逻辑
-    /// </summary>
-    public partial class TestWindow : Window
+    public partial class MainPage : Page
     {
-        public TestWindow()
+        public MainPage()
         {
             InitializeComponent();
-            Loaded += (s, e) => AcrylicBlur.Apply(this, new Color
-            {
-                A = 1,
-                R = 255,
-                G = 255,
-                B = 255,
-            });
+            DataContext = new MainPageViewModel();
         }
     }
 }

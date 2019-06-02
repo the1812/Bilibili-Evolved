@@ -3,13 +3,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const commandLineArgs = require("command-line-args");
 const clipboardy = require("clipboardy");
+// import request = require("requestretry");
 const request = require("request");
 const fs = require("fs");
 const ProgressBar = require("progress");
 require("colors");
 const optionDefinitions = [
+    { name: 'danmaku', alias: 'd', defaultValue: false, type: Boolean },
     { name: 'info', alias: 'i', defaultOption: true, type: String, defaultValue: undefined },
-    { name: 'parts', alias: 'p', type: Number, defaultValue: 30 },
+    { name: 'parts', alias: 'p', type: Number, defaultValue: 12 },
     { name: 'output', alias: 'o', type: String, defaultValue: '.' },
 ];
 const commandLineOptions = commandLineArgs(optionDefinitions);
@@ -43,58 +45,78 @@ class Downloader {
         this.progressBar.update(progress);
     }
     cancelDownload() {
-        [...this.progressMap.keys()].forEach(it => it.abort());
+        [...this.progressMap.keys()].forEach(it => {
+            if (typeof it !== "string") {
+                it.abort();
+            }
+        });
         this.progressBar.terminate();
         const files = fs.readdirSync(".");
         const parts = files.filter(it => it.includes(this.inputData.title));
         parts.forEach(file => fs.unlinkSync(file));
         console.log("已取消下载".blue);
     }
+    downloadFragmentPart(url, range, partFilename) {
+        return new Promise((resolve, reject) => {
+            let stream;
+            const makeRequest = () => {
+                const req = request({
+                    url: url,
+                    method: "GET",
+                    headers: {
+                        Range: range,
+                        Origin: "https://www.bilibili.com",
+                        Referer: "https://www.bilibili.com",
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
+                    },
+                }).on("complete", response => {
+                    if (response.statusCode.toString()[0] === "2") {
+                        resolve(response);
+                    }
+                    else {
+                        reject(`请求失败: ${response.statusCode}`);
+                    }
+                }).on("data", data => {
+                    this.progressMap.set(req, this.progressMap.get(req) + data.length);
+                    this.updateProgress();
+                }).on("error", error => {
+                    stream.close();
+                    fs.unlinkSync(partFilename);
+                    this.progressMap.delete(req);
+                    this.progressMap.set(makeRequest(), 0);
+                    this.updateProgress();
+                    reject(`\n片段下载失败: ${error}`);
+                });
+                stream = req.pipe(fs.createWriteStream(partFilename));
+                return req;
+            };
+            this.progressMap.set(makeRequest(), 0);
+        });
+    }
     async downloadFragment(fragment, index = -1) {
         const partialLength = Math.round(fragment.size / options.parts);
         const title = (index === -1 ? this.inputData.title : this.inputData.title + " - " + index.toString());
         if (fs.existsSync(title + this.extension)) {
-            this.progressBar.interrupt(`跳过了已存在的文件 ${title + this.extension}`);
+            this.progressBar.terminate();
+            console.log(`跳过了已存在的文件 ${title + this.extension}`);
             return title;
         }
         let startByte = 0;
         let part = 0;
         const promises = [];
         while (startByte < fragment.size) {
+            const partFilename = `${title}.part${part}`;
+            // if (fs.existsSync(partFilename))
+            // {
+            //     this.progressMap.set(partFilename, partialLength);
+            //     this.updateProgress();
+            // }
+            // else
+            // {
             const endByte = Math.min(fragment.size - 1, Math.round(startByte + partialLength));
             const range = `bytes=${startByte}-${endByte}`;
-            promises.push(new Promise((resolve, reject) => {
-                const makeRequest = () => {
-                    const req = request({
-                        url: fragment.url,
-                        method: "GET",
-                        headers: {
-                            Range: range,
-                            Origin: "https://www.bilibili.com",
-                            Referer: "https://www.bilibili.com",
-                            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
-                        },
-                    }).on("complete", response => {
-                        if (response.statusCode.toString()[0] === "2") {
-                            resolve(response);
-                        }
-                        else {
-                            reject(`请求失败`);
-                        }
-                    }).on("data", data => {
-                        this.progressMap.set(req, this.progressMap.get(req) + data.length);
-                        this.updateProgress();
-                    }).on("error", error => {
-                        this.progressMap.delete(req);
-                        this.progressMap.set(makeRequest(), 0);
-                        this.updateProgress();
-                        console.error(`\n片段下载失败: ${error} 重试中...`.yellow);
-                    });
-                    req.pipe(fs.createWriteStream(`${title}.part${part}`));
-                    return req;
-                };
-                this.progressMap.set(makeRequest(), 0);
-            }));
+            promises.push(this.downloadFragmentPart(fragment.url, range, partFilename));
+            // }
             startByte = Math.round(startByte + partialLength) + 1;
             part++;
         }
@@ -116,6 +138,10 @@ class Downloader {
     }
     async mergeFragment(title, index = -1) {
         const dest = title + this.extension;
+        if (!this.progressBar.complete) {
+            this.progressBar.update(1);
+            this.progressBar.terminate();
+        }
         if (fs.existsSync(dest)) {
             return dest;
         }

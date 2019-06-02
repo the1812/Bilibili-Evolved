@@ -42,12 +42,12 @@ export class ResourceManager
         styles.push("--brightness:" + settings.brightness);
         styles.push("--invert-filter:" + settings.filterInvert);
         styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
-        styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
+         // styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
         this.applyStyleFromText(`html{${styles.join(";")}}`, "bilibili-evolved-variables");
     }
     resolveComponentName(componentName)
     {
-        const keyword = "/" + componentName.replace("./", "") + ".min.js";
+        const keyword = "/" + componentName.replace("./", "").replace("../", "") + ".min.js";
         for (const [name, value] of Object.entries(Resource.all))
         {
             if (value.url.endsWith(keyword))
@@ -198,19 +198,19 @@ export class ResourceManager
                 });
             }
         };
-        for (const [key, targetKey] of Object.entries(Resource.reloadables))
+        for (const key of Resource.reloadables)
         {
-            const attributes = this.attributes[targetKey];
+            const attributes = this.attributes[key];
             if (attributes === undefined)
             {
                 const fetchListener = async newValue =>
                 {
                     if (newValue === true)
                     {
-                        await this.styleManager.fetchStyleByKey(targetKey);
-                        await this.fetchByKey(targetKey);
+                        await this.styleManager.fetchStyleByKey(key);
+                        await this.fetchByKey(key);
                         removeSettingsListener(key, fetchListener);
-                        checkAttribute(key, this.attributes[targetKey]);
+                        checkAttribute(key, this.attributes[key]);
                     }
                 };
                 addSettingsListener(key, fetchListener);
@@ -284,18 +284,20 @@ export class ResourceManager
             else
             {
                 const dropdownInput = await SpinQuery.select(`.gui-settings-dropdown input[key=${info.key}]`);
+                dropdownInput.value = settings[info.key];
+                dropdownInput.setAttribute("data-name", settings[info.key]);
                 const dropdown = dropdownInput.parentElement;
                 const list = dropdown.querySelector("ul");
                 const input = dropdown.querySelector("input");
                 info.items.forEach(itemHtml =>
                 {
-                    list.insertAdjacentHTML("beforeend", `<li>${itemHtml}</li>`);
+                    list.insertAdjacentHTML("beforeend", `<li data-name="${itemHtml}">${itemHtml}</li>`);
                 });
                 list.querySelectorAll("li").forEach(li => li.addEventListener("click", () =>
                 {
                     input.value = li.innerText;
-                    raiseEvent(input, "input");
-                    raiseEvent(input, "change");
+                    input.setAttribute("data-name", li.getAttribute("data-name"));
+                    settings[info.key] = li.getAttribute("data-name");
                 }));
             }
         }
@@ -312,6 +314,25 @@ export class ResourceManager
                 }
             });
         await Promise.all(manifests.map(it => applyDropdownOption(it)));
+    }
+    toggleStyle(content, id)
+    {
+        if (id === undefined) // content is resource name
+        {
+            this.styleManager.applyStyle(content);
+            return {
+                reload: () => this.styleManager.applyStyle(content),
+                unload: () => this.styleManager.removeStyle(content),
+            };
+        }
+        else // content is style text
+        {
+            this.styleManager.applyStyleFromText(content, id);
+            return {
+                reload: () => this.styleManager.applyStyleFromText(content, id),
+                unload: () => document.getElementById(id).remove(),
+            };
+        }
     }
     validateCache()
     {

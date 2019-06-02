@@ -22,7 +22,7 @@ export const toolTips = new Map([
     ["framePlayback", `在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
     ["playerFocus", `进入视频/番剧页面时, 自动定位到播放器.`],
     ["playerFocusOffset", `定位时的竖直偏移量, 单位为像素(px).`],
-    ["customStyleColor", `设定顶栏(样式调整启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],
+    ["customStyleColor", `设定顶栏(自定义顶栏启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],
     ["useNewStyle", `<span>主要</span>会改变顶栏的样式, 并有一些其他地方的界面微调:
 - 为播放器增加主题色投影
 - 可控制顶栏对横幅的透明度
@@ -99,6 +99,24 @@ export const toolTips = new Map([
     ["narrowDanmaku", `在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.`],
     ["hideOldEntry", `隐藏播放页右侧的<span>返回旧版</span>入口.`],
     ["hideBanner", `隐藏首页顶部横幅.`],
+    ["allowJumpContinue", `当历史记录的集数与当前打开的不一致时, 仍然自动跳转.`],
+    ["hideBangumiReviews", `隐藏番剧播放页面里的点评板块.`],
+    ["videoScreenshot", `启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
+    ["filenameFormat", `自定义文件命名格式, 作用于<span>下载弹幕</span>, <span>下载视频</span>, <span>视频截图</span>, <span>查看封面</span>.
+可以使用的变量有:
+- <span>title</span>: 视频标题/直播间标题
+- <span>ep</span>: 选集标题
+- <span>aid</span>: AV号
+- <span>cid</span>: CID (每个视频的唯一编号, AV号对应的视频可能有多集)
+- <span>lid</span>: 直播间号
+- <span>y</span>/<span>M</span>/<span>d</span>: 年/月/日
+- <span>h</span>/<span>m</span>/<span>s</span>/<span>ms</span>: 时/分/秒/毫秒
+
+默认的格式是<span>[title][ - ep]</span>, 标题+选集标题, 当没有选集标题时则只有标题.
+
+变量要放在方括号里, 而方括号里的其他内容会在变量有效时出现. 比如格式如果写成<span>[title] - [ep]</span>, 那么即使没有选集标题, 中间那个<span> - </span>也会出现在文件名里. 如果像默认那样放在方括号里, 没有选集标题时, <span> - </span>也不会出现.
+
+例如, 想要标题+AV号+时间的格式, 可以设定为<span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>, 能够得到类似<span>xxxx AV23333 2019-05-29 19-59-44</span>的名字.`],
 ]);
 export default {
     export: { toolTips },

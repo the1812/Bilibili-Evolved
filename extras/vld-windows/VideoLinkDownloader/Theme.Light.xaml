@@ -1,0 +1,11 @@
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="clr-namespace:VideoLinkDownloader">
+  <SolidColorBrush
+    x:Key="Background"
+    Color="#fff" />
+  <SolidColorBrush
+    x:Key="Foreground"
+    Color="#000" />
+</ResourceDictionary>

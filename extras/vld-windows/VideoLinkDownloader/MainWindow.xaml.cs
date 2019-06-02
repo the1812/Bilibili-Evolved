@@ -21,23 +21,6 @@ namespace VideoLinkDownloader
         public MainWindow()
         {
             InitializeComponent();
-            //button.Click += (s,e) =>
-            //{
-            //    AcrylicBlur.Apply(this, new Color
-            //    {
-            //        A = 0,
-            //        R = 255,
-            //        G = 255,
-            //        B = 255,
-            //    }, AccentState.Diabled);
-            //    AcrylicBlur.Apply(this, new Color
-            //    {
-            //        A = 0,
-            //        R = 255,
-            //        G = 255,
-            //        B = 255,
-            //    }, AccentState.AcrylicBlurBehind);
-            //};
         }
     }
 }

@@ -201,13 +201,13 @@ function checkOfflineData()
         document.querySelector("input[key=useCache]").disabled = true;
     }
 }
-function foldAllCategories()
-{
-    document.querySelectorAll(".gui-settings-content ul li.category").forEach(e =>
-    {
-        e.click();
-    });
-}
+// function foldAllCategories()
+// {
+//     document.querySelectorAll(".gui-settings-content ul li.category").forEach(e =>
+//     {
+//         e.click();
+//     });
+// }
 function checkCompatibility()
 {
     if (!CSS.supports("backdrop-filter", "blur(24px)")
@@ -302,18 +302,20 @@ function setDisplayNames()
     new ThemeColors().setupDom();
 
     const boxes = document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box");
-    document.querySelector(".gui-settings-icon-panel").addEventListener("mouseover", () =>
+    const iconPanel = document.querySelector(".gui-settings-icon-panel");
+    iconPanel.addEventListener("mouseover", () =>
     {
+        raiseEvent(iconPanel, "be:load");
         boxes.forEach(it => it.classList.add("loaded"));
         inputs = [...document.querySelectorAll("input[key]")];
         checkBoxes = inputs.filter(it => it.type === "checkbox");
-        textBoxes = inputs.filter(it => it.type === "text");
+        textBoxes = inputs.filter(it => it.type === "text" && !it.parentElement.classList.contains("gui-settings-dropdown"));
         setupEvents();
         checkOfflineData();
         syncGui();
         listenDependencies();
         listenSettingsChange();
-        foldAllCategories();
+        // foldAllCategories();
         checkCompatibility();
         setDisplayNames();
         new SettingsSearch();

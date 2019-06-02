@@ -3,13 +3,25 @@ resources.applyStyle("framePlaybackStyle");
 const main = async () =>
 {
     const video = await SpinQuery.select(() => document.querySelector("video"));
-    const time = await SpinQuery.select(() => document.querySelector(".bilibili-player-video-time"));
 
-    if (time === null || document.querySelector(".frame-playback"))
+    if (settings.videoScreenshot)
     {
-        return;
+        const screenshotButton = await SpinQuery.select(".video-take-screenshot");
+        if (screenshotButton === null || document.querySelector(".frame-playback"))
+        {
+            return;
+        }
+        screenshotButton.insertAdjacentHTML("afterend", html);
     }
-    time.insertAdjacentHTML("afterend", html);
+    else
+    {
+        const time = await SpinQuery.select(".bilibili-player-video-time");
+        if (time === null || document.querySelector(".frame-playback"))
+        {
+            return;
+        }
+        time.insertAdjacentHTML("afterend", html);
+    }
 
     let frameTime = 0;
     const prevFrame = () => video.currentTime -= frameTime;
@@ -60,3 +72,7 @@ const main = async () =>
     }
 };
 Observer.videoChange(main);
+export default {
+    reload: () => document.querySelectorAll(".bilibili-player-video-control-bottom .frame-playback").forEach(it => it.setAttribute("style", "display: flex !important")),
+    unload: () => document.querySelectorAll(".bilibili-player-video-control-bottom .frame-playback").forEach(it => it.setAttribute("style", "display: none !important")),
+};

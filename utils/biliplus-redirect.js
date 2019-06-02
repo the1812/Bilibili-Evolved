@@ -23,11 +23,12 @@ export default {
             {
                 if (location.host === "space.bilibili.com")
                 {
-                    location.replace(document.URL.replace("space.bilibili.com/", `${host}/space/`));
+                    location.assign(document.URL.replace("space.bilibili.com/", `${host}/space/`));
                 }
                 else if (document.URL.includes("/bangumi/"))
                 {
-                    location.replace(`https://${host}/video/av${unsafeWindow.aid}/`);
+                    const aid = unsafeWindow.aid || document.querySelector(".av-link,.info-sec-av").innerText.replace(/[aAvV]/g, "");
+                    location.assign(`https://${host}/video/av${aid}/`);
                 }
                 else
                 {

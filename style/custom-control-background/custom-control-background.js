@@ -1,5 +1,9 @@
-if (settings.customControlBackgroundOpacity > 0)
+document.body.style.setProperty("--custom-control-background-opacity", settings.customControlBackgroundOpacity);
+addSettingsListener("customControlBackgroundOpacity", value =>
 {
+    document.body.style.setProperty("--custom-control-background-opacity", value);
+});
+const load = () => {
     resources.applyStyle("customControlBackgroundStyle");
     if (!settings.touchVideoPlayer)
     {
@@ -13,4 +17,13 @@ if (settings.customControlBackgroundOpacity > 0)
             </style>
             `);
     }
-}
+};
+load();
+export default {
+    reload: load,
+    unload: () => {
+        resources.removeStyle("customControlBackgroundStyle");
+        const nonTouchStyle = document.getElementById("control-background-non-touch");
+        nonTouchStyle && nonTouchStyle.remove();
+    },
+};

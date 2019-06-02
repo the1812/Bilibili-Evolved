@@ -92,3 +92,5 @@ export function getI18nKey()
 {
     return settings.i18n ? languageNameToCode[settings.i18nLanguage] : "zh-CN";
 }
+export const dq = (selector) => document.querySelector(selector);
+export const dqa = (selector) => [...document.querySelectorAll(selector)];

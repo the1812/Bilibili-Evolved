@@ -109,7 +109,16 @@ export class Observer
             });
             cidHooked = true;
         }
-        callback();
+        // callback();
+        const videoContainer = await SpinQuery.select("#bofqi video");
+        if (videoContainer)
+        {
+            Observer.childList(videoContainer, callback);
+        }
+        else
+        {
+            callback();
+        }
         videoChangeCallbacks.push(callback);
     }
 }

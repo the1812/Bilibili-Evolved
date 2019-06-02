@@ -44,13 +44,29 @@
 .feedback-mask .content .feedback-body .feedback-submit,
 .info-line .status-attend.status-attend-hover,
 .info-line .status-no-attend,
-.ssr-content .link-tag.activity
+.ssr-content .link-tag.activity,
+.advice-dialog-wrapper .input-style,
+.advice-dialog-wrapper .submit-btn,
+.home-pc .dialog .footer .apply-btn,
+.regist .toolbox,
+.song-info .info-wrap .type-list .item-list .type-item,
+.song-info .info-wrap .type-list .musicHoverType,
+.protocol-modal .modal-wrap .modal-content .text-content,
+.enter-failure,
+.cc-content-body .select-box,
+.cc-content-body .select-box .option-footer,
+.bp-emoji-box .static-popup,
+.float_window,
+.ui-widget-header
 {
     background-color: #222 !important;
 }
 .content .link-tag-box,
 .content .tab-selector-wrap,
-.live-user .user-item .item-right .tags>span
+.live-user .user-item .item-right .tags>span,
+.home-pc .application .application-body .btn-color,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management,
+.vl-hd-sub .selector-block .b-slt .list li:hover
 {
     background-color: #333 !important;
 }
@@ -104,9 +120,36 @@
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-filter .bilibili-player-filter-btn.active,
 .info-wrap .feedback-mask .content,
 .abnormal-module .abnormal-item .btn-back,
-.main-ctnr .qualify-drawer .drawer-pop
+.main-ctnr .qualify-drawer .drawer-pop,
+.bangumi-list .bangumi-item .right-info .headline .bangumi-label,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item,
+.pgc-list .pgc-item .right-info .headline .pgc-label,
+#pgc-navigate-wrap .play-btn,
+.live-category .category,
+.customize-wrp .customize-tab,
+.advice-dialog-wrapper,
+.r-con .members-info__container,
+.home-pc .application,
+.enter-failure .bl-button--primary:disabled,
+.enter-failure .link-input,
+.cc-content-body .select-box .select-item:hover,
+.cc-content-body .select-box .option-footer:hover,
+.detail-wrp .detail-empty,
+.vl-hd-sub .selector-block .b-slt,
+.vl-hd-sub .selector-block .b-slt .list,
+.vd-list.l3 li .l-item,
+.selet-datebox .sse a:hover,
+.selet-datebox .inpt input[type=text],
+.selet-datebox .inpt a.b-btn,
+.ui-widget-content
 {
     background-color: #444 !important;
+}
+.r-con .members-info__header,
+.r-con .members-info .up-card .attention--not,
+.r-con .members-info .up-card .attention
+{
+    background-color: #555 !important;
 }
 .follow-main .list-item:hover
 {
@@ -116,10 +159,22 @@
 {
     background-image: linear-gradient(rgba(242,243,245,0),#222 40%,#222) !important;
 }
-/* a
+.ui-widget-content,
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus
 {
     background-image: none !important;
-} */
+}
 .p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
 .rank-list-ctnr a,
 .rank-list-ctnr a:hover,
@@ -130,7 +185,14 @@
 .view-later-module .video-box-module,
 .view-later-module .up-info-module,
 .view-later-module .video-info-module .number .fav i,
-.main-ctnr .qualify-drawer .draw-list
+.main-ctnr .qualify-drawer .draw-list,
+.header-info-ctnr .normal-mode .area-link:active,
+.tab-bg.w-100.bg-white,
+.vd-list li .l-item,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-datepicker .ui-datepicker-header
 {
     background-color: transparent !important;
 }
@@ -143,7 +205,10 @@
 .text-article-wrp .head-stat .section .count,
 .view-later-module .read-list-modal-component .mask,
 .view-later-module .video-info-module .number .coin i,
-.view-later-module .video-info-module .number .fav i
+.view-later-module .video-info-module .number .fav i,
+#member-container:hover::-webkit-scrollbar,
+#member-container:hover::-webkit-scrollbar-track,
+.ui-widget-header
 {
     background: transparent !important;
 }
@@ -247,7 +312,25 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-header,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-info-other,
 .article-list-holder-block .article-list-name,
-.abnormal-module .abnormal-item .txt
+.abnormal-module .abnormal-item .txt,
+#navigator .v-switcher-header-item a span,
+.bangumi-list .bangumi-item .right-info .intros .label,
+.bangumi-list .bangumi-item .right-info .intros .value,
+.pgc-list .pgc-item .right-info .intros .value,
+.pgc-list .pgc-item .right-info .intros .label,
+.steps .step-operate,
+.r-con .members-info .up-card .info-title,
+.home-pc .application .application-header p,
+.home-pc .application .application-body .fjw-tip,
+.home-pc .application .application-foot p,
+.upload-cover-wrapper .upload-cover-suggest,
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info,
+.detail-wrp .detail-header .tips,
+.detail-wrp .detail-header .article-link,
+.vd-list li .v-desc,
+.vd-list li .l-r .up-info .v-author,
+.vd-list li .v-info .v-info-i,
+.vd-list li .l-r .up-info .v-date
 {
     color: #aaa !important;
 }
@@ -354,7 +437,74 @@
 .feedback-mask .content .feedback-body .dl-item .dt-item,
 .feedback-mask .content .feedback-body .feedback-submit,
 .feedback-mask .content .feedback-body .feedback-submit.active,
-.abnormal-module .abnormal-item .btn-back
+.abnormal-module .abnormal-item .btn-back,
+#navigator .v-switcher-header-item a,
+.bangumi-list .bangumi-item .right-info .headline .title,
+.bangumi-list .bangumi-item .right-info .headline .bangumi-label,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover,
+.pgc-list .pgc-item .right-info .headline .title,
+.pgc-list .pgc-item .right-info .headline .pgc-label,
+#pgc-navigate-wrap .play-btn,
+#pgc-navigate-wrap .play-btn:hover,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name,
+.tabs .customize-tab .tab-title,
+.customize-wrp .steps-title,
+.steps .step-operate .step-bread .step-index,
+.title-library-wrap .title-status button,
+.advice-dialog-wrapper .advice-title,
+.advice-dialog-wrapper .advice-info,
+.advice-dialog-wrapper .advice-item-title,
+.advice-dialog-wrapper .input-style,
+.advice-dialog-wrapper .advice-dialog-close,
+.right-content .customize-wrp .title,
+.right-content .reward-wrp .reward-title,
+.card-warpper .card-warpper-outside .card-item .info-text,
+.r-con .members-info__header .title,
+.r-con .members-info__header .btn,
+.r-con .members-info .up-card .info-name,
+.r-con .members-info .up-card .attention--not,
+.r-con .members-info .up-card .attention,
+.home-pc .application .application-header .title span,
+.home-pc .application .application-body .application-item .p1,
+.home-pc .application .application-body button,
+.home-pc .dialog .header h1,
+.home-pc .dialog .footer .apply-btn,
+.regist .reg-main-title,
+.regist .reg-main-text,
+.regist .toolbox .reg-tip,
+.song-info .info-wrap .type-list span,
+.song-info .info-wrap .current-selector .chosen-type,
+.song-info .info-wrap .type-list .item-list .type-item,
+.song-info .info-wrap .type-list .item-list .type-item.active:hover,
+.enter-failure,
+.enter-failure .supporting-text,
+.fold-box .fold-hoverable,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management i,
+.cc-content-body .select-box .option-footer,
+.cc-content-body .select-box .select-item .text,
+.detail-wrp .detail-empty,
+.vd-list li .title,
+.vl-hd-sub .b-slt .txt,
+.vl-hd-sub .b-slt .list li,
+.selet-datebox .sse a,
+.selet-datebox .inpt input[type=text],
+.selet-datebox .inpt a.b-btn,
+.ui-widget-content,
+.ui-widget-header,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus
 {
     color: #eee !important;
 }
@@ -441,7 +591,54 @@
 .info-wrap .feedback-mask .content .headline,
 .main-ctnr .qualify-drawer .draw-list,
 .main-ctnr .qualify-drawer .drawer-pop:after,
-.ssr-content .link-tag.activity:active
+.ssr-content .link-tag.activity:active,
+#navigator .v-switcher-header-item,
+.s-space #page-fav .fav-sidenav,
+.bangumi-list .bangumi-item,
+.bangumi-list .bangumi-item .right-info .headline .bangumi-label,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item,
+.pgc-list .pgc-item .right-info .headline .pgc-label,
+.pgc-list .pgc-item,
+#pgc-navigate-wrap .play-btn,
+#pgc-navigate-wrap .play-btn:hover,
+.el-picker-panel__body .el-date-table th,
+.el-popper[x-placement^=bottom] .popper__arrow,
+.el-popper[x-placement^=bottom] .popper__arrow:after,
+.customize-wrp .customize-tab,
+.live-category .category,
+.r-con .members-info .up-card .attention--not:hover,
+.home-pc .application .application-foot,
+.feed-topic .card,
+.song-info .info-wrap .type-list .item-list .type-item,
+.protocol-modal .cancel-btn,
+.home-content .card .fold-box,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>*,
+.cc-content-body .select-box,
+.cc-content-body .select-box .row,
+.detail-wrp .detail-empty,
+.bp-emoji-box .static-popup,
+.b-slt.on, .b-slt:hover, .b-slt.on:hover,
+.vl-hd-sub .selector-block .b-slt .list,
+.vd-list.l3 li .l-item,
+.float_window,
+.float_window .close,
+.float_window .close:hover,
+.float_window .selet-datebox .inpt input[type=text],
+.selet-datebox .inpt a.b-btn,
+.selet-datebox .inpt a.b-btn:hover,
+.ui-widget-header,
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default
 {
     border-color: transparent !important;
 }
@@ -452,7 +649,8 @@
 .modal .img-clip-wrap .container-box,
 .text-article-wrp .article-card .meta-status .pubdate,
 .pendant-main .final-price,
-.pendant-main .unit-price li
+.pendant-main .unit-price li,
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write
 {
     border-color: #aaa !important;
 }
@@ -463,7 +661,15 @@
 .bili-dialog-bomb .appeal-box .submit,
 .view-later-module .video-info-module .number .line,
 .view-later-module .video-desc,
-.view-later-module .video-tag
+.view-later-module .video-tag,
+.vd-list.l2 li,
+.vd-list.l2 li .l-item,
+.vd-list.l1 li .l-r,
+.vd-list li .l-r .up-info .v-date,
+#float_window h3,
+.selet-datebox .sse a,
+.selet-datebox .sse,
+.ui-widget-content
 {
     border-color: #444 !important
 }
@@ -483,7 +689,10 @@
 .game-package-wrapper .title-right-link .m-arrow-package,
 .text-article-wrp .head-stat .section .iconarrow,
 .error-related .error.details,
-.video-toolbar-module .share-box .share-btn ul li
+.video-toolbar-module .share-box .share-btn ul li,
+#pgc-navigate-wrap .play-btn .play-btn-svg,
+.b-slt .b-slt-arrow,
+.float_window .close
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -504,7 +713,8 @@
 .album-card .info .like-num .icon-like,
 .section-block .col-full .meta .icon,
 .case-list .info .jury-time i,
-.view-later-module .share-box .s-text .icon
+.view-later-module .share-box .s-text .icon,
+.l-item .v-info .b-icon
 {
     filter: brightness(0) invert(.7) !important;
 }
@@ -517,7 +727,14 @@
 .security-right-bottom .face-nav>.active:after,
 .pendant-main .unit-price li.active,
 .pendant-pay-close,
-.feedback-mask .content .feedback-body input[type=radio]:checked+.radio-icon
+.feedback-mask .content .feedback-body input[type=radio]:checked+.radio-icon,
+.bui-radio .bui-radio-normal .bui-radio-item:hover .bui-radio-icon svg,
+.left-nav-ul .icon-customize.active,
+.left-nav-item:hover .icon-customize,
+.song-info .info-wrap .type-list .fold-div .foldStatus,
+.song-info .info-wrap .type-list .fold-div .unfoldStatus,
+.fold-box .fold-hoverable:hover .fold-arrow,
+.vl-hd #tab_list_mode .tab-i
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -545,7 +762,8 @@
 {
     background-image: none !important;
 } */
-.view-later-module .video-info-module
+.view-later-module .video-info-module,
+.float_window .close:hover
 {
     box-shadow: none !important;
 }
@@ -562,7 +780,13 @@
 .read-list-page .module-box,
 .m-layer.m-button,
 .m_layer.m-button,
-.face-g-list#my-g-list .face-g-block .my-mp-block:hover
+.face-g-list#my-g-list .face-g-block .my-mp-block:hover,
+#app-ctnr .demo-app .category,
+.left-nav-wrapper,
+.charge-participate .part-btn,
+.cc-content-body .select-box,
+.detail-wrp .detail-empty,
+.float_window
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -592,7 +816,13 @@
 .pendant-main .unit-price li.active,
 .pendant-main .unit-price li:hover,
 .info-line .status-attend,
-.ssr-content .link-tag.activity
+.ssr-content .link-tag.activity,
+.live-category .category:hover,
+.title-library-wrap .title-status button,
+.customize-wrp .select,
+.song-info .info-wrap .type-list .item-list .type-item:hover,
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write:hover,
+.vl-hd .vl-tab .tab-i.on
 {
     border-color: var(--theme-color) !important;
 }
@@ -647,7 +877,27 @@
 .feedback-mask .content .feedback-body .feedback-submit.active,
 .abnormal-module .abnormal-item .btn-back:hover,
 .ssr-content .link-tag.activity:hover,
-.ssr-content .link-tag.activity:active
+.ssr-content .link-tag.activity:active,
+#navigator .v-switcher-header-anchor,
+#pgc-navigate-wrap .ep-box .ep-sub .ep-item:hover,
+#pgc-navigate-wrap .play-btn:hover,
+.steps .step-operate .step-bread .step-index,
+.ac-article-wrp .tabs-nav .select,
+.advice-dialog-wrapper .submit-btn:hover,
+.r-con .members-info .up-card .attention--not:hover,
+.home-pc .application .application-body .btn-color:hover,
+.home-pc .dialog .footer .apply-btn:hover,
+.selet-datebox .sse a.on,
+.selet-datebox .inpt a.b-btn:hover,
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus
 {
     background-color: var(--theme-color) !important;
 }
@@ -718,7 +968,33 @@
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-random:hover,
 .view-later-module .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-watchlater-nav-reverse:hover,
 .cntr .sort-cntr .href-all:hover i,
-.cntr .sort-cntr .href-all:hover
+.cntr .sort-cntr .href-all:hover,
+#navigator .v-switcher-header-item a:hover,
+.bangumi-list .bangumi-item .right-info .headline .title:hover,
+.pgc-list .pgc-item .right-info .headline .title:hover,
+.steps .step-operate .step-bread .step-title.selected,
+.steps .step-operate .dropdown-btn .icon-text,
+.card-warpper .card-warpper-outside .card-item .learn.unlearn,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name:hover,
+.home-pc .application .application-body .fjw-tip li:first-child,
+.song-info .info-wrap .choose-type .selected,
+.song-info .info-wrap .type-list .item-list .type-item:hover,
+.song-info .info-wrap .type-list .fold-div,
+.song-info .info-wrap .current-selector .selector-list .font-blue,
+.enter-failure .password-input .empty-hint,
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write:hover,
+.fold-box .fold-hoverable:hover,
+.photo-imager-container .image-count-hinter .count-hinter .current-index,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>:hover,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management>:hover i,
+.content-tag-v2-edit-mod-wrp p a,
+.content-tag-v2-edit-mod-wrp p a:hover,
+.electron-set-v2-hint a,
+.electron-set-v2-hint a:hover,
+.vd-list li .title:hover,
+.vl-hd .vl-tab .tab-i.on,
+.vl-hd #tab_list_type .tab-i.on,
+.b-slt-tab li:hover, .b-slt-tab .tab-i:hover
 {
     color: var(--theme-color) !important;
 }
@@ -743,9 +1019,23 @@
 .data-card .data-wrp .tab .fan-tab.current:after,
 .data-card .fans-wrp .tab .fan-tab.current:after,
 .data-card .data-wrp .total .incr-num:before,
-.data-card .fans-wrp .total .incr-num:before
+.data-card .fans-wrp .total .incr-num:before,
+.contri-condition .contri-select.active:after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
+}
+.ui-widget-content,
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default
+{
+    border-radius: 4px !important;
+}
+.cc-content-body .select-box .select-item:hover
+{
+    border-radius: 15px !important;
 }
 /* line-ending test */

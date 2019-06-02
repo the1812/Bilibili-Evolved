@@ -5,6 +5,7 @@ const pageData = {
     aid: undefined,
     cid: undefined,
 };
+let formats = [];
 let selectedFormat = null;
 class Video
 {
@@ -98,6 +99,7 @@ class VideoFormat
                     if (json.code !== 0)
                     {
                         reject("获取清晰度信息失败.");
+                        return;
                     }
                     const data = json.data || json.result || json;
                     const qualities = data.accept_quality;
@@ -258,11 +260,11 @@ class VideoDownloader
     }
     exportData(copy = false)
     {
-        const data = JSON.stringify({
+        const data = JSON.stringify([{
             fragments: this.fragments,
             title: getFriendlyTitle(true),
             totalSize: this.fragments.map(it => it.size).reduce((acc, it) => acc + it),
-        });
+        }]);
         if (copy)
         {
             GM_setClipboard(data, "text");
@@ -368,54 +370,59 @@ async function checkBatch()
 {
     const urls = [
         "/www.bilibili.com/bangumi",
+        "/www.bilibili.com/video/av",
     ];
-    if (urls.some(url => document.URL.includes(url)))
+    if (!urls.some(url => document.URL.includes(url)))
     {
-        const { BatchExtractor } = await import("batchDownload");
-        const extractor = new BatchExtractor();
-        document.getElementById("download-video").classList.add("batch");
-        document.getElementById("video-action-batch-data").addEventListener("click", async () =>
-        {
-            if (!selectedFormat)
-            {
-                return;
-            }
-            pageData.entity.resetMenuClass();
-            const toast = Toast.info("获取链接中...", "批量下载");
-            const data = await extractor.collectData(selectedFormat, toast);
-            if (!data)
-            {
-                return;
-            }
-            GM_setClipboard(data, { type: "text/json" });
-            Toast.success("已复制批量数据到剪贴板.", "复制批量数据", 3000);
-        });
-        document.getElementById("video-action-batch-download-data").addEventListener("click", async () =>
-        {
-            if (!selectedFormat)
-            {
-                return;
-            }
-            pageData.entity.resetMenuClass();
-            const toast = Toast.info("获取链接中...", "批量下载");
-            const data = await extractor.collectData(selectedFormat, toast);
-            if (!data)
-            {
-                return;
-            }
-
-            const a = document.createElement("a");
-            const blob = new Blob([data], { type: "text/json" });
-            const url = URL.createObjectURL(blob);
-            a.setAttribute("href", url);
-            a.setAttribute("download", `export.json`);
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            URL.revokeObjectURL(url);
-
-        });
+        return;
     }
+    const { BatchExtractor } = await import("batchDownload");
+    if (await BatchExtractor.test() !== true)
+    {
+        return;
+    }
+    const extractor = new BatchExtractor();
+    document.getElementById("download-video").classList.add("batch");
+    document.getElementById("video-action-batch-data").addEventListener("click", async () =>
+    {
+        if (!selectedFormat)
+        {
+            return;
+        }
+        pageData.entity.resetMenuClass();
+        const toast = Toast.info("获取链接中...", "批量下载");
+        const data = await extractor.collectData(selectedFormat, toast);
+        if (!data)
+        {
+            return;
+        }
+        GM_setClipboard(data, { type: "text/json" });
+        Toast.success("已复制批量数据到剪贴板.", "复制批量数据", 3000);
+    });
+    document.getElementById("video-action-batch-download-data").addEventListener("click", async () =>
+    {
+        if (!selectedFormat)
+        {
+            return;
+        }
+        pageData.entity.resetMenuClass();
+        const toast = Toast.info("获取链接中...", "批量下载");
+        const data = await extractor.collectData(selectedFormat, toast);
+        if (!data)
+        {
+            return;
+        }
+
+        const a = document.createElement("a");
+        const blob = new Blob([data], { type: "text/json" });
+        const url = URL.createObjectURL(blob);
+        a.setAttribute("href", url);
+        a.setAttribute("download", `export.json`);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    });
 }
 async function loadPageData()
 {
@@ -431,35 +438,44 @@ async function loadPageData()
     {
         pageData.entity = new Video();
     }
+    try
+    {
+        formats = await VideoFormat.availableFormats;
+    }
+    catch (error)
+    {
+        return false;
+    }
     return Boolean(aid && cid);
 }
 async function loadWidget()
 {
-    let formats = await VideoFormat.availableFormats;
     selectedFormat = formats[0];
     const loadQualities = async () =>
     {
-        await loadPageData();
-        formats = await VideoFormat.availableFormats;
-        const list = $("ol.video-quality");
-        list.html("");
+        const canDownload = await loadPageData();
+        document.querySelector("#download-video").style.display = canDownload ? "flex" : "none";
+        if (canDownload === false)
+        {
+            return;
+        }
+        // formats = await VideoFormat.availableFormats;
+
+        const list = document.querySelector("ol.video-quality");
+        list.childNodes.forEach(list.removeChild);
         formats.forEach(format =>
         {
-            $(`<li>${format.displayName}</li>`)
-                .on("click", () =>
-                {
-                    selectedFormat = format;
-                    pageData.entity.nextMenuClass();
-                })
-                .prependTo(list);
+            const item = document.createElement("li");
+            item.innerHTML = format.displayName;
+            item.addEventListener("click", () =>
+            {
+                selectedFormat = format;
+                pageData.entity.nextMenuClass();
+            });
+            list.insertAdjacentElement("afterbegin", item);
         });
     };
-    if (Observer.videoChange)
-    {
-        Observer.videoChange(loadQualities);
-    }
-    else
-    { Observer.childList("#bofqi", loadQualities); }
+    Observer.videoChange(loadQualities);
     const getVideoInfo = () => selectedFormat.downloadInfo().catch(error =>
     {
         pageData.entity.addError();
@@ -535,19 +551,19 @@ async function loadWidget()
     resources.applyStyle("downloadVideoStyle");
     const downloadPanel = document.querySelector(".download-video-panel");
     const togglePopup = () => $(".download-video-panel").toggleClass("opened");
-    $("#download-video").on("click", e =>
+    document.querySelector("#download-video").addEventListener("click", e =>
     {
         if (!downloadPanel.contains(e.target))
         {
             togglePopup();
         }
     });
-    $(".video-error").on("click", () =>
+    document.querySelector(".video-error").addEventListener("click", () =>
     {
-        $(".video-error").text("");
+        document.querySelector(".video-error").innerHTML = "";
         pageData.entity.removeError();
     });
-    await SpinQuery.select(() => document.querySelector(".download-video-panel"));
+    await SpinQuery.select(".download-video-panel");
     pageData.entity.addMenuClass();
     checkBatch();
 }

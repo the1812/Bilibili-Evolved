@@ -4,6 +4,7 @@
     height: 24px;
     display: inline-block;
     background-image: none;
+    font-size: 12px;
 }
 .icons-enabled [class^=icon-]::after
 {
@@ -11,6 +12,10 @@
     width: 24px;
     height: 24px;
     display: inline-block;
+}
+.icons-enabled [class^=icon-]::before
+{
+    content: none !important;
 }
 
 .icons-enabled .icon-view::after
