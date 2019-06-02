@@ -1,21 +1,29 @@
 .video-take-screenshot
 {
-    padding: 0 6px 0 18px;
+    padding: 0 4px 0 12px;
     height: 100%;
     cursor: pointer;
     display: none !important;
+}
+.video-take-screenshot.touch
+{
+    padding: 0 6px 0 18px;
 }
 .bilibili-player-video-control-bottom .video-take-screenshot
 {
     display: flex !important;
 }
-.video-take-screenshot span
+.video-take-screenshot.touch span
 {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: max-content;
     width: 100%;
+}
+.video-take-screenshot.touch span
+{
+    height: 100%;
 }
 .video-take-screenshot i
 {
@@ -24,6 +32,7 @@
     transform: scale(1);
     opacity: 0.9;
     transition: all .4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    display: block;
 }
 .bilibili-player.mode-fullscreen .video-take-screenshot i,
 .bilibili-player.mode-webfullscreen .video-take-screenshot i

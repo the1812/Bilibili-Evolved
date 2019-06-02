@@ -204,6 +204,10 @@ Observer.videoChange(async () =>
             screenshotButton.click();
         }
     });
+    if (settings.touchVideoPlayer)
+    {
+        document.querySelectorAll(".video-take-screenshot").forEach(it => it.classList.add("touch"));
+    }
 });
 export default {
     export: {
