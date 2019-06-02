@@ -1,5 +1,5 @@
 const displayNames = {
-    vip: "姥爷图标",
+    vip: "老爷图标",
     fansMedal: "粉丝勋章",
     title: "活动头衔",
     userLevel: "用户等级",
