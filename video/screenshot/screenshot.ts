@@ -39,7 +39,7 @@ class Screenshot
     }
     get filename()
     {
-        return `${getFriendlyTitle()} @${this.time.replace(/:/g, "-")} ${this.timeStamp.toString()}.png`;
+        return `${getFriendlyTitle()} @${this.time.replace(/\:/g, "-")} ${this.timeStamp.toString()}.png`;
     }
     get id()
     {
