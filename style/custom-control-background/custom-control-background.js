@@ -4,12 +4,10 @@ addSettingsListener("customControlBackgroundOpacity", value =>
     document.body.style.setProperty("--custom-control-background-opacity", value);
 });
 const load = () => {
-    if (settings.customControlBackgroundOpacity > 0)
+    resources.applyStyle("customControlBackgroundStyle");
+    if (!settings.touchVideoPlayer)
     {
-        resources.applyStyle("customControlBackgroundStyle");
-        if (!settings.touchVideoPlayer)
-        {
-            resources.applyImportantStyleFromText(/*html*/`
+        resources.applyImportantStyleFromText(/*html*/`
             <style id="control-background-non-touch">
             .bilibili-player-video-control-bottom
             {
@@ -18,9 +16,9 @@ const load = () => {
             }
             </style>
             `);
-        }
     }
 };
+load();
 export default {
     reload: load,
     unload: () => {
