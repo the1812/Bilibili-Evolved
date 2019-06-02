@@ -4,7 +4,7 @@ export class Resource
     {
         return this.text !== null;
     }
-    constructor(url, { styles = [], alwaysPreview: false } = {})
+    constructor(url, { styles = [], alwaysPreview = false } = {})
     {
         this.rawUrl = Resource.root + "min/" + url;
         this.dependencies = [];
@@ -18,7 +18,7 @@ export class Resource
     }
     get url()
     {
-        if (this.alwaysPreview)
+        if (typeof offlineData === "undefined" && this.alwaysPreview)
         {
             return this.rawUrl.replace("/master/", "/preview/");
         }
