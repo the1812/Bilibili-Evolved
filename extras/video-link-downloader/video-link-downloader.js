@@ -11,7 +11,7 @@ require("colors");
 const optionDefinitions = [
     { name: 'danmaku', alias: 'd', defaultValue: false, type: Boolean },
     { name: 'info', alias: 'i', defaultOption: true, type: String, defaultValue: undefined },
-    { name: 'parts', alias: 'p', type: Number, defaultValue: 30 },
+    { name: 'parts', alias: 'p', type: Number, defaultValue: 12 },
     { name: 'output', alias: 'o', type: String, defaultValue: '.' },
 ];
 const commandLineOptions = commandLineArgs(optionDefinitions);

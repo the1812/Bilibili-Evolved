@@ -260,11 +260,11 @@ class VideoDownloader
     }
     exportData(copy = false)
     {
-        const data = JSON.stringify({
+        const data = JSON.stringify([{
             fragments: this.fragments,
             title: getFriendlyTitle(true),
             totalSize: this.fragments.map(it => it.size).reduce((acc, it) => acc + it),
-        });
+        }]);
         if (copy)
         {
             GM_setClipboard(data, "text");
@@ -370,54 +370,59 @@ async function checkBatch()
 {
     const urls = [
         "/www.bilibili.com/bangumi",
+        "/www.bilibili.com/video/av",
     ];
-    if (urls.some(url => document.URL.includes(url)))
+    if (!urls.some(url => document.URL.includes(url)))
     {
-        const { BatchExtractor } = await import("batchDownload");
-        const extractor = new BatchExtractor();
-        document.getElementById("download-video").classList.add("batch");
-        document.getElementById("video-action-batch-data").addEventListener("click", async () =>
-        {
-            if (!selectedFormat)
-            {
-                return;
-            }
-            pageData.entity.resetMenuClass();
-            const toast = Toast.info("获取链接中...", "批量下载");
-            const data = await extractor.collectData(selectedFormat, toast);
-            if (!data)
-            {
-                return;
-            }
-            GM_setClipboard(data, { type: "text/json" });
-            Toast.success("已复制批量数据到剪贴板.", "复制批量数据", 3000);
-        });
-        document.getElementById("video-action-batch-download-data").addEventListener("click", async () =>
-        {
-            if (!selectedFormat)
-            {
-                return;
-            }
-            pageData.entity.resetMenuClass();
-            const toast = Toast.info("获取链接中...", "批量下载");
-            const data = await extractor.collectData(selectedFormat, toast);
-            if (!data)
-            {
-                return;
-            }
-
-            const a = document.createElement("a");
-            const blob = new Blob([data], { type: "text/json" });
-            const url = URL.createObjectURL(blob);
-            a.setAttribute("href", url);
-            a.setAttribute("download", `export.json`);
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            URL.revokeObjectURL(url);
-
-        });
+        return;
     }
+    const { BatchExtractor } = await import("batchDownload");
+    if (await BatchExtractor.test() !== true)
+    {
+        return;
+    }
+    const extractor = new BatchExtractor();
+    document.getElementById("download-video").classList.add("batch");
+    document.getElementById("video-action-batch-data").addEventListener("click", async () =>
+    {
+        if (!selectedFormat)
+        {
+            return;
+        }
+        pageData.entity.resetMenuClass();
+        const toast = Toast.info("获取链接中...", "批量下载");
+        const data = await extractor.collectData(selectedFormat, toast);
+        if (!data)
+        {
+            return;
+        }
+        GM_setClipboard(data, { type: "text/json" });
+        Toast.success("已复制批量数据到剪贴板.", "复制批量数据", 3000);
+    });
+    document.getElementById("video-action-batch-download-data").addEventListener("click", async () =>
+    {
+        if (!selectedFormat)
+        {
+            return;
+        }
+        pageData.entity.resetMenuClass();
+        const toast = Toast.info("获取链接中...", "批量下载");
+        const data = await extractor.collectData(selectedFormat, toast);
+        if (!data)
+        {
+            return;
+        }
+
+        const a = document.createElement("a");
+        const blob = new Blob([data], { type: "text/json" });
+        const url = URL.createObjectURL(blob);
+        a.setAttribute("href", url);
+        a.setAttribute("download", `export.json`);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    });
 }
 async function loadPageData()
 {
