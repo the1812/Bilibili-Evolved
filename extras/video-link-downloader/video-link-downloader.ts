@@ -152,17 +152,17 @@ class Downloader
         while (startByte < fragment.size)
         {
             const partFilename = `${title}.part${part}`;
-            if (fs.existsSync(partFilename))
-            {
-                this.progressMap.set(partFilename, partialLength);
-                this.updateProgress();
-            }
-            else
-            {
-                const endByte = Math.min(fragment.size - 1, Math.round(startByte + partialLength));
-                const range = `bytes=${startByte}-${endByte}`;
-                promises.push(this.downloadFragmentPart(fragment.url, range, partFilename));
-            }
+            // if (fs.existsSync(partFilename))
+            // {
+            //     this.progressMap.set(partFilename, partialLength);
+            //     this.updateProgress();
+            // }
+            // else
+            // {
+            const endByte = Math.min(fragment.size - 1, Math.round(startByte + partialLength));
+            const range = `bytes=${startByte}-${endByte}`;
+            promises.push(this.downloadFragmentPart(fragment.url, range, partFilename));
+            // }
             startByte = Math.round(startByte + partialLength) + 1;
             part++;
         }
