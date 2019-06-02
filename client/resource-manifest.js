@@ -10,12 +10,15 @@ Resource.manifest = {
     },
     darkStyle: {
         path: "dark.min.css",
+        alwaysPreview: true,
     },
     darkStyleImportant: {
         path: "dark-important.min.css",
+        alwaysPreview: true,
     },
     darkStyleNavBar: {
         path: "dark-navbar.min.css",
+        alwaysPreview: true,
     },
     touchPlayerStyle: {
         path: "touch-player.min.css",
@@ -92,6 +95,7 @@ Resource.manifest = {
     },
     useDarkStyle: {
         path: "dark-styles.min.js",
+        alwaysPreview: true,
         styles: [
             "darkStyle",
             "scrollbarStyle",
@@ -137,22 +141,6 @@ Resource.manifest = {
             blurBackgroundOpacity: "顶栏(对横幅)透明度",
         },
     },
-    // overrideNavBar: {
-    //     path: "override-navbar.min.js",
-    //     styles: [
-    //         "tweetsStyle",
-    //         "navbarOverrideStyle",
-    //         {
-    //             key: "noBannerStyle",
-    //             condition: () => !settings.showBanner
-    //         },
-    //     ],
-    //     displayNames: {
-    //         overrideNavBar: "搜索栏置顶",
-    //         showBanner: "显示顶部横幅",
-    //         preserveRank: "显示排行榜图标",
-    //     },
-    // },
     hideBanner: {
         path: "hide-banner.min.js",
         style: true,
@@ -446,20 +434,10 @@ Resource.manifest = {
     useCommentStyle: {
         path: "comment.min.js",
         style: "important",
-        // styles: [
-        //     {
-        //         key: "commentDarkStyle",
-        //         important: true,
-        //         condition: () => settings.useDarkStyle,
-        //     },
-        // ],
         displayNames: {
             useCommentStyle: "简化评论区",
         },
     },
-    // commentDarkStyle: {
-    //     path: "comment-dark.min.css"
-    // },
     title: {
         path: "title.min.js",
         displayNames: {

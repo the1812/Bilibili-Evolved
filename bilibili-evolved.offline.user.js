@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      320.34
+// @version      320.90
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -534,7 +534,7 @@ function loadResources()
     ];
     for (const [key, data] of Object.entries(Resource.manifest))
     {
-        const resource = new Resource(data.path, data.styles);
+        const resource = new Resource(data.path, { styles: data.styles, alwaysPreview: data.alwaysPreview });
         resource.key = key;
         resource.dropdown = data.dropdown;
         if (data.displayNames)
@@ -545,7 +545,7 @@ function loadResources()
         if (data.style)
         {
             const styleKey = key + "Style";
-            const style = Resource.all[styleKey] = new Resource(data.path.replace(".js", ".css"));
+            const style = Resource.all[styleKey] = new Resource(data.path.replace(".js", ".css"), { alwaysPreview: data.alwaysPreview });
             style.key = styleKey;
             switch (data.style)
             {
@@ -580,7 +580,7 @@ function loadResources()
         if (data.html === true)
         {
             const htmlKey = key + "Html";
-            const html = Resource.all[htmlKey] = new Resource(data.path.replace(".js", ".html"));
+            const html = Resource.all[htmlKey] = new Resource(data.path.replace(".js", ".html"), { alwaysPreview: data.alwaysPreview });
             html.key = htmlKey;
             resource.dependencies.push(html);
         }
@@ -1213,16 +1213,25 @@ class Resource
     {
         return this.text !== null;
     }
-    constructor(url, styles = [])
+    constructor(url, { styles = [], alwaysPreview: false } = {})
     {
-        this.url = Resource.root + "min/" + url;
+        this.rawUrl = Resource.root + "min/" + url;
         this.dependencies = [];
         // this.priority = priority;
         this.styles = styles;
         this.text = null;
         this.key = null;
+        this.alwaysPreview = alwaysPreview;
         this.type = ResourceType.fromUrl(url);
         this.displayName = "";
+    }
+    get url()
+    {
+        if (this.alwaysPreview)
+        {
+            return this.rawUrl.replace("/master/", "/preview/");
+        }
+        return this.rawUrl;
     }
     flatMapPolyfill()
     {
@@ -1364,12 +1373,15 @@ Resource.manifest = {
     },
     darkStyle: {
         path: "dark.min.css",
+        alwaysPreview: true,
     },
     darkStyleImportant: {
         path: "dark-important.min.css",
+        alwaysPreview: true,
     },
     darkStyleNavBar: {
         path: "dark-navbar.min.css",
+        alwaysPreview: true,
     },
     touchPlayerStyle: {
         path: "touch-player.min.css",
@@ -1446,6 +1458,7 @@ Resource.manifest = {
     },
     useDarkStyle: {
         path: "dark-styles.min.js",
+        alwaysPreview: true,
         styles: [
             "darkStyle",
             "scrollbarStyle",
@@ -1491,22 +1504,6 @@ Resource.manifest = {
             blurBackgroundOpacity: "顶栏(对横幅)透明度",
         },
     },
-    // overrideNavBar: {
-    //     path: "override-navbar.min.js",
-    //     styles: [
-    //         "tweetsStyle",
-    //         "navbarOverrideStyle",
-    //         {
-    //             key: "noBannerStyle",
-    //             condition: () => !settings.showBanner
-    //         },
-    //     ],
-    //     displayNames: {
-    //         overrideNavBar: "搜索栏置顶",
-    //         showBanner: "显示顶部横幅",
-    //         preserveRank: "显示排行榜图标",
-    //     },
-    // },
     hideBanner: {
         path: "hide-banner.min.js",
         style: true,
@@ -1800,20 +1797,10 @@ Resource.manifest = {
     useCommentStyle: {
         path: "comment.min.js",
         style: "important",
-        // styles: [
-        //     {
-        //         key: "commentDarkStyle",
-        //         important: true,
-        //         condition: () => settings.useDarkStyle,
-        //     },
-        // ],
         displayNames: {
             useCommentStyle: "简化评论区",
         },
     },
-    // commentDarkStyle: {
-    //     path: "comment-dark.min.css"
-    // },
     title: {
         path: "title.min.js",
         displayNames: {

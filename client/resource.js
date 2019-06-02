@@ -4,16 +4,25 @@ export class Resource
     {
         return this.text !== null;
     }
-    constructor(url, styles = [])
+    constructor(url, { styles = [], alwaysPreview: false } = {})
     {
-        this.url = Resource.root + "min/" + url;
+        this.rawUrl = Resource.root + "min/" + url;
         this.dependencies = [];
         // this.priority = priority;
         this.styles = styles;
         this.text = null;
         this.key = null;
+        this.alwaysPreview = alwaysPreview;
         this.type = ResourceType.fromUrl(url);
         this.displayName = "";
+    }
+    get url()
+    {
+        if (this.alwaysPreview)
+        {
+            return this.rawUrl.replace("/master/", "/preview/");
+        }
+        return this.rawUrl;
     }
     flatMapPolyfill()
     {

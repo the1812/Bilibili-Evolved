@@ -23,7 +23,7 @@ export function loadResources()
     ];
     for (const [key, data] of Object.entries(Resource.manifest))
     {
-        const resource = new Resource(data.path, data.styles);
+        const resource = new Resource(data.path, { styles: data.styles, alwaysPreview: data.alwaysPreview });
         resource.key = key;
         resource.dropdown = data.dropdown;
         if (data.displayNames)
@@ -34,7 +34,7 @@ export function loadResources()
         if (data.style)
         {
             const styleKey = key + "Style";
-            const style = Resource.all[styleKey] = new Resource(data.path.replace(".js", ".css"));
+            const style = Resource.all[styleKey] = new Resource(data.path.replace(".js", ".css"), { alwaysPreview: data.alwaysPreview });
             style.key = styleKey;
             switch (data.style)
             {
@@ -69,7 +69,7 @@ export function loadResources()
         if (data.html === true)
         {
             const htmlKey = key + "Html";
-            const html = Resource.all[htmlKey] = new Resource(data.path.replace(".js", ".html"));
+            const html = Resource.all[htmlKey] = new Resource(data.path.replace(".js", ".html"), { alwaysPreview: data.alwaysPreview });
             html.key = htmlKey;
             resource.dependencies.push(html);
         }
