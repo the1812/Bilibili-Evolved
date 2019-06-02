@@ -50,7 +50,11 @@ class Screenshot
         const hour = Math.trunc(this.videoTime / 3600).toString();
         const minute = Math.trunc(this.videoTime / 60).toString();
         const second = (this.videoTime % 60).toFixed(2);
-        return `${hour.padStart(2, "0")}:${minute.padStart(2, "0")}:${second.padStart(5, "0")}`;
+        if (hour === "0")
+        {
+            return `${minute.padStart(2, "0")}:${second.padStart(5, "0")}`;
+        }
+        return `${hour}:${minute.padStart(2, "0")}:${second.padStart(5, "0")}`;
     }
     revoke()
     {
