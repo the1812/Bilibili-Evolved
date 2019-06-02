@@ -4,7 +4,8 @@
     document.body.insertAdjacentHTML("beforeend", html);
     const nameSorter = (a, b) => a.charCodeAt(0) - b.charCodeAt(0);
     const userSorter = (a, b) => nameSorter(a.name, b.name);
-    const clientType = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)[1];
+    const clientTypeMatch = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/);
+    const clientType = clientTypeMatch ? clientTypeMatch[1] : "Stable";
     new Vue({
         el: ".bilibili-evolved-about",
         data: {
