@@ -69,7 +69,7 @@ export function getFriendlyTitle(includesPageTitle = true)
     };
     const filename = Object.keys(data).reduce((result, name) =>
     {
-        return result.replace(new RegExp(`\\[(?<before>[^\\[\\]]*?)${name}(?<after>[^\\[\\]]*?)\\]`, "g"), data[name] ? `$<before>${data[name]}$<after>` : "");
+        return result.replace(new RegExp(`\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]`, "g"), data[name] ? `$1${data[name]}$2` : "");
     }, settings.filenameFormat);
     return filename.replace(/[\/\\:\*\?"<>\|]/g, "");
 }
