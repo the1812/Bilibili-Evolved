@@ -55,7 +55,9 @@
 .enter-failure,
 .cc-content-body .select-box,
 .cc-content-body .select-box .option-footer,
-.bp-emoji-box .static-popup
+.bp-emoji-box .static-popup,
+.float_window,
+.ui-widget-header
 {
     background-color: #222 !important;
 }
@@ -63,7 +65,8 @@
 .content .tab-selector-wrap,
 .live-user .user-item .item-right .tags>span,
 .home-pc .application .application-body .btn-color,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management,
+.vl-hd-sub .selector-block .b-slt .list li:hover
 {
     background-color: #333 !important;
 }
@@ -131,7 +134,14 @@
 .enter-failure .link-input,
 .cc-content-body .select-box .select-item:hover,
 .cc-content-body .select-box .option-footer:hover,
-.detail-wrp .detail-empty
+.detail-wrp .detail-empty,
+.vl-hd-sub .selector-block .b-slt,
+.vl-hd-sub .selector-block .b-slt .list,
+.vd-list.l3 li .l-item,
+.selet-datebox .sse a:hover,
+.selet-datebox .inpt input[type=text],
+.selet-datebox .inpt a.b-btn,
+.ui-widget-content
 {
     background-color: #444 !important;
 }
@@ -149,10 +159,22 @@
 {
     background-image: linear-gradient(rgba(242,243,245,0),#222 40%,#222) !important;
 }
-/* a
+.ui-widget-content,
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus
 {
     background-image: none !important;
-} */
+}
 .p-relative.rank-list-section.z-rank-list .rank-list-ctnr,
 .rank-list-ctnr a,
 .rank-list-ctnr a:hover,
@@ -165,7 +187,12 @@
 .view-later-module .video-info-module .number .fav i,
 .main-ctnr .qualify-drawer .draw-list,
 .header-info-ctnr .normal-mode .area-link:active,
-.tab-bg.w-100.bg-white
+.tab-bg.w-100.bg-white,
+.vd-list li .l-item,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-datepicker .ui-datepicker-header
 {
     background-color: transparent !important;
 }
@@ -180,7 +207,8 @@
 .view-later-module .video-info-module .number .coin i,
 .view-later-module .video-info-module .number .fav i,
 #member-container:hover::-webkit-scrollbar,
-#member-container:hover::-webkit-scrollbar-track
+#member-container:hover::-webkit-scrollbar-track,
+.ui-widget-header
 {
     background: transparent !important;
 }
@@ -298,7 +326,11 @@
 .upload-cover-wrapper .upload-cover-suggest,
 .bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info,
 .detail-wrp .detail-header .tips,
-.detail-wrp .detail-header .article-link
+.detail-wrp .detail-header .article-link,
+.vd-list li .v-desc,
+.vd-list li .l-r .up-info .v-author,
+.vd-list li .v-info .v-info-i,
+.vd-list li .l-r .up-info .v-date
 {
     color: #aaa !important;
 }
@@ -452,7 +484,27 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-management i,
 .cc-content-body .select-box .option-footer,
 .cc-content-body .select-box .select-item .text,
-.detail-wrp .detail-empty
+.detail-wrp .detail-empty,
+.vd-list li .title,
+.vl-hd-sub .b-slt .txt,
+.vl-hd-sub .b-slt .list li,
+.selet-datebox .sse a,
+.selet-datebox .inpt input[type=text],
+.selet-datebox .inpt a.b-btn,
+.ui-widget-content,
+.ui-widget-header,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus
 {
     color: #eee !important;
 }
@@ -564,7 +616,29 @@
 .cc-content-body .select-box,
 .cc-content-body .select-box .row,
 .detail-wrp .detail-empty,
-.bp-emoji-box .static-popup
+.bp-emoji-box .static-popup,
+.b-slt.on, .b-slt:hover, .b-slt.on:hover,
+.vl-hd-sub .selector-block .b-slt .list,
+.vd-list.l3 li .l-item,
+.float_window,
+.float_window .close,
+.float_window .close:hover,
+.float_window .selet-datebox .inpt input[type=text],
+.selet-datebox .inpt a.b-btn,
+.selet-datebox .inpt a.b-btn:hover,
+.ui-widget-header,
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default
 {
     border-color: transparent !important;
 }
@@ -587,7 +661,15 @@
 .bili-dialog-bomb .appeal-box .submit,
 .view-later-module .video-info-module .number .line,
 .view-later-module .video-desc,
-.view-later-module .video-tag
+.view-later-module .video-tag,
+.vd-list.l2 li,
+.vd-list.l2 li .l-item,
+.vd-list.l1 li .l-r,
+.vd-list li .l-r .up-info .v-date,
+#float_window h3,
+.selet-datebox .sse a,
+.selet-datebox .sse,
+.ui-widget-content
 {
     border-color: #444 !important
 }
@@ -608,7 +690,9 @@
 .text-article-wrp .head-stat .section .iconarrow,
 .error-related .error.details,
 .video-toolbar-module .share-box .share-btn ul li,
-#pgc-navigate-wrap .play-btn .play-btn-svg
+#pgc-navigate-wrap .play-btn .play-btn-svg,
+.b-slt .b-slt-arrow,
+.float_window .close
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -629,7 +713,8 @@
 .album-card .info .like-num .icon-like,
 .section-block .col-full .meta .icon,
 .case-list .info .jury-time i,
-.view-later-module .share-box .s-text .icon
+.view-later-module .share-box .s-text .icon,
+.l-item .v-info .b-icon
 {
     filter: brightness(0) invert(.7) !important;
 }
@@ -648,7 +733,8 @@
 .left-nav-item:hover .icon-customize,
 .song-info .info-wrap .type-list .fold-div .foldStatus,
 .song-info .info-wrap .type-list .fold-div .unfoldStatus,
-.fold-box .fold-hoverable:hover .fold-arrow
+.fold-box .fold-hoverable:hover .fold-arrow,
+.vl-hd #tab_list_mode .tab-i
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -676,7 +762,8 @@
 {
     background-image: none !important;
 } */
-.view-later-module .video-info-module
+.view-later-module .video-info-module,
+.float_window .close:hover
 {
     box-shadow: none !important;
 }
@@ -698,7 +785,8 @@
 .left-nav-wrapper,
 .charge-participate .part-btn,
 .cc-content-body .select-box,
-.detail-wrp .detail-empty
+.detail-wrp .detail-empty,
+.float_window
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -733,7 +821,8 @@
 .title-library-wrap .title-status button,
 .customize-wrp .select,
 .song-info .info-wrap .type-list .item-list .type-item:hover,
-.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write:hover
+.bangumi-media .bangumi-media-body .review-empty-wrapper .empty-info .btn-go-write:hover,
+.vl-hd .vl-tab .tab-i.on
 {
     border-color: var(--theme-color) !important;
 }
@@ -797,7 +886,18 @@
 .advice-dialog-wrapper .submit-btn:hover,
 .r-con .members-info .up-card .attention--not:hover,
 .home-pc .application .application-body .btn-color:hover,
-.home-pc .dialog .footer .apply-btn:hover
+.home-pc .dialog .footer .apply-btn:hover,
+.selet-datebox .sse a.on,
+.selet-datebox .inpt a.b-btn:hover,
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus
 {
     background-color: var(--theme-color) !important;
 }
@@ -890,7 +990,11 @@
 .content-tag-v2-edit-mod-wrp p a,
 .content-tag-v2-edit-mod-wrp p a:hover,
 .electron-set-v2-hint a,
-.electron-set-v2-hint a:hover
+.electron-set-v2-hint a:hover,
+.vd-list li .title:hover,
+.vl-hd .vl-tab .tab-i.on,
+.vl-hd #tab_list_type .tab-i.on,
+.b-slt-tab li:hover, .b-slt-tab .tab-i:hover
 {
     color: var(--theme-color) !important;
 }
@@ -920,6 +1024,15 @@
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
+}
+.ui-widget-content,
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default
+{
+    border-radius: 4px !important;
 }
 .cc-content-body .select-box .select-item:hover
 {

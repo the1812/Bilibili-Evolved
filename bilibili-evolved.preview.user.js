@@ -1757,18 +1757,23 @@ Resource.manifest = {
     },
     i18nEnglish: {
         path: "i18n.en-US.min.js",
+        alwaysPreview: true,
     },
     i18nJapanese: {
         path: "i18n.ja-JP.min.js",
+        alwaysPreview: true,
     },
     i18nTraditionalChinese: {
         path: "i18n.zh-TW.min.js",
+        alwaysPreview: true,
     },
     i18nGerman: {
         path: "i18n.de-DE.min.js",
+        alwaysPreview: true,
     },
     i18n: {
         path: "i18n.min.js",
+        alwaysPreview: true,
         style: "important",
         displayNames: {
             i18n: "界面翻译",
