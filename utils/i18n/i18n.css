@@ -84,7 +84,8 @@
 {
     white-space: pre !important;
 }
-.player-auxiliary-area .player-auxiliary-setting-menu-list
+.player-auxiliary-area .player-auxiliary-setting-menu-list,
+#area-list ul li dl
 {
     white-space: nowrap !important;
 }
