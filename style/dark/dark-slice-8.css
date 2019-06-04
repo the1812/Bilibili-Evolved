@@ -14,18 +14,20 @@
 {
     background-image: none !important;
 } */
-/* a
+.player-auxiliary-area .danmaku-info-row-special
 {
     background-color: transparent !important;
-} */
+}
 /* a
 {
     background: #fff !important;
 } */
-/* a
+.player-auxiliary-area .danmaku-info-row-block span.danmaku-info-danmaku,
+.player-auxiliary-area .danmaku-info-row-block span.danmaku-info-time,
+.player-auxiliary-area .danmaku-info-row-block::after
 {
     color: #aaa !important;
-} */
+}
 /* a
 {
     color: #eee !important;

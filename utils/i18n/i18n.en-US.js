@@ -145,7 +145,7 @@ export const map = new Map([
     [`隐藏弹幕`, `Hide danmakus`],
     [`发个友善的弹幕见证当下`, `Enter your danmaku`],
     [`发个弹幕见证当下`, `Enter your danmaku`],
-    [`弹幕礼仪`, `Danmaku rules`],
+    [`弹幕礼仪`, `Guidelines`],
     [`追番`, `Subscribe`],
     [`已追番`, `Subscribed`],
     [`取消追番`, `Unsubscribe`],

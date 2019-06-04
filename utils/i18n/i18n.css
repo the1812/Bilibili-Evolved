@@ -229,6 +229,14 @@ html[lang='en-US'] .player-auxiliary-area .danmaku-info-row-block::after
 {
     content: "Blocked" !important;
 }
+html[lang='en-US'] .player-auxiliary-area .danmaku-info-row-super::after
+{
+    content: "Super" !important;
+}
+html[lang='en-US'] .player-auxiliary-area .danmaku-info-row-special::after
+{
+    content: "Code" !important;
+}
 .season-list li.season-item .season-body .season-title span.follow
 {
     background-image: none;
