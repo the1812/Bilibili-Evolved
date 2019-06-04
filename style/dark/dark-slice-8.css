@@ -24,7 +24,8 @@
 } */
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-danmaku,
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-time,
-.player-auxiliary-area .danmaku-info-row-block::after
+.player-auxiliary-area .danmaku-info-row-block::after,
+.player-auxiliary-area .danmaku-info-row-super::after
 {
     color: #aaa !important;
 }
