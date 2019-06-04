@@ -29,7 +29,8 @@ const playerModes = [
                 () => document.querySelector(".bilibili-player-video video"),
                 it =>
                 {
-                    return it !== null && it.readyState === 4 && document.hasFocus();
+                    return it !== null && it.readyState === 4
+                        && document.readyState === "complete" && document.hasFocus();
                 });
             if (video === null)
             {
