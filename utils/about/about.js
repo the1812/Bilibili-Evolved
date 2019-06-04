@@ -64,6 +64,10 @@
                     name: "debounce",
                     link: "https://github.com/component/debounce/",
                 },
+                {
+                    name: "Slip.js",
+                    link: "https://github.com/kornelski/slip",
+                },
             ],
         },
         mounted()
