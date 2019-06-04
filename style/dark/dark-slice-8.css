@@ -113,6 +113,15 @@
 {
     display: none !important;
 } */
+.members-info .up-card
+{
+    margin: 16px !important;
+}
+.members-info .up-card .info-name,
+.members-info .up-card .info-title
+{
+    width: auto !important;
+}
 /* a
 {
     border-color: var(--theme-color) !important;
