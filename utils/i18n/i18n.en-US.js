@@ -562,6 +562,7 @@ export const regex = new Map([
     [/^金仓鼠([ ]?[:]?)$/, `Golden hamster$1`],
     [/^贝壳([ ]?[:]?)$/, `Shell$1`],
     [/^创作团队（([\d]+)）$/, `Team（$1）`],
+    [/^([\d]+)\.(\d)万$/, `$1$2k`],
 ]);
 export default {
     export: { map, regex },
