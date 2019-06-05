@@ -71,10 +71,10 @@
 {
     filter: brightness(0) invert(.7) !important;
 } */
-/* a
+.fold-box:hover .fold-arrow
 {
     filter: var(--blue-image-filter) !important;
-} */
+}
 /* a
 {
     filter: var(--pink-image-filter) !important;
@@ -156,10 +156,10 @@
 {
     background-color: var(--theme-color-90) !important;
 } */
-/* a
+.d-data .fold-box:hover
 {
     color: var(--theme-color) !important;
-} */
+}
 .bangumi-timing-module .headline .c-clink:hover,
 .elevator-module .nav-list .customize:hover,
 .elevator-module .nav-list .item.on,
