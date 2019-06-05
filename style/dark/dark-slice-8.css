@@ -29,7 +29,8 @@
 {
     color: #aaa !important;
 }
-.dynamic-m .dyn_menu li
+.dynamic-m .dyn_menu li,
+.dynamic-btn.pink.with-border-radius.publish-btn.disabled
 {
     color: #eee !important;
 }
@@ -162,7 +163,14 @@
 .elevator-module .nav-list .customize:hover,
 .elevator-module .nav-list .item.on,
 .bangumi-timing-module .headline .c-clink,
-.dynamic-m .wnd_bottom a:hover
+.dynamic-m .wnd_bottom a:hover,
+.sticky-bar .bar-content .send-button .send-text,
+.favInfo-box .favInfo-details .fav-options .fav-play:hover,
+#page-fav .fav-sidenav .fav-item.cur .text.router-link-exact-active.router-link-active,
+#page-fav .fav-sidenav .fav-item.cur .num,
+#page-fav .fav-sidenav .fav-item.cur .be-dropdown-trigger .icon-ic_more,
+#page-fav .fav-sidenav .fav-item.cur .iconfont,
+.edit-media-list .edit-mask .edit-board .edit-info .submit-btn
 {
     color: var(--foreground-color) !important;
 }
