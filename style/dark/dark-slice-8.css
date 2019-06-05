@@ -2,10 +2,10 @@
 {
     background-color: #222 !important;
 } */
-/* a
+.at-popup .user-container .item.is-selected
 {
     background-color: #333 !important;
-} */
+}
 /* a
 {
     background-color: #444 !important;
@@ -38,7 +38,8 @@
 {
     color: #fff !important;
 } */
-.bangumi-timing-module .headline .c-clink
+.bangumi-timing-module .headline .c-clink,
+.section-block .at-popup
 {
     border-color: transparent !important;
 }
@@ -106,10 +107,10 @@
 {
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 } */
-/* a
+.section-block .at-popup
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
-} */
+}
 /* a
 {
     display: none !important;
