@@ -1,11 +1,8 @@
-.dynamic-m .info,
-.dynamic-m .title
+.dynamic-m .info
 {
     height: auto !important;
 }
-.dynamic-m .info a,
-.dynamic-m .title a,
-.dynamic-m .title span
+.dynamic-m .info a
 {
     white-space: normal !important;
 }
