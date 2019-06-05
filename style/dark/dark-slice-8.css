@@ -14,18 +14,21 @@
 {
     background-image: none !important;
 } */
-/* a
+.player-auxiliary-area .danmaku-info-row-special
 {
     background-color: transparent !important;
-} */
+}
 /* a
 {
     background: #fff !important;
 } */
-/* a
+.player-auxiliary-area .danmaku-info-row-block span.danmaku-info-danmaku,
+.player-auxiliary-area .danmaku-info-row-block span.danmaku-info-time,
+.player-auxiliary-area .danmaku-info-row-block::after,
+.player-auxiliary-area .danmaku-info-row-super::after
 {
     color: #aaa !important;
-} */
+}
 /* a
 {
     color: #eee !important;
@@ -110,6 +113,15 @@
 {
     display: none !important;
 } */
+.members-info .up-card
+{
+    margin: 16px !important;
+}
+.members-info .up-card .info-name,
+.members-info .up-card .info-title
+{
+    width: auto !important;
+}
 /* a
 {
     border-color: var(--theme-color) !important;
