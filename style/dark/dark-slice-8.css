@@ -14,7 +14,9 @@
 {
     background-image: none !important;
 } */
-.player-auxiliary-area .danmaku-info-row-special
+.player-auxiliary-area .danmaku-info-row-special,
+.rank-list-ctnr .normal-list .item.self,
+.rank-list-ctnr .own
 {
     background-color: transparent !important;
 }
@@ -71,10 +73,10 @@
 {
     filter: brightness(0) invert(.7) !important;
 } */
-/* a
+.fold-box:hover .fold-arrow
 {
     filter: var(--blue-image-filter) !important;
-} */
+}
 /* a
 {
     filter: var(--pink-image-filter) !important;
@@ -144,7 +146,8 @@
 {
     border: 1px solid var(--theme-color) !important;
 } */
-.bangumi-timing-module .headline .c-clink
+.bangumi-timing-module .headline .c-clink,
+.progress-bar-core.p-absolute
 {
     background-color: var(--theme-color) !important;
 }
@@ -156,10 +159,10 @@
 {
     background-color: var(--theme-color-90) !important;
 } */
-/* a
+.d-data .fold-box:hover
 {
     color: var(--theme-color) !important;
-} */
+}
 .bangumi-timing-module .headline .c-clink:hover,
 .elevator-module .nav-list .customize:hover,
 .elevator-module .nav-list .item.on,
