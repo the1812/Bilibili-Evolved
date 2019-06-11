@@ -73,7 +73,8 @@
 {
     filter: brightness(0) invert(.7) !important;
 } */
-.fold-box:hover .fold-arrow
+.fold-box:hover .fold-arrow,
+.sticky-bar .bar-content .title-icon
 {
     filter: var(--blue-image-filter) !important;
 }
