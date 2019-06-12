@@ -119,7 +119,7 @@ function getI18nKey()
     return settings.i18n ? languageNameToCode[settings.i18nLanguage] : "zh-CN";
 }
 const dq = (selector) => document.querySelector(selector);
-const dqa = (selector) => [...document.querySelectorAll(selector)];
+const dqa = (selector) => [...document.querySelectorAll(selector)];;
 const customNavbarDefaultOrders = {
     blank1: 0,
     logo: 1,
@@ -239,6 +239,7 @@ const settings = {
     sideBarOffset: 0,
     noLiveAutoplay: false,
     hideHomeLive: false,
+    noMiniVideoAutoplay: false,
     cache: {},
 };
 const fixedSettings = {
@@ -363,7 +364,7 @@ function onSettingsChange()
     //     GM_addValueChangeListener(key, change);
     // }
     console.warn("此功能已弃用.");
-}
+};
 class Ajax
 {
     static send(xhr, body, text = true)
@@ -511,7 +512,7 @@ function downloadText(url, load, error) // The old method for compatibility
             xhr.send();
         });
     }
-}
+};
 function loadResources()
 {
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/";
@@ -597,7 +598,7 @@ function loadResources()
         }
     }
 }
-
+;
 // Placeholder class for Toast
 class Toast
 {
@@ -608,7 +609,7 @@ class Toast
     static info() { }
     static success() { }
     static error() { }
-}
+};
 class DoubleClickEvent
 {
     constructor(handler, singleClickHandler = null)
@@ -656,7 +657,7 @@ class DoubleClickEvent
         this.elements.splice(index, 1);
         element.removeEventListener("click", this.doubleClickHandler);
     }
-}
+};
 let cidHooked = false;
 const videoChangeCallbacks = [];
 class Observer
@@ -780,7 +781,7 @@ class Observer
         }
         videoChangeCallbacks.push(callback);
     }
-}
+};
 class SpinQuery
 {
     constructor(query, condition, action, failed)
@@ -865,7 +866,7 @@ class SpinQuery
     {
         return SpinQuery.condition(() => unsafeWindow.$, jquery => jquery !== undefined, action, failed);
     }
-}
+};
 class ColorProcessor
 {
     constructor(hex)
@@ -1038,7 +1039,7 @@ class ColorProcessor
     {
         return this.foreground === "#000" ? "invert(0)" : "invert(1)";
     }
-}
+};
 const offlineData = {};
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.css"] = `.bilibili-evolved-about{height:100%;width:400px;background:#fff;color:#000;position:fixed;top:0;left:0;z-index:100000;transform:translateX(-100%);transition:.3s cubic-bezier(0,.86,.58,1);display:flex;flex-direction:column;box-shadow:4px 0 16px 0 #0000}body.dark .bilibili-evolved-about{background:#222;color:#eee}.bilibili-evolved-about.opened{transform:translateX(0);box-shadow:4px 0 16px 0 #0005}.about-header{padding:32px;display:flex;align-items:center;justify-content:flex-start}.about-header i{margin-right:8px;display:flex}.about-title{font-size:16pt}.about-content{padding:16px 36px 0;margin-bottom:36px;display:flex;flex-direction:column;overflow:auto}.about-content .name{font-size:24pt;display:flex;align-items:center}.about-content .name img{margin-right:18px}.about-content .version{font-size:12pt;opacity:.6;margin-top:6px;margin-bottom:6px;align-self:center}.about-content .love{font-size:10pt;margin-bottom:24px;align-self:center}.about-content .love a{color:inherit!important}.about-content section{font-size:10pt;margin-top:16px}.about-content section .title{display:flex;justify-content:center;text-transform:uppercase;font-weight:700;font-size:13pt;letter-spacing:3px;margin:8px 0 16px}.about-content section .supporter,.about-content section a{color:var(--theme-color)!important;margin-right:8px;display:inline-flex}.about-content section .supporter{user-select:none}.about-content section .supporter:not(:last-child)::after,.about-content section a:not(:last-child)::after{content:","}@keyframes spinner{to{transform:translate(-50%,-50%) rotate(360deg)}}.about-content section.participants .fetching{margin-right:8px;position:relative;width:16px;height:16px;display:inline-flex}.about-content section.participants .fetching::before{content:"";box-sizing:border-box;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(0);width:16px;height:16px;border-radius:50%;border:2px solid #8884;border-top-color:var(--theme-color);animation:.6s linear infinite spinner}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.html"] = `<div class=bilibili-evolved-about><div class=about-header><i class="mdi mdi-information-outline mdi-24px"></i><span class=about-title>关于</span></div><div class=about-content><p class=name><img v-if=branch v-bind:src="'https://github.com/the1812/Bilibili-Evolved/raw/' + branch + '/images/logo.png'"width=50> Bilibili Evolved</p><code class=version>v{{version}} · {{clientType}}</code><p class=love><a target=_blank href=https://github.com/the1812/Bilibili-Evolved/ >Made with ❤　　</a><a target=_blank href=https://github.com/the1812/Bilibili-Evolved/blob/master/donate.md>Buy me a coffee ☕</a><section class=authors><span class=title>Authors</span><a class=author target=_blank v-for="author of authors"v-bind:href=author.link>{{author.name}}</a></section><section class=contributors><span class=title>Contributors</span><a class=contributor target=_blank v-for="contributor of contributors"v-bind:href=contributor.link>{{contributor.name}}</a></section><section class=participants><span class=title>Participants</span><span class=fetching v-if=fetching></span><a class=participant target=_blank v-for="participant of participants"v-bind:href=participant.link>{{participant.name}}</a></section><section class=supporters><span class=title>Supporters</span><span class=supporter v-for="supporter of supporters">{{supporter}}</span></section><section class=websites><span class=title>Websites</span><a class=website target=_blank v-for="website of websites"v-bind:href=website.link>{{website.name}}</a></section><section class=components><span class=title>Components</span><a class=component target=_blank v-for="component of components"v-bind:href=component.link>{{component.name}}</a></section></div></div>`;
@@ -1209,7 +1210,7 @@ class ResourceType
     {
         return new ResourceType("unknown");
     }
-}
+};
 class Resource
 {
     get downloaded()
@@ -1363,7 +1364,7 @@ class Resource
             }
         }
     }
-}
+};
 Resource.manifest = {
     style: {
         path: "style.min.css",
@@ -1968,7 +1969,7 @@ Resource.manifest = {
         },
     },
 };
-const resourceManifest = Resource.manifest;
+const resourceManifest = Resource.manifest;;
 class StyleManager
 {
     constructor(resources)
@@ -2068,7 +2069,7 @@ class StyleManager
             }
         }
     }
-}
+};
 class ResourceManager
 {
     constructor()
@@ -2430,7 +2431,7 @@ class ResourceManager
         }
         return true; // Has cache
     }
-}
+};
 
 try
 {

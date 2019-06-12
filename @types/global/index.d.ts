@@ -272,6 +272,7 @@ declare global
         sideBarOffset: number,
         noLiveAutoplay: boolean,
         hideHomeLive: boolean,
+        noMiniVideoAutoplay: boolean,
         latestVersionLink: string,
         currentVersion: string,
     }

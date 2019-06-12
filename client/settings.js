@@ -117,6 +117,7 @@ export const settings = {
     sideBarOffset: 0,
     noLiveAutoplay: false,
     hideHomeLive: false,
+    noMiniVideoAutoplay: false,
     cache: {},
 };
 const fixedSettings = {

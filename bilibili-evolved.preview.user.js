@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.8.5
+// @version      1.8.6
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -118,7 +118,7 @@ function getI18nKey()
     return settings.i18n ? languageNameToCode[settings.i18nLanguage] : "zh-CN";
 }
 const dq = (selector) => document.querySelector(selector);
-const dqa = (selector) => [...document.querySelectorAll(selector)];
+const dqa = (selector) => [...document.querySelectorAll(selector)];;
 const customNavbarDefaultOrders = {
     blank1: 0,
     logo: 1,
@@ -238,6 +238,7 @@ const settings = {
     sideBarOffset: 0,
     noLiveAutoplay: false,
     hideHomeLive: false,
+    noMiniVideoAutoplay: false,
     cache: {},
 };
 const fixedSettings = {
@@ -362,7 +363,7 @@ function onSettingsChange()
     //     GM_addValueChangeListener(key, change);
     // }
     console.warn("此功能已弃用.");
-}
+};
 class Ajax
 {
     static send(xhr, body, text = true)
@@ -510,7 +511,7 @@ function downloadText(url, load, error) // The old method for compatibility
             xhr.send();
         });
     }
-}
+};
 function loadResources()
 {
     Resource.root = "https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/";
@@ -596,7 +597,7 @@ function loadResources()
         }
     }
 }
-
+;
 // Placeholder class for Toast
 class Toast
 {
@@ -607,7 +608,7 @@ class Toast
     static info() { }
     static success() { }
     static error() { }
-}
+};
 class DoubleClickEvent
 {
     constructor(handler, singleClickHandler = null)
@@ -655,7 +656,7 @@ class DoubleClickEvent
         this.elements.splice(index, 1);
         element.removeEventListener("click", this.doubleClickHandler);
     }
-}
+};
 let cidHooked = false;
 const videoChangeCallbacks = [];
 class Observer
@@ -779,7 +780,7 @@ class Observer
         }
         videoChangeCallbacks.push(callback);
     }
-}
+};
 class SpinQuery
 {
     constructor(query, condition, action, failed)
@@ -864,7 +865,7 @@ class SpinQuery
     {
         return SpinQuery.condition(() => unsafeWindow.$, jquery => jquery !== undefined, action, failed);
     }
-}
+};
 class ColorProcessor
 {
     constructor(hex)
@@ -1037,7 +1038,7 @@ class ColorProcessor
     {
         return this.foreground === "#000" ? "invert(0)" : "invert(1)";
     }
-}
+};
 // [Offline build placeholder]
 class ResourceType
 {
@@ -1089,7 +1090,7 @@ class ResourceType
     {
         return new ResourceType("unknown");
     }
-}
+};
 class Resource
 {
     get downloaded()
@@ -1285,7 +1286,7 @@ class Resource
             }
         }
     }
-}
+};
 Resource.manifest = {
     style: {
         path: "style.min.css",
@@ -1890,7 +1891,7 @@ Resource.manifest = {
         },
     },
 };
-const resourceManifest = Resource.manifest;
+const resourceManifest = Resource.manifest;;
 class StyleManager
 {
     constructor(resources)
@@ -1990,7 +1991,7 @@ class StyleManager
             }
         }
     }
-}
+};
 class ResourceManager
 {
     constructor()
@@ -2352,7 +2353,7 @@ class ResourceManager
         }
         return true; // Has cache
     }
-}
+};
 
 try
 {
