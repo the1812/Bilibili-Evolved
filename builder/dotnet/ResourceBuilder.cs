@@ -154,16 +154,16 @@ namespace BilibiliEvolved.Build
                     }
                     return source;
                 };
-                input = RegexReplacer.Replace(input, @"import (.*) from (.*);", match =>
+                input = RegexReplacer.Replace(input, @"import (.*) from (.*)", match =>
                 {
                     var imported = match.Groups[1].Value.Replace(" as ", ":");
                     var source = convertToRuntimeSource(match.Groups[2].Value);
-                    return $"const {imported} = resources.import({source});";
+                    return $"const {imported} = resources.import({source})";
                 });
-                input = RegexReplacer.Replace(input, @" import\((.*)\);", match =>
+                input = RegexReplacer.Replace(input, @" import\((.*)\)", match =>
                 {
                     var source = convertToRuntimeSource(match.Groups[1].Value);
-                    return $" resources.importAsync({source});";
+                    return $" resources.importAsync({source})";
                 });
                 input = @"(() =>
 {

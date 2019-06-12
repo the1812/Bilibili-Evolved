@@ -18,10 +18,10 @@ namespace BilibiliEvolved.Build
                 { @"Bilibili-Evolved/preview", @"Bilibili-Evolved/master" },
                 { @"Bilibili-Evolved/raw/preview", @"Bilibili-Evolved/raw/master" },
                 { SourcePath, OutputPath },
-                { @"// settings.guiSettings = true;", @"settings.guiSettings = true;" },
+                { @"// settings.guiSettings = true", @"settings.guiSettings = true" },
                 { @"Bilibili Evolved (Preview)", @"Bilibili Evolved" },
                 { Description.Preview, Description.Master },
-                { @"settings.debug = true;", @"settings.debug = false;" },
+                { @"settings.debug = true", @"settings.debug = false" },
             };
             replaceMap.ForEach(item => master = master.Replace(item.Key, item.Value));
             Output = master;
