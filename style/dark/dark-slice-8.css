@@ -41,7 +41,8 @@
     color: #fff !important;
 } */
 .bangumi-timing-module .headline .c-clink,
-.section-block .at-popup
+.section-block .at-popup,
+.coin-nav
 {
     border-color: transparent !important;
 }
@@ -73,7 +74,8 @@
 {
     filter: brightness(0) invert(.7) !important;
 } */
-.fold-box:hover .fold-arrow
+.fold-box:hover .fold-arrow,
+.sticky-bar .bar-content .title-icon
 {
     filter: var(--blue-image-filter) !important;
 }
