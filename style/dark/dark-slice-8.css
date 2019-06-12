@@ -6,10 +6,10 @@
 {
     background-color: #333 !important;
 }
-/* a
+.mession-box .content .list-wrap .item-index
 {
     background-color: #444 !important;
-} */
+}
 /* a
 {
     background-image: none !important;
@@ -27,12 +27,18 @@
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-danmaku,
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-time,
 .player-auxiliary-area .danmaku-info-row-block::after,
-.player-auxiliary-area .danmaku-info-row-super::after
+.player-auxiliary-area .danmaku-info-row-super::after,
+.mession-box .content .list-wrap .item-summary
 {
     color: #aaa !important;
 }
 .dynamic-m .dyn_menu li,
-.dynamic-btn.pink.with-border-radius.publish-btn.disabled
+.dynamic-btn.pink.with-border-radius.publish-btn.disabled,
+.mession-box .content .list-wrap .item-title,
+.mession-box .content .list-wrap .item-index,
+.mession-box .btn,
+.mession-box .title,
+.cc-nav-wrp .activity-nav-wrp .activity-link
 {
     color: #eee !important;
 }
@@ -46,14 +52,15 @@
 {
     border-color: transparent !important;
 }
-/* a
+.carousel-wrp .page .next
 {
     border-color: #aaa !important;
-} */
-/* a
+}
+.mession-box .content .list-wrap .border-btm,
+.mession-box .content
 {
     border-color: #444 !important
-} */
+}
 /* a
 {
     border-color: white !important;
@@ -161,7 +168,16 @@
 {
     background-color: var(--theme-color-90) !important;
 } */
-.d-data .fold-box:hover
+.d-data .fold-box:hover,
+.cc-nav-wrp .nav-item.active i,
+.cc-nav-wrp .nav-item.active span,
+.cc-nav-wrp .nav-item:hover i,
+.cc-nav-wrp .nav-item:hover span,
+.cc-nav-wrp .activity-nav-wrp .activity-link.active i,
+.cc-nav-wrp .activity-nav-wrp .activity-link.active span,
+.cc-nav-wrp .activity-nav-wrp .activity-link:hover i,
+.cc-nav-wrp .activity-nav-wrp .activity-link:hover span,
+.mession-box .btn:hover
 {
     color: var(--theme-color) !important;
 }
