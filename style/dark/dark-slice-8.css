@@ -41,7 +41,8 @@
     color: #fff !important;
 } */
 .bangumi-timing-module .headline .c-clink,
-.section-block .at-popup
+.section-block .at-popup,
+.coin-nav
 {
     border-color: transparent !important;
 }
