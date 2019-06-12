@@ -235,6 +235,9 @@ const settings = {
     videoScreenshot: false,
     hideBangumiReviews: false,
     filenameFormat: "[title][ - ep]",
+    sideBarOffset: 0,
+    noLiveAutoplay: false,
+    hideHomeLive: false,
     cache: {},
 };
 const fixedSettings = {
@@ -1376,6 +1379,7 @@ Resource.manifest = {
             clearCache: "清除缓存",
             settingsTooltip: "设置项帮助",
             settingsSearch: "搜索设置",
+            sideBarOffset: "侧栏垂直偏移量",
         },
     },
     useDarkStyle: {

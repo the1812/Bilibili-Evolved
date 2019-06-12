@@ -269,6 +269,9 @@ declare global
         videoScreenshot: boolean,
         cache: {} | { version: string } | undefined,
         filenameFormat: string,
+        sideBarOffset: number,
+        noLiveAutoplay: boolean,
+        hideHomeLive: boolean,
         latestVersionLink: string,
         currentVersion: string,
     }

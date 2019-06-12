@@ -114,6 +114,9 @@ export const settings = {
     videoScreenshot: false,
     hideBangumiReviews: false,
     filenameFormat: "[title][ - ep]",
+    sideBarOffset: 0,
+    noLiveAutoplay: false,
+    hideHomeLive: false,
     cache: {},
 };
 const fixedSettings = {
