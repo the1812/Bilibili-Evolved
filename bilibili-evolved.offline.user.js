@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      332.29
+// @version      332.32
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1092,7 +1092,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/full-tweets-title.min.css"] = `.dynamic-m .info{height:auto!important}.dynamic-m .info a{white-space:normal!important}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/full-tweets-title.min.js"] = (()=>{return(e,l)=>{l.applyStyle("fullTweetsTitleStyle")}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.css"] = `.gui-settings-icon-panel{height:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;position:fixed;top:calc(50% + var(--side-bar-offset));left:0;width:32px;z-index:99999;transform:translateY(-50%);user-select:none}.gui-settings-icon-panel i{transition:.2s;opacity:.6;transform:rotate(180deg);font-size:12px}.gui-settings-widgets:hover i,.gui-settings:hover i{opacity:.75;transform:rotate(0)}.gui-settings,.gui-settings-widgets{display:flex;justify-content:center;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent;margin:16px 0;width:24px;height:24px;transition:.2s;opacity:1;transform-origin:center!important;transform:translateX(-16px);background-color:rgba(255,255,255,.75);border-radius:0 50% 50% 0;padding:6px}body.dark .gui-settings,body.dark .gui-settings-widgets{background-color:rgba(0,0,0,.75)}.gui-settings-widgets:hover,.gui-settings:hover{opacity:1;transform:translateX(0)}.gui-settings-footer,.gui-settings-header{flex-grow:0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:10;padding:32px}.gui-settings-footer{height:80px;justify-content:center;position:relative}.gui-settings-content{flex-grow:1;overflow:auto;position:relative;overscroll-behavior:contain}.gui-settings-content ul{padding:0;margin:0}.gui-settings-content ul li{font-size:16px;margin-bottom:18px;display:flex;height:24px;transition:.2s}.gui-settings-content ul li.disabled,.gui-settings-content ul li:not(.category).folded{height:0;margin:0;overflow:hidden}.gui-settings-content ul li.indent-0{margin-left:16px}.gui-settings-content ul li.indent-1{margin-left:80px}.gui-settings-content ul li.indent-2{margin-left:144px}.gui-settings-content ul li.indent-center{align-items:center;justify-content:center}.gui-settings-content ul li.category{padding:16px 0;margin-bottom:18px;border-top:1px dashed #8884;border-bottom:1px dashed #8884;background:#fff;position:sticky;top:0;z-index:10;cursor:pointer;transition:.2s ease-out;-webkit-tap-highlight-color:transparent}.gui-settings-content ul li.category.folded{margin-bottom:-1px}.gui-settings-content ul li.category *{opacity:.8}.gui-settings-title{font-size:16pt;flex:0 0 auto}.gui-settings-box .gui-settings-title{margin-right:64px}.gui-settings-search[type=text]{flex:1 0 auto;height:auto;border:none;padding:6px;font-size:12pt;width:40%;border-bottom:1px solid #8884;transition:.2s;color:inherit;background:0 0;box-sizing:border-box;outline:0!important}.gui-settings-close{width:24px;height:24px;padding:16px}.gui-settings-header .gui-settings-close{cursor:pointer;-webkit-tap-highlight-color:transparent}.gui-settings-textbox-container{display:flex;justify-content:center;align-items:center;-webkit-tap-highlight-color:transparent}.gui-settings-dropdown-span,.gui-settings-textbox-container span{margin:0 16px;transition:.2s}.gui-settings-textbox-container input{border:none;height:100%;max-width:90px;padding:4px 8px;background:#8884;transition:.2s;font-size:16px}.gui-settings-textbox-container input:disabled,.gui-settings-textbox-container.disabled div,.gui-settings-textbox-container.disabled span{opacity:.5}.gui-settings-checkbox-container{cursor:pointer;display:flex;width:100%;justify-content:start;align-items:center;padding:0 16px;-webkit-tap-highlight-color:transparent}.gui-settings-checkbox-container input{visibility:collapse;transition:.2s;width:0}.gui-settings-checkbox-container .gui-settings-ok{width:24px;height:24px;margin-right:16px;transition:.2s}.gui-settings-checkbox-container input~.gui-settings-ok{background-color:#8884}.gui-settings-checkbox-container input:checked~.gui-settings-ok{background-color:var(--theme-color)}.gui-settings-checkbox-container input~.gui-settings-ok>i{opacity:0;transform-origin:center;transform:scale(.9)}.gui-settings-checkbox-container input:checked~.gui-settings-ok>i{opacity:1}.gui-settings-checkbox-container input:disabled~.gui-settings-ok,.gui-settings-checkbox-container input:disabled~span{opacity:.5}button.gui-settings-button{padding:6px 20px;margin:0 4px;max-height:34px;border:none;background:#8884;font-size:16px;cursor:pointer;transition:.2s ease-out;font-family:inherit;-webkit-tap-highlight-color:transparent}button.gui-settings-button:hover{opacity:.9}button.gui-settings-button:active{opacity:.8}button.gui-settings-button:focus{outline:0}.custom-color-preview{width:28px;height:28px;border-radius:50%;background:var(--theme-color);margin-right:16px;position:relative;cursor:pointer;box-sizing:border-box;box-shadow:0 2px 8px 1px var(--theme-color-70)}.predefined-colors{transition:.2s;display:flex;opacity:0;background:#fff;width:168px;height:168px;position:absolute;box-shadow:0 3px 20px 2px #0004;top:32px;left:calc(-84px + 50%);transform:scale(0);transform-origin:top;z-index:9}.predefined-colors.opened{opacity:1;transform:scale(1)}.predefined-colors-grid{display:grid;grid-template-columns:auto auto auto auto;margin:0;flex-grow:1}.predefined-colors-grid-block{width:100%;height:100%;justify-self:center;align-self:center;cursor:pointer;transform-origin:center;transition:.1s ease-out}.predefined-colors-grid-block:hover{transform:scale(1.1);box-shadow:0 0 8px 1px #0004}input[key]:focus{outline:0}input[type=text][key]{height:auto;border:none}.gui-settings-label{margin:0 16px;font-size:16px}.hidden{display:none!important}@supports (backdrop-filter:blur(24px)) or (-webkit-backdrop-filter:blur(24px)){.gui-settings-box.blur li.category{-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);background:0 0}.gui-settings-box.blur,.gui-settings-box.blur .gui-settings-content,.gui-settings-box.blur .gui-settings-footer,.gui-settings-box.blur .gui-settings-header{background:#fff8}.gui-settings-box.blur .gui-settings-content,.gui-settings-box.blur .gui-settings-footer,.gui-settings-box.blur .gui-settings-header{-webkit-backdrop-filter:blur(64px);backdrop-filter:blur(64px)}}li.category i.icon-arrow{transition:.2s ease-out}li.category.folded i.icon-arrow{transform:rotate(180deg)}.gui-settings-dropdown-container{display:flex;align-items:center}.gui-settings-dropdown{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent;background-color:#8884;display:inline-flex;align-items:center;height:32px}.gui-settings-dropdown>i{transition:.2s ease-out;transform-origin:center;transform:rotate(180deg)}.gui-settings-dropdown>ul{position:absolute;top:calc(100%);width:100%;cursor:pointer;background:#fff;transform-origin:top;transform:scaleY(0);transition:.2s cubic-bezier(.6,-.28,.74,.05);display:flex;flex-direction:column;align-items:center;box-shadow:0 3px 20px 2px #0004;z-index:100}.gui-settings-dropdown ul li{margin:0;padding:12px 0;height:auto;width:100%;justify-content:center}.gui-settings-dropdown ul li:hover{background:rgba(0,0,0,.16)}.gui-settings-dropdown.opened>ul{transform:scaleY(1);transition-timing-function:cubic-bezier(.18,.89,.32,1.28)}.gui-settings-dropdown.opened>i{transform:rotate(0)}.gui-settings-dropdown input{cursor:pointer;border:none;height:100%;max-width:80px;padding:4px 8px;transition:.2s;font-size:16px;background-color:transparent}.gui-settings-dropdown input[key=defaultPlayerMode]{max-width:120px}.gui-settings-dropdown input[key=defaultBangumiLayout],.gui-settings-dropdown input[key=defaultPlayerLayout]{max-width:50px}.gui-settings-box input[key=filenameFormat]{max-width:500px}.gui-settings-mask{height:calc(100% + 5px);width:calc(100% + 5px);opacity:0;background:#000a;position:fixed;top:0;left:0;z-index:99999;pointer-events:none;transition:.3s cubic-bezier(0,.86,.58,1);overscroll-behavior:contain}.gui-settings-mask.opened{opacity:1;pointer-events:initial}.gui-settings-mask.opened.transparent{opacity:0;transition:.3s cubic-bezier(0,.86,.58,1) .3s}.gui-settings-box,.gui-settings-widgets-box{height:100%;width:420px;background:#fff;color:#000;position:fixed;top:0;left:0;z-index:100000;transform:translateX(-100%);transition:.3s cubic-bezier(0,.86,.58,1);display:none;flex-direction:column;box-shadow:4px 0 16px 0 #0000}.gui-settings-box.loaded,.gui-settings-widgets-box.loaded{display:flex}.gui-settings-widgets-box{min-width:200px;width:auto}.gui-settings-box.opened,.gui-settings-widgets-box.opened{transform:translateX(0);box-shadow:4px 0 16px 0 #0005}.gui-settings-widgets-box>.title{margin:32px;font-size:16pt}.gui-settings-widgets-box>.widgets-container{padding:32px;display:flex;flex-direction:column;align-items:stretch;justify-content:start;position:relative;overscroll-behavior:contain;overflow:auto;height:100%}.gui-settings-widgets-box>.widgets-container .empty-tip{font-size:10pt;display:none}.gui-settings-widgets-box>.widgets-container .empty-tip.show{display:block}.gui-settings-widgets-box>.gui-settings-header{justify-content:start}.gui-settings-flat-button,.gui-settings-flat-button a,.gui-settings-flat-button a:hover{display:flex;align-items:center;justify-content:center;color:inherit}.gui-settings-flat-button{width:auto;padding:8px 16px;background:#8884;border:none;color:#000;cursor:pointer;transition:.2s ease-out;font-size:10pt;border-bottom:2px solid var(--theme-color-50);flex:0 0 auto;margin:4px;border-radius:0}.gui-settings-flat-button:disabled{opacity:.5;cursor:not-allowed}.gui-settings-flat-button:hover:not(:disabled){border-bottom-color:var(--theme-color-90);background:#8884}.gui-settings-flat-button:active:not(:disabled){border-bottom-color:var(--theme-color)}.gui-settings-flat-button:focus{outline:0}.gui-settings-flat-button i{margin-right:8px;line-height:24px;height:24px}.gui-settings-checkbox{width:28px;margin-right:24px;height:12px;background:#8884;border-radius:16px;position:relative}.gui-settings-checkbox::after{content:"";width:20px;height:20px;background:#c6c6c6;position:absolute;border-radius:50%;top:-4px;left:-4px;box-shadow:0 2px 8px 1px #0003;transition:.2s ease-out}.gui-settings-checkbox-container input:checked~.gui-settings-checkbox{background:var(--theme-color-80)}.gui-settings-checkbox-container input:checked~.gui-settings-checkbox::after{background:var(--theme-color)!important;box-shadow:0 2px 8px 1px var(--theme-color-70);left:calc(100% - 16px)}.gui-settings-checkbox-container input:disabled~.gui-settings-checkbox{opacity:.5}.gui-settings-header>i{margin-right:8px}.player-full-win .app-content,.player-full-win .live-room-app .app-content,.player-mode-webfullscreen .player-module{z-index:100000!important}.gui-settings-flat-button .popup{position:absolute;top:calc(100% + 2px);transition:.2s cubic-bezier(.6,-.28,.74,.05);transform-origin:top;transform:scaleY(0) translateX(-50%);left:50%;background:#fff;box-shadow:0 3px 20px 2px #0004;z-index:200;display:flex;flex-direction:column;align-items:center;width:max-content}.gui-settings-flat-button .popup *{transition:.2s}.gui-settings-flat-button .popup.opened{transform:scaleY(1) translateX(-50%);transition-timing-function:cubic-bezier(.18,.89,.32,1.28)}.gui-settings-flat-button .popup ul{list-style:none;margin:0;padding:0}.gui-settings-box kbd{padding:0 4px;border-radius:4px;border:1px solid #ccc;color:#ccc;border-bottom-width:3px;margin:0 4px}`;
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.html"] = `<div class=gui-settings-mask></div><div class="gui-settings-widgets-box icons-enabled"><div class=gui-settings-header><i class=icon-widgets></i><span class=gui-settings-title>附加功能</span></div><div class=widgets-container><div class=empty-tip>空空如也哦 =￣ω￣=</div></div></div><div class="gui-settings-box icons-enabled"><div class=gui-settings-header><i class=icon-settings></i><span class=gui-settings-title>设置</span><i class=icon-search style="transform: scale(0.9); margin-right: 0"></i><input class=gui-settings-search placeholder=搜索设置项 type=text></div><div class=gui-settings-content><ul><li class="indent-center category folded"><i class=icon-video style=margin-right:8px></i><span class=settings-category>视频</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDefaultPlayerLayout type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultPlayerLayout dependencies=useDefaultPlayerLayout><ul></ul><i class=icon-arrow></i></div></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultBangumiLayout dependencies=useDefaultPlayerLayout><ul></ul><i class=icon-arrow></i></div></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDefaultPlayerMode type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultPlayerMode dependencies=useDefaultPlayerMode><ul></ul><i class=icon-arrow></i></div></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=applyPlayerModeOnPlay type=checkbox dependencies=useDefaultPlayerMode checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=autoLightOff type=checkbox dependencies=useDefaultPlayerMode checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDefaultVideoQuality type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultVideoQuality dependencies=useDefaultVideoQuality><ul></ul><i class=icon-arrow></i></div></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDefaultDanmakuSettings type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=enableDanmaku type=checkbox dependencies=useDefaultDanmakuSettings checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=rememberDanmakuSettings type=checkbox dependencies="useDefaultDanmakuSettings enableDanmaku"checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=expandDanmakuList type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=expandDescription type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=autoContinue type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=allowJumpContinue type=checkbox dependencies=autoContinue checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=autoPlay type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=skipChargeList type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=framePlayback type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=videoScreenshot type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=playerFocus type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-textbox-container><span></span><input key=playerFocusOffset dependencies=playerFocus spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=outerWatchlater type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-style style=margin-right:8px></i><span class=settings-category>样式</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-textbox-container><span>主题颜色</span><div class=custom-color-preview><div class="predefined-colors popup"><div class=predefined-colors-grid></div></div></div><input key=customStyleColor dependencies=""spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=customNavbar type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=customNavbarFill type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=allNavbarFill type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=customNavbarShadow type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=customNavbarCompact type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=customNavbarBlur type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-2 folded"><label class=gui-settings-textbox-container><span></span><input key=customNavbarBlurOpacity dependencies="customNavbar customNavbarBlur"spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDarkStyle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=darkSchedule type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-textbox-container><span></span><input key=darkScheduleStart dependencies=darkSchedule spellcheck=false type=text></label><li class="indent-1 folded"><label class=gui-settings-textbox-container><span></span><input key=darkScheduleEnd dependencies=darkSchedule spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=compactLayout type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useCommentStyle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=simplifyLiveroom type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=hideBanner type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=playerShadow type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=narrowDanmaku type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=blurVideoControl type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=customControlBackground type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-textbox-container><span></span><input key=customControlBackgroundOpacity dependencies=customControlBackground spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=harunaScale type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=removeLiveWatermark type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=removeVideoTopMask type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=hideOldEntry type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=hideBangumiReviews type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-tool style=margin-right:8px></i><span class=settings-category>工具</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=removeAds type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=watchLaterRedirect type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=favoritesRedirect type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=hideTopSearch type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=fullTweetsTitle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=fullPageTitle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=biliplusRedirect type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=imageResolution type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=oldTweets type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=i18n type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=i18nLanguage dependencies=i18n><ul></ul><i class=icon-arrow></i></div></label><li class="indent-center category folded"><i class=icon-touch style=margin-right:8px></i><span class=settings-category>触摸</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=touchNavBar type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=comboLike type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=touchVideoPlayer type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=touchVideoPlayerAnimation type=checkbox dependencies=touchVideoPlayer checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=touchVideoPlayerDoubleTapControl type=checkbox dependencies=touchVideoPlayer checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-other style=margin-right:8px></i><span class=settings-category>其他</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=toast type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=toastInternalError type=checkbox dependencies=toast checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useCache type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-textbox-container><span></span><input key=filenameFormat dependencies=""spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-textbox-container><span></span><input key=sideBarOffset dependencies=""spellcheck=false type=text></label></ul></div><div class=gui-settings-tooltip></div></div>`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.html"] = `<div class=gui-settings-mask></div><div class="gui-settings-widgets-box icons-enabled"><div class=gui-settings-header><i class=icon-widgets></i><span class=gui-settings-title>附加功能</span></div><div class=widgets-container><div class=empty-tip>空空如也哦 =￣ω￣=</div></div></div><div class="gui-settings-box icons-enabled"><div class=gui-settings-header><i class=icon-settings></i><span class=gui-settings-title>设置</span><i class=icon-search style="transform: scale(0.9); margin-right: 0"></i><input class=gui-settings-search placeholder=搜索设置项 type=text></div><div class=gui-settings-content><ul><li class="indent-center category folded"><i class=icon-video style=margin-right:8px></i><span class=settings-category>视频</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDefaultPlayerLayout type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultPlayerLayout dependencies=useDefaultPlayerLayout><ul></ul><i class=icon-arrow></i></div></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultBangumiLayout dependencies=useDefaultPlayerLayout><ul></ul><i class=icon-arrow></i></div></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDefaultPlayerMode type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultPlayerMode dependencies=useDefaultPlayerMode><ul></ul><i class=icon-arrow></i></div></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=applyPlayerModeOnPlay type=checkbox dependencies=useDefaultPlayerMode checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=autoLightOff type=checkbox dependencies=useDefaultPlayerMode checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDefaultVideoQuality type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultVideoQuality dependencies=useDefaultVideoQuality><ul></ul><i class=icon-arrow></i></div></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDefaultDanmakuSettings type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=enableDanmaku type=checkbox dependencies=useDefaultDanmakuSettings checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=rememberDanmakuSettings type=checkbox dependencies="useDefaultDanmakuSettings enableDanmaku"checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=expandDanmakuList type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=expandDescription type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=autoContinue type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=allowJumpContinue type=checkbox dependencies=autoContinue checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=autoPlay type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=skipChargeList type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=framePlayback type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=videoScreenshot type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=playerFocus type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-textbox-container><span></span><input key=playerFocusOffset dependencies=playerFocus spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=outerWatchlater type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-style style=margin-right:8px></i><span class=settings-category>样式</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-textbox-container><span>主题颜色</span><div class=custom-color-preview><div class="predefined-colors popup"><div class=predefined-colors-grid></div></div></div><input key=customStyleColor dependencies=""spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=customNavbar type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=customNavbarFill type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=allNavbarFill type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=customNavbarShadow type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=customNavbarCompact type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=customNavbarBlur type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-2 folded"><label class=gui-settings-textbox-container><span></span><input key=customNavbarBlurOpacity dependencies="customNavbar customNavbarBlur"spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useDarkStyle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=darkSchedule type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-textbox-container><span></span><input key=darkScheduleStart dependencies=darkSchedule spellcheck=false type=text></label><li class="indent-1 folded"><label class=gui-settings-textbox-container><span></span><input key=darkScheduleEnd dependencies=darkSchedule spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=compactLayout type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useCommentStyle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=simplifyLiveroom type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=hideBanner type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=playerShadow type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=narrowDanmaku type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=blurVideoControl type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=customControlBackground type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-textbox-container><span></span><input key=customControlBackgroundOpacity dependencies=customControlBackground spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=harunaScale type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=removeLiveWatermark type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=removeVideoTopMask type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=hideOldEntry type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=hideBangumiReviews type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-tool style=margin-right:8px></i><span class=settings-category>工具</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=removeAds type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=watchLaterRedirect type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=favoritesRedirect type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=hideTopSearch type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=fullTweetsTitle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=fullPageTitle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=biliplusRedirect type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=imageResolution type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=oldTweets type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=i18n type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=i18nLanguage dependencies=i18n><ul></ul><i class=icon-arrow></i></div></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=noLiveAutoplay type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=hideHomeLive type=checkbox dependencies=noLiveAutoplay checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=noMiniVideoAutoplay type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-touch style=margin-right:8px></i><span class=settings-category>触摸</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=touchNavBar type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=comboLike type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=touchVideoPlayer type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=touchVideoPlayerAnimation type=checkbox dependencies=touchVideoPlayer checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=touchVideoPlayerDoubleTapControl type=checkbox dependencies=touchVideoPlayer checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-other style=margin-right:8px></i><span class=settings-category>其他</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=toast type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"><label class=gui-settings-checkbox-container><input key=toastInternalError type=checkbox dependencies=toast checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-checkbox-container><input key=useCache type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"><label class=gui-settings-textbox-container><span></span><input key=filenameFormat dependencies=""spellcheck=false type=text></label><li class="indent-0 folded"><label class=gui-settings-textbox-container><span></span><input key=sideBarOffset dependencies=""spellcheck=false type=text></label></ul></div><div class=gui-settings-tooltip></div></div>`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.js"] = (()=>{return(e,t)=>{const{ThemeColors:n}=t.import("theme-colors");const{SettingsSearch:i}=t.import("settings-search");const{Validator:s}=t.import("text-validate");let o=[];let c=[];let r=[];function a(e){let t=e.nextElementSibling;const n=[];while(t!==null&&!t.classList.contains("category")){n.push(t);t=t.nextElementSibling}return n}function l(){r.forEach(t=>t.value=e[t.getAttribute("key")]);c.forEach(t=>t.checked=e[t.getAttribute("key")])}function d(){document.querySelector(".gui-settings-mask").addEventListener("click",()=>{document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask,.bilibili-evolved-about").forEach(e=>e.classList.remove("opened"))});r.forEach(t=>{t.setAttribute("placeholder",e[t.getAttribute("key")])});document.querySelectorAll(".gui-settings-content ul li.category").forEach(e=>{e.addEventListener("click",e=>{const t=document.querySelector(".gui-settings-search");if(t.value!==""){t.value="";raiseEvent(t,"input")}e.currentTarget.classList.toggle("folded");a(e.currentTarget).forEach(e=>e.classList.toggle("folded"))})});document.querySelectorAll(".gui-settings-dropdown>input").forEach(e=>{e.addEventListener("click",e=>{e.currentTarget.parentElement.classList.toggle("opened")})})}function u(){const t=e=>{};c.forEach(n=>{n.addEventListener("change",()=>{const i=n.getAttribute("key");const s=n.checked;e[i]=s;t(i);saveSettings(e)})});r.forEach(n=>{n.addEventListener("change",()=>{const i=n.getAttribute("key");const o=s.getValidator(i).validate(n.value);e[i]=o;n.value=o;t(i);saveSettings(e)})})}function g(){const e=o.map(e=>[e.getAttribute("dependencies").split(" ").map(e=>o.find(t=>t.getAttribute("key")===e)),e]);const t=e=>e.nodeName.toUpperCase()==="LI"?e:t(e.parentElement);e.forEach(([e,n])=>{if(e[0]===undefined){return}const i=()=>{if(e.every(e=>e.checked)){t(n).classList.remove("disabled")}else{t(n).classList.add("disabled")}};e.forEach(e=>e.addEventListener("change",i));i()})}function f(){if(typeof offlineData!=="undefined"){document.querySelector(".gui-settings-checkbox-container>input[key=useCache]").parentElement.parentElement.classList.add("disabled");document.querySelector("input[key=useCache]").disabled=true}}function b(){if(!CSS.supports("backdrop-filter","blur(24px)")&&!CSS.supports("-webkit-backdrop-filter","blur(24px)")){o.find(e=>e.getAttribute("key")==="blurVideoControl").disabled=true;e.blurVideoControl=false;saveSettings(e)}if(window.devicePixelRatio===1){o.find(e=>e.getAttribute("key")==="harunaScale").disabled=true;o.find(e=>e.getAttribute("key")==="imageResolution").disabled=true;e.harunaScale=false;e.imageResolution=false;saveSettings(e)}}function m(){for(const[e,t]of Object.entries(Resource.displayNames)){const n=o.find(t=>t.getAttribute("key")===e);if(!n){continue}switch(n.type){case"checkbox":n.nextElementSibling.nextElementSibling.innerHTML=t;break;case"text":const e=n.parentElement;if(e.classList.contains("gui-settings-textbox-container")){n.previousElementSibling.innerHTML=t}else if(e.classList.contains("gui-settings-dropdown")){e.previousElementSibling.innerHTML=t}break;default:break}}}(async()=>{t.applyStyle("guiSettingsStyle");document.body.insertAdjacentHTML("afterbegin",`<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);const e=document.body&&unsafeWindow.parent.window!==unsafeWindow;if(e){document.querySelector(".gui-settings-icon-panel").style.display="none"}const s=t.data.guiSettingsHtml.text;document.body.insertAdjacentHTML("beforeend",s);const a=document.querySelector(".widgets-container");const p=a.querySelector(".empty-tip");Observer.childList(a,()=>{if(a.childElementCount<=1){p.classList.add("show")}else{p.classList.remove("show")}});(new n).setupDom();const y=document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box");const h=document.querySelector(".gui-settings-icon-panel");h.addEventListener("mouseover",()=>{raiseEvent(h,"be:load");y.forEach(e=>e.classList.add("loaded"));o=[...document.querySelectorAll("input[key]")];c=o.filter(e=>e.type==="checkbox");r=o.filter(e=>e.type==="text"&&!e.parentElement.classList.contains("gui-settings-dropdown"));d();f();l();g();u();b();m();new i},{once:true})})()}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/haruna-scale.min.js"] = (()=>{return(n,e)=>{const t="haruna-scale";const a=()=>{if(document.getElementById(t)===null){e.applyStyleFromText(`\n            .haruna-ctnr,\n            .avatar-btn\n            {\n                transform: scale(${1/window.devicePixelRatio}) !important;\n            }\n        `,t)}};a();return{reload:a,unload:()=>{const n=document.getElementById(t);n&&n.remove()}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/hide-bangumi-reviews.min.js"] = (()=>{return(e,n)=>{return n.toggleStyle(`\n    #review_module { display: none !important; }\n    `,`hide-bangumi-reviews-style`)}})();
@@ -1116,6 +1116,8 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/narrow-danmaku.min.js"] = (()=>{return(e,l)=>{const i=`<style id="narrow-danmaku-style">\n@media screen and (max-width: 1200px)\n{\n    .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-center .bilibili-player-video-sendbar .bilibili-player-video-inputbar\n    {\n        display: flex !important;\n    }\n}\n</style>`;l.applyStyleFromText(i);return{reload:()=>l.applyStyleFromText(i),unload:()=>document.getElementById("narrow-danmaku-style").remove()}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/new-styles.min.js"] = (()=>{return(e,l)=>{if(document.URL===`https://h.bilibili.com/`){return}if(document.querySelector(`.z_header`)!==null){l.removeStyle("tweetsStyle");return}SpinQuery.any(()=>$(".custom-scrollbar"),e=>e.removeClass("custom-scrollbar"));SpinQuery.any(()=>$("#banner_link"),()=>l.removeStyle("tweetsStyle"));if(["/h.bilibili.com","/live.bilibili.com","/link.bilibili.com"].some(e=>document.URL.includes(e))){l.applyStyle("style","bilibili-style-optimization")}else{Promise.race([SpinQuery.select(()=>document.querySelector(".bili-header-m")).then(e=>e!==null&&e.classList.contains("stardust-video")),SpinQuery.select(()=>document.querySelector("body>#Header")).then(e=>e!==null)]).then(e=>l.applyStyle(e?"style":"oldStyle","bilibili-style-optimization"))}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/no-banner.min.css"] = `#banner_link,.z-top-container.has-banner>.header{display:none!important}.b-header-mask-wrp .b-header-mask-bg,div.blur-bg{opacity:0!important}`;
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/no-live-autoplay.min.js"] = (()=>{return(e,i)=>{(async()=>{const e=document.URL.replace(window.location.search,"");if(e!=="https://live.bilibili.com/"&&e!=="https://live.bilibili.com/index.html"){return}SpinQuery.condition(()=>document.querySelector(".component-ctnr video"),e=>!e.paused,()=>{const e=document.querySelector(".bilibili-live-player-video-controller-start-btn>button");e.click()})})()}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/no-mini-video-autoplay.min.js"] = (()=>{return(r,e)=>{}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/notify-new-version.min.js"] = (()=>{return(e,t)=>{const n={less:-1,equal:0,greater:1,incomparable:NaN};class s{constructor(e){this.parts=e.split(".").map(e=>parseInt(e));this.versionString=e}compareTo(e){for(let t=0;t<this.parts.length;++t){if(e.parts.length===t){return n.greater}if(this.parts[t]===e.parts[t]){continue}if(this.parts[t]>e.parts[t]){return n.greater}return n.less}if(this.parts.length!==e.parts.length){return n.less}return n.equal}greaterThan(e){return this.compareTo(e)===n.greater}lessThan(e){return this.compareTo(e)===n.less}equals(e){return this.compareTo(e)===n.equal}}async function r(){const n=new s(t.data.latestVersion?t.data.latestVersion.text:await Ajax.getText(Resource.root+"version.txt"));const r=new s(e.currentVersion);const a=n.greaterThan(r);if(a){const t=`新版本<span>${n.versionString}</span>已发布.  <a id="new-version-link" class="link" href="${e.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;const s=Toast.info(t,"检查更新");$("#new-version-link").on("click",()=>s&&s.dismiss())}return a}return{widget:{content:`\n            <button\n                class="gui-settings-flat-button"\n                id="new-version-update">\n                <a href="${e.latestVersionLink}" style="display:none"></a>\n                <i class="icon-update"></i>\n                <span>安装更新</span>\n            </button>\n            <button\n                class="gui-settings-flat-button"\n                id="new-version-info">\n                <a target="blank" style="display:none" href="https://github.com/the1812/Bilibili-Evolved/releases"></a>\n                <i class="icon-info"></i>\n                <span>查看更新</span>\n            </button>\n        `,condition:r,success:()=>{document.querySelector("#new-version-update").addEventListener("click",e=>{if(e.target.nodeName.toLowerCase()!=="a"){document.querySelector("#new-version-update a").click()}});document.querySelector("#new-version-info").addEventListener("click",e=>{if(e.target.nodeName.toLowerCase()!=="a"){document.querySelector("#new-version-info a").click()}})}}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/old-tweets.min.js"] = (()=>{return(t,i)=>{const n=[`a.read-more[href*='t.bilibili.com']`,`.link-navbar a[href*='t.bilibili.com']`,`.bili-header-m .nav-menu .nav-con .nav-item [href*='t.bilibili.com']`];const o=`https://www.bilibili.com/account/dynamic`;const e=`https://t.bilibili.com/`;const c=()=>{for(const t of n){SpinQuery.any(()=>document.querySelectorAll(t),t=>t.forEach(t=>t.setAttribute("href",o)))}};SpinQuery.select(".dynamic-m .wnd_bottom .r-l").then(t=>{if(t!==null){Observer.childList(".dynamic-m .wnd_bottom .r-l",c)}});c();const s=location.host==="t.bilibili.com";return{widget:{condition:()=>{return document.URL.startsWith(e)||document.URL.startsWith(o)},content:`\n            <button class="gui-settings-flat-button" id="old-tweets">\n                <i class="mdi mdi-24px mdi-swap-horizontal-variant"></i>\n                <span>${s?"回到旧版":"转到新版"}</span>\n            </button>`,success:()=>{const t=document.querySelector("#old-tweets");t.addEventListener("click",()=>{location.assign(s?o:e)})}}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/old.min.css"] = `.b-header-mask-wrp .b-header-mask,.bili-header-m>.nav-menu{background:var(--theme-color)!important;box-shadow:var(--theme-color-70) 0 2px 10px 1px!important}.b-header-mask-wrp,.z_top,body .bili-header-m .nav-menu div.nav-mask{background-color:transparent!important;box-shadow:none!important}.b-header-mask-wrp{overflow:unset!important}.bili-header-m .nav-menu .nav-con .nav-item .t,.z_top.b-header-blur .z_top_nav li:not(.home) a.i-link{color:var(--foreground-color-d)!important}.uns_box ul.menu li:not(.b-post):hover,.z_top .z_top_nav ul li:hover,li.nav-item:not(.profile-info):hover{background-color:hsla(0,0%,var(--brightness),.2)!important}.vip-m{background:#fff!important}a.t>i.bili-icon{filter:brightness(0) var(--invert-filter)!important;background-image:url(https://www.bilibili.com/favicon.ico)!important;background-size:cover!important;background-position:inherit!important;width:16px!important;height:16px!important;opacity:.81!important}.header-icon-bilibili-tv{filter:brightness(0) var(--invert-filter)!important;opacity:.81;transform:scale(.9)}.z_top .z_top_nav ul li.home{filter:brightness(0) invert(1)!important;background:url(https://www.bilibili.com/favicon.ico) left center/16px no-repeat!important;opacity:.81!important;background-position-x:16%!important}#entryOld,.b-icon-app,.nav-search-submit,.title-icon,.uns_box li.u-i.b-post .up-new,.z_top .z_top_nav li .beta,.z_top .z_top_nav li .new,body>#Header{display:none!important}.i-face>.face,.uns_box li.u-i .i_face{box-shadow:0 0 2px 1.5px #0002!important}div.up-load{margin:5px 0 0 5px!important;height:32px!important}.u-link,.uns_box li.u-i.b-post a.i-link{background:0 0!important;color:var(--foreground-color-d)!important;border-radius:4px!important;line-height:30px!important;height:30px!important;border:1px solid!important;transition:background-color .2s!important}.u-link:hover,.uns_box li.u-i.b-post a.i-link:hover{opacity:1!important;background-color:hsla(0,0%,var(--brightness),.2)!important}.uns_box li.u-i.b-post{margin-left:8px!important}.nav-search{width:140px!important}.nav-search-keyword{width:130px!important;margin-right:32px!important}#nav_searchform{border-radius:4px!important;background:#fffb!important;border:none!important;transition:background-color .2s!important;box-shadow:0 2px 10px 1px #0002}#nav_searchform:hover{background-color:#fff!important}.nav-search-submit{top:2px!important}.showSearch .nav-search-submit{top:4px!important}#bilibiliPlayer{box-shadow:0 4px 16px 0 var(--theme-color-40)!important}.blur-bg{opacity:var(--blur-background-opacity)!important;filter:blur(20px)!important}.suggest-item .cancel{width:28px!important}ul.bilibili-suggest{margin-left:-30px!important;width:200px!important}li.suggest-item>a{max-width:155px!important}.nav-item div.num{box-shadow:0 .5px 4px 0 #0004!important}#primary_menu,#primary_menu>ul.nav-menu,.uns_box li.u-i.b-post{display:flex!important;align-items:center!important}#primary_menu,div.nav-gif{padding:0!important}.up-nav{top:37px!important}.filter-item.search,body{margin:0!important}.input-box textarea{padding:8px!important}.bili-header-m .nav-search .nav-search-keyword{color:#222!important}.tag-container .tag-item .tag-border .tag-border-inner{width:100%!important}.search-module .search-block input::placeholder,input.nav-search-keyword::placeholder{color:#888!important}#home_noob.guide-box{display:flex!important}@media only screen and (min-width:1291px){.bilibili-suggest.nav,.nav-search{width:250px!important}.nav-search-keyword{width:240px!important}ul.bilibili-suggest{margin-left:0!important;width:250px!important}li.suggest-item>a{max-width:205px!important}}`;
@@ -1366,610 +1368,623 @@ class Resource
     }
 };
 Resource.manifest = {
+  style: {
+    path: 'style.min.css'
+  },
+  oldStyle: {
+    path: 'old.min.css'
+  },
+  scrollbarStyle: {
+    path: 'scrollbar.min.css'
+  },
+  darkStyle: {
+    path: 'dark.min.css',
+    alwaysPreview: true
+  },
+  darkStyleImportant: {
+    path: 'dark-important.min.css',
+    alwaysPreview: true
+  },
+  darkStyleNavBar: {
+    path: 'dark-navbar.min.css',
+    alwaysPreview: true
+  },
+  touchPlayerStyle: {
+    path: 'touch-player.min.css'
+  },
+  navbarOverrideStyle: {
+    path: 'override-navbar.min.css'
+  },
+  noBannerStyle: {
+    path: 'no-banner.min.css'
+  },
+  imageViewerStyle: {
+    path: 'image-viewer.min.css'
+  },
+  imageViewerHtml: {
+    path: 'image-viewer.min.html'
+  },
+  iconsStyle: {
+    path: 'icons.min.css'
+  },
+  settingsSideBar: {
+    path: 'settings-side-bar.min.js'
+  },
+  textValidate: {
+    path: 'text-validate.min.js'
+  },
+  themeColors: {
+    path: 'theme-colors.min.js'
+  },
+  settingsTooltipStyle: {
+    path: 'settings-tooltip.min.css'
+  },
+  settingsTooltipJapanese: {
+    path: 'settings-tooltip.ja-JP.min.js'
+  },
+  settingsTooltipChinese: {
+    path: 'settings-tooltip.zh-CN.min.js'
+  },
+  settingsTooltipEnglish: {
+    path: 'settings-tooltip.en-US.min.js'
+  },
+  settingsTooltip: {
+    path: 'settings-tooltip.loader.min.js',
+    dependencies: [
+      'settingsTooltipStyle'
+    ]
+  },
+  settingsSearch: {
+    path: 'settings-search.min.js'
+  },
+  guiSettings: {
+    path: 'gui-settings.min.js',
+    html: true,
+    style: 'instant',
+    dependencies: [
+      'textValidate',
+      'settingsSideBar',
+      'themeColors',
+      'settingsTooltip',
+      'settingsSearch'
+    ],
+    styles: [
+      {
+        key: 'iconsStyle',
+        important: true
+      }
+    ],
+    displayNames: {
+      guiSettings: '设置',
+      blurSettingsPanel: '模糊设置面板背景',
+      clearCache: '清除缓存',
+      settingsTooltip: '设置项帮助',
+      settingsSearch: '搜索设置',
+      sideBarOffset: '侧栏垂直偏移量'
+    }
+  },
+  useDarkStyle: {
+    path: 'dark-styles.min.js',
+    alwaysPreview: true,
+    styles: [
+      'darkStyle',
+      'scrollbarStyle',
+      {
+        key: 'darkStyleNavBar',
+        important: true,
+        condition () {
+          return !settings.useNewStyle && ($('#banner_link').length === 0 ||
+            $('#banner_link').length > 0 &&
+            settings.overrideNavBar &&
+            !settings.showBanner)
+        }
+      },
+      {
+        key: 'darkStyleImportant',
+        important: true,
+        condition: () => true
+      }
+    ],
+    displayNames: {
+      useDarkStyle: '夜间模式'
+    }
+  },
+  tweetsStyle: {
+    path: 'tweets.min.css'
+  },
+  useNewStyle: {
+    path: 'new-styles.min.js',
+    dependencies: [
+      'style',
+      'oldStyle'
+    ],
+    styles: [
+      'tweetsStyle',
+      {
+        key: 'scrollbarStyle',
+        condition: () => document.URL !== `https://h.bilibili.com/`
+      }
+    ],
+    displayNames: {
+      useNewStyle: '样式调整',
+      blurBackgroundOpacity: '顶栏(对横幅)透明度'
+    }
+  },
+  hideBanner: {
+    path: 'hide-banner.min.js',
+    style: true,
+    displayNames: {
+      hideBanner: '隐藏顶部横幅'
+    }
+  },
+  touchNavBar: {
+    path: 'touch-navbar.min.js',
+    displayNames: {
+      touchNavBar: '顶栏触摸优化'
+    }
+  },
+  touchVideoPlayer: {
+    path: 'touch-player.min.js',
+    styles: [
+      'touchPlayerStyle'
+    ],
+    displayNames: {
+      touchVideoPlayer: '播放器触摸支持',
+      touchVideoPlayerAnimation: '启用实验性动画效果',
+      touchVideoPlayerDoubleTapControl: '启用双击控制'
+    }
+  },
+  expandDanmakuList: {
+    path: 'expand-danmaku.min.js',
+    displayNames: {
+      expandDanmakuList: '自动展开弹幕列表'
+    }
+  },
+  removeAds: {
+    path: 'remove-promotions.min.js',
+    style: 'instant',
+    displayNames: {
+      removeAds: '删除广告'
+    }
+  },
+  watchLaterRedirect: {
+    path: 'watchlater.min.js',
+    displayNames: {
+      watchLaterRedirect: '稍后再看重定向'
+    }
+  },
+  hideTopSearch: {
+    path: 'hide-top-search.min.js',
+    displayNames: {
+      hideTopSearch: '隐藏搜索推荐'
+    }
+  },
+  harunaScale: {
+    path: 'haruna-scale.min.js',
+    displayNames: {
+      harunaScale: '缩放直播看板娘'
+    }
+  },
+  removeLiveWatermark: {
+    path: 'remove-watermark.min.js',
+    displayNames: {
+      removeLiveWatermark: '删除直播水印'
+    }
+  },
+  fullTweetsTitle: {
+    path: 'full-tweets-title.min.js',
+    style: 'instant',
+    displayNames: {
+      fullTweetsTitle: '展开动态标题'
+    }
+  },
+  fullPageTitle: {
+    path: 'full-page-title.min.js',
+    style: 'instant',
+    displayNames: {
+      fullPageTitle: '展开选集标题'
+    }
+  },
+  viewCover: {
+    path: 'view-cover.min.js',
+    dependencies: [
+      'imageViewerHtml',
+      'videoInfo',
+      'title'
+    ],
+    styles: [
+      'imageViewerStyle'
+    ],
+    displayNames: {
+      viewCover: '查看封面'
+    }
+  },
+  notifyNewVersion: {
+    path: 'notify-new-version.min.js',
+    displayNames: {
+      notifyNewVersion: '检查更新'
+    }
+  },
+  toast: {
+    path: 'toast.min.js',
+    style: 'instant',
+    displayNames: {
+      toast: '显示消息',
+      toastInternalError: '显示内部错误消息'
+    }
+  },
+  removeVideoTopMask: {
+    path: 'remove-top-mask.min.js',
+    displayNames: {
+      removeVideoTopMask: '删除视频标题层'
+    }
+  },
+  blurVideoControl: {
+    path: 'blur-video-control.min.js',
+    style: 'instant',
+    displayNames: {
+      blurVideoControl: '模糊视频控制栏背景'
+    }
+  },
+  darkSchedule: {
+    path: 'dark-schedule.min.js',
+    displayNames: {
+      darkSchedule: '夜间模式计划时段',
+      darkScheduleStart: '起始时间',
+      darkScheduleEnd: '结束时间'
+    }
+  },
+  clearCache: {
+    path: 'clear-cache.min.js',
+    displayNames: {
+      useCache: '启用缓存'
+    }
+  },
+  downloadVideo: {
+    path: 'download-video.min.js',
+    html: true,
+    style: 'instant',
+    dependencies: ['title'],
+    displayNames: {
+      'downloadVideo': '下载视频',
+      'batchDownload': '批量下载'
+    }
+  },
+  downloadDanmaku: {
+    path: 'download-danmaku.min.js',
+    dependencies: [
+      'title',
+      'videoInfo',
+      'danmakuConverter'
+    ],
+    displayNames: {
+      'downloadDanmaku': '下载弹幕'
+    }
+  },
+  danmakuConverter: {
+    path: 'danmaku-converter.min.js'
+  },
+  videoInfo: {
+    path: 'video-info.min.js'
+  },
+  about: {
+    path: 'about.min.js',
+    html: true,
+    style: 'important',
+    displayNames: {
+      'about': '关于'
+    }
+  },
+  customControlBackground: {
+    path: 'custom-control-background.min.js',
     style: {
-        path: "style.min.css",
-    },
-    oldStyle: {
-        path: "old.min.css",
-    },
-    scrollbarStyle: {
-        path: "scrollbar.min.css",
-    },
-    darkStyle: {
-        path: "dark.min.css",
-        alwaysPreview: true,
-    },
-    darkStyleImportant: {
-        path: "dark-important.min.css",
-        alwaysPreview: true,
-    },
-    darkStyleNavBar: {
-        path: "dark-navbar.min.css",
-        alwaysPreview: true,
-    },
-    touchPlayerStyle: {
-        path: "touch-player.min.css",
-    },
-    navbarOverrideStyle: {
-        path: "override-navbar.min.css",
-    },
-    noBannerStyle: {
-        path: "no-banner.min.css",
-    },
-    imageViewerStyle: {
-        path: "image-viewer.min.css",
-    },
-    imageViewerHtml: {
-        path: "image-viewer.min.html",
-    },
-    iconsStyle: {
-        path: "icons.min.css",
-    },
-    settingsSideBar: {
-        path: "settings-side-bar.min.js",
-    },
-    textValidate: {
-        path: "text-validate.min.js",
-    },
-    themeColors: {
-        path: "theme-colors.min.js",
-    },
-    settingsTooltipStyle: {
-        path: "settings-tooltip.min.css",
-    },
-    settingsTooltipJapanese: {
-        path: "settings-tooltip.ja-JP.min.js",
-    },
-    settingsTooltipChinese: {
-        path: "settings-tooltip.zh-CN.min.js",
-    },
-    settingsTooltipEnglish: {
-        path: "settings-tooltip.en-US.min.js",
-    },
-    settingsTooltip: {
-        path: "settings-tooltip.loader.min.js",
-        dependencies: [
-            "settingsTooltipStyle"
-        ],
-    },
-    settingsSearch: {
-        path: "settings-search.min.js",
-    },
-    guiSettings: {
-        path: "gui-settings.min.js",
-        html: true,
-        style: "instant",
-        dependencies: [
-            "textValidate",
-            "settingsSideBar",
-            "themeColors",
-            "settingsTooltip",
-            "settingsSearch",
-        ],
-        styles: [
-            {
-                key: "iconsStyle",
-                important: true,
-            },
-        ],
-        displayNames: {
-            guiSettings: "设置",
-            blurSettingsPanel: "模糊设置面板背景",
-            clearCache: "清除缓存",
-            settingsTooltip: "设置项帮助",
-            settingsSearch: "搜索设置",
-            sideBarOffset: "侧栏垂直偏移量",
-        },
-    },
-    useDarkStyle: {
-        path: "dark-styles.min.js",
-        alwaysPreview: true,
-        styles: [
-            "darkStyle",
-            "scrollbarStyle",
-            {
-                key: "darkStyleNavBar",
-                important: true,
-                condition()
-                {
-                    return !settings.useNewStyle && ($("#banner_link").length === 0 ||
-                        $("#banner_link").length > 0 &&
-                        settings.overrideNavBar &&
-                        !settings.showBanner);
-                }
-            },
-            {
-                key: "darkStyleImportant",
-                important: true,
-                condition: () => true,
-            },
-        ],
-        displayNames: {
-            useDarkStyle: "夜间模式",
-        },
-    },
-    tweetsStyle: {
-        path: "tweets.min.css",
-    },
-    useNewStyle: {
-        path: "new-styles.min.js",
-        dependencies: [
-            "style",
-            "oldStyle",
-        ],
-        styles: [
-            "tweetsStyle",
-            {
-                key: "scrollbarStyle",
-                condition: () => document.URL !== `https://h.bilibili.com/`,
-            },
-        ],
-        displayNames: {
-            useNewStyle: "样式调整",
-            blurBackgroundOpacity: "顶栏(对横幅)透明度",
-        },
-    },
-    hideBanner: {
-        path: "hide-banner.min.js",
-        style: true,
-        displayNames: {
-            hideBanner: "隐藏顶部横幅",
-        },
-    },
-    touchNavBar: {
-        path: "touch-navbar.min.js",
-        displayNames: {
-            touchNavBar: "顶栏触摸优化",
-        },
-    },
-    touchVideoPlayer: {
-        path: "touch-player.min.js",
-        styles: [
-            "touchPlayerStyle",
-        ],
-        displayNames: {
-            touchVideoPlayer: "播放器触摸支持",
-            touchVideoPlayerAnimation: "启用实验性动画效果",
-            touchVideoPlayerDoubleTapControl: "启用双击控制",
-        },
-    },
-    expandDanmakuList: {
-        path: "expand-danmaku.min.js",
-        displayNames: {
-            expandDanmakuList: "自动展开弹幕列表",
-        },
-    },
-    removeAds: {
-        path: "remove-promotions.min.js",
-        style: "instant",
-        displayNames: {
-            removeAds: "删除广告",
-        },
-    },
-    watchLaterRedirect: {
-        path: "watchlater.min.js",
-        displayNames: {
-            watchLaterRedirect: "稍后再看重定向",
-        },
-    },
-    hideTopSearch: {
-        path: "hide-top-search.min.js",
-        displayNames: {
-            hideTopSearch: "隐藏搜索推荐",
-        },
-    },
-    harunaScale: {
-        path: "haruna-scale.min.js",
-        displayNames: {
-            harunaScale: "缩放直播看板娘",
-        },
-    },
-    removeLiveWatermark: {
-        path: "remove-watermark.min.js",
-        displayNames: {
-            removeLiveWatermark: "删除直播水印",
-        },
-    },
-    fullTweetsTitle: {
-        path: "full-tweets-title.min.js",
-        style: "instant",
-        displayNames: {
-            fullTweetsTitle: "展开动态标题",
-        },
-    },
-    fullPageTitle: {
-        path: "full-page-title.min.js",
-        style: "instant",
-        displayNames: {
-            fullPageTitle: "展开选集标题",
-        },
-    },
-    viewCover: {
-        path: "view-cover.min.js",
-        dependencies: [
-            "imageViewerHtml",
-            "videoInfo",
-            "title",
-        ],
-        styles: [
-            "imageViewerStyle",
-        ],
-        displayNames: {
-            viewCover: "查看封面",
-        },
-    },
-    notifyNewVersion: {
-        path: "notify-new-version.min.js",
-        displayNames: {
-            notifyNewVersion: "检查更新",
-        },
-    },
-    toast: {
-        path: "toast.min.js",
-        style: "instant",
-        displayNames: {
-            toast: "显示消息",
-            toastInternalError: "显示内部错误消息",
-        },
-    },
-    removeVideoTopMask: {
-        path: "remove-top-mask.min.js",
-        displayNames: {
-            removeVideoTopMask: "删除视频标题层",
-        },
-    },
-    blurVideoControl: {
-        path: "blur-video-control.min.js",
-        style: "instant",
-        displayNames: {
-            blurVideoControl: "模糊视频控制栏背景",
-        },
-    },
-    darkSchedule: {
-        path: "dark-schedule.min.js",
-        displayNames: {
-            darkSchedule: "夜间模式计划时段",
-            darkScheduleStart: "起始时间",
-            darkScheduleEnd: "结束时间",
-        },
-    },
-    clearCache: {
-        path: "clear-cache.min.js",
-        displayNames: {
-            useCache: "启用缓存",
-        },
-    },
-    downloadVideo: {
-        path: "download-video.min.js",
-        html: true,
-        style: "instant",
-        dependencies: ["title"],
-        displayNames: {
-            "downloadVideo": "下载视频",
-            "batchDownload": "批量下载",
-        },
-    },
-    downloadDanmaku: {
-        path: "download-danmaku.min.js",
-        dependencies: [
-            "title",
-            "videoInfo",
-            "danmakuConverter",
-        ],
-        displayNames: {
-            "downloadDanmaku": "下载弹幕",
-        },
-    },
-    danmakuConverter: {
-        path: "danmaku-converter.min.js"
-    },
-    videoInfo: {
-        path: "video-info.min.js",
-    },
-    about: {
-        path: "about.min.js",
-        html: true,
-        style: "important",
-        displayNames: {
-            "about": "关于",
-        }
-    },
-    customControlBackground: {
-        path: "custom-control-background.min.js",
-        style: {
-            key: "customControlBackgroundStyle",
-            condition: () => settings.customControlBackgroundOpacity > 0,
-        },
-        displayNames: {
-            customControlBackground: "控制栏着色",
-            customControlBackgroundOpacity: "不透明度",
-        },
-    },
-    useDefaultPlayerMode: {
-        path: "default-player-mode.min.js",
-        displayNames: {
-            useDefaultPlayerMode: "使用默认播放器模式",
-            defaultPlayerMode: "默认播放器模式",
-            autoLightOff: "播放时自动关灯",
-            applyPlayerModeOnPlay: "播放时应用模式",
-        },
-        dropdown: {
-            key: "defaultPlayerMode",
-            items: ["常规", "宽屏", "网页全屏", "全屏"],
-        },
-    },
-    useDefaultVideoQuality: {
-        path: "default-video-quality.min.js",
-        displayNames: {
-            useDefaultVideoQuality: "使用默认视频画质",
-            defaultVideoQuality: "画质设定",
-        },
-        dropdown: {
-            key: "defaultVideoQuality",
-            items: ["1080P60", "1080P+", "1080P", "720P60", "720P", "480P", "360P", "自动"],
-        },
-    },
-    comboLike: {
-        path: "combo-like.min.js",
-        displayNames: {
-            comboLike: "素质三连触摸支持",
-        },
-    },
-    autoContinue: {
-        path: "auto-continue.min.js",
-        displayNames: {
-            autoContinue: "自动从历史记录点播放",
-            allowJumpContinue: "允许跨集跳转",
-        },
-    },
-    expandDescription: {
-        path: "expand-description.min.js",
-        style: "instant",
-        displayNames: {
-            expandDescription: "自动展开视频简介"
-        }
-    },
-    defaultDanmakuSettingsStyle: {
-        path: "default-danmaku-settings.min.css",
-    },
-    useDefaultDanmakuSettings: {
-        path: "default-danmaku-settings.min.js",
-        styles: [
-            {
-                key: "defaultDanmakuSettingsStyle",
-                condition: () => settings.rememberDanmakuSettings,
-            },
-        ],
-        displayNames: {
-            useDefaultDanmakuSettings: "使用默认弹幕设置",
-            enableDanmaku: "开启弹幕",
-            rememberDanmakuSettings: "记住弹幕设置",
-        },
-    },
-    skipChargeList: {
-        path: "skip-charge-list.min.js",
-        style: "instant",
-        displayNames: {
-            skipChargeList: "跳过充电鸣谢",
-        }
-    },
-    playerLayout: {
-        path: "default-player-layout.min.js",
-        displayNames: {
-            useDefaultPlayerLayout: "指定播放器布局",
-            defaultPlayerLayout: "视频区布局",
-            defaultBangumiLayout: "番剧区布局",
-        },
-        dropdown: [
-            {
-                key: "defaultPlayerLayout",
-                items: ["旧版", "新版"]
-            },
-            {
-                key: "defaultBangumiLayout",
-                items: ["旧版", "新版"]
-            },
-        ],
-    },
-    compactLayout: {
-        path: "compact-layout.min.js",
-        style: true,
-        displayNames: {
-            compactLayout: "首页使用紧凑布局",
-        }
-    },
-    medalHelper: {
-        path: "medal-helper.min.js",
-        html: true,
-        style: "instant",
-        displayNames: {
-            medalHelper: "直播勋章快速更换"
-        }
-    },
-    showDeadVideoTitle: {
-        path: "show-dead-video-title.min.js",
-        displayNames: {
-            showDeadVideoTitle: "显示失效视频信息",
-            useBiliplusRedirect: "失效视频重定向",
-        },
-    },
-    autoPlay: {
-        path: "auto-play.min.js",
-        displayNames: {
-            autoPlay: "自动播放视频",
-        }
-    },
-    useCommentStyle: {
-        path: "comment.min.js",
-        style: "important",
-        displayNames: {
-            useCommentStyle: "简化评论区",
-        },
-    },
-    title: {
-        path: "title.min.js",
-        displayNames: {
-            filenameFormat: "文件命名格式",
-        },
-    },
-    imageResolution: {
-        path: "image-resolution.min.js",
-        displayNames: {
-            imageResolution: "高分辨率图片",
-        },
-    },
-    biliplusRedirect: {
-        path: "biliplus-redirect.min.js",
-        displayNames: {
-            biliplusRedirect: "BiliPlus跳转支持",
-        }
-    },
-    framePlayback: {
-        path: "frame-playback.min.js",
-        style: "instant",
-        html: true,
-        displayNames: {
-            framePlayback: "启用逐帧调整",
-        },
-    },
-    downloadAudio: {
-        path: "download-audio.min.js",
-        displayNames: {
-            downloadAudio: "下载音频",
-        },
-    },
-    i18nEnglish: {
-        path: "i18n.en-US.min.js",
-        alwaysPreview: true,
-    },
-    i18nJapanese: {
-        path: "i18n.ja-JP.min.js",
-        alwaysPreview: true,
-    },
-    i18nTraditionalChinese: {
-        path: "i18n.zh-TW.min.js",
-        alwaysPreview: true,
-    },
-    i18nGerman: {
-        path: "i18n.de-DE.min.js",
-        alwaysPreview: true,
-    },
-    i18n: {
-        path: "i18n.min.js",
-        alwaysPreview: true,
-        style: "important",
-        displayNames: {
-            i18n: "界面翻译",
-            i18nLanguage: "语言",
-            i18nEnglish: "英语翻译模块",
-            i18nJapanese: "日语翻译模块",
-            i18nGerman: "德语翻译模块",
-            i18nTraditionalChinese: "繁体翻译模块",
-        },
-        dropdown: {
-            key: "i18nLanguage",
-            // items: Object.keys(languageCodeMap),
-            items: [`日本語`, `English`],
-        },
-    },
-    playerFocus: {
-        path: "player-focus.min.js",
-        displayNames: {
-            playerFocus: "自动定位到播放器",
-            playerFocusOffset: "定位偏移量",
-        },
-    },
-    simplifyLiveroom: {
-        path: "simplify-liveroom.min.js",
-        style: "important",
-        displayNames: {
-            simplifyLiveroom: "简化直播间"
-        },
-    },
-    oldTweets: {
-        path: "old-tweets.min.js",
-        displayNames: {
-            oldTweets: "旧版动态跳转支持",
-        },
-    },
-    customNavbar: {
-        path: "custom-navbar.min.js",
-        style: "instant",
-        html: true,
-        displayNames: {
-            customNavbar: "使用自定义顶栏",
-            customNavbarFill: "主题色填充",
-            customNavbarShadow: "投影",
-            customNavbarCompact: "紧凑布局",
-            customNavbarBlur: "背景模糊",
-            customNavbarBlurOpacity: "模糊层不透明度",
-            allNavbarFill: "填充其他顶栏",
-        },
-    },
-    favoritesRedirect: {
-        path: "favorites-redirect.min.js",
-        displayNames: {
-            favoritesRedirect: "收藏夹视频重定向",
-        }
-    },
-    outerWatchlater: {
-        path: "outer-watchlater.min.js",
-        style: "important",
-        displayNames: {
-            outerWatchlater: "外置稍后再看",
-        },
-    },
-    playerShadow: {
-        path: "player-shadow.min.js",
-        displayNames: {
-            playerShadow: "播放器投影",
-        },
-    },
-    narrowDanmaku: {
-        path: "narrow-danmaku.min.js",
-        displayNames: {
-            narrowDanmaku: "强制保留弹幕栏",
-        },
-    },
-    hideOldEntry: {
-        path: "hide-old-entry.min.js",
-        displayNames: {
-            hideOldEntry: "隐藏返回旧版",
-        },
-    },
-    batchDownload: {
-        path: "batch-download.min.js",
-    },
-    slip: {
-        path: "slip.min.js",
-        displayNames: {
-            slip: "Slip.js"
-        },
-    },
-    debounce: {
-        path: "debounce.min.js",
-        displayNames: {
-            slip: "debounce.js"
-        },
-    },
-    videoScreenshot: {
-        path: "screenshot.min.js",
-        style: true,
-        displayNames: {
-            videoScreenshot: "启用视频截图",
-        },
-        dependencies: [
-            "title",
-        ],
-    },
-    hideBangumiReviews: {
-        path: "hide-bangumi-reviews.min.js",
-        displayNames: {
-            hideBangumiReviews: "隐藏番剧点评",
-        },
-    },
-};
-const resourceManifest = Resource.manifest;;
+      key: 'customControlBackgroundStyle',
+      condition: () => settings.customControlBackgroundOpacity > 0
+    },
+    displayNames: {
+      customControlBackground: '控制栏着色',
+      customControlBackgroundOpacity: '不透明度'
+    }
+  },
+  useDefaultPlayerMode: {
+    path: 'default-player-mode.min.js',
+    displayNames: {
+      useDefaultPlayerMode: '使用默认播放器模式',
+      defaultPlayerMode: '默认播放器模式',
+      autoLightOff: '播放时自动关灯',
+      applyPlayerModeOnPlay: '播放时应用模式'
+    },
+    dropdown: {
+      key: 'defaultPlayerMode',
+      items: ['常规', '宽屏', '网页全屏', '全屏']
+    }
+  },
+  useDefaultVideoQuality: {
+    path: 'default-video-quality.min.js',
+    displayNames: {
+      useDefaultVideoQuality: '使用默认视频画质',
+      defaultVideoQuality: '画质设定'
+    },
+    dropdown: {
+      key: 'defaultVideoQuality',
+      items: ['1080P60', '1080P+', '1080P', '720P60', '720P', '480P', '360P', '自动']
+    }
+  },
+  comboLike: {
+    path: 'combo-like.min.js',
+    displayNames: {
+      comboLike: '素质三连触摸支持'
+    }
+  },
+  autoContinue: {
+    path: 'auto-continue.min.js',
+    displayNames: {
+      autoContinue: '自动从历史记录点播放',
+      allowJumpContinue: '允许跨集跳转'
+    }
+  },
+  expandDescription: {
+    path: 'expand-description.min.js',
+    style: 'instant',
+    displayNames: {
+      expandDescription: '自动展开视频简介'
+    }
+  },
+  defaultDanmakuSettingsStyle: {
+    path: 'default-danmaku-settings.min.css'
+  },
+  useDefaultDanmakuSettings: {
+    path: 'default-danmaku-settings.min.js',
+    styles: [
+      {
+        key: 'defaultDanmakuSettingsStyle',
+        condition: () => settings.rememberDanmakuSettings
+      }
+    ],
+    displayNames: {
+      useDefaultDanmakuSettings: '使用默认弹幕设置',
+      enableDanmaku: '开启弹幕',
+      rememberDanmakuSettings: '记住弹幕设置'
+    }
+  },
+  skipChargeList: {
+    path: 'skip-charge-list.min.js',
+    style: 'instant',
+    displayNames: {
+      skipChargeList: '跳过充电鸣谢'
+    }
+  },
+  playerLayout: {
+    path: 'default-player-layout.min.js',
+    displayNames: {
+      useDefaultPlayerLayout: '指定播放器布局',
+      defaultPlayerLayout: '视频区布局',
+      defaultBangumiLayout: '番剧区布局'
+    },
+    dropdown: [
+      {
+        key: 'defaultPlayerLayout',
+        items: ['旧版', '新版']
+      },
+      {
+        key: 'defaultBangumiLayout',
+        items: ['旧版', '新版']
+      }
+    ]
+  },
+  compactLayout: {
+    path: 'compact-layout.min.js',
+    style: true,
+    displayNames: {
+      compactLayout: '首页使用紧凑布局'
+    }
+  },
+  medalHelper: {
+    path: 'medal-helper.min.js',
+    html: true,
+    style: 'instant',
+    displayNames: {
+      medalHelper: '直播勋章快速更换'
+    }
+  },
+  showDeadVideoTitle: {
+    path: 'show-dead-video-title.min.js',
+    displayNames: {
+      showDeadVideoTitle: '显示失效视频信息',
+      useBiliplusRedirect: '失效视频重定向'
+    }
+  },
+  autoPlay: {
+    path: 'auto-play.min.js',
+    displayNames: {
+      autoPlay: '自动播放视频'
+    }
+  },
+  useCommentStyle: {
+    path: 'comment.min.js',
+    style: 'important',
+    displayNames: {
+      useCommentStyle: '简化评论区'
+    }
+  },
+  title: {
+    path: 'title.min.js',
+    displayNames: {
+      filenameFormat: '文件命名格式'
+    }
+  },
+  imageResolution: {
+    path: 'image-resolution.min.js',
+    displayNames: {
+      imageResolution: '高分辨率图片'
+    }
+  },
+  biliplusRedirect: {
+    path: 'biliplus-redirect.min.js',
+    displayNames: {
+      biliplusRedirect: 'BiliPlus跳转支持'
+    }
+  },
+  framePlayback: {
+    path: 'frame-playback.min.js',
+    style: 'instant',
+    html: true,
+    displayNames: {
+      framePlayback: '启用逐帧调整'
+    }
+  },
+  downloadAudio: {
+    path: 'download-audio.min.js',
+    displayNames: {
+      downloadAudio: '下载音频'
+    }
+  },
+  i18nEnglish: {
+    path: 'i18n.en-US.min.js',
+    alwaysPreview: true
+  },
+  i18nJapanese: {
+    path: 'i18n.ja-JP.min.js',
+    alwaysPreview: true
+  },
+  i18nTraditionalChinese: {
+    path: 'i18n.zh-TW.min.js',
+    alwaysPreview: true
+  },
+  i18nGerman: {
+    path: 'i18n.de-DE.min.js',
+    alwaysPreview: true
+  },
+  i18n: {
+    path: 'i18n.min.js',
+    alwaysPreview: true,
+    style: 'important',
+    displayNames: {
+      i18n: '界面翻译',
+      i18nLanguage: '语言',
+      i18nEnglish: '英语翻译模块',
+      i18nJapanese: '日语翻译模块',
+      i18nGerman: '德语翻译模块',
+      i18nTraditionalChinese: '繁体翻译模块'
+    },
+    dropdown: {
+      key: 'i18nLanguage',
+      // items: Object.keys(languageCodeMap),
+      items: [`日本語`, `English`]
+    }
+  },
+  playerFocus: {
+    path: 'player-focus.min.js',
+    displayNames: {
+      playerFocus: '自动定位到播放器',
+      playerFocusOffset: '定位偏移量'
+    }
+  },
+  simplifyLiveroom: {
+    path: 'simplify-liveroom.min.js',
+    style: 'important',
+    displayNames: {
+      simplifyLiveroom: '简化直播间'
+    }
+  },
+  oldTweets: {
+    path: 'old-tweets.min.js',
+    displayNames: {
+      oldTweets: '旧版动态跳转支持'
+    }
+  },
+  customNavbar: {
+    path: 'custom-navbar.min.js',
+    style: 'instant',
+    html: true,
+    displayNames: {
+      customNavbar: '使用自定义顶栏',
+      customNavbarFill: '主题色填充',
+      customNavbarShadow: '投影',
+      customNavbarCompact: '紧凑布局',
+      customNavbarBlur: '背景模糊',
+      customNavbarBlurOpacity: '模糊层不透明度',
+      allNavbarFill: '填充其他顶栏'
+    }
+  },
+  favoritesRedirect: {
+    path: 'favorites-redirect.min.js',
+    displayNames: {
+      favoritesRedirect: '收藏夹视频重定向'
+    }
+  },
+  outerWatchlater: {
+    path: 'outer-watchlater.min.js',
+    style: 'important',
+    displayNames: {
+      outerWatchlater: '外置稍后再看'
+    }
+  },
+  playerShadow: {
+    path: 'player-shadow.min.js',
+    displayNames: {
+      playerShadow: '播放器投影'
+    }
+  },
+  narrowDanmaku: {
+    path: 'narrow-danmaku.min.js',
+    displayNames: {
+      narrowDanmaku: '强制保留弹幕栏'
+    }
+  },
+  hideOldEntry: {
+    path: 'hide-old-entry.min.js',
+    displayNames: {
+      hideOldEntry: '隐藏返回旧版'
+    }
+  },
+  batchDownload: {
+    path: 'batch-download.min.js'
+  },
+  slip: {
+    path: 'slip.min.js',
+    displayNames: {
+      slip: 'Slip.js'
+    }
+  },
+  debounce: {
+    path: 'debounce.min.js',
+    displayNames: {
+      slip: 'debounce.js'
+    }
+  },
+  videoScreenshot: {
+    path: 'screenshot.min.js',
+    style: true,
+    displayNames: {
+      videoScreenshot: '启用视频截图'
+    },
+    dependencies: [
+      'title'
+    ]
+  },
+  hideBangumiReviews: {
+    path: 'hide-bangumi-reviews.min.js',
+    displayNames: {
+      hideBangumiReviews: '隐藏番剧点评'
+    }
+  },
+  noLiveAutoplay: {
+    path: 'no-live-autoplay.min.js',
+    displayNames: {
+      noLiveAutoplay: '禁止直播首页自动播放',
+      hideHomeLive: '隐藏首页推荐直播',
+    }
+  },
+  noMiniVideoAutoplay: {
+    path: 'no-mini-video-autoplay.min.js',
+    displayNames: {
+      noMiniVideoAutoplay: '禁止小视频自动播放',
+    }
+  },
+}
+const resourceManifest = Resource.manifest
+;
 class StyleManager
 {
     constructor(resources)
