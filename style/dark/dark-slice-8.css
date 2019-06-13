@@ -1,12 +1,20 @@
-/* a
+.content .share-wrap,
+.box .content-wrap .btn .info,
+.nomal-task .bottom-box .btn,
+.item-wrap__task .operate-btn,
+.dialog-wrapper .dialog,
+.fjw-kpi-wrap-bg
 {
     background-color: #222 !important;
-} */
+}
 .at-popup .user-container .item.is-selected
 {
     background-color: #333 !important;
 }
-.mession-box .content .list-wrap .item-index
+.mession-box .content .list-wrap .item-index,
+.news-dialog-Wrapper,
+.box .record-wrap,
+.box .content-wrap
 {
     background-color: #444 !important;
 }
@@ -16,19 +24,24 @@
 } */
 .player-auxiliary-area .danmaku-info-row-special,
 .rank-list-ctnr .normal-list .item.self,
-.rank-list-ctnr .own
+.rank-list-ctnr .own,
+.high-wrapper .body-padding
 {
     background-color: transparent !important;
 }
-/* a
+.box .title .h1:after
 {
     background: #fff !important;
-} */
+}
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-danmaku,
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-time,
 .player-auxiliary-area .danmaku-info-row-block::after,
 .player-auxiliary-area .danmaku-info-row-super::after,
-.mession-box .content .list-wrap .item-summary
+.mession-box .content .list-wrap .item-summary,
+.box .content-wrap p,
+.box .list-box .wrap-list .text,
+.bottom-box .wrap-list .gift-item .B-paper,
+.item-wrap__task .content-desc
 {
     color: #aaa !important;
 }
@@ -38,7 +51,16 @@
 .mession-box .content .list-wrap .item-index,
 .mession-box .btn,
 .mession-box .title,
-.cc-nav-wrp .activity-nav-wrp .activity-link
+.cc-nav-wrp .activity-nav-wrp .activity-link,
+.news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__title,
+.news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__body,
+.news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__btn,
+.box .title .h1,
+.box .title .progress-num,
+.bottom-box .complete,
+.item-wrap__task .content-title,
+.item-wrap__task .operate-btn,
+.empty-wrap .empty-text
 {
     color: #eee !important;
 }
@@ -48,11 +70,15 @@
 } */
 .bangumi-timing-module .headline .c-clink,
 .section-block .at-popup,
-.coin-nav
+.coin-nav,
+.nomal-task .card,
+.item-wrap__task .operate-btn
 {
     border-color: transparent !important;
 }
-.carousel-wrp .page .next
+.carousel-wrp .page .next,
+.item-wrap__task:before,
+.item-wrap__task:after
 {
     border-color: #aaa !important;
 }
@@ -98,10 +124,10 @@
 {
     filter: brightness(0.7) !important;
 } */
-/* a
+.news-dialog__wrapper .trangle-img img
 {
-    filter: brightness(0.2) !important;
-} */
+    filter: brightness(0.27) !important;
+}
 /* a
 {
     filter: brightness(0.5) !important;
@@ -110,10 +136,10 @@
 {
     background-image: none !important;
 } */
-/* a
+.box .record-wrap
 {
     box-shadow: none !important;
-} */
+}
 /* a
 {
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
@@ -156,7 +182,10 @@
     border: 1px solid var(--theme-color) !important;
 } */
 .bangumi-timing-module .headline .c-clink,
-.progress-bar-core.p-absolute
+.progress-bar-core.p-absolute,
+.news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__btn,
+.bottom-box .complete .complete_text:before,
+.item-wrap__task .item-index
 {
     background-color: var(--theme-color) !important;
 }
@@ -177,7 +206,8 @@
 .cc-nav-wrp .activity-nav-wrp .activity-link.active span,
 .cc-nav-wrp .activity-nav-wrp .activity-link:hover i,
 .cc-nav-wrp .activity-nav-wrp .activity-link:hover span,
-.mession-box .btn:hover
+.mession-box .btn:hover,
+.bottom-box .complete .uncomplete
 {
     color: var(--theme-color) !important;
 }
@@ -192,7 +222,8 @@
 #page-fav .fav-sidenav .fav-item.cur .num,
 #page-fav .fav-sidenav .fav-item.cur .be-dropdown-trigger .icon-ic_more,
 #page-fav .fav-sidenav .fav-item.cur .iconfont,
-.edit-media-list .edit-mask .edit-board .edit-info .submit-btn
+.edit-media-list .edit-mask .edit-board .edit-info .submit-btn,
+.item-wrap__task .item-index
 {
     color: var(--foreground-color) !important;
 }
