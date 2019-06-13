@@ -2,7 +2,8 @@
 .box .content-wrap .btn .info,
 .nomal-task .bottom-box .btn,
 .item-wrap__task .operate-btn,
-.dialog-wrapper .dialog
+.dialog-wrapper .dialog,
+.fjw-kpi-wrap-bg
 {
     background-color: #222 !important;
 }
