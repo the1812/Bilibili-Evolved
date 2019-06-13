@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      332.32
+// @version      332.33
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -121,249 +121,232 @@ function getI18nKey()
 const dq = (selector) => document.querySelector(selector);
 const dqa = (selector) => [...document.querySelectorAll(selector)];;
 const customNavbarDefaultOrders = {
-    blank1: 0,
-    logo: 1,
-    category: 2,
-    rankingLink: 3,
-    drawingLink: 4,
-    musicLink: 5,
-    gamesIframe: 6,
-    livesIframe: 7,
-    shopLink: 8,
-    mangaLink: 9,
-    blank2: 10,
-    search: 11,
-    userInfo: 12,
-    messages: 13,
-    activities: 14,
-    watchlaterList: 15,
-    favoritesList: 16,
-    historyList: 17,
-    upload: 18,
-    blank3: 19
+  blank1: 0,
+  logo: 1,
+  category: 2,
+  rankingLink: 3,
+  drawingLink: 4,
+  musicLink: 5,
+  gamesIframe: 6,
+  livesIframe: 7,
+  shopLink: 8,
+  mangaLink: 9,
+  blank2: 10,
+  search: 11,
+  userInfo: 12,
+  messages: 13,
+  activities: 14,
+  watchlaterList: 15,
+  favoritesList: 16,
+  historyList: 17,
+  upload: 18,
+  blank3: 19
 };
 const settings = {
-    useDarkStyle: false,
-    compactLayout: false,
-    // showBanner: true,
-    hideBanner: false,
-    expandDanmakuList: true,
-    expandDescription: true,
-    watchLaterRedirect: true,
-    touchNavBar: false,
-    touchVideoPlayer: false,
-    customControlBackgroundOpacity: 0.64,
-    customControlBackground: true,
-    darkScheduleStart: "18:00",
-    darkScheduleEnd: "6:00",
-    darkSchedule: false,
-    blurVideoControl: false,
-    toast: true,
-    fullTweetsTitle: true,
-    fullPageTitle: false,
-    removeVideoTopMask: false,
-    removeLiveWatermark: true,
-    harunaScale: true,
-    removeAds: true,
-    hideTopSearch: false,
-    touchVideoPlayerDoubleTapControl: false,
-    touchVideoPlayerAnimation: false,
-    customStyleColor: "#00A0D8",
-    preserveRank: true,
-    blurBackgroundOpacity: 0.382,
-    useDefaultPlayerMode: false,
-    applyPlayerModeOnPlay: true,
-    defaultPlayerMode: "常规",
-    useDefaultVideoQuality: false,
-    defaultVideoQuality: "自动",
-    useDefaultDanmakuSettings: false,
-    enableDanmaku: true,
-    rememberDanmakuSettings: false,
-    danmakuSettings: {
-        subtitlesPreserve: false,
-        smartMask: false,
-    },
-    defaultPlayerLayout: "新版",
-    defaultBangumiLayout: "旧版",
-    useDefaultPlayerLayout: false,
-    skipChargeList: false,
-    comboLike: false,
-    autoLightOff: false,
-    useCache: true,
-    autoContinue: false,
-    allowJumpContinue: false,
-    autoPlay: false,
-    showDeadVideoTitle: false,
-    useBiliplusRedirect: false,
-    biliplusRedirect: false,
-    framePlayback: true,
-    useCommentStyle: true,
-    imageResolution: false,
-    imageResolutionScale: "auto",
-    toastInternalError: false,
-    i18n: false,
-    i18nLanguage: "日本語",
-    playerFocus: false,
-    playerFocusOffset: -10,
-    oldTweets: false,
-    simplifyLiveroom: false,
-    simplifyLiveroomSettings: {
-        vip: true,
-        fansMedal: true,
-        title: true,
-        userLevel: true,
-        guard: true,
-        systemMessage: true,
-        welcomeMessage: true,
-        popup: false,
-        skin: false,
-    },
-    customNavbar: true,
-    customNavbarFill: true,
-    allNavbarFill: true,
-    customNavbarShadow: true,
-    customNavbarCompact: false,
-    customNavbarBlur: false,
-    customNavbarBlurOpacity: 0.7,
-    customNavbarOrder: { ...customNavbarDefaultOrders },
-    customNavbarHidden: [],
-    customNavbarBoundsPadding: 5,
-    playerShadow: false,
-    narrowDanmaku: true,
-    favoritesRedirect: true,
-    outerWatchlater: true,
-    hideOldEntry: true,
-    videoScreenshot: false,
-    hideBangumiReviews: false,
-    filenameFormat: "[title][ - ep]",
-    sideBarOffset: 0,
-    noLiveAutoplay: false,
-    hideHomeLive: false,
-    noMiniVideoAutoplay: false,
-    cache: {},
+  useDarkStyle: false,
+  compactLayout: false,
+  // showBanner: true,
+  hideBanner: false,
+  expandDanmakuList: true,
+  expandDescription: true,
+  watchLaterRedirect: true,
+  touchNavBar: false,
+  touchVideoPlayer: false,
+  customControlBackgroundOpacity: 0.64,
+  customControlBackground: true,
+  darkScheduleStart: "18:00",
+  darkScheduleEnd: "6:00",
+  darkSchedule: false,
+  blurVideoControl: false,
+  toast: true,
+  fullTweetsTitle: true,
+  fullPageTitle: false,
+  removeVideoTopMask: false,
+  removeLiveWatermark: true,
+  harunaScale: true,
+  removeAds: true,
+  hideTopSearch: false,
+  touchVideoPlayerDoubleTapControl: false,
+  touchVideoPlayerAnimation: false,
+  customStyleColor: "#00A0D8",
+  preserveRank: true,
+  blurBackgroundOpacity: 0.382,
+  useDefaultPlayerMode: false,
+  applyPlayerModeOnPlay: true,
+  defaultPlayerMode: "常规",
+  useDefaultVideoQuality: false,
+  defaultVideoQuality: "自动",
+  useDefaultDanmakuSettings: false,
+  enableDanmaku: true,
+  rememberDanmakuSettings: false,
+  danmakuSettings: {
+    subtitlesPreserve: false,
+    smartMask: false,
+  },
+  defaultPlayerLayout: "新版",
+  defaultBangumiLayout: "旧版",
+  useDefaultPlayerLayout: false,
+  skipChargeList: false,
+  comboLike: false,
+  autoLightOff: false,
+  useCache: true,
+  autoContinue: false,
+  allowJumpContinue: false,
+  autoPlay: false,
+  showDeadVideoTitle: false,
+  useBiliplusRedirect: false,
+  biliplusRedirect: false,
+  framePlayback: true,
+  useCommentStyle: true,
+  imageResolution: false,
+  imageResolutionScale: "auto",
+  toastInternalError: false,
+  i18n: false,
+  i18nLanguage: "日本語",
+  playerFocus: false,
+  playerFocusOffset: -10,
+  oldTweets: false,
+  simplifyLiveroom: false,
+  simplifyLiveroomSettings: {
+    vip: true,
+    fansMedal: true,
+    title: true,
+    userLevel: true,
+    guard: true,
+    systemMessage: true,
+    welcomeMessage: true,
+    popup: false,
+    skin: false,
+  },
+  customNavbar: true,
+  customNavbarFill: true,
+  allNavbarFill: true,
+  customNavbarShadow: true,
+  customNavbarCompact: false,
+  customNavbarBlur: false,
+  customNavbarBlurOpacity: 0.7,
+  customNavbarOrder: { ...customNavbarDefaultOrders },
+  customNavbarHidden: [],
+  customNavbarBoundsPadding: 5,
+  playerShadow: false,
+  narrowDanmaku: true,
+  favoritesRedirect: true,
+  outerWatchlater: true,
+  hideOldEntry: true,
+  videoScreenshot: false,
+  hideBangumiReviews: false,
+  filenameFormat: "[title][ - ep]",
+  sideBarOffset: 0,
+  noLiveAutoplay: false,
+  hideHomeLive: false,
+  noMiniVideoAutoplay: false,
+  cache: {},
 };
 const fixedSettings = {
-    guiSettings: true,
-    viewCover: true,
-    notifyNewVersion: true,
-    clearCache: true,
-    downloadVideo: true,
-    downloadDanmaku: true,
-    downloadAudio: true,
-    playerLayout: true,
-    medalHelper: true,
-    about: true,
-    forceWide: false,
-    useNewStyle: false,
-    overrideNavBar: false,
-    latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js",
-    currentVersion: GM_info.script.version,
+  guiSettings: true,
+  viewCover: true,
+  notifyNewVersion: true,
+  clearCache: true,
+  downloadVideo: true,
+  downloadDanmaku: true,
+  downloadAudio: true,
+  playerLayout: true,
+  medalHelper: true,
+  about: true,
+  forceWide: false,
+  useNewStyle: false,
+  overrideNavBar: false,
+  latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js",
+  currentVersion: GM_info.script.version,
 };
 const settingsChangeHandlers = {};
-function addSettingsListener(key, handler)
-{
-    if (!settingsChangeHandlers[key])
-    {
-        settingsChangeHandlers[key] = [handler];
-    }
-    else
-    {
-        settingsChangeHandlers[key].push(handler);
-    }
+function addSettingsListener (key, handler, initCall) {
+  if (!settingsChangeHandlers[key]) {
+    settingsChangeHandlers[key] = [handler];
+  }
+  else {
+    settingsChangeHandlers[key].push(handler);
+  }
+  if (initCall) {
+    const value = settings[key]
+    handler(value, value)
+  }
 }
-function removeSettingsListener(key, handler)
-{
-    const handlers = settingsChangeHandlers[key];
-    if (!handlers)
-    {
-        return;
-    }
-    handlers.splice(handlers.indexOf(handler), 1);
+function removeSettingsListener (key, handler) {
+  const handlers = settingsChangeHandlers[key];
+  if (!handlers) {
+    return;
+  }
+  handlers.splice(handlers.indexOf(handler), 1);
 }
-function loadSettings()
-{
-    for (const key in fixedSettings)
-    {
-        settings[key] = fixedSettings[key];
-        GM_setValue(key, fixedSettings[key]);
+function loadSettings () {
+  for (const key in fixedSettings) {
+    settings[key] = fixedSettings[key];
+    GM_setValue(key, fixedSettings[key]);
+  }
+  if (Object.keys(languageCodeToName).includes(navigator.language)) {
+    settings.i18n = true;
+    settings.i18nLanguage = languageCodeToName[navigator.language];
+  }
+  for (const key in settings) {
+    let value = GM_getValue(key);
+    if (value === undefined) {
+      value = settings[key];
+      GM_setValue(key, settings[key]);
     }
-    if (Object.keys(languageCodeToName).includes(navigator.language))
-    {
-        settings.i18n = true;
-        settings.i18nLanguage = languageCodeToName[navigator.language];
+    else if (settings[key] !== undefined && value.constructor === Object) {
+      value = Object.assign(settings[key], value);
     }
-    for (const key in settings)
-    {
-        let value = GM_getValue(key);
-        if (value === undefined)
-        {
-            value = settings[key];
-            GM_setValue(key, settings[key]);
-        }
-        else if (settings[key] !== undefined && value.constructor === Object)
-        {
-            value = Object.assign(settings[key], value);
-        }
-        Object.defineProperty(settings, key, {
-            get()
-            {
-                return value;
-            },
-            set(newValue)
-            {
-                value = newValue;
-                GM_setValue(key, newValue);
+    Object.defineProperty(settings, key, {
+      get () {
+        return value;
+      },
+      set (newValue) {
+        value = newValue;
+        GM_setValue(key, newValue);
 
-                const handlers = settingsChangeHandlers[key];
-                if (handlers)
-                {
-                    if (key === "useDarkStyle")
-                    {
-                        setTimeout(() => handlers.forEach(h => h(newValue, value)), 200);
-                    }
-                    else
-                    {
-                        handlers.forEach(h => h(newValue, value));
-                    }
-                }
-                const input = document.querySelector(`input[key=${key}]`);
-                if (input !== null)
-                {
-                    if (input.type === "checkbox")
-                    {
-                        input.checked = newValue;
-                    }
-                    else if (input.type === "text" && !input.parentElement.classList.contains("gui-settings-dropdown"))
-                    {
-                        input.value = newValue;
-                    }
-                }
-            },
-        });
-        // if (settings[key] !== undefined && value.constructor === Object)
-        // {
-        //     settings[key] = Object.assign(settings[key], value);
-        // }
-        // else
-        // {
-        //     settings[key] = value;
-        // }
-    }
-}
-function saveSettings(newSettings)
-{
-    // for (const key in settings)
+        const handlers = settingsChangeHandlers[key];
+        if (handlers) {
+          if (key === "useDarkStyle") {
+            setTimeout(() => handlers.forEach(h => h(newValue, value)), 200);
+          }
+          else {
+            handlers.forEach(h => h(newValue, value));
+          }
+        }
+        const input = document.querySelector(`input[key=${key}]`);
+        if (input !== null) {
+          if (input.type === "checkbox") {
+            input.checked = newValue;
+          }
+          else if (input.type === "text" && !input.parentElement.classList.contains("gui-settings-dropdown")) {
+            input.value = newValue;
+          }
+        }
+      },
+    });
+    // if (settings[key] !== undefined && value.constructor === Object)
     // {
-    //     GM_setValue(key, newSettings[key]);
+    //     settings[key] = Object.assign(settings[key], value);
     // }
-}
-function onSettingsChange()
-{
-    // for (const key in settings)
+    // else
     // {
-    //     GM_addValueChangeListener(key, change);
+    //     settings[key] = value;
     // }
-    console.warn("此功能已弃用.");
+  }
+}
+function saveSettings (newSettings) {
+  // for (const key in settings)
+  // {
+  //     GM_setValue(key, newSettings[key]);
+  // }
+}
+function onSettingsChange () {
+  // for (const key in settings)
+  // {
+  //     GM_addValueChangeListener(key, change);
+  // }
+  console.warn("此功能已弃用.");
 };
 class Ajax
 {
@@ -1116,7 +1099,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/narrow-danmaku.min.js"] = (()=>{return(e,l)=>{const i=`<style id="narrow-danmaku-style">\n@media screen and (max-width: 1200px)\n{\n    .bilibili-player.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-center .bilibili-player-video-sendbar .bilibili-player-video-inputbar\n    {\n        display: flex !important;\n    }\n}\n</style>`;l.applyStyleFromText(i);return{reload:()=>l.applyStyleFromText(i),unload:()=>document.getElementById("narrow-danmaku-style").remove()}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/new-styles.min.js"] = (()=>{return(e,l)=>{if(document.URL===`https://h.bilibili.com/`){return}if(document.querySelector(`.z_header`)!==null){l.removeStyle("tweetsStyle");return}SpinQuery.any(()=>$(".custom-scrollbar"),e=>e.removeClass("custom-scrollbar"));SpinQuery.any(()=>$("#banner_link"),()=>l.removeStyle("tweetsStyle"));if(["/h.bilibili.com","/live.bilibili.com","/link.bilibili.com"].some(e=>document.URL.includes(e))){l.applyStyle("style","bilibili-style-optimization")}else{Promise.race([SpinQuery.select(()=>document.querySelector(".bili-header-m")).then(e=>e!==null&&e.classList.contains("stardust-video")),SpinQuery.select(()=>document.querySelector("body>#Header")).then(e=>e!==null)]).then(e=>l.applyStyle(e?"style":"oldStyle","bilibili-style-optimization"))}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/no-banner.min.css"] = `#banner_link,.z-top-container.has-banner>.header{display:none!important}.b-header-mask-wrp .b-header-mask-bg,div.blur-bg{opacity:0!important}`;
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/no-live-autoplay.min.js"] = (()=>{return(e,i)=>{(async()=>{const e=document.URL.replace(window.location.search,"");if(e!=="https://live.bilibili.com/"&&e!=="https://live.bilibili.com/index.html"){return}SpinQuery.condition(()=>document.querySelector(".component-ctnr video"),e=>!e.paused,()=>{const e=document.querySelector(".bilibili-live-player-video-controller-start-btn>button");e.click()})})()}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/no-live-autoplay.min.js"] = (()=>{return(e,t)=>{(async()=>{const e=document.URL.replace(window.location.search,"");if(e!=="https://live.bilibili.com/"&&e!=="https://live.bilibili.com/index.html"){return}SpinQuery.condition(()=>document.querySelector(".component-ctnr video"),e=>!e.paused,()=>{const e=document.querySelector(".bilibili-live-player-video-controller-start-btn>button");e.click()});const t="hide-home-live-style";addSettingsListener("hideHomeLive",e=>{if(e===true){const e=document.createElement("style");e.innerText=`#player-header { display: none !important }`;e.id=t;document.body.append(e)}else{const e=document.getElementById(t);e&&e.remove()}},true)})()}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/no-mini-video-autoplay.min.js"] = (()=>{return(r,e)=>{}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/notify-new-version.min.js"] = (()=>{return(e,t)=>{const n={less:-1,equal:0,greater:1,incomparable:NaN};class s{constructor(e){this.parts=e.split(".").map(e=>parseInt(e));this.versionString=e}compareTo(e){for(let t=0;t<this.parts.length;++t){if(e.parts.length===t){return n.greater}if(this.parts[t]===e.parts[t]){continue}if(this.parts[t]>e.parts[t]){return n.greater}return n.less}if(this.parts.length!==e.parts.length){return n.less}return n.equal}greaterThan(e){return this.compareTo(e)===n.greater}lessThan(e){return this.compareTo(e)===n.less}equals(e){return this.compareTo(e)===n.equal}}async function r(){const n=new s(t.data.latestVersion?t.data.latestVersion.text:await Ajax.getText(Resource.root+"version.txt"));const r=new s(e.currentVersion);const a=n.greaterThan(r);if(a){const t=`新版本<span>${n.versionString}</span>已发布.  <a id="new-version-link" class="link" href="${e.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`;const s=Toast.info(t,"检查更新");$("#new-version-link").on("click",()=>s&&s.dismiss())}return a}return{widget:{content:`\n            <button\n                class="gui-settings-flat-button"\n                id="new-version-update">\n                <a href="${e.latestVersionLink}" style="display:none"></a>\n                <i class="icon-update"></i>\n                <span>安装更新</span>\n            </button>\n            <button\n                class="gui-settings-flat-button"\n                id="new-version-info">\n                <a target="blank" style="display:none" href="https://github.com/the1812/Bilibili-Evolved/releases"></a>\n                <i class="icon-info"></i>\n                <span>查看更新</span>\n            </button>\n        `,condition:r,success:()=>{document.querySelector("#new-version-update").addEventListener("click",e=>{if(e.target.nodeName.toLowerCase()!=="a"){document.querySelector("#new-version-update a").click()}});document.querySelector("#new-version-info").addEventListener("click",e=>{if(e.target.nodeName.toLowerCase()!=="a"){document.querySelector("#new-version-info a").click()}})}}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/old-tweets.min.js"] = (()=>{return(t,i)=>{const n=[`a.read-more[href*='t.bilibili.com']`,`.link-navbar a[href*='t.bilibili.com']`,`.bili-header-m .nav-menu .nav-con .nav-item [href*='t.bilibili.com']`];const o=`https://www.bilibili.com/account/dynamic`;const e=`https://t.bilibili.com/`;const c=()=>{for(const t of n){SpinQuery.any(()=>document.querySelectorAll(t),t=>t.forEach(t=>t.setAttribute("href",o)))}};SpinQuery.select(".dynamic-m .wnd_bottom .r-l").then(t=>{if(t!==null){Observer.childList(".dynamic-m .wnd_bottom .r-l",c)}});c();const s=location.host==="t.bilibili.com";return{widget:{condition:()=>{return document.URL.startsWith(e)||document.URL.startsWith(o)},content:`\n            <button class="gui-settings-flat-button" id="old-tweets">\n                <i class="mdi mdi-24px mdi-swap-horizontal-variant"></i>\n                <span>${s?"回到旧版":"转到新版"}</span>\n            </button>`,success:()=>{const t=document.querySelector("#old-tweets");t.addEventListener("click",()=>{location.assign(s?o:e)})}}}}})();

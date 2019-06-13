@@ -11,4 +11,16 @@
       button.click()
     }
   )
+  const styleID = 'hide-home-live-style'
+  addSettingsListener('hideHomeLive', value => {
+    if (value === true) {
+      const style = document.createElement('style')
+      style.innerText = `#player-header { display: none !important }`
+      style.id = styleID
+      document.body.append(style)
+    } else {
+      const style = document.getElementById(styleID)
+      style && style.remove()
+    }
+  }, true)
 })()
