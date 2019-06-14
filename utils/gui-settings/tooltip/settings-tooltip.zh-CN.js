@@ -117,6 +117,8 @@ export const toolTips = new Map([
 变量要放在方括号里, 而方括号里的其他内容会在变量有效时出现. 比如格式如果写成<span>[title] - [ep]</span>, 那么即使没有选集标题, 中间那个<span> - </span>也会出现在文件名里. 如果像默认那样放在方括号里, 没有选集标题时, <span> - </span>也不会出现.
 
 例如, 想要标题+AV号+时间的格式, 可以设定为<span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>, 能够得到类似<span>xxxx AV23333 2019-05-29 19-59-44</span>的名字.`],
+    ['noLiveAutoplay', /*html*/ `禁止直播首页的推荐直播间自动开始播放.`],
+    ['hideHomeLive', /*html*/ `隐藏直播首页的推荐直播间板块.`],
 ]);
 export default {
     export: { toolTips },

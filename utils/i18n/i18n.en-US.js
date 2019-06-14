@@ -616,6 +616,8 @@ export const map = new Map([
   [`申诉管理`, `Appeal`],
   [`你的手机号/邮箱`, `Phone Number / Email`],
   [`密码`, `Password`],
+  [`禁止直播首页自动播放`, `Disable live autoplay`],
+  [`隐藏首页推荐直播`, `Hide recommended live rooms`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
