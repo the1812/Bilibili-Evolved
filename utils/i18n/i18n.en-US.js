@@ -618,6 +618,7 @@ export const map = new Map([
   [`密码`, `Password`],
   [`禁止直播首页自动播放`, `Disable live autoplay`],
   [`隐藏首页推荐直播`, `Hide recommended live rooms`],
+  [`侧栏垂直偏移量`, `Side bar vertical offset`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

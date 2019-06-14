@@ -342,6 +342,9 @@
 
 例如, 想要标题+AV号+时间的格式, 可以设定为`[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]`, 能够得到类似`xxxx AV23333 2019-05-29 19-59-44`的名字.
 
+### 侧栏垂直偏移量
+设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.
+
 # 兼容性
 ## 脚本管理器
 ### [Tampermonkey](https://tampermonkey.net/) / [Violentmonkey](https://violentmonkey.github.io/)

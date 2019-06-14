@@ -119,6 +119,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 例如, 想要标题+AV号+时间的格式, 可以设定为<span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>, 能够得到类似<span>xxxx AV23333 2019-05-29 19-59-44</span>的名字.`],
   ['noLiveAutoplay', /*html*/`禁止直播首页的推荐直播间自动开始播放.`],
   ['hideHomeLive', /*html*/`隐藏直播首页的推荐直播间板块.`],
+  ['sideBarOffset', /*html*/`设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.`],
 ]);
 export default {
   export: { toolTips },
