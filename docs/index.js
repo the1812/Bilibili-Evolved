@@ -1,3 +1,5 @@
-import { foo } from './foo';
+import { foo } from './foo.js';
 
-document.body.innerHTML = foo()
+const p = document.createElement('p')
+p.innerHTML = foo()
+document.body.appendChild(p)
