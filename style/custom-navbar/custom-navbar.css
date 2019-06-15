@@ -444,7 +444,36 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     width: 240px;
     font-size: 12px;
 }
-.user-info-panel>*
+.user-info-panel .welcome
+{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 46px 0 16px 0;
+    text-align: center;
+}
+.user-info-panel .grey-button,
+.user-info-panel .theme-button
+{
+    align-self: stretch;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.user-info-panel .grey-button
+{
+    background: #EDEDED;
+}
+.custom-navbar.dark .user-info-panel .grey-button
+{
+    background: #444;
+}
+.custom-navbar .user-info-panel .theme-button
+{
+    background: var(--theme-color);
+    color: var(--foreground-color);
+}
+/* .user-info-panel>*
 {
     display: flex;
     flex-direction: column;
@@ -608,7 +637,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .not-logged-in .sign-up:hover
 {
     background-color: #8884;
-}
+} */
 
 .custom-navbar li:hover .user-face,
 .custom-navbar li:hover .user-pendant
