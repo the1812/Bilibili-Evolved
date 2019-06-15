@@ -3,6 +3,10 @@
     font-family: "custom-navbar-font";
     src: url('//s1.hdslb.com/bfs/seed/jinkela/header/asserts/iconfont.ttf') format('truetype');
 }
+@font-face {
+    font-family: "custom-navbar-font-extended";
+    src: url('//s1.hdslb.com/bfs/static/jinkela/video/asserts/iconfont.4bab144.ttf') format('truetype');
+}
 .custom-navbar-iconfont
 {
     color: inherit;
@@ -10,9 +14,51 @@
     font-size: 24px;
     font-style: normal;
 }
+.custom-navbar-iconfont-extended
+{
+    color: inherit;
+    font-family: "custom-navbar-font-extended" !important;
+    font-size: 24px;
+    font-style: normal;
+}
 .custom-navbar-icon-logo::before
 {
     content: "\E725";
+}
+.custom-navbar-icon-coin::before
+{
+    content: "\E6E4";
+}
+.custom-navbar-icon-lv0::before {
+    content: "\E6CB";
+    color: #9A9A9A;
+}
+.custom-navbar-icon-lv1::before {
+    content: "\E6CC";
+    color: #646464;
+}
+.custom-navbar-icon-lv2::before {
+    content: "\E6CD";
+    color: #1BC861;
+}
+.custom-navbar-icon-lv3::before {
+    content: "\E6CE";
+    color: #22BAEA;
+}
+.custom-navbar-icon-lv4::before {
+    content: "\E6CF";
+    color: #EAA722;
+}
+.custom-navbar-icon-lv5::before {
+    content: "\E6D0";
+    color: #FF7631;
+}
+.custom-navbar-icon-lv6::before {
+    content: "\E6D1";
+    color: #FF3131;
+}
+[class^='custom-navbar-icon-lv']::before {
+    font-size: 24px;
 }
 
 body
@@ -444,12 +490,80 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     width: 240px;
     font-size: 12px;
 }
-.user-info-panel .welcome
+.user-info-panel i {
+    font-size: 20px;
+}
+.user-info-panel .logged-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.user-info-panel .row,
+.user-info-panel .items {
+    align-self: stretch;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.user-info-panel .row {
+    margin: 0 10px;
+}
+.user-info-panel .row.level-info {
+    margin-bottom: -5px;
+}
+.user-info-panel .operation {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.user-info-panel .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 56px;
+    width: 60px;
+}
+.user-info-panel .item span {
+    font-size: 14px;
+}
+.user-info-panel .item i:nth-child(2) {
+    font-size: 18px;
+}
+.user-info-panel .welcome,
+.user-info-panel .name
 {
     font-size: 16px;
     font-weight: bold;
     margin: 46px 0 16px 0;
     text-align: center;
+}
+.user-info-panel .name
+{
+    margin: 62px 0 0 0;
+}
+.user-info-panel .type
+{
+    font-size: 11px;
+    opacity: 0.5;
+    margin: 6px 0;
+}
+.user-info-panel .separator {
+    height: 1px;
+    align-self: stretch;
+    margin: 5px 10px;
+    background: rgba(0,0,0,0.1);
+}
+.user-info-panel .level-progress-thumb {
+    width: 100%;
+    height: 100%;
+    background: var(--theme-color);
+    transform-origin: left;
+}
+.user-info-panel .level-progress-label {
+    font-size: 11px;
 }
 .user-info-panel .grey-button,
 .user-info-panel .theme-button
@@ -463,6 +577,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .user-info-panel .grey-button
 {
     background: #EDEDED;
+    color: inherit !important;
 }
 .custom-navbar.dark .user-info-panel .grey-button
 {
@@ -1006,11 +1121,11 @@ body.all-navbar-fill .link-navbar .main-ctnr .nav-items-ctnr
 {
     background-color: var(--theme-color) !important;
 }
-body.all-navbar-fill .link-navbar .nav-item:first-child:before,
+body.all-navbar-fill .link-navbar .nav-item:first-child::before,
 body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-logo,
 body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-tv-icon,
 body.all-navbar-fill .nav-header-wrapper .nav-header .search-icon,
-body.all-navbar-fill .link-navbar .main-ctnr .nav-logo:before,
+body.all-navbar-fill .link-navbar .main-ctnr .nav-logo::before,
 body.all-navbar-fill .link-navbar .main-ctnr .nav-switcher.open-btn
 {
     filter: brightness(0) invert(1) !important;

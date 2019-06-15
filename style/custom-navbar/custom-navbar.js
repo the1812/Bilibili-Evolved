@@ -519,60 +519,60 @@ class UserInfo extends NavbarComponent {
       <div class="user-info-panel">
         <div v-if="isLogin" class="logged-in">
           <a class="name" target="_blank" href="https://space.bilibili.com/">{{uname}}</a>
-          <div class="row">
+          <a class="type" target="_blank" href="https://account.bilibili.com/account/big">{{userType}}</a>
+          <div class="level-info row">
             <a target="_blank" title="等级" href="https://account.bilibili.com/site/record?type=exp"
-              class="level">LV<strong>{{level_info.current_level}}</strong></a>
-            <a target="_blank" href="https://account.bilibili.com/account/big" class="type">{{userType}}</a>
-            <div class="level-progress">
-              <div class="level-progress-thumb" v-bind:style="levelProgressStyle"></div>
-            </div>
+              class="level custom-navbar-iconfont-extended">
+              <i v-bind:class="'custom-navbar-icon-lv' + level_info.current_level"></i>
+            </a>
             <span class="level-progress-label">{{level_info.current_exp}} / {{level_info.next_exp}}</span>
           </div>
-          <div class="row">
-            <div class="coins-container">
-              <a target="_blank" href="https://account.bilibili.com/site/coin" title="硬币" class="coins">{{money}}</a>
-              <a target="_blank" href="https://pay.bilibili.com/bb_balance.html" title="B币"
-                class="b-coins">{{wallet.bcoin_balance}}</a>
-            </div>
-            <div class="verifications">
-              <a target="_blank" v-bind:class="{verified: email_verified }" title="邮箱验证"
-                href="https://passport.bilibili.com/account/security#/bindmail">
-                <i class="mdi mdi-email"></i>
-              </a>
-              <a target="_blank" v-bind:class="{verified: mobile_verified }" title="手机验证"
-                href="https://passport.bilibili.com/account/security#/bindphone">
-                <i class="mdi mdi-cellphone-android"></i>
-              </a>
-            </div>
+          <div class="level-progress separator">
+            <div class="level-progress-thumb" v-bind:style="levelProgressStyle"></div>
           </div>
-          <div class="row operations">
-            <a target="_blank" href="https://account.bilibili.com/account/home">
-              <i class="mdi mdi-account"></i>个人中心
+          <div class="items">
+            <a class="item" target="_blank" title="手机验证"
+              href="https://passport.bilibili.com/account/security#/bindphone">
+              <i class="mdi mdi-cellphone-android"></i>
+              <i v-if="mobile_verified" class="mdi mdi-check"></i>
+              <i v-else class="mdi mdi-close"></i>
             </a>
-            <a target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">
-              <i class="mdi mdi-square-edit-outline"></i>投稿管理
+            <a class="item" target="_blank" title="邮箱验证"
+              href="https://passport.bilibili.com/account/security#/bindmail">
+              <i class="mdi mdi-email"></i>
+              <i v-if="email_verified" class="mdi mdi-check"></i>
+              <i v-else class="mdi mdi-close"></i>
             </a>
-          </div>
-          <div class="row operations">
-            <a target="_blank" href="https://pay.bilibili.com/">
-              <i class="mdi mdi-wallet"></i>B币钱包
+            <a class="item" target="_blank" href="https://account.bilibili.com/site/coin" title="硬币">
+              <i class="custom-navbar-iconfont-extended custom-navbar-icon-coin"></i>
+              <span>{{money}}</span>
             </a>
-            <a target="_blank" href="https://link.bilibili.com/p/center/index">
-              <i class="mdi mdi-video-input-antenna"></i>直播中心
+            <a class="item" target="_blank" href="https://pay.bilibili.com/bb_balance.html" title="B币">
+              <i class="mdi mdi-alpha-b-circle"></i>
+              <span>{{wallet.bcoin_balance}}</span>
             </a>
           </div>
-          <div class="row operations">
-            <a target="_blank" href="https://show.bilibili.com/orderlist">
-              <i class="mdi mdi-ticket"></i>订单中心
-            </a>
-            <a href="https://account.bilibili.com/login?act=exit">
-              <i class="mdi mdi-logout"></i>退出登录
-            </a>
-          </div>
+          <div class="separator"></div>
+          <a class="operation" target="_blank" href="https://account.bilibili.com/account/home">
+            <i class="mdi mdi-account"></i>个人中心
+          </a>
+          <a class="operation" target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">
+            <i class="mdi mdi-square-edit-outline"></i>投稿管理
+          </a>
+          <a class="operation" target="_blank" href="https://pay.bilibili.com/">
+            <i class="mdi mdi-wallet"></i>B币钱包
+          </a>
+          <a class="operation" target="_blank" href="https://link.bilibili.com/p/center/index">
+            <i class="mdi mdi-video-input-antenna"></i>直播中心
+          </a>
+          <a class="operation" target="_blank" href="https://show.bilibili.com/orderlist">
+            <i class="mdi mdi-ticket"></i>订单中心
+          </a>
+          <a class="logout grey-button" href="https://account.bilibili.com/login?act=exit">退出登录</a>
         </div>
         <div v-else class="not-logged-in">
           <h1 class="welcome">欢迎来到 bilibili</h1>
-          <a href="https://passport.bilibili.com/register/phone.html" class="sign-up grey-button">注册</a>
+          <a href="https://passport.bilibili.com/register/phone.html" class="signup grey-button">注册</a>
           <a href="https://passport.bilibili.com/login" class="login theme-button">登录</a>
         </div>
       </div>
