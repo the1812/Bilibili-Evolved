@@ -264,7 +264,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar.dark .popup
 {
-    box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
+    box-shadow: rgba(0,0,0,0.3) 0 4px 8px 0px;
 }
 .custom-navbar .popup.no-padding
 {
@@ -588,6 +588,15 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     margin: 5px 10px;
     background: rgba(0,0,0,0.1);
 }
+.user-info-panel .logout {
+    margin-top: 5px;
+}
+.user-info-panel .logout:hover {
+    color: inherit !important;
+}
+.custom-navbar.dark .user-info-panel .separator {
+    background: rgba(255,255,255,.1);
+}
 .user-info-panel .level-progress-thumb {
     width: 100%;
     height: 100%;
@@ -620,172 +629,6 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     background: var(--theme-color);
     color: var(--foreground-color);
 }
-/* .user-info-panel>*
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 300px;
-}
-.user-info-panel .not-logged-in
-{
-    height: auto;
-    margin-top: 40px;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
-.user-info-panel .row
-{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    position: relative;
-}
-.user-info-panel .name
-{
-    font-size: 14pt;
-    margin-top: 40px;
-    color: inherit;
-}
-.user-info-panel .name:hover
-{
-    color: var(--theme-color);
-}
-.user-info-panel .type
-{
-    padding: 4px;
-    background: var(--theme-color) !important;
-    color: var(--foreground-color) !important;
-    margin-bottom: 8px;
-}
-.user-info-panel .coins,
-.user-info-panel .b-coins,
-.user-info-panel .coins-container,
-.user-info-panel .verifications
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1 0 50%;
-}
-.user-info-panel .coins-container,
-.user-info-panel .verifications
-{
-    justify-content: space-evenly;
-}
-.user-info-panel .coins-container>a
-{
-    margin: 4px 0;
-}
-.user-info-panel .coins-container
-{
-    flex-direction: column;
-    align-items: start;
-    padding-left: 10px;
-}
-.user-info-panel .verifications a
-{
-    border: 1px solid var(--navbar-foreground);
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.user-info-panel .verifications a.verified
-{
-    border-color: var(--theme-color);
-}
-.user-info-panel .verifications i
-{
-    opacity: 0.6;
-    font-size: 16px;
-}
-.user-info-panel .verifications a.verified i
-{
-    opacity: 1;
-    color: var(--theme-color);
-}
-.user-info-panel .coins::before,
-.user-info-panel .b-coins::before
-{
-    content: attr(title);
-    color: var(--theme-color);
-    margin-right: 4px;
-}
-.user-info-panel .level,
-.user-info-panel .level:hover
-{
-    color: var(--theme-color);
-}
-.custom-navbar .level strong
-{
-    font-size: 14pt;
-    font-weight: normal;
-    margin-left: 2px;
-}
-.user-info-panel .level,
-.user-info-panel .level-progress-label
-{
-    margin-bottom: 8px;
-}
-.user-info-panel .level-progress
-{
-    width: 100%;
-    height: 2px;
-    background-color: #8884;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-.user-info-panel .level-progress-thumb
-{
-    width: 100%;
-    height: 100%;
-    transform-origin: left;
-    background-color: var(--theme-color);
-}
-.user-info-panel  .row.operations
-{
-    transform: translateX(5%);
-}
-.user-info-panel .operations a
-{
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    flex: 1 0 50%;
-}
-.user-info-panel .operations a:hover,
-.user-info-panel .operations a:hover i
-{
-    color: var(--theme-color) !important;
-}
-.user-info-panel .operations i
-{
-    font-size: 16px;
-    margin-right: 4px;
-}
-.custom-navbar .not-logged-in .login,
-.custom-navbar .not-logged-in .sign-up
-{
-    padding: 8px 16px;
-}
-.custom-navbar .not-logged-in .login,
-.custom-navbar .not-logged-in .login:hover
-{
-    background-color: var(--theme-color);
-    color: var(--foreground-color);
-}
-.custom-navbar .not-logged-in .sign-up,
-.custom-navbar .not-logged-in .sign-up:hover
-{
-    background-color: #8884;
-} */
-
 .custom-navbar li:hover .user-face,
 .custom-navbar li:hover .user-pendant
 {
