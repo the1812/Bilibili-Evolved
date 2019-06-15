@@ -10,10 +10,10 @@ let showWidget = true;
 const attributes = {
   widget: {
     content: /*html*/`
-        <div class="gui-settings-flat-button" id="custom-navbar-settings">
-            <i class="mdi mdi-24px mdi-auto-fix"></i>
-            <span>顶栏布局</span>
-        </div>`,
+      <div class="gui-settings-flat-button" id="custom-navbar-settings">
+        <i class="mdi mdi-24px mdi-auto-fix"></i>
+        <span>顶栏布局</span>
+      </div>`,
     condition: () => showWidget,
     success: async () => {
       await SpinQuery.select(".custom-navbar-settings");
@@ -54,17 +54,17 @@ const attributes = {
         Vue.component("order-item", {
           props: ["item"],
           template: /*html*/`
-                    <li v-on:mouseenter="viewBorder(true)"
-                        v-on:mouseleave="viewBorder(false)"
-                        v-bind:class="{hidden: hidden()}">
-                        <i class="mdi mdi-menu"></i>
-                        {{item.displayName}}
-                        <button v-on:click="toggleHidden()">
-                            <i v-if="hidden()" class="mdi mdi-eye-off"></i>
-                            <i v-else class="mdi mdi-eye"></i>
-                        </button>
-                    </li>
-                `,
+            <li v-on:mouseenter="viewBorder(true)"
+                v-on:mouseleave="viewBorder(false)"
+                v-bind:class="{hidden: hidden()}">
+              <i class="mdi mdi-menu"></i>
+              {{item.displayName}}
+              <button v-on:click="toggleHidden()">
+                  <i v-if="hidden()" class="mdi mdi-eye-off"></i>
+                  <i v-else class="mdi mdi-eye"></i>
+              </button>
+            </li>
+          `,
           methods: {
             hidden () {
               return settings.customNavbarHidden.includes(this.item.name);
@@ -298,19 +298,19 @@ class Upload extends NavbarComponent {
     super();
     this.href = "https://member.bilibili.com/v2#/upload/video/frame";
     this.html = /*html*/`
-        <svg style="width:22px;height:22px" viewBox="0 0 24 24">
-            <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" />
-        </svg>
-        <div id="upload-button">投稿</div>`;
+      <svg style="width:22px;height:22px" viewBox="0 0 24 24">
+        <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" />
+      </svg>
+      <div id="upload-button">投稿</div>`;
     this.popupHtml = /*html*/`
-        <ul id="upload-actions">
-            <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/text/apply">专栏投稿</a></li>
-            <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/audio/">音频投稿</a></li>
-            <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/video/frame">视频投稿</a></li>
-            <li><a target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">投稿管理</a></li>
-            <li><a target="_blank" href="https://member.bilibili.com/v2#/home">创作中心</a></li>
-        </ul>
-        `;
+      <ul id="upload-actions">
+        <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/text/apply">专栏投稿</a></li>
+        <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/audio/">音频投稿</a></li>
+        <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/video/frame">视频投稿</a></li>
+        <li><a target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">投稿管理</a></li>
+        <li><a target="_blank" href="https://member.bilibili.com/v2#/home">创作中心</a></li>
+      </ul>
+    `;
   }
   get name () {
     return "upload";
@@ -322,13 +322,13 @@ class Messages extends NavbarComponent {
     this.href = "https://message.bilibili.com/";
     this.html = "消息";
     this.popupHtml = /*html*/`
-        <ul id="message-list">
-            <li><a data-name="reply_me" target="_blank" href="https://message.bilibili.com/#/reply">回复我的</a></li>
-            <li><a data-name="at_me" target="_blank" href="https://message.bilibili.com/#/at">@我的</a></li>
-            <li><a data-name="praise_me" target="_blank" href="https://message.bilibili.com/#/love">收到的赞</a></li>
-            <li><a data-name="notify_me" target="_blank" href="https://message.bilibili.com/#/system">系统通知</a></li>
-        </ul>
-        `;
+      <ul id="message-list">
+        <li><a data-name="reply_me" target="_blank" href="https://message.bilibili.com/#/reply">回复我的</a></li>
+        <li><a data-name="at_me" target="_blank" href="https://message.bilibili.com/#/at">@我的</a></li>
+        <li><a data-name="praise_me" target="_blank" href="https://message.bilibili.com/#/love">收到的赞</a></li>
+        <li><a data-name="notify_me" target="_blank" href="https://message.bilibili.com/#/system">系统通知</a></li>
+      </ul>
+    `;
     this.requestedPopup = true;
     this.active = document.URL.startsWith("https://message.bilibili.com/");
     this.init();
@@ -376,23 +376,23 @@ class Category extends NavbarComponent {
     this.html = `主站`;
     this.requestedPopup = true;
     this.popupHtml = /*html*/`
-        <ul id="custom-navbar-home-popup">
-            <li class="category-item" v-for="item of info" v-bind:class="{ main: item[1].count }">
-                <a v-bind:href="item[1].link">
-                    <svg aria-hidden="true">
-                        <use v-bind:href="'#header-icon-' + item[1].icon" v-bind:xlink:href="'#header-icon-' + item[1].icon"></use>
-                    </svg>
-                    <div>{{item[0]}}</div>
-                    <span>{{item[1].count}}</span>
-                </a>
-                <div class="popup" v-if="item[1].subRegions">
-                    <a v-for="region of Object.entries(item[1].subRegions)" v-bind:href="region[1]">
-                        {{region[0]}}
-                    </a>
-                </div>
-            </li>
-        </ul>
-        `;
+      <ul id="custom-navbar-home-popup">
+        <li class="category-item" v-for="item of info" v-bind:class="{ main: item[1].count }">
+          <a v-bind:href="item[1].link">
+            <svg aria-hidden="true">
+              <use v-bind:href="'#header-icon-' + item[1].icon" v-bind:xlink:href="'#header-icon-' + item[1].icon"></use>
+            </svg>
+            <div>{{item[0]}}</div>
+            <span>{{item[1].count}}</span>
+          </a>
+          <div class="popup" v-if="item[1].subRegions">
+            <a v-for="region of Object.entries(item[1].subRegions)" v-bind:href="region[1]">
+              {{region[0]}}
+            </a>
+          </div>
+        </li>
+      </ul>
+    `;
     this.getOnlineInfo().then(info => {
       new Vue({
         el: "#custom-navbar-home-popup",
@@ -510,11 +510,11 @@ class UserInfo extends NavbarComponent {
     this.noPadding = true;
     this.href = "https://space.bilibili.com";
     this.html = /*html*/`
-            <div class="user-face-container">
-                <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-face"></img>
-                <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-pendant"></img>
-            </div>
-        `;
+      <div class="user-face-container">
+        <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-face"></img>
+        <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-pendant"></img>
+      </div>
+    `;
     this.popupHtml = /*html*/`
       <div class="user-info-panel">
         <div v-if="isLogin" class="logged-in">
@@ -533,13 +533,19 @@ class UserInfo extends NavbarComponent {
           <div class="items">
             <a class="item" target="_blank" title="手机验证"
               href="https://passport.bilibili.com/account/security#/bindphone">
-              <i class="mdi mdi-cellphone-android"></i>
+              <div class="circle">
+                <i class="mdi mdi-circle"></i>
+                <i class="mdi mdi-cellphone-android"></i>
+              </div>
               <i v-if="mobile_verified" class="mdi mdi-check"></i>
               <i v-else class="mdi mdi-close"></i>
             </a>
             <a class="item" target="_blank" title="邮箱验证"
               href="https://passport.bilibili.com/account/security#/bindmail">
-              <i class="mdi mdi-email"></i>
+              <div class="circle">
+                <i class="mdi mdi-circle"></i>
+                <i class="mdi mdi-email"></i>
+              </div>
               <i v-if="email_verified" class="mdi mdi-check"></i>
               <i v-else class="mdi mdi-close"></i>
             </a>
@@ -554,19 +560,49 @@ class UserInfo extends NavbarComponent {
           </div>
           <div class="separator"></div>
           <a class="operation" target="_blank" href="https://account.bilibili.com/account/home">
-            <i class="mdi mdi-account"></i>个人中心
+            <span class="icon">
+              <div class="circle">
+                <i class="mdi mdi-circle"></i>
+                <i class="mdi mdi-account"></i>
+              </div>
+            </span>
+            个人中心
           </a>
           <a class="operation" target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">
-            <i class="mdi mdi-square-edit-outline"></i>投稿管理
+            <span class="icon">
+              <div class="circle">
+                <i class="mdi mdi-circle"></i>
+                <i class="mdi mdi-square-edit-outline"></i>
+              </div>
+            </span>
+            投稿管理
           </a>
           <a class="operation" target="_blank" href="https://pay.bilibili.com/">
-            <i class="mdi mdi-wallet"></i>B币钱包
+            <span class="icon">
+              <div class="circle">
+                <i class="mdi mdi-circle"></i>
+                <i class="mdi mdi-wallet"></i>
+              </div>
+            </span>
+            B币钱包
           </a>
           <a class="operation" target="_blank" href="https://link.bilibili.com/p/center/index">
-            <i class="mdi mdi-video-input-antenna"></i>直播中心
+            <span class="icon">
+              <div class="circle">
+                <i class="mdi mdi-circle"></i>
+                <i class="mdi mdi-video-input-antenna"></i>
+              </div>
+            </span>
+            直播中心
           </a>
           <a class="operation" target="_blank" href="https://show.bilibili.com/orderlist">
-            <i class="mdi mdi-ticket"></i>订单中心
+            <span class="icon">
+              <div class="circle">
+                <i class="mdi mdi-circle"></i>
+                <i class="mdi mdi-ticket"></i>
+              </div>
+            </span>
+            订单中心
           </a>
           <a class="logout grey-button" href="https://account.bilibili.com/login?act=exit">退出登录</a>
         </div>
@@ -648,17 +684,17 @@ class SearchBox extends NavbarComponent {
     super();
     this.disabled = true;
     this.html = /*html*/`
-            <form id="custom-navbar-search" autocomplete="off" target="_blank" method="get" action="https://search.bilibili.com/all">
-                <input type="text" placeholder="搜索" name="keyword">
-                <input type="hidden" name="from_source" value="banner_search">
-                <a style="display: none" target="_blank" class="recommended-target"></a>
-                <button type="submit" title="搜索">
-                    <svg style="width:22px;height:22px" viewBox="0 0 24 24">
-                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
-                    </svg>
-                </button>
-            </form>
-        `;
+      <form id="custom-navbar-search" autocomplete="off" target="_blank" method="get" action="https://search.bilibili.com/all">
+        <input type="text" placeholder="搜索" name="keyword">
+        <input type="hidden" name="from_source" value="banner_search">
+        <a style="display: none" target="_blank" class="recommended-target"></a>
+        <button type="submit" title="搜索">
+          <svg style="width:22px;height:22px" viewBox="0 0 24 24">
+            <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+          </svg>
+        </button>
+      </form>
+    `;
     this.init();
   }
   async init () {
@@ -701,8 +737,8 @@ class Iframe extends NavbarComponent {
     this.html = name;
     this.href = link;
     this.popupHtml = /*html*/`
-            <iframe src="${src}" frameborder="0" width="${width}" height="${height}"></iframe>
-        `;
+      <iframe src="${src}" frameborder="0" width="${width}" height="${height}"></iframe>
+    `;
     this.noPadding = true;
     this.requestedPopup = lazy ? false : true;
     this.touch = false;
@@ -787,10 +823,10 @@ class VideoList extends NavbarComponent {
     this.html = name;
     this.requestedPopup = false;
     this.popupHtml = /*html*/`
-            <ol class="video-list ${listName}">
-                <li class="loading">加载中...</li>
-            </ol>
-        `;
+      <ol class="video-list ${listName}">
+          <li class="loading">加载中...</li>
+      </ol>
+    `;
     this.onPopup = async () => {
       if (!listMap) {
         return;
@@ -806,8 +842,8 @@ class VideoList extends NavbarComponent {
       }
       const videoList = listMap(json).join("");
       videoListElement.insertAdjacentHTML("beforeend", videoList + /*html*/`
-                <li class="more"><a target="_blank" href="${mainUrl}">查看更多</a></li>
-            `);
+        <li class="more"><a target="_blank" href="${mainUrl}">查看更多</a></li>
+      `);
       videoListElement.classList.add("loaded");
     };
   }
@@ -829,9 +865,7 @@ class WatchlaterList extends VideoList {
           const href = settings.watchLaterRedirect ?
             `https://www.bilibili.com/video/av${item.aid}?p=${page}` :
             `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`;
-          return /*html*/`<li>
-                        <a target="_blank" href="${href}">${item.title}</a>
-                    </li>`;
+          return /*html*/`<li><a target="_blank" href="${href}">${item.title}</a></li>`;
         });
       },
     });
@@ -847,9 +881,10 @@ class FavoritesList extends VideoList {
       listName: "favorites",
       listMap: json => {
         return json.data.map(item => {
-          return /*html*/`<li>
-                        <a target="_blank" href="https://www.bilibili.com/video/av${item.id}">${item.title}</a>
-                    </li>`;
+          return /*html*/`
+            <li>
+              <a target="_blank" href="https://www.bilibili.com/video/av${item.id}">${item.title}</a>
+            </li>`;
         });
       },
     });
@@ -883,13 +918,14 @@ class HistoryList extends VideoList {
           else {
             description += " 100%";
           }
-          return /*html*/`<li class="history-item">
-                        <a target="_blank" href="https://www.bilibili.com/video/av${item.aid}?${parameter.join("&")}">
-                            <span class="title">${item.title}</span>
-                            <span class="description">${description}</span>
-                            <div class="progress" style="transform: scaleX(${progress})"></div>
-                        </a>
-                    </li>`;
+          return /*html*/`
+            <li class="history-item">
+              <a target="_blank" href="https://www.bilibili.com/video/av${item.aid}?${parameter.join("&")}">
+                <span class="title">${item.title}</span>
+                <span class="description">${description}</span>
+                <div class="progress" style="transform: scaleX(${progress})"></div>
+              </a>
+            </li>`;
         });
       },
     });

@@ -68,6 +68,7 @@ body
     --navbar-background: white;
     --navbar-bounds-padding: 0 5%;
     --navbar-blur-opacity: 0.7;
+    --navbar-icon-size: 24px;
 }
 body.no-banner #banner_link,
 body.no-banner .z-top-container.has-banner>.header,
@@ -250,7 +251,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     top: 100%;
     left: 50%;
     padding: 16px;
-    box-shadow: rgba(0,0,0,0.1) 0 4px 40px 20px;
+    box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
     pointer-events: none;
     opacity: 0;
     transform: translateX(-50%);
@@ -263,7 +264,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar.dark .popup
 {
-    box-shadow: rgba(0,0,0,0.3) 0 4px 40px 20px;
+    box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
 }
 .custom-navbar .popup.no-padding
 {
@@ -490,8 +491,27 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     width: 240px;
     font-size: 12px;
 }
+.user-info-panel .circle {
+    position: relative;
+    width: var(--navbar-icon-size);
+    height: var(--navbar-icon-size);
+    opacity: 0.7;
+}
+.user-info-panel .circle .mdi {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.user-info-panel .mdi-circle ~ .mdi {
+    filter: invert(1);
+    font-size: calc(var(--navbar-icon-size) - 10px);
+    line-height: calc(var(--navbar-icon-size) - 10px);
+    transform: translate(5px, 5px);
+}
 .user-info-panel i {
-    font-size: 20px;
+    font-size: var(--navbar-icon-size);
+    font-style: normal;
+    line-height: var(--navbar-icon-size);
 }
 .user-info-panel .logged-in {
     display: flex;
@@ -517,6 +537,17 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    align-self: stretch;
+}
+.user-info-panel .operation .icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.user-info-panel .item > i {
+    opacity: .7;
 }
 .user-info-panel .item {
     display: flex;
@@ -529,8 +560,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .user-info-panel .item span {
     font-size: 14px;
 }
-.user-info-panel .item i:nth-child(2) {
+.user-info-panel .item > i:nth-child(2) {
     font-size: 18px;
+    line-height: 18px;
 }
 .user-info-panel .welcome,
 .user-info-panel .name
