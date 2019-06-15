@@ -74,7 +74,8 @@
 .home-container .at-popup,
 .coin-nav,
 .nomal-task .card,
-.item-wrap__task .operate-btn
+.item-wrap__task .operate-btn,
+.ban-vote .vote-dialog .dialog-header
 {
     border-color: transparent !important;
 }
@@ -110,7 +111,11 @@
     filter: brightness(0) invert(.7) !important;
 } */
 .fold-box:hover .fold-arrow,
-.sticky-bar .bar-content .title-icon
+.sticky-bar .bar-content .title-icon,
+.fjw-random .agree.active,
+.fjw-random .agree:hover,
+.fjw-random .unagree.active,
+.fjw-random .unagree:hover
 {
     filter: var(--blue-image-filter) !important;
 }
