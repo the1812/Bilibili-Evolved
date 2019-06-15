@@ -30,7 +30,8 @@
     width: auto !important;
 }
 .bb-comment .comment-send .comment-emoji,
-#app-ctnr .demo-app .category
+#app-ctnr .demo-app .category,
+.fjw-point .point-wrap .user-point .face .unfocus-btn
 {
     width: max-content !important;
 }
