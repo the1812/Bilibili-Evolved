@@ -139,8 +139,8 @@ const customNavbarDefaultOrders = {
   favoritesList: 16,
   historyList: 17,
   upload: 18,
-  blank3: 19
-};
+  blank3: 19,
+}
 const settings = {
   useDarkStyle: false,
   compactLayout: false,
@@ -153,8 +153,8 @@ const settings = {
   touchVideoPlayer: false,
   customControlBackgroundOpacity: 0.64,
   customControlBackground: true,
-  darkScheduleStart: "18:00",
-  darkScheduleEnd: "6:00",
+  darkScheduleStart: '18:00',
+  darkScheduleEnd: '6:00',
   darkSchedule: false,
   blurVideoControl: false,
   toast: true,
@@ -167,14 +167,14 @@ const settings = {
   hideTopSearch: false,
   touchVideoPlayerDoubleTapControl: false,
   touchVideoPlayerAnimation: false,
-  customStyleColor: "#00A0D8",
+  customStyleColor: '#00A0D8',
   preserveRank: true,
   blurBackgroundOpacity: 0.382,
   useDefaultPlayerMode: false,
   applyPlayerModeOnPlay: true,
-  defaultPlayerMode: "常规",
+  defaultPlayerMode: '常规',
   useDefaultVideoQuality: false,
-  defaultVideoQuality: "自动",
+  defaultVideoQuality: '自动',
   useDefaultDanmakuSettings: false,
   enableDanmaku: true,
   rememberDanmakuSettings: false,
@@ -182,8 +182,8 @@ const settings = {
     subtitlesPreserve: false,
     smartMask: false,
   },
-  defaultPlayerLayout: "新版",
-  defaultBangumiLayout: "旧版",
+  defaultPlayerLayout: '新版',
+  defaultBangumiLayout: '旧版',
   useDefaultPlayerLayout: false,
   skipChargeList: false,
   comboLike: false,
@@ -198,10 +198,10 @@ const settings = {
   framePlayback: true,
   useCommentStyle: true,
   imageResolution: false,
-  imageResolutionScale: "auto",
+  imageResolutionScale: 'auto',
   toastInternalError: false,
   i18n: false,
-  i18nLanguage: "日本語",
+  i18nLanguage: '日本語',
   playerFocus: false,
   playerFocusOffset: -10,
   oldTweets: false,
@@ -234,13 +234,15 @@ const settings = {
   hideOldEntry: true,
   videoScreenshot: false,
   hideBangumiReviews: false,
-  filenameFormat: "[title][ - ep]",
+  filenameFormat: '[title][ - ep]',
   sideBarOffset: 0,
   noLiveAutoplay: false,
   hideHomeLive: false,
   noMiniVideoAutoplay: false,
+  useDefaultVideoSpeed: false,
+  defaultVideoSpeed: 1,
   cache: {},
-};
+}
 const fixedSettings = {
   guiSettings: true,
   viewCover: true,
@@ -255,16 +257,15 @@ const fixedSettings = {
   forceWide: false,
   useNewStyle: false,
   overrideNavBar: false,
-  latestVersionLink: "https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js",
+  latestVersionLink: 'https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js',
   currentVersion: GM_info.script.version,
-};
-const settingsChangeHandlers = {};
+}
+const settingsChangeHandlers = {}
 function addSettingsListener (key, handler, initCall) {
   if (!settingsChangeHandlers[key]) {
-    settingsChangeHandlers[key] = [handler];
-  }
-  else {
-    settingsChangeHandlers[key].push(handler);
+    settingsChangeHandlers[key] = [handler]
+  } else {
+    settingsChangeHandlers[key].push(handler)
   }
   if (initCall) {
     const value = settings[key]
@@ -272,81 +273,63 @@ function addSettingsListener (key, handler, initCall) {
   }
 }
 function removeSettingsListener (key, handler) {
-  const handlers = settingsChangeHandlers[key];
+  const handlers = settingsChangeHandlers[key]
   if (!handlers) {
-    return;
+    return
   }
-  handlers.splice(handlers.indexOf(handler), 1);
+  handlers.splice(handlers.indexOf(handler), 1)
 }
 function loadSettings () {
   for (const key in fixedSettings) {
-    settings[key] = fixedSettings[key];
-    GM_setValue(key, fixedSettings[key]);
+    settings[key] = fixedSettings[key]
+    GM_setValue(key, fixedSettings[key])
   }
   if (Object.keys(languageCodeToName).includes(navigator.language)) {
-    settings.i18n = true;
-    settings.i18nLanguage = languageCodeToName[navigator.language];
+    settings.i18n = true
+    settings.i18nLanguage = languageCodeToName[navigator.language]
   }
   for (const key in settings) {
-    let value = GM_getValue(key);
+    let value = GM_getValue(key)
     if (value === undefined) {
-      value = settings[key];
-      GM_setValue(key, settings[key]);
-    }
-    else if (settings[key] !== undefined && value.constructor === Object) {
-      value = Object.assign(settings[key], value);
+      value = settings[key]
+      GM_setValue(key, settings[key])
+    } else if (settings[key] !== undefined && value.constructor === Object) {
+      value = Object.assign(settings[key], value)
     }
     Object.defineProperty(settings, key, {
       get () {
-        return value;
+        return value
       },
       set (newValue) {
-        value = newValue;
-        GM_setValue(key, newValue);
+        value = newValue
+        GM_setValue(key, newValue)
 
-        const handlers = settingsChangeHandlers[key];
+        const handlers = settingsChangeHandlers[key]
         if (handlers) {
-          if (key === "useDarkStyle") {
-            setTimeout(() => handlers.forEach(h => h(newValue, value)), 200);
-          }
-          else {
-            handlers.forEach(h => h(newValue, value));
+          if (key === 'useDarkStyle') {
+            setTimeout(() => handlers.forEach(h => h(newValue, value)), 200)
+          } else {
+            handlers.forEach(h => h(newValue, value))
           }
         }
-        const input = document.querySelector(`input[key=${key}]`);
+        const input = document.querySelector(`input[key=${key}]`)
         if (input !== null) {
-          if (input.type === "checkbox") {
-            input.checked = newValue;
-          }
-          else if (input.type === "text" && !input.parentElement.classList.contains("gui-settings-dropdown")) {
-            input.value = newValue;
+          if (input.type === 'checkbox') {
+            input.checked = newValue
+          } else if (input.type === 'text' && !input.parentElement.classList.contains('gui-settings-dropdown')) {
+            input.value = newValue
           }
         }
-      },
-    });
-    // if (settings[key] !== undefined && value.constructor === Object)
-    // {
-    //     settings[key] = Object.assign(settings[key], value);
-    // }
-    // else
-    // {
-    //     settings[key] = value;
-    // }
+      }
+    })
   }
 }
 function saveSettings (newSettings) {
-  // for (const key in settings)
-  // {
-  //     GM_setValue(key, newSettings[key]);
-  // }
 }
 function onSettingsChange () {
-  // for (const key in settings)
-  // {
-  //     GM_addValueChangeListener(key, change);
-  // }
-  console.warn("此功能已弃用.");
-};
+  console.warn('此功能已弃用.')
+}
+;
 class Ajax
 {
     static send(xhr, body, text = true)
