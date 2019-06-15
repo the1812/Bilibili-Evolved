@@ -3,7 +3,8 @@
 .nomal-task .bottom-box .btn,
 .item-wrap__task .operate-btn,
 .dialog-wrapper .dialog,
-.fjw-kpi-wrap-bg
+.fjw-kpi-wrap-bg,
+.fjw-point .point-wrap .user-point .face .unfocus-btn
 {
     background-color: #222 !important;
 }
@@ -60,7 +61,8 @@
 .bottom-box .complete,
 .item-wrap__task .content-title,
 .item-wrap__task .operate-btn,
-.empty-wrap .empty-text
+.empty-wrap .empty-text,
+.fjw-point .point-wrap .user-point .face .unfocus-btn
 {
     color: #eee !important;
 }
