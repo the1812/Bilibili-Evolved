@@ -37,6 +37,12 @@
     content: "\E6CC";
     color: #646464;
 }
+.custom-navbar.dark .custom-navbar-icon-lv0::before {
+    color: #777;
+}
+.custom-navbar.dark .custom-navbar-icon-lv1::before {
+    color: #ddd;
+}
 .custom-navbar-icon-lv2::before {
     content: "\E6CD";
     color: #1BC861;
