@@ -7,7 +7,6 @@
 .h .h-f-btn,
 .n .n-data,
 .bili-search .nav-wrap .wrap>.sub,
-#page-follows .follow-sidenav .text,
 .author-info .favourite-btn,
 .author-info .communicate-btn,
 .dashboard li.like,
@@ -72,10 +71,6 @@
 .gui-settings-box
 {
     width: 450px !important;
-}
-#page-follows .follow-sidenav .text
-{
-    min-width: 78px !important;
 }
 .h .h-f-btn
 {
