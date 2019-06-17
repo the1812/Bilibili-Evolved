@@ -100,7 +100,6 @@ export const map = new Map([
   [`我的音乐`, `私の音楽`],
   [`我的专栏`, `私のコラム`],
   [`我的相簿`, `私のアルバム`],
-  [`我的关注`, `私のフォロー`],
   [`我的粉丝`, `私のファン`],
   [`我的消息`, `DM`],
   [`我的收藏`, `私のお気に入り`],
@@ -216,8 +215,8 @@ export const map = new Map([
   [`播放数量`, `再生数`],
   [`自动`, `自動`],
   [`暂停`, `一時停止`],
-  [`静音`, `ミュート`],
-  [`取消静音`, `ミュートを解除`],
+  [`静音`, `消音`],
+  [`取消静音`, `消音を解除`],
   [`弹幕`, `弾幕`],
   [`硬币`, `コイン`],
   [`宽屏模式`, `ワイドモード`],
@@ -454,6 +453,13 @@ export const map = new Map([
     {
       text: `履歴`,
       selector: `.nav-con.fr .nav-item .t, .custom-navbar li[data-name='historyList'] .main-content, .custom-navbar-settings .orders li`
+    },
+  ]],
+  [`我的关注`, [
+    `私のフォロー`,
+    {
+      text: `フォロー`,
+      selector: `#page-follows .follow-sidenav .text`
     },
   ]],
   [`登录`, `ログイン`],
