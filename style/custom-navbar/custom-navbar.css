@@ -551,6 +551,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
+    background: none;
 }
 .user-info-panel .item > i {
     opacity: .7;
@@ -759,6 +760,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     border-radius: 0 0 8px 8px;
     opacity: 0;
     line-height: 14px;
+    white-space: nowrap;
 }
 .custom-navbar.fill .notify-count
 {
