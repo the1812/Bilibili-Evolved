@@ -213,7 +213,8 @@
 .cc-nav-wrp .activity-nav-wrp .activity-link:hover i,
 .cc-nav-wrp .activity-nav-wrp .activity-link:hover span,
 .mession-box .btn:hover,
-.bottom-box .complete .uncomplete
+.bottom-box .complete .uncomplete,
+.n-statistics a:hover
 {
     color: var(--theme-color) !important;
 }
