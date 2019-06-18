@@ -230,7 +230,8 @@
 #page-fav .fav-sidenav .fav-item.cur .be-dropdown-trigger .icon-ic_more,
 #page-fav .fav-sidenav .fav-item.cur .iconfont,
 .edit-media-list .edit-mask .edit-board .edit-info .submit-btn,
-.item-wrap__task .item-index
+.item-wrap__task .item-index,
+.link-navbar .nav-item:hover .nav-link
 {
     color: var(--foreground-color) !important;
 }
