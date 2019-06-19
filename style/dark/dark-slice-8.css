@@ -8,14 +8,18 @@
 {
     background-color: #222 !important;
 }
-.at-popup .user-container .item.is-selected
+.at-popup .user-container .item.is-selected,
+.pgc-space-follow-item .bangumi-options .opt-list,
+.main-container .media-info .media-right .media-tool-bar .bangumi-options .opt-list li:hover
 {
     background-color: #333 !important;
 }
 .mession-box .content .list-wrap .item-index,
 .news-dialog-Wrapper,
 .box .record-wrap,
-.box .content-wrap
+.box .content-wrap,
+.pgc-space-follow-item .bangumi-options .opt-list li:hover,
+.main-container .media-info .media-right .media-tool-bar .bangumi-options .opt-list
 {
     background-color: #444 !important;
 }
@@ -62,7 +66,11 @@
 .item-wrap__task .content-title,
 .item-wrap__task .operate-btn,
 .empty-wrap .empty-text,
-.fjw-point .point-wrap .user-point .face .unfocus-btn
+.fjw-point .point-wrap .user-point .face .unfocus-btn,
+.sub-tabs .filter-content,
+.pgc-space-follow-item .bangumi-options .opt-list li,
+.pgc-space-follow-item .bangumi-options .opt-list li:hover,
+.main-container .media-info .media-right .media-tool-bar .bangumi-options .opt-list li
 {
     color: #eee !important;
 }
@@ -75,7 +83,9 @@
 .coin-nav,
 .nomal-task .card,
 .item-wrap__task .operate-btn,
-.ban-vote .vote-dialog .dialog-header
+.ban-vote .vote-dialog .dialog-header,
+.pgc-space-follow-item .bangumi-options .opt-list,
+.main-container .media-info .media-right .media-tool-bar .bangumi-options .opt-list
 {
     border-color: transparent !important;
 }
@@ -151,7 +161,8 @@
 {
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 } */
-.section-block .at-popup
+.section-block .at-popup,
+.pgc-space-follow-item .bangumi-options .opt-list
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -213,7 +224,8 @@
 .cc-nav-wrp .activity-nav-wrp .activity-link:hover i,
 .cc-nav-wrp .activity-nav-wrp .activity-link:hover span,
 .mession-box .btn:hover,
-.bottom-box .complete .uncomplete
+.bottom-box .complete .uncomplete,
+.n-statistics a:hover
 {
     color: var(--theme-color) !important;
 }
@@ -229,7 +241,8 @@
 #page-fav .fav-sidenav .fav-item.cur .be-dropdown-trigger .icon-ic_more,
 #page-fav .fav-sidenav .fav-item.cur .iconfont,
 .edit-media-list .edit-mask .edit-board .edit-info .submit-btn,
-.item-wrap__task .item-index
+.item-wrap__task .item-index,
+.link-navbar .nav-item:hover .nav-link
 {
     color: var(--foreground-color) !important;
 }
