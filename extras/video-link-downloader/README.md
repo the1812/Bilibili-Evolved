@@ -24,8 +24,6 @@ npm uninstall -g bilibili-evolved-video-link-downloader
 ```
 
 ## 使用
-**⚠ 目前只有预览通道的 Bilibili Evolved 拥有`复制数据`和`导出数据`的功能.**
-
 在网页中选择 附加功能-下载视频, 选择清晰度后选择`复制数据`或`导出数据`.
 
 然后在要保存视频的文件夹中打开终端.
