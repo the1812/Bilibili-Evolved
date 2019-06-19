@@ -1,6 +1,6 @@
 {
   "name": "bilibili-evolved-video-link-downloader",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Bilibili Evolved 视频链接下载器",
   "main": "video-link-downloader.js",
   "bin": {
