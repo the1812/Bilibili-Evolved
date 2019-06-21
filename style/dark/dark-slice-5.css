@@ -884,7 +884,6 @@ table.viptable td,
 {
     border-color: transparent !important;
 }
-.link-input,
 .add-cover,
 .cc-article-wrp .article-card .meta-title .typename,
 .text-area-box-v2-container,
@@ -958,7 +957,7 @@ table.viptable td,
 .multi-page .cur-list .module-box li:hover,
 .multi-page .cur-list .module-box li.on,
 .creation-li .creation-left .creation-shadow,
-#dyn_wnd .dyn_menu .line:before 
+#dyn_wnd .dyn_menu .line:before
 {
     border-color: var(--theme-color) !important;
 }
@@ -1063,7 +1062,7 @@ table.viptable td,
 {
     background-color: var(--theme-color) !important;
 }
-#bp_right .balance_bp_box .button 
+#bp_right .balance_bp_box .button
 {
     background: var(--theme-color) !important;
 }

@@ -96,7 +96,9 @@
     border-color: #aaa !important;
 }
 .mession-box .content .list-wrap .border-btm,
-.mession-box .content
+.mession-box .content,
+.live-category .latest,
+.link-input
 {
     border-color: #444 !important
 }
@@ -227,7 +229,9 @@
 .cc-nav-wrp .activity-nav-wrp .activity-link:hover span,
 .mession-box .btn:hover,
 .bottom-box .complete .uncomplete,
-.n-statistics a:hover
+.n-statistics a:hover,
+.live-category .latest a:hover,
+.live-category .latest a.active
 {
     color: var(--theme-color) !important;
 }
