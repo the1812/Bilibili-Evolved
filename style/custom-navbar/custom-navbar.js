@@ -645,7 +645,7 @@ class UserInfo extends NavbarComponent {
           return "正式会员";
         },
         levelProgressStyle () {
-          const progress = (this.level_info.next_exp - this.level_info.current_exp) / (this.level_info.next_exp - this.level_info.current_min);
+          const progress = (this.level_info.current_exp - this.level_info.current_min) / (this.level_info.next_exp - this.level_info.current_min);
           return {
             transform: `scaleX(${progress})`
           };
