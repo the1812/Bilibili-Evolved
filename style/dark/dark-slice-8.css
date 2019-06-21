@@ -125,7 +125,9 @@
 .fjw-random .agree.active,
 .fjw-random .agree:hover,
 .fjw-random .unagree.active,
-.fjw-random .unagree:hover
+.fjw-random .unagree:hover,
+.svga-container.svga-center canvas,
+.ops canvas.ring-progress
 {
     filter: var(--blue-image-filter) !important;
 }
