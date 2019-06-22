@@ -18,7 +18,8 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
 .bpui-selected,
 .bpui-selected span,
-.danmaku-wrap .player-auxiliary-block-wrap
+.danmaku-wrap .player-auxiliary-block-wrap,
+.player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-load-status
 {
     background-color: #333 !important;
 }
@@ -27,7 +28,12 @@
 .box .record-wrap,
 .box .content-wrap,
 .bangumi-options .opt-list li:hover,
-.bui-collapse .bui-collapse-header
+.bui-collapse .bui-collapse-header,
+.bpui-selecting>span,
+.bpui-unselecting,
+.bpui-selected>span,
+li.danmaku-info-row.bpui-selected,
+li.danmaku-info-row.bpui-selecting
 {
     background-color: #444 !important;
 }
