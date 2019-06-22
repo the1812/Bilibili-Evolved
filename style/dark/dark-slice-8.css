@@ -9,8 +9,12 @@
     background-color: #222 !important;
 }
 .at-popup .user-container .item.is-selected,
-.pgc-space-follow-item .bangumi-options .opt-list,
-.bangumi-options .opt-list li:hover
+.bangumi-options .opt-list,
+.player-auxiliary-danmaku-function [class*=player-auxiliary-danmaku-btn-],
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap,
+.bui-button.bui-button-gray2,
+.player-auxiliary-danmaku-function,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer
 {
     background-color: #333 !important;
 }
@@ -18,7 +22,8 @@
 .news-dialog-Wrapper,
 .box .record-wrap,
 .box .content-wrap,
-.bangumi-options .opt-list
+.bangumi-options .opt-list li:hover,
+.bui-collapse .bui-collapse-header
 {
     background-color: #444 !important;
 }
