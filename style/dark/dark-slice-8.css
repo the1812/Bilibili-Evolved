@@ -14,7 +14,11 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap,
 .bui-button.bui-button-gray2,
 .player-auxiliary-danmaku-function,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
+.bpui-selected,
+.bpui-selected span,
+.danmaku-wrap .player-auxiliary-block-wrap
 {
     background-color: #333 !important;
 }
