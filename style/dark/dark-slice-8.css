@@ -52,6 +52,10 @@ li.danmaku-info-row.bpui-selecting
 {
     background: #fff !important;
 }
+.fans-medal-item.special-medal .label .content
+{
+    color: #222 !important;
+}
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-danmaku,
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-time,
 .player-auxiliary-area .danmaku-info-row-block::after,
@@ -153,6 +157,10 @@ li.danmaku-info-row.bpui-selecting
 {
     filter: grayscale(1) !important;
 } */
+.fans-medal-item.special-medal .union
+{
+    filter: brightness(0.125) !important;
+}
 /* a
 {
     filter: brightness(0.7) !important;
