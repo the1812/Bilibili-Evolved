@@ -20,7 +20,9 @@
 .bpui-selected,
 .bpui-selected span,
 .danmaku-wrap .player-auxiliary-block-wrap,
-.player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-load-status
+.player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-load-status,
+.comic-info-component .page-normal .comic-info-con .comic-des,
+.comic-info-component .page-normal .comic-info-con
 {
     background-color: #333 !important;
 }
@@ -45,7 +47,8 @@ li.danmaku-info-row.bpui-selecting
 .player-auxiliary-area .danmaku-info-row-special,
 .rank-list-ctnr .normal-list .item.self,
 .rank-list-ctnr .own,
-.high-wrapper .body-padding
+.high-wrapper .body-padding,
+.episode-item
 {
     background-color: transparent !important;
 }
@@ -91,7 +94,13 @@ li.danmaku-info-row.bpui-selecting
 .bangumi-options .opt-list li:hover,
 .bangumi-options .opt-list li,
 .h5share-container .text-area .text-content,
-.navbar-container .logo-part
+.navbar-container .logo-part,
+.navbar-container .size-ruler .app-title,
+.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .fav-btn .fav-text,
+.comic-episodes .episode-list .episode-item,
+.comic-episodes .episode-header .episode-operation,
+.manga-card .manga-title,
+.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .comments-total
 {
     color: #eee !important;
 }
@@ -106,7 +115,8 @@ li.danmaku-info-row.bpui-selecting
 .item-wrap__task .operate-btn,
 .ban-vote .vote-dialog .dialog-header,
 .bangumi-options .opt-list,
-.navbar-container
+.navbar-container,
+.comic-info-component .page-normal .comic-tab .tab-titles
 {
     border-color: transparent !important;
 }
@@ -119,7 +129,9 @@ li.danmaku-info-row.bpui-selecting
 .mession-box .content .list-wrap .border-btm,
 .mession-box .content,
 .live-category .latest,
-.link-input
+.link-input,
+.comic-episodes .episode-list .episode-item .item-body,
+.tab-content .bilibili-comment
 {
     border-color: #444 !important
 }
@@ -209,10 +221,10 @@ li.danmaku-info-row.bpui-selecting
 {
     width: auto !important;
 }
-/* a
+.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .tab-btn
 {
     border-color: var(--theme-color) !important;
-} */
+}
 /* a
 {
     border-top-color: var(--theme-color) !important;
@@ -234,7 +246,8 @@ li.danmaku-info-row.bpui-selecting
 .bottom-box .complete .complete_text:before,
 .item-wrap__task .item-index,
 .h5share-container .tag,
-.navbar-container .nav-items .nav-item.activated:before
+.navbar-container .nav-items .nav-item.activated:before,
+.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -259,7 +272,8 @@ li.danmaku-info-row.bpui-selecting
 .bottom-box .complete .uncomplete,
 .n-statistics a:hover,
 .live-category .latest a:hover,
-.live-category .latest a.active
+.live-category .latest a.active,
+.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active
 {
     color: var(--theme-color) !important;
 }
@@ -277,7 +291,8 @@ li.danmaku-info-row.bpui-selecting
 .edit-media-list .edit-mask .edit-board .edit-info .submit-btn,
 .item-wrap__task .item-index,
 .link-navbar .nav-item:hover .nav-link,
-.h5share-container .tag
+.h5share-container .tag,
+.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn
 {
     color: var(--foreground-color) !important;
 }
