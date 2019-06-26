@@ -4,7 +4,8 @@
 .item-wrap__task .operate-btn,
 .dialog-wrapper .dialog,
 .fjw-kpi-wrap-bg,
-.fjw-point .point-wrap .user-point .face .unfocus-btn
+.fjw-point .point-wrap .user-point .face .unfocus-btn,
+.navbar-container
 {
     background-color: #222 !important;
 }
@@ -89,7 +90,8 @@ li.danmaku-info-row.bpui-selecting
 .sub-tabs .filter-content,
 .bangumi-options .opt-list li:hover,
 .bangumi-options .opt-list li,
-.h5share-container .text-area .text-content
+.h5share-container .text-area .text-content,
+.navbar-container .logo-part
 {
     color: #eee !important;
 }
@@ -103,7 +105,8 @@ li.danmaku-info-row.bpui-selecting
 .nomal-task .card,
 .item-wrap__task .operate-btn,
 .ban-vote .vote-dialog .dialog-header,
-.bangumi-options .opt-list
+.bangumi-options .opt-list,
+.navbar-container
 {
     border-color: transparent !important;
 }
@@ -188,7 +191,8 @@ li.danmaku-info-row.bpui-selecting
     box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
 } */
 .section-block .at-popup,
-.pgc-space-follow-item .bangumi-options .opt-list
+.pgc-space-follow-item .bangumi-options .opt-list,
+.navbar-container
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -229,7 +233,8 @@ li.danmaku-info-row.bpui-selecting
 .news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__btn,
 .bottom-box .complete .complete_text:before,
 .item-wrap__task .item-index,
-.h5share-container .tag
+.h5share-container .tag,
+.navbar-container .nav-items .nav-item.activated:before
 {
     background-color: var(--theme-color) !important;
 }
