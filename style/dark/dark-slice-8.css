@@ -64,7 +64,8 @@ li.danmaku-info-row.bpui-selecting
 .box .content-wrap p,
 .box .list-box .wrap-list .text,
 .bottom-box .wrap-list .gift-item .B-paper,
-.item-wrap__task .content-desc
+.item-wrap__task .content-desc,
+.h5share-container .text-area .text-desc
 {
     color: #aaa !important;
 }
@@ -87,7 +88,8 @@ li.danmaku-info-row.bpui-selecting
 .fjw-point .point-wrap .user-point .face .unfocus-btn,
 .sub-tabs .filter-content,
 .bangumi-options .opt-list li:hover,
-.bangumi-options .opt-list li
+.bangumi-options .opt-list li,
+.h5share-container .text-area .text-content
 {
     color: #eee !important;
 }
@@ -226,7 +228,8 @@ li.danmaku-info-row.bpui-selecting
 .progress-bar-core.p-absolute,
 .news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__btn,
 .bottom-box .complete .complete_text:before,
-.item-wrap__task .item-index
+.item-wrap__task .item-index,
+.h5share-container .tag
 {
     background-color: var(--theme-color) !important;
 }
@@ -268,7 +271,8 @@ li.danmaku-info-row.bpui-selecting
 #page-fav .fav-sidenav .fav-item.cur .iconfont,
 .edit-media-list .edit-mask .edit-board .edit-info .submit-btn,
 .item-wrap__task .item-index,
-.link-navbar .nav-item:hover .nav-link
+.link-navbar .nav-item:hover .nav-link,
+.h5share-container .tag
 {
     color: var(--foreground-color) !important;
 }
