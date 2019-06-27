@@ -36,7 +36,8 @@
 .bpui-unselecting,
 .bpui-selected>span,
 li.danmaku-info-row.bpui-selected,
-li.danmaku-info-row.bpui-selecting
+li.danmaku-info-row.bpui-selecting,
+.box-body
 {
     background-color: #444 !important;
 }
