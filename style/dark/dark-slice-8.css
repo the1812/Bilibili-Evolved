@@ -183,7 +183,8 @@ li.danmaku-info-row.bpui-selecting,
 {
     filter: brightness(0.7) !important;
 } */
-.news-dialog__wrapper .trangle-img img
+.news-dialog__wrapper .trangle-img img,
+.bili-share-pc .favourite .icon-fav
 {
     filter: brightness(0.27) !important;
 }
