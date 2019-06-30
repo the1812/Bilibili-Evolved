@@ -64,8 +64,8 @@ class Downloader {
                     headers: {
                         Range: range,
                         Origin: "https://www.bilibili.com",
-                        Referer: "https://www.bilibili.com",
-                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36",
+                        Referer: this.inputData.referer || "https://www.bilibili.com",
+                        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0",
                     },
                 }).on("complete", response => {
                     if (response.statusCode.toString()[0] === "2") {
@@ -78,15 +78,15 @@ class Downloader {
                     this.progressMap.set(req, this.progressMap.get(req) + data.length);
                     this.updateProgress();
                 }).on("error", error => {
-                    // stream.close();
                     // fs.unlinkSync(partFilename);
-                    // this.progressMap.delete(req);
-                    // this.progressMap.set(makeRequest(), 0);
-                    // this.updateProgress();
+                    this.progressMap.delete(req);
+                    this.progressMap.set(makeRequest(), 0);
+                    this.updateProgress();
                     reject(`\n片段下载失败: ${error}`);
                 });
-                console.log(`created stream ${partFilename}`);
-                req.pipe(fs.createWriteStream(partFilename));
+                req.pipe(fs.createWriteStream(partFilename, {
+                    autoClose: true
+                }));
                 return req;
             };
             this.progressMap.set(makeRequest(), 0);
