@@ -154,7 +154,7 @@ namespace BilibiliEvolved.Build
                     }
                     return source;
                 };
-                input = RegexReplacer.Replace(input, @"import (.*) from (.*)", match =>
+                input = RegexReplacer.Replace(input, @"import (.*) from ([^;]*)", match =>
                 {
                     var imported = match.Groups[1].Value.Replace(" as ", ":");
                     var source = convertToRuntimeSource(match.Groups[2].Value);

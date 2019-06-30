@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const commandLineArgs = require("command-line-args");
 const clipboardy = require("clipboardy");
-// import request = require("requestretry");
 const request = require("request");
 const fs = require("fs");
 const ProgressBar = require("progress");
@@ -58,7 +57,6 @@ class Downloader {
     }
     downloadFragmentPart(url, range, partFilename) {
         return new Promise((resolve, reject) => {
-            let stream;
             const makeRequest = () => {
                 const req = request({
                     url: url,
@@ -80,14 +78,15 @@ class Downloader {
                     this.progressMap.set(req, this.progressMap.get(req) + data.length);
                     this.updateProgress();
                 }).on("error", error => {
-                    stream.close();
-                    fs.unlinkSync(partFilename);
-                    this.progressMap.delete(req);
-                    this.progressMap.set(makeRequest(), 0);
-                    this.updateProgress();
+                    // stream.close();
+                    // fs.unlinkSync(partFilename);
+                    // this.progressMap.delete(req);
+                    // this.progressMap.set(makeRequest(), 0);
+                    // this.updateProgress();
                     reject(`\n片段下载失败: ${error}`);
                 });
-                stream = req.pipe(fs.createWriteStream(partFilename));
+                console.log(`created stream ${partFilename}`);
+                req.pipe(fs.createWriteStream(partFilename));
                 return req;
             };
             this.progressMap.set(makeRequest(), 0);

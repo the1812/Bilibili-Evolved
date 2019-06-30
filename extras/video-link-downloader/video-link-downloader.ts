@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import commandLineArgs = require("command-line-args");
 import clipboardy = require("clipboardy");
-// import request = require("requestretry");
 import request = require("request");
 import fs = require("fs");
 import ProgressBar = require("progress");
@@ -93,7 +92,6 @@ class Downloader
     {
         return new Promise((resolve, reject) =>
         {
-            let stream: fs.WriteStream;
             const makeRequest = () =>
             {
                 const req = request({
@@ -123,15 +121,15 @@ class Downloader
                     this.updateProgress();
                 }).on("error", error =>
                 {
-                    stream.close();
-                    fs.unlinkSync(partFilename);
-                    this.progressMap.delete(req);
-                    this.progressMap.set(makeRequest(), 0);
-                    this.updateProgress();
+                    // stream.close();
+                    // fs.unlinkSync(partFilename);
+                    // this.progressMap.delete(req);
+                    // this.progressMap.set(makeRequest(), 0);
+                    // this.updateProgress();
                     reject(`\n片段下载失败: ${error}`);
                 });
-                stream = req.pipe(fs.createWriteStream(partFilename));
-                return req;
+                req.pipe(fs.createWriteStream(partFilename))
+                return req
             };
             this.progressMap.set(makeRequest(), 0);
         });
