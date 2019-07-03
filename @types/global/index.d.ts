@@ -72,6 +72,7 @@ declare global
         userInfo: number;
         messages: number;
         activities: number;
+        bangumiLink: number;
         watchlaterList: number;
         favoritesList: number;
         historyList: number;
@@ -275,6 +276,9 @@ declare global
         noLiveAutoplay: boolean,
         hideHomeLive: boolean,
         noMiniVideoAutoplay: boolean,
+        useDefaultVideoSpeed: boolean,
+        defaultVideoSpeed: number,
+        hideCategory: boolean,
         latestVersionLink: string,
         currentVersion: string,
     }

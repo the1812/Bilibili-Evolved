@@ -613,5 +613,11 @@ Resource.manifest = {
       noMiniVideoAutoplay: '禁止小视频自动播放',
     }
   },
+  hideCategory: {
+    path: 'hide-category.min.js',
+    displayNames: {
+      hideCategory: '隐藏分区栏',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

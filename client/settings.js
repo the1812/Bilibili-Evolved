@@ -123,6 +123,7 @@ export const settings = {
   noMiniVideoAutoplay: false,
   useDefaultVideoSpeed: false,
   defaultVideoSpeed: 1,
+  hideCategory: false,
   cache: {},
 }
 const fixedSettings = {
