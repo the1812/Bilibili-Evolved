@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.8.6
+// @version      1.8.7
 // @description  增强哔哩哔哩Web端体验: 下载视频, 音乐, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 自定义顶栏, 删除广告, 使用夜间模式; 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -135,11 +135,12 @@ const customNavbarDefaultOrders = {
   userInfo: 12,
   messages: 13,
   activities: 14,
-  watchlaterList: 15,
-  favoritesList: 16,
-  historyList: 17,
-  upload: 18,
-  blank3: 19,
+  bangumiLink: 15,
+  watchlaterList: 16,
+  favoritesList: 17,
+  historyList: 18,
+  upload: 19,
+  blank3: 20,
 }
 const settings = {
   useDarkStyle: false,
@@ -227,7 +228,7 @@ const settings = {
   customNavbarBlur: false,
   customNavbarBlurOpacity: 0.7,
   customNavbarOrder: { ...customNavbarDefaultOrders },
-  customNavbarHidden: [],
+  customNavbarHidden: ['bangumiLink'],
   customNavbarBoundsPadding: 5,
   playerShadow: false,
   narrowDanmaku: true,
