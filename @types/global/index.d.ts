@@ -247,6 +247,8 @@ declare global
             guard: boolean,
             systemMessage: boolean,
             welcomeMessage: boolean,
+            giftMessage: boolean,
+            guardPurchase: boolean,
             popup: boolean,
             skin: boolean,
         },

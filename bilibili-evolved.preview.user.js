@@ -214,6 +214,8 @@ const settings = {
     guard: true,
     systemMessage: true,
     welcomeMessage: true,
+    giftMessage: true,
+    guardPurchase: true,
     popup: false,
     skin: false,
   },
