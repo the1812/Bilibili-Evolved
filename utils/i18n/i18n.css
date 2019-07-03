@@ -56,8 +56,7 @@
 {
     width: 160px !important;
 }
-.link-navbar .main-ctnr,
-.bili-search .contain
+.link-navbar .main-ctnr
 {
     width: 100% !important;
 }
@@ -134,13 +133,13 @@
 {
     margin: 0 10px 0 0px !important;
 }
-.bili-search .rocket-con
+.bili-search #navigator
 {
-    margin-left: 40% !important;
+    overflow: visible !important;
 }
-.bili-search .video.matrix:nth-child(5n)
+.search-wrap .search-block .search-button
 {
-    margin-right: 32px !important;
+    letter-spacing: 0 !important;
 }
 .follow-btn>span>span
 {
