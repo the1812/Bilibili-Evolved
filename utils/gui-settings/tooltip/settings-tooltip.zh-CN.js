@@ -122,6 +122,7 @@ export const toolTips = new Map([
     ['noLiveAutoplay', /*html*/ `禁止直播首页的推荐直播间自动开始播放.`],
     ['hideHomeLive', /*html*/ `隐藏直播首页的推荐直播间板块.`],
     ['sideBarOffset', /*html*/ `设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.`],
+    ['hideCategory', /*html*/ `隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.`],
 ]);
 export default {
     export: { toolTips },
