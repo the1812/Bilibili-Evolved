@@ -997,6 +997,14 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     filter: blur(54px);
 }
+.custom-navbar ol
+{
+    color: black;
+}
+.custom-navbar.dark ol
+{
+    color: #eee;
+}
 
 body.all-navbar-fill .link-navbar,
 body.all-navbar-fill .nav-header-wrapper,
