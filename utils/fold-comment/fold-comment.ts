@@ -11,6 +11,8 @@ if (document.URL.replace(window.location.search, '') === 'https://t.bilibili.com
         if (commentBox === null) {
           console.error('未找到评论区')
           return
+        } else if (commentBox.querySelector('.fold-comment') !== null) {
+          return
         } else {
           button.addEventListener('click', () => {
             const originalButton = card.querySelector('.button-bar')!.children[1] as HTMLDivElement
