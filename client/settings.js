@@ -124,6 +124,7 @@ export const settings = {
   useDefaultVideoSpeed: false,
   defaultVideoSpeed: 1,
   hideCategory: false,
+  foldComment: true,
   cache: {},
 }
 const fixedSettings = {

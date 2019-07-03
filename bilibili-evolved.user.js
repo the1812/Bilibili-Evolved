@@ -245,6 +245,7 @@ const settings = {
   useDefaultVideoSpeed: false,
   defaultVideoSpeed: 1,
   hideCategory: false,
+  foldComment: true,
   cache: {},
 }
 const fixedSettings = {
@@ -1868,6 +1869,13 @@ Resource.manifest = {
     path: 'hide-category.min.js',
     displayNames: {
       hideCategory: '隐藏分区栏',
+    },
+  },
+  foldComment: {
+    path: 'fold-comment.min.js',
+    style: true,
+    displayNames: {
+      foldComment: '快速收起动态评论区',
     },
   },
 }

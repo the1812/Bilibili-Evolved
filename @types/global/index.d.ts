@@ -279,6 +279,7 @@ declare global
         useDefaultVideoSpeed: boolean,
         defaultVideoSpeed: number,
         hideCategory: boolean,
+        foldComment: boolean,
         latestVersionLink: string,
         currentVersion: string,
     }

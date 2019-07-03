@@ -619,5 +619,12 @@ Resource.manifest = {
       hideCategory: '隐藏分区栏',
     },
   },
+  foldComment: {
+    path: 'fold-comment.min.js',
+    style: true,
+    displayNames: {
+      foldComment: '快速收起动态评论区',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
