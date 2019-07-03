@@ -123,6 +123,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['hideHomeLive', /*html*/`隐藏直播首页的推荐直播间板块.`],
   ['sideBarOffset', /*html*/`设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.`],
   ['hideCategory', /*html*/`隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.`],
+  ['foldComment', /*html*/`动态里查看评论区时, 在底部添加一个<span>收起评论</span>按钮, 这样就不用再回到上面收起了.`],
 ]);
 export default {
   export: { toolTips },

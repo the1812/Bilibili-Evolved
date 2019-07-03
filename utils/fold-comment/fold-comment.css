@@ -11,6 +11,7 @@
   color: #99a2aa;
   cursor: pointer;
   transition: all .2s ease-out;
+  z-index: 1000;
 }
 .panel-area .bb-comment .fold-comment:hover {
   color: black;
