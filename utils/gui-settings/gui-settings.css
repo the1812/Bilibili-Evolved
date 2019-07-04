@@ -218,6 +218,7 @@ body.dark .gui-settings-widgets
     visibility: collapse;
     transition: all 0.2s;
     width: 0;
+    position: absolute;
 }
 .gui-settings-checkbox-container .gui-settings-ok
 {
