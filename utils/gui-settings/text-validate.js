@@ -16,6 +16,7 @@ export class Validator {
       case 'defaultPlayerMode':
       case 'defaultVideoQuality':
       case 'i18nLanguage':
+      case 'deadVideoTitleProvider':
         return new DropDownValidator(key)
       case 'darkScheduleStart':
       case 'darkScheduleEnd':

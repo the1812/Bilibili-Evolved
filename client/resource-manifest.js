@@ -422,8 +422,13 @@ Resource.manifest = {
     path: 'show-dead-video-title.min.js',
     displayNames: {
       showDeadVideoTitle: '显示失效视频信息',
-      useBiliplusRedirect: '失效视频重定向'
-    }
+      useBiliplusRedirect: '失效视频重定向',
+      deadVideoTitleProvider: '信息来源',
+    },
+    dropdown: {
+      key: 'deadVideoTitleProvider',
+      items: ['稍后再看', 'Biliplus'],
+    },
   },
   autoPlay: {
     path: 'auto-play.min.js',

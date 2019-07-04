@@ -73,6 +73,7 @@ export const settings = {
   allowJumpContinue: false,
   autoPlay: false,
   showDeadVideoTitle: false,
+  deadVideoTitleProvider: '稍后再看',
   useBiliplusRedirect: false,
   biliplusRedirect: false,
   framePlayback: true,

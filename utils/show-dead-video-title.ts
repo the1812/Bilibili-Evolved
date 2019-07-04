@@ -80,7 +80,8 @@
       return
     }
     const aids = deadVideos.map(it => it.getAttribute('data-aid')!)
-    const query = new WatchlaterProvider()
+    const query: DeadVideoInfoProvider =
+      settings.deadVideoTitleProvider === 'Biliplus' ? new BiliplusProvider() : new WatchlaterProvider()
     const infos = await query.queryInfo(aids)
     deadVideos.forEach((it, index) => {
       it.classList.remove('disabled')
