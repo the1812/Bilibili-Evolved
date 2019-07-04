@@ -227,7 +227,7 @@ declare global
         allowJumpContinue: boolean,
         autoPlay: boolean,
         showDeadVideoTitle: boolean,
-        deadVideoTitleProvider: '稍后再看' | 'Biliplus',
+        deadVideoTitleProvider: '稍后再看' | 'BiliPlus',
         useBiliplusRedirect: boolean,
         biliplusRedirect: boolean,
         framePlayback: boolean,

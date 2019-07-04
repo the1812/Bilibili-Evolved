@@ -427,7 +427,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'deadVideoTitleProvider',
-      items: ['稍后再看', 'Biliplus'],
+      items: ['稍后再看'],
     },
   },
   autoPlay: {
