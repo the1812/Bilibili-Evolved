@@ -37,7 +37,8 @@
 .bpui-selected>span,
 li.danmaku-info-row.bpui-selected,
 li.danmaku-info-row.bpui-selecting,
-.box-body
+.box-body,
+.feed-topic .empty-content
 {
     background-color: #444 !important;
 }
@@ -320,3 +321,7 @@ li.danmaku-info-row.bpui-selecting,
     border-left-color: transparent !important;
     border-right-color: transparent !important;
 } */
+.feed-topic .empty-content
+{
+    border-radius: 4px !important;
+}
