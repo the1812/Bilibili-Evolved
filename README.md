@@ -377,7 +377,6 @@
 
 ### Firefox
 - 背景模糊效果无效, 详见[Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765).
-- 触摸调整的进度预览有弹跳现象.(源自CSS `transition`. 短时间内总是从原数值开始变化, 而不是当前数值)
 
 ### Safari
 - 尚未在Safari中测试.(流下了贫穷的泪水

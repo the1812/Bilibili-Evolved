@@ -86,12 +86,11 @@
     transform-origin: left;
     transform: scaleX(0);
     height: 4px;
-    transition: all 0.2s;
 }
 .touch-row-item
 {
     flex: 1 0 0;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
 }
@@ -117,6 +116,16 @@
 {
     transform: rotateX(0deg) rotateY(0deg) scale(1);
 }
+.touch-video-info.speed .touch-row-item
+{
+    display: flex;
+}
+.touch-video-info.cancel .touch-progress,
+.touch-video-info.cancel .touch-result
+{
+    opacity: 0;
+}
+
 
 .disable-original-hover .bilibili-player-video-control-bottom,
 .disable-original-hover .bilibili-player-video-control-mask

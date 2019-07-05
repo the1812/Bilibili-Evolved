@@ -290,7 +290,24 @@ function setupTouchPlayer (player) {
   $('.bilibili-player-video-subtitle').before(/* html */`
     <div class='touch-video-box-wrapper'>
       <div class='touch-video-box adjust-closed'>
-        <div class='touch-video-info'></div>
+        <div class='touch-video-info'>
+          <div class='touch-row'>
+            <div class='touch-row-item'>
+              <span class='touch-speed'></span>
+            </div>
+            <div class='touch-row-item-wide'>
+              <span class='touch-info'></span>
+            </div>
+          </div>
+          <div class='touch-row'>
+            <div class='videoshot-wrapper touch-row-item'>
+              <div class='videoshot'></div>
+            </div>
+            <div class='touch-row-item-wide'>
+              <span class='touch-result'></span>
+            </div>
+          </div>
+        </div>
         <div class='touch-progress'></div>
       </div>
     </div>`)
@@ -332,9 +349,9 @@ function setupTouchPlayer (player) {
     box.classList.add('animation')
   }
 
-  swiper.action.onActionStart = () => {
+  swiper.action.onActionStart = direction => {
     box.classList.add('adjust-opened')
-    text.innerHTML = ''
+    text.classList[direction === 'vertical' ? 'remove' : 'add']('speed')
     originalVolume = Math.round(video.prop('volume') * 100)
     const filter = video.css('filter').match(/brightness\((.+)\)/)
     originalBrightness = Math.trunc((filter ? filter[1] : 1) * 100)
@@ -357,25 +374,10 @@ function setupTouchPlayer (player) {
         change = current
       }
       const result = `${secondsToHms(current)} (${currentPercent}%)<br>👇<br>${secondsToHms(finalTime)} (${finalPercent}%)`
-      const html = /* html */`
-        <div class='touch-row'>
-          <div class='touch-row-item'>
-            <span class='touch-speed'>${speed}速</span>
-          </div>
-          <div class='touch-row-item-wide'>
-            <span class='touch-info'>进度: ${sec > 0 ? '+' : '-'}${secondsToTime(change)}</span>
-          </div>
-        </div>
-        <div class='touch-row'>
-          <div class='videoshot-wrapper touch-row-item'>
-            <div class='videoshot'></div>
-          </div>
-          <div class='touch-row-item-wide'>
-            <span class='touch-result'>${result}</span>
-          </div>
-        </div>
-        `
-      text.innerHTML = html
+      text.classList.remove('cancel')
+      text.querySelector('.touch-speed').innerHTML = `${speed}速`
+      text.querySelector('.touch-info').innerHTML = `进度: ${sec > 0 ? '+' : '-'}${secondsToTime(change)}`
+      text.querySelector('.touch-result').innerHTML = result
       videoshot.getVideoshot(finalTime, style => $('.videoshot').css(style))
       $('.touch-progress').css('transform', `scaleX(${finalPercent / 100})`)
     }
@@ -399,19 +401,9 @@ function setupTouchPlayer (player) {
     }
     const result = `${originalVolume} 👉 ${finalVolume}`
     setVolume(finalVolume)
-    const html = /* html */`
-        <div class='touch-row'>
-          <div class='touch-row-item-wide'>
-            <span class='touch-info'>音量: ${volume > 0 ? '+' : '-'}${change}</span>
-          </div>
-        </div>
-        <div class='touch-row'>
-          <div class='touch-row-item'>
-            <span class='touch-result'>${result}</span>
-          </div>
-        </div>
-        `
-    text.innerHTML = html
+    text.classList.remove('cancel')
+    text.querySelector('.touch-info').innerHTML = `音量: ${volume > 0 ? '+' : '-'}${change}`
+    text.querySelector('.touch-result').innerHTML = result
     $('.touch-progress').css('transform', `scaleX(${finalVolume / 100})`)
   }
   swiper.action.volumeUp = volumeChange
@@ -430,31 +422,20 @@ function setupTouchPlayer (player) {
     const result = `${originalBrightness} 👉 ${finalBrightness}`
     console.log(brightness, originalBrightness, finalBrightness)
     video.css('filter', `brightness(${finalBrightness / 100})`)
-    const html = /* html */`
-        <div class='touch-row'>
-          <div class='touch-row-item-wide'>
-            <span class='touch-info'>亮度: ${brightness > 0 ? '+' : '-'}${change}</span>
-          </div>
-        </div>
-        <div class='touch-row'>
-          <div class='touch-row-item'>
-            <span class='touch-result'>${result}</span>
-          </div>
-        </div>
-        `
-    text.innerHTML = html
+    text.classList.remove('cancel')
+    text.querySelector('.touch-info').innerHTML = `亮度: ${brightness > 0 ? '+' : '-'}${change}`
+    text.querySelector('.touch-result').innerHTML = result
     $('.touch-progress').css('transform', `scaleX(${finalBrightness / 100})`)
   }
   swiper.action.brightnessUp = brightnessChange
   swiper.action.brightnessDown = brightnessChange
 
   swiper.action.speedCancel = () => {
-    text.innerHTML = `取消时间调整`
-    $('.touch-progress').css('transform', 'scaleX(0)')
+    text.querySelector('.touch-info').innerHTML = `取消时间调整`
+    text.classList.add('cancel')
   }
   if (!unsafeWindow.TOUCH_PLAYER_DEBUG) {
     swiper.action.onActionEnd = action => {
-      text.innerHTML = ''
       if (action) {
         if (action.type === 'playback') {
           let time = video.prop('currentTime')
