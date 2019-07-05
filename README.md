@@ -318,12 +318,14 @@
 ![放大前](images/compressed/player-buttons-original.jpg)
 ![放大后](images/compressed/player-buttons-large.jpg)
 - 启用触摸手势
-    - 左右滑动可调整进度
-    - 上下滑动可调整音量
+    - 左右滑动可调整进度, 上下位置不同灵敏度不同
     - 进度调整可在左上角和右上角取消
-    - 在不同位置滑动, 可以使用3档不同的灵敏度.
+    - 左侧上下滑动可调整亮度
+    - 右侧上下滑动可调整音量
 
-![触摸调整](images/compressed/touch-player.gif)
+![进度调整](images/compressed/touch-gestures.jpg)
+![亮度和音量调整](images/compressed/touch-gestures-vertical.jpg)
+
 #### 启用双击控制
 将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.
 
