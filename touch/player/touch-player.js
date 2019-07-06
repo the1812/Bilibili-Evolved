@@ -75,13 +75,14 @@ class Swiper {
           direction = 'vertical'
         }
         this.direction = direction
-        e.preventDefault()
       } else {
         if (this.direction === 'vertical') {
           this.action.startAction(this.direction, yDiff, position)
         } else if (this.direction === 'horizontal') {
           this.action.startAction(this.direction, -xDiff, position)
         }
+      }
+      if (e.cancelable) {
         e.preventDefault()
       }
     })
@@ -247,6 +248,9 @@ class VideoShot {
       }
 
       let imageData = data.image
+      if (imageData === null) {
+        return
+      }
       if (this.supportWebp) {
         imageData = imageData.map(url => url.replace('.jpg', '.jpg@.webp'))
       }
@@ -311,11 +315,11 @@ function setupTouchPlayer (player) {
         <div class='touch-progress'></div>
       </div>
     </div>`)
-  const video = $('video')
+  let video = $('video')
   const videoDuration = video.prop('duration')
   const swiper = new Swiper(player.get(0))
-  const text = document.getElementsByClassName('touch-video-info')[0]
-  const box = document.getElementsByClassName('touch-video-box')[0]
+  const text = document.querySelector('.touch-video-info')
+  const box = document.querySelector('.touch-video-box')
 
   let originalBrightness = 100
   let originalVolume = Math.round(video.prop('volume') * 100)
@@ -352,6 +356,7 @@ function setupTouchPlayer (player) {
   swiper.action.onActionStart = direction => {
     box.classList.add('adjust-opened')
     text.classList[direction === 'vertical' ? 'remove' : 'add']('speed')
+    video = $('video')
     originalVolume = Math.round(video.prop('volume') * 100)
     const filter = video.css('filter').match(/brightness\((.+)\)/)
     originalBrightness = Math.trunc((filter ? filter[1] : 1) * 100)
@@ -420,7 +425,7 @@ function setupTouchPlayer (player) {
       change = originalBrightness
     }
     const result = `${originalBrightness} 👉 ${finalBrightness}`
-    console.log(brightness, originalBrightness, finalBrightness)
+    // console.log(brightness, originalBrightness, finalBrightness)
     video.css('filter', `brightness(${finalBrightness / 100})`)
     text.classList.remove('cancel')
     text.querySelector('.touch-info').innerHTML = `亮度: ${brightness > 0 ? '+' : '-'}${change}`
