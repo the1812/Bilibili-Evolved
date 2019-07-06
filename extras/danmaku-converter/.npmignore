@@ -1,0 +1,5 @@
+.vscode/
+test.*
+test/
+*.xml
+*.ass

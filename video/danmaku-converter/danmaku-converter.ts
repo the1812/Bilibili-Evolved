@@ -82,7 +82,7 @@ enum DanmakuType {
   Top,
   Reversed,
   Special,
-  Speical2
+  Special2
 }
 export class AssDanmaku extends Danmaku {
   typeTag: string
@@ -166,7 +166,7 @@ export class DanmakuStack {
     [DanmakuType.Top]: 'top',
     [DanmakuType.Reversed]: 'reversed',
     [DanmakuType.Special]: 'special',
-    [DanmakuType.Speical2]: 'special'
+    [DanmakuType.Special2]: 'special'
   }
   static readonly margin = 4
   static readonly nextDanmakuDelay = 0.05
