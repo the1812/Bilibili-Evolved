@@ -44,7 +44,7 @@ var DanmakuType;
     DanmakuType[DanmakuType["Top"] = 5] = "Top";
     DanmakuType[DanmakuType["Reversed"] = 6] = "Reversed";
     DanmakuType[DanmakuType["Special"] = 7] = "Special";
-    DanmakuType[DanmakuType["Speical2"] = 8] = "Speical2";
+    DanmakuType[DanmakuType["Special2"] = 8] = "Special2";
 })(DanmakuType || (DanmakuType = {}));
 export class AssDanmaku extends Danmaku {
     constructor({ content, time, type, fontSize, color, typeTag, colorTag, endTime }) {
@@ -169,7 +169,7 @@ export class DanmakuStack {
           
                       当前弹幕的速度 v = (x + w) / d
                       当前弹幕碰到左侧边缘需要的时间 ▲t = x / v = dx / (x + w)
-                      当前弹幕碰到左侧边缘需要的时间 t = ▲t + start
+                      当前弹幕碰到左侧边缘的时间点 t = ▲t + start
           
                       如果会重叠, 则当前弹幕碰到左边缘时, 前面的弹幕还未结束
                       即 t <= end
@@ -265,7 +265,7 @@ DanmakuStack.danmakuType = {
     [DanmakuType.Top]: 'top',
     [DanmakuType.Reversed]: 'reversed',
     [DanmakuType.Special]: 'special',
-    [DanmakuType.Speical2]: 'special'
+    [DanmakuType.Special2]: 'special'
 };
 DanmakuStack.margin = 4;
 DanmakuStack.nextDanmakuDelay = 0.05;
