@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      355.86
+// @version      355.92
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1060,7 +1060,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/full-tweets-title.min.js"] = (()=>{return(e,l)=>{l.applyStyle("fullTweetsTitleStyle")}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.css"] = `.gui-settings-icon-panel{height:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;position:fixed;top:calc(50% + var(--side-bar-offset));left:0;width:32px;z-index:99999;transform:translateY(-50%);user-select:none}.gui-settings-icon-panel i{transition:.2s;opacity:.6;transform:rotate(180deg);font-size:12px}.gui-settings-widgets:hover i,.gui-settings:hover i{opacity:.75;transform:rotate(0)}.gui-settings,.gui-settings-widgets{display:flex;justify-content:center;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent;margin:16px 0;width:24px;height:24px;transition:.2s;opacity:1;transform-origin:center!important;transform:translateX(-16px);background-color:rgba(255,255,255,.75);border-radius:0 50% 50% 0;padding:6px}body.dark .gui-settings,body.dark .gui-settings-widgets{background-color:rgba(0,0,0,.75)}.gui-settings-widgets:hover,.gui-settings:hover{opacity:1;transform:translateX(0)}.gui-settings-footer,.gui-settings-header{flex-grow:0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:10;padding:32px}.gui-settings-footer{height:80px;justify-content:center;position:relative}.gui-settings-content{flex-grow:1;overflow:auto;position:relative;overscroll-behavior:contain}.gui-settings-content ul{padding:0;margin:0}.gui-settings-content ul li{font-size:16px;margin-bottom:18px;display:flex;height:24px;transition:.2s}.gui-settings-content ul li.disabled,.gui-settings-content ul li:not(.category).folded{height:0;margin:0;overflow:hidden}.gui-settings-content ul li.indent-0{margin-left:16px}.gui-settings-content ul li.indent-1{margin-left:80px}.gui-settings-content ul li.indent-2{margin-left:144px}.gui-settings-content ul li.indent-center{align-items:center;justify-content:center}.gui-settings-content ul li.category{padding:16px 0;margin-bottom:18px;border-top:1px dashed #8884;border-bottom:1px dashed #8884;background:#fff;position:sticky;top:0;z-index:10;cursor:pointer;transition:.2s ease-out;-webkit-tap-highlight-color:transparent}.gui-settings-content ul li.category.folded{margin-bottom:-1px}.gui-settings-content ul li.category *{opacity:.8}.gui-settings-title{font-size:16pt;flex:0 0 auto}.gui-settings-box .gui-settings-title{margin-right:64px}.gui-settings-search[type=text]{flex:1 0 auto;height:auto;border:none;padding:6px;font-size:12pt;width:40%;border-bottom:1px solid #8884;transition:.2s;color:inherit;background:0 0;box-sizing:border-box;outline:0!important}.gui-settings-close{width:24px;height:24px;padding:16px}.gui-settings-header .gui-settings-close{cursor:pointer;-webkit-tap-highlight-color:transparent}.gui-settings-textbox-container{display:flex;justify-content:center;align-items:center;-webkit-tap-highlight-color:transparent}.gui-settings-dropdown-span,.gui-settings-textbox-container span{margin:0 16px;transition:.2s}.gui-settings-textbox-container input{border:none;height:100%;max-width:90px;padding:4px 8px;background:#8884;transition:.2s;font-size:16px}.gui-settings-textbox-container input:disabled,.gui-settings-textbox-container.disabled div,.gui-settings-textbox-container.disabled span{opacity:.5}.gui-settings-checkbox-container{cursor:pointer;display:flex;width:100%;justify-content:start;align-items:center;padding:0 16px;-webkit-tap-highlight-color:transparent}.gui-settings-checkbox-container input{visibility:collapse;transition:.2s;width:0;position:absolute}.gui-settings-checkbox-container .gui-settings-ok{width:24px;height:24px;margin-right:16px;transition:.2s}.gui-settings-checkbox-container input~.gui-settings-ok{background-color:#8884}.gui-settings-checkbox-container input:checked~.gui-settings-ok{background-color:var(--theme-color)}.gui-settings-checkbox-container input~.gui-settings-ok>i{opacity:0;transform-origin:center;transform:scale(.9)}.gui-settings-checkbox-container input:checked~.gui-settings-ok>i{opacity:1}.gui-settings-checkbox-container input:disabled~.gui-settings-ok,.gui-settings-checkbox-container input:disabled~span{opacity:.5}button.gui-settings-button{padding:6px 20px;margin:0 4px;max-height:34px;border:none;background:#8884;font-size:16px;cursor:pointer;transition:.2s ease-out;font-family:inherit;-webkit-tap-highlight-color:transparent}button.gui-settings-button:hover{opacity:.9}button.gui-settings-button:active{opacity:.8}button.gui-settings-button:focus{outline:0}.custom-color-preview{width:28px;height:28px;border-radius:50%;background:var(--theme-color);margin-right:16px;position:relative;cursor:pointer;box-sizing:border-box;box-shadow:0 2px 8px 1px var(--theme-color-70)}.predefined-colors{transition:.2s;display:flex;opacity:0;background:#fff;width:168px;height:168px;position:absolute;box-shadow:0 3px 20px 2px #0004;top:32px;left:calc(-84px + 50%);transform:scale(0);transform-origin:top;z-index:9}.predefined-colors.opened{opacity:1;transform:scale(1)}.predefined-colors-grid{display:grid;grid-template-columns:auto auto auto auto;margin:0;flex-grow:1}.predefined-colors-grid-block{width:100%;height:100%;justify-self:center;align-self:center;cursor:pointer;transform-origin:center;transition:.1s ease-out}.predefined-colors-grid-block:hover{transform:scale(1.1);box-shadow:0 0 8px 1px #0004}input[key]:focus{outline:0}input[type=text][key]{height:auto;border:none}.gui-settings-label{margin:0 16px;font-size:16px}.hidden{display:none!important}@supports (backdrop-filter:blur(24px)) or (-webkit-backdrop-filter:blur(24px)){.gui-settings-box.blur li.category{-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);background:0 0}.gui-settings-box.blur,.gui-settings-box.blur .gui-settings-content,.gui-settings-box.blur .gui-settings-footer,.gui-settings-box.blur .gui-settings-header{background:#fff8}.gui-settings-box.blur .gui-settings-content,.gui-settings-box.blur .gui-settings-footer,.gui-settings-box.blur .gui-settings-header{-webkit-backdrop-filter:blur(64px);backdrop-filter:blur(64px)}}li.category i.icon-arrow{transition:.2s ease-out}li.category.folded i.icon-arrow{transform:rotate(180deg)}.gui-settings-dropdown-container{display:flex;align-items:center}.gui-settings-dropdown{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent;background-color:#8884;display:inline-flex;align-items:center;height:32px}.gui-settings-dropdown>i{transition:.2s ease-out;transform-origin:center;transform:rotate(180deg)}.gui-settings-dropdown>ul{position:absolute;top:calc(100%);width:100%;cursor:pointer;background:#fff;transform-origin:top;transform:scaleY(0);transition:.2s cubic-bezier(.6,-.28,.74,.05);display:flex;flex-direction:column;align-items:center;box-shadow:rgba(0,0,0,.2) 0 4px 8px 0;z-index:100}.gui-settings-dropdown ul li{margin:0;padding:12px 0;height:auto;width:100%;justify-content:center}.gui-settings-dropdown ul li:hover{background:rgba(0,0,0,.16)}.gui-settings-dropdown.opened>ul{transform:scaleY(1);transition-timing-function:cubic-bezier(.18,.89,.32,1.28)}.gui-settings-dropdown.opened>i{transform:rotate(0)}.gui-settings-dropdown input{cursor:pointer;border:none;height:100%;max-width:80px;padding:4px 8px;transition:.2s;font-size:16px;background-color:transparent}.gui-settings-dropdown input[key=defaultPlayerMode]{max-width:120px}.gui-settings-dropdown input[key=defaultBangumiLayout],.gui-settings-dropdown input[key=defaultPlayerLayout]{max-width:50px}.gui-settings-box input[key=filenameFormat]{max-width:500px}.gui-settings-mask{height:calc(100% + 5px);width:calc(100% + 5px);opacity:0;background:#000a;position:fixed;top:0;left:0;z-index:99999;pointer-events:none;transition:.3s cubic-bezier(0,.86,.58,1);overscroll-behavior:contain}.gui-settings-mask.opened{opacity:1;pointer-events:initial}.gui-settings-mask.opened.transparent{opacity:0;transition:.3s cubic-bezier(0,.86,.58,1) .3s}.gui-settings-box,.gui-settings-widgets-box{height:100%;width:420px;background:#fff;color:#000;position:fixed;top:0;left:0;z-index:100000;transform:translateX(-100%);transition:.3s cubic-bezier(0,.86,.58,1);display:none;flex-direction:column;box-shadow:4px 0 16px 0 #0000}.gui-settings-box.loaded,.gui-settings-widgets-box.loaded{display:flex}.gui-settings-widgets-box{min-width:200px;width:auto}.gui-settings-box.opened,.gui-settings-widgets-box.opened{transform:translateX(0);box-shadow:4px 0 16px 0 #0005}.gui-settings-widgets-box>.title{margin:32px;font-size:16pt}.gui-settings-widgets-box>.widgets-container{padding:32px;display:flex;flex-direction:column;align-items:stretch;justify-content:start;position:relative;overscroll-behavior:contain;overflow:auto;height:100%}.gui-settings-widgets-box>.widgets-container .empty-tip{font-size:10pt;display:none}.gui-settings-widgets-box>.widgets-container .empty-tip.show{display:block}.gui-settings-widgets-box>.gui-settings-header{justify-content:start}.gui-settings-flat-button,.gui-settings-flat-button a,.gui-settings-flat-button a:hover{display:flex;align-items:center;justify-content:center;color:inherit}.gui-settings-flat-button{width:auto;padding:8px 16px;background:#8884;border:none;color:#000;cursor:pointer;transition:.2s ease-out;font-size:10pt;border-bottom:2px solid var(--theme-color-50);flex:0 0 auto;margin:4px}.gui-settings-flat-button:disabled{opacity:.5;cursor:not-allowed}.gui-settings-flat-button:hover:not(:disabled){border-bottom-color:var(--theme-color-90);background:#8884}.gui-settings-flat-button:active:not(:disabled){border-bottom-color:var(--theme-color)}.gui-settings-flat-button:focus{outline:0}.gui-settings-flat-button i{margin-right:8px;line-height:24px;height:24px}.gui-settings-checkbox{width:28px;margin-right:24px;height:12px;background:#8884;border-radius:16px;position:relative}.gui-settings-checkbox::after{content:"";width:20px;height:20px;background:#c6c6c6;position:absolute;border-radius:50%;top:-4px;left:-4px;box-shadow:0 2px 8px 1px #0003;transition:.2s ease-out}.gui-settings-checkbox-container input:checked~.gui-settings-checkbox{background:var(--theme-color-80)}.gui-settings-checkbox-container input:checked~.gui-settings-checkbox::after{background:var(--theme-color)!important;box-shadow:0 2px 8px 1px var(--theme-color-70);left:calc(100% - 16px)}.gui-settings-checkbox-container input:disabled~.gui-settings-checkbox{opacity:.5}.gui-settings-header>i{margin-right:8px}.player-full-win .app-content,.player-full-win .live-room-app .app-content,.player-mode-webfullscreen .player-module{z-index:100000!important}.gui-settings-flat-button .popup{position:absolute;top:calc(100% + 2px);transition:.2s cubic-bezier(.6,-.28,.74,.05);transform-origin:top;transform:scaleY(0) translateX(-50%);left:50%;background:#fff;box-shadow:rgba(0,0,0,.2) 0 4px 8px 0;z-index:200;display:flex;flex-direction:column;align-items:center;width:max-content}.gui-settings-flat-button .popup *{transition:.2s}.gui-settings-flat-button .popup.opened{transform:scaleY(1) translateX(-50%);transition-timing-function:cubic-bezier(.18,.89,.32,1.28)}.gui-settings-flat-button .popup ul{list-style:none;margin:0;padding:0}.gui-settings-box kbd{padding:0 4px;border-radius:4px;border:1px solid #ccc;color:#ccc;border-bottom-width:3px;margin:0 4px}body.round-corner{--corner-radius:4px;--large-corner-radius:8px}.round-corner .gui-settings-dropdown,.round-corner .gui-settings-dropdown ul li,.round-corner .gui-settings-flat-button,.round-corner .gui-settings-flat-button .popup,.round-corner .gui-settings-textbox-container input{border-radius:var(--corner-radius)}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.html"] = `<div class=gui-settings-mask></div><div class="gui-settings-widgets-box icons-enabled"><div class=gui-settings-header><i class=icon-widgets></i><span class=gui-settings-title>附加功能</span></div><div class=widgets-container><div class=empty-tip>空空如也哦 =￣ω￣=</div></div></div><div class="gui-settings-box icons-enabled"><div class=gui-settings-header><i class=icon-settings></i><span class=gui-settings-title>设置</span><i class=icon-search style="transform: scale(0.9); margin-right: 0"></i><input class=gui-settings-search placeholder=搜索设置项 type=text></div><div class=gui-settings-content><ul><li class="indent-center category folded"><i class=icon-video style=margin-right:8px></i><span class=settings-category>视频</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"data-indent=0 data-key=useDefaultPlayerLayout data-dependencies=""><label class=gui-settings-checkbox-container><input key=useDefaultPlayerLayout type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=defaultPlayerLayout data-dependencies=useDefaultPlayerLayout><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultPlayerLayout dependencies=useDefaultPlayerLayout><ul></ul><i class=icon-arrow></i></div></label><li class="indent-1 folded"data-indent=1 data-key=defaultBangumiLayout data-dependencies=useDefaultPlayerLayout><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultBangumiLayout dependencies=useDefaultPlayerLayout><ul></ul><i class=icon-arrow></i></div></label><li class="indent-0 folded"data-indent=0 data-key=useDefaultPlayerMode data-dependencies=""><label class=gui-settings-checkbox-container><input key=useDefaultPlayerMode type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=defaultPlayerMode data-dependencies=useDefaultPlayerMode><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultPlayerMode dependencies=useDefaultPlayerMode><ul></ul><i class=icon-arrow></i></div></label><li class="indent-1 folded"data-indent=1 data-key=applyPlayerModeOnPlay data-dependencies=useDefaultPlayerMode><label class=gui-settings-checkbox-container><input key=applyPlayerModeOnPlay type=checkbox dependencies=useDefaultPlayerMode checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=autoLightOff data-dependencies=useDefaultPlayerMode><label class=gui-settings-checkbox-container><input key=autoLightOff type=checkbox dependencies=useDefaultPlayerMode checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=useDefaultVideoQuality data-dependencies=""><label class=gui-settings-checkbox-container><input key=useDefaultVideoQuality type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=defaultVideoQuality data-dependencies=useDefaultVideoQuality><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=defaultVideoQuality dependencies=useDefaultVideoQuality><ul></ul><i class=icon-arrow></i></div></label><li class="indent-0 folded"data-indent=0 data-key=useDefaultDanmakuSettings data-dependencies=""><label class=gui-settings-checkbox-container><input key=useDefaultDanmakuSettings type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=enableDanmaku data-dependencies=useDefaultDanmakuSettings><label class=gui-settings-checkbox-container><input key=enableDanmaku type=checkbox dependencies=useDefaultDanmakuSettings checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=rememberDanmakuSettings data-dependencies="useDefaultDanmakuSettings enableDanmaku"><label class=gui-settings-checkbox-container><input key=rememberDanmakuSettings type=checkbox dependencies="useDefaultDanmakuSettings enableDanmaku"checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=expandDanmakuList data-dependencies=""><label class=gui-settings-checkbox-container><input key=expandDanmakuList type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=expandDescription data-dependencies=""><label class=gui-settings-checkbox-container><input key=expandDescription type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=autoContinue data-dependencies=""><label class=gui-settings-checkbox-container><input key=autoContinue type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=allowJumpContinue data-dependencies=autoContinue><label class=gui-settings-checkbox-container><input key=allowJumpContinue type=checkbox dependencies=autoContinue checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=autoPlay data-dependencies=""><label class=gui-settings-checkbox-container><input key=autoPlay type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=skipChargeList data-dependencies=""><label class=gui-settings-checkbox-container><input key=skipChargeList type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=framePlayback data-dependencies=""><label class=gui-settings-checkbox-container><input key=framePlayback type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=videoScreenshot data-dependencies=""><label class=gui-settings-checkbox-container><input key=videoScreenshot type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=playerFocus data-dependencies=""><label class=gui-settings-checkbox-container><input key=playerFocus type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=playerFocusOffset data-dependencies=playerFocus><label class=gui-settings-textbox-container><span></span><input key=playerFocusOffset dependencies=playerFocus spellcheck=false type=text></label><li class="indent-0 folded"data-indent=0 data-key=outerWatchlater data-dependencies=""><label class=gui-settings-checkbox-container><input key=outerWatchlater type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-style style=margin-right:8px></i><span class=settings-category>样式</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"><label class=gui-settings-textbox-container><span>主题颜色</span><div class=custom-color-preview><div class="predefined-colors popup"><div class=predefined-colors-grid></div></div></div><input key=customStyleColor dependencies=""spellcheck=false type=text></label><li class="indent-0 folded"data-indent=0 data-key=customNavbar data-dependencies=""><label class=gui-settings-checkbox-container><input key=customNavbar type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=customNavbarFill data-dependencies=customNavbar><label class=gui-settings-checkbox-container><input key=customNavbarFill type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=allNavbarFill data-dependencies=customNavbar><label class=gui-settings-checkbox-container><input key=allNavbarFill type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=customNavbarShadow data-dependencies=customNavbar><label class=gui-settings-checkbox-container><input key=customNavbarShadow type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=customNavbarCompact data-dependencies=customNavbar><label class=gui-settings-checkbox-container><input key=customNavbarCompact type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=customNavbarBlur data-dependencies=customNavbar><label class=gui-settings-checkbox-container><input key=customNavbarBlur type=checkbox dependencies=customNavbar checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-2 folded"data-indent=2 data-key=customNavbarBlurOpacity data-dependencies="customNavbar customNavbarBlur"><label class=gui-settings-textbox-container><span></span><input key=customNavbarBlurOpacity dependencies="customNavbar customNavbarBlur"spellcheck=false type=text></label><li class="indent-0 folded"data-indent=0 data-key=useDarkStyle data-dependencies=""><label class=gui-settings-checkbox-container><input key=useDarkStyle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=darkSchedule data-dependencies=""><label class=gui-settings-checkbox-container><input key=darkSchedule type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=darkScheduleStart data-dependencies=darkSchedule><label class=gui-settings-textbox-container><span></span><input key=darkScheduleStart dependencies=darkSchedule spellcheck=false type=text></label><li class="indent-1 folded"data-indent=1 data-key=darkScheduleEnd data-dependencies=darkSchedule><label class=gui-settings-textbox-container><span></span><input key=darkScheduleEnd dependencies=darkSchedule spellcheck=false type=text></label><li class="indent-0 folded"data-indent=0 data-key=compactLayout data-dependencies=""><label class=gui-settings-checkbox-container><input key=compactLayout type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=useCommentStyle data-dependencies=""><label class=gui-settings-checkbox-container><input key=useCommentStyle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=simplifyLiveroom data-dependencies=""><label class=gui-settings-checkbox-container><input key=simplifyLiveroom type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=hideBanner data-dependencies=""><label class=gui-settings-checkbox-container><input key=hideBanner type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=playerShadow data-dependencies=""><label class=gui-settings-checkbox-container><input key=playerShadow type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=narrowDanmaku data-dependencies=""><label class=gui-settings-checkbox-container><input key=narrowDanmaku type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=blurVideoControl data-dependencies=""><label class=gui-settings-checkbox-container><input key=blurVideoControl type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=customControlBackground data-dependencies=""><label class=gui-settings-checkbox-container><input key=customControlBackground type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=customControlBackgroundOpacity data-dependencies=customControlBackground><label class=gui-settings-textbox-container><span></span><input key=customControlBackgroundOpacity dependencies=customControlBackground spellcheck=false type=text></label><li class="indent-0 folded"data-indent=0 data-key=harunaScale data-dependencies=""><label class=gui-settings-checkbox-container><input key=harunaScale type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=removeLiveWatermark data-dependencies=""><label class=gui-settings-checkbox-container><input key=removeLiveWatermark type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=removeVideoTopMask data-dependencies=""><label class=gui-settings-checkbox-container><input key=removeVideoTopMask type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=hideOldEntry data-dependencies=""><label class=gui-settings-checkbox-container><input key=hideOldEntry type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=hideBangumiReviews data-dependencies=""><label class=gui-settings-checkbox-container><input key=hideBangumiReviews type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=hideCategory data-dependencies=""><label class=gui-settings-checkbox-container><input key=hideCategory type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-tool style=margin-right:8px></i><span class=settings-category>工具</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"data-indent=0 data-key=removeAds data-dependencies=""><label class=gui-settings-checkbox-container><input key=removeAds type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=watchLaterRedirect data-dependencies=""><label class=gui-settings-checkbox-container><input key=watchLaterRedirect type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=favoritesRedirect data-dependencies=""><label class=gui-settings-checkbox-container><input key=favoritesRedirect type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=hideTopSearch data-dependencies=""><label class=gui-settings-checkbox-container><input key=hideTopSearch type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=fullTweetsTitle data-dependencies=""><label class=gui-settings-checkbox-container><input key=fullTweetsTitle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=fullPageTitle data-dependencies=""><label class=gui-settings-checkbox-container><input key=fullPageTitle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=showDeadVideoTitle data-dependencies=""><label class=gui-settings-checkbox-container><input key=showDeadVideoTitle type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=useBiliplusRedirect data-dependencies=showDeadVideoTitle><label class=gui-settings-checkbox-container><input key=useBiliplusRedirect type=checkbox dependencies=showDeadVideoTitle checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=deadVideoTitleProvider data-dependencies=showDeadVideoTitle><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=deadVideoTitleProvider dependencies=showDeadVideoTitle><ul></ul><i class=icon-arrow></i></div></label><li class="indent-0 folded"data-indent=0 data-key=biliplusRedirect data-dependencies=""><label class=gui-settings-checkbox-container><input key=biliplusRedirect type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=imageResolution data-dependencies=""><label class=gui-settings-checkbox-container><input key=imageResolution type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=oldTweets data-dependencies=""><label class=gui-settings-checkbox-container><input key=oldTweets type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=i18n data-dependencies=""><label class=gui-settings-checkbox-container><input key=i18n type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=i18nLanguage data-dependencies=i18n><label class=gui-settings-dropdown-container><span class=gui-settings-dropdown-span></span><div class="gui-settings-dropdown popup"><input readonly=readonly type=text spellcheck=false key=i18nLanguage dependencies=i18n><ul></ul><i class=icon-arrow></i></div></label><li class="indent-0 folded"data-indent=0 data-key=noLiveAutoplay data-dependencies=""><label class=gui-settings-checkbox-container><input key=noLiveAutoplay type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=hideHomeLive data-dependencies=noLiveAutoplay><label class=gui-settings-checkbox-container><input key=hideHomeLive type=checkbox dependencies=noLiveAutoplay checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=foldComment data-dependencies=""><label class=gui-settings-checkbox-container><input key=foldComment type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-touch style=margin-right:8px></i><span class=settings-category>触摸</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"data-indent=0 data-key=touchNavBar data-dependencies=""><label class=gui-settings-checkbox-container><input key=touchNavBar type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=comboLike data-dependencies=""><label class=gui-settings-checkbox-container><input key=comboLike type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=touchVideoPlayer data-dependencies=""><label class=gui-settings-checkbox-container><input key=touchVideoPlayer type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=touchVideoPlayerDoubleTapControl data-dependencies=touchVideoPlayer><label class=gui-settings-checkbox-container><input key=touchVideoPlayerDoubleTapControl type=checkbox dependencies=touchVideoPlayer checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-center category folded"><i class=icon-other style=margin-right:8px></i><span class=settings-category>其他</span><i class=icon-arrow style=margin-left:8px></i><li class="indent-0 folded"data-indent=0 data-key=toast data-dependencies=""><label class=gui-settings-checkbox-container><input key=toast type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-1 folded"data-indent=1 data-key=toastInternalError data-dependencies=toast><label class=gui-settings-checkbox-container><input key=toastInternalError type=checkbox dependencies=toast checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=useCache data-dependencies=""><label class=gui-settings-checkbox-container><input key=useCache type=checkbox dependencies=""checked=checked><div class=gui-settings-checkbox></div><span></span></label><li class="indent-0 folded"data-indent=0 data-key=filenameFormat data-dependencies=""><label class=gui-settings-textbox-container><span></span><input key=filenameFormat dependencies=""spellcheck=false type=text></label><li class="indent-0 folded"data-indent=0 data-key=sideBarOffset data-dependencies=""><label class=gui-settings-textbox-container><span></span><input key=sideBarOffset dependencies=""spellcheck=false type=text></label></ul></div><div class=gui-settings-tooltip></div></div>`;
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.js"] = (()=>{return(e,t)=>{const{ThemeColors:n}=t.import("theme-colors");const{SettingsSearch:i}=t.import("settings-search");const{Validator:s}=t.import("text-validate");let o=[];let c=[];let r=[];function a(e){let t=e.nextElementSibling;const n=[];while(t!==null&&!t.classList.contains("category")){n.push(t);t=t.nextElementSibling}return n}function l(){r.forEach(t=>t.value=e[t.getAttribute("key")]);c.forEach(t=>t.checked=e[t.getAttribute("key")])}function d(){document.querySelector(".gui-settings-mask").addEventListener("click",()=>{document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask,.bilibili-evolved-about").forEach(e=>e.classList.remove("opened"))});r.forEach(t=>{t.setAttribute("placeholder",e[t.getAttribute("key")])});document.querySelectorAll(".gui-settings-content ul li.category").forEach(e=>{e.addEventListener("click",e=>{const t=document.querySelector(".gui-settings-search");if(t.value!==""){t.value="";raiseEvent(t,"input")}e.currentTarget.classList.toggle("folded");a(e.currentTarget).forEach(e=>e.classList.toggle("folded"))})});document.querySelectorAll(".gui-settings-dropdown>input").forEach(e=>{e.addEventListener("click",e=>{e.currentTarget.parentElement.classList.toggle("opened")})})}function u(){c.forEach(t=>{t.addEventListener("change",()=>{const n=t.getAttribute("key");const i=t.checked;e[n]=i;saveSettings(e)})});r.forEach(t=>{t.addEventListener("change",()=>{const n=t.getAttribute("key");const i=s.getValidator(n).validate(t.value);e[n]=i;t.value=i;saveSettings(e)})})}function g(){const e=o.map(e=>[e.getAttribute("dependencies").split(" ").map(e=>o.find(t=>t.getAttribute("key")===e)),e]);const t=e=>e.nodeName.toUpperCase()==="LI"?e:t(e.parentElement);e.forEach(([e,n])=>{if(e[0]===undefined){return}const i=()=>{if(e.every(e=>e.checked)){t(n).classList.remove("disabled")}else{t(n).classList.add("disabled")}};e.forEach(e=>e.addEventListener("change",i));i()})}function f(){if(typeof offlineData!=="undefined"){document.querySelector(".gui-settings-checkbox-container>input[key=useCache]").parentElement.parentElement.classList.add("disabled");document.querySelector("input[key=useCache]").disabled=true}}function b(){if(!CSS.supports("backdrop-filter","blur(24px)")&&!CSS.supports("-webkit-backdrop-filter","blur(24px)")){o.find(e=>e.getAttribute("key")==="blurVideoControl").disabled=true;e.blurVideoControl=false;saveSettings(e)}if(window.devicePixelRatio===1){o.find(e=>e.getAttribute("key")==="harunaScale").disabled=true;o.find(e=>e.getAttribute("key")==="imageResolution").disabled=true;e.harunaScale=false;e.imageResolution=false;saveSettings(e)}}function m(){for(const[e,t]of Object.entries(Resource.displayNames)){const n=o.find(t=>t.getAttribute("key")===e);if(!n){continue}switch(n.type){case"checkbox":n.nextElementSibling.nextElementSibling.innerHTML=t;break;case"text":const e=n.parentElement;if(e.classList.contains("gui-settings-textbox-container")){n.previousElementSibling.innerHTML=t}else if(e.classList.contains("gui-settings-dropdown")){e.previousElementSibling.innerHTML=t}break;default:break}}}(async()=>{t.applyStyle("guiSettingsStyle");document.body.insertAdjacentHTML("afterbegin",`<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);document.body.classList.add("round-corner");const e=document.body&&unsafeWindow.parent.window!==unsafeWindow;if(e){document.querySelector(".gui-settings-icon-panel").style.display="none"}const s=t.data.guiSettingsHtml.text;document.body.insertAdjacentHTML("beforeend",s);const a=document.querySelector(".widgets-container");const p=a.querySelector(".empty-tip");Observer.childList(a,()=>{if(a.childElementCount<=1){p.classList.add("show")}else{p.classList.remove("show")}});(new n).setupDom();const y=document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box");const h=document.querySelector(".gui-settings-icon-panel");h.addEventListener("mouseover",()=>{raiseEvent(h,"be:load");y.forEach(e=>e.classList.add("loaded"));o=[...document.querySelectorAll("input[key]")];c=o.filter(e=>e.type==="checkbox");r=o.filter(e=>e.type==="text"&&!e.parentElement.classList.contains("gui-settings-dropdown"));d();f();l();g();u();b();m();new i},{once:true})})()}})();
+offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/gui-settings.min.js"] = (()=>{return(e,t)=>{const{ThemeColors:n}=t.import("theme-colors");const{SettingsSearch:i}=t.import("settings-search");const{Validator:s}=t.import("text-validate");let o=[];let c=[];let r=[];function a(e){let t=e.nextElementSibling;const n=[];while(t!==null&&!t.classList.contains("category")){n.push(t);t=t.nextElementSibling}return n}function l(){r.forEach(t=>t.value=e[t.getAttribute("key")]);c.forEach(t=>t.checked=e[t.getAttribute("key")])}function d(){document.querySelector(".gui-settings-mask").addEventListener("click",()=>{document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask,.bilibili-evolved-about").forEach(e=>e.classList.remove("opened"))});r.forEach(t=>{t.setAttribute("placeholder",e[t.getAttribute("key")])});document.querySelectorAll(".gui-settings-content ul li.category").forEach(e=>{e.addEventListener("click",e=>{const t=document.querySelector(".gui-settings-search");if(t.value!==""){t.value="";raiseEvent(t,"input")}e.currentTarget.classList.toggle("folded");a(e.currentTarget).forEach(e=>e.classList.toggle("folded"))})});document.querySelectorAll(".gui-settings-dropdown>input").forEach(e=>{e.addEventListener("click",e=>{e.currentTarget.parentElement.classList.toggle("opened")})})}function u(){c.forEach(t=>{t.addEventListener("change",()=>{const n=t.getAttribute("key");const i=t.checked;e[n]=i;saveSettings(e)})});r.forEach(t=>{t.addEventListener("change",()=>{const n=t.getAttribute("key");const i=s.getValidator(n).validate(t.value);e[n]=i;t.value=i;saveSettings(e)})})}function g(){const e=o.map(e=>[e.getAttribute("dependencies").split(" ").map(e=>o.find(t=>t.getAttribute("key")===e)),e]);const t=e=>e.nodeName.toUpperCase()==="LI"?e:t(e.parentElement);e.forEach(([e,n])=>{if(e[0]===undefined){return}const i=()=>{if(e.every(e=>e.checked)){t(n).classList.remove("disabled")}else{t(n).classList.add("disabled")}};e.forEach(e=>e.addEventListener("change",i));i()})}function f(){if(typeof offlineData!=="undefined"){document.querySelector(".gui-settings-checkbox-container>input[key=useCache]").parentElement.parentElement.classList.add("disabled");document.querySelector("input[key=useCache]").disabled=true}}function b(){if(!CSS.supports("backdrop-filter","blur(24px)")&&!CSS.supports("-webkit-backdrop-filter","blur(24px)")){o.find(e=>e.getAttribute("key")==="blurVideoControl").disabled=true;e.blurVideoControl=false;saveSettings(e)}if(window.devicePixelRatio===1){o.find(e=>e.getAttribute("key")==="harunaScale").disabled=true;o.find(e=>e.getAttribute("key")==="imageResolution").disabled=true;e.harunaScale=false;e.imageResolution=false;saveSettings(e)}}function p(){for(const[e,t]of Object.entries(Resource.displayNames)){const n=o.find(t=>t.getAttribute("key")===e);if(!n){continue}switch(n.type){case"checkbox":n.nextElementSibling.nextElementSibling.innerHTML=t;break;case"text":const e=n.parentElement;if(e.classList.contains("gui-settings-textbox-container")){n.previousElementSibling.innerHTML=t}else if(e.classList.contains("gui-settings-dropdown")){e.previousElementSibling.innerHTML=t}break;default:break}}}(async()=>{t.applyStyle("guiSettingsStyle");document.body.insertAdjacentHTML("afterbegin",`<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`);document.body.classList.add("round-corner");const e=document.body&&unsafeWindow.parent.window!==unsafeWindow;if(e){document.querySelector(".gui-settings-icon-panel").style.display="none"}const s=t.data.guiSettingsHtml.text;document.body.insertAdjacentHTML("beforeend",s);t.applyDropdownOptions();const a=document.querySelector(".widgets-container");const m=a.querySelector(".empty-tip");Observer.childList(a,()=>{if(a.childElementCount<=1){m.classList.add("show")}else{m.classList.remove("show")}});(new n).setupDom();const y=document.querySelectorAll(".gui-settings-widgets-box,.gui-settings-box");const h=document.querySelector(".gui-settings-icon-panel");h.addEventListener("mouseover",()=>{raiseEvent(h,"be:load");y.forEach(e=>e.classList.add("loaded"));o=[...document.querySelectorAll("input[key]")];c=o.filter(e=>e.type==="checkbox");r=o.filter(e=>e.type==="text"&&!e.parentElement.classList.contains("gui-settings-dropdown"));d();f();l();g();u();b();p();new i},{once:true})})()}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/haruna-scale.min.js"] = (()=>{return(n,e)=>{const t="haruna-scale";const a=()=>{if(document.getElementById(t)===null){e.applyStyleFromText(`\n            .haruna-ctnr,\n            .avatar-btn\n            {\n                transform: scale(${1/window.devicePixelRatio}) !important;\n            }\n        `,t)}};a();return{reload:a,unload:()=>{const n=document.getElementById(t);n&&n.remove()}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/hide-bangumi-reviews.min.js"] = (()=>{return(e,n)=>{return n.toggleStyle(`\n    #review_module { display: none !important; }\n    `,`hide-bangumi-reviews-style`)}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/hide-banner.min.css"] = `#banner_link,.custom-navbar .blur-layer,.z-top-container.has-banner>.header{display:none!important}.b-header-mask-wrp .b-header-mask-bg,div.blur-bg{opacity:0!important}`;
@@ -2072,368 +2072,287 @@ class StyleManager
         }
     }
 };
-class ResourceManager
-{
-    constructor()
-    {
-        this.data = Resource.all;
-        this.skippedImport = [];
-        this.attributes = {};
-        this.styleManager = new StyleManager(this);
-        const styleMethods = Object.getOwnPropertyNames(StyleManager.prototype).filter(it => it !== "constructor");
-        for (const key of styleMethods)
-        {
-            this[key] = function (...params)
-            {
-                this.styleManager[key](...params);
-            };
-        }
-        this.setupColors();
+class ResourceManager {
+  constructor () {
+    this.data = Resource.all
+    this.skippedImport = []
+    this.attributes = {}
+    this.styleManager = new StyleManager(this)
+    const styleMethods = Object.getOwnPropertyNames(StyleManager.prototype).filter(it => it !== 'constructor')
+    for (const key of styleMethods) {
+      this[key] = function (...params) {
+        this.styleManager[key](...params)
+      }
     }
-    setupColors()
-    {
-        this.color = new ColorProcessor(settings.customStyleColor);
-        settings.foreground = this.color.foreground;
-        settings.blueImageFilter = this.color.blueImageFilter;
-        settings.pinkImageFilter = this.color.pinkImageFilter;
-        settings.brightness = this.color.brightness;
-        settings.filterInvert = this.color.filterInvert;
+    this.setupColors()
+  }
+  setupColors () {
+    this.color = new ColorProcessor(settings.customStyleColor)
+    settings.foreground = this.color.foreground
+    settings.blueImageFilter = this.color.blueImageFilter
+    settings.pinkImageFilter = this.color.pinkImageFilter
+    settings.brightness = this.color.brightness
+    settings.filterInvert = this.color.filterInvert
 
-        const hexToRgba = input => this.color.rgbToString(this.color.hexToRgba(input));
-        let styles = [];
-        styles.push("--theme-color:" + settings.customStyleColor);
-        for (let opacity = 10; opacity <= 90; opacity += 10)
-        {
-            const color = this.color.hexToRgba(settings.customStyleColor);
-            color.a = opacity / 100;
-            styles.push(`--theme-color-${opacity}:` + this.color.rgbToString(color));
-        }
-        styles.push("--foreground-color:" + settings.foreground);
-        styles.push("--foreground-color-b:" + hexToRgba(settings.foreground + "b"));
-        styles.push("--foreground-color-d:" + hexToRgba(settings.foreground + "d"));
-        styles.push("--blue-image-filter:" + settings.blueImageFilter);
-        styles.push("--pink-image-filter:" + settings.pinkImageFilter);
-        styles.push("--brightness:" + settings.brightness);
-        styles.push("--invert-filter:" + settings.filterInvert);
-        styles.push("--blur-background-opacity:" + settings.blurBackgroundOpacity);
-         // styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
-        this.applyStyleFromText(`html{${styles.join(";")}}`, "bilibili-evolved-variables");
+    const hexToRgba = input => this.color.rgbToString(this.color.hexToRgba(input))
+    let styles = []
+    styles.push('--theme-color:' + settings.customStyleColor)
+    for (let opacity = 10; opacity <= 90; opacity += 10) {
+      const color = this.color.hexToRgba(settings.customStyleColor)
+      color.a = opacity / 100
+      styles.push(`--theme-color-${opacity}:` + this.color.rgbToString(color))
     }
-    resolveComponentName(componentName)
-    {
-        const keyword = "/" + componentName.replace("./", "").replace("../", "") + ".min.js";
-        for (const [name, value] of Object.entries(Resource.all))
-        {
-            if (value.url.endsWith(keyword))
-            {
-                return name;
-            }
-        }
-        return componentName;
+    styles.push('--foreground-color:' + settings.foreground)
+    styles.push('--foreground-color-b:' + hexToRgba(settings.foreground + 'b'))
+    styles.push('--foreground-color-d:' + hexToRgba(settings.foreground + 'd'))
+    styles.push('--blue-image-filter:' + settings.blueImageFilter)
+    styles.push('--pink-image-filter:' + settings.pinkImageFilter)
+    styles.push('--brightness:' + settings.brightness)
+    styles.push('--invert-filter:' + settings.filterInvert)
+    styles.push('--blur-background-opacity:' + settings.blurBackgroundOpacity)
+    // styles.push("--custom-control-background-opacity:" + settings.customControlBackgroundOpacity);
+    this.applyStyleFromText(`html{${styles.join(';')}}`, 'bilibili-evolved-variables')
+  }
+  resolveComponentName (componentName) {
+    const keyword = '/' + componentName.replace('./', '').replace('../', '') + '.min.js'
+    for (const [name, value] of Object.entries(Resource.all)) {
+      if (value.url.endsWith(keyword)) {
+        return name
+      }
     }
-    resolveComponent(componentName)
-    {
-        const resource = Resource.all[this.resolveComponentName(componentName)];
-        if (!resource)
-        {
-            this.skippedImport.push(componentName);
-        }
-        return resource;
+    return componentName
+  }
+  resolveComponent (componentName) {
+    const resource = Resource.all[this.resolveComponentName(componentName)]
+    if (!resource) {
+      this.skippedImport.push(componentName)
     }
-    importAsync(componentName)
-    {
-        return new Promise(resolve =>
-        {
-            const resource = this.resolveComponent(componentName);
-            if (!resource)
-            {
-                resolve(unsafeWindow.bilibiliEvolved);
-            }
-            if (!Object.keys(this.attributes).includes(resource.key))
-            {
-                if (resource.type.name === "html" || resource.type.name === "style")
-                {
-                    resource.download().then(() => resolve(this.import(componentName)));
-                }
-                else
-                {
-                    this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)));
-                }
-            }
-            else
-            {
-                resolve(this.import(componentName));
-            }
-        });
+    return resource
+  }
+  importAsync (componentName) {
+    return new Promise(resolve => {
+      const resource = this.resolveComponent(componentName)
+      if (!resource) {
+        resolve(unsafeWindow.bilibiliEvolved)
+      }
+      if (!Object.keys(this.attributes).includes(resource.key)) {
+        if (resource.type.name === 'html' || resource.type.name === 'style') {
+          resource.download().then(() => resolve(this.import(componentName)))
+        } else {
+          this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)))
+        }
+      } else {
+        resolve(this.import(componentName))
+      }
+    })
+  }
+  import (componentName) {
+    const resource = this.resolveComponent(componentName)
+    if (!resource) {
+      return unsafeWindow.bilibiliEvolved
     }
-    import(componentName)
-    {
-        const resource = this.resolveComponent(componentName);
-        if (!resource)
-        {
-            return unsafeWindow.bilibiliEvolved;
-        }
-        if (resource.type.name === "html" || resource.type.name === "style")
-        {
-            if (!resource.downloaded)
-            {
-                console.error(`Import failed: component "${componentName}" is not loaded.`);
-                return null;
-            }
-            return resource.text;
-        }
-        else
-        {
-            const attribute = this.attributes[this.resolveComponentName(componentName)];
-            if (attribute === undefined)
-            {
-                console.error(`Import failed: component "${componentName}" is not loaded.`);
-                return null;
-            }
-            return attribute.export;
-        }
+    if (resource.type.name === 'html' || resource.type.name === 'style') {
+      if (!resource.downloaded) {
+        console.error(`Import failed: component "${componentName}" is not loaded.`)
+        return null
+      }
+      return resource.text
+    } else {
+      const attribute = this.attributes[this.resolveComponentName(componentName)]
+      if (attribute === undefined) {
+        console.error(`Import failed: component "${componentName}" is not loaded.`)
+        return null
+      }
+      return attribute.export
     }
-    async fetchByKey(key)
-    {
-        const resource = Resource.all[key];
-        if (!resource)
-        {
-            return null;
-        }
-        const text = await resource.download().catch(reason =>
-        {
-            console.error(`Download error, XHR status: ${reason}`);
-            let toastMessage = `无法下载组件<span>${Resource.all[key].displayName}</span>`;
-            if (settings.toastInternalError)
-            {
-                toastMessage += "\n" + reason;
-            }
-            Toast.error(toastMessage, "错误");
-        });
-        await Promise.all(resource.dependencies
-            .filter(it => it.type.name === "style")
-            .map(it => this.styleManager.fetchStyleByKey(it.key)));
-        await Promise.all(resource.dependencies
-            .filter(it => it.type.name === "script")
-            .map(it => this.fetchByKey(it.key)));
-        this.applyComponent(key, text);
+  }
+  async fetchByKey (key) {
+    const resource = Resource.all[key]
+    if (!resource) {
+      return null
     }
-    async fetch()
-    {
-        const isCacheValid = this.validateCache();
-        let loadingToast = null;
-        if (settings.toast === true)
-        {
-            await this.fetchByKey("toast");
-            unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export.Toast || this.attributes.toast.export;
-            if (!isCacheValid && settings.useCache)
-            {
-                loadingToast = Toast.info(/*html*/`<div class="loading"></div>正在初始化脚本`, "初始化");
-            }
-        }
-        const promises = [];
-        for (const key in settings)
-        {
-            if (settings[key] === true && key !== "toast")
-            {
-                const promise = this.fetchByKey(key);
-                if (promise)
-                {
-                    promises.push(promise);
-                }
-            }
-        }
-        await Promise.all(promises);
-        saveSettings(settings);
-        if (loadingToast)
-        {
-            loadingToast.dismiss();
-        }
-        this.applyReloadables(); // reloadables run sync
-        await this.applyDropdownOptions();
-        this.applyWidgets(); // No need to wait the widgets
+    const text = await resource.download().catch(reason => {
+      console.error(`Download error, XHR status: ${reason}`)
+      let toastMessage = `无法下载组件<span>${Resource.all[key].displayName}</span>`
+      if (settings.toastInternalError) {
+        toastMessage += '\n' + reason
+      }
+      Toast.error(toastMessage, '错误')
+    })
+    await Promise.all(resource.dependencies
+      .filter(it => it.type.name === 'style')
+      .map(it => this.styleManager.fetchStyleByKey(it.key)))
+    await Promise.all(resource.dependencies
+      .filter(it => it.type.name === 'script')
+      .map(it => this.fetchByKey(it.key)))
+    this.applyComponent(key, text)
+  }
+  async fetch () {
+    const isCacheValid = this.validateCache()
+    let loadingToast = null
+    if (settings.toast === true) {
+      await this.fetchByKey('toast')
+      unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export.Toast || this.attributes.toast.export
+      if (!isCacheValid && settings.useCache) {
+        loadingToast = Toast.info(/* html */`<div class="loading"></div>正在初始化脚本`, '初始化')
+      }
     }
-    applyReloadables()
-    {
-        const checkAttribute = (key, attributes) =>
-        {
-            if (attributes.reload && attributes.unload)
-            {
-                addSettingsListener(key, newValue =>
-                {
-                    if (newValue === true)
-                    {
-                        attributes.reload();
-                    }
-                    else
-                    {
-                        attributes.unload();
-                    }
-                });
-            }
-        };
-        for (const key of Resource.reloadables)
-        {
-            const attributes = this.attributes[key];
-            if (attributes === undefined)
-            {
-                const fetchListener = async newValue =>
-                {
-                    if (newValue === true)
-                    {
-                        await this.styleManager.fetchStyleByKey(key);
-                        await this.fetchByKey(key);
-                        removeSettingsListener(key, fetchListener);
-                        checkAttribute(key, this.attributes[key]);
-                    }
-                };
-                addSettingsListener(key, fetchListener);
-            }
-            else
-            {
-                checkAttribute(key, attributes);
-            }
+    const promises = []
+    for (const key in settings) {
+      if (settings[key] === true && key !== 'toast') {
+        const promise = this.fetchByKey(key)
+        if (promise) {
+          promises.push(promise)
         }
+      }
     }
-    applyComponent(key, text)
-    {
-        const func = eval(text);
-        if (func)
-        {
-            try
-            {
-                const attribute = func(settings, this) || {};
-                this.attributes[key] = attribute;
-            }
-            catch (error)
-            {
-                console.error(`Failed to apply feature "${key}": ${error}`);
-                let toastMessage = `加载组件<span>${Resource.all[key].displayName}</span>失败`;
-                if (settings.toastInternalError)
-                {
-                    toastMessage += "\n" + error;
-                }
-                Toast.error(toastMessage, "错误");
-            }
-        }
+    await Promise.all(promises)
+    saveSettings(settings)
+    if (loadingToast) {
+      loadingToast.dismiss()
     }
-    async applyWidget(info)
-    {
-        let condition = true;
-        if (typeof info.condition === "function")
-        {
-            condition = info.condition();
-            if (typeof condition === "object" && "then" in condition)
-            {
-                condition = await condition.catch(() => { return false; });
-            }
-        }
-        if (condition === true)
-        {
-            if (info.content)
-            {
-                document.querySelector(".widgets-container").insertAdjacentHTML("beforeend", info.content);
-            }
-            if (info.success)
-            {
-                info.success();
-            }
-        }
+    this.applyReloadables() // reloadables run sync
+    // await this.applyDropdownOptions();
+    this.applyWidgets() // No need to wait the widgets
+  }
+  applyReloadables () {
+    const checkAttribute = (key, attributes) => {
+      if (attributes.reload && attributes.unload) {
+        addSettingsListener(key, newValue => {
+          if (newValue === true) {
+            attributes.reload()
+          } else {
+            attributes.unload()
+          }
+        })
+      }
     }
-    async applyWidgets()
-    {
-        await Promise.all(Object.values(this.attributes)
-            .filter(it => it.widget)
-            .map(it => this.applyWidget(it.widget))
-        );
+    for (const key of Resource.reloadables) {
+      const attributes = this.attributes[key]
+      if (attributes === undefined) {
+        const fetchListener = async newValue => {
+          if (newValue === true) {
+            await this.styleManager.fetchStyleByKey(key)
+            await this.fetchByKey(key)
+            removeSettingsListener(key, fetchListener)
+            checkAttribute(key, this.attributes[key])
+          }
+        }
+        addSettingsListener(key, fetchListener)
+      } else {
+        checkAttribute(key, attributes)
+      }
     }
-    async applyDropdownOptions()
-    {
-        async function applyDropdownOption(info)
-        {
-            if (Array.isArray(info))
-            {
-                await Promise.all(info.map(applyDropdownOption));
-            }
-            else
-            {
-                const dropdownInput = await SpinQuery.select(`.gui-settings-dropdown input[key=${info.key}]`);
-                dropdownInput.value = settings[info.key];
-                dropdownInput.setAttribute("data-name", settings[info.key]);
-                const dropdown = dropdownInput.parentElement;
-                const list = dropdown.querySelector("ul");
-                const input = dropdown.querySelector("input");
-                info.items.forEach(itemHtml =>
-                {
-                    list.insertAdjacentHTML("beforeend", `<li data-name="${itemHtml}">${itemHtml}</li>`);
-                });
-                list.querySelectorAll("li").forEach(li => li.addEventListener("click", () =>
-                {
-                    input.value = li.innerText;
-                    input.setAttribute("data-name", li.getAttribute("data-name"));
-                    settings[info.key] = li.getAttribute("data-name");
-                }));
-            }
+  }
+  applyComponent (key, text) {
+    const func = eval(text)
+    if (func) {
+      try {
+        const attribute = func(settings, this) || {}
+        this.attributes[key] = attribute
+      } catch (error) {
+        console.error(`Failed to apply feature "${key}": ${error}`)
+        let toastMessage = `加载组件<span>${Resource.all[key].displayName}</span>失败`
+        if (settings.toastInternalError) {
+          toastMessage += '\n' + error
         }
-        const manifests = Object.values(Resource.manifest).filter(it => it.dropdown).map(it => it.dropdown);
-        Object.values(Resource.all)
-            //.concat(Object.values(this.attributes))
-            .filter(it => it.dropdown)
-            .map(it => it.dropdown)
-            .forEach(it =>
-            {
-                if (!manifests.some(m => m.key === it.key))
-                {
-                    manifests.push(it);
-                }
-            });
-        await Promise.all(manifests.map(it => applyDropdownOption(it)));
+        Toast.error(toastMessage, '错误')
+      }
     }
-    toggleStyle(content, id)
-    {
-        if (id === undefined) // content is resource name
-        {
-            this.styleManager.applyStyle(content);
-            return {
-                reload: () => this.styleManager.applyStyle(content),
-                unload: () => this.styleManager.removeStyle(content),
-            };
-        }
-        else // content is style text
-        {
-            this.styleManager.applyStyleFromText(content, id);
-            return {
-                reload: () => this.styleManager.applyStyleFromText(content, id),
-                unload: () => document.getElementById(id).remove(),
-            };
-        }
+  }
+  async applyWidget (info) {
+    let condition = true
+    if (typeof info.condition === 'function') {
+      condition = info.condition()
+      if (typeof condition === 'object' && 'then' in condition) {
+        condition = await condition.catch(() => { return false })
+      }
     }
-    validateCache()
-    {
-        if (typeof offlineData !== "undefined") // offline version always has cache
-        {
-            return true;
-        }
-        if (Object.getOwnPropertyNames(settings.cache).length === 0) // has no cache
-        {
-            return false;
-        }
-        if (settings.cache.version === undefined) // Has newly downloaded cache
-        {
-            settings.cache = Object.assign(settings.cache, { version: settings.currentVersion });
-            // settings.cache.version = settings.currentVersion;
-            saveSettings(settings);
-            return true;
-        }
-        if (settings.cache.version !== settings.currentVersion) // Has old version cache
-        {
-            settings.cache = {};
-            saveSettings(settings);
-            return false;
-        }
-        return true; // Has cache
+    if (condition === true) {
+      if (info.content) {
+        document.querySelector('.widgets-container').insertAdjacentHTML('beforeend', info.content)
+      }
+      if (info.success) {
+        info.success()
+      }
     }
-};
+  }
+  async applyWidgets () {
+    await Promise.all(Object.values(this.attributes)
+      .filter(it => it.widget)
+      .map(it => this.applyWidget(it.widget))
+    )
+  }
+  async applyDropdownOptions () {
+    async function applyDropdownOption (info) {
+      if (Array.isArray(info)) {
+        await Promise.all(info.map(applyDropdownOption))
+      } else {
+        const dropdownInput = dq(`.gui-settings-dropdown input[key=${info.key}]`)
+        dropdownInput.value = settings[info.key]
+        dropdownInput.setAttribute('data-name', settings[info.key])
+        const dropdown = dropdownInput.parentElement
+        const list = dropdown.querySelector('ul')
+        const input = dropdown.querySelector('input')
+        info.items.forEach(itemHtml => {
+          list.insertAdjacentHTML('beforeend', `<li data-name="${itemHtml}">${itemHtml}</li>`)
+        })
+        list.querySelectorAll('li').forEach(li => li.addEventListener('click', () => {
+          input.value = li.innerText
+          input.setAttribute('data-name', li.getAttribute('data-name'))
+          settings[info.key] = li.getAttribute('data-name')
+        }))
+      }
+    }
+    const manifests = Object.values(Resource.manifest).filter(it => it.dropdown).map(it => it.dropdown)
+    Object.values(Resource.all)
+      // .concat(Object.values(this.attributes))
+      .filter(it => it.dropdown)
+      .map(it => it.dropdown)
+      .forEach(it => {
+        if (!manifests.some(m => m.key === it.key)) {
+          manifests.push(it)
+        }
+      })
+    await Promise.all(manifests.map(it => applyDropdownOption(it)))
+  }
+  toggleStyle (content, id) {
+    if (id === undefined) { // content is resource name
+      this.styleManager.applyStyle(content)
+      return {
+        reload: () => this.styleManager.applyStyle(content),
+        unload: () => this.styleManager.removeStyle(content)
+      }
+    } else { // content is style text
+      this.styleManager.applyStyleFromText(content, id)
+      return {
+        reload: () => this.styleManager.applyStyleFromText(content, id),
+        unload: () => document.getElementById(id).remove()
+      }
+    }
+  }
+  validateCache () {
+    if (typeof offlineData !== 'undefined') { // offline version always has cache
+      return true
+    }
+    if (Object.getOwnPropertyNames(settings.cache).length === 0) { // has no cache
+      return false
+    }
+    if (settings.cache.version === undefined) { // Has newly downloaded cache
+      settings.cache = Object.assign(settings.cache, { version: settings.currentVersion })
+      // settings.cache.version = settings.currentVersion;
+      saveSettings(settings)
+      return true
+    }
+    if (settings.cache.version !== settings.currentVersion) { // Has old version cache
+      settings.cache = {}
+      saveSettings(settings)
+      return false
+    }
+    return true // Has cache
+  }
+}
+;
 
 try
 {

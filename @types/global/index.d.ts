@@ -138,6 +138,7 @@ declare global
         getStyle(key: string, id?: string): void;
         toggleStyle(content: string, id: string): void;
         toggleStyle(key: string): void;
+        applyDropdownOptions(): Promise<void>;
     }
     const resources: ResourceManager;
     class DoubleClickEvent

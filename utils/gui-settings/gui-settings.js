@@ -138,6 +138,7 @@ function setDisplayNames () {
 
   const settingsBox = resources.data.guiSettingsHtml.text
   document.body.insertAdjacentHTML('beforeend', settingsBox)
+  resources.applyDropdownOptions()
 
   const widgetsContainer = document.querySelector('.widgets-container')
   const emptyTip = widgetsContainer.querySelector('.empty-tip')
