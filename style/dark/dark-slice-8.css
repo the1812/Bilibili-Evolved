@@ -102,7 +102,8 @@ li.danmaku-info-row.bpui-selecting,
 .comic-episodes .episode-list .episode-item,
 .comic-episodes .episode-header .episode-operation,
 .manga-card .manga-title,
-.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .comments-total
+.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .comments-total,
+.bb-comment a.more-link
 {
     color: #eee !important;
 }
