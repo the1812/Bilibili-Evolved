@@ -45,7 +45,7 @@ const attributes = {
           userInfo: "用户信息",
           messages: "消息",
           activities: "动态",
-          bangumiLink: '追番',
+          bangumiLink: '订阅',
           watchlaterList: "稍后再看",
           favoritesList: "收藏",
           historyList: "历史",
@@ -988,7 +988,7 @@ class HistoryList extends VideoList {
   if (userInfo.isLogin) {
     components.push(
       new Messages,
-      new SimpleLink('追番', `https://space.bilibili.com/${userInfo.mid}/bangumi`, 'bangumi'),
+      new SimpleLink('订阅', `https://space.bilibili.com/${userInfo.mid}/bangumi`, 'bangumi'),
       new Activities,
       new WatchlaterList,
       new FavoritesList,

@@ -115,7 +115,10 @@ ol.video-quality li:hover,
 }
 
 .round-corner .video-action>div,
-.round-corner ol.video-quality li
+.round-corner ol.video-quality li,
+.round-corner .download-progress-cancel>span,
+.round-corner .download-progress-background,
+.round-corner .download-progress-foreground
 {
     border-radius: var(--corner-radius);
 }
