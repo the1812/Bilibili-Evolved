@@ -618,7 +618,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .user-info-panel .logout {
     margin-top: 5px;
 }
-.round-corner .user-info-panel .logout {
+.round-corner .user-info-panel .logout,
+.round-corner .user-info-panel .login {
     border-radius: 0 0 var(--corner-radius) var(--corner-radius);
 }
 .user-info-panel .logout:hover {
