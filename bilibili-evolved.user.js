@@ -621,215 +621,175 @@ class DoubleClickEvent
         element.removeEventListener("click", this.doubleClickHandler);
     }
 };
-let cidHooked = false;
-const videoChangeCallbacks = [];
-class Observer
-{
-    constructor(element, callback)
-    {
-        this.element = element;
-        this.callback = callback;
-        this.observer = null;
-        this.options = undefined;
+let cidHooked = false
+const videoChangeCallbacks = []
+class Observer {
+  constructor (element, callback) {
+    this.element = element
+    this.callback = callback
+    this.observer = null
+    this.options = undefined
+  }
+  start () {
+    if (this.element) {
+      this.observer = new MutationObserver(this.callback)
+      this.observer.observe(this.element, this.options)
     }
-    start()
-    {
-        if (this.element)
-        {
-            this.observer = new MutationObserver(this.callback);
-            this.observer.observe(this.element, this.options);
+    return this
+  }
+  stop () {
+    this.observer && this.observer.disconnect()
+    return this
+  }
+  static observe (selector, callback, options) {
+    callback([])
+    let elements = selector
+    if (typeof selector === 'string') {
+      elements = [...document.querySelectorAll(selector)]
+    } else if (!Array.isArray(selector)) {
+      elements = [selector]
+    }
+    return elements.map(
+      it => {
+        const observer = new Observer(it, callback)
+        observer.options = options
+        return observer.start()
+      })
+  }
+  static childList (selector, callback) {
+    return Observer.observe(selector, callback, {
+      childList: true,
+      subtree: false,
+      attributes: false
+    })
+  }
+  static childListSubtree (selector, callback) {
+    return Observer.observe(selector, callback, {
+      childList: true,
+      subtree: true,
+      attributes: false
+    })
+  }
+  static attributes (selector, callback) {
+    return Observer.observe(selector, callback, {
+      childList: false,
+      subtree: false,
+      attributes: true
+    })
+  }
+  static attributesSubtree (selector, callback) {
+    return Observer.observe(selector, callback, {
+      childList: false,
+      subtree: true,
+      attributes: true
+    })
+  }
+  static all (selector, callback) {
+    return Observer.observe(selector, callback, {
+      childList: true,
+      subtree: true,
+      attributes: true
+    })
+  }
+  static async videoChange (callback) {
+    const cid = await SpinQuery.select(() => unsafeWindow.cid)
+    if (cid === null) {
+      return
+    }
+    if (!cidHooked) {
+      let hookedCid = cid
+      Object.defineProperty(unsafeWindow, 'cid', {
+        get () {
+          return hookedCid
+        },
+        set (newId) {
+          hookedCid = newId
+          if (!Array.isArray(newId)) {
+            videoChangeCallbacks.forEach(it => it())
+          }
         }
-        return this;
+      })
+      cidHooked = true
     }
-    stop()
-    {
-        this.observer && this.observer.disconnect();
-        return this;
+    // callback();
+    const videoContainer = await SpinQuery.select('#bofqi video')
+    if (videoContainer) {
+      Observer.childList(videoContainer, callback)
+    } else {
+      callback()
     }
-    static observe(selector, callback, options)
-    {
-        callback([]);
-        let elements = selector;
-        if (typeof selector === "string")
-        {
-            elements = [...document.querySelectorAll(selector)];
-        }
-        else if (!Array.isArray(selector))
-        {
-            elements = [selector];
-        }
-        return elements.map(
-            it =>
-            {
-                const observer = new Observer(it, callback);
-                observer.options = options;
-                return observer.start();
-            });
+    videoChangeCallbacks.push(callback)
+  }
+}
+;
+class SpinQuery {
+  constructor (query, condition, action, failed) {
+    this.maxRetry = 15
+    this.retry = 0
+    this.queryInterval = 1000
+    this.query = query
+    this.condition = condition
+    this.action = action
+    this.failed = failed
+  }
+  start () {
+    this.tryQuery(this.query, this.condition, this.action, this.failed)
+  }
+  testFocus() {
+    if (document.hasFocus()) {
+      this.retry++
+      setTimeout(() => this.tryQuery(this.query, this.condition, this.action, this.failed), this.queryInterval)
+    } else {
+      setTimeout(() => this.testFocus(), this.queryInterval * 6)
     }
-    static childList(selector, callback)
-    {
-        return Observer.observe(selector, callback, {
-            childList: true,
-            subtree: false,
-            attributes: false,
-        });
+  }
+  tryQuery (query, condition, action, failed) {
+    if (this.retry < this.maxRetry) {
+      const result = query()
+      if (condition(result)) {
+        action(result)
+      } else {
+        this.testFocus()
+      }
+    } else {
+      typeof failed === 'function' && failed()
     }
-    static childListSubtree(selector, callback)
-    {
-        return Observer.observe(selector, callback, {
-            childList: true,
-            subtree: true,
-            attributes: false,
-        });
+  }
+  static condition (query, condition, action, failed) {
+    if (action !== undefined) {
+      new SpinQuery(query, condition, action, failed).start()
+    } else {
+      return new Promise((resolve) => {
+        new SpinQuery(query, condition, it => resolve(it), () => resolve(null)).start()
+      })
     }
-    static attributes(selector, callback)
-    {
-        return Observer.observe(selector, callback, {
-            childList: false,
-            subtree: false,
-            attributes: true,
-        });
+  }
+  static select (query, action, failed) {
+    if (typeof query === 'string') {
+      const selector = query
+      query = () => document.querySelector(selector)
     }
-    static attributesSubtree(selector, callback)
-    {
-        return Observer.observe(selector, callback, {
-            childList: false,
-            subtree: true,
-            attributes: true,
-        });
+    return SpinQuery.condition(query, it => it !== null && it !== undefined, action, failed)
+  }
+  static any (query, action, failed) {
+    if (typeof query === 'string') {
+      const selector = query
+      query = () => $(selector)
     }
-    static all(selector, callback)
-    {
-        return Observer.observe(selector, callback, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-        });
+    return SpinQuery.condition(query, it => it.length > 0, action, failed)
+  }
+  static count (query, count, action, failed) {
+    if (typeof query === 'string') {
+      const selector = query
+      query = () => document.querySelectorAll(selector)
     }
-    static async videoChange(callback)
-    {
-        const cid = await SpinQuery.select(() => unsafeWindow.cid);
-        if (cid === null)
-        {
-            return;
-        }
-        if (!cidHooked)
-        {
-            let hookedCid = cid;
-            Object.defineProperty(unsafeWindow, "cid", {
-                get()
-                {
-                    return hookedCid;
-                },
-                set(newId)
-                {
-                    hookedCid = newId;
-                    if (!Array.isArray(newId))
-                    {
-                        videoChangeCallbacks.forEach(it => it());
-                    }
-                }
-            });
-            cidHooked = true;
-        }
-        // callback();
-        const videoContainer = await SpinQuery.select("#bofqi video");
-        if (videoContainer)
-        {
-            Observer.childList(videoContainer, callback);
-        }
-        else
-        {
-            callback();
-        }
-        videoChangeCallbacks.push(callback);
-    }
-};
-class SpinQuery
-{
-    constructor(query, condition, action, failed)
-    {
-        this.maxRetry = 15;
-        this.retry = 0;
-        this.queryInterval = 1000;
-        this.query = query;
-        this.condition = condition;
-        this.action = action;
-        this.failed = failed;
-    }
-    start()
-    {
-        this.tryQuery(this.query, this.condition, this.action, this.failed);
-    }
-    tryQuery(query, condition, action, failed)
-    {
-        if (this.retry < this.maxRetry)
-        {
-            const result = query();
-            if (condition(result))
-            {
-                action(result);
-            }
-            else
-            {
-                if (document.hasFocus())
-                {
-                    this.retry++;
-                }
-                setTimeout(() => this.tryQuery(query, condition, action, failed), this.queryInterval);
-            }
-        }
-        else
-        {
-            typeof failed === "function" && failed();
-        }
-    }
-    static condition(query, condition, action, failed)
-    {
-        if (action !== undefined)
-        {
-            new SpinQuery(query, condition, action, failed).start();
-        }
-        else
-        {
-            return new Promise((resolve) =>
-            {
-                new SpinQuery(query, condition, it => resolve(it), () => resolve(null)).start();
-            });
-        }
-    }
-    static select(query, action, failed)
-    {
-        if (typeof query === "string")
-        {
-            const selector = query;
-            query = () => document.querySelector(selector);
-        }
-        return SpinQuery.condition(query, it => it !== null && it !== undefined, action, failed);
-    }
-    static any(query, action, failed)
-    {
-        if (typeof query === "string")
-        {
-            const selector = query;
-            query = () => $(selector);
-        }
-        return SpinQuery.condition(query, it => it.length > 0, action, failed);
-    }
-    static count(query, count, action, failed)
-    {
-        if (typeof query === "string")
-        {
-            const selector = query;
-            query = () => document.querySelectorAll(selector);
-        }
-        return SpinQuery.condition(query, it => it.length === count, action, failed);
-    }
-    static unsafeJquery(action, failed)
-    {
-        return SpinQuery.condition(() => unsafeWindow.$, jquery => jquery !== undefined, action, failed);
-    }
-};
+    return SpinQuery.condition(query, it => it.length === count, action, failed)
+  }
+  static unsafeJquery (action, failed) {
+    return SpinQuery.condition(() => unsafeWindow.$, jquery => jquery !== undefined, action, failed)
+  }
+}
+;
 class ColorProcessor
 {
     constructor(hex)

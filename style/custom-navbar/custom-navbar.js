@@ -22,7 +22,7 @@ const attributes = {
       // const customNavbar = document.querySelector(".custom-navbar");
       const button = document.querySelector("#custom-navbar-settings");
       button.addEventListener("click", async () => {
-        const settingsPanel = await SpinQuery.select(".custom-navbar-settings");
+        const settingsPanel = dq(".custom-navbar-settings");
         if (settingsPanel) {
           settingsPanel.classList.toggle("show");
           document.querySelector(".gui-settings-mask").click();
