@@ -142,7 +142,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     background: white;
     transition: all .2s ease-out .2s;
 }
-.round-corner .custom-navbar .popup
+.round-corner .custom-navbar .popup,
+.round-corner .custom-navbar .popup iframe
 {
     border-radius: 0 0 var(--corner-radius) var(--corner-radius);
 }
@@ -150,6 +151,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     color: #eee;
     background: #222;
+}
+.custom-navbar.dark .popup iframe
+{
+    box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
 }
 .custom-navbar *,
 .custom-navbar,
@@ -693,7 +698,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     padding: 6px 8px;
 }
-.custom-navbar .video-list li:hover
+.custom-navbar .video-list li:not(.loading):hover
 {
     background: rgba(0,0,0,0.1);
     /* border-left-width: 8px; */
@@ -725,6 +730,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     justify-content: center;
     border-color: transparent !important;
+    padding: 8px;
+    cursor: default;
 }
 .custom-navbar .video-list.loaded .loading
 {
