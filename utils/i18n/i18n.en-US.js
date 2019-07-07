@@ -631,6 +631,8 @@ export const map = new Map([
   [`我的直播间地址`, `My live room address`],
   [`选择分类`, `Category`],
   [`必须选择分类才能开播`, `You can't start live broadcasting before select a category.`],
+  [`使用默认播放速度`, `Default playback rate`],
+  [`默认播放速度`, `Playback rate`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

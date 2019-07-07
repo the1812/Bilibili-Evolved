@@ -35,12 +35,12 @@
 
 #### 注意事项
 - 请尊重视频原作者的版权.
-- 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换.
+- 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换, 例如 [ffmpeg](https://ffmpeg.org/) 或 [Handbrake](http://handbrake.fr/).
 - **分段**的视频会把所有视频打包成`.zip`格式.
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
 - 如果以您的账号权限无法观看某些视频(地区限制, 大会员专享等), 那么这种视频也是无法下载的.
-- 下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=https://www.bilibili.com`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
-- 针对上一条, 也可以使用我另外编写的[下载器](extras/video-link-downloader/README.md)解决内存占用问题.
+- 直接下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`或其他选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=https://www.bilibili.com`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
+- 针对上一条, 可以使用 [aria2](https://aria2.github.io/) 或者我另外编写的[下载器](extras/video-link-downloader/README.md)解决内存占用问题.
 - Chrome浏览器对单个文件大小有[限制](https://chromium.googlesource.com/chromium/src/+/master/storage/browser/blob/README.md#example-limits), 如果在下载完成时浏览器发生崩溃, 请尝试适当降低画质, 或换用没有限制的Firefox浏览器.
     - 64位限制: 2GB
     - 32位限制: 614MB
@@ -71,6 +71,9 @@
 进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.
 
 > 官方于2018.12.27已正式支持记忆画质
+### 默认视频速度
+进入视频时自动选择指定的视频倍速.
+
 ### 默认弹幕设置
 设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.
 ### 自动展开弹幕列表

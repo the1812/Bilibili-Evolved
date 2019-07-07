@@ -125,6 +125,8 @@ export const toolTips = new Map([
     ['sideBarOffset', /*html*/ `设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.`],
     ['hideCategory', /*html*/ `隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.`],
     ['foldComment', /*html*/ `动态里查看评论区时, 在底部添加一个<span>收起评论</span>按钮, 这样就不用再回到上面收起了.`],
+    ['useDefaultVideoSpeed', /*html*/ `设置是否使用默认视频播放速度.`],
+    ['defaultVideoSpeed', /*html*/ `设置默认的视频播放速度.`],
 ]);
 export default {
     export: { toolTips },

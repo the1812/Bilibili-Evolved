@@ -114,6 +114,8 @@ export const toolTips = new Map([
 
 例えば、タイトル＋AV番号＋時間の命名形式が欲しい、<span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>に設定することができます. <span>xxxx AV23333 2019-06-1 22-22-22</span>ような名前をつけることができます.`],
     ['sideBarOffset', `設定ボタンの垂直オフセット、単位はパーセント、許容範囲は-40％〜40％です.`],
+    ['useDefaultVideoSpeed', `デフォルトの再生速度を使用するかどうかを設定します.`],
+    ['defaultVideoSpeed', `デフォルトの動画再生速度を設定する.`],
 ]);
 export default {
     export: { toolTips },

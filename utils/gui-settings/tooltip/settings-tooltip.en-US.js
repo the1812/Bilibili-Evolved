@@ -107,6 +107,8 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
     ['showDeadVideoTitle', `Retrieve title and cover of dead videos in your space`],
     ['useBiliplusRedirect', `Jump to BiliPlus for dead videos.`],
     ['deadVideoTitleProvider', `Select dead video info provider: Watchlater is stable but takes some time, BiliPlus runs fast but it's not implemented yet.`],
+    ['useDefaultVideoSpeed', `Set the default video playback rate.`],
+    ['defaultVideoSpeed', `Select the default playback rate.`],
 ]);
 export default {
     export: { toolTips },

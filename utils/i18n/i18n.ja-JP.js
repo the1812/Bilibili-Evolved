@@ -630,6 +630,8 @@ export const map = new Map([
   [`你的手机号/邮箱`, `あなたの携帯電話番号/メール`],
   [`密码`, `アカウントパスワード`],
   [`签到`, `ログボ`],
+  [`使用默认播放速度`, `デフォルトの再生速度を使用する`],
+  [`默认播放速度`, `デフォルトの再生速度`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

@@ -8,10 +8,5 @@ Observer.videoChange(() => {
     if (!video) {
         return;
     }
-    if (video.paused) {
-        video.addEventListener('play', () => setPlaybackRate(video), { once: true });
-    }
-    else {
-        setPlaybackRate(video);
-    }
+    setPlaybackRate(video);
 });
