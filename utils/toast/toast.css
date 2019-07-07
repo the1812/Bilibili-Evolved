@@ -25,6 +25,10 @@
     border-left-width: 4px;
     border-left-style: solid;
 }
+.round-corner .toast-card
+{
+    border-radius: 0 var(--corner-radius) var(--corner-radius) 0;
+}
 .toast-card.visible
 {
     min-height: 96px;

@@ -822,6 +822,7 @@ class VideoList extends NavbarComponent {
     this.href = mainUrl;
     this.listName = listName;
     this.html = name;
+    this.noPadding = true;
     this.requestedPopup = false;
     this.popupHtml = /*html*/`
       <ol class="video-list ${listName}">

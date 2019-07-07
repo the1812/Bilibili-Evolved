@@ -43,3 +43,7 @@
 {
     background: rgba(0,0,0,0.16);
 }
+.round-corner .simplify-liveroom-settings>ul>li
+{
+    border-radius: var(--corner-radius);
+}

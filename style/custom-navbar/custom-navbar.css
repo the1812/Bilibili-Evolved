@@ -142,6 +142,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     background: white;
     transition: all .2s ease-out .2s;
 }
+.round-corner .custom-navbar .popup
+{
+    border-radius: 0 0 var(--corner-radius) var(--corner-radius);
+}
 .custom-navbar.dark .popup
 {
     color: #eee;
@@ -256,7 +260,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     position: absolute;
     top: 100%;
     left: 50%;
-    padding: 16px;
+    padding: 8px;
     box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
     pointer-events: none;
     opacity: 0;
@@ -264,10 +268,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     /* transform-origin: top; */
     /* transition: all 0.15s cubic-bezier(0.18, 0.89, 0.38, 1.15) .2s; */
 }
-.custom-navbar.compact li:not([data-name='userInfo']) .popup
+/* .custom-navbar.compact li:not([data-name='userInfo']) .popup
 {
     padding: 8px;
-}
+} */
 .custom-navbar.dark .popup
 {
     box-shadow: rgba(0,0,0,0.3) 0 4px 8px 0px;
@@ -318,6 +322,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     cursor: pointer;
     position: relative;
 }
+.round-corner #custom-navbar-home-popup .category-item
+{
+    border-radius: var(--corner-radius);
+}
 .custom-navbar.compact #custom-navbar-home-popup .category-item
 {
     padding: 6px;
@@ -362,6 +370,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     top: 0;
     transition-delay: .3s;
     pointer-events: initial;
+}
+.round-corner #custom-navbar-home-popup .category-item .popup
+{
+    border-radius: var(--corner-radius);
 }
 #custom-navbar-home-popup .category-item:hover .popup
 {
@@ -546,6 +558,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     position: relative;
     align-self: stretch;
 }
+.user-info-panel .operation:hover {
+    background-color: rgba(0,0,0,0.1);
+}
 .user-info-panel .operation .icon {
     position: absolute;
     left: 10px;
@@ -598,6 +613,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .user-info-panel .logout {
     margin-top: 5px;
 }
+.round-corner .user-info-panel .logout {
+    border-radius: 0 0 var(--corner-radius) var(--corner-radius);
+}
 .user-info-panel .logout:hover {
     color: inherit !important;
 }
@@ -624,12 +642,20 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .user-info-panel .grey-button
 {
-    background: #EDEDED;
+    background: #ededed;
     color: inherit !important;
+}
+.user-info-panel .grey-button:hover
+{
+    background: #ddd;
 }
 .custom-navbar.dark .user-info-panel .grey-button
 {
     background: #444;
+}
+.custom-navbar.dark .user-info-panel .grey-button:hover
+{
+    background: #333;
 }
 .custom-navbar .user-info-panel .theme-button
 {
@@ -650,12 +676,12 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .video-list li:not(.more)
 {
-    border-left: 2px solid var(--theme-color-30);
+    border-bottom: 2px solid var(--theme-color-30);
 }
 .custom-navbar .video-list li:not(.more) a
 {
-    padding: 6px 16px;
-    margin: 6px 0;
+    padding: 12px 16px;
+    margin: 0;
     box-sizing: border-box;
     transition: all .2s ease-out .1s;
     display: block;
@@ -673,9 +699,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     /* border-left-width: 8px; */
     border-color: var(--theme-color);
 }
-.custom-navbar .video-list li.more
+.round-corner .custom-navbar .video-list li.more
 {
-    border-bottom: 2px solid transparent;
+    /* border-bottom: 2px solid transparent; */
+    border-radius: 0 0 var(--corner-radius) var(--corner-radius);
 }
 .custom-navbar .video-list li.more a
 {
@@ -683,6 +710,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 8px 0;
     display: flex;
     justify-content: center;
+    font-weight: bold;
 }
 .custom-navbar.compact .video-list li.more a
 {
@@ -718,11 +746,11 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     justify-content: space-between;
     position: relative;
     display: flex;
-    padding: 6px 8px !important;
+    padding: 13px 16px !important;
 }
 .custom-navbar.compact .video-list.history li:not(.more) a
 {
-    padding: 6px !important;
+    padding: 7px 8px !important;
 }
 .custom-navbar .video-list.history a .description
 {
@@ -805,6 +833,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     box-shadow: #0002 0 1px 10px 1px;
     font-size: 16px;
     line-height: 1.5;
+}
+.round-corner .custom-navbar-settings
+{
+    border-radius: var(--large-corner-radius);
 }
 .custom-navbar-settings.dark
 {
