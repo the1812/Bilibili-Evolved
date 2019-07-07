@@ -735,21 +735,16 @@ class SpinQuery {
   start () {
     this.tryQuery(this.query, this.condition, this.action, this.failed)
   }
-  testFocus() {
-    if (document.hasFocus()) {
-      this.retry++
-      setTimeout(() => this.tryQuery(this.query, this.condition, this.action, this.failed), this.queryInterval)
-    } else {
-      setTimeout(() => this.testFocus(), this.queryInterval * 6)
-    }
-  }
   tryQuery (query, condition, action, failed) {
     if (this.retry < this.maxRetry) {
       const result = query()
       if (condition(result)) {
         action(result)
       } else {
-        this.testFocus()
+        if (document.hasFocus()) {
+          this.retry++
+        }
+        setTimeout(() => this.tryQuery(query, condition, action, failed), this.queryInterval)
       }
     } else {
       typeof failed === 'function' && failed()
