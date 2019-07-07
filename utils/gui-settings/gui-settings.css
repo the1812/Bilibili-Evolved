@@ -126,7 +126,7 @@ body.dark .gui-settings-widgets
     background: white;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 101;
     cursor: pointer;
     transition: all .2s ease-out;
     -webkit-tap-highlight-color: transparent;
@@ -419,7 +419,7 @@ li.category.folded i.icon-arrow
 .gui-settings-dropdown ul li
 {
     margin: 0;
-    padding: 12px 0;
+    padding: 8px 0;
     height: auto;
     width: 100%;
     justify-content: center;
@@ -694,6 +694,7 @@ body.round-corner {
 .round-corner .gui-settings-dropdown,
 .round-corner .gui-settings-textbox-container input,
 .round-corner .gui-settings-dropdown ul li,
+.round-corner .gui-settings-dropdown>ul,
 .round-corner .gui-settings-flat-button .popup
 {
     border-radius: var(--corner-radius);

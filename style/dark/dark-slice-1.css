@@ -28,7 +28,6 @@ div.danmaku-wrap,
 div.bilibili-player-auxiliary-area,
 .bilibili-player-danmaku-date-picker-container,
 .video-toolbar .share .share-pos .share-address ul li input,
-li.tag,
 .btn-add,
 form.ipt,
 .tag-info-pane,
@@ -419,6 +418,7 @@ button.submit-button.disabled,
 .ban-detail .content-box .major-content,
 #app .submit .cancel,
 .home-wrap .home-input .type.selected,
+li.tag,
 .home-wrap .home-input .type:hover
 {
     background-color: #444 !important;
@@ -524,10 +524,8 @@ span.copyright,
 .video-toolbar .ops > span,
 .video-toolbar .share .share-btn,
 .video-toolbar,
-li.tag,
 .tag-info-pane .tag-footer .btn-left-box > a,
 .video-desc .btn span,
-li.tag > a,
 .tag-info-pane .tag-header .btn-unsubscribe,
 span.disabled,
 .btn-box .liked,
@@ -1092,6 +1090,8 @@ font,
 .is-max .option-text,
 .video-page-card .card-box .info .title,
 .app-watch .title,
+li.tag,
+li.tag > a,
 #app .container,
 #app .submit .cancel,
 #app .header
@@ -1326,7 +1326,8 @@ div.bar>div.num,
 #app .header,
 .iScrollIndicator,
 #app .submit,
-#app .submit .cancel
+#app .submit .cancel,
+li.tag
 {
     border-color: transparent !important;
 }
@@ -1809,7 +1810,6 @@ a.more:hover,
 .up-info .btn .b-cd:hover,
 .bi-btn,
 .day-span.day-enable.active,
-li.tag:hover,
 .bb-comment .comment-header .tabs-order li.on,
 textarea:focus,
 .comment-submit,
@@ -2007,6 +2007,7 @@ a.s-btn:hover,
 .text-con .title i,
 .fjw-point .focus-btn,
 .cases-wrap .fjw-user .b-right button,
+li.tag:hover,
 #app .submit .confirm
 {
     background-color: var(--theme-color) !important;
@@ -2038,7 +2039,6 @@ div.info>a,
 .day-span.day-enable:hover,
 .video-toolbar .ops .app .app-look .foot-txt a,
 .video-toolbar .ops>span.on,
-li.tag>a:hover,
 .video-desc .btn span:hover,
 .tag-info-pane .tag-header .btn-unsubscribe:hover,
 div.title a:hover,
@@ -2344,6 +2344,7 @@ a.s-btn:hover,
 .dyn_list span.sp,
 .fjw-point .focus-btn,
 .cases-wrap .fjw-user .b-right button,
+li.tag>a:hover,
 #app .submit .confirm
 {
     color: var(--foreground-color) !important;
