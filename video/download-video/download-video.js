@@ -32,6 +32,7 @@ class Video {
     return next
   }
   closeMenu () {
+    this.resetMenuClass()
     this.menuPanel.classList.remove('opened')
   }
   addError () {
@@ -437,7 +438,6 @@ async function loadWidget () {
 
     const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename.replace(/"/g, '&quot;')}">再次保存</a>`
     Toast.success(message, '下载视频')
-    pageData.entity.resetMenuClass()
     pageData.entity.closeMenu()
   }
   async function copyLink () {
@@ -447,7 +447,6 @@ async function loadWidget () {
     const info = await getVideoInfo()
     info.copyUrl()
     Toast.success('已复制链接到剪贴板.', '复制链接', 3000)
-    pageData.entity.resetMenuClass()
     pageData.entity.closeMenu()
   }
   dq('#video-action-download').addEventListener('click', download)
@@ -459,7 +458,6 @@ async function loadWidget () {
     const info = await getVideoInfo()
     info.exportData(true)
     Toast.success('已复制数据到剪贴板.', '复制数据', 3000)
-    pageData.entity.resetMenuClass()
     pageData.entity.closeMenu()
   })
   dq('#video-action-download-data').addEventListener('click', async () => {
@@ -468,7 +466,6 @@ async function loadWidget () {
     }
     const info = await getVideoInfo()
     info.exportData(false)
-    pageData.entity.resetMenuClass()
     pageData.entity.closeMenu()
   })
   dq('#video-action-aria2').addEventListener('click', async () => {
@@ -477,7 +474,6 @@ async function loadWidget () {
     }
     const info = await getVideoInfo()
     info.exportAria2(false)
-    pageData.entity.resetMenuClass()
     pageData.entity.closeMenu()
   })
   // dq('#video-action-aria2-rpc').addEventListener('click', async () => {
@@ -486,7 +482,6 @@ async function loadWidget () {
   //   }
   //   const info = await getVideoInfo()
   //   info.exportAria2(true)
-  //   pageData.entity.resetMenuClass()
   //   pageData.entity.closeMenu()
   // })
   resources.applyStyle('downloadVideoStyle')
