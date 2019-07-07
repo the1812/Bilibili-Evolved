@@ -154,16 +154,16 @@ namespace BilibiliEvolved.Build
                     }
                     return source;
                 };
-                input = RegexReplacer.Replace(input, @"import (.*) from (.*);", match =>
+                input = RegexReplacer.Replace(input, @"import (.*) from ([^\r\n;]*)", match =>
                 {
                     var imported = match.Groups[1].Value.Replace(" as ", ":");
                     var source = convertToRuntimeSource(match.Groups[2].Value);
-                    return $"const {imported} = resources.import({source});";
+                    return $"const {imported} = resources.import({source})";
                 });
-                input = RegexReplacer.Replace(input, @" import\((.*)\);", match =>
+                input = RegexReplacer.Replace(input, @" import\((.*)\)", match =>
                 {
                     var source = convertToRuntimeSource(match.Groups[1].Value);
-                    return $" resources.importAsync({source});";
+                    return $" resources.importAsync({source})";
                 });
                 input = @"(() =>
 {
@@ -173,6 +173,7 @@ namespace BilibiliEvolved.Build
     };
 })();";
             }
+            // Console.WriteLine(input);
             return new UglifyJs().Run(input);
         }
     }
@@ -198,14 +199,14 @@ namespace BilibiliEvolved.Build
                     <span class='settings-category'>$2</span>
                     <i class='icon-arrow' style='margin-left:8px'></i>
                 </li>",
-                @"<li class='indent-$1 folded'>
+                @"<li class='indent-$1 folded' data-indent='$1' data-key='$2' data-dependencies='$3'>
                     <label class='gui-settings-checkbox-container'>
                         <input key='$2' type='checkbox' dependencies='$3' checked/>
                         <div class='gui-settings-checkbox'></div>
                         <span>$4</span>
                     </label>
                 </li>",
-                @"<li class='indent-$1 folded'>
+                @"<li class='indent-$1 folded' data-indent='$1' data-key='$2' data-dependencies='$3'>
                     <label class='gui-settings-dropdown-container'>
                         <span class='gui-settings-dropdown-span'>$4</span>
                         <div class='gui-settings-dropdown popup'>
@@ -215,7 +216,7 @@ namespace BilibiliEvolved.Build
                         </div>
                     </label>
                 </li>",
-                @"<li class='indent-$1 folded'>
+                @"<li class='indent-$1 folded' data-indent='$1' data-key='$2' data-dependencies='$3'>
                     <label class='gui-settings-textbox-container'>
                         <span>$4</span>
                         <input key='$2' dependencies='$3' spellcheck='false' type='text' />

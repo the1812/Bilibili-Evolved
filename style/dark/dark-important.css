@@ -10,7 +10,8 @@
 .action-row .sch-pub-btn.publishing,
 .action-row .sch-pub-btn.disabled,
 .action-row .publish-btn.publishing,
-.action-row .publish-btn.disabled
+.action-row .publish-btn.disabled,
+.player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-indicator
 {
     background-color: #222 !important;
 }
@@ -41,7 +42,10 @@
 }
 .m-recommend-item div.box,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .bscroll-vertical-scrollbar.mousedown,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap:hover .bscroll-vertical-scrollbar
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap:hover .bscroll-vertical-scrollbar,
+.player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-vertical-scrollbar,
+.player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-vertical-scrollbar.mousedown,
+.player-auxiliary-area .player-auxiliary-bscrollbar:hover .bscroll-vertical-scrollbar
 {
     background-color: transparent !important;
 }

@@ -1,13 +1,13 @@
 {
   "name": "bilibili-evolved-video-link-downloader",
-  "version": "1.8.0",
+  "version": "1.8.2",
   "description": "Bilibili Evolved 视频链接下载器",
   "main": "video-link-downloader.js",
   "bin": {
     "vld": "video-link-downloader.js"
   },
   "dependencies": {
-    "clipboardy": "^2.0.0",
+    "clipboardy": "^2.1.0",
     "colors": "^1.3.3",
     "command-line-args": "^5.1.1",
     "progress": "^2.0.3",

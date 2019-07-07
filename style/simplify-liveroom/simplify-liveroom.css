@@ -7,7 +7,9 @@
 .simplify-welcomeMessage .welcome-guard,
 .simplify-welcomeMessage .welcome-msg,
 .simplify-popup .chat-popups-section,
-.simplify-popup .link-popup-ctnr
+.simplify-popup .link-popup-ctnr,
+.simplify-giftMessage .chat-item.gift-item,
+.simplify-guardPurchase .chat-item.guard-buy
 {
     display: none !important;
 }
@@ -40,4 +42,8 @@
 .simplify-liveroom-settings>ul>li:hover
 {
     background: rgba(0,0,0,0.16);
+}
+.round-corner .simplify-liveroom-settings>ul>li
+{
+    border-radius: var(--corner-radius);
 }

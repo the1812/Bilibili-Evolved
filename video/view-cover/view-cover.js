@@ -68,7 +68,7 @@ class ImageViewer
 
 export default (() =>
 {
-    if (document.querySelector("meta[itemprop='image'],meta[property='og:image']") !== null)
+    if (!document.URL.includes('live.bilibili.com'))
     {
         return {
             widget: {

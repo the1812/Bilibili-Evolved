@@ -7,7 +7,6 @@
 .h .h-f-btn,
 .n .n-data,
 .bili-search .nav-wrap .wrap>.sub,
-#page-follows .follow-sidenav .text,
 .author-info .favourite-btn,
 .author-info .communicate-btn,
 .dashboard li.like,
@@ -24,12 +23,15 @@
 .player-auxiliary-area .player-auxiliary-setting-menu-wrap,
 .bilibili-player-video-sendbar .bilibili-player-video-hint,
 .bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku,
-.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow
+.bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
+.invite-code .copy-btn,
+.bili-share-pc .title
 {
     width: auto !important;
 }
 .bb-comment .comment-send .comment-emoji,
-#app-ctnr .demo-app .category
+#app-ctnr .demo-app .category,
+.fjw-point .point-wrap .user-point .face .unfocus-btn
 {
     width: max-content !important;
 }
@@ -54,10 +56,9 @@
 {
     width: 160px !important;
 }
-.link-navbar .main-ctnr,
-.bili-search .contain
+.link-navbar .main-ctnr
 {
-    width: 95% !important;
+    width: 100% !important;
 }
 .bili-search .video.list
 {
@@ -71,10 +72,6 @@
 {
     width: 450px !important;
 }
-#page-follows .follow-sidenav .text
-{
-    min-width: 78px !important;
-}
 .h .h-f-btn
 {
     min-width: 76px !important;
@@ -84,7 +81,8 @@
 {
     white-space: pre !important;
 }
-.player-auxiliary-area .player-auxiliary-setting-menu-list
+.player-auxiliary-area .player-auxiliary-setting-menu-list,
+#area-list ul li dl
 {
     white-space: nowrap !important;
 }
@@ -135,13 +133,13 @@
 {
     margin: 0 10px 0 0px !important;
 }
-.bili-search .rocket-con
+.bili-search #navigator
 {
-    margin-left: 40% !important;
+    overflow: visible !important;
 }
-.bili-search .video.matrix:nth-child(5n)
+.search-wrap .search-block .search-button
 {
-    margin-right: 32px !important;
+    letter-spacing: 0 !important;
 }
 .follow-btn>span>span
 {
@@ -223,6 +221,18 @@
 html[lang='ja-JP'] .player-auxiliary-area .danmaku-info-row-block::after
 {
     content: "ブロック" !important;
+}
+html[lang='en-US'] .player-auxiliary-area .danmaku-info-row-block::after
+{
+    content: "Blocked" !important;
+}
+html[lang='en-US'] .player-auxiliary-area .danmaku-info-row-super::after
+{
+    content: "Special" !important;
+}
+html[lang='en-US'] .player-auxiliary-area .danmaku-info-row-special::after
+{
+    content: "Code" !important;
 }
 .season-list li.season-item .season-body .season-title span.follow
 {

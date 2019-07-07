@@ -172,7 +172,6 @@ body>div.to-top.on,
 .card .user-face,
 .result-list .user-face,
 .card .img-box,
-.player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-load-status,
 .act-card-wrap .act-card .type
 {
     background-color: #444 !important;
@@ -246,7 +245,6 @@ body>div.to-top.on,
 .bb-comment .hot-line span,
 .bb-comment .more-link:hover,
 .bb-comment .result,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer,
 .result .card,
 .bili-header-m.report-wrap-module
 {

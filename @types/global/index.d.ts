@@ -72,6 +72,7 @@ declare global
         userInfo: number;
         messages: number;
         activities: number;
+        bangumiLink: number;
         watchlaterList: number;
         favoritesList: number;
         historyList: number;
@@ -83,18 +84,18 @@ declare global
     const unsafeWindow: Window;
     class SpinQuery
     {
-        static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed: () => void): void;
+        static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void;
         static condition<T>(query: () => T, condition: (queryResult: T) => boolean): Promise<T>;
-        static select<T>(query: () => T, action: (queryResult: T) => void, failed: () => void): void;
+        static select<T>(query: () => T, action: (queryResult: T) => void, failed?: () => void): void;
         static select<T>(query: () => T): Promise<T>;
         static select(query: string): Promise<HTMLElement | null>;
-        static any<T>(query: () => T, action: (queryResult: T) => void, failed: () => void): void;
+        static any<T>(query: () => T, action: (queryResult: T) => void, failed?: () => void): void;
         static any<T>(query: () => T): Promise<T>;
         static any(query: string): Promise<any>;
-        static count<T>(query: () => T, count: number, success: (queryResult: T) => void, failed: () => void): void;
+        static count<T>(query: () => T, count: number, success: (queryResult: T) => void, failed?: () => void): void;
         static count<T>(query: () => T, count: number): Promise<T>;
         static count(query: string, count: number): Promise<NodeListOf<Element>>;
-        static unsafeJquery(action: () => void, failed: () => void): void;
+        static unsafeJquery(action: () => void, failed?: () => void): void;
         static unsafeJquery(): Promise<void>;
     }
     class Toast
@@ -137,6 +138,7 @@ declare global
         getStyle(key: string, id?: string): void;
         toggleStyle(content: string, id: string): void;
         toggleStyle(key: string): void;
+        applyDropdownOptions(): Promise<void>;
     }
     const resources: ResourceManager;
     class DoubleClickEvent
@@ -226,6 +228,7 @@ declare global
         allowJumpContinue: boolean,
         autoPlay: boolean,
         showDeadVideoTitle: boolean,
+        deadVideoTitleProvider: '稍后再看' | 'BiliPlus',
         useBiliplusRedirect: boolean,
         biliplusRedirect: boolean,
         framePlayback: boolean,
@@ -247,6 +250,8 @@ declare global
             guard: boolean,
             systemMessage: boolean,
             welcomeMessage: boolean,
+            giftMessage: boolean,
+            guardPurchase: boolean,
             popup: boolean,
             skin: boolean,
         },
@@ -269,6 +274,14 @@ declare global
         videoScreenshot: boolean,
         cache: {} | { version: string } | undefined,
         filenameFormat: string,
+        sideBarOffset: number,
+        noLiveAutoplay: boolean,
+        hideHomeLive: boolean,
+        noMiniVideoAutoplay: boolean,
+        useDefaultVideoSpeed: boolean,
+        defaultVideoSpeed: string,
+        hideCategory: boolean,
+        foldComment: boolean,
         latestVersionLink: string,
         currentVersion: string,
     }
@@ -279,7 +292,7 @@ declare global
     function logError(message: Error | string): void;
     function loadSettings(): void
     function saveSettings(newSettings: BilibiliEvolvedSettings): void;
-    function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void;
+    function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void, initCall?: boolean): void;
     function removeSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void;
     function onSettingsChange(change: (key: string, oldValue: any, newValue: any) => void): void;
     function downloadText(url: string, load: (text: string) => void, error: (text: string) => void): void;

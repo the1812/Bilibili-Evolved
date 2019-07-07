@@ -185,28 +185,36 @@
 }
 .bb-comment .reply-notice .notice-item
 {
-    background-color: #0001;
-    border: none;
-    display: flex;
+    background-color: #0001 !important;
+    border: none !important;
+    display: flex !important;
     align-items: center;
-    padding: 10px 14px;
+    padding: 10px 14px !important;
+}
+.dark .bb-comment .reply-notice .notice-item
+{
+    background-color: #333 !important;
 }
 .bb-comment .reply-notice .notice-item .icon-notice
 {
     order: 0;
-    position: static;
+    position: static !important;
     margin-right: 12px;
 }
 .bb-comment .reply-notice .notice-item a
 {
     order: 1;
     flex-grow: 1;
-    color: black;
+    color: black !important;
+}
+.dark .bb-comment .reply-notice .notice-item a
+{
+    color: #eee !important;
 }
 .bb-comment .reply-notice .notice-item .icon-close-notice
 {
     order: 2;
-    position: static;
+    position: static !important;
 }
 .bb-comment .reply-notice .notice-item .icon-notice,
 .bb-comment .reply-notice .notice-item .icon-close-notice

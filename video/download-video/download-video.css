@@ -28,7 +28,7 @@ ol.video-quality li,
 }
 .video-action>div
 {
-    padding: 12px 24px;
+    padding: 8px 24px;
 }
 ol.video-quality li:hover,
 .video-action>div:hover
@@ -112,4 +112,13 @@ ol.video-quality li:hover,
 .batch #video-action-batch-download-data
 {
     display: block;
+}
+
+.round-corner .video-action>div,
+.round-corner ol.video-quality li,
+.round-corner .download-progress-cancel>span,
+.round-corner .download-progress-background,
+.round-corner .download-progress-foreground
+{
+    border-radius: var(--corner-radius);
 }

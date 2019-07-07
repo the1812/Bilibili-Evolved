@@ -1,7 +1,7 @@
 # Bilibili Evolved
 增强哔哩哔哩Web端体验: 下载视频, 音乐, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 自定义顶栏, 删除广告, 使用夜间模式; 以及增加对触屏设备的支持等.
 
-- [安装](#安装) / [English](install-tutorial.en-US.md) / [インストール](install-tutorial.ja-JP.md)
+- [安装](#安装) / [Install](install-tutorial.en-US.md) / [インストール](install-tutorial.ja-JP.md)
 - [设置](#设置)
 - [功能](#功能)
 - [兼容性](#兼容性)
@@ -35,12 +35,12 @@
 
 #### 注意事项
 - 请尊重视频原作者的版权.
-- 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换.
+- 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换, 例如 [ffmpeg](https://ffmpeg.org/) 或 [Handbrake](http://handbrake.fr/).
 - **分段**的视频会把所有视频打包成`.zip`格式.
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
 - 如果以您的账号权限无法观看某些视频(地区限制, 大会员专享等), 那么这种视频也是无法下载的.
-- 下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=https://www.bilibili.com`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
-- 针对上一条, 也可以使用我另外编写的[下载器](extras/video-link-downloader/README.md)解决内存占用问题.
+- 直接下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`或其他选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=https://www.bilibili.com`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
+- 针对上一条, 可以使用 [aria2](https://aria2.github.io/) 或者我另外编写的[下载器](extras/video-link-downloader/README.md)解决内存占用问题.
 - Chrome浏览器对单个文件大小有[限制](https://chromium.googlesource.com/chromium/src/+/master/storage/browser/blob/README.md#example-limits), 如果在下载完成时浏览器发生崩溃, 请尝试适当降低画质, 或换用没有限制的Firefox浏览器.
     - 64位限制: 2GB
     - 32位限制: 614MB
@@ -71,6 +71,9 @@
 进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.
 
 > 官方于2018.12.27已正式支持记忆画质
+### 默认视频速度
+进入视频时自动选择指定的视频倍速.
+
 ### 默认弹幕设置
 设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.
 ### 自动展开弹幕列表
@@ -196,6 +199,8 @@
 - 隐藏舰长图标
 - 隐藏全区广播
 - 隐藏欢迎信息 (xxx姥爷进入直播间)
+- 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
+- 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
 - 禁用直播间皮肤
 
@@ -254,6 +259,10 @@
 隐藏播放页右侧的`返回旧版`入口.
 ### 隐藏番剧点评
 隐藏番剧播放页面的点评板块, 不会隐藏番剧介绍页那里的点评.
+### 隐藏分区栏
+隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.
+
+![分区栏](images/compressed/hide-category.jpg)
 
 ## 工具
 ### 删除广告
@@ -266,7 +275,7 @@
 ### 隐藏搜索推荐
 将搜索框的推荐词替换为`搜索`.
 ### 展开动态标题
-在顶栏的动态预览框中, 不管名称多长, 总是完全展开up主和视频的标题.
+在顶栏的动态预览框中, 不管名称多长, 总是完全展开视频的标题.
 ![展开动态标题](images/compressed/full-tweets-title.jpg)
 ### 展开选集标题
 在视频选集列表中, 当标题超出一行时, 另起一行以显示完整标题.
@@ -275,6 +284,10 @@
 ![展开选集标题](images/compressed/full-page-title.jpg)
 ### 直播间勋章快速切换
 在直播区(live.bilibili.com)中, 可从`附加功能`中直接切换勋章和头衔.
+### 显示失效视频信息
+在个人空间中, 为已失效视频恢复标题和封面. 如果还启用了`失效视频重定向`, 还会把视频的链接替换为BiliPlus里对应的页面.
+
+`信息来源`默认为`稍后再看`, 脚本将把视频添加到稍后再看, 拿到标题和封面后再从稍后再看删掉, 会消耗一定时间. 之后如果 BiliPlus API 弄好了, 将开放`BiliPlus`的选项, 速度相对更快.
 ### BiliPlus跳转支持
 在视频/番剧/空间中, 附加功能`转到BiliPlus`, 点击可以转到[BiliPlus](https://biliplus.com)上对应的页面.
 ### 下载音频
@@ -286,13 +299,21 @@
 根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.
 适用于2K, 4K等的显示屏, DPI缩放为100%的用户不需要此功能.
 
-![image-resolution](images/compressed/image-resolution.jpg)
+![高分辨率图片](images/compressed/image-resolution.jpg)
 
 ### 旧版动态跳转支持
 将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.
 
 ### 界面翻译(实验性)
 为界面中一些常用文本提供翻译, 目前仅开放日语和英语.
+
+### 禁止直播首页自动播放
+禁止直播首页的推荐直播间自动开始播放, 开启后, 还可以通过`隐藏首页推荐直播`直接隐藏掉这个推荐板块.
+
+![直播首页自动播放](images/compressed/hide-home-live.jpg)
+
+### 快速收起动态评论区
+动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.
 
 ## 触摸
 ### 顶栏
@@ -304,12 +325,14 @@
 ![放大前](images/compressed/player-buttons-original.jpg)
 ![放大后](images/compressed/player-buttons-large.jpg)
 - 启用触摸手势
-    - 左右滑动可调整进度
-    - 上下滑动可调整音量
+    - 左右滑动可调整进度, 上下位置不同灵敏度不同
     - 进度调整可在左上角和右上角取消
-    - 在不同位置滑动, 可以使用3档不同的灵敏度.
+    - 左侧上下滑动可调整亮度
+    - 右侧上下滑动可调整音量
 
-![触摸调整](images/compressed/touch-player.gif)
+![进度调整](images/compressed/touch-gestures.jpg)
+![亮度和音量调整](images/compressed/touch-gestures-vertical.jpg)
+
 #### 启用双击控制
 将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.
 
@@ -339,6 +362,9 @@
 
 例如, 想要标题+AV号+时间的格式, 可以设定为`[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]`, 能够得到类似`xxxx AV23333 2019-05-29 19-59-44`的名字.
 
+### 侧栏垂直偏移量
+设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.
+
 # 兼容性
 ## 脚本管理器
 ### [Tampermonkey](https://tampermonkey.net/) / [Violentmonkey](https://violentmonkey.github.io/)
@@ -349,17 +375,24 @@
 ## 浏览器
 > ⚠ 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)中完美运行.
 
-### Chrome / Edge (Chromium)
+### Chrome
 - 背景模糊效果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启. (Edge要把`chrome`换成`edge`)
 - 含有背景模糊效果的动画有掉帧现象.
 - 在Chrome ≥ 73版中, 如果您的屏幕DPI缩放大于100%, 或者改动了页面缩放倍数, 则模糊效果区域会错位. 详见[Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910).
+
+### Edge (Chromium)
+- 滑条控件(`input[type='range']`)会有一段异常的黑色.
+- 背景模糊效果似乎不会计算后面的视频, 所以`模糊视频控制栏背景`开启了也没有什么效果.
+
 ### Firefox
 - 背景模糊效果无效, 详见[Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765).
-- 触摸调整的进度预览有弹跳现象.(源自CSS `transition`. 短时间内总是从原数值开始变化, 而不是当前数值)
+
 ### Safari
 - 尚未在Safari中测试.(流下了贫穷的泪水
+
 ### Edge (UWP) [**停止支持**]
 - 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://microsoftedgeinsider.com/).
+- Chromium 内核的 Edge 可以通过特殊手段启用中文界面, 网上搜一下就有, 或者也可以参考这篇 [Gist](https://gist.github.com/the1812/bd5c3edabd61b03696428fcfde53d74f). (需要梯子)
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 

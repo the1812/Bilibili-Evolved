@@ -114,14 +114,12 @@ body.dark .bilibili-evolved-about
 {
     margin-right: 8px;
     position: relative;
-    width: 16px;
-    height: 16px;
     display: inline-flex;
 }
 .about-content section.participants .fetching::before
 {
-    content: "";
-    box-sizing: border-box;
+    content: "Loading...";
+    /* box-sizing: border-box;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -131,5 +129,5 @@ body.dark .bilibili-evolved-about
     border-radius: 50%;
     border: 2px solid #8884;
     border-top-color: var(--theme-color);
-    animation: spinner .6s linear infinite;
+    animation: spinner .6s linear infinite; */
 }

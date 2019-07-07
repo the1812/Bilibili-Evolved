@@ -53,8 +53,6 @@ Tip: Every item can be toggled individually in Add-ons.`],
     ["hideTopSearch", `Use <span>"Search"</span> in place of search recommendations.`],
     ["fullTweetsTitle", `Always expand full title in the activities peek in navbar.`],
     ["fullPageTitle", `Always expand full title of video episodes. (Not work for bangumi)`],
-    ["showDeadVideoTitle", `In your space, recover the title and cover of dead videos`],
-    ["useBiliplusRedirect", `Jump to BiliPlus for dead videos.`],
     ["biliplusRedirect", `Append "Jump to BiliPlus" button to Add-ons.`],
     ["imageResolution", `Request hi-resolution images by your screen DPI. But also cause longer loading time.`],
     ["oldTweets", `Replace activities link by the old version, and you can switch between new and old versions in Add-ons.`],
@@ -101,6 +99,16 @@ The default format is <span>[title][ - ep]</span>, representing video title and 
 Put your variables inside square brackets, other contents inside brackets (like "<span> - </span>" in "<span>[ - ep]</span>") will only appear when the variable exists. For instance, if the format is <span>[title] - [ep]</span>. Even there's no episode title, that "<span> - </span>" will still appear in filename (which is meaningless). So in default format, when episode title not exists, "<span> - </span>" will also disappear.
 
 A more specific example: To use a "video title + AV ID + time" format, we can use <span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>. And get filenames like "<span>xxxx AV23333 2019-05-29 19-59-44</span>".`],
+    ['noLiveAutoplay', `Disable autoplay on live homepage.`],
+    ['hideHomeLive', `Hide recommended live rooms on live homepage.`],
+    ['sideBarOffset', `Set vertical offset of side bar (in percent). Valid range: -40% ~ 40%.`],
+    ['hideCategory', `Hide category bar on main site, you can select category from Home in navbar.`],
+    ['foldComment', `Append a <span>"Fold comments"</span> button on the bottom of page when viewing comments in activities. Then you can quickly fold comments without scrolling up.`],
+    ['showDeadVideoTitle', `Retrieve title and cover of dead videos in your space`],
+    ['useBiliplusRedirect', `Jump to BiliPlus for dead videos.`],
+    ['deadVideoTitleProvider', `Select dead video info provider: Watchlater is stable but takes some time, BiliPlus runs fast but it's not implemented yet.`],
+    ['useDefaultVideoSpeed', `Set the default video playback rate.`],
+    ['defaultVideoSpeed', `Select the default playback rate.`],
 ]);
 export default {
     export: { toolTips },

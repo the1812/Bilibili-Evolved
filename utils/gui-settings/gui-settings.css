@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 50%;
+    top: calc(50% + var(--side-bar-offset));
     left: 0;
     width: 32px;
     z-index: 99999;
@@ -126,7 +126,7 @@ body.dark .gui-settings-widgets
     background: white;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 101;
     cursor: pointer;
     transition: all .2s ease-out;
     -webkit-tap-highlight-color: transparent;
@@ -218,6 +218,7 @@ body.dark .gui-settings-widgets
     visibility: collapse;
     transition: all 0.2s;
     width: 0;
+    position: absolute;
 }
 .gui-settings-checkbox-container .gui-settings-ok
 {
@@ -412,13 +413,13 @@ li.category.folded i.icon-arrow
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0px 3px 20px 2px #0004;
+    box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
     z-index: 100;
 }
 .gui-settings-dropdown ul li
 {
     margin: 0;
-    padding: 12px 0;
+    padding: 8px 0;
     height: auto;
     width: 100%;
     justify-content: center;
@@ -452,7 +453,8 @@ li.category.folded i.icon-arrow
     max-width: 120px;
 }
 .gui-settings-dropdown input[key='defaultPlayerLayout'],
-.gui-settings-dropdown input[key='defaultBangumiLayout']
+.gui-settings-dropdown input[key='defaultBangumiLayout'],
+.gui-settings-dropdown input[key='defaultVideoSpeed']
 {
     max-width: 50px;
 }
@@ -570,7 +572,6 @@ li.category.folded i.icon-arrow
     border-bottom: 2px solid var(--theme-color-50);
     flex: 0 0 auto;
     margin: 4px;
-    border-radius: 0;
 }
 .gui-settings-flat-button:disabled
 {
@@ -654,7 +655,7 @@ li.category.folded i.icon-arrow
     transform: scaleY(0) translateX(-50%);
     left: 50%;
     background: white;
-    box-shadow: 0px 3px 20px 2px #0004;
+    box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
     z-index: 200;
     display: flex;
     flex-direction: column;
@@ -684,4 +685,18 @@ li.category.folded i.icon-arrow
     color: #ccc;
     border-bottom-width: 3px;
     margin: 0 4px;
+}
+
+body.round-corner {
+    --corner-radius: 4px;
+    --large-corner-radius: 8px;
+}
+.round-corner .gui-settings-flat-button,
+.round-corner .gui-settings-dropdown,
+.round-corner .gui-settings-textbox-container input,
+.round-corner .gui-settings-dropdown ul li,
+.round-corner .gui-settings-dropdown>ul,
+.round-corner .gui-settings-flat-button .popup
+{
+    border-radius: var(--corner-radius);
 }

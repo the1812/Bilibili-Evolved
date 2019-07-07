@@ -1,12 +1,12 @@
 export const map = new Map([
-    /* Your translation here */
-    [`*`, [
-        /* CSS translation here */
-    ]],
+  /* Your translation here */
+  [`*`, [
+    /* CSS translation here */
+  ]],
 ]);
 export const regex = new Map([
-    /* Regex translation here */
+  /* Regex translation here */
 ]);
 export default {
-    export: { map, regex },
+  export: { map, regex },
 };

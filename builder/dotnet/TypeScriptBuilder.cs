@@ -13,8 +13,12 @@ namespace BilibiliEvolved.Build
         {
             var tsc = new TypeScriptCompiler();
             var files = ResourceMinifier.GetFiles(file =>
+                (file.FullName.Contains(@"style\")
+                || file.FullName.Contains(@"touch\")
+                || file.FullName.Contains(@"utils\")
+                || file.FullName.Contains(@"video\")) &&
                 file.Extension == ".ts" &&
-                !file.Name.EndsWith("d.ts")
+                !file.Name.EndsWith(".d.ts")
             );
             using (var cache = new BuildCache())
             {

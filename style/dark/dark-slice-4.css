@@ -80,6 +80,10 @@ li.user-wrapper .avatar .detail .logout,
 {
     background-color: #222 !important;
 }
+.player-auxiliary-area .bui-collapse
+{
+    background-color: #333 !important;
+}
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
 .rank-list-container .rank-list-wrapper,
@@ -191,9 +195,11 @@ body #app .marquee,
 {
     background-color: #444 !important;
 }
-.player-auxiliary-area .bui-collapse
+.player-auxiliary-area .bui-collapse,
+.player-auxiliary-area .player-auxiliary-danmaku-btn-footer,
+.v-wrap #multi_page
 {
-    background-color: #555 !important;
+    border-radius: 2px !important;
 }
 .add-tag .edit .input-wrapper .container.active .btn-add,
 .infor-news .news-top,
@@ -215,10 +221,9 @@ div.cntr a.check-all
 .el-table__expanded-cell,
 .container .main-btn.edit-btn:hover,
 .player-auxiliary-area .player-auxiliary-filter,
-.bui-collapse .bui-collapse-header,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap,
 .gui-settings-box.blur,
 .bl-search,
+.player-auxiliary-collapse .player-auxiliary-wraplist,
 .buy-vip-panel .panel-ctnr .panel-aside .aside-item .item-img-ctnr
 {
     background-color: transparent !important;

@@ -1,5 +1,4 @@
-if (typeof isEmbeddedPlayer !== "undefined" && isEmbeddedPlayer())
-{
+if (typeof isEmbeddedPlayer !== "undefined" && isEmbeddedPlayer()) {
     return;
 }
 const playerModes = [
@@ -24,22 +23,32 @@ const playerModes = [
     },
     {
         name: "全屏",
-        action: () =>
+        action: async () =>
         {
+            const video = await SpinQuery.condition(
+                () => document.querySelector(".bilibili-player-video video"),
+                it =>
+                {
+                    return it !== null && it.readyState === 4
+                        && document.readyState === "complete" && document.hasFocus();
+                });
+            if (video === null)
+            {
+                console.warn("[默认播放器模式] 未能应用全屏模式, 等待超时.");
+                return;
+            }
             document.querySelector(".bilibili-player-video-btn-fullscreen").click();
         },
     },
 ];
 let lightOff = () => { };
 let lightOn = () => { };
-async function initLights()
+async function initLights ()
 {
-    if (settings.autoLightOff)
-    {
+    if (settings.autoLightOff) {
         await SpinQuery.unsafeJquery();
         const settingsButton = await SpinQuery.any(() => unsafeWindow.$(".bilibili-player-video-btn-setting"));
-        if (!settingsButton)
-        {
+        if (!settingsButton) {
             return;
         }
         settingsButton.mouseover().mouseout();
@@ -54,7 +63,7 @@ async function initLights()
         lightOn = () => setLight(false);
     }
 }
-async function main()
+async function main ()
 {
     await initLights();
     await SpinQuery.condition(
@@ -62,8 +71,7 @@ async function main()
         it => it.length === 3 && $("video").length > 0 && $("video").prop("duration"));
 
     const video = document.querySelector("video");
-    if (!video)
-    {
+    if (!video) {
         return;
     }
     const info = playerModes.find(it => it.name === settings.defaultPlayerMode);
@@ -89,26 +97,21 @@ async function main()
     {
         const onplay = () =>
         {
-            if (info && $("#bilibiliPlayer[class*=mode-]").length === 0)
-            {
+            if (info && $("#bilibiliPlayer[class*=mode-]").length === 0) {
                 info.action();
             }
         };
-        if (settings.applyPlayerModeOnPlay && !settings.autoPlay)
-        {
+        if (settings.applyPlayerModeOnPlay && !settings.autoPlay) {
             video.addEventListener("play", onplay, { once: true });
         }
-        else
-        {
+        else {
             onplay();
         }
 
-        if (!settings.autoPlay)
-        {
+        if (!settings.autoPlay) {
             video.addEventListener("play", lightOff, { once: true });
         }
-        else
-        {
+        else {
             lightOff();
         }
         video.addEventListener("ended", lightOn, { once: true });
