@@ -293,7 +293,7 @@ function setupTouchPlayer (player) {
   }
   $('.bilibili-player-video-subtitle').before(/* html */`
     <div class='touch-video-box-wrapper'>
-      <div class='touch-video-box adjust-closed'>
+      <div class='touch-video-box adjust-closed animation'>
         <div class='touch-video-info'>
           <div class='touch-row'>
             <div class='touch-row-item'>
@@ -348,9 +348,6 @@ function setupTouchPlayer (player) {
       $('.bilibili-player-video-btn-volume').removeClass('video-state-volume-max')
       video.prop('muted', false)
     }
-  }
-  if (settings.touchVideoPlayerAnimation) {
-    box.classList.add('animation')
   }
 
   swiper.action.onActionStart = direction => {

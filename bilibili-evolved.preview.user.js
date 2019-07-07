@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.8.7
+// @version      1.8.8
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -167,7 +167,6 @@ const settings = {
   removeAds: true,
   hideTopSearch: false,
   touchVideoPlayerDoubleTapControl: false,
-  touchVideoPlayerAnimation: false,
   customStyleColor: '#00A0D8',
   preserveRank: true,
   blurBackgroundOpacity: 0.382,
@@ -263,6 +262,7 @@ const fixedSettings = {
   forceWide: false,
   useNewStyle: false,
   overrideNavBar: false,
+  touchVideoPlayerAnimation: false,
   latestVersionLink: 'https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js',
   currentVersion: GM_info.script.version,
 }
