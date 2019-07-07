@@ -122,7 +122,7 @@ export const settings = {
   hideHomeLive: false,
   noMiniVideoAutoplay: false,
   useDefaultVideoSpeed: false,
-  defaultVideoSpeed: 1,
+  defaultVideoSpeed: '1',
   hideCategory: false,
   foldComment: true,
   cache: {},

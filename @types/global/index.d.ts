@@ -279,7 +279,7 @@ declare global
         hideHomeLive: boolean,
         noMiniVideoAutoplay: boolean,
         useDefaultVideoSpeed: boolean,
-        defaultVideoSpeed: number,
+        defaultVideoSpeed: string,
         hideCategory: boolean,
         foldComment: boolean,
         latestVersionLink: string,

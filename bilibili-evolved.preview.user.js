@@ -243,7 +243,7 @@ const settings = {
   hideHomeLive: false,
   noMiniVideoAutoplay: false,
   useDefaultVideoSpeed: false,
-  defaultVideoSpeed: 1,
+  defaultVideoSpeed: '1',
   hideCategory: false,
   foldComment: true,
   cache: {},
@@ -1838,6 +1838,17 @@ Resource.manifest = {
     displayNames: {
       foldComment: '快速收起动态评论区',
     },
+  },
+  useDefaultVideoSpeed: {
+    path: 'default-video-speed.min.js',
+    displayNames: {
+      useDefaultVideoSpeed: '使用默认播放速度',
+      defaultVideoSpeed: '默认播放速度',
+    },
+    dropdown: {
+      key: 'defaultVideoSpeed',
+      items: ['0.5', '0.75', '1', '1.25', '1.5', '2.0'],
+    }
   },
 }
 const resourceManifest = Resource.manifest

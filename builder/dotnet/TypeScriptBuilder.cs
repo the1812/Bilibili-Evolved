@@ -18,7 +18,7 @@ namespace BilibiliEvolved.Build
                 || file.FullName.Contains(@"utils\")
                 || file.FullName.Contains(@"video\")) &&
                 file.Extension == ".ts" &&
-                !file.Name.EndsWith("d.ts")
+                !file.Name.EndsWith(".d.ts")
             );
             using (var cache = new BuildCache())
             {
