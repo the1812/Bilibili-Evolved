@@ -10,7 +10,7 @@
     z-index: 100000;
     transform: translateX(-100%);
     transition: all .3s cubic-bezier(0, 0.86, 0.58, 1);
-    display: none;
+    display: flex;
     flex-direction: column;
     box-shadow: 4px 0px 16px 0px #0000;
 }
@@ -118,7 +118,7 @@ body.dark .bilibili-evolved-about
 }
 .about-content section.participants .fetching::before
 {
-    content: "Loading";
+    content: "Loading...";
     /* box-sizing: border-box;
     position: absolute;
     top: 50%;
