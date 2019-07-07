@@ -256,7 +256,7 @@ ${it.url}
 }).join('\n')}
       `.trim()
       const blob = new Blob([input], { type: 'text/plain' })
-      this.downloadBlob(blob, `cid${unsafeWindow.cid}.txt`)
+      this.downloadBlob(blob, `${getFriendlyTitle(true)}.txt`)
     }
   }
   extension (fragment) {
