@@ -619,6 +619,18 @@ export const map = new Map([
   [`禁止直播首页自动播放`, `Disable live autoplay`],
   [`隐藏首页推荐直播`, `Hide recommended live rooms`],
   [`侧栏垂直偏移量`, `Side bar vertical offset`],
+  [`合作视频`, `Collaboration`],
+  [`礼物弹幕`, `Gift danmaku`],
+  [`上舰提示`, `New captains`],
+  [`隐藏分区栏`, `Hide category bar`],
+  [`显示失效视频信息`, `Retrieve dead video info`],
+  [`失效视频重定向`, `Redirect dead video`],
+  [`信息来源`, `Info provider`],
+  [`快速收起动态评论区`, `Quick fold comments`],
+  [`收起评论`, `Fold comments`],
+  [`我的直播间地址`, `My live room address`],
+  [`选择分类`, `Category`],
+  [`必须选择分类才能开播`, `You can't start live broadcasting before select a category.`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
