@@ -3,6 +3,7 @@
   bottom: 0;
   height: 40px;
   width: calc(100% + 20px);
+  font-size: 14px;
   transform: translateX(-10px);
   display: flex;
   align-items: center;

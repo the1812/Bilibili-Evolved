@@ -103,7 +103,8 @@ li.danmaku-info-row.bpui-selecting,
 .comic-episodes .episode-header .episode-operation,
 .manga-card .manga-title,
 .comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .comments-total,
-.bb-comment a.more-link
+.bb-comment a.more-link,
+.interact-dialog .btn
 {
     color: #eee !important;
 }
@@ -120,7 +121,8 @@ li.danmaku-info-row.bpui-selecting,
 .bangumi-options .opt-list,
 .navbar-container,
 .comic-info-component .page-normal .comic-tab .tab-titles,
-.bilibili-player-ending-panel-box-recommend:hover
+.bilibili-player-ending-panel-box-recommend:hover,
+.interact-dialog .btn
 {
     border-color: transparent !important;
 }
@@ -254,7 +256,9 @@ li.danmaku-info-row.bpui-selecting,
 .item-wrap__task .item-index,
 .h5share-container .tag,
 .navbar-container .nav-items .nav-item.activated:before,
-.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn
+.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
+.interact-dialog .btn,
+.video-control-show .bilibili-player-video-interactive-list .check:hover .big-round
 {
     background-color: var(--theme-color) !important;
 }

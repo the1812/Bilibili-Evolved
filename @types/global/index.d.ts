@@ -82,6 +82,10 @@ declare global
     type CustomNavbarOrders = { [key in keyof CustomNavbarComponents]: number };
     const GM_info: MonkeyInfo;
     const unsafeWindow: Window;
+    interface Window {
+        aid: string | undefined
+        cid: string | undefined
+    }
     class SpinQuery
     {
         static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void;
