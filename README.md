@@ -6,6 +6,7 @@
 - [功能](#功能)
 - [兼容性](#兼容性)
 - [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
+- [相关文档](https://github.com/the1812/Bilibili-Evolved/wiki)
 - [投喂](donate.md)
 
 # 安装
@@ -64,9 +65,9 @@
 
 ### 默认播放器模式
 设置默认的播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 可以选择在进入页面的首次播放时应用, 或者一进入页面就应用. 还可以设置是否自动关灯.
-<!--
-> ⚠ 自动全屏的稳定性还有待观测, 目前仅有一定概率成功. 如果它在您的电脑上没有效果, 那么请无视这个`全屏`选项吧.
--->
+
+> ⚠ 自动全屏的效果并不稳定, 可以尝试改用播放时全屏并关闭自动播放.
+
 ### 默认视频画质
 进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.
 
@@ -377,9 +378,11 @@
 支持 Chrome, Edge (Chromium 内核), Firefox, Safari, 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)中完美运行.
 
 ### Edge (UWP) [**停止支持**]
-UWP版Edge已经不再支持了(就是 Windows 10 自带的那个), 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://microsoftedgeinsider.com/).
+UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://microsoftedgeinsider.com/).
 
 另外, Chromium 内核的 Edge 可以通过特殊手段启用中文界面, 网上搜一下就有, 或者也可以参考这篇 [Gist](https://gist.github.com/the1812/bd5c3edabd61b03696428fcfde53d74f). (需要梯子)
+
+------
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 
