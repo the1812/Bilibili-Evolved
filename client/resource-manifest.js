@@ -298,6 +298,9 @@ Resource.manifest = {
   videoInfo: {
     path: 'video-info.min.js'
   },
+  videoStory: {
+    path: 'video-story.min.js'
+  },
   about: {
     path: 'about.min.js',
     html: true,
