@@ -7,11 +7,12 @@ export class StoryChoice {
     }
 }
 export class StoryNode {
-    constructor(rawObject, aid) {
+    constructor(rawObject, aid, graphVersion) {
         this.title = rawObject.title;
         this.nodeID = rawObject.node_id;
         this.aid = aid;
         this.cid = rawObject.cid;
+        this.graphVersion = graphVersion;
         this.choices = [];
         this.choiceTime = -1;
     }
@@ -20,7 +21,7 @@ export class StoryNode {
             return;
         }
         const url = `https://api.bilibili.com/x/stein/nodeinfo?aid=${this.aid}&node_id=${this.nodeID}&graph_version=504`;
-        const json = await Ajax.getJson(url);
+        const json = await Ajax.getJsonWithCredentials(url);
         if (json.code !== 0) {
             console.error(`获取选项失败: ${json.message}`);
             return;
@@ -42,13 +43,13 @@ export class Story {
         return await Promise.all(this.nodeList.map(node => node.getChoices()));
     }
 }
-export const getStoryNodes = async (aid) => {
-    const url = `https://api.bilibili.com/x/stein/nodeinfo?aid=${aid}&graph_version=504`;
-    const json = await Ajax.getJson(url);
+export const getStoryNodes = async (aid, graphVersion) => {
+    const url = `https://api.bilibili.com/x/stein/nodeinfo?aid=${aid}&graph_version=${graphVersion}`;
+    const json = await Ajax.getJsonWithCredentials(url);
     if (json.code !== 0) {
         return json.message;
     }
-    const nodeList = json.data.story_list.map((it) => new StoryNode(it, aid));
+    const nodeList = json.data.story_list.map((it) => new StoryNode(it, aid, graphVersion));
     const startingNode = nodeList.find(it => it.nodeID === json.data.node_id);
     if (!startingNode) {
         return '获取起始结点失败';
