@@ -57,6 +57,12 @@ body.dark .bilibili-evolved-about
 .about-content .name img
 {
     margin-right: 18px;
+    visibility: collapse;
+}
+body.dark .about-content .name .dark,
+body:not(.dark) .about-content .name .light
+{
+    visibility: visible;
 }
 .about-content .version
 {
