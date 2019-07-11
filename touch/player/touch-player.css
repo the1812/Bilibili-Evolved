@@ -320,7 +320,100 @@ div.bilibili-player-video-control
 {
     -webkit-tap-highlight-color: transparent !important;
 }
-
+/*
+.disable-original-hover .bilibili-player-video-interactive,
+.disable-original-hover .bilibili-player-video-interactive-list
+{
+    display: none !important;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-interactive
+{
+    display: block !important;
+    opacity: 1;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 54px;
+    z-index: 13;
+    pointer-events: none;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-interactive-list
+{
+    display: block !important;
+    opacity: 1;
+    position: relative;
+    width: 400px;
+    height: auto;
+    margin: 0 auto;
+    overflow: visible;
+    animation: show-list .2s;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-interactive-list .oval-list
+{
+    position: relative;
+    width: auto;
+    transition: .6s ease-out;
+    margin: 0 auto;
+    left: 0;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-interactive-list .hover-item
+{
+    position: fixed;
+    width: auto;
+    top: 55px;
+    height: 44px;
+    border: 1px solid hsla(0,0%,100%,.8);
+    background: rgba(34,34,34,.8);
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-interactive-list .check
+{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    float: left;
+    fill: #fff;
+    cursor: pointer;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-interactive-list .bilibili-player-video-interactive-oval .big-round
+{
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    left: 8px;
+    top: 8px;
+    background: rgba(0,0,0,0.8);
+    z-index: 13;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-interactive-list .bilibili-player-video-interactive-oval .big-round .small
+{
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: 4px;
+    top: 4px;
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-interactive-list .hover-item .bg
+{
+    position: absolute;
+    width: 100%;
+    height: 44px;
+    background: linear-gradient(center bottom, center top, from);
+}
+.disable-original-hover.touch-video-control-show .bilibili-player-video-interactive-list .hover-item .text
+{
+    max-width: 420px;
+    position: relative;
+    padding: 0 10px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 44px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+} */
 
 @media screen and (min-width: 750px)
 {

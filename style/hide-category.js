@@ -1,4 +1,4 @@
-const style = `#app>.bili-header-m>.bili-wrapper {
+const style = `.bili-header-m>.bili-wrapper {
   visibility: hidden !important;
   height: 18px !important;
 }`
