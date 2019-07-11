@@ -715,12 +715,17 @@ class SearchBox extends NavbarComponent {
       const json = await Ajax.getJson("https://api.bilibili.com/x/web-interface/search/default");
       if (json.code === 0) {
         keyword.setAttribute("placeholder", json.data.show_name);
-        if (json.data.name.startsWith("av")) {
-          form.querySelector(".recommended-target").setAttribute("href", `https://www.bilibili.com/${json.data.name}`);
+        let href;
+        if (json.data.url !== "") {
+          href = json.data.url;
+        }
+        else if (json.data.name.startsWith("av")) {
+          href = `https://www.bilibili.com/${json.data.name}`;
         }
         else {
-          form.querySelector(".recommended-target").setAttribute("href", `https://search.bilibili.com/all?keyword=${json.data.name}`);
+          href = `https://search.bilibili.com/all?keyword=${json.data.name}`;
         }
+        form.querySelector(".recommended-target").setAttribute("href", href);
       }
       else {
         console.error("[自定义顶栏] 获取搜索推荐词失败");
