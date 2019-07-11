@@ -637,8 +637,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .user-info-panel .level-progress-label {
     font-size: 11px;
 }
-.user-info-panel .grey-button,
-.user-info-panel .theme-button
+.custom-navbar .grey-button,
+.custom-navbar .theme-button
 {
     align-self: stretch;
     height: 36px;
@@ -646,24 +646,24 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     align-items: center;
     justify-content: center;
 }
-.user-info-panel .grey-button
+.custom-navbar .grey-button
 {
     background: #ededed;
     color: inherit !important;
 }
-.user-info-panel .grey-button:hover
+.custom-navbar .grey-button:hover
 {
     background: #ddd;
 }
-.custom-navbar.dark .user-info-panel .grey-button
+.custom-navbar.dark .grey-button
 {
     background: #444;
 }
-.custom-navbar.dark .user-info-panel .grey-button:hover
+.custom-navbar.dark .grey-button:hover
 {
-    background: #333;
+    background: #383838;
 }
-.custom-navbar .user-info-panel .theme-button
+.custom-navbar .theme-button
 {
     background: var(--theme-color);
     color: var(--foreground-color);
@@ -725,6 +725,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .video-list li.more:hover
 {
     border-color: var(--theme-color);
+    color: var(--theme-color) !important;
 }
 .custom-navbar .video-list .loading
 {
