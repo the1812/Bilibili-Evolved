@@ -6,6 +6,7 @@
 - [功能](#功能)
 - [兼容性](#兼容性)
 - [版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
+- [相关文档](https://github.com/the1812/Bilibili-Evolved/wiki)
 - [投喂](donate.md)
 
 # 安装
@@ -64,9 +65,9 @@
 
 ### 默认播放器模式
 设置默认的播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 可以选择在进入页面的首次播放时应用, 或者一进入页面就应用. 还可以设置是否自动关灯.
-<!--
-> ⚠ 自动全屏的稳定性还有待观测, 目前仅有一定概率成功. 如果它在您的电脑上没有效果, 那么请无视这个`全屏`选项吧.
--->
+
+> ⚠ 自动全屏的效果并不稳定, 可以尝试改用播放时全屏并关闭自动播放.
+
 ### 默认视频画质
 进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.
 
@@ -230,8 +231,8 @@
 在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
 
 ### 模糊视频控制栏背景
-模糊视频控制栏背景, 原版的阴影效果将无效.
-此功能需要浏览器支持背景模糊效果, 详情见[兼容性](#兼容性)一节.
+模糊视频控制栏背景, 原有的阴影效果将无效.
+此功能需要浏览器支持背景模糊效果, 详情见[背景模糊兼容性](backdrop-filter.md)一节.
 
 **启用前**
 ![不模糊背景](images/compressed/original-control.jpg)
@@ -373,26 +374,15 @@
 不支持, 请使用以上的两种管理器.
 
 ## 浏览器
-> ⚠ 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)中完美运行.
 
-### Chrome
-- 背景模糊效果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))需要手动在`chrome://flags/#enable-experimental-web-platform-features`中开启. (Edge要把`chrome`换成`edge`)
-- 含有背景模糊效果的动画有掉帧现象.
-- 在Chrome ≥ 73版中, 如果您的屏幕DPI缩放大于100%, 或者改动了页面缩放倍数, 则模糊效果区域会错位. 详见[Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910).
-
-### Edge (Chromium)
-- 滑条控件(`input[type='range']`)会有一段异常的黑色.
-- 背景模糊效果似乎不会计算后面的视频, 所以`模糊视频控制栏背景`开启了也没有什么效果.
-
-### Firefox
-- 背景模糊效果无效, 详见[Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765).
-
-### Safari
-- 尚未在Safari中测试.(流下了贫穷的泪水
+支持 Chrome, Edge (Chromium 内核), Firefox, Safari, 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)中完美运行.
 
 ### Edge (UWP) [**停止支持**]
-- 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://microsoftedgeinsider.com/).
-- Chromium 内核的 Edge 可以通过特殊手段启用中文界面, 网上搜一下就有, 或者也可以参考这篇 [Gist](https://gist.github.com/the1812/bd5c3edabd61b03696428fcfde53d74f). (需要梯子)
+UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://microsoftedgeinsider.com/).
+
+另外, Chromium 内核的 Edge 可以通过特殊手段启用中文界面, 网上搜一下就有, 或者也可以参考这篇 [Gist](https://gist.github.com/the1812/bd5c3edabd61b03696428fcfde53d74f). (需要梯子)
+
+------
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 

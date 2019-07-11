@@ -1,14 +1,10 @@
-export class VideoInfo
-{
-    constructor(aid)
-    {
+export class VideoInfo {
+    constructor(aid) {
         this.aid = aid;
     }
-    async fetchInfo()
-    {
+    async fetchInfo() {
         const json = JSON.parse(await Ajax.getText(`https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`));
-        if (json.code !== 0)
-        {
+        if (json.code !== 0) {
             throw new Error(json.message);
         }
         const data = json.data;
@@ -24,8 +20,7 @@ export class VideoInfo
             name: data.owner.name,
             faceUrl: data.owner.face
         };
-        this.pages = data.pages.map(it =>
-        {
+        this.pages = data.pages.map((it) => {
             return {
                 cid: it.cid,
                 title: it.part,
@@ -34,48 +29,37 @@ export class VideoInfo
         });
         return this;
     }
-    async fetchDanmaku()
-    {
+    async fetchDanmaku() {
         this.danmaku = new DanmakuInfo(this.cid);
         return this.danmaku.fetchInfo();
     }
 }
-export class Danmaku
-{
-    constructor(text, p)
-    {
+export class Danmaku {
+    constructor(text, p) {
         this.text = text;
         this.p = p;
     }
 }
-export class DanmakuInfo
-{
-    constructor(cid)
-    {
+export class DanmakuInfo {
+    constructor(cid) {
         this.cid = cid;
     }
-    async fetchInfo()
-    {
+    async fetchInfo() {
         const xml = await Ajax.getText(`https://api.bilibili.com/x/v1/dm/list.so?oid=${this.cid}`);
         this.rawXML = xml;
-
-        const dom = new DOMParser().parseFromString(xml, "application/xml").documentElement;
+        const dom = new DOMParser().parseFromString(xml, 'application/xml').documentElement;
         this.xml = dom;
-        this.danmakus = [].map.call(dom.querySelectorAll("d[p]"), it =>
-        {
-            return new Danmaku(it.innerHTML, it.getAttribute("p"));
+        this.danmakus = [...dom.querySelectorAll('d[p]')].map(it => {
+            return new Danmaku(it.innerHTML, it.getAttribute('p'));
         });
     }
 }
-export class BangumiInfo
-{
-    constructor(ep)
-    {
+export class BangumiInfo {
+    constructor(ep) {
         this.ep = ep;
         this.videos = [];
     }
-    async fetchInfo()
-    {
+    async fetchInfo() {
         const data = await Ajax.getText(`https://www.bilibili.com/bangumi/play/ep${this.ep}/`);
         const json = JSON.parse(data.match(/window\.__INITIAL_STATE__=(.*);\(function\(\){/)[1]);
         this.title = json.mediaInfo.title;
@@ -83,8 +67,7 @@ export class BangumiInfo
         this.squareCover = json.mediaInfo.square_cover;
         this.aid = json.epInfo.aid;
         this.cid = json.epInfo.cid;
-        this.videos = json.epList.map(async (it) =>
-        {
+        this.videos = json.epList.map(async (it) => {
             return {
                 title: it.index_title,
                 aid: it.aid,
