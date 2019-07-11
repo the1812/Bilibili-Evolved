@@ -1,7 +1,7 @@
 .bilibili-evolved-about
 {
     height: 100%;
-    width: 400px;
+    width: 450px;
     background: white;
     color: #000;
     position: fixed;
@@ -51,22 +51,22 @@ body.dark .bilibili-evolved-about
 .about-content .name
 {
     font-size: 24pt;
-    display: flex;
+    display: none;
     align-items: center;
 }
-.about-content .name img
+.about-content .name svg
 {
-    margin-right: 18px;
-    visibility: collapse;
+    width: 100%;
 }
-body.dark .about-content .name .dark,
-body:not(.dark) .about-content .name .light
+body.dark .about-content .name.dark,
+body:not(.dark) .about-content .name.light
 {
-    visibility: visible;
+    display: flex;
 }
 .about-content .version
 {
-    font-size: 12pt;
+    font-size: 10pt;
+    font-weight: bold;
     opacity: 0.6;
     margin-top: 6px;
     margin-bottom: 6px;

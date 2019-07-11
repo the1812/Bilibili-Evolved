@@ -10,6 +10,8 @@
     data: {
       version: settings.currentVersion,
       clientType,
+      logoImage: null,
+      logoImageDark: null,
       branch: null,
       authors: [
         {
@@ -79,8 +81,13 @@
       }, { once: true })
     },
     methods: {
+      async getLogos() {
+        this.logoImage = await Ajax.getText(`https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/bilibili-evolved-wide.svg`)
+        this.logoImageDark = await Ajax.getText(`https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/bilibili-evolved-wide-dark.svg`)
+      },
       async init () {
         this.branch = /Preview|Local/.test(clientType) ? 'preview' : 'master'
+        this.getLogos()
         const allParticipants = new Set()
         let issues = []
         let page = 1

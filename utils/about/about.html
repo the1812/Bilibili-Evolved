@@ -4,12 +4,9 @@
     <span class="about-title">关于</span>
   </div>
   <div class="about-content">
-    <p v-if="branch" class="name">
-      <img class="light" src="'https://github.com/the1812/Bilibili-Evolved/raw/' + branch + '/images/bilibili-evolved-wide.svg'"
-        width="50">
-      <img class="dark" src="'https://github.com/the1812/Bilibili-Evolved/raw/' + branch + '/images/bilibili-evolved-wide-dark.svg'" width="50">
-    </p>
-    <code class="version">v{{version}} · {{clientType}}</code>
+    <p v-if="branch" class="name light" v-html="logoImage"></p>
+    <p v-if="branch" class="name dark" v-html="logoImageDark"></p>
+    <p class="version">v{{version}} · {{clientType}}</p>
     <p class="love">
       <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved/">Made with ❤　　</a>
       <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved/blob/master/donate.md">
