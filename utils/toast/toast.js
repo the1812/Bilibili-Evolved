@@ -14,7 +14,7 @@ export class Toast {
         this.duration = 3000;
     }
     show() {
-        container.cards.push(this);
+        container.cards.splice(0, 0, this);
         if (this.duration !== undefined) {
             setTimeout(() => this.dismiss(), this.duration);
         }
@@ -26,7 +26,7 @@ export class Toast {
         return dq(`.toast-card[key='${this.key}']`);
     }
     get key() {
-        return this.creationTime.toString();
+        return this.creationTime.toISOString();
     }
     static get container() {
         return document.querySelector('.toast-card-container');
@@ -34,9 +34,9 @@ export class Toast {
     static createToastContainer() {
         if (!document.querySelector('.toast-card-container')) {
             document.body.insertAdjacentHTML('beforeend', /* html */ `
-        <div class="toast-card-container">
+        <transition-group class="toast-card-container" name="toast-card-container" tag="div">
           <toast-card v-for="card of cards" v-bind:key="card.key" v-bind:card="card"></toast-card>
-        </div>`);
+        </transition-group>`);
         }
     }
     static internalShow(message, title, duration, type) {
