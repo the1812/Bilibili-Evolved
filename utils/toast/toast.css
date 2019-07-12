@@ -48,6 +48,11 @@
     transition: .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     position: relative;
 }
+.round-corner .toast-card
+{
+    border-left-width: 0px;
+    padding-left: var(--corner-radius);
+}
 .toast-card.toast-card-container-leave-active
 {
     position: absolute;
@@ -55,7 +60,7 @@
 }
 .round-corner .toast-card
 {
-    border-radius: 0 var(--corner-radius) var(--corner-radius) 0;
+    border-radius: var(--corner-radius);
 }
 .toast-card-header
 {
@@ -116,6 +121,38 @@
 .toast-card.toast-success
 {
     border-left-color: #8BC34A;
+}
+.toast-card .toast-card-border
+{
+    position: absolute;
+    height: 100%;
+    width: 4px;
+    top: 0;
+    left: 0;
+}
+.round-corner .toast-card .toast-card-border
+{
+    border-radius: var(--corner-radius);
+    height: calc(100% - 10px);
+    width: var(--corner-radius);
+    top: 5px;
+    left: 0;
+}
+.toast-card.toast-default .toast-card-border
+{
+    background-color: #444;
+}
+.toast-card.toast-error .toast-card-border
+{
+    background-color: #f44336;
+}
+.toast-card.toast-info .toast-card-border
+{
+    background-color: #2196F3;
+}
+.toast-card.toast-success .toast-card-border
+{
+    background-color: #8BC34A;
 }
 .toast-card span,
 .toast-card .link

@@ -63,6 +63,7 @@ Vue.component('toast-card', {
     props: ['card'],
     template: /*html*/ `
     <div class="toast-card icons-enabled visible" v-bind:class="'toast-' + card.type">
+      <div class="toast-card-border"></div>
       <div class="toast-card-header">
         <h1 class="toast-card-title">{{card.title}}</h1>
         <div class="toast-card-dismiss" v-on:click="card.dismiss()">
