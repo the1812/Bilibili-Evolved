@@ -6,10 +6,14 @@
 {
   background-color: #333 !important;
 } */
-/* a
+.s_tag .btn-add
 {
   background-color: #444 !important;
-} */
+}
+.s_tag .btn-add span
+{
+  background-color: #eee !important;
+}
 /* a
 {
   background-image: none !important;
