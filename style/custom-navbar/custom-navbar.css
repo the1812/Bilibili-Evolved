@@ -657,11 +657,11 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar.dark .grey-button
 {
-    background: #444;
+    background: #383838;
 }
 .custom-navbar.dark .grey-button:hover
 {
-    background: #383838;
+    background: #333;
 }
 .custom-navbar .theme-button
 {
