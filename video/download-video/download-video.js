@@ -531,7 +531,11 @@ async function loadWidget() {
 }
 export default {
     widget: {
-        content: resources.import('downloadVideoHtml'),
+        content: /*html*/ `
+    <button class="gui-settings-flat-button" style="position: relative; z-index: 100;" id="download-video">
+      <i class="icon-download"></i>
+      <span>下载视频</span>
+    </button>`,
         condition: loadPageData,
         success: loadWidget
     }

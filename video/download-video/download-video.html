@@ -1,34 +1,54 @@
-<div class="gui-settings-flat-button" style="position: relative; z-index: 100;" id="download-video">
-  <i class="icon-download"></i>
-  <span>下载视频</span>
-  <div class="download-video-panel popup">
-    <ol class="video-quality">
-
-    </ol>
-    <div class="video-action">
-      <div id="video-action-download">直接下载</div>
-      <div id="video-action-copy">复制链接</div>
-      <div id="video-action-copy-data">复制VLD数据</div>
-      <div id="video-action-download-data">导出VLD数据</div>
-      <div id="video-action-batch-data">复制批量数据</div>
-      <div id="video-action-batch-download-data">导出批量数据</div>
-      <div id="video-action-aria2">aria2导出</div>
-      <div id="video-action-aria2-batch">aria2批量导出</div>
-      <!-- <div id="video-action-aria2-rpc">aria2 RPC</div> -->
+<div class="download-video">
+  <div class="header">
+    <h1>下载视频</h1>
+    <i class="mdi mdi-close"></i>
+  </div>
+  <div class="tabs">
+    <div class="tab download-single active"></div>
+    <div class="tab download-batch"></div>
+  </div>
+  <div class="info">
+    <img v-bind:src="" class="cover">
+    <div class="title">
+      <span class="bold">{{title}}</span>
+      <span class="size">{{size}}</span>
     </div>
-    <div class="video-progress">
-      <div class="download-progress-text">
-        <span class="download-progress-title">正在下载</span>
-        <div style="flex: 1 0 0"></div>
-        <span class="download-progress-value">0</span>
-        <span class="download-progress-percent">%</span>
-      </div>
-      <div class="download-progress-background">
-        <div class="download-progress-foreground"></div>
-      </div>
-      <div class="download-progress-cancel"><span>取消</span></div>
+  </div>
+  <div class="options">
+    <div class="option-item">
+      清晰度
+      <v-dropdown v-bind:value="quality" v-bind:items="qualityItems"></v-dropdown>
     </div>
-    <div class="video-error"></div>
-    <a href="" id="video-complete"></a>
+    <div class="option-item">
+      弹幕
+      <v-dropdown v-bind:value="danmaku" v-bind:items="danmakuItems"></v-dropdown>
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div v-show="downloadSingle" class="direct-download">
+    直接下载
+    <button class="primary start-download" v-on:click="startSingleDownload">开始</button>
+    <div class="progress">
+      <div class="background"></div>
+      <div class="foreground" v-bind:style="{width: progressPercent + '%'}"></div>
+      <span class="percent">{{progressPercent}}%</span>
+    </div>
+  </div>
+  <div v-show="!downloadSingle" class="batch-download">
+    选集
+    <div class="episode-list">
+      <v-checkbox v-for="ep of episodeList" class="episode-item" v-bind:key="ep.title" v-bind:checked="ep.checked" v-bind:name="ep.title"></v-checkbox>
+    </div>
+  </div>
+  <div class="separator"></div>
+  <div class="exports">
+    <button class="copy-link">复制链接</button>
+    <button class="aria2-file">导出aria2</button>
+    <button class="vld-copy">复制vld数据</button>
+    <button class="vld-export">导出vld数据</button>
+    <!--
+    <button class="aria2-rpc">aria2 RPC</button>
+    <button class="idm-export">导出IDM</button>
+    -->
   </div>
 </div>
