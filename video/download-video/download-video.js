@@ -529,6 +529,32 @@ async function loadWidget() {
     pageData.entity.addMenuClass();
     checkBatch();
 }
+Vue.component('v-dropdown', {
+    template: ``
+});
+Vue.component('v-checkbox', {
+    template: ``
+});
+var DanmakuOption;
+(function (DanmakuOption) {
+    DanmakuOption["None"] = "\u65E0";
+    DanmakuOption["Xml"] = "XML";
+    DanmakuOption["Ass"] = "ASS";
+})(DanmakuOption || (DanmakuOption = {}));
+var QualityOption;
+(function (QualityOption) {
+})(QualityOption || (QualityOption = {}));
+const panelVM = new Vue({
+    el: '.download-video',
+    data: {
+        downloadSingle: true,
+        coverUrl: null,
+        quality: '',
+        qualityItems: [],
+        danmaku: settings.downloadVideoDefaultDanmaku,
+        danmakuItems: [],
+    }
+});
 export default {
     widget: {
         content: /*html*/ `

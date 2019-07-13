@@ -221,6 +221,7 @@ const settings = {
   defaultVideoSpeed: '1',
   hideCategory: false,
   foldComment: true,
+  downloadVideoDefaultDanmaku: '无',
   cache: {},
 }
 const fixedSettings = {
@@ -1454,9 +1455,6 @@ Resource.manifest = {
       useCache: '启用缓存'
     }
   },
-  downloadVideoPanel: {
-    path: 'download-video-panel.min.js',
-  },
   downloadVideo: {
     path: 'download-video.min.js',
     html: true,
@@ -1464,7 +1462,6 @@ Resource.manifest = {
     dependencies: ['title'],
     displayNames: {
       'downloadVideo': '下载视频',
-      'downloadVideoPanel': '下载视频面板',
       'batchDownload': '批量下载'
     }
   },

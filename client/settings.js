@@ -125,6 +125,7 @@ export const settings = {
   defaultVideoSpeed: '1',
   hideCategory: false,
   foldComment: true,
+  downloadVideoDefaultDanmaku: '无',
   cache: {},
 }
 const fixedSettings = {

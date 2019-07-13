@@ -286,6 +286,7 @@ declare global
         defaultVideoSpeed: string,
         hideCategory: boolean,
         foldComment: boolean,
+        downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
         latestVersionLink: string,
         currentVersion: string,
     }

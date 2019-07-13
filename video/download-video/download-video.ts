@@ -556,6 +556,38 @@ async function loadWidget() {
   pageData.entity.addMenuClass()
   checkBatch()
 }
+
+Vue.component('v-dropdown', {
+  template: ``
+})
+Vue.component('v-checkbox', {
+  template: ``
+})
+enum DanmakuOption {
+  None = '无',
+  Xml = 'XML',
+  Ass = 'ASS',
+}
+enum QualityOption {
+
+}
+interface Episode {
+  title: string
+  checked: boolean
+  index: number
+}
+const panelVM = new Vue({
+  el: '.download-video',
+  data: {
+    downloadSingle: true,
+    coverUrl: null,
+    quality: '',
+    qualityItems: [],
+    danmaku: settings.downloadVideoDefaultDanmaku,
+    danmakuItems: [],
+  }
+})
+
 export default {
   widget:
   {
