@@ -343,7 +343,7 @@ async function checkBatch() {
         if (!selectedFormat) {
             return;
         }
-        pageData.entity.resetMenuClass();
+        pageData.entity.closeMenu();
         const toast = Toast.info('获取链接中...', '批量下载');
         const data = await extractor.collectData(selectedFormat, toast);
         if (!data) {
@@ -356,7 +356,7 @@ async function checkBatch() {
         if (!selectedFormat) {
             return;
         }
-        pageData.entity.resetMenuClass();
+        pageData.entity.closeMenu();
         const toast = Toast.info('获取链接中...', '批量下载');
         const data = await extractor.collectData(selectedFormat, toast);
         if (!data) {
@@ -364,6 +364,19 @@ async function checkBatch() {
         }
         const blob = new Blob([data], { type: 'text/json' });
         VideoDownloader.downloadBlob(blob, 'export.json');
+    });
+    document.getElementById('video-action-aria2-batch').addEventListener('click', async () => {
+        if (!selectedFormat) {
+            return;
+        }
+        pageData.entity.closeMenu();
+        const toast = Toast.info('获取链接中...', '批量下载');
+        const data = await extractor.collectAria2(selectedFormat, toast);
+        if (!data) {
+            return;
+        }
+        const blob = new Blob([data], { type: 'text/plain' });
+        VideoDownloader.downloadBlob(blob, `${getFriendlyTitle(false)}.txt`);
     });
 }
 async function loadPageData() {

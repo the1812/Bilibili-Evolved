@@ -103,13 +103,11 @@ ol.video-quality li:hover,
     display: none;
 }
 
-#video-action-batch-data,
-#video-action-batch-download-data
+.video-action [id~='batch']
 {
     display: none;
 }
-.batch #video-action-batch-data,
-.batch #video-action-batch-download-data
+.batch .video-action [id~='batch']
 {
     display: block;
 }

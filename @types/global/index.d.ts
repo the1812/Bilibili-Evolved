@@ -106,10 +106,10 @@ declare global
     {
         show(): void;
         dismiss(): void;
-        static show(message: string, title: string, duration?: number): void;
-        static info(message: string, title: string, duration?: number): void;
-        static success(message: string, title: string, duration?: number): void;
-        static error(message: string, title: string, duration?: number): void;
+        static show(message: string, title: string, duration?: number): Toast;
+        static info(message: string, title: string, duration?: number): Toast;
+        static success(message: string, title: string, duration?: number): Toast;
+        static error(message: string, title: string, duration?: number): Toast;
     }
     class Resource
     {
