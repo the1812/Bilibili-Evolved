@@ -1,21 +1,169 @@
-.download-video-panel.opened
+.download-video.opened
 {
-    transform: scaleY(1) translateX(-50%);
-    transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  pointer-events: initial;
+  opacity: 1;
 }
-.download-video-panel
+.download-video
 {
-    position: absolute;
-    top: calc(100% + 2px);
-    transition: .2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
-    transform-origin: top;
-    transform: scaleY(0) translateX(-50%);
-    background: white;
-    box-shadow: 0px 3px 20px 2px #0004;
-    z-index: 100;
-    left: 50%;
+  --download-video-background: white;
+  --download-video-foreground: black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--download-video-background);
+  color: var(--download-video-foreground);
+  box-shadow: 0px 3px 20px 2px #0004;
+  z-index: 10001;
+  pointer-events: none;
+  opacity: 0;
+  padding: 16px;
 }
-ol.video-quality li,
+body.dark .download-video {
+  --download-video-background: #222;
+  --download-video-foreground: #eee;
+}
+.round-corner .download-video {
+  border-radius: var(--large-corner-radius);
+}
+.round-corner .download-video .title,
+.round-corner .download-video .cover,
+.round-corner .v-dropdown,
+.round-corner .v-dropdown .dropdown-menu,
+.round-corner .v-dropdown .dropdown-menu li {
+  border-radius: var(--corner-radius);
+}
+.download-video,
+.download-video * {
+  transition: all .2s ease-out;
+}
+.download-video .cover {
+  width: 120px;
+}
+.download-video .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.download-video h1 {
+  font-size: 16pt;
+  font-weight: bold;
+  color: var(--download-video-foreground);
+}
+.download-video i.mdi.mdi-close {
+  font-size: 16pt;
+  color: var(--download-video-foreground);
+  cursor: pointer;
+}
+.download-video i.mdi.mdi-close:hover {
+  color: var(--theme-color);
+}
+.download-video .info {
+  display: flex;
+}
+.download-video .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-left: 12px;
+}
+.download-video .bold {
+  color: var(--download-video-foreground);
+  font-weight: bold;
+  font-size: 12pt;
+}
+.download-video .title .bold {
+  max-height: 36pt;
+  width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.download-video .title .size {
+  font-size: 10pt;
+  color: var(--download-video-foreground);
+  align-self: center;
+}
+.download-video .option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  font-size: 10pt;
+}
+.v-dropdown {
+  position: relative;
+  background-color: #ededed;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 100px;
+}
+body.dark .v-dropdown {
+  background-color: #333;
+}
+.v-dropdown .dropdown-menu {
+  transform-origin: top;
+  transform: scaleY(0) translateX(-50%);
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  background-color: var(--download-video-background);
+  z-index: 1;
+  transition: .2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+  box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
+}
+.v-dropdown .dropdown-menu.opened {
+  transform: scaleY(1) translateX(-50%);
+  transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+.v-dropdown .dropdown-menu li {
+  padding: 4px 8px;
+  white-space: nowrap;
+  min-width: 80px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--download-video-foreground);
+  background-color: transparent;
+}
+.v-dropdown .dropdown-menu li:hover {
+  background-color: rgba(0,0,0,0.16);
+}
+.v-dropdown .mdi-chevron-down {
+  font-size: 16pt;
+  line-height: 1;
+  transform: rotate(0deg);
+}
+.v-dropdown .dropdown-menu.opened ~ .mdi-chevron-down {
+  transform: rotate(180deg);
+}
+.v-dropdown .selected {
+  user-select: none;
+  padding: 4px 8px;
+}
+.download-video .tabs {
+  display: flex;
+  padding: 12px 0;
+  font-size: 10pt;
+}
+.download-video .tabs .tab {
+  padding: 6px 12px;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.download-video .tab.active {
+  color: var(--theme-color);
+  border-bottom-color: var(--theme-color);
+}
+.download-video .separator {
+  height: 1px;
+  background: #8884;
+  width: 100%;
+  margin: 12px 0;
+}
+/* ol.video-quality li,
 .video-action>div
 {
     cursor: pointer;
@@ -119,4 +267,4 @@ ol.video-quality li:hover,
 .round-corner .download-progress-foreground
 {
     border-radius: var(--corner-radius);
-}
+} */

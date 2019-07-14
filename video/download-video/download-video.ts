@@ -1,4 +1,5 @@
 import { getFriendlyTitle } from '../title'
+import { VideoInfo } from '../video-info'
 
 
 interface PageData {
@@ -107,7 +108,7 @@ class VideoFormat {
             )
             formats.push(format)
           }
-          resolve(formats)
+          resolve(formats.reverse())
         })
         xhr.addEventListener('error', () => reject(`获取清晰度信息失败.`))
         xhr.withCredentials = true
@@ -428,165 +429,190 @@ async function loadPageData() {
 }
 async function loadWidget() {
   selectedFormat = formats[0]
-  const loadQualities = async () => {
-    const canDownload = await loadPageData();
-    (document.querySelector('#download-video') as HTMLElement).style.display = canDownload ? 'flex' : 'none'
-    if (canDownload === false) {
-      return
-    }
-    // formats = await VideoFormat.availableFormats;
+  // const loadQualities = async () => {
+  //   const canDownload = await loadPageData();
+  //   (document.querySelector('#download-video') as HTMLElement).style.display = canDownload ? 'flex' : 'none'
+  //   if (canDownload === false) {
+  //     return
+  //   }
+  //   // formats = await VideoFormat.availableFormats;
 
-    const list = document.querySelector('ol.video-quality') as HTMLOListElement
-    list.childNodes.forEach(list.removeChild)
-    formats.forEach(format => {
-      const item = document.createElement('li')
-      item.innerHTML = format.displayName
-      item.addEventListener('click', () => {
-        selectedFormat = format
-        pageData.entity.nextMenuClass()
-      })
-      list.insertAdjacentElement('afterbegin', item)
-    })
-  }
-  Observer.videoChange(loadQualities)
-  const getVideoInfo = () => selectedFormat!.downloadInfo().catch(error => {
-    pageData.entity.addError()
-    dq('.video-error')!.innerHTML = error
-  })
-  async function download() {
-    if (!selectedFormat) {
-      return
-    }
-    pageData.entity.nextMenuClass()
-    const info = await getVideoInfo()
-    if (!info) {
-      return
-    }
-    info.progress = percent => {
-      dq('.download-progress-value')!.innerHTML = `${fixed(percent * 100)}`;
-      (dq('.download-progress-foreground') as HTMLDivElement).style.transform = `scaleX(${percent})`
-    };
-    (dq('.download-progress-cancel>span') as HTMLSpanElement).onclick = () => info.cancelDownload()
-    const result = await info.download()
-      .catch(error => {
-        pageData.entity.addError()
-        dq('.video-error')!.innerHTML = error
-      })
-    if (!result) { // canceled or other errors
-      return
-    }
-    const completeLink = document.getElementById('video-complete') as HTMLAnchorElement
-    completeLink.setAttribute('href', result.url)
-    completeLink.setAttribute('download', result.filename)
-    completeLink.click()
+  //   const list = document.querySelector('ol.video-quality') as HTMLOListElement
+  //   list.childNodes.forEach(list.removeChild)
+  //   formats.forEach(format => {
+  //     const item = document.createElement('li')
+  //     item.innerHTML = format.displayName
+  //     item.addEventListener('click', () => {
+  //       selectedFormat = format
+  //       pageData.entity.nextMenuClass()
+  //     })
+  //     list.insertAdjacentElement('afterbegin', item)
+  //   })
+  // }
+  // Observer.videoChange(loadQualities)
+  // const getVideoInfo = () => selectedFormat!.downloadInfo().catch(error => {
+  //   pageData.entity.addError()
+  //   dq('.video-error')!.innerHTML = error
+  // })
+  // async function download() {
+  //   if (!selectedFormat) {
+  //     return
+  //   }
+  //   pageData.entity.nextMenuClass()
+  //   const info = await getVideoInfo()
+  //   if (!info) {
+  //     return
+  //   }
+  //   info.progress = percent => {
+  //     dq('.download-progress-value')!.innerHTML = `${fixed(percent * 100)}`;
+  //     (dq('.download-progress-foreground') as HTMLDivElement).style.transform = `scaleX(${percent})`
+  //   };
+  //   (dq('.download-progress-cancel>span') as HTMLSpanElement).onclick = () => info.cancelDownload()
+  //   const result = await info.download()
+  //     .catch(error => {
+  //       pageData.entity.addError()
+  //       dq('.video-error')!.innerHTML = error
+  //     })
+  //   if (!result) { // canceled or other errors
+  //     return
+  //   }
+  //   const completeLink = document.getElementById('video-complete') as HTMLAnchorElement
+  //   completeLink.setAttribute('href', result.url)
+  //   completeLink.setAttribute('download', result.filename)
+  //   completeLink.click()
 
-    const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename.replace(/"/g, '&quot;')}">再次保存</a>`
-    Toast.success(message, '下载视频')
-    pageData.entity.closeMenu()
-  }
-  async function copyLink() {
-    if (!selectedFormat) {
-      return
-    }
-    const info = await getVideoInfo()
-    if (!info) {
-      return
-    }
-    info.copyUrl()
-    Toast.success('已复制链接到剪贴板.', '复制链接', 3000)
-    pageData.entity.closeMenu()
-  }
-  dq('#video-action-download')!.addEventListener('click', download)
-  dq('#video-action-copy')!.addEventListener('click', copyLink)
-  dq('#video-action-copy-data')!.addEventListener('click', async () => {
-    if (!selectedFormat) {
-      return
-    }
-    const info = await getVideoInfo()
-    if (!info) {
-      return
-    }
-    info.exportData(true)
-    Toast.success('已复制数据到剪贴板.', '复制数据', 3000)
-    pageData.entity.closeMenu()
-  })
-  dq('#video-action-download-data')!.addEventListener('click', async () => {
-    if (!selectedFormat) {
-      return
-    }
-    const info = await getVideoInfo()
-    if (!info) {
-      return
-    }
-    info.exportData(false)
-    pageData.entity.closeMenu()
-  })
-  dq('#video-action-aria2')!.addEventListener('click', async () => {
-    if (!selectedFormat) {
-      return
-    }
-    const info = await getVideoInfo()
-    if (!info) {
-      return
-    }
-    info.exportAria2(false)
-    pageData.entity.closeMenu()
-  })
-  // dq('#video-action-aria2-rpc').addEventListener('click', async () => {
+  //   const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename.replace(/"/g, '&quot;')}">再次保存</a>`
+  //   Toast.success(message, '下载视频')
+  //   pageData.entity.closeMenu()
+  // }
+  // async function copyLink() {
   //   if (!selectedFormat) {
   //     return
   //   }
   //   const info = await getVideoInfo()
-  //   info.exportAria2(true)
+  //   if (!info) {
+  //     return
+  //   }
+  //   info.copyUrl()
+  //   Toast.success('已复制链接到剪贴板.', '复制链接', 3000)
+  //   pageData.entity.closeMenu()
+  // }
+  // dq('#video-action-download')!.addEventListener('click', download)
+  // dq('#video-action-copy')!.addEventListener('click', copyLink)
+  // dq('#video-action-copy-data')!.addEventListener('click', async () => {
+  //   if (!selectedFormat) {
+  //     return
+  //   }
+  //   const info = await getVideoInfo()
+  //   if (!info) {
+  //     return
+  //   }
+  //   info.exportData(true)
+  //   Toast.success('已复制数据到剪贴板.', '复制数据', 3000)
+  //   pageData.entity.closeMenu()
+  // })
+  // dq('#video-action-download-data')!.addEventListener('click', async () => {
+  //   if (!selectedFormat) {
+  //     return
+  //   }
+  //   const info = await getVideoInfo()
+  //   if (!info) {
+  //     return
+  //   }
+  //   info.exportData(false)
+  //   pageData.entity.closeMenu()
+  // })
+  // dq('#video-action-aria2')!.addEventListener('click', async () => {
+  //   if (!selectedFormat) {
+  //     return
+  //   }
+  //   const info = await getVideoInfo()
+  //   if (!info) {
+  //     return
+  //   }
+  //   info.exportAria2(false)
   //   pageData.entity.closeMenu()
   // })
   resources.applyStyle('downloadVideoStyle')
-  const downloadPanel = document.querySelector('.download-video-panel') as HTMLDivElement
-  const togglePopup = () => dq('.download-video-panel')!.classList.toggle('opened')
-  dq('#download-video')!.addEventListener('click', e => {
-    if (!downloadPanel.contains(e.target as Node)) {
-      togglePopup()
-    }
+  dq('#download-video')!.addEventListener('click', () => {
+    dq('.download-video')!.classList.toggle('opened')
   })
-  document.querySelector('.video-error')!.addEventListener('click', () => {
-    document.querySelector('.video-error')!.innerHTML = ''
-    pageData.entity.removeError()
-  })
-  await SpinQuery.select('.download-video-panel')
-  pageData.entity.addMenuClass()
+  dq('#download-video')!.addEventListener('mouseover', () => {
+    document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
+    loadPanel()
+  }, { once: true })
   checkBatch()
 }
+async function loadPanel() {
 
-Vue.component('v-dropdown', {
-  template: ``
-})
-Vue.component('v-checkbox', {
-  template: ``
-})
-enum DanmakuOption {
-  None = '无',
-  Xml = 'XML',
-  Ass = 'ASS',
-}
-enum QualityOption {
-
-}
-interface Episode {
-  title: string
-  checked: boolean
-  index: number
-}
-const panelVM = new Vue({
-  el: '.download-video',
-  data: {
-    downloadSingle: true,
-    coverUrl: null,
-    quality: '',
-    qualityItems: [],
-    danmaku: settings.downloadVideoDefaultDanmaku,
-    danmakuItems: [],
+  Vue.component('v-dropdown', {
+    template: /*html*/`
+    <div class="v-dropdown" v-on:click="toggleDropDown()">
+      <span class="selected">{{value}}</span>
+      <ul class="dropdown-menu" v-bind:class="{opened: dropdownOpen}">
+        <li v-for="item in model.items" v-bind:key="item" v-bind:data-value="item" v-on:click="select(item)">{{item}}</li>
+      </ul>
+      <i class="mdi mdi-chevron-down"></i>
+    </div>
+  `,
+    props: [
+      'model',
+    ],
+    data() {
+      return {
+        dropdownOpen: false,
+      }
+    },
+    computed: {
+      value() {
+        return this.model.value
+      }
+    },
+    methods: {
+      toggleDropDown() {
+        this.dropdownOpen = !this.dropdownOpen
+      },
+      select(item: string) {
+        this.model.value = item
+      },
+    },
+  })
+  // Vue.component('v-checkbox', {
+  //   template: ``
+  // })
+  interface Episode {
+    title: string
+    checked: boolean
+    index: number
   }
-})
+  const panel = new Vue({
+    el: '.download-video',
+    data: {
+      downloadSingle: true,
+      coverUrl: '',
+      qualityModel: {
+        value: selectedFormat!.displayName,
+        items: formats.map(f => f.displayName)
+      },
+      danmakuModel: {
+        value: settings.downloadVideoDefaultDanmaku,
+        items: ['无', 'XML', 'ASS']
+      },
+      progressPercent: 0,
+      title: getFriendlyTitle(false),
+      size: 0,
+      episodeList: [],
+    },
+    methods: {
+      close() {
+        this.$el.classList.remove('opened')
+      },
+    }
+  })
+  const videoInfo = new VideoInfo(parseInt(pageData.aid))
+  await videoInfo.fetchInfo()
+  panel.coverUrl = videoInfo.coverUrl
+}
 
 export default {
   widget:
