@@ -5,7 +5,8 @@
 .dialog-wrapper .dialog,
 .fjw-kpi-wrap-bg,
 .fjw-point .point-wrap .user-point .face .unfocus-btn,
-.navbar-container
+.navbar-container,
+.submit button
 {
     background-color: #222 !important;
 }
@@ -38,19 +39,35 @@
 li.danmaku-info-row.bpui-selected,
 li.danmaku-info-row.bpui-selecting,
 .box-body,
-.feed-topic .empty-content
+.feed-topic .empty-content,
+.tabs-wrapper,
+.detail-content .activity-info,
+.ticket-tips-wrapper .ticket-tips,
+.ticket-tips-wrapper .rec-item,
+.replies-comment-input-wrapper .submit-comment.no-login,
+.replies-comment-input-wrapper .replies-upload .comment-input-img,
+.replies-comment-input-wrapper .replies-upload .replies-uploading-container,
+.detail-content .jump-pagination-input,
+.comment .comment-hot-item-floor .operate-utils,
+.report-pc-dialog .report-dialog-container
 {
     background-color: #444 !important;
 }
-/* a
+.replies-comment-input-wrapper .submit-comment
 {
     background-image: none !important;
-} */
+}
 .player-auxiliary-area .danmaku-info-row-special,
 .rank-list-ctnr .normal-list .item.self,
 .rank-list-ctnr .own,
 .high-wrapper .body-padding,
-.episode-item
+.episode-item,
+.buyticket,
+.detail-content .comment,
+.buyticket .bread-wrapper,
+.whole-detail-info-wrapper,
+#app .report-dialog-container .submit,
+.selectable-option.unable
 {
     background-color: transparent !important;
 }
@@ -71,7 +88,9 @@ li.danmaku-info-row.bpui-selecting,
 .box .list-box .wrap-list .text,
 .bottom-box .wrap-list .gift-item .B-paper,
 .item-wrap__task .content-desc,
-.h5share-container .text-area .text-desc
+.h5share-container .text-area .text-desc,
+.comment .comment-hot-item-floor,
+.comment .reply-comment-list .reply-comment-item .reply-comment-item-floor
 {
     color: #aaa !important;
 }
@@ -104,7 +123,31 @@ li.danmaku-info-row.bpui-selecting,
 .manga-card .manga-title,
 .comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .comments-total,
 .bb-comment a.more-link,
-.interact-dialog .btn
+.interact-dialog .btn,
+.detail-content .content-detail p,
+.detail-content .content-detail span,
+.buyticket .bread-wrapper span,
+.buyticket .bread-wrapper span a,
+.buyticket .whole-detail-info-wrapper,
+.product-info-time-wrapper .product-info-time,
+.product-info-time-wrapper .product-info-time-title,
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .title,
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .vuene-info-content .address-name,
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .check-map,
+.calendar .month,
+.calendar .weekdays li,
+.whole-detail-info-wrapper .product-buy-wrapper .want-wrapper .want-content p,
+.activity-info .activity-info-header,
+.ticket-tips-wrapper .ticket-tips-header,
+.ticket-tips-wrapper .rec-item .rec-item-name,
+.comment .comment-hot-item-user-name,
+.common-pagination-wrapper,
+.detail-content .jump-pagination-input,
+.comment .comment-hot-item-floor .operate-utils,
+.report-pc-dialog .report-dialog-container .title,
+.reason-container .reason-category .reason-category-title,
+.report-dialog-container .submit .cancel-btn,
+.selectable-option.unable
 {
     color: #eee !important;
 }
@@ -122,7 +165,16 @@ li.danmaku-info-row.bpui-selecting,
 .navbar-container,
 .comic-info-component .page-normal .comic-tab .tab-titles,
 .bilibili-player-ending-panel-box-recommend:hover,
-.interact-dialog .btn
+.interact-dialog .btn,
+.detail-content .comment,
+.comment .comment-selecotr,
+.detail-content .activity-info,
+.ticket-tips-wrapper .ticket-tips,
+.ticket-tips-wrapper .rec-item,
+.replies-comment-input-wrapper .replies-upload .comment-input-img,
+.detail-content .jump-pagination-input,
+.report-dialog-container .submit .submit-btn:after,
+.report-dialog-container .submit .cancel-btn:after
 {
     border-color: transparent !important;
 }
@@ -153,10 +205,10 @@ li.danmaku-info-row.bpui-selecting,
 {
     fill: #fff !important;
 } */
-/* a
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .address-icon
 {
     filter: brightness(0) invert(1) !important;
-} */
+}
 /* a
 {
     filter: brightness(0) invert(.7) !important;
@@ -172,10 +224,22 @@ li.danmaku-info-row.bpui-selecting,
 {
     filter: var(--blue-image-filter) !important;
 }
-/* a
+.comment .up-icon.active,
+.replies-comment-input-wrapper .replies-upload .comment-input-img span,
+.replies-comment-input-wrapper .replies-upload .replies-uploading-container .replies-uploading-btn,
+.replies-comment-input-wrapper .replies-upload .replies-uploading-container p span:hover,
+.reason-container .reason-category .other-reason .icon-select.selected,
+.reason-container .reason-category .reason-item .icon-select.selected,
+.report-pc-dialog .report-dialog-container .title i:hover,
+.buyticket .product-buy.enable,
+.whole-detail-info-wrapper .product-buy-wrapper .want-wrapper .want-icon,
+.ticket-count .count-reduce.active:before,
+.ticket-count .count-plus.active:after,
+.activity-info .icon-activity,
+.ticket-tips-wrapper .ticket-tips-header span
 {
     filter: var(--pink-image-filter) !important;
-} */
+}
 /* a
 {
     filter: grayscale(1) !important;
@@ -201,7 +265,11 @@ li.danmaku-info-row.bpui-selecting,
 {
     background-image: none !important;
 } */
-.box .record-wrap
+.box .record-wrap,
+.comment .comment-hot-item-user-content,
+.replies-comment-input-wrapper .submit-comment,
+.comment .comment-selecotr,
+.buyticket .product-buy.enable
 {
     box-shadow: none !important;
 }
@@ -212,7 +280,8 @@ li.danmaku-info-row.bpui-selecting,
 .section-block .at-popup,
 .pgc-space-follow-item .bangumi-options .opt-list,
 .navbar-container,
-.bilibili-player-ending-panel-box-recommend:hover
+.bilibili-player-ending-panel-box-recommend:hover,
+.selectable-option.active
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -230,7 +299,10 @@ li.danmaku-info-row.bpui-selecting,
     width: auto !important;
 }
 .comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .tab-btn,
-.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-head.up-avatar:hover
+.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-head.up-avatar:hover,
+.replies-comment-input-wrapper .replies-upload .comment-input-img:hover,
+.selectable-option.active,
+.selectable-option.active:after
 {
     border-color: var(--theme-color) !important;
 }
@@ -258,7 +330,12 @@ li.danmaku-info-row.bpui-selecting,
 .navbar-container .nav-items .nav-item.activated:before,
 .comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
 .interact-dialog .btn,
-.video-control-show .bilibili-player-video-interactive-list .check:hover .big-round
+.video-control-show .bilibili-player-video-interactive-list .check:hover .big-round,
+.replies-comment-input-wrapper .submit-comment,
+.comment .comment-selecotr .all-comments.active:before,
+.comment .comment-selecotr .sortByHot.active:before,
+.calendar .days li.selected,
+.tabs-wrapper .tabs .tabs-item.active:before
 {
     background-color: var(--theme-color) !important;
 }
@@ -284,7 +361,16 @@ li.danmaku-info-row.bpui-selecting,
 .n-statistics a:hover,
 .live-category .latest a:hover,
 .live-category .latest a.active,
-.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active
+.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active,
+.whole-detail-info-wrapper .product-buy-wrapper .want-wrapper .want-content p:hover,
+.comment .comment-selecotr .all-comments.active,
+.comment .comment-selecotr .sortByHot.active,
+.comment .more-replys span,
+.whole-pagination-wrapper .common-pagination-wrapper .pageNum.active,
+.whole-pagination-wrapper .common-pagination-wrapper .pageNum:hover,
+.replies-comment-input-wrapper .replies-upload .comment-input-img,
+.selectable-option.active,
+.tabs-wrapper .tabs .tabs-item.active
 {
     color: var(--theme-color) !important;
 }
@@ -316,11 +402,11 @@ li.danmaku-info-row.bpui-selecting,
     border-top-color: transparent !important;
     border-bottom-color: transparent !important;
 } */
-/* a
+.selectable-option.active:after
 {
     border-top-color: transparent !important;
     border-left-color: transparent !important;
-} */
+}
 /* a
 {
     border-left-color: transparent !important;
