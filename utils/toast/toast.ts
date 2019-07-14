@@ -77,7 +77,7 @@ Vue.component('toast-card', {
           </svg>
         </div>
       </div>
-      <div class="toast-card-message">{{card.message}}</div>
+      <div class="toast-card-message" v-html="card.message"></div>
     </div>
     `,
 })
