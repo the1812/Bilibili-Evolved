@@ -49,7 +49,10 @@ li.danmaku-info-row.bpui-selecting,
 .replies-comment-input-wrapper .replies-upload .replies-uploading-container,
 .detail-content .jump-pagination-input,
 .comment .comment-hot-item-floor .operate-utils,
-.report-pc-dialog .report-dialog-container
+.report-pc-dialog .report-dialog-container,
+.detail-content .more-hot-comments,
+.modal-wrapper .modal-container,
+.detail-content .guest-wrapper
 {
     background-color: #444 !important;
 }
@@ -67,7 +70,8 @@ li.danmaku-info-row.bpui-selecting,
 .buyticket .bread-wrapper,
 .whole-detail-info-wrapper,
 #app .report-dialog-container .submit,
-.selectable-option.unable
+.selectable-option.unable,
+.detail-content .activity-info-body .info-header
 {
     background-color: transparent !important;
 }
@@ -90,7 +94,10 @@ li.danmaku-info-row.bpui-selecting,
 .item-wrap__task .content-desc,
 .h5share-container .text-area .text-desc,
 .comment .comment-hot-item-floor,
-.comment .reply-comment-list .reply-comment-item .reply-comment-item-floor
+.comment .reply-comment-list .reply-comment-item .reply-comment-item-floor,
+.ticket-tips-wrapper .rec-item .rec-item-time,
+.ticket-tips-wrapper .rec-item .rec-item-vuene,
+.detail-content .activity-info-body .info-content p span
 {
     color: #aaa !important;
 }
@@ -147,7 +154,13 @@ li.danmaku-info-row.bpui-selecting,
 .report-pc-dialog .report-dialog-container .title,
 .reason-container .reason-category .reason-category-title,
 .report-dialog-container .submit .cancel-btn,
-.selectable-option.unable
+.selectable-option.unable,
+.ticket-tips-wrapper .ticket-tips-content span,
+.detail-content .more-hot-comments,
+.buyticket .map-model .modal-container .modal-header,
+.guest-wrapper .guest-header,
+.guest-wrapper .guest-list .name,
+.detail-content .activity-info-body .info-header span
 {
     color: #eee !important;
 }
@@ -174,7 +187,9 @@ li.danmaku-info-row.bpui-selecting,
 .replies-comment-input-wrapper .replies-upload .comment-input-img,
 .detail-content .jump-pagination-input,
 .report-dialog-container .submit .submit-btn:after,
-.report-dialog-container .submit .cancel-btn:after
+.report-dialog-container .submit .cancel-btn:after,
+.detail-content .guest-wrapper,
+.report-dialog-container .textarea-wrapper
 {
     border-color: transparent !important;
 }
@@ -236,7 +251,9 @@ li.danmaku-info-row.bpui-selecting,
 .ticket-count .count-reduce.active:before,
 .ticket-count .count-plus.active:after,
 .activity-info .icon-activity,
-.ticket-tips-wrapper .ticket-tips-header span
+.ticket-tips-wrapper .ticket-tips-header span,
+.detail-content .comment .hot-icon span,
+.guest-wrapper .icon-guest
 {
     filter: var(--pink-image-filter) !important;
 }
@@ -281,7 +298,8 @@ li.danmaku-info-row.bpui-selecting,
 .pgc-space-follow-item .bangumi-options .opt-list,
 .navbar-container,
 .bilibili-player-ending-panel-box-recommend:hover,
-.selectable-option.active
+.selectable-option.active,
+.guest-wrapper .guest-list .guest-item:hover .image
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -370,7 +388,8 @@ li.danmaku-info-row.bpui-selecting,
 .whole-pagination-wrapper .common-pagination-wrapper .pageNum:hover,
 .replies-comment-input-wrapper .replies-upload .comment-input-img,
 .selectable-option.active,
-.tabs-wrapper .tabs .tabs-item.active
+.tabs-wrapper .tabs .tabs-item.active,
+.guest-wrapper .guest-list .guest-item:hover .name
 {
     color: var(--theme-color) !important;
 }
@@ -412,7 +431,8 @@ li.danmaku-info-row.bpui-selecting,
     border-left-color: transparent !important;
     border-right-color: transparent !important;
 } */
-.feed-topic .empty-content
+.feed-topic .empty-content,
+.report-dialog-container .textarea-wrapper
 {
     border-radius: 4px !important;
 }
