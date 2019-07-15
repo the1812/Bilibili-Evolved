@@ -165,6 +165,10 @@
     color: #000;
     transition: all .2s ease-out;
 }
+.round-corner .toast-card .link,
+.round-corner .toast-card span {
+    border-radius: var(--corner-radius);
+}
 .toast-card .link:hover
 {
     background-color: rgba(0,0,0,.2);

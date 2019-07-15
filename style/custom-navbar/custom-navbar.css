@@ -835,7 +835,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -46%);
+    transform: translate(-50%, -46%) scale(0.95);
     z-index: 10001;
     background: var(--navbar-background);
     padding-top: 16px;
@@ -860,6 +860,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar-settings.show
 {
     pointer-events: initial;
+    transform: translate(-50%, -46%) scale(1);
     opacity: 1;
 }
 .custom-navbar-settings .header,

@@ -226,6 +226,9 @@ body.dark .v-dropdown {
   top: 0;
   left: 0;
   height: 4px;
+  background: linear-gradient(to right, var(--theme-color), var(--theme-color-60));
+}
+body.dark .download-video .direct-download .progress .foreground {
   background: linear-gradient(to right, var(--theme-color-70), var(--theme-color));
 }
 .download-video .direct-download .progress .percent {

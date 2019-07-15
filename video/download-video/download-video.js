@@ -208,7 +208,13 @@ class VideoDownloader {
     }
     static downloadBlob(blob, filename) {
         const a = document.createElement('a');
-        const url = URL.createObjectURL(blob);
+        let url;
+        if (typeof blob === 'string') {
+            url = blob;
+        }
+        else {
+            url = URL.createObjectURL(blob);
+        }
         a.setAttribute('href', url);
         a.setAttribute('download', filename);
         document.body.appendChild(a);
@@ -509,6 +515,7 @@ async function loadWidget() {
     resources.applyStyle('downloadVideoStyle');
     dq('#download-video').addEventListener('click', () => {
         dq('.download-video').classList.toggle('opened');
+        dq('.gui-settings-mask').click();
     });
     dq('#download-video').addEventListener('mouseover', () => {
         document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'));
@@ -549,6 +556,7 @@ async function loadPanel() {
             },
         },
     });
+    let workingDownloader;
     const panel = new Vue({
         el: '.download-video',
         data: {
@@ -565,11 +573,48 @@ async function loadPanel() {
             progressPercent: 0,
             title: getFriendlyTitle(false),
             size: 0,
+            blobUrl: '',
             episodeList: [],
+            downloading: false,
         },
         methods: {
             close() {
                 this.$el.classList.remove('opened');
+            },
+            cancelDownload() {
+                if (workingDownloader) {
+                    workingDownloader.cancelDownload();
+                }
+            },
+            async startDownload() {
+                const format = formats.find(f => f.displayName === this.qualityModel.value);
+                if (!format) {
+                    console.error(`No format found. model value = ${this.qualityModel.value}`);
+                    return;
+                }
+                try {
+                    this.downloading = true;
+                    const videoDownloader = await format.downloadInfo();
+                    videoDownloader.progress = percent => {
+                        this.progressPercent = Math.trunc(percent * 1000) / 10;
+                    };
+                    workingDownloader = videoDownloader;
+                    const result = await videoDownloader.download();
+                    const completeLink = document.getElementById('video-complete');
+                    completeLink.setAttribute('href', result.url);
+                    completeLink.setAttribute('download', result.filename);
+                    completeLink.click();
+                    Toast.success(/*html*/ `下载完成: ${result.filename} <a class="link" href="${result.url}" download="${result.filename.replace(/"/g, '&quot;')}">再次保存</a>`, '下载视频');
+                }
+                catch (error) {
+                    if (error !== '下载已取消.') {
+                        logError(error);
+                    }
+                    this.progressPercent = 0;
+                }
+                finally {
+                    this.downloading = false;
+                }
             },
         }
     });

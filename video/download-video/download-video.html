@@ -1,4 +1,5 @@
 <div class="download-video">
+  <a v-bind:href="blobUrl" id="video-complete" style="display: none"></a>
   <div class="header">
     <h1>下载视频</h1>
     <i class="mdi mdi-close" v-on:click="close()"></i>
@@ -27,7 +28,8 @@
   <div class="separator"></div>
   <div v-show="downloadSingle" class="direct-download">
     <h2>直接下载</h2>
-    <button class="primary start-download">开始</button>
+    <button v-if="!downloading" class="primary start-download" v-on:click="startDownload()">开始</button>
+    <button v-else class="primary cancel-download" v-on:click="cancelDownload()">取消</button>
     <div class="progress">
       <div class="background">
         <div class="foreground" v-bind:style="{width: progressPercent + '%'}"></div>
