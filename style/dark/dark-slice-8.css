@@ -25,7 +25,9 @@
 .danmaku-wrap .player-auxiliary-block-wrap,
 .player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-load-status,
 .comic-info-component .page-normal .comic-info-con .comic-des,
-.comic-info-component .page-normal .comic-info-con
+.comic-info-component .page-normal .comic-info-con,
+.dropdown__content .dropdown__item:hover,
+.dropdown__content .dropdown__active
 {
     background-color: #333 !important;
 }
@@ -59,7 +61,15 @@ li.danmaku-info-row.bpui-selecting,
 .calendarEntry_wrap .calendarEntry_slide,
 .ui-dropdown .default,
 .calendar-wrap .calendar-body .calendar-body__select .ui-dropdown .default:hover,
-.ui-dropdown .ul-dropdown-list
+.ui-dropdown .ul-dropdown-list,
+.tabs .customize-tab,
+.tabs-nav .tab-item.border-bottom,
+.list-header .filter-wrp .category-wrp,
+.list-header .filter-wrp .order-wrp,
+.list-header .filter-wrp .article-type,
+.list-header .filter-wrp .filter-level,
+.list-header .filter-wrp .video-type,
+.tabs-nav .tab-item.full
 {
     background-color: #444 !important;
 }
@@ -83,7 +93,13 @@ li.danmaku-info-row.bpui-selecting,
 .article-action .more .more-ops-list ul li:hover,
 #app .calendarEntry_content .header,
 .calendar-wrap .calendar-body .date-desc_wrap .item-desc_card,
-.calendar-wrap .calendar-body .date-desc_wrap .date-desc__content .nothing-wrap
+.calendar-wrap .calendar-body .date-desc_wrap .date-desc__content .nothing-wrap,
+.list-header .filter-wrp .article-type .bili-btn,
+.list-header .filter-wrp .filter-level .bili-btn,
+.list-header .filter-wrp .video-type .bili-btn,
+.list-header .filter-wrp .article-type .line,
+.list-header .filter-wrp .filter-level .line,
+.list-header .filter-wrp .video-type .line
 {
     background-color: transparent !important;
 }
@@ -111,7 +127,10 @@ li.danmaku-info-row.bpui-selecting,
 .ticket-tips-wrapper .rec-item .rec-item-vuene,
 .detail-content .activity-info-body .info-content p span,
 .calendarEntry_wrap .calendarEntry_footer .footer_content span,
-.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content,
+.videos-wrap .card-view .collect-num,
+.videos-wrap .card-view .danmu-num,
+.videos-wrap .card-view .play-num
 {
     color: #aaa !important;
 }
@@ -184,7 +203,21 @@ li.danmaku-info-row.bpui-selecting,
 .ui-dropdown .default,
 .ui-dropdown .ul-dropdown-list,
 .horizontalSelect-wrap .month,
-.calendar-wrap .calendar-body .date-wrap .wrap-content .today
+.calendar-wrap .calendar-body .date-wrap .wrap-content .today,
+.left-nav-list.no-office .left-nav-item span,
+.customize-wrap .steps-title,
+.tabs-nav .tab-item.border-bottom,
+.customize-wrap .item-list .item .info-text,
+.list-header .dropdown-btn .icon-text,
+.list-header .filter-wrp .bread-crumb .main,
+.list-header .filter-wrp .bread-crumb .second,
+.list-header .filter-wrp .article-type .bili-btn,
+.list-header .filter-wrp .filter-level .bili-btn,
+.list-header .filter-wrp .video-type .bili-btn,
+.tabs-nav .tab-item.full,
+.list-header .dropdown-btn:hover,
+.tabs-nav .tab-item,
+.customize-wrap .title
 {
     color: #eee !important;
 }
@@ -216,7 +249,13 @@ li.danmaku-info-row.bpui-selecting,
 .report-dialog-container .textarea-wrapper,
 .calendarEntry_wrap,
 .calendarEntry_wrap .greetings,
-.calendarEntry_wrap .calendarEntry_slide
+.calendarEntry_wrap .calendarEntry_slide,
+.tabs .customize-tab,
+.list-header .filter-wrp .category-wrp,
+.list-header .filter-wrp .order-wrp,
+.list-header .filter-wrp .article-type,
+.list-header .filter-wrp .filter-level,
+.list-header .filter-wrp .video-type
 {
     border-color: transparent !important;
 }
@@ -350,7 +389,8 @@ li.danmaku-info-row.bpui-selecting,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-head.up-avatar:hover,
 .replies-comment-input-wrapper .replies-upload .comment-input-img:hover,
 .selectable-option.active,
-.selectable-option.active:after
+.selectable-option.active:after,
+.tabs-nav .tab-item.border-bottom
 {
     border-color: var(--theme-color) !important;
 }
@@ -424,7 +464,18 @@ li.danmaku-info-row.bpui-selecting,
 .calendarEntry_wrap .calendarEntry_footer .footer-link,
 .calendarEntry_wrap .greetings .greet-num,
 .calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content .item-desc_share,
-.calendar-wrap .calendar-body .date-desc_wrap .date-desc__content .nothing-wrap .release-link
+.calendar-wrap .calendar-body .date-desc_wrap .date-desc__content .nothing-wrap .release-link,
+.left-nav-wrapper .left-nav-ul .left-nav-item:hover i,
+.left-nav-wrapper .left-nav-ul .left-nav-item:hover span,
+.left-nav-list.active .left-nav-item i,
+.left-nav-list.active .left-nav-item span,
+.customize-wrap .item-list .item .learn.unlearn,
+.left-nav-item-child:hover i,
+.left-nav-item-child:hover span,
+.list-header .filter-wrp .article-type .bili-btn.current,
+.list-header .filter-wrp .filter-level .bili-btn.current,
+.list-header .filter-wrp .video-type .bili-btn.current,
+.left-nav-childed .left-nav-childed-list .left-nav-item-childed:hover span
 {
     color: var(--theme-color) !important;
 }
