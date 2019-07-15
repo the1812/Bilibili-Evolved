@@ -26,23 +26,24 @@
   </div>
   <div class="separator"></div>
   <div v-show="downloadSingle" class="direct-download">
-    直接下载
+    <h2>直接下载</h2>
     <button class="primary start-download">开始</button>
     <div class="progress">
-      <div class="background"></div>
-      <div class="foreground" v-bind:style="{width: progressPercent + '%'}"></div>
+      <div class="background">
+        <div class="foreground" v-bind:style="{width: progressPercent + '%'}"></div>
+      </div>
       <span class="percent">{{progressPercent}}%</span>
     </div>
   </div>
   <div v-show="!downloadSingle" class="batch-download">
-    选集
+    <h2>选集</h2>
     <div class="episode-list">
       <v-checkbox v-for="ep of episodeList" class="episode-item" v-bind:key="ep.title" v-bind:checked="ep.checked" v-bind:name="ep.title"></v-checkbox>
     </div>
   </div>
   <div class="separator"></div>
   <div class="exports">
-    导出
+    <h2>导出</h2>
     <div class="actions">
       <button class="copy-link">复制链接</button>
       <button class="aria2-file">导出aria2</button>
