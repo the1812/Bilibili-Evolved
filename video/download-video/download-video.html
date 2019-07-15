@@ -22,7 +22,7 @@
     </div>
     <div class="option-item">
       弹幕
-      <v-dropdown v-bind:model="danmakuModel"></v-dropdown>
+      <v-dropdown v-on:change="danmakuOptionChange()" v-bind:model="danmakuModel"></v-dropdown>
     </div>
   </div>
   <div class="separator"></div>

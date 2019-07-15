@@ -1,5 +1,5 @@
 import { getFriendlyTitle } from '../title'
-import { VideoInfo } from '../video-info'
+import { VideoInfo, DanmakuInfo } from '../video-info'
 
 
 interface PageData {
@@ -130,6 +130,7 @@ class VideoDownloaderFragment {
     this.backupUrls = backupUrls
   }
 }
+type DanmakuOption = '无' | 'XML' | 'ASS'
 class VideoDownloader {
   format: VideoFormat
   fragments: VideoDownloaderFragment[]
@@ -137,6 +138,8 @@ class VideoDownloader {
   workingXhr: XMLHttpRequest[] | null = null
   progress: (progress: number) => void
   progressMap: Map<XMLHttpRequest, number> = new Map()
+  danmakuOption: DanmakuOption
+
   constructor(format: VideoFormat, fragments?: VideoDownloaderFragment[]) {
     this.format = format
     this.fragments = fragments || []
@@ -308,11 +311,35 @@ ${it.url}
       .filter((it: HTMLElement) => it.innerText.includes('下载视频'))
       .forEach((it: HTMLElement) => (it.querySelector('.toast-card-dismiss') as HTMLElement).click())
   }
-  downloadSingle(downloadedData: any[]) {
+  async downloadDanmaku() {
+    if (this.danmakuOption !== '无') {
+      const danmakuInfo = new DanmakuInfo(parseInt(pageData.cid))
+      await danmakuInfo.fetchInfo()
+      if (this.danmakuOption === 'XML') {
+        return danmakuInfo.rawXML
+      } else {
+        const { convertToAss } = await import('../download-danmaku')
+        return convertToAss(danmakuInfo.rawXML)
+      }
+    } else {
+      return null
+    }
+  }
+  async downloadSingle(downloadedData: any[]) {
+    const danmaku = await this.downloadDanmaku()
     const [data] = downloadedData
-    const blob = this.makeBlob(data)
-    const filename = getFriendlyTitle() + this.extension()
-    return { blob, filename }
+    if (danmaku === null) {
+      const blob = this.makeBlob(data)
+      const filename = getFriendlyTitle() + this.extension()
+      return { blob, filename }
+    } else {
+      const zip = new JSZip()
+      zip.file(getFriendlyTitle() + this.extension(), this.makeBlob(data))
+      zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
+      const blob = await zip.generateAsync({ type: 'blob' })
+      const filename = getFriendlyTitle() + '.zip'
+      return { blob, filename }
+    }
   }
   async downloadMultiple(downloadedData: any[]) {
     const zip = new JSZip()
@@ -325,6 +352,10 @@ ${it.url}
     } else {
       const [data] = downloadedData
       zip.file(`${title}${this.extension()}`, this.makeBlob(data))
+    }
+    const danmaku = await this.downloadDanmaku()
+    if (danmaku !== null) {
+      zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
     }
     const blob = await zip.generateAsync({ type: 'blob' })
     const filename = title + '.zip'
@@ -342,7 +373,7 @@ ${it.url}
 
     let { blob, filename } = await (async () => {
       if (downloadedData.length === 1) {
-        return this.downloadSingle(downloadedData)
+        return await this.downloadSingle(downloadedData)
       } else {
         return await this.downloadMultiple(downloadedData)
       }
@@ -606,7 +637,7 @@ async function loadPanel() {
       },
       danmakuModel: {
         value: settings.downloadVideoDefaultDanmaku,
-        items: ['无', 'XML', 'ASS']
+        items: ['无', 'XML', 'ASS'] as DanmakuOption[]
       },
       progressPercent: 0,
       title: getFriendlyTitle(false),
@@ -621,6 +652,9 @@ async function loadPanel() {
     methods: {
       close() {
         this.$el.classList.remove('opened')
+      },
+      danmakuOptionChange() {
+        settings.downloadVideoDefaultDanmaku = this.danmakuModel.value
       },
       async formatChange() {
         const format = this.getFormat() as VideoFormat
@@ -658,16 +692,18 @@ async function loadPanel() {
       async exportData(type: 'copyLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD') {
         const format = this.getFormat() as VideoFormat
         const videoDownloader = await format.downloadInfo()
+        videoDownloader.danmakuOption = this.danmakuModel.value
         switch (type) {
           case 'copyLink':
             videoDownloader.copyUrl()
-            Toast.success('已复制链接到剪贴板.', '复制链接', 3000)
+            Toast.success('已复制链接到剪贴板.', '下载视频', 3000)
             break
           case 'aria2':
             videoDownloader.exportAria2(false)
             break
           case 'copyVLD':
             videoDownloader.exportData(true)
+            Toast.success('已复制VLD数据到剪贴板.', '下载视频', 3000)
             break
           case 'exportVLD':
             videoDownloader.exportData(false)
@@ -686,6 +722,7 @@ async function loadPanel() {
         try {
           this.downloading = true
           const videoDownloader = await format.downloadInfo()
+          videoDownloader.danmakuOption = this.danmakuModel.value
           videoDownloader.progress = percent => {
             this.progressPercent = Math.trunc(percent * 100)
           }
@@ -711,7 +748,7 @@ async function loadPanel() {
   })
   const videoInfo = new VideoInfo(parseInt(pageData.aid))
   await videoInfo.fetchInfo()
-  panel.coverUrl = videoInfo.coverUrl
+  panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:')
 }
 
 export default {
