@@ -252,10 +252,10 @@ class VideoDownloader {
     a.remove()
     URL.revokeObjectURL(url)
   }
-  exportData(copy = false) {
+  async exportData(copy = false) {
     const data = JSON.stringify([{
       fragments: this.fragments,
-      title: getFriendlyTitle(true),
+      title: getFriendlyTitle(),
       totalSize: this.fragments.map(it => it.size).reduce((acc, it) => acc + it),
       referer: document.URL.replace(window.location.search, '')
     }])
@@ -263,10 +263,18 @@ class VideoDownloader {
       GM_setClipboard(data, 'text')
     } else {
       const blob = new Blob([data], { type: 'text/json' })
-      VideoDownloader.downloadBlob(blob, `cid${unsafeWindow.cid}.json`)
+      const danmaku = await this.downloadDanmaku()
+      if (danmaku !== null) {
+        const zip = new JSZip()
+        zip.file(`${getFriendlyTitle()}.json`, blob)
+        zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
+        VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), `${getFriendlyTitle()}.zip`)
+      } else {
+        VideoDownloader.downloadBlob(blob, `${getFriendlyTitle()}.json`)
+      }
     }
   }
-  exportAria2(rpc = false) {
+  async exportAria2(rpc = false) {
     if (rpc) {
 
     } else { // https://aria2.github.io/manual/en/html/aria2c.html#input-file
@@ -282,13 +290,21 @@ ${this.fragments.map((it, index) => {
 ${it.url}
   referer=${document.URL.replace(window.location.search, '')}
   user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0
-  out=${getFriendlyTitle(true)}${indexNumber}.flv
+  out=${getFriendlyTitle()}${indexNumber}.flv
   split=${this.fragmentSplitFactor}
   `.trim()
       }).join('\n')}
       `.trim()
       const blob = new Blob([input], { type: 'text/plain' })
-      VideoDownloader.downloadBlob(blob, `${getFriendlyTitle(true)}.txt`)
+      const danmaku = await this.downloadDanmaku()
+      if (danmaku !== null) {
+        const zip = new JSZip()
+        zip.file(`${getFriendlyTitle()}.txt`, blob)
+        zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
+        VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), `${getFriendlyTitle()}.zip`)
+      } else {
+        VideoDownloader.downloadBlob(blob, `${getFriendlyTitle()}.txt`)
+      }
     }
   }
   extension(fragment?: VideoDownloaderFragment) {
