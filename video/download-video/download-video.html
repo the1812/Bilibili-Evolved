@@ -18,7 +18,7 @@
   <div class="options">
     <div class="option-item">
       清晰度
-      <v-dropdown v-bind:model="qualityModel"></v-dropdown>
+      <v-dropdown v-on:change="formatChange()" v-bind:model="qualityModel"></v-dropdown>
     </div>
     <div class="option-item">
       弹幕
@@ -47,10 +47,10 @@
   <div class="exports">
     <h2>导出</h2>
     <div class="actions">
-      <button class="copy-link">复制链接</button>
-      <button class="aria2-file">导出aria2</button>
-      <button class="vld-copy">复制vld数据</button>
-      <button class="vld-export">导出vld数据</button>
+      <button class="copy-link" v-on:click="exportData('copyLink')">复制链接</button>
+      <button class="aria2-file" v-on:click="exportData('aria2')">导出aria2</button>
+      <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>
+      <button class="vld-export" v-on:click="exportData('exportVLD')">导出vld数据</button>
     </div>
     <!--
     <button class="aria2-rpc">aria2 RPC</button>

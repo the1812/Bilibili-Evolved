@@ -113,10 +113,12 @@ class VideoDownloader {
     constructor(format, fragments) {
         this.fragmentSplitFactor = 6 * 5;
         this.workingXhr = null;
-        this.totalSize = 0;
         this.progressMap = new Map();
         this.format = format;
         this.fragments = fragments || [];
+    }
+    get totalSize() {
+        return this.fragments.map(it => it.size).reduce((acc, it) => acc + it);
     }
     fetchVideoInfo() {
         return new Promise((resolve, reject) => {
@@ -307,7 +309,6 @@ ${it.url}
     }
     async download() {
         const downloadedData = [];
-        this.totalSize = this.fragments.map(it => it.size).reduce((acc, it) => acc + it);
         for (const fragment of this.fragments) {
             const data = await this.downloadFragment(fragment);
             downloadedData.push(data);
@@ -553,10 +554,12 @@ async function loadPanel() {
             },
             select(item) {
                 this.model.value = item;
+                this.$emit('change');
             },
         },
     });
     let workingDownloader;
+    const sizeCache = new Map();
     const panel = new Vue({
         el: '.download-video',
         data: {
@@ -572,14 +575,72 @@ async function loadPanel() {
             },
             progressPercent: 0,
             title: getFriendlyTitle(false),
-            size: 0,
+            size: '',
             blobUrl: '',
             episodeList: [],
             downloading: false,
         },
+        mounted() {
+            this.formatChange();
+        },
         methods: {
             close() {
                 this.$el.classList.remove('opened');
+            },
+            async formatChange() {
+                const format = this.getFormat();
+                const cache = sizeCache.get(format);
+                if (cache) {
+                    this.size = cache;
+                    return;
+                }
+                try {
+                    this.size = '获取大小中';
+                    const videoDownloader = await format.downloadInfo();
+                    const size = videoDownloader.totalSize;
+                    const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                    let number = size;
+                    let unitIndex = 0;
+                    while (number >= 1024) {
+                        number /= 1024;
+                        unitIndex++;
+                    }
+                    const displaySize = `${Math.round(number * 10) / 10}${units[unitIndex]}`;
+                    this.size = displaySize;
+                    sizeCache.set(format, displaySize);
+                }
+                catch (error) {
+                    this.size = '获取大小失败';
+                }
+            },
+            getFormat() {
+                const format = formats.find(f => f.displayName === this.qualityModel.value);
+                if (!format) {
+                    console.error(`No format found. model value = ${this.qualityModel.value}`);
+                    return null;
+                }
+                return format;
+            },
+            async exportData(type) {
+                const format = this.getFormat();
+                const videoDownloader = await format.downloadInfo();
+                switch (type) {
+                    case 'copyLink':
+                        videoDownloader.copyUrl();
+                        Toast.success('已复制链接到剪贴板.', '复制链接', 3000);
+                        break;
+                    case 'aria2':
+                        videoDownloader.exportAria2(false);
+                        break;
+                    case 'copyVLD':
+                        videoDownloader.exportData(true);
+                        break;
+                    case 'exportVLD':
+                        videoDownloader.exportData(false);
+                        break;
+                    default:
+                        break;
+                }
             },
             cancelDownload() {
                 if (workingDownloader) {
@@ -587,16 +648,12 @@ async function loadPanel() {
                 }
             },
             async startDownload() {
-                const format = formats.find(f => f.displayName === this.qualityModel.value);
-                if (!format) {
-                    console.error(`No format found. model value = ${this.qualityModel.value}`);
-                    return;
-                }
+                const format = this.getFormat();
                 try {
                     this.downloading = true;
                     const videoDownloader = await format.downloadInfo();
                     videoDownloader.progress = percent => {
-                        this.progressPercent = Math.trunc(percent * 1000) / 10;
+                        this.progressPercent = Math.trunc(percent * 100);
                     };
                     workingDownloader = videoDownloader;
                     const result = await videoDownloader.download();
