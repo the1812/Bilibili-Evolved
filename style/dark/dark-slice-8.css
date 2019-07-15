@@ -6,7 +6,9 @@
 .fjw-kpi-wrap-bg,
 .fjw-point .point-wrap .user-point .face .unfocus-btn,
 .navbar-container,
-.submit button
+.submit button,
+.calendar-wrap .calendar-body .date-desc_wrap,
+.row1 .calendar-wrap
 {
     background-color: #222 !important;
 }
@@ -52,7 +54,12 @@ li.danmaku-info-row.bpui-selecting,
 .report-pc-dialog .report-dialog-container,
 .detail-content .more-hot-comments,
 .modal-wrapper .modal-container,
-.detail-content .guest-wrapper
+.detail-content .guest-wrapper,
+.calendarEntry_wrap,
+.calendarEntry_wrap .calendarEntry_slide,
+.ui-dropdown .default,
+.calendar-wrap .calendar-body .calendar-body__select .ui-dropdown .default:hover,
+.ui-dropdown .ul-dropdown-list
 {
     background-color: #444 !important;
 }
@@ -73,7 +80,10 @@ li.danmaku-info-row.bpui-selecting,
 .selectable-option.unable,
 .detail-content .activity-info-body .info-header,
 .article-action .more .more-ops-list,
-.article-action .more .more-ops-list ul li:hover
+.article-action .more .more-ops-list ul li:hover,
+#app .calendarEntry_content .header,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card,
+.calendar-wrap .calendar-body .date-desc_wrap .date-desc__content .nothing-wrap
 {
     background-color: transparent !important;
 }
@@ -99,7 +109,9 @@ li.danmaku-info-row.bpui-selecting,
 .comment .reply-comment-list .reply-comment-item .reply-comment-item-floor,
 .ticket-tips-wrapper .rec-item .rec-item-time,
 .ticket-tips-wrapper .rec-item .rec-item-vuene,
-.detail-content .activity-info-body .info-content p span
+.detail-content .activity-info-body .info-content p span,
+.calendarEntry_wrap .calendarEntry_footer .footer_content span,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content
 {
     color: #aaa !important;
 }
@@ -162,7 +174,17 @@ li.danmaku-info-row.bpui-selecting,
 .buyticket .map-model .modal-container .modal-header,
 .guest-wrapper .guest-header,
 .guest-wrapper .guest-list .name,
-.detail-content .activity-info-body .info-header span
+.detail-content .activity-info-body .info-header span,
+.calendarEntry_wrap .greetings,
+.calendarEntry_wrap .calendarEntry_slide,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_title .item-title,
+.calendar-wrap .calendar-header,
+.calendar-wrap .headerClass,
+.calendar-wrap .calendar-body .date-wrap,
+.ui-dropdown .default,
+.ui-dropdown .ul-dropdown-list,
+.horizontalSelect-wrap .month,
+.calendar-wrap .calendar-body .date-wrap .wrap-content .today
 {
     color: #eee !important;
 }
@@ -191,7 +213,10 @@ li.danmaku-info-row.bpui-selecting,
 .report-dialog-container .submit .submit-btn:after,
 .report-dialog-container .submit .cancel-btn:after,
 .detail-content .guest-wrapper,
-.report-dialog-container .textarea-wrapper
+.report-dialog-container .textarea-wrapper,
+.calendarEntry_wrap,
+.calendarEntry_wrap .greetings,
+.calendarEntry_wrap .calendarEntry_slide
 {
     border-color: transparent !important;
 }
@@ -206,7 +231,9 @@ li.danmaku-info-row.bpui-selecting,
 .live-category .latest,
 .link-input,
 .comic-episodes .episode-list .episode-item .item-body,
-.tab-content .bilibili-comment
+.tab-content .bilibili-comment,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content,
+.calendar-wrap .calendar-header
 {
     border-color: #444 !important
 }
@@ -255,7 +282,8 @@ li.danmaku-info-row.bpui-selecting,
 .activity-info .icon-activity,
 .ticket-tips-wrapper .ticket-tips-header span,
 .detail-content .comment .hot-icon span,
-.guest-wrapper .icon-guest
+.guest-wrapper .icon-guest,
+.calendar-date-body .wrap-content img
 {
     filter: var(--pink-image-filter) !important;
 }
@@ -355,7 +383,8 @@ li.danmaku-info-row.bpui-selecting,
 .comment .comment-selecotr .all-comments.active:before,
 .comment .comment-selecotr .sortByHot.active:before,
 .calendar .days li.selected,
-.tabs-wrapper .tabs .tabs-item.active:before
+.tabs-wrapper .tabs .tabs-item.active:before,
+.calendar-wrap .calendar-body .date-wrap .wrap-content .select-icon
 {
     background-color: var(--theme-color) !important;
 }
@@ -391,7 +420,11 @@ li.danmaku-info-row.bpui-selecting,
 .replies-comment-input-wrapper .replies-upload .comment-input-img,
 .selectable-option.active,
 .tabs-wrapper .tabs .tabs-item.active,
-.guest-wrapper .guest-list .guest-item:hover .name
+.guest-wrapper .guest-list .guest-item:hover .name,
+.calendarEntry_wrap .calendarEntry_footer .footer-link,
+.calendarEntry_wrap .greetings .greet-num,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content .item-desc_share,
+.calendar-wrap .calendar-body .date-desc_wrap .date-desc__content .nothing-wrap .release-link
 {
     color: var(--theme-color) !important;
 }
