@@ -641,7 +641,7 @@ async function loadPanel() {
     index: number
   }
   let workingDownloader: VideoDownloader
-  const sizeCache = new Map<VideoFormat, string>()
+  const sizeCache = new Map<VideoFormat, number>()
   const panel = new Vue({
     el: '.download-video',
     data: {
@@ -657,13 +657,34 @@ async function loadPanel() {
       },
       progressPercent: 0,
       title: getFriendlyTitle(false),
-      size: '',
+      size: 0 as number | string,
       blobUrl: '',
       episodeList: [],
       downloading: false,
     },
     mounted() {
       this.formatChange()
+    },
+    computed: {
+      displaySize() {
+        if (typeof this.size === 'string') {
+          return this.size
+        }
+        const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+        let number = this.size
+        let unitIndex = 0
+        while (number >= 1024) {
+          number /= 1024
+          unitIndex++
+        }
+        return `${Math.round(number * 10) / 10}${units[unitIndex]}`
+      },
+      sizeWarning() {
+        if (typeof this.size === 'string') {
+          return false
+        }
+        return this.size > 1073741824 // 1GB
+      },
     },
     methods: {
       close() {
@@ -682,17 +703,8 @@ async function loadPanel() {
         try {
           this.size = '获取大小中'
           const videoDownloader = await format.downloadInfo()
-          const size = videoDownloader.totalSize
-          const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-          let number = size
-          let unitIndex = 0
-          while (number >= 1024) {
-            number /= 1024
-            unitIndex++
-          }
-          const displaySize = `${Math.round(number * 10) / 10}${units[unitIndex]}`
-          this.size = displaySize
-          sizeCache.set(format, displaySize)
+          this.size = videoDownloader.totalSize
+          sizeCache.set(format, this.size)
         } catch (error) {
           this.size = '获取大小失败'
         }
