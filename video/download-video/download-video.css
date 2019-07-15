@@ -246,6 +246,9 @@ body.dark .download-video .direct-download .progress .foreground {
   flex-grow: 1;
   flex-basis: calc(50% - 16px);
 }
+.download-video .batch-download {
+  height: 232px;
+}
 /* ol.video-quality li,
 .video-action>div
 {
