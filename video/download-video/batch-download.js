@@ -1,5 +1,10 @@
 const fragmentSplitFactor = 12
 class Batch {
+  constructor () {
+    this.itemList = []
+    this.itemFilter = () => true
+  }
+  async getItemList() {}
   async collectData () {}
   async collectAria2 (quality, rpc) {
     if (rpc) {
@@ -31,7 +36,10 @@ class VideoEpisodeBatch extends Batch {
     }
     return await SpinQuery.select('#multi_page') !== null
   }
-  async collectData (quality) {
+  async getItemList() {
+    if (this.itemList.length > 0) {
+      return this.itemList
+    }
     const api = `https://api.bilibili.com/x/web-interface/view?aid=${unsafeWindow.aid}`
     const json = await Ajax.getJson(api)
     if (json.code !== 0) {
@@ -43,9 +51,19 @@ class VideoEpisodeBatch extends Batch {
       Toast.error(`获取视频选集列表失败, 没有找到选集信息.`, '批量下载')
       return ''
     }
+    this.itemList = pages.map(page => {
+      return {
+        title: `P${page.page} ${page.part}`,
+        cid: page.cid,
+        aid: unsafeWindow.aid,
+      }
+    })
+    return this.itemList
+  }
+  async collectData (quality) {
     const result = []
-    for (const page of pages) {
-      const url = `https://api.bilibili.com/x/player/playurl?avid=${unsafeWindow.aid}&cid=${page.cid}&qn=${quality}&otype=json`
+    for (const item of (await this.getItemList()).filter(this.itemFilter)) {
+      const url = `https://api.bilibili.com/x/player/playurl?avid=${item.aid}&cid=${item.cid}&qn=${quality}&otype=json`
       const json = await Ajax.getJsonWithCredentials(url)
       const data = json.data || json.result || json
       if (data.quality !== quality) {
@@ -61,9 +79,9 @@ class VideoEpisodeBatch extends Batch {
       })
       result.push({
         fragments,
-        title: `${page.page} - ${page.part}`,
+        title: item.title,
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
-        cid: page.cid,
+        cid: item.cid,
         referer: document.URL.replace(window.location.search, '')
       })
     }
@@ -74,7 +92,10 @@ class BangumiBatch extends Batch {
   static async test () {
     return document.URL.includes('/www.bilibili.com/bangumi')
   }
-  async collectData (quality) {
+  async getItemList() {
+    if (this.itemList.length > 0) {
+      return this.itemList
+    }
     const metaUrl = document.querySelector("meta[property='og:url']")
     if (metaUrl === null) {
       Toast.error('获取番剧数据失败: 无法找到 Season ID', '批量下载')
@@ -90,12 +111,19 @@ class BangumiBatch extends Batch {
       Toast.error(`获取番剧数据失败: 无法获取番剧集数列表, message=${json.message}`, '批量下载')
       return ''
     }
-    const pages = json.result.main_section.episodes.map(it => {
-      return { aid: it.aid, cid: it.cid, number: it.title, title: it.long_title }
+    this.itemList = json.result.main_section.episodes.map(it => {
+      return {
+        aid: it.aid,
+        cid: it.cid,
+        title: `${it.title} - ${it.long_title}`,
+      }
     })
+    return this.itemList
+  }
+  async collectData (quality) {
     const result = []
-    for (const page of pages) {
-      const url = `https://api.bilibili.com/pgc/player/web/playurl?avid=${page.aid}&cid=${page.cid}&qn=${quality}&otype=json`
+    for (const item of (await this.getItemList()).filter(this.itemFilter)) {
+      const url = `https://api.bilibili.com/pgc/player/web/playurl?avid=${item.aid}&cid=${item.cid}&qn=${quality}&otype=json`
       const json = await Ajax.getJsonWithCredentials(url)
       const data = json.data || json.result || json
       if (data.quality !== quality) {
@@ -111,9 +139,9 @@ class BangumiBatch extends Batch {
       })
       result.push({
         fragments,
-        title: `${page.number} - ${page.title}`,
+        title: item.title,
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
-        cid: page.cid,
+        cid: item.cid,
         referer: document.URL.replace(window.location.search, '')
       })
     }
@@ -122,7 +150,19 @@ class BangumiBatch extends Batch {
 }
 const extractors = [BangumiBatch, VideoEpisodeBatch]
 let ExtractorClass = null
+const getExtractor = () => {
+  if (ExtractorClass === null) {
+    logError('[批量下载] 未找到合适的解析模块.')
+    throw new Error(`[Batch Download] module not found.`)
+  }
+  const extractor = new ExtractorClass()
+  extractor.itemFilter = this.itemFilter
+  return extractor
+}
 export class BatchExtractor {
+  constructor() {
+    this.itemFilter = () => true
+  }
   static async test () {
     for (const e of extractors) {
       if (await e.test() === true) {
@@ -133,22 +173,18 @@ export class BatchExtractor {
     ExtractorClass = null
     return false
   }
+  async getItemList () {
+    const extractor = getExtractor()
+    return await extractor.getItemList()
+  }
   async collectData (format, toast) {
-    if (ExtractorClass === null) {
-      logError('[批量下载] 未找到合适的解析模块.')
-      return null
-    }
-    const extractor = new ExtractorClass()
+    const extractor = getExtractor()
     const result = await extractor.collectData(format.quality)
     toast.dismiss()
     return result
   }
   async collectAria2 (format, toast, rpc) {
-    if (ExtractorClass === null) {
-      logError('[批量下载] 未找到合适的解析模块.')
-      return null
-    }
-    const extractor = new ExtractorClass()
+    const extractor = getExtractor()
     const result = await extractor.collectAria2(format.quality, rpc)
     toast.dismiss()
     return result

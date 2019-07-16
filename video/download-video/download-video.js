@@ -186,7 +186,7 @@ class VideoDownloader {
                         reject(`请求失败.`);
                     }
                 });
-                xhr.addEventListener('abort', () => reject('下载已取消.'));
+                xhr.addEventListener('abort', () => reject('canceled'));
                 xhr.addEventListener('error', () => {
                     console.error(`[下载视频] 视频片段${getPartNumber(xhr)}下载失败: ${range}`);
                     this.progressMap.set(xhr, 0);
@@ -383,58 +383,45 @@ ${it.url}
     }
 }
 async function checkBatch() {
-    const urls = [
-        '/www.bilibili.com/bangumi',
-        '/www.bilibili.com/video/av'
-    ];
-    if (!urls.some(url => document.URL.includes(url))) {
-        return;
-    }
-    const { BatchExtractor } = await import('batch-download');
-    if (await BatchExtractor.test() !== true) {
-        return;
-    }
-    const extractor = new BatchExtractor();
-    document.getElementById('download-video').classList.add('batch');
-    document.getElementById('video-action-batch-data').addEventListener('click', async () => {
-        if (!selectedFormat) {
-            return;
-        }
-        pageData.entity.closeMenu();
-        const toast = Toast.info('获取链接中...', '批量下载');
-        const data = await extractor.collectData(selectedFormat, toast);
-        if (!data) {
-            return;
-        }
-        GM_setClipboard(data, { type: 'text/json' });
-        Toast.success('已复制批量数据到剪贴板.', '复制批量数据', 3000);
-    });
-    document.getElementById('video-action-batch-download-data').addEventListener('click', async () => {
-        if (!selectedFormat) {
-            return;
-        }
-        pageData.entity.closeMenu();
-        const toast = Toast.info('获取链接中...', '批量下载');
-        const data = await extractor.collectData(selectedFormat, toast);
-        if (!data) {
-            return;
-        }
-        const blob = new Blob([data], { type: 'text/json' });
-        VideoDownloader.downloadBlob(blob, 'export.json');
-    });
-    document.getElementById('video-action-aria2-batch').addEventListener('click', async () => {
-        if (!selectedFormat) {
-            return;
-        }
-        pageData.entity.closeMenu();
-        const toast = Toast.info('获取链接中...', '批量下载');
-        const data = await extractor.collectAria2(selectedFormat, toast);
-        if (!data) {
-            return;
-        }
-        const blob = new Blob([data], { type: 'text/plain' });
-        VideoDownloader.downloadBlob(blob, `${getFriendlyTitle(false)}.txt`);
-    });
+    // document.getElementById('video-action-batch-data')!.addEventListener('click', async () => {
+    //   if (!selectedFormat) {
+    //     return
+    //   }
+    //   pageData.entity.closeMenu()
+    //   const toast = Toast.info('获取链接中...', '批量下载')
+    //   const data = await extractor.collectData(selectedFormat, toast)
+    //   if (!data) {
+    //     return
+    //   }
+    //   GM_setClipboard(data, { type: 'text/json' })
+    //   Toast.success('已复制批量数据到剪贴板.', '复制批量数据', 3000)
+    // })
+    // document.getElementById('video-action-batch-download-data')!.addEventListener('click', async () => {
+    //   if (!selectedFormat) {
+    //     return
+    //   }
+    //   pageData.entity.closeMenu()
+    //   const toast = Toast.info('获取链接中...', '批量下载')
+    //   const data = await extractor.collectData(selectedFormat, toast)
+    //   if (!data) {
+    //     return
+    //   }
+    //   const blob = new Blob([data], { type: 'text/json' })
+    //   VideoDownloader.downloadBlob(blob, 'export.json')
+    // })
+    // document.getElementById('video-action-aria2-batch')!.addEventListener('click', async () => {
+    //   if (!selectedFormat) {
+    //     return
+    //   }
+    //   pageData.entity.closeMenu()
+    //   const toast = Toast.info('获取链接中...', '批量下载')
+    //   const data = await extractor.collectAria2(selectedFormat, toast)
+    //   if (!data) {
+    //     return
+    //   }
+    //   const blob = new Blob([data], { type: 'text/plain' })
+    //   VideoDownloader.downloadBlob(blob, `${getFriendlyTitle(false)}.txt`)
+    // })
 }
 async function loadPageData() {
     const aid = await SpinQuery.select(() => (unsafeWindow || window).aid);
@@ -571,12 +558,11 @@ async function loadWidget() {
         document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'));
         loadPanel();
     }, { once: true });
-    checkBatch();
 }
 async function loadPanel() {
     Vue.component('v-dropdown', {
         template: /*html*/ `
-    <div class="v-dropdown" v-on:click="toggleDropDown()">
+    <div class="v-dropdown" v-on:click="toggleDropdown()">
       <span class="selected">{{value}}</span>
       <ul class="dropdown-menu" v-bind:class="{opened: dropdownOpen}">
         <li v-for="item in model.items" v-bind:key="item" v-bind:data-value="item" v-on:click="select(item)">{{item}}</li>
@@ -598,12 +584,28 @@ async function loadPanel() {
             }
         },
         methods: {
-            toggleDropDown() {
+            toggleDropdown() {
                 this.dropdownOpen = !this.dropdownOpen;
             },
             select(item) {
                 this.model.value = item;
                 this.$emit('change');
+            },
+        },
+    });
+    Vue.component('v-checkbox', {
+        template: /*html*/ `
+      <div class="v-checkbox" v-on:click="toggleCheck()" v-bind:class="{checked: model.checked}">
+        <i class="mdi mdi-checkbox-blank-circle-outline">
+          <i class="mdi mdi-checkbox-marked-circle"></i>
+        </i>
+        <span class="content">{{model.title}}</span>
+      </div>
+    `,
+        props: ['model'],
+        methods: {
+            toggleCheck() {
+                this.model.checked = !this.model.checked;
             },
         },
     });
@@ -628,6 +630,7 @@ async function loadPanel() {
             blobUrl: '',
             episodeList: [],
             downloading: false,
+            batch: false,
         },
         mounted() {
             this.formatChange();
@@ -686,6 +689,33 @@ async function loadPanel() {
                 return format;
             },
             async exportData(type) {
+                if (this.batch) {
+                    this.exportBatchData(type);
+                    return;
+                }
+                const format = this.getFormat();
+                const videoDownloader = await format.downloadInfo();
+                videoDownloader.danmakuOption = this.danmakuModel.value;
+                switch (type) {
+                    case 'copyLink':
+                        videoDownloader.copyUrl();
+                        Toast.success('已复制链接到剪贴板.', '下载视频', 3000);
+                        break;
+                    case 'aria2':
+                        videoDownloader.exportAria2(false);
+                        break;
+                    case 'copyVLD':
+                        videoDownloader.exportData(true);
+                        Toast.success('已复制VLD数据到剪贴板.', '下载视频', 3000);
+                        break;
+                    case 'exportVLD':
+                        videoDownloader.exportData(false);
+                        break;
+                    default:
+                        break;
+                }
+            },
+            async exportBatchData(type) {
                 const format = this.getFormat();
                 const videoDownloader = await format.downloadInfo();
                 videoDownloader.danmakuOption = this.danmakuModel.value;
@@ -731,7 +761,7 @@ async function loadPanel() {
                     Toast.success(/*html*/ `下载完成: ${result.filename} <a class="link" href="${result.url}" download="${result.filename.replace(/"/g, '&quot;')}">再次保存</a>`, '下载视频');
                 }
                 catch (error) {
-                    if (error !== '下载已取消.') {
+                    if (error !== 'canceled') {
                         logError(error);
                     }
                     this.progressPercent = 0;
@@ -745,14 +775,37 @@ async function loadPanel() {
     const videoInfo = new VideoInfo(parseInt(pageData.aid));
     await videoInfo.fetchInfo();
     panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:');
+    // Check batch download
+    const urls = [
+        '/www.bilibili.com/bangumi',
+        '/www.bilibili.com/video/av'
+    ];
+    if (!urls.some(url => document.URL.includes(url))) {
+        return;
+    }
+    const { BatchExtractor } = await import('batch-download');
+    if (await BatchExtractor.test() !== true) {
+        return;
+    }
+    const batchExtractor = new BatchExtractor();
+    panel.batch = true;
+    panel.episodeList = (await batchExtractor.getItemList()).map((item, index) => {
+        return {
+            aid: item.aid,
+            cid: item.cid,
+            title: item.title,
+            index,
+            checked: true,
+        };
+    });
 }
 export default {
     widget: {
         content: /*html*/ `
-    <button class="gui-settings-flat-button" style="position: relative; z-index: 100;" id="download-video">
-      <i class="icon-download"></i>
-      <span>下载视频</span>
-    </button>`,
+      <button class="gui-settings-flat-button" style="position: relative; z-index: 100;" id="download-video">
+        <i class="icon-download"></i>
+        <span>下载视频</span>
+      </button>`,
         condition: loadPageData,
         success: loadWidget
     }

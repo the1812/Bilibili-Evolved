@@ -4,7 +4,7 @@
     <h1>下载视频</h1>
     <i class="mdi mdi-close" v-on:click="close()"></i>
   </div>
-  <div class="tabs">
+  <div v-if="batch" class="tabs">
     <div class="tab download-single" v-bind:class="{active: downloadSingle}" v-on:click="downloadSingle = true">单个视频
     </div>
     <div class="tab download-batch" v-bind:class="{active: !downloadSingle}" v-on:click="downloadSingle = false">批量导出
@@ -51,8 +51,7 @@
   <div v-show="!downloadSingle" class="batch-download">
     <h2>选集</h2>
     <div class="episode-list">
-      <v-checkbox v-for="ep of episodeList" class="episode-item" v-bind:key="ep.title" v-bind:checked="ep.checked"
-        v-bind:name="ep.title"></v-checkbox>
+      <v-checkbox v-for="ep of episodeList" v-bind:key="ep.index" v-bind:model="ep"></v-checkbox>
     </div>
   </div>
   <div class="separator"></div>
