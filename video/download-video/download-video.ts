@@ -627,7 +627,7 @@ async function loadPanel() {
     `,
     props: ['model'],
     methods: {
-      toggleCheck () {
+      toggleCheck() {
         this.model.checked = !this.model.checked
       },
     },
@@ -652,11 +652,10 @@ async function loadPanel() {
         items: formats.map(f => f.displayName)
       },
       danmakuModel: {
-        value: settings.downloadVideoDefaultDanmaku,
+        value: settings.downloadVideoDefaultDanmaku as DanmakuOption,
         items: ['无', 'XML', 'ASS'] as DanmakuOption[]
       },
       progressPercent: 0,
-      title: getFriendlyTitle(false),
       size: 0 as number | string,
       blobUrl: '',
       episodeList: [] as EpisodeItem[],
@@ -667,6 +666,13 @@ async function loadPanel() {
       this.formatChange()
     },
     computed: {
+      title() {
+        if (document.URL.includes('/www.bilibili.com/bangumi/')) {
+          return this.downloadSingle ? getFriendlyTitle(false) : getFriendlyTitle(true)
+        } else {
+          return this.downloadSingle ? getFriendlyTitle(true) : getFriendlyTitle(false)
+        }
+      },
       displaySize() {
         if (typeof this.size === 'string') {
           return this.size
@@ -685,6 +691,9 @@ async function loadPanel() {
           return false
         }
         return this.size > 1073741824 // 1GB
+      },
+      selectedEpisodeCount() {
+        return (this.episodeList as EpisodeItem[]).filter(item => item.checked).length
       },
     },
     methods: {
@@ -719,7 +728,7 @@ async function loadPanel() {
         return format
       },
       async exportData(type: ExportType) {
-        if (this.batch) {
+        if (!this.downloadSingle) {
           this.exportBatchData(type)
           return
         }
@@ -746,27 +755,66 @@ async function loadPanel() {
         }
       },
       async exportBatchData(type: ExportType) {
-        const format = this.getFormat() as VideoFormat
-        const videoDownloader = await format.downloadInfo()
-        videoDownloader.danmakuOption = this.danmakuModel.value
-        switch (type) {
-          case 'copyLink':
-            videoDownloader.copyUrl()
-            Toast.success('已复制链接到剪贴板.', '下载视频', 3000)
-            break
-          case 'aria2':
-            videoDownloader.exportAria2(false)
-            break
-          case 'copyVLD':
-            videoDownloader.exportData(true)
-            Toast.success('已复制VLD数据到剪贴板.', '下载视频', 3000)
-            break
-          case 'exportVLD':
-            videoDownloader.exportData(false)
-            break
-          default:
-            break
+        if ((this.episodeList as EpisodeItem[]).every(item => item.checked === false)) {
+          Toast.info('请至少选择1集或以上的数量!', '批量导出', 3000)
+          return
         }
+        const format = this.getFormat()
+        // if (this.danmakuModel.value !== '无') {
+        //   const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
+
+        // }
+        const toast = Toast.info('获取链接中...', '批量导出')
+        const episodeFilter = (item: EpisodeItem) => {
+          const match = this.episodeList.find((it: EpisodeItem) => it.cid === item.cid) as EpisodeItem | undefined
+          if (match === undefined) {
+            return false
+          }
+          return match.checked
+        }
+        this.batchExtractor.itemFilter = episodeFilter
+        let result: string
+        switch (type) {
+          case 'aria2':
+            result = await this.batchExtractor.collectAria2(format, toast)
+            VideoDownloader.downloadBlob(result, getFriendlyTitle(false) + '.txt')
+            return
+          case 'copyVLD':
+            GM_setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
+            Toast.success('已复制批量vld数据到剪贴板.', '批量导出', 3000)
+            return
+          case 'exportVLD':
+            result = await this.batchExtractor.collectData(format, toast)
+            VideoDownloader.downloadBlob(result, getFriendlyTitle(false) + '.json')
+            return
+          default:
+            toast.dismiss()
+            return
+        }
+      },
+      async checkBatch() {
+        const urls = [
+          '/www.bilibili.com/bangumi',
+          '/www.bilibili.com/video/av'
+        ]
+        if (!urls.some(url => document.URL.includes(url))) {
+          return
+        }
+        const { BatchExtractor } = await import('batch-download')
+        if (await BatchExtractor.test() !== true) {
+          return
+        }
+        this.batchExtractor = new BatchExtractor()
+        this.batch = true
+        this.episodeList = (await this.batchExtractor.getItemList()).map((item: EpisodeItem, index: number) => {
+          return {
+            aid: item.aid,
+            cid: item.cid,
+            title: item.title,
+            index,
+            checked: true,
+          }
+        })
       },
       cancelDownload() {
         if (workingDownloader) {
@@ -805,30 +853,7 @@ async function loadPanel() {
   const videoInfo = new VideoInfo(parseInt(pageData.aid))
   await videoInfo.fetchInfo()
   panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:')
-
-  // Check batch download
-  const urls = [
-    '/www.bilibili.com/bangumi',
-    '/www.bilibili.com/video/av'
-  ]
-  if (!urls.some(url => document.URL.includes(url))) {
-    return
-  }
-  const { BatchExtractor } = await import('batch-download')
-  if (await BatchExtractor.test() !== true) {
-    return
-  }
-  const batchExtractor = new BatchExtractor()
-  panel.batch = true
-  panel.episodeList = (await batchExtractor.getItemList()).map((item, index) => {
-    return {
-      aid: item.aid,
-      cid: item.cid,
-      title: item.title,
-      index,
-      checked: true,
-    }
-  })
+  await panel.checkBatch()
 }
 
 export default {

@@ -53,7 +53,7 @@ class VideoEpisodeBatch extends Batch {
     }
     this.itemList = pages.map(page => {
       return {
-        title: `P${page.page} ${page.part}`,
+        title: `P${page.page}  ${page.part}`,
         cid: page.cid,
         aid: unsafeWindow.aid,
       }
@@ -115,7 +115,7 @@ class BangumiBatch extends Batch {
       return {
         aid: it.aid,
         cid: it.cid,
-        title: `${it.title} - ${it.long_title}`,
+        title: `第${it.title}话 ${it.long_title}`,
       }
     })
     return this.itemList
@@ -150,15 +150,6 @@ class BangumiBatch extends Batch {
 }
 const extractors = [BangumiBatch, VideoEpisodeBatch]
 let ExtractorClass = null
-const getExtractor = () => {
-  if (ExtractorClass === null) {
-    logError('[批量下载] 未找到合适的解析模块.')
-    throw new Error(`[Batch Download] module not found.`)
-  }
-  const extractor = new ExtractorClass()
-  extractor.itemFilter = this.itemFilter
-  return extractor
-}
 export class BatchExtractor {
   constructor() {
     this.itemFilter = () => true
@@ -173,18 +164,27 @@ export class BatchExtractor {
     ExtractorClass = null
     return false
   }
+  getExtractor () {
+    if (ExtractorClass === null) {
+      logError('[批量下载] 未找到合适的解析模块.')
+      throw new Error(`[Batch Download] module not found.`)
+    }
+    const extractor = new ExtractorClass()
+    extractor.itemFilter = this.itemFilter
+    return extractor
+  }
   async getItemList () {
-    const extractor = getExtractor()
+    const extractor = this.getExtractor()
     return await extractor.getItemList()
   }
   async collectData (format, toast) {
-    const extractor = getExtractor()
+    const extractor = this.getExtractor()
     const result = await extractor.collectData(format.quality)
     toast.dismiss()
     return result
   }
   async collectAria2 (format, toast, rpc) {
-    const extractor = getExtractor()
+    const extractor = this.getExtractor()
     const result = await extractor.collectAria2(format.quality, rpc)
     toast.dismiss()
     return result

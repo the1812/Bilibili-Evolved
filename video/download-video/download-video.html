@@ -31,7 +31,7 @@
       清晰度
       <v-dropdown v-on:change="formatChange()" v-bind:model="qualityModel"></v-dropdown>
     </div>
-    <div class="option-item">
+    <div v-show="downloadSingle" class="option-item">
       弹幕
       <v-dropdown v-on:change="danmakuOptionChange()" v-bind:model="danmakuModel"></v-dropdown>
     </div>
@@ -49,7 +49,13 @@
     </div>
   </div>
   <div v-show="!downloadSingle" class="batch-download">
-    <h2>选集</h2>
+    <div class="episode-header">
+      <h2>选集</h2>
+      <button class="list-tool" title="全选"></button>
+      <button class="list-tool" title="全不选"></button>
+      <button class="list-tool" title="反选"></button>
+      <span class="selected-count">已选择{{selectedEpisodeCount}}P</span>
+    </div>
     <div class="episode-list">
       <v-checkbox v-for="ep of episodeList" v-bind:key="ep.index" v-bind:model="ep"></v-checkbox>
     </div>
@@ -58,7 +64,7 @@
   <div class="exports">
     <h2>导出</h2>
     <div class="actions">
-      <button class="copy-link" v-on:click="exportData('copyLink')">复制链接</button>
+      <button class="copy-link" v-bind:disabled="downloadSingle ? null : 'disabled'" v-on:click="exportData('copyLink')">复制链接</button>
       <button class="aria2-file" v-on:click="exportData('aria2')">导出aria2</button>
       <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>
       <button class="vld-export" v-on:click="exportData('exportVLD')">导出vld数据</button>

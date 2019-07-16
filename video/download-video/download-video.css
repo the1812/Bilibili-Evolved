@@ -249,9 +249,6 @@ body.dark .download-video .direct-download .progress .foreground {
   flex-grow: 1;
   flex-basis: calc(50% - 16px);
 }
-.download-video .batch-download {
-  height: 232px;
-}
 .download-video i.mdi-alert-circle {
   font-size: 14pt;
   color: #FF9800;
@@ -321,4 +318,19 @@ body.dark .download-video .direct-download .progress .foreground {
 .v-checkbox.checked .mdi-checkbox-marked-circle {
   transform: scale(1);
   transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+.download-video button:disabled {
+  background-color: #0001;
+  color: #8884;
+  cursor: not-allowed;
+}
+.download-video .episode-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.download-video .episode-list {
+  overflow: auto;
+  height: 240px;
 }
