@@ -662,17 +662,7 @@ async function loadPanel() {
       downloading: false,
       batch: false,
     },
-    mounted() {
-      this.formatChange()
-    },
     computed: {
-      title() {
-        if (document.URL.includes('/www.bilibili.com/bangumi/')) {
-          return this.downloadSingle ? getFriendlyTitle(false) : getFriendlyTitle(true)
-        } else {
-          return this.downloadSingle ? getFriendlyTitle(true) : getFriendlyTitle(false)
-        }
-      },
       displaySize() {
         if (typeof this.size === 'string') {
           return this.size
@@ -696,7 +686,19 @@ async function loadPanel() {
         return (this.episodeList as EpisodeItem[]).filter(item => item.checked).length
       },
     },
+    watch: {
+      batch () {
+        this.downloadSingle = this.downloadSingle // Force update title
+      }
+    },
     methods: {
+      title() {
+        if (document.URL.includes('/www.bilibili.com/bangumi/')) {
+          return this.downloadSingle ? getFriendlyTitle(false) : getFriendlyTitle(true)
+        } else {
+          return this.downloadSingle ? getFriendlyTitle(true) : getFriendlyTitle(false)
+        }
+      },
       close() {
         this.$el.classList.remove('opened')
       },
@@ -798,10 +800,14 @@ async function loadPanel() {
           '/www.bilibili.com/video/av'
         ]
         if (!urls.some(url => document.URL.includes(url))) {
+          this.batch = false
+          this.episodeList = []
           return
         }
         const { BatchExtractor } = await import('batch-download')
         if (await BatchExtractor.test() !== true) {
+          this.batch = false
+          this.episodeList = []
           return
         }
         this.batchExtractor = new BatchExtractor()
@@ -859,10 +865,26 @@ async function loadPanel() {
       },
     }
   })
-  const videoInfo = new VideoInfo(parseInt(pageData.aid))
-  await videoInfo.fetchInfo()
-  panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:')
-  await panel.checkBatch()
+  Observer.videoChange(async () => {
+    const canDownload = await loadPageData();
+    (dq('#download-video') as HTMLElement).style.display = canDownload ? 'flex' : 'none'
+    if (!canDownload) {
+      panel.close()
+      return
+    }
+    const videoInfo = new VideoInfo(parseInt(pageData.aid))
+    await videoInfo.fetchInfo()
+    panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:')
+
+    formats = await VideoFormat.availableFormats;
+    [selectedFormat] = formats
+    panel.qualityModel = {
+      value: selectedFormat.displayName,
+      items: formats.map(f => f.displayName)
+    }
+    panel.formatChange()
+    await panel.checkBatch()
+  })
 }
 
 export default {
