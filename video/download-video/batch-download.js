@@ -111,11 +111,11 @@ class BangumiBatch extends Batch {
       Toast.error(`获取番剧数据失败: 无法获取番剧集数列表, message=${json.message}`, '批量下载')
       return ''
     }
-    this.itemList = json.result.main_section.episodes.map(it => {
+    this.itemList = json.result.main_section.episodes.map((it, index) => {
       return {
         aid: it.aid,
         cid: it.cid,
-        title: `第${it.title}话 ${it.long_title}`,
+        title: it.long_title ? `${it.title} - ${it.long_title}` : `${index + 1} - ${it.title}`,
       }
     })
     return this.itemList

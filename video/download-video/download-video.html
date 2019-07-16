@@ -51,10 +51,16 @@
   <div v-show="!downloadSingle" class="batch-download">
     <div class="episode-header">
       <h2>选集</h2>
-      <button class="list-tool" title="全选"></button>
-      <button class="list-tool" title="全不选"></button>
-      <button class="list-tool" title="反选"></button>
-      <span class="selected-count">已选择{{selectedEpisodeCount}}P</span>
+      <button class="list-tool" title="全选" v-on:click="selectAllEpisodes()">
+        <i class="mdi mdi-checkbox-multiple-marked-circle"></i>
+      </button>
+      <button class="list-tool" title="全不选" v-on:click="unselectAllEpisodes()">
+        <i class="mdi mdi-checkbox-multiple-blank-circle-outline"></i>
+      </button>
+      <button class="list-tool" title="反选" v-on:click="inverseAllEpisodes()">
+        <i class="mdi mdi-circle-slice-4"></i>
+      </button>
+      <span class="selected-count">{{selectedEpisodeCount}}/{{episodeList.length}}</span>
     </div>
     <div class="episode-list">
       <v-checkbox v-for="ep of episodeList" v-bind:key="ep.index" v-bind:model="ep"></v-checkbox>

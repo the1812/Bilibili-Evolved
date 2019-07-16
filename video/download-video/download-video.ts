@@ -848,6 +848,15 @@ async function loadPanel() {
           this.downloading = false
         }
       },
+      selectAllEpisodes() {
+        this.episodeList.forEach((item: EpisodeItem) => item.checked = true)
+      },
+      unselectAllEpisodes() {
+        this.episodeList.forEach((item: EpisodeItem) => item.checked = false)
+      },
+      inverseAllEpisodes() {
+        this.episodeList.forEach((item: EpisodeItem) => item.checked = !item.checked)
+      },
     }
   })
   const videoInfo = new VideoInfo(parseInt(pageData.aid))

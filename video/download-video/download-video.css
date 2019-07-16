@@ -42,6 +42,7 @@ body.dark .download-video {
 .download-video,
 .download-video * {
   transition: all .2s ease-out;
+  -webkit-tap-highlight-color: transparent !important;
 }
 .download-video .cover {
   width: 240px;
@@ -333,4 +334,17 @@ body.dark .download-video .direct-download .progress .foreground {
 .download-video .episode-list {
   overflow: auto;
   height: 240px;
+}
+.download-video button.list-tool {
+  padding: 4px;
+  line-height: 1;
+  font-size: 12pt;
+  margin: 0 4px;
+}
+.download-video .episode-header h2 {
+  flex-grow: 1;
+}
+.download-video .selected-count {
+  width: 64px;
+  text-align: right;
 }

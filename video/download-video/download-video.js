@@ -818,6 +818,15 @@ async function loadPanel() {
                     this.downloading = false;
                 }
             },
+            selectAllEpisodes() {
+                this.episodeList.forEach((item) => item.checked = true);
+            },
+            unselectAllEpisodes() {
+                this.episodeList.forEach((item) => item.checked = false);
+            },
+            inverseAllEpisodes() {
+                this.episodeList.forEach((item) => item.checked = !item.checked);
+            },
         }
     });
     const videoInfo = new VideoInfo(parseInt(pageData.aid));
