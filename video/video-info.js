@@ -30,7 +30,7 @@ export class VideoInfo {
         return this;
     }
     async fetchDanmaku() {
-        this.danmaku = new DanmakuInfo(this.cid);
+        this.danmaku = new DanmakuInfo(this.cid.toString());
         return this.danmaku.fetchInfo();
     }
 }

@@ -1,4 +1,4 @@
-import { getFriendlyTitle } from '../title'
+import { getFriendlyTitle, formatTitle } from '../title'
 import { VideoInfo, DanmakuInfo } from '../video-info'
 
 interface PageData {
@@ -236,13 +236,13 @@ class VideoDownloader {
     const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + '\r\n' + it)
     GM_setClipboard(urls, 'text')
   }
-  static downloadBlob(blob: Blob | string, filename: string) {
+  static downloadBlob(blobOrUrl: Blob | string, filename: string) {
     const a = document.createElement('a')
     let url: string
-    if (typeof blob === 'string') {
-      url = blob
+    if (typeof blobOrUrl === 'string') {
+      url = blobOrUrl
     } else {
-      url = URL.createObjectURL(blob)
+      url = URL.createObjectURL(blobOrUrl)
     }
     a.setAttribute('href', url)
     a.setAttribute('download', filename)
@@ -328,7 +328,7 @@ ${it.url}
   }
   async downloadDanmaku() {
     if (this.danmakuOption !== '无') {
-      const danmakuInfo = new DanmakuInfo(parseInt(pageData.cid))
+      const danmakuInfo = new DanmakuInfo(pageData.cid)
       await danmakuInfo.fetchInfo()
       if (this.danmakuOption === 'XML') {
         return danmakuInfo.rawXML
@@ -402,50 +402,6 @@ ${it.url}
     }
   }
 }
-async function checkBatch() {
-  // document.getElementById('video-action-batch-data')!.addEventListener('click', async () => {
-  //   if (!selectedFormat) {
-  //     return
-  //   }
-  //   pageData.entity.closeMenu()
-  //   const toast = Toast.info('获取链接中...', '批量下载')
-  //   const data = await extractor.collectData(selectedFormat, toast)
-  //   if (!data) {
-  //     return
-  //   }
-  //   GM_setClipboard(data, { type: 'text/json' })
-  //   Toast.success('已复制批量数据到剪贴板.', '复制批量数据', 3000)
-  // })
-  // document.getElementById('video-action-batch-download-data')!.addEventListener('click', async () => {
-  //   if (!selectedFormat) {
-  //     return
-  //   }
-  //   pageData.entity.closeMenu()
-  //   const toast = Toast.info('获取链接中...', '批量下载')
-  //   const data = await extractor.collectData(selectedFormat, toast)
-  //   if (!data) {
-  //     return
-  //   }
-
-  //   const blob = new Blob([data], { type: 'text/json' })
-  //   VideoDownloader.downloadBlob(blob, 'export.json')
-  // })
-  // document.getElementById('video-action-aria2-batch')!.addEventListener('click', async () => {
-  //   if (!selectedFormat) {
-  //     return
-  //   }
-  //   pageData.entity.closeMenu()
-  //   const toast = Toast.info('获取链接中...', '批量下载')
-  //   const data = await extractor.collectAria2(selectedFormat, toast)
-  //   if (!data) {
-  //     return
-  //   }
-
-  //   const blob = new Blob([data], { type: 'text/plain' })
-  //   VideoDownloader.downloadBlob(blob, `${getFriendlyTitle(false)}.txt`)
-  // })
-}
-
 async function loadPageData() {
   const aid = await SpinQuery.select(() => (unsafeWindow || window).aid)
   const cid = await SpinQuery.select(() => (unsafeWindow || window).cid)
@@ -468,110 +424,6 @@ async function loadPageData() {
 }
 async function loadWidget() {
   selectedFormat = formats[0]
-  // const loadQualities = async () => {
-  //   const canDownload = await loadPageData();
-  //   (document.querySelector('#download-video') as HTMLElement).style.display = canDownload ? 'flex' : 'none'
-  //   if (canDownload === false) {
-  //     return
-  //   }
-  //   // formats = await VideoFormat.availableFormats;
-
-  //   const list = document.querySelector('ol.video-quality') as HTMLOListElement
-  //   list.childNodes.forEach(list.removeChild)
-  //   formats.forEach(format => {
-  //     const item = document.createElement('li')
-  //     item.innerHTML = format.displayName
-  //     item.addEventListener('click', () => {
-  //       selectedFormat = format
-  //       pageData.entity.nextMenuClass()
-  //     })
-  //     list.insertAdjacentElement('afterbegin', item)
-  //   })
-  // }
-  // Observer.videoChange(loadQualities)
-  // const getVideoInfo = () => selectedFormat!.downloadInfo().catch(error => {
-  //   pageData.entity.addError()
-  //   dq('.video-error')!.innerHTML = error
-  // })
-  // async function download() {
-  //   if (!selectedFormat) {
-  //     return
-  //   }
-  //   pageData.entity.nextMenuClass()
-  //   const info = await getVideoInfo()
-  //   if (!info) {
-  //     return
-  //   }
-  //   info.progress = percent => {
-  //     dq('.download-progress-value')!.innerHTML = `${fixed(percent * 100)}`;
-  //     (dq('.download-progress-foreground') as HTMLDivElement).style.transform = `scaleX(${percent})`
-  //   };
-  //   (dq('.download-progress-cancel>span') as HTMLSpanElement).onclick = () => info.cancelDownload()
-  //   const result = await info.download()
-  //     .catch(error => {
-  //       pageData.entity.addError()
-  //       dq('.video-error')!.innerHTML = error
-  //     })
-  //   if (!result) { // canceled or other errors
-  //     return
-  //   }
-  //   const completeLink = document.getElementById('video-complete') as HTMLAnchorElement
-  //   completeLink.setAttribute('href', result.url)
-  //   completeLink.setAttribute('download', result.filename)
-  //   completeLink.click()
-
-  //   const message = `下载完成. <a class="link" href="${result.url}" download="${result.filename.replace(/"/g, '&quot;')}">再次保存</a>`
-  //   Toast.success(message, '下载视频')
-  //   pageData.entity.closeMenu()
-  // }
-  // async function copyLink() {
-  //   if (!selectedFormat) {
-  //     return
-  //   }
-  //   const info = await getVideoInfo()
-  //   if (!info) {
-  //     return
-  //   }
-  //   info.copyUrl()
-  //   Toast.success('已复制链接到剪贴板.', '复制链接', 3000)
-  //   pageData.entity.closeMenu()
-  // }
-  // dq('#video-action-download')!.addEventListener('click', download)
-  // dq('#video-action-copy')!.addEventListener('click', copyLink)
-  // dq('#video-action-copy-data')!.addEventListener('click', async () => {
-  //   if (!selectedFormat) {
-  //     return
-  //   }
-  //   const info = await getVideoInfo()
-  //   if (!info) {
-  //     return
-  //   }
-  //   info.exportData(true)
-  //   Toast.success('已复制数据到剪贴板.', '复制数据', 3000)
-  //   pageData.entity.closeMenu()
-  // })
-  // dq('#video-action-download-data')!.addEventListener('click', async () => {
-  //   if (!selectedFormat) {
-  //     return
-  //   }
-  //   const info = await getVideoInfo()
-  //   if (!info) {
-  //     return
-  //   }
-  //   info.exportData(false)
-  //   pageData.entity.closeMenu()
-  // })
-  // dq('#video-action-aria2')!.addEventListener('click', async () => {
-  //   if (!selectedFormat) {
-  //     return
-  //   }
-  //   const info = await getVideoInfo()
-  //   if (!info) {
-  //     return
-  //   }
-  //   info.exportAria2(false)
-  //   pageData.entity.closeMenu()
-  // })
   resources.applyStyle('downloadVideoStyle')
   dq('#download-video')!.addEventListener('click', () => {
     dq('.download-video')!.classList.toggle('opened');
@@ -647,6 +499,8 @@ async function loadPanel() {
     data: {
       downloadSingle: true,
       coverUrl: '',
+      title: '',
+      epTitle: '',
       qualityModel: {
         value: selectedFormat!.displayName,
         items: formats.map(f => f.displayName)
@@ -686,19 +540,7 @@ async function loadPanel() {
         return (this.episodeList as EpisodeItem[]).filter(item => item.checked).length
       },
     },
-    watch: {
-      batch () {
-        this.downloadSingle = this.downloadSingle // Force update title
-      }
-    },
     methods: {
-      title() {
-        if (document.URL.includes('/www.bilibili.com/bangumi/')) {
-          return this.downloadSingle ? getFriendlyTitle(false) : getFriendlyTitle(true)
-        } else {
-          return this.downloadSingle ? getFriendlyTitle(true) : getFriendlyTitle(false)
-        }
-      },
       close() {
         this.$el.classList.remove('opened')
       },
@@ -757,18 +599,35 @@ async function loadPanel() {
         }
       },
       async exportBatchData(type: ExportType) {
-        if ((this.episodeList as EpisodeItem[]).every(item => item.checked === false)) {
+        const episodeList = this.episodeList as EpisodeItem[]
+        if (episodeList.every(item => item.checked === false)) {
           Toast.info('请至少选择1集或以上的数量!', '批量导出', 3000)
           return
         }
         const format = this.getFormat()
-        // if (this.danmakuModel.value !== '无') {
-        //   const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
-
-        // }
+        if (this.danmakuModel.value !== '无') {
+          const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
+          const zip = new JSZip()
+          if (this.danmakuModel.value === 'XML') {
+            for (const item of episodeList) {
+              const danmakuInfo = new DanmakuInfo(item.cid)
+              await danmakuInfo.fetchInfo()
+              zip.file(item.title + '.xml', danmakuInfo.rawXML)
+            }
+          } else {
+            const { convertToAss } = await import('../download-danmaku')
+            for (const item of episodeList) {
+              const danmakuInfo = new DanmakuInfo(item.cid)
+              await danmakuInfo.fetchInfo()
+              zip.file(item.title + '.ass', await convertToAss(danmakuInfo.rawXML))
+            }
+          }
+          danmakuToast.dismiss()
+          VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), this.getTitle() + '.danmakus.zip')
+        }
         const toast = Toast.info('获取链接中...', '批量导出')
         const episodeFilter = (item: EpisodeItem) => {
-          const match = this.episodeList.find((it: EpisodeItem) => it.cid === item.cid) as EpisodeItem | undefined
+          const match = episodeList.find((it: EpisodeItem) => it.cid === item.cid) as EpisodeItem | undefined
           if (match === undefined) {
             return false
           }
@@ -779,7 +638,7 @@ async function loadPanel() {
         switch (type) {
           case 'aria2':
             result = await this.batchExtractor.collectAria2(format, toast)
-            VideoDownloader.downloadBlob(result, getFriendlyTitle(false) + '.txt')
+            VideoDownloader.downloadBlob(new Blob([result], { type: 'text/plain' }), getFriendlyTitle(false) + '.txt')
             return
           case 'copyVLD':
             GM_setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
@@ -787,7 +646,7 @@ async function loadPanel() {
             return
           case 'exportVLD':
             result = await this.batchExtractor.collectData(format, toast)
-            VideoDownloader.downloadBlob(result, getFriendlyTitle(false) + '.json')
+            VideoDownloader.downloadBlob(new Blob([result], { type: 'text/json' }), getFriendlyTitle(false) + '.json')
             return
           default:
             toast.dismiss()
@@ -865,14 +724,18 @@ async function loadPanel() {
       },
     }
   })
+
   Observer.videoChange(async () => {
+    panel.close()
+    panel.batch = false
+    panel.downloadSingle = true
+    const button = dq('#download-video') as HTMLElement
     const canDownload = await loadPageData();
-    (dq('#download-video') as HTMLElement).style.display = canDownload ? 'flex' : 'none'
+    button.style.display = canDownload ? 'flex' : 'none'
     if (!canDownload) {
-      panel.close()
       return
     }
-    const videoInfo = new VideoInfo(parseInt(pageData.aid))
+    const videoInfo = new VideoInfo(pageData.aid)
     await videoInfo.fetchInfo()
     panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:')
 
@@ -882,8 +745,27 @@ async function loadPanel() {
       value: selectedFormat.displayName,
       items: formats.map(f => f.displayName)
     }
-    panel.formatChange()
+    panel.formatChange();
+    (async () => {
+      await SpinQuery.condition(
+        () => document.querySelector('.video-toolbar .ops .coin,.tool-bar .coin-info'),
+        it => {
+          return it !== null && (it as HTMLElement).innerText !== '--'
+        })
+      panel.title = formatTitle('[title]', false)
+      SpinQuery.select('#eplist_module li.cursor').then(li => {
+        if (li !== null) {
+          panel.epTitle = ' - ' + li.innerText
+        }
+      })
+      SpinQuery.select('#multi_page .cur-list>ul li.on a').then(a => {
+        if (a !== null) {
+          panel.epTitle = ' - ' + a.getAttribute('title')!
+        }
+      })
+    })()
     await panel.checkBatch()
+
   })
 }
 

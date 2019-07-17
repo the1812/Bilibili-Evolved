@@ -85,6 +85,7 @@ declare global
     interface Window {
         aid: string | undefined
         cid: string | undefined
+        pageno: string | number | undefined
     }
     class SpinQuery
     {
@@ -304,6 +305,7 @@ declare global
     function downloadText(url: string): Promise<string>;
     function raiseEvent(element: Element, eventName: string): void;
     function loadLazyPanel(selector: string): Promise<void>;
+    function loadDanmakuSettingsPanel(): Promise<void>;
     function contentLoaded(callback: () => void): void;
     function fullyLoaded(callback: () => void): void;
     function fixed(number: number, precision?: number): string;

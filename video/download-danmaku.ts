@@ -6,7 +6,7 @@ export async function convertToAss(xml: string) {
   const title = getFriendlyTitle()
   let config: any = { title }
   try {
-    await loadLazyPanel('.bilibili-player-video-danmaku-setting')
+    await loadDanmakuSettingsPanel()
     const getSliderIndex = (selector: string) => {
       const transform = parseFloat((dq(selector) as HTMLElement).style.transform!.replace(/translateX\(([\d\.]+)/, '$1')) as 0 | 44 | 94 | 144 | 188
       const index = {
@@ -89,7 +89,7 @@ export async function convertToAss(xml: string) {
 }
 export async function downloadDanmaku(ass: boolean, timeout: number | undefined) {
   const title = getFriendlyTitle()
-  const danmaku = new DanmakuInfo(parseInt((unsafeWindow || window).cid!))
+  const danmaku = new DanmakuInfo((unsafeWindow || window).cid!)
   await danmaku.fetchInfo()
   const blob = await (async () => {
     if (ass === true) {

@@ -49,7 +49,7 @@ class ImageViewer {
     this.viewer.classList.remove("opened");
   }
   get filename () {
-    return getFriendlyTitle(!document.URL.includes('/www.bilibili.com/bangumi/')) + this.url.substring(this.url.lastIndexOf("."));
+    return getFriendlyTitle(document.URL.includes('/www.bilibili.com/bangumi/')) + this.url.substring(this.url.lastIndexOf("."));
   }
 }
 

@@ -1,5 +1,5 @@
 export class VideoInfo {
-  aid: number
+  aid: string
   cid: number
   pageCount: number
   coverUrl: string
@@ -19,7 +19,7 @@ export class VideoInfo {
   }[]
   danmaku: DanmakuInfo
 
-  constructor(aid: number) {
+  constructor(aid: string) {
     this.aid = aid
   }
   async fetchInfo() {
@@ -50,7 +50,7 @@ export class VideoInfo {
     return this
   }
   async fetchDanmaku() {
-    this.danmaku = new DanmakuInfo(this.cid)
+    this.danmaku = new DanmakuInfo(this.cid.toString())
     return this.danmaku.fetchInfo()
   }
 }
@@ -63,11 +63,11 @@ export class Danmaku {
   }
 }
 export class DanmakuInfo {
-  cid: number
+  cid: string
   rawXML: string
   xml: HTMLElement
   danmakus: Danmaku[]
-  constructor(cid: number) {
+  constructor(cid: string) {
     this.cid = cid
   }
   async fetchInfo() {

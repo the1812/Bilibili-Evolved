@@ -19,6 +19,13 @@ export async function loadLazyPanel (selector) {
   }
   panel.mouseover().mouseout()
 }
+export async function loadDanmakuSettingsPanel () {
+  const style = document.createElement('style')
+  style.innerText = `.bilibili-player-video-danmaku-setting-wrap { display: none !important; }`
+  document.body.insertAdjacentElement('beforeend', style)
+  await loadLazyPanel('.bilibili-player-video-danmaku-setting')
+  setTimeout(() => style.remove(), 300)
+}
 export function contentLoaded (callback) {
   if (/complete|interactive|loaded/.test(document.readyState)) {
     callback()

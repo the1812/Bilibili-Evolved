@@ -13,7 +13,8 @@
   <div class="info">
     <img v-show="downloadSingle" v-bind:src="coverUrl" class="cover">
     <div class="title">
-      <span class="bold" v-bind:title="title()">{{title()}}</span>
+      <span v-if="downloadSingle" class="bold" v-bind:title="title + epTitle">{{title}}{{epTitle}}</span>
+      <span v-else class="bold" v-bind:title="title">{{title}}</span>
       <span v-show="downloadSingle" class="size">
         <div v-if="sizeWarning" class="size-warning">
           <i class="mdi mdi-alert-circle"></i>
@@ -31,7 +32,7 @@
       清晰度
       <v-dropdown v-on:change="formatChange()" v-bind:model="qualityModel"></v-dropdown>
     </div>
-    <div v-show="downloadSingle" class="option-item">
+    <div class="option-item">
       弹幕
       <v-dropdown v-on:change="danmakuOptionChange()" v-bind:model="danmakuModel"></v-dropdown>
     </div>

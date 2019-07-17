@@ -53,7 +53,7 @@ class VideoEpisodeBatch extends Batch {
     }
     this.itemList = pages.map(page => {
       return {
-        title: `P${page.page}  ${page.part}`,
+        title: `P${page.page} ${page.part}`,
         cid: page.cid,
         aid: unsafeWindow.aid,
       }
