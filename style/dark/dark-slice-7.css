@@ -128,7 +128,6 @@
 .live-category .category,
 .customize-wrp .customize-tab,
 .advice-dialog-wrapper,
-.r-con .members-info__container,
 .home-pc .application,
 .enter-failure .bl-button--primary:disabled,
 .enter-failure .link-input,
@@ -144,12 +143,6 @@
 .ui-widget-content
 {
     background-color: #444 !important;
-}
-.r-con .members-info__header,
-.r-con .members-info .up-card .attention--not,
-.r-con .members-info .up-card .attention
-{
-    background-color: #555 !important;
 }
 .follow-main .list-item:hover
 {
