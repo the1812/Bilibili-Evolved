@@ -867,11 +867,18 @@ class WatchlaterList extends VideoList {
       listName: "watchlater",
       listMap: json => {
         return json.data.list.slice(0, 6).map(item => {
-          const pages = item.pages.map(it => it.cid);
-          const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1;
-          const href = settings.watchLaterRedirect ?
-            `https://www.bilibili.com/video/av${item.aid}?p=${page}` :
-            `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`;
+          const href = (() => {
+            if (item.pages === undefined) {
+              return settings.watchLaterRedirect ?
+                `https://www.bilibili.com/video/av${item.aid}` :
+                `https://www.bilibili.com/watchlater/#/av${item.aid}`;
+            }
+            const pages = item.pages.map(it => it.cid);
+            const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1;
+            return settings.watchLaterRedirect ?
+              `https://www.bilibili.com/video/av${item.aid}?p=${page}` :
+              `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`;
+          })();
           return /*html*/`<li><a target="_blank" href="${href}">${item.title}</a></li>`;
         });
       },

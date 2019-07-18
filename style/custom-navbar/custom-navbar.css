@@ -81,6 +81,7 @@ body.no-banner .z-top-container.has-banner>.header,
 .bili-header-m>#banner_link .search,
 li.nav-item[report-id='playpage_dynamic'] iframe,
 li.nav-item[report-id='playpage_dynamic'] .i-frame,
+.z-top-container>.header .search,
 .i_menu_login
 {
     display: none !important;
