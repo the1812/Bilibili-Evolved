@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.8.9
+// @version      1.8.10
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2228,7 +2228,6 @@ class ResourceManager {
 try {
   Vue.config.productionTip = false
   Vue.config.devtools = false
-  document.body.classList.add('round-corner')
   setupAjaxHook()
   const events = {}
   for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
@@ -2257,6 +2256,9 @@ try {
         return new Promise((resolve) => this.subscribe(type, () => resolve()))
       }
     }
+  })
+  contentLoaded(() => {
+    document.body.classList.add('round-corner')
   })
   loadResources()
   loadSettings()

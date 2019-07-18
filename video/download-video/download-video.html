@@ -13,7 +13,7 @@
   <div class="info">
     <img v-show="downloadSingle" v-bind:src="coverUrl" class="cover">
     <div class="title">
-      <span class="bold" v-bind:title="title">{{title}}</span>
+      <!-- <span class="bold" v-bind:title="'av' + aid + ' / cid' + cid">av{{aid}} / cid{{cid}}</span> -->
       <span v-show="downloadSingle" class="size">
         <div v-if="sizeWarning" class="size-warning">
           <i class="mdi mdi-alert-circle"></i>

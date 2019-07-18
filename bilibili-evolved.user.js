@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.8.9
+// @version      1.8.10
 // @description  增强哔哩哔哩Web端体验: 下载视频, 音乐, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 自定义顶栏, 删除广告, 使用夜间模式; 以及增加对触屏设备的支持等.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2228,7 +2228,6 @@ class ResourceManager {
 try {
   Vue.config.productionTip = false
   Vue.config.devtools = false
-  document.body.classList.add('round-corner')
   setupAjaxHook()
   const events = {}
   for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
@@ -2257,6 +2256,9 @@ try {
         return new Promise((resolve) => this.subscribe(type, () => resolve()))
       }
     }
+  })
+  contentLoaded(() => {
+    document.body.classList.add('round-corner')
   })
   loadResources()
   loadSettings()
