@@ -23,148 +23,124 @@
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
-import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed } from './utils';
-import { settings, loadSettings, saveSettings, onSettingsChange, settingsChangeHandlers } from './settings';
-import { Ajax, setupAjaxHook } from './ajax';
-import { loadResources } from './resource-loader';
-import { Toast } from './toast-holder';
-import { DoubleClickEvent } from './double-click-event';
-import { Observer } from './observer';
-import { SpinQuery } from './spin-query';
-import { ColorProcessor } from './color-processor';
+import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed } from './utils'
+import { settings, loadSettings, saveSettings, onSettingsChange, settingsChangeHandlers } from './settings'
+import { Ajax, setupAjaxHook } from './ajax'
+import { loadResources } from './resource-loader'
+import { Toast } from './toast-holder'
+import { DoubleClickEvent } from './double-click-event'
+import { Observer } from './observer'
+import { SpinQuery } from './spin-query'
+import { ColorProcessor } from './color-processor'
 // [Offline build placeholder]
-import { ResourceType } from './resource-type';
-import { Resource } from './resource';
-import { resourceManifest } from './resource-manifest';
-import { StyleManager } from './style-manager';
-import { ResourceManager } from './resource-manager';
+import { ResourceType } from './resource-type'
+import { Resource } from './resource'
+import { resourceManifest } from './resource-manifest'
+import { StyleManager } from './style-manager'
+import { ResourceManager } from './resource-manager'
 
-try
-{
-    Vue.config.productionTip = false;
-    Vue.config.devtools = false;
-    setupAjaxHook();
-    const events = {};
-    for (const name of ["init", "styleLoaded", "scriptLoaded"])
-    {
-        events[name] = {
-            completed: false,
-            subscribers: [],
-            complete()
-            {
-                this.completed = true;
-                this.subscribers.forEach(it => it());
-            },
-        };
+try {
+  Vue.config.productionTip = false
+  Vue.config.devtools = false
+  document.body.classList.add('round-corner')
+  setupAjaxHook()
+  const events = {}
+  for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
+    events[name] = {
+      completed: false,
+      subscribers: [],
+      complete () {
+        this.completed = true
+        this.subscribers.forEach(it => it())
+      }
     }
-    if (unsafeWindow.bilibiliEvolved === undefined)
-    {
-        unsafeWindow.bilibiliEvolved = { addons: [] };
+  }
+  if (unsafeWindow.bilibiliEvolved === undefined) {
+    unsafeWindow.bilibiliEvolved = { addons: [] }
+  }
+  Object.assign(unsafeWindow.bilibiliEvolved, {
+    subscribe (type, callback) {
+      const event = events[type]
+      if (callback) {
+        if (event && !event.completed) {
+          event.subscribers.push(callback)
+        } else {
+          callback()
+        }
+      } else {
+        return new Promise((resolve) => this.subscribe(type, () => resolve()))
+      }
     }
-    Object.assign(unsafeWindow.bilibiliEvolved, {
-        subscribe(type, callback)
-        {
-            const event = events[type];
-            if (callback)
-            {
-                if (event && !event.completed)
-                {
-                    event.subscribers.push(callback);
-                }
-                else
-                {
-                    callback();
-                }
-            }
-            else
-            {
-                return new Promise((resolve) => this.subscribe(type, () => resolve()));
-            }
-        },
-    });
-    loadResources();
-    loadSettings();
-    const resources = new ResourceManager();
-    events.init.complete();
-    resources.styleManager.prefetchStyles();
-    events.styleLoaded.complete();
+  })
+  loadResources()
+  loadSettings()
+  const resources = new ResourceManager()
+  events.init.complete()
+  resources.styleManager.prefetchStyles()
+  events.styleLoaded.complete()
 
-    Object.assign(unsafeWindow.bilibiliEvolved, {
-        SpinQuery,
-        Toast,
-        Observer,
-        DoubleClickEvent,
-        ColorProcessor,
-        StyleManager,
-        ResourceManager,
-        Resource,
-        ResourceType,
-        Ajax,
-        resourceManifest,
-        loadSettings,
-        saveSettings,
-        onSettingsChange,
-        logError,
-        raiseEvent,
-        loadLazyPanel,
-        contentLoaded,
-        fixed,
-        settings,
-        settingsChangeHandlers,
-        addSettingsListener,
-        removeSettingsListener,
-        isEmbeddedPlayer,
-        isIframe,
-        resources,
-        theWorld: waitTime =>
-        {
-            if (waitTime > 0)
-            {
-                setTimeout(() => { debugger; }, waitTime);
-            }
-            else
-            {
-                debugger;
-            }
+  Object.assign(unsafeWindow.bilibiliEvolved, {
+    SpinQuery,
+    Toast,
+    Observer,
+    DoubleClickEvent,
+    ColorProcessor,
+    StyleManager,
+    ResourceManager,
+    Resource,
+    ResourceType,
+    Ajax,
+    resourceManifest,
+    loadSettings,
+    saveSettings,
+    onSettingsChange,
+    logError,
+    raiseEvent,
+    loadLazyPanel,
+    contentLoaded,
+    fixed,
+    settings,
+    settingsChangeHandlers,
+    addSettingsListener,
+    removeSettingsListener,
+    isEmbeddedPlayer,
+    isIframe,
+    resources,
+    theWorld: waitTime => {
+      if (waitTime > 0) {
+        setTimeout(() => { debugger }, waitTime)
+      } else {
+        debugger
+      }
+    },
+    monkeyInfo: GM_info,
+    monkeyApis: {
+      getValue: GM_getValue,
+      setValue: GM_setValue,
+      setClipboard: GM_setClipboard,
+      addValueChangeListener: () => console.warn('此功能已弃用.')
+    }
+  })
+  const applyScripts = () => resources.fetch()
+    .then(() => {
+      events.scriptLoaded.complete()
+      const addons = new Proxy(unsafeWindow.bilibiliEvolved.addons || [], {
+        apply: function (target, thisArg, argumentsList) {
+          return thisArg[target].apply(this, argumentsList)
         },
-        monkeyInfo: GM_info,
-        monkeyApis: {
-            getValue: GM_getValue,
-            setValue: GM_setValue,
-            setClipboard: GM_setClipboard,
-            addValueChangeListener: () => console.warn("此功能已弃用."),
-        },
-    });
-    const applyScripts = () => resources.fetch()
-        .then(() =>
-        {
-            events.scriptLoaded.complete();
-            const addons = new Proxy(unsafeWindow.bilibiliEvolved.addons || [], {
-                apply: function (target, thisArg, argumentsList)
-                {
-                    return thisArg[target].apply(this, argumentsList);
-                },
-                deleteProperty: function (target, property)
-                {
-                    return true;
-                },
-                set: function (target, property, value)
-                {
-                    if (target[property] === undefined)
-                    {
-                        resources.applyWidget(value);
-                    }
-                    target[property] = value;
-                    return true;
-                }
-            });
-            addons.forEach(it => resources.applyWidget(it));
-            Object.assign(unsafeWindow.bilibiliEvolved, { addons });
-        })
-        .catch(error => logError(error));
-    contentLoaded(applyScripts);
-}
-catch (error)
-{
-    logError(error);
+        set: function (target, property, value) {
+          if (target[property] === undefined) {
+            resources.applyWidget(value)
+          }
+          target[property] = value
+          return true
+        }
+      })
+      addons.forEach(it => resources.applyWidget(it))
+      Object.assign(unsafeWindow.bilibiliEvolved, { addons })
+    })
+    .catch(error => logError(error))
+  contentLoaded(applyScripts)
+} catch (error) {
+  logError(error)
 }

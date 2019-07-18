@@ -473,7 +473,7 @@ async function loadPanel() {
         data: {
             downloadSingle: true,
             coverUrl: '',
-            aid: pageData.aid,
+            title: `av${pageData.aid} / cid${pageData.cid}`,
             qualityModel: {
                 value: selectedFormat.displayName,
                 items: formats.map(f => f.displayName)
@@ -728,7 +728,7 @@ async function loadPanel() {
         if (!canDownload) {
             return;
         }
-        panel.aid = pageData.aid;
+        panel.title = `av${pageData.aid} / cid${pageData.cid}`;
         const videoInfo = new VideoInfo(pageData.aid);
         await videoInfo.fetchInfo();
         panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:');

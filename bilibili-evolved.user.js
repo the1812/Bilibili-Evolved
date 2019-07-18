@@ -104,7 +104,7 @@ function getI18nKey () {
 const dq = (selector) => document.querySelector(selector)
 const dqa = (selector) => [...document.querySelectorAll(selector)]
 const UserAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0`
-;
+
 const customNavbarDefaultOrders = {
   blank1: 0,
   logo: 1,
@@ -322,7 +322,7 @@ function saveSettings (newSettings) {
 function onSettingsChange () {
   console.warn('此功能已弃用.')
 }
-;
+
 class Ajax
 {
     static send(xhr, body, text = true)
@@ -470,7 +470,7 @@ function downloadText(url, load, error) // The old method for compatibility
             xhr.send();
         });
     }
-};
+}
 function loadResources () {
   Resource.root = 'https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/'
   Resource.all = {}
@@ -548,7 +548,7 @@ function loadResources () {
     }
   }
 }
-;
+
 // Placeholder class for Toast
 class Toast
 {
@@ -559,7 +559,7 @@ class Toast
     static info() { }
     static success() { }
     static error() { }
-};
+}
 class DoubleClickEvent
 {
     constructor(handler, singleClickHandler = null)
@@ -607,7 +607,7 @@ class DoubleClickEvent
         this.elements.splice(index, 1);
         element.removeEventListener("click", this.doubleClickHandler);
     }
-};
+}
 let cidHooked = false
 const videoChangeCallbacks = []
 class Observer {
@@ -708,7 +708,7 @@ class Observer {
     videoChangeCallbacks.push(callback)
   }
 }
-;
+
 class SpinQuery {
   constructor (query, condition, action, failed) {
     this.maxRetry = 15
@@ -771,7 +771,7 @@ class SpinQuery {
     return SpinQuery.condition(() => unsafeWindow.$, jquery => jquery !== undefined, action, failed)
   }
 }
-;
+
 class ColorProcessor
 {
     constructor(hex)
@@ -944,7 +944,7 @@ class ColorProcessor
     {
         return this.foreground === "#000" ? "invert(0)" : "invert(1)";
     }
-};
+}
 // [Offline build placeholder]
 class ResourceType
 {
@@ -996,7 +996,7 @@ class ResourceType
     {
         return new ResourceType("unknown");
     }
-};
+}
 class Resource
 {
     get downloaded()
@@ -1192,7 +1192,7 @@ class Resource
             }
         }
     }
-};
+}
 Resource.manifest = {
   style: {
     path: 'style.min.css'
@@ -1842,7 +1842,7 @@ Resource.manifest = {
   },
 }
 const resourceManifest = Resource.manifest
-;
+
 class StyleManager
 {
     constructor(resources)
@@ -1942,7 +1942,7 @@ class StyleManager
             }
         }
     }
-};
+}
 class ResourceManager {
   constructor () {
     this.data = Resource.all
@@ -2223,134 +2223,110 @@ class ResourceManager {
     return true // Has cache
   }
 }
-;
 
-try
-{
-    Vue.config.productionTip = false;
-    Vue.config.devtools = false;
-    setupAjaxHook();
-    const events = {};
-    for (const name of ["init", "styleLoaded", "scriptLoaded"])
-    {
-        events[name] = {
-            completed: false,
-            subscribers: [],
-            complete()
-            {
-                this.completed = true;
-                this.subscribers.forEach(it => it());
-            },
-        };
-    }
-    if (unsafeWindow.bilibiliEvolved === undefined)
-    {
-        unsafeWindow.bilibiliEvolved = { addons: [] };
-    }
-    Object.assign(unsafeWindow.bilibiliEvolved, {
-        subscribe(type, callback)
-        {
-            const event = events[type];
-            if (callback)
-            {
-                if (event && !event.completed)
-                {
-                    event.subscribers.push(callback);
-                }
-                else
-                {
-                    callback();
-                }
-            }
-            else
-            {
-                return new Promise((resolve) => this.subscribe(type, () => resolve()));
-            }
-        },
-    });
-    loadResources();
-    loadSettings();
-    const resources = new ResourceManager();
-    events.init.complete();
-    resources.styleManager.prefetchStyles();
-    events.styleLoaded.complete();
 
-    Object.assign(unsafeWindow.bilibiliEvolved, {
-        SpinQuery,
-        Toast,
-        Observer,
-        DoubleClickEvent,
-        ColorProcessor,
-        StyleManager,
-        ResourceManager,
-        Resource,
-        ResourceType,
-        Ajax,
-        resourceManifest,
-        loadSettings,
-        saveSettings,
-        onSettingsChange,
-        logError,
-        raiseEvent,
-        loadLazyPanel,
-        contentLoaded,
-        fixed,
-        settings,
-        settingsChangeHandlers,
-        addSettingsListener,
-        removeSettingsListener,
-        isEmbeddedPlayer,
-        isIframe,
-        resources,
-        theWorld: waitTime =>
-        {
-            if (waitTime > 0)
-            {
-                setTimeout(() => { debugger; }, waitTime);
-            }
-            else
-            {
-                debugger;
-            }
+try {
+  Vue.config.productionTip = false
+  Vue.config.devtools = false
+  document.body.classList.add('round-corner')
+  setupAjaxHook()
+  const events = {}
+  for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
+    events[name] = {
+      completed: false,
+      subscribers: [],
+      complete () {
+        this.completed = true
+        this.subscribers.forEach(it => it())
+      }
+    }
+  }
+  if (unsafeWindow.bilibiliEvolved === undefined) {
+    unsafeWindow.bilibiliEvolved = { addons: [] }
+  }
+  Object.assign(unsafeWindow.bilibiliEvolved, {
+    subscribe (type, callback) {
+      const event = events[type]
+      if (callback) {
+        if (event && !event.completed) {
+          event.subscribers.push(callback)
+        } else {
+          callback()
+        }
+      } else {
+        return new Promise((resolve) => this.subscribe(type, () => resolve()))
+      }
+    }
+  })
+  loadResources()
+  loadSettings()
+  const resources = new ResourceManager()
+  events.init.complete()
+  resources.styleManager.prefetchStyles()
+  events.styleLoaded.complete()
+
+  Object.assign(unsafeWindow.bilibiliEvolved, {
+    SpinQuery,
+    Toast,
+    Observer,
+    DoubleClickEvent,
+    ColorProcessor,
+    StyleManager,
+    ResourceManager,
+    Resource,
+    ResourceType,
+    Ajax,
+    resourceManifest,
+    loadSettings,
+    saveSettings,
+    onSettingsChange,
+    logError,
+    raiseEvent,
+    loadLazyPanel,
+    contentLoaded,
+    fixed,
+    settings,
+    settingsChangeHandlers,
+    addSettingsListener,
+    removeSettingsListener,
+    isEmbeddedPlayer,
+    isIframe,
+    resources,
+    theWorld: waitTime => {
+      if (waitTime > 0) {
+        setTimeout(() => { debugger }, waitTime)
+      } else {
+        debugger
+      }
+    },
+    monkeyInfo: GM_info,
+    monkeyApis: {
+      getValue: GM_getValue,
+      setValue: GM_setValue,
+      setClipboard: GM_setClipboard,
+      addValueChangeListener: () => console.warn('此功能已弃用.')
+    }
+  })
+  const applyScripts = () => resources.fetch()
+    .then(() => {
+      events.scriptLoaded.complete()
+      const addons = new Proxy(unsafeWindow.bilibiliEvolved.addons || [], {
+        apply: function (target, thisArg, argumentsList) {
+          return thisArg[target].apply(this, argumentsList)
         },
-        monkeyInfo: GM_info,
-        monkeyApis: {
-            getValue: GM_getValue,
-            setValue: GM_setValue,
-            setClipboard: GM_setClipboard,
-            addValueChangeListener: () => console.warn("此功能已弃用."),
-        },
-    });
-    const applyScripts = () => resources.fetch()
-        .then(() =>
-        {
-            events.scriptLoaded.complete();
-            const addons = new Proxy(unsafeWindow.bilibiliEvolved.addons || [], {
-                apply: function (target, thisArg, argumentsList)
-                {
-                    return thisArg[target].apply(this, argumentsList);
-                },
-                deleteProperty: function (target, property)
-                {
-                    return true;
-                },
-                set: function (target, property, value)
-                {
-                    if (target[property] === undefined)
-                    {
-                        resources.applyWidget(value);
-                    }
-                    target[property] = value;
-                    return true;
-                }
-            });
-            addons.forEach(it => resources.applyWidget(it));
-            Object.assign(unsafeWindow.bilibiliEvolved, { addons });
-        })
-        .catch(error => logError(error));
-    contentLoaded(applyScripts);
-}
-catch (error)
-{
-    logError(error);
+        set: function (target, property, value) {
+          if (target[property] === undefined) {
+            resources.applyWidget(value)
+          }
+          target[property] = value
+          return true
+        }
+      })
+      addons.forEach(it => resources.applyWidget(it))
+      Object.assign(unsafeWindow.bilibiliEvolved, { addons })
+    })
+    .catch(error => logError(error))
+  contentLoaded(applyScripts)
+} catch (error) {
+  logError(error)
 }
