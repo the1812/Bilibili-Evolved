@@ -666,7 +666,12 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .theme-button
 {
     background: var(--theme-color);
-    color: var(--foreground-color);
+    color: var(--foreground-color) !important;
+}
+.custom-navbar .theme-button:hover
+{
+    background: var(--theme-color-90);
+    color: var(--foreground-color) !important;
 }
 .custom-navbar li:hover .user-face,
 .custom-navbar li:hover .user-pendant
