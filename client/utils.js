@@ -1,10 +1,14 @@
-export function logError (message) {
-  if (settings.toastInternalError) {
-    Toast.error(typeof message === 'object' && 'stack' in message
-      ? message.stack
-      : message, '错误')
+export function logError (error) {
+  let finalMessage = error
+  if (typeof error === 'object' && 'stack' in error) {
+    if (settings.toastInternalError) {
+      finalMessage = `${error.message}\n${error.stack}`
+    } else {
+      finalMessage = error.message
+    }
   }
-  console.error(message)
+  Toast.error(finalMessage, '错误')
+  console.error(error)
 }
 export function raiseEvent (element, eventName) {
   const event = document.createEvent('HTMLEvents')

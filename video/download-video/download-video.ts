@@ -576,25 +576,29 @@ async function loadPanel() {
           return
         }
         const format = this.getFormat() as VideoFormat
-        const videoDownloader = await format.downloadInfo()
-        videoDownloader.danmakuOption = this.danmakuModel.value
-        switch (type) {
-          case 'copyLink':
-            videoDownloader.copyUrl()
-            Toast.success('已复制链接到剪贴板.', '下载视频', 3000)
-            break
-          case 'aria2':
-            videoDownloader.exportAria2(false)
-            break
-          case 'copyVLD':
-            videoDownloader.exportData(true)
-            Toast.success('已复制VLD数据到剪贴板.', '下载视频', 3000)
-            break
-          case 'exportVLD':
-            videoDownloader.exportData(false)
-            break
-          default:
-            break
+        try {
+          const videoDownloader = await format.downloadInfo()
+          videoDownloader.danmakuOption = this.danmakuModel.value
+          switch (type) {
+            case 'copyLink':
+              videoDownloader.copyUrl()
+              Toast.success('已复制链接到剪贴板.', '下载视频', 3000)
+              break
+            case 'aria2':
+              videoDownloader.exportAria2(false)
+              break
+            case 'copyVLD':
+              videoDownloader.exportData(true)
+              Toast.success('已复制VLD数据到剪贴板.', '下载视频', 3000)
+              break
+            case 'exportVLD':
+              videoDownloader.exportData(false)
+              break
+            default:
+              break
+          }
+        } catch (error) {
+          logError(error)
         }
       },
       async exportBatchData(type: ExportType) {
@@ -607,22 +611,27 @@ async function loadPanel() {
         if (this.danmakuModel.value !== '无') {
           const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
           const zip = new JSZip()
-          if (this.danmakuModel.value === 'XML') {
-            for (const item of episodeList) {
-              const danmakuInfo = new DanmakuInfo(item.cid)
-              await danmakuInfo.fetchInfo()
-              zip.file(item.title + '.xml', danmakuInfo.rawXML)
+          try {
+            if (this.danmakuModel.value === 'XML') {
+              for (const item of episodeList) {
+                const danmakuInfo = new DanmakuInfo(item.cid)
+                await danmakuInfo.fetchInfo()
+                zip.file(item.title + '.xml', danmakuInfo.rawXML)
+              }
+            } else {
+              const { convertToAss } = await import('../download-danmaku')
+              for (const item of episodeList) {
+                const danmakuInfo = new DanmakuInfo(item.cid)
+                await danmakuInfo.fetchInfo()
+                zip.file(item.title + '.ass', await convertToAss(danmakuInfo.rawXML))
+              }
             }
-          } else {
-            const { convertToAss } = await import('../download-danmaku')
-            for (const item of episodeList) {
-              const danmakuInfo = new DanmakuInfo(item.cid)
-              await danmakuInfo.fetchInfo()
-              zip.file(item.title + '.ass', await convertToAss(danmakuInfo.rawXML))
-            }
+            VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), this.getTitle() + '.danmakus.zip')
+          } catch (error) {
+            logError(error)
+          } finally {
+            danmakuToast.dismiss()
           }
-          danmakuToast.dismiss()
-          VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), this.getTitle() + '.danmakus.zip')
         }
         const toast = Toast.info('获取链接中...', '批量导出')
         const episodeFilter = (item: EpisodeItem) => {
@@ -634,22 +643,27 @@ async function loadPanel() {
         }
         this.batchExtractor.itemFilter = episodeFilter
         let result: string
-        switch (type) {
-          case 'aria2':
-            result = await this.batchExtractor.collectAria2(format, toast)
-            VideoDownloader.downloadBlob(new Blob([result], { type: 'text/plain' }), getFriendlyTitle(false) + '.txt')
-            return
-          case 'copyVLD':
-            GM_setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
-            Toast.success('已复制批量vld数据到剪贴板.', '批量导出', 3000)
-            return
-          case 'exportVLD':
-            result = await this.batchExtractor.collectData(format, toast)
-            VideoDownloader.downloadBlob(new Blob([result], { type: 'text/json' }), getFriendlyTitle(false) + '.json')
-            return
-          default:
-            toast.dismiss()
-            return
+        try {
+          switch (type) {
+            case 'aria2':
+              result = await this.batchExtractor.collectAria2(format, toast)
+              VideoDownloader.downloadBlob(new Blob([result], { type: 'text/plain' }), getFriendlyTitle(false) + '.txt')
+              return
+            case 'copyVLD':
+              GM_setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
+              Toast.success('已复制批量vld数据到剪贴板.', '批量导出', 3000)
+              return
+            case 'exportVLD':
+              result = await this.batchExtractor.collectData(format, toast)
+              VideoDownloader.downloadBlob(new Blob([result], { type: 'text/json' }), getFriendlyTitle(false) + '.json')
+              return
+            default:
+              return
+          }
+        } catch (error) {
+          logError(error)
+        } finally {
+          toast.dismiss()
         }
       },
       async checkBatch() {

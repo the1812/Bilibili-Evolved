@@ -23,13 +23,17 @@
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo.png
 // ==/UserScript==
-function logError (message) {
-  if (settings.toastInternalError) {
-    Toast.error(typeof message === 'object' && 'stack' in message
-      ? message.stack
-      : message, '错误')
+function logError (error) {
+  let finalMessage = error
+  if (typeof error === 'object' && 'stack' in error) {
+    if (settings.toastInternalError) {
+      finalMessage = `${error.message}\n${error.stack}`
+    } else {
+      finalMessage = error.message
+    }
   }
-  console.error(message)
+  Toast.error(finalMessage, '错误')
+  console.error(error)
 }
 function raiseEvent (element, eventName) {
   const event = document.createEvent('HTMLEvents')
