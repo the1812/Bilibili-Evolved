@@ -27,7 +27,8 @@
 .comic-info-component .page-normal .comic-info-con .comic-des,
 .comic-info-component .page-normal .comic-info-con,
 .dropdown__content .dropdown__item:hover,
-.dropdown__content .dropdown__active
+.dropdown__content .dropdown__active,
+.r-con .members-info__container
 {
     background-color: #333 !important;
 }
@@ -69,7 +70,10 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .article-type,
 .list-header .filter-wrp .filter-level,
 .list-header .filter-wrp .video-type,
-.tabs-nav .tab-item.full
+.tabs-nav .tab-item.full,
+.r-con .members-info__header,
+.r-con .members-info .up-card .attention--not,
+.r-con .members-info .up-card .attention
 {
     background-color: #444 !important;
 }
