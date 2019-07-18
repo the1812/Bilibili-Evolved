@@ -13,8 +13,7 @@
   <div class="info">
     <img v-show="downloadSingle" v-bind:src="coverUrl" class="cover">
     <div class="title">
-      <span v-if="downloadSingle" class="bold" v-bind:title="title + epTitle">{{title}}{{epTitle}}</span>
-      <span v-else class="bold" v-bind:title="title">{{title}}</span>
+      <span class="bold" v-bind:title="aid">av{{aid}}</span>
       <span v-show="downloadSingle" class="size">
         <div v-if="sizeWarning" class="size-warning">
           <i class="mdi mdi-alert-circle"></i>

@@ -48,7 +48,7 @@
 body.dark .gui-settings,
 body.dark .gui-settings-widgets
 {
-    background-color: rgba(0,0,0,0.75);
+    background-color: rgba(0,0,0,0.3);
 }
 .gui-settings:hover,
 .gui-settings-widgets:hover

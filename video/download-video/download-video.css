@@ -107,15 +107,12 @@ body.dark .download-video {
 }
 .v-dropdown {
   position: relative;
-  background-color: #ededed;
+  background-color: #8884;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-width: 100px;
-}
-body.dark .v-dropdown {
-  background-color: #333;
 }
 .v-dropdown .dropdown-menu {
   transform-origin: top;

@@ -1,4 +1,4 @@
-import { getFriendlyTitle, formatTitle } from '../title';
+import { getFriendlyTitle } from '../title';
 import { VideoInfo, DanmakuInfo } from '../video-info';
 class Video {
     constructor() {
@@ -473,8 +473,7 @@ async function loadPanel() {
         data: {
             downloadSingle: true,
             coverUrl: '',
-            title: '',
-            epTitle: '',
+            aid: pageData.aid,
             qualityModel: {
                 value: selectedFormat.displayName,
                 items: formats.map(f => f.displayName)
@@ -702,12 +701,15 @@ async function loadPanel() {
     });
     Observer.videoChange(async () => {
         panel.close();
+        panel.batch = false;
+        panel.downloadSingle = true;
         const button = dq('#download-video');
         const canDownload = await loadPageData();
         button.style.display = canDownload ? 'flex' : 'none';
         if (!canDownload) {
             return;
         }
+        panel.aid = pageData.aid;
         const videoInfo = new VideoInfo(pageData.aid);
         await videoInfo.fetchInfo();
         panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:');
@@ -718,22 +720,6 @@ async function loadPanel() {
             items: formats.map(f => f.displayName)
         };
         panel.formatChange();
-        (async () => {
-            await SpinQuery.condition(() => document.querySelector('.video-toolbar .ops .coin,.tool-bar .coin-info'), it => {
-                return it !== null && it.innerText !== '--';
-            });
-            panel.title = formatTitle('[title]', false);
-            SpinQuery.select('#eplist_module li.cursor').then(li => {
-                if (li !== null) {
-                    panel.epTitle = ' - ' + li.innerText;
-                }
-            });
-            SpinQuery.select('#multi_page .cur-list>ul li.on a').then(a => {
-                if (a !== null) {
-                    panel.epTitle = ' - ' + a.getAttribute('title');
-                }
-            });
-        })();
         await panel.checkBatch();
     });
 }
