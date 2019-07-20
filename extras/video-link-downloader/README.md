@@ -54,3 +54,6 @@ vld -p 12
 ```shell
 vld -o xxx
 ```
+
+## 已知问题
+下载过程中有时候会出现速度降为0或者疑似下载完成但没有写入磁盘的情况, 多发于批量导出或大文件. [issue #139](https://github.com/the1812/Bilibili-Evolved/issues/139)
