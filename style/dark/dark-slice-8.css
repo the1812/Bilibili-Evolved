@@ -134,7 +134,9 @@ li.danmaku-info-row.bpui-selecting,
 .calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content,
 .videos-wrap .card-view .collect-num,
 .videos-wrap .card-view .danmu-num,
-.videos-wrap .card-view .play-num
+.videos-wrap .card-view .play-num,
+.center-box .line-1,
+.center-box .line-1 .name-field
 {
     color: #aaa !important;
 }
@@ -221,7 +223,8 @@ li.danmaku-info-row.bpui-selecting,
 .tabs-nav .tab-item.full,
 .list-header .dropdown-btn:hover,
 .tabs-nav .tab-item,
-.customize-wrap .title
+.customize-wrap .title,
+.center-box .line-2
 {
     color: #eee !important;
 }
@@ -279,6 +282,13 @@ li.danmaku-info-row.bpui-selecting,
 .calendar-wrap .calendar-header
 {
     border-color: #444 !important
+}
+.reply-item:not(:last-child):after,
+.at-item:not(:last-child):after,
+.love-item:not(:last-child):after,
+.center-box .orginal-reply
+{
+    border-color: #555 !important
 }
 /* a
 {
@@ -479,7 +489,9 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .article-type .bili-btn.current,
 .list-header .filter-wrp .filter-level .bili-btn.current,
 .list-header .filter-wrp .video-type .bili-btn.current,
-.left-nav-childed .left-nav-childed-list .left-nav-item-childed:hover span
+.left-nav-childed .left-nav-childed-list .left-nav-item-childed:hover span,
+.center-box .line-3 .action-button.active,
+.center-box .line-3 .action-button:hover
 {
     color: var(--theme-color) !important;
 }
