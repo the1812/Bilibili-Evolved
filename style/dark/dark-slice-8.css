@@ -262,7 +262,8 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .order-wrp,
 .list-header .filter-wrp .article-type,
 .list-header .filter-wrp .filter-level,
-.list-header .filter-wrp .video-type
+.list-header .filter-wrp .video-type,
+.love-detail .follow-btn.active
 {
     border-color: transparent !important;
 }
@@ -286,6 +287,7 @@ li.danmaku-info-row.bpui-selecting,
 .reply-item:not(:last-child):after,
 .at-item:not(:last-child):after,
 .love-item:not(:last-child):after,
+.liked-user:not(:last-child):after,
 .center-box .orginal-reply
 {
     border-color: #555 !important
@@ -491,7 +493,8 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .video-type .bili-btn.current,
 .left-nav-childed .left-nav-childed-list .left-nav-item-childed:hover span,
 .center-box .line-3 .action-button.active,
-.center-box .line-3 .action-button:hover
+.center-box .line-3 .action-button:hover,
+.center-box .line-1 .like-item:hover
 {
     color: var(--theme-color) !important;
 }
