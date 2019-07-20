@@ -5,6 +5,13 @@ declare global
     function GM_setValue(name: string, value: any): void;
     function GM_getValue<T>(name: string, defaultValue?: T): T;
     type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
+    type DanmakuOption = '无' | 'XML' | 'ASS'
+    interface RpcOption {
+        secretKey: string
+        dir: string
+        host: string
+        port: string
+    }
     interface MonkeyInfo
     {
         script: {
@@ -288,6 +295,7 @@ declare global
         hideCategory: boolean,
         foldComment: boolean,
         downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
+        aria2RpcOption: RpcOption,
         latestVersionLink: string,
         currentVersion: string,
     }

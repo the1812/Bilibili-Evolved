@@ -126,6 +126,12 @@ export const settings = {
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
+  aria2RpcOption: {
+    secretKey: '',
+    dir: '',
+    host: '127.0.0.1',
+    port: '6800',
+  },
   cache: {},
 }
 const fixedSettings = {

@@ -249,6 +249,9 @@ body.dark .download-video .direct-download .progress .foreground {
   margin: 4px;
   flex-grow: 1;
   flex-basis: calc(50% - 16px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .download-video i.mdi-alert-circle {
   font-size: 14pt;
@@ -347,4 +350,9 @@ body.dark .download-video .direct-download .progress .foreground {
 .download-video .selected-count {
   width: 64px;
   text-align: right;
+}
+.download-video .aria2-rpc .mdi {
+  margin-left: 8px;
+  font-size: 14pt;
+  line-height: 1;
 }

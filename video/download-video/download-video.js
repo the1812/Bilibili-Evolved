@@ -249,7 +249,54 @@ class VideoDownloader {
         }
     }
     async exportAria2(rpc = false) {
-        if (rpc) {
+        if (rpc) { // https://aria2.github.io/manual/en/html/aria2c.html#json-rpc-using-http-get
+            const option = settings.aria2RpcOption;
+            if (!option.host.startsWith('http://')) {
+                option.host = 'http://' + option.host;
+            }
+            const methodName = 'aria2.addUri';
+            const params = this.fragments.map((fragment, index) => {
+                let indexNumber = '';
+                if (this.fragments.length > 1) {
+                    indexNumber = ' - ' + (index + 1);
+                }
+                const params = [];
+                if (option.secretKey !== '') {
+                    params.push(`token:${option.secretKey}`);
+                }
+                params.push([fragment.url]);
+                params.push({
+                    referer: document.URL.replace(window.location.search, ''),
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0',
+                    out: `${getFriendlyTitle()}${indexNumber}${this.extension(fragment)}`,
+                    split: this.fragmentSplitFactor,
+                });
+                const base64Params = window.btoa(unescape(encodeURIComponent(JSON.stringify(params))));
+                const id = `${getFriendlyTitle()}${indexNumber}`;
+                return {
+                    base64Params,
+                    id,
+                };
+            });
+            for (const param of params) {
+                try {
+                    const response = await Ajax.getJson(`${option.host}:${option.port}/jsonrpc?method=${methodName}&id=${param.id}&params=${param.base64Params}`);
+                    if (response.error !== undefined) {
+                        if (response.error.code === 1) {
+                            logError(`请求遭到拒绝, 请检查您的私钥相关设置.`);
+                        }
+                        else {
+                            logError(`请求发生错误, code = ${response.error.code}, message = ${response.error.message}`);
+                        }
+                        return;
+                    }
+                    Toast.success(`成功发送了请求, GID = ${response.result}`, 'aria2 RPC');
+                }
+                catch (error) { // Host or port is invalid
+                    logError(`无法连接到RPC主机, error = ${error}`);
+                    return;
+                }
+            }
         }
         else { // https://aria2.github.io/manual/en/html/aria2c.html#input-file
             const input = `
@@ -264,7 +311,7 @@ ${this.fragments.map((it, index) => {
 ${it.url}
   referer=${document.URL.replace(window.location.search, '')}
   user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0
-  out=${getFriendlyTitle()}${indexNumber}.flv
+  out=${getFriendlyTitle()}${indexNumber}${this.extension(it)}
   split=${this.fragmentSplitFactor}
   `.trim();
             }).join('\n')}
@@ -563,6 +610,9 @@ async function loadPanel() {
                         case 'aria2':
                             videoDownloader.exportAria2(false);
                             break;
+                        case 'aria2RPC':
+                            videoDownloader.exportAria2(true);
+                            break;
                         case 'copyVLD':
                             videoDownloader.exportData(true);
                             Toast.success('已复制VLD数据到剪贴板.', '下载视频', 3000);
@@ -628,6 +678,8 @@ async function loadPanel() {
                         case 'aria2':
                             result = await this.batchExtractor.collectAria2(format, toast);
                             VideoDownloader.downloadBlob(new Blob([result], { type: 'text/plain' }), getFriendlyTitle(false) + '.txt');
+                            return;
+                        case 'aria2RPC':
                             return;
                         case 'copyVLD':
                             GM_setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' });

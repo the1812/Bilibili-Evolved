@@ -48,19 +48,16 @@
     transition: .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     position: relative;
 }
-.round-corner .toast-card
+.toast-card
 {
     border-left-width: 0px;
     padding-left: var(--corner-radius);
+    border-radius: var(--corner-radius);
 }
 .toast-card.toast-card-container-leave-active
 {
     position: absolute;
     transition: .3s cubic-bezier(0.6, -0.28, 0.74, 0.05);
-}
-.round-corner .toast-card
-{
-    border-radius: var(--corner-radius);
 }
 .toast-card-header
 {
@@ -130,7 +127,7 @@
     top: 0;
     left: 0;
 }
-.round-corner .toast-card .toast-card-border
+.toast-card .toast-card-border
 {
     border-radius: var(--corner-radius);
     height: calc(100% - 10px);
@@ -164,9 +161,6 @@
     text-decoration: none;
     color: #000;
     transition: all .2s ease-out;
-}
-.round-corner .toast-card .link,
-.round-corner .toast-card span {
     border-radius: var(--corner-radius);
 }
 .toast-card .link:hover
