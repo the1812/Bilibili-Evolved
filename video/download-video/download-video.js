@@ -484,7 +484,7 @@ async function loadPanel() {
                 items: ['无', 'XML', 'ASS']
             },
             progressPercent: 0,
-            size: 0,
+            size: '获取大小中',
             blobUrl: '',
             episodeList: [],
             downloading: false,

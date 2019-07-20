@@ -46,6 +46,8 @@ body.dark .download-video {
 }
 .download-video .cover {
   width: 240px;
+  min-height: 120px;
+  background-color: #8882;
 }
 .download-video .header {
   display: flex;

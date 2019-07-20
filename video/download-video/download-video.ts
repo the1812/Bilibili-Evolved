@@ -510,7 +510,7 @@ async function loadPanel() {
         items: ['无', 'XML', 'ASS'] as DanmakuOption[]
       },
       progressPercent: 0,
-      size: 0 as number | string,
+      size: '获取大小中' as number | string,
       blobUrl: '',
       episodeList: [] as EpisodeItem[],
       downloading: false,
