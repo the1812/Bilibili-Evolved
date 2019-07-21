@@ -69,7 +69,7 @@
   <div class="separator"></div>
   <div class="exports">
     <h2>导出</h2>
-    <div class="actions">
+    <div class="actions" v-bind:class="{busy: busy}">
       <button class="copy-link" v-bind:disabled="downloadSingle ? null : 'disabled'" v-on:click="exportData('copyLink')">复制链接</button>
       <button class="aria2-file" v-on:click="exportData('aria2')">导出aria2</button>
       <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>

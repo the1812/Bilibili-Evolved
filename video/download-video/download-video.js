@@ -204,7 +204,7 @@ class VideoDownloader {
         }
         return Promise.all(promises);
     }
-    copyUrl() {
+    async copyUrl() {
         const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + '\r\n' + it);
         GM_setClipboard(urls, 'text');
     }
@@ -536,6 +536,7 @@ async function loadPanel() {
             batch: false,
             rpcSettings: settings.aria2RpcOption,
             showRpcSettings: false,
+            busy: false,
         },
         computed: {
             displaySize() {
@@ -594,31 +595,35 @@ async function loadPanel() {
                 return format;
             },
             async exportData(type) {
-                if (!this.downloadSingle) {
-                    this.exportBatchData(type);
+                if (this.busy === true) {
                     return;
                 }
-                const format = this.getFormat();
                 try {
+                    this.busy = true;
+                    if (!this.downloadSingle) {
+                        await this.exportBatchData(type);
+                        return;
+                    }
+                    const format = this.getFormat();
                     const videoDownloader = await format.downloadInfo();
                     videoDownloader.danmakuOption = this.danmakuModel.value;
                     switch (type) {
                         case 'copyLink':
-                            videoDownloader.copyUrl();
+                            await videoDownloader.copyUrl();
                             Toast.success('已复制链接到剪贴板.', '下载视频', 3000);
                             break;
                         case 'aria2':
-                            videoDownloader.exportAria2(false);
+                            await videoDownloader.exportAria2(false);
                             break;
                         case 'aria2RPC':
-                            videoDownloader.exportAria2(true);
+                            await videoDownloader.exportAria2(true);
                             break;
                         case 'copyVLD':
-                            videoDownloader.exportData(true);
+                            await videoDownloader.exportData(true);
                             Toast.success('已复制VLD数据到剪贴板.', '下载视频', 3000);
                             break;
                         case 'exportVLD':
-                            videoDownloader.exportData(false);
+                            await videoDownloader.exportData(false);
                             break;
                         default:
                             break;
@@ -626,6 +631,9 @@ async function loadPanel() {
                 }
                 catch (error) {
                     logError(error);
+                }
+                finally {
+                    this.busy = false;
                 }
             },
             async exportBatchData(type) {

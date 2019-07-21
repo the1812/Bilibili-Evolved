@@ -49,7 +49,7 @@ body.dark .download-video {
 }
 .download-video .cover {
   width: 240px;
-  min-height: 120px;
+  min-height: 135px;
   background-color: #8882;
 }
 .download-video .header {
@@ -211,12 +211,17 @@ body.dark .download-video {
 .download-video .primary:hover {
   background: var(--theme-color-90);
 }
-.download-video button.disabled,
-.download-video .button.disabled,
-.download-video .primary.disabled {
-  background: #0004;
-  color: inherit;
+.download-video button:disabled,
+.download-video .busy button,
+.download-video .busy .button,
+.download-video .busy .primary {
+  background-color: #0001;
+  color: #8884;
   cursor: not-allowed;
+}
+.download-video .busy button,
+.download-video .busy .button {
+  cursor: wait !important;
 }
 .download-video .direct-download .progress {
   align-self: stretch;
@@ -328,12 +333,6 @@ body.dark .download-video .direct-download .progress .foreground {
 .v-checkbox.checked .mdi-checkbox-marked-circle {
   transform: scale(1);
   transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
-}
-.download-video .button:disabled,
-.download-video button:disabled {
-  background-color: #0001;
-  color: #8884;
-  cursor: not-allowed;
 }
 .download-video .episode-header {
   display: flex;
