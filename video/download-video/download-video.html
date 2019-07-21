@@ -74,13 +74,28 @@
       <button class="aria2-file" v-on:click="exportData('aria2')">导出aria2</button>
       <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>
       <button class="vld-export" v-on:click="exportData('exportVLD')">导出vld数据</button>
-      <button class="aria2-rpc" v-on:click="exportData('aria2RPC')">导出aria2 RPC
+      <div class="button aria2-rpc" v-on:click.self="toggleRpcSettings()">导出aria2 RPC
         <i class="mdi mdi-chevron-right"></i>
-      </button>
+        <div class="rpc-settings" v-bind:class="{show: showRpcSettings}">
+          <h1>aria2 RPC 配置</h1>
+          <div class="rpc-settings-item">
+            主机<input type="text" v-model="rpcSettings.host" placeholder="127.0.0.1">
+          </div>
+          <div class="rpc-settings-item">
+            端口<input type="text" v-model="rpcSettings.port" placeholder="6800">
+          </div>
+          <div class="rpc-settings-item">
+            密钥<input type="text" v-model="rpcSettings.secretKey">
+          </div>
+          <div class="rpc-settings-item">
+            路径<input type="text" v-model="rpcSettings.dir">
+          </div>
+          <div class="primary button" v-on:click="saveRpcSettings();toggleRpcSettings();exportData('aria2RPC')">确定</div>
+        </div>
+      </div>
+      <!--
+      <button class="idm-export">导出IDM</button>
+      -->
     </div>
-    <!--
-    <button class="aria2-rpc">aria2 RPC</button>
-    <button class="idm-export">导出IDM</button>
-    -->
   </div>
 </div>

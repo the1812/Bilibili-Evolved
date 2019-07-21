@@ -26,7 +26,8 @@ body.dark .download-video {
   --download-video-foreground: #eee;
 }
 .round-corner .download-video,
-.round-corner .download-video .episode-list .v-checkbox {
+.round-corner .download-video .episode-list .v-checkbox,
+.round-corner .download-video .rpc-settings {
   border-radius: var(--large-corner-radius);
 }
 .round-corner .download-video .title,
@@ -35,8 +36,10 @@ body.dark .download-video {
 .round-corner .v-dropdown .dropdown-menu,
 .round-corner .v-dropdown .dropdown-menu li,
 .round-corner .download-video button,
+.round-corner .download-video .button,
 .round-corner .download-video .direct-download .progress .background,
-.round-corner .download-video .direct-download .progress .foreground {
+.round-corner .download-video .direct-download .progress .foreground,
+.round-corner .download-video .rpc-settings input[type="text"] {
   border-radius: var(--corner-radius);
 }
 .download-video,
@@ -186,7 +189,8 @@ body.dark .download-video {
   align-items: start;
   justify-content: space-between;
 }
-.download-video button {
+.download-video button,
+.download-video .button {
   border: none;
   outline: none !important;
   padding: 6px 16px;
@@ -195,19 +199,21 @@ body.dark .download-video {
   background: #8884;
   color: var(--download-video-foreground);
 }
-.download-video button:hover {
+.download-video button:hover,
+.download-video .button:hover {
   background: #8886;
 }
-.download-video button.primary {
+.download-video .primary {
   background: var(--theme-color);
   color: var(--foreground-color);
   align-self: center;
 }
-.download-video button.primary:hover {
+.download-video .primary:hover {
   background: var(--theme-color-90);
 }
 .download-video button.disabled,
-.download-video button.primary.disabled {
+.download-video .button.disabled,
+.download-video .primary.disabled {
   background: #0004;
   color: inherit;
   cursor: not-allowed;
@@ -245,7 +251,7 @@ body.dark .download-video .direct-download .progress .foreground {
   justify-content: space-between;
   margin-top: 8px;
 }
-.download-video .actions button {
+.download-video .actions>* {
   margin: 4px;
   flex-grow: 1;
   flex-basis: calc(50% - 16px);
@@ -323,6 +329,7 @@ body.dark .download-video .direct-download .progress .foreground {
   transform: scale(1);
   transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
+.download-video .button:disabled,
 .download-video button:disabled {
   background-color: #0001;
   color: #8884;
@@ -355,4 +362,48 @@ body.dark .download-video .direct-download .progress .foreground {
   margin-left: 8px;
   font-size: 14pt;
   line-height: 1;
+}
+.download-video .aria2-rpc {
+  position: relative;
+}
+.download-video .rpc-settings {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--download-video-foreground);
+  background: var(--download-video-background);
+  bottom: 120%;
+  left: 50%;
+  cursor: initial;
+  box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
+  transform-origin: bottom;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  padding: 8px;
+  z-index: 3;
+}
+.download-video .rpc-settings>* {
+  margin: 8px;
+}
+.download-video .rpc-settings.show {
+  opacity: 1;
+  pointer-events: initial;
+}
+.download-video .rpc-settings-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
+}
+.download-video .rpc-settings input[type="text"] {
+  background: transparent;
+  color: var(--download-video-foreground);
+  border: 1px solid #8884;
+  padding: 4px;
+  margin-left: 8px;
+}
+.download-video .rpc-settings input[type="text"]:focus {
+  border-color: var(--theme-color);
 }

@@ -275,9 +275,7 @@ class VideoDownloader {
   async exportAria2(rpc = false) {
     if (rpc) { // https://aria2.github.io/manual/en/html/aria2c.html#json-rpc-using-http-get
       const option = settings.aria2RpcOption
-      if (!option.host.startsWith('http://')) {
-        option.host = 'http://' + option.host
-      }
+      const host = option.host.startsWith('http://') ? option.host : 'http://' + option.host
       const methodName = 'aria2.addUri'
       const params = this.fragments.map((fragment, index) => {
         let indexNumber = ''
@@ -304,16 +302,16 @@ class VideoDownloader {
       })
       for (const param of params) {
         try {
-          const response = await Ajax.getJson(`${option.host}:${option.port}/jsonrpc?method=${methodName}&id=${param.id}&params=${param.base64Params}`)
+          const response = await Ajax.getJson(`${host}:${option.port}/jsonrpc?method=${methodName}&id=${param.id}&params=${param.base64Params}`)
           if (response.error !== undefined) {
             if (response.error.code === 1) {
-              logError(`请求遭到拒绝, 请检查您的私钥相关设置.`)
+              logError(`请求遭到拒绝, 请检查您的密钥相关设置.`)
             } else {
               logError(`请求发生错误, code = ${response.error.code}, message = ${response.error.message}`)
             }
             return
           }
-          Toast.success(`成功发送了请求, GID = ${response.result}`, 'aria2 RPC')
+          Toast.success(`成功发送了请求, GID = ${response.result}`, 'aria2 RPC', 5000)
         } catch (error) { // Host or port is invalid
           logError(`无法连接到RPC主机, error = ${error}`)
           return
@@ -558,6 +556,8 @@ async function loadPanel() {
       episodeList: [] as EpisodeItem[],
       downloading: false,
       batch: false,
+      rpcSettings: settings.aria2RpcOption,
+      showRpcSettings: false,
     },
     computed: {
       displaySize() {
@@ -785,6 +785,18 @@ async function loadPanel() {
       inverseAllEpisodes() {
         this.episodeList.forEach((item: EpisodeItem) => item.checked = !item.checked)
       },
+      toggleRpcSettings() {
+        this.showRpcSettings = !this.showRpcSettings
+      },
+      saveRpcSettings() {
+        if (this.rpcSettings.host === '') {
+          this.rpcSettings.host = '127.0.0.1'
+        }
+        if (this.rpcSettings.port === '') {
+          this.rpcSettings.port = '6800'
+        }
+        settings.aria2RpcOption = this.rpcSettings
+      }
     }
   })
 
