@@ -825,10 +825,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     top: 50%;
     transform: translateY(-50%);
     background-color: var(--theme-color);
-    padding: 0 10px;
+    padding: 0 6px;
     display: flex;
     justify-content: center;
-    font-size: 11pt;
+    font-size: 9pt;
     border-radius: 6px;
 }
 .custom-navbar-settings
