@@ -40,11 +40,8 @@
 - **分段**的视频会把所有视频打包成`.zip`格式.
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
 - 如果以您的账号权限无法观看某些视频(地区限制, 大会员专享等), 那么这种视频也是无法下载的.
-- 直接下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 如果你更喜欢使用其他的下载软件, 可以使用`复制链接`或其他选项. **下载时的请求Header必须包含`Origin=https://www.bilibili.com`和`Referer=https://www.bilibili.com`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
-- 针对上一条, 可以使用 [aria2](https://aria2.github.io/) 或者我另外编写的[下载器](extras/video-link-downloader/README.md)解决内存占用问题.
-- Chrome浏览器对单个文件大小有[限制](https://chromium.googlesource.com/chromium/src/+/master/storage/browser/blob/README.md#example-limits), 如果在下载完成时浏览器发生崩溃, 请尝试适当降低画质, 或换用没有限制的Firefox浏览器.
-    - 64位限制: 2GB
-    - 32位限制: 614MB
+- 直接下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 可以考虑[导出 aria2](aria2-notice.md)来进行下载.
+- 使用`复制链接`得到的链接并不是直接就能用的, 因为**下载时的请求Header必须包含`Referer=https://www.bilibili.com`和正确的`User-Agent`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
 
 ### 下载弹幕
 在视频播放页面中, `下载弹幕`按钮将在`附加功能`中启用, 点击可以下载XML格式的弹幕.

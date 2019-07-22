@@ -2,6 +2,8 @@
 使用 aria2 可以解决 Chrome 无法下载超过 2GB 视频的限制, 以及 Firefox 内存占用过大导致标签页卡顿或崩溃的问题. ~~(顺便还能在PanDownload里用)~~
 
 ## 前言: 链接下载器(vld)即将寿终正寝
+> 如果您从未使用过链接下载器, 可以跳过这一节了
+
 我编写链接下载器的目的, 就是希望在我找到稳定的方案前, 能**暂时**地解决大文件的下载问题. 所以随着对 aria2 支持的完善, 链接下载器也将不再更新.
 
 通过以下命令可以卸载链接下载器:
@@ -12,7 +14,7 @@ npm uninstall -g bilibili-evolved-video-link-downloader
 如果您当时只是为了安装链接下载器而安装了 Node.js, 也可以将 Node.js 卸载.
 
 ## 下载 aria2
-您可以在 [aria2官网](https://aria2.github.io/) 或 [GitHub Release页面](https://github.com/aria2/aria2/releases/latest) 下载 aria2. 无需安装, 解压后即可使用.
+您可以在 [aria2官网](https://aria2.github.io/) 或 [GitHub Releases页面](https://github.com/aria2/aria2/releases/latest) 下载 aria2. 无需安装, 解压放在一个文件夹里后即可使用.
 
 ## 使用 aria2
 脚本支持两种方式将数据传送给 aria2:
