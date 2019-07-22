@@ -704,7 +704,8 @@ async function loadPanel() {
               VideoDownloader.downloadBlob(new Blob([result], { type: 'text/plain' }), getFriendlyTitle(false) + '.txt')
               return
             case 'aria2RPC':
-
+              await this.batchExtractor.collectAria2(format, toast, true)
+              Toast.success(`成功发送了批量请求.`, 'aria2 RPC', 3000)
               return
             case 'copyVLD':
               GM_setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })

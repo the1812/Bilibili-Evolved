@@ -20,7 +20,9 @@ export class Toast {
         }
     }
     dismiss() {
-        container.cards.splice(container.cards.indexOf(this), 1);
+        if (container.cards.includes(this)) {
+            container.cards.splice(container.cards.indexOf(this), 1);
+        }
     }
     get element() {
         return dq(`.toast-card[key='${this.key}']`);
