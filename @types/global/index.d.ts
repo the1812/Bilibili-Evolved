@@ -11,6 +11,7 @@ declare global
         dir: string
         host: string
         port: string
+        skipByDefault: boolean
     }
     interface MonkeyInfo
     {

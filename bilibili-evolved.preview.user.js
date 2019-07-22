@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.8.10
+// @version      1.8.11
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -238,6 +238,7 @@ const settings = {
     dir: '',
     host: '127.0.0.1',
     port: '6800',
+    skipByDefault: false,
   },
   cache: {},
 }
