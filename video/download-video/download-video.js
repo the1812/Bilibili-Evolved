@@ -255,7 +255,7 @@ class VideoDownloader {
                 VideoDownloader.downloadBlob(new Blob([danmaku]), `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`);
             }
             const option = settings.aria2RpcOption;
-            const host = option.host.startsWith('http://') ? option.host : 'http://' + option.host;
+            const host = option.host.match(/^http[s]?:\/\//) ? option.host : 'http://' + option.host;
             const methodName = 'aria2.addUri';
             const params = this.fragments.map((fragment, index) => {
                 let indexNumber = '';

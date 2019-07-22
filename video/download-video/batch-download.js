@@ -10,7 +10,7 @@ class Batch {
     const json = JSON.parse(await this.collectData(quality))
     if (rpc) {
       const option = settings.aria2RpcOption
-      const host = option.host.startsWith('http://') ? option.host : 'http://' + option.host
+      const host = option.host.match(/^http[s]?:\/\//) ? option.host : 'http://' + option.host
       const methodName = 'aria2.addUri'
       for (const item of json) {
         const params = item.fragments.map((fragment, index) => {
