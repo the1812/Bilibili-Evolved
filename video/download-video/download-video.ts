@@ -274,6 +274,10 @@ class VideoDownloader {
   }
   async exportAria2(rpc = false) {
     if (rpc) { // https://aria2.github.io/manual/en/html/aria2c.html#json-rpc-using-http-get
+      const danmaku = await this.downloadDanmaku()
+      if (danmaku !== null) {
+        VideoDownloader.downloadBlob(new Blob([danmaku]), `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`)
+      }
       const option = settings.aria2RpcOption
       const host = option.host.startsWith('http://') ? option.host : 'http://' + option.host
       const methodName = 'aria2.addUri'
@@ -680,7 +684,7 @@ async function loadPanel() {
                 zip.file(item.title + '.ass', await convertToAss(danmakuInfo.rawXML))
               }
             }
-            VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), this.getTitle() + '.danmakus.zip')
+            VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), this.cid + '.danmakus.zip')
           } catch (error) {
             logError(error)
           } finally {
