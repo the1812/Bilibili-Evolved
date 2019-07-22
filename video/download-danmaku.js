@@ -20,7 +20,7 @@ export async function convertToAss(xml) {
         config.font = dq('.bilibili-player-video-danmaku-setting-right-font .bui-select-result').innerText;
         config.alpha = parseFloat(dq('.bilibili-player-setting-opacity .bui-bar').style.transform.replace(/scaleX\(([\d\.]+)\)/, '$1'));
         config.duration = (() => {
-            const scrollDuration = [10, 8, 6, 4, 2][getSliderIndex('.bilibili-player-setting-speedplus .bui-thumb')];
+            const scrollDuration = [18, 14, 10, 8, 6][getSliderIndex('.bilibili-player-setting-speedplus .bui-thumb')];
             return (danmaku) => {
                 switch (danmaku.type) {
                     case 4:
