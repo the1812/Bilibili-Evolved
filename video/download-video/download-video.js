@@ -522,7 +522,7 @@ async function loadPanel() {
         el: '.download-video',
         data: {
             downloadSingle: true,
-            coverUrl: '',
+            coverUrl: 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>',
             aid: pageData.aid,
             cid: pageData.cid,
             qualityModel: {

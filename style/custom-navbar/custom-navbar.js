@@ -523,8 +523,8 @@ class UserInfo extends NavbarComponent {
           <a class="type" target="_blank" href="https://account.bilibili.com/account/big">{{userType}}</a>
           <div class="level-info row">
             <a target="_blank" title="等级" href="https://account.bilibili.com/site/record?type=exp"
-              class="level custom-navbar-iconfont-extended">
-              <i v-bind:class="'custom-navbar-icon-lv' + level_info.current_level"></i>
+              class="level">
+              <i class="custom-navbar-iconfont-extended" v-bind:class="'custom-navbar-icon-lv' + level_info.current_level"></i>
             </a>
             <span class="level-progress-label">{{level_info.current_exp}} / {{level_info.next_exp}}</span>
           </div>

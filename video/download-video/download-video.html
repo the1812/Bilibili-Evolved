@@ -10,20 +10,20 @@
     <div class="tab download-batch" v-bind:class="{active: !downloadSingle}" v-on:click="downloadSingle = false">批量导出
     </div>
   </div>
-  <div class="info">
-    <img v-show="downloadSingle" v-bind:src="coverUrl" class="cover">
+  <div v-show="downloadSingle" class="info">
+    <img v-bind:src="coverUrl" class="cover">
     <div class="title">
       <!-- <span class="bold" v-bind:title="'av' + aid + ' / cid' + cid">av{{aid}} / cid{{cid}}</span> -->
-      <span v-show="downloadSingle" class="size">
+      <span class="size">
         <div v-if="sizeWarning" class="size-warning">
           <i class="mdi mdi-alert-circle"></i>
           <div class="size-warning-tip">
             警告: 过大的视频大小会在直接下载时占用大量内存, 并可能导致浏览器标签页崩溃. 请考虑降低清晰度或使用导出选项.
           </div>
         </div>
-        {{displaySize}}
+        预计大小: {{displaySize}}
       </span>
-      <span v-show="!downloadSingle" class="size">共{{episodeList.length}}P</span>
+      <!-- <span v-show="!downloadSingle" class="size">共{{episodeList.length}}P</span> -->
     </div>
   </div>
   <div class="options">

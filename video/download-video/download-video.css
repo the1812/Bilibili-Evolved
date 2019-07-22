@@ -20,6 +20,10 @@
   opacity: 0;
   padding: 16px;
   width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
 }
 body.dark .download-video {
   --download-video-background: #222;
@@ -342,7 +346,7 @@ body.dark .download-video .direct-download .progress .foreground {
 }
 .download-video .episode-list {
   overflow: auto;
-  height: 240px;
+  max-height: 320px;
 }
 .download-video button.list-tool {
   padding: 4px;
