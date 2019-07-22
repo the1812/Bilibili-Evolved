@@ -116,6 +116,11 @@ li.danmaku-info-row.bpui-selecting,
 {
     color: #222 !important;
 }
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.visited,
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:visited
+{
+    color: #888 !important;
+}
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-danmaku,
 .player-auxiliary-area .danmaku-info-row-block span.danmaku-info-time,
 .player-auxiliary-area .danmaku-info-row-block::after,
