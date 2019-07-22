@@ -157,7 +157,7 @@
     display: inline-block;
     padding: 4px 6px;
     margin: 0 2px;
-    background-color: rgba(0,0,0,.1);
+    background-color: #8882;
     text-decoration: none;
     color: #000;
     transition: all .2s ease-out;
@@ -165,11 +165,11 @@
 }
 .toast-card .link:hover
 {
-    background-color: rgba(0,0,0,.2);
+    background-color: #8883;
 }
 .toast-card .link:active
 {
-    background-color: rgba(0,0,0,.1);
+    background-color: #8884;
 }
 @keyframes loading
 {
