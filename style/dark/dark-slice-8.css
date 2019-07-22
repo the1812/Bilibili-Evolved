@@ -103,7 +103,8 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .video-type .bili-btn,
 .list-header .filter-wrp .article-type .line,
 .list-header .filter-wrp .filter-level .line,
-.list-header .filter-wrp .video-type .line
+.list-header .filter-wrp .video-type .line,
+.card .forw-area a.more:hover
 {
     background-color: transparent !important;
 }
@@ -263,7 +264,8 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .article-type,
 .list-header .filter-wrp .filter-level,
 .list-header .filter-wrp .video-type,
-.love-detail .follow-btn.active
+.love-detail .follow-btn.active,
+.love-card .header:after
 {
     border-color: transparent !important;
 }
@@ -494,7 +496,8 @@ li.danmaku-info-row.bpui-selecting,
 .left-nav-childed .left-nav-childed-list .left-nav-item-childed:hover span,
 .center-box .line-3 .action-button.active,
 .center-box .line-3 .action-button:hover,
-.center-box .line-1 .like-item:hover
+.center-box .line-1 .like-item:hover,
+.card .forw-area a.more:hover
 {
     color: var(--theme-color) !important;
 }
