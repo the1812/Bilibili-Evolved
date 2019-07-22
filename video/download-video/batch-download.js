@@ -28,7 +28,7 @@ class Batch {
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0',
             out: `${item.title}${indexNumber}.flv`,
             split: fragmentSplitFactor,
-            dir: option.dir,
+            dir: option.dir || undefined,
           })
           const base64Params = window.btoa(unescape(encodeURIComponent(JSON.stringify(params))))
           const id = `${item.title}${indexNumber}`
