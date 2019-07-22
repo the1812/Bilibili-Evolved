@@ -90,6 +90,8 @@ declare global
     type CustomNavbarOrders = { [key in keyof CustomNavbarComponents]: number };
     const GM_info: MonkeyInfo;
     const unsafeWindow: Window;
+    const UserAgent: string
+    const EmptyImageUrl: string
     interface Window {
         aid: string | undefined
         cid: string | undefined
