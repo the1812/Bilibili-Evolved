@@ -1,12 +1,14 @@
 import { getFriendlyTitle } from '../title';
 const canvas = document.createElement("canvas");
 class Screenshot {
-    constructor(video, videoTime) {
+    constructor(video, videoTime, withDanmaku = false) {
         this.url = "";
         this.timeStamp = new Date().getTime();
+        this.withDanmaku = false;
         this.video = video;
         this.videoTime = videoTime;
         // this.url = URL.createObjectURL(this.blob);
+        this.withDanmaku = withDanmaku;
         this.createUrl();
     }
     async createUrl() {
@@ -18,6 +20,12 @@ class Screenshot {
             return;
         }
         context.drawImage(this.video, 0, 0);
+        if (this.withDanmaku) {
+            const danmakuCanvas = dq('canvas.bilibili-player-video-danmaku');
+            if (danmakuCanvas !== null) {
+                context.drawImage(danmakuCanvas, 0, 0, this.video.videoWidth, this.video.videoHeight);
+            }
+        }
         canvas.toBlob(blob => {
             if (blob === null) {
                 logError("视频截图失败: 创建 blob 失败.");
@@ -46,26 +54,28 @@ class Screenshot {
         URL.revokeObjectURL(this.url);
     }
 }
-export const takeScreenshot = (video) => {
+export const takeScreenshot = (video, withDanmaku = false) => {
     const time = video.currentTime;
-    return new Screenshot(video, time);
+    return new Screenshot(video, time, withDanmaku);
 };
 resources.applyStyle("videoScreenshotStyle");
 document.body.insertAdjacentHTML("beforeend", /*html*/ `
-    <div class="video-screenshot-container">
-        <transition-group class="video-screenshot-list" name="video-screenshot-list" tag="div">
-            <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename" v-bind:object-url="screenshot.url" v-bind:time="screenshot.time" v-on:discard="discard(screenshot)" v-bind:key="screenshot.id"></video-screenshot>
-        </transition-group>
-        <div v-show="showBatch" class="video-screenshot-batch">
-            <a class="batch-link" style="display:none" v-bind:download="batchFilename"></a>
-            <button v-on:click="saveAll">
-                <i class="mdi mdi-content-save"></i>全部保存
-            </button>
-            <button v-on:click="discardAll">
-                <i class="mdi mdi-delete-forever"></i>全部丢弃
-            </button>
-        </div>
+  <div class="video-screenshot-container">
+    <transition-group class="video-screenshot-list" name="video-screenshot-list" tag="div">
+      <video-screenshot v-for="screenshot of screenshots" v-bind:filename="screenshot.filename"
+        v-bind:object-url="screenshot.url" v-bind:time="screenshot.time" v-on:discard="discard(screenshot)"
+        v-bind:key="screenshot.id"></video-screenshot>
+    </transition-group>
+    <div v-show="showBatch" class="video-screenshot-batch">
+      <a class="batch-link" style="display:none" v-bind:download="batchFilename"></a>
+      <button v-on:click="saveAll">
+        <i class="mdi mdi-content-save"></i>全部保存
+      </button>
+      <button v-on:click="discardAll">
+        <i class="mdi mdi-delete-forever"></i>全部丢弃
+      </button>
     </div>
+  </div>
 `);
 Vue.component("video-screenshot", {
     props: {
@@ -74,17 +84,18 @@ Vue.component("video-screenshot", {
         time: String,
     },
     template: /*html*/ `
-        <div class="video-screenshot-thumbnail">
-            <img v-if="objectUrl" v-bind:src="objectUrl">
-            <div class="mask" v-if="objectUrl">
-                <a class="link" style="display:none" v-bind:href="objectUrl" v-bind:download="filename"></a>
-                <button v-on:click="save" class="save" title="保存"><i class="mdi mdi-content-save-outline"></i></button>
-                <button v-on:click="discard" title="丢弃" class="discard"><i class="mdi mdi-delete-forever-outline"></i></button>
-                <span class="time">{{time}}</span>
-            </div>
-            <div class="loading" v-else>
-            </div>
-        </div>`,
+    <div class="video-screenshot-thumbnail">
+      <img v-if="objectUrl" v-bind:src="objectUrl">
+      <div class="mask" v-if="objectUrl">
+        <a class="link" style="display:none" v-bind:href="objectUrl" v-bind:download="filename"></a>
+        <button v-on:click="save" class="save" title="保存"><i class="mdi mdi-content-save-outline"></i></button>
+        <button v-on:click="discard" title="丢弃" class="discard"><i class="mdi mdi-delete-forever-outline"></i></button>
+        <span class="time">{{time}}</span>
+      </div>
+      <div class="loading" v-else>
+      </div>
+    </div>
+  `,
     methods: {
         discard() {
             this.$emit("discard");
@@ -133,35 +144,23 @@ const screenShotsList = new Vue({
     },
 });
 const buttonHtml = /*html*/ `
-    <div class="video-take-screenshot" title="截图">
-        <span><i class="mdi mdi-camera"></i></span>
-    </div>`;
+  <div class="video-take-screenshot" title="截图">
+    <span><i class="mdi mdi-camera"></i></span>
+  </div>`;
 Observer.videoChange(async () => {
     const video = await SpinQuery.select("#bofqi video");
     if (video === null) {
         return;
     }
-    // if (settings.framePlayback)
-    // {
-    //     const frameButton = await SpinQuery.select(".frame-playback.prev-frame");
-    //     if (frameButton === null || document.querySelector(".video-take-screenshot"))
-    //     {
-    //         return;
-    //     }
-    //     frameButton.insertAdjacentHTML("beforebegin", buttonHtml);
-    // }
-    // else
-    // {
     const time = await SpinQuery.select(".bilibili-player-video-time");
     if (time === null || document.querySelector(".video-take-screenshot")) {
         return;
     }
     time.insertAdjacentHTML("afterend", buttonHtml);
-    // }
     const screenshotButton = document.querySelector(".video-take-screenshot");
-    screenshotButton.addEventListener("click", async () => {
+    screenshotButton.addEventListener("click", async (e) => {
         const video = await SpinQuery.select("#bofqi video");
-        const screenshot = takeScreenshot(video);
+        const screenshot = takeScreenshot(video, e.shiftKey);
         screenShotsList.screenshots.unshift(screenshot);
     });
     document.addEventListener("keydown", e => {
