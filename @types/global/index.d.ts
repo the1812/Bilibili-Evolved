@@ -304,8 +304,6 @@ declare global {
   function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void, initCall?: boolean): void;
   function removeSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void;
   function onSettingsChange(change: (key: string, oldValue: any, newValue: any) => void): void;
-  function downloadText(url: string, load: (text: string) => void, error: (text: string) => void): void;
-  function downloadText(url: string): Promise<string>;
   function raiseEvent(element: Element, eventName: string): void;
   function loadLazyPanel(selector: string): Promise<void>;
   function loadDanmakuSettingsPanel(): Promise<void>;

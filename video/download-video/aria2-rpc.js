@@ -29,7 +29,7 @@ async function rpc(getResponse, batch = false) {
         return true;
     }
     catch (error) { // Host or port is invalid
-        logError(`无法连接到RPC主机, error = ${error}`);
+        logError(`无法连接到RPC主机.`);
         return false;
     }
 }

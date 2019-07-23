@@ -345,7 +345,13 @@ function onSettingsChange () {
 class Ajax {
   static send (xhr, body, text = true) {
     return new Promise((resolve, reject) => {
-      xhr.addEventListener('load', () => resolve(text ? xhr.responseText : xhr.response))
+      xhr.addEventListener('load', () => {
+        // if (xhr.status.toString().match(/^[45]/)) {
+        //   reject(xhr.status)
+        // } else {
+        resolve(text ? xhr.responseText : xhr.response)
+        // }
+      })
       xhr.addEventListener('error', () => reject(xhr.status))
       xhr.send(body)
     })
@@ -456,24 +462,6 @@ function setupAjaxHook () {
     hookOnEvent('onreadystatechange', this)
     hookOnEvent('onload', this)
     return hook('send', this, ...args)
-  }
-}
-function downloadText (url, load, error) // The old method for compatibility
-{
-  const xhr = new XMLHttpRequest()
-  xhr.open('GET', url)
-
-  if (load !== undefined) // callback
-  {
-    xhr.addEventListener('load', () => load && load(xhr.responseText))
-    xhr.addEventListener('error', () => error && error(xhr.status))
-    xhr.send()
-  } else {
-    return new Promise((resolve, reject) => {
-      xhr.addEventListener('load', () => resolve(xhr.responseText))
-      xhr.addEventListener('error', () => reject(xhr.status))
-      xhr.send()
-    })
   }
 }
 

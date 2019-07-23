@@ -445,12 +445,10 @@ class VideoSpeed {
     this.workingDownloader = downloader
   }
   startMeasure() {
-    // console.log(`total bytes = ${this.workingDownloader.totalSize}`)
     this.intervalTimer = setInterval(() => {
       const progress = this.workingDownloader.progressMap
         ? [...this.workingDownloader.progressMap.values()].reduce((a, b) => a + b, 0) : 0
       const loadedBytes = progress - this.lastProgress
-      // console.log(`${progress} - ${this.lastProgress} = ${loadedBytes} (${formatFileSize(loadedBytes)})`)
       if (this.speedUpdate !== undefined) {
         this.speedUpdate(formatFileSize(loadedBytes) + '/s')
       }
