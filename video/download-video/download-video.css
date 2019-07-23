@@ -373,7 +373,7 @@ body.dark .download-video .direct-download .progress .foreground {
   position: absolute;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   color: var(--download-video-foreground);
   background: var(--download-video-background);
   bottom: 120%;
