@@ -35,7 +35,7 @@ class Batch {
             id,
           }
         })
-        await sendRpc(params)
+        await sendRpc(params, true)
       }
     } else {
       return `
