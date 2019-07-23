@@ -10,8 +10,7 @@ class Batch {
     const json = JSON.parse(await this.collectData(quality))
     if (rpc) {
       const option = settings.aria2RpcOption
-      const host = option.host.match(/^http[s]?:\/\//) ? option.host : 'http://' + option.host
-      const methodName = 'aria2.addUri'
+      const { sendRpc } = await import('./aria2-rpc')
       for (const item of json) {
         const params = item.fragments.map((fragment, index) => {
           let indexNumber = ''
@@ -30,29 +29,13 @@ class Batch {
             split: fragmentSplitFactor,
             dir: option.dir || undefined,
           })
-          const base64Params = window.btoa(unescape(encodeURIComponent(JSON.stringify(params))))
-          const id = `${item.title}${indexNumber}`
+          const id = encodeURIComponent(`${item.title}${indexNumber}`)
           return {
-            base64Params,
+            params,
             id,
           }
         })
-        for (const param of params) {
-          try {
-            const response = await Ajax.getJson(`${host}:${option.port}/jsonrpc?method=${methodName}&id=${param.id}&params=${param.base64Params}`)
-            if (response.error !== undefined) {
-              if (response.error.code === 1) {
-                logError(`请求遭到拒绝, 请检查您的密钥相关设置.`)
-              } else {
-                logError(`请求发生错误, code = ${response.error.code}, message = ${response.error.message}`)
-              }
-              return
-            }
-          } catch (error) { // Host or port is invalid
-            logError(`无法连接到RPC主机, error = ${error}`)
-            return
-          }
-        }
+        await sendRpc(params)
       }
     } else {
       return `

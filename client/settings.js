@@ -131,6 +131,7 @@ export const settings = {
     dir: '',
     host: '127.0.0.1',
     port: '6800',
+    method: 'get',
     skipByDefault: false,
   },
   cache: {},

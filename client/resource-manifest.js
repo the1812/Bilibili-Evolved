@@ -278,7 +278,8 @@ Resource.manifest = {
     dependencies: ['title'],
     displayNames: {
       'downloadVideo': '下载视频',
-      'batchDownload': '批量下载'
+      'batchDownload': '批量下载',
+      'aria2Rpc': 'aria2 RPC',
     }
   },
   downloadDanmaku: {
@@ -644,6 +645,9 @@ Resource.manifest = {
       key: 'defaultVideoSpeed',
       items: ['0.5', '0.75', '1', '1.25', '1.5', '2.0'],
     }
+  },
+  aria2Rpc: {
+    path: 'aria2-rpc.min.js',
   },
 }
 export const resourceManifest = Resource.manifest
