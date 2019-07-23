@@ -1,4 +1,3 @@
-import { getFriendlyTitle } from '../title'
 function getOption() {
   const option = settings.aria2RpcOption
   const host = option.host.match(/^http[s]?:\/\//) ? option.host : 'http://' + option.host
