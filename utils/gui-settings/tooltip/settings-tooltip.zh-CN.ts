@@ -104,7 +104,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["hideBanner", /*html*/`隐藏首页顶部横幅.`],
   ["allowJumpContinue", /*html*/`当历史记录的集数与当前打开的不一致时, 仍然自动跳转.`],
   ["hideBangumiReviews", /*html*/`隐藏番剧播放页面里的点评板块.`],
-  ["videoScreenshot", /*html*/`启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
+  ["videoScreenshot", /*html*/`启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)
+如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为"按住<kbd>Shift</kbd>点击截图按钮", 键盘操作为"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>".`],
   ["filenameFormat", /*html*/`自定义文件命名格式, 作用于<span>下载弹幕</span>, <span>下载视频</span>, <span>视频截图</span>, <span>查看封面</span>.
 可以使用的变量有:
 - <span>title</span>: 视频标题/直播间标题
