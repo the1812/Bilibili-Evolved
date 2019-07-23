@@ -29,11 +29,11 @@
   <div class="options">
     <div class="option-item">
       清晰度
-      <v-dropdown v-on:change="formatChange()" v-bind:model="qualityModel"></v-dropdown>
+      <v-dropdown v-on:change="formatChange()" v-bind:items="qualityModel.items" v-bind:value.sync="qualityModel.value"></v-dropdown>
     </div>
     <div class="option-item">
       弹幕
-      <v-dropdown v-on:change="danmakuOptionChange()" v-bind:model="danmakuModel"></v-dropdown>
+      <v-dropdown v-on:change="danmakuOptionChange()" v-bind:items="danmakuModel.items" v-bind:value.sync="danmakuModel.value"></v-dropdown>
     </div>
   </div>
   <div class="separator"></div>
@@ -63,7 +63,7 @@
       <span class="selected-count">{{selectedEpisodeCount}}/{{episodeList.length}}</span>
     </div>
     <div class="episode-list">
-      <v-checkbox v-for="ep of episodeList" v-bind:key="ep.index" v-bind:model="ep"></v-checkbox>
+      <v-checkbox v-for="ep of episodeList" v-bind:key="ep.index" v-bind:title="ep.title" v-bind:checked.sync="ep.checked"></v-checkbox>
     </div>
   </div>
   <div class="separator"></div>

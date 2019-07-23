@@ -468,22 +468,18 @@ async function loadPanel() {
     <div class="v-dropdown" v-on:click="toggleDropdown()">
       <span class="selected">{{value}}</span>
       <ul class="dropdown-menu" v-bind:class="{opened: dropdownOpen}">
-        <li v-for="item in model.items" v-bind:key="item" v-bind:data-value="item" v-on:click="select(item)">{{item}}</li>
+        <li v-for="item in items" v-bind:key="item" v-bind:data-value="item" v-on:click="select(item)">{{item}}</li>
       </ul>
       <i class="mdi mdi-chevron-down"></i>
     </div>
   `,
     props: [
-      'model',
+      'items',
+      'value'
     ],
     data() {
       return {
         dropdownOpen: false,
-      }
-    },
-    computed: {
-      value() {
-        return this.model.value
       }
     },
     methods: {
@@ -491,24 +487,24 @@ async function loadPanel() {
         this.dropdownOpen = !this.dropdownOpen
       },
       select(item: string) {
-        this.model.value = item
-        this.$emit('change')
+        this.$emit('update:value', item)
+        this.$emit('change', item)
       },
     },
   })
   Vue.component('v-checkbox', {
     template: /*html*/`
-      <div class="v-checkbox" v-on:click="toggleCheck()" v-bind:class="{checked: model.checked}">
+      <div class="v-checkbox" v-on:click="toggleCheck()" v-bind:class="{checked: checked}">
         <i class="mdi mdi-checkbox-blank-circle-outline">
           <i class="mdi mdi-checkbox-marked-circle"></i>
         </i>
-        <span class="content">{{model.title}}</span>
+        <span class="content">{{title}}</span>
       </div>
     `,
-    props: ['model'],
+    props: ['checked', 'title'],
     methods: {
       toggleCheck() {
-        this.model.checked = !this.model.checked
+        this.$emit('update:checked', !this.checked)
       },
     },
   })
