@@ -91,7 +91,7 @@
             路径<input type="text" v-model="rpcSettings.dir">
           </div>
           <div class="rpc-settings-item">
-            方法<v-dropdown v-bind:items="['get', 'post']" v-bind:value.sync="rpcSettings.method">
+            方法<v-dropdown style="text-transform: uppercase;" v-bind:items="['get', 'post']" v-bind:value.sync="rpcSettings.method">
           </div>
           <div class="primary button" v-on:click="saveRpcSettings();toggleRpcSettings();exportData('aria2RPC')">确定</div>
         </div>
