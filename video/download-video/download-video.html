@@ -38,7 +38,10 @@
   </div>
   <div class="separator"></div>
   <div v-show="downloadSingle" class="direct-download">
-    <h2>直接下载</h2>
+    <div class="direct-download-header">
+      <h2>直接下载</h2>
+      <span class="download-speed">{{speed}}</span>
+    </div>
     <button v-if="!downloading" class="primary start-download" v-on:click="startDownload()">开始</button>
     <button v-else class="primary cancel-download" v-on:click="cancelDownload()">取消</button>
     <div class="progress">

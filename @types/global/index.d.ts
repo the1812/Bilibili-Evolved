@@ -317,5 +317,6 @@ declare global {
   function getI18nKey(): string;
   const dq: (selector: string) => Element | null;
   const dqa: (selector: string) => Element[];
+  const formatFileSize: (bytes: number, fixed?: number) => string
 }
 export { };

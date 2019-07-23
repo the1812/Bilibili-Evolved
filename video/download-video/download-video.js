@@ -116,6 +116,7 @@ class VideoDownloader {
         this.progressMap = new Map();
         this.format = format;
         this.fragments = fragments || [];
+        this.videoSpeed = new VideoSpeed(this);
     }
     get totalSize() {
         return this.fragments.map(it => it.size).reduce((acc, it) => acc + it);
@@ -149,6 +150,7 @@ class VideoDownloader {
         this.progress && this.progress(progress);
     }
     cancelDownload() {
+        this.videoSpeed.stopMeasure();
         if (this.workingXhr !== null) {
             this.workingXhr.forEach(it => it.abort());
         }
@@ -388,6 +390,7 @@ ${it.url}
     }
     async download() {
         const downloadedData = [];
+        this.videoSpeed.startMeasure();
         for (const fragment of this.fragments) {
             const data = await this.downloadFragment(fragment);
             downloadedData.push(data);
@@ -406,10 +409,34 @@ ${it.url}
         this.cleanUpOldBlobUrl();
         const blobUrl = URL.createObjectURL(blob);
         this.progress && this.progress(0);
+        this.videoSpeed.stopMeasure();
         return {
             url: blobUrl,
             filename: filename
         };
+    }
+}
+class VideoSpeed {
+    constructor(downloader) {
+        this.lastProgress = 0;
+        this.measureInterval = 1000;
+        this.workingDownloader = downloader;
+    }
+    startMeasure() {
+        // console.log(`total bytes = ${this.workingDownloader.totalSize}`)
+        this.intervalTimer = setInterval(() => {
+            const progress = this.workingDownloader.progressMap
+                ? [...this.workingDownloader.progressMap.values()].reduce((a, b) => a + b, 0) : 0;
+            const loadedBytes = progress - this.lastProgress;
+            // console.log(`${progress} - ${this.lastProgress} = ${loadedBytes} (${formatFileSize(loadedBytes)})`)
+            if (this.speedUpdate !== undefined) {
+                this.speedUpdate(formatFileSize(loadedBytes) + '/s');
+            }
+            this.lastProgress = progress;
+        }, this.measureInterval);
+    }
+    stopMeasure() {
+        clearInterval(this.intervalTimer);
     }
 }
 async function loadPageData() {
@@ -514,6 +541,7 @@ async function loadPanel() {
             blobUrl: '',
             episodeList: [],
             downloading: false,
+            speed: '',
             batch: false,
             rpcSettings: settings.aria2RpcOption,
             showRpcSettings: false,
@@ -524,14 +552,7 @@ async function loadPanel() {
                 if (typeof this.size === 'string') {
                     return this.size;
                 }
-                const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-                let number = this.size;
-                let unitIndex = 0;
-                while (number >= 1024) {
-                    number /= 1024;
-                    unitIndex++;
-                }
-                return `${Math.round(number * 10) / 10}${units[unitIndex]}`;
+                return formatFileSize(this.size);
             },
             sizeWarning() {
                 if (typeof this.size === 'string') {
@@ -729,6 +750,7 @@ async function loadPanel() {
                 try {
                     this.downloading = true;
                     const videoDownloader = await format.downloadInfo();
+                    videoDownloader.videoSpeed.speedUpdate = speed => this.speed = speed;
                     videoDownloader.danmakuOption = this.danmakuModel.value;
                     videoDownloader.progress = percent => {
                         this.progressPercent = Math.trunc(percent * 100);
@@ -749,6 +771,7 @@ async function loadPanel() {
                 }
                 finally {
                     this.downloading = false;
+                    this.speed = '';
                 }
             },
             selectAllEpisodes() {

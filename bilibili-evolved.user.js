@@ -105,6 +105,16 @@ const dq = (selector) => document.querySelector(selector)
 const dqa = (selector) => [...document.querySelectorAll(selector)]
 const UserAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0`
 const EmptyImageUrl = 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>'
+const formatFileSize = (bytes, fixed = 1) => {
+  const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+  let number = bytes
+  let unitIndex = 0
+  while (number >= 1024) {
+    number /= 1024
+    unitIndex++
+  }
+  return `${Math.round(number * (10 ** fixed)) / (10 ** fixed)}${units[unitIndex]}`
+}
 
 const customNavbarDefaultOrders = {
   blank1: 0,

@@ -410,3 +410,13 @@ body.dark .download-video .direct-download .progress .foreground {
 .download-video .rpc-settings input[type="text"]:focus {
   border-color: var(--theme-color);
 }
+.download-video button.start-download,
+.download-video button.cancel-download {
+  margin-top: 8px;
+}
+.download-video .direct-download-header {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
