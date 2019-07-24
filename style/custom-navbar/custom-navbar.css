@@ -784,6 +784,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     transform-origin: left;
     opacity: 0.3;
 }
+.custom-navbar .video-list.history a .progress.background {
+    background-color: #8884;
+}
 .custom-navbar .video-list.history a:hover .progress
 {
     opacity: 1;
