@@ -3,22 +3,22 @@
     position: relative;
 }
 .bb-comment .comment-list .list-item .info,
-.dynamic-list-item-wrap .item-detail>.info
+.dynamic-list-item-wrap .reply-item>.info
 {
     display: flex;
 }
 .bb-comment .comment-list .list-item .info .floor,
-.dynamic-list-item-wrap .item-detail>.info .floor
+.dynamic-list-item-wrap .reply-item>.info .floor
 {
     order: 1;
 }
 .bb-comment .comment-list .list-item .info .reply,
-.dynamic-list-item-wrap .item-detail>.info .reply
+.dynamic-list-item-wrap .reply-item>.info .reply
 {
     order: 2;
 }
 .bb-comment .comment-list .list-item .info .operation,
-.dynamic-list-item-wrap .item-detail>.info .operation
+.dynamic-list-item-wrap .reply-item>.info .operation
 {
     order: 3;
     flex-grow: 1;
@@ -34,16 +34,16 @@
     margin-top: 4px;
 }
 .bb-comment .comment-list .list-item>.con>.info>.time,
-.item-detail>.info>.time
+.reply-item>.info>.time
 {
     position: absolute;
     right: 8px;
     top: 24px;
-    margin: 0;
+    margin: 0 !important;
     line-height: normal;
     color: black;
 }
-.item-detail>.info>.time
+.reply-item>.info>.time
 {
     top: 12px;
     opacity: 1;
@@ -59,11 +59,13 @@
 .comment-area .dynamic-level,
 .dynamic-list-item-wrap .info .plat,
 .bb-comment .comment-list .list-item .con .vote-container,
-.bb-comment .nameplate
+.bb-comment .nameplate,
+.bb-comment .reply-notice
 {
     display: none !important;
 }
-.bb-comment .comment-list .reply-con
+.bb-comment .comment-list .reply-con,
+.bb-comment .reply-item
 {
     position: relative;
 }
@@ -269,7 +271,8 @@ body.dark .bb-comment .comment-list .list-item .info .hate span,
 body.dark .bb-comment .comment-list .list-item .info .like.liked span,
 body.dark .bb-comment .comment-list .list-item .info .hate.hated span,
 body.dark .bb-comment .comment-list .list-item .info .like:hover span,
-body.dark .bb-comment .comment-list .list-item .info .hate:hover span
+body.dark .bb-comment .comment-list .list-item .info .hate:hover span,
+body.dark .bb-comment .reply-item>.info>.time
 {
     color: #eee !important;
 }

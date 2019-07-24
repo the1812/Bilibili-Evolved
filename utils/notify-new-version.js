@@ -50,7 +50,9 @@ async function checkNewVersion () {
     if (hasNewVersion) {
       const message = /* html */`新版本<span>${latestVersion.versionString}</span>已发布.  <a id="new-version-link" class="link" href="${settings.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`
       const toast = Toast.info(message, '检查更新')
-      $('#new-version-link').on('click', () => toast && toast.dismiss())
+      SpinQuery.select('#new-version-link').then(a => a.addEventListener('click', () => {
+        toast && toast.dismiss()
+      }))
     }
     return hasNewVersion
   } catch (error) {
