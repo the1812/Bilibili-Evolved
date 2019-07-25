@@ -230,7 +230,8 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .dropdown-btn:hover,
 .tabs-nav .tab-item,
 .customize-wrap .title,
-.center-box .line-2
+.center-box .line-2,
+.new-comers-module .zone-title .headline .name
 {
     color: #eee !important;
 }
@@ -502,7 +503,8 @@ li.danmaku-info-row.bpui-selecting,
 .center-box .line-3 .action-button.active,
 .center-box .line-3 .action-button:hover,
 .center-box .line-1 .like-item:hover,
-.card .forw-area a.more:hover
+.card .forw-area a.more:hover,
+.new-comers-module .zone-title .headline .name:hover
 {
     color: var(--theme-color) !important;
 }
