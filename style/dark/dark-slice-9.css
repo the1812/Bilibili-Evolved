@@ -1,12 +1,14 @@
-/* a
+#biliAppHomeSetting>div
 {
   background-color: #222 !important;
-} */
+}
 /* a
 {
   background-color: #333 !important;
 } */
-.s_tag .btn-add
+.s_tag .btn-add,
+#biliAppHomeSetting select,
+#biliAppHomeSetting input
 {
   background-color: #444 !important;
 }
@@ -26,22 +28,25 @@
 {
   background: #fff !important;
 } */
-/* a
+#biliAppHomeSetting label ~ span
 {
   color: #aaa !important;
-} */
-/* a
+}
+#biliAppHomeSetting select,
+#biliAppHomeSetting input,
+#biliAppHomeSetting a
 {
   color: #eee !important;
-} */
+}
 /* a
 {
   color: #fff !important;
 } */
-/* a
+#biliAppHomeSetting select,
+#biliAppHomeSetting input
 {
   border-color: transparent !important;
-} */
+}
 /* a
 {
   border-color: #aaa !important;
@@ -54,6 +59,11 @@
 {
   border-color: white !important;
 } */
+#biliAppHomeSetting select,
+#biliAppHomeSetting input
+{
+  border-radius: 4px;
+}
 /* a
 {
   fill: #aaa !important;
@@ -136,7 +146,8 @@
 } */
 .interact-dialog .btn,
 .rookie-guide .close-button,
-.video-control-show .bilibili-player-video-interactive-list .check:hover .big-round
+.video-control-show .bilibili-player-video-interactive-list .check:hover .big-round,
+#biliAppHomeSetting button
 {
   background-color: var(--theme-color) !important;
 }
@@ -148,12 +159,13 @@
 {
   background-color: var(--theme-color-90) !important;
 } */
-/* a
+#biliAppHomeSetting h2
 {
   color: var(--theme-color) !important;
-} */
+}
 .interact-dialog .btn,
-.rookie-guide .close-button
+.rookie-guide .close-button,
+#biliAppHomeSetting button
 {
   color: var(--foreground-color) !important;
 }
