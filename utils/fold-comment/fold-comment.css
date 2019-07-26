@@ -2,9 +2,9 @@
   position: sticky;
   bottom: 0;
   height: 40px;
-  width: calc(100% + 20px);
+  width: calc(100% + 48px);
   font-size: 14px;
-  transform: translateX(-10px);
+  transform: translateX(-24px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,6 +13,7 @@
   cursor: pointer;
   transition: all .2s ease-out;
   z-index: 1000;
+  border-radius: 4px;
 }
 .panel-area .bb-comment .fold-comment:hover {
   color: black;
