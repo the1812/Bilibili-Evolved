@@ -17,7 +17,7 @@
 {
     transition: all 0.2s;
     opacity: 0.6;
-    transform: rotate(180deg);
+    transform: rotate(360deg);
     font-size: 12px;
 }
 .gui-settings:hover i,

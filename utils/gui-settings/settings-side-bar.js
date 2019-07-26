@@ -19,6 +19,39 @@ if (document.querySelector('.gui-settings-icon-panel') === null) {
   document.querySelector('.gui-settings-widgets').addEventListener('click', () => {
     document.querySelectorAll('.gui-settings-widgets-box,.gui-settings-mask').forEach(it => it.classList.add('opened'))
   })
+
+  const settingsIcon = dq('.gui-settings-icon-panel .gui-settings>i')
+  let keyup = false
+  let blur = false
+  const restoreIcon = () => {
+    settingsIcon.classList.remove('icon-info')
+    settingsIcon.classList.add('icon-settings')
+    settingsIcon.parentElement.title = '设置'
+    keyup = false
+    blur = false
+  }
+  const changeIcon = () => {
+    settingsIcon.classList.remove('icon-settings')
+    settingsIcon.classList.add('icon-info')
+    settingsIcon.parentElement.title = '关于'
+    if (!keyup) {
+      document.body.addEventListener('keyup', restoreIcon, { once: true })
+      keyup = true
+    }
+    if (!blur) {
+      window.addEventListener('blur', restoreIcon, { once: true })
+      blur = true
+    }
+  }
+  document.body.addEventListener('keydown', e => {
+    if (document.activeElement &&
+      ["input", "textarea"].includes(document.activeElement.nodeName.toLowerCase())) {
+      return
+    }
+    if (e.shiftKey === true) {
+      changeIcon()
+    }
+  })
 }
 const setSideBarOffset = (value = settings.sideBarOffset) => {
   document.body.style.setProperty("--side-bar-offset", value + "%")
