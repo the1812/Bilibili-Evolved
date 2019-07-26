@@ -16,6 +16,9 @@
     white-space: pre-wrap;
     pointer-events: none;
 }
+.round-corner .gui-settings-tooltip {
+    border-radius: var(--large-corner-radius);
+}
 .gui-settings-tooltip.show
 {
     pointer-events: initial;

@@ -318,6 +318,7 @@ class Upload extends NavbarComponent {
   }
 }
 class Messages extends NavbarComponent {
+  // TODO: try alt api: https://api.bilibili.com/x/msgfeed/unread
   constructor () {
     super();
     this.href = "https://message.bilibili.com/";
