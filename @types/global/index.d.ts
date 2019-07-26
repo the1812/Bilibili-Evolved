@@ -206,6 +206,7 @@ declare global {
     removeLiveWatermark: boolean,
     harunaScale: boolean,
     removeAds: boolean,
+    showBlockedAdsTip: boolean,
     hideTopSearch: boolean,
     touchVideoPlayerDoubleTapControl: boolean,
     touchVideoPlayerAnimation: boolean,

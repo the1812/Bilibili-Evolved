@@ -44,6 +44,7 @@ export const settings = {
   removeLiveWatermark: true,
   harunaScale: true,
   removeAds: true,
+  showBlockedAdsTip: false,
   hideTopSearch: false,
   touchVideoPlayerDoubleTapControl: false,
   customStyleColor: '#00A0D8',

@@ -175,7 +175,8 @@ Resource.manifest = {
     path: 'remove-promotions.min.js',
     style: 'instant',
     displayNames: {
-      removeAds: '删除广告'
+      removeAds: '删除广告',
+      showBlockedAdsTip: '显示占位文本',
     }
   },
   watchLaterRedirect: {

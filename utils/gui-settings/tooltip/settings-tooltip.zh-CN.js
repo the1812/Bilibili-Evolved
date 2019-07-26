@@ -69,6 +69,7 @@ export const toolTips = new Map([
     ["removeLiveWatermark", /*html*/ `删除观看直播时角落的水印.`],
     ["removeVideoTopMask", /*html*/ `删除视频里鼠标经过时出现在右上角的覆盖层.`],
     ["removeAds", /*html*/ `删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.`],
+    ["showBlockedAdsTip", /*html*/ `删除首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.`],
     ["watchLaterRedirect", /*html*/ `将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`],
     ["favoritesRedirect", /*html*/ `将个人空间收藏夹里的视频重定向为直链, 而不是收藏夹播单链接.`],
     ["hideTopSearch", /*html*/ `将搜索框的推荐词替换为<span>搜索</span>.`],
