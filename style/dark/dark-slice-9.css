@@ -159,7 +159,8 @@
 {
   background-color: var(--theme-color-90) !important;
 } */
-#biliAppHomeSetting h2
+#biliAppHomeSetting h2,
+.video-desc .subtitle a
 {
   color: var(--theme-color) !important;
 }
