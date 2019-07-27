@@ -322,5 +322,7 @@ declare global {
   const dq: (selector: string) => Element | null;
   const dqa: (selector: string) => Element[];
   const formatFileSize: (bytes: number, fixed?: number) => string
+  const ascendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
+  const descendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
 }
 export { };

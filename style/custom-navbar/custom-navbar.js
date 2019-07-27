@@ -690,12 +690,16 @@ class SearchBox extends NavbarComponent {
         <input type="text" placeholder="搜索" name="keyword">
         <input type="hidden" name="from_source" value="banner_search">
         <a style="display: none" target="_blank" class="recommended-target"></a>
-        <button type="submit" title="搜索">
+        <button type="submit" title="搜索" tabindex="-1">
           <svg style="width:22px;height:22px" viewBox="0 0 24 24">
             <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
           </svg>
         </button>
       </form>
+      <div class="popup search-list" :class="{empty: items.length === 0}">
+        <div class="search-list-item" tabindex="0" v-for="(item, index) of items" v-html="item.html" @keydown.enter="submit(item.value)" @click="submit(item.value)" @keydown.down.prevent="nextItem(index)" @keydown.up.prevent="previousItem(index)"></div>
+        <div tabindex="0" v-if="items.length > 0 && isHistory" class="search-list-item clear-history" @click="clearSearchHistory()" @keydown.enter="clearSearchHistory()" @keydown.down.prevent="nextItem(items.length)" @keydown.up.prevent="previousItem(items.length)">清除搜索历史</div>
+      </div>
     `;
     this.init();
   }
@@ -710,6 +714,16 @@ class SearchBox extends NavbarComponent {
         e.preventDefault();
         return false;
       }
+      const historyItem = settings.searchHistory.find(item => item.keyword === keyword.value)
+      if (historyItem) {
+        historyItem.count++
+      } else {
+        settings.searchHistory.push({
+          count: 1,
+          keyword: keyword.value
+        })
+      }
+      settings.searchHistory = settings.searchHistory // save history
       return true;
     });
     if (!settings.hideTopSearch) {
@@ -732,6 +746,81 @@ class SearchBox extends NavbarComponent {
         console.error("[自定义顶栏] 获取搜索推荐词失败");
       }
     }
+    const searchList = new Vue({
+      el: dq('.popup.search-list'),
+      data: {
+        items: [],
+        isHistory: true,
+      },
+      methods: {
+        submit (value) {
+          keyword.value = value
+          form.submit()
+          // submit method will not trigger submit event
+          // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit
+          raiseEvent(form, 'submit')
+        },
+        nextItem (index) {
+          const item = dq(`.custom-navbar .search-list-item:nth-child(${index + 2})`)
+          if (item) {
+            item.focus()
+          }
+        },
+        previousItem (index) {
+          const item = dq(`.custom-navbar .search-list-item:nth-child(${index})`)
+          if (item) {
+            item.focus()
+          } else {
+            keyword.focus()
+            return
+          }
+        },
+        clearSearchHistory() {
+          settings.searchHistory = []
+          this.items = []
+        }
+      },
+    })
+    const { debounce } = await import('debounce');
+    let lastQueuedRequest = ''
+    const updateSuggest = async () => {
+      const text = keyword.value
+      searchList.isHistory = text === ''
+      if (searchList.isHistory) {
+        searchList.items = settings.searchHistory.sort((a, b) => b.count - a.count).map(item => {
+          return {
+            value: item.keyword,
+            html: item.keyword,
+          }
+        })
+      } else {
+        const url = `https://s.search.bilibili.com/main/suggest?func=suggest&suggest_type=accurate&sub_type=tag&main_ver=v1&highlight=&userid=${userInfo.mid}&bangumi_acc_num=1&special_acc_num=1&topic_acc_num=1&upuser_acc_num=3&tag_num=10&special_num=10&bangumi_num=10&upuser_num=3&term=${text}`
+        lastQueuedRequest = url
+        const json = await Ajax.getJson(url)
+        if (json.code !== 0 || lastQueuedRequest !== url) {
+          return
+        }
+        const results = json.result.tag
+        if (results === undefined) {
+          searchList.items = []
+          return
+        }
+        searchList.items = results.map(item => {
+          return {
+            value: item.value,
+            html: item.name.replace(/suggest_high_light/g, 'suggest-highlight')
+          }
+        })
+      }
+    }
+    updateSuggest()
+    keyword.addEventListener('input', debounce(updateSuggest, 200))
+    keyword.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown' && searchList.items.length > 0) {
+        e.preventDefault()
+        dq('.custom-navbar .search-list-item:first-child').focus()
+      }
+    })
   }
   get name () {
     return "search";
