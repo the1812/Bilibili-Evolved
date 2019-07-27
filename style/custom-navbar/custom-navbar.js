@@ -705,22 +705,22 @@ class SearchBox extends NavbarComponent {
   }
   async init () {
     const form = await SpinQuery.select("#custom-navbar-search");
-    const keyword = form.querySelector("input[name='keyword']");
+    const keywordInput = form.querySelector("input[name='keyword']");
     form.addEventListener("submit", e => {
-      if (keyword.value === "") {
+      if (keywordInput.value === "") {
         if (!settings.hideTopSearch) {
           form.querySelector(".recommended-target").click();
         }
         e.preventDefault();
         return false;
       }
-      const historyItem = settings.searchHistory.find(item => item.keyword === keyword.value)
+      const historyItem = settings.searchHistory.find(item => item.keyword === keywordInput.value)
       if (historyItem) {
         historyItem.count++
       } else {
         settings.searchHistory.push({
           count: 1,
-          keyword: keyword.value
+          keyword: keywordInput.value
         })
       }
       settings.searchHistory = settings.searchHistory // save history
@@ -729,7 +729,7 @@ class SearchBox extends NavbarComponent {
     if (!settings.hideTopSearch) {
       const json = await Ajax.getJson("https://api.bilibili.com/x/web-interface/search/default");
       if (json.code === 0) {
-        keyword.setAttribute("placeholder", json.data.show_name);
+        keywordInput.setAttribute("placeholder", json.data.show_name);
         let href;
         if (json.data.url !== "") {
           href = json.data.url;
@@ -754,7 +754,7 @@ class SearchBox extends NavbarComponent {
       },
       methods: {
         submit (value) {
-          keyword.value = value
+          keywordInput.value = value
           form.submit()
           // submit method will not trigger submit event
           // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit
@@ -771,7 +771,7 @@ class SearchBox extends NavbarComponent {
           if (item) {
             item.focus()
           } else {
-            keyword.focus()
+            keywordInput.focus()
             return
           }
         },
@@ -784,7 +784,7 @@ class SearchBox extends NavbarComponent {
     const { debounce } = await import('debounce');
     let lastQueuedRequest = ''
     const updateSuggest = async () => {
-      const text = keyword.value
+      const text = keywordInput.value
       searchList.isHistory = text === ''
       if (searchList.isHistory) {
         searchList.items = settings.searchHistory.sort((a, b) => b.count - a.count).map(item => {
@@ -814,8 +814,19 @@ class SearchBox extends NavbarComponent {
       }
     }
     updateSuggest()
-    keyword.addEventListener('input', debounce(updateSuggest, 200))
-    keyword.addEventListener('keydown', e => {
+    const debouncedSuggest = debounce(updateSuggest, 200)
+    let composing = false
+    keywordInput.addEventListener('compositionstart', () => composing = true)
+    keywordInput.addEventListener('compositionend', () => {
+      composing = false
+      raiseEvent(keywordInput, 'input')
+    })
+    keywordInput.addEventListener('input', () => {
+      if (!composing) {
+        debouncedSuggest()
+      }
+    })
+    keywordInput.addEventListener('keydown', e => {
       if (e.key === 'ArrowDown' && searchList.items.length > 0) {
         e.preventDefault()
         dq('.custom-navbar .search-list-item:first-child').focus()
