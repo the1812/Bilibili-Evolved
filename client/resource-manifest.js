@@ -644,7 +644,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'defaultVideoSpeed',
-      items: ['0.5', '0.75', '1', '1.25', '1.5', '2.0'],
+      items: ['0.5', '0.75', '1.0', '1.25', '1.5', '2.0'],
     }
   },
   aria2Rpc: {

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      375.22
+// @version      375.87
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -242,7 +242,7 @@ const settings = {
   hideHomeLive: false,
   noMiniVideoAutoplay: false,
   useDefaultVideoSpeed: false,
-  defaultVideoSpeed: '1',
+  defaultVideoSpeed: '1.0',
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
@@ -254,6 +254,7 @@ const settings = {
     method: 'get',
     skipByDefault: false,
   },
+  searchHistory: [],
   cache: {},
 }
 const fixedSettings = {
@@ -1921,7 +1922,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'defaultVideoSpeed',
-      items: ['0.5', '0.75', '1', '1.25', '1.5', '2.0'],
+      items: ['0.5', '0.75', '1.0', '1.25', '1.5', '2.0'],
     }
   },
   aria2Rpc: {

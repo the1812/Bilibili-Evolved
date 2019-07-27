@@ -241,7 +241,7 @@ const settings = {
   hideHomeLive: false,
   noMiniVideoAutoplay: false,
   useDefaultVideoSpeed: false,
-  defaultVideoSpeed: '1',
+  defaultVideoSpeed: '1.0',
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
@@ -253,6 +253,7 @@ const settings = {
     method: 'get',
     skipByDefault: false,
   },
+  searchHistory: [],
   cache: {},
 }
 const fixedSettings = {
@@ -1834,7 +1835,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'defaultVideoSpeed',
-      items: ['0.5', '0.75', '1', '1.25', '1.5', '2.0'],
+      items: ['0.5', '0.75', '1.0', '1.25', '1.5', '2.0'],
     }
   },
   aria2Rpc: {

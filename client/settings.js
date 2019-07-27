@@ -123,7 +123,7 @@ export const settings = {
   hideHomeLive: false,
   noMiniVideoAutoplay: false,
   useDefaultVideoSpeed: false,
-  defaultVideoSpeed: '1',
+  defaultVideoSpeed: '1.0',
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
@@ -135,6 +135,7 @@ export const settings = {
     method: 'get',
     skipByDefault: false,
   },
+  searchHistory: [],
   cache: {},
 }
 const fixedSettings = {

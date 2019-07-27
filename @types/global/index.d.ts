@@ -13,6 +13,10 @@ declare global {
     method: 'get' | 'post'
     skipByDefault: boolean
   }
+  interface SearchHistoryItem {
+    keyword: string
+    count: number
+  }
   interface MonkeyInfo {
     script: {
       author: string;
@@ -292,6 +296,7 @@ declare global {
     foldComment: boolean,
     downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
     aria2RpcOption: RpcOption,
+    searchHistory: SearchHistoryItem[],
     latestVersionLink: string,
     currentVersion: string,
   }
