@@ -41,7 +41,7 @@
     opacity: 1;
     transform-origin: center !important;
     transform: translateX(-16px);
-    background-color: rgba(255,255,255,0.75);
+    background-color: #dddc;
     border-radius: 0 50% 50% 0;
     padding: 6px;
 }
@@ -285,7 +285,7 @@ button.gui-settings-button:focus
     position: relative;
     cursor: pointer;
     box-sizing: border-box;
-    box-shadow: 0px 2px 8px 1px var(--theme-color-70);
+    box-shadow: 0px 2px 4px 0px var(--theme-color-40);
 }
 .predefined-colors
 {
@@ -296,7 +296,7 @@ button.gui-settings-button:focus
     width: 168px;
     height: 168px;
     position: absolute;
-    box-shadow: 0px 3px 20px 2px #0004;
+    box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
     top: 32px;
     left: calc(-84px + 50%);
     transform: scale(0);
@@ -617,7 +617,7 @@ li.category.folded i.icon-arrow
     border-radius: 50%;
     top: -4px;
     left: -4px;
-    box-shadow: 0px 2px 8px 1px #0003;
+    box-shadow: 0px 2px 4px 0px #0003;
     transition: all .2s ease-out;
 }
 .gui-settings-checkbox-container input:checked ~ .gui-settings-checkbox
@@ -627,7 +627,7 @@ li.category.folded i.icon-arrow
 .gui-settings-checkbox-container input:checked ~ .gui-settings-checkbox::after
 {
     background: var(--theme-color) !important;
-    box-shadow: 0px 2px 8px 1px var(--theme-color-70);
+    box-shadow: 0px 2px 4px 0px var(--theme-color-40);
     left: calc(100% - 16px);
 }
 .gui-settings-checkbox-container input:disabled ~ .gui-settings-checkbox
