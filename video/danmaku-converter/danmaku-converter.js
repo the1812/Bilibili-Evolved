@@ -54,6 +54,10 @@ export class AssDanmaku extends Danmaku {
         this.endTime = endTime;
     }
     text(fontStyles) {
+        let style = fontStyles[this.fontSize];
+        if (!style) {
+            style = fontStyles[25];
+        }
         const styleName = fontStyles[this.fontSize].match(/Style:(.*?),/)[1].trim();
         return `Dialogue: 0,${this.time},${this.endTime},${styleName},,0,0,0,,{${this.typeTag}${this.colorTag}}${this.content}`;
     }
@@ -105,7 +109,8 @@ export class DanmakuStack {
         this.fontSizes = {
             30: `64px ${font}`,
             25: `52px ${font}`,
-            18: `36px ${font}`
+            18: `36px ${font}`,
+            45: `90px ${font}`,
         };
         this.bottomMarginPercent = bottomMarginPercent;
         this.generateTracks();
@@ -284,7 +289,8 @@ export class DanmakuConverter {
         return {
             30: `Style: Large,${this.font},64,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? '1' : '0'},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`,
             25: `Style: Medium,${this.font},52,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? '1' : '0'},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`,
-            18: `Style: Small,${this.font},36,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? '1' : '0'},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`
+            18: `Style: Small,${this.font},36,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? '1' : '0'},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`,
+            45: `Style: ExtraLarge,${this.font},90,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? '1' : '0'},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`,
         };
     }
     convertToAssDocument(xml) {
