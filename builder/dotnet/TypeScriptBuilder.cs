@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace BilibiliEvolved.Build
 {
@@ -32,9 +33,7 @@ namespace BilibiliEvolved.Build
             WriteInfo($"TypeScript build: {file}");
           });
           Console.Write(tsc.Run().Trim());
-          changedFiles.ForEach(file =>
-          {
-            file = file.Replace(".ts", ".js");
+          Parallel.ForEach(changedFiles.Select(f => f.Replace(".ts", ".js")), file => {
             var min = uglifyJs.Minify(File.ReadAllText(file));
             var minFile = ResourceMinifier.GetMinimizedFileName(file);
             File.WriteAllText(minFile, min);
