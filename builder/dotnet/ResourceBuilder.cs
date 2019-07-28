@@ -132,11 +132,7 @@ namespace BilibiliEvolved.Build
     {
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
-            return (file.FullName.Contains(@"style\")
-                || file.FullName.Contains(@"touch\")
-                || file.FullName.Contains(@"utils\")
-                || file.FullName.Contains(@"video\"))
-                && file.Extension == ".js";
+            return file.FullName.Contains(@"src\") && file.Extension == ".js";
         };
 
         public override string ResourceType { get; } = "JavaScript";

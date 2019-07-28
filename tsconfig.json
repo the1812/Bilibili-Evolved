@@ -1,20 +1,17 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "sourceMap": false,
-        "typeRoots": [
-            "./@types",
-            "./node_modules/vue/types"
-        ]
-    },
-    "include": [
-        "./client/*.ts",
-        "./style/**/*.ts",
-        "./touch/**/*.ts",
-        "./utils/**/*.ts",
-        "./video/**/*.ts",
-    ]
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "sourceMap": false,
+    "typeRoots": [
+      "./@types",
+      "./node_modules/vue/types"
+    ],
+    "outDir": ".ts-output/"
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
 }

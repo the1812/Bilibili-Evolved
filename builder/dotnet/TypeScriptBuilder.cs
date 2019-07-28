@@ -15,10 +15,7 @@ namespace BilibiliEvolved.Build
       var tsc = new TypeScriptCompiler();
       var uglifyJs = new JavascriptMinifier();
       var files = ResourceMinifier.GetFiles(file =>
-        (file.FullName.Contains(@"style\")
-        || file.FullName.Contains(@"touch\")
-        || file.FullName.Contains(@"utils\")
-        || file.FullName.Contains(@"video\")) &&
+        file.FullName.Contains(@"src\") &&
         file.Extension == ".ts" &&
         !file.Name.EndsWith(".d.ts")
       );
@@ -33,11 +30,10 @@ namespace BilibiliEvolved.Build
             WriteInfo($"TypeScript build: {file}");
           });
           Console.Write(tsc.Run().Trim());
-          Parallel.ForEach(changedFiles.Select(f => f.Replace(".ts", ".js")), file => {
+          Parallel.ForEach(changedFiles.Select(f => "ts-output/" + f.Replace(".ts", ".js")), file => {
             var min = uglifyJs.Minify(File.ReadAllText(file));
             var minFile = ResourceMinifier.GetMinimizedFileName(file);
             File.WriteAllText(minFile, min);
-            File.Delete(file);
             WriteHint($"\t=> {minFile}");
           });
         }
