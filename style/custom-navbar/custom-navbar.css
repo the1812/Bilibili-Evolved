@@ -229,7 +229,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     content: "";
     width: 94%;
     height: 94%;
-    border: 2px dashed #888a;
+    border: 2px dashed var(--navbar-foreground);
     position: absolute;
     top: 3%;
     left: 3%;
