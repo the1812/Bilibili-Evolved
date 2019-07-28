@@ -24,7 +24,7 @@ namespace BilibiliEvolved.Build
         public abstract Predicate<FileInfo> FileFilter { get; }
         public abstract string ResourceType { get; }
         public abstract string Minify(string input);
-        protected string GetMinimizedFileName(string path)
+        public static string GetMinimizedFileName(string path)
         {
             var fileInfo = new FileInfo(path);
             return "min/" + fileInfo.Name.Insert(fileInfo.Name.LastIndexOf("."), ".min");
