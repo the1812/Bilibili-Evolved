@@ -404,11 +404,6 @@ li.danmaku-info-row.bpui-selecting,
 {
     margin: 16px !important;
 }
-.members-info .up-card .info-name,
-.members-info .up-card .info-title
-{
-    width: auto !important;
-}
 .comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .tab-btn,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-head.up-avatar:hover,
 .replies-comment-input-wrapper .replies-upload .comment-input-img:hover,

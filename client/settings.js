@@ -136,6 +136,8 @@ export const settings = {
     skipByDefault: false,
   },
   searchHistory: [],
+  seedsToCoins: true,
+  autoSeedsToCoins: true,
   cache: {},
 }
 const fixedSettings = {

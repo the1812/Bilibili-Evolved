@@ -650,5 +650,12 @@ Resource.manifest = {
   aria2Rpc: {
     path: 'aria2-rpc.min.js',
   },
+  seedsToCoins: {
+    path: 'seeds-to-coins.min.js',
+    displayNames: {
+      seedsToCoins: '直播间瓜子换硬币',
+      autoSeedsToCoins: '自动运行',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

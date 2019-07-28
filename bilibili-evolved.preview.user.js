@@ -260,6 +260,8 @@ const settings = {
     skipByDefault: false,
   },
   searchHistory: [],
+  seedsToCoins: true,
+  autoSeedsToCoins: true,
   cache: {},
 }
 const fixedSettings = {
@@ -1846,6 +1848,13 @@ Resource.manifest = {
   },
   aria2Rpc: {
     path: 'aria2-rpc.min.js',
+  },
+  seedsToCoins: {
+    path: 'seeds-to-coins.min.js',
+    displayNames: {
+      seedsToCoins: '直播间瓜子换硬币',
+      autoSeedsToCoins: '自动运行',
+    },
   },
 }
 const resourceManifest = Resource.manifest
