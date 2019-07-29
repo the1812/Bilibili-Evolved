@@ -297,6 +297,9 @@ declare global {
     downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
     aria2RpcOption: RpcOption,
     searchHistory: SearchHistoryItem[],
+    seedsToCoins: boolean,
+    autoSeedsToCoins: boolean,
+    lastSeedsToCoinsDate: number,
     latestVersionLink: string,
     currentVersion: string,
   }

@@ -262,6 +262,7 @@ const settings = {
   searchHistory: [],
   seedsToCoins: true,
   autoSeedsToCoins: true,
+  lastSeedsToCoinsDate: 0,
   cache: {},
 }
 const fixedSettings = {

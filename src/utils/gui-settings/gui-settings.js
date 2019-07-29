@@ -127,7 +127,7 @@ function setDisplayNames () {
 
 (async () => {
   resources.applyStyle('guiSettingsStyle')
-  document.body.insertAdjacentHTML('afterbegin', `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css">`)
+  document.body.insertAdjacentHTML('afterbegin', `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css">`)
   document.body.classList.add('round-corner')
 
   const isIframe = document.body && unsafeWindow.parent.window !== unsafeWindow
