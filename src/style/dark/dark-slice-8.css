@@ -8,7 +8,8 @@
 .navbar-container,
 .submit button,
 .calendar-wrap .calendar-body .date-desc_wrap,
-.row1 .calendar-wrap
+.row1 .calendar-wrap,
+.main-wrapper .comment-wrapper
 {
     background-color: #222 !important;
 }
@@ -271,7 +272,8 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .filter-level,
 .list-header .filter-wrp .video-type,
 .love-detail .follow-btn.active,
-.love-card .header:after
+.love-card .header:after,
+.main-wrapper .comment-wrapper
 {
     border-color: transparent !important;
 }
