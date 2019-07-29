@@ -653,7 +653,7 @@ Resource.manifest = {
   seedsToCoins: {
     path: 'seeds-to-coins.min.js',
     displayNames: {
-      seedsToCoins: '直播间瓜子换硬币',
+      seedsToCoins: '瓜子换硬币',
       autoSeedsToCoins: '自动运行',
     },
   },

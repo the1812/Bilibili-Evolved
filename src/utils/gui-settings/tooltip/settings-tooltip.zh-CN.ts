@@ -132,6 +132,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['foldComment', /*html*/`动态里查看评论区时, 在底部添加一个<span>收起评论</span>按钮, 这样就不用再回到上面收起了.`],
   ['useDefaultVideoSpeed', /*html*/`设置是否使用默认视频播放速度.`],
   ['defaultVideoSpeed', /*html*/`设置默认的视频播放速度.`],
+  ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`]
 ]);
 export default {
   export: { toolTips },
