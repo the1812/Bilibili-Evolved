@@ -30,7 +30,7 @@ namespace BilibiliEvolved.Build
             WriteInfo($"TypeScript build: {file}");
           });
           Console.Write(tsc.Run().Trim());
-          Parallel.ForEach(changedFiles.Select(f => "ts-output/" + f.Replace(".ts", ".js")), file => {
+          Parallel.ForEach(changedFiles.Select(f => ".ts-output/" + f.Replace(".ts", ".js").Replace($"src{Path.DirectorySeparatorChar}", "")), file => {
             var min = uglifyJs.Minify(File.ReadAllText(file));
             var minFile = ResourceMinifier.GetMinimizedFileName(file);
             File.WriteAllText(minFile, min);
