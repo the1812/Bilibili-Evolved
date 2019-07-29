@@ -65,7 +65,7 @@ export async function sendRpc(params: RpcParam[], batch = false) {
       result = await postRpc(param, batch)
     }
     if (batch === true && result === false) {
-      logError(`${param.id} 导出失败`)
+      logError(`${decodeURIComponent(param.id)} 导出失败`)
     }
   }
 }

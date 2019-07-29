@@ -667,33 +667,6 @@ async function loadPanel() {
           Toast.info('请至少选择1集或以上的数量!', '批量导出', 3000)
           return
         }
-        const format = this.getFormat()
-        if (this.danmakuModel.value !== '无') {
-          const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
-          const zip = new JSZip()
-          try {
-            if (this.danmakuModel.value === 'XML') {
-              for (const item of episodeList) {
-                const danmakuInfo = new DanmakuInfo(item.cid)
-                await danmakuInfo.fetchInfo()
-                zip.file(item.title + '.xml', danmakuInfo.rawXML)
-              }
-            } else {
-              const { convertToAss } = await import('../download-danmaku')
-              for (const item of episodeList) {
-                const danmakuInfo = new DanmakuInfo(item.cid)
-                await danmakuInfo.fetchInfo()
-                zip.file(item.title + '.ass', await convertToAss(danmakuInfo.rawXML))
-              }
-            }
-            VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), this.cid + '.danmakus.zip')
-          } catch (error) {
-            logError(error)
-          } finally {
-            danmakuToast.dismiss()
-          }
-        }
-        const toast = Toast.info('获取链接中...', '批量导出')
         const episodeFilter = (item: EpisodeItem) => {
           const match = episodeList.find((it: EpisodeItem) => it.cid === item.cid) as EpisodeItem | undefined
           if (match === undefined) {
@@ -701,6 +674,33 @@ async function loadPanel() {
           }
           return match.checked
         }
+        const format = this.getFormat()
+        if (this.danmakuModel.value !== '无') {
+          const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
+          const zip = new JSZip()
+          try {
+            if (this.danmakuModel.value === 'XML') {
+              for (const item of episodeList.filter(episodeFilter)) {
+                const danmakuInfo = new DanmakuInfo(item.cid)
+                await danmakuInfo.fetchInfo()
+                zip.file(item.title + '.xml', danmakuInfo.rawXML)
+              }
+            } else {
+              const { convertToAss } = await import('../download-danmaku')
+              for (const item of episodeList.filter(episodeFilter)) {
+                const danmakuInfo = new DanmakuInfo(item.cid)
+                await danmakuInfo.fetchInfo()
+                zip.file(item.title + '.ass', await convertToAss(danmakuInfo.rawXML))
+              }
+            }
+            VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), this.cid + '.danmakus.zip')
+          } catch (error) {
+            logError(`弹幕下载失败`)
+          } finally {
+            danmakuToast.dismiss()
+          }
+        }
+        const toast = Toast.info('获取链接中...', '批量导出')
         this.batchExtractor.itemFilter = episodeFilter
         let result: string
         try {
