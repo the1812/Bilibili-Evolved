@@ -1,22 +1,25 @@
-<div align="center"><img width="500" alt="Bilibili Evolved" src="images\bilibili-evolved-wide-color.svg">
+<div align="center"><img id="Bilibili-Evolved" width="500" alt="Bilibili Evolved" src="images\bilibili-evolved-wide-color.svg"></div>
+
+<div align="center">
 
 强大的哔哩哔哩增强脚本: 下载视频, 音乐, 封面, 弹幕 / 自定义播放器画质, 模式, 布局 / 自定义顶栏, 删除广告, 夜间模式 / 触屏设备支持
 
 </div>
 
-[📦安装](#安装) / [Install](install-tutorial.en-US.md) / [インストール](install-tutorial.ja-JP.md)
 
-[⚙设置](#设置)
+[📦 安装](#安装) / [Install](install-tutorial.en-US.md) / [インストール](install-tutorial.ja-JP.md)
 
-[📚功能](#功能)
+[⚙ 设置](#设置)
 
-[👻兼容性](#兼容性)
+[📚 功能](#功能)
 
-[🐛版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
+[👻 兼容性](#兼容性)
 
-[📖相关文档](https://github.com/the1812/Bilibili-Evolved/wiki)
+[🐛 版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
 
-[❤投喂](donate.md)
+[📖 相关文档](https://github.com/the1812/Bilibili-Evolved/wiki)
+
+[❤ 投喂](donate.md)
 
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
@@ -592,5 +595,3 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 ------
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
-
-[返回顶部](#Bilibili-Evolved)
