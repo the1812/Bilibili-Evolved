@@ -192,7 +192,9 @@ class VideoDownloader {
     this.workingXhr = []
     this.progressMap = new Map()
     this.updateProgress()
-    const partialLength = Math.round(fragment.size / this.fragmentSplitFactor)
+    // 按一定大小分段或许对大视频更好
+    // const partialLength = Math.round(fragment.size / this.fragmentSplitFactor)
+    const partialLength = 16 * 1024 * 1024 // 16MB
     let startByte = 0
     const getPartNumber = (xhr: XMLHttpRequest) => [...this.progressMap.keys()].indexOf(xhr) + 1
     while (startByte < fragment.size) {
