@@ -60,7 +60,6 @@ if (settings.rememberDanmakuSettings)
                     [type]: element.checked,
                 });
                 // settings.danmakuSettings[type] = element.checked;
-                saveSettings(settings);
             });
         }
     }

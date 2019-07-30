@@ -14,7 +14,6 @@ export default {
             $("#clear-cache").on("click", () =>
             {
                 settings.cache = {};
-                saveSettings(settings);
                 Toast.success("已删除全部缓存.", "清除缓存", 5000);
             });
         }

@@ -89,14 +89,12 @@ function checkCompatibility () {
     !CSS.supports('-webkit-backdrop-filter', 'blur(24px)')) {
     inputs.find(it => it.getAttribute('key') === 'blurVideoControl').disabled = true
     settings.blurVideoControl = false
-    saveSettings(settings)
   }
   if (window.devicePixelRatio === 1) {
     inputs.find(it => it.getAttribute('key') === 'harunaScale').disabled = true
     inputs.find(it => it.getAttribute('key') === 'imageResolution').disabled = true
     settings.harunaScale = false
     settings.imageResolution = false
-    saveSettings(settings)
   }
 }
 function setDisplayNames () {
