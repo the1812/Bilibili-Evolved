@@ -99,7 +99,6 @@ export class Resource
                                         settings.cache = Object.assign(settings.cache, {
                                             [key]: this.text
                                         });
-                                        saveSettings(settings);
                                     }
                                 }
                             }).catch(error => reject(error));

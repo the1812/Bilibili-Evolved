@@ -133,7 +133,6 @@ export class ResourceManager {
       }
     }
     await Promise.all(promises)
-    saveSettings(settings)
     if (loadingToast) {
       loadingToast.dismiss()
     }
@@ -284,12 +283,10 @@ export class ResourceManager {
     if (settings.cache.version === undefined) { // Has newly downloaded cache
       settings.cache = Object.assign(settings.cache, { version: settings.currentVersion })
       // settings.cache.version = settings.currentVersion;
-      saveSettings(settings)
       return true
     }
     if (settings.cache.version !== settings.currentVersion) { // Has old version cache
       settings.cache = {}
-      saveSettings(settings)
       return false
     }
     return true // Has cache

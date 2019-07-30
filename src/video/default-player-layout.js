@@ -95,7 +95,6 @@ class VideoLayoutCookie extends LayoutCookie
         //     navbarOption.disabled = true;
         //     $(navbarOption).change();
         //     settings.overrideNavBar = false;
-        //     saveSettings(settings);
         //     Toast.info(`已关闭<span>搜索栏置顶</span>功能, 因为旧版视频播放器布局不兼容此功能.`, "提示", 5000);
         // }
     }
