@@ -258,7 +258,7 @@ body.dark .download-video .direct-download .progress .foreground {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 8px;
+  margin: 8px -4px 0 -4px;
 }
 .download-video .actions>* {
   margin: 4px;
