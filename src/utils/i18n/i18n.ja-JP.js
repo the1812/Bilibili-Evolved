@@ -666,6 +666,7 @@ export const map = new Map([
   [`签到`, `ログボ`],
   [`使用默认播放速度`, `デフォルトの再生速度を使用する`],
   [`默认播放速度`, `デフォルトの再生速度`],
+  [`直播歌曲内容不适宜请立即调整`, `放送の内容は適していません、すぐに調整してください`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
