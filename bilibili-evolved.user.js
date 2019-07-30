@@ -2120,8 +2120,20 @@ class ResourceManager {
       if (attributes === undefined) {
         const fetchListener = async newValue => {
           if (newValue === true) {
+            const isDownloading =
+              typeof offlineData === 'undefined' &&
+              (settings.useCache ? settings.cache[key] === undefined : true)
+            if (isDownloading) {
+              const downloading = document.createElement('i')
+              downloading.classList.add('mdi', 'mdi-18px', 'downloading', 'mdi-download')
+              downloading.innerHTML = '下载中'
+              dq(`li[data-key=${key}] label`).insertAdjacentElement('beforeend', downloading)
+            }
             await this.styleManager.fetchStyleByKey(key)
             await this.fetchByKey(key)
+            if (isDownloading) {
+              dq(`li[data-key=${key}] i.downloading`).remove()
+            }
             removeSettingsListener(key, fetchListener)
             checkAttribute(key, this.attributes[key])
           }

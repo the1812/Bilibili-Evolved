@@ -33,6 +33,7 @@ namespace BilibiliEvolved.Build
                     .BuildResources()
                     .BuildPreviewOffline()
                     .BuildOffline()
+                    .BuildBundle()
                     .BuildFinalOutput();
 
                 if (config.CopyOnBuild)

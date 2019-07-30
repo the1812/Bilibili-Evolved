@@ -696,7 +696,18 @@ body.round-corner {
 .round-corner .gui-settings-textbox-container input,
 .round-corner .gui-settings-dropdown ul li,
 .round-corner .gui-settings-dropdown>ul,
-.round-corner .gui-settings-flat-button .popup
+.round-corner .gui-settings-flat-button .popup,
+.round-corner .gui-settings-box li i.downloading
 {
     border-radius: var(--corner-radius);
+}
+.gui-settings-box li i.downloading {
+    margin-left: 8px;
+    font-style: normal;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    background: var(--theme-color);
+    color: var(--foreground-color);
+    padding: 2px 8px;
 }

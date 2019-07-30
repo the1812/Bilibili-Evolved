@@ -49,7 +49,6 @@ function listenSettingsChange () {
       const key = element.getAttribute('key')
       const value = element.checked
       settings[key] = value
-      saveSettings(settings)
     })
   })
   textBoxes.forEach(element => {
@@ -58,7 +57,6 @@ function listenSettingsChange () {
       const value = Validator.getValidator(key).validate(element.value)
       settings[key] = value
       element.value = value
-      saveSettings(settings)
     })
   })
 }
