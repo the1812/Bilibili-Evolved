@@ -273,7 +273,8 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .video-type,
 .love-detail .follow-btn.active,
 .love-card .header:after,
-.main-wrapper .comment-wrapper
+.main-wrapper .comment-wrapper,
+.title-container .info .activity
 {
     border-color: transparent !important;
 }
