@@ -161,19 +161,24 @@ export class ResourceManager {
             const isDownloading =
               typeof offlineData === 'undefined' &&
               (settings.useCache ? settings.cache[key] === undefined : true)
-            if (isDownloading) {
-              const downloading = document.createElement('i')
-              downloading.classList.add('mdi', 'mdi-18px', 'downloading', 'mdi-download')
-              downloading.innerHTML = '下载中'
-              dq(`li[data-key=${key}] label`).insertAdjacentElement('beforeend', downloading)
+            try {
+              if (isDownloading) {
+                const downloading = document.createElement('i')
+                downloading.classList.add('mdi', 'mdi-18px', 'downloading', 'mdi-download')
+                downloading.innerHTML = '下载中'
+                dq(`li[data-key=${key}] label`).insertAdjacentElement('beforeend', downloading)
+                dq(`input[key=${key}]`).disabled = true
+              }
+              await this.styleManager.fetchStyleByKey(key)
+              await this.fetchByKey(key)
+              removeSettingsListener(key, fetchListener)
+              checkAttribute(key, this.attributes[key])
+            } finally {
+              if (isDownloading) {
+                dq(`li[data-key=${key}] i.downloading`).remove()
+                dq(`input[key=${key}]`).disabled = false
+              }
             }
-            await this.styleManager.fetchStyleByKey(key)
-            await this.fetchByKey(key)
-            if (isDownloading) {
-              dq(`li[data-key=${key}] i.downloading`).remove()
-            }
-            removeSettingsListener(key, fetchListener)
-            checkAttribute(key, this.attributes[key])
           }
         }
         addSettingsListener(key, fetchListener)

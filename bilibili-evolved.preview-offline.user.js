@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      378.82
+// @version      378.84
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2211,19 +2211,24 @@ class ResourceManager {
             const isDownloading =
               typeof offlineData === 'undefined' &&
               (settings.useCache ? settings.cache[key] === undefined : true)
-            if (isDownloading) {
-              const downloading = document.createElement('i')
-              downloading.classList.add('mdi', 'mdi-18px', 'downloading', 'mdi-download')
-              downloading.innerHTML = '下载中'
-              dq(`li[data-key=${key}] label`).insertAdjacentElement('beforeend', downloading)
+            try {
+              if (isDownloading) {
+                const downloading = document.createElement('i')
+                downloading.classList.add('mdi', 'mdi-18px', 'downloading', 'mdi-download')
+                downloading.innerHTML = '下载中'
+                dq(`li[data-key=${key}] label`).insertAdjacentElement('beforeend', downloading)
+                dq(`input[key=${key}]`).disabled = true
+              }
+              await this.styleManager.fetchStyleByKey(key)
+              await this.fetchByKey(key)
+              removeSettingsListener(key, fetchListener)
+              checkAttribute(key, this.attributes[key])
+            } finally {
+              if (isDownloading) {
+                dq(`li[data-key=${key}] i.downloading`).remove()
+                dq(`input[key=${key}]`).disabled = false
+              }
             }
-            await this.styleManager.fetchStyleByKey(key)
-            await this.fetchByKey(key)
-            if (isDownloading) {
-              dq(`li[data-key=${key}] i.downloading`).remove()
-            }
-            removeSettingsListener(key, fetchListener)
-            checkAttribute(key, this.attributes[key])
           }
         }
         addSettingsListener(key, fetchListener)
