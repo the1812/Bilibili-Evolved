@@ -94,8 +94,7 @@ class VideoEpisodeBatch extends Batch {
       const json = await Ajax.getJsonWithCredentials(url)
       const data = json.data || json.result || json
       if (data.quality !== quality) {
-        Toast.error('获取下载链接失败, 请确认当前账号有下载权限后重试.', '批量下载')
-        return ''
+        console.warn(`${item.title} 不支持所选画质, 已回退到较低画质. (quality=${data.quality})`)
       }
       const fragments = data.durl.map(it => {
         return {
@@ -154,8 +153,7 @@ class BangumiBatch extends Batch {
       const json = await Ajax.getJsonWithCredentials(url)
       const data = json.data || json.result || json
       if (data.quality !== quality) {
-        Toast.error('获取下载链接失败, 请确认当前账号有下载权限后重试.', '批量下载')
-        return ''
+        console.warn(`${item.title} 不支持所选画质, 已回退到较低画质. (quality=${data.quality})`)
       }
       const fragments = data.durl.map(it => {
         return {
