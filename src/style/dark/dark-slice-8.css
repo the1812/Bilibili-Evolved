@@ -29,7 +29,8 @@
 .comic-info-component .page-normal .comic-info-con,
 .dropdown__content .dropdown__item:hover,
 .dropdown__content .dropdown__active,
-.r-con .members-info__container
+.r-con .members-info__container,
+.practice-wrap .tab-container
 {
     background-color: #333 !important;
 }
@@ -74,7 +75,8 @@ li.danmaku-info-row.bpui-selecting,
 .tabs-nav .tab-item.full,
 .r-con .members-info__header,
 .r-con .members-info .up-card .attention--not,
-.r-con .members-info .up-card .attention
+.r-con .members-info .up-card .attention,
+.ui-dropdown .ui-dropdown-text
 {
     background-color: #444 !important;
 }
@@ -143,7 +145,11 @@ li.danmaku-info-row.bpui-selecting,
 .videos-wrap .card-view .danmu-num,
 .videos-wrap .card-view .play-num,
 .center-box .line-1,
-.center-box .line-1 .name-field
+.center-box .line-1 .name-field,
+.practice-wrap .banner-container .title~p,
+.past-work .card-view .collect-num,
+.past-work .card-view .danmu-num,
+.past-work .card-view .play-num
 {
     color: #aaa !important;
 }
@@ -274,7 +280,9 @@ li.danmaku-info-row.bpui-selecting,
 .love-detail .follow-btn.active,
 .love-card .header:after,
 .main-wrapper .comment-wrapper,
-.title-container .info .activity
+.title-container .info .activity,
+.practice-wrap .tab-container,
+.ui-dropdown .ui-dropdown-text
 {
     border-color: transparent !important;
 }
@@ -291,7 +299,8 @@ li.danmaku-info-row.bpui-selecting,
 .comic-episodes .episode-list .episode-item .item-body,
 .tab-content .bilibili-comment,
 .calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content,
-.calendar-wrap .calendar-header
+.calendar-wrap .calendar-header,
+.practice-wrap .banner-container .current-work
 {
     border-color: #444 !important
 }
@@ -446,7 +455,8 @@ li.danmaku-info-row.bpui-selecting,
 .comment .comment-selecotr .sortByHot.active:before,
 .calendar .days li.selected,
 .tabs-wrapper .tabs .tabs-item.active:before,
-.calendar-wrap .calendar-body .date-wrap .wrap-content .select-icon
+.calendar-wrap .calendar-body .date-wrap .wrap-content .select-icon,
+.practice-wrap .banner-container .current-work .bili-btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -502,7 +512,8 @@ li.danmaku-info-row.bpui-selecting,
 .center-box .line-3 .action-button:hover,
 .center-box .line-1 .like-item:hover,
 .card .forw-area a.more:hover,
-.new-comers-module .zone-title .headline .name:hover
+.new-comers-module .zone-title .headline .name:hover,
+.left-nav-childed .left-nav-childed-list.active .left-nav-item-childed span
 {
     color: var(--theme-color) !important;
 }
@@ -521,7 +532,8 @@ li.danmaku-info-row.bpui-selecting,
 .item-wrap__task .item-index,
 .link-navbar .nav-item:hover .nav-link,
 .h5share-container .tag,
-.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn
+.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
+.practice-wrap .banner-container .current-work .bili-btn
 {
     color: var(--foreground-color) !important;
 }
