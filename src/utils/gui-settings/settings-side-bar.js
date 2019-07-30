@@ -8,18 +8,23 @@ if (document.querySelector('.gui-settings-icon-panel') === null) {
             <i class="icon-settings"></i>
         </div>
     </div>`)
-  document.querySelector('.gui-settings').addEventListener('click', e => {
+  dq('.gui-settings').addEventListener('click', e => {
     if (e.shiftKey === false) {
-      document.querySelectorAll('.gui-settings-box,.gui-settings-mask').forEach(it => it.classList.add('opened'))
+      dqa('.gui-settings-box,.gui-settings-mask').forEach(it => it.classList.add('opened'))
     } else {
-      document.querySelectorAll('.bilibili-evolved-about,.gui-settings-mask').forEach(it => it.classList.add('opened'))
+      dqa('.bilibili-evolved-about,.gui-settings-mask').forEach(it => it.classList.add('opened'))
       raiseEvent(document.querySelector('.bilibili-evolved-about'), 'be:about-load')
     }
   })
-  document.querySelector('.gui-settings-widgets').addEventListener('click', () => {
-    document.querySelectorAll('.gui-settings-widgets-box,.gui-settings-mask').forEach(it => it.classList.add('opened'))
+  dq('.gui-settings-widgets').addEventListener('click', e => {
+    if (e.shiftKey === false) {
+      dqa('.gui-settings-widgets-box,.gui-settings-mask').forEach(it => it.classList.add('opened'))
+    } else {
+      debugger
+    }
   })
 
+  const widgetsIcon = dq('.gui-settings-icon-panel .gui-settings-widgets>i')
   const settingsIcon = dq('.gui-settings-icon-panel .gui-settings>i')
   let keyup = false
   let blur = false
@@ -27,6 +32,9 @@ if (document.querySelector('.gui-settings-icon-panel') === null) {
     settingsIcon.classList.remove('icon-info')
     settingsIcon.classList.add('icon-settings')
     settingsIcon.parentElement.title = '设置'
+    widgetsIcon.classList.remove('icon-time')
+    widgetsIcon.classList.add('icon-widgets')
+    widgetsIcon.parentElement.title = '附加功能'
     keyup = false
     blur = false
   }
@@ -34,6 +42,9 @@ if (document.querySelector('.gui-settings-icon-panel') === null) {
     settingsIcon.classList.remove('icon-settings')
     settingsIcon.classList.add('icon-info')
     settingsIcon.parentElement.title = '关于'
+    widgetsIcon.classList.remove('icon-widgets')
+    widgetsIcon.classList.add('icon-time')
+    widgetsIcon.parentElement.title = '「ザ・ワールド」'
     if (!keyup) {
       document.body.addEventListener('keyup', restoreIcon, { once: true })
       keyup = true
