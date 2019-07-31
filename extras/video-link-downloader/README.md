@@ -1,10 +1,10 @@
 # Bilibili Evolved 视频链接下载器
 
+> **重要: 链接下载器将停止更新, 请更换使用 aria2. [详细信息](https://github.com/the1812/Bilibili-Evolved/blob/preview/aria2-notice.md)**
+
 从 [Bilibili Evolved](https://github.com/the1812/Bilibili-Evolved/) 复制的视频数据下载视频, 用于解决 Chrome 无法下载超过 2GB 视频的限制, 以及 Firefox 内存占用过大导致标签页卡顿的问题.
 
 适用于长视频(几个小时)的下载, 短视频可以直接在浏览器中完成下载.
-
-目前仅有下载单个视频的功能, 以后可能会添加批量功能.
 
 ## 安装
 
@@ -54,3 +54,6 @@ vld -p 12
 ```shell
 vld -o xxx
 ```
+
+## 已知问题
+下载过程中有时候会出现速度降为0或者疑似下载完成但没有写入磁盘的情况, 多发于批量导出或大文件. [issue #139](https://github.com/the1812/Bilibili-Evolved/issues/139)

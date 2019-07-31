@@ -14,5 +14,6 @@ namespace BilibiliEvolved.Build
         public string SmallLogoPath { get; set; }
         public string Owner { get; set; }
         public bool CopyOnBuild { get; set; }
+        public string Bundle { get; set; }
     }
 }

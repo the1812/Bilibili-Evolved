@@ -24,7 +24,7 @@ namespace BilibiliEvolved.Build
         public abstract Predicate<FileInfo> FileFilter { get; }
         public abstract string ResourceType { get; }
         public abstract string Minify(string input);
-        protected string GetMinimizedFileName(string path)
+        public static string GetMinimizedFileName(string path)
         {
             var fileInfo = new FileInfo(path);
             return "min/" + fileInfo.Name.Insert(fileInfo.Name.LastIndexOf("."), ".min");
@@ -132,11 +132,9 @@ namespace BilibiliEvolved.Build
     {
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
-            return (file.FullName.Contains(@"style\")
-                || file.FullName.Contains(@"touch\")
-                || file.FullName.Contains(@"utils\")
-                || file.FullName.Contains(@"video\"))
-                && file.Extension == ".js";
+            return file.FullName.Contains("src" + Path.DirectorySeparatorChar) &&
+                !file.FullName.Contains("client" + Path.DirectorySeparatorChar) &&
+                file.Extension == ".js";
         };
 
         public override string ResourceType { get; } = "JavaScript";

@@ -1,0 +1,563 @@
+.content .share-wrap,
+.box .content-wrap .btn .info,
+.nomal-task .bottom-box .btn,
+.item-wrap__task .operate-btn,
+.dialog-wrapper .dialog,
+.fjw-kpi-wrap-bg,
+.fjw-point .point-wrap .user-point .face .unfocus-btn,
+.navbar-container,
+.submit button,
+.calendar-wrap .calendar-body .date-desc_wrap,
+.row1 .calendar-wrap,
+.main-wrapper .comment-wrapper
+{
+    background-color: #222 !important;
+}
+.at-popup .user-container .item.is-selected,
+.bangumi-options .opt-list,
+.player-auxiliary-danmaku-function [class*=player-auxiliary-danmaku-btn-],
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap,
+.bui-button.bui-button-gray2,
+.player-auxiliary-danmaku-function,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
+.bpui-selected,
+.bpui-selected span,
+.danmaku-wrap .player-auxiliary-block-wrap,
+.player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-load-status,
+.comic-info-component .page-normal .comic-info-con .comic-des,
+.comic-info-component .page-normal .comic-info-con,
+.dropdown__content .dropdown__item:hover,
+.dropdown__content .dropdown__active,
+.r-con .members-info__container,
+.practice-wrap .tab-container
+{
+    background-color: #333 !important;
+}
+.mession-box .content .list-wrap .item-index,
+.news-dialog-Wrapper,
+.box .record-wrap,
+.box .content-wrap,
+.bangumi-options .opt-list li:hover,
+.bui-collapse .bui-collapse-header,
+.bpui-selecting>span,
+.bpui-unselecting,
+.bpui-selected>span,
+li.danmaku-info-row.bpui-selected,
+li.danmaku-info-row.bpui-selecting,
+.box-body,
+.feed-topic .empty-content,
+.tabs-wrapper,
+.detail-content .activity-info,
+.ticket-tips-wrapper .ticket-tips,
+.ticket-tips-wrapper .rec-item,
+.replies-comment-input-wrapper .submit-comment.no-login,
+.replies-comment-input-wrapper .replies-upload .comment-input-img,
+.replies-comment-input-wrapper .replies-upload .replies-uploading-container,
+.detail-content .jump-pagination-input,
+.comment .comment-hot-item-floor .operate-utils,
+.report-pc-dialog .report-dialog-container,
+.detail-content .more-hot-comments,
+.modal-wrapper .modal-container,
+.detail-content .guest-wrapper,
+.calendarEntry_wrap,
+.calendarEntry_wrap .calendarEntry_slide,
+.ui-dropdown .default,
+.calendar-wrap .calendar-body .calendar-body__select .ui-dropdown .default:hover,
+.ui-dropdown .ul-dropdown-list,
+.tabs .customize-tab,
+.tabs-nav .tab-item.border-bottom,
+.list-header .filter-wrp .category-wrp,
+.list-header .filter-wrp .order-wrp,
+.list-header .filter-wrp .article-type,
+.list-header .filter-wrp .filter-level,
+.list-header .filter-wrp .video-type,
+.tabs-nav .tab-item.full,
+.r-con .members-info__header,
+.r-con .members-info .up-card .attention--not,
+.r-con .members-info .up-card .attention,
+.ui-dropdown .ui-dropdown-text
+{
+    background-color: #444 !important;
+}
+.replies-comment-input-wrapper .submit-comment
+{
+    background-image: none !important;
+}
+.player-auxiliary-area .danmaku-info-row-special,
+.rank-list-ctnr .normal-list .item.self,
+.rank-list-ctnr .own,
+.high-wrapper .body-padding,
+.episode-item,
+.buyticket,
+.detail-content .comment,
+.buyticket .bread-wrapper,
+.whole-detail-info-wrapper,
+#app .report-dialog-container .submit,
+.selectable-option.unable,
+.detail-content .activity-info-body .info-header,
+.article-action .more .more-ops-list,
+.article-action .more .more-ops-list ul li:hover,
+#app .calendarEntry_content .header,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card,
+.calendar-wrap .calendar-body .date-desc_wrap .date-desc__content .nothing-wrap,
+.list-header .filter-wrp .article-type .bili-btn,
+.list-header .filter-wrp .filter-level .bili-btn,
+.list-header .filter-wrp .video-type .bili-btn,
+.list-header .filter-wrp .article-type .line,
+.list-header .filter-wrp .filter-level .line,
+.list-header .filter-wrp .video-type .line,
+.card .forw-area a.more:hover
+{
+    background-color: transparent !important;
+}
+.box .title .h1:after
+{
+    background: #fff !important;
+}
+.fans-medal-item.special-medal .label .content
+{
+    color: #222 !important;
+}
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.visited,
+.main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:visited
+{
+    color: #888 !important;
+}
+.player-auxiliary-area .danmaku-info-row-block span.danmaku-info-danmaku,
+.player-auxiliary-area .danmaku-info-row-block span.danmaku-info-time,
+.player-auxiliary-area .danmaku-info-row-block::after,
+.player-auxiliary-area .danmaku-info-row-super::after,
+.mession-box .content .list-wrap .item-summary,
+.box .content-wrap p,
+.box .list-box .wrap-list .text,
+.bottom-box .wrap-list .gift-item .B-paper,
+.item-wrap__task .content-desc,
+.h5share-container .text-area .text-desc,
+.comment .comment-hot-item-floor,
+.comment .reply-comment-list .reply-comment-item .reply-comment-item-floor,
+.ticket-tips-wrapper .rec-item .rec-item-time,
+.ticket-tips-wrapper .rec-item .rec-item-vuene,
+.detail-content .activity-info-body .info-content p span,
+.calendarEntry_wrap .calendarEntry_footer .footer_content span,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content,
+.videos-wrap .card-view .collect-num,
+.videos-wrap .card-view .danmu-num,
+.videos-wrap .card-view .play-num,
+.center-box .line-1,
+.center-box .line-1 .name-field,
+.practice-wrap .banner-container .title~p,
+.past-work .card-view .collect-num,
+.past-work .card-view .danmu-num,
+.past-work .card-view .play-num
+{
+    color: #aaa !important;
+}
+.dynamic-m .dyn_menu li,
+.dynamic-btn.pink.with-border-radius.publish-btn.disabled,
+.mession-box .content .list-wrap .item-title,
+.mession-box .content .list-wrap .item-index,
+.mession-box .btn,
+.mession-box .title,
+.cc-nav-wrp .activity-nav-wrp .activity-link,
+.news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__title,
+.news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__body,
+.news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__btn,
+.box .title .h1,
+.box .title .progress-num,
+.bottom-box .complete,
+.item-wrap__task .content-title,
+.item-wrap__task .operate-btn,
+.empty-wrap .empty-text,
+.fjw-point .point-wrap .user-point .face .unfocus-btn,
+.sub-tabs .filter-content,
+.bangumi-options .opt-list li:hover,
+.bangumi-options .opt-list li,
+.h5share-container .text-area .text-content,
+.navbar-container .logo-part,
+.navbar-container .size-ruler .app-title,
+.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .fav-btn .fav-text,
+.comic-episodes .episode-list .episode-item,
+.comic-episodes .episode-header .episode-operation,
+.manga-card .manga-title,
+.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .comments-total,
+.bb-comment a.more-link,
+.interact-dialog .btn,
+.detail-content .content-detail p,
+.detail-content .content-detail span,
+.buyticket .bread-wrapper span,
+.buyticket .bread-wrapper span a,
+.buyticket .whole-detail-info-wrapper,
+.product-info-time-wrapper .product-info-time,
+.product-info-time-wrapper .product-info-time-title,
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .title,
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .vuene-info-content .address-name,
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .check-map,
+.calendar .month,
+.calendar .weekdays li,
+.whole-detail-info-wrapper .product-buy-wrapper .want-wrapper .want-content p,
+.activity-info .activity-info-header,
+.ticket-tips-wrapper .ticket-tips-header,
+.ticket-tips-wrapper .rec-item .rec-item-name,
+.comment .comment-hot-item-user-name,
+.common-pagination-wrapper,
+.detail-content .jump-pagination-input,
+.comment .comment-hot-item-floor .operate-utils,
+.report-pc-dialog .report-dialog-container .title,
+.reason-container .reason-category .reason-category-title,
+.report-dialog-container .submit .cancel-btn,
+.selectable-option.unable,
+.ticket-tips-wrapper .ticket-tips-content span,
+.detail-content .more-hot-comments,
+.buyticket .map-model .modal-container .modal-header,
+.guest-wrapper .guest-header,
+.guest-wrapper .guest-list .name,
+.detail-content .activity-info-body .info-header span,
+.calendarEntry_wrap .greetings,
+.calendarEntry_wrap .calendarEntry_slide,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_title .item-title,
+.calendar-wrap .calendar-header,
+.calendar-wrap .headerClass,
+.calendar-wrap .calendar-body .date-wrap,
+.ui-dropdown .default,
+.ui-dropdown .ul-dropdown-list,
+.horizontalSelect-wrap .month,
+.calendar-wrap .calendar-body .date-wrap .wrap-content .today,
+.left-nav-list.no-office .left-nav-item span,
+.customize-wrap .steps-title,
+.tabs-nav .tab-item.border-bottom,
+.customize-wrap .item-list .item .info-text,
+.list-header .dropdown-btn .icon-text,
+.list-header .filter-wrp .bread-crumb .main,
+.list-header .filter-wrp .bread-crumb .second,
+.list-header .filter-wrp .article-type .bili-btn,
+.list-header .filter-wrp .filter-level .bili-btn,
+.list-header .filter-wrp .video-type .bili-btn,
+.tabs-nav .tab-item.full,
+.list-header .dropdown-btn:hover,
+.tabs-nav .tab-item,
+.customize-wrap .title,
+.center-box .line-2,
+.new-comers-module .zone-title .headline .name
+{
+    color: #eee !important;
+}
+/* a
+{
+    color: #fff !important;
+} */
+.bangumi-timing-module .headline .c-clink,
+.home-container .at-popup,
+.coin-nav,
+.nomal-task .card,
+.item-wrap__task .operate-btn,
+.ban-vote .vote-dialog .dialog-header,
+.bangumi-options .opt-list,
+.navbar-container,
+.comic-info-component .page-normal .comic-tab .tab-titles,
+.bilibili-player-ending-panel-box-recommend:hover,
+.interact-dialog .btn,
+.detail-content .comment,
+.comment .comment-selecotr,
+.detail-content .activity-info,
+.ticket-tips-wrapper .ticket-tips,
+.ticket-tips-wrapper .rec-item,
+.replies-comment-input-wrapper .replies-upload .comment-input-img,
+.detail-content .jump-pagination-input,
+.report-dialog-container .submit .submit-btn:after,
+.report-dialog-container .submit .cancel-btn:after,
+.detail-content .guest-wrapper,
+.report-dialog-container .textarea-wrapper,
+.calendarEntry_wrap,
+.calendarEntry_wrap .greetings,
+.calendarEntry_wrap .calendarEntry_slide,
+.tabs .customize-tab,
+.list-header .filter-wrp .category-wrp,
+.list-header .filter-wrp .order-wrp,
+.list-header .filter-wrp .article-type,
+.list-header .filter-wrp .filter-level,
+.list-header .filter-wrp .video-type,
+.love-detail .follow-btn.active,
+.love-card .header:after,
+.main-wrapper .comment-wrapper,
+.title-container .info .activity,
+.practice-wrap .tab-container,
+.ui-dropdown .ui-dropdown-text
+{
+    border-color: transparent !important;
+}
+.carousel-wrp .page .next,
+.item-wrap__task:before,
+.item-wrap__task:after
+{
+    border-color: #aaa !important;
+}
+.mession-box .content .list-wrap .border-btm,
+.mession-box .content,
+.live-category .latest,
+.link-input,
+.comic-episodes .episode-list .episode-item .item-body,
+.tab-content .bilibili-comment,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content,
+.calendar-wrap .calendar-header,
+.practice-wrap .banner-container .current-work
+{
+    border-color: #444 !important
+}
+.reply-item:not(:last-child):after,
+.at-item:not(:last-child):after,
+.love-item:not(:last-child):after,
+.liked-user:not(:last-child):after,
+.center-box .orginal-reply
+{
+    border-color: #555 !important
+}
+/* a
+{
+    border-color: white !important;
+} */
+/* a
+{
+    fill: #aaa !important;
+} */
+/* a
+{
+    fill: #fff !important;
+} */
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .address-icon
+{
+    filter: brightness(0) invert(1) !important;
+}
+/* a
+{
+    filter: brightness(0) invert(.7) !important;
+} */
+.fold-box:hover .fold-arrow,
+.sticky-bar .bar-content .title-icon,
+.fjw-random .agree.active,
+.fjw-random .agree:hover,
+.fjw-random .unagree.active,
+.fjw-random .unagree:hover,
+.svga-container.svga-center canvas,
+.ops canvas.ring-progress
+{
+    filter: var(--blue-image-filter) !important;
+}
+.comment .up-icon.active,
+.replies-comment-input-wrapper .replies-upload .comment-input-img span,
+.replies-comment-input-wrapper .replies-upload .replies-uploading-container .replies-uploading-btn,
+.replies-comment-input-wrapper .replies-upload .replies-uploading-container p span:hover,
+.reason-container .reason-category .other-reason .icon-select.selected,
+.reason-container .reason-category .reason-item .icon-select.selected,
+.report-pc-dialog .report-dialog-container .title i:hover,
+.buyticket .product-buy.enable,
+.whole-detail-info-wrapper .product-buy-wrapper .want-wrapper .want-icon,
+.ticket-count .count-reduce.active:before,
+.ticket-count .count-plus.active:after,
+.activity-info .icon-activity,
+.ticket-tips-wrapper .ticket-tips-header span,
+.detail-content .comment .hot-icon span,
+.guest-wrapper .icon-guest,
+.calendar-date-body .wrap-content img
+{
+    filter: var(--pink-image-filter) !important;
+}
+/* a
+{
+    filter: grayscale(1) !important;
+} */
+.fans-medal-item.special-medal .union
+{
+    filter: brightness(0.125) !important;
+}
+/* a
+{
+    filter: brightness(0.7) !important;
+} */
+.news-dialog__wrapper .trangle-img img,
+.bili-share-pc .favourite .icon-fav
+{
+    filter: brightness(0.27) !important;
+}
+/* a
+{
+    filter: brightness(0.5) !important;
+} */
+/* a
+{
+    background-image: none !important;
+} */
+.box .record-wrap,
+.comment .comment-hot-item-user-content,
+.replies-comment-input-wrapper .submit-comment,
+.comment .comment-selecotr,
+.buyticket .product-buy.enable
+{
+    box-shadow: none !important;
+}
+/* a
+{
+    box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
+} */
+.section-block .at-popup,
+.pgc-space-follow-item .bangumi-options .opt-list,
+.navbar-container,
+.bilibili-player-ending-panel-box-recommend:hover,
+.selectable-option.active,
+.guest-wrapper .guest-list .guest-item:hover .image
+{
+    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
+}
+/* a
+{
+    display: none !important;
+} */
+.members-info .up-card
+{
+    margin: 16px !important;
+}
+.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .tab-btn,
+.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-head.up-avatar:hover,
+.replies-comment-input-wrapper .replies-upload .comment-input-img:hover,
+.selectable-option.active,
+.selectable-option.active:after,
+.tabs-nav .tab-item.border-bottom
+{
+    border-color: var(--theme-color) !important;
+}
+/* a
+{
+    border-top-color: var(--theme-color) !important;
+} */
+/* a
+{
+    border-bottom-color: var(--theme-color) !important;
+} */
+/* a
+{
+    border-right-color: var(--theme-color) !important;
+} */
+/* a
+{
+    border: 1px solid var(--theme-color) !important;
+} */
+.progress-bar-core.p-absolute,
+.news-dialog__wrapper .dialog-wrapper__desc .dialog-wrapper__btn,
+.bottom-box .complete .complete_text:before,
+.item-wrap__task .item-index,
+.h5share-container .tag,
+.navbar-container .nav-items .nav-item.activated:before,
+.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
+.interact-dialog .btn,
+.video-control-show .bilibili-player-video-interactive-list .check:hover .big-round,
+.replies-comment-input-wrapper .submit-comment,
+.comment .comment-selecotr .all-comments.active:before,
+.comment .comment-selecotr .sortByHot.active:before,
+.calendar .days li.selected,
+.tabs-wrapper .tabs .tabs-item.active:before,
+.calendar-wrap .calendar-body .date-wrap .wrap-content .select-icon,
+.practice-wrap .banner-container .current-work .bili-btn
+{
+    background-color: var(--theme-color) !important;
+}
+/* a
+{
+    background-color: var(--theme-color-60) !important;
+} */
+/* a
+{
+    background-color: var(--theme-color-90) !important;
+} */
+.d-data .fold-box:hover,
+.cc-nav-wrp .nav-item.active i,
+.cc-nav-wrp .nav-item.active span,
+.cc-nav-wrp .nav-item:hover i,
+.cc-nav-wrp .nav-item:hover span,
+.cc-nav-wrp .activity-nav-wrp .activity-link.active i,
+.cc-nav-wrp .activity-nav-wrp .activity-link.active span,
+.cc-nav-wrp .activity-nav-wrp .activity-link:hover i,
+.cc-nav-wrp .activity-nav-wrp .activity-link:hover span,
+.mession-box .btn:hover,
+.bottom-box .complete .uncomplete,
+.n-statistics a:hover,
+.live-category .latest a:hover,
+.live-category .latest a.active,
+.comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active,
+.whole-detail-info-wrapper .product-buy-wrapper .want-wrapper .want-content p:hover,
+.comment .comment-selecotr .all-comments.active,
+.comment .comment-selecotr .sortByHot.active,
+.comment .more-replys span,
+.whole-pagination-wrapper .common-pagination-wrapper .pageNum.active,
+.whole-pagination-wrapper .common-pagination-wrapper .pageNum:hover,
+.replies-comment-input-wrapper .replies-upload .comment-input-img,
+.selectable-option.active,
+.tabs-wrapper .tabs .tabs-item.active,
+.guest-wrapper .guest-list .guest-item:hover .name,
+.calendarEntry_wrap .calendarEntry_footer .footer-link,
+.calendarEntry_wrap .greetings .greet-num,
+.calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content .item-desc_share,
+.calendar-wrap .calendar-body .date-desc_wrap .date-desc__content .nothing-wrap .release-link,
+.left-nav-wrapper .left-nav-ul .left-nav-item:hover i,
+.left-nav-wrapper .left-nav-ul .left-nav-item:hover span,
+.left-nav-list.active .left-nav-item i,
+.left-nav-list.active .left-nav-item span,
+.customize-wrap .item-list .item .learn.unlearn,
+.left-nav-item-child:hover i,
+.left-nav-item-child:hover span,
+.list-header .filter-wrp .article-type .bili-btn.current,
+.list-header .filter-wrp .filter-level .bili-btn.current,
+.list-header .filter-wrp .video-type .bili-btn.current,
+.left-nav-childed .left-nav-childed-list .left-nav-item-childed:hover span,
+.center-box .line-3 .action-button.active,
+.center-box .line-3 .action-button:hover,
+.center-box .line-1 .like-item:hover,
+.card .forw-area a.more:hover,
+.new-comers-module .zone-title .headline .name:hover,
+.left-nav-childed .left-nav-childed-list.active .left-nav-item-childed span
+{
+    color: var(--theme-color) !important;
+}
+.bangumi-timing-module .headline .c-clink:hover,
+.elevator-module .nav-list .customize:hover,
+.elevator-module .nav-list .item.on,
+.bangumi-timing-module .headline .c-clink,
+.dynamic-m .wnd_bottom a:hover,
+.sticky-bar .bar-content .send-button .send-text,
+.favInfo-box .favInfo-details .fav-options .fav-play:hover,
+#page-fav .fav-sidenav .fav-item.cur .text.router-link-exact-active.router-link-active,
+#page-fav .fav-sidenav .fav-item.cur .num,
+#page-fav .fav-sidenav .fav-item.cur .be-dropdown-trigger .icon-ic_more,
+#page-fav .fav-sidenav .fav-item.cur .iconfont,
+.edit-media-list .edit-mask .edit-board .edit-info .submit-btn,
+.item-wrap__task .item-index,
+.link-navbar .nav-item:hover .nav-link,
+.h5share-container .tag,
+.comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
+.practice-wrap .banner-container .current-work .bili-btn
+{
+    color: var(--foreground-color) !important;
+}
+/* a
+{
+    fill: var(--theme-color) !important;
+} */
+/* a
+{
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+} */
+.selectable-option.active:after
+{
+    border-top-color: transparent !important;
+    border-left-color: transparent !important;
+}
+/* a
+{
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+} */
+.feed-topic .empty-content,
+.report-dialog-container .textarea-wrapper
+{
+    border-radius: 4px !important;
+}

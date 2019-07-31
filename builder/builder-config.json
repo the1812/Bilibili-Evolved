@@ -6,5 +6,6 @@
     "smallLogoPath": "images/logo-small.png",
     "logoPath": "images/logo.png",
     "owner": "the1812",
-    "copyOnBuild": true
+    "copyOnBuild": true,
+    "bundle": "dist/bundle"
 }

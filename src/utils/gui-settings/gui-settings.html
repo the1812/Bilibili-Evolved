@@ -1,0 +1,125 @@
+<div class="gui-settings-mask"></div>
+<div class="gui-settings-widgets-box icons-enabled">
+  <div class="gui-settings-header">
+    <i class="icon-widgets"></i>
+    <span class="gui-settings-title">附加功能</span>
+  </div>
+  <div class="widgets-container">
+    <div class="empty-tip">空空如也哦 =￣ω￣=</div>
+  </div>
+</div>
+<div class="gui-settings-box icons-enabled">
+  <div class="gui-settings-header">
+    <i class="icon-settings"></i>
+    <span class="gui-settings-title">设置</span>
+    <i class="icon-search" style="transform: scale(0.9); margin-right: 0"></i>
+    <input class="gui-settings-search" placeholder="搜索设置项" type="text">
+  </div>
+  <div class="gui-settings-content">
+    <ul>
+      <category icon="video">视频</category>
+      <checkbox indent="0" key="useDefaultPlayerLayout" dependencies=""></checkbox>
+      <dropdown indent="1" key="defaultPlayerLayout" dependencies="useDefaultPlayerLayout"></dropdown>
+      <dropdown indent="1" key="defaultBangumiLayout" dependencies="useDefaultPlayerLayout"></dropdown>
+      <checkbox indent="0" key="useDefaultPlayerMode" dependencies=""></checkbox>
+      <dropdown indent="1" key="defaultPlayerMode" dependencies="useDefaultPlayerMode"></dropdown>
+      <checkbox indent="1" key="applyPlayerModeOnPlay" dependencies="useDefaultPlayerMode"></checkbox>
+      <checkbox indent="1" key="autoLightOff" dependencies="useDefaultPlayerMode"></checkbox>
+      <checkbox indent="0" key="useDefaultVideoQuality" dependencies=""></checkbox>
+      <dropdown indent="1" key="defaultVideoQuality" dependencies="useDefaultVideoQuality"></dropdown>
+      <checkbox indent="0" key="useDefaultVideoSpeed" dependencies=""></checkbox>
+      <dropdown indent="1" key="defaultVideoSpeed" dependencies="useDefaultVideoSpeed"></dropdown>
+      <checkbox indent="0" key="useDefaultDanmakuSettings" dependencies=""></checkbox>
+      <checkbox indent="1" key="enableDanmaku" dependencies="useDefaultDanmakuSettings"></checkbox>
+      <checkbox indent="1" key="rememberDanmakuSettings" dependencies="useDefaultDanmakuSettings enableDanmaku">
+      </checkbox>
+      <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
+      <checkbox indent="0" key="expandDescription" dependencies=""></checkbox>
+      <checkbox indent="0" key="autoContinue" dependencies=""></checkbox>
+      <checkbox indent="1" key="allowJumpContinue" dependencies="autoContinue"></checkbox>
+      <checkbox indent="0" key="autoPlay" dependencies=""></checkbox>
+      <checkbox indent="0" key="skipChargeList" dependencies=""></checkbox>
+      <checkbox indent="0" key="framePlayback" dependencies=""></checkbox>
+      <checkbox indent="0" key="videoScreenshot" dependencies=""></checkbox>
+      <checkbox indent="0" key="playerFocus" dependencies=""></checkbox>
+      <textbox indent="1" key="playerFocusOffset" dependencies="playerFocus"></textbox>
+      <checkbox indent="0" key="outerWatchlater" dependencies=""></checkbox>
+      <category icon="style">样式</category>
+      <li class="indent-0 folded">
+        <label class="gui-settings-textbox-container">
+          <span>主题颜色</span>
+          <div class="custom-color-preview">
+            <div class="predefined-colors popup">
+              <div class="predefined-colors-grid"></div>
+            </div>
+          </div>
+          <input key="customStyleColor" dependencies="" spellcheck="false" type="text" />
+        </label>
+      </li>
+      <!-- <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox> -->
+      <!-- <textbox indent="1" key="blurBackgroundOpacity" dependencies="useNewStyle"></textbox> -->
+      <checkbox indent="0" key="customNavbar" dependencies=""></checkbox>
+      <checkbox indent="1" key="customNavbarFill" dependencies="customNavbar"></checkbox>
+      <checkbox indent="1" key="allNavbarFill" dependencies="customNavbar"></checkbox>
+      <checkbox indent="1" key="customNavbarShadow" dependencies="customNavbar"></checkbox>
+      <checkbox indent="1" key="customNavbarCompact" dependencies="customNavbar"></checkbox>
+      <checkbox indent="1" key="customNavbarBlur" dependencies="customNavbar"></checkbox>
+      <textbox indent="2" key="customNavbarBlurOpacity" dependencies="customNavbar customNavbarBlur"></textbox>
+      <checkbox indent="0" key="useDarkStyle" dependencies=""></checkbox>
+      <checkbox indent="0" key="darkSchedule" dependencies=""></checkbox>
+      <textbox indent="1" key="darkScheduleStart" dependencies="darkSchedule"></textbox>
+      <textbox indent="1" key="darkScheduleEnd" dependencies="darkSchedule"></textbox>
+      <checkbox indent="0" key="compactLayout" dependencies=""></checkbox>
+      <checkbox indent="0" key="useCommentStyle" dependencies=""></checkbox>
+      <checkbox indent="0" key="simplifyLiveroom" dependencies=""></checkbox>
+      <checkbox indent="0" key="hideBanner" dependencies=""></checkbox>
+      <checkbox indent="0" key="playerShadow" dependencies=""></checkbox>
+      <checkbox indent="0" key="narrowDanmaku" dependencies=""></checkbox>
+      <!-- <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox> -->
+      <!-- <checkbox indent="0" key="showBanner" dependencies=""></checkbox> -->
+      <!-- <checkbox indent="1" key="preserveRank" dependencies="overrideNavBar"></checkbox> -->
+      <checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox>
+      <checkbox indent="0" key="customControlBackground" dependencies=""></checkbox>
+      <textbox indent="1" key="customControlBackgroundOpacity" dependencies="customControlBackground"></textbox>
+      <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
+      <checkbox indent="0" key="removeLiveWatermark" dependencies=""></checkbox>
+      <checkbox indent="0" key="removeVideoTopMask" dependencies=""></checkbox>
+      <checkbox indent="0" key="hideOldEntry" dependencies=""></checkbox>
+      <checkbox indent="0" key="hideBangumiReviews" dependencies=""></checkbox>
+      <checkbox indent="0" key="hideCategory" dependencies=""></checkbox>
+      <category icon="tool">工具</category>
+      <checkbox indent="0" key="removeAds" dependencies=""></checkbox>
+      <checkbox indent="1" key="showBlockedAdsTip" dependencies="removeAds"></checkbox>
+      <checkbox indent="0" key="watchLaterRedirect" dependencies=""></checkbox>
+      <checkbox indent="0" key="favoritesRedirect" dependencies=""></checkbox>
+      <checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox>
+      <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
+      <checkbox indent="0" key="fullPageTitle" dependencies=""></checkbox>
+      <checkbox indent="0" key="showDeadVideoTitle" dependencies=""></checkbox>
+      <checkbox indent="1" key="useBiliplusRedirect" dependencies="showDeadVideoTitle"></checkbox>
+      <dropdown indent="1" key="deadVideoTitleProvider" dependencies="showDeadVideoTitle"></dropdown>
+      <checkbox indent="0" key="biliplusRedirect" dependencies=""></checkbox>
+      <checkbox indent="0" key="imageResolution" dependencies=""></checkbox>
+      <checkbox indent="0" key="oldTweets" dependencies=""></checkbox>
+      <checkbox indent="0" key="i18n" dependencies=""></checkbox>
+      <dropdown indent="1" key="i18nLanguage" dependencies="i18n"></dropdown>
+      <checkbox indent="0" key="noLiveAutoplay" dependencies=""></checkbox>
+      <checkbox indent="1" key="hideHomeLive" dependencies="noLiveAutoplay"></checkbox>
+      <checkbox indent="0" key="foldComment" dependencies=""></checkbox>
+      <checkbox indent="0" key="seedsToCoins" dependencies=""></checkbox>
+      <!-- <checkbox indent="0" key="noMiniVideoAutoplay" dependencies=""></checkbox> -->
+      <category icon="touch">触摸</category>
+      <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
+      <checkbox indent="0" key="comboLike" dependencies=""></checkbox>
+      <checkbox indent="0" key="touchVideoPlayer" dependencies=""></checkbox>
+      <checkbox indent="1" key="touchVideoPlayerDoubleTapControl" dependencies="touchVideoPlayer"></checkbox>
+      <category icon="other">其他</category>
+      <checkbox indent="0" key="toast" dependencies=""></checkbox>
+      <checkbox indent="1" key="toastInternalError" dependencies="toast"></checkbox>
+      <checkbox indent="0" key="useCache" dependencies=""></checkbox>
+      <textbox indent="0" key="filenameFormat" dependencies=""></textbox>
+      <textbox indent="0" key="sideBarOffset" dependencies=""></textbox>
+    </ul>
+  </div>
+  <div class="gui-settings-tooltip"></div>
+</div>
