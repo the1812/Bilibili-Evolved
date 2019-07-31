@@ -50,7 +50,7 @@
 <div align="center">各种视频相关功能</div>
 
 <details>
-<summary>下载视频</summary>
+<summary><strong>下载视频</strong></summary>
 
 在视频播放页面中, `下载视频`按钮将在`附加功能`中启用, 点击可以选择清晰度并下载.
 
@@ -63,16 +63,21 @@
 - 直接下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 可以考虑[导出 aria2](aria2-notice.md)来进行下载.
 - 使用`复制链接`得到的链接并不是直接就能用的, 因为**下载时的请求Header必须包含`Referer=https://www.bilibili.com`和正确的`User-Agent`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
 
+<div>
+<img height="500" alt="single" src="images/compressed/download-video-single.jpg">
+<img height="500" alt="batch" src="images/compressed/download-video-batch.jpg">
+</div>
+
 </details>
 <details>
-<summary>下载弹幕</summary>
+<summary><strong>下载弹幕</strong></summary>
 
 在视频播放页面中, `下载弹幕`按钮将在`附加功能`中启用, 点击可以下载XML格式的弹幕.
 > 点击时若按住`Shift`将下载ASS格式的弹幕, 此功能尚未完善, 完善后会跟XML的操作方式互换.
 
 </details>
 <details>
-<summary>查看封面</summary>
+<summary><strong>查看封面</strong></summary>
 
 在视频播放页面/直播间中, `查看封面`按钮将在`附加功能`中启用, 点击可以查看或保存封面. (其实还可以看专栏的封面, 不过专栏的封面本来就显示在标题上方了)
 
@@ -80,7 +85,7 @@
 
 </details>
 <details>
-<summary>指定播放器布局</summary>
+<summary><strong>指定播放器布局</strong></summary>
 
 设置默认的播放器布局, 可分别设置视频区和番剧区. 尽量在相应的页面里设置(比如在番剧播放页面设置番剧播放器布局), 否则可能没有效果.
 
@@ -91,7 +96,7 @@
 
 </details>
 <details>
-<summary>默认播放器模式</summary>
+<summary><strong>默认播放器模式</strong></summary>
 
 设置默认的播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 可以选择在进入页面的首次播放时应用, 或者一进入页面就应用. 还可以设置是否自动关灯.
 
@@ -99,7 +104,7 @@
 
 </details>
 <details>
-<summary>默认视频画质</summary>
+<summary><strong>默认视频画质</strong></summary>
 
 进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.
 
@@ -107,50 +112,50 @@
 
 </details>
 <details>
-<summary>默认视频速度</summary>
+<summary><strong>默认视频速度</strong></summary>
 
 进入视频时自动选择指定的视频倍速.
 
 </details>
 <details>
-<summary>默认弹幕设置</summary>
+<summary><strong>默认弹幕设置</strong></summary>
 
 设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.
 
 </details>
 <details>
-<summary>自动展开弹幕列表</summary>
+<summary><strong>自动展开弹幕列表</strong></summary>
 
 新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.
 
 </details>
 <details>
-<summary>自动展开视频简介</summary>
+<summary><strong>自动展开视频简介</strong></summary>
 
 长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.
 
 </details>
 <details>
-<summary>自动从历史记录点播放</summary>
+<summary><strong>自动从历史记录点播放</strong></summary>
 
 播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.
 > 如果还开启了`允许跨集跳转`, 即使当前集数跟历史记录不同也会跳转.
 
 </details>
 <details>
-<summary>自动播放视频</summary>
+<summary><strong>自动播放视频</strong></summary>
 
 进入视频页面时自动开始播放视频.
 
 </details>
 <details>
-<summary>跳过充电鸣谢</summary>
+<summary><strong>跳过充电鸣谢</strong></summary>
 
 自动跳过视频结尾处的充电鸣谢.
 
 </details>
 <details>
-<summary>启用逐帧调整</summary>
+<summary><strong>启用逐帧调整</strong></summary>
 
 在播放器的时间右边增加两个按钮, 用于**较**精细调整视频时间. 支持键盘快捷键`Shift + 左/右方向键`. (旧版播放器只能用键盘快捷键, 不会显示按钮)
 
@@ -164,7 +169,7 @@
 
 </details>
 <details>
-<summary>启用视频截图</summary>
+<summary><strong>启用视频截图</strong></summary>
 
 在播放器的时间右边增加截图按钮, 点击可以截取视频画面, 不会包含暂停标志和弹幕. 截取的图片将在网页右侧显示(非全屏或网页全屏模式), 可以单独保存或丢弃, 也可以截取一定数量后一次性保存. 支持键盘快捷键`Ctrl + Alt + C`. (旧版播放器只能用键盘快捷键, 不会显示按钮)
 
@@ -174,13 +179,13 @@
 
 </details>
 <details>
-<summary>自动定位到播放器</summary>
+<summary><strong>自动定位到播放器</strong></summary>
 
 进入视频/番剧页面时, 自动定位到播放器.
 
 </details>
 <details>
-<summary>外置稍后再看</summary>
+<summary><strong>外置稍后再看</strong></summary>
 
 将视频页面菜单里的`稍后再看`移到外面.
 
@@ -192,7 +197,7 @@
 <div align="center">掌控哔哩哔哩的外观</div>
 
 <details>
-<summary>主题颜色</summary>
+<summary><strong>主题颜色</strong></summary>
 
 设定顶栏和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(`#rrggbb`或`#rgb`).
 
@@ -200,7 +205,7 @@
 
 </details>
 <details>
-<summary>自定义顶栏</summary>
+<summary><strong>自定义顶栏</strong></summary>
 
 启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 直播/相簿/会员购等仍使用原来的顶栏.
 
@@ -224,7 +229,7 @@
 
 </details>
 <details>
-<summary>夜间模式</summary>
+<summary><strong>夜间模式</strong></summary>
 
 夜间模式更适合光线暗的环境, 并会大量应用主题颜色.
 
@@ -238,14 +243,14 @@
 
 </details>
 <details>
-<summary>夜间模式计划时段</summary>
+<summary><strong>夜间模式计划时段</strong></summary>
 
 设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式.
 > 结束时间小于起始时间时将视为次日, 如`18:00`至`6:00`表示晚上18:00到次日6:00.
 
 </details>
 <details>
-<summary>首页使用紧凑布局</summary>
+<summary><strong>首页使用紧凑布局</strong></summary>
 
 设置首页是否使用紧凑布局, 视频的间距会减小并削去圆角, 番剧的图片和排名序号会变成圆形, 分区栏的图标会使用高清重制版. 仅支持首页和稍后再看.
 
@@ -257,7 +262,7 @@
 
 </details>
 <details>
-<summary>简化评论区</summary>
+<summary><strong>简化评论区</strong></summary>
 
 - 删除热评头像下方的关注按钮
 - 删除用户的等级标识
@@ -274,7 +279,7 @@
 
 </details>
 <details>
-<summary>简化直播间</summary>
+<summary><strong>简化直播间</strong></summary>
 
 - 隐藏姥爷图标
 - 隐藏粉丝勋章
@@ -294,25 +299,25 @@
 
 </details>
 <details>
-<summary>隐藏顶部横幅</summary>
+<summary><strong>隐藏顶部横幅</strong></summary>
 
 隐藏主站顶部的横幅, 注意这会导致搜索框也被隐藏, 除非开启了自定义顶栏.
 
 </details>
 <details>
-<summary>播放器投影</summary>
+<summary><strong>播放器投影</strong></summary>
 
 为播放器添加主题色投影.
 
 </details>
 <details>
-<summary>强制保留弹幕发送栏</summary>
+<summary><strong>强制保留弹幕发送栏</strong></summary>
 
 在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
 
 </details>
 <details>
-<summary>模糊视频控制栏背景</summary>
+<summary><strong>模糊视频控制栏背景</strong></summary>
 
 模糊视频控制栏背景, 原有的阴影效果将无效.
 此功能需要浏览器支持背景模糊效果, 详情见[背景模糊兼容性](backdrop-filter.md)一节.
@@ -325,7 +330,7 @@
 
 </details>
 <details>
-<summary>控制栏着色</summary>
+<summary><strong>控制栏着色</strong></summary>
 
 给视频控制栏附上半透明的黑色, 代替原来的阴影, 黑色的不透明度可在设置中调整.
 
@@ -337,38 +342,38 @@
 
 </details>
 <details>
-<summary>缩放直播看板娘</summary>
+<summary><strong>缩放直播看板娘</strong></summary>
 
 根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度, DPI缩放为100%的用户不需要此功能.
 
 </details>
 <details>
-<summary>删除直播水印</summary>
+<summary><strong>删除直播水印</strong></summary>
 
 删除观看直播时角落的水印.
 
 </details>
 <details>
-<summary>删除视频标题层</summary>
+<summary><strong>删除视频标题层</strong></summary>
 
 删除视频里鼠标经过时出现在右上角的标题层.
 ![覆盖层](images/compressed/remove-top-mask.jpg)
 
 </details>
 <details>
-<summary>隐藏返回旧版</summary>
+<summary><strong>隐藏返回旧版</strong></summary>
 
 隐藏播放页右侧的`返回旧版`入口.
 
 </details>
 <details>
-<summary>隐藏番剧点评</summary>
+<summary><strong>隐藏番剧点评</strong></summary>
 
 隐藏番剧播放页面的点评板块, 不会隐藏番剧介绍页那里的点评.
 
 </details>
 <details>
-<summary>隐藏分区栏</summary>
+<summary><strong>隐藏分区栏</strong></summary>
 
 隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.
 
@@ -380,33 +385,33 @@
 <div align="center">各式各样的小玩意</div>
 
 <details>
-<summary>删除广告</summary>
+<summary><strong>删除广告</strong></summary>
 
 删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.
 ![删除广告](images/compressed/remove-ads.jpg)
 
 </details>
 <details>
-<summary>稍后再看重定向</summary>
+<summary><strong>稍后再看重定向</strong></summary>
 
 将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.
 
 </details>
 <details>
-<summary>隐藏搜索推荐</summary>
+<summary><strong>隐藏搜索推荐</strong></summary>
 
 将搜索框的推荐词替换为`搜索`.
 
 </details>
 <details>
-<summary>展开动态标题</summary>
+<summary><strong>展开动态标题</strong></summary>
 
 在顶栏的动态预览框中, 不管名称多长, 总是完全展开视频的标题.
 ![展开动态标题](images/compressed/full-tweets-title.jpg)
 
 </details>
 <details>
-<summary>展开选集标题</summary>
+<summary><strong>展开选集标题</strong></summary>
 
 在视频选集列表中, 当标题超出一行时, 另起一行以显示完整标题.
 > 因为番剧选集用的绝对布局, 所以此功能在番剧区无效.
@@ -415,13 +420,13 @@
 
 </details>
 <details>
-<summary>直播间勋章快速切换</summary>
+<summary><strong>直播间勋章快速切换</strong></summary>
 
 在直播区(live.bilibili.com)中, 可从`附加功能`中直接切换勋章和头衔.
 
 </details>
 <details>
-<summary>显示失效视频信息</summary>
+<summary><strong>显示失效视频信息</strong></summary>
 
 在个人空间中, 为已失效视频恢复标题和封面. 如果还启用了`失效视频重定向`, 还会把视频的链接替换为BiliPlus里对应的页面.
 
@@ -429,14 +434,14 @@
 
 </details>
 <details>
-<summary>BiliPlus跳转支持</summary>
+<summary><strong>BiliPlus跳转支持</strong></summary>
 
 在视频/番剧/空间中, 附加功能`转到BiliPlus`, 点击可以转到[BiliPlus](https://biliplus.com)上对应的页面.
 
 
 </details>
 <details>
-<summary>下载音频</summary>
+<summary><strong>下载音频</strong></summary>
 
 在音频区中, 附加功能会出现`下载音频`按钮, 当你进入某一音乐的详细信息页面时, 点击按钮可以下载该页面对应的音乐. 在其他页面中此按钮将不可点击.
 
@@ -444,7 +449,7 @@
 
 </details>
 <details>
-<summary>高分辨率图片</summary>
+<summary><strong>高分辨率图片</strong></summary>
 
 根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.
 适用于2K, 4K等的显示屏, DPI缩放为100%的用户不需要此功能.
@@ -453,19 +458,19 @@
 
 </details>
 <details>
-<summary>旧版动态跳转支持</summary>
+<summary><strong>旧版动态跳转支持</strong></summary>
 
 将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.
 
 </details>
 <details>
-<summary>界面翻译(实验性)</summary>
+<summary><strong>界面翻译(实验性)</strong></summary>
 
 为界面中一些常用文本提供翻译, 完成度不高, 目前仅开放日语和英语.
 
 </details>
 <details>
-<summary>禁止直播首页自动播放</summary>
+<summary><strong>禁止直播首页自动播放</strong></summary>
 
 禁止直播首页的推荐直播间自动开始播放, 开启后, 还可以通过`隐藏首页推荐直播`直接隐藏掉这个推荐板块.
 
@@ -473,13 +478,13 @@
 
 </details>
 <details>
-<summary>快速收起动态评论区</summary>
+<summary><strong>快速收起动态评论区</strong></summary>
 
 动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.
 
 </details>
 <details>
-<summary>瓜子换硬币</summary>
+<summary><strong>瓜子换硬币</strong></summary>
 
 在附加功能中添加`瓜子换硬币`的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.
 
@@ -489,19 +494,19 @@
 <div align="center">为支持触屏的设备特别设计的功能</div>
 
 <details>
-<summary>顶栏触摸优化</summary>
+<summary><strong>顶栏触摸优化</strong></summary>
 
 删除顶栏右侧的一级链接(从`大会员`到`历史`), 以方便触屏设备快速预览信息. 被删除的链接可从各预览中的`查看更多`进入.
 
 </details>
 <details>
-<summary>素质三连触摸支持</summary>
+<summary><strong>素质三连触摸支持</strong></summary>
 
 为素质三连(长按点赞)启用触摸支持.
 
 </details>
 <details>
-<summary>播放器触摸支持</summary>
+<summary><strong>播放器触摸支持</strong></summary>
 
 - 增大控制栏的按钮间距, 使触摸操作更准确.
 ![放大前](images/compressed/player-buttons-original.jpg)
@@ -517,7 +522,7 @@
 
 </details>
 <details>
-<summary>启用双击控制</summary>
+<summary><strong>启用双击控制</strong></summary>
 
 将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.
 
@@ -527,26 +532,26 @@
 <div align="center">关于脚本自身的一些设定</div>
 
 <details>
-<summary>显示消息</summary>
+<summary><strong>显示消息</strong></summary>
 
 允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.
 ![消息](images/compressed/toast.jpg)
 
 </details>
 <details>
-<summary>显示内部错误消息</summary>
+<summary><strong>显示内部错误消息</strong></summary>
 
 开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.
 
 </details>
 <details>
-<summary>启用缓存</summary>
+<summary><strong>启用缓存</strong></summary>
 
 使用缓存以提高脚本的加载速度, 此选项只对非离线版有效, 可在`附加功能`中清除脚本的缓存.
 
 </details>
 <details>
-<summary>文件命名格式</summary>
+<summary><strong>文件命名格式</strong></summary>
 
 自定义文件命名格式, 作用于`下载弹幕`, `下载视频`, `视频截图`, `查看封面`.
 可以使用的变量有:
@@ -566,7 +571,7 @@
 
 </details>
 <details>
-<summary>侧栏垂直偏移量</summary>
+<summary><strong>侧栏垂直偏移量</strong></summary>
 
 设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.
 
