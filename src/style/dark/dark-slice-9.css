@@ -28,7 +28,8 @@
 {
   background: #fff !important;
 } */
-#biliAppHomeSetting label ~ span
+#biliAppHomeSetting label ~ span,
+.video-container .text-area .view-danmaku
 {
   color: #aaa !important;
 }
