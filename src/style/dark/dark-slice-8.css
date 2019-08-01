@@ -370,6 +370,13 @@ li.danmaku-info-row.bpui-selecting,
 {
     filter: brightness(0.125) !important;
 }
+.video-info-m .number .coin b,
+.video-info-m .number .coin i,
+.video-info-m .number .fav b,
+.video-info-m .number .fav i
+{
+    filter: brightness(0.135) !important;
+}
 /* a
 {
     filter: brightness(0.7) !important;
