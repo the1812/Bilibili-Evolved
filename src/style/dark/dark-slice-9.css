@@ -29,7 +29,8 @@
   background: #fff !important;
 } */
 #biliAppHomeSetting label ~ span,
-.video-container .text-area .view-danmaku
+.video-container .text-area .view-danmaku,
+.follow-dialog-wrap .special-tip
 {
   color: #aaa !important;
 }
