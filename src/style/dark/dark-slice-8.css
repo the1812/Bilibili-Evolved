@@ -9,7 +9,12 @@
 .submit button,
 .calendar-wrap .calendar-body .date-desc_wrap,
 .row1 .calendar-wrap,
-.main-wrapper .comment-wrapper
+.main-wrapper .comment-wrapper,
+.round-corner .app-layout,
+.app-layout .page-content .feedback-content-input,
+.app-layout .dropbox-component,
+.app-layout .dropbox-component .data-list,
+.app-layout .page-content .manga-textbox
 {
     background-color: #222 !important;
 }
@@ -32,7 +37,8 @@
 .r-con .members-info__container,
 .practice-wrap .tab-container,
 .manga-button.ghost,
-.manga-button.primary
+.manga-button.primary,
+.app-layout .sidebar
 {
     background-color: #333 !important;
 }
@@ -79,7 +85,8 @@ li.danmaku-info-row.bpui-selecting,
 .r-con .members-info .up-card .attention--not,
 .r-con .members-info .up-card .attention,
 .ui-dropdown .ui-dropdown-text,
-.round-corner .app-layout
+.app-layout .page-content .router-view,
+.app-layout .sidebar .nav-item-indicator
 {
     background-color: #444 !important;
 }
@@ -112,7 +119,10 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .video-type .line,
 .card .forw-area a.more:hover,
 .multi-line-text:after,
-.manga-recommendation .data-list .list-item
+.manga-recommendation .data-list .list-item,
+.app-layout .user-info>.uid,
+.app-layout .page-content,
+.app-layout .list-item:hover
 {
     background-color: transparent !important;
 }
@@ -155,7 +165,10 @@ li.danmaku-info-row.bpui-selecting,
 .past-work .card-view .collect-num,
 .past-work .card-view .danmu-num,
 .past-work .card-view .play-num,
-.header-info .manga-info .supporting-text
+.header-info .manga-info .supporting-text,
+.my-coupon .subtitle,
+.app-layout .page-content .extral-info,
+.purchase-history .list-item .text-info .recharge-date
 {
     color: #aaa !important;
 }
@@ -252,7 +265,17 @@ li.danmaku-info-row.bpui-selecting,
 .header-info .manga-info .author-name,
 .episode-list-component .episode-list .list-header .header-item,
 .manga-button.ghost,
-.manga-button.primary
+.manga-button.primary,
+.user-info-component .coin-info,
+.pivot-component .pivot-headers .pivot-header-item,
+.my-coupon .coupon-title,
+.my-coupon .coupon-title .coupon-number,
+.app-layout .page-content .feedback-content-input .length-hinter,
+.purchase-history .list-item .text-info .display-text,
+.purchase-history .list-item .coin-info .recharge-count,
+.app-layout .dropbox-component .current,
+.app-layout .dropbox-component .data-list>li,
+.app-layout .page-content .manga-textbox
 {
     color: #eee !important;
 }
@@ -296,7 +319,10 @@ li.danmaku-info-row.bpui-selecting,
 .main-wrapper .comment-wrapper,
 .title-container .info .activity,
 .practice-wrap .tab-container,
-.ui-dropdown .ui-dropdown-text
+.ui-dropdown .ui-dropdown-text,
+.app-layout .dropbox-component,
+.app-layout .dropbox-component .data-list,
+.app-layout .page-content .manga-textbox:focus
 {
     border-color: transparent !important;
 }
@@ -322,7 +348,8 @@ li.danmaku-info-row.bpui-selecting,
 .at-item:not(:last-child):after,
 .love-item:not(:last-child):after,
 .liked-user:not(:last-child):after,
-.center-box .orginal-reply
+.center-box .orginal-reply,
+.app-layout .pivot-component .pivot-headers
 {
     border-color: #555 !important
 }
@@ -340,7 +367,9 @@ li.danmaku-info-row.bpui-selecting,
 } */
 .whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .address-icon,
 .header-info .manga-info .supporting-text .label-icon,
-.header-info .manga-info .action-buttons .do-favourite .fav-icon
+.header-info .manga-info .action-buttons .do-favourite .fav-icon,
+.app-layout .sidebar .nav-item .nav-item-icon,
+.my-coupon .subtitle .question-cion
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -481,7 +510,8 @@ li.danmaku-info-row.bpui-selecting,
 .calendar-wrap .calendar-body .date-wrap .wrap-content .select-icon,
 .practice-wrap .banner-container .current-work .bili-btn,
 .style-section .tag-block .tag-containers .style-tag:active,
-.manga-button.primary:hover
+.manga-button.primary:hover,
+.app-layout .dropbox-component .data-list>li:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -539,7 +569,9 @@ li.danmaku-info-row.bpui-selecting,
 .card .forw-area a.more:hover,
 .new-comers-module .zone-title .headline .name:hover,
 .left-nav-childed .left-nav-childed-list.active .left-nav-item-childed span,
-.schedule-list .list-header .date-selector .date-item.active
+.schedule-list .list-header .date-selector .date-item.active,
+.pivot-component .pivot-headers .pivot-header-item.selected,
+.pivot-component .pivot-headers .pivot-header-item:active
 {
     color: var(--theme-color) !important;
 }
@@ -559,7 +591,8 @@ li.danmaku-info-row.bpui-selecting,
 .link-navbar .nav-item:hover .nav-link,
 .h5share-container .tag,
 .comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
-.practice-wrap .banner-container .current-work .bili-btn
+.practice-wrap .banner-container .current-work .bili-btn,
+.app-layout .dropbox-component .data-list>li:hover
 {
     color: var(--foreground-color) !important;
 }
