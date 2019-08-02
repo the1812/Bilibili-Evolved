@@ -161,7 +161,8 @@ blockquote .color-yellow-04,
 .up-info .u-info .name .username.is-vip:hover,
 #app .sticky-bar .bar-content .message:hover,
 .el-select-dropdown__item.selected,
-.r-con .members-info .up-card .info-name.is-vip:hover
+.r-con .members-info .up-card .info-name.is-vip:hover,
+.style-section .tag-block .tag-containers .style-tag.selected
 {
     color: var(--theme-color) !important;
 }
@@ -201,7 +202,8 @@ blockquote .color-yellow-04,
 .el-date-table td.current:not(.disabled),
 .el-date-table td.end-date,
 .el-date-table td.start-date,
-.popup-content-ctnr .bl-button--ghost
+.popup-content-ctnr .bl-button--ghost,
+.style-section .tag-block .tag-containers .style-tag:active
 {
     color: var(--foreground-color) !important;
 }

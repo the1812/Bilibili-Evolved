@@ -241,7 +241,9 @@ li.danmaku-info-row.bpui-selecting,
 .center-box .line-2,
 .new-comers-module .zone-title .headline .name,
 .rank-list-item .expand-mode .text-section .item-title,
-.schedule-list .list-header .date-selector .date-item
+.schedule-list .list-header .date-selector .date-item,
+.style-section .tag-block .block-title,
+.style-section .tag-block .tag-containers .style-tag
 {
     color: #eee !important;
 }
@@ -466,7 +468,8 @@ li.danmaku-info-row.bpui-selecting,
 .calendar .days li.selected,
 .tabs-wrapper .tabs .tabs-item.active:before,
 .calendar-wrap .calendar-body .date-wrap .wrap-content .select-icon,
-.practice-wrap .banner-container .current-work .bili-btn
+.practice-wrap .banner-container .current-work .bili-btn,
+.style-section .tag-block .tag-containers .style-tag:active
 {
     background-color: var(--theme-color) !important;
 }
