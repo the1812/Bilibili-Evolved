@@ -107,7 +107,8 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .article-type .line,
 .list-header .filter-wrp .filter-level .line,
 .list-header .filter-wrp .video-type .line,
-.card .forw-area a.more:hover
+.card .forw-area a.more:hover,
+.multi-line-text:after
 {
     background-color: transparent !important;
 }
@@ -238,7 +239,9 @@ li.danmaku-info-row.bpui-selecting,
 .tabs-nav .tab-item,
 .customize-wrap .title,
 .center-box .line-2,
-.new-comers-module .zone-title .headline .name
+.new-comers-module .zone-title .headline .name,
+.rank-list-item .expand-mode .text-section .item-title,
+.schedule-list .list-header .date-selector .date-item
 {
     color: #eee !important;
 }
@@ -520,7 +523,8 @@ li.danmaku-info-row.bpui-selecting,
 .center-box .line-1 .like-item:hover,
 .card .forw-area a.more:hover,
 .new-comers-module .zone-title .headline .name:hover,
-.left-nav-childed .left-nav-childed-list.active .left-nav-item-childed span
+.left-nav-childed .left-nav-childed-list.active .left-nav-item-childed span,
+.schedule-list .list-header .date-selector .date-item.active
 {
     color: var(--theme-color) !important;
 }
