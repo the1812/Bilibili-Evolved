@@ -275,7 +275,8 @@ li.danmaku-info-row.bpui-selecting,
 .purchase-history .list-item .coin-info .recharge-count,
 .app-layout .dropbox-component .current,
 .app-layout .dropbox-component .data-list>li,
-.app-layout .page-content .manga-textbox
+.app-layout .page-content .manga-textbox,
+.app-ctnr .club-brief
 {
     color: #eee !important;
 }
