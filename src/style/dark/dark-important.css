@@ -163,7 +163,8 @@ blockquote .color-yellow-04,
 .el-select-dropdown__item.selected,
 .r-con .members-info .up-card .info-name.is-vip:hover,
 .style-section .tag-block .tag-containers .style-tag.selected,
-.episode-list-component .episode-list .list-header .header-item.selected
+.manga-detail .episode-list-component .episode-list .list-header .header-item.selected,
+.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read
 {
     color: var(--theme-color) !important;
 }
@@ -176,7 +177,8 @@ blockquote .color-yellow-04,
 .page-list-box .page-input:focus,
 .page-list-box .page-input:hover,
 .live-skin-coloration-area .room-info-ctnr .info-section .live-skin-highlight-border,
-.popup-content-ctnr .bl-button--ghost
+.popup-content-ctnr .bl-button--ghost,
+.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read
 {
     border-color: var(--theme-color) !important;
 }
