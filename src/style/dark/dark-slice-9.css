@@ -1,11 +1,15 @@
-#biliAppHomeSetting>div
+#biliAppHomeSetting>div,
+.app-layout .manga-navbar,
+.manga-navbar .drop-list
 {
   background-color: #222 !important;
 }
-/* a
+.manga-navbar .search-bar .search-bar-bg,
+.manga-navbar .user-panel .drop-list .logout-btn-container,
+.manga-navbar .drop-list .more-btn-container
 {
   background-color: #333 !important;
-} */
+}
 .s_tag .btn-add,
 #biliAppHomeSetting select,
 #biliAppHomeSetting input
@@ -20,23 +24,37 @@
 {
   background-image: none !important;
 } */
-/* a
+.manga-navbar .nav-list
 {
   background-color: transparent !important;
-} */
+}
 /* a
 {
   background: #fff !important;
 } */
+.manga-navbar .search-bar .placeholder-list .placeholder-item
+{
+  color: #888 !important;
+}
 #biliAppHomeSetting label ~ span,
 .video-container .text-area .view-danmaku,
-.follow-dialog-wrap .special-tip
+.follow-dialog-wrap .special-tip,
+.manga-navbar .data-list .list-container .empty-hinter,
+.manga-navbar .data-list .list-container .failure-hinter,
+.manga-navbar .data-list .list-container .loading-hinter
 {
   color: #aaa !important;
 }
 #biliAppHomeSetting select,
 #biliAppHomeSetting input,
-#biliAppHomeSetting a
+#biliAppHomeSetting a,
+.manga-navbar-history-list .action-button,
+.manga-navbar-favourite-manga .action-button,
+.manga-navbar .search-bar .search-input,
+.manga-navbar .user-info-panel .user-name,
+.manga-navbar .user-info-panel .info-item,
+.manga-navbar .user-panel .drop-list .logout-btn-container .logout-button,
+.manga-navbar .drop-list .more-btn-container .more-button
 {
   color: #eee !important;
 }
@@ -49,7 +67,7 @@
 {
   border-color: transparent !important;
 }
-/* a
+/*
 {
   border-color: #aaa !important;
 } */
@@ -74,10 +92,10 @@
 {
   fill: #fff !important;
 } */
-/* a
+.manga-navbar .search-bar .confirm-btn .search-icon
 {
   filter: brightness(0) invert(1) !important;
-} */
+}
 /* a
 {
   filter: brightness(0) invert(.7) !important;
@@ -122,6 +140,10 @@
 {
   box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 } */
+.app-layout .manga-navbar
+{
+  box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px !important;
+}
 /* a
 {
   display: none !important;

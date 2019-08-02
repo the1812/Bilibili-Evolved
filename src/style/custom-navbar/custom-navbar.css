@@ -513,7 +513,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     opacity: 0;
     pointer-events: none;
 }
-.user-info-panel
+.custom-navbar .user-info-panel
 {
     width: 240px;
     font-size: 12px;
