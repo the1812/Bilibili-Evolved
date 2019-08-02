@@ -30,7 +30,9 @@
 .dropdown__content .dropdown__item:hover,
 .dropdown__content .dropdown__active,
 .r-con .members-info__container,
-.practice-wrap .tab-container
+.practice-wrap .tab-container,
+.manga-button.ghost,
+.manga-button.primary
 {
     background-color: #333 !important;
 }
@@ -76,7 +78,8 @@ li.danmaku-info-row.bpui-selecting,
 .r-con .members-info__header,
 .r-con .members-info .up-card .attention--not,
 .r-con .members-info .up-card .attention,
-.ui-dropdown .ui-dropdown-text
+.ui-dropdown .ui-dropdown-text,
+.round-corner .app-layout
 {
     background-color: #444 !important;
 }
@@ -108,7 +111,8 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .filter-level .line,
 .list-header .filter-wrp .video-type .line,
 .card .forw-area a.more:hover,
-.multi-line-text:after
+.multi-line-text:after,
+.manga-recommendation .data-list .list-item
 {
     background-color: transparent !important;
 }
@@ -150,7 +154,8 @@ li.danmaku-info-row.bpui-selecting,
 .practice-wrap .banner-container .title~p,
 .past-work .card-view .collect-num,
 .past-work .card-view .danmu-num,
-.past-work .card-view .play-num
+.past-work .card-view .play-num,
+.header-info .manga-info .supporting-text
 {
     color: #aaa !important;
 }
@@ -243,7 +248,11 @@ li.danmaku-info-row.bpui-selecting,
 .rank-list-item .expand-mode .text-section .item-title,
 .schedule-list .list-header .date-selector .date-item,
 .style-section .tag-block .block-title,
-.style-section .tag-block .tag-containers .style-tag
+.style-section .tag-block .tag-containers .style-tag,
+.header-info .manga-info .author-name,
+.episode-list-component .episode-list .list-header .header-item,
+.manga-button.ghost,
+.manga-button.primary
 {
     color: #eee !important;
 }
@@ -329,7 +338,9 @@ li.danmaku-info-row.bpui-selecting,
 {
     fill: #fff !important;
 } */
-.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .address-icon
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .address-icon,
+.header-info .manga-info .supporting-text .label-icon,
+.header-info .manga-info .action-buttons .do-favourite .fav-icon
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -469,7 +480,8 @@ li.danmaku-info-row.bpui-selecting,
 .tabs-wrapper .tabs .tabs-item.active:before,
 .calendar-wrap .calendar-body .date-wrap .wrap-content .select-icon,
 .practice-wrap .banner-container .current-work .bili-btn,
-.style-section .tag-block .tag-containers .style-tag:active
+.style-section .tag-block .tag-containers .style-tag:active,
+.manga-button.primary:hover
 {
     background-color: var(--theme-color) !important;
 }

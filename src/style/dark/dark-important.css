@@ -162,7 +162,8 @@ blockquote .color-yellow-04,
 #app .sticky-bar .bar-content .message:hover,
 .el-select-dropdown__item.selected,
 .r-con .members-info .up-card .info-name.is-vip:hover,
-.style-section .tag-block .tag-containers .style-tag.selected
+.style-section .tag-block .tag-containers .style-tag.selected,
+.episode-list-component .episode-list .list-header .header-item.selected
 {
     color: var(--theme-color) !important;
 }
