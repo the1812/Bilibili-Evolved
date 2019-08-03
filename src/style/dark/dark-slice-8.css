@@ -168,7 +168,8 @@ li.danmaku-info-row.bpui-selecting,
 .header-info .manga-info .supporting-text,
 .my-coupon .subtitle,
 .app-layout .page-content .extral-info,
-.purchase-history .list-item .text-info .recharge-date
+.purchase-history .list-item .text-info .recharge-date,
+.data-list .list-container .data-item .text-section .footer-text .text
 {
     color: #aaa !important;
 }
@@ -276,7 +277,8 @@ li.danmaku-info-row.bpui-selecting,
 .app-layout .dropbox-component .current,
 .app-layout .dropbox-component .data-list>li,
 .app-layout .page-content .manga-textbox,
-.app-ctnr .club-brief
+.app-ctnr .club-brief,
+.data-list .list-container .data-item .text-section .manga-title
 {
     color: #eee !important;
 }
