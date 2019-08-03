@@ -305,6 +305,7 @@ Resource.manifest = {
   },
   about: {
     path: 'about.min.js',
+    alwaysPreview: true,
     html: true,
     style: 'important',
     displayNames: {
