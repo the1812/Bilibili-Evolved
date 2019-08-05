@@ -575,6 +575,7 @@ li.category.folded i.icon-arrow
     box-shadow: #0004 0 2px 4px;
     height: 40px;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent !important;
 }
 .gui-settings-flat-button:disabled
 {

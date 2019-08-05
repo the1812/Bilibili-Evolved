@@ -1092,7 +1092,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 
 body.all-navbar-fill .link-navbar,
 body.all-navbar-fill .nav-header-wrapper,
-body.all-navbar-fill .link-navbar .main-ctnr .nav-items-ctnr
+body.all-navbar-fill .link-navbar .main-ctnr .nav-items-ctnr,
+body.all-navbar-fill .manga-navbar,
+body.all-navbar-fill .manga-navbar .search-bar .search-bar-bg
 {
     background-color: var(--theme-color) !important;
 }
@@ -1101,7 +1103,8 @@ body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-logo,
 body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-tv-icon,
 body.all-navbar-fill .nav-header-wrapper .nav-header .search-icon,
 body.all-navbar-fill .link-navbar .main-ctnr .nav-logo::before,
-body.all-navbar-fill .link-navbar .main-ctnr .nav-switcher.open-btn
+body.all-navbar-fill .link-navbar .main-ctnr .nav-switcher.open-btn,
+body.all-navbar-fill .manga-navbar .nav-list .nav-item .item-icon
 {
     filter: brightness(0) invert(1) !important;
     opacity: 0.8666666;
@@ -1121,7 +1124,11 @@ body.all-navbar-fill .shortcuts-ctnr .shortcut-item,
 body.all-navbar-fill .my-link-btn,
 body.all-navbar-fill .link-navbar .main-ctnr .nav-switcher i,
 body.all-navbar-fill .link-navbar .main-ctnr .nav-switcher i:hover,
-body.all-navbar-fill .link-navbar.black .my-link-btn .label
+body.all-navbar-fill .link-navbar.black .my-link-btn .label,
+body.all-navbar-fill .manga-navbar .search-bar .placeholder-list .placeholder-item,
+body.all-navbar-fill .manga-navbar .search-bar .search-input,
+body.all-navbar-fill .manga-navbar .nav-list .nav-item,
+body.all-navbar-fill .manga-navbar .action-button
 {
     color: var(--foreground-color-d) !important;
 }
@@ -1133,14 +1140,16 @@ body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-search-bar::pla
     color: white !important;
 }
 body.all-navbar-fill .link-navbar .search-bar-ctnr .search-bar input::placeholder,
-body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-search-bar::placeholder
+body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-search-bar::placeholder,
+body.all-navbar-fill .manga-navbar .search-bar .placeholder-list .placeholder-item
 {
     opacity: 0.7 !important;
 }
 body.all-navbar-fill .nav-header-wrapper .nav-header .nav-header-search-bar,
-body.all-navbar-fill .link-navbar .search-bar-ctnr .search-bar
+body.all-navbar-fill .link-navbar .search-bar-ctnr .search-bar,
+body.all-navbar-fill .manga-navbar .search-bar .search-bar-bg
 {
-    box-shadow: 0px 1px 4px 0 #0004;
+    box-shadow: 0px 1px 4px 0 #0002;
 }
 body.all-navbar-fill .link-navbar .nav-item:hover,
 body.all-navbar-fill .link-navbar .shortcuts-ctnr .shortcut-item:hover,
@@ -1173,6 +1182,10 @@ body.all-navbar-fill .link-navbar .shortcuts-ctnr .shortcut-item,
 body.all-navbar-fill .link-navbar .nav-item
 {
     transition: all .2s ease-out;
+}
+body.all-navbar-fill .manga-navbar .search-bar .confirm-btn .search-icon
+{
+    visibility: hidden !important;
 }
 
 
