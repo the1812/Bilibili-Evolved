@@ -86,7 +86,8 @@ li.danmaku-info-row.bpui-selecting,
 .r-con .members-info .up-card .attention,
 .ui-dropdown .ui-dropdown-text,
 .app-layout .page-content .router-view,
-.app-layout .sidebar .nav-item-indicator
+.app-layout .sidebar .nav-item-indicator,
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel
 {
     background-color: #444 !important;
 }
@@ -123,7 +124,8 @@ li.danmaku-info-row.bpui-selecting,
 .app-layout .user-info>.uid,
 .app-layout .page-content,
 .app-layout .list-item:hover,
-.manga-spread-module .label
+.manga-spread-module .label,
+.danmaku-box .bui-radio-input:checked+.bui-radio-label
 {
     background-color: transparent !important;
 }
@@ -282,7 +284,9 @@ li.danmaku-info-row.bpui-selecting,
 .app-layout .dropbox-component .data-list>li,
 .app-layout .page-content .manga-textbox,
 .app-ctnr .club-brief,
-.data-list .list-container .data-item .text-section .manga-title
+.data-list .list-container .data-item .text-section .manga-title,
+.player-auxiliary-danmaku-report-wrap .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-content
 {
     color: #eee !important;
 }
@@ -356,7 +360,8 @@ li.danmaku-info-row.bpui-selecting,
 .love-item:not(:last-child):after,
 .liked-user:not(:last-child):after,
 .center-box .orginal-reply,
-.app-layout .pivot-component .pivot-headers
+.app-layout .pivot-component .pivot-headers,
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title
 {
     border-color: #555 !important
 }
@@ -463,7 +468,8 @@ li.danmaku-info-row.bpui-selecting,
 .navbar-container,
 .bilibili-player-ending-panel-box-recommend:hover,
 .selectable-option.active,
-.guest-wrapper .guest-list .guest-item:hover .image
+.guest-wrapper .guest-list .guest-item:hover .image,
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
