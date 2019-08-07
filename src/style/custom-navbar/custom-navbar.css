@@ -1091,7 +1091,6 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .activity-popup {
     width: 380px;
-    height: 600px;
 }
 .custom-navbar .activity-tabs {
     display: flex;
@@ -1124,6 +1123,47 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .activity-tab.selected::after {
     max-height: unset;
     max-width: unset;
+}
+.custom-navbar .video-activity {
+    padding: 12px;
+    overflow: auto;
+    height: 500px;
+}
+.custom-navbar .video-activity-card {
+    --card-width: 172px;
+    width: var(--card-width);
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
+    margin-bottom: 12px;
+}
+.custom-navbar.dark .video-activity-card {
+    box-shadow: rgba(0,0,0,0.3) 0 4px 8px 0px;
+}
+.custom-navbar .video-activity-card .cover {
+    width: var(--card-width);
+}
+.custom-navbar .video-activity-card .title {
+    font-size: 10pt;
+    font-weight: bold;
+    margin: 8px;
+}
+.custom-navbar .video-activity-card .up {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px;
+}
+.custom-navbar .video-activity-card .up .face {
+    width: 28px;
+    border-radius: 50%;
+}
+
+.round-corner .custom-navbar .video-activity-card {
+    border-radius: var(--large-corner-radius);
+}
+.round-corner .custom-navbar .video-activity-card .cover {
+    border-radius: var(--large-corner-radius) var(--large-corner-radius) 0 0;
 }
 
 body.all-navbar-fill .link-navbar,

@@ -906,6 +906,12 @@ class Activities extends NavbarComponent {
     this.active = document.URL.replace(/\?.*$/, "") === "https://t.bilibili.com/";
     this.onPopup = this.init
   }
+  static get latestID () {
+
+  }
+  static set latestID (id) {
+
+  }
   async init () {
     this.popupVM = new Vue({
       el: await SpinQuery.select('.activity-popup'),
@@ -933,7 +939,50 @@ class Activities extends NavbarComponent {
             }
           },
         },
-        // 'video-activity': {},
+        'video-activity': {
+          template: /*html*/`
+            <div class="video-activity">
+              <div v-if="loading" class="loading">加载中...</div>
+              <div v-else class="video-activity-card" v-for="card of cards">
+                <img class="cover" :src="card.coverUrl">
+                <h1 class="title">{{card.title}}</h1>
+                <div class="up">
+                  <img class="face" :src="card.faceUrl">
+                  <span class="name">{{card.upName}}</span>
+                </div>
+              </div>
+            </div>
+          `,
+          data() {
+            return {
+              cards: [],
+              loading: true,
+            }
+          },
+          mounted() {
+            (async () => {
+              try {
+                const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=8`)
+                if (json.code !== 0) {
+                  throw new Error(json.message)
+                }
+                this.cards = json.data.cards.map(card => {
+                  const cardJson = JSON.parse(card.card)
+                  return {
+                    coverUrl: cardJson.pic,
+                    title: cardJson.title,
+                    faceUrl: card.desc.user_profile.info.face,
+                    upName: card.desc.user_profile.info.uname,
+                  }
+                })
+              } catch (error) {
+                logError(`加载视频动态失败, error = ${error}`)
+              } finally {
+                this.loading = false
+              }
+            })()
+          },
+        },
         // 'bangumi-activity': {},
         // 'column-activity': {},
         // 'photos-activity': {},
