@@ -258,6 +258,13 @@ class NavbarComponent {
   get hidden () {
     return settings.customNavbarHidden.includes(this.name);
   }
+  async setNotifyCount(count) {
+    const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`)
+    if (!notifyElement) {
+      return
+    }
+    notifyElement.innerHTML = count
+  }
 }
 class Blank extends NavbarComponent {
   constructor (number) {
@@ -347,12 +354,11 @@ class Messages extends NavbarComponent {
     if (json.code !== 0) {
       return;
     }
-    const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`);
     let totalCount = names.reduce((acc, it) => acc + json.data[it], 0);
     if (!totalCount) {
       return;
     }
-    notifyElement.innerHTML = totalCount;
+    await this.setNotifyCount(totalCount);
     names.forEach((name, index) => {
       const count = json.data[name];
       if (count > 0) {
@@ -879,24 +885,62 @@ class NotifyIframe extends Iframe {
     }
   }
 }
-class Activities extends NotifyIframe {
+class Activities extends NavbarComponent {
   constructor () {
-    super("动态",
-      settings.oldTweets ? "https://www.bilibili.com/account/dynamic" : "https://t.bilibili.com/",
-      {
-        src: `https://t.bilibili.com/pages/nav/index`,
-        width: `380px`,
-        height: `422px`,
-        lazy: true,
-      });
+    super();
+    this.noPadding = true;
+    this.href = settings.oldTweets ? "https://www.bilibili.com/account/dynamic" : "https://t.bilibili.com/";
+    this.html = "动态";
+    this.popupHtml = /*html*/`
+      <div class="activity-popup">
+        <activity-tabs :tab.sync="selectedTab" :items="tabs"></activity-tabs>
+        <div class="activity-popup-content">
+          <video-activity v-if="selectedTab === '视频'"></video-activity>
+          <bangumi-activity v-if="selectedTab === '番剧'"></bangumi-activity>
+          <column-activity v-if="selectedTab === '专栏'"></column-activity>
+          <photos-activity v-if="selectedTab === '图片'"></photos-activity>
+          <live-activity v-if="selectedTab === '直播'"></live-activity>
+        </div>
+      </div>
+    `;
     this.active = document.URL.replace(/\?.*$/, "") === "https://t.bilibili.com/";
+    this.onPopup = this.init
   }
-  getApiUrl () {
-    const updateNumber = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), "$1");
-    return `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${updateNumber}&type_list=8,512,64`;
-  }
-  getCount (json) {
-    return json.data.update_num;
+  async init () {
+    this.popupVM = new Vue({
+      el: await SpinQuery.select('.activity-popup'),
+      data: {
+        tabs: [
+          '视频',
+          '番剧',
+          '专栏',
+          '图片',
+          '直播',
+        ],
+        selectedTab: '视频',
+      },
+      components: {
+        'activity-tabs': {
+          props: ['items', 'tab'],
+          template: /*html*/`
+            <ul class="activity-tabs">
+              <li v-for="item of items" class="activity-tab" :class="{selected: item === tab}" @click="changeTab(item)">{{item}}</li>
+            </ul>
+          `,
+          methods: {
+            changeTab(item) {
+              this.$emit('update:tab', item)
+            }
+          },
+        },
+        // 'video-activity': {},
+        // 'bangumi-activity': {},
+        // 'column-activity': {},
+        // 'photos-activity': {},
+        // 'live-activity': {},
+      },
+
+    })
   }
   get name () {
     return "activities";

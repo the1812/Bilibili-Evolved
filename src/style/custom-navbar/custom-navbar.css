@@ -1089,6 +1089,42 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .search-list {
     width: 250px;
 }
+.custom-navbar .activity-popup {
+    width: 380px;
+    height: 600px;
+}
+.custom-navbar .activity-tabs {
+    display: flex;
+    padding: 16px 0;
+    justify-content: space-evenly;
+    align-items: flex-end;
+}
+.custom-navbar .activity-tab {
+    opacity: 0.5;
+    position: relative;
+    cursor: pointer;
+}
+.custom-navbar .activity-tab.selected {
+    opacity: 1;
+    transform: scale(1.2);
+    font-weight: bold;
+}
+.custom-navbar .activity-tab::after {
+    content: "";
+    width: calc(100% + 12px);
+    height: 2px;
+    border-radius: 1px;
+    position: absolute;
+    background-color: var(--theme-color);
+    left: -6px;
+    bottom: -6px;
+    max-height: 0;
+    max-width: 0;
+}
+.custom-navbar .activity-tab.selected::after {
+    max-height: unset;
+    max-width: unset;
+}
 
 body.all-navbar-fill .link-navbar,
 body.all-navbar-fill .nav-header-wrapper,
