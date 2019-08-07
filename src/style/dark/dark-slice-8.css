@@ -122,7 +122,8 @@ li.danmaku-info-row.bpui-selecting,
 .manga-recommendation .data-list .list-item,
 .app-layout .user-info>.uid,
 .app-layout .page-content,
-.app-layout .list-item:hover
+.app-layout .list-item:hover,
+.manga-spread-module .label
 {
     background-color: transparent !important;
 }
@@ -169,7 +170,10 @@ li.danmaku-info-row.bpui-selecting,
 .my-coupon .subtitle,
 .app-layout .page-content .extral-info,
 .purchase-history .list-item .text-info .recharge-date,
-.data-list .list-container .data-item .text-section .footer-text .text
+.data-list .list-container .data-item .text-section .footer-text .text,
+.manga-spread-module .label,
+.manga-rank-list .rank-item .ri-detail .ri-first-info,
+.manga-rank-list .rank-item .ri-detail .ri-update
 {
     color: #aaa !important;
 }
