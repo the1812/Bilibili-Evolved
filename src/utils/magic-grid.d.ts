@@ -13,3 +13,4 @@ export class MagicGrid {
   listen(): void
   positionItems(): void
 }
+export const MagicGridComponent: any

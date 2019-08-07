@@ -658,5 +658,11 @@ Resource.manifest = {
       autoSeedsToCoins: '自动运行',
     },
   },
+  magicGrid: {
+    path: 'magic-grid.min.js',
+    displayNames: {
+      magicGrid: 'Magic Grid',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

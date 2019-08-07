@@ -1124,10 +1124,12 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     max-height: unset;
     max-width: unset;
 }
-.custom-navbar .video-activity {
-    padding: 12px;
+.custom-navbar .activity-popup-content {
     overflow: auto;
     height: 500px;
+}
+.custom-navbar .video-activity {
+    padding: 12px;
 }
 .custom-navbar .video-activity-card {
     --card-width: 172px;
@@ -1136,6 +1138,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     flex-direction: column;
     box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
     margin-bottom: 12px;
+    left: 0;
 }
 .custom-navbar.dark .video-activity-card {
     box-shadow: rgba(0,0,0,0.3) 0 4px 8px 0px;

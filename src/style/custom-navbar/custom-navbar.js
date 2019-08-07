@@ -913,6 +913,7 @@ class Activities extends NavbarComponent {
 
   }
   async init () {
+    const { MagicGridComponent } = await import('../../utils/magic-grid')
     this.popupVM = new Vue({
       el: await SpinQuery.select('.activity-popup'),
       data: {
@@ -940,8 +941,11 @@ class Activities extends NavbarComponent {
           },
         },
         'video-activity': {
+          components: {
+            'magic-grid': MagicGridComponent,
+          },
           template: /*html*/`
-            <div class="video-activity">
+            <magic-grid wrapper="video-activity" :gap="12" :maxCols="2" :animate="true">
               <div v-if="loading" class="loading">加载中...</div>
               <div v-else class="video-activity-card" v-for="card of cards">
                 <img class="cover" :src="card.coverUrl">
@@ -951,7 +955,7 @@ class Activities extends NavbarComponent {
                   <span class="name">{{card.upName}}</span>
                 </div>
               </div>
-            </div>
+            </magic-grid>
           `,
           data() {
             return {
