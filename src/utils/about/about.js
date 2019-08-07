@@ -32,6 +32,7 @@
       fetching: true,
       participants: [],
       supporters: [
+        '*耀宇',
         '*飞',
         'N*v',
         '*博睿',
