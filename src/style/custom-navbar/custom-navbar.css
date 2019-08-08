@@ -1095,8 +1095,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .activity-tabs {
     display: flex;
-    padding: 16px 12px 16px 18px;
-    justify-content: space-evenly;
+    padding: 12px 12px 16px 18px;
+    justify-content: space-between;
     align-items: center;
 }
 .custom-navbar .activity-tabs .view-all {
@@ -1105,6 +1105,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     height: 28px;
     box-sizing: border-box;
     border-radius: 14px;
+}
+.custom-navbar .activity-tabs .view-all:hover {
+    background-color: #8884;
 }
 .custom-navbar .activity-tab {
     opacity: 0.5;
@@ -1126,12 +1129,14 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     left: 10%;
     bottom: -4px;
     transform: scaleX(0);
+    transition: all .2s ease-out;
 }
 .custom-navbar .activity-tab.selected::after {
     transform: scaleX(1);
 }
 .custom-navbar .activity-popup-content {
     overflow: auto;
+    overscroll-behavior: contain;
     height: 500px;
     position: relative;
     display: flex;
