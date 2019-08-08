@@ -900,7 +900,7 @@ class Activities extends NavbarComponent {
           <column-activity v-if="selectedTab === '专栏'"></column-activity>
           <photos-activity v-if="selectedTab === '图片'"></photos-activity>
           <live-activity v-if="selectedTab === '直播'"></live-activity>
-          <div class="view-more">查看更多<i class="mdi mdi-18px mdi-more"></i></div>
+          <a class="view-more" target="_blank" :href="viewMoreUrl">查看更多<i class="mdi mdi-18px mdi-more"></i></a>
         </div>
       </div>
     `;
@@ -932,6 +932,7 @@ class Activities extends NavbarComponent {
           template: /*html*/`
             <ul class="activity-tabs">
               <li v-for="item of items" class="activity-tab" :class="{selected: item === tab}" @click="changeTab(item)">{{item}}</li>
+              <a class="view-all" target="_blank" href="https://t.bilibili.com/">全部动态</a>
             </ul>
           `,
           methods: {
@@ -943,11 +944,36 @@ class Activities extends NavbarComponent {
         'video-activity': {
           components: {
             'video-card': {
-              props: ['card'],
+              props: ['card', 'watchlaterInit'],
+              data() {
+                return {
+                  watchlater: this.watchlaterInit,
+                }
+              },
+              methods: {
+                async toggleWatchlater() {
+                  try {
+                    const { toggleWatchlater } = await import('../../video/watchlater-api')
+                    if (this.watchlater === false) {
+                      await toggleWatchlater(this.card.aid, true)
+                    } else {
+                      await toggleWatchlater(this.card.aid, false)
+                    }
+                    this.watchlater = !this.watchlater
+                  } catch (error) {
+                    logError(`稍后再看操作失败: ${error}`)
+                  }
+                },
+              },
               template: /*html*/`
                 <a class="video-activity-card" target="_blank" :href="card.videoUrl">
-                  <img class="cover" :src="card.coverUrl">
-                  <h1 class="title">{{card.title}}</h1>
+                  <div class="cover-container">
+                    <img class="cover" :src="card.coverUrl">
+                    <div class="time">{{card.time}}</div>
+                    <div v-if="!watchlater" @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi mdi-clock-outline"></i>稍后再看</div>
+                    <div v-else @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi mdi-clock"></i>已添加</div>
+                  </div>
+                  <h1 class="title" :title="card.description">{{card.title}}</h1>
                   <a class="up" target="_blank" :href="card.upUrl">
                     <img class="face" :src="card.faceUrl">
                     <span class="name">{{card.upName}}</span>
@@ -960,10 +986,10 @@ class Activities extends NavbarComponent {
             <div class="video-activity">
               <div v-if="loading" class="loading">加载中...</div>
               <div v-if="!loading" class="video-activity-column">
-                <video-card v-for="card of leftCards" :key="card.id" :card="card"></video-card>
+                <video-card v-for="card of leftCards" :key="card.id" :card="card" :watchlaterInit="card.watchlater"></video-card>
               </div>
               <div v-if="!loading" class="video-activity-column">
-                <video-card v-for="card of rightCards" :key="card.id" :card="card"></video-card>
+                <video-card v-for="card of rightCards" :key="card.id" :card="card" :watchlaterInit="card.watchlater"></video-card>
               </div>
             </div>
           `,
@@ -981,6 +1007,8 @@ class Activities extends NavbarComponent {
                 if (json.code !== 0) {
                   throw new Error(json.message)
                 }
+                const { getWatchlaterList } = await import('../../video/watchlater-api')
+                const watchlaterList = await getWatchlaterList()
                 const cards = json.data.cards.map(card => {
                   const cardJson = JSON.parse(card.card)
                   let topics
@@ -995,12 +1023,14 @@ class Activities extends NavbarComponent {
                     timeNumber: cardJson.duration,
                     time: formatDuration(cardJson.duration),
                     description: cardJson.desc,
+                    aid: cardJson.aid,
                     videoUrl: `https://www.bilibili.com/av${cardJson.aid}`,
                     faceUrl: card.desc.user_profile.info.face,
                     upName: card.desc.user_profile.info.uname,
                     upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
                     id: card.desc.dynamic_id_str,
-                    topics
+                    topics,
+                    watchlater: watchlaterList.includes(cardJson.aid),
                   }
                 })
                 this.leftCards = cards.filter((_, index) => index % 2 === 0)
@@ -1021,7 +1051,15 @@ class Activities extends NavbarComponent {
         // 'photos-activity': {},
         // 'live-activity': {},
       },
-
+      computed: {
+        viewMoreUrl() {
+          switch (this.selectedTab) {
+            case '视频':
+              return 'https://t.bilibili.com/?tab=8'
+            default: return null
+          }
+        },
+      },
     })
   }
   get name () {

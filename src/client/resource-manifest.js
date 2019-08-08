@@ -664,5 +664,11 @@ Resource.manifest = {
       magicGrid: 'Magic Grid',
     },
   },
+  watchlaterApi: {
+    path: 'watchlater-api.min.js',
+    displayNames: {
+      toggleWatchlater: '稍后再看API',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
