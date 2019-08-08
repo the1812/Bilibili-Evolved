@@ -271,6 +271,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     pointer-events: none;
     opacity: 0;
     transform: translateX(-50%);
+    cursor: default;
     /* transform-origin: top; */
     /* transition: all 0.15s cubic-bezier(0.18, 0.89, 0.38, 1.15) .2s; */
 }
@@ -1127,20 +1128,60 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .activity-popup-content {
     overflow: auto;
     height: 500px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.custom-navbar .activity-popup-content .view-more {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    padding: 8px 16px;
+    background-color: #fffe;
+    margin-top: 8px;
+    transform: translateY(-6px);
+    box-shadow: rgba(0,0,0,0.12) 0 4px 8px 0px;
+    cursor: pointer;
+    height: 36px;
+    border-radius: 18px;
+}
+.custom-navbar .activity-popup-content .view-more:hover {
+    background-color: #fff;
+    transform: translateY(-6px) scale(1.1);
+}
+.custom-navbar.dark .activity-popup-content .view-more {
+    background-color: #000e;
+}
+.custom-navbar.dark .activity-popup-content .view-more:hover {
+    background-color: #000;
+    transform: translateY(-6px) scale(1.1);
+}
+.custom-navbar .activity-popup-content .view-more .mdi {
+    line-height: 1;
+    margin-left: 8px;
 }
 .custom-navbar .video-activity {
-    padding: 12px;
+    padding: 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-self: stretch;
 }
 .custom-navbar .video-activity-card {
     --card-width: 172px;
     width: var(--card-width);
     display: flex;
     flex-direction: column;
-    box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
+    box-shadow: rgba(0,0,0,0.12) 0 4px 8px 0px;
     margin-bottom: 12px;
-    left: 0;
+    break-inside: avoid;
 }
-.custom-navbar.dark .video-activity-card {
+.custom-navbar.dark .video-activity-card,
+.custom-navbar.dark .activity-popup-content .view-more {
     box-shadow: rgba(0,0,0,0.3) 0 4px 8px 0px;
 }
 .custom-navbar .video-activity-card .cover {
@@ -1151,6 +1192,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     font-weight: bold;
     margin: 8px;
 }
+.custom-navbar .video-activity-card:hover .title {
+    color: var(--theme-color);
+}
 .custom-navbar .video-activity-card .up {
     display: flex;
     justify-content: space-between;
@@ -1158,7 +1202,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     margin: 8px;
 }
 .custom-navbar .video-activity-card .up .face {
-    width: 28px;
+    width: 24px;
     border-radius: 50%;
 }
 

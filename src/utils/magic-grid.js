@@ -309,7 +309,7 @@ export const MagicGridComponent = {
   },
 
   updated () {
-    this.getReady()
+    this.positionItems()
   },
 
   methods: {
@@ -394,6 +394,10 @@ export const MagicGridComponent = {
       wSpace = Math.floor(wSpace / 2)
 
       Array.prototype.forEach.call(this.items, (item, i) => {
+        item.style.position = 'absolute'
+        item.style.maxWidth = this.maxColWidth + 'px'
+        if (this.animate) item.style.transition = 'top, left 0.2s ease'
+
         let min = this.nextCol(cols, i)
         let left = min.index * this.colWidth() + wSpace
 

@@ -900,6 +900,7 @@ class Activities extends NavbarComponent {
           <column-activity v-if="selectedTab === '专栏'"></column-activity>
           <photos-activity v-if="selectedTab === '图片'"></photos-activity>
           <live-activity v-if="selectedTab === '直播'"></live-activity>
+          <div class="view-more">查看更多<i class="mdi mdi-18px mdi-more"></i></div>
         </div>
       </div>
     `;
@@ -913,7 +914,6 @@ class Activities extends NavbarComponent {
 
   }
   async init () {
-    const { MagicGridComponent } = await import('../../utils/magic-grid')
     this.popupVM = new Vue({
       el: await SpinQuery.select('.activity-popup'),
       data: {
@@ -942,24 +942,35 @@ class Activities extends NavbarComponent {
         },
         'video-activity': {
           components: {
-            'magic-grid': MagicGridComponent,
+            'video-card': {
+              props: ['card'],
+              template: /*html*/`
+                <a class="video-activity-card" target="_blank" :href="card.videoUrl">
+                  <img class="cover" :src="card.coverUrl">
+                  <h1 class="title">{{card.title}}</h1>
+                  <a class="up" target="_blank" :href="card.upUrl">
+                    <img class="face" :src="card.faceUrl">
+                    <span class="name">{{card.upName}}</span>
+                  </a>
+                </a>
+              `,
+            },
           },
           template: /*html*/`
-            <magic-grid wrapper="video-activity" :gap="12" :maxCols="2" :animate="true">
+            <div class="video-activity">
               <div v-if="loading" class="loading">加载中...</div>
-              <div v-else class="video-activity-card" v-for="card of cards">
-                <img class="cover" :src="card.coverUrl">
-                <h1 class="title">{{card.title}}</h1>
-                <div class="up">
-                  <img class="face" :src="card.faceUrl">
-                  <span class="name">{{card.upName}}</span>
-                </div>
+              <div v-if="!loading" class="video-activity-column">
+                <video-card v-for="card of leftCards" :key="card.id" :card="card"></video-card>
               </div>
-            </magic-grid>
+              <div v-if="!loading" class="video-activity-column">
+                <video-card v-for="card of rightCards" :key="card.id" :card="card"></video-card>
+              </div>
+            </div>
           `,
           data() {
             return {
-              cards: [],
+              leftCards: [],
+              rightCards: [],
               loading: true,
             }
           },
@@ -970,15 +981,33 @@ class Activities extends NavbarComponent {
                 if (json.code !== 0) {
                   throw new Error(json.message)
                 }
-                this.cards = json.data.cards.map(card => {
+                const cards = json.data.cards.map(card => {
                   const cardJson = JSON.parse(card.card)
+                  let topics
+                  if (card.display && card.display.topic_info) {
+                    topics = card.display.topic_info.topic_details.map(it => {
+                      return it.topic_name
+                    })
+                  }
                   return {
                     coverUrl: cardJson.pic,
                     title: cardJson.title,
+                    timeNumber: cardJson.duration,
+                    time: formatDuration(cardJson.duration),
+                    description: cardJson.desc,
+                    videoUrl: `https://www.bilibili.com/av${cardJson.aid}`,
                     faceUrl: card.desc.user_profile.info.face,
                     upName: card.desc.user_profile.info.uname,
+                    upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
+                    id: card.desc.dynamic_id_str,
+                    topics
                   }
                 })
+                this.leftCards = cards.filter((_, index) => index % 2 === 0)
+                this.rightCards = cards.filter((_, index) => index % 2 === 1)
+                if (this.leftCards.length !== this.rightCards.length) {
+                  this.leftCards.pop()
+                }
               } catch (error) {
                 logError(`加载视频动态失败, error = ${error}`)
               } finally {
