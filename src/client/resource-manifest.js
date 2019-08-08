@@ -670,5 +670,11 @@ Resource.manifest = {
       toggleWatchlater: '稍后再看API',
     },
   },
+  mdi: {
+    path: 'mdi.min.js',
+    displayNames: {
+      mdi: 'MDI 图标集',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
