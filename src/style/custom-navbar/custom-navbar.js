@@ -970,8 +970,7 @@ class Activities extends NavbarComponent {
                   <div class="cover-container">
                     <img class="cover" :src="card.coverUrl">
                     <div class="time">{{card.time}}</div>
-                    <div v-if="!watchlater" @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi mdi-clock-outline"></i>稍后再看</div>
-                    <div v-else @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi mdi-clock"></i>已添加</div>
+                    <div @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi mdi-clock-outline"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
                   </div>
                   <h1 class="title" :title="card.description">{{card.title}}</h1>
                   <a class="up" target="_blank" :href="card.upUrl">
