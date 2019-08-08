@@ -87,7 +87,8 @@ li.danmaku-info-row.bpui-selecting,
 .ui-dropdown .ui-dropdown-text,
 .app-layout .page-content .router-view,
 .app-layout .sidebar .nav-item-indicator,
-.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel,
+.episode-list-component .episode-list .list-data .list-item
 {
     background-color: #444 !important;
 }
@@ -524,7 +525,8 @@ li.danmaku-info-row.bpui-selecting,
 .practice-wrap .banner-container .current-work .bili-btn,
 .style-section .tag-block .tag-containers .style-tag:active,
 .manga-button.primary:hover,
-.app-layout .dropbox-component .data-list>li:hover
+.app-layout .dropbox-component .data-list>li:hover,
+.episode-list-component .episode-list .list-data .list-item:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -605,7 +607,8 @@ li.danmaku-info-row.bpui-selecting,
 .h5share-container .tag,
 .comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
 .practice-wrap .banner-container .current-work .bili-btn,
-.app-layout .dropbox-component .data-list>li:hover
+.app-layout .dropbox-component .data-list>li:hover,
+.episode-list-component .episode-list .list-data .list-item:hover
 {
     color: var(--foreground-color) !important;
 }
