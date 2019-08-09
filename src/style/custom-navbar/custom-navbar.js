@@ -260,7 +260,7 @@ class NavbarComponent {
   }
   async setNotifyCount(count) {
     const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`)
-    if (!notifyElement) {
+    if (!notifyElement || !count) {
       notifyElement.innerHTML = ''
       return
     }
@@ -1196,7 +1196,45 @@ class Activities extends NavbarComponent {
           },
         },
         // 'photos-activity': {},
-        // 'live-activity': {},
+        'live-activity': {
+          template: /*html*/`
+            <div class="live-activity" :class="{loading}">
+              <activity-loading :loading="loading"></activity-loading>
+              <a v-if="!loading" class="live-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
+                <dpi-img class="face" :size="{width: 64}" :src="card.faceUrl"></dpi-img>
+                <h1 class="live-title" :title="card.title">{{card.title}}</h1>
+                <div class="name" :title="card.name">{{card.name}}</div>
+              </a>
+            </div>
+          `,
+          data () {
+            return {
+              cards: [],
+              loading: true,
+            }
+          },
+          async mounted () {
+            try {
+              const json = await Ajax.getJsonWithCredentials(`https://api.live.bilibili.com/relation/v1/feed/feed_list?page=1&pagesize=24`)
+              if (json.code !== 0) {
+                throw new Error(json.message)
+              }
+              this.cards = json.data.list.map(card => {
+                return {
+                  faceUrl: card.face,
+                  title: card.title,
+                  name: card.uname,
+                  id: card.roomid,
+                  url: card.link,
+                }
+              })
+            } catch (error) {
+              logError(`加载直播动态失败, error = ${error}`)
+            } finally {
+              this.loading = false
+            }
+          },
+        },
       },
       computed: {
         viewMoreUrl() {
@@ -1207,6 +1245,8 @@ class Activities extends NavbarComponent {
               return 'https://t.bilibili.com/?tab=512'
             case '专栏':
               return 'https://t.bilibili.com/?tab=64'
+            case '直播':
+              return 'https://link.bilibili.com/p/center/index#/user-center/follow/1'
             default: return null
           }
         },
