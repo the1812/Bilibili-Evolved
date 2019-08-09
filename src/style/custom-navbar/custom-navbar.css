@@ -1273,6 +1273,15 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     margin-right: 4px;
     font-size: 16px;
 }
+.custom-navbar .bangumi-activity {
+    display: flex;
+    flex-direction: column;
+}
+.custom-navbar .bangumi-activity.loading {
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
 .custom-navbar .bangumi-card {
     --cover-width: 100px;
     margin: 0 12px 12px 12px;
@@ -1280,20 +1289,25 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: grid;
     grid-template-areas: "cover epTitle" "cover title";
     grid-template-columns: var(--cover-width) 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 60% 40%;
 }
 .custom-navbar .bangumi-card .title {
     grid-area: title;
-    padding: 4px 8px;
+    padding: 0 8px;
+    align-self: start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .custom-navbar .bangumi-card .ep-title {
     grid-area: epTitle;
     font-size: 12pt;
     font-weight: bold;
-    padding: 4px 8px;
+    padding: 0 8px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    align-self: center;
 }
 .custom-navbar .bangumi-card:hover .ep-title {
     color: var(--theme-color);
