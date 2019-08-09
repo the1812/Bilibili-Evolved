@@ -1081,7 +1081,10 @@ class Activities extends NavbarComponent {
               <a v-if="!loading" class="bangumi-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
                 <dpi-img class="ep-cover" :size="{width: 100}" :src="card.epCoverUrl"></dpi-img>
                 <h1 class="ep-title" :title="card.epTitle">{{card.epTitle}}</h1>
-                <div class="title" :title="card.title">{{card.title}}</div>
+                <div class="up" :title="card.title">
+                  <dpi-img class="cover" :size="24" :src="card.coverUrl"></dpi-img>
+                  <div class="title">{{card.title}}</div>
+                </div>
               </a>
             </div>
           `,
@@ -1122,10 +1125,10 @@ class Activities extends NavbarComponent {
               <a v-if="!loading" class="column-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
                 <div class="covers">
                   <dpi-img class="cover" v-for="cover of card.covers" :key="cover" :size="{height: 120}" :src="cover"></dpi-img>
-                  <div class="up">
+                  <a class="up" target="_blank" :href="card.upUrl">
                     <dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>
                     <div class="name">{{card.upName}}</div>
-                  </div>
+                  </a>
                 </div>
                 <h1 class="title" :title="card.title">{{card.title}}</h1>
                 <div class="description" :title="card.description">{{card.description}}</div>
@@ -1151,6 +1154,7 @@ class Activities extends NavbarComponent {
                   originalCovers: cardJson.origin_image_urls,
                   upName: cardJson.author.name,
                   faceUrl: cardJson.author.face,
+                  upUrl: `https://space.bilibili.com/${cardJson.author.mid}`,
                   title: cardJson.title,
                   description: cardJson.summary,
                   url: `https://www.bilibili.com/read/cv${cardJson.id}`,

@@ -1204,7 +1204,6 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar.dark .video-activity-card,
 .custom-navbar.dark .activity-popup-content .view-more,
-.custom-navbar.dark .bangumi-card,
 .custom-navbar.dark .column-card {
     box-shadow: rgba(0,0,0,0.3) 0 4px 8px 0px;
 }
@@ -1215,7 +1214,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .video-activity-card .title {
     font-size: 10pt;
     font-weight: bold;
-    margin: 8px;
+    margin: 2px 8px;
     color: inherit;
 }
 .custom-navbar .video-activity-card .title:hover,
@@ -1226,7 +1225,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 8px;
+    margin: 6px 8px;
     border-radius: 13px;
     padding: 2px;
 }
@@ -1282,6 +1281,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .bangumi-activity {
     display: flex;
     flex-direction: column;
+    padding-top: 4px;
 }
 .custom-navbar .bangumi-activity.loading {
     height: 100%;
@@ -1291,19 +1291,31 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .bangumi-card {
     --cover-width: 100px;
     margin: 0 12px 12px 12px;
-    box-shadow: rgba(0,0,0,0.12) 0 4px 8px 0px;
+    box-shadow: rgba(0,0,0,0.12) 0 2px 8px 0px;
     display: grid;
     grid-template-areas: "cover epTitle" "cover title";
     grid-template-columns: var(--cover-width) 1fr;
     grid-template-rows: 6fr 5fr;
 }
-.custom-navbar .bangumi-card .title {
+.custom-navbar.dark .bangumi-card {
+    box-shadow: rgba(0,0,0,0.3) 0 2px 8px 0px;
+}
+.custom-navbar .bangumi-card .up {
     grid-area: title;
+    display: flex;
+    align-items: center;
     padding: 0 8px;
     align-self: start;
+}
+.custom-navbar .bangumi-card .up .cover {
+    height: 18px;
+    border-radius: 50%;
+}
+.custom-navbar .bangumi-card .up .title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 0 6px;
 }
 .custom-navbar .bangumi-card .ep-title {
     grid-area: epTitle;
@@ -1323,6 +1335,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     background-color: #8884;
     grid-area: cover;
 }
+
 .custom-navbar .column-activity {
     display: flex;
     flex-direction: column;
@@ -1353,6 +1366,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .column-card .up .name {
     margin: 0 6px;
+    color: #fff;
 }
 .custom-navbar .column-card .title {
     padding: 8px 10px 0 10px;
