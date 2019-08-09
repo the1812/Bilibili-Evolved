@@ -914,6 +914,15 @@ class Activities extends NavbarComponent {
 
   }
   async init () {
+    Vue.component('dpi-img', {
+      template: /*html*/`<img :srcset="srcset">`,
+      props: ['size', 'src'],
+      computed: {
+        srcset() {
+          return getDpiSourceSet(this.src, this.size)
+        }
+      },
+    })
     this.popupVM = new Vue({
       el: await SpinQuery.select('.activity-popup'),
       data: {
@@ -968,13 +977,13 @@ class Activities extends NavbarComponent {
               template: /*html*/`
                 <a class="video-activity-card" target="_blank" :href="card.videoUrl">
                   <div class="cover-container">
-                    <img class="cover" :src="card.coverUrl">
+                    <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
                     <div class="time">{{card.time}}</div>
                     <div @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
                   </div>
                   <h1 class="title" :title="card.description">{{card.title}}</h1>
                   <a class="up" target="_blank" :href="card.upUrl" :title="card.upName">
-                    <img class="face" :src="card.faceUrl">
+                    <dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>
                     <span class="name">{{card.upName}}</span>
                   </a>
                 </a>
@@ -1052,7 +1061,7 @@ class Activities extends NavbarComponent {
                 <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
               </div>
               <a v-else class="bangumi-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
-                <img class="ep-cover" :src="card.epCoverUrl">
+                <dpi-img class="ep-cover" :size="{width: 100}" :src="card.epCoverUrl"></dpi-img>
                 <h1 class="ep-title">{{card.epTitle}}</h1>
                 <div class="title">{{card.title}}</div>
               </a>
