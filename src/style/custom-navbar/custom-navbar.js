@@ -915,11 +915,23 @@ class Activities extends NavbarComponent {
   }
   async init () {
     Vue.component('dpi-img', {
-      template: /*html*/`<img :srcset="srcset">`,
+      template: /*html*/`<img :width="width" :height="height" :srcset="srcset">`,
       props: ['size', 'src'],
       computed: {
-        srcset() {
+        srcset () {
           return getDpiSourceSet(this.src, this.size)
+        },
+        width () {
+          if (typeof this.size === 'object' && 'width' in this.size) {
+            return this.size.width
+          }
+          return null
+        },
+        height () {
+          if (typeof this.size === 'object' && 'height' in this.size) {
+            return this.size.height
+          }
+          return null
         }
       },
     })

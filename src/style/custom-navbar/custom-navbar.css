@@ -1209,6 +1209,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .video-activity-card .cover {
     width: var(--card-width);
+    background-color: #8884;
 }
 .custom-navbar .video-activity-card .title {
     font-size: 10pt;
@@ -1234,6 +1235,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .video-activity-card .up .face {
     width: 24px;
     border-radius: 50%;
+    background-color: #8884;
 }
 .custom-navbar .video-activity-card .up .name {
     padding: 0 8px;
@@ -1289,7 +1291,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: grid;
     grid-template-areas: "cover epTitle" "cover title";
     grid-template-columns: var(--cover-width) 1fr;
-    grid-template-rows: 60% 40%;
+    grid-template-rows: 6fr 5fr;
 }
 .custom-navbar .bangumi-card .title {
     grid-area: title;
@@ -1314,6 +1316,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .bangumi-card .ep-cover {
     width: var(--cover-width);
+    background-color: #8884;
     grid-area: cover;
 }
 
