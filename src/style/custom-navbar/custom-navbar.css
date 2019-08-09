@@ -1151,7 +1151,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     bottom: 0;
     left: 0;
     justify-content: center;
-    padding: 8px 16px;
+    padding: 6px 12px;
     background-color: #fffe;
     transform: translateY(-6px);
     box-shadow: rgba(0,0,0,0.12) 0 4px 8px 0px;
@@ -1212,7 +1212,6 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     margin: 8px;
     border-radius: 13px;
     padding: 2px;
-    padding-right: 10px;
 }
 .custom-navbar .video-activity-card .up:hover {
     background-color: #8882;
@@ -1220,6 +1219,12 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .video-activity-card .up .face {
     width: 24px;
     border-radius: 50%;
+}
+.custom-navbar .video-activity-card .up .name {
+    padding: 0 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .custom-navbar .video-activity-card .cover-container {
     position: relative;
