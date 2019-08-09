@@ -261,6 +261,7 @@ class NavbarComponent {
   async setNotifyCount(count) {
     const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`)
     if (!notifyElement) {
+      notifyElement.innerHTML = ''
       return
     }
     notifyElement.innerHTML = count
@@ -905,13 +906,39 @@ class Activities extends NavbarComponent {
       </div>
     `;
     this.active = document.URL.replace(/\?.*$/, "") === "https://t.bilibili.com/";
-    this.onPopup = this.init
+    this.onPopup = () => {
+      this.init()
+      this.setNotifyCount(0)
+    }
   }
   static get latestID () {
-
+    return document.cookie.replace(new RegExp(`?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`, '$1'))
   }
   static set latestID (id) {
-
+    if (Activities.compareID(Activities.latestID, id) < 0) {
+      return
+    }
+    document.cookie = `bp_t_offset_${userInfo.mid}=${id};path=/;domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`
+  }
+  static compareID(a, b) {
+    if (a === b) {
+      return 0
+    }
+    if (a.length > b.length) {
+      return 1
+    }
+    if (b.length > a.length) {
+      return -1
+    }
+    return a > b === true ? 1 : -1
+  }
+  async getNotifyCount() {
+    const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=8,64,512`
+    const json = await Ajax.getJsonWithCredentials(api)
+    if (json.code !== 0) {
+      return
+    }
+    this.setNotifyCount(json.data.update_num)
   }
   async init () {
     Vue.component('dpi-img', {
