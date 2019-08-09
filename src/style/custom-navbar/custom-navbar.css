@@ -1328,6 +1328,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     overflow: hidden;
     text-overflow: ellipsis;
     align-self: center;
+    color: inherit;
 }
 .custom-navbar .bangumi-card:hover .ep-title {
     color: var(--theme-color);
@@ -1379,6 +1380,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 10px 10px 0;
     font-size: 11pt;
     font-weight: bold;
+    color: inherit;
 }
 .custom-navbar .column-card:hover .title {
     color: var(--theme-color);
@@ -1441,6 +1443,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: inherit;
 }
 .custom-navbar .live-card:hover .live-title {
     color: var(--theme-color);
