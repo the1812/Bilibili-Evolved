@@ -1173,11 +1173,25 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     line-height: 1;
     margin-left: 8px;
 }
+.custom-navbar .activity-popup-content .loading {
+    display: flex;
+    align-items: center;
+}
+.custom-navbar .activity-popup-content .mdi {
+    line-height: 1;
+    margin-right: 6px;
+}
 .custom-navbar .video-activity {
     padding: 0 12px;
     display: flex;
     justify-content: space-between;
     align-self: stretch;
+}
+.custom-navbar .video-activity.loading {
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .custom-navbar .video-activity-card {
     --card-width: 172px;

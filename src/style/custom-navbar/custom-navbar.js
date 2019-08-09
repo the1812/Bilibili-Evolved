@@ -982,8 +982,10 @@ class Activities extends NavbarComponent {
             },
           },
           template: /*html*/`
-            <div class="video-activity">
-              <div v-if="loading" class="loading">加载中...</div>
+            <div class="video-activity" :class="{loading}">
+              <div v-if="loading" class="loading">
+                <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
+              </div>
               <div v-if="!loading" class="video-activity-column">
                 <video-card v-for="card of leftCards" :key="card.id" :card="card" :watchlaterInit="card.watchlater"></video-card>
               </div>
@@ -1045,7 +1047,24 @@ class Activities extends NavbarComponent {
             })()
           },
         },
-        // 'bangumi-activity': {},
+        'bangumi-activity': {
+          template: /*html*/`
+            <div class="bangumi-activity">
+              <div v-if="loading" class="loading">
+                <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
+              </div>
+              <bangumi-card v-for="card of cards" :key="card.id" :card="card"></bangumi-card>
+            </div>
+          `,
+          data() {
+            return {
+              cards: [],
+            }
+          },
+          mounted() {
+
+          },
+        },
         // 'column-activity': {},
         // 'photos-activity': {},
         // 'live-activity': {},
