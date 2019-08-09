@@ -1105,6 +1105,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     height: 28px;
     box-sizing: border-box;
     border-radius: 14px;
+    display: flex;
+    align-items: center;
 }
 .custom-navbar .activity-tabs .view-all:hover {
     background-color: #8884;
@@ -1214,7 +1216,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .video-activity-card .title {
     font-size: 10pt;
     font-weight: bold;
-    margin: 2px 8px;
+    margin: 8px 8px 2px 8px;
     color: inherit;
 }
 .custom-navbar .video-activity-card .title:hover,
@@ -1249,7 +1251,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .video-activity-card .time,
 .custom-navbar .video-activity-card .watchlater {
     position: absolute;
-    bottom: 8px;
+    bottom: 4px;
     display: flex;
     align-items: center;
     background-color: #000a;
