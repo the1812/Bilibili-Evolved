@@ -258,7 +258,7 @@ class NavbarComponent {
   get hidden () {
     return settings.customNavbarHidden.includes(this.name);
   }
-  async setNotifyCount(count) {
+  async setNotifyCount (count) {
     const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`)
     if (!notifyElement || !count) {
       notifyElement.innerHTML = ''
@@ -782,7 +782,7 @@ class SearchBox extends NavbarComponent {
             return
           }
         },
-        clearSearchHistory() {
+        clearSearchHistory () {
           settings.searchHistory = []
           this.items = []
         }
@@ -896,11 +896,9 @@ class Activities extends NavbarComponent {
       <div class="activity-popup">
         <activity-tabs :tab.sync="selectedTab" :items="tabs"></activity-tabs>
         <div class="activity-popup-content">
-          <video-activity v-if="selectedTab === '视频'"></video-activity>
-          <bangumi-activity v-if="selectedTab === '番剧'"></bangumi-activity>
-          <column-activity v-if="selectedTab === '专栏'"></column-activity>
-          <photos-activity v-if="selectedTab === '图片'"></photos-activity>
-          <live-activity v-if="selectedTab === '直播'"></live-activity>
+          <transition name="activity-content" mode="out-in">
+            <component :is="content"></component>
+          </transition>
           <a class="view-more" target="_blank" :href="viewMoreUrl">查看更多<i class="mdi mdi-18px mdi-more"></i></a>
         </div>
       </div>
@@ -920,7 +918,7 @@ class Activities extends NavbarComponent {
     }
     document.cookie = `bp_t_offset_${userInfo.mid}=${id};path=/;domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`
   }
-  static compareID(a, b) {
+  static compareID (a, b) {
     if (a === b) {
       return 0
     }
@@ -932,7 +930,7 @@ class Activities extends NavbarComponent {
     }
     return a > b === true ? 1 : -1
   }
-  async getNotifyCount() {
+  async getNotifyCount () {
     const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=8,64,512`
     const json = await Ajax.getJsonWithCredentials(api)
     if (json.code !== 0) {
@@ -994,7 +992,7 @@ class Activities extends NavbarComponent {
             </ul>
           `,
           methods: {
-            changeTab(item) {
+            changeTab (item) {
               this.$emit('update:tab', item)
             }
           },
@@ -1003,13 +1001,13 @@ class Activities extends NavbarComponent {
           components: {
             'video-card': {
               props: ['card', 'watchlaterInit'],
-              data() {
+              data () {
                 return {
                   watchlater: this.watchlaterInit,
                 }
               },
               methods: {
-                async toggleWatchlater() {
+                async toggleWatchlater () {
                   try {
                     const { toggleWatchlater } = await import('../../video/watchlater-api')
                     if (this.watchlater === false) {
@@ -1050,14 +1048,14 @@ class Activities extends NavbarComponent {
               </div>
             </div>
           `,
-          data() {
+          data () {
             return {
               leftCards: [],
               rightCards: [],
               loading: true,
             }
           },
-          async mounted() {
+          async mounted () {
             try {
               const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=8`)
               if (json.code !== 0) {
@@ -1115,13 +1113,13 @@ class Activities extends NavbarComponent {
               </a>
             </div>
           `,
-          data() {
+          data () {
             return {
               cards: [],
               loading: true,
             }
           },
-          async mounted() {
+          async mounted () {
             try {
               const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=512`)
               if (json.code !== 0) {
@@ -1237,7 +1235,22 @@ class Activities extends NavbarComponent {
         },
       },
       computed: {
-        viewMoreUrl() {
+        content () {
+          switch (this.selectedTab) {
+            case '视频':
+              return 'video-activity'
+            case '番剧':
+              return 'bangumi-activity'
+            case '专栏':
+              return 'column-activity'
+            case '图片':
+              return 'photos-activity'
+            case '直播':
+              return 'live-activity'
+            default: return null
+          }
+        },
+        viewMoreUrl () {
           switch (this.selectedTab) {
             case '视频':
               return 'https://t.bilibili.com/?tab=8'

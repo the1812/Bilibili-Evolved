@@ -1451,6 +1451,16 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.custom-navbar .activity-content-enter-active,
+.custom-navbar .activity-content-leave-active {
+    transition: all .2s ease-out;
+    transform-origin: top;
+}
+.custom-navbar .activity-content-enter,
+.custom-navbar .activity-content-leave-to {
+    opacity: 0;
+    transform: scale(0.95);
+}
 
 .round-corner .custom-navbar .column-card .cover:first-child {
     border-top-left-radius: var(--large-corner-radius);
