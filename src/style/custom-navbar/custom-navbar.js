@@ -1001,68 +1001,91 @@ class Activities extends NavbarComponent {
               loading: true,
             }
           },
-          mounted() {
-            (async () => {
-              try {
-                const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=8`)
-                if (json.code !== 0) {
-                  throw new Error(json.message)
-                }
-                const { getWatchlaterList } = await import('../../video/watchlater-api')
-                const watchlaterList = await getWatchlaterList()
-                const cards = json.data.cards.map(card => {
-                  const cardJson = JSON.parse(card.card)
-                  let topics
-                  if (card.display && card.display.topic_info) {
-                    topics = card.display.topic_info.topic_details.map(it => {
-                      return it.topic_name
-                    })
-                  }
-                  return {
-                    coverUrl: cardJson.pic,
-                    title: cardJson.title,
-                    timeNumber: cardJson.duration,
-                    time: formatDuration(cardJson.duration),
-                    description: cardJson.desc,
-                    aid: cardJson.aid,
-                    videoUrl: `https://www.bilibili.com/av${cardJson.aid}`,
-                    faceUrl: card.desc.user_profile.info.face,
-                    upName: card.desc.user_profile.info.uname,
-                    upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
-                    id: card.desc.dynamic_id_str,
-                    topics,
-                    watchlater: watchlaterList.includes(cardJson.aid),
-                  }
-                })
-                this.leftCards = cards.filter((_, index) => index % 2 === 0)
-                this.rightCards = cards.filter((_, index) => index % 2 === 1)
-                if (this.leftCards.length !== this.rightCards.length) {
-                  this.leftCards.pop()
-                }
-              } catch (error) {
-                logError(`加载视频动态失败, error = ${error}`)
-              } finally {
-                this.loading = false
+          async mounted() {
+            try {
+              const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=8`)
+              if (json.code !== 0) {
+                throw new Error(json.message)
               }
-            })()
+              const { getWatchlaterList } = await import('../../video/watchlater-api')
+              const watchlaterList = await getWatchlaterList()
+              const cards = json.data.cards.map(card => {
+                const cardJson = JSON.parse(card.card)
+                let topics
+                if (card.display && card.display.topic_info) {
+                  topics = card.display.topic_info.topic_details.map(it => {
+                    return it.topic_name
+                  })
+                }
+                return {
+                  coverUrl: cardJson.pic,
+                  title: cardJson.title,
+                  timeNumber: cardJson.duration,
+                  time: formatDuration(cardJson.duration),
+                  description: cardJson.desc,
+                  aid: cardJson.aid,
+                  videoUrl: `https://www.bilibili.com/av${cardJson.aid}`,
+                  faceUrl: card.desc.user_profile.info.face,
+                  upName: card.desc.user_profile.info.uname,
+                  upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
+                  id: card.desc.dynamic_id_str,
+                  topics,
+                  watchlater: watchlaterList.includes(cardJson.aid),
+                }
+              })
+              this.leftCards = cards.filter((_, index) => index % 2 === 0)
+              this.rightCards = cards.filter((_, index) => index % 2 === 1)
+              if (this.leftCards.length !== this.rightCards.length) {
+                this.leftCards.pop()
+              }
+            } catch (error) {
+              logError(`加载视频动态失败, error = ${error}`)
+            } finally {
+              this.loading = false
+            }
           },
         },
         'bangumi-activity': {
           template: /*html*/`
-            <div class="bangumi-activity">
+            <div class="bangumi-activity" :class="{loading}">
               <div v-if="loading" class="loading">
                 <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
               </div>
-              <bangumi-card v-for="card of cards" :key="card.id" :card="card"></bangumi-card>
+              <a v-else class="bangumi-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
+                <img class="ep-cover" :src="card.epCoverUrl">
+                <h1 class="ep-title">{{card.epTitle}}</h1>
+                <div class="title">{{card.title}}</div>
+              </a>
             </div>
           `,
           data() {
             return {
               cards: [],
+              loading: true,
             }
           },
-          mounted() {
-
+          async mounted() {
+            try {
+              const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=512`)
+              if (json.code !== 0) {
+                throw new Error(json.message)
+              }
+              this.cards = json.data.cards.map(card => {
+                const cardJson = JSON.parse(card.card)
+                return {
+                  title: cardJson.apiSeasonInfo.title,
+                  coverUrl: cardJson.apiSeasonInfo.cover,
+                  epCoverUrl: cardJson.cover,
+                  epTitle: cardJson.new_desc,
+                  url: cardJson.url,
+                  id: card.desc.dynamic_id_str,
+                }
+              })
+            } catch (error) {
+              logError(`加载番剧动态失败, error = ${error}`)
+            } finally {
+              this.loading = false
+            }
           },
         },
         // 'column-activity': {},
@@ -1074,6 +1097,8 @@ class Activities extends NavbarComponent {
           switch (this.selectedTab) {
             case '视频':
               return 'https://t.bilibili.com/?tab=8'
+            case '番剧':
+              return 'https://t.bilibili.com/?tab=512'
             default: return null
           }
         },

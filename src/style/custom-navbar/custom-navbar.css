@@ -1156,8 +1156,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     transform: translateY(-6px);
     box-shadow: rgba(0,0,0,0.12) 0 4px 8px 0px;
     cursor: pointer;
-    height: 36px;
-    border-radius: 18px;
+    height: 28px;
+    border-radius: 14px;
     box-sizing: border-box;
 }
 .custom-navbar .activity-popup-content .view-more:hover {
@@ -1177,7 +1177,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     align-items: center;
 }
-.custom-navbar .activity-popup-content .mdi {
+.custom-navbar .activity-popup-content .loading .mdi {
     line-height: 1;
     margin-right: 6px;
 }
@@ -1203,7 +1203,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     break-inside: avoid;
 }
 .custom-navbar.dark .video-activity-card,
-.custom-navbar.dark .activity-popup-content .view-more {
+.custom-navbar.dark .activity-popup-content .view-more,
+.custom-navbar.dark .bangumi-card {
     box-shadow: rgba(0,0,0,0.3) 0 4px 8px 0px;
 }
 .custom-navbar .video-activity-card .cover {
@@ -1272,12 +1273,45 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     margin-right: 4px;
     font-size: 16px;
 }
+.custom-navbar .bangumi-card {
+    --cover-width: 100px;
+    margin: 0 12px 12px 12px;
+    box-shadow: rgba(0,0,0,0.12) 0 4px 8px 0px;
+    display: grid;
+    grid-template-areas: "cover epTitle" "cover title";
+    grid-template-columns: var(--cover-width) 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+.custom-navbar .bangumi-card .title {
+    grid-area: title;
+    padding: 4px 8px;
+}
+.custom-navbar .bangumi-card .ep-title {
+    grid-area: epTitle;
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 4px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.custom-navbar .bangumi-card:hover .ep-title {
+    color: var(--theme-color);
+}
+.custom-navbar .bangumi-card .ep-cover {
+    width: var(--cover-width);
+    grid-area: cover;
+}
 
-.round-corner .custom-navbar .video-activity-card {
+.round-corner .custom-navbar .video-activity-card,
+.round-corner .custom-navbar .bangumi-card {
     border-radius: var(--large-corner-radius);
 }
 .round-corner .custom-navbar .video-activity-card .cover {
     border-radius: var(--large-corner-radius) var(--large-corner-radius) 0 0;
+}
+.round-corner .custom-navbar .bangumi-activity .ep-cover {
+    border-radius: var(--large-corner-radius) 0 0 var(--large-corner-radius);
 }
 
 body.all-navbar-fill .link-navbar,
