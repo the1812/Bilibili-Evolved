@@ -894,7 +894,7 @@ class Activities extends NavbarComponent {
     this.html = "动态";
     this.popupHtml = /*html*/`
       <div class="activity-popup">
-        <activity-tabs :tab.sync="selectedTab" :items="tabs"></activity-tabs>
+        <activity-tabs :tab.sync="selectedTab" :items="tabs.map(it => it.name)"></activity-tabs>
         <div class="activity-popup-content">
           <transition name="activity-content" mode="out-in">
             <component :is="content"></component>
@@ -974,11 +974,30 @@ class Activities extends NavbarComponent {
       el: await SpinQuery.select('.activity-popup'),
       data: {
         tabs: [
-          '视频',
-          '番剧',
-          '专栏',
-          // '图片',
-          '直播',
+          {
+            name: '视频',
+            component: 'video-activity',
+            moreUrl: 'https://t.bilibili.com/?tab=8',
+            notifyCount: 0,
+          },
+          {
+            name: '番剧',
+            component: 'bangumi-activity',
+            moreUrl: 'https://t.bilibili.com/?tab=512',
+            notifyCount: 0,
+          },
+          {
+            name: '专栏',
+            component: 'column-activity',
+            moreUrl: 'https://t.bilibili.com/?tab=64',
+            notifyCount: 0,
+          },
+          {
+            name: '直播',
+            component: 'live-activity',
+            moreUrl: 'https://link.bilibili.com/p/center/index#/user-center/follow/1',
+            notifyCount: 0,
+          },
         ],
         selectedTab: '视频',
       },
@@ -1236,32 +1255,10 @@ class Activities extends NavbarComponent {
       },
       computed: {
         content () {
-          switch (this.selectedTab) {
-            case '视频':
-              return 'video-activity'
-            case '番剧':
-              return 'bangumi-activity'
-            case '专栏':
-              return 'column-activity'
-            case '图片':
-              return 'photos-activity'
-            case '直播':
-              return 'live-activity'
-            default: return null
-          }
+          return this.tabs.find(tab => tab.name === this.selectedTab).component
         },
         viewMoreUrl () {
-          switch (this.selectedTab) {
-            case '视频':
-              return 'https://t.bilibili.com/?tab=8'
-            case '番剧':
-              return 'https://t.bilibili.com/?tab=512'
-            case '专栏':
-              return 'https://t.bilibili.com/?tab=64'
-            case '直播':
-              return 'https://link.bilibili.com/p/center/index#/user-center/follow/1'
-            default: return null
-          }
+          return this.tabs.find(tab => tab.name === this.selectedTab).moreUrl
         },
       },
     })
