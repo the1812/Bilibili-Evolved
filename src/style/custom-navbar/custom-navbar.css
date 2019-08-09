@@ -1375,7 +1375,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .column-card .title {
     padding: 10px 10px 0;
-    font-size: 12pt;
+    font-size: 11pt;
     font-weight: bold;
 }
 .custom-navbar .column-card:hover .title {
@@ -1418,21 +1418,21 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     box-shadow: rgba(0,0,0,0.12) 0 2px 8px 0px;
     display: grid;
     grid-template-areas: "face title" "face name";
-    grid-template-columns: 64px 1fr;
+    grid-template-columns: 48px 1fr;
     grid-template-rows: 6fr 5fr;
-    height: 68px;
-    border-radius: 32px;
+    height: 52px;
+    border-radius: 26px;
     box-sizing: border-box;
     padding: 2px;
 }
 .custom-navbar .live-card .face {
     grid-area: face;
     border-radius: 50%;
-    height: 64px;
+    height: 48px;
 }
 .custom-navbar .live-card .live-title {
     grid-area: title;
-    font-size: 12pt;
+    font-size: 11pt;
     font-weight: bold;
     align-self: center;
     padding: 0 12px;
@@ -1454,12 +1454,11 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .activity-content-enter-active,
 .custom-navbar .activity-content-leave-active {
     transition: all .2s ease-out;
-    transform-origin: top;
 }
 .custom-navbar .activity-content-enter,
 .custom-navbar .activity-content-leave-to {
     opacity: 0;
-    transform: scale(0.95);
+    transform: translateY(-12px);
 }
 
 .round-corner .custom-navbar .column-card .cover:first-child {

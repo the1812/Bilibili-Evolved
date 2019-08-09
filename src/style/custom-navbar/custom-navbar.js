@@ -1199,7 +1199,7 @@ class Activities extends NavbarComponent {
             <div class="live-activity" :class="{loading}">
               <activity-loading :loading="loading"></activity-loading>
               <a v-if="!loading" class="live-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
-                <dpi-img class="face" :size="{width: 64}" :src="card.faceUrl"></dpi-img>
+                <dpi-img class="face" :size="{width: 48}" :src="card.faceUrl"></dpi-img>
                 <h1 class="live-title" :title="card.title">{{card.title}}</h1>
                 <div class="name" :title="card.name">{{card.name}}</div>
               </a>
