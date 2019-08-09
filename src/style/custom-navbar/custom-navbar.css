@@ -1204,7 +1204,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar.dark .video-activity-card,
 .custom-navbar.dark .activity-popup-content .view-more,
-.custom-navbar.dark .bangumi-card {
+.custom-navbar.dark .bangumi-card,
+.custom-navbar.dark .column-card {
     box-shadow: rgba(0,0,0,0.3) 0 4px 8px 0px;
 }
 .custom-navbar .video-activity-card .cover {
@@ -1259,6 +1260,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     border-radius: 10px;
     box-sizing: border-box;
     opacity: 0;
+}
+.custom-navbar .video-activity-card .watchlater {
+    padding: 0 8px 0 4px;
 }
 .custom-navbar .video-activity-card:hover .time,
 .custom-navbar .video-activity-card:hover .watchlater {
@@ -1319,9 +1323,76 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     background-color: #8884;
     grid-area: cover;
 }
+.custom-navbar .column-activity {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 12px;
+}
+.custom-navbar .column-card {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+    box-shadow: rgba(0,0,0,0.12) 0 4px 8px 0px;
+}
+.custom-navbar .column-card .up {
+    position: absolute;
+    left: 8px;
+    bottom: 6px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    background-color: #000a;
+    border-radius: 14px;
+    height: 28px;
+    box-sizing: border-box;
+}
+.custom-navbar .column-card .face {
+    border-radius: 50%;
+    height: 24px;
+}
+.custom-navbar .column-card .up .name {
+    margin: 0 6px;
+}
+.custom-navbar .column-card .title {
+    padding: 8px 10px 0 10px;
+    font-size: 12pt;
+    font-weight: bold;
+}
+.custom-navbar .column-card:hover .title {
+    color: var(--theme-color);
+}
+.custom-navbar .column-card .description {
+    margin: 8px 10px;
+    max-height: 3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    line-height: 1.5;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}
+.custom-navbar .column-card .covers {
+    position: relative;
+    display: flex;
+}
+.custom-navbar .column-card .cover {
+    width: 0;
+    flex-grow: 1;
+    object-fit: cover;
+}
+
+.round-corner .custom-navbar .column-card .cover:first-child {
+    border-top-left-radius: var(--large-corner-radius);
+}
+.round-corner .custom-navbar .column-card .cover:nth-last-child(2) {
+    border-top-right-radius: var(--large-corner-radius);
+}
 
 .round-corner .custom-navbar .video-activity-card,
-.round-corner .custom-navbar .bangumi-card {
+.round-corner .custom-navbar .bangumi-card,
+.round-corner .custom-navbar .column-card {
     border-radius: var(--large-corner-radius);
 }
 .round-corner .custom-navbar .video-activity-card .cover {

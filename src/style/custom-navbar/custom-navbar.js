@@ -919,6 +919,9 @@ class Activities extends NavbarComponent {
       props: ['size', 'src'],
       computed: {
         srcset () {
+          if (!this.src || !this.size) {
+            return null
+          }
           return getDpiSourceSet(this.src, this.size)
         },
         width () {
@@ -935,6 +938,13 @@ class Activities extends NavbarComponent {
         }
       },
     })
+    Vue.component('activity-loading', {
+      template: /*html*/`
+        <div v-if="loading" class="loading">
+          <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
+        </div>`,
+      props: ['loading'],
+    })
     this.popupVM = new Vue({
       el: await SpinQuery.select('.activity-popup'),
       data: {
@@ -942,7 +952,7 @@ class Activities extends NavbarComponent {
           '视频',
           '番剧',
           '专栏',
-          '图片',
+          // '图片',
           '直播',
         ],
         selectedTab: '视频',
@@ -1004,9 +1014,7 @@ class Activities extends NavbarComponent {
           },
           template: /*html*/`
             <div class="video-activity" :class="{loading}">
-              <div v-if="loading" class="loading">
-                <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
-              </div>
+              <activity-loading :loading="loading"></activity-loading>
               <div v-if="!loading" class="video-activity-column">
                 <video-card v-for="card of leftCards" :key="card.id" :card="card" :watchlaterInit="card.watchlater"></video-card>
               </div>
@@ -1069,13 +1077,11 @@ class Activities extends NavbarComponent {
         'bangumi-activity': {
           template: /*html*/`
             <div class="bangumi-activity" :class="{loading}">
-              <div v-if="loading" class="loading">
-                <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
-              </div>
-              <a v-else class="bangumi-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
+              <activity-loading :loading="loading"></activity-loading>
+              <a v-if="!loading" class="bangumi-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
                 <dpi-img class="ep-cover" :size="{width: 100}" :src="card.epCoverUrl"></dpi-img>
-                <h1 class="ep-title">{{card.epTitle}}</h1>
-                <div class="title">{{card.title}}</div>
+                <h1 class="ep-title" :title="card.epTitle">{{card.epTitle}}</h1>
+                <div class="title" :title="card.title">{{card.title}}</div>
               </a>
             </div>
           `,
@@ -1109,7 +1115,55 @@ class Activities extends NavbarComponent {
             }
           },
         },
-        // 'column-activity': {},
+        'column-activity': {
+          template: /*html*/`
+            <div class="column-activity" :class="{loading}">
+              <activity-loading :loading="loading"></activity-loading>
+              <a v-if="!loading" class="column-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
+                <div class="covers">
+                  <dpi-img class="cover" v-for="cover of card.covers" :key="cover" :size="{height: 120}" :src="cover"></dpi-img>
+                  <div class="up">
+                    <dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>
+                    <div class="name">{{card.upName}}</div>
+                  </div>
+                </div>
+                <h1 class="title" :title="card.title">{{card.title}}</h1>
+                <div class="description" :title="card.description">{{card.description}}</div>
+              </a>
+            </div>
+          `,
+          data () {
+            return {
+              cards: [],
+              loading: true,
+            }
+          },
+          async mounted () {
+            try {
+              const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=64`)
+              if (json.code !== 0) {
+                throw new Error(json.message)
+              }
+              this.cards = json.data.cards.map(card => {
+                const cardJson = JSON.parse(card.card)
+                return {
+                  covers: cardJson.image_urls,
+                  originalCovers: cardJson.origin_image_urls,
+                  upName: cardJson.author.name,
+                  faceUrl: cardJson.author.face,
+                  title: cardJson.title,
+                  description: cardJson.summary,
+                  url: `https://www.bilibili.com/read/cv${cardJson.id}`,
+                  id: card.desc.dynamic_id_str,
+                }
+              })
+            } catch (error) {
+              logError(`加载专栏动态失败, error = ${error}`)
+            } finally {
+              this.loading = false
+            }
+          },
+        },
         // 'photos-activity': {},
         // 'live-activity': {},
       },
@@ -1120,6 +1174,8 @@ class Activities extends NavbarComponent {
               return 'https://t.bilibili.com/?tab=8'
             case '番剧':
               return 'https://t.bilibili.com/?tab=512'
+            case '专栏':
+              return 'https://t.bilibili.com/?tab=64'
             default: return null
           }
         },

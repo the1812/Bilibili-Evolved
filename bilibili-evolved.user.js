@@ -138,7 +138,7 @@ const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
         return `${src}@${Math.trunc(baseSize.width * dpi)}w_${Math.trunc(baseSize.height * dpi)}h.${extension} ${dpi}x`
       } else if ('width' in baseSize) {
         return `${src}@${Math.trunc(baseSize.width * dpi)}w.${extension} ${dpi}x`
-      } else if ('width' in baseSize) {
+      } else if ('height' in baseSize) {
         return `${src}@${Math.trunc(baseSize.height * dpi)}h.${extension} ${dpi}x`
       }
     } else {
@@ -2367,6 +2367,16 @@ try {
     removeSettingsListener,
     isEmbeddedPlayer,
     isIframe,
+    getI18nKey,
+    dq,
+    dqa,
+    UserAgent,
+    EmptyImageUrl,
+    ascendingSort,
+    descendingSort,
+    formatFileSize,
+    formatDuration,
+    getDpiSourceSet,
     resources,
     theWorld: waitTime => {
       if (waitTime > 0) {
