@@ -1208,7 +1208,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     justify-content: space-between;
     align-self: stretch;
 }
-.custom-navbar .video-activity.loading {
+.custom-navbar .video-activity.center {
     height: 100%;
     flex-direction: column;
     justify-content: center;
@@ -1303,7 +1303,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     flex-direction: column;
     padding-top: 4px;
 }
-.custom-navbar .bangumi-activity.loading {
+.custom-navbar .bangumi-activity.center {
     height: 100%;
     justify-content: center;
     align-items: center;
@@ -1365,7 +1365,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     align-items: stretch;
     padding: 0 12px;
 }
-.custom-navbar .column-activity.loading {
+.custom-navbar .column-activity.center {
     height: 100%;
     align-items: center;
     justify-content: center;
@@ -1433,7 +1433,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     width: 100%;
     padding-top: 4px;
 }
-.custom-navbar .live-activity.loading {
+.custom-navbar .live-activity.center {
     height: 100%;
     align-items: center;
     justify-content: center;

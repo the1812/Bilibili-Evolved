@@ -978,6 +978,10 @@ class Activities extends NavbarComponent {
         </div>`,
       props: ['loading'],
     })
+    Vue.component('activity-empty', {
+      template: /*html*/`
+        <div class="empty">空空如也哦 =￣ω￣=</div>`,
+    })
     this.popupVM = new Vue({
       el: await SpinQuery.select('.activity-popup'),
       data: {
@@ -1074,8 +1078,9 @@ class Activities extends NavbarComponent {
             },
           },
           template: /*html*/`
-            <div class="video-activity" :class="{loading}">
+            <div class="video-activity" :class="{center: loading || (leftCards.length + rightCards.length) === 0}">
               <activity-loading :loading="loading"></activity-loading>
+              <activity-empty v-if="!loading && leftCards.length + rightCards.length === 0"></activity-empty>
               <div v-if="!loading" class="video-activity-column">
                 <video-card v-for="card of leftCards" :key="card.id" :card="card" :watchlaterInit="card.watchlater"></video-card>
               </div>
@@ -1139,8 +1144,9 @@ class Activities extends NavbarComponent {
         },
         'bangumi-activity': {
           template: /*html*/`
-            <div class="bangumi-activity" :class="{loading}">
+            <div class="bangumi-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
+              <activity-empty v-if="!loading && cards.length === 0"></activity-empty>
               <a v-if="!loading" class="bangumi-card" :class="{new: card.new}" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
                 <dpi-img class="ep-cover" :size="{width: 100}" :src="card.epCoverUrl"></dpi-img>
                 <h1 class="ep-title" :title="card.epTitle">{{card.epTitle}}</h1>
@@ -1185,8 +1191,9 @@ class Activities extends NavbarComponent {
         },
         'column-activity': {
           template: /*html*/`
-            <div class="column-activity" :class="{loading}">
+            <div class="column-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
+              <activity-empty v-if="!loading && cards.length === 0"></activity-empty>
               <a v-if="!loading" class="column-card" :class="{new: card.new}" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
                 <div class="covers">
                   <dpi-img class="cover" v-for="cover of card.covers" :key="cover" :size="{height: 120}" :src="cover"></dpi-img>
