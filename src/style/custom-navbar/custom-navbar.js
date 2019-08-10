@@ -376,7 +376,7 @@ class Messages extends NavbarComponent {
         const count = item.getAttribute("data-count");
         item.removeAttribute("data-count");
         totalCount -= count;
-        notifyElement.innerHTML = totalCount || "";
+        this.setNotifyCount(totalCount)
       });
     })
   }
