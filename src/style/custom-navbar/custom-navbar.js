@@ -1109,12 +1109,12 @@ class Activities extends NavbarComponent {
               const watchlaterList = await getWatchlaterList()
               const cards = json.data.cards.map(card => {
                 const cardJson = JSON.parse(card.card)
-                let topics
-                if (card.display && card.display.topic_info) {
-                  topics = card.display.topic_info.topic_details.map(it => {
-                    return it.topic_name
-                  })
-                }
+                // let topics
+                // if (card.display && card.display.topic_info) {
+                //   topics = card.display.topic_info.topic_details.map(it => {
+                //     return it.topic_name
+                //   })
+                // }
                 return {
                   coverUrl: cardJson.pic,
                   title: cardJson.title,
@@ -1127,7 +1127,7 @@ class Activities extends NavbarComponent {
                   upName: card.desc.user_profile.info.uname,
                   upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
                   id: card.desc.dynamic_id_str,
-                  topics,
+                  // topics,
                   watchlater: watchlaterList.includes(cardJson.aid),
                   get new() { return Activities.isNewID(this.id) },
                 }
