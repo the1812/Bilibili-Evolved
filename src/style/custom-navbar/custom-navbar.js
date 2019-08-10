@@ -236,6 +236,8 @@ let userInfo = {};
 let orders = {
 
 };
+let latestID
+
 class NavbarComponent {
   constructor () {
     this.html = ``;
@@ -910,14 +912,12 @@ class Activities extends NavbarComponent {
     }
     this.getNotifyCount()
   }
-  static get latestID () {
-    return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
-  }
-  static set latestID (id) {
-    if (Activities.compareID(Activities.latestID, id) < 0) {
+  static setLatestID (id) {
+    if (Activities.compareID(id, latestID) < 0) {
       return
     }
     document.cookie = `bp_t_offset_${userInfo.mid}=${id};path=/;domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`
+    // console.log(latestID, id, `bp_t_offset_${userInfo.mid}=${id};path=/;domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`)
   }
   static compareID (a, b) {
     if (a === b) {
@@ -932,10 +932,14 @@ class Activities extends NavbarComponent {
     return a > b === true ? 1 : -1
   }
   static isNewID (id) {
-    return Activities.compareID(id, Activities.latestID) > 0
+    return Activities.compareID(id, latestID) > 0
+  }
+  static updateLatestID (cards) {
+    const [latestCard] = cards.sort(Activities.compareID).reverse()
+    Activities.setLatestID(latestCard.id)
   }
   async getNotifyCount () {
-    const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=8,64,512`
+    const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=8,64,512`
     const json = await Ajax.getJsonWithCredentials(api)
     if (json.code !== 0 || this.requestedPopup) {
       return
@@ -982,21 +986,21 @@ class Activities extends NavbarComponent {
             name: '视频',
             component: 'video-activity',
             moreUrl: 'https://t.bilibili.com/?tab=8',
-            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=8`,
+            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=8`,
             notifyCount: null,
           },
           {
             name: '番剧',
             component: 'bangumi-activity',
             moreUrl: 'https://t.bilibili.com/?tab=512',
-            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=512`,
+            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=512`,
             notifyCount: null,
           },
           {
             name: '专栏',
             component: 'column-activity',
             moreUrl: 'https://t.bilibili.com/?tab=64',
-            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=64`,
+            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=64`,
             notifyCount: null,
           },
           {
@@ -1125,6 +1129,7 @@ class Activities extends NavbarComponent {
               if (this.leftCards.length !== this.rightCards.length) {
                 this.leftCards.pop()
               }
+              Activities.updateLatestID(cards)
             } catch (error) {
               logError(`加载视频动态失败, error = ${error}`)
             } finally {
@@ -1170,6 +1175,7 @@ class Activities extends NavbarComponent {
                   get new () { return Activities.isNewID(this.id) },
                 }
               })
+              Activities.updateLatestID(this.cards)
             } catch (error) {
               logError(`加载番剧动态失败, error = ${error}`)
             } finally {
@@ -1221,6 +1227,7 @@ class Activities extends NavbarComponent {
                   get new () { return Activities.isNewID(this.id) },
                 }
               })
+              Activities.updateLatestID(this.cards)
             } catch (error) {
               logError(`加载专栏动态失败, error = ${error}`)
             } finally {
@@ -1451,6 +1458,7 @@ class HistoryList extends VideoList {
   const html = await import("customNavbarHtml");
   const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
   userInfo = json.data;
+  latestID = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
   document.body.insertAdjacentHTML("beforeend", html);
   addSettingsListener("useDarkStyle", darkHandler);
   darkHandler(settings.useDarkStyle);
