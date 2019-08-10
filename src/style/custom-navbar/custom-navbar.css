@@ -1112,14 +1112,33 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     background-color: #8884;
 }
 .custom-navbar .activity-tab {
-    opacity: 0.5;
     position: relative;
     cursor: pointer;
 }
 .custom-navbar .activity-tab.selected {
     opacity: 1;
     transform: scale(1.2);
+}
+.custom-navbar .activity-tab .tab-name {
+    opacity: 0.5;
+}
+.custom-navbar .activity-tab.selected .tab-name {
+    opacity: 1;
     font-weight: bold;
+}
+.custom-navbar .activity-tab[data-count]::before {
+    content: attr(data-count);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 1;
+    background-color: #8884;
+    padding: 2px 4px;
+    border-radius: 10px;
+    white-space: nowrap;
 }
 .custom-navbar .activity-tab::after {
     content: "";
@@ -1261,6 +1280,19 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     border-radius: 10px;
     box-sizing: border-box;
     opacity: 0;
+}
+.custom-navbar .video-activity-card.new .cover-container::before {
+    content: "NEW";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background-color: var(--theme-color);
+    padding: 0 6px;
+    height: 18px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 18px;
 }
 .custom-navbar .video-activity-card:hover .time,
 .custom-navbar .video-activity-card:hover .watchlater {

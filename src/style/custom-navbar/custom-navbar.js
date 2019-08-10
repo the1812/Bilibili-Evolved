@@ -894,7 +894,7 @@ class Activities extends NavbarComponent {
     this.html = "动态";
     this.popupHtml = /*html*/`
       <div class="activity-popup">
-        <activity-tabs :tab.sync="selectedTab" :items="tabs.map(it => it.name)"></activity-tabs>
+        <activity-tabs :tab.sync="selectedTab" :items="tabs"></activity-tabs>
         <div class="activity-popup-content">
           <transition name="activity-content" mode="out-in">
             <component :is="content"></component>
@@ -908,9 +908,10 @@ class Activities extends NavbarComponent {
       this.init()
       this.setNotifyCount(0)
     }
+    this.getNotifyCount()
   }
   static get latestID () {
-    return document.cookie.replace(new RegExp(`?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`, '$1'))
+    return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
   }
   static set latestID (id) {
     if (Activities.compareID(Activities.latestID, id) < 0) {
@@ -930,10 +931,13 @@ class Activities extends NavbarComponent {
     }
     return a > b === true ? 1 : -1
   }
+  static isNewID (id) {
+    return Activities.compareID(id, Activities.latestID) > 0
+  }
   async getNotifyCount () {
     const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=8,64,512`
     const json = await Ajax.getJsonWithCredentials(api)
-    if (json.code !== 0) {
+    if (json.code !== 0 || this.requestedPopup) {
       return
     }
     this.setNotifyCount(json.data.update_num)
@@ -978,25 +982,28 @@ class Activities extends NavbarComponent {
             name: '视频',
             component: 'video-activity',
             moreUrl: 'https://t.bilibili.com/?tab=8',
-            notifyCount: 0,
+            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=8`,
+            notifyCount: null,
           },
           {
             name: '番剧',
             component: 'bangumi-activity',
             moreUrl: 'https://t.bilibili.com/?tab=512',
-            notifyCount: 0,
+            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=512`,
+            notifyCount: null,
           },
           {
             name: '专栏',
             component: 'column-activity',
             moreUrl: 'https://t.bilibili.com/?tab=64',
-            notifyCount: 0,
+            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.latestID}&type_list=64`,
+            notifyCount: null,
           },
           {
             name: '直播',
             component: 'live-activity',
             moreUrl: 'https://link.bilibili.com/p/center/index#/user-center/follow/1',
-            notifyCount: 0,
+            notifyCount: null,
           },
         ],
         selectedTab: '视频',
@@ -1006,13 +1013,15 @@ class Activities extends NavbarComponent {
           props: ['items', 'tab'],
           template: /*html*/`
             <ul class="activity-tabs">
-              <li v-for="item of items" class="activity-tab" :class="{selected: item === tab}" @click="changeTab(item)">{{item}}</li>
+              <li v-for="item of items" class="activity-tab" :data-count="item.notifyCount" :class="{selected: item.name === tab}" @click="changeTab(item)">
+                <div class="tab-name">{{item.name}}</div>
+              </li>
               <a class="view-all" target="_blank" href="https://t.bilibili.com/">全部动态</a>
             </ul>
           `,
           methods: {
             changeTab (item) {
-              this.$emit('update:tab', item)
+              this.$emit('update:tab', item.name)
             }
           },
         },
@@ -1041,7 +1050,7 @@ class Activities extends NavbarComponent {
                 },
               },
               template: /*html*/`
-                <a class="video-activity-card" target="_blank" :href="card.videoUrl">
+                <a class="video-activity-card" :class="{new: card.new}" target="_blank" :href="card.videoUrl">
                   <div class="cover-container">
                     <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
                     <div class="time">{{card.time}}</div>
@@ -1104,6 +1113,7 @@ class Activities extends NavbarComponent {
                   id: card.desc.dynamic_id_str,
                   topics,
                   watchlater: watchlaterList.includes(cardJson.aid),
+                  get new() { return Activities.isNewID(this.id) },
                 }
               })
               this.leftCards = cards.filter((_, index) => index % 2 === 0)
@@ -1260,6 +1270,23 @@ class Activities extends NavbarComponent {
         viewMoreUrl () {
           return this.tabs.find(tab => tab.name === this.selectedTab).moreUrl
         },
+      },
+      mounted () {
+        for (const tab of this.tabs) {
+          if (tab.notifyApi) {
+            Ajax.getJsonWithCredentials(tab.notifyApi).then(json => {
+              if (json.code !== 0 || !json.data.update_num || this.selectedTab === tab.name) {
+                return
+              }
+              tab.notifyCount = json.data.update_num
+            })
+          }
+        }
+      },
+      watch: {
+        selectedTab (name) {
+          this.tabs.find(t => t.name === name).notifyCount = null
+        }
       },
     })
   }
