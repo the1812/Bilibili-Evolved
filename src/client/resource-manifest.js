@@ -658,5 +658,23 @@ Resource.manifest = {
       autoSeedsToCoins: '自动运行',
     },
   },
+  magicGrid: {
+    path: 'magic-grid.min.js',
+    displayNames: {
+      magicGrid: 'Magic Grid',
+    },
+  },
+  watchlaterApi: {
+    path: 'watchlater-api.min.js',
+    displayNames: {
+      toggleWatchlater: '稍后再看API',
+    },
+  },
+  mdi: {
+    path: 'mdi.min.js',
+    displayNames: {
+      mdi: 'MDI 图标集',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

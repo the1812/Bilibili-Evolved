@@ -40,7 +40,7 @@ export class ResourceManager {
     this.applyStyleFromText(`html{${styles.join(';')}}`, 'bilibili-evolved-variables')
   }
   resolveComponentName (componentName) {
-    const keyword = '/' + componentName.replace('./', '').replace('../', '') + '.min.js'
+    const keyword = '/' + componentName.substring(componentName.lastIndexOf('/') + 1) + '.min.js'
     for (const [name, value] of Object.entries(Resource.all)) {
       if (value.url.endsWith(keyword)) {
         return name

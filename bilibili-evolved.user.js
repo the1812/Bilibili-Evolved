@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili Evolved
 // @version      1.8.14
-// @description  增强哔哩哔哩Web端体验: 下载视频, 音乐, 封面, 弹幕; 自定义播放器的画质, 模式, 布局; 自定义顶栏, 删除广告, 使用夜间模式; 以及增加对触屏设备的支持等.
+// @description  强大的哔哩哔哩增强脚本: 下载视频, 音乐, 封面, 弹幕 / 自定义播放器画质, 模式, 布局 / 自定义顶栏, 删除广告, 夜间模式 / 触屏设备支持
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
@@ -120,6 +120,31 @@ const formatFileSize = (bytes, fixed = 1) => {
     unitIndex++
   }
   return `${Math.round(number * (10 ** fixed)) / (10 ** fixed)}${units[unitIndex]}`
+}
+const formatDuration = (time, fixed = 0) => {
+  const hour = Math.trunc(time / 3600).toString()
+  const minute = Math.trunc(time / 60).toString()
+  const second = (time % 60).toFixed(fixed)
+  if (hour === '0') {
+    return `${minute.padStart(2, '0')}:${second.padStart(2, '0')}`
+  }
+  return `${hour}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`
+}
+const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
+  const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4]
+  return dpis.map(dpi => {
+    if (typeof baseSize === 'object') {
+      if ('width' in baseSize && 'height' in baseSize) {
+        return `${src}@${Math.trunc(baseSize.width * dpi)}w_${Math.trunc(baseSize.height * dpi)}h.${extension} ${dpi}x`
+      } else if ('width' in baseSize) {
+        return `${src}@${Math.trunc(baseSize.width * dpi)}w.${extension} ${dpi}x`
+      } else if ('height' in baseSize) {
+        return `${src}@${Math.trunc(baseSize.height * dpi)}h.${extension} ${dpi}x`
+      }
+    } else {
+      return `${src}@${Math.trunc(baseSize * dpi)}w_${Math.trunc(baseSize * dpi)}h.${extension} ${dpi}x`
+    }
+  }).join(",")
 }
 
 const customNavbarDefaultOrders = {
@@ -1857,6 +1882,24 @@ Resource.manifest = {
       autoSeedsToCoins: '自动运行',
     },
   },
+  magicGrid: {
+    path: 'magic-grid.min.js',
+    displayNames: {
+      magicGrid: 'Magic Grid',
+    },
+  },
+  watchlaterApi: {
+    path: 'watchlater-api.min.js',
+    displayNames: {
+      toggleWatchlater: '稍后再看API',
+    },
+  },
+  mdi: {
+    path: 'mdi.min.js',
+    displayNames: {
+      mdi: 'MDI 图标集',
+    },
+  },
 }
 const resourceManifest = Resource.manifest
 
@@ -2002,7 +2045,7 @@ class ResourceManager {
     this.applyStyleFromText(`html{${styles.join(';')}}`, 'bilibili-evolved-variables')
   }
   resolveComponentName (componentName) {
-    const keyword = '/' + componentName.replace('./', '').replace('../', '') + '.min.js'
+    const keyword = '/' + componentName.substring(componentName.lastIndexOf('/') + 1) + '.min.js'
     for (const [name, value] of Object.entries(Resource.all)) {
       if (value.url.endsWith(keyword)) {
         return name
@@ -2324,6 +2367,16 @@ try {
     removeSettingsListener,
     isEmbeddedPlayer,
     isIframe,
+    getI18nKey,
+    dq,
+    dqa,
+    UserAgent,
+    EmptyImageUrl,
+    ascendingSort,
+    descendingSort,
+    formatFileSize,
+    formatDuration,
+    getDpiSourceSet,
     resources,
     theWorld: waitTime => {
       if (waitTime > 0) {

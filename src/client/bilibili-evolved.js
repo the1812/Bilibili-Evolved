@@ -107,6 +107,16 @@ try {
     removeSettingsListener,
     isEmbeddedPlayer,
     isIframe,
+    getI18nKey,
+    dq,
+    dqa,
+    UserAgent,
+    EmptyImageUrl,
+    ascendingSort,
+    descendingSort,
+    formatFileSize,
+    formatDuration,
+    getDpiSourceSet,
     resources,
     theWorld: waitTime => {
       if (waitTime > 0) {
