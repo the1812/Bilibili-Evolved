@@ -523,6 +523,7 @@ function loadResources () {
     'removeLiveWatermark',
     'framePlayback',
     'hideCategory',
+    'fullTweetsTitle',
   ]
   for (const [key, data] of Object.entries(Resource.manifest)) {
     const resource = new Resource(data.path, { styles: data.styles, alwaysPreview: data.alwaysPreview })

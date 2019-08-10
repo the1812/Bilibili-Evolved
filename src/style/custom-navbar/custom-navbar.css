@@ -1231,12 +1231,22 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .video-activity-card .cover {
     width: var(--card-width);
     background-color: #8884;
+    height: calc(var(--card-width) / 16 * 10);
+    object-fit: cover;
 }
 .custom-navbar .video-activity-card .title {
     font-size: 10pt;
     font-weight: bold;
     margin: 8px 8px 2px 8px;
     color: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.4;
+    max-height: 2.8em;
+    word-break: break-all;
 }
 .custom-navbar .video-activity-card .title:hover,
 .custom-navbar .video-activity-card .up:hover .name {

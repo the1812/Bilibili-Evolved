@@ -1068,7 +1068,7 @@ class Activities extends NavbarComponent {
                     <div class="time">{{card.time}}</div>
                     <div @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
                   </div>
-                  <h1 class="title" :title="card.description">{{card.title}}</h1>
+                  <h1 class="title" :title="card.title">{{card.title}}</h1>
                   <a class="up" target="_blank" :href="card.upUrl" :title="card.upName">
                     <dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>
                     <span class="name">{{card.upName}}</span>
