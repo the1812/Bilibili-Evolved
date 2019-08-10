@@ -362,7 +362,8 @@ li.danmaku-info-row.bpui-selecting,
 .liked-user:not(:last-child):after,
 .center-box .orginal-reply,
 .app-layout .pivot-component .pivot-headers,
-.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
+.config-item:not(:last-child):after
 {
     border-color: #555 !important
 }

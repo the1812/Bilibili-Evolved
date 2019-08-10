@@ -1153,6 +1153,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     transform: scale(1.2);
 }
 .custom-navbar .activity-tab .tab-name {
+    line-height: normal;
     opacity: 0.5;
 }
 .custom-navbar .activity-tab.selected .tab-name {
