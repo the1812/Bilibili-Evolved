@@ -1484,7 +1484,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .activity-content-enter,
 .custom-navbar .activity-content-leave-to {
     opacity: 0;
-    transform: translateY(-12px);
+    transform: translateY(12px);
 }
 .custom-navbar .video-activity-card.new .cover-container::before,
 .custom-navbar .bangumi-card.new::before,
