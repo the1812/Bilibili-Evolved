@@ -759,7 +759,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 8px;
     cursor: default;
 }
-.custom-navbar .video-list.loaded .loading
+.custom-navbar .video-list.loaded .loading:not(.empty)
 {
     display: none;
 }
