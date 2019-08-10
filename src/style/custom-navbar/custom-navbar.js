@@ -913,11 +913,11 @@ class Activities extends NavbarComponent {
     this.getNotifyCount()
   }
   static setLatestID (id) {
-    if (Activities.compareID(id, latestID) < 0) {
+    const currentID = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+    if (Activities.compareID(id, currentID) < 0) {
       return
     }
     document.cookie = `bp_t_offset_${userInfo.mid}=${id};path=/;domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`
-    // console.log(latestID, id, `bp_t_offset_${userInfo.mid}=${id};path=/;domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`)
   }
   static compareID (a, b) {
     if (a === b) {
@@ -935,8 +935,8 @@ class Activities extends NavbarComponent {
     return Activities.compareID(id, latestID) > 0
   }
   static updateLatestID (cards) {
-    const [latestCard] = cards.sort(Activities.compareID).reverse()
-    Activities.setLatestID(latestCard.id)
+    const [id] = [...cards.map(c => c.id)].sort(Activities.compareID).reverse()
+    Activities.setLatestID(id)
   }
   async getNotifyCount () {
     const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=8,64,512`

@@ -1091,7 +1091,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     width: 250px;
 }
 .custom-navbar .activity-popup {
-    width: 380px;
+    width: 385px;
 }
 .custom-navbar .activity-tabs {
     display: flex;
@@ -1233,6 +1233,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     background-color: #8884;
     height: calc(var(--card-width) / 16 * 10);
     object-fit: cover;
+    display: block;
 }
 .custom-navbar .video-activity-card .title {
     font-size: 10pt;
