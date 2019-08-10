@@ -1244,8 +1244,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    line-height: 1.4;
-    max-height: 2.8em;
+    line-height: 1.5;
+    max-height: 3em;
     word-break: break-all;
 }
 .custom-navbar .video-activity-card .title:hover,
