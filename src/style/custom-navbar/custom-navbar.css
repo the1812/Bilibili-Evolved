@@ -1314,6 +1314,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     flex-direction: column;
     padding-top: 4px;
+    width: 100%;
 }
 .custom-navbar .bangumi-activity.center {
     height: 100%;
@@ -1340,6 +1341,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     align-items: center;
     padding: 0 12px;
     align-self: start;
+    overflow: hidden;
 }
 .custom-navbar .bangumi-card .up .cover {
     height: 18px;
