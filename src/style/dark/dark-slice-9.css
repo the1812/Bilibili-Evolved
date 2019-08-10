@@ -16,6 +16,10 @@
 {
   background-color: #444 !important;
 }
+#link-message .love-card .header::after
+{
+  background-color: #555 !important;
+}
 .s_tag .btn-add span
 {
   background-color: #eee !important;
@@ -41,7 +45,8 @@
 .follow-dialog-wrap .special-tip,
 .manga-navbar .data-list .list-container .empty-hinter,
 .manga-navbar .data-list .list-container .failure-hinter,
-.manga-navbar .data-list .list-container .loading-hinter
+.manga-navbar .data-list .list-container .loading-hinter,
+.center-box .line-3 .action-button
 {
   color: #aaa !important;
 }
@@ -54,7 +59,11 @@
 .manga-navbar .user-info-panel .user-name,
 .manga-navbar .user-info-panel .info-item,
 .manga-navbar .user-panel .drop-list .logout-btn-container .logout-button,
-.manga-navbar .drop-list .more-btn-container .more-button
+.manga-navbar .drop-list .more-btn-container .more-button,
+#link-message .love-card .header,
+.center-box .line-1 .name-field,
+.center-box .line-1 .name-field a,
+.center-box .line-1 .like-item
 {
   color: #eee !important;
 }
