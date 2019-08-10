@@ -1102,6 +1102,9 @@ class Activities extends NavbarComponent {
               if (json.code !== 0) {
                 throw new Error(json.message)
               }
+              if (!json.data.cards) {
+                return
+              }
               const { getWatchlaterList } = await import('../../video/watchlater-api')
               const watchlaterList = await getWatchlaterList()
               const cards = json.data.cards.map(card => {
@@ -1169,6 +1172,9 @@ class Activities extends NavbarComponent {
               if (json.code !== 0) {
                 throw new Error(json.message)
               }
+              if (!json.data.cards) {
+                return
+              }
               this.cards = json.data.cards.map(card => {
                 const cardJson = JSON.parse(card.card)
                 return {
@@ -1218,6 +1224,9 @@ class Activities extends NavbarComponent {
               const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=64`)
               if (json.code !== 0) {
                 throw new Error(json.message)
+              }
+              if (!json.data.cards) {
+                return
               }
               this.cards = json.data.cards.map(card => {
                 const cardJson = JSON.parse(card.card)
