@@ -1383,7 +1383,7 @@ class WatchlaterList extends VideoList {
       listName: "watchlater",
       listMap: json => {
         if (!json.data.list) {
-          return /*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`
+          return [/*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`]
         }
         return json.data.list.slice(0, 6).map(item => {
           const href = (() => {
@@ -1414,7 +1414,7 @@ class FavoritesList extends VideoList {
       listName: "favorites",
       listMap: json => {
         if (!json.data || json.data.length === 0) {
-          return /*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`
+          return [/*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`]
         }
         return json.data.map(item => {
           return /*html*/`
@@ -1436,7 +1436,7 @@ class HistoryList extends VideoList {
       listName: "history",
       listMap: json => {
         if (!json.data || json.data.length === 0) {
-          return /*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`
+          return [/*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`]
         }
         return json.data.map(item => {
           let parameter = [];
