@@ -706,8 +706,8 @@ class SearchBox extends NavbarComponent {
         </button>
       </form>
       <div class="popup search-list" :class="{empty: items.length === 0}">
-        <div class="search-list-item" tabindex="0" v-for="(item, index) of items" v-html="item.html" @keydown.enter="submit(item.value)" @click="submit(item.value)" @keydown.down.prevent="nextItem(index)" @keydown.up.prevent="previousItem(index)"></div>
-        <div tabindex="0" v-if="items.length > 0 && isHistory" class="search-list-item clear-history" @click="clearSearchHistory()" @keydown.enter="clearSearchHistory()" @keydown.down.prevent="nextItem(items.length)" @keydown.up.prevent="previousItem(items.length)">清除搜索历史</div>
+        <div class="search-list-item" tabindex="0" v-for="(item, index) of items" v-html="item.html" @keydown.enter="submit(item.value)" @click.self="submit(item.value)" @keydown.down.prevent="nextItem(index)" @keydown.up.prevent="previousItem(index)"></div>
+        <div tabindex="0" v-if="items.length > 0 && isHistory" class="search-list-item clear-history" @click="clearSearchHistory()" @keydown.enter="clearSearchHistory()" @keydown.down.prevent="nextItem(items.length)" @keydown.up.prevent="previousItem(items.length)"><i class="mdi mdi-18px mdi-delete-sweep"></i>清除搜索历史</div>
       </div>
     `;
     this.init();

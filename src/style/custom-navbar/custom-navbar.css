@@ -1103,6 +1103,14 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     text-align: center;
     font-weight: bold;
     background-color: #8881;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.custom-navbar .search-list-item.clear-history .mdi {
+    line-height: 1;
+    margin-right: 6px;
 }
 .custom-navbar .search-list-item.clear-history:hover,
 .custom-navbar .search-list-item.clear-history:focus-within {
