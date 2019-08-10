@@ -1049,6 +1049,10 @@ class Activities extends NavbarComponent {
                   }
                 },
               },
+              async mounted() {
+                // 预加载稍后再看的API
+                await import('../../video/watchlater-api')
+              },
               template: /*html*/`
                 <a class="video-activity-card" :class="{new: card.new}" target="_blank" :href="card.videoUrl">
                   <div class="cover-container">
@@ -1132,7 +1136,7 @@ class Activities extends NavbarComponent {
           template: /*html*/`
             <div class="bangumi-activity" :class="{loading}">
               <activity-loading :loading="loading"></activity-loading>
-              <a v-if="!loading" class="bangumi-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
+              <a v-if="!loading" class="bangumi-card" :class="{new: card.new}" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
                 <dpi-img class="ep-cover" :size="{width: 100}" :src="card.epCoverUrl"></dpi-img>
                 <h1 class="ep-title" :title="card.epTitle">{{card.epTitle}}</h1>
                 <div class="up" :title="card.title">
@@ -1163,6 +1167,7 @@ class Activities extends NavbarComponent {
                   epTitle: cardJson.new_desc,
                   url: cardJson.url,
                   id: card.desc.dynamic_id_str,
+                  get new () { return Activities.isNewID(this.id) },
                 }
               })
             } catch (error) {
@@ -1176,7 +1181,7 @@ class Activities extends NavbarComponent {
           template: /*html*/`
             <div class="column-activity" :class="{loading}">
               <activity-loading :loading="loading"></activity-loading>
-              <a v-if="!loading" class="column-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
+              <a v-if="!loading" class="column-card" :class="{new: card.new}" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
                 <div class="covers">
                   <dpi-img class="cover" v-for="cover of card.covers" :key="cover" :size="{height: 120}" :src="cover"></dpi-img>
                   <a class="up" target="_blank" :href="card.upUrl">
@@ -1213,6 +1218,7 @@ class Activities extends NavbarComponent {
                   description: cardJson.summary,
                   url: `https://www.bilibili.com/read/cv${cardJson.id}`,
                   id: card.desc.dynamic_id_str,
+                  get new () { return Activities.isNewID(this.id) },
                 }
               })
             } catch (error) {
