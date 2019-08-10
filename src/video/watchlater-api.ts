@@ -19,6 +19,9 @@ export const getWatchlaterList = async (raw = false) => {
   if (raw === true) {
     return response.data
   }
+  if (!response.data.list) {
+    return []
+  }
   return response.data.list.map((item: any) => item.aid)
 }
 export default {
