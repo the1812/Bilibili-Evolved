@@ -1382,6 +1382,9 @@ class WatchlaterList extends VideoList {
       apiUrl: "https://api.bilibili.com/x/v2/history/toview/web",
       listName: "watchlater",
       listMap: json => {
+        if (!json.data.list) {
+          return /*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`
+        }
         return json.data.list.slice(0, 6).map(item => {
           const href = (() => {
             if (item.pages === undefined) {
@@ -1396,7 +1399,7 @@ class WatchlaterList extends VideoList {
               `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`;
           })();
           return /*html*/`<li><a target="_blank" href="${href}">${item.title}</a></li>`;
-        });
+        })
       },
     });
     this.active = document.URL.startsWith("https://www.bilibili.com/watchlater/");
@@ -1410,6 +1413,9 @@ class FavoritesList extends VideoList {
       apiUrl: "https://api.bilibili.com/medialist/gateway/coll/resource/recent",
       listName: "favorites",
       listMap: json => {
+        if (!json.data || json.data.length === 0) {
+          return /*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`
+        }
         return json.data.map(item => {
           return /*html*/`
             <li>
@@ -1429,6 +1435,9 @@ class HistoryList extends VideoList {
       apiUrl: "https://api.bilibili.com/x/v2/history?pn=1&ps=6",
       listName: "history",
       listMap: json => {
+        if (!json.data || json.data.length === 0) {
+          return /*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`
+        }
         return json.data.map(item => {
           let parameter = [];
           let description = "";
