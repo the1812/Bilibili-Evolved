@@ -1460,8 +1460,9 @@ class HistoryList extends VideoList {
               <a target="_blank" href="https://www.bilibili.com/video/av${item.aid}?${parameter.join("&")}">
                 <span class="title">${item.title}</span>
                 <span class="description">${description}</span>
-                <div class="progress background"></div>
-                <div class="progress" style="transform: scaleX(${progress})"></div>
+                <div class="progress background">
+                  <div class="progress foreground" style="width: ${progress * 100}%"></div>
+                </div>
               </a>
             </li>`;
         });
