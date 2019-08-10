@@ -1245,8 +1245,9 @@ class Activities extends NavbarComponent {
         // 'photos-activity': {},
         'live-activity': {
           template: /*html*/`
-            <div class="live-activity" :class="{loading}">
+            <div class="live-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
+              <activity-empty v-if="!loading && cards.length === 0"></activity-empty>
               <a v-if="!loading" class="live-card" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
                 <dpi-img class="face" :size="{width: 48}" :src="card.faceUrl"></dpi-img>
                 <h1 class="live-title" :title="card.title">{{card.title}}</h1>
