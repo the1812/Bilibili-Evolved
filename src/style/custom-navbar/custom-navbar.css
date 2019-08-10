@@ -1168,6 +1168,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .activity-popup-content .view-more {
     display: flex;
     align-items: center;
+    position: -webkit-sticky;
     position: sticky;
     bottom: 0;
     left: 0;

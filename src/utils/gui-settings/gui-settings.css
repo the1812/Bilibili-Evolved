@@ -124,6 +124,7 @@ body.dark .gui-settings-widgets
     border-top: 1px dashed #8884;
     border-bottom: 1px dashed #8884;
     background: white;
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 101;
