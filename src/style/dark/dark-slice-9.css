@@ -24,6 +24,10 @@
 {
   background-color: #eee !important;
 }
+.card .risk-tip-content
+{
+	background-color: #624f27 !important;
+}
 /* a
 {
   background-image: none !important;
