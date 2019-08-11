@@ -702,6 +702,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     position: absolute;
     bottom: 0;
     left: 8px;
+    pointer-events: none;
 }
 .custom-navbar .video-list li:not(.history-item):not(.more):not(.loading)::after {
     width: 0;
