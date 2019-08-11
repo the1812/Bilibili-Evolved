@@ -92,6 +92,10 @@ li.danmaku-info-row.bpui-selecting,
 {
     background-color: #444 !important;
 }
+.config-item:not(:last-child):after
+{
+    background-color: #555 !important;
+}
 .replies-comment-input-wrapper .submit-comment
 {
     background-image: none !important;
@@ -361,8 +365,7 @@ li.danmaku-info-row.bpui-selecting,
 .liked-user:not(:last-child):after,
 .center-box .orginal-reply,
 .app-layout .pivot-component .pivot-headers,
-.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
-.config-item:not(:last-child):after
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title
 {
     border-color: #555 !important
 }
