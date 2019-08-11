@@ -690,20 +690,31 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     width: 280px;
     font-size: 12px;
 }
-.custom-navbar .video-list li:not(.history-item):not(.more):not(.loading)::after {
+.custom-navbar .video-list li:not(.history-item):not(.more):not(.loading)::after,
+.custom-navbar .video-list li:not(.history-item):not(.more):not(.loading)::before {
     content: "";
-    transition: all .2s ease-out .1s;
+    transition: .3s cubic-bezier(0.22, 0.61, 0.36, 1) .1s;
     width: calc(100% - 16px);
     height: 2px;
     border-radius: 1px;
     background: linear-gradient(to right, var(--theme-color), var(--theme-color-50));
-    opacity: 0.5;
+    opacity: 1;
     position: absolute;
     bottom: 0;
     left: 8px;
 }
+.custom-navbar .video-list li:not(.history-item):not(.more):not(.loading)::after {
+    width: 0;
+    background: linear-gradient(to right, var(--theme-color), var(--theme-color-50));
+}
+.custom-navbar .video-list li:not(.history-item):not(.more):not(.loading):hover::after {
+    width: calc(100% - 16px);
+}
 .custom-navbar.dark .video-list li:not(.history-item):not(.more):not(.loading)::after {
     background: linear-gradient(to right, var(--theme-color-60), var(--theme-color));
+}
+.custom-navbar .video-list li:not(.history-item):not(.more):not(.loading)::before {
+    background: #8882;
 }
 .custom-navbar .video-list li {
     position: relative;
@@ -722,9 +733,6 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar.compact .video-list li:not(.more) a
 {
     padding: 6px 8px;
-}
-.custom-navbar .video-list li:not(.more):not(.loading):hover::after {
-    opacity: 1;
 }
 .custom-navbar .video-list li:not(.loading):hover .title
 {
@@ -799,7 +807,12 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     height: 2px;
     border-radius: 1px;
     background: linear-gradient(to right, var(--theme-color), var(--theme-color-50));
-    opacity: 0.5;
+    width: 0;
+    transition: .3s cubic-bezier(0.22, 0.61, 0.36, 1) .1s;
+}
+.custom-navbar .video-list.history a:hover .progress.foreground
+{
+    width: var(--progress);
 }
 .custom-navbar.dark .video-list.history a .progress.foreground
 {
@@ -812,13 +825,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     height: 2px;
     width: calc(100% - 16px);
     transform-origin: left;
-    opacity: 0.5;
     border-radius: 1px;
     background: #8882;
-}
-.custom-navbar .video-list.history a:hover .progress
-{
-    opacity: 1;
 }
 .custom-navbar .notify-count
 {

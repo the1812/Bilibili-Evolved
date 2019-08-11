@@ -1463,7 +1463,7 @@ class HistoryList extends VideoList {
                 <span class="title">${item.title}</span>
                 <span class="description">${description}</span>
                 <div class="progress background">
-                  <div class="progress foreground" style="width: ${progress * 100}%"></div>
+                  <div class="progress foreground" style="--progress: ${progress * 100}%"></div>
                 </div>
               </a>
             </li>`;
