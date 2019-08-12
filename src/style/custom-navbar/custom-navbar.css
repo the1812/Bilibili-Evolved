@@ -1134,6 +1134,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .activity-popup {
     width: 380px;
+    font-size: 9pt;
 }
 .custom-navbar .activity-tabs {
     display: flex;
