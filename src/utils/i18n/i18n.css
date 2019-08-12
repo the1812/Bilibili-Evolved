@@ -190,10 +190,16 @@
 {
     font-size: 18px !important;
 }
+.bilibili-player.mode-fullscreen .bilibili-player-video-control .bilibili-player-video-btn-name,
+.bilibili-player.mode-webfullscreen .bilibili-player-video-control .bilibili-player-video-btn-name
+{
+    font-size: 14px !important;
+}
 .author-info .favourite-btn,
 .author-info .favourite-btn:active,
 .author-info .communicate-btn,
-.author-info .communicate-btn:active
+.author-info .communicate-btn:active,
+.bilibili-player .bilibili-player-video-control .bilibili-player-video-btn-name
 {
     font-size: 12px !important;
 }
