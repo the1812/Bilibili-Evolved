@@ -1,3 +1,22 @@
+.level-5, .level-6, .level-7, .level-8 {
+  border-color: #74b0f6 !important;
+}
+.level-5 .label,.level-6 .label,.level-7 .label,.level-8 .label {
+  background-color: #74b0f6 !important;
+}
+.level-5 .level,.level-6 .level,.level-7 .level,.level-8 .level {
+  color: #74b0f6 !important;
+}
+.level-9, .level-10, .level-11, .level-12 {
+  border-color: #ba94f2 !important;
+}
+.level-9 .label,.level-10 .label,.level-11 .label,.level-12 .label {
+  background-color: #ba94f2 !important;
+}
+.level-9 .level,.level-10 .level,.level-11 .level,.level-12 .level {
+  color: #ba94f2 !important;
+}
+
 #biliAppHomeSetting>div,
 .app-layout .manga-navbar,
 .manga-navbar .drop-list
