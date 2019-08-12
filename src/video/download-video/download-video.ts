@@ -213,9 +213,10 @@ class VideoDownloader {
         })
         xhr.addEventListener('load', () => {
           if (('' + xhr.status)[0] === '2') {
+            console.log(`[下载视频] 视频片段${getPartNumber(xhr)}下载完成`)
             resolve(xhr.response)
           } else {
-            reject(`请求失败.`)
+            reject(`视频片段${getPartNumber(xhr)}请求失败, response = ${xhr.status}`)
           }
         })
         xhr.addEventListener('abort', () => reject('canceled'))
