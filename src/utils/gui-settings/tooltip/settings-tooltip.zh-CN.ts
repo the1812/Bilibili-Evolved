@@ -37,7 +37,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 结束时间小于起始时间时将视为次日, 如<span>18:00</span>至<span>6:00</span>表示晚上18:00到次日6:00.`],
   ["darkScheduleStart", /*html*/`设置计划时段的起始时间.`],
   ["darkScheduleEnd", /*html*/`设置计划时段的结束时间.`],
-  ["compactLayout", /*html*/`设置首页是否使用紧凑布局, 视频的间距会减小并削去圆角, 分区栏的图标会使用高清重制版. 目前仅支持首页, 其他分区的样式后续会添加.`],
+  ["compactLayout", /*html*/`设置首页是否使用紧凑布局, 视频的间距会减小, 分区栏的图标会使用高清重制版.`],
   ["useCommentStyle", /*html*/`- 删除热评头像下方的关注按钮
 - 删除用户的等级标识
 - 删除发送源信息(<span>来自安卓客户端</span>这种)
