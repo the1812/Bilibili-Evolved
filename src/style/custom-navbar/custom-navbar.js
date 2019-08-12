@@ -1051,15 +1051,16 @@ class Activities extends NavbarComponent {
               methods: {
                 async toggleWatchlater () {
                   try {
+                    this.watchlater = !this.watchlater
                     const { toggleWatchlater } = await import('../../video/watchlater-api')
                     if (this.watchlater === false) {
                       await toggleWatchlater(this.card.aid, true)
                     } else {
                       await toggleWatchlater(this.card.aid, false)
                     }
-                    this.watchlater = !this.watchlater
                   } catch (error) {
                     logError(`稍后再看操作失败: ${error}`)
+                    this.watchlater = !this.watchlater
                   }
                 },
               },
