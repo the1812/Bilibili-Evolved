@@ -1283,6 +1283,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     height: calc(var(--card-width) / 16 * 10);
     object-fit: cover;
     display: block;
+    min-height: 100px;
 }
 .custom-navbar .video-activity-card .title {
     font-size: 10pt;

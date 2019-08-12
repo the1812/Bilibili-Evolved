@@ -915,8 +915,11 @@ class Activities extends NavbarComponent {
     }
     setInterval(() => this.getNotifyCount(), 60 * 1000)
   }
+  static getLatestID () {
+    return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+  }
   static setLatestID (id) {
-    const currentID = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+    const currentID = Activities.getLatestID()
     if (Activities.compareID(id, currentID) < 0) {
       return
     }
@@ -942,7 +945,7 @@ class Activities extends NavbarComponent {
     Activities.setLatestID(id)
   }
   async getNotifyCount () {
-    const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=8,64,512`
+    const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.getLatestID()}&type_list=8,64,512`
     const json = await Ajax.getJsonWithCredentials(api)
     if (json.code !== 0) {
       return
@@ -1481,7 +1484,7 @@ class HistoryList extends VideoList {
   const html = await import("customNavbarHtml");
   const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
   userInfo = json.data;
-  latestID = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+  latestID = Activities.getLatestID()
   document.body.insertAdjacentHTML("beforeend", html);
   addSettingsListener("useDarkStyle", darkHandler);
   darkHandler(settings.useDarkStyle);
