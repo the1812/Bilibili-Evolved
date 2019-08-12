@@ -245,6 +245,7 @@ class NavbarComponent {
     this.flex = `0 0 auto`;
     this.disabled = false;
     this.requestedPopup = false;
+    this.initialPopup = null;
     this.onPopup = null;
     this.href = null;
     this.notifyCount = 0;
@@ -882,7 +883,7 @@ class NotifyIframe extends Iframe {
     const count = this.getCount(json);
     if (json.code === 0 && count) {
       notifyElement.innerHTML = count;
-      this.onPopup = () => {
+      this.initialPopup = () => {
         notifyElement.innerHTML = '';
       };
     }
@@ -906,11 +907,13 @@ class Activities extends NavbarComponent {
       </div>
     `;
     this.active = document.URL.replace(/\?.*$/, "") === "https://t.bilibili.com/";
-    this.onPopup = () => {
+    this.initialPopup = () => {
       this.init()
+    }
+    this.onPopup = () => {
       this.setNotifyCount(0)
     }
-    this.getNotifyCount()
+    setInterval(() => this.getNotifyCount(), 60 * 1000)
   }
   static setLatestID (id) {
     const currentID = document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
@@ -941,7 +944,7 @@ class Activities extends NavbarComponent {
   async getNotifyCount () {
     const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=8,64,512`
     const json = await Ajax.getJsonWithCredentials(api)
-    if (json.code !== 0 || this.requestedPopup) {
+    if (json.code !== 0) {
       return
     }
     this.setNotifyCount(json.data.update_num)
@@ -1350,7 +1353,7 @@ class VideoList extends NavbarComponent {
           <li class="loading">加载中...</li>
       </ol>
     `;
-    this.onPopup = async () => {
+    this.initialPopup = async () => {
       if (!listMap) {
         return;
       }
@@ -1545,8 +1548,9 @@ class HistoryList extends VideoList {
       requestPopup (component) {
         if (!component.requestedPopup && !component.disabled && !component.active) {
           this.$set(component, `requestedPopup`, true);
-          component.onPopup && component.onPopup();
+          component.initialPopup && component.initialPopup();
         }
+        component.onPopup && component.onPopup()
       }
     },
   });
