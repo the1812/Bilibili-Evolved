@@ -802,7 +802,7 @@ class SearchBox extends NavbarComponent {
             value: item.keyword,
             html: item.keyword,
           }
-        })
+        }).slice(0, 10)
       } else {
         const url = `https://s.search.bilibili.com/main/suggest?func=suggest&suggest_type=accurate&sub_type=tag&main_ver=v1&highlight=&userid=${userInfo.mid}&bangumi_acc_num=1&special_acc_num=1&topic_acc_num=1&upuser_acc_num=3&tag_num=10&special_num=10&bangumi_num=10&upuser_num=3&term=${text}`
         lastQueuedRequest = url
