@@ -958,7 +958,7 @@ class Activities extends NavbarComponent {
     }, Activities.updateInterval)
   }
   static get updateInterval () {
-    return 60 * 1000 // 每分钟更新1次动态提醒数字
+    return 5 * 60 * 1000 // 每5分钟更新1次动态提醒数字
   }
   static getLatestID () {
     return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
