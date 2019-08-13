@@ -918,7 +918,10 @@ const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, templat
     },
     mounted () {
       this.fetchData()
-      setInterval(() => this.fetchData(true), Activities.updateInterval)
+      this.interval = setInterval(() => this.fetchData(true), Activities.updateInterval)
+    },
+    destroyed() {
+      clearInterval(this.interval)
     },
   }
 }
@@ -1032,21 +1035,27 @@ class Activities extends NavbarComponent {
             name: '视频',
             component: 'video-activity',
             moreUrl: 'https://t.bilibili.com/?tab=8',
-            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=8`,
+            get notifyApi () {
+              return `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.getLatestID()}&type_list=8`
+            },
             notifyCount: null,
           },
           {
             name: '番剧',
             component: 'bangumi-activity',
             moreUrl: 'https://t.bilibili.com/?tab=512',
-            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=512`,
+            get notifyApi () {
+              return `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.getLatestID()}&type_list=512`
+            },
             notifyCount: null,
           },
           {
             name: '专栏',
             component: 'column-activity',
             moreUrl: 'https://t.bilibili.com/?tab=64',
-            notifyApi: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${latestID}&type_list=64`,
+            get notifyApi () {
+              return `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${userInfo.mid}&update_num_dy_id=${Activities.getLatestID()}&type_list=64`
+            },
             notifyCount: null,
           },
           {
@@ -1277,7 +1286,7 @@ class Activities extends NavbarComponent {
         },
       },
       mounted () {
-        setInterval(() => {
+        this.interval = setInterval(() => {
           for (const tab of this.tabs) {
             if (tab.notifyApi) {
               Ajax.getJsonWithCredentials(tab.notifyApi).then(json => {
@@ -1289,6 +1298,9 @@ class Activities extends NavbarComponent {
             }
           }
         }, Activities.updateInterval)
+      },
+      destroyed() {
+        clearInterval(this.interval)
       },
       watch: {
         selectedTab (name) {
