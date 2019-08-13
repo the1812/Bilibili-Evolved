@@ -1360,11 +1360,12 @@ class VideoList extends NavbarComponent {
         return;
       }
       const json = await Ajax.getJsonWithCredentials(apiUrl);
+      let videoList = ''
       if (json.code !== 0) {
-        logError(`加载${name}信息失败. 错误码: ${json.code} ${json.message}`);
-        return;
+        logError(`加载${name}信息失败. 错误码: ${json.code} ${json.message}`)
+      } else {
+        videoList = listMap(json).join("");
       }
-      const videoList = listMap(json).join("");
       videoListElement.insertAdjacentHTML("beforeend", videoList + /*html*/`
         <li class="more"><a target="_blank" href="${mainUrl}">查看更多</a></li>
       `);
