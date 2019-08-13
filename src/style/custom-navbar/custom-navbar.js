@@ -889,6 +889,8 @@ class NotifyIframe extends Iframe {
     }
   }
 }
+let componentUpdate = () => { }
+let tabUpdate = () => { }
 const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, template }) => {
   return {
     template,
@@ -918,10 +920,10 @@ const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, templat
     },
     mounted () {
       this.fetchData()
-      this.interval = setInterval(() => this.fetchData(true), Activities.updateInterval)
+      componentUpdate = async () => await this.fetchData(true)
     },
-    destroyed() {
-      clearInterval(this.interval)
+    destroyed () {
+      componentUpdate = () => { }
     },
   }
 }
@@ -949,7 +951,11 @@ class Activities extends NavbarComponent {
     this.onPopup = () => {
       this.setNotifyCount(0)
     }
-    setInterval(() => this.getNotifyCount(), Activities.updateInterval)
+    setInterval(async () => {
+      await this.getNotifyCount()
+      await tabUpdate()
+      await componentUpdate()
+    }, Activities.updateInterval)
   }
   static get updateInterval () {
     return 60 * 1000 // 每分钟更新1次动态提醒数字
@@ -1286,21 +1292,20 @@ class Activities extends NavbarComponent {
         },
       },
       mounted () {
-        this.interval = setInterval(() => {
+        tabUpdate = async () => {
           for (const tab of this.tabs) {
             if (tab.notifyApi) {
-              Ajax.getJsonWithCredentials(tab.notifyApi).then(json => {
-                if (json.code !== 0 || !json.data.update_num || this.selectedTab === tab.name) {
-                  return
-                }
-                tab.notifyCount = json.data.update_num
-              })
+              const json = await Ajax.getJsonWithCredentials(tab.notifyApi)
+              if (json.code !== 0 || !json.data.update_num || this.selectedTab === tab.name) {
+                continue
+              }
+              tab.notifyCount = json.data.update_num
             }
           }
-        }, Activities.updateInterval)
+        }
       },
-      destroyed() {
-        clearInterval(this.interval)
+      destroyed () {
+        tabUpdate = () => { }
       },
       watch: {
         selectedTab (name) {
