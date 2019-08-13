@@ -889,6 +889,39 @@ class NotifyIframe extends Iframe {
     }
   }
 }
+const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, template }) => {
+  return {
+    template,
+    methods: {
+      handleJson,
+      async fetchData (silent = false) {
+        try {
+          const json = await Ajax.getJsonWithCredentials(apiUrl)
+          if (json.code !== 0) {
+            if (silent === true) {
+              return
+            }
+            throw new Error(json.message)
+          }
+          await this.handleJson(json)
+        } catch (error) {
+          logError(`加载${name}动态失败, error = ${error}`)
+        } finally {
+          this.loading = false
+        }
+      }
+    },
+    data () {
+      return Object.assign({
+        loading: true,
+      }, dataObject)
+    },
+    mounted () {
+      this.fetchData()
+      setInterval(() => this.fetchData(true), Activities.updateInterval)
+    },
+  }
+}
 class Activities extends NavbarComponent {
   constructor () {
     super();
@@ -913,7 +946,10 @@ class Activities extends NavbarComponent {
     this.onPopup = () => {
       this.setNotifyCount(0)
     }
-    setInterval(() => this.getNotifyCount(), 60 * 1000)
+    setInterval(() => this.getNotifyCount(), Activities.updateInterval)
+  }
+  static get updateInterval () {
+    return 60 * 1000 // 每分钟更新1次动态提醒数字
   }
   static getLatestID () {
     return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
@@ -1039,7 +1075,7 @@ class Activities extends NavbarComponent {
             }
           },
         },
-        'video-activity': {
+        'video-activity': Object.assign({
           components: {
             'video-card': {
               props: ['card', 'watchlaterInit'],
@@ -1084,6 +1120,13 @@ class Activities extends NavbarComponent {
               `,
             },
           },
+        }, getActivityTabComponent({
+          dataObject: {
+            leftCards: [],
+            rightCards: [],
+          },
+          apiUrl: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=8`,
+          name: '视频',
           template: /*html*/`
             <div class="video-activity" :class="{center: loading || (leftCards.length + rightCards.length) === 0}">
               <activity-loading :loading="loading"></activity-loading>
@@ -1096,56 +1139,39 @@ class Activities extends NavbarComponent {
               </div>
             </div>
           `,
-          data () {
-            return {
-              leftCards: [],
-              rightCards: [],
-              loading: true,
+          handleJson: async function (json) {
+            const { getWatchlaterList } = await import('../../video/watchlater-api')
+            const watchlaterList = await getWatchlaterList()
+            const cards = json.data.cards.map(card => {
+              const cardJson = JSON.parse(card.card)
+              return {
+                coverUrl: cardJson.pic,
+                title: cardJson.title,
+                timeNumber: cardJson.duration,
+                time: formatDuration(cardJson.duration),
+                description: cardJson.desc,
+                aid: cardJson.aid,
+                videoUrl: `https://www.bilibili.com/av${cardJson.aid}`,
+                faceUrl: card.desc.user_profile.info.face,
+                upName: card.desc.user_profile.info.uname,
+                upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
+                id: card.desc.dynamic_id_str,
+                watchlater: watchlaterList.includes(cardJson.aid),
+                get new () { return Activities.isNewID(this.id) },
+              }
+            })
+            this.leftCards = cards.filter((_, index) => index % 2 === 0)
+            this.rightCards = cards.filter((_, index) => index % 2 === 1)
+            if (this.leftCards.length !== this.rightCards.length) {
+              this.leftCards.pop()
             }
-          },
-          async mounted () {
-            try {
-              const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=8`)
-              if (json.code !== 0) {
-                throw new Error(json.message)
-              }
-              if (!json.data.cards) {
-                return
-              }
-              const { getWatchlaterList } = await import('../../video/watchlater-api')
-              const watchlaterList = await getWatchlaterList()
-              const cards = json.data.cards.map(card => {
-                const cardJson = JSON.parse(card.card)
-                return {
-                  coverUrl: cardJson.pic,
-                  title: cardJson.title,
-                  timeNumber: cardJson.duration,
-                  time: formatDuration(cardJson.duration),
-                  description: cardJson.desc,
-                  aid: cardJson.aid,
-                  videoUrl: `https://www.bilibili.com/av${cardJson.aid}`,
-                  faceUrl: card.desc.user_profile.info.face,
-                  upName: card.desc.user_profile.info.uname,
-                  upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
-                  id: card.desc.dynamic_id_str,
-                  watchlater: watchlaterList.includes(cardJson.aid),
-                  get new () { return Activities.isNewID(this.id) },
-                }
-              })
-              this.leftCards = cards.filter((_, index) => index % 2 === 0)
-              this.rightCards = cards.filter((_, index) => index % 2 === 1)
-              if (this.leftCards.length !== this.rightCards.length) {
-                this.leftCards.pop()
-              }
-              Activities.updateLatestID(cards)
-            } catch (error) {
-              logError(`加载视频动态失败, error = ${error}`)
-            } finally {
-              this.loading = false
-            }
-          },
-        },
-        'bangumi-activity': {
+            Activities.updateLatestID(cards)
+          }
+        })),
+        'bangumi-activity': getActivityTabComponent({
+          dataObject: { cards: [] },
+          apiUrl: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=512`,
+          name: '番剧',
           template: /*html*/`
             <div class="bangumi-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
@@ -1160,42 +1186,25 @@ class Activities extends NavbarComponent {
               </a>
             </div>
           `,
-          data () {
-            return {
-              cards: [],
-              loading: true,
-            }
-          },
-          async mounted () {
-            try {
-              const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=512`)
-              if (json.code !== 0) {
-                throw new Error(json.message)
+          handleJson: async function (json) {
+            this.cards = json.data.cards.map(card => {
+              const cardJson = JSON.parse(card.card)
+              return {
+                title: cardJson.apiSeasonInfo.title,
+                coverUrl: cardJson.apiSeasonInfo.cover,
+                epCoverUrl: cardJson.cover,
+                epTitle: cardJson.new_desc,
+                url: cardJson.url,
+                id: card.desc.dynamic_id_str,
+                get new () { return Activities.isNewID(this.id) },
               }
-              if (!json.data.cards) {
-                return
-              }
-              this.cards = json.data.cards.map(card => {
-                const cardJson = JSON.parse(card.card)
-                return {
-                  title: cardJson.apiSeasonInfo.title,
-                  coverUrl: cardJson.apiSeasonInfo.cover,
-                  epCoverUrl: cardJson.cover,
-                  epTitle: cardJson.new_desc,
-                  url: cardJson.url,
-                  id: card.desc.dynamic_id_str,
-                  get new () { return Activities.isNewID(this.id) },
-                }
-              })
-              Activities.updateLatestID(this.cards)
-            } catch (error) {
-              logError(`加载番剧动态失败, error = ${error}`)
-            } finally {
-              this.loading = false
-            }
+            })
+            Activities.updateLatestID(this.cards)
           },
-        },
-        'column-activity': {
+        }),
+        'column-activity': getActivityTabComponent({
+          dataObject: { cards: [] },
+          apiUrl: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=64`,
           template: /*html*/`
             <div class="column-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
@@ -1213,46 +1222,28 @@ class Activities extends NavbarComponent {
               </a>
             </div>
           `,
-          data () {
-            return {
-              cards: [],
-              loading: true,
-            }
-          },
-          async mounted () {
-            try {
-              const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=64`)
-              if (json.code !== 0) {
-                throw new Error(json.message)
+          handleJson: async function (json) {
+            this.cards = json.data.cards.map(card => {
+              const cardJson = JSON.parse(card.card)
+              return {
+                covers: cardJson.image_urls,
+                originalCovers: cardJson.origin_image_urls,
+                upName: cardJson.author.name,
+                faceUrl: cardJson.author.face,
+                upUrl: `https://space.bilibili.com/${cardJson.author.mid}`,
+                title: cardJson.title,
+                description: cardJson.summary,
+                url: `https://www.bilibili.com/read/cv${cardJson.id}`,
+                id: card.desc.dynamic_id_str,
+                get new () { return Activities.isNewID(this.id) },
               }
-              if (!json.data.cards) {
-                return
-              }
-              this.cards = json.data.cards.map(card => {
-                const cardJson = JSON.parse(card.card)
-                return {
-                  covers: cardJson.image_urls,
-                  originalCovers: cardJson.origin_image_urls,
-                  upName: cardJson.author.name,
-                  faceUrl: cardJson.author.face,
-                  upUrl: `https://space.bilibili.com/${cardJson.author.mid}`,
-                  title: cardJson.title,
-                  description: cardJson.summary,
-                  url: `https://www.bilibili.com/read/cv${cardJson.id}`,
-                  id: card.desc.dynamic_id_str,
-                  get new () { return Activities.isNewID(this.id) },
-                }
-              })
-              Activities.updateLatestID(this.cards)
-            } catch (error) {
-              logError(`加载专栏动态失败, error = ${error}`)
-            } finally {
-              this.loading = false
-            }
+            })
+            Activities.updateLatestID(this.cards)
           },
-        },
-        // 'photos-activity': {},
-        'live-activity': {
+        }),
+        'live-activity': getActivityTabComponent({
+          dataObject: { cards: [] },
+          apiUrl: `https://api.live.bilibili.com/relation/v1/feed/feed_list?page=1&pagesize=24`,
           template: /*html*/`
             <div class="live-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
@@ -1264,34 +1255,18 @@ class Activities extends NavbarComponent {
               </a>
             </div>
           `,
-          data () {
-            return {
-              cards: [],
-              loading: true,
-            }
-          },
-          async mounted () {
-            try {
-              const json = await Ajax.getJsonWithCredentials(`https://api.live.bilibili.com/relation/v1/feed/feed_list?page=1&pagesize=24`)
-              if (json.code !== 0) {
-                throw new Error(json.message)
+          handleJson: async function (json) {
+            this.cards = json.data.list.map(card => {
+              return {
+                faceUrl: card.face,
+                title: card.title,
+                name: card.uname,
+                id: card.roomid,
+                url: card.link,
               }
-              this.cards = json.data.list.map(card => {
-                return {
-                  faceUrl: card.face,
-                  title: card.title,
-                  name: card.uname,
-                  id: card.roomid,
-                  url: card.link,
-                }
-              })
-            } catch (error) {
-              logError(`加载直播动态失败, error = ${error}`)
-            } finally {
-              this.loading = false
-            }
+            })
           },
-        },
+        }),
       },
       computed: {
         content () {
@@ -1302,16 +1277,18 @@ class Activities extends NavbarComponent {
         },
       },
       mounted () {
-        for (const tab of this.tabs) {
-          if (tab.notifyApi) {
-            Ajax.getJsonWithCredentials(tab.notifyApi).then(json => {
-              if (json.code !== 0 || !json.data.update_num || this.selectedTab === tab.name) {
-                return
-              }
-              tab.notifyCount = json.data.update_num
-            })
+        setInterval(() => {
+          for (const tab of this.tabs) {
+            if (tab.notifyApi) {
+              Ajax.getJsonWithCredentials(tab.notifyApi).then(json => {
+                if (json.code !== 0 || !json.data.update_num || this.selectedTab === tab.name) {
+                  return
+                }
+                tab.notifyCount = json.data.update_num
+              })
+            }
           }
-        }
+        }, Activities.updateInterval)
       },
       watch: {
         selectedTab (name) {
