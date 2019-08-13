@@ -4,7 +4,7 @@
     return
   }
   SpinQuery.condition(
-    () => document.querySelector('.component-ctnr video'),
+    () => document.querySelector('.component-ctnr video,.bilibili-live-player-video video'),
     (video: HTMLVideoElement) => !video.paused,
     () => {
       const button = document.querySelector('.bilibili-live-player-video-controller-start-btn>button') as HTMLButtonElement
@@ -15,7 +15,7 @@
   addSettingsListener('hideHomeLive', value => {
     if (value === true) {
       const style = document.createElement('style')
-      style.innerText = `#player-header { display: none !important }`
+      style.innerText = `.player-area-ctnr,#player-header { display: none !important }`
       style.id = styleID
       document.body.append(style)
     } else {

@@ -598,6 +598,7 @@ i.settings-category-arrow::after,
 {
     border-color: white !important;
 }
+.player-area-ctnr .bg-image,
 #player-header .bg-image
 {
     transition: all .2s .5s !important;
@@ -696,10 +697,12 @@ body>div.to-top.on,
 {
     filter: grayscale(1) !important;
 }
+.player-area-ctnr .bg-image:hover,
 #player-header .bg-image:hover
 {
     filter: brightness(0.7) !important;
 }
+.player-area-ctnr .bg-image,
 #player-header .bg-image
 {
     filter: brightness(0.2) !important;

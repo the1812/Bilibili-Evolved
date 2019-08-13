@@ -19,19 +19,27 @@
 
 #biliAppHomeSetting>div,
 .app-layout .manga-navbar,
-.manga-navbar .drop-list
+.manga-navbar .drop-list,
+.hover-panel-wrap,
+.hover-panel-wrapper
 {
   background-color: #222 !important;
 }
 .manga-navbar .search-bar .search-bar-bg,
 .manga-navbar .user-panel .drop-list .logout-btn-container,
-.manga-navbar .drop-list .more-btn-container
+.manga-navbar .drop-list .more-btn-container,
+.yzly-content-ctnr .btn,
+.recommend-area-ctnr .rec-area-item
 {
   background-color: #333 !important;
 }
 .s_tag .btn-add,
 #biliAppHomeSetting select,
-#biliAppHomeSetting input
+#biliAppHomeSetting input,
+.highlight-areas-ctnr .highlight-area-item,
+.grid-area-ctnr .hab-ctnr,
+.grid-area-ctnr .news-ctnr,
+.grid-area-ctnr .rank-ctnr
 {
   background-color: #444 !important;
 }
@@ -51,7 +59,10 @@
 {
   background-image: none !important;
 } */
-.manga-navbar .nav-list
+.manga-navbar .nav-list,
+.text-info-ctnr,
+.news-ctnr .more-link:hover,
+.news-ctnr .more-link
 {
   background-color: transparent !important;
 }
@@ -69,7 +80,9 @@
 .manga-navbar .data-list .list-container .empty-hinter,
 .manga-navbar .data-list .list-container .failure-hinter,
 .manga-navbar .data-list .list-container .loading-hinter,
-.center-box .line-3 .action-button
+.center-box .line-3 .action-button,
+.highlight-areas-ctnr .area-desc,
+.rank-item .room-title
 {
   color: #aaa !important;
 }
@@ -86,16 +99,53 @@
 #link-message .love-card .header,
 .center-box .line-1 .name-field,
 .center-box .line-1 .name-field a,
-.center-box .line-1 .like-item
+.center-box .line-1 .like-item,
+.banner-ctnr .banner-title,
+.item-ctnr .item-title,
+.tab-ctnr .tab-item,
+.rank-item .room-anchor,
+.area-detail-ctnr .area-title,
+.yzly-ctnr .yzly-title,
+.recommend-area-ctnr .title-text,
+.recommend-area-ctnr .area-name,
+.more-ctnr,
+.news-ctnr .more-link
 {
   color: #eee !important;
+}
+.highlight-areas-ctnr .highlight-area-item:nth-child(1) .area-name
+{
+  color: #a0a7dc !important;
+}
+.highlight-areas-ctnr .highlight-area-item:nth-child(2) .area-name
+{
+  color: #c7aade !important;
+}
+.highlight-areas-ctnr .highlight-area-item:nth-child(3) .area-name
+{
+  color: #deb29c !important;
+}
+.highlight-areas-ctnr .highlight-area-item:nth-child(4) .area-name
+{
+  color: #afb7e8 !important;
+}
+.highlight-areas-ctnr .highlight-area-item:nth-child(5) .area-name
+{
+  color: #dcbf94 !important;
+}
+.highlight-areas-ctnr .highlight-area-item:nth-child(6) .area-name
+{
+  color: #95c5a8 !important;
 }
 /* a
 {
   color: #fff !important;
 } */
 #biliAppHomeSetting select,
-#biliAppHomeSetting input
+#biliAppHomeSetting input,
+.hover-panel-wrap,
+.recommend-area-ctnr .rec-area-item,
+.hover-panel-wrapper
 {
   border-color: transparent !important;
 }
@@ -176,14 +226,27 @@
 {
   box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px !important;
 }
+.highlight-areas-ctnr .highlight-area-item.hover
+{
+  box-shadow: 0 7px 11px 0 rgba(0,0,0,.18) !important;
+}
+.hover-panel-wrap
+{
+  box-shadow: 0 13px 20px 0 rgba(0,0,0,.22) !important;
+}
 /* a
 {
   display: none !important;
 } */
-/* a
+.aside-item.active .item-border,
+.aside-item:hover .item-border
 {
   border-color: var(--theme-color) !important;
-} */
+}
+.aside-item::after
+{
+  border-right-color: var(--theme-color) !important;
+}
 /* a
 {
   border-top-color: var(--theme-color) !important;
@@ -216,7 +279,11 @@
   background-color: var(--theme-color-90) !important;
 } */
 #biliAppHomeSetting h2,
-.video-desc .subtitle a
+.video-desc .subtitle a,
+.tab-ctnr .tab-item:hover,
+.tab-ctnr .tab-item.activated,
+.more-ctnr:hover,
+.news-ctnr .more-link:hover
 {
   color: var(--theme-color) !important;
 }
