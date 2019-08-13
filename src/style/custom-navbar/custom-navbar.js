@@ -900,13 +900,13 @@ const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, templat
         try {
           const json = await Ajax.getJsonWithCredentials(apiUrl)
           if (json.code !== 0) {
-            if (silent === true) {
-              return
-            }
             throw new Error(json.message)
           }
           await this.handleJson(json)
         } catch (error) {
+          if (silent === true) {
+            return
+          }
           logError(`加载${name}动态失败, error = ${error}`)
         } finally {
           this.loading = false
