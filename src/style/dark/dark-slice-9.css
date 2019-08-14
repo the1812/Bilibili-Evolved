@@ -82,7 +82,9 @@
 .manga-navbar .data-list .list-container .loading-hinter,
 .center-box .line-3 .action-button,
 .highlight-areas-ctnr .area-desc,
-.rank-item .room-title
+.rank-item .room-title,
+.bb-comment .comment-list .list-item .blacklist-font-color,
+.comment-bilibili-fold .comment-list .list-item .blacklist-font-color
 {
   color: #aaa !important;
 }
