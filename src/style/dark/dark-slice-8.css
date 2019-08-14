@@ -611,7 +611,8 @@ li.danmaku-info-row.bpui-selecting,
 .comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
 .practice-wrap .banner-container .current-work .bili-btn,
 .app-layout .dropbox-component .data-list>li:hover,
-.episode-list-component .episode-list .list-data .list-item:hover
+.episode-list-component .episode-list .list-data .list-item:hover,
+.manga-navbar-manga-logo
 {
     color: var(--foreground-color) !important;
 }
