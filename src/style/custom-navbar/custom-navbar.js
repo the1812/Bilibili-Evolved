@@ -951,6 +951,7 @@ class Activities extends NavbarComponent {
     this.onPopup = () => {
       this.setNotifyCount(0)
     }
+    this.getNotifyCount()
     setInterval(async () => {
       await this.getNotifyCount()
       await tabUpdate()
