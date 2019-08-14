@@ -42,6 +42,9 @@ class Version {
   }
 }
 async function checkNewVersion () {
+  if (typeof offlineData !== 'undefined') {
+    return false
+  }
   try {
     const latestVersionText = await Ajax.getText(Resource.root + 'version.txt')
     const latestVersion = new Version(latestVersionText)
