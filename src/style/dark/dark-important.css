@@ -106,7 +106,8 @@ blockquote .color-yellow-04,
 .coupon-content-con .coupon-btn-disable,
 .common .bb-comment .no-login .comment-submit,
 .popup-content-ctnr .bl-button--ghost:hover,
-.customize-wrp .select
+.customize-wrp .select,
+.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read
 {
     color: #eee !important;
 }
