@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      393.83
+// @version      394.06
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -123,9 +123,9 @@ const formatFileSize = (bytes, fixed = 1) => {
   return `${Math.round(number * (10 ** fixed)) / (10 ** fixed)}${units[unitIndex]}`
 }
 const formatDuration = (time, fixed = 0) => {
-  const hour = Math.trunc(time / 3600).toString()
-  const minute = Math.trunc(time / 60).toString()
   const second = (time % 60).toFixed(fixed)
+  const minute = (Math.trunc(time / 60) % 60).toString()
+  const hour = Math.trunc(time / 3600).toString()
   if (hour === '0') {
     return `${minute.padStart(2, '0')}:${second.padStart(2, '0')}`
   }

@@ -122,9 +122,9 @@ const formatFileSize = (bytes, fixed = 1) => {
   return `${Math.round(number * (10 ** fixed)) / (10 ** fixed)}${units[unitIndex]}`
 }
 const formatDuration = (time, fixed = 0) => {
-  const hour = Math.trunc(time / 3600).toString()
-  const minute = Math.trunc(time / 60).toString()
   const second = (time % 60).toFixed(fixed)
+  const minute = (Math.trunc(time / 60) % 60).toString()
+  const hour = Math.trunc(time / 3600).toString()
   if (hour === '0') {
     return `${minute.padStart(2, '0')}:${second.padStart(2, '0')}`
   }
