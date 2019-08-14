@@ -130,7 +130,8 @@ li.danmaku-info-row.bpui-selecting,
 .app-layout .page-content,
 .app-layout .list-item:hover,
 .manga-spread-module .label,
-.danmaku-box .bui-radio-input:checked+.bui-radio-label
+.danmaku-box .bui-radio-input:checked+.bui-radio-label,
+.app-layout .size-ruler
 {
     background-color: transparent !important;
 }
@@ -290,7 +291,8 @@ li.danmaku-info-row.bpui-selecting,
 .app-ctnr .club-brief,
 .data-list .list-container .data-item .text-section .manga-title,
 .player-auxiliary-danmaku-report-wrap .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
-.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-content
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-content,
+.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read
 {
     color: #eee !important;
 }
