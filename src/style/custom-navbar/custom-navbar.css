@@ -1230,6 +1230,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     height: 28px;
     border-radius: 14px;
     box-sizing: border-box;
+    z-index: 2;
 }
 .custom-navbar .activity-popup-content .view-more:hover {
     background-color: #fff;

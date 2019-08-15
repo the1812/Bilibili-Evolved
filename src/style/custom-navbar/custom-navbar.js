@@ -1300,6 +1300,7 @@ class Activities extends NavbarComponent {
             }
           }
         }
+        tabUpdate()
       },
       destroyed () {
         tabUpdate = () => { }
