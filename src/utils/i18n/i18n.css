@@ -186,7 +186,8 @@
 {
     float: none !important;
 }
-#area-list ul li dd
+#area-list ul li dd,
+.highlight-areas-ctnr .highlight-area-item .area-name
 {
     font-size: 18px !important;
 }
