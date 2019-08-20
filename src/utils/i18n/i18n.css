@@ -32,7 +32,8 @@
 }
 .bb-comment .comment-send .comment-emoji,
 #app-ctnr .demo-app .category,
-.fjw-point .point-wrap .user-point .face .unfocus-btn
+.fjw-point .point-wrap .user-point .face .unfocus-btn,
+.live-room-app .draw-fold-cntr .draw
 {
     width: max-content !important;
 }
