@@ -130,7 +130,8 @@ li.danmaku-info-row.bpui-selecting,
 .app-layout .page-content,
 .app-layout .list-item:hover,
 .manga-spread-module .label,
-.danmaku-box .bui-radio-input:checked+.bui-radio-label
+.danmaku-box .bui-radio-input:checked+.bui-radio-label,
+.app-layout .size-ruler
 {
     background-color: transparent !important;
 }
@@ -611,7 +612,8 @@ li.danmaku-info-row.bpui-selecting,
 .comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
 .practice-wrap .banner-container .current-work .bili-btn,
 .app-layout .dropbox-component .data-list>li:hover,
-.episode-list-component .episode-list .list-data .list-item:hover
+.episode-list-component .episode-list .list-data .list-item:hover,
+.manga-navbar-manga-logo
 {
     color: var(--foreground-color) !important;
 }

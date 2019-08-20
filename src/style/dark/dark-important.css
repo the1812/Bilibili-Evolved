@@ -106,7 +106,8 @@ blockquote .color-yellow-04,
 .coupon-content-con .coupon-btn-disable,
 .common .bb-comment .no-login .comment-submit,
 .popup-content-ctnr .bl-button--ghost:hover,
-.customize-wrp .select
+.customize-wrp .select,
+.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read
 {
     color: #eee !important;
 }
@@ -162,9 +163,8 @@ blockquote .color-yellow-04,
 #app .sticky-bar .bar-content .message:hover,
 .el-select-dropdown__item.selected,
 .r-con .members-info .up-card .info-name.is-vip:hover,
-.style-section .tag-block .tag-containers .style-tag.selected,
-.manga-detail .episode-list-component .episode-list .list-header .header-item.selected,
-.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read
+.app-layout .style-section .tag-block .tag-containers .style-tag.selected,
+.manga-detail .episode-list-component .episode-list .list-header .header-item.selected
 {
     color: var(--theme-color) !important;
 }
