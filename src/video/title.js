@@ -32,7 +32,7 @@ export function formatTitle (format, includesPageTitle = true) {
       if (!includesPageTitle) {
         return null
       }
-      const bangumiPage = dq('#eplist_module li.cursor')
+      const bangumiPage = dq('#eplist_module li.cursor .ep-title')
       if (bangumiPage !== null) {
         return bangumiPage.innerText
       }
