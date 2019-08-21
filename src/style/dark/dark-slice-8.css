@@ -532,7 +532,7 @@ li.danmaku-info-row.bpui-selecting,
 .manga-button.primary:hover,
 .app-layout .dropbox-component .data-list>li:hover,
 .episode-list-component .episode-list .list-data .list-item:hover,
-.guard-rank-cntr .rank-cntr .btn-box .buy:hover
+.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover
 {
     background-color: var(--theme-color) !important;
 }
