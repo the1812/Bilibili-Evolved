@@ -96,7 +96,8 @@ li.danmaku-info-row.bpui-selecting,
 {
     background-color: #555 !important;
 }
-.replies-comment-input-wrapper .submit-comment
+.replies-comment-input-wrapper .submit-comment,
+.guard-rank-cntr .rank-cntr .rank-list-box .url-back
 {
     background-image: none !important;
 }
@@ -530,7 +531,8 @@ li.danmaku-info-row.bpui-selecting,
 .style-section .tag-block .tag-containers .style-tag:active,
 .manga-button.primary:hover,
 .app-layout .dropbox-component .data-list>li:hover,
-.episode-list-component .episode-list .list-data .list-item:hover
+.episode-list-component .episode-list .list-data .list-item:hover,
+.guard-rank-cntr .rank-cntr .btn-box .buy:hover
 {
     background-color: var(--theme-color) !important;
 }
