@@ -33,7 +33,8 @@
 .bb-comment .comment-send .comment-emoji,
 #app-ctnr .demo-app .category,
 .fjw-point .point-wrap .user-point .face .unfocus-btn,
-.live-room-app .draw-fold-cntr .draw
+.live-room-app .draw-fold-cntr .draw,
+.media-info-card .mic-expand
 {
     width: max-content !important;
 }
