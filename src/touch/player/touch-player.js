@@ -179,7 +179,7 @@ class SwipeAction {
     } else if (direction === 'horizontal') {
       if (position.y < 1 / 3 && (position.x < 0.1 || position.x > 0.9)
         // || Math.abs(distance) < this.minSwipeDistance
-        ) {
+      ) {
         this.speedCancel && this.speedCancel()
         this.lastAction = null
       } else {
@@ -381,7 +381,7 @@ function setupTouchPlayer (player) {
       text.querySelector('.touch-info').innerHTML = `进度: ${sec > 0 ? '+' : '-'}${secondsToTime(change)}`
       text.querySelector('.touch-result').innerHTML = result
       videoshot.getVideoshot(finalTime, style => $('.videoshot').css(style))
-      $('.touch-progress').css('transform', `scaleX(${finalPercent / 100})`)
+      $('.touch-progress').css('width', `${finalPercent}%`)
     }
   }
   swiper.action.lowSpeedBackward = speedChange('低')
@@ -406,7 +406,7 @@ function setupTouchPlayer (player) {
     text.classList.remove('cancel')
     text.querySelector('.touch-info').innerHTML = `音量: ${volume > 0 ? '+' : '-'}${change}`
     text.querySelector('.touch-result').innerHTML = result
-    $('.touch-progress').css('transform', `scaleX(${finalVolume / 100})`)
+    $('.touch-progress').css('width', `${finalVolume}%`)
   }
   swiper.action.volumeUp = volumeChange
   swiper.action.volumeDown = volumeChange
@@ -427,7 +427,7 @@ function setupTouchPlayer (player) {
     text.classList.remove('cancel')
     text.querySelector('.touch-info').innerHTML = `亮度: ${brightness > 0 ? '+' : '-'}${change}`
     text.querySelector('.touch-result').innerHTML = result
-    $('.touch-progress').css('transform', `scaleX(${finalBrightness / 100})`)
+    $('.touch-progress').css('width', `${finalBrightness}%`)
   }
   swiper.action.brightnessUp = brightnessChange
   swiper.action.brightnessDown = brightnessChange
@@ -436,8 +436,8 @@ function setupTouchPlayer (player) {
     text.querySelector('.touch-info').innerHTML = `取消时间调整`
     text.classList.add('cancel')
   }
-  if (!unsafeWindow.TOUCH_PLAYER_DEBUG) {
-    swiper.action.onActionEnd = action => {
+  swiper.action.onActionEnd = action => {
+    if (!unsafeWindow.touchPlayerDebug) {
       if (action) {
         if (action.type === 'playback') {
           let time = video.prop('currentTime')
