@@ -7,7 +7,13 @@
     font-family: "custom-navbar-font-extended";
     src: url('//s1.hdslb.com/bfs/static/jinkela/video/asserts/iconfont.4bab144.ttf') format('truetype');
 }
-.custom-navbar-iconfont
+@font-face {
+    font-family: "custom-navbar-font-new-home";
+    src: url('//s1.hdslb.com/bfs/static/jinkela/international-home/asserts/iconfont.ttf') format('truetype');
+}
+.custom-navbar-iconfont,
+.custom-navbar-iconfont-extended,
+.custom-navbar-iconfont-new-home
 {
     color: inherit;
     font-family: "custom-navbar-font" !important;
@@ -16,18 +22,15 @@
 }
 .custom-navbar-iconfont-extended
 {
-    color: inherit;
     font-family: "custom-navbar-font-extended" !important;
-    font-size: 24px;
-    font-style: normal;
+}
+.custom-navbar-iconfont-new-home
+{
+    font-family: "custom-navbar-font-new-home" !important;
 }
 .custom-navbar-icon-logo::before
 {
     content: "\E725";
-}
-.custom-navbar-icon-coin::before
-{
-    content: "\E6E4";
 }
 .custom-navbar-icon-lv0::before {
     content: "\E6CB";
@@ -62,6 +65,42 @@
 .custom-navbar-icon-lv6::before {
     content: "\E6D1";
     color: #FF3131;
+}
+.custom-navbar-icon-profile::before {
+    content: "\E722";
+}
+.custom-navbar-icon-posts::before {
+    content: "\E723";
+}
+.custom-navbar-icon-wallet::before {
+    content: "\E71F";
+}
+.custom-navbar-icon-live-center::before {
+    content: "\E720";
+}
+.custom-navbar-icon-order-center::before {
+    content: "\E71E";
+}
+.custom-navbar-icon-logout::before {
+    content: "\E721";
+}
+.custom-navbar-icon-ok::before {
+    content: "\E749";
+}
+.custom-navbar-icon-cancel::before {
+    content: "\E74A";
+}
+.custom-navbar-icon-bind-phone::before {
+    content: "\E733";
+}
+.custom-navbar-icon-bind-email::before {
+    content: "\E735";
+}
+.custom-navbar-icon-coin::before {
+    content: "\E734";
+}
+.custom-navbar-icon-b-coin::before {
+    content: "\E736";
 }
 [class^='custom-navbar-icon-lv']::before {
     font-size: 24px;
@@ -583,6 +622,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .user-info-panel .item > i {
     opacity: .7;
+    font-size: 16pt;
 }
 .user-info-panel .item {
     display: flex;
@@ -594,6 +634,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .user-info-panel .item span {
     font-size: 14px;
+    font-weight: bold;
+    opacity: .7;
 }
 .user-info-panel .item > i:nth-child(2) {
     font-size: 18px;

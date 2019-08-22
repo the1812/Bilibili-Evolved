@@ -545,78 +545,49 @@ class UserInfo extends NavbarComponent {
           <div class="items">
             <a class="item" target="_blank" title="手机验证"
               href="https://passport.bilibili.com/account/security#/bindphone">
-              <div class="circle">
-                <i class="mdi mdi-circle"></i>
-                <i class="mdi mdi-cellphone-android"></i>
-              </div>
-              <i v-if="mobile_verified" class="mdi mdi-check"></i>
-              <i v-else class="mdi mdi-close"></i>
+              <i class="custom-navbar-iconfont-new-home custom-navbar-icon-bind-phone"></i>
+              <i v-if="mobile_verified" class="custom-navbar-iconfont-new-home custom-navbar-icon-ok"></i>
+              <i v-else class="custom-navbar-iconfont-new-home custom-navbar-icon-cancel"></i>
             </a>
             <a class="item" target="_blank" title="邮箱验证"
               href="https://passport.bilibili.com/account/security#/bindmail">
-              <div class="circle">
-                <i class="mdi mdi-circle"></i>
-                <i class="mdi mdi-email"></i>
-              </div>
-              <i v-if="email_verified" class="mdi mdi-check"></i>
-              <i v-else class="mdi mdi-close"></i>
+              <i class="custom-navbar-iconfont-new-home custom-navbar-icon-bind-email"></i>
+              <i v-if="email_verified" class="custom-navbar-iconfont-new-home custom-navbar-icon-ok"></i>
+              <i v-else class="custom-navbar-iconfont-new-home custom-navbar-icon-cancel"></i>
             </a>
             <a class="item" target="_blank" href="https://account.bilibili.com/site/coin" title="硬币">
-              <i class="custom-navbar-iconfont-extended custom-navbar-icon-coin"></i>
+              <i class="custom-navbar-iconfont-new-home custom-navbar-icon-coin"></i>
               <span>{{money}}</span>
             </a>
             <a class="item" target="_blank" href="https://pay.bilibili.com/bb_balance.html" title="B币">
-              <i class="mdi mdi-alpha-b-circle"></i>
+              <i class="custom-navbar-iconfont-new-home custom-navbar-icon-b-coin"></i>
               <span>{{wallet.bcoin_balance}}</span>
             </a>
           </div>
           <div class="separator"></div>
           <a class="operation" target="_blank" href="https://account.bilibili.com/account/home">
-            <span class="icon">
-              <div class="circle">
-                <i class="mdi mdi-circle"></i>
-                <i class="mdi mdi-account"></i>
-              </div>
-            </span>
+            <i class="icon custom-navbar-icon-profile custom-navbar-iconfont-new-home"></i>
             个人中心
           </a>
           <a class="operation" target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">
-            <span class="icon">
-              <div class="circle">
-                <i class="mdi mdi-circle"></i>
-                <i class="mdi mdi-square-edit-outline"></i>
-              </div>
-            </span>
+            <i class="icon custom-navbar-icon-posts custom-navbar-iconfont-new-home"></i>
             投稿管理
           </a>
           <a class="operation" target="_blank" href="https://pay.bilibili.com/">
-            <span class="icon">
-              <div class="circle">
-                <i class="mdi mdi-circle"></i>
-                <i class="mdi mdi-wallet"></i>
-              </div>
-            </span>
+            <i class="icon custom-navbar-icon-wallet custom-navbar-iconfont-new-home"></i>
             B币钱包
           </a>
           <a class="operation" target="_blank" href="https://link.bilibili.com/p/center/index">
-            <span class="icon">
-              <div class="circle">
-                <i class="mdi mdi-circle"></i>
-                <i class="mdi mdi-video-input-antenna"></i>
-              </div>
-            </span>
+            <i class="icon custom-navbar-icon-live-center custom-navbar-iconfont-new-home"></i>
             直播中心
           </a>
           <a class="operation" target="_blank" href="https://show.bilibili.com/orderlist">
-            <span class="icon">
-              <div class="circle">
-                <i class="mdi mdi-circle"></i>
-                <i class="mdi mdi-ticket"></i>
-              </div>
-            </span>
+            <i class="icon custom-navbar-icon-order-center custom-navbar-iconfont-new-home"></i>
             订单中心
           </a>
-          <a class="logout grey-button" href="https://account.bilibili.com/login?act=exit">退出登录</a>
+          <a class="logout grey-button" href="https://account.bilibili.com/login?act=exit">
+            退出登录
+          </a>
         </div>
         <div v-else class="not-logged-in">
           <h1 class="welcome">欢迎来到 bilibili</h1>
