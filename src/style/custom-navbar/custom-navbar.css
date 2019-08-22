@@ -148,7 +148,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     width: 100%;
     background-color: var(--navbar-background);
     color: var(--navbar-foreground);
-    z-index: 10001;
+    /* z-index: 10001; */
+    z-index: 1999;
     display: flex;
     justify-content: center;
 }
@@ -648,6 +649,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     font-weight: bold;
     margin: 46px 0 16px 0;
     text-align: center;
+    color: inherit;
 }
 .user-info-panel .name
 {
@@ -1642,7 +1644,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .round-corner .custom-navbar .bangumi-activity .ep-cover {
     border-radius: var(--large-corner-radius) 0 0 var(--large-corner-radius);
 }
-
+/*
 body.all-navbar-fill .link-navbar,
 body.all-navbar-fill .nav-header-wrapper,
 body.all-navbar-fill .link-navbar .main-ctnr .nav-items-ctnr,
@@ -1739,7 +1741,7 @@ body.all-navbar-fill .link-navbar .nav-item
 body.all-navbar-fill .manga-navbar .search-bar .confirm-btn .search-icon
 {
     visibility: hidden !important;
-}
+} */
 
 
 @media screen and (max-width: 1400px)
