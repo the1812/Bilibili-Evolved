@@ -84,6 +84,7 @@
     transition: all .2s ease-out;
     transform-origin: center;
     opacity: 0.5;
+    box-sizing: content-box;
 }
 .toast-card-dismiss:hover
 {
