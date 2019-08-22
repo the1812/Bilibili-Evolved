@@ -110,9 +110,9 @@ li.danmaku-info-row.bpui-selecting,
 .container .lang-change .lang-intro,
 .container .level-intro,
 .vip-m .bubble-traditional .renew-btn button,
-.container .split-line::before,
 .container .split-line .history-tip,
-.container .play-all
+.container .play-all,
+.container .more-btn
 {
     background-color: #444 !important;
 }
@@ -373,7 +373,8 @@ li.danmaku-info-row.bpui-selecting,
 .container .video-info .line-2,
 .container .date-title,
 .container .tab-header .tab-item,
-.container .tab-header .tab-item:hover
+.container .tab-header .tab-item:hover,
+.container .more-btn
 {
     color: #eee !important;
 }
@@ -436,7 +437,8 @@ li.danmaku-info-row.bpui-selecting,
 .container .counts,
 .container .links,
 .container .lang-change,
-.container .tab-header
+.container .tab-header,
+.round-corner .out-container .tab-bar
 {
     border-color: transparent !important;
 }
@@ -470,7 +472,8 @@ li.danmaku-info-row.bpui-selecting,
 .player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
 .elevator .list-box .item.sort,
 .container .play-all,
-.container .tabs-panel
+.container .tabs-panel,
+.container .split-line::before
 {
     border-color: #555 !important
 }
@@ -650,7 +653,8 @@ li.danmaku-info-row.bpui-selecting,
 .elevator .list-box .item:hover,
 .vip-m .bubble-traditional .renew-btn button:hover,
 .round-corner .out-container .tab-item.active,
-.container .tab-item--active
+.container .tab-item--active,
+.container .more-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -732,7 +736,8 @@ li.danmaku-info-row.bpui-selecting,
 .container .count-item:hover .item-value,
 .container .lang-change .lang-intro-item.on,
 .container .video-list .content:hover,
-.round-corner .out-container .tab-item:hover
+.round-corner .out-container .tab-item:hover,
+.container .publish-time
 {
     color: var(--theme-color) !important;
 }
@@ -764,7 +769,8 @@ li.danmaku-info-row.bpui-selecting,
 .elevator .list-box .item.on,
 .elevator .list-box .item:hover,
 .round-corner .out-container .tab-item.active,
-.container .tab-item--active
+.container .tab-item--active,
+.container .more-btn:hover
 {
     color: var(--foreground-color) !important;
 }
