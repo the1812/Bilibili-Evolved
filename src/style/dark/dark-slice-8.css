@@ -98,7 +98,8 @@ li.danmaku-info-row.bpui-selecting,
 .elevator .list-box .item.back-old,
 .elevator .list-box .item.sort,
 .elevator .list-box,
-.van-popover
+.van-popover,
+.elevator .list-box .item
 {
     background-color: #444 !important;
 }
@@ -388,7 +389,14 @@ li.danmaku-info-row.bpui-selecting,
 .exchange-btn .btn,
 .gg-window .online,
 .time-line .tl-link,
-.elevator .list-box .item.back-old
+.elevator .list-box .item.back-old,
+.page-tab .con li,
+.elevator .list-box,
+.elevator .list-box .item.back-top,
+.van-popover,
+.tab-line-itnl,
+.van-popper[x-placement^=top] .popper__arrow,
+.van-popper[x-placement^=bottom] .popper__arrow
 {
     border-color: transparent !important;
 }
@@ -408,7 +416,8 @@ li.danmaku-info-row.bpui-selecting,
 .calendar-wrap .calendar-header,
 .practice-wrap .banner-container .current-work,
 .round-corner .international-footer .link-box .link-item,
-.van-popper[x-placement^=bottom] .popper__arrow:after
+.van-popper[x-placement^=bottom] .popper__arrow:after,
+.van-popper[x-placement^=top] .popper__arrow:after
 {
     border-color: #444 !important
 }
@@ -418,7 +427,8 @@ li.danmaku-info-row.bpui-selecting,
 .liked-user:not(:last-child):after,
 .center-box .orginal-reply,
 .app-layout .pivot-component .pivot-headers,
-.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
+.elevator .list-box .item.sort
 {
     border-color: #555 !important
 }
@@ -719,6 +729,7 @@ li.danmaku-info-row.bpui-selecting,
     border-top-color: transparent !important;
     border-left-color: transparent !important;
 }
+.van-popper[x-placement^=top] .popper__arrow:after,
 .van-popper[x-placement^=bottom] .popper__arrow:after
 {
     border-left-color: transparent !important;
