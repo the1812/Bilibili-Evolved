@@ -44,6 +44,7 @@
     background-color: #dddc;
     border-radius: 0 50% 50% 0;
     padding: 6px;
+    box-sizing: content-box;
 }
 body.dark .gui-settings,
 body.dark .gui-settings-widgets
@@ -92,6 +93,7 @@ body.dark .gui-settings-widgets
     display: flex;
     height: 24px;
     transition: all .2s;
+    box-sizing: content-box;
 }
 .gui-settings-content ul li.disabled,
 .gui-settings-content ul li:not(.category).folded
