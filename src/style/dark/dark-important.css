@@ -107,7 +107,14 @@ blockquote .color-yellow-04,
 .common .bb-comment .no-login .comment-submit,
 .popup-content-ctnr .bl-button--ghost:hover,
 .customize-wrp .select,
-.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read
+.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read,
+.live-room-app .tabs.isHundred .item.active,
+.live-room-app .guard-rank-cntr.hundred .live-skin-main-a-text,
+.live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text,
+.live-room-app .guard-rank-cntr.hundred .page-box .live-skin-main-text,
+.live-room-app .guard-rank-cntr.thousand .page-box .live-skin-main-text,
+.live-room-app .guard-rank-cntr.hundred .live-skin-highlight-text,
+.live-room-app .guard-rank-cntr.thousand .live-skin-highlight-text
 {
     color: #eee !important;
 }
@@ -164,7 +171,9 @@ blockquote .color-yellow-04,
 .el-select-dropdown__item.selected,
 .r-con .members-info .up-card .info-name.is-vip:hover,
 .app-layout .style-section .tag-block .tag-containers .style-tag.selected,
-.manga-detail .episode-list-component .episode-list .list-header .header-item.selected
+.manga-detail .episode-list-component .episode-list .list-header .header-item.selected,
+.live-room-app .guard-rank-cntr.hundred .live-skin-main-a-text:hover,
+.live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text:hover
 {
     color: var(--theme-color) !important;
 }

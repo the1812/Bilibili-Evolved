@@ -96,7 +96,8 @@ li.danmaku-info-row.bpui-selecting,
 {
     background-color: #555 !important;
 }
-.replies-comment-input-wrapper .submit-comment
+.replies-comment-input-wrapper .submit-comment,
+.guard-rank-cntr .rank-cntr .rank-list-box .url-back
 {
     background-image: none !important;
 }
@@ -131,7 +132,8 @@ li.danmaku-info-row.bpui-selecting,
 .app-layout .list-item:hover,
 .manga-spread-module .label,
 .danmaku-box .bui-radio-input:checked+.bui-radio-label,
-.app-layout .size-ruler
+.app-layout .size-ruler,
+.round-corner .international-footer
 {
     background-color: transparent !important;
 }
@@ -291,7 +293,11 @@ li.danmaku-info-row.bpui-selecting,
 .app-ctnr .club-brief,
 .data-list .list-container .data-item .text-section .manga-title,
 .player-auxiliary-danmaku-report-wrap .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
-.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-content
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-content,
+.round-corner .international-footer .link-box .link-item ul a,
+.round-corner .international-footer .link-box .link-item.link-c p,
+.round-corner .international-footer .link-box .link-item .bt,
+.round-corner .international-footer .partner a
 {
     color: #eee !important;
 }
@@ -356,7 +362,8 @@ li.danmaku-info-row.bpui-selecting,
 .tab-content .bilibili-comment,
 .calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content,
 .calendar-wrap .calendar-header,
-.practice-wrap .banner-container .current-work
+.practice-wrap .banner-container .current-work,
+.round-corner .international-footer .link-box .link-item
 {
     border-color: #444 !important
 }
@@ -530,7 +537,8 @@ li.danmaku-info-row.bpui-selecting,
 .style-section .tag-block .tag-containers .style-tag:active,
 .manga-button.primary:hover,
 .app-layout .dropbox-component .data-list>li:hover,
-.episode-list-component .episode-list .list-data .list-item:hover
+.episode-list-component .episode-list .list-data .list-item:hover,
+.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -590,7 +598,10 @@ li.danmaku-info-row.bpui-selecting,
 .left-nav-childed .left-nav-childed-list.active .left-nav-item-childed span,
 .schedule-list .list-header .date-selector .date-item.active,
 .pivot-component .pivot-headers .pivot-header-item.selected,
-.pivot-component .pivot-headers .pivot-header-item:active
+.pivot-component .pivot-headers .pivot-header-item:active,
+.round-corner .international-footer .link-box .link-item.link-c a:hover p,
+.round-corner .international-footer .link-box .link-item ul a:hover,
+.round-corner .international-footer .partner a:hover
 {
     color: var(--theme-color) !important;
 }
