@@ -1516,6 +1516,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     border-radius: 26px;
     box-sizing: border-box;
     padding: 2px;
+    width: auto;
 }
 .custom-navbar .live-card .face {
     grid-area: face;
