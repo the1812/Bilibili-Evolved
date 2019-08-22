@@ -38,7 +38,13 @@
 .practice-wrap .tab-container,
 .manga-button.ghost,
 .manga-button.primary,
-.app-layout .sidebar
+.app-layout .sidebar,
+.container .links .link-item:hover,
+.container .lang-change .lang-item:hover,
+.container .lang-change .lang-intro-item:hover,
+.container .logout a:hover,
+.container .video-card:hover,
+.container .tab-item--normal:hover
 {
     background-color: #333 !important;
 }
@@ -99,7 +105,14 @@ li.danmaku-info-row.bpui-selecting,
 .elevator .list-box .item.sort,
 .elevator .list-box,
 .van-popover,
-.elevator .list-box .item
+.elevator .list-box .item,
+.recommendation-list .list-item:before,
+.container .lang-change .lang-intro,
+.container .level-intro,
+.vip-m .bubble-traditional .renew-btn button,
+.container .split-line::before,
+.container .split-line .history-tip,
+.container .play-all
 {
     background-color: #444 !important;
 }
@@ -144,7 +157,13 @@ li.danmaku-info-row.bpui-selecting,
 .manga-spread-module .label,
 .danmaku-box .bui-radio-input:checked+.bui-radio-label,
 .app-layout .size-ruler,
-.round-corner .international-footer
+.round-corner .international-footer,
+.round-corner .loc-menu-box,
+.mini-header__content .i-frame::before,
+.mini-header__content .i-frame,
+.round-corner .out-container,
+.round-corner .out-container .tab-bar,
+.container .info .date
 {
     background-color: transparent !important;
 }
@@ -338,7 +357,23 @@ li.danmaku-info-row.bpui-selecting,
 .special-recommend header,
 .time-line .tl-link,
 .article-card .r-con .title,
-.elevator .list-box .item.back-old
+.elevator .list-box .item.back-old,
+.popularity-list .list-title,
+.container .level-info .grade,
+.container .count-item .item-value,
+.container .links .link-title,
+.container .lang-change .lang-title,
+.container .lang-change .lang-intro,
+.container .level-intro,
+.vip-m .bubble-traditional .recommand .title,
+.vip-m .bubble-traditional .renew-btn button,
+.round-corner .out-container .tab-bar,
+.container .split-line,
+.container .tab-item--normal,
+.container .video-info .line-2,
+.container .date-title,
+.container .tab-header .tab-item,
+.container .tab-header .tab-item:hover
 {
     color: #eee !important;
 }
@@ -396,7 +431,12 @@ li.danmaku-info-row.bpui-selecting,
 .van-popover,
 .tab-line-itnl,
 .van-popper[x-placement^=top] .popper__arrow,
-.van-popper[x-placement^=bottom] .popper__arrow
+.van-popper[x-placement^=bottom] .popper__arrow,
+.container .coins,
+.container .counts,
+.container .links,
+.container .lang-change,
+.container .tab-header
 {
     border-color: transparent !important;
 }
@@ -428,7 +468,9 @@ li.danmaku-info-row.bpui-selecting,
 .center-box .orginal-reply,
 .app-layout .pivot-component .pivot-headers,
 .player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
-.elevator .list-box .item.sort
+.elevator .list-box .item.sort,
+.container .play-all,
+.container .tabs-panel
 {
     border-color: #555 !important
 }
@@ -464,7 +506,8 @@ li.danmaku-info-row.bpui-selecting,
 .fjw-random .unagree:hover,
 .svga-container.svga-center canvas,
 .ops canvas.ring-progress,
-.home-slide .trigger span.on
+.home-slide .trigger span.on,
+.container .level-intro .svg-icon
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -604,7 +647,10 @@ li.danmaku-info-row.bpui-selecting,
 .home-slide .trigger span:hover,
 .time-line .tl-link:hover,
 .elevator .list-box .item.on,
-.elevator .list-box .item:hover
+.elevator .list-box .item:hover,
+.vip-m .bubble-traditional .renew-btn button:hover,
+.round-corner .out-container .tab-item.active,
+.container .tab-item--active
 {
     background-color: var(--theme-color) !important;
 }
@@ -681,7 +727,12 @@ li.danmaku-info-row.bpui-selecting,
 .gg-window .online a:hover,
 .time-line-card .txt .update .published,
 .time-line .tab-switch .tab-switch-item.on,
-.article-card .r-con .title:hover
+.article-card .r-con .title:hover,
+.container .count-item:hover .item-key,
+.container .count-item:hover .item-value,
+.container .lang-change .lang-intro-item.on,
+.container .video-list .content:hover,
+.round-corner .out-container .tab-item:hover
 {
     color: var(--theme-color) !important;
 }
@@ -711,7 +762,9 @@ li.danmaku-info-row.bpui-selecting,
 .pgc-rank-wrap .number.on,
 .time-line .tl-link:hover,
 .elevator .list-box .item.on,
-.elevator .list-box .item:hover
+.elevator .list-box .item:hover,
+.round-corner .out-container .tab-item.active,
+.container .tab-item--active
 {
     color: var(--foreground-color) !important;
 }
