@@ -26,7 +26,9 @@
 .bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
 .invite-code .copy-btn,
 .bili-share-pc .title,
-.video-toolbar-module .btn-item .t
+.video-toolbar-module .btn-item .t,
+.exchange-btn .more,
+.rank-header .more
 {
     width: auto !important;
 }

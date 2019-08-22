@@ -88,7 +88,17 @@ li.danmaku-info-row.bpui-selecting,
 .app-layout .page-content .router-view,
 .app-layout .sidebar .nav-item-indicator,
 .player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel,
-.episode-list-component .episode-list .list-data .list-item
+.episode-list-component .episode-list .list-data .list-item,
+.exchange-btn .btn,
+.live-rank .live-rank-item .number,
+.gg-window .online,
+.rank-wrap .number,
+.pgc-rank-wrap .number,
+.time-line .tl-link,
+.elevator .list-box .item.back-old,
+.elevator .list-box .item.sort,
+.elevator .list-box,
+.van-popover
 {
     background-color: #444 !important;
 }
@@ -182,7 +192,18 @@ li.danmaku-info-row.bpui-selecting,
 .data-list .list-container .data-item .text-section .footer-text .text,
 .manga-spread-module .label,
 .manga-rank-list .rank-item .ri-detail .ri-first-info,
-.manga-rank-list .rank-item .ri-detail .ri-update
+.manga-rank-list .rank-item .ri-detail .ri-update,
+.live-list .text-info,
+.live-list .text-info a,
+.live-card .up .txt .desc,
+.live-card .up .txt .tag,
+.video-card-common .up,
+.live-rank .live-rank-item .txt p.p2,
+.pgc-rank-wrap .txt .update,
+.time-line-card .txt .update a,
+.rank-wrap .preview .txt span,
+.article-card .r-con .up,
+.article-card .r-con .count
 {
     color: #aaa !important;
 }
@@ -297,7 +318,26 @@ li.danmaku-info-row.bpui-selecting,
 .round-corner .international-footer .link-box .link-item ul a,
 .round-corner .international-footer .link-box .link-item.link-c p,
 .round-corner .international-footer .link-box .link-item .bt,
-.round-corner .international-footer .partner a
+.round-corner .international-footer .partner a,
+.live-card .up .txt .name,
+.video-card-common .title,
+.international-header a,
+.van-popover a,
+.live-rank .live-rank-item .txt p,
+.rank-header .name,
+.rank-wrap .link .title,
+.rank-wrap .preview .txt p,
+.pgc-rank-wrap .txt .title,
+.time-line-card .txt .ss,
+.exchange-btn .btn,
+.live-rank .live-rank-item .number,
+.gg-window .online a,
+.rank-wrap .number,
+.pgc-rank-wrap .number,
+.special-recommend header,
+.time-line .tl-link,
+.article-card .r-con .title,
+.elevator .list-box .item.back-old
 {
     color: #eee !important;
 }
@@ -344,7 +384,11 @@ li.danmaku-info-row.bpui-selecting,
 .ui-dropdown .ui-dropdown-text,
 .app-layout .dropbox-component,
 .app-layout .dropbox-component .data-list,
-.app-layout .page-content .manga-textbox:focus
+.app-layout .page-content .manga-textbox:focus,
+.exchange-btn .btn,
+.gg-window .online,
+.time-line .tl-link,
+.elevator .list-box .item.back-old
 {
     border-color: transparent !important;
 }
@@ -363,7 +407,8 @@ li.danmaku-info-row.bpui-selecting,
 .calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content,
 .calendar-wrap .calendar-header,
 .practice-wrap .banner-container .current-work,
-.round-corner .international-footer .link-box .link-item
+.round-corner .international-footer .link-box .link-item,
+.van-popper[x-placement^=bottom] .popper__arrow:after
 {
     border-color: #444 !important
 }
@@ -408,7 +453,8 @@ li.danmaku-info-row.bpui-selecting,
 .fjw-random .unagree.active,
 .fjw-random .unagree:hover,
 .svga-container.svga-center canvas,
-.ops canvas.ring-progress
+.ops canvas.ring-progress,
+.home-slide .trigger span.on
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -498,7 +544,9 @@ li.danmaku-info-row.bpui-selecting,
 .replies-comment-input-wrapper .replies-upload .comment-input-img:hover,
 .selectable-option.active,
 .selectable-option.active:after,
-.tabs-nav .tab-item.border-bottom
+.tabs-nav .tab-item.border-bottom,
+.live-tabs .tab-switch .tab-switch-item.on,
+.time-line .tab-switch .tab-switch-item.on
 {
     border-color: var(--theme-color) !important;
 }
@@ -538,7 +586,15 @@ li.danmaku-info-row.bpui-selecting,
 .manga-button.primary:hover,
 .app-layout .dropbox-component .data-list>li:hover,
 .episode-list-component .episode-list .list-data .list-item:hover,
-.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover
+.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover,
+.exchange-btn .btn:hover,
+.live-rank .live-rank-item .number.on,
+.rank-wrap .number.on,
+.pgc-rank-wrap .number.on,
+.home-slide .trigger span:hover,
+.time-line .tl-link:hover,
+.elevator .list-box .item.on,
+.elevator .list-box .item:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -601,7 +657,21 @@ li.danmaku-info-row.bpui-selecting,
 .pivot-component .pivot-headers .pivot-header-item:active,
 .round-corner .international-footer .link-box .link-item.link-c a:hover p,
 .round-corner .international-footer .link-box .link-item ul a:hover,
-.round-corner .international-footer .partner a:hover
+.round-corner .international-footer .partner a:hover,
+.video-card-common .title:hover,
+.international-header a:hover,
+.van-popover a:hover,
+.video-card-common .up:hover,
+.rank-wrap .preview .txt p:hover,
+.rank-wrap .link p:hover,
+.pgc-rank-wrap .txt .title:hover,
+.time-line-card .txt a:hover,
+.live-card .up .txt .name:hover,
+.live-tabs .tab-switch .tab-switch-item.on,
+.gg-window .online a:hover,
+.time-line-card .txt .update .published,
+.time-line .tab-switch .tab-switch-item.on,
+.article-card .r-con .title:hover
 {
     color: var(--theme-color) !important;
 }
@@ -624,7 +694,14 @@ li.danmaku-info-row.bpui-selecting,
 .practice-wrap .banner-container .current-work .bili-btn,
 .app-layout .dropbox-component .data-list>li:hover,
 .episode-list-component .episode-list .list-data .list-item:hover,
-.manga-navbar-manga-logo
+.manga-navbar-manga-logo,
+.exchange-btn .btn:hover,
+.live-rank .live-rank-item .number.on,
+.rank-wrap .number.on,
+.pgc-rank-wrap .number.on,
+.time-line .tl-link:hover,
+.elevator .list-box .item.on,
+.elevator .list-box .item:hover
 {
     color: var(--foreground-color) !important;
 }
@@ -642,11 +719,11 @@ li.danmaku-info-row.bpui-selecting,
     border-top-color: transparent !important;
     border-left-color: transparent !important;
 }
-/* a
+.van-popper[x-placement^=bottom] .popper__arrow:after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-} */
+}
 .feed-topic .empty-content,
 .report-dialog-container .textarea-wrapper
 {
