@@ -82,7 +82,9 @@ body.no-banner .z-top-container.has-banner>.header,
 li.nav-item[report-id='playpage_dynamic'] iframe,
 li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .z-top-container>.header .search,
-.i_menu_login
+.i_menu_login,
+.bili-banner .taper-line,
+.international-header .mini-header
 {
     display: none !important;
 }
@@ -1559,6 +1561,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     top: 4px;
     left: 4px;
     background-color: var(--theme-color);
+    color: var(--forground-color);
     padding: 0 6px;
     height: 18px;
     border-radius: 9px;

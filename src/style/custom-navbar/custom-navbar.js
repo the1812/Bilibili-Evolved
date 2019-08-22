@@ -1000,7 +1000,7 @@ class Activities extends NavbarComponent {
   }
   async init () {
     Vue.component('dpi-img', {
-      template: /*html*/`<img :width="width" :height="height" :srcset="srcset">`,
+      template: /*html*/`<img :width="width" :height="height" :srcset="srcset" :src="src">`,
       props: ['size', 'src'],
       computed: {
         srcset () {
@@ -1486,7 +1486,7 @@ class HistoryList extends VideoList {
     addSettingsListener("customNavbar" + item, value => classHandler(item.toLowerCase(), value, document.querySelector(".custom-navbar")));
     classHandler(item.toLowerCase(), settings["customNavbar" + item], document.querySelector(".custom-navbar"));
   });
-  SpinQuery.condition(() => document.getElementById("banner_link"),
+  SpinQuery.condition(() => dq("#banner_link,.international-header .bili-banner"),
     banner => banner === null ? null : banner.style.backgroundImage,
     banner => {
       Observer.attributes(banner, () => {
