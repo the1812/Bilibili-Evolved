@@ -76,7 +76,8 @@
 .manga-navbar .nav-list,
 .text-info-ctnr,
 .news-ctnr .more-link:hover,
-.news-ctnr .more-link
+.news-ctnr .more-link,
+.news-content
 {
   background-color: transparent !important;
 }
@@ -132,7 +133,8 @@
 .van-popper-login .title,
 .van-popover .btn-box .btn.reg-btn,
 .van-popper-history .view-all,
-.van-popper-upload .upload-item .bilifont
+.van-popper-upload .upload-item .bilifont,
+.news-content
 {
   color: #eee !important;
 }
@@ -175,7 +177,8 @@
 .recommend-area-ctnr .rec-area-item,
 .hover-panel-wrapper,
 .van-popover .btn-box .btn.reg-btn,
-.van-popper-history .view-all
+.van-popper-history .view-all,
+.at-popup
 {
   border-color: transparent !important;
 }
