@@ -107,11 +107,7 @@ li.danmaku-info-row.bpui-selecting,
 .van-popover,
 .elevator .list-box .item,
 .recommendation-list .list-item:before,
-.container .lang-change .lang-intro,
-.container .level-intro,
 .vip-m .bubble-traditional .renew-btn button,
-.container .split-line .history-tip,
-.container .play-all,
 .container .more-btn
 {
     background-color: #444 !important;
@@ -509,8 +505,7 @@ li.danmaku-info-row.bpui-selecting,
 .fjw-random .unagree:hover,
 .svga-container.svga-center canvas,
 .ops canvas.ring-progress,
-.home-slide .trigger span.on,
-.container .level-intro .svg-icon
+.home-slide .trigger span.on
 {
     filter: var(--blue-image-filter) !important;
 }

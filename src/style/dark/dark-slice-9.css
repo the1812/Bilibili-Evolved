@@ -16,12 +16,19 @@
 .level-9 .level,.level-10 .level,.level-11 .level,.level-12 .level {
   color: #ba94f2 !important;
 }
+.van-popover .level-bar .level-progress {
+  background-color: #FFAE00 !important;
+}
 
 #biliAppHomeSetting>div,
 .app-layout .manga-navbar,
 .manga-navbar .drop-list,
 .hover-panel-wrap,
-.hover-panel-wrapper
+.hover-panel-wrapper,
+.van-popover .container,
+.container .play-all,
+.container .split-line .history-tip,
+.container .lang-change .lang-intro
 {
   background-color: #222 !important;
 }
@@ -29,7 +36,10 @@
 .manga-navbar .user-panel .drop-list .logout-btn-container,
 .manga-navbar .drop-list .more-btn-container,
 .yzly-content-ctnr .btn,
-.recommend-area-ctnr .rec-area-item
+.recommend-area-ctnr .rec-area-item,
+.container .level-intro,
+.van-popover .upload-item:hover,
+.container .play-all:hover
 {
   background-color: #333 !important;
 }
@@ -39,7 +49,8 @@
 .highlight-areas-ctnr .highlight-area-item,
 .grid-area-ctnr .hab-ctnr,
 .grid-area-ctnr .news-ctnr,
-.grid-area-ctnr .rank-ctnr
+.grid-area-ctnr .rank-ctnr,
+.van-popover .level-bar
 {
   background-color: #444 !important;
 }
@@ -84,7 +95,9 @@
 .highlight-areas-ctnr .area-desc,
 .rank-item .room-title,
 .bb-comment .comment-list .list-item .blacklist-font-color,
-.comment-bilibili-fold .comment-list .list-item .blacklist-font-color
+.container .split-line .history-tip,
+.comment-bilibili-fold .comment-list .list-item .blacklist-font-color,
+.list-item .publish-time
 {
   color: #aaa !important;
 }
@@ -111,9 +124,15 @@
 .recommend-area-ctnr .title-text,
 .recommend-area-ctnr .area-name,
 .more-ctnr,
-.news-ctnr .more-link
+.news-ctnr .more-link,
+.van-popover .coins .info a
 {
   color: #eee !important;
+}
+.van-popover .vip:hover,
+.international-header .mini-upload:hover
+{
+  color: #fff !important;
 }
 .highlight-areas-ctnr .highlight-area-item:nth-child(1) .area-name
 {
@@ -176,7 +195,8 @@
 {
   fill: #fff !important;
 } */
-.manga-navbar .search-bar .confirm-btn .search-icon
+.manga-navbar .search-bar .confirm-btn .search-icon,
+.container .level-intro .svg-icon
 {
   filter: brightness(0) invert(1) !important;
 }
@@ -236,10 +256,10 @@
 {
   box-shadow: 0 13px 20px 0 rgba(0,0,0,.22) !important;
 }
-/* a
+.van-popper .popper__arrow
 {
   display: none !important;
-} */
+}
 .aside-item.active .item-border,
 .aside-item:hover .item-border
 {
@@ -285,7 +305,8 @@
 .tab-ctnr .tab-item:hover,
 .tab-ctnr .tab-item.activated,
 .more-ctnr:hover,
-.news-ctnr .more-link:hover
+.news-ctnr .more-link:hover,
+.van-popover .coins .info a:hover
 {
   color: var(--theme-color) !important;
 }
