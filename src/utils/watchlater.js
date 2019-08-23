@@ -69,13 +69,11 @@ SpinQuery.select('.van-popper-favorite').then(async favoritePopup => {
       const url = '//www.bilibili.com/watchlater/#/list'
       Observer.attributes(playAll, () => {
         if (playAll.getAttribute('href') === '//www.bilibili.com/watchlater/') {
-          console.log('watchlater')
           playAll.setAttribute('href', url)
           playAll.firstChild.classList.remove('bili-icon_dingdao_bofang')
           playAll.firstChild.classList.add('bili-icon_xinxi_yuedushu')
           playAll.lastChild.nodeValue = '查看全部'
         } else if (playAll.getAttribute('href') !== url) {
-          console.log('not watchlater')
           playAll.firstChild.classList.add('bili-icon_dingdao_bofang')
           playAll.firstChild.classList.remove('bili-icon_xinxi_yuedushu')
           playAll.lastChild.nodeValue = '播放全部'
