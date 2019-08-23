@@ -1080,7 +1080,7 @@ class Activities extends NavbarComponent {
                     const { toggleWatchlater } = await import('../../video/watchlater-api')
                     await toggleWatchlater(this.card.aid, this.watchlater)
                   } catch (error) {
-                    logError(`稍后再看操作失败: ${error}`)
+                    logError(error)
                     this.watchlater = !this.watchlater
                   }
                 },

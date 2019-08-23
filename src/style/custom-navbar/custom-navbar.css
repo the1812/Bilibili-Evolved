@@ -127,6 +127,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 {
     display: none !important;
 }
+.van-popover {
+    z-index: 10002 !important;
+}
 
 .bili-header-m>.nav-menu,
 .z_top
