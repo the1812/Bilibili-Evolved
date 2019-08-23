@@ -20,6 +20,7 @@
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
+// @require      https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
@@ -2384,6 +2385,16 @@ try {
         setTimeout(() => { debugger }, waitTime)
       } else {
         debugger
+      }
+    },
+    get newHomePage () {
+      return Cookies.get('INTVER') === '1' ? true : false
+    },
+    set newHomePage (value) {
+      if (value === true) {
+        Cookies.set('INTVER', '1', { expires: 365, path: '/', domain: '.bilibili.com' })
+      } else {
+        Cookies.remove('INTVER')
       }
     },
     monkeyInfo: GM_info,
