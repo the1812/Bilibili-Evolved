@@ -52,7 +52,8 @@
 .grid-area-ctnr .news-ctnr,
 .grid-area-ctnr .rank-ctnr,
 .van-popover .level-bar,
-.van-popover .btn-box .btn.reg-btn
+.van-popover .btn-box .btn.reg-btn,
+.van-popper-history .view-all
 {
   background-color: #444 !important;
 }
@@ -129,7 +130,9 @@
 .news-ctnr .more-link,
 .van-popover .coins .info a,
 .van-popper-login .title,
-.van-popover .btn-box .btn.reg-btn
+.van-popover .btn-box .btn.reg-btn,
+.van-popper-history .view-all,
+.van-popper-upload .upload-item .bilifont
 {
   color: #eee !important;
 }
@@ -171,7 +174,8 @@
 .hover-panel-wrap,
 .recommend-area-ctnr .rec-area-item,
 .hover-panel-wrapper,
-.van-popover .btn-box .btn.reg-btn
+.van-popover .btn-box .btn.reg-btn,
+.van-popper-history .view-all
 {
   border-color: transparent !important;
 }
@@ -294,7 +298,8 @@
 .rookie-guide .close-button,
 .video-control-show .bilibili-player-video-interactive-list .check:hover .big-round,
 #biliAppHomeSetting button,
-.van-popover .btn-box .btn
+.van-popover .btn-box .btn,
+.van-popper-history .view-all:hover
 {
   background-color: var(--theme-color) !important;
 }
@@ -312,14 +317,16 @@
 .tab-ctnr .tab-item.activated,
 .more-ctnr:hover,
 .news-ctnr .more-link:hover,
-.van-popover .coins .info a:hover
+.van-popover .coins .info a:hover,
+.van-popper-upload .upload-item:hover .bilifont
 {
   color: var(--theme-color) !important;
 }
 .interact-dialog .btn,
 .rookie-guide .close-button,
 #biliAppHomeSetting button,
-.van-popover .btn-box .btn
+.van-popover .btn-box .btn,
+.van-popper-history .view-all:hover
 {
   color: var(--foreground-color) !important;
 }
