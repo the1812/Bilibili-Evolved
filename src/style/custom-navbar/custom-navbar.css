@@ -1747,6 +1747,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+    margin: 0;
 }
 .custom-navbar .bangumi-subscriptions-card:hover .title {
     color: var(--theme-color);
