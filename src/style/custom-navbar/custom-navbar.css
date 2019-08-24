@@ -1322,11 +1322,16 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     margin-left: 8px;
     font-size: 12pt;
 }
-.custom-navbar .activity-popup-content .loading {
+.custom-navbar .activity-popup-content .loading,
+.custom-navbar .bangumi-subscriptions .loading {
+    height: 100%;
+    align-self: center;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
-.custom-navbar .activity-popup-content .loading .mdi {
+.custom-navbar .activity-popup-content .loading .mdi,
+.custom-navbar .bangumi-subscriptions .loading .mdi {
     line-height: 1;
     margin-right: 6px;
 }
@@ -1733,6 +1738,9 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 8px 12px;
     height: 500px;
     overflow: auto;
+}
+.custom-navbar .bangumi-subscriptions.loading {
+    height: 100%;
 }
 
 .round-corner .custom-navbar .column-card .cover:first-child {

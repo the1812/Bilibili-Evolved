@@ -1444,8 +1444,8 @@ class Subscriptions extends NavbarComponent {
       </ul>
       <div class="content">
         <transition name="subscriptions-content" mode="out-in">
-          <bangumi-subscriptions v-if="bangumi"></bangumi-subscriptions>
-          <cinema-subscriptions v-else></cinema-subscriptions>
+          <bangumi-subscriptions v-if="bangumi" type="bangumi" :key="'bangumi'"></bangumi-subscriptions>
+          <bangumi-subscriptions v-else type="cinema" :key="'cinema'"></bangumi-subscriptions>
         </transition>
       </div>
     </div>`
@@ -1459,13 +1459,14 @@ class Subscriptions extends NavbarComponent {
       },
       components: {
         'bangumi-subscriptions': {
+          props: ['type'],
           template: /*html*/`
-            <div class="bangumi-subscriptions">
+            <div class="bangumi-subscriptions" :class="{loading}">
               <div v-if="loading" class="loading">
                 <i class="mdi mdi-18px mdi-loading mdi-spin"></i>
                 加载中...
               </div>
-              <a v-else v-for="card of cards" :href="card.playUrl" target="_blank" class="bangumi-subscriptions-card">
+              <a v-else v-for="card of cards" :key="card.id" :href="card.playUrl" target="_blank" class="bangumi-subscriptions-card">
                 <dpi-img class="cover" :src="card.coverUrl" :size="{height: 64}"></dpi-img>
                 <div class="card-info">
                   <h1 class="title">{{card.title}}</h1>
@@ -1487,18 +1488,18 @@ class Subscriptions extends NavbarComponent {
           },
           async mounted () {
             try {
-              const json = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/space/bangumi/follow/list?type=1&pn=1&ps=16&vmid=${userInfo.mid}`)
+              const json = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/space/bangumi/follow/list?type=${this.type !== 'bangumi' ? '2' : '1'}&pn=1&ps=16&vmid=${userInfo.mid}`)
               if (json.code !== 0) {
-                logError(`加载追番信息失败: ${json.message}`)
+                logError(`加载订阅信息失败: ${json.message}`)
                 return
               }
               this.cards = json.data.list.map(item => {
-                console.log(item)
                 return {
                   title: item.title,
                   coverUrl: item.square_cover.replace('http:', 'https:'),
                   latest: item.new_ep.index_show,
                   progress: item.progress,
+                  id: item.season_id,
                   playUrl: `https://www.bilibili.com/bangumi/play/ss${item.season_id}`,
                   mediaUrl: `https://www.bilibili.com/bangumi/media/md${item.media_id}`,
                 }
@@ -1506,17 +1507,6 @@ class Subscriptions extends NavbarComponent {
             } finally {
               this.loading = false
             }
-          },
-        },
-        'cinema-subscriptions': {
-          template: /*html*/``,
-          data () {
-            return {
-              cards: []
-            }
-          },
-          async mounted () {
-
           },
         },
       },
