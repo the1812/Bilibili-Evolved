@@ -1657,10 +1657,10 @@ Resource.manifest = {
       useBiliplusRedirect: '失效视频重定向',
       deadVideoTitleProvider: '信息来源',
     },
-    dropdown: {
-      key: 'deadVideoTitleProvider',
-      items: ['稍后再看'],
-    },
+    // dropdown: {
+    //   key: 'deadVideoTitleProvider',
+    //   items: ['稍后再看'],
+    // },
   },
   autoPlay: {
     path: 'auto-play.min.js',
