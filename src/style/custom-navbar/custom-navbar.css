@@ -1324,7 +1324,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     font-size: 12pt;
 }
 .custom-navbar .activity-popup-content .loading,
-.custom-navbar .bangumi-subscriptions .loading {
+.custom-navbar .bangumi-subscriptions .loading,
+.custom-navbar .bangumi-subscriptions .empty {
     height: 100%;
     align-self: center;
     display: flex;
@@ -1746,7 +1747,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     overscroll-behavior: contain;
     scrollbar-width: none !important;
 }
-.custom-navbar .bangumi-subscriptions.loading {
+.custom-navbar .bangumi-subscriptions.center {
     height: 100%;
 }
 

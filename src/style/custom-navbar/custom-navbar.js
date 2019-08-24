@@ -1461,12 +1461,13 @@ class Subscriptions extends NavbarComponent {
         'bangumi-subscriptions': {
           props: ['type'],
           template: /*html*/`
-            <div class="bangumi-subscriptions" :class="{loading}">
+            <div class="bangumi-subscriptions" :class="{center: loading || !loading && cards.length === 0}">
               <div v-if="loading" class="loading">
                 <i class="mdi mdi-18px mdi-loading mdi-spin"></i>
                 加载中...
               </div>
-              <a v-else v-for="card of cards" :key="card.id" :href="card.playUrl" target="_blank" class="bangumi-subscriptions-card">
+              <div v-if="!loading && cards.length === 0" class="empty">空空如也哦 =￣ω￣=</div>
+              <a v-if="!loading" v-for="card of cards" :key="card.id" :href="card.playUrl" target="_blank" class="bangumi-subscriptions-card">
                 <dpi-img class="cover" :src="card.coverUrl" :size="{height: 64}"></dpi-img>
                 <div class="card-info">
                   <h1 class="title">{{card.title}}</h1>
