@@ -1713,6 +1713,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     flex-direction: column;
     align-items: flex-start;
     padding: 0 12px;
+    max-width: calc(100% - 24px - 64px);
 }
 .custom-navbar .bangumi-subscriptions-card .info {
     padding: 2px;
@@ -1731,11 +1732,21 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     align-self: stretch;
     align-items: center;
 }
+.custom-navbar .bangumi-subscriptions-card .progress{
+    white-space: nowrap;
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .custom-navbar .bangumi-subscriptions-card .title {
     font-size: 11pt;
     font-weight: bold;
     padding-top: 8px;
     color: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 .custom-navbar .bangumi-subscriptions-card:hover .title {
     color: var(--theme-color);
