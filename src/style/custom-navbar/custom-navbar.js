@@ -913,7 +913,7 @@ class Activities extends NavbarComponent {
           <transition name="activity-content" mode="out-in">
             <component :is="content"></component>
           </transition>
-          <a class="view-more" target="_blank" :href="viewMoreUrl">查看更多<i class="mdi mdi-18px mdi-more"></i></a>
+          <a class="view-more" target="_blank" :href="viewMoreUrl">查看更多<i class="mdi mdi-more"></i></a>
         </div>
       </div>
     `;
@@ -1055,7 +1055,10 @@ class Activities extends NavbarComponent {
               <li v-for="item of items" class="activity-tab" :data-count="item.notifyCount" :class="{selected: item.name === tab}" @click="changeTab(item)">
                 <div class="tab-name">{{item.name}}</div>
               </li>
-              <a class="view-all" target="_blank" href="https://t.bilibili.com/">全部动态</a>
+              <a class="view-all" target="_blank" href="https://t.bilibili.com/">
+                <i class="custom-navbar-iconfont-new-home custom-navbar-icon-activity"></i>
+                全部动态
+              </a>
             </ul>
           `,
           methods: {

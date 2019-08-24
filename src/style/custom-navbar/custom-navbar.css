@@ -102,6 +102,21 @@
 .custom-navbar-icon-b-coin::before {
     content: "\E736";
 }
+.custom-navbar-icon-activity::before {
+    content: "\E732";
+}
+.custom-navbar-icon-message::before {
+    content: "\E731";
+}
+.custom-navbar-icon-favorite::before {
+    content: "\E730";
+}
+.custom-navbar-icon-history::before {
+    content: "\E72F";
+}
+.custom-navbar-icon-vip::before {
+    content: "\E72E";
+}
 [class^='custom-navbar-icon-lv']::before {
     font-size: 24px;
 }
@@ -1201,6 +1216,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     display: flex;
     align-items: center;
 }
+.custom-navbar .activity-tabs .view-all i {
+    font-size: 14pt;
+    margin-right: 4px;
+}
 .custom-navbar .activity-tabs .view-all:hover {
     background-color: #8884;
 }
@@ -1293,6 +1312,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .activity-popup-content .view-more .mdi {
     line-height: 1;
     margin-left: 8px;
+    font-size: 12pt;
 }
 .custom-navbar .activity-popup-content .loading {
     display: flex;
