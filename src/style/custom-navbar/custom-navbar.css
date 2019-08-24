@@ -1207,9 +1207,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     justify-content: space-between;
     align-items: center;
 }
-.custom-navbar .activity-tabs .view-all {
+.custom-navbar .activity-tabs .view-all,
+.custom-navbar .subscriptions-tabs .view-all {
     background-color: #8882;
-    padding: 4px 10px;
+    padding: 4px 6px 4px 10px;
     height: 28px;
     box-sizing: border-box;
     border-radius: 14px;
@@ -1218,9 +1219,14 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar .activity-tabs .view-all i {
     font-size: 14pt;
-    margin-right: 4px;
+    margin-left: 4px;
 }
-.custom-navbar .activity-tabs .view-all:hover {
+.custom-navbar .subscriptions-tabs .view-all i {
+    font-size: 12pt;
+    margin-left: 4px;
+}
+.custom-navbar .activity-tabs .view-all:hover,
+.custom-navbar .subscriptions-tabs .view-all:hover {
     background-color: #8884;
 }
 .custom-navbar .activity-tab {
@@ -1253,7 +1259,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     border-radius: 10px;
     white-space: nowrap;
 }
-.custom-navbar .activity-tab::after {
+.custom-navbar .activity-tab::after,
+.custom-navbar .subscriptions .tab::after {
     content: "";
     width: calc(80%);
     height: 2px;
@@ -1265,7 +1272,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     transform: scaleX(0);
     transition: all .2s ease-out;
 }
-.custom-navbar .activity-tab.selected::after {
+.custom-navbar .activity-tab.selected::after,
+.custom-navbar .subscriptions .tab.selected::after {
     transform: scaleX(1);
 }
 .custom-navbar .activity-popup-content {
@@ -1629,7 +1637,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     top: 4px;
     left: 4px;
     background-color: var(--theme-color);
-    color: var(--forground-color);
+    color: var(--foreground-color);
     padding: 0 6px;
     height: 18px;
     border-radius: 9px;
@@ -1647,6 +1655,84 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     line-height: 20px;
     font-size: 12px;
     padding: 0 8px;
+}
+.custom-navbar .subscriptions {
+    width: 380px;
+    font-size: 9pt;
+}
+.custom-navbar .subscriptions-tabs {
+    margin: 8px 16px;
+    display: flex;
+    align-items: center;
+}
+.custom-navbar .subscriptions .tab-placeholder {
+    flex-grow: 1;
+}
+.custom-navbar .subscriptions .tab {
+    opacity: 0.5;
+    margin-right: 24px;
+    position: relative;
+    line-height: 1.4;
+    cursor: pointer;
+}
+.custom-navbar .subscriptions .tab.selected {
+    opacity: 1;
+    font-weight: bold;
+    transform: scale(1.2);
+}
+.custom-navbar .bangumi-subscriptions {
+    display: flex;
+    flex-direction: column;
+}
+.custom-navbar .bangumi-subscriptions-card {
+    position: relative;
+    display: flex;
+    margin-bottom: 12px;
+}
+.round-corner .custom-navbar .bangumi-subscriptions-card {
+    border-radius: var(--large-corner-radius);
+    box-shadow: rgba(0,0,0,0.12) 0 2px 8px 0px;
+}
+.round-corner .custom-navbar .bangumi-subscriptions-card .cover {
+    border-radius: var(--large-corner-radius) 0 0 var(--large-corner-radius);
+}
+.custom-navbar .bangumi-subscriptions-card .card-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 12px;
+}
+.custom-navbar .bangumi-subscriptions-card .info {
+    padding: 2px;
+    background-color: #8882;
+    font-size: 12pt;
+    border-radius: 14px;
+    line-height: 1;
+}
+.custom-navbar .bangumi-subscriptions-card .info:hover {
+    background-color: #8884;
+}
+.custom-navbar .bangumi-subscriptions-card .progress-row {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-self: stretch;
+    align-items: center;
+}
+.custom-navbar .bangumi-subscriptions-card .title {
+    font-size: 11pt;
+    font-weight: bold;
+    padding-top: 8px;
+    color: inherit;
+}
+.custom-navbar .bangumi-subscriptions-card:hover .title {
+    color: var(--theme-color);
+}
+.custom-navbar .subscriptions .content {
+    padding: 8px 12px;
+    height: 500px;
+    overflow: auto;
 }
 
 .round-corner .custom-navbar .column-card .cover:first-child {

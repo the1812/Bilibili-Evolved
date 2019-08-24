@@ -83,7 +83,7 @@ declare global {
     userInfo: number;
     messages: number;
     activities: number;
-    bangumiLink: number;
+    bangumi: number;
     watchlaterList: number;
     favoritesList: number;
     historyList: number;

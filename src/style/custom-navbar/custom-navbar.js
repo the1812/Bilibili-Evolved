@@ -45,7 +45,7 @@ const attributes = {
           userInfo: "用户信息",
           messages: "消息",
           activities: "动态",
-          bangumiLink: '订阅',
+          bangumi: '订阅',
           watchlaterList: "稍后再看",
           favoritesList: "收藏",
           historyList: "历史",
@@ -152,7 +152,7 @@ const attributes = {
           computed: {
             orderList () {
               const orders = Object.entries(settings.customNavbarOrder);
-              return orders.sort((a, b) => a[1] - b[1]).map(it => {
+              return orders.filter(it => it[0] in displayNames).sort((a, b) => a[1] - b[1]).map(it => {
                 return {
                   displayName: displayNames[it[0]],
                   name: it[0],
@@ -913,7 +913,7 @@ class Activities extends NavbarComponent {
           <transition name="activity-content" mode="out-in">
             <component :is="content"></component>
           </transition>
-          <a class="view-more" target="_blank" :href="viewMoreUrl">查看更多<i class="mdi mdi-more"></i></a>
+          <a class="view-more" target="_blank" :href="viewMoreUrl">查看更多<i class="mdi mdi-dots-horizontal-circle-outline"></i></a>
         </div>
       </div>
     `;
@@ -972,30 +972,6 @@ class Activities extends NavbarComponent {
     this.setNotifyCount(json.data.update_num)
   }
   async init () {
-    Vue.component('dpi-img', {
-      template: /*html*/`<img :width="width" :height="height" :srcset="srcset" :src="src">`,
-      props: ['size', 'src'],
-      computed: {
-        srcset () {
-          if (!this.src || !this.size) {
-            return null
-          }
-          return getDpiSourceSet(this.src, this.size)
-        },
-        width () {
-          if (typeof this.size === 'object' && 'width' in this.size) {
-            return this.size.width
-          }
-          return null
-        },
-        height () {
-          if (typeof this.size === 'object' && 'height' in this.size) {
-            return this.size.height
-          }
-          return null
-        }
-      },
-    })
     Vue.component('activity-loading', {
       template: /*html*/`
         <div v-if="loading" class="loading">
@@ -1056,8 +1032,8 @@ class Activities extends NavbarComponent {
                 <div class="tab-name">{{item.name}}</div>
               </li>
               <a class="view-all" target="_blank" href="https://t.bilibili.com/">
-                <i class="custom-navbar-iconfont-new-home custom-navbar-icon-activity"></i>
                 全部动态
+                <i class="custom-navbar-iconfont-new-home custom-navbar-icon-activity"></i>
               </a>
             </ul>
           `,
@@ -1449,12 +1425,137 @@ class HistoryList extends VideoList {
     this.active = document.URL.replace(/\?.*$/, "") === "https://www.bilibili.com/account/history";
   }
 }
+class Subscriptions extends NavbarComponent {
+  constructor () {
+    super()
+    this.noPadding = true
+    this.href = `https://space.bilibili.com/${userInfo.mid}/bangumi`
+    this.html = '订阅'
+    this.popupHtml = /*html*/`
+    <div class="subscriptions">
+      <ul class="subscriptions-tabs">
+        <li class="tab" :class="{selected: bangumi}" @click="bangumi = true">追番</li>
+        <li class="tab" :class="{selected: !bangumi}" @click="bangumi = false">追剧</li>
+        <div class="tab-placeholder"></div>
+        <a class="view-all" :href="'https://space.bilibili.com/${userInfo.mid}/' + (bangumi ? 'bangumi' : 'cinema')">
+          查看更多
+          <i class="mdi mdi-dots-horizontal-circle-outline"></i>
+        </a>
+      </ul>
+      <div class="content">
+        <transition name="subscriptions-content" mode="out-in">
+          <bangumi-subscriptions v-if="bangumi"></bangumi-subscriptions>
+          <cinema-subscriptions v-else></cinema-subscriptions>
+        </transition>
+      </div>
+    </div>`
+    this.initialPopup = () => { this.init() }
+  }
+  async init () {
+    new Vue({
+      el: await SpinQuery.select('.custom-navbar .subscriptions'),
+      data: {
+        bangumi: true,
+      },
+      components: {
+        'bangumi-subscriptions': {
+          template: /*html*/`
+            <div class="bangumi-subscriptions">
+              <div v-if="loading" class="loading">
+                <i class="mdi mdi-18px mdi-loading mdi-spin"></i>
+                加载中...
+              </div>
+              <a v-else v-for="card of cards" :href="card.playUrl" target="_blank" class="bangumi-subscriptions-card">
+                <dpi-img class="cover" :src="card.coverUrl" :size="{height: 64}"></dpi-img>
+                <div class="card-info">
+                  <h1 class="title">{{card.title}}</h1>
+                  <div class="progress-row">
+                    <div class="progress">{{card.progress}} | {{card.latest}}</div>
+                    <a class="info" :href="card.mediaUrl" target="_blank" title="详细信息">
+                      <i class="mdi mdi-information-outline"></i>
+                    </a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          `,
+          data () {
+            return {
+              loading: true,
+              cards: [],
+            }
+          },
+          async mounted () {
+            try {
+              const json = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/space/bangumi/follow/list?type=1&pn=1&ps=16&vmid=${userInfo.mid}`)
+              if (json.code !== 0) {
+                logError(`加载追番信息失败: ${json.message}`)
+                return
+              }
+              this.cards = json.data.list.map(item => {
+                console.log(item)
+                return {
+                  title: item.title,
+                  coverUrl: item.square_cover.replace('http:', 'https:'),
+                  latest: item.new_ep.index_show,
+                  progress: item.progress,
+                  playUrl: `https://www.bilibili.com/bangumi/play/ss${item.season_id}`,
+                  mediaUrl: `https://www.bilibili.com/bangumi/media/md${item.media_id}`,
+                }
+              })
+            } finally {
+              this.loading = false
+            }
+          },
+        },
+        'cinema-subscriptions': {
+          template: /*html*/``,
+          data () {
+            return {
+              cards: []
+            }
+          },
+          async mounted () {
+
+          },
+        },
+      },
+    })
+  }
+  get name () {
+    return 'bangumi';
+  }
+}
 
 (async () => {
   const html = await import("customNavbarHtml");
   const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
   userInfo = json.data;
   latestID = Activities.getLatestID()
+  Vue.component('dpi-img', {
+    template: /*html*/`<img :width="width" :height="height" :srcset="srcset" :src="src" :style="{filter: blur ? 'blur(' + blur + 'px)' : undefined}">`,
+    props: ['size', 'src', 'blur'],
+    computed: {
+      srcset () {
+        if (!this.src || !this.size) {
+          return null
+        }
+        return getDpiSourceSet(this.src, this.size)
+      },
+      width () {
+        if (typeof this.size === 'object' && 'width' in this.size) {
+          return this.size.width
+        }
+        return null
+      },
+      height () {
+        if (typeof this.size === 'object' && 'height' in this.size) {
+          return this.size.height
+        }
+        return null
+      }
+    },
+  })
   document.body.insertAdjacentHTML("beforeend", html);
   addSettingsListener("useDarkStyle", darkHandler);
   darkHandler(settings.useDarkStyle);
@@ -1504,7 +1605,8 @@ class HistoryList extends VideoList {
   if (userInfo.isLogin) {
     components.push(
       new Messages,
-      new SimpleLink('订阅', `https://space.bilibili.com/${userInfo.mid}/bangumi`, 'bangumi'),
+      // new SimpleLink('订阅', `https://space.bilibili.com/${userInfo.mid}/bangumi`, 'bangumi'),
+      new Subscriptions,
       new Activities,
       new WatchlaterList,
       new FavoritesList,
