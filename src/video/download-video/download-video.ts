@@ -301,7 +301,7 @@ class VideoDownloader {
           out: `${getFriendlyTitle()}${indexNumber}${this.extension(fragment)}`,
           split: this.fragmentSplitFactor,
           dir: option.dir || undefined,
-          'max-download-limit': option.maxDownloadLimit,
+          'max-download-limit': option.maxDownloadLimit || undefined,
         })
         const id = encodeURIComponent(`${getFriendlyTitle()}${indexNumber}`)
         return {

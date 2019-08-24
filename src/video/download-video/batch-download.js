@@ -28,7 +28,7 @@ class Batch {
             out: `${item.title}${indexNumber}.flv`,
             split: fragmentSplitFactor,
             dir: option.dir || undefined,
-            'max-download-limit': option.maxDownloadLimit,
+            'max-download-limit': option.maxDownloadLimit || undefined,
           })
           const id = encodeURIComponent(`${item.title}${indexNumber}`)
           return {

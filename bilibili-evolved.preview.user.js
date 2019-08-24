@@ -282,7 +282,7 @@ const settings = {
     port: '6800',
     method: 'get',
     skipByDefault: false,
-    maxDownloadLimit: '0',
+    maxDownloadLimit: '',
   },
   searchHistory: [],
   seedsToCoins: true,
