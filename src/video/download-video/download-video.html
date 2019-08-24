@@ -77,8 +77,9 @@
       <button class="aria2-file" v-on:click="exportData('aria2')">导出aria2</button>
       <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>
       <button class="vld-export" v-on:click="exportData('exportVLD')">导出vld数据</button>
-      <div class="button aria2-rpc" v-on:click.self="toggleRpcSettings()">导出aria2 RPC
-        <i class="mdi mdi-chevron-right" v-on:click.self="toggleRpcSettings()"></i>
+      <div class="button aria2-rpc" v-on:click.self="toggleRpcSettings()">
+        {{showRpcSettings ? '取消' : '导出aria2 RPC'}}
+        <i :class="{'mdi-close': showRpcSettings, 'mdi-chevron-right': !showRpcSettings}" class="mdi" v-on:click.self="toggleRpcSettings()"></i>
         <div class="rpc-settings" v-bind:class="{show: showRpcSettings}">
           <h1>aria2 RPC 配置</h1>
           <div class="rpc-settings-item">
@@ -89,6 +90,12 @@
           </div>
           <div class="rpc-settings-item">
             密钥<input type="text" v-model="rpcSettings.secretKey">
+          </div>
+          <div class="rpc-settings-item">
+            单任务限速<input type="text" v-model="rpcSettings.maxDownloadLimit" placeholder="无">
+          </div>
+          <div class="rpc-settings-item">
+            总体限速<input type="text" v-model="rpcSettings.maxOverallDownloadLimit" placeholder="无">
           </div>
           <div class="rpc-settings-item">
             路径<input type="text" v-model="rpcSettings.dir">

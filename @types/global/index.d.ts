@@ -12,6 +12,7 @@ declare global {
     port: string
     method: 'get' | 'post'
     skipByDefault: boolean
+    maxDownloadLimit: string
   }
   interface SearchHistoryItem {
     keyword: string

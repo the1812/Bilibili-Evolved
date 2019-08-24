@@ -66,12 +66,12 @@ body.dark .download-video {
   font-weight: bold;
   color: var(--download-video-foreground);
 }
-.download-video i.mdi.mdi-close {
+.download-video .header .mdi-close {
   font-size: 16pt;
   color: var(--download-video-foreground);
   cursor: pointer;
 }
-.download-video i.mdi.mdi-close:hover {
+.download-video .header .mdi-close:hover {
   color: var(--theme-color);
 }
 .download-video .info {
