@@ -221,7 +221,6 @@ const settings = {
   autoContinue: false,
   allowJumpContinue: false,
   autoPlay: false,
-  showDeadVideoTitle: false,
   deadVideoTitleProvider: '稍后再看',
   useBiliplusRedirect: false,
   biliplusRedirect: false,
@@ -306,6 +305,7 @@ const fixedSettings = {
   overrideNavBar: false,
   touchVideoPlayerAnimation: false,
   allNavbarFill: false,
+  showDeadVideoTitle: false,
   latestVersionLink: 'https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js',
   currentVersion: GM_info.script.version,
 }
