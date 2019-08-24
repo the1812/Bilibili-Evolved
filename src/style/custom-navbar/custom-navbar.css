@@ -1287,7 +1287,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     justify-content: space-between;
     scrollbar-width: none !important;
 }
-.custom-navbar .activity-popup-content::-webkit-scrollbar {
+.custom-navbar .activity-popup-content::-webkit-scrollbar,
+.custom-navbar .subscriptions .content::-webkit-scrollbar {
     width: 0px !important;
 }
 .custom-navbar .activity-popup-content .view-more {
@@ -1626,11 +1627,15 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     white-space: nowrap;
 }
 .custom-navbar .activity-content-enter-active,
-.custom-navbar .activity-content-leave-active {
+.custom-navbar .activity-content-leave-active,
+.custom-navbar .subscriptions-content-enter-active,
+.custom-navbar .subscriptions-content-leave-active {
     transition: all .2s ease-out;
 }
 .custom-navbar .activity-content-enter,
-.custom-navbar .activity-content-leave-to {
+.custom-navbar .activity-content-leave-to,
+.custom-navbar .subscriptions-content-enter,
+.custom-navbar .subscriptions-content-leave-to {
     opacity: 0;
     transform: translateY(12px);
 }
@@ -1738,6 +1743,8 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     padding: 8px 12px;
     height: 500px;
     overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none !important;
 }
 .custom-navbar .bangumi-subscriptions.loading {
     height: 100%;
