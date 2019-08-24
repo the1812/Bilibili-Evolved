@@ -255,7 +255,7 @@ const settings = {
   customNavbarBlur: true,
   customNavbarBlurOpacity: 0.7,
   customNavbarOrder: { ...customNavbarDefaultOrders },
-  customNavbarHidden: ['bangumi'],
+  customNavbarHidden: [],
   customNavbarBoundsPadding: 5,
   playerShadow: false,
   narrowDanmaku: true,
