@@ -1434,7 +1434,7 @@ class Subscriptions extends NavbarComponent {
     this.popupHtml = /*html*/`
     <div class="subscriptions">
       <ul class="subscriptions-tabs">
-        <li class="tab selected" :class="{selected: bangumi}" @click="bangumi = true">追番</li>
+        <li class="tab" :class="{selected: bangumi}" @click="bangumi = true">追番</li>
         <li class="tab" :class="{selected: !bangumi}" @click="bangumi = false">追剧</li>
         <div class="tab-placeholder"></div>
         <a class="view-all" :href="'https://space.bilibili.com/${userInfo.mid}/' + (bangumi ? 'bangumi' : 'cinema')">

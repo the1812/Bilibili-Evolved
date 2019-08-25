@@ -3,13 +3,15 @@
     return
   }
   const popupContainer = await SpinQuery.select('.chat-popups-section')
+  console.log(popupContainer)
   if (!popupContainer) {
     console.warn('[自动领奖] 未能找到弹窗容器')
     return
   }
-  Observer.childList(popupContainer, () => {
+  Observer.childListSubtree(popupContainer, () => {
     let draw: HTMLSpanElement | null
     while (true) {
+      console.log('draw button = ', dq('.chat-popups-section .draw>span:nth-child(3)'))
       draw = dq('.chat-popups-section .draw>span:nth-child(3)') as HTMLSpanElement | null
       if (draw === null) {
         break
