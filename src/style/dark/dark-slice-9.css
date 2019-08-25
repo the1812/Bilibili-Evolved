@@ -178,7 +178,8 @@
 .hover-panel-wrapper,
 .van-popover .btn-box .btn.reg-btn,
 .van-popper-history .view-all,
-.at-popup
+.at-popup,
+.chat-popups-section .draw-full-ctnr
 {
   border-color: transparent !important;
 }
