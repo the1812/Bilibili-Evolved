@@ -11,9 +11,12 @@ document.body.addEventListener('keydown', e => {
   }
   const key = e.key.toLowerCase()
   if (key in keymap) {
-    console.log(key)
     e.stopPropagation()
     e.preventDefault();
     (dq(keymap[key]) as HTMLElement).click()
+  } else if (key === 'd') { // 切换弹幕开关
+    const checkbox = dq('.bilibili-player-video-danmaku-switch input') as HTMLInputElement
+    checkbox.checked = !checkbox.checked
+    raiseEvent(checkbox, 'change')
   }
 })
