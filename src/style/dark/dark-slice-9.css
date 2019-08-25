@@ -57,7 +57,7 @@
 {
   background-color: #444 !important;
 }
-#link-message .love-card .header::after
+.love-card .header::after
 {
   background-color: #555 !important;
 }
@@ -115,7 +115,7 @@
 .manga-navbar .user-info-panel .info-item,
 .manga-navbar .user-panel .drop-list .logout-btn-container .logout-button,
 .manga-navbar .drop-list .more-btn-container .more-button,
-#link-message .love-card .header,
+.love-card .header,
 .center-box .line-1 .name-field,
 .center-box .line-1 .name-field a,
 .center-box .line-1 .like-item,
