@@ -1472,7 +1472,8 @@ class Subscriptions extends NavbarComponent {
                 <div class="card-info">
                   <h1 class="title" :title="card.title">{{card.title}}</h1>
                   <div class="progress-row">
-                    <div class="progress" :title="card.progress + ' | ' + card.latest">{{card.progress}} | {{card.latest}}</div>
+                    <div v-if="card.progress" class="progress" :title="card.progress + ' | ' + card.latest">{{card.progress}} | {{card.latest}}</div>
+                    <div v-else class="progress" :title="card.latest">{{card.latest}}</div>
                     <a class="info" :href="card.mediaUrl" target="_blank" title="详细信息">
                       <i class="mdi mdi-information-outline"></i>
                     </a>

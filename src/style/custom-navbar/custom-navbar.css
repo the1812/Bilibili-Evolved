@@ -1672,7 +1672,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     font-size: 9pt;
 }
 .custom-navbar .subscriptions-tabs {
-    margin: 8px 16px;
+    margin: 12px 12px 8px 18px;
     display: flex;
     align-items: center;
 }
