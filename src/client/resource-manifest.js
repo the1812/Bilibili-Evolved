@@ -682,5 +682,11 @@ Resource.manifest = {
       autoDraw: '直播间自动领奖',
     },
   },
+  keymap: {
+    path: 'keymap.min.js',
+    displayNames: {
+      keymap: '快捷键扩展',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

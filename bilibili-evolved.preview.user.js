@@ -288,6 +288,7 @@ const settings = {
   autoSeedsToCoins: true,
   lastSeedsToCoinsDate: 0,
   autoDraw: false,
+  keymap: false,
   cache: {},
 }
 const fixedSettings = {
@@ -1907,6 +1908,12 @@ Resource.manifest = {
     path: 'auto-draw.min.js',
     displayNames: {
       autoDraw: '直播间自动领奖',
+    },
+  },
+  keymap: {
+    path: 'keymap.min.js',
+    displayNames: {
+      keymap: '快捷键扩展',
     },
   },
 }

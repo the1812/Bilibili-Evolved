@@ -139,6 +139,7 @@ export const settings = {
   autoSeedsToCoins: true,
   lastSeedsToCoinsDate: 0,
   autoDraw: false,
+  keymap: false,
   cache: {},
 }
 const fixedSettings = {
