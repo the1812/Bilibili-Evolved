@@ -138,6 +138,7 @@ export const settings = {
   seedsToCoins: true,
   autoSeedsToCoins: true,
   lastSeedsToCoinsDate: 0,
+  autoDraw: false,
   cache: {},
 }
 const fixedSettings = {

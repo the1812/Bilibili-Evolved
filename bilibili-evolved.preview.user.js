@@ -287,6 +287,7 @@ const settings = {
   seedsToCoins: true,
   autoSeedsToCoins: true,
   lastSeedsToCoinsDate: 0,
+  autoDraw: false,
   cache: {},
 }
 const fixedSettings = {
@@ -1900,6 +1901,12 @@ Resource.manifest = {
     path: 'mdi.min.js',
     displayNames: {
       mdi: 'MDI 图标集',
+    },
+  },
+  autoDraw: {
+    path: 'auto-draw.min.js',
+    displayNames: {
+      autoDraw: '直播间自动领奖',
     },
   },
 }

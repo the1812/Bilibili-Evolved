@@ -676,5 +676,11 @@ Resource.manifest = {
       mdi: 'MDI 图标集',
     },
   },
+  autoDraw: {
+    path: 'auto-draw.min.js',
+    displayNames: {
+      autoDraw: '直播间自动领奖',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
