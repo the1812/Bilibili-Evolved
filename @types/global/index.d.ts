@@ -301,6 +301,8 @@ declare global {
     seedsToCoins: boolean,
     autoSeedsToCoins: boolean,
     lastSeedsToCoinsDate: number,
+    autoDraw: boolean,
+    keymap: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

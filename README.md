@@ -192,6 +192,32 @@
 ![外置稍后再看](images/compressed/watchlater.jpg)
 
 </details>
+<details>
+<summary><strong>快捷键扩展</strong></summary>
+
+为视频播放器启用更多的快捷键:
+- `w` 网页全屏
+- `t` 宽屏
+- `r` 循环播放
+- `m` 静音
+- `d` 弹幕开关
+
+附: b站原生快捷键列表:
+- `space` 播放/暂停
+- `→` 步进5s
+- `←` 步退5s
+- `↑` 音量增加10%
+- `↓` 音量降低10%
+- `esc` 退出全屏
+- `媒体键 play/pause` 播放/暂停
+- `f` 全屏/退出全屏
+- `[` 多P 上一个
+- `]` 多P 下一个
+- `enter` 发弹幕
+
+> ⚠ 此功能与原生快捷键有一点差异: 在网页任何地方点下快捷键都会生效, 除非正在打字. (原生快捷键需要聚焦到播放器才能用)
+
+</details>
 
 <h2 align="center">样式</h2>
 <div align="center">掌控哔哩哔哩的外观</div>

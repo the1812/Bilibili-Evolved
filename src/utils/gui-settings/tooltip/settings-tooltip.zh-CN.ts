@@ -132,7 +132,14 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['foldComment', /*html*/`动态里查看评论区时, 在底部添加一个<span>收起评论</span>按钮, 这样就不用再回到上面收起了.`],
   ['useDefaultVideoSpeed', /*html*/`设置是否使用默认视频播放速度.`],
   ['defaultVideoSpeed', /*html*/`设置默认的视频播放速度.`],
-  ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`]
+  ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`],
+  ['autoDraw', /*html*/`在当前直播间有抽奖活动时, 自动点击抽奖按钮.`],
+  ['keymap', /*html*/`为视频播放器启用更多的快捷键:
+- <kbd>w</kbd> 网页全屏
+- <kbd>t</kbd> 宽屏
+- <kbd>r</kbd> 循环播放
+- <kbd>m</kbd> 静音
+- <kbd>d</kbd> 弹幕开关`],
 ]);
 export default {
   export: { toolTips },
