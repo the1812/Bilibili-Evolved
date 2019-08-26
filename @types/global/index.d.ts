@@ -3,6 +3,39 @@ declare global {
   function GM_setClipboard(data: any, info: string | { type?: string, mimetype?: string }): void;
   function GM_setValue(name: string, value: any): void;
   function GM_getValue<T>(name: string, defaultValue?: T): T;
+  interface MonkeyXhrResponse {
+    finalUrl: string
+    readyState: number
+    status: number
+    statusText: string
+    responseHeaders: any
+    response: any
+    responseXML: Document
+    responseText: string
+  }
+  interface MonkeyXhrDetails {
+    method: 'GET' | 'POST' | 'HEAD'
+    url: string
+    headers?: { [name: string]: string },
+    data?: string
+    binary?: boolean
+    timeout?: number
+    context?: any
+    responseType?: 'arraybuffer' | 'blob' | 'json'
+    overrideMimeType?: string
+    anonymous?: boolean
+    fetch?: boolean
+    username?: string
+    password?: string
+    onabort?: (response: MonkeyXhrResponse) => void
+    onerror?: (response: MonkeyXhrResponse) => void
+    onloadstart?: (response: MonkeyXhrResponse) => void
+    onprogress?: (response: MonkeyXhrResponse) => void
+    onreadystatechange?: (response: MonkeyXhrResponse) => void
+    ontimeout?: (response: MonkeyXhrResponse) => void
+    onload?: (response: MonkeyXhrResponse) => void
+  }
+  function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void };
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
   type DanmakuOption = '无' | 'XML' | 'ASS'
   interface RpcOption {

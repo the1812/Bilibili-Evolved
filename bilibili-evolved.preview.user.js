@@ -17,6 +17,8 @@
 // @grant        GM_setValue
 // @grant        GM_setClipboard
 // @grant        GM_info
+// @grant        GM_xmlhttpRequest
+// @connect      *
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
