@@ -108,7 +108,8 @@ li.danmaku-info-row.bpui-selecting,
 .elevator .list-box .item,
 .recommendation-list .list-item:before,
 .vip-m .bubble-traditional .renew-btn button,
-.container .more-btn
+.container .more-btn,
+.hot-recom-module .random-change
 {
     background-color: #444 !important;
 }
@@ -370,7 +371,12 @@ li.danmaku-info-row.bpui-selecting,
 .container .date-title,
 .container .tab-header .tab-item,
 .container .tab-header .tab-item:hover,
-.container .more-btn
+.container .more-btn,
+.index-entry-wrapper .filter-block-title span,
+.index-entry-wrapper .filter-block-title a,
+.index-entry-wrapper .filter-list .filter-item,
+.handpick-right-module .block-header .block-title,
+.hot-recom-module .random-change .info
 {
     color: #eee !important;
 }
@@ -434,7 +440,8 @@ li.danmaku-info-row.bpui-selecting,
 .container .links,
 .lang-change,
 .container .tab-header,
-.round-corner .out-container .tab-bar
+.round-corner .out-container .tab-bar,
+.hot-recom-module .random-change
 {
     border-color: transparent !important;
 }
@@ -489,7 +496,9 @@ li.danmaku-info-row.bpui-selecting,
 .header-info .manga-info .supporting-text .label-icon,
 .header-info .manga-info .action-buttons .do-favourite .fav-icon,
 .app-layout .sidebar .nav-item .nav-item-icon,
-.my-coupon .subtitle .question-cion
+.my-coupon .subtitle .question-cion,
+.index-entry-wrapper .filter-block-title a:after,
+.hot-recom-module .random-change .icon_read
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -732,7 +741,9 @@ li.danmaku-info-row.bpui-selecting,
 .lang-change .lang-intro-item.on,
 .container .video-list .content:hover,
 .round-corner .out-container .tab-item:hover,
-.container .publish-time
+.container .publish-time,
+.index-entry-wrapper .filter-block-title a:hover,
+.index-entry-wrapper .filter-list .filter-item:hover
 {
     color: var(--theme-color) !important;
 }
