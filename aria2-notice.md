@@ -70,7 +70,9 @@ rpc-secret=xxxxxx
 
 点确定后, 脚本会记住这些配置, 然后发送下载请求给 aria2, 配置都正确无误的话, 下载就会自动开始了.
 
-> 您可以在[aria2 WebUI](https://ziahamza.github.io/webui-aria2/)中输入您的配置, 连接后可以直观地看到下载状态等信息
+> 您可以在 [aria2 WebUI](https://ziahamza.github.io/webui-aria2/) 中输入您的配置, 连接后可以直观地看到下载状态等信息
+
+> 如果您的远程服务器是 `http` 而非 `https`, 首次导出时脚本管理器可能会弹出警告, 询问您是否允许脚本访问跨域网址, 选择始终允许即可.
 
 ## 卸载 aria2
 如需卸载 aria2, 删掉它的文件夹就行了.
