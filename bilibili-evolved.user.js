@@ -584,64 +584,52 @@ function loadResources () {
 }
 
 // Placeholder class for Toast
-class Toast
-{
-    constructor() { }
-    show() { }
-    dismiss() { }
-    static show() { }
-    static info() { }
-    static success() { }
-    static error() { }
+class Toast {
+  show () { }
+  dismiss () { }
+  static show () { }
+  static info () { }
+  static success () { }
+  static error () { }
 }
-class DoubleClickEvent
-{
-    constructor(handler, singleClickHandler = null)
-    {
-        this.handler = handler;
-        this.singleClickHandler = singleClickHandler;
-        this.elements = [];
-        this.clickedOnce = false;
-        this.doubleClickHandler = e =>
-        {
-            if (!this.clickedOnce)
-            {
-                this.clickedOnce = true;
-                setTimeout(() =>
-                {
-                    if (this.clickedOnce)
-                    {
-                        this.clickedOnce = false;
-                        this.singleClickHandler && this.singleClickHandler(e);
-                    }
-                }, 200);
-            }
-            else
-            {
-                this.clickedOnce = false;
-                this.handler && this.handler(e);
-            }
-        };
+
+class DoubleClickEvent {
+  constructor (handler, singleClickHandler = null) {
+    this.handler = handler
+    this.singleClickHandler = singleClickHandler
+    this.elements = []
+    this.clickedOnce = false
+    this.doubleClickHandler = e => {
+      if (!this.clickedOnce) {
+        this.clickedOnce = true
+        setTimeout(() => {
+          if (this.clickedOnce) {
+            this.clickedOnce = false
+            this.singleClickHandler && this.singleClickHandler(e)
+          }
+        }, 200)
+      } else {
+        this.clickedOnce = false
+        this.handler && this.handler(e)
+      }
     }
-    bind(element)
-    {
-        if (this.elements.indexOf(element) === -1)
-        {
-            this.elements.push(element);
-            element.addEventListener("click", this.doubleClickHandler);
-        }
+  }
+  bind (element) {
+    if (this.elements.indexOf(element) === -1) {
+      this.elements.push(element)
+      element.addEventListener('click', this.doubleClickHandler)
     }
-    unbind(element)
-    {
-        const index = this.elements.indexOf(element);
-        if (index === -1)
-        {
-            return;
-        }
-        this.elements.splice(index, 1);
-        element.removeEventListener("click", this.doubleClickHandler);
+  }
+  unbind (element) {
+    const index = this.elements.indexOf(element)
+    if (index === -1) {
+      return
     }
+    this.elements.splice(index, 1)
+    element.removeEventListener('click', this.doubleClickHandler)
+  }
 }
+
 let cidHooked = false
 const videoChangeCallbacks = []
 class Observer {
@@ -806,426 +794,308 @@ class SpinQuery {
   }
 }
 
-class ColorProcessor
-{
-    constructor(hex)
-    {
-        this.hex = hex;
-    }
-    get rgb()
-    {
-        return this.hexToRgb(this.hex);
-    }
-    get rgba()
-    {
-        return this.hexToRgba(this.hex);
-    }
-    getHexRegex(alpha, shorthand)
-    {
-        const repeat = shorthand ? "" : "{2}";
-        const part = `([a-f\\d]${repeat})`;
-        const count = alpha ? 4 : 3;
-        const pattern = `#?${part.repeat(count)}`;
-        return new RegExp(pattern, "ig");
-    }
-    hexToRgbOrRgba(hex, alpha)
-    {
-        const isShortHand = hex.length < 6;
-        if (isShortHand)
-        {
-            const shorthandRegex = this.getHexRegex(alpha, true);
-            hex = hex.replace(shorthandRegex, function (...args)
-            {
-                let result = "";
-                let i = 1;
-                while (args[i])
-                {
-                    result += args[i].repeat(2);
-                    i++;
-                }
-                return result;
-            });
+class ColorProcessor {
+  constructor (hex) {
+    this.hex = hex
+  }
+  get rgb () {
+    return this.hexToRgb(this.hex)
+  }
+  get rgba () {
+    return this.hexToRgba(this.hex)
+  }
+  getHexRegex (alpha, shorthand) {
+    const repeat = shorthand ? '' : '{2}'
+    const part = `([a-f\\d]${repeat})`
+    const count = alpha ? 4 : 3
+    const pattern = `#?${part.repeat(count)}`
+    return new RegExp(pattern, 'ig')
+  }
+  hexToRgbOrRgba (hex, alpha) {
+    const isShortHand = hex.length < 6
+    if (isShortHand) {
+      const shorthandRegex = this.getHexRegex(alpha, true)
+      hex = hex.replace(shorthandRegex, function (...args) {
+        let result = ''
+        let i = 1
+        while (args[i]) {
+          result += args[i].repeat(2)
+          i++
         }
+        return result
+      })
+    }
 
-        const regex = this.getHexRegex(alpha, false);
-        const regexResult = regex.exec(hex);
-        if (regexResult)
-        {
-            const color = {
-                r: parseInt(regexResult[1], 16),
-                g: parseInt(regexResult[2], 16),
-                b: parseInt(regexResult[3], 16),
-            };
-            if (regexResult[4])
-            {
-                color.a = parseInt(regexResult[4], 16) / 255;
-            }
-            return color;
-        }
-        else if (alpha)
-        {
-            const rgb = this.hexToRgbOrRgba(hex, false);
-            if (rgb)
-            {
-                rgb.a = 1;
-                return rgb;
-            }
-        }
-        return null;
+    const regex = this.getHexRegex(alpha, false)
+    const regexResult = regex.exec(hex)
+    if (regexResult) {
+      const color = {
+        r: parseInt(regexResult[1], 16),
+        g: parseInt(regexResult[2], 16),
+        b: parseInt(regexResult[3], 16)
+      }
+      if (regexResult[4]) {
+        color.a = parseInt(regexResult[4], 16) / 255
+      }
+      return color
+    } else if (alpha) {
+      const rgb = this.hexToRgbOrRgba(hex, false)
+      if (rgb) {
+        rgb.a = 1
+        return rgb
+      }
     }
-    hexToRgb(hex)
-    {
-        return this.hexToRgbOrRgba(hex, false);
+    return null
+  }
+  hexToRgb (hex) {
+    return this.hexToRgbOrRgba(hex, false)
+  }
+  hexToRgba (hex) {
+    return this.hexToRgbOrRgba(hex, true)
+  }
+  rgbToString (color) {
+    if (color.a) {
+      return `rgba(${color.r},${color.g},${color.b},${color.a})`
     }
-    hexToRgba(hex)
-    {
-        return this.hexToRgbOrRgba(hex, true);
-    }
-    rgbToString(color)
-    {
-        if (color.a)
-        {
-            return `rgba(${color.r},${color.g},${color.b},${color.a})`;
-        }
-        return `rgb(${color.r},${color.g},${color.b})`;
-    }
-    rgbToHsb(rgb)
-    {
-        const { r, g, b, } = rgb;
-        const max = Math.max(r, g, b);
-        const min = Math.min(r, g, b);
-        const delta = max - min;
-        const s = Math.round((max === 0 ? 0 : delta / max) * 100);
-        const v = Math.round(max / 255 * 100);
+    return `rgb(${color.r},${color.g},${color.b})`
+  }
+  rgbToHsb (rgb) {
+    const { r, g, b } = rgb
+    const max = Math.max(r, g, b)
+    const min = Math.min(r, g, b)
+    const delta = max - min
+    const s = Math.round((max === 0 ? 0 : delta / max) * 100)
+    const v = Math.round(max / 255 * 100)
 
-        let h;
-        if (delta === 0)
-        {
-            h = 0;
-        }
-        else if (r === max)
-        {
-            h = (g - b) / delta % 6;
-        }
-        else if (g === max)
-        {
-            h = (b - r) / delta + 2;
-        }
-        else if (b === max)
-        {
-            h = (r - g) / delta + 4;
-        }
-        h = Math.round(h * 60);
-        if (h < 0)
-        {
-            h += 360;
-        }
+    let h
+    if (delta === 0) {
+      h = 0
+    } else if (r === max) {
+      h = (g - b) / delta % 6
+    } else if (g === max) {
+      h = (b - r) / delta + 2
+    } else if (b === max) {
+      h = (r - g) / delta + 4
+    }
+    h = Math.round(h * 60)
+    if (h < 0) {
+      h += 360
+    }
 
-        return { h: h, s: s, b: v, };
+    return { h: h, s: s, b: v }
+  }
+  get hsb () {
+    return this.rgbToHsb(this.rgb)
+  }
+  get grey () {
+    const color = this.rgb
+    return 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255
+  }
+  get foreground () {
+    const color = this.rgb
+    if (color && this.grey < 0.35) {
+      return '#000'
     }
-    get hsb()
-    {
-        return this.rgbToHsb(this.rgb);
-    }
-    get grey()
-    {
-        const color = this.rgb;
-        return 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
-    }
-    get foreground()
-    {
-        const color = this.rgb;
-        if (color && this.grey < 0.35)
-        {
-            return "#000";
-        }
-        return "#fff";
-    }
-    makeImageFilter(originalRgb)
-    {
-        const { h, s, } = this.rgbToHsb(originalRgb);
-        const targetColor = this.hsb;
+    return '#fff'
+  }
+  makeImageFilter (originalRgb) {
+    const { h, s } = this.rgbToHsb(originalRgb)
+    const targetColor = this.hsb
 
-        const hue = targetColor.h - h;
-        const saturate = ((targetColor.s - s) / 100 + 1) * 100;
-        // const brightness = ((targetColor.b - b) / 100 + 1) * 100;
-        const filter = `hue-rotate(${hue}deg) saturate(${saturate}%)`;
-        return filter;
+    const hue = targetColor.h - h
+    const saturate = ((targetColor.s - s) / 100 + 1) * 100
+    // const brightness = ((targetColor.b - b) / 100 + 1) * 100;
+    const filter = `hue-rotate(${hue}deg) saturate(${saturate}%)`
+    return filter
+  }
+  get blueImageFilter () {
+    const blueColor = {
+      r: 0,
+      g: 160,
+      b: 213
     }
-    get blueImageFilter()
-    {
-        const blueColor = {
-            r: 0,
-            g: 160,
-            b: 213,
-        };
-        return this.makeImageFilter(blueColor);
+    return this.makeImageFilter(blueColor)
+  }
+  get pinkImageFilter () {
+    const pinkColor = {
+      r: 251,
+      g: 113,
+      b: 152
     }
-    get pinkImageFilter()
-    {
-        const pinkColor = {
-            r: 251,
-            g: 113,
-            b: 152,
-        };
-        return this.makeImageFilter(pinkColor);
-    }
-    get brightness()
-    {
-        return `${this.foreground === "#000" ? "100" : "0"}%`;
-    }
-    get filterInvert()
-    {
-        return this.foreground === "#000" ? "invert(0)" : "invert(1)";
-    }
+    return this.makeImageFilter(pinkColor)
+  }
+  get brightness () {
+    return `${this.foreground === '#000' ? '100' : '0'}%`
+  }
+  get filterInvert () {
+    return this.foreground === '#000' ? 'invert(0)' : 'invert(1)'
+  }
 }
+
 // [Offline build placeholder]
-class ResourceType
-{
-    constructor(name, preprocessor)
-    {
-        this.name = name;
-        this.preprocessor = preprocessor || (text => text);
+class ResourceType {
+  constructor (name, preprocessor) {
+    this.name = name
+    this.preprocessor = preprocessor || (text => text)
+  }
+  static fromUrl (url) {
+    if (url.indexOf('.css') !== -1) {
+      return this.style
+    } else if (url.indexOf('.html') !== -1 || url.indexOf('.htm') !== -1) {
+      return this.html
+    } else if (url.indexOf('.js') !== -1) {
+      return this.script
+    } else if (url.indexOf('.txt') !== -1) {
+      return this.text
+    } else {
+      return this.unknown
     }
-    static fromUrl(url)
-    {
-        if (url.indexOf(".css") !== -1)
-        {
-            return this.style;
-        }
-        else if (url.indexOf(".html") !== -1 || url.indexOf(".htm") !== -1)
-        {
-            return this.html;
-        }
-        else if (url.indexOf(".js") !== -1)
-        {
-            return this.script;
-        }
-        else if (url.indexOf(".txt") !== -1)
-        {
-            return this.text;
-        }
-        else
-        {
-            return this.unknown;
-        }
-    }
-    static get style()
-    {
-        return new ResourceType("style");
-    }
-    static get html()
-    {
-        return new ResourceType("html");
-    }
-    static get script()
-    {
-        return new ResourceType("script");
-    }
-    static get text()
-    {
-        return new ResourceType("text");
-    }
-    static get unknown()
-    {
-        return new ResourceType("unknown");
-    }
+  }
+  static get style () {
+    return new ResourceType('style')
+  }
+  static get html () {
+    return new ResourceType('html')
+  }
+  static get script () {
+    return new ResourceType('script')
+  }
+  static get text () {
+    return new ResourceType('text')
+  }
+  static get unknown () {
+    return new ResourceType('unknown')
+  }
 }
-class Resource
-{
-    get downloaded()
-    {
-        return this.text !== null;
+
+class Resource {
+  get downloaded () {
+    return this.text !== null
+  }
+  constructor (url, { styles = [], alwaysPreview = false } = {}) {
+    this.rawUrl = Resource.root + 'min/' + url
+    this.dependencies = []
+    this.styles = styles
+    this.text = null
+    this.key = null
+    this.alwaysPreview = alwaysPreview
+    this.type = ResourceType.fromUrl(url)
+    this.displayName = ''
+  }
+  get url () {
+    if (typeof offlineData === 'undefined' && this.alwaysPreview) {
+      return this.rawUrl.replace('/master/', '/preview/')
     }
-    constructor(url, { styles = [], alwaysPreview = false } = {})
-    {
-        this.rawUrl = Resource.root + "min/" + url;
-        this.dependencies = [];
-        // this.priority = priority;
-        this.styles = styles;
-        this.text = null;
-        this.key = null;
-        this.alwaysPreview = alwaysPreview;
-        this.type = ResourceType.fromUrl(url);
-        this.displayName = "";
+    return this.rawUrl
+  }
+  flatMapPolyfill () {
+    if (Array.prototype.flatMap === undefined) {
+      const flatMap = function (mapFunc) {
+        return this
+          .map(mapFunc)
+          .reduce((acc, it) => acc.concat(it), [])
+      }
+      return flatMap
+    } else {
+      return Array.prototype.flatMap
     }
-    get url()
-    {
-        if (typeof offlineData === "undefined" && this.alwaysPreview)
-        {
-            return this.rawUrl.replace("/master/", "/preview/");
-        }
-        return this.rawUrl;
+  }
+  loadCache () {
+    const key = this.key
+    if (!settings.cache || !settings.cache[key]) {
+      return null
+    } else {
+      return settings.cache[key]
     }
-    flatMapPolyfill()
-    {
-        if (Array.prototype.flatMap === undefined)
-        {
-            const flatMap = function (mapFunc)
-            {
-                return this
-                    .map(mapFunc)
-                    .reduce((acc, it) => acc.concat(it), []);
-            };
-            return flatMap;
-        }
-        else
-        {
-            return Array.prototype.flatMap;
-        }
-    }
-    loadCache()
-    {
-        const key = this.key;
-        if (!settings.cache || !settings.cache[key])
-        {
-            return null;
-        }
-        else
-        {
-            return settings.cache[key];
-        }
-    }
-    async download()
-    {
-        const key = this.key;
-        return new Promise((resolve, reject) =>
-        {
-            if (this.downloaded)
-            {
-                resolve(this.text);
+  }
+  async download () {
+    const key = this.key
+    return new Promise((resolve, reject) => {
+      if (this.downloaded) {
+        resolve(this.text)
+      } else {
+        const flattenStyles = this.flatMapPolyfill()
+          .bind(this.styles)(it => typeof it === 'object' ? it.key : it)
+        Promise.all(this.dependencies
+          .concat(flattenStyles.map(it => Resource.all[it]))
+          .map(r => r.download())
+        )
+          .then(() => {
+            // +#Offline build placeholder
+            if (settings.useCache) {
+              const cache = this.loadCache(key)
+              if (cache !== null) {
+                this.text = cache
+                resolve(cache)
+              }
+              Ajax.getText(this.url).then(text => {
+                this.text = this.type.preprocessor(text)
+                if (text === null) {
+                  reject('download failed')
+                }
+                if (cache !== this.text) {
+                  if (cache === null) {
+                    resolve(this.text)
+                  }
+                  if (typeof offlineData === 'undefined') {
+                    settings.cache = Object.assign(settings.cache, {
+                      [key]: this.text
+                    })
+                  }
+                }
+              }).catch(error => reject(error))
+            } else {
+              Ajax.getText(this.url)
+                .then(text => {
+                  this.text = this.type.preprocessor(text)
+                  resolve(this.text)
+                })
+                .catch(error => reject(error))
             }
-            else
-            {
-                const flattenStyles = this.flatMapPolyfill()
-                    .bind(this.styles)(it => typeof it === "object" ? it.key : it);
-                Promise.all(this.dependencies
-                    .concat(flattenStyles.map(it => Resource.all[it]))
-                    .map(r => r.download())
-                )
-                    .then(() =>
-                    {
-                        // +#Offline build placeholder
-                        if (settings.useCache)
-                        {
-                            const cache = this.loadCache(key);
-                            if (cache !== null)
-                            {
-                                this.text = cache;
-                                resolve(cache);
-                            }
-                            Ajax.getText(this.url).then(text =>
-                            {
-                                this.text = this.type.preprocessor(text);
-                                if (text === null)
-                                {
-                                    reject("download failed");
-                                }
-                                if (cache !== this.text)
-                                {
-                                    if (cache === null)
-                                    {
-                                        resolve(this.text);
-                                    }
-                                    if (typeof offlineData === "undefined")
-                                    {
-                                        settings.cache = Object.assign(settings.cache, {
-                                            [key]: this.text
-                                        });
-                                    }
-                                }
-                            }).catch(error => reject(error));
-                        }
-                        else
-                        {
-                            Ajax.getText(this.url)
-                                .then(text =>
-                                {
-                                    this.text = this.type.preprocessor(text);
-                                    resolve(this.text);
-                                })
-                                .catch(error => reject(error));
-                        }
-                        // -#Offline build placeholder
-                    });
-            }
-        });
+            // -#Offline build placeholder
+          })
+      }
+    })
+  }
+  getStyle (id) {
+    const style = this.text
+    if (style === null) {
+      logError('Attempt to get style which is not downloaded.')
     }
-    getStyle(id)
-    {
-        const style = this.text;
-        if (style === null)
-        {
-            logError("Attempt to get style which is not downloaded.");
-        }
-        // let attributes = `id='${id}'`;
-        // if (this.priority !== undefined)
-        // {
-        //     attributes += ` priority='${this.priority}'`;
-        // }
-        // return `<style ${attributes}>${style}</style>`;
-        const styleElement = document.createElement("style");
-        styleElement.id = id;
-        styleElement.innerText = style;
-        return styleElement;
+    const styleElement = document.createElement('style')
+    styleElement.id = id
+    styleElement.innerText = style
+    return styleElement
+  }
+  getPriorStyle () {
+    if (this.priority !== undefined) {
+      let insertPosition = this.priority - 1
+      let formerStyle = $(`style[priority='${insertPosition}']`)
+      while (insertPosition >= 0 && formerStyle.length === 0) {
+        formerStyle = $(`style[priority='${insertPosition}']`)
+        insertPosition--
+      }
+      if (insertPosition < 0) {
+        return null
+      } else {
+        return formerStyle
+      }
+    } else {
+      return null
     }
-    getPriorStyle()
-    {
-        if (this.priority !== undefined)
-        {
-            let insertPosition = this.priority - 1;
-            let formerStyle = $(`style[priority='${insertPosition}']`);
-            while (insertPosition >= 0 && formerStyle.length === 0)
-            {
-                formerStyle = $(`style[priority='${insertPosition}']`);
-                insertPosition--;
-            }
-            if (insertPosition < 0)
-            {
-                return null;
-            }
-            else
-            {
-                return formerStyle;
-            }
-        }
-        else
-        {
-            return null;
-        }
+  }
+  applyStyle (id, important) {
+    if (!document.querySelector(`#${id}`)) {
+      const style = this.getStyle(id)
+      if (important) {
+        document.body.insertAdjacentElement('beforeend', style)
+      } else {
+        document.head.insertAdjacentElement('afterbegin', style)
+      }
     }
-    applyStyle(id, important)
-    {
-        if (!document.querySelector(`#${id}`))
-        {
-            const style = this.getStyle(id);
-            // const priorStyle = this.getPriorStyle();
-            // if (priorStyle === null)
-            // {
-            //     if (important)
-            //     {
-            //         $("html").append(element);
-            //     }
-            //     else
-            //     {
-            //         $("head").prepend(element);
-            //     }
-            // }
-            // else
-            // {
-            //     priorStyle.after(element);
-            // }
-            if (important)
-            {
-                document.body.insertAdjacentElement("beforeend", style);
-            }
-            else
-            {
-                document.head.insertAdjacentElement("afterbegin", style);
-            }
-        }
-    }
+  }
 }
+
 Resource.manifest = {
   style: {
     path: 'style.min.css'
@@ -1919,106 +1789,80 @@ Resource.manifest = {
 }
 const resourceManifest = Resource.manifest
 
-class StyleManager
-{
-    constructor(resources)
-    {
-        this.resources = resources;
+class StyleManager {
+  constructor (resources) {
+    this.resources = resources
+  }
+  getDefaultStyleId (key) {
+    return key.replace(/([a-z][A-Z])/g,
+      g => `${g[0]}-${g[1].toLowerCase()}`)
+  }
+  applyStyle (key, id) {
+    if (id === undefined) {
+      id = this.getDefaultStyleId(key)
     }
-    getDefaultStyleId(key)
-    {
-        return key.replace(/([a-z][A-Z])/g,
-            g => `${g[0]}-${g[1].toLowerCase()}`);
+    Resource.all[key].applyStyle(id, false)
+  }
+  removeStyle (key) {
+    const style = document.querySelector(`#${this.getDefaultStyleId(key)}`)
+    style && style.remove()
+  }
+  applyImportantStyle (key, id) {
+    if (id === undefined) {
+      id = this.getDefaultStyleId(key)
     }
-    applyStyle(key, id)
-    {
-        if (id === undefined)
-        {
-            id = this.getDefaultStyleId(key);
-        }
-        Resource.all[key].applyStyle(id, false);
+    Resource.all[key].applyStyle(id, true)
+  }
+  applyStyleFromText (text, id) {
+    if (!id) {
+      document.head.insertAdjacentHTML('afterbegin', text)
+    } else {
+      const style = document.createElement('style')
+      style.id = id
+      style.innerText = text
+      document.head.insertAdjacentElement('afterbegin', style)
     }
-    removeStyle(key)
-    {
-        const style = document.querySelector(`#${this.getDefaultStyleId(key)}`);
-        style && style.remove();
+  }
+  applyImportantStyleFromText (text, id) {
+    if (!id) {
+      document.body.insertAdjacentHTML('beforeend', text)
+    } else {
+      const style = document.createElement('style')
+      style.id = id
+      style.innerText = text
+      document.body.insertAdjacentElement('beforeend', style)
     }
-    applyImportantStyle(key, id)
-    {
-        if (id === undefined)
-        {
-            id = this.getDefaultStyleId(key);
-        }
-        Resource.all[key].applyStyle(id, true);
+  }
+  getStyle (key, id) {
+    return Resource.all[key].getStyle(id)
+  }
+  fetchStyleByKey (key) {
+    if (settings[key] !== true) {
+      return
     }
-    applyStyleFromText(text, id)
-    {
-        if (!id)
-        {
-            document.head.insertAdjacentHTML("afterbegin", text);
-        }
-        else
-        {
-            const style = document.createElement("style");
-            style.id = id;
-            style.innerText = text;
-            document.head.insertAdjacentElement("afterbegin", style);
-        }
+    Resource.all[key].styles
+      .filter(it => it.condition !== undefined ? it.condition() : true)
+      .forEach(it => {
+        const important = typeof it === 'object' ? it.important : false
+        const key = typeof it === 'object' ? it.key : it
+        Resource.all[key].download().then(() => {
+          if (important) {
+            contentLoaded(() => this.applyImportantStyle(key))
+          } else {
+            this.applyStyle(key)
+          }
+        })
+      })
+  }
+  prefetchStyles () {
+    for (const key in Resource.all) {
+      if (typeof offlineData !== 'undefined' || settings.useCache && settings.cache[key]) {
+        this.fetchStyleByKey(key)
+      }
     }
-    applyImportantStyleFromText(text, id)
-    {
-        if (!id)
-        {
-            document.body.insertAdjacentHTML("beforeend", text);
-        }
-        else
-        {
-            const style = document.createElement("style");
-            style.id = id;
-            style.innerText = text;
-            document.body.insertAdjacentElement("beforeend", style);
-        }
-    }
-    getStyle(key, id)
-    {
-        return Resource.all[key].getStyle(id);
-    }
-    fetchStyleByKey(key)
-    {
-        if (settings[key] !== true)
-        {
-            return;
-        }
-        Resource.all[key].styles
-            .filter(it => it.condition !== undefined ? it.condition() : true)
-            .forEach(it =>
-            {
-                const important = typeof it === "object" ? it.important : false;
-                const key = typeof it === "object" ? it.key : it;
-                Resource.all[key].download().then(() =>
-                {
-                    if (important)
-                    {
-                        contentLoaded(() => this.applyImportantStyle(key));
-                    }
-                    else
-                    {
-                        this.applyStyle(key);
-                    }
-                });
-            });
-    }
-    prefetchStyles()
-    {
-        for (const key in Resource.all)
-        {
-            if (typeof offlineData !== "undefined" || settings.useCache && settings.cache[key])
-            {
-                this.fetchStyleByKey(key);
-            }
-        }
-    }
+  }
 }
+
 class ResourceManager {
   constructor () {
     this.data = Resource.all

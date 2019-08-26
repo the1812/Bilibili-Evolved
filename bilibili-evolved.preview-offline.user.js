@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      405.81
+// @version      405.96
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -585,64 +585,52 @@ function loadResources () {
 }
 
 // Placeholder class for Toast
-class Toast
-{
-    constructor() { }
-    show() { }
-    dismiss() { }
-    static show() { }
-    static info() { }
-    static success() { }
-    static error() { }
+class Toast {
+  show () { }
+  dismiss () { }
+  static show () { }
+  static info () { }
+  static success () { }
+  static error () { }
 }
-class DoubleClickEvent
-{
-    constructor(handler, singleClickHandler = null)
-    {
-        this.handler = handler;
-        this.singleClickHandler = singleClickHandler;
-        this.elements = [];
-        this.clickedOnce = false;
-        this.doubleClickHandler = e =>
-        {
-            if (!this.clickedOnce)
-            {
-                this.clickedOnce = true;
-                setTimeout(() =>
-                {
-                    if (this.clickedOnce)
-                    {
-                        this.clickedOnce = false;
-                        this.singleClickHandler && this.singleClickHandler(e);
-                    }
-                }, 200);
-            }
-            else
-            {
-                this.clickedOnce = false;
-                this.handler && this.handler(e);
-            }
-        };
+
+class DoubleClickEvent {
+  constructor (handler, singleClickHandler = null) {
+    this.handler = handler
+    this.singleClickHandler = singleClickHandler
+    this.elements = []
+    this.clickedOnce = false
+    this.doubleClickHandler = e => {
+      if (!this.clickedOnce) {
+        this.clickedOnce = true
+        setTimeout(() => {
+          if (this.clickedOnce) {
+            this.clickedOnce = false
+            this.singleClickHandler && this.singleClickHandler(e)
+          }
+        }, 200)
+      } else {
+        this.clickedOnce = false
+        this.handler && this.handler(e)
+      }
     }
-    bind(element)
-    {
-        if (this.elements.indexOf(element) === -1)
-        {
-            this.elements.push(element);
-            element.addEventListener("click", this.doubleClickHandler);
-        }
+  }
+  bind (element) {
+    if (this.elements.indexOf(element) === -1) {
+      this.elements.push(element)
+      element.addEventListener('click', this.doubleClickHandler)
     }
-    unbind(element)
-    {
-        const index = this.elements.indexOf(element);
-        if (index === -1)
-        {
-            return;
-        }
-        this.elements.splice(index, 1);
-        element.removeEventListener("click", this.doubleClickHandler);
+  }
+  unbind (element) {
+    const index = this.elements.indexOf(element)
+    if (index === -1) {
+      return
     }
+    this.elements.splice(index, 1)
+    element.removeEventListener('click', this.doubleClickHandler)
+  }
 }
+
 let cidHooked = false
 const videoChangeCallbacks = []
 class Observer {
@@ -807,179 +795,144 @@ class SpinQuery {
   }
 }
 
-class ColorProcessor
-{
-    constructor(hex)
-    {
-        this.hex = hex;
-    }
-    get rgb()
-    {
-        return this.hexToRgb(this.hex);
-    }
-    get rgba()
-    {
-        return this.hexToRgba(this.hex);
-    }
-    getHexRegex(alpha, shorthand)
-    {
-        const repeat = shorthand ? "" : "{2}";
-        const part = `([a-f\\d]${repeat})`;
-        const count = alpha ? 4 : 3;
-        const pattern = `#?${part.repeat(count)}`;
-        return new RegExp(pattern, "ig");
-    }
-    hexToRgbOrRgba(hex, alpha)
-    {
-        const isShortHand = hex.length < 6;
-        if (isShortHand)
-        {
-            const shorthandRegex = this.getHexRegex(alpha, true);
-            hex = hex.replace(shorthandRegex, function (...args)
-            {
-                let result = "";
-                let i = 1;
-                while (args[i])
-                {
-                    result += args[i].repeat(2);
-                    i++;
-                }
-                return result;
-            });
+class ColorProcessor {
+  constructor (hex) {
+    this.hex = hex
+  }
+  get rgb () {
+    return this.hexToRgb(this.hex)
+  }
+  get rgba () {
+    return this.hexToRgba(this.hex)
+  }
+  getHexRegex (alpha, shorthand) {
+    const repeat = shorthand ? '' : '{2}'
+    const part = `([a-f\\d]${repeat})`
+    const count = alpha ? 4 : 3
+    const pattern = `#?${part.repeat(count)}`
+    return new RegExp(pattern, 'ig')
+  }
+  hexToRgbOrRgba (hex, alpha) {
+    const isShortHand = hex.length < 6
+    if (isShortHand) {
+      const shorthandRegex = this.getHexRegex(alpha, true)
+      hex = hex.replace(shorthandRegex, function (...args) {
+        let result = ''
+        let i = 1
+        while (args[i]) {
+          result += args[i].repeat(2)
+          i++
         }
+        return result
+      })
+    }
 
-        const regex = this.getHexRegex(alpha, false);
-        const regexResult = regex.exec(hex);
-        if (regexResult)
-        {
-            const color = {
-                r: parseInt(regexResult[1], 16),
-                g: parseInt(regexResult[2], 16),
-                b: parseInt(regexResult[3], 16),
-            };
-            if (regexResult[4])
-            {
-                color.a = parseInt(regexResult[4], 16) / 255;
-            }
-            return color;
-        }
-        else if (alpha)
-        {
-            const rgb = this.hexToRgbOrRgba(hex, false);
-            if (rgb)
-            {
-                rgb.a = 1;
-                return rgb;
-            }
-        }
-        return null;
+    const regex = this.getHexRegex(alpha, false)
+    const regexResult = regex.exec(hex)
+    if (regexResult) {
+      const color = {
+        r: parseInt(regexResult[1], 16),
+        g: parseInt(regexResult[2], 16),
+        b: parseInt(regexResult[3], 16)
+      }
+      if (regexResult[4]) {
+        color.a = parseInt(regexResult[4], 16) / 255
+      }
+      return color
+    } else if (alpha) {
+      const rgb = this.hexToRgbOrRgba(hex, false)
+      if (rgb) {
+        rgb.a = 1
+        return rgb
+      }
     }
-    hexToRgb(hex)
-    {
-        return this.hexToRgbOrRgba(hex, false);
+    return null
+  }
+  hexToRgb (hex) {
+    return this.hexToRgbOrRgba(hex, false)
+  }
+  hexToRgba (hex) {
+    return this.hexToRgbOrRgba(hex, true)
+  }
+  rgbToString (color) {
+    if (color.a) {
+      return `rgba(${color.r},${color.g},${color.b},${color.a})`
     }
-    hexToRgba(hex)
-    {
-        return this.hexToRgbOrRgba(hex, true);
-    }
-    rgbToString(color)
-    {
-        if (color.a)
-        {
-            return `rgba(${color.r},${color.g},${color.b},${color.a})`;
-        }
-        return `rgb(${color.r},${color.g},${color.b})`;
-    }
-    rgbToHsb(rgb)
-    {
-        const { r, g, b, } = rgb;
-        const max = Math.max(r, g, b);
-        const min = Math.min(r, g, b);
-        const delta = max - min;
-        const s = Math.round((max === 0 ? 0 : delta / max) * 100);
-        const v = Math.round(max / 255 * 100);
+    return `rgb(${color.r},${color.g},${color.b})`
+  }
+  rgbToHsb (rgb) {
+    const { r, g, b } = rgb
+    const max = Math.max(r, g, b)
+    const min = Math.min(r, g, b)
+    const delta = max - min
+    const s = Math.round((max === 0 ? 0 : delta / max) * 100)
+    const v = Math.round(max / 255 * 100)
 
-        let h;
-        if (delta === 0)
-        {
-            h = 0;
-        }
-        else if (r === max)
-        {
-            h = (g - b) / delta % 6;
-        }
-        else if (g === max)
-        {
-            h = (b - r) / delta + 2;
-        }
-        else if (b === max)
-        {
-            h = (r - g) / delta + 4;
-        }
-        h = Math.round(h * 60);
-        if (h < 0)
-        {
-            h += 360;
-        }
+    let h
+    if (delta === 0) {
+      h = 0
+    } else if (r === max) {
+      h = (g - b) / delta % 6
+    } else if (g === max) {
+      h = (b - r) / delta + 2
+    } else if (b === max) {
+      h = (r - g) / delta + 4
+    }
+    h = Math.round(h * 60)
+    if (h < 0) {
+      h += 360
+    }
 
-        return { h: h, s: s, b: v, };
+    return { h: h, s: s, b: v }
+  }
+  get hsb () {
+    return this.rgbToHsb(this.rgb)
+  }
+  get grey () {
+    const color = this.rgb
+    return 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255
+  }
+  get foreground () {
+    const color = this.rgb
+    if (color && this.grey < 0.35) {
+      return '#000'
     }
-    get hsb()
-    {
-        return this.rgbToHsb(this.rgb);
-    }
-    get grey()
-    {
-        const color = this.rgb;
-        return 1 - (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
-    }
-    get foreground()
-    {
-        const color = this.rgb;
-        if (color && this.grey < 0.35)
-        {
-            return "#000";
-        }
-        return "#fff";
-    }
-    makeImageFilter(originalRgb)
-    {
-        const { h, s, } = this.rgbToHsb(originalRgb);
-        const targetColor = this.hsb;
+    return '#fff'
+  }
+  makeImageFilter (originalRgb) {
+    const { h, s } = this.rgbToHsb(originalRgb)
+    const targetColor = this.hsb
 
-        const hue = targetColor.h - h;
-        const saturate = ((targetColor.s - s) / 100 + 1) * 100;
-        // const brightness = ((targetColor.b - b) / 100 + 1) * 100;
-        const filter = `hue-rotate(${hue}deg) saturate(${saturate}%)`;
-        return filter;
+    const hue = targetColor.h - h
+    const saturate = ((targetColor.s - s) / 100 + 1) * 100
+    // const brightness = ((targetColor.b - b) / 100 + 1) * 100;
+    const filter = `hue-rotate(${hue}deg) saturate(${saturate}%)`
+    return filter
+  }
+  get blueImageFilter () {
+    const blueColor = {
+      r: 0,
+      g: 160,
+      b: 213
     }
-    get blueImageFilter()
-    {
-        const blueColor = {
-            r: 0,
-            g: 160,
-            b: 213,
-        };
-        return this.makeImageFilter(blueColor);
+    return this.makeImageFilter(blueColor)
+  }
+  get pinkImageFilter () {
+    const pinkColor = {
+      r: 251,
+      g: 113,
+      b: 152
     }
-    get pinkImageFilter()
-    {
-        const pinkColor = {
-            r: 251,
-            g: 113,
-            b: 152,
-        };
-        return this.makeImageFilter(pinkColor);
-    }
-    get brightness()
-    {
-        return `${this.foreground === "#000" ? "100" : "0"}%`;
-    }
-    get filterInvert()
-    {
-        return this.foreground === "#000" ? "invert(0)" : "invert(1)";
-    }
+    return this.makeImageFilter(pinkColor)
+  }
+  get brightness () {
+    return `${this.foreground === '#000' ? '100' : '0'}%`
+  }
+  get filterInvert () {
+    return this.foreground === '#000' ? 'invert(0)' : 'invert(1)'
+  }
 }
+
 const offlineData = {};
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.css"] = `.bilibili-evolved-about{height:100%;width:450px;background:#fff;color:#000;position:fixed;top:0;left:0;z-index:100000;transform:translateX(-100%);transition:.3s cubic-bezier(0,.86,.58,1);display:flex;flex-direction:column;box-shadow:4px 0 16px 0 #0000}body.dark .bilibili-evolved-about{background:#222;color:#eee}.bilibili-evolved-about.opened{transform:translateX(0);box-shadow:4px 0 16px 0 #0005}.about-header{padding:32px;display:flex;align-items:center;justify-content:flex-start}.about-header i{margin-right:8px;display:flex}.about-title{font-size:16pt}.about-content{padding:16px 36px 0;margin-bottom:36px;display:flex;flex-direction:column;overflow:auto}.about-content .name{font-size:24pt;display:none;align-items:center}.about-content .name svg{width:100%}body.dark .about-content .name.dark,body:not(.dark) .about-content .name.light{display:flex}.about-content .version{font-size:10pt;font-weight:700;opacity:.6;margin-top:6px;margin-bottom:6px;align-self:center}.about-content .love{font-size:10pt;margin-bottom:24px;align-self:center}.about-content .love a{color:inherit!important}.about-content section{font-size:10pt;margin-top:16px}.about-content section .title{display:flex;justify-content:center;text-transform:uppercase;font-weight:700;font-size:13pt;letter-spacing:3px;margin:8px 0 16px}.about-content section .supporter,.about-content section a{color:var(--theme-color)!important;margin-right:8px;display:inline-flex}.about-content section .supporter{user-select:none}.about-content section .supporter:not(:last-child)::after,.about-content section a:not(:last-child)::after{content:","}@keyframes spinner{to{transform:translate(-50%,-50%) rotate(360deg)}}.about-content section.participants .fetching{margin-right:8px;position:relative;display:inline-flex}.about-content section.participants .fetching::before{content:"Loading..."}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.html"] = `<div class=bilibili-evolved-about><div class=about-header><i class="mdi mdi-information-outline mdi-24px"></i><span class=about-title>关于</span></div><div class=about-content><p v-if=branch class="name light"v-html=logoImage><p v-if=branch class="name dark"v-html=logoImageDark><p class=version>v{{version}} · {{clientType}}<p class=love><a target=_blank href=https://github.com/the1812/Bilibili-Evolved/ >Made with ❤　　</a><a target=_blank href=https://github.com/the1812/Bilibili-Evolved/blob/master/donate.md>Buy me a coffee ☕</a><section class=authors><span class=title>Authors</span><a class=author target=_blank v-for="author of authors"v-bind:href=author.link>{{author.name}}</a></section><section class=contributors><span class=title>Contributors</span><a class=contributor target=_blank v-for="contributor of contributors"v-bind:href=contributor.link>{{contributor.name}}</a></section><section class=participants><span class=title>Participants</span><span class=fetching v-if=fetching></span><a class=participant target=_blank v-for="participant of participants"v-bind:href=participant.link>{{participant.name}}</a></section><section class=supporters><span class=title>Supporters</span><span class=supporter v-for="supporter of supporters">{{supporter}}</span></section><section class=websites><span class=title>Websites</span><a class=website target=_blank v-for="website of websites"v-bind:href=website.link>{{website.name}}</a></section><section class=components><span class=title>Components</span><a class=component target=_blank v-for="component of components"v-bind:href=component.link>{{component.name}}</a></section></div></div>`;
@@ -1115,211 +1068,138 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/watchlater-api.min.js"] = (()=>{return(t,i)=>{const e=async(t,i)=>{const e=i?"https://api.bilibili.com/x/v2/history/toview/add":"https://api.bilibili.com/x/v2/history/toview/del";const s=document.cookie.replace(/(?:(?:^|.*\s*)bili_jct\s*\=\s*([^]*).*$)|^.*$/,"$1");const a=await Ajax.postTextWithCredentials(e,`aid=${t}&csrf=${s}`);const o=JSON.parse(a);if(o.code!==0){throw new Error(`稍后再看操作失败: ${o.message}`)}};const s=async(t=false)=>{const i=`https://api.bilibili.com/x/v2/history/toview/web`;const e=await Ajax.getJsonWithCredentials(i);if(e.code!==0){throw new Error(`获取稍后再看列表失败: ${e.message}`)}if(t===true){return e.data}if(!e.data.list){return[]}return e.data.list.map(t=>t.aid)};return{export:{toggleWatchlater:e,getWatchlaterList:s}}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/watchlater.min.js"] = (()=>{return(e,t)=>{const i=e=>{const t=e.match(/(av[\d]+)\/p([\d]+)/);if(t){return`https://www.bilibili.com/video/${t[1]}/?p=${t[2]}`}else{return"javascript:;"}};const r=e=>{const t=e.map(e=>{const t=e.getAttribute("href");if(!t){return"javascript:;"}if(t.match(/.*watchlater.*|javascript:;/g)){return i(t)}if(t.indexOf("video/av")!==-1){return t}});e.forEach((e,i)=>{e.setAttribute("href",t[i]);e.setAttribute("target","_blank")})};const a=(...e)=>{for(const t of e){SpinQuery.select(()=>document.querySelectorAll(t),e=>r([...e]))}};SpinQuery.select(".watch-later-list").then(()=>{Observer.childListSubtree("#viewlater-app",()=>{SpinQuery.condition(()=>document.URL.match(/(av[\d]+)\/p([\d]+)/),e=>e&&document.URL.indexOf("watchlater")!==-1,()=>{const e=i(document.URL);if(e!==null){window.location.replace(e)}});SpinQuery.select("#viewlater-app .s-btn[href='#/']",e=>e.remove());a(".av-pic",".av-about>a")})});SpinQuery.select("li.nav-item[report-id*=watchlater]").then(()=>{Observer.childListSubtree("li.nav-item[report-id*=watchlater]",()=>{a(".av-item>a",".av-about>a","div.watch-later-m>ul>div>li>a");SpinQuery.select(".read-more.mr",e=>e.remove());SpinQuery.select(".read-more-grp>.read-more",e=>{e.style.width="auto";e.style.float="none"})})});SpinQuery.select(".van-popper-favorite").then(async e=>{if(!e){return}const t=Observer.childListSubtree(e,()=>{const i=e.querySelector(".play-all");if(i){const e="//www.bilibili.com/watchlater/#/list";Observer.attributes(i,()=>{if(i.getAttribute("href")==="//www.bilibili.com/watchlater/"){i.setAttribute("href",e);i.firstChild.classList.remove("bili-icon_dingdao_bofang");i.firstChild.classList.add("bili-icon_xinxi_yuedushu");i.lastChild.nodeValue="查看全部"}else if(i.getAttribute("href")!==e){i.firstChild.classList.add("bili-icon_dingdao_bofang");i.firstChild.classList.remove("bili-icon_xinxi_yuedushu");i.lastChild.nodeValue="播放全部"}});t.forEach(e=>e.stop())}})})}})();
 
-class ResourceType
-{
-    constructor(name, preprocessor)
-    {
-        this.name = name;
-        this.preprocessor = preprocessor || (text => text);
+class ResourceType {
+  constructor (name, preprocessor) {
+    this.name = name
+    this.preprocessor = preprocessor || (text => text)
+  }
+  static fromUrl (url) {
+    if (url.indexOf('.css') !== -1) {
+      return this.style
+    } else if (url.indexOf('.html') !== -1 || url.indexOf('.htm') !== -1) {
+      return this.html
+    } else if (url.indexOf('.js') !== -1) {
+      return this.script
+    } else if (url.indexOf('.txt') !== -1) {
+      return this.text
+    } else {
+      return this.unknown
     }
-    static fromUrl(url)
-    {
-        if (url.indexOf(".css") !== -1)
-        {
-            return this.style;
-        }
-        else if (url.indexOf(".html") !== -1 || url.indexOf(".htm") !== -1)
-        {
-            return this.html;
-        }
-        else if (url.indexOf(".js") !== -1)
-        {
-            return this.script;
-        }
-        else if (url.indexOf(".txt") !== -1)
-        {
-            return this.text;
-        }
-        else
-        {
-            return this.unknown;
-        }
-    }
-    static get style()
-    {
-        return new ResourceType("style");
-    }
-    static get html()
-    {
-        return new ResourceType("html");
-    }
-    static get script()
-    {
-        return new ResourceType("script");
-    }
-    static get text()
-    {
-        return new ResourceType("text");
-    }
-    static get unknown()
-    {
-        return new ResourceType("unknown");
-    }
+  }
+  static get style () {
+    return new ResourceType('style')
+  }
+  static get html () {
+    return new ResourceType('html')
+  }
+  static get script () {
+    return new ResourceType('script')
+  }
+  static get text () {
+    return new ResourceType('text')
+  }
+  static get unknown () {
+    return new ResourceType('unknown')
+  }
 }
-class Resource
-{
-    get downloaded()
-    {
-        return this.text !== null;
+
+class Resource {
+  get downloaded () {
+    return this.text !== null
+  }
+  constructor (url, { styles = [], alwaysPreview = false } = {}) {
+    this.rawUrl = Resource.root + 'min/' + url
+    this.dependencies = []
+    this.styles = styles
+    this.text = null
+    this.key = null
+    this.alwaysPreview = alwaysPreview
+    this.type = ResourceType.fromUrl(url)
+    this.displayName = ''
+  }
+  get url () {
+    if (typeof offlineData === 'undefined' && this.alwaysPreview) {
+      return this.rawUrl.replace('/master/', '/preview/')
     }
-    constructor(url, { styles = [], alwaysPreview = false } = {})
-    {
-        this.rawUrl = Resource.root + "min/" + url;
-        this.dependencies = [];
-        // this.priority = priority;
-        this.styles = styles;
-        this.text = null;
-        this.key = null;
-        this.alwaysPreview = alwaysPreview;
-        this.type = ResourceType.fromUrl(url);
-        this.displayName = "";
+    return this.rawUrl
+  }
+  flatMapPolyfill () {
+    if (Array.prototype.flatMap === undefined) {
+      const flatMap = function (mapFunc) {
+        return this
+          .map(mapFunc)
+          .reduce((acc, it) => acc.concat(it), [])
+      }
+      return flatMap
+    } else {
+      return Array.prototype.flatMap
     }
-    get url()
-    {
-        if (typeof offlineData === "undefined" && this.alwaysPreview)
-        {
-            return this.rawUrl.replace("/master/", "/preview/");
-        }
-        return this.rawUrl;
+  }
+  loadCache () {
+    const key = this.key
+    if (!settings.cache || !settings.cache[key]) {
+      return null
+    } else {
+      return settings.cache[key]
     }
-    flatMapPolyfill()
-    {
-        if (Array.prototype.flatMap === undefined)
-        {
-            const flatMap = function (mapFunc)
-            {
-                return this
-                    .map(mapFunc)
-                    .reduce((acc, it) => acc.concat(it), []);
-            };
-            return flatMap;
-        }
-        else
-        {
-            return Array.prototype.flatMap;
-        }
+  }
+  async download () {
+    const key = this.key
+    return new Promise((resolve, reject) => {
+      if (this.downloaded) {
+        resolve(this.text)
+      } else {
+        const flattenStyles = this.flatMapPolyfill()
+          .bind(this.styles)(it => typeof it === 'object' ? it.key : it)
+        Promise.all(this.dependencies
+          .concat(flattenStyles.map(it => Resource.all[it]))
+          .map(r => r.download())
+        )
+          .then(() => {
+            this.text=this.type.preprocessor(offlineData[this.url]);resolve(this.text);
+          })
+      }
+    })
+  }
+  getStyle (id) {
+    const style = this.text
+    if (style === null) {
+      logError('Attempt to get style which is not downloaded.')
     }
-    loadCache()
-    {
-        const key = this.key;
-        if (!settings.cache || !settings.cache[key])
-        {
-            return null;
-        }
-        else
-        {
-            return settings.cache[key];
-        }
+    const styleElement = document.createElement('style')
+    styleElement.id = id
+    styleElement.innerText = style
+    return styleElement
+  }
+  getPriorStyle () {
+    if (this.priority !== undefined) {
+      let insertPosition = this.priority - 1
+      let formerStyle = $(`style[priority='${insertPosition}']`)
+      while (insertPosition >= 0 && formerStyle.length === 0) {
+        formerStyle = $(`style[priority='${insertPosition}']`)
+        insertPosition--
+      }
+      if (insertPosition < 0) {
+        return null
+      } else {
+        return formerStyle
+      }
+    } else {
+      return null
     }
-    async download()
-    {
-        const key = this.key;
-        return new Promise((resolve, reject) =>
-        {
-            if (this.downloaded)
-            {
-                resolve(this.text);
-            }
-            else
-            {
-                const flattenStyles = this.flatMapPolyfill()
-                    .bind(this.styles)(it => typeof it === "object" ? it.key : it);
-                Promise.all(this.dependencies
-                    .concat(flattenStyles.map(it => Resource.all[it]))
-                    .map(r => r.download())
-                )
-                    .then(() =>
-                    {
-                        this.text=this.type.preprocessor(offlineData[this.url]);resolve(this.text);
-                    });
-            }
-        });
+  }
+  applyStyle (id, important) {
+    if (!document.querySelector(`#${id}`)) {
+      const style = this.getStyle(id)
+      if (important) {
+        document.body.insertAdjacentElement('beforeend', style)
+      } else {
+        document.head.insertAdjacentElement('afterbegin', style)
+      }
     }
-    getStyle(id)
-    {
-        const style = this.text;
-        if (style === null)
-        {
-            logError("Attempt to get style which is not downloaded.");
-        }
-        // let attributes = `id='${id}'`;
-        // if (this.priority !== undefined)
-        // {
-        //     attributes += ` priority='${this.priority}'`;
-        // }
-        // return `<style ${attributes}>${style}</style>`;
-        const styleElement = document.createElement("style");
-        styleElement.id = id;
-        styleElement.innerText = style;
-        return styleElement;
-    }
-    getPriorStyle()
-    {
-        if (this.priority !== undefined)
-        {
-            let insertPosition = this.priority - 1;
-            let formerStyle = $(`style[priority='${insertPosition}']`);
-            while (insertPosition >= 0 && formerStyle.length === 0)
-            {
-                formerStyle = $(`style[priority='${insertPosition}']`);
-                insertPosition--;
-            }
-            if (insertPosition < 0)
-            {
-                return null;
-            }
-            else
-            {
-                return formerStyle;
-            }
-        }
-        else
-        {
-            return null;
-        }
-    }
-    applyStyle(id, important)
-    {
-        if (!document.querySelector(`#${id}`))
-        {
-            const style = this.getStyle(id);
-            // const priorStyle = this.getPriorStyle();
-            // if (priorStyle === null)
-            // {
-            //     if (important)
-            //     {
-            //         $("html").append(element);
-            //     }
-            //     else
-            //     {
-            //         $("head").prepend(element);
-            //     }
-            // }
-            // else
-            // {
-            //     priorStyle.after(element);
-            // }
-            if (important)
-            {
-                document.body.insertAdjacentElement("beforeend", style);
-            }
-            else
-            {
-                document.head.insertAdjacentElement("afterbegin", style);
-            }
-        }
-    }
+  }
 }
+
 Resource.manifest = {
   style: {
     path: 'style.min.css'
@@ -2013,106 +1893,80 @@ Resource.manifest = {
 }
 const resourceManifest = Resource.manifest
 
-class StyleManager
-{
-    constructor(resources)
-    {
-        this.resources = resources;
+class StyleManager {
+  constructor (resources) {
+    this.resources = resources
+  }
+  getDefaultStyleId (key) {
+    return key.replace(/([a-z][A-Z])/g,
+      g => `${g[0]}-${g[1].toLowerCase()}`)
+  }
+  applyStyle (key, id) {
+    if (id === undefined) {
+      id = this.getDefaultStyleId(key)
     }
-    getDefaultStyleId(key)
-    {
-        return key.replace(/([a-z][A-Z])/g,
-            g => `${g[0]}-${g[1].toLowerCase()}`);
+    Resource.all[key].applyStyle(id, false)
+  }
+  removeStyle (key) {
+    const style = document.querySelector(`#${this.getDefaultStyleId(key)}`)
+    style && style.remove()
+  }
+  applyImportantStyle (key, id) {
+    if (id === undefined) {
+      id = this.getDefaultStyleId(key)
     }
-    applyStyle(key, id)
-    {
-        if (id === undefined)
-        {
-            id = this.getDefaultStyleId(key);
-        }
-        Resource.all[key].applyStyle(id, false);
+    Resource.all[key].applyStyle(id, true)
+  }
+  applyStyleFromText (text, id) {
+    if (!id) {
+      document.head.insertAdjacentHTML('afterbegin', text)
+    } else {
+      const style = document.createElement('style')
+      style.id = id
+      style.innerText = text
+      document.head.insertAdjacentElement('afterbegin', style)
     }
-    removeStyle(key)
-    {
-        const style = document.querySelector(`#${this.getDefaultStyleId(key)}`);
-        style && style.remove();
+  }
+  applyImportantStyleFromText (text, id) {
+    if (!id) {
+      document.body.insertAdjacentHTML('beforeend', text)
+    } else {
+      const style = document.createElement('style')
+      style.id = id
+      style.innerText = text
+      document.body.insertAdjacentElement('beforeend', style)
     }
-    applyImportantStyle(key, id)
-    {
-        if (id === undefined)
-        {
-            id = this.getDefaultStyleId(key);
-        }
-        Resource.all[key].applyStyle(id, true);
+  }
+  getStyle (key, id) {
+    return Resource.all[key].getStyle(id)
+  }
+  fetchStyleByKey (key) {
+    if (settings[key] !== true) {
+      return
     }
-    applyStyleFromText(text, id)
-    {
-        if (!id)
-        {
-            document.head.insertAdjacentHTML("afterbegin", text);
-        }
-        else
-        {
-            const style = document.createElement("style");
-            style.id = id;
-            style.innerText = text;
-            document.head.insertAdjacentElement("afterbegin", style);
-        }
+    Resource.all[key].styles
+      .filter(it => it.condition !== undefined ? it.condition() : true)
+      .forEach(it => {
+        const important = typeof it === 'object' ? it.important : false
+        const key = typeof it === 'object' ? it.key : it
+        Resource.all[key].download().then(() => {
+          if (important) {
+            contentLoaded(() => this.applyImportantStyle(key))
+          } else {
+            this.applyStyle(key)
+          }
+        })
+      })
+  }
+  prefetchStyles () {
+    for (const key in Resource.all) {
+      if (typeof offlineData !== 'undefined' || settings.useCache && settings.cache[key]) {
+        this.fetchStyleByKey(key)
+      }
     }
-    applyImportantStyleFromText(text, id)
-    {
-        if (!id)
-        {
-            document.body.insertAdjacentHTML("beforeend", text);
-        }
-        else
-        {
-            const style = document.createElement("style");
-            style.id = id;
-            style.innerText = text;
-            document.body.insertAdjacentElement("beforeend", style);
-        }
-    }
-    getStyle(key, id)
-    {
-        return Resource.all[key].getStyle(id);
-    }
-    fetchStyleByKey(key)
-    {
-        if (settings[key] !== true)
-        {
-            return;
-        }
-        Resource.all[key].styles
-            .filter(it => it.condition !== undefined ? it.condition() : true)
-            .forEach(it =>
-            {
-                const important = typeof it === "object" ? it.important : false;
-                const key = typeof it === "object" ? it.key : it;
-                Resource.all[key].download().then(() =>
-                {
-                    if (important)
-                    {
-                        contentLoaded(() => this.applyImportantStyle(key));
-                    }
-                    else
-                    {
-                        this.applyStyle(key);
-                    }
-                });
-            });
-    }
-    prefetchStyles()
-    {
-        for (const key in Resource.all)
-        {
-            if (typeof offlineData !== "undefined" || settings.useCache && settings.cache[key])
-            {
-                this.fetchStyleByKey(key);
-            }
-        }
-    }
+  }
 }
+
 class ResourceManager {
   constructor () {
     this.data = Resource.all
