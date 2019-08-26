@@ -1161,6 +1161,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 }
 .custom-navbar em.suggest-highlight {
     color: var(--theme-color);
+    font-style: normal;
 }
 .custom-navbar .search-list-item {
     padding: 6px;
