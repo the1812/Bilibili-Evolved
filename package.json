@@ -1,0 +1,33 @@
+{
+  "name": "bilibili-evolved",
+  "version": "1.8.18",
+  "description": "「 强大的哔哩哔哩增强脚本 」",
+  "main": "bilibili-evolved.user.js",
+  "dependencies": {
+    "typescript": "^3.5.3",
+    "uglify-es": "^3.3.9",
+    "clean-css-cli": "^4.3.0",
+    "html-minifier": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the1812/Bilibili-Evolved.git"
+  },
+  "keywords": [
+    "userscript",
+    "bilibili",
+    "dark-theme",
+    "touchscreen",
+    "tampermonkey"
+  ],
+  "author": "Grant Howard, Coulomb-G",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/the1812/Bilibili-Evolved/issues"
+  },
+  "homepage": "https://github.com/the1812/Bilibili-Evolved#readme"
+}
