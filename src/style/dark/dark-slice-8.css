@@ -376,7 +376,8 @@ li.danmaku-info-row.bpui-selecting,
 .index-entry-wrapper .filter-block-title a,
 .index-entry-wrapper .filter-list .filter-item,
 .handpick-right-module .block-header .block-title,
-.hot-recom-module .random-change .info
+.hot-recom-module .random-change .info,
+.app-layout .account-info-container
 {
     color: #eee !important;
 }
