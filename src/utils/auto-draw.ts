@@ -12,17 +12,21 @@
   }
   Observer.childListSubtree(popupContainer, () => {
     let draw: HTMLSpanElement | null
-    const tryDraw = () => {
-      console.log('draw button = ', dq('.chat-popups-section .draw>span:nth-child(3)'))
-      console.log(popupContainer)
-      draw = dq('.chat-popups-section .draw>span:nth-child(3)') as HTMLSpanElement | null
-      if (draw === null && dq('.chat-popups-section chat-draw-area') === null) {
-        return
-      }
-      if (draw !== null) {
-        draw.click()
+    console.log('draw button = ', dq('.chat-popups-section .draw>span:nth-child(3)'))
+    draw = dq('.chat-popups-section .draw>span:nth-child(3)') as HTMLSpanElement | null
+    if (draw === null) {
+      const drawWaiting = dq('.chat-popups-section .function-bar>span:nth-child(3)') as HTMLSpanElement | null
+      if (drawWaiting !== null) {
+        const observers = Observer.attributes(drawWaiting, () => {
+          if (drawWaiting.style.display !== 'none') {
+            observers.forEach(it => it.stop())
+            drawWaiting.click()
+          }
+        })
       }
     }
-    tryDraw()
+    if (draw !== null) {
+      draw.click()
+    }
   })
 })()
