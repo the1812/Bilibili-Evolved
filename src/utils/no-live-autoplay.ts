@@ -5,7 +5,7 @@
   }
   SpinQuery.condition(
     () => document.querySelector('.component-ctnr video,.bilibili-live-player-video video'),
-    (video: HTMLVideoElement) => !video.paused,
+    (video: HTMLVideoElement) => video && !video.paused,
     () => {
       const button = document.querySelector('.bilibili-live-player-video-controller-start-btn>button') as HTMLButtonElement
       button.click()
