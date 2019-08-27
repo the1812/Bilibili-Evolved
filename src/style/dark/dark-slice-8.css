@@ -109,7 +109,10 @@ li.danmaku-info-row.bpui-selecting,
 .recommendation-list .list-item:before,
 .vip-m .bubble-traditional .renew-btn button,
 .container .more-btn,
-.hot-recom-module .random-change
+.hot-recom-module .random-change,
+.user-item .attention-btn.followed,
+.user-item .attention-btn.followed:hover,
+.flow-loader .activity-item .info .type
 {
     background-color: #444 !important;
 }
@@ -220,7 +223,8 @@ li.danmaku-info-row.bpui-selecting,
 .time-line-card .txt .update a,
 .rank-wrap .preview .txt span,
 .article-card .r-con .up,
-.article-card .r-con .count
+.article-card .r-con .count,
+#all-list .user-item .up-info>span
 {
     color: #aaa !important;
 }
@@ -377,7 +381,15 @@ li.danmaku-info-row.bpui-selecting,
 .index-entry-wrapper .filter-list .filter-item,
 .handpick-right-module .block-header .block-title,
 .hot-recom-module .random-change .info,
-.app-layout .account-info-container
+.app-layout .account-info-container,
+.activity-item .info .title,
+#all-list .user-item .title,
+.user-item .up-videos .video-item .video-desc,
+.video-item.matrix .title,
+.user-item .up-videos .video-more,
+.user-item .attention-btn.followed,
+.user-item .attention-btn.followed:hover,
+.flow-loader .activity-item .info .type
 {
     color: #eee !important;
 }
@@ -442,7 +454,11 @@ li.danmaku-info-row.bpui-selecting,
 .lang-change,
 .container .tab-header,
 .round-corner .out-container .tab-bar,
-.hot-recom-module .random-change
+.hot-recom-module .random-change,
+.flow-loader .activity-item,
+.flow-loader .user-item,
+.flow-loader .video-item.matrix,
+.flow-loader .activity-item .info .type
 {
     border-color: transparent !important;
 }
@@ -463,7 +479,8 @@ li.danmaku-info-row.bpui-selecting,
 .practice-wrap .banner-container .current-work,
 .round-corner .international-footer .link-box .link-item,
 .van-popper[x-placement^=bottom] .popper__arrow:after,
-.van-popper[x-placement^=top] .popper__arrow:after
+.van-popper[x-placement^=top] .popper__arrow:after,
+#all-list .mixin-list ul:not(:last-child)
 {
     border-color: #444 !important
 }
@@ -744,7 +761,12 @@ li.danmaku-info-row.bpui-selecting,
 .round-corner .out-container .tab-item:hover,
 .container .publish-time,
 .index-entry-wrapper .filter-block-title a:hover,
-.index-entry-wrapper .filter-list .filter-item:hover
+.index-entry-wrapper .filter-list .filter-item:hover,
+.activity-item .info .title:hover,
+#all-list .user-item .title:hover,
+.user-item .up-videos .video-item .video-desc:hover,
+.video-item.matrix .title:hover,
+.user-item .up-videos .video-more:hover
 {
     color: var(--theme-color) !important;
 }
