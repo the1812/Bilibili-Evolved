@@ -673,6 +673,8 @@ export const map = new Map([
   [`请求遭到拒绝, 请检查您的密钥相关设置.`, `Connection refused, please check your Secret Key.`],
   [`明日方舟`, `Arknights`],
   [`直播歌曲内容不适宜请立即调整`, `Your songs in live have conflicted our policy, please use other songs.`],
+  [`快捷键扩展`, `Extended Keymap`],
+  [`限速`, `Speed Limit`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

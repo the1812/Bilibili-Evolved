@@ -109,6 +109,14 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   ['deadVideoTitleProvider', `Select dead video info provider: Watchlater is stable but takes some time, BiliPlus runs fast but it's not implemented yet.`],
   ['useDefaultVideoSpeed', `Set the default video playback rate.`],
   ['defaultVideoSpeed', `Select the default playback rate.`],
+  ['seedsToCoins', `Append a <span>Seeds to coins</span> button, click to convert 700 silver seeds to 1 coin, up to one time per day.`],
+  ['autoDraw', `Auto click draw button when there're drawing events in live room.`],
+  ['keymap', `Enable more keyboard shortcuts for video player:
+- <kbd>w</kbd> Web fullscreen
+- <kbd>t</kbd> Wide screen / Theater mode
+- <kbd>r</kbd> Toggle repeat
+- <kbd>m</kbd> Toggle mute
+- <kbd>d</kbd> Toggle danmakus`],
 ]);
 export default {
   export: { toolTips },
