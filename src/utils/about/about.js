@@ -31,14 +31,6 @@
       ].sort(userSorter),
       fetching: true,
       participants: [],
-      supporters: [
-        '*耀宇',
-        '*飞',
-        'N*v',
-        '*博睿',
-        '*杨',
-        '*泽鹏'
-      ].sort(nameSorter),
       websites: [
         {
           name: 'GitHub',
