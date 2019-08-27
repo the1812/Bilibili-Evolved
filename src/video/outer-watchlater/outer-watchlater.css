@@ -16,10 +16,12 @@
     color: #eee;
     transition: all .2s ease-out;
     opacity: 0;
+    pointer-events: none;
 }
 .watchlater .tip.show
 {
     opacity: 1;
+    pointer-events: initial;
 }
 .ops .watchlater>i
 {

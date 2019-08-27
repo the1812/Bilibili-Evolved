@@ -305,6 +305,7 @@ Resource.manifest = {
   },
   about: {
     path: 'about.min.js',
+    alwaysPreview: true,
     html: true,
     style: 'important',
     displayNames: {
@@ -430,10 +431,10 @@ Resource.manifest = {
       useBiliplusRedirect: '失效视频重定向',
       deadVideoTitleProvider: '信息来源',
     },
-    dropdown: {
-      key: 'deadVideoTitleProvider',
-      items: ['稍后再看'],
-    },
+    // dropdown: {
+    //   key: 'deadVideoTitleProvider',
+    //   items: ['稍后再看'],
+    // },
   },
   autoPlay: {
     path: 'auto-play.min.js',
@@ -655,6 +656,36 @@ Resource.manifest = {
     displayNames: {
       seedsToCoins: '瓜子换硬币',
       autoSeedsToCoins: '自动运行',
+    },
+  },
+  magicGrid: {
+    path: 'magic-grid.min.js',
+    displayNames: {
+      magicGrid: 'Magic Grid',
+    },
+  },
+  watchlaterApi: {
+    path: 'watchlater-api.min.js',
+    displayNames: {
+      toggleWatchlater: '稍后再看API',
+    },
+  },
+  mdi: {
+    path: 'mdi.min.js',
+    displayNames: {
+      mdi: 'MDI 图标集',
+    },
+  },
+  autoDraw: {
+    path: 'auto-draw.min.js',
+    displayNames: {
+      autoDraw: '直播间自动领奖',
+    },
+  },
+  keymap: {
+    path: 'keymap.min.js',
+    displayNames: {
+      keymap: '快捷键扩展',
     },
   },
 }

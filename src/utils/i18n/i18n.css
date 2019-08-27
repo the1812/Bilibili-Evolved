@@ -25,13 +25,18 @@
 .bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku,
 .bangumi-info .info-right .info-title .func-module .bangumi-btn .btn-follow,
 .invite-code .copy-btn,
-.bili-share-pc .title
+.bili-share-pc .title,
+.video-toolbar-module .btn-item .t,
+.exchange-btn .more,
+.rank-header .more
 {
     width: auto !important;
 }
 .bb-comment .comment-send .comment-emoji,
 #app-ctnr .demo-app .category,
-.fjw-point .point-wrap .user-point .face .unfocus-btn
+.fjw-point .point-wrap .user-point .face .unfocus-btn,
+.live-room-app .draw-fold-cntr .draw,
+.media-info-card .mic-expand
 {
     width: max-content !important;
 }
@@ -185,14 +190,21 @@
 {
     float: none !important;
 }
-#area-list ul li dd
+#area-list ul li dd,
+.highlight-areas-ctnr .highlight-area-item .area-name
 {
     font-size: 18px !important;
+}
+.bilibili-player.mode-fullscreen .bilibili-player-video-control .bilibili-player-video-btn-name,
+.bilibili-player.mode-webfullscreen .bilibili-player-video-control .bilibili-player-video-btn-name
+{
+    font-size: 14px !important;
 }
 .author-info .favourite-btn,
 .author-info .favourite-btn:active,
 .author-info .communicate-btn,
-.author-info .communicate-btn:active
+.author-info .communicate-btn:active,
+.bilibili-player .bilibili-player-video-control .bilibili-player-video-btn-name
 {
     font-size: 12px !important;
 }

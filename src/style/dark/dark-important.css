@@ -106,7 +106,15 @@ blockquote .color-yellow-04,
 .coupon-content-con .coupon-btn-disable,
 .common .bb-comment .no-login .comment-submit,
 .popup-content-ctnr .bl-button--ghost:hover,
-.customize-wrp .select
+.customize-wrp .select,
+.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read,
+.live-room-app .tabs.isHundred .item.active,
+.live-room-app .guard-rank-cntr.hundred .live-skin-main-a-text,
+.live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text,
+.live-room-app .guard-rank-cntr.hundred .page-box .live-skin-main-text,
+.live-room-app .guard-rank-cntr.thousand .page-box .live-skin-main-text,
+.live-room-app .guard-rank-cntr.hundred .live-skin-highlight-text,
+.live-room-app .guard-rank-cntr.thousand .live-skin-highlight-text
 {
     color: #eee !important;
 }
@@ -161,7 +169,12 @@ blockquote .color-yellow-04,
 .up-info .u-info .name .username.is-vip:hover,
 #app .sticky-bar .bar-content .message:hover,
 .el-select-dropdown__item.selected,
-.r-con .members-info .up-card .info-name.is-vip:hover
+.r-con .members-info .up-card .info-name.is-vip:hover,
+.app-layout .style-section .tag-block .tag-containers .style-tag.selected,
+.manga-detail .episode-list-component .episode-list .list-header .header-item.selected,
+.live-room-app .guard-rank-cntr.hundred .live-skin-main-a-text:hover,
+.live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text:hover,
+.container .video-panel .play-all .bilifont
 {
     color: var(--theme-color) !important;
 }
@@ -174,7 +187,8 @@ blockquote .color-yellow-04,
 .page-list-box .page-input:focus,
 .page-list-box .page-input:hover,
 .live-skin-coloration-area .room-info-ctnr .info-section .live-skin-highlight-border,
-.popup-content-ctnr .bl-button--ghost
+.popup-content-ctnr .bl-button--ghost,
+.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read
 {
     border-color: var(--theme-color) !important;
 }
@@ -201,7 +215,8 @@ blockquote .color-yellow-04,
 .el-date-table td.current:not(.disabled),
 .el-date-table td.end-date,
 .el-date-table td.start-date,
-.popup-content-ctnr .bl-button--ghost
+.popup-content-ctnr .bl-button--ghost,
+.style-section .tag-block .tag-containers .style-tag:active
 {
     color: var(--foreground-color) !important;
 }

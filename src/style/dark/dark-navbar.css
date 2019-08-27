@@ -7,7 +7,9 @@
     background-color: #222;
 }
 .link-navbar .nav-item:hover,
-.shortcuts-ctnr .shortcut-item:hover
+.shortcuts-ctnr .shortcut-item:hover,
+.search-bar-ctnr .search-bar,
+.nav-header-wrapper .nav-header .nav-header-search-bar
 {
     background-color: #222 !important;
 }
@@ -51,12 +53,13 @@
 .uns_box li.u-i a.i-link,
 .shortcuts-ctnr .shortcut-item,
 .link-navbar .main-ctnr .custom-link>a,
-.search-bar-ctnr .search-bar input,
 .shortcut-item .list-item span
 {
     color: #eee;
 }
-.link-navbar .main-ctnr .nav-logo
+.link-navbar .main-ctnr .nav-logo,
+.search-bar-ctnr .search-bar input,
+.nav-header-wrapper .nav-header .nav-header-search-bar
 {
     color: #eee !important;
 }
@@ -83,6 +86,6 @@
 }
 .search-bar-ctnr .search-bar
 {
-    border: none;
+    border-color: transparent !important;
     box-shadow: 0px 2px 10px 1px #0002;
 }

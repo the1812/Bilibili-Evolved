@@ -41,18 +41,44 @@ async function getRpc(rpcParam: RpcParam, batch = false) {
     const base64Params = window.btoa(unescape(encodeURIComponent(JSON.stringify(rpcParam.params))))
     const url = `${host}:${option.port}/jsonrpc?method=${methodName}&id=${rpcParam.id}&params=${base64Params}`
     console.log(`RPC request:`, url)
-    return await Ajax.getJson(url)
+    if (url.startsWith('http:')) {
+      return await new Promise((resolve, reject) => {
+        GM_xmlhttpRequest({
+          method: 'GET',
+          url,
+          responseType: 'json',
+          onload: r => resolve(r.response),
+          onerror: r => reject(r),
+        })
+      })
+    } else {
+      return await Ajax.getJson(url)
+    }
   }, batch)
 }
 async function postRpc(rpcParam: RpcParam, batch = false) {
   const { option, host, methodName } = getOption()
   return await rpc(async () => {
     const url = `${host}:${option.port}/jsonrpc`
-    return await Ajax.postJson(url, {
+    const data = {
       method: methodName,
       id: rpcParam.id,
       params: rpcParam.params,
-    })
+    }
+    if (url.startsWith('http:')) {
+      return await new Promise((resolve, reject) => {
+        GM_xmlhttpRequest({
+          method: 'POST',
+          url,
+          responseType: 'json',
+          data: JSON.stringify(data),
+          onload: r => resolve(r.response),
+          onerror: r => reject(r),
+        })
+      })
+    } else {
+      return await Ajax.postJson(url, data)
+    }
   }, batch)
 }
 export async function sendRpc(params: RpcParam[], batch = false) {

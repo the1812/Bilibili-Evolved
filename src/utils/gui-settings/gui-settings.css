@@ -44,6 +44,7 @@
     background-color: #dddc;
     border-radius: 0 50% 50% 0;
     padding: 6px;
+    box-sizing: content-box;
 }
 body.dark .gui-settings,
 body.dark .gui-settings-widgets
@@ -92,6 +93,7 @@ body.dark .gui-settings-widgets
     display: flex;
     height: 24px;
     transition: all .2s;
+    box-sizing: content-box;
 }
 .gui-settings-content ul li.disabled,
 .gui-settings-content ul li:not(.category).folded
@@ -124,6 +126,7 @@ body.dark .gui-settings-widgets
     border-top: 1px dashed #8884;
     border-bottom: 1px dashed #8884;
     background: white;
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 101;
@@ -530,7 +533,7 @@ li.category.folded i.icon-arrow
     padding: 32px;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: start;
     justify-content: start;
     position: relative;
     overscroll-behavior: contain;
@@ -563,15 +566,19 @@ li.category.folded i.icon-arrow
 {
     width: auto;
     padding: 8px 16px;
-    background: #8884;
+    background: #8882;
     border: none;
     color: black;
     cursor: pointer;
     transition: all .2s ease-out;
     font-size: 10pt;
-    border-bottom: 2px solid var(--theme-color-50);
     flex: 0 0 auto;
     margin: 4px;
+    border-radius: 20px;
+    box-shadow: #0004 0 2px 4px;
+    height: 40px;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent !important;
 }
 .gui-settings-flat-button:disabled
 {
@@ -580,7 +587,6 @@ li.category.folded i.icon-arrow
 }
 .gui-settings-flat-button:hover:not(:disabled)
 {
-    border-bottom-color: var(--theme-color-90);
     background: #8884;
 }
 .gui-settings-flat-button:active:not(:disabled)
@@ -691,7 +697,6 @@ body.round-corner {
     --corner-radius: 4px;
     --large-corner-radius: 8px;
 }
-.round-corner .gui-settings-flat-button,
 .round-corner .gui-settings-dropdown,
 .round-corner .gui-settings-textbox-container input,
 .round-corner .gui-settings-dropdown ul li,

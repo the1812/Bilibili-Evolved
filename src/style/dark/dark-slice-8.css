@@ -9,7 +9,13 @@
 .submit button,
 .calendar-wrap .calendar-body .date-desc_wrap,
 .row1 .calendar-wrap,
-.main-wrapper .comment-wrapper
+.main-wrapper .comment-wrapper,
+.round-corner .app-layout,
+.app-layout .page-content .feedback-content-input,
+.app-layout .dropbox-component,
+.app-layout .dropbox-component .data-list,
+.van-popover,
+.app-layout .page-content .manga-textbox
 {
     background-color: #222 !important;
 }
@@ -30,7 +36,16 @@
 .dropdown__content .dropdown__item:hover,
 .dropdown__content .dropdown__active,
 .r-con .members-info__container,
-.practice-wrap .tab-container
+.practice-wrap .tab-container,
+.manga-button.ghost,
+.manga-button.primary,
+.app-layout .sidebar,
+.container .links .link-item:hover,
+.lang-change .lang-item:hover,
+.lang-change .lang-intro-item:hover,
+.container .logout a:hover,
+.container .video-card:hover,
+.container .tab-item--normal:hover
 {
     background-color: #333 !important;
 }
@@ -76,11 +91,37 @@ li.danmaku-info-row.bpui-selecting,
 .r-con .members-info__header,
 .r-con .members-info .up-card .attention--not,
 .r-con .members-info .up-card .attention,
-.ui-dropdown .ui-dropdown-text
+.ui-dropdown .ui-dropdown-text,
+.app-layout .page-content .router-view,
+.app-layout .sidebar .nav-item-indicator,
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel,
+.episode-list-component .episode-list .list-data .list-item,
+.exchange-btn .btn,
+.live-rank .live-rank-item .number,
+.gg-window .online,
+.rank-wrap .number,
+.pgc-rank-wrap .number,
+.time-line .tl-link,
+.elevator .list-box .item.back-old,
+.elevator .list-box .item.sort,
+.elevator .list-box,
+.elevator .list-box .item,
+.recommendation-list .list-item:before,
+.vip-m .bubble-traditional .renew-btn button,
+.container .more-btn,
+.hot-recom-module .random-change,
+.user-item .attention-btn.followed,
+.user-item .attention-btn.followed:hover,
+.flow-loader .activity-item .info .type
 {
     background-color: #444 !important;
 }
-.replies-comment-input-wrapper .submit-comment
+.config-item:not(:last-child):after
+{
+    background-color: #555 !important;
+}
+.replies-comment-input-wrapper .submit-comment,
+.guard-rank-cntr .rank-cntr .rank-list-box .url-back
 {
     background-image: none !important;
 }
@@ -107,7 +148,22 @@ li.danmaku-info-row.bpui-selecting,
 .list-header .filter-wrp .article-type .line,
 .list-header .filter-wrp .filter-level .line,
 .list-header .filter-wrp .video-type .line,
-.card .forw-area a.more:hover
+.card .forw-area a.more:hover,
+.multi-line-text:after,
+.manga-recommendation .data-list .list-item,
+.app-layout .user-info>.uid,
+.app-layout .page-content,
+.app-layout .list-item:hover,
+.manga-spread-module .label,
+.danmaku-box .bui-radio-input:checked+.bui-radio-label,
+.app-layout .size-ruler,
+.round-corner .international-footer,
+.round-corner .loc-menu-box,
+.mini-header__content .i-frame::before,
+.mini-header__content .i-frame,
+.round-corner .out-container,
+.round-corner .out-container .tab-bar,
+.container .info .date
 {
     background-color: transparent !important;
 }
@@ -145,11 +201,30 @@ li.danmaku-info-row.bpui-selecting,
 .videos-wrap .card-view .danmu-num,
 .videos-wrap .card-view .play-num,
 .center-box .line-1,
-.center-box .line-1 .name-field,
 .practice-wrap .banner-container .title~p,
 .past-work .card-view .collect-num,
 .past-work .card-view .danmu-num,
-.past-work .card-view .play-num
+.past-work .card-view .play-num,
+.header-info .manga-info .supporting-text,
+.my-coupon .subtitle,
+.app-layout .page-content .extral-info,
+.purchase-history .list-item .text-info .recharge-date,
+.data-list .list-container .data-item .text-section .footer-text .text,
+.manga-spread-module .label,
+.manga-rank-list .rank-item .ri-detail .ri-first-info,
+.manga-rank-list .rank-item .ri-detail .ri-update,
+.live-list .text-info,
+.live-list .text-info a,
+.live-card .up .txt .desc,
+.live-card .up .txt .tag,
+.video-card-common .up,
+.live-rank .live-rank-item .txt p.p2,
+.pgc-rank-wrap .txt .update,
+.time-line-card .txt .update a,
+.rank-wrap .preview .txt span,
+.article-card .r-con .up,
+.article-card .r-con .count,
+#all-list .user-item .up-info>span
 {
     color: #aaa !important;
 }
@@ -238,7 +313,83 @@ li.danmaku-info-row.bpui-selecting,
 .tabs-nav .tab-item,
 .customize-wrap .title,
 .center-box .line-2,
-.new-comers-module .zone-title .headline .name
+.new-comers-module .zone-title .headline .name,
+.rank-list-item .expand-mode .text-section .item-title,
+.schedule-list .list-header .date-selector .date-item,
+.style-section .tag-block .block-title,
+.style-section .tag-block .tag-containers .style-tag,
+.header-info .manga-info .author-name,
+.episode-list-component .episode-list .list-header .header-item,
+.manga-button.ghost,
+.manga-button.primary,
+.user-info-component .coin-info,
+.pivot-component .pivot-headers .pivot-header-item,
+.my-coupon .coupon-title,
+.my-coupon .coupon-title .coupon-number,
+.app-layout .page-content .feedback-content-input .length-hinter,
+.purchase-history .list-item .text-info .display-text,
+.purchase-history .list-item .coin-info .recharge-count,
+.app-layout .dropbox-component .current,
+.app-layout .dropbox-component .data-list>li,
+.app-layout .page-content .manga-textbox,
+.app-ctnr .club-brief,
+.data-list .list-container .data-item .text-section .manga-title,
+.player-auxiliary-danmaku-report-wrap .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-content,
+.round-corner .international-footer .link-box .link-item ul a,
+.round-corner .international-footer .link-box .link-item.link-c p,
+.round-corner .international-footer .link-box .link-item .bt,
+.round-corner .international-footer .partner a,
+.live-card .up .txt .name,
+.video-card-common .title,
+.international-header a,
+.van-popover a,
+.live-rank .live-rank-item .txt p,
+.rank-header .name,
+.rank-wrap .link .title,
+.rank-wrap .preview .txt p,
+.pgc-rank-wrap .txt .title,
+.time-line-card .txt .ss,
+.exchange-btn .btn,
+.live-rank .live-rank-item .number,
+.gg-window .online a,
+.rank-wrap .number,
+.pgc-rank-wrap .number,
+.special-recommend header,
+.time-line .tl-link,
+.article-card .r-con .title,
+.elevator .list-box .item.back-old,
+.popularity-list .list-title,
+.container .level-info .grade,
+.container .count-item .item-value,
+.container .links .link-title,
+.lang-change .lang-title,
+.lang-change .lang-intro,
+.container .level-intro,
+.vip-m .bubble-traditional .recommand .title,
+.vip-m .bubble-traditional .renew-btn button,
+.round-corner .out-container .tab-bar,
+.container .split-line,
+.container .tab-item--normal,
+.container .video-info .line-2,
+.container .date-title,
+.container .tab-header .tab-item,
+.container .tab-header .tab-item:hover,
+.container .more-btn,
+.index-entry-wrapper .filter-block-title span,
+.index-entry-wrapper .filter-block-title a,
+.index-entry-wrapper .filter-list .filter-item,
+.handpick-right-module .block-header .block-title,
+.hot-recom-module .random-change .info,
+.app-layout .account-info-container,
+.activity-item .info .title,
+#all-list .user-item .title,
+.user-item .up-videos .video-item .video-desc,
+.video-item.matrix .title,
+.user-item .up-videos .video-more,
+.user-item .attention-btn.followed,
+.user-item .attention-btn.followed:hover,
+.flow-loader .activity-item .info .type
 {
     color: #eee !important;
 }
@@ -282,7 +433,32 @@ li.danmaku-info-row.bpui-selecting,
 .main-wrapper .comment-wrapper,
 .title-container .info .activity,
 .practice-wrap .tab-container,
-.ui-dropdown .ui-dropdown-text
+.ui-dropdown .ui-dropdown-text,
+.app-layout .dropbox-component,
+.app-layout .dropbox-component .data-list,
+.app-layout .page-content .manga-textbox:focus,
+.exchange-btn .btn,
+.gg-window .online,
+.time-line .tl-link,
+.elevator .list-box .item.back-old,
+.page-tab .con li,
+.elevator .list-box,
+.elevator .list-box .item.back-top,
+.van-popover,
+.tab-line-itnl,
+.van-popper[x-placement^=top] .popper__arrow,
+.van-popper[x-placement^=bottom] .popper__arrow,
+.container .coins,
+.container .counts,
+.container .links,
+.lang-change,
+.container .tab-header,
+.round-corner .out-container .tab-bar,
+.hot-recom-module .random-change,
+.flow-loader .activity-item,
+.flow-loader .user-item,
+.flow-loader .video-item.matrix,
+.flow-loader .activity-item .info .type
 {
     border-color: transparent !important;
 }
@@ -300,7 +476,11 @@ li.danmaku-info-row.bpui-selecting,
 .tab-content .bilibili-comment,
 .calendar-wrap .calendar-body .date-desc_wrap .item-desc_card .item-desc_body .item-desc__content,
 .calendar-wrap .calendar-header,
-.practice-wrap .banner-container .current-work
+.practice-wrap .banner-container .current-work,
+.round-corner .international-footer .link-box .link-item,
+.van-popper[x-placement^=bottom] .popper__arrow:after,
+.van-popper[x-placement^=top] .popper__arrow:after,
+#all-list .mixin-list ul:not(:last-child)
 {
     border-color: #444 !important
 }
@@ -308,7 +488,13 @@ li.danmaku-info-row.bpui-selecting,
 .at-item:not(:last-child):after,
 .love-item:not(:last-child):after,
 .liked-user:not(:last-child):after,
-.center-box .orginal-reply
+.center-box .orginal-reply,
+.app-layout .pivot-component .pivot-headers,
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel .player-auxiliary-report-panel-title,
+.elevator .list-box .item.sort,
+.container .play-all,
+.container .tabs-panel,
+.container .split-line::before
 {
     border-color: #555 !important
 }
@@ -324,7 +510,13 @@ li.danmaku-info-row.bpui-selecting,
 {
     fill: #fff !important;
 } */
-.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .address-icon
+.whole-detail-info-wrapper .detail-info-wrapper .vuene-wrapper .address-icon,
+.header-info .manga-info .supporting-text .label-icon,
+.header-info .manga-info .action-buttons .do-favourite .fav-icon,
+.app-layout .sidebar .nav-item .nav-item-icon,
+.my-coupon .subtitle .question-cion,
+.index-entry-wrapper .filter-block-title a:after,
+.hot-recom-module .random-change .icon_read
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -339,7 +531,8 @@ li.danmaku-info-row.bpui-selecting,
 .fjw-random .unagree.active,
 .fjw-random .unagree:hover,
 .svga-container.svga-center canvas,
-.ops canvas.ring-progress
+.ops canvas.ring-progress,
+.home-slide .trigger span.on
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -369,6 +562,13 @@ li.danmaku-info-row.bpui-selecting,
 .fans-medal-item.special-medal .union
 {
     filter: brightness(0.125) !important;
+}
+.video-info-m .number .coin b,
+.video-info-m .number .coin i,
+.video-info-m .number .fav b,
+.video-info-m .number .fav i
+{
+    filter: brightness(0.135) !important;
 }
 /* a
 {
@@ -404,7 +604,8 @@ li.danmaku-info-row.bpui-selecting,
 .navbar-container,
 .bilibili-player-ending-panel-box-recommend:hover,
 .selectable-option.active,
-.guest-wrapper .guest-list .guest-item:hover .image
+.guest-wrapper .guest-list .guest-item:hover .image,
+.player-auxiliary-danmaku-report-wrap.player-auxiliary-danmaku-report-wrap-white .player-auxiliary-danmaku-report-box .player-auxiliary-danmaku-report-panel
 {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
@@ -421,7 +622,9 @@ li.danmaku-info-row.bpui-selecting,
 .replies-comment-input-wrapper .replies-upload .comment-input-img:hover,
 .selectable-option.active,
 .selectable-option.active:after,
-.tabs-nav .tab-item.border-bottom
+.tabs-nav .tab-item.border-bottom,
+.live-tabs .tab-switch .tab-switch-item.on,
+.time-line .tab-switch .tab-switch-item.on
 {
     border-color: var(--theme-color) !important;
 }
@@ -456,7 +659,24 @@ li.danmaku-info-row.bpui-selecting,
 .calendar .days li.selected,
 .tabs-wrapper .tabs .tabs-item.active:before,
 .calendar-wrap .calendar-body .date-wrap .wrap-content .select-icon,
-.practice-wrap .banner-container .current-work .bili-btn
+.practice-wrap .banner-container .current-work .bili-btn,
+.style-section .tag-block .tag-containers .style-tag:active,
+.manga-button.primary:hover,
+.app-layout .dropbox-component .data-list>li:hover,
+.episode-list-component .episode-list .list-data .list-item:hover,
+.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover,
+.exchange-btn .btn:hover,
+.live-rank .live-rank-item .number.on,
+.rank-wrap .number.on,
+.pgc-rank-wrap .number.on,
+.home-slide .trigger span:hover,
+.time-line .tl-link:hover,
+.elevator .list-box .item.on,
+.elevator .list-box .item:hover,
+.vip-m .bubble-traditional .renew-btn button:hover,
+.round-corner .out-container .tab-item.active,
+.container .tab-item--active,
+.container .more-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -513,7 +733,40 @@ li.danmaku-info-row.bpui-selecting,
 .center-box .line-1 .like-item:hover,
 .card .forw-area a.more:hover,
 .new-comers-module .zone-title .headline .name:hover,
-.left-nav-childed .left-nav-childed-list.active .left-nav-item-childed span
+.left-nav-childed .left-nav-childed-list.active .left-nav-item-childed span,
+.schedule-list .list-header .date-selector .date-item.active,
+.pivot-component .pivot-headers .pivot-header-item.selected,
+.pivot-component .pivot-headers .pivot-header-item:active,
+.round-corner .international-footer .link-box .link-item.link-c a:hover p,
+.round-corner .international-footer .link-box .link-item ul a:hover,
+.round-corner .international-footer .partner a:hover,
+.video-card-common .title:hover,
+.international-header a:hover,
+.van-popover a:hover,
+.video-card-common .up:hover,
+.rank-wrap .preview .txt p:hover,
+.rank-wrap .link p:hover,
+.pgc-rank-wrap .txt .title:hover,
+.time-line-card .txt a:hover,
+.live-card .up .txt .name:hover,
+.live-tabs .tab-switch .tab-switch-item.on,
+.gg-window .online a:hover,
+.time-line-card .txt .update .published,
+.time-line .tab-switch .tab-switch-item.on,
+.article-card .r-con .title:hover,
+.container .count-item:hover .item-key,
+.container .count-item:hover .item-value,
+.lang-change .lang-intro-item.on,
+.container .video-list .content:hover,
+.round-corner .out-container .tab-item:hover,
+.container .publish-time,
+.index-entry-wrapper .filter-block-title a:hover,
+.index-entry-wrapper .filter-list .filter-item:hover,
+.activity-item .info .title:hover,
+#all-list .user-item .title:hover,
+.user-item .up-videos .video-item .video-desc:hover,
+.video-item.matrix .title:hover,
+.user-item .up-videos .video-more:hover
 {
     color: var(--theme-color) !important;
 }
@@ -533,7 +786,20 @@ li.danmaku-info-row.bpui-selecting,
 .link-navbar .nav-item:hover .nav-link,
 .h5share-container .tag,
 .comic-info-component .page-normal .comic-info-con .comic-des .comic-operation .comic-view-btn,
-.practice-wrap .banner-container .current-work .bili-btn
+.practice-wrap .banner-container .current-work .bili-btn,
+.app-layout .dropbox-component .data-list>li:hover,
+.episode-list-component .episode-list .list-data .list-item:hover,
+.manga-navbar-manga-logo,
+.exchange-btn .btn:hover,
+.live-rank .live-rank-item .number.on,
+.rank-wrap .number.on,
+.pgc-rank-wrap .number.on,
+.time-line .tl-link:hover,
+.elevator .list-box .item.on,
+.elevator .list-box .item:hover,
+.round-corner .out-container .tab-item.active,
+.container .tab-item--active,
+.container .more-btn:hover
 {
     color: var(--foreground-color) !important;
 }
@@ -551,11 +817,12 @@ li.danmaku-info-row.bpui-selecting,
     border-top-color: transparent !important;
     border-left-color: transparent !important;
 }
-/* a
+.van-popper[x-placement^=top] .popper__arrow:after,
+.van-popper[x-placement^=bottom] .popper__arrow:after
 {
     border-left-color: transparent !important;
     border-right-color: transparent !important;
-} */
+}
 .feed-topic .empty-content,
 .report-dialog-container .textarea-wrapper
 {

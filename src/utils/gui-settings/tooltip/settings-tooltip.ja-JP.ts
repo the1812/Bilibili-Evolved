@@ -25,6 +25,12 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["playerFocus", `動画/番組の放送ページに入る時、プレーヤーに自動的に移動する.`],
     ["playerFocusOffset", `移動時の垂直オフセット、単位はピクセル(px).`],
     ["outerWatchlater", `動画放送ページの<span>稍后再看</span>を外に移動します.`],
+    ['keymap', `動画プレーヤーのためにより多くのショートカットを有効にします:
+- <kbd>w</kbd> ウェブの全画面
+- <kbd>t</kbd> ワイドモード
+- <kbd>r</kbd> サイクル放送
+- <kbd>m</kbd> 消音
+- <kbd>d</kbd> 弾幕スイッチ`],
     ["customStyleColor", `頂欄(スタイルの調整が有効な場合）とダークテーマのテーマ色で埋める、カラープレビューサークルをクリックして、设定の16種類のテーマカラーにできるの、右側のテキストボックスに任意の有効な16進数のカラー値を直接入力することもできます.(<span>#rrggbb</span>或<span>#rgb</span>).`],
     ["blurBackgroundOpacity", `设置顶栏对横幅的透明度(0~1), 数值越高顶栏越淡, 当横幅关闭时此选项无效.`],
     ["customNavbar", `カスタム頂欄を使用する.伝統的な頂欄に取って代わる.メインステーション専用です.「生放送」、「アルバム」、「会員購」などには影響しません.`],
@@ -117,6 +123,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ['sideBarOffset', `設定ボタンの垂直オフセット、単位はパーセント、許容範囲は-40％〜40％です.`],
     ['useDefaultVideoSpeed', `デフォルトの再生速度を使用するかどうかを設定します.`],
     ['defaultVideoSpeed', `デフォルトの動画再生速度を設定する.`],
+    ['autoDraw', `ライブルームに抽選活動がある場合は、「受け取り」ボタンを自動的にクリックします.`],
 ]);
 export default {
     export: { toolTips },

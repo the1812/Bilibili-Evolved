@@ -37,7 +37,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 结束时间小于起始时间时将视为次日, 如<span>18:00</span>至<span>6:00</span>表示晚上18:00到次日6:00.`],
   ["darkScheduleStart", /*html*/`设置计划时段的起始时间.`],
   ["darkScheduleEnd", /*html*/`设置计划时段的结束时间.`],
-  ["compactLayout", /*html*/`设置首页是否使用紧凑布局, 视频的间距会减小并削去圆角, 分区栏的图标会使用高清重制版. 目前仅支持首页, 其他分区的样式后续会添加.`],
+  ["compactLayout", /*html*/`设置首页是否使用紧凑布局, 视频的间距会减小, 分区栏的图标会使用高清重制版.`],
   ["useCommentStyle", /*html*/`- 删除热评头像下方的关注按钮
 - 删除用户的等级标识
 - 删除发送源信息(<span>来自安卓客户端</span>这种)
@@ -132,7 +132,14 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['foldComment', /*html*/`动态里查看评论区时, 在底部添加一个<span>收起评论</span>按钮, 这样就不用再回到上面收起了.`],
   ['useDefaultVideoSpeed', /*html*/`设置是否使用默认视频播放速度.`],
   ['defaultVideoSpeed', /*html*/`设置默认的视频播放速度.`],
-  ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`]
+  ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`],
+  ['autoDraw', /*html*/`在当前直播间有抽奖活动时, 自动点击抽奖按钮.`],
+  ['keymap', /*html*/`为视频播放器启用更多的快捷键:
+- <kbd>w</kbd> 网页全屏
+- <kbd>t</kbd> 宽屏
+- <kbd>r</kbd> 循环播放
+- <kbd>m</kbd> 静音
+- <kbd>d</kbd> 弹幕开关`],
 ]);
 export default {
   export: { toolTips },

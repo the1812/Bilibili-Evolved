@@ -30,7 +30,6 @@ body.dark .primary-menu .nav-menu .side-nav .side-link i
 {
     width: 100% !important;
     height: 100% !important;
-    transition: all .2s;
 }
 .groom-module:hover .pic,
 .groom-module:hover .lazy-img
@@ -170,9 +169,11 @@ body.dark .primary-menu .nav-menu .side-nav .side-link i
 .carousel-wrapper,
 .video-item-biref .biref-img,
 .game-groom-box-m .game-groom-m,
-.rank-item .content .img .cover img
+.rank-item .content .img .cover img,
+.article-card .article-cover,
+.article-card .article-cover img
 {
-    border-radius: 0 !important;
+    border-radius: 8px !important;
 }
 .rank-list .rank-item .ri-num,
 .card-timing-module .pic,
@@ -398,7 +399,6 @@ body.dark .primary-menu .nav-menu .side-nav .side-link i
 {
     width: 116px !important;
     height: 87px !important;
-    border-radius: 0 !important;
 }
 .article-card
 {

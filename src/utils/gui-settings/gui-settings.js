@@ -123,7 +123,6 @@ function setDisplayNames () {
 
 (async () => {
   resources.applyStyle('guiSettingsStyle')
-  document.body.insertAdjacentHTML('afterbegin', `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css">`)
   document.body.classList.add('round-corner')
 
   const isIframe = document.body && unsafeWindow.parent.window !== unsafeWindow
@@ -134,6 +133,11 @@ function setDisplayNames () {
 
   const settingsBox = resources.data.guiSettingsHtml.text
   document.body.insertAdjacentHTML('beforeend', settingsBox)
+
+  const { style } = await import('../../style/mdi')
+  if (!style) {
+    document.body.insertAdjacentHTML('afterbegin', `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css">`)
+  }
   resources.applyDropdownOptions()
 
   const widgetsContainer = document.querySelector('.widgets-container')

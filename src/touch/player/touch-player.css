@@ -13,7 +13,6 @@
 }
 .touch-video-box
 {
-    border-radius: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,6 +24,12 @@
     max-height: 240px;
     border: 4px solid transparent;
     transform-origin: center;
+}
+.round-corner .touch-video-box {
+    border-radius: var(--corner-radius);
+}
+.touch-video-box-wrapper.simple {
+    align-items: flex-start;
 }
 .touch-video-box.animation
 {
@@ -82,10 +87,11 @@
     bottom: 0;
     left: 0;
     background: var(--theme-color);
-    width: 100%;
-    transform-origin: left;
-    transform: scaleX(0);
+    width: 0;
     height: 4px;
+}
+.round-corner .touch-progress {
+    border-radius: 2px;
 }
 .touch-row-item
 {

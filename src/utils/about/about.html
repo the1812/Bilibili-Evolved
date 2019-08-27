@@ -20,15 +20,16 @@
       <a class="contributor" target="_blank" v-for="contributor of contributors"
         v-bind:href="contributor.link">{{contributor.name}}</a>
     </section>
+    <section class="supporters">
+      <a class="title" target="_blank" href="https://github.com/the1812/Bilibili-Evolved/blob/preview/donate.md#历史">View
+        Supporters</a>
+      <!-- <span class="supporter" v-for="supporter of supporters">{{supporter}}</span> -->
+    </section>
     <section class="participants">
-      <span class="title">Participants</span>
+      <span class="title">Community Power</span>
       <span class="fetching" v-if="fetching"></span>
       <a class="participant" target="_blank" v-for="participant of participants"
         v-bind:href="participant.link">{{participant.name}}</a>
-    </section>
-    <section class="supporters">
-      <span class="title">Supporters</span>
-      <span class="supporter" v-for="supporter of supporters">{{supporter}}</span>
     </section>
     <section class="websites">
       <span class="title">Websites</span>
