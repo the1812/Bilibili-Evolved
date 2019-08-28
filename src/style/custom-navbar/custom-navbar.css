@@ -145,6 +145,10 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .van-popover {
     z-index: 10002 !important;
 }
+.international-header
+{
+    height: var(--navbar-height) !important;
+}
 
 .bili-header-m>.nav-menu,
 .z_top
@@ -1705,6 +1709,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     position: relative;
     display: flex;
     margin-bottom: 12px;
+    flex-shrink: 0;
 }
 .round-corner .custom-navbar .bangumi-subscriptions-card {
     border-radius: var(--large-corner-radius);
