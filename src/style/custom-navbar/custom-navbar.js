@@ -917,7 +917,7 @@ class Activities extends NavbarComponent {
           <transition name="activity-content" mode="out-in">
             <component :is="content"></component>
           </transition>
-          <a class="view-more" target="_blank" :href="viewMoreUrl">查看更多<i class="mdi mdi-dots-horizontal-circle-outline"></i></a>
+          <!-- <a class="view-more" target="_blank" :href="viewMoreUrl">查看更多<i class="mdi mdi-dots-horizontal-circle-outline"></i></a> -->
         </div>
       </div>
     `;
@@ -1043,6 +1043,9 @@ class Activities extends NavbarComponent {
           `,
           methods: {
             changeTab (item) {
+              if (this.tab === item.name) {
+                window.open(item.moreUrl, '_blank')
+              }
               this.$emit('update:tab', item.name)
             }
           },
