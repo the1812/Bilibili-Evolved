@@ -1295,6 +1295,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
 .custom-navbar .activity-popup-content .view-more {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
     position: -webkit-sticky;
     position: sticky;
     bottom: 0;
@@ -1358,6 +1359,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     box-shadow: rgba(0,0,0,0.12) 0 4px 8px 0px;
     margin-bottom: 12px;
     break-inside: avoid;
+    flex-shrink: 0;
 }
 .custom-navbar.dark .video-activity-card,
 .custom-navbar.dark .activity-popup-content .view-more,
@@ -1466,6 +1468,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     grid-template-columns: var(--cover-width) 1fr;
     grid-template-rows: 6fr 5fr;
     position: relative;
+    flex-shrink: 0;
 }
 .custom-navbar.dark .bangumi-card,
 .custom-navbar.dark .live-card {
@@ -1526,6 +1529,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     margin-bottom: 12px;
     box-shadow: rgba(0,0,0,0.12) 0 4px 8px 0px;
     position: relative;
+    flex-shrink: 0;
 }
 .custom-navbar .column-card .up {
     position: absolute;
@@ -1600,6 +1604,7 @@ li.nav-item[report-id='playpage_dynamic'] .i-frame,
     box-sizing: border-box;
     padding: 2px;
     width: auto;
+    flex-shrink: 0;
 }
 .custom-navbar .live-card .face {
     grid-area: face;
