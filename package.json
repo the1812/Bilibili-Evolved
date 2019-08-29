@@ -7,7 +7,8 @@
     "typescript": "^3.5.3",
     "uglify-es": "^3.3.9",
     "clean-css-cli": "^4.3.0",
-    "html-minifier": "^4.0.0"
+    "html-minifier": "^4.0.0",
+    "sass": "^1.22.10"
   },
   "devDependencies": {},
   "scripts": {

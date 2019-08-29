@@ -30,6 +30,7 @@ namespace BilibiliEvolved.Build
                     .BuildPreview()
                     .BuildMaster()
                     .BuildTypeScripts()
+                    .BuildSass()
                     .BuildResources()
                     .BuildPreviewOffline()
                     .BuildOffline()

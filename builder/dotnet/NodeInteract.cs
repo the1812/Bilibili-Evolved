@@ -71,4 +71,9 @@ namespace BilibiliEvolved.Build
         protected override string ExecutablePath => "typescript/bin/tsc";
         protected override string Arguments => "";
     }
+    sealed class SassCompiler : NodeInteract
+    {
+        protected override string ExecutablePath => "sass/sass.js";
+        protected override string Arguments => "--quiet --no-source-map src:.sass-output";
+    }
 }
