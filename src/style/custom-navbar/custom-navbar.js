@@ -1401,7 +1401,11 @@ class HistoryList extends VideoList {
           let parameter = [];
           let description = "";
           const page = item.page ? item.page.page : 1;
-          const progress = item.progress >= 0 ? item.progress / item.duration : 1;
+          let progress = item.progress >= 0 ? item.progress / item.duration : 1;
+          if (isNaN(progress)) {
+            progress = 0
+          }
+
           if (page !== 1) {
             parameter.push(`p=${page}`);
             description += `看到第${page}话`;
