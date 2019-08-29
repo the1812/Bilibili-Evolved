@@ -496,35 +496,8 @@ async function loadWidget() {
   }, { once: true })
 }
 async function loadPanel() {
-  Vue.component('v-dropdown', {
-    template: /*html*/`
-    <div class="v-dropdown" v-on:click="toggleDropdown()">
-      <span class="selected">{{value}}</span>
-      <ul class="dropdown-menu" v-bind:class="{opened: dropdownOpen}">
-        <li v-for="item in items" v-bind:key="item" v-bind:data-value="item" v-on:click="select(item)">{{item}}</li>
-      </ul>
-      <i class="mdi mdi-chevron-down"></i>
-    </div>
-  `,
-    props: [
-      'items',
-      'value'
-    ],
-    data() {
-      return {
-        dropdownOpen: false,
-      }
-    },
-    methods: {
-      toggleDropdown() {
-        this.dropdownOpen = !this.dropdownOpen
-      },
-      select(item: string) {
-        this.$emit('update:value', item)
-        this.$emit('change', item)
-      },
-    },
-  })
+  const VueDropDown = await import((() => './v-dropdown.vue')())
+  Vue.component('v-dropdown', VueDropDown)
   Vue.component('v-checkbox', {
     template: /*html*/`
       <div class="v-checkbox" v-on:click="toggleCheck()" v-bind:class="{checked: checked}">

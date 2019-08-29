@@ -114,54 +114,6 @@ body.dark .download-video {
   padding-top: 12px;
   font-size: 10pt;
 }
-.v-dropdown {
-  position: relative;
-  background-color: #8884;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 100px;
-}
-.v-dropdown .dropdown-menu {
-  transform-origin: top;
-  transform: scaleY(0) translateX(-50%);
-  position: absolute;
-  top: calc(100% + 2px);
-  left: 50%;
-  background-color: var(--download-video-background);
-  z-index: 1;
-  transition: .2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
-  box-shadow: rgba(0,0,0,0.2) 0 4px 8px 0px;
-}
-.v-dropdown .dropdown-menu.opened {
-  transform: scaleY(1) translateX(-50%);
-  transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
-}
-.v-dropdown .dropdown-menu li {
-  padding: 4px 8px;
-  white-space: nowrap;
-  min-width: 80px;
-  text-align: center;
-  cursor: pointer;
-  color: var(--download-video-foreground);
-  background-color: transparent;
-}
-.v-dropdown .dropdown-menu li:hover {
-  background-color: rgba(0,0,0,0.16);
-}
-.v-dropdown .mdi-chevron-down {
-  font-size: 16pt;
-  line-height: 1;
-  transform: rotate(0deg);
-}
-.v-dropdown .dropdown-menu.opened ~ .mdi-chevron-down {
-  transform: rotate(180deg);
-}
-.v-dropdown .selected {
-  user-select: none;
-  padding: 4px 8px;
-}
 .download-video .tabs {
   display: flex;
   padding-top: 12px;

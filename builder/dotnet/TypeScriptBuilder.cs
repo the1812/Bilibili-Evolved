@@ -31,7 +31,11 @@ namespace BilibiliEvolved.Build
           });
           Console.Write(tsc.Run().Trim());
           Parallel.ForEach(changedFiles.Select(f => ".ts-output/" + f.Replace(".ts", ".js").Replace($"src{Path.DirectorySeparatorChar}", "")), file => {
-            var min = uglifyJs.Minify(File.ReadAllText(file));
+            var text = RegexReplacer.Replace(File.ReadAllText(file), @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match => {
+              Console.WriteLine($"import({match.Groups[1].Value})");
+              return $"import({match.Groups[1].Value})";
+            });
+            var min = uglifyJs.Minify(text);
             var minFile = ResourceMinifier.GetMinimizedFileName(file);
             File.WriteAllText(minFile, min);
             WriteHint($"\t=> {minFile}");
