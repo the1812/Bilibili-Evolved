@@ -116,7 +116,11 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - <kbd>t</kbd> Wide screen / Theater mode
 - <kbd>r</kbd> Toggle repeat
 - <kbd>m</kbd> Toggle mute
-- <kbd>d</kbd> Toggle danmakus`],
+- <kbd>d</kbd> Toggle danmakus
+- <kbd>l</kbd> Like
+- <kbd>c</kbd> Coin
+- <kbd>s</kbd> Favorite
+- <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> Playback Speed Adjust`],
 ]);
 export default {
   export: { toolTips },
