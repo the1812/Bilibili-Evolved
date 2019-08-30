@@ -497,7 +497,8 @@ async function loadWidget() {
 }
 async function loadPanel() {
   const VueDropDown = await import((() => './v-dropdown.vue')())
-  Vue.component('v-dropdown', VueDropDown)
+  console.log(VueDropDown)
+  // Vue.component('v-dropdown', VueDropDown)
   Vue.component('v-checkbox', {
     template: /*html*/`
       <div class="v-checkbox" v-on:click="toggleCheck()" v-bind:class="{checked: checked}">
@@ -526,6 +527,9 @@ async function loadPanel() {
   }
   const panel = new Vue({
     el: '.download-video',
+    components: {
+      'v-dropdown': VueDropDown,
+    },
     data: {
       downloadSingle: true,
       coverUrl: 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>',

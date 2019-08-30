@@ -8,7 +8,7 @@
   </div>
 </template>
 <script lang="ts">
-export default Vue.extend({
+export default {
   props: ['items', 'value'],
   data() {
     return {
@@ -24,7 +24,7 @@ export default Vue.extend({
       this.$emit('change', item)
     }
   }
-})
+}
 </script>
 <style lang="scss">
 .v-dropdown {

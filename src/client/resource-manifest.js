@@ -689,7 +689,7 @@ Resource.manifest = {
     },
   },
   vDropdown: {
-    path: 'v-dropdown.min.js',
+    path: 'v-dropdown.vue.min.js',
     displayNames: {
       vDropdown: '下拉框组件',
     },

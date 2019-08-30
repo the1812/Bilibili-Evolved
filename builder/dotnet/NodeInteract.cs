@@ -64,7 +64,7 @@ namespace BilibiliEvolved.Build
   sealed class UglifyHtml : NodeInteract
   {
     protected override string ExecutablePath => "html-minifier/cli.js";
-    protected override string Arguments => "--collapse-whitespace --collapse-inline-tag-whitespace --remove-comments --remove-attribute-quotes --remove-optional-tags --remove-tag-whitespace --use-short-doctype";
+    protected override string Arguments => "--collapse-whitespace --collapse-inline-tag-whitespace --remove-comments --remove-attribute-quotes --remove-tag-whitespace --use-short-doctype";
   }
   sealed class TypeScriptCompiler : NodeInteract
   {
