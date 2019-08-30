@@ -497,8 +497,6 @@ async function loadWidget() {
 }
 async function loadPanel() {
   const VueDropDown = await import((() => './v-dropdown.vue')())
-  console.log(VueDropDown)
-  // Vue.component('v-dropdown', VueDropDown)
   Vue.component('v-checkbox', {
     template: /*html*/`
       <div class="v-checkbox" v-on:click="toggleCheck()" v-bind:class="{checked: checked}">
