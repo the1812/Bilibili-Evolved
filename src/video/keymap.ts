@@ -17,7 +17,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       return
     }
     const key = e.key.toLowerCase()
-    if (key in clickableKeymap) {
+    const noModifyKeys = !e.shiftKey && !e.altKey && !e.ctrlKey
+    if (key in clickableKeymap && noModifyKeys) {
       const element = dq(clickableKeymap[key]) as HTMLElement
       if (!element) {
         return
@@ -25,7 +26,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       e.stopPropagation()
       e.preventDefault()
       element.click()
-    } else if (key === 'd') { // 切换弹幕开关
+    } else if (key === 'd' && noModifyKeys) { // 切换弹幕开关
       const checkbox = dq('.bilibili-player-video-danmaku-switch input') as HTMLInputElement
       if (!checkbox) {
         return
