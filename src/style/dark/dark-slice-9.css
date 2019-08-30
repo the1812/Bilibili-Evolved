@@ -65,6 +65,10 @@
 {
   background-color: #eee !important;
 }
+.coin-dialog-mask .coin-operated .mc .mc-box
+{
+  background-color: white !important;
+}
 .card .risk-tip-content
 {
 	background-color: #624f27 !important;

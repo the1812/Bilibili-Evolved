@@ -29,7 +29,7 @@ namespace BilibiliEvolved.Build
                     .BuildClient()
                     .BuildPreview()
                     .BuildMaster()
-                    .BuildVue()
+                    //.BuildVue()
                     .BuildTypeScripts()
                     .BuildSass()
                     .BuildResources()

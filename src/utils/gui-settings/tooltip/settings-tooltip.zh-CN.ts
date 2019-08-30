@@ -139,7 +139,11 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>t</kbd> 宽屏
 - <kbd>r</kbd> 循环播放
 - <kbd>m</kbd> 静音
-- <kbd>d</kbd> 弹幕开关`],
+- <kbd>d</kbd> 弹幕开关
+- <kbd>l</kbd> 点赞
+- <kbd>c</kbd> 投币
+- <kbd>s</kbd> 收藏
+- <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> 播放速度调整`],
 ]);
 export default {
   export: { toolTips },
