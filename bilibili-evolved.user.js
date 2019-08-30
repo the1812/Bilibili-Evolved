@@ -1788,6 +1788,12 @@ Resource.manifest = {
       keymap: '快捷键扩展',
     },
   },
+  vDropdown: {
+    path: 'v-dropdown.min.js',
+    displayNames: {
+      vDropdown: '下拉框组件',
+    },
+  },
 }
 const resourceManifest = Resource.manifest
 

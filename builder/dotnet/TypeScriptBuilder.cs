@@ -24,15 +24,14 @@ namespace BilibiliEvolved.Build
         var changedFiles = files.Where(file => !cache.Contains(file)).ToArray();
         if (changedFiles.Any())
         {
-          changedFiles.ForEach(file =>
+          changedFiles.Where(f => !f.EndsWith(".vue.ts")).ForEach(file =>
           {
             cache.AddCache(file);
             WriteInfo($"TypeScript build: {file}");
           });
           Console.Write(tsc.Run().Trim());
-          Parallel.ForEach(changedFiles.Select(f => ".ts-output/" + f.Replace(".ts", ".js").Replace($"src{Path.DirectorySeparatorChar}", "")), file => {
+          Parallel.ForEach(changedFiles.Where(f => !f.EndsWith(".vue.ts")).Select(f => ".ts-output/" + f.Replace(".ts", ".js").Replace($"src{Path.DirectorySeparatorChar}", "")), file => {
             var text = RegexReplacer.Replace(File.ReadAllText(file), @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match => {
-              Console.WriteLine($"import({match.Groups[1].Value})");
               return $"import({match.Groups[1].Value})";
             });
             var min = uglifyJs.Minify(text);

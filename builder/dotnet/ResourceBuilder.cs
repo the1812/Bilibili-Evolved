@@ -136,7 +136,7 @@ namespace BilibiliEvolved.Build
         {
             return file.FullName.Contains("src" + Path.DirectorySeparatorChar) &&
                 !file.FullName.Contains("client" + Path.DirectorySeparatorChar) &&
-                file.Extension == ".js";
+                file.Extension == ".js" && !file.Name.EndsWith(".vue.js");
         };
 
         public override string ResourceType { get; } = "JavaScript";
