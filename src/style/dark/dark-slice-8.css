@@ -231,7 +231,9 @@ li.danmaku-info-row.bpui-selecting,
 .bangumi-item .right-info .intros .value,
 .user-item .up-info>span,
 .user-item .up-videos .ptime,
-.bili-search .topic-item .content .desc
+.bili-search .topic-item .content .desc,
+.bili-search .article-item .content .desc,
+.bili-search .article-item .content .so-icon a
 {
     color: #aaa !important;
 }
@@ -402,7 +404,8 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .user-item .title,
 .bili-search .user-item .attention-btn,
 .bili-search .photo-item .title,
-.bili-search .topic-item .content .headline a
+.bili-search .topic-item .content .headline a,
+.bili-search .article-item .content .title
 {
     color: #eee !important;
 }
@@ -497,7 +500,8 @@ li.danmaku-info-row.bpui-selecting,
 .van-popper[x-placement^=top] .popper__arrow:after,
 #all-list .mixin-list ul:not(:last-child),
 .bili-search .bangumi-item,
-.bili-search .topic-item
+.bili-search .topic-item,
+.bili-search .article-item
 {
     border-color: #444 !important
 }
@@ -537,10 +541,12 @@ li.danmaku-info-row.bpui-selecting,
 {
     filter: brightness(0) invert(1) !important;
 }
-/* a
+.bili-search .so-icon i.icon-like,
+.bili-search .so-icon i.icon-view,
+.bili-search .so-icon i.icon-reply
 {
     filter: brightness(0) invert(.7) !important;
-} */
+}
 .fold-box:hover .fold-arrow,
 .sticky-bar .bar-content .title-icon,
 .fjw-random .agree.active,
@@ -788,7 +794,8 @@ li.danmaku-info-row.bpui-selecting,
 .bangumi-item .right-info .headline .title:hover,
 .bili-search .user-item .title:hover,
 .bili-search .photo-item .title:hover,
-.bili-search .topic-item .content .headline a:hover
+.bili-search .topic-item .content .headline a:hover,
+.bili-search .article-item .content .title:hover
 {
     color: var(--theme-color) !important;
 }
