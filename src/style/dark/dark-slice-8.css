@@ -112,7 +112,8 @@ li.danmaku-info-row.bpui-selecting,
 .hot-recom-module .random-change,
 .user-item .attention-btn.followed,
 .user-item .attention-btn.followed:hover,
-.flow-loader .activity-item .info .type
+.flow-loader .activity-item .info .type,
+.bangumi-item .right-info .headline .bangumi-label
 {
     background-color: #444 !important;
 }
@@ -224,7 +225,9 @@ li.danmaku-info-row.bpui-selecting,
 .rank-wrap .preview .txt span,
 .article-card .r-con .up,
 .article-card .r-con .count,
-#all-list .user-item .up-info>span
+#all-list .user-item .up-info>span,
+.bangumi-item .right-info .intros .label,
+.bangumi-item .right-info .intros .value
 {
     color: #aaa !important;
 }
@@ -389,7 +392,9 @@ li.danmaku-info-row.bpui-selecting,
 .user-item .up-videos .video-more,
 .user-item .attention-btn.followed,
 .user-item .attention-btn.followed:hover,
-.flow-loader .activity-item .info .type
+.flow-loader .activity-item .info .type,
+.bangumi-item .right-info .headline .title,
+.bangumi-item .right-info .headline .bangumi-label
 {
     color: #eee !important;
 }
@@ -458,7 +463,8 @@ li.danmaku-info-row.bpui-selecting,
 .flow-loader .activity-item,
 .flow-loader .user-item,
 .flow-loader .video-item.matrix,
-.flow-loader .activity-item .info .type
+.flow-loader .activity-item .info .type,
+.bangumi-item .right-info .headline .bangumi-label
 {
     border-color: transparent !important;
 }
@@ -480,7 +486,8 @@ li.danmaku-info-row.bpui-selecting,
 .round-corner .international-footer .link-box .link-item,
 .van-popper[x-placement^=bottom] .popper__arrow:after,
 .van-popper[x-placement^=top] .popper__arrow:after,
-#all-list .mixin-list ul:not(:last-child)
+#all-list .mixin-list ul:not(:last-child),
+.bili-search .bangumi-item
 {
     border-color: #444 !important
 }
@@ -766,7 +773,8 @@ li.danmaku-info-row.bpui-selecting,
 #all-list .user-item .title:hover,
 .user-item .up-videos .video-item .video-desc:hover,
 .video-item.matrix .title:hover,
-.user-item .up-videos .video-more:hover
+.user-item .up-videos .video-more:hover,
+.bangumi-item .right-info .headline .title:hover
 {
     color: var(--theme-color) !important;
 }
