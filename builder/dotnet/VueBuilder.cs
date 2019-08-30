@@ -189,7 +189,7 @@ namespace BilibiliEvolved.Build
               }
             }
             compiledText.Append("}})()");
-            var minFile = "min" + Path.DirectorySeparatorChar + Path.GetFileName(file) + ".js";
+            var minFile = "min" + Path.DirectorySeparatorChar + Path.GetFileName(file) + ".min.js";
             var jsc = new UglifyJs();
             File.WriteAllText(minFile, jsc.Run(compiledText.ToString()));
             WriteHint($"\t=> {minFile}");
