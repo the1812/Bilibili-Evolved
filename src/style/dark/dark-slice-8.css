@@ -230,7 +230,8 @@ li.danmaku-info-row.bpui-selecting,
 .bangumi-item .right-info .intros .label,
 .bangumi-item .right-info .intros .value,
 .user-item .up-info>span,
-.user-item .up-videos .ptime
+.user-item .up-videos .ptime,
+.bili-search .topic-item .content .desc
 {
     color: #aaa !important;
 }
@@ -400,7 +401,8 @@ li.danmaku-info-row.bpui-selecting,
 .bangumi-item .right-info .headline .bangumi-label,
 .bili-search .user-item .title,
 .bili-search .user-item .attention-btn,
-.bili-search .photo-item .title
+.bili-search .photo-item .title,
+.bili-search .topic-item .content .headline a
 {
     color: #eee !important;
 }
@@ -494,7 +496,8 @@ li.danmaku-info-row.bpui-selecting,
 .van-popper[x-placement^=bottom] .popper__arrow:after,
 .van-popper[x-placement^=top] .popper__arrow:after,
 #all-list .mixin-list ul:not(:last-child),
-.bili-search .bangumi-item
+.bili-search .bangumi-item,
+.bili-search .topic-item
 {
     border-color: #444 !important
 }
@@ -784,7 +787,8 @@ li.danmaku-info-row.bpui-selecting,
 .user-item .up-videos .video-more:hover,
 .bangumi-item .right-info .headline .title:hover,
 .bili-search .user-item .title:hover,
-.bili-search .photo-item .title:hover
+.bili-search .photo-item .title:hover,
+.bili-search .topic-item .content .headline a:hover
 {
     color: var(--theme-color) !important;
 }
