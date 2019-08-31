@@ -112,7 +112,11 @@ li.danmaku-info-row.bpui-selecting,
 .hot-recom-module .random-change,
 .user-item .attention-btn.followed,
 .user-item .attention-btn.followed:hover,
-.flow-loader .activity-item .info .type
+.flow-loader .activity-item .info .type,
+.bangumi-item .right-info .headline .bangumi-label,
+.bili-search .user-item .attention-btn,
+.bili-search .live-user-item .item-right .tags>span,
+.bili-search .pgc-item .right-info .headline .pgc-label
 {
     background-color: #444 !important;
 }
@@ -224,7 +228,18 @@ li.danmaku-info-row.bpui-selecting,
 .rank-wrap .preview .txt span,
 .article-card .r-con .up,
 .article-card .r-con .count,
-#all-list .user-item .up-info>span
+#all-list .user-item .up-info>span,
+.bangumi-item .right-info .intros .label,
+.bangumi-item .right-info .intros .value,
+.user-item .up-info>span,
+.user-item .up-videos .ptime,
+.bili-search .topic-item .content .desc,
+.bili-search .article-item .content .desc,
+.bili-search .article-item .content .so-icon a,
+.bili-search .live-user-item .item-right .info .star,
+.bili-search .live-user-item .item-right .info .type,
+.bili-search .pgc-item .right-info .intros .label,
+.bili-search .pgc-item .right-info .intros .value
 {
     color: #aaa !important;
 }
@@ -389,7 +404,22 @@ li.danmaku-info-row.bpui-selecting,
 .user-item .up-videos .video-more,
 .user-item .attention-btn.followed,
 .user-item .attention-btn.followed:hover,
-.flow-loader .activity-item .info .type
+.flow-loader .activity-item .info .type,
+.bangumi-item .right-info .headline .title,
+.bangumi-item .right-info .headline .bangumi-label,
+.bili-search .user-item .title,
+.bili-search .user-item .attention-btn,
+.bili-search .photo-item .title,
+.bili-search .topic-item .content .headline a,
+.bili-search .article-item .content .title,
+.bili-search #live-list .live-tabs a,
+.bili-search #live-list .headline-live .user-more,
+.bili-search .live-user-item .item-right .uname,
+.bili-search .live-user-item .item-right .tags>span,
+.bili-search #live-list .headline-room .filter a,
+.bili-search .live-room-item .item-title,
+.bili-search .pgc-item .right-info .headline .title,
+.bili-search .pgc-item .right-info .headline .pgc-label
 {
     color: #eee !important;
 }
@@ -458,7 +488,11 @@ li.danmaku-info-row.bpui-selecting,
 .flow-loader .activity-item,
 .flow-loader .user-item,
 .flow-loader .video-item.matrix,
-.flow-loader .activity-item .info .type
+.flow-loader .activity-item .info .type,
+.bangumi-item .right-info .headline .bangumi-label,
+.bili-search .photo-item,
+.bili-search .live-user-item .item-right .tags>span,
+.bili-search .pgc-item .right-info .headline .pgc-label
 {
     border-color: transparent !important;
 }
@@ -480,7 +514,11 @@ li.danmaku-info-row.bpui-selecting,
 .round-corner .international-footer .link-box .link-item,
 .van-popper[x-placement^=bottom] .popper__arrow:after,
 .van-popper[x-placement^=top] .popper__arrow:after,
-#all-list .mixin-list ul:not(:last-child)
+#all-list .mixin-list ul:not(:last-child),
+.bili-search .bangumi-item,
+.bili-search .topic-item,
+.bili-search .article-item,
+.bili-search .pgc-item
 {
     border-color: #444 !important
 }
@@ -520,10 +558,12 @@ li.danmaku-info-row.bpui-selecting,
 {
     filter: brightness(0) invert(1) !important;
 }
-/* a
+.bili-search .so-icon i.icon-like,
+.bili-search .so-icon i.icon-view,
+.bili-search .so-icon i.icon-reply
 {
     filter: brightness(0) invert(.7) !important;
-} */
+}
 .fold-box:hover .fold-arrow,
 .sticky-bar .bar-content .title-icon,
 .fjw-random .agree.active,
@@ -532,7 +572,9 @@ li.danmaku-info-row.bpui-selecting,
 .fjw-random .unagree:hover,
 .svga-container.svga-center canvas,
 .ops canvas.ring-progress,
-.home-slide .trigger span.on
+.home-slide .trigger span.on,
+.bili-search #live-list .headline-room .icon-live-face,
+.bili-search #live-list .headline-room .icon-live-frame
 {
     filter: var(--blue-image-filter) !important;
 }
@@ -624,7 +666,8 @@ li.danmaku-info-row.bpui-selecting,
 .selectable-option.active:after,
 .tabs-nav .tab-item.border-bottom,
 .live-tabs .tab-switch .tab-switch-item.on,
-.time-line .tab-switch .tab-switch-item.on
+.time-line .tab-switch .tab-switch-item.on,
+.bili-search #live-list .live-tabs a.active
 {
     border-color: var(--theme-color) !important;
 }
@@ -676,7 +719,8 @@ li.danmaku-info-row.bpui-selecting,
 .vip-m .bubble-traditional .renew-btn button:hover,
 .round-corner .out-container .tab-item.active,
 .container .tab-item--active,
-.container .more-btn:hover
+.container .more-btn:hover,
+.bili-search .user-item .attention-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -766,7 +810,19 @@ li.danmaku-info-row.bpui-selecting,
 #all-list .user-item .title:hover,
 .user-item .up-videos .video-item .video-desc:hover,
 .video-item.matrix .title:hover,
-.user-item .up-videos .video-more:hover
+.user-item .up-videos .video-more:hover,
+.bangumi-item .right-info .headline .title:hover,
+.bili-search .user-item .title:hover,
+.bili-search .photo-item .title:hover,
+.bili-search .topic-item .content .headline a:hover,
+.bili-search .article-item .content .title:hover,
+.bili-search #live-list .live-tabs a.active,
+.bili-search .live-user-item .item-right .uname:hover,
+.bili-search #live-list .headline-room .filter a.active,
+.bili-search #live-list .headline-room .filter a:hover,
+.bili-search .live-room-item .item-title:hover,
+.bili-search #live-list .headline-live .user-more:hover,
+.bili-search .pgc-item .right-info .headline .title:hover
 {
     color: var(--theme-color) !important;
 }
