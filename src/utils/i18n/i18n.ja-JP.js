@@ -486,7 +486,8 @@ export const map = new Map([
     text: `デジタル`,
   }],
   [`纪录片`, {
-    selector: `.elevator-module .nav-list .item`,
+    selector: `.elevator-module .nav-list .item,
+    .elevator .list-box .item.sortable`,
     not,
     text: `ドキュメンタリー`,
   }],
@@ -499,7 +500,8 @@ export const map = new Map([
     `歴史`,
     {
       text: `履歴`,
-      selector: `.nav-con.fr .nav-item .t, .custom-navbar li[data-name='historyList'] .main-content, .custom-navbar-settings .orders li`
+      selector: `.nav-con.fr .nav-item .t, .custom-navbar li[data-name='historyList'] .main-content, .custom-navbar-settings .orders li,
+        .app-layout .manga-navbar .action-button.app-button`
     },
   ]],
   [`我的关注`, [
@@ -680,6 +682,9 @@ export const map = new Map([
   [`违法信息`, `違法な情報`],
   [`直播歌曲内容不适宜请立即调整`, `放送の内容は適していません、すぐに調整`],
   [`违反直播言论规范, 请立即调整`, `ライブスピーチ規範の違反、すぐに調整`],
+  [`系统通知`, `システム通知`],
+  [`当前直播间被直播管理员切断直播。`, `今、配信ルームはスーパー管理者によって中断されています．`],
+  [`悲痛欲绝 ＞△＜`, `悲しすぎる ＞△＜`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
