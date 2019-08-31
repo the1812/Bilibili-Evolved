@@ -1176,6 +1176,7 @@ class Activities extends NavbarComponent {
         'column-activity': getActivityTabComponent({
           dataObject: { cards: [] },
           apiUrl: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=64`,
+          name: '专栏',
           template: /*html*/`
             <div class="column-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
@@ -1215,6 +1216,7 @@ class Activities extends NavbarComponent {
         'live-activity': getActivityTabComponent({
           dataObject: { cards: [] },
           apiUrl: `https://api.live.bilibili.com/relation/v1/feed/feed_list?page=1&pagesize=24`,
+          name: '直播',
           template: /*html*/`
             <div class="live-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
