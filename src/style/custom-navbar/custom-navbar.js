@@ -111,7 +111,7 @@ const attributes = {
               if (orderBefore === orderAfter) {
                 return;
               }
-              const entires = Object.entries(settings.customNavbarOrder);
+              const entires = Object.entries(settings.customNavbarOrder).filter(([key,]) => key in customNavbarDefaultOrders);
               const names = entires.sort((a, b) => a[1] - b[1]).map(it => it[0]);
               if (orderBefore < orderAfter) {
                 for (let i = orderBefore + 1; i <= orderAfter; i++) {
@@ -119,8 +119,7 @@ const attributes = {
                   settings.customNavbarOrder[name] = i - 1;
                   document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i - 1;
                 }
-              }
-              else {
+              } else {
                 for (let i = orderBefore - 1; i >= orderAfter; i--) {
                   const name = names[i];
                   settings.customNavbarOrder[name] = i + 1;
