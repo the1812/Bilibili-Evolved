@@ -1443,13 +1443,14 @@ class Subscriptions extends NavbarComponent {
     this.noPadding = true
     this.href = `https://space.bilibili.com/${userInfo.mid}/bangumi`
     this.html = '订阅'
+    this.active = [`https://space.bilibili.com/${userInfo.mid}/bangumi`, `https://space.bilibili.com/${userInfo.mid}/cinema`, `https://space.bilibili.com/${userInfo.mid}/subs`].includes(document.URL.replace(/\?.*$/, ""))
     this.popupHtml = /*html*/`
     <div class="subscriptions">
       <ul class="subscriptions-tabs">
         <li class="tab" :class="{selected: bangumi}" @click="bangumi = true">追番</li>
         <li class="tab" :class="{selected: !bangumi}" @click="bangumi = false">追剧</li>
         <div class="tab-placeholder"></div>
-        <a class="view-all" :href="'https://space.bilibili.com/${userInfo.mid}/' + (bangumi ? 'bangumi' : 'cinema')">
+        <a class="view-all" target="_blank" :href="'https://space.bilibili.com/${userInfo.mid}/' + (bangumi ? 'bangumi' : 'cinema')">
           查看更多
           <i class="mdi mdi-dots-horizontal-circle-outline"></i>
         </a>
