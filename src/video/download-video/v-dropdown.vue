@@ -75,5 +75,14 @@ export default {
     user-select: none;
     padding: 4px 8px;
   }
+
+  .round-corner & {
+    border-radius: var(--corner-radius);
+
+    .dropdown-menu,
+    .dropdown-menu li {
+      border-radius: var(--corner-radius);
+    }
+  }
 }
 </style>

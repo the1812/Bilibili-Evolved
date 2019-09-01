@@ -1795,6 +1795,12 @@ Resource.manifest = {
       vDropdown: '下拉框组件',
     },
   },
+  vCheckbox: {
+    path: 'v-checkbox.vue.min.js',
+    displayNames: {
+      vCheckbox: '复选框组件',
+    },
+  },
   doubleClickFullscreen: {
     path: 'double-click-fullscreen.min.js',
     displayNames: {

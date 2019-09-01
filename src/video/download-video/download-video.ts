@@ -497,22 +497,7 @@ async function loadWidget() {
 }
 async function loadPanel() {
   const VueDropDown = await import((() => './v-dropdown.vue')())
-  Vue.component('v-checkbox', {
-    template: /*html*/`
-      <div class="v-checkbox" v-on:click="toggleCheck()" v-bind:class="{checked: checked}">
-        <i class="mdi mdi-checkbox-blank-circle-outline">
-          <i class="mdi mdi-checkbox-marked-circle"></i>
-        </i>
-        <span class="content">{{title}}</span>
-      </div>
-    `,
-    props: ['checked', 'title'],
-    methods: {
-      toggleCheck() {
-        this.$emit('update:checked', !this.checked)
-      },
-    },
-  })
+  const VueCheckBox = await import((() => './v-checkbox.vue')())
   let workingDownloader: VideoDownloader
   const sizeCache = new Map<VideoFormat, number>()
   type ExportType = 'copyLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD'
@@ -527,6 +512,7 @@ async function loadPanel() {
     el: '.download-video',
     components: {
       'v-dropdown': VueDropDown,
+      'v-checkbox': VueCheckBox,
     },
     data: {
       downloadSingle: true,
