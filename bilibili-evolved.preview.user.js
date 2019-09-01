@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.8.19
+// @version      1.8.20
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -291,6 +291,7 @@ const settings = {
   lastSeedsToCoinsDate: 0,
   autoDraw: false,
   keymap: false,
+  doubleClickFullscreen: false,
   cache: {},
 }
 const fixedSettings = {
@@ -1792,6 +1793,12 @@ Resource.manifest = {
     path: 'v-dropdown.vue.min.js',
     displayNames: {
       vDropdown: '下拉框组件',
+    },
+  },
+  doubleClickFullscreen: {
+    path: 'double-click-fullscreen.min.js',
+    displayNames: {
+      doubleClickFullscreen: '双击全屏',
     },
   },
 }

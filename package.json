@@ -4,11 +4,12 @@
   "description": "「 强大的哔哩哔哩增强脚本 」",
   "main": "bilibili-evolved.user.js",
   "dependencies": {
-    "typescript": "^3.5.3",
-    "uglify-es": "^3.3.9",
+    "@types/jquery": "^3.3.31",
     "clean-css-cli": "^4.3.0",
     "html-minifier": "^4.0.0",
-    "sass": "^1.22.10"
+    "sass": "^1.22.10",
+    "typescript": "^3.5.3",
+    "uglify-es": "^3.3.9"
   },
   "devDependencies": {},
   "scripts": {

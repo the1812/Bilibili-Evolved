@@ -132,6 +132,7 @@ declare global {
     aid: string | undefined
     cid: string | undefined
     pageno: string | number | undefined
+    $: JQueryStatic
   }
   class SpinQuery {
     static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void;
@@ -336,6 +337,7 @@ declare global {
     lastSeedsToCoinsDate: number,
     autoDraw: boolean,
     keymap: boolean,
+    doubleClickFullscreen: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

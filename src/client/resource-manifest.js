@@ -694,5 +694,11 @@ Resource.manifest = {
       vDropdown: '下拉框组件',
     },
   },
+  doubleClickFullscreen: {
+    path: 'double-click-fullscreen.min.js',
+    displayNames: {
+      doubleClickFullscreen: '双击全屏',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
