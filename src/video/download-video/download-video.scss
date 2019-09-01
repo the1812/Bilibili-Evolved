@@ -297,17 +297,19 @@
     cursor: initial;
     box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
     transform-origin: bottom;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(0.9);
     opacity: 0;
     pointer-events: none;
     padding: 8px;
     z-index: 3;
+    transition: .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   }
   .rpc-settings > * {
     margin: 8px;
   }
   .rpc-settings.show {
     opacity: 1;
+    transform: translateX(-50%) scale(1);
     pointer-events: initial;
   }
   .rpc-settings-item {
