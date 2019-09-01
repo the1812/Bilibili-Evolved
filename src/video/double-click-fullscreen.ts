@@ -6,7 +6,7 @@
   if (!supportedUrls.some(url => document.URL.startsWith(url))) {
     return
   }
-  if (settings.touchVideoPlayerDoubleTapControl) {
+  if (settings.touchVideoPlayer && settings.touchVideoPlayerDoubleTapControl) {
     Toast.info('在开启了<span>播放器触摸支持-启用双击控制</span>后, <span>双击全屏</span>功能将无效.', '提示')
     settings.doubleClickFullscreen = false
     return
