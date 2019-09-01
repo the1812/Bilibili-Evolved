@@ -302,31 +302,32 @@
     pointer-events: none;
     padding: 8px;
     z-index: 3;
-    transition: .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-  }
-  .rpc-settings > * {
-    margin: 8px;
-  }
-  .rpc-settings.show {
-    opacity: 1;
-    transform: translateX(-50%) scale(1);
-    pointer-events: initial;
+    transition: 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+
+    & > * {
+      margin: 8px;
+    }
+    &.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+      pointer-events: initial;
+    }
+    input[type="text"] {
+      background: transparent;
+      color: var(--download-video-foreground);
+      border: 1px solid #8884;
+      padding: 4px;
+      margin-left: 8px;
+    }
+    input[type="text"]:focus {
+      border-color: var(--theme-color);
+    }
   }
   .rpc-settings-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     white-space: nowrap;
-  }
-  .rpc-settings input[type="text"] {
-    background: transparent;
-    color: var(--download-video-foreground);
-    border: 1px solid #8884;
-    padding: 4px;
-    margin-left: 8px;
-  }
-  .rpc-settings input[type="text"]:focus {
-    border-color: var(--theme-color);
   }
   button.start-download,
   button.cancel-download {
