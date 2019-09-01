@@ -33,7 +33,7 @@
 }
 .touch-video-box.animation
 {
-    transition: all 0.2s;
+    transition: .2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 /* @supports (backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px))
 {
@@ -116,11 +116,13 @@
 }
 .adjust-closed
 {
-    transform: rotateX(90deg) rotateY(90deg) scale(0.5);
+    opacity: 0;
+    transform: scale(0.9);
 }
 .adjust-opened
 {
-    transform: rotateX(0deg) rotateY(0deg) scale(1);
+    opacity: 1;
+    transform: scale(1);
 }
 .touch-video-info.speed .touch-row-item
 {
@@ -318,8 +320,8 @@ div.bilibili-player-video-control
 {
     bottom: 60px !important;
 }
-.bilibili-player .bilibili-player-area .bilibili-player-video-control-wrap:hover .bilibili-player-video-control-top .bilibili-player-video-progress-slider,
-.bilibili-player .bilibili-player-area.video-control-show .bilibili-player-video-control-top .bilibili-player-video-progress-slider
+.bilibili-player .bilibili-player-area:not(.disable-original-hover) .bilibili-player-video-control-wrap:hover .bilibili-player-video-control-top .bilibili-player-video-progress-slider,
+.bilibili-player .bilibili-player-area:not(.disable-original-hover).video-control-show .bilibili-player-video-control-top .bilibili-player-video-progress-slider
 {
     height: 74px !important;
 }
