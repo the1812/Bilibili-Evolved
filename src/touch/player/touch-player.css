@@ -318,6 +318,11 @@ div.bilibili-player-video-control
 {
     bottom: 60px !important;
 }
+.bilibili-player .bilibili-player-area .bilibili-player-video-control-wrap:hover .bilibili-player-video-control-top .bilibili-player-video-progress-slider,
+.bilibili-player .bilibili-player-area.video-control-show .bilibili-player-video-control-top .bilibili-player-video-progress-slider
+{
+    height: 74px !important;
+}
 .bilibili-player.mode-fullscreen .disable-original-hover .bilibili-player-video-control-top
 {
     opacity: 1 !important;
