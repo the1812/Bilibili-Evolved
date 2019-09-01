@@ -73,12 +73,13 @@
   <div class="exports">
     <h2>导出</h2>
     <div class="actions" v-bind:class="{busy: busy}">
-      <button class="copy-link" v-bind:disabled="downloadSingle ? null : 'disabled'" v-on:click="exportData('copyLink')">复制链接</button>
-      <button class="aria2-file" v-on:click="exportData('aria2')">导出aria2</button>
-      <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>
-      <button class="vld-export" v-on:click="exportData('exportVLD')">导出vld数据</button>
+      <!-- <button class="copy-link" v-bind:disabled="downloadSingle ? null : 'disabled'" v-on:click="exportData('copyLink')">复制链接</button> -->
+      <button class="idm-export" disabled title="暂不支持导出IDM, 详见 GitHub issue #149">IDM</button>
+      <button class="aria2-file" v-on:click="exportData('aria2')">aria2</button>
+      <!-- <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>
+      <button class="vld-export" v-on:click="exportData('exportVLD')">导出vld数据</button> -->
       <div class="button aria2-rpc" v-on:click.self="toggleRpcSettings()">
-        {{showRpcSettings ? '取消' : '导出aria2 RPC'}}
+        {{showRpcSettings ? '取消' : 'aria2 RPC'}}
         <i :class="{'mdi-close': showRpcSettings, 'mdi-chevron-right': !showRpcSettings}" class="mdi" v-on:click.self="toggleRpcSettings()"></i>
         <div class="rpc-settings" v-bind:class="{show: showRpcSettings}">
           <h1>aria2 RPC 配置</h1>
@@ -103,9 +104,6 @@
           <div class="primary button" v-on:click="saveRpcSettings();toggleRpcSettings();exportData('aria2RPC')">确定</div>
         </div>
       </div>
-      <!--
-      <button class="idm-export">导出IDM</button>
-      -->
     </div>
   </div>
 </div>
