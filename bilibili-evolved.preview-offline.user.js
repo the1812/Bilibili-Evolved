@@ -1982,7 +1982,6 @@ class StyleManager {
         const important = typeof it === 'object' ? it.important : false
         const styleKey = typeof it === 'object' ? it.key : it
         Resource.all[styleKey].download().then(() => {
-          console.log('fetchStyleByKey:', styleKey)
           if (important) {
             contentLoaded(() => this.applyImportantStyle(styleKey))
           } else {
