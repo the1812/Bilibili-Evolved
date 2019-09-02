@@ -123,6 +123,7 @@ function setDisplayNames () {
 
 (async () => {
   resources.applyStyle('guiSettingsStyle')
+  resources.applyImportantStyle('iconsStyle')
   document.body.classList.add('round-corner')
 
   const isIframe = document.body && unsafeWindow.parent.window !== unsafeWindow

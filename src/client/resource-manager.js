@@ -105,9 +105,9 @@ export class ResourceManager {
       }
       Toast.error(toastMessage, '错误')
     })
-    await Promise.all(resource.dependencies
-      .filter(it => it.type.name === 'style')
-      .map(it => this.styleManager.fetchStyleByKey(it.key)))
+    // await Promise.all(resource.dependencies
+    //   .filter(it => it.type.name === 'style')
+    //   .map(it => this.styleManager.fetchStyleByKey(it.key)))
     await Promise.all(resource.dependencies
       .filter(it => it.type.name === 'script')
       .map(it => this.fetchByKey(it.key)))

@@ -135,6 +135,7 @@ try {
       getValue: GM_getValue,
       setValue: GM_setValue,
       setClipboard: GM_setClipboard,
+      xhr: GM_xmlhttpRequest,
       addValueChangeListener: () => console.warn('此功能已弃用.')
     }
   })

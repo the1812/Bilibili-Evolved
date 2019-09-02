@@ -53,12 +53,13 @@ export class StyleManager {
       .filter(it => it.condition !== undefined ? it.condition() : true)
       .forEach(it => {
         const important = typeof it === 'object' ? it.important : false
-        const key = typeof it === 'object' ? it.key : it
-        Resource.all[key].download().then(() => {
+        const styleKey = typeof it === 'object' ? it.key : it
+        Resource.all[styleKey].download().then(() => {
+          console.log('fetchStyleByKey:', styleKey)
           if (important) {
-            contentLoaded(() => this.applyImportantStyle(key))
+            contentLoaded(() => this.applyImportantStyle(styleKey))
           } else {
-            this.applyStyle(key)
+            this.applyStyle(styleKey)
           }
         })
       })

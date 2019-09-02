@@ -1191,13 +1191,8 @@ Resource.manifest = {
       'settingsSideBar',
       'themeColors',
       'settingsTooltip',
-      'settingsSearch'
-    ],
-    styles: [
-      {
-        key: 'iconsStyle',
-        important: true
-      }
+      'settingsSearch',
+      'iconsStyle',
     ],
     displayNames: {
       guiSettings: '设置',
@@ -1878,12 +1873,13 @@ class StyleManager {
       .filter(it => it.condition !== undefined ? it.condition() : true)
       .forEach(it => {
         const important = typeof it === 'object' ? it.important : false
-        const key = typeof it === 'object' ? it.key : it
-        Resource.all[key].download().then(() => {
+        const styleKey = typeof it === 'object' ? it.key : it
+        Resource.all[styleKey].download().then(() => {
+          console.log('fetchStyleByKey:', styleKey)
           if (important) {
-            contentLoaded(() => this.applyImportantStyle(key))
+            contentLoaded(() => this.applyImportantStyle(styleKey))
           } else {
-            this.applyStyle(key)
+            this.applyStyle(styleKey)
           }
         })
       })
@@ -2004,9 +2000,9 @@ class ResourceManager {
       }
       Toast.error(toastMessage, '错误')
     })
-    await Promise.all(resource.dependencies
-      .filter(it => it.type.name === 'style')
-      .map(it => this.styleManager.fetchStyleByKey(it.key)))
+    // await Promise.all(resource.dependencies
+    //   .filter(it => it.type.name === 'style')
+    //   .map(it => this.styleManager.fetchStyleByKey(it.key)))
     await Promise.all(resource.dependencies
       .filter(it => it.type.name === 'script')
       .map(it => this.fetchByKey(it.key)))
@@ -2287,6 +2283,7 @@ try {
       getValue: GM_getValue,
       setValue: GM_setValue,
       setClipboard: GM_setClipboard,
+      xhr: GM_xmlhttpRequest,
       addValueChangeListener: () => console.warn('此功能已弃用.')
     }
   })
