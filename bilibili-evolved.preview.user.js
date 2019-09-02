@@ -470,6 +470,19 @@ class Ajax {
     const handlers = Ajax.getHandlers(type)
     handlers.splice(handlers.indexOf(handler), 1)
   }
+  static monkey (details) {
+    return new Promise((resolve, reject) => {
+      const fullDetails = {
+        ...details,
+        onload: r => resolve(r.response),
+        onerror: r => reject(r),
+      }
+      if (!('method' in fullDetails)) {
+        fullDetails.method = 'GET'
+      }
+      GM_xmlhttpRequest(fullDetails)
+    })
+  }
 }
 // https://github.com/the1812/Bilibili-Evolved/issues/84
 function setupAjaxHook () {
@@ -1031,7 +1044,7 @@ class Resource {
                 this.text = cache
                 resolve(cache)
               }
-              Ajax.getText(this.url).then(text => {
+              Ajax.monkey({ url: this.url }).then(text => {
                 this.text = this.type.preprocessor(text)
                 if (text === null) {
                   reject('download failed')
@@ -1048,7 +1061,7 @@ class Resource {
                 }
               }).catch(error => reject(error))
             } else {
-              Ajax.getText(this.url)
+              Ajax.monkey({ url: this.url })
                 .then(text => {
                   this.text = this.type.preprocessor(text)
                   resolve(this.text)
@@ -1377,7 +1390,7 @@ Resource.manifest = {
     path: 'download-video.min.js',
     html: true,
     style: 'instant',
-    dependencies: ['title'],
+    dependencies: ['title', 'videoInfo'],
     displayNames: {
       'downloadVideo': '下载视频',
       'batchDownload': '批量下载',

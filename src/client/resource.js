@@ -58,7 +58,7 @@ export class Resource {
                 this.text = cache
                 resolve(cache)
               }
-              Ajax.getText(this.url).then(text => {
+              Ajax.monkey({ url: this.url }).then(text => {
                 this.text = this.type.preprocessor(text)
                 if (text === null) {
                   reject('download failed')
@@ -75,7 +75,7 @@ export class Resource {
                 }
               }).catch(error => reject(error))
             } else {
-              Ajax.getText(this.url)
+              Ajax.monkey({ url: this.url })
                 .then(text => {
                   this.text = this.type.preprocessor(text)
                   resolve(this.text)

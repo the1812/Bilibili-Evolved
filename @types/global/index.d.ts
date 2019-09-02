@@ -13,7 +13,7 @@ declare global {
     responseXML: Document
     responseText: string
   }
-  interface MonkeyXhrDetails {
+  interface MonkeyXhrBasicDetails {
     method: 'GET' | 'POST' | 'HEAD'
     url: string
     headers?: { [name: string]: string },
@@ -27,6 +27,8 @@ declare global {
     fetch?: boolean
     username?: string
     password?: string
+  }
+  interface MonkeyXhrDetails extends MonkeyXhrBasicDetails {
     onabort?: (response: MonkeyXhrResponse) => void
     onerror?: (response: MonkeyXhrResponse) => void
     onloadstart?: (response: MonkeyXhrResponse) => void
@@ -206,6 +208,7 @@ declare global {
     static postTextWithCredentials(url: string, body: string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>): Promise<string>;
     static postJson(url: string, json: any): Promise<any>;
     static postJsonWithCredentials(url: string, json: any): Promise<any>;
+    static monkey(details: MonkeyXhrBasicDetails): Promise<any>;
   }
   type Observable = string | Node | Node[] | NodeList;
   class Observer {

@@ -276,7 +276,7 @@ Resource.manifest = {
     path: 'download-video.min.js',
     html: true,
     style: 'instant',
-    dependencies: ['title'],
+    dependencies: ['title', 'videoInfo'],
     displayNames: {
       'downloadVideo': '下载视频',
       'batchDownload': '批量下载',
