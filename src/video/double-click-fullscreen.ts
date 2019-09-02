@@ -23,12 +23,14 @@
   if (!playerArea.classList.contains(className)) {
     playerArea.classList.add(className)
     const video = unsafeWindow.$('.bilibili-player-video')
-    // const originalClickHandler = video.data('events').click[0].handler
+    const originalClickHandler = settings.doubleClickFullscreenPreventSingleClick ? video.data('events').click[0].handler : () => {}
     const doubleClick = new DoubleClickEvent(
       () => (dq('.bilibili-player-video-btn-fullscreen') as HTMLDivElement).click(),
-      () => {},
+      e => originalClickHandler(e),
     )
-    // video.unbind('click')
+    if (settings.doubleClickFullscreenPreventSingleClick) {
+      video.unbind('click')
+    }
     doubleClick.bind(video[0])
   }
 })()

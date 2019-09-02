@@ -341,6 +341,7 @@ declare global {
     autoDraw: boolean,
     keymap: boolean,
     doubleClickFullscreen: boolean,
+    doubleClickFullscreenPreventSingleClick: boolean
     latestVersionLink: string,
     currentVersion: string,
   }

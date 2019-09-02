@@ -292,6 +292,7 @@ const settings = {
   autoDraw: false,
   keymap: false,
   doubleClickFullscreen: false,
+  doubleClickFullscreenPreventSingleClick: false,
   cache: {},
 }
 const fixedSettings = {
