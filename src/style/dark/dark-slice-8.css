@@ -45,7 +45,8 @@
 .lang-change .lang-intro-item:hover,
 .container .logout a:hover,
 .container .video-card:hover,
-.container .tab-item--normal:hover
+.container .tab-item--normal:hover,
+.guest-home .button-box button
 {
     background-color: #333 !important;
 }
@@ -116,11 +117,20 @@ li.danmaku-info-row.bpui-selecting,
 .bangumi-item .right-info .headline .bangumi-label,
 .bili-search .user-item .attention-btn,
 .bili-search .live-user-item .item-right .tags>span,
-.bili-search .pgc-item .right-info .headline .pgc-label
+.bili-search .pgc-item .right-info .headline .pgc-label,
+.follow-right-module .follow-head .follow-more,
+.coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .line .point-wrapper,
+.coming-soon-wrapper .slider-contro span,
+.carousel-wrap li.scrollx,
+.feed-card .feed-title,
+.main-panel .hot-topic-panel,
+.guest-home .login-panel
 {
     background-color: #444 !important;
 }
-.config-item:not(:last-child):after
+.config-item:not(:last-child):after,
+.coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .line,
+.coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .line .point-wrapper .point
 {
     background-color: #555 !important;
 }
@@ -239,7 +249,13 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .live-user-item .item-right .info .star,
 .bili-search .live-user-item .item-right .info .type,
 .bili-search .pgc-item .right-info .intros .label,
-.bili-search .pgc-item .right-info .intros .value
+.bili-search .pgc-item .right-info .intros .value,
+.coming-soon-wrapper .card-wrapper .card-item .info-wrapper .desc,
+.carousel-wrap .panel .pic li a .card-info .detail,
+.video-list .card-view .collect-num,
+.video-list .card-view .danmu-num,
+.video-list .card-view .play-num,
+.guest-home .title h2
 {
     color: #aaa !important;
 }
@@ -419,7 +435,19 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search #live-list .headline-room .filter a,
 .bili-search .live-room-item .item-title,
 .bili-search .pgc-item .right-info .headline .title,
-.bili-search .pgc-item .right-info .headline .pgc-label
+.bili-search .pgc-item .right-info .headline .pgc-label,
+.follow-right-module .follow-head .follow-more,
+.coming-soon-wrapper .block-title,
+.coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .date,
+.coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .time,
+.coming-soon-wrapper .card-wrapper .card-item .info-wrapper .title,
+.carousel-wrap .panel .pic li a .card-info .title .headline,
+.cc-zimu-wrp .zimu-header .zimu-header-title,
+.feed-card .feed-title,
+.main-panel .title,
+.main-panel .more,
+.guest-home .title h1,
+.guest-home .button-box .regist
 {
     color: #eee !important;
 }
@@ -492,7 +520,11 @@ li.danmaku-info-row.bpui-selecting,
 .bangumi-item .right-info .headline .bangumi-label,
 .bili-search .photo-item,
 .bili-search .live-user-item .item-right .tags>span,
-.bili-search .pgc-item .right-info .headline .pgc-label
+.bili-search .pgc-item .right-info .headline .pgc-label,
+.follow-right-module .follow-head .follow-more,
+.carousel-wrap .page .next.current,
+.head .dropdown-menu .article-list,
+.guest-home .button-box button
 {
     border-color: transparent !important;
 }
@@ -532,7 +564,8 @@ li.danmaku-info-row.bpui-selecting,
 .elevator .list-box .item.sort,
 .container .play-all,
 .container .tabs-panel,
-.container .split-line::before
+.container .split-line::before,
+.carousel-wrap .page .next
 {
     border-color: #555 !important
 }
@@ -554,7 +587,8 @@ li.danmaku-info-row.bpui-selecting,
 .app-layout .sidebar .nav-item .nav-item-icon,
 .my-coupon .subtitle .question-cion,
 .index-entry-wrapper .filter-block-title a:after,
-.hot-recom-module .random-change .icon_read
+.hot-recom-module .random-change .icon_read,
+.follow-right-module .follow-head .follow-more .icon
 {
     filter: brightness(0) invert(1) !important;
 }
@@ -720,7 +754,10 @@ li.danmaku-info-row.bpui-selecting,
 .round-corner .out-container .tab-item.active,
 .container .tab-item--active,
 .container .more-btn:hover,
-.bili-search .user-item .attention-btn:hover
+.bili-search .user-item .attention-btn:hover,
+.follow-right-module .follow-head .follow-more:hover,
+.carousel-wrap .page .next.current,
+.guest-home .button-box button:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -822,7 +859,11 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search #live-list .headline-room .filter a:hover,
 .bili-search .live-room-item .item-title:hover,
 .bili-search #live-list .headline-live .user-more:hover,
-.bili-search .pgc-item .right-info .headline .title:hover
+.bili-search .pgc-item .right-info .headline .title:hover,
+.coming-soon-wrapper .card-wrapper .card-item .info-wrapper .title:hover,
+.video-item-biref:hover .biref-info .biref-title,
+.video-list .card-txt:hover,
+.main-panel .more:hover
 {
     color: var(--theme-color) !important;
 }
@@ -855,7 +896,12 @@ li.danmaku-info-row.bpui-selecting,
 .elevator .list-box .item:hover,
 .round-corner .out-container .tab-item.active,
 .container .tab-item--active,
-.container .more-btn:hover
+.container .more-btn:hover,
+.follow-right-module .follow-head .follow-more:hover,
+.timeline-box .timeline-item.new p.num a,
+.new-stat-module .zone-title .headline .new-stat-more:hover,
+.block-area .timeline-title .headline .timeline-more:hover,
+.guest-home .button-box button:hover
 {
     color: var(--foreground-color) !important;
 }
