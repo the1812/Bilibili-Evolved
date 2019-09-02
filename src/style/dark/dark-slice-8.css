@@ -119,7 +119,8 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .pgc-item .right-info .headline .pgc-label,
 .follow-right-module .follow-head .follow-more,
 .coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .line .point-wrapper,
-.coming-soon-wrapper .slider-contro span
+.coming-soon-wrapper .slider-contro span,
+.carousel-wrap li.scrollx
 {
     background-color: #444 !important;
 }
@@ -245,7 +246,11 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .live-user-item .item-right .info .type,
 .bili-search .pgc-item .right-info .intros .label,
 .bili-search .pgc-item .right-info .intros .value,
-.coming-soon-wrapper .card-wrapper .card-item .info-wrapper .desc
+.coming-soon-wrapper .card-wrapper .card-item .info-wrapper .desc,
+.carousel-wrap .panel .pic li a .card-info .detail,
+.video-list .card-view .collect-num,
+.video-list .card-view .danmu-num,
+.video-list .card-view .play-num
 {
     color: #aaa !important;
 }
@@ -430,7 +435,8 @@ li.danmaku-info-row.bpui-selecting,
 .coming-soon-wrapper .block-title,
 .coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .date,
 .coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .time,
-.coming-soon-wrapper .card-wrapper .card-item .info-wrapper .title
+.coming-soon-wrapper .card-wrapper .card-item .info-wrapper .title,
+.carousel-wrap .panel .pic li a .card-info .title .headline
 {
     color: #eee !important;
 }
@@ -504,7 +510,8 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .photo-item,
 .bili-search .live-user-item .item-right .tags>span,
 .bili-search .pgc-item .right-info .headline .pgc-label,
-.follow-right-module .follow-head .follow-more
+.follow-right-module .follow-head .follow-more,
+.carousel-wrap .page .next.current
 {
     border-color: transparent !important;
 }
@@ -544,7 +551,8 @@ li.danmaku-info-row.bpui-selecting,
 .elevator .list-box .item.sort,
 .container .play-all,
 .container .tabs-panel,
-.container .split-line::before
+.container .split-line::before,
+.carousel-wrap .page .next
 {
     border-color: #555 !important
 }
@@ -734,7 +742,8 @@ li.danmaku-info-row.bpui-selecting,
 .container .tab-item--active,
 .container .more-btn:hover,
 .bili-search .user-item .attention-btn:hover,
-.follow-right-module .follow-head .follow-more:hover
+.follow-right-module .follow-head .follow-more:hover,
+.carousel-wrap .page .next.current
 {
     background-color: var(--theme-color) !important;
 }
@@ -838,7 +847,8 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search #live-list .headline-live .user-more:hover,
 .bili-search .pgc-item .right-info .headline .title:hover,
 .coming-soon-wrapper .card-wrapper .card-item .info-wrapper .title:hover,
-.video-item-biref:hover .biref-info .biref-title
+.video-item-biref:hover .biref-info .biref-title,
+.video-list .card-txt:hover
 {
     color: var(--theme-color) !important;
 }
