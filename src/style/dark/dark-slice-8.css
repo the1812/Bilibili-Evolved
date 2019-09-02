@@ -872,7 +872,10 @@ li.danmaku-info-row.bpui-selecting,
 .round-corner .out-container .tab-item.active,
 .container .tab-item--active,
 .container .more-btn:hover,
-.follow-right-module .follow-head .follow-more:hover
+.follow-right-module .follow-head .follow-more:hover,
+.timeline-box .timeline-item.new p.num a,
+.new-stat-module .zone-title .headline .new-stat-more:hover,
+.block-area .timeline-title .headline .timeline-more:hover
 {
     color: var(--foreground-color) !important;
 }
