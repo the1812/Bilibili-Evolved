@@ -160,6 +160,10 @@
 {
     bottom: 0 !important;
 }
+.video-control-show .bilibili-player-video-progress-detail
+{
+    bottom: 36px !important;
+}
 .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top
 {
     left: 0 !important;
@@ -320,8 +324,8 @@ div.bilibili-player-video-control
 {
     bottom: 60px !important;
 }
-.bilibili-player .bilibili-player-area:not(.disable-original-hover) .bilibili-player-video-control-wrap:hover .bilibili-player-video-control-top .bilibili-player-video-progress-slider,
-.bilibili-player .bilibili-player-area:not(.disable-original-hover).video-control-show .bilibili-player-video-control-top .bilibili-player-video-progress-slider
+.bilibili-player:not(.mode-webfullscreen):not(.mode-fullscreen) .bilibili-player-area:not(.disable-original-hover) .bilibili-player-video-control-wrap:hover .bilibili-player-video-control-top .bilibili-player-video-progress-slider,
+.bilibili-player:not(.mode-webfullscreen):not(.mode-fullscreen) .bilibili-player-area:not(.disable-original-hover).video-control-show .bilibili-player-video-control-top .bilibili-player-video-progress-slider
 {
     height: 74px !important;
 }
