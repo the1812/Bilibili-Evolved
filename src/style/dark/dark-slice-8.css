@@ -45,7 +45,8 @@
 .lang-change .lang-intro-item:hover,
 .container .logout a:hover,
 .container .video-card:hover,
-.container .tab-item--normal:hover
+.container .tab-item--normal:hover,
+.guest-home .button-box button
 {
     background-color: #333 !important;
 }
@@ -120,7 +121,10 @@ li.danmaku-info-row.bpui-selecting,
 .follow-right-module .follow-head .follow-more,
 .coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .line .point-wrapper,
 .coming-soon-wrapper .slider-contro span,
-.carousel-wrap li.scrollx
+.carousel-wrap li.scrollx,
+.feed-card .feed-title,
+.main-panel .hot-topic-panel,
+.guest-home .login-panel
 {
     background-color: #444 !important;
 }
@@ -250,7 +254,8 @@ li.danmaku-info-row.bpui-selecting,
 .carousel-wrap .panel .pic li a .card-info .detail,
 .video-list .card-view .collect-num,
 .video-list .card-view .danmu-num,
-.video-list .card-view .play-num
+.video-list .card-view .play-num,
+.guest-home .title h2
 {
     color: #aaa !important;
 }
@@ -437,7 +442,12 @@ li.danmaku-info-row.bpui-selecting,
 .coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .time,
 .coming-soon-wrapper .card-wrapper .card-item .info-wrapper .title,
 .carousel-wrap .panel .pic li a .card-info .title .headline,
-.cc-zimu-wrp .zimu-header .zimu-header-title
+.cc-zimu-wrp .zimu-header .zimu-header-title,
+.feed-card .feed-title,
+.main-panel .title,
+.main-panel .more,
+.guest-home .title h1,
+.guest-home .button-box .regist
 {
     color: #eee !important;
 }
@@ -513,7 +523,8 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .pgc-item .right-info .headline .pgc-label,
 .follow-right-module .follow-head .follow-more,
 .carousel-wrap .page .next.current,
-.head .dropdown-menu .article-list
+.head .dropdown-menu .article-list,
+.guest-home .button-box button
 {
     border-color: transparent !important;
 }
@@ -745,7 +756,8 @@ li.danmaku-info-row.bpui-selecting,
 .container .more-btn:hover,
 .bili-search .user-item .attention-btn:hover,
 .follow-right-module .follow-head .follow-more:hover,
-.carousel-wrap .page .next.current
+.carousel-wrap .page .next.current,
+.guest-home .button-box button:hover
 {
     background-color: var(--theme-color) !important;
 }
@@ -850,7 +862,8 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .pgc-item .right-info .headline .title:hover,
 .coming-soon-wrapper .card-wrapper .card-item .info-wrapper .title:hover,
 .video-item-biref:hover .biref-info .biref-title,
-.video-list .card-txt:hover
+.video-list .card-txt:hover,
+.main-panel .more:hover
 {
     color: var(--theme-color) !important;
 }
@@ -887,7 +900,8 @@ li.danmaku-info-row.bpui-selecting,
 .follow-right-module .follow-head .follow-more:hover,
 .timeline-box .timeline-item.new p.num a,
 .new-stat-module .zone-title .headline .new-stat-more:hover,
-.block-area .timeline-title .headline .timeline-more:hover
+.block-area .timeline-title .headline .timeline-more:hover,
+.guest-home .button-box button:hover
 {
     color: var(--foreground-color) !important;
 }
