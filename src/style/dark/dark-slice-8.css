@@ -436,7 +436,8 @@ li.danmaku-info-row.bpui-selecting,
 .coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .date,
 .coming-soon-wrapper .card-wrapper .card-item .time-line-wrapper .time,
 .coming-soon-wrapper .card-wrapper .card-item .info-wrapper .title,
-.carousel-wrap .panel .pic li a .card-info .title .headline
+.carousel-wrap .panel .pic li a .card-info .title .headline,
+.cc-zimu-wrp .zimu-header .zimu-header-title
 {
     color: #eee !important;
 }
@@ -511,7 +512,8 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .live-user-item .item-right .tags>span,
 .bili-search .pgc-item .right-info .headline .pgc-label,
 .follow-right-module .follow-head .follow-more,
-.carousel-wrap .page .next.current
+.carousel-wrap .page .next.current,
+.head .dropdown-menu .article-list
 {
     border-color: transparent !important;
 }
