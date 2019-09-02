@@ -114,18 +114,19 @@ export class ResourceManager {
     this.applyComponent(key, text)
   }
   async fetch () {
-    const isCacheValid = this.validateCache()
-    let loadingToast = null
+    this.validateCache()
+    // let loadingToast = null
     if (settings.toast === true) {
       await this.fetchByKey('toast')
       unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export.Toast || this.attributes.toast.export
-      if (!isCacheValid && settings.useCache) {
-        loadingToast = Toast.info(/* html */`<div class="loading"></div>正在初始化脚本`, '初始化')
-      }
+      // if (!isCacheValid && settings.useCache) {
+      //   loadingToast = Toast.info(/* html */`<div class="loading"></div>正在初始化脚本`, '初始化')
+      // }
     }
     const promises = []
     for (const key in settings) {
       if (settings[key] === true && key !== 'toast') {
+        await this.styleManager.fetchStyleByKey(key)
         const promise = this.fetchByKey(key)
         if (promise) {
           promises.push(promise)
@@ -133,9 +134,9 @@ export class ResourceManager {
       }
     }
     await Promise.all(promises)
-    if (loadingToast) {
-      loadingToast.dismiss()
-    }
+    // if (loadingToast) {
+    //   loadingToast.dismiss()
+    // }
     this.applyReloadables() // reloadables run sync
     // await this.applyDropdownOptions();
     this.applyWidgets() // No need to wait the widgets

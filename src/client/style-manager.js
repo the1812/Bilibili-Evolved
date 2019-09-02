@@ -49,7 +49,11 @@ export class StyleManager {
     if (settings[key] !== true) {
       return
     }
-    Resource.all[key].styles
+    const resource = Resource.all[key]
+    if (!resource || !resource.styles) {
+      return
+    }
+    resource.styles
       .filter(it => it.condition !== undefined ? it.condition() : true)
       .forEach(it => {
         const important = typeof it === 'object' ? it.important : false
