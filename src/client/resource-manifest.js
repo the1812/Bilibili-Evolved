@@ -78,7 +78,12 @@ Resource.manifest = {
       'themeColors',
       'settingsTooltip',
       'settingsSearch',
-      'iconsStyle',
+    ],
+    styles: [
+      {
+        key: 'iconsStyle',
+        important: true,
+      },
     ],
     displayNames: {
       guiSettings: '设置',
