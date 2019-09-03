@@ -4,8 +4,8 @@
   </div>
 </template>
 <script lang="ts">
-import MinimalHome from './minimal-home.vue'
-import SimpleHome from './simple-home.vue'
+import MinimalHome from './minimal-home/minimal-home.vue'
+import SimpleHome from './simple-home/simple-home.vue'
 export default {
   components: {
     'minimal-home': MinimalHome,

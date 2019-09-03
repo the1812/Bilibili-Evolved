@@ -42,7 +42,7 @@ class Version {
   }
 }
 async function checkNewVersion () {
-  if (typeof offlineData !== 'undefined') {
+  if (typeof offlineData !== 'undefined' || isIframe()) {
     return false
   }
   try {
