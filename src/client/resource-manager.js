@@ -114,7 +114,7 @@ export class ResourceManager {
     this.applyComponent(key, text)
   }
   async fetch () {
-    this.validateCache()
+    const isCacheValid = this.validateCache()
     // let loadingToast = null
     if (settings.toast === true) {
       await this.fetchByKey('toast')
@@ -140,6 +140,7 @@ export class ResourceManager {
     this.applyReloadables() // reloadables run sync
     // await this.applyDropdownOptions();
     this.applyWidgets() // No need to wait the widgets
+    this.checkUpdates(!isCacheValid)
   }
   applyReloadables () {
     const checkAttribute = (key, attributes) => {
@@ -202,6 +203,64 @@ export class ResourceManager {
         Toast.error(toastMessage, '错误')
       }
     }
+  }
+  async checkUpdates (fullDownload) {
+    if (isOffline) {
+      return
+    }
+    if (fullDownload) {
+      const url = Resource.root + 'min/bundle.zip'
+      const zip = new JSZip()
+      await zip.loadAsync(await Ajax.monkey({
+        url,
+        responseType: 'blob',
+      }))
+      console.log('zip: ', zip)
+      zip.forEach((filename, file) => {
+        const url = Resource.root + 'min/' + filename
+        const resource = Resource.all.find(it => it.rawUrl === url)
+        console.log('url: ', url)
+        console.log('resource: ', resource)
+        console.log('file: ', file)
+        settings.cache = Object.assign(settings.cache, {
+          [resource.key]: await file.async('text')
+        })
+      })
+    } else {
+      const hashJson = await Ajax.monkey({
+        url: Resource.root + 'min/bundle.json',
+        responseType: 'json',
+      })
+      console.log('hashJson: ', hashJson)
+      for (const [name, hash] of Object.entries(hashJson)) {
+        const url = Resource.root + 'min/' + name
+        const resource = Resource.all.find(it => it.rawUrl === url)
+        const cache = settings.cache[resource.key]
+        console.log('url: ', url)
+        console.log('resource: ', resource)
+        console.log('cache: ', cache)
+        if (cache) {
+          // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+          const getHash = async (message) => {
+            const msgUint8 = new TextEncoder().encode(message)
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
+            const hashArray = Array.from(new Uint8Array(hashBuffer))
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+            return hashHex
+          }
+          const cacheHash = await getHash(cache)
+          console.log('cacheHash: ', cacheHash)
+          console.log('hash: ', hash)
+          if (cacheHash !== hash) {
+            await resource.download()
+            settings.cache = Object.assign(settings.cache, {
+              [resource.key]: resource.text
+            })
+          }
+        }
+      }
+    }
+
   }
   async applyWidget (info) {
     let condition = true

@@ -19,13 +19,21 @@ namespace BilibiliEvolved.Build
                     where !file.Contains("dark-slice")
                     select file.Replace(@"\", "/");
       var hashDict = new Dictionary<string, string>();
-      using (var sha1 = new SHA1Managed())
-      using (var zip = ZipFile.Open("min/bundle.zip", ZipArchiveMode.Update))
+      var zipName = "min/bundle.zip";
+      // if (File.Exists(zipName))
+      // {
+      //   File.Delete(zipName);
+      // }
+      using (var sha256 = new SHA256Managed())
+      using (var zip = ZipFile.Open(zipName, ZipArchiveMode.Update))
       {
         foreach (var url in urlList)
         {
           var filename = Path.GetFileName(url);
-          var hash = string.Join("", sha1.ComputeHash(File.OpenRead(url)).Select(b => b.ToString("X2")).ToArray());
+          if (filename.StartsWith("bundle.")) {
+            continue;
+          }
+          var hash = string.Join("", sha256.ComputeHash(File.OpenRead(url)).Select(b => b.ToString("X2")).ToArray());
           zip.CreateEntryFromFile(url, filename);
           hashDict.Add(filename, hash);
         }

@@ -64,22 +64,6 @@ export class Resource {
                 })
                 resolve(this.text)
               }
-              Ajax.monkey({ url: this.url }).then(text => {
-                this.text = this.type.preprocessor(text)
-                if (text === null) {
-                  reject(`Component [${key}] download failed`)
-                }
-                if (cache !== this.text) {
-                  // if (cache === null) {
-                  //   resolve(this.text)
-                  // }
-                  if (typeof offlineData === 'undefined') {
-                    settings.cache = Object.assign(settings.cache, {
-                      [key]: this.text
-                    })
-                  }
-                }
-              }).catch(error => reject(error))
             } else {
               Ajax.monkey({ url: this.url })
                 .then(text => {
