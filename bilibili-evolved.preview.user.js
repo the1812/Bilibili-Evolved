@@ -2247,14 +2247,10 @@ class ResourceManager {
         url,
         responseType: 'blob',
       }))
-      console.log('zip: ', zip)
       zip.forEach((filename, file) => {
         const url = Resource.root + 'min/' + filename
         const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
         if (resource) {
-          console.log('url: ', url)
-          console.log('resource: ', resource)
-          console.log('file: ', file)
           file.async('text').then(text => {
             settings.cache = Object.assign(settings.cache, {
               [resource.key]: text
@@ -2267,7 +2263,6 @@ class ResourceManager {
         url: Resource.root + 'min/bundle.json',
         responseType: 'json',
       })
-      console.log('hashJson: ', hashJson)
       await Promise.all(Object.entries(hashJson).map(async ([name, hash]) => {
         const url = Resource.root + 'min/' + name
         const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
@@ -2285,15 +2280,13 @@ class ResourceManager {
             return hashHex
           }
           const cacheHash = await getHash(cache)
-          if (cacheHash.toLowerCase() === hash.toLowerCase()) {
-            return
+          if (cacheHash.toLowerCase() !== hash.toLowerCase()) {
+            await resource.download()
+            settings.cache = Object.assign(settings.cache, {
+              [resource.key]: resource.text
+            })
           }
         }
-        console.log(`loading ${resource.key}`)
-        await resource.download()
-        settings.cache = Object.assign(settings.cache, {
-          [resource.key]: resource.text
-        })
       }))
     }
 

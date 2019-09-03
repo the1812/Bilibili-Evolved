@@ -20,10 +20,10 @@ namespace BilibiliEvolved.Build
                     select file.Replace(@"\", "/");
       var hashDict = new Dictionary<string, string>();
       var zipName = "min/bundle.zip";
-      // if (File.Exists(zipName))
-      // {
-      //   File.Delete(zipName);
-      // }
+      if (File.Exists(zipName))
+      {
+        File.Delete(zipName);
+      }
       using (var sha256 = new SHA256Managed())
       using (var zip = ZipFile.Open(zipName, ZipArchiveMode.Update))
       {
