@@ -15,7 +15,8 @@
 .app-layout .dropbox-component,
 .app-layout .dropbox-component .data-list,
 .van-popover,
-.app-layout .page-content .manga-textbox
+.app-layout .page-content .manga-textbox,
+.international-home .bilibili-search-history
 {
     background-color: #222 !important;
 }
@@ -124,7 +125,9 @@ li.danmaku-info-row.bpui-selecting,
 .carousel-wrap li.scrollx,
 .feed-card .feed-title,
 .main-panel .hot-topic-panel,
-.guest-home .login-panel
+.guest-home .login-panel,
+.international-home .bilibili-search-history .history-item.focus,
+.international-home .bilibili-search-history .history-item:hover
 {
     background-color: #444 !important;
 }
@@ -524,7 +527,8 @@ li.danmaku-info-row.bpui-selecting,
 .follow-right-module .follow-head .follow-more,
 .carousel-wrap .page .next.current,
 .head .dropdown-menu .article-list,
-.guest-home .button-box button
+.guest-home .button-box button,
+.international-home .bilibili-search-history
 {
     border-color: transparent !important;
 }
@@ -863,7 +867,8 @@ li.danmaku-info-row.bpui-selecting,
 .coming-soon-wrapper .card-wrapper .card-item .info-wrapper .title:hover,
 .video-item-biref:hover .biref-info .biref-title,
 .video-list .card-txt:hover,
-.main-panel .more:hover
+.main-panel .more:hover,
+.international-home .bilibili-search-history .cancel-icon:hover
 {
     color: var(--theme-color) !important;
 }

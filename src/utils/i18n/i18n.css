@@ -28,7 +28,8 @@
 .bili-share-pc .title,
 .video-toolbar-module .btn-item .t,
 .exchange-btn .more,
-.rank-header .more
+.rank-header .more,
+.v-wrap .video-toolbar .ops>span
 {
     width: auto !important;
 }
