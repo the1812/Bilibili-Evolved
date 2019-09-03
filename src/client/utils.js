@@ -121,4 +121,4 @@ export const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
     }
   }).join(",")
 }
-export const isOffline = typeof offlineData !== 'undefined'
+export const isOffline = () => typeof offlineData !== 'undefined'

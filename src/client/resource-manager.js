@@ -205,7 +205,7 @@ export class ResourceManager {
     }
   }
   async checkUpdates (fullDownload) {
-    if (isOffline) {
+    if (isOffline()) {
       return
     }
     if (fullDownload) {

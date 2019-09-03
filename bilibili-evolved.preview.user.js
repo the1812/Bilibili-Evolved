@@ -149,7 +149,7 @@ const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
     }
   }).join(",")
 }
-const isOffline = typeof offlineData !== 'undefined'
+const isOffline = () => typeof offlineData !== 'undefined'
 
 const customNavbarDefaultOrders = {
   blank1: 0,
@@ -2238,7 +2238,7 @@ class ResourceManager {
     }
   }
   async checkUpdates (fullDownload) {
-    if (isOffline) {
+    if (isOffline()) {
       return
     }
     if (fullDownload) {
