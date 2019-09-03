@@ -80,8 +80,8 @@ function listenDependencies () {
 }
 function checkOfflineData () {
   if (typeof offlineData !== 'undefined') {
-    document.querySelector('.gui-settings-checkbox-container>input[key=useCache]').parentElement.parentElement.classList.add('disabled')
-    document.querySelector('input[key=useCache]').disabled = true
+    // document.querySelector('.gui-settings-checkbox-container>input[key=useCache]').parentElement.parentElement.classList.add('disabled')
+    // document.querySelector('input[key=useCache]').disabled = true
   }
 }
 function checkCompatibility () {
