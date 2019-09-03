@@ -220,6 +220,12 @@
 > ⚠ 此功能与原生快捷键有一点差异: 在网页任何地方点下快捷键都会生效, 除非正在打字. (原生快捷键需要聚焦到播放器才能用)
 
 </details>
+<details>
+<summary><strong>双击全屏</strong></summary>
+
+允许双击播放器切换全屏, 请注意不能与`播放器触摸支持-启用双击控制`一同使用.
+
+</details>
 
 <h2 align="center">样式</h2>
 <div align="center">掌控哔哩哔哩的外观</div>
@@ -571,12 +577,14 @@
 开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.
 
 </details>
-<details>
+
+<!-- <details>
 <summary><strong>启用缓存</strong></summary>
 
 使用缓存以提高脚本的加载速度, 此选项只对非离线版有效, 可在`附加功能`中清除脚本的缓存.
 
-</details>
+</details> -->
+
 <details>
 <summary><strong>文件命名格式</strong></summary>
 
