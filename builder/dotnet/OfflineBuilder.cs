@@ -45,7 +45,7 @@ namespace BilibiliEvolved.Build
       //                select "min/" + match.Groups[1].Value.Trim()
       //               ).ToList();
       var urlList = from file in Directory.GetFiles("min")
-                    where !file.Contains("dark-slice")
+                    where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
                     select file.Replace(@"\", "/");
 
       var downloadCodeStart = @"// \+#Offline build placeholder";

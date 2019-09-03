@@ -16,7 +16,7 @@ namespace BilibiliEvolved.Build
     public ProjectBuilder BuildBundle()
     {
       var urlList = from file in Directory.GetFiles("min")
-                    where !file.Contains("dark-slice")
+                    where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
                     select file.Replace(@"\", "/");
       var hashDict = new Dictionary<string, string>();
       var zipName = "min/bundle.zip";
@@ -30,9 +30,6 @@ namespace BilibiliEvolved.Build
         foreach (var url in urlList)
         {
           var filename = Path.GetFileName(url);
-          if (filename.StartsWith("bundle.")) {
-            continue;
-          }
           var hash = string.Join("", sha256.ComputeHash(File.OpenRead(url)).Select(b => b.ToString("X2")).ToArray());
           zip.CreateEntryFromFile(url, filename);
           hashDict.Add(filename, hash);

@@ -13,7 +13,7 @@ namespace BilibiliEvolved.Build
     {
       var onlineRoot = $"https://raw.githubusercontent.com/{config.Owner}/Bilibili-Evolved/preview/";
       var urlList = from file in Directory.GetFiles("min")
-                    where !file.Contains("dark-slice")
+                    where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
                     select file.Replace(@"\", "/");
       var onlineData = "const onlineData = {};" + Environment.NewLine;
       foreach (var url in urlList)
