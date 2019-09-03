@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      413.77
+// @version      413.79
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2230,13 +2230,17 @@ class ResourceManager {
       console.log('zip: ', zip)
       zip.forEach((filename, file) => {
         const url = Resource.root + 'min/' + filename
-        const resource = Resource.all.find(it => it.rawUrl === url)
-        console.log('url: ', url)
-        console.log('resource: ', resource)
-        console.log('file: ', file)
-        settings.cache = Object.assign(settings.cache, {
-          [resource.key]: await file.async('text')
-        })
+        const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
+        if (resource) {
+          console.log('url: ', url)
+          console.log('resource: ', resource)
+          console.log('file: ', file)
+          file.async('text').then(text => {
+            settings.cache = Object.assign(settings.cache, {
+              [resource.key]: text
+            })
+          })
+        }
       })
     } else {
       const hashJson = await Ajax.monkey({
@@ -2244,13 +2248,13 @@ class ResourceManager {
         responseType: 'json',
       })
       console.log('hashJson: ', hashJson)
-      for (const [name, hash] of Object.entries(hashJson)) {
+      await Promise.all(Object.entries(hashJson).map(async ([name, hash]) => {
         const url = Resource.root + 'min/' + name
-        const resource = Resource.all.find(it => it.rawUrl === url)
+        const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
+        if (!resource) {
+          return
+        }
         const cache = settings.cache[resource.key]
-        console.log('url: ', url)
-        console.log('resource: ', resource)
-        console.log('cache: ', cache)
         if (cache) {
           // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
           const getHash = async (message) => {
@@ -2261,16 +2265,16 @@ class ResourceManager {
             return hashHex
           }
           const cacheHash = await getHash(cache)
-          console.log('cacheHash: ', cacheHash)
-          console.log('hash: ', hash)
-          if (cacheHash !== hash) {
-            await resource.download()
-            settings.cache = Object.assign(settings.cache, {
-              [resource.key]: resource.text
-            })
+          if (cacheHash.toLowerCase() === hash.toLowerCase()) {
+            return
           }
         }
-      }
+        console.log(`loading ${resource.key}`)
+        await resource.download()
+        settings.cache = Object.assign(settings.cache, {
+          [resource.key]: resource.text
+        })
+      }))
     }
 
   }
