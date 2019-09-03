@@ -142,6 +142,8 @@ export const settings = {
   keymap: false,
   doubleClickFullscreen: false,
   doubleClickFullscreenPreventSingleClick: false,
+  simplifyHome: false,
+  simplifyHomeStyle: '清爽',
   cache: {},
 }
 const fixedSettings = {

@@ -15,27 +15,36 @@ namespace BilibiliEvolved.Build
   {
     public ProjectBuilder BuildBundle()
     {
-      var urlList = from file in Directory.GetFiles("min")
-                    where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
-                    select file.Replace(@"\", "/");
-      var hashDict = new Dictionary<string, string>();
-      var zipName = "min/bundle.zip";
-      if (File.Exists(zipName))
+      using (var cache = new BuildCache())
       {
-        File.Delete(zipName);
-      }
-      using (var sha256 = new SHA256Managed())
-      using (var zip = ZipFile.Open(zipName, ZipArchiveMode.Update))
-      {
-        foreach (var url in urlList)
-        {
-          var filename = Path.GetFileName(url);
-          var hash = string.Join("", sha256.ComputeHash(File.OpenRead(url)).Select(b => b.ToString("X2")).ToArray());
-          zip.CreateEntryFromFile(url, filename);
-          hashDict.Add(filename, hash);
+        var files = ResourceMinifier.GetFiles(file =>
+          file.FullName.Contains(@"src\")
+        );
+        var changedFiles = files.Where(file => !cache.Contains(file)).ToArray();
+        if (changedFiles.Any()) {
+          var urlList = from file in Directory.GetFiles("min")
+                        where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
+                        select file.Replace(@"\", "/");
+          var hashDict = new Dictionary<string, string>();
+          var zipName = "min/bundle.zip";
+          if (File.Exists(zipName))
+          {
+            File.Delete(zipName);
+          }
+          using (var sha256 = new SHA256Managed())
+          using (var zip = ZipFile.Open(zipName, ZipArchiveMode.Update))
+          {
+            foreach (var url in urlList)
+            {
+              var filename = Path.GetFileName(url);
+              var hash = string.Join("", sha256.ComputeHash(File.OpenRead(url)).Select(b => b.ToString("X2")).ToArray());
+              zip.CreateEntryFromFile(url, filename);
+              hashDict.Add(filename, hash);
+            }
+          }
+          File.WriteAllText("min/bundle.json", JsonConvert.SerializeObject(hashDict, Formatting.Indented));
         }
       }
-      File.WriteAllText("min/bundle.json", JsonConvert.SerializeObject(hashDict, Formatting.Indented));
       WriteSuccess("Bundle build complete.");
       return this;
     }

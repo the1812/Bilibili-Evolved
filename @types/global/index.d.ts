@@ -342,6 +342,8 @@ declare global {
     keymap: boolean,
     doubleClickFullscreen: boolean,
     doubleClickFullscreenPreventSingleClick: boolean
+    simplifyHome: boolean,
+    simplifyHomeStyle: '清爽' | '极简',
     latestVersionLink: string,
     currentVersion: string,
   }

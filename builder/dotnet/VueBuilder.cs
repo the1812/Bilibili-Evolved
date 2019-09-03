@@ -28,7 +28,7 @@ namespace BilibiliEvolved.Build
     {
       var regex = @"<template\s*(lang=""(.+)"")?\s*>([^\0]*)</template>";
       var match = new Regex(regex, RegexOptions.Multiline).Match(text);
-      if (match is null)
+      if (!match.Success)
       {
         TamplateLang = null;
         Tamplate = null;
@@ -45,7 +45,7 @@ namespace BilibiliEvolved.Build
     {
       var regex = @"<script\s*(lang=""(.+)"")?\s*>([^\0]*)</script>";
       var match = new Regex(regex, RegexOptions.Multiline).Match(text);
-      if (match is null)
+      if (!match.Success)
       {
         ScriptLang = null;
         Script = null;
@@ -62,13 +62,13 @@ namespace BilibiliEvolved.Build
     {
       var regex = @"<style\s*(lang=""(.+)"")?\s*>([^\0]*)</style>";
       var match = new Regex(regex, RegexOptions.Multiline).Match(text);
-      if (match is null)
+      if (!match.Success)
       {
         StyleLang = null;
         Style = null;
         return;
       }
-      Style = match.Groups[3].Value.Trim();
+      Style = match.Groups[3].Value.Trim().Trim('\ufeff');
       StyleLang = match.Groups[2].Value.Trim();
       if (StyleLang == "")
       {
@@ -127,7 +127,7 @@ namespace BilibiliEvolved.Build
             WriteInfo($"Vue build: {file}");
             var source = File.ReadAllText(file);
             var vueFile = new VueFile(source);
-            var compiledText = new StringBuilder("(()=>{return (settings,resources)=>{");
+            var compiledText = new StringBuilder("");
             if (vueFile.Tamplate is null)
             {
               throw new VueBuildException($"{file}: Missing <tamplate>");
@@ -181,17 +181,17 @@ namespace BilibiliEvolved.Build
                 var script = File.ReadAllText(jsFile).Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
                 compiledText.Append($"{script})}}");
                 File.Delete(tsFile);
-                File.Delete(jsFile);
+                // File.Delete(jsFile);
               }
               else
               {
                 throw new VueBuildException($"{file}: Unsupported <script> lang '{vueFile.ScriptLang}'");
               }
             }
-            compiledText.Append("}})()");
+            // compiledText.Append("}})()");
             var minFile = "min" + Path.DirectorySeparatorChar + Path.GetFileName(file) + ".min.js";
-            var jsc = new UglifyJs();
-            File.WriteAllText(minFile, jsc.Run(compiledText.ToString()));
+            var jsc = new JavascriptMinifier();
+            File.WriteAllText(minFile, jsc.Minify(compiledText.ToString()));
             WriteHint($"\t=> {minFile}");
           });
         }
