@@ -40,18 +40,29 @@ export class ResourceManager {
     this.applyStyleFromText(`html{${styles.join(';')}}`, 'bilibili-evolved-variables')
   }
   resolveComponentName (componentName) {
-    const keyword = '/' + componentName.substring(componentName.lastIndexOf('/') + 1) + '.min.js'
+    const filename = '/' + componentName.substring(componentName.lastIndexOf('/') + 1) + '.min.js'
     for (const [name, value] of Object.entries(Resource.all)) {
-      if (value.url.endsWith(keyword)) {
+      if (value.url.endsWith(filename)) {
         return name
       }
     }
-    return componentName
+    if (componentName.endsWith('Html') || componentName.endsWith('Style')) {
+      return componentName
+    }
+    return filename.replace('/', '')
   }
   resolveComponent (componentName) {
-    const resource = Resource.all[this.resolveComponentName(componentName)]
+    const name = this.resolveComponentName(componentName)
+    let resource = Resource.all[name]
     if (!resource) {
-      this.skippedImport.push(componentName)
+      resource = new Resource(name)
+      let key = name.substring(0, name.indexOf('.')).replace(/-\w/g, t => t.substr(1).toUpperCase())
+      if (name.includes('.vue.')) {
+        key += 'Component'
+      }
+      resource.key = key
+      console.log(name, key, resource)
+      Resource.all[key] = resource
     }
     return resource
   }
@@ -65,6 +76,7 @@ export class ResourceManager {
         if (resource.type.name === 'html' || resource.type.name === 'style') {
           resource.download().then(() => resolve(this.import(componentName)))
         } else {
+          console.log('async load: ', resource.key)
           this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)))
         }
       } else {
@@ -196,7 +208,8 @@ export class ResourceManager {
         this.attributes[key] = attribute
       } catch (error) {
         console.error(`Failed to apply feature "${key}": ${error}`)
-        let toastMessage = `加载组件<span>${Resource.all[key].displayName}</span>失败`
+        const displayName = Resource.all[key].displayName
+        let toastMessage = `加载组件<span>${displayName || key}</span>失败`
         if (settings.toastInternalError) {
           toastMessage += '\n' + error
         }

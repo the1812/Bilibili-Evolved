@@ -709,24 +709,8 @@ Resource.manifest = {
   simplifyHome: {
     path: 'simplify-home.min.js',
     displayNames: {
-      simplifyHome: '简化首页',
-      simplifyHomeComponent: '简化首页组件',
-      minimalHomeComponent: '简化首页-极简样式',
-      simpleHomeComponent: '简化首页-清爽样式',
+      simplifyHome: '简化首页'
     },
   },
-  simplifyHomeComponent: {
-    path: 'simplify-home.vue.min.js',
-    dependencies: [
-      'minimalHomeComponent',
-      'simpleHomeComponent',
-    ],
-  },
-  minimalHomeComponent: {
-    path: 'minimal-home.vue.min.js',
-  },
-  simpleHomeComponent: {
-    path: 'simple-home.vue.min.js',
-  }
 }
 export const resourceManifest = Resource.manifest

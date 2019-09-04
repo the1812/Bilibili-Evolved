@@ -1071,7 +1071,7 @@ onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/m
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/show-dead-video-title.min.js"] = (()=>{return(e,t)=>{(async()=>{if(!document.URL.startsWith("https://space.bilibili.com")){return}class t{}class i extends t{convertToDeadVideoInfo(e,t){return{aid:e,title:t.title,cover:t.pic}}async queryInfo(e){const t=[];if(e.length<=i.MaxCountPerRequest){const s=await Ajax.getJson(`${i.BiliplusHost}/api/aidinfo?aid=${e.join(",")}`);if(s.code===0){t.push(...e.map(e=>{if(e in s.data){return this.convertToDeadVideoInfo(e,s.data[e])}else{return{aid:e,title:"已失效视频",cover:""}}}))}else{console.error(`[显示失效视频信息] Biliplus API 未成功. message=${s.message}`)}}else{t.push(...await this.queryInfo(e.slice(0,i.MaxCountPerRequest)));t.push(...await this.queryInfo(e.slice(i.MaxCountPerRequest)))}return t}}i.BiliplusHost=`https://hd.biliplus.com`;i.MaxCountPerRequest=30;class s extends t{async toggleWatchlater(e,t){for(const i of t){await Ajax.postTextWithCredentials(`https://api.bilibili.com/x/v2/history/toview/${e?"add":"del"}`,`aid=${i}&csrf=${s.csrf}`)}}async queryInfo(e){const t=[];await this.toggleWatchlater(true,e);const i=await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/v2/history/toview/web");if(i.code===0){const s=i.data.list.map(e=>{return{aid:e.aid.toString(),title:e.title,cover:e.pic}});t.push(...e.map(e=>s.find(t=>t.aid===e)).filter(e=>e!==undefined));await this.toggleWatchlater(false,e)}else{console.error(`[显示失效视频信息] 稍后再看 API 未成功. message=${i.message}`)}return t}}s.csrf=document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/,"$1");const a=await SpinQuery.select("#app>.s-space");if(!a){return}Observer.childListSubtree(a,async()=>{const t=dqa(".disabled[data-aid]");if(t.length===0){return}const a=t.map(e=>e.getAttribute("data-aid"));const o=e.deadVideoTitleProvider==="BiliPlus"?new i:new s;const r=await o.queryInfo(a);console.log(`[显示失效视频信息]`,`deadVideos:`,t,`infos:`,r);t.forEach((t,i)=>{t.classList.remove("disabled");const s=t.getAttribute("data-aid");const a=(()=>{if(e.useBiliplusRedirect){return`https://hd.biliplus.com/video/av${s}`}else{return`//www.bilibili.com/video/av${s}`}})();const o=r.find(e=>e.aid===s);console.log(`[显示失效视频信息]`,"#"+i,o);if(o===undefined){console.error(`[显示失效视频信息]信息获取失败, aid=${s}`);return}const n=t.querySelector("a.cover");n.target="_blank";n.href=a;if(o.cover!==""){n.querySelector("img").src=o.cover.replace("http:","https:")}const l=t.querySelector("a.title");l.target="_blank";l.title=o.title;l.href=a;l.innerText=o.title})})})()}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/simple-home.vue.min.js"] = (()=>{return(e,t)=>{const m=`<div class=simple-home>I'm SimpleHome component!</div>`;return{export:Object.assign({template:m},{})}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/simplify-home.min.js"] = (()=>{return(e,i)=>{(async()=>{if(document.URL.replace(window.location.search,"")!=="https://www.bilibili.com/"){return}const t=await i.importAsync("simplify-home.vue");document.body.insertAdjacentHTML("afterbegin",`\n    <simplify-home :home-style="homeStyle"></simplify-home>\n  `);const m=new Vue({el:"simplify-home",components:{"simplify-home":t},data:{homeStyle:e.simplifyHomeStyle}});addSettingsListener("simplifyHomeStyle",e=>m.homeStyle=e,false)})()}})();
-onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/simplify-home.vue.min.js"] = (()=>{return(e,o)=>{const t=`<div class=simplify-home><component :is=activeComponent></component></div>`;const m=o.import("minimal-home.vue");const n=o.import("simple-home.vue");return{export:Object.assign({template:t},{components:{"minimal-home":m,"simple-home":n},computed:{activeComponent(){return this.homeStyle==="清爽"?n:m}},props:{homeStyle:String}})}}})();
+onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/simplify-home.vue.min.js"] = (()=>{return(e,m)=>{const o=`<div class=simplify-home><component :is=activeComponent></component></div>`;return{export:Object.assign({template:o},{components:{"minimal-home":()=>m.importAsync("minimal-home.vue"),"simple-home":()=>m.importAsync("simple-home.vue")},computed:{activeComponent(){return this.homeStyle==="清爽"?"simple-home":"minimal-home"}},props:{homeStyle:String}})}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/simplify-liveroom.min.css"] = `.simplify-fansMedal .fans-medal-item-ctnr,.simplify-giftMessage .chat-item.gift-item,.simplify-guard i.guard-icon,.simplify-guardPurchase .chat-item.guard-buy,.simplify-popup .chat-popups-section,.simplify-popup .link-popup-ctnr,.simplify-systemMessage .announcement-wrapper,.simplify-systemMessage .system-msg,.simplify-title .title-label,.simplify-userLevel .user-level-icon,.simplify-vip .vip-icon,.simplify-welcomeMessage .welcome-guard,.simplify-welcomeMessage .welcome-msg{display:none!important}.simplify-skin #gift-control-vm,.simplify-skin #head-info-vm,.simplify-skin #rank-list-ctnr-box{background-image:none!important}.simplify-guard .guard-danmaku::before{border-image:none!important;background-color:transparent!important}.simplify-guard .guard-danmaku{margin:0!important;padding:4px 5px!important}.simplify-guard .guard-danmaku::after{background-image:none!important}.simplify-liveroom-settings>ul>li{padding:8px 12px;display:flex;align-items:center}.simplify-liveroom-settings>ul>li:hover{background:rgba(0,0,0,.16)}.round-corner .simplify-liveroom-settings>ul>li{border-radius:var(--corner-radius)}`;
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/simplify-liveroom.min.js"] = (()=>{return(e,i)=>{const s={vip:"老爷图标",fansMedal:"粉丝勋章",title:"活动头衔",userLevel:"用户等级",guard:"舰长图标",systemMessage:"全区广播",welcomeMessage:"欢迎信息",giftMessage:"礼物弹幕",guardPurchase:"上舰提示",popup:"抽奖提示",skin:"房间皮肤"};return{widget:{condition:()=>document.URL.startsWith(`https://live.bilibili.com/`),content:`\n      <div class="gui-settings-flat-button" style="position: relative" id="simplify-liveroom">\n        <i class="mdi mdi-24px mdi-settings"></i>\n        <span>简化直播间</span>\n        <div class="simplify-liveroom-settings popup">\n          <ul>\n            <li v-for="item in items" v-on:click="itemClick(item)">\n              <i class="mdi mdi-18px" v-bind:class="{'mdi-eye': !item.checked, 'mdi-eye-off': item.checked}"></i>\n              {{item.name}}\n            </li>\n          </ul>\n        </div>\n      </div>\n    `,success:()=>{const i=document.querySelector("#simplify-liveroom");const t=document.querySelector(".gui-settings-mask");i.addEventListener("click",e=>{const i=document.querySelector(".simplify-liveroom-settings");if(i.contains(e.target)||e.target===i){return}i.classList.toggle("opened")});i.addEventListener("mouseenter",()=>t.classList.add("transparent"));i.addEventListener("mouseleave",()=>t.classList.remove("transparent"));let n=e.simplifyLiveroomSettings.skin;const a=["#head-info-vm","#gift-control-vm","#rank-list-vm","#rank-list-ctnr-box",".gift-panel.base-panel",".gift-panel.extend-panel",".seeds-wrap>div:first-child",".gift-section>div:last-child",".z-gift-package>div>div",".right-action"];const c="live-skin-coloration-area";a.forEach(e=>{SpinQuery.select(e,i=>{Observer.attributes(e,e=>{e.forEach(e=>{if(e.attributeName==="class"){if(n&&i.classList.contains(c)){i.classList.remove(c)}else if(!n&&!i.classList.contains(c)){i.classList.add(c)}}})})})});const o=(e,i)=>{document.body.classList[e?"add":"remove"](`simplify-${i}`);if(i==="skin"){n=e;a.forEach(i=>{SpinQuery.select(i,i=>i.classList[e?"remove":"add"]("live-skin-coloration-area"))})}};new Vue({el:".simplify-liveroom-settings",data:{items:Object.entries(s).map(([i,s])=>{const t=e.simplifyLiveroomSettings[i];o(t,i);return{key:i,name:s,checked:t}})},methods:{itemClick(i){i.checked=!i.checked;o(i.checked,i.key);e.simplifyLiveroomSettings=Object.assign(e.simplifyLiveroomSettings,{[i.key]:i.checked})}}})}}}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/skip-charge-list.min.css"] = `.bilibili-player .bilibili-player-area .bilibili-player-electric-panel{display:none!important}`;
@@ -1959,25 +1959,9 @@ Resource.manifest = {
   simplifyHome: {
     path: 'simplify-home.min.js',
     displayNames: {
-      simplifyHome: '简化首页',
-      simplifyHomeComponent: '简化首页组件',
-      minimalHomeComponent: '简化首页-极简样式',
-      simpleHomeComponent: '简化首页-清爽样式',
+      simplifyHome: '简化首页'
     },
   },
-  simplifyHomeComponent: {
-    path: 'simplify-home.vue.min.js',
-    dependencies: [
-      'minimalHomeComponent',
-      'simpleHomeComponent',
-    ],
-  },
-  minimalHomeComponent: {
-    path: 'minimal-home.vue.min.js',
-  },
-  simpleHomeComponent: {
-    path: 'simple-home.vue.min.js',
-  }
 }
 const resourceManifest = Resource.manifest
 
@@ -2101,18 +2085,29 @@ class ResourceManager {
     this.applyStyleFromText(`html{${styles.join(';')}}`, 'bilibili-evolved-variables')
   }
   resolveComponentName (componentName) {
-    const keyword = '/' + componentName.substring(componentName.lastIndexOf('/') + 1) + '.min.js'
+    const filename = '/' + componentName.substring(componentName.lastIndexOf('/') + 1) + '.min.js'
     for (const [name, value] of Object.entries(Resource.all)) {
-      if (value.url.endsWith(keyword)) {
+      if (value.url.endsWith(filename)) {
         return name
       }
     }
-    return componentName
+    if (componentName.endsWith('Html') || componentName.endsWith('Style')) {
+      return componentName
+    }
+    return filename.replace('/', '')
   }
   resolveComponent (componentName) {
-    const resource = Resource.all[this.resolveComponentName(componentName)]
+    const name = this.resolveComponentName(componentName)
+    let resource = Resource.all[name]
     if (!resource) {
-      this.skippedImport.push(componentName)
+      resource = new Resource(name)
+      let key = name.substring(0, name.indexOf('.')).replace(/-\w/g, t => t.substr(1).toUpperCase())
+      if (name.includes('.vue.')) {
+        key += 'Component'
+      }
+      resource.key = key
+      console.log(name, key, resource)
+      Resource.all[key] = resource
     }
     return resource
   }
@@ -2126,6 +2121,7 @@ class ResourceManager {
         if (resource.type.name === 'html' || resource.type.name === 'style') {
           resource.download().then(() => resolve(this.import(componentName)))
         } else {
+          console.log('async load: ', resource.key)
           this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)))
         }
       } else {
@@ -2257,7 +2253,8 @@ class ResourceManager {
         this.attributes[key] = attribute
       } catch (error) {
         console.error(`Failed to apply feature "${key}": ${error}`)
-        let toastMessage = `加载组件<span>${Resource.all[key].displayName}</span>失败`
+        const displayName = Resource.all[key].displayName
+        let toastMessage = `加载组件<span>${displayName || key}</span>失败`
         if (settings.toastInternalError) {
           toastMessage += '\n' + error
         }
