@@ -1,9 +1,16 @@
 <template>
   <div class="minimal-home">
     <div class="minimal-home-header">
-      <Logo class="logo"></Logo>
+      <Icon class="logo" icon="logo" type="main"></Icon>
       <div class="home-tabs">
-        <div v-for="(tab, index) of tabs" :key="index" class="tab" :class="{active: tab.active}" :data-tab="tab.name" @click="changeTab(tab)">{{tab.displayName}}</div>
+        <div
+          v-for="(tab, index) of tabs"
+          :key="index"
+          class="tab"
+          :class="{active: tab.active}"
+          :data-tab="tab.name"
+          @click="changeTab(tab)"
+        >{{tab.displayName}}</div>
       </div>
       <Search></Search>
     </div>
@@ -23,9 +30,9 @@ interface Tab {
 }
 export default {
   components: {
-    Logo: () => import('../../logo.vue'),
+    Icon: () => import('../../icon.vue'),
     Search: () => import('../../search.vue'),
-    HomeVideo: () => import('./home-video.vue'),
+    HomeVideo: () => import('./home-video.vue')
   },
   data() {
     return {
@@ -34,28 +41,28 @@ export default {
           name: 'video',
           displayName: '视频动态',
           active: true,
-          more: 'https://t.bilibili.com/?tab=8',
+          more: 'https://t.bilibili.com/?tab=8'
         },
         {
           name: 'ranking7',
           displayName: '一周排行',
-          active: true,
-          more: 'https://www.bilibili.com/ranking/all/0/0/7',
+          active: false,
+          more: 'https://www.bilibili.com/ranking/all/0/0/7'
         },
         {
           name: 'ranking3',
           displayName: '三日排行',
-          active: true,
-          more: 'https://www.bilibili.com/ranking',
+          active: false,
+          more: 'https://www.bilibili.com/ranking'
         },
         {
           name: 'ranking1',
           displayName: '昨日排行',
-          active: true,
-          more: 'https://www.bilibili.com/ranking/all/0/0/1',
-        },
+          active: false,
+          more: 'https://www.bilibili.com/ranking/all/0/0/1'
+        }
       ] as Tab[],
-      content: 'HomeVideo',
+      content: 'HomeVideo'
     }
   },
   methods: {
@@ -68,7 +75,7 @@ export default {
       activeTab.active = false
       tab.active = true
     }
-  },
+  }
 }
 </script>
 <style lang="scss">
@@ -79,6 +86,22 @@ export default {
   }
   .logo {
     font-size: 48px;
+    color: var(--theme-color);
+  }
+  .minimal-home-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .home-tabs {
+      display: flex;
+      flex-grow: 1;
+      justify-content: space-around;
+    }
+  }
+  .minimal-home-content {
+    margin-top: 64px;
+    width: calc(var(--card-column-count) * ( var(--card-width) + var(--card-margin) ));
   }
 }
 </style>

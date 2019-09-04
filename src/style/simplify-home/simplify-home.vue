@@ -1,6 +1,6 @@
 <template>
   <div class="simplify-home">
-    <component :is="activeComponent"></component>
+    <component class="simplify-home-component" :is="activeComponent"></component>
   </div>
 </template>
 <script lang="ts">
@@ -19,3 +19,19 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+.simplify-home {
+  margin-top: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  --card-width: 700px;
+  --card-height: 160px;
+  --card-margin: 16px;
+  --card-column-count: 1;
+
+  .simplify-home-component {
+    max-width: 80%;
+  }
+}
+</style>

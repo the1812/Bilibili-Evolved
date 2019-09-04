@@ -637,6 +637,7 @@ Resource.manifest = {
   },
   simplifyHome: {
     path: 'simplify-home.min.js',
+    style: 'instant',
     displayNames: {
       simplifyHome: '简化首页'
     },
