@@ -32,12 +32,16 @@ namespace BilibiliEvolved.Build
     }
     public ProjectBuilder BuildPreview()
     {
-      var version = new Regex(@"//[ ]*@version[ ]*(.+)")
-          .Match(Source).Groups[1].Value.Trim();
+      var version = new Regex(@"//[ ]*@version[ ]*(.+)").Match(Source).Groups[1].Value.Trim();
       Source = ownerRegex
         .Replace(Source, "${1}" + config.Owner + "${3}");
-      File.WriteAllText(SourcePath, Source.Replace(@"// [Offline build placeholder]", compileOnlineData()));
+      File.WriteAllText(SourcePath, Source);
       File.WriteAllText("version.txt", version);
+      return this;
+    }
+    public ProjectBuilder BuildPreviewData()
+    {
+      File.WriteAllText(SourcePath, Source.Replace(@"// [Offline build placeholder]", compileOnlineData()));
       return this;
     }
   }
