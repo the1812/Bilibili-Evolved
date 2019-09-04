@@ -24,7 +24,8 @@ interface Tab {
 export default {
   components: {
     Logo: () => import('../../logo.vue'),
-    Search: () => import('../../search.vue')
+    Search: () => import('../../search.vue'),
+    HomeVideo: () => import('./home-video.vue'),
   },
   data() {
     return {
@@ -54,7 +55,7 @@ export default {
           more: 'https://www.bilibili.com/ranking/all/0/0/1',
         },
       ] as Tab[],
-      content: null,
+      content: 'HomeVideo',
     }
   },
   methods: {

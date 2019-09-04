@@ -1049,48 +1049,7 @@ class Activities extends NavbarComponent {
             }
           },
         },
-        'video-activity': Object.assign({
-          components: {
-            'video-card': {
-              props: ['card', 'watchlaterInit'],
-              data () {
-                return {
-                  watchlater: this.watchlaterInit,
-                }
-              },
-              methods: {
-                async toggleWatchlater () {
-                  try {
-                    this.watchlater = !this.watchlater
-                    const { toggleWatchlater } = await import('../../video/watchlater-api')
-                    await toggleWatchlater(this.card.aid, this.watchlater)
-                  } catch (error) {
-                    logError(error)
-                    this.watchlater = !this.watchlater
-                  }
-                },
-              },
-              async mounted () {
-                // 预加载稍后再看的API
-                await import('../../video/watchlater-api')
-              },
-              template: /*html*/`
-                <a class="video-activity-card" :class="{new: card.new}" target="_blank" :href="card.videoUrl">
-                  <div class="cover-container">
-                    <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
-                    <div class="time">{{card.time}}</div>
-                    <div @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
-                  </div>
-                  <h1 class="title" :title="card.title">{{card.title}}</h1>
-                  <a class="up" target="_blank" :href="card.upUrl" :title="card.upName">
-                    <dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>
-                    <span class="name">{{card.upName}}</span>
-                  </a>
-                </a>
-              `,
-            },
-          },
-        }, getActivityTabComponent({
+        'video-activity': Object.assign(getActivityTabComponent({
           dataObject: {
             leftCards: [],
             rightCards: [],
@@ -1137,7 +1096,51 @@ class Activities extends NavbarComponent {
             }
             Activities.updateLatestID(cards)
           }
-        })),
+        }), {
+          components: {
+            'video-card': {
+              props: ['card', 'watchlaterInit'],
+              data () {
+                return {
+                  watchlater: this.watchlaterInit,
+                }
+              },
+              components: {
+                'dpi-img': () => import('../dpi-img.vue'),
+              },
+              methods: {
+                async toggleWatchlater () {
+                  try {
+                    this.watchlater = !this.watchlater
+                    const { toggleWatchlater } = await import('../../video/watchlater-api')
+                    await toggleWatchlater(this.card.aid, this.watchlater)
+                  } catch (error) {
+                    logError(error)
+                    this.watchlater = !this.watchlater
+                  }
+                },
+              },
+              async mounted () {
+                // 预加载稍后再看的API
+                await import('../../video/watchlater-api')
+              },
+              template: /*html*/`
+                <a class="video-activity-card" :class="{new: card.new}" target="_blank" :href="card.videoUrl">
+                  <div class="cover-container">
+                    <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
+                    <div class="time">{{card.time}}</div>
+                    <div @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
+                  </div>
+                  <h1 class="title" :title="card.title">{{card.title}}</h1>
+                  <a class="up" target="_blank" :href="card.upUrl" :title="card.upName">
+                    <dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>
+                    <span class="name">{{card.upName}}</span>
+                  </a>
+                </a>
+              `,
+            },
+          },
+        }),
         'bangumi-activity': getActivityTabComponent({
           dataObject: { cards: [] },
           apiUrl: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=512`,
@@ -1473,6 +1476,9 @@ class Subscriptions extends NavbarComponent {
       components: {
         'bangumi-subscriptions': {
           props: ['type'],
+          components: {
+            'dpi-img': () => import('../dpi-img.vue'),
+          },
           template: /*html*/`
             <div class="bangumi-subscriptions" :class="{center: loading || !loading && cards.length === 0}">
               <div v-if="loading" class="loading">
@@ -1537,30 +1543,6 @@ class Subscriptions extends NavbarComponent {
   const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
   userInfo = json.data;
   latestID = Activities.getLatestID()
-  Vue.component('dpi-img', {
-    template: /*html*/`<img :width="width" :height="height" :srcset="srcset" :src="src" :style="{filter: blur ? 'blur(' + blur + 'px)' : undefined}">`,
-    props: ['size', 'src', 'blur'],
-    computed: {
-      srcset () {
-        if (!this.src || !this.size) {
-          return null
-        }
-        return getDpiSourceSet(this.src, this.size)
-      },
-      width () {
-        if (typeof this.size === 'object' && 'width' in this.size) {
-          return this.size.width
-        }
-        return null
-      },
-      height () {
-        if (typeof this.size === 'object' && 'height' in this.size) {
-          return this.size.height
-        }
-        return null
-      }
-    },
-  })
   document.body.insertAdjacentHTML("beforeend", html);
   addSettingsListener("useDarkStyle", darkHandler);
   darkHandler(settings.useDarkStyle);
