@@ -6,8 +6,8 @@
 <script lang="ts">
 export default {
   components: {
-    'minimal-home': () => import('./minimal-home.vue'),
-    'simple-home': () => import('./simple-home.vue'),
+    'minimal-home': () => import('./minimal-home/minimal-home.vue'),
+    'simple-home': () => import('./simple-home/simple-home.vue'),
   },
   computed: {
     activeComponent () {

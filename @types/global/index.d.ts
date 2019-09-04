@@ -374,5 +374,6 @@ declare global {
   const descendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
   const getDpiSourceSet: (src: string, baseSize: number | string | { width?: number | string, height?: number | string }, extension?: string) => string
   const isOffline: () => boolean
+  const getUID: () => string
 }
 export { };

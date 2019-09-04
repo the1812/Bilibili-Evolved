@@ -21,6 +21,7 @@
 // @connect      raw.githubusercontent.com
 // @connect      *
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
+// @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
