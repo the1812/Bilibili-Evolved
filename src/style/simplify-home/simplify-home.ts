@@ -3,7 +3,7 @@
     return
   }
   const SimplifyHome = await import((() => 'simplify-home.vue')())
-  document.body.insertAdjacentHTML('afterbegin', /*html*/`
+  document.body.insertAdjacentHTML('beforeend', /*html*/`
     <simplify-home :home-style="homeStyle"></simplify-home>
   `)
   const vm = new Vue({
