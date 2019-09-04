@@ -61,7 +61,6 @@ export class ResourceManager {
         key += 'Component'
       }
       resource.key = key
-      console.log(name, key, resource)
       Resource.all[key] = resource
     }
     return resource
@@ -76,7 +75,6 @@ export class ResourceManager {
         if (resource.type.name === 'html' || resource.type.name === 'style') {
           resource.download().then(() => resolve(this.import(componentName)))
         } else {
-          console.log('async load: ', resource.key)
           this.fetchByKey(resource.key).then(() => resolve(this.import(componentName)))
         }
       } else {

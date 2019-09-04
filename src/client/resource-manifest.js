@@ -50,15 +50,6 @@ Resource.manifest = {
   settingsTooltipStyle: {
     path: 'settings-tooltip.min.css'
   },
-  settingsTooltipJapanese: {
-    path: 'settings-tooltip.ja-JP.min.js'
-  },
-  settingsTooltipChinese: {
-    path: 'settings-tooltip.zh-CN.min.js'
-  },
-  settingsTooltipEnglish: {
-    path: 'settings-tooltip.en-US.min.js'
-  },
   settingsTooltip: {
     path: 'settings-tooltip.loader.min.js',
     dependencies: [
@@ -481,22 +472,6 @@ Resource.manifest = {
       downloadAudio: '下载音频'
     }
   },
-  i18nEnglish: {
-    path: 'i18n.en-US.min.js',
-    alwaysPreview: true
-  },
-  i18nJapanese: {
-    path: 'i18n.ja-JP.min.js',
-    alwaysPreview: true
-  },
-  i18nTraditionalChinese: {
-    path: 'i18n.zh-TW.min.js',
-    alwaysPreview: true
-  },
-  i18nGerman: {
-    path: 'i18n.de-DE.min.js',
-    alwaysPreview: true
-  },
   i18n: {
     path: 'i18n.min.js',
     alwaysPreview: true,
@@ -504,10 +479,6 @@ Resource.manifest = {
     displayNames: {
       i18n: '界面翻译',
       i18nLanguage: '语言',
-      i18nEnglish: '英语翻译模块',
-      i18nJapanese: '日语翻译模块',
-      i18nGerman: '德语翻译模块',
-      i18nTraditionalChinese: '繁体翻译模块'
     },
     dropdown: {
       key: 'i18nLanguage',
@@ -580,21 +551,6 @@ Resource.manifest = {
       hideOldEntry: '隐藏返回旧版'
     }
   },
-  batchDownload: {
-    path: 'batch-download.min.js'
-  },
-  slip: {
-    path: 'slip.min.js',
-    displayNames: {
-      slip: 'Slip.js'
-    }
-  },
-  debounce: {
-    path: 'debounce.min.js',
-    displayNames: {
-      slip: 'debounce.js'
-    }
-  },
   videoScreenshot: {
     path: 'screenshot.min.js',
     style: true,
@@ -648,9 +604,6 @@ Resource.manifest = {
       items: ['0.5', '0.75', '1.0', '1.25', '1.5', '2.0'],
     }
   },
-  aria2Rpc: {
-    path: 'aria2-rpc.min.js',
-  },
   seedsToCoins: {
     path: 'seeds-to-coins.min.js',
     displayNames: {
@@ -664,18 +617,6 @@ Resource.manifest = {
       magicGrid: 'Magic Grid',
     },
   },
-  watchlaterApi: {
-    path: 'watchlater-api.min.js',
-    displayNames: {
-      toggleWatchlater: '稍后再看API',
-    },
-  },
-  mdi: {
-    path: 'mdi.min.js',
-    displayNames: {
-      mdi: 'MDI 图标集',
-    },
-  },
   autoDraw: {
     path: 'auto-draw.min.js',
     displayNames: {
@@ -686,18 +627,6 @@ Resource.manifest = {
     path: 'keymap.min.js',
     displayNames: {
       keymap: '快捷键扩展',
-    },
-  },
-  vDropdown: {
-    path: 'v-dropdown.vue.min.js',
-    displayNames: {
-      vDropdown: '下拉框组件',
-    },
-  },
-  vCheckbox: {
-    path: 'v-checkbox.vue.min.js',
-    displayNames: {
-      vCheckbox: '复选框组件',
     },
   },
   doubleClickFullscreen: {

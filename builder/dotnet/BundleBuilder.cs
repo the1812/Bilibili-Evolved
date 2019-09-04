@@ -18,7 +18,8 @@ namespace BilibiliEvolved.Build
       using (var cache = new BuildCache())
       {
         var files = ResourceMinifier.GetFiles(file =>
-          file.FullName.Contains(@"src\")
+          file.FullName.Contains("src" + Path.DirectorySeparatorChar) &&
+          !file.FullName.Contains("client" + Path.DirectorySeparatorChar)
         );
         var changedFiles = files.Where(file => !cache.Contains(file)).ToArray();
         if (changedFiles.Any()) {
