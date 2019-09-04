@@ -1,5 +1,5 @@
 <template>
-  <div class="bilibili-logo"></div>
+  <div class="bilibili-logo bilibili-logo-icon"></div>
 </template>
 
 <script>
