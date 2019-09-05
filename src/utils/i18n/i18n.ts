@@ -164,7 +164,7 @@ Translator.sensitiveTranslators = [Translator.textNode, Translator.title, Transl
 const startTranslate = async () =>
 {
     const languageCode = languageCodeMap[settings.i18nLanguage];
-    const { map, regex } = await import(`./i18n.${languageCode}.js`);
+    const { map, regex } = await import(`./i18n.${languageCode}`);
     document.documentElement.setAttribute("lang", languageCode);
     Translator.map = map as Map<string, any>;
     Translator.regex = [...regex.entries()] as Array<[RegExp, string]>;

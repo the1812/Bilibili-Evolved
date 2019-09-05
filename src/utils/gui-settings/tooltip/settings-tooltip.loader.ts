@@ -10,7 +10,7 @@ function extractKey(listItem: Element)
 (async () =>
 {
     resources.applyStyle("settingsTooltipStyle");
-    const { toolTips } = await import(`settings-tooltip.${getI18nKey()}.js`);
+    const { toolTips } = await import(`settings-tooltip.${getI18nKey()}`);
     const tooltip = await SpinQuery.select(".gui-settings-tooltip");
     if (!tooltip)
     {

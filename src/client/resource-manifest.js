@@ -50,6 +50,15 @@ Resource.manifest = {
   settingsTooltipStyle: {
     path: 'settings-tooltip.min.css'
   },
+  settingsTooltipJapanese: {
+    path: 'settings-tooltip.ja-JP.min.js'
+  },
+  settingsTooltipChinese: {
+    path: 'settings-tooltip.zh-CN.min.js'
+  },
+  settingsTooltipEnglish: {
+    path: 'settings-tooltip.en-US.min.js'
+  },
   settingsTooltip: {
     path: 'settings-tooltip.loader.min.js',
     dependencies: [
@@ -485,6 +494,22 @@ Resource.manifest = {
       // items: Object.keys(languageCodeMap),
       items: [`日本語`, `English`]
     }
+  },
+  i18nEnglish: {
+    path: 'i18n.en-US.min.js',
+    alwaysPreview: true
+  },
+  i18nJapanese: {
+    path: 'i18n.ja-JP.min.js',
+    alwaysPreview: true
+  },
+  i18nTraditionalChinese: {
+    path: 'i18n.zh-TW.min.js',
+    alwaysPreview: true
+  },
+  i18nGerman: {
+    path: 'i18n.de-DE.min.js',
+    alwaysPreview: true
   },
   playerFocus: {
     path: 'player-focus.min.js',
