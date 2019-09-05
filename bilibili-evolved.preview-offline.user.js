@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      416.02
+// @version      416.03
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2222,10 +2222,12 @@ class ResourceManager {
           }
           const cacheHash = await getHash(cache)
           if (cacheHash.toLowerCase() !== hash.toLowerCase()) {
+            console.log(`hash not match: ${resource.key}`)
             await resource.download()
             settings.cache = Object.assign(settings.cache, {
               [resource.key]: resource.text
             })
+            console.log(`downloaded ${resource.key} (${await getHash(settings.cache[resource.key])})`)
           }
         }
       }))

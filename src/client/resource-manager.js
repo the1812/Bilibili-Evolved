@@ -260,10 +260,12 @@ export class ResourceManager {
           }
           const cacheHash = await getHash(cache)
           if (cacheHash.toLowerCase() !== hash.toLowerCase()) {
+            console.log(`hash not match: ${resource.key}`)
             await resource.download()
             settings.cache = Object.assign(settings.cache, {
               [resource.key]: resource.text
             })
+            console.log(`downloaded ${resource.key} (${await getHash(settings.cache[resource.key])})`)
           }
         }
       }))
