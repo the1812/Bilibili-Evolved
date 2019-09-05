@@ -870,6 +870,9 @@ let tabUpdate = () => { }
 const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, template }) => {
   return {
     template,
+    components: {
+      'dpi-img': () => import('../dpi-img.vue'),
+    },
     methods: {
       handleJson,
       async fetchData (silent = false) {
