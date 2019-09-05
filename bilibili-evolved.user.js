@@ -2226,6 +2226,14 @@ class ResourceManager {
     if (isOffline()) {
       return
     }
+    // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+    const getHash = async (message) => {
+      const msgUint8 = new TextEncoder().encode(message)
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
+      const hashArray = Array.from(new Uint8Array(hashBuffer))
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+      return hashHex
+    }
     if (fullDownload) {
       const url = Resource.root + 'min/bundle.zip'
       const zip = new JSZip()
@@ -2241,6 +2249,7 @@ class ResourceManager {
             settings.cache = Object.assign(settings.cache, {
               [resource.key]: text
             })
+            getHash(text).then(hash => console.log(`full download: saved ${resource.key} (${hash})`))
           })
         }
       })
@@ -2257,22 +2266,14 @@ class ResourceManager {
         }
         const cache = settings.cache[resource.key]
         if (cache) {
-          // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
-          const getHash = async (message) => {
-            const msgUint8 = new TextEncoder().encode(message)
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
-            const hashArray = Array.from(new Uint8Array(hashBuffer))
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-            return hashHex
-          }
           const cacheHash = await getHash(cache)
           if (cacheHash.toLowerCase() !== hash.toLowerCase()) {
-            console.log(`hash not match: ${resource.key}`)
+            console.log(`hash not match: ${resource.key} (${cacheHash.toLowerCase()}) !== (${hash.toLowerCase()})`)
             await resource.download()
             settings.cache = Object.assign(settings.cache, {
               [resource.key]: resource.text
             })
-            console.log(`downloaded ${resource.key} (${await getHash(settings.cache[resource.key])})`)
+            console.log(`downloaded ${resource.key} (${await getHash(resource.text)}) => (${await getHash(settings.cache[resource.key])})`)
           }
         }
       }))
