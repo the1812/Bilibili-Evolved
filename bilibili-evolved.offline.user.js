@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      416.10
+// @version      416.16
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2238,6 +2238,7 @@ class ResourceManager {
         url: Resource.root + 'min/bundle.json',
         responseType: 'json',
       })
+      const scriptHashWrap = h => `(()=>{return${h}})();`
       await Promise.all(Object.entries(hashJson).map(async ([name, hash]) => {
         const url = Resource.root + 'min/' + name
         const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
@@ -2247,13 +2248,16 @@ class ResourceManager {
         const cache = settings.cache[resource.key]
         if (cache) {
           const cacheHash = await getHash(cache)
-          if (cacheHash.toLowerCase() !== hash.toLowerCase()) {
+          if (cacheHash.toLowerCase() !== hash.toLowerCase() &&
+            scriptHashWrap(cacheHash).toLowerCase() !== hash.toLowerCase()) {
             console.log(`hash not match: ${resource.key} (${cacheHash.toLowerCase()}) !== (${hash.toLowerCase()})`)
             await resource.download()
             settings.cache = Object.assign(settings.cache, {
               [resource.key]: resource.text
             })
-            console.log(`downloaded ${resource.key} (${await getHash(resource.text)}) => (${await getHash(settings.cache[resource.key])})`)
+            console.log(`downloaded ${resource.key}`)
+          } else {
+            console.log(`checked hash: ${resource.key}`)
           }
         }
       }))

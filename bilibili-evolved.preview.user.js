@@ -2258,6 +2258,7 @@ class ResourceManager {
         url: Resource.root + 'min/bundle.json',
         responseType: 'json',
       })
+      const scriptHashWrap = h => `(()=>{return${h}})();`
       await Promise.all(Object.entries(hashJson).map(async ([name, hash]) => {
         const url = Resource.root + 'min/' + name
         const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
@@ -2267,13 +2268,16 @@ class ResourceManager {
         const cache = settings.cache[resource.key]
         if (cache) {
           const cacheHash = await getHash(cache)
-          if (cacheHash.toLowerCase() !== hash.toLowerCase()) {
+          if (cacheHash.toLowerCase() !== hash.toLowerCase() &&
+            scriptHashWrap(cacheHash).toLowerCase() !== hash.toLowerCase()) {
             console.log(`hash not match: ${resource.key} (${cacheHash.toLowerCase()}) !== (${hash.toLowerCase()})`)
             await resource.download()
             settings.cache = Object.assign(settings.cache, {
               [resource.key]: resource.text
             })
-            console.log(`downloaded ${resource.key} (${await getHash(resource.text)}) => (${await getHash(settings.cache[resource.key])})`)
+            console.log(`downloaded ${resource.key}`)
+          } else {
+            console.log(`checked hash: ${resource.key}`)
           }
         }
       }))
