@@ -35,7 +35,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>c</kbd> コインを投げる
 - <kbd>s</kbd> お気に入り
 - <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> 再生速度を調整する.`],
-    ['doubleClickFullscreen', `ダブルクリックして全画面に切り替えることができます.ご注意ください<span>播放器触摸支持</span>-</span>启用双击控制</span>と共に使用できない.`],
+    ['doubleClickFullscreen', `ダブルクリックして全画面に切り替えることができます.ご注意ください<span>播放器触摸支持</span>-<span>启用双击控制</span>と共に使用できない.`],
     ["customStyleColor", `頂欄(スタイルの調整が有効な場合）とダークテーマのテーマ色で埋める、カラープレビューサークルをクリックして、设定の16種類のテーマカラーにできるの、右側のテキストボックスに任意の有効な16進数のカラー値を直接入力することもできます.(<span>#rrggbb</span>或<span>#rgb</span>).`],
     ["blurBackgroundOpacity", `设置顶栏对横幅的透明度(0~1), 数值越高顶栏越淡, 当横幅关闭时此选项无效.`],
     ["customNavbar", `カスタム頂欄を使用する.伝統的な頂欄に取って代わる.メインステーション専用です.「生放送」、「アルバム」、「会員購」などには影響しません.`],
