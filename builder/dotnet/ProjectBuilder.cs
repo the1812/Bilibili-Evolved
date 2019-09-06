@@ -27,7 +27,7 @@ namespace BilibiliEvolved.Build
         public void BuildFinalOutput()
         {
             var ratio = 100.0 * MinimizedResourceLength / OriginalResourceLength;
-            File.WriteAllText(OutputPath, Output);
+            File.WriteAllText(OutputPath, Output.Replace(@"// [Offline build placeholder]", compileOnlineData()));
             WriteInfo();
             // WriteHint($"External resource size -{(100.0 - ratio):0.##}%");
             WriteInfo("Build complete.", ConsoleColor.Green);

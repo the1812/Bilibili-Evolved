@@ -103,6 +103,7 @@
     white-space: pre-wrap;
     display: flex;
     align-items: center;
+    line-height: 1.5;
 }
 .toast-card.toast-default
 {

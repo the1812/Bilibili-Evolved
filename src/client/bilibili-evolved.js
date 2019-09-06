@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.8.18
+// @version      1.9.0
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -18,8 +18,10 @@
 // @grant        GM_setClipboard
 // @grant        GM_info
 // @grant        GM_xmlhttpRequest
+// @connect      raw.githubusercontent.com
 // @connect      *
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
+// @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
@@ -135,6 +137,7 @@ try {
       getValue: GM_getValue,
       setValue: GM_setValue,
       setClipboard: GM_setClipboard,
+      xhr: GM_xmlhttpRequest,
       addValueChangeListener: () => console.warn('此功能已弃用.')
     }
   })

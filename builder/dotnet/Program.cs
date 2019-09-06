@@ -29,11 +29,15 @@ namespace BilibiliEvolved.Build
                     .BuildClient()
                     .BuildPreview()
                     .BuildMaster()
+                    .PrebuildVue()
                     .BuildTypeScripts()
+                    .BuildSass()
+                    .BuildVue()
                     .BuildResources()
                     .BuildPreviewOffline()
                     .BuildOffline()
                     .BuildBundle()
+                    .BuildPreviewData()
                     .BuildFinalOutput();
 
                 if (config.CopyOnBuild)

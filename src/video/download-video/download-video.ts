@@ -496,51 +496,8 @@ async function loadWidget() {
   }, { once: true })
 }
 async function loadPanel() {
-  Vue.component('v-dropdown', {
-    template: /*html*/`
-    <div class="v-dropdown" v-on:click="toggleDropdown()">
-      <span class="selected">{{value}}</span>
-      <ul class="dropdown-menu" v-bind:class="{opened: dropdownOpen}">
-        <li v-for="item in items" v-bind:key="item" v-bind:data-value="item" v-on:click="select(item)">{{item}}</li>
-      </ul>
-      <i class="mdi mdi-chevron-down"></i>
-    </div>
-  `,
-    props: [
-      'items',
-      'value'
-    ],
-    data() {
-      return {
-        dropdownOpen: false,
-      }
-    },
-    methods: {
-      toggleDropdown() {
-        this.dropdownOpen = !this.dropdownOpen
-      },
-      select(item: string) {
-        this.$emit('update:value', item)
-        this.$emit('change', item)
-      },
-    },
-  })
-  Vue.component('v-checkbox', {
-    template: /*html*/`
-      <div class="v-checkbox" v-on:click="toggleCheck()" v-bind:class="{checked: checked}">
-        <i class="mdi mdi-checkbox-blank-circle-outline">
-          <i class="mdi mdi-checkbox-marked-circle"></i>
-        </i>
-        <span class="content">{{title}}</span>
-      </div>
-    `,
-    props: ['checked', 'title'],
-    methods: {
-      toggleCheck() {
-        this.$emit('update:checked', !this.checked)
-      },
-    },
-  })
+  const VueDropDown = await import((() => './v-dropdown.vue')())
+  const VueCheckBox = await import((() => './v-checkbox.vue')())
   let workingDownloader: VideoDownloader
   const sizeCache = new Map<VideoFormat, number>()
   type ExportType = 'copyLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD'
@@ -553,6 +510,10 @@ async function loadPanel() {
   }
   const panel = new Vue({
     el: '.download-video',
+    components: {
+      'v-dropdown': VueDropDown,
+      'v-checkbox': VueCheckBox,
+    },
     data: {
       downloadSingle: true,
       coverUrl: 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>',

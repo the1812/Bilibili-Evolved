@@ -49,16 +49,20 @@ export class StyleManager {
     if (settings[key] !== true) {
       return
     }
-    Resource.all[key].styles
+    const resource = Resource.all[key]
+    if (!resource || !resource.styles) {
+      return
+    }
+    resource.styles
       .filter(it => it.condition !== undefined ? it.condition() : true)
       .forEach(it => {
         const important = typeof it === 'object' ? it.important : false
-        const key = typeof it === 'object' ? it.key : it
-        Resource.all[key].download().then(() => {
+        const styleKey = typeof it === 'object' ? it.key : it
+        Resource.all[styleKey].download().then(() => {
           if (important) {
-            contentLoaded(() => this.applyImportantStyle(key))
+            contentLoaded(() => this.applyImportantStyle(styleKey))
           } else {
-            this.applyStyle(key)
+            this.applyStyle(styleKey)
           }
         })
       })

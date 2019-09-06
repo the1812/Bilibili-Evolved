@@ -675,6 +675,7 @@ export const map = new Map([
   [`直播歌曲内容不适宜请立即调整`, `Your songs in live have conflicted our policy, please use other songs.`],
   [`快捷键扩展`, `Extended Keymap`],
   [`限速`, `Speed Limit`],
+  [`双击全屏`, `Quick fullscreen`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

@@ -109,10 +109,12 @@ namespace BilibiliEvolved.Build
     {
         public override Predicate<FileInfo> FileFilter { get; } = file =>
         {
-            return !file.FullName.Contains(".min")
+            return file.FullName.Contains("src" + Path.DirectorySeparatorChar) &&
+                !file.FullName.Contains(".min")
                 && file.Name != "dark.css"
                 && file.Name != "dark-template.css"
-                && (file.Extension == ".css");
+                && file.Extension == ".css"
+                && !file.Name.EndsWith(".p.css");
         };
 
         public override string ResourceType { get; } = "CSS";
@@ -134,7 +136,7 @@ namespace BilibiliEvolved.Build
         {
             return file.FullName.Contains("src" + Path.DirectorySeparatorChar) &&
                 !file.FullName.Contains("client" + Path.DirectorySeparatorChar) &&
-                file.Extension == ".js";
+                file.Extension == ".js" && !file.Name.EndsWith(".vue.js");
         };
 
         public override string ResourceType { get; } = "JavaScript";

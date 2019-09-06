@@ -111,7 +111,7 @@ const attributes = {
               if (orderBefore === orderAfter) {
                 return;
               }
-              const entires = Object.entries(settings.customNavbarOrder);
+              const entires = Object.entries(settings.customNavbarOrder).filter(([key,]) => key in customNavbarDefaultOrders);
               const names = entires.sort((a, b) => a[1] - b[1]).map(it => it[0]);
               if (orderBefore < orderAfter) {
                 for (let i = orderBefore + 1; i <= orderAfter; i++) {
@@ -119,8 +119,7 @@ const attributes = {
                   settings.customNavbarOrder[name] = i - 1;
                   document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i - 1;
                 }
-              }
-              else {
+              } else {
                 for (let i = orderBefore - 1; i >= orderAfter; i--) {
                   const name = names[i];
                   settings.customNavbarOrder[name] = i + 1;
@@ -225,6 +224,7 @@ const supportedUrls = [
 const unsupportedUrls = [
   "/t.bilibili.com/lottery/h5/index/#/result",
   "/member.bilibili.com/video/upload",
+  "/space.bilibili.com/ajax/",
 ]
 if (!supportedUrls.some(it => document.URL.includes(it))
   || unsupportedUrls.some(it => document.URL.includes(it))) {
@@ -310,7 +310,7 @@ class Upload extends NavbarComponent {
     super();
     this.href = "https://member.bilibili.com/v2#/upload/video/frame";
     this.html = /*html*/`
-      <svg style="width:16px;height:16px;padding:3px;" viewBox="0 0 785 886">
+      <svg style="width:16px;height:16px;padding:3px;box-sizing:content-box;" viewBox="0 0 785 886">
         <path d="M582,374L582,566C582,585.333 576.167,600.833 564.5,612.5C552.833,624.167 537.333,630 518,630L262,630C242.667,630 227.167,624.167 215.5,612.5C203.833,600.833 198,585.333 198,566L198,374L32,374C22,374 14.1667,371.167 8.5,365.5C2.83333,359.833 0,352 0,342C0,338.667 1.16666,334.5 3.5,329.5C5.83333,324.5 8.66666,320 12,316L371,9C377.667,3.00006 385.167,6.10352e-005 393.5,0C401.833,6.10352e-005 409.333,3.00006 416,9L774,316C780,322.667 783.333,330.167 784,338.5C784.667,346.833 783.333,354.333 780,361L764,370C760,372.667 754.667,374 748,374ZM70,758L710,758C729.333,758 744.833,763.833 756.5,775.5C768.167,787.167 774,802.667 774,822C774,841.333 768.167,856.833 756.5,868.5C744.833,880.167 729.333,886 710,886L70,886C50.6667,886 35.1667,880.167 23.5,868.5C11.8333,856.833 6,841.333 6,822C6,802.667 11.8333,787.167 23.5,775.5C35.1667,763.833 50.6667,758 70,758Z" />
       </svg>
       <div id="upload-button">投稿</div>`;
@@ -871,6 +871,9 @@ let tabUpdate = () => { }
 const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, template }) => {
   return {
     template,
+    components: {
+      'dpi-img': () => import('../dpi-img.vue'),
+    },
     methods: {
       handleJson,
       async fetchData (silent = false) {
@@ -1050,48 +1053,7 @@ class Activities extends NavbarComponent {
             }
           },
         },
-        'video-activity': Object.assign({
-          components: {
-            'video-card': {
-              props: ['card', 'watchlaterInit'],
-              data () {
-                return {
-                  watchlater: this.watchlaterInit,
-                }
-              },
-              methods: {
-                async toggleWatchlater () {
-                  try {
-                    this.watchlater = !this.watchlater
-                    const { toggleWatchlater } = await import('../../video/watchlater-api')
-                    await toggleWatchlater(this.card.aid, this.watchlater)
-                  } catch (error) {
-                    logError(error)
-                    this.watchlater = !this.watchlater
-                  }
-                },
-              },
-              async mounted () {
-                // 预加载稍后再看的API
-                await import('../../video/watchlater-api')
-              },
-              template: /*html*/`
-                <a class="video-activity-card" :class="{new: card.new}" target="_blank" :href="card.videoUrl">
-                  <div class="cover-container">
-                    <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
-                    <div class="time">{{card.time}}</div>
-                    <div @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
-                  </div>
-                  <h1 class="title" :title="card.title">{{card.title}}</h1>
-                  <a class="up" target="_blank" :href="card.upUrl" :title="card.upName">
-                    <dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>
-                    <span class="name">{{card.upName}}</span>
-                  </a>
-                </a>
-              `,
-            },
-          },
-        }, getActivityTabComponent({
+        'video-activity': Object.assign(getActivityTabComponent({
           dataObject: {
             leftCards: [],
             rightCards: [],
@@ -1138,7 +1100,51 @@ class Activities extends NavbarComponent {
             }
             Activities.updateLatestID(cards)
           }
-        })),
+        }), {
+          components: {
+            'video-card': {
+              props: ['card', 'watchlaterInit'],
+              data () {
+                return {
+                  watchlater: this.watchlaterInit,
+                }
+              },
+              components: {
+                'dpi-img': () => import('../dpi-img.vue'),
+              },
+              methods: {
+                async toggleWatchlater () {
+                  try {
+                    this.watchlater = !this.watchlater
+                    const { toggleWatchlater } = await import('../../video/watchlater-api')
+                    await toggleWatchlater(this.card.aid, this.watchlater)
+                  } catch (error) {
+                    logError(error)
+                    this.watchlater = !this.watchlater
+                  }
+                },
+              },
+              async mounted () {
+                // 预加载稍后再看的API
+                await import('../../video/watchlater-api')
+              },
+              template: /*html*/`
+                <a class="video-activity-card" :class="{new: card.new}" target="_blank" :href="card.videoUrl">
+                  <div class="cover-container">
+                    <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
+                    <div class="time">{{card.time}}</div>
+                    <div @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
+                  </div>
+                  <h1 class="title" :title="card.title">{{card.title}}</h1>
+                  <a class="up" target="_blank" :href="card.upUrl" :title="card.upName">
+                    <dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>
+                    <span class="name">{{card.upName}}</span>
+                  </a>
+                </a>
+              `,
+            },
+          },
+        }),
         'bangumi-activity': getActivityTabComponent({
           dataObject: { cards: [] },
           apiUrl: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=512`,
@@ -1176,6 +1182,7 @@ class Activities extends NavbarComponent {
         'column-activity': getActivityTabComponent({
           dataObject: { cards: [] },
           apiUrl: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${userInfo.mid}&type_list=64`,
+          name: '专栏',
           template: /*html*/`
             <div class="column-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
@@ -1215,6 +1222,7 @@ class Activities extends NavbarComponent {
         'live-activity': getActivityTabComponent({
           dataObject: { cards: [] },
           apiUrl: `https://api.live.bilibili.com/relation/v1/feed/feed_list?page=1&pagesize=24`,
+          name: '直播',
           template: /*html*/`
             <div class="live-activity" :class="{center: loading || cards.length === 0}">
               <activity-loading :loading="loading"></activity-loading>
@@ -1401,7 +1409,11 @@ class HistoryList extends VideoList {
           let parameter = [];
           let description = "";
           const page = item.page ? item.page.page : 1;
-          const progress = item.progress >= 0 ? item.progress / item.duration : 1;
+          let progress = item.progress >= 0 ? item.progress / item.duration : 1;
+          if (isNaN(progress)) {
+            progress = 0
+          }
+
           if (page !== 1) {
             parameter.push(`p=${page}`);
             description += `看到第${page}话`;
@@ -1438,13 +1450,14 @@ class Subscriptions extends NavbarComponent {
     this.noPadding = true
     this.href = `https://space.bilibili.com/${userInfo.mid}/bangumi`
     this.html = '订阅'
+    this.active = [`https://space.bilibili.com/${userInfo.mid}/bangumi`, `https://space.bilibili.com/${userInfo.mid}/cinema`, `https://space.bilibili.com/${userInfo.mid}/subs`].includes(document.URL.replace(/\?.*$/, ""))
     this.popupHtml = /*html*/`
     <div class="subscriptions">
       <ul class="subscriptions-tabs">
         <li class="tab" :class="{selected: bangumi}" @click="bangumi = true">追番</li>
         <li class="tab" :class="{selected: !bangumi}" @click="bangumi = false">追剧</li>
         <div class="tab-placeholder"></div>
-        <a class="view-all" :href="'https://space.bilibili.com/${userInfo.mid}/' + (bangumi ? 'bangumi' : 'cinema')">
+        <a class="view-all" target="_blank" :href="'https://space.bilibili.com/${userInfo.mid}/' + (bangumi ? 'bangumi' : 'cinema')">
           查看更多
           <i class="mdi mdi-dots-horizontal-circle-outline"></i>
         </a>
@@ -1467,6 +1480,9 @@ class Subscriptions extends NavbarComponent {
       components: {
         'bangumi-subscriptions': {
           props: ['type'],
+          components: {
+            'dpi-img': () => import('../dpi-img.vue'),
+          },
           template: /*html*/`
             <div class="bangumi-subscriptions" :class="{center: loading || !loading && cards.length === 0}">
               <div v-if="loading" class="loading">
@@ -1531,30 +1547,6 @@ class Subscriptions extends NavbarComponent {
   const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
   userInfo = json.data;
   latestID = Activities.getLatestID()
-  Vue.component('dpi-img', {
-    template: /*html*/`<img :width="width" :height="height" :srcset="srcset" :src="src" :style="{filter: blur ? 'blur(' + blur + 'px)' : undefined}">`,
-    props: ['size', 'src', 'blur'],
-    computed: {
-      srcset () {
-        if (!this.src || !this.size) {
-          return null
-        }
-        return getDpiSourceSet(this.src, this.size)
-      },
-      width () {
-        if (typeof this.size === 'object' && 'width' in this.size) {
-          return this.size.width
-        }
-        return null
-      },
-      height () {
-        if (typeof this.size === 'object' && 'height' in this.size) {
-          return this.size.height
-        }
-        return null
-      }
-    },
-  })
   document.body.insertAdjacentHTML("beforeend", html);
   addSettingsListener("useDarkStyle", darkHandler);
   darkHandler(settings.useDarkStyle);

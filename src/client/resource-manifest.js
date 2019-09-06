@@ -77,13 +77,13 @@ Resource.manifest = {
       'settingsSideBar',
       'themeColors',
       'settingsTooltip',
-      'settingsSearch'
+      'settingsSearch',
     ],
     styles: [
       {
         key: 'iconsStyle',
-        important: true
-      }
+        important: true,
+      },
     ],
     displayNames: {
       guiSettings: '设置',
@@ -276,7 +276,7 @@ Resource.manifest = {
     path: 'download-video.min.js',
     html: true,
     style: 'instant',
-    dependencies: ['title'],
+    dependencies: ['title', 'videoInfo'],
     displayNames: {
       'downloadVideo': '下载视频',
       'batchDownload': '批量下载',
@@ -481,6 +481,20 @@ Resource.manifest = {
       downloadAudio: '下载音频'
     }
   },
+  i18n: {
+    path: 'i18n.min.js',
+    alwaysPreview: true,
+    style: 'important',
+    displayNames: {
+      i18n: '界面翻译',
+      i18nLanguage: '语言',
+    },
+    dropdown: {
+      key: 'i18nLanguage',
+      // items: Object.keys(languageCodeMap),
+      items: [`日本語`, `English`]
+    }
+  },
   i18nEnglish: {
     path: 'i18n.en-US.min.js',
     alwaysPreview: true
@@ -496,24 +510,6 @@ Resource.manifest = {
   i18nGerman: {
     path: 'i18n.de-DE.min.js',
     alwaysPreview: true
-  },
-  i18n: {
-    path: 'i18n.min.js',
-    alwaysPreview: true,
-    style: 'important',
-    displayNames: {
-      i18n: '界面翻译',
-      i18nLanguage: '语言',
-      i18nEnglish: '英语翻译模块',
-      i18nJapanese: '日语翻译模块',
-      i18nGerman: '德语翻译模块',
-      i18nTraditionalChinese: '繁体翻译模块'
-    },
-    dropdown: {
-      key: 'i18nLanguage',
-      // items: Object.keys(languageCodeMap),
-      items: [`日本語`, `English`]
-    }
   },
   playerFocus: {
     path: 'player-focus.min.js',
@@ -580,21 +576,6 @@ Resource.manifest = {
       hideOldEntry: '隐藏返回旧版'
     }
   },
-  batchDownload: {
-    path: 'batch-download.min.js'
-  },
-  slip: {
-    path: 'slip.min.js',
-    displayNames: {
-      slip: 'Slip.js'
-    }
-  },
-  debounce: {
-    path: 'debounce.min.js',
-    displayNames: {
-      slip: 'debounce.js'
-    }
-  },
   videoScreenshot: {
     path: 'screenshot.min.js',
     style: true,
@@ -648,9 +629,6 @@ Resource.manifest = {
       items: ['0.5', '0.75', '1.0', '1.25', '1.5', '2.0'],
     }
   },
-  aria2Rpc: {
-    path: 'aria2-rpc.min.js',
-  },
   seedsToCoins: {
     path: 'seeds-to-coins.min.js',
     displayNames: {
@@ -664,18 +642,6 @@ Resource.manifest = {
       magicGrid: 'Magic Grid',
     },
   },
-  watchlaterApi: {
-    path: 'watchlater-api.min.js',
-    displayNames: {
-      toggleWatchlater: '稍后再看API',
-    },
-  },
-  mdi: {
-    path: 'mdi.min.js',
-    displayNames: {
-      mdi: 'MDI 图标集',
-    },
-  },
   autoDraw: {
     path: 'auto-draw.min.js',
     displayNames: {
@@ -686,6 +652,19 @@ Resource.manifest = {
     path: 'keymap.min.js',
     displayNames: {
       keymap: '快捷键扩展',
+    },
+  },
+  doubleClickFullscreen: {
+    path: 'double-click-fullscreen.min.js',
+    displayNames: {
+      doubleClickFullscreen: '双击全屏',
+    },
+  },
+  simplifyHome: {
+    path: 'simplify-home.min.js',
+    style: 'instant',
+    displayNames: {
+      simplifyHome: '简化首页'
     },
   },
 }

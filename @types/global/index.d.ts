@@ -13,7 +13,7 @@ declare global {
     responseXML: Document
     responseText: string
   }
-  interface MonkeyXhrDetails {
+  interface MonkeyXhrBasicDetails {
     method: 'GET' | 'POST' | 'HEAD'
     url: string
     headers?: { [name: string]: string },
@@ -27,6 +27,8 @@ declare global {
     fetch?: boolean
     username?: string
     password?: string
+  }
+  interface MonkeyXhrDetails extends MonkeyXhrBasicDetails {
     onabort?: (response: MonkeyXhrResponse) => void
     onerror?: (response: MonkeyXhrResponse) => void
     onloadstart?: (response: MonkeyXhrResponse) => void
@@ -46,6 +48,9 @@ declare global {
     method: 'get' | 'post'
     skipByDefault: boolean
     maxDownloadLimit: string
+  }
+  interface RpcOptionProfile extends RpcOption {
+    name: string
   }
   interface SearchHistoryItem {
     keyword: string
@@ -132,6 +137,7 @@ declare global {
     aid: string | undefined
     cid: string | undefined
     pageno: string | number | undefined
+    $: JQueryStatic
   }
   class SpinQuery {
     static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void;
@@ -205,6 +211,7 @@ declare global {
     static postTextWithCredentials(url: string, body: string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>): Promise<string>;
     static postJson(url: string, json: any): Promise<any>;
     static postJsonWithCredentials(url: string, json: any): Promise<any>;
+    static monkey(details: MonkeyXhrBasicDetails): Promise<any>;
   }
   type Observable = string | Node | Node[] | NodeList;
   class Observer {
@@ -330,17 +337,23 @@ declare global {
     foldComment: boolean,
     downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
     aria2RpcOption: RpcOption,
+    aria2RpcOptionProfiles: RpcOptionProfile[],
     searchHistory: SearchHistoryItem[],
     seedsToCoins: boolean,
     autoSeedsToCoins: boolean,
     lastSeedsToCoinsDate: number,
     autoDraw: boolean,
     keymap: boolean,
+    doubleClickFullscreen: boolean,
+    doubleClickFullscreenPreventSingleClick: boolean
+    simplifyHome: boolean,
+    simplifyHomeStyle: '清爽' | '极简',
     latestVersionLink: string,
     currentVersion: string,
   }
   const settings: BilibiliEvolvedSettings;
   const customNavbarDefaultOrders: CustomNavbarOrders;
+  const aria2RpcDefaultOption: RpcOption;
   const languageNameToCode: { [key: string]: string };
   const languageCodeToName: { [key: string]: string };
   function logError(message: Error | string): void;
@@ -365,5 +378,7 @@ declare global {
   const ascendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
   const descendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
   const getDpiSourceSet: (src: string, baseSize: number | string | { width?: number | string, height?: number | string }, extension?: string) => string
+  const isOffline: () => boolean
+  const getUID: () => string
 }
 export { };

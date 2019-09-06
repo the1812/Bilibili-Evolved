@@ -2429,6 +2429,7 @@ li.tag>a:hover,
 ::-webkit-scrollbar-thumb
 {
     background: #444 !important;
+    border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover
 {

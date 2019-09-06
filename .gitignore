@@ -2,6 +2,7 @@
 builder/dotnet/Properties
 .node_modules/
 .ts-output/
+.sass-output/
 package-lock.json
 dark.scss
 dark.css

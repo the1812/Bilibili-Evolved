@@ -21,6 +21,16 @@ export const customNavbarDefaultOrders = {
   upload: 19,
   blank3: 20,
 }
+export const aria2RpcDefaultOption = {
+  secretKey: '',
+  dir: '',
+  host: '127.0.0.1',
+  port: '6800',
+  method: 'get',
+  skipByDefault: false,
+  maxDownloadLimit: '',
+  baseDir: '',
+}
 export const settings = {
   useDarkStyle: false,
   compactLayout: false,
@@ -125,21 +135,18 @@ export const settings = {
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
-  aria2RpcOption: {
-    secretKey: '',
-    dir: '',
-    host: '127.0.0.1',
-    port: '6800',
-    method: 'get',
-    skipByDefault: false,
-    maxDownloadLimit: '',
-  },
+  aria2RpcOption: {...aria2RpcDefaultOption},
+  aria2RpcOptionProfiles: [],
   searchHistory: [],
   seedsToCoins: true,
   autoSeedsToCoins: true,
   lastSeedsToCoinsDate: 0,
   autoDraw: false,
   keymap: false,
+  doubleClickFullscreen: false,
+  doubleClickFullscreenPreventSingleClick: false,
+  simplifyHome: false,
+  simplifyHomeStyle: '清爽',
   cache: {},
 }
 const fixedSettings = {

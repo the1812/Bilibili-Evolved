@@ -42,11 +42,11 @@ class Version {
   }
 }
 async function checkNewVersion () {
-  if (typeof offlineData !== 'undefined') {
+  if (typeof offlineData !== 'undefined' || isIframe()) {
     return false
   }
   try {
-    const latestVersionText = await Ajax.getText(Resource.root + 'version.txt')
+    const latestVersionText = await Ajax.monkey({ url: Resource.root + 'version.txt' })
     const latestVersion = new Version(latestVersionText)
     const currentVersion = new Version(settings.currentVersion)
     const hasNewVersion = latestVersion.greaterThan(currentVersion)

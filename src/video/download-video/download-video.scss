@@ -1,0 +1,345 @@
+.download-video {
+  --download-video-background: white;
+  --download-video-foreground: black;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  background: var(--download-video-background);
+  color: var(--download-video-foreground);
+  box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
+  z-index: 10001;
+  pointer-events: none;
+  opacity: 0;
+  padding: 16px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  max-height: 90%;
+  overflow: auto;
+
+  &,
+  * {
+    transition: all 0.2s ease-out;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  &.opened {
+    pointer-events: initial;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  body.dark & {
+    --download-video-background: #222;
+    --download-video-foreground: #eee;
+  }
+  .round-corner & {
+    border-radius: var(--large-corner-radius);
+    .episode-list .v-checkbox,
+    .rpc-settings {
+      border-radius: var(--large-corner-radius);
+    }
+    .title,
+    .cover,
+    button,
+    .button,
+    .direct-download .progress .background,
+    .direct-download .progress .foreground,
+    .rpc-settings input[type="text"] {
+      border-radius: var(--corner-radius);
+    }
+  }
+  .cover {
+    width: 240px;
+    min-height: 135px;
+    background-color: #8882;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  h1 {
+    font-size: 16pt;
+    font-weight: bold;
+    color: var(--download-video-foreground);
+  }
+  .header .mdi-close {
+    font-size: 16pt;
+    color: var(--download-video-foreground);
+    cursor: pointer;
+  }
+  .header .mdi-close:hover {
+    color: var(--theme-color);
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-top: 12px;
+
+    .bold {
+      width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .size {
+      font-size: 10pt;
+      color: var(--download-video-foreground);
+      align-self: center;
+      display: flex;
+      align-items: center;
+      height: 24px;
+    }
+  }
+  .bold {
+    color: var(--download-video-foreground);
+    font-weight: bold;
+    font-size: 12pt;
+  }
+  .option-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    font-size: 10pt;
+  }
+  .tabs {
+    display: flex;
+    padding-top: 12px;
+    font-size: 10pt;
+    .tab {
+      padding: 6px 12px;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      &.active {
+        color: var(--theme-color);
+        border-bottom-color: var(--theme-color);
+      }
+    }
+  }
+  .separator {
+    height: 1px;
+    background: #8884;
+    width: 100%;
+    margin: 12px 0;
+    flex-shrink: 0;
+  }
+  h2 {
+    font-size: 12pt;
+    font-weight: bold;
+    color: var(--download-video-foreground);
+  }
+  .direct-download {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+  }
+  button,
+  .button {
+    border: none;
+    outline: none !important;
+    padding: 6px 16px;
+    font-size: 10pt;
+    cursor: pointer;
+    background: #8884;
+    color: var(--download-video-foreground);
+  }
+  button:hover,
+  .button:hover {
+    background: #8886;
+  }
+  .primary {
+    background: var(--theme-color);
+    color: var(--foreground-color);
+    align-self: center;
+  }
+  .primary:hover {
+    background: var(--theme-color-90);
+  }
+  button:disabled,
+  .busy button,
+  .busy .button,
+  .busy .primary {
+    background-color: #0001;
+    color: #8884;
+    cursor: not-allowed;
+  }
+  .busy button,
+  .busy .button {
+    cursor: wait !important;
+  }
+  .direct-download .progress {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    .background {
+      flex-grow: 1;
+      height: 4px;
+      background: #8884;
+      margin-right: 4px;
+      position: relative;
+      .foreground {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: linear-gradient(to right, var(--theme-color), var(--theme-color-60));
+      }
+    }
+  }
+  .direct-download .progress .percent {
+    width: 50px;
+    text-align: right;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 8px -4px 0 -4px;
+  }
+  .actions > * {
+    margin: 4px;
+    flex-grow: 1;
+    flex-basis: calc(50% - 16px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  i.mdi-alert-circle {
+    font-size: 14pt;
+    color: #ff9800;
+  }
+  .size-warning {
+    position: relative;
+    padding: 0 8px;
+  }
+  .size-warning-tip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--download-video-background);
+    color: var(--download-video-foreground);
+    border: 1px dashed var(--theme-color);
+    z-index: 2;
+    font-size: 10pt;
+    width: 300px;
+    padding: 8px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .size-warning:hover .size-warning-tip {
+    opacity: 1;
+  }
+  .episode-list .v-checkbox {
+    padding: 4px 8px;
+    margin: 4px 0;
+    position: relative;
+    background-color: transparent;
+  }
+  .episode-list .v-checkbox.checked {
+    background-color: #8882;
+  }
+  .episode-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .episode-list {
+    overflow: auto;
+    max-height: 320px;
+  }
+  button.list-tool {
+    padding: 4px;
+    line-height: 1;
+    font-size: 12pt;
+    margin: 0 4px;
+  }
+  .episode-header h2 {
+    flex-grow: 1;
+  }
+  .selected-count {
+    width: 64px;
+    text-align: right;
+  }
+  .aria2-rpc .mdi {
+    margin-left: 8px;
+    font-size: 14pt;
+    line-height: 1;
+  }
+  .aria2-rpc {
+    position: relative;
+  }
+  .rpc-settings {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    color: var(--download-video-foreground);
+    background: var(--download-video-background);
+    bottom: 120%;
+    left: 50%;
+    cursor: initial;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
+    transform-origin: bottom;
+    transform: translateX(-50%) scale(0.9);
+    opacity: 0;
+    pointer-events: none;
+    padding: 8px;
+    z-index: 3;
+    transition: 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+
+    & > * {
+      margin: 8px;
+    }
+    &.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+      pointer-events: initial;
+    }
+    input[type="text"] {
+      background: transparent;
+      color: var(--download-video-foreground);
+      border: 1px solid #8884;
+      padding: 4px;
+      margin-left: 8px;
+    }
+    input[type="text"]:focus {
+      border-color: var(--theme-color);
+    }
+  }
+  .rpc-settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+  }
+  button.start-download,
+  button.cancel-download {
+    margin-top: 8px;
+  }
+  .direct-download-header {
+    align-self: stretch;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+body.dark .download-video .direct-download .progress .foreground {
+  background: linear-gradient(to right, var(--theme-color-70), var(--theme-color));
+}

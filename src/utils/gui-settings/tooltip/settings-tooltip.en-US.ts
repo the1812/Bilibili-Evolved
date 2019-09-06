@@ -116,7 +116,12 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - <kbd>t</kbd> Wide screen / Theater mode
 - <kbd>r</kbd> Toggle repeat
 - <kbd>m</kbd> Toggle mute
-- <kbd>d</kbd> Toggle danmakus`],
+- <kbd>d</kbd> Toggle danmakus
+- <kbd>l</kbd> Like
+- <kbd>c</kbd> Coin
+- <kbd>s</kbd> Favorite
+- <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> Playback Speed Adjust`],
+  ['doubleClickFullscreen', `Allow double click the player to toggle fullscreen, please note that this feature will not work if <span>播放器触摸支持</span> - <span>启用双击控制</span> is also enabled.`],
 ]);
 export default {
   export: { toolTips },

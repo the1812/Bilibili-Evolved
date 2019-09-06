@@ -40,18 +40,28 @@ export class ResourceManager {
     this.applyStyleFromText(`html{${styles.join(';')}}`, 'bilibili-evolved-variables')
   }
   resolveComponentName (componentName) {
-    const keyword = '/' + componentName.substring(componentName.lastIndexOf('/') + 1) + '.min.js'
+    const filename = '/' + componentName.substring(componentName.lastIndexOf('/') + 1) + '.min.js'
     for (const [name, value] of Object.entries(Resource.all)) {
-      if (value.url.endsWith(keyword)) {
+      if (value.url.endsWith(filename)) {
         return name
       }
     }
-    return componentName
+    if (componentName.endsWith('Html') || componentName.endsWith('Style')) {
+      return componentName
+    }
+    return filename.replace('/', '')
   }
   resolveComponent (componentName) {
-    const resource = Resource.all[this.resolveComponentName(componentName)]
+    const name = this.resolveComponentName(componentName)
+    let resource = Resource.all[name]
     if (!resource) {
-      this.skippedImport.push(componentName)
+      resource = new Resource(name)
+      let key = name.substring(0, name.indexOf('.')).replace(/-\w/g, t => t.substr(1).toUpperCase())
+      if (name.includes('.vue.')) {
+        key += 'Component'
+      }
+      resource.key = key
+      Resource.all[key] = resource
     }
     return resource
   }
@@ -105,9 +115,9 @@ export class ResourceManager {
       }
       Toast.error(toastMessage, '错误')
     })
-    await Promise.all(resource.dependencies
-      .filter(it => it.type.name === 'style')
-      .map(it => this.styleManager.fetchStyleByKey(it.key)))
+    // await Promise.all(resource.dependencies
+    //   .filter(it => it.type.name === 'style')
+    //   .map(it => this.styleManager.fetchStyleByKey(it.key)))
     await Promise.all(resource.dependencies
       .filter(it => it.type.name === 'script')
       .map(it => this.fetchByKey(it.key)))
@@ -115,17 +125,18 @@ export class ResourceManager {
   }
   async fetch () {
     const isCacheValid = this.validateCache()
-    let loadingToast = null
+    // let loadingToast = null
     if (settings.toast === true) {
       await this.fetchByKey('toast')
       unsafeWindow.bilibiliEvolved.Toast = Toast = this.attributes.toast.export.Toast || this.attributes.toast.export
-      if (!isCacheValid && settings.useCache) {
-        loadingToast = Toast.info(/* html */`<div class="loading"></div>正在初始化脚本`, '初始化')
-      }
+      // if (!isCacheValid && settings.useCache) {
+      //   loadingToast = Toast.info(/* html */`<div class="loading"></div>正在初始化脚本`, '初始化')
+      // }
     }
     const promises = []
     for (const key in settings) {
       if (settings[key] === true && key !== 'toast') {
+        await this.styleManager.fetchStyleByKey(key)
         const promise = this.fetchByKey(key)
         if (promise) {
           promises.push(promise)
@@ -133,12 +144,13 @@ export class ResourceManager {
       }
     }
     await Promise.all(promises)
-    if (loadingToast) {
-      loadingToast.dismiss()
-    }
+    // if (loadingToast) {
+    //   loadingToast.dismiss()
+    // }
     this.applyReloadables() // reloadables run sync
     // await this.applyDropdownOptions();
     this.applyWidgets() // No need to wait the widgets
+    this.checkUpdates(!isCacheValid)
   }
   applyReloadables () {
     const checkAttribute = (key, attributes) => {
@@ -194,13 +206,76 @@ export class ResourceManager {
         this.attributes[key] = attribute
       } catch (error) {
         console.error(`Failed to apply feature "${key}": ${error}`)
-        let toastMessage = `加载组件<span>${Resource.all[key].displayName}</span>失败`
+        const displayName = Resource.all[key].displayName
+        let toastMessage = `加载组件<span>${displayName || key}</span>失败`
         if (settings.toastInternalError) {
           toastMessage += '\n' + error
         }
         Toast.error(toastMessage, '错误')
       }
     }
+  }
+  async checkUpdates (fullDownload) {
+    if (isOffline()) {
+      return
+    }
+    // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
+    const getHash = async (message) => {
+      const msgUint8 = new TextEncoder().encode(message)
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
+      const hashArray = Array.from(new Uint8Array(hashBuffer))
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+      return hashHex
+    }
+    if (fullDownload) {
+      const url = Resource.root + 'min/bundle.zip'
+      const zip = new JSZip()
+      await zip.loadAsync(await Ajax.monkey({
+        url,
+        responseType: 'blob',
+      }))
+      zip.forEach((filename, file) => {
+        const url = Resource.root + 'min/' + filename
+        const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
+        if (resource) {
+          file.async('text').then(text => {
+            settings.cache = Object.assign(settings.cache, {
+              [resource.key]: text
+            })
+            getHash(text).then(hash => console.log(`full download: saved ${resource.key} (${hash})`))
+          })
+        }
+      })
+    } else {
+      const hashJson = await Ajax.monkey({
+        url: Resource.root + 'min/bundle.json',
+        responseType: 'json',
+      })
+      const scriptHashWrap = h => `(()=>{return${h}})();`
+      await Promise.all(Object.entries(hashJson).map(async ([name, hash]) => {
+        const url = Resource.root + 'min/' + name
+        const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
+        if (!resource) {
+          return
+        }
+        const cache = settings.cache[resource.key]
+        if (cache) {
+          const cacheHash = await getHash(cache)
+          if (cacheHash.toLowerCase() !== hash.toLowerCase() &&
+            scriptHashWrap(cacheHash).toLowerCase() !== hash.toLowerCase()) {
+            console.log(`hash not match: ${resource.key} (${cacheHash.toLowerCase()}) !== (${hash.toLowerCase()})`)
+            await resource.download()
+            settings.cache = Object.assign(settings.cache, {
+              [resource.key]: resource.text
+            })
+            console.log(`downloaded ${resource.key}`)
+          } else {
+            console.log(`checked hash: ${resource.key}`)
+          }
+        }
+      }))
+    }
+
   }
   async applyWidget (info) {
     let condition = true

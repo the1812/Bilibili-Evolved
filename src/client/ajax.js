@@ -84,6 +84,19 @@ export class Ajax {
     const handlers = Ajax.getHandlers(type)
     handlers.splice(handlers.indexOf(handler), 1)
   }
+  static monkey (details) {
+    return new Promise((resolve, reject) => {
+      const fullDetails = {
+        ...details,
+        onload: r => resolve(r.response),
+        onerror: r => reject(r),
+      }
+      if (!('method' in fullDetails)) {
+        fullDetails.method = 'GET'
+      }
+      GM_xmlhttpRequest(fullDetails)
+    })
+  }
 }
 // https://github.com/the1812/Bilibili-Evolved/issues/84
 export function setupAjaxHook () {

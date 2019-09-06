@@ -1,0 +1,140 @@
+{
+  "_from": "@types/jquery",
+  "_id": "@types/jquery@3.3.31",
+  "_inBundle": false,
+  "_integrity": "sha1-J8cG5L9IhHThy1SnHYMD83yTRRs=",
+  "_location": "/@types/jquery",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@types/jquery",
+    "name": "@types/jquery",
+    "escapedName": "@types%2fjquery",
+    "scope": "@types",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/@types/jquery/download/@types/jquery-3.3.31.tgz?cache=0&sync_timestamp=1565830143949&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fjquery%2Fdownload%2F%40types%2Fjquery-3.3.31.tgz",
+  "_shasum": "27c706e4bf488474e1cb54a71d8303f37c93451b",
+  "_spec": "@types/jquery",
+  "_where": "C:\\Users\\The18\\Documents\\My Docs\\Codes\\Bilibili Evo",
+  "bugs": {
+    "url": "https://github.com/DefinitelyTyped/DefinitelyTyped/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Leonard Thieu",
+      "url": "https://github.com/leonard-thieu"
+    },
+    {
+      "name": "Boris Yankov",
+      "url": "https://github.com/borisyankov"
+    },
+    {
+      "name": "Christian Hoffmeister",
+      "url": "https://github.com/choffmeister"
+    },
+    {
+      "name": "Steve Fenton",
+      "url": "https://github.com/Steve-Fenton"
+    },
+    {
+      "name": "Diullei Gomes",
+      "url": "https://github.com/Diullei"
+    },
+    {
+      "name": "Tass Iliopoulos",
+      "url": "https://github.com/tasoili"
+    },
+    {
+      "name": "Jason Swearingen",
+      "url": "https://github.com/jasons-novaleaf"
+    },
+    {
+      "name": "Sean Hill",
+      "url": "https://github.com/seanski"
+    },
+    {
+      "name": "Guus Goossens",
+      "url": "https://github.com/Guuz"
+    },
+    {
+      "name": "Kelly Summerlin",
+      "url": "https://github.com/ksummerlin"
+    },
+    {
+      "name": "Basarat Ali Syed",
+      "url": "https://github.com/basarat"
+    },
+    {
+      "name": "Nicholas Wolverson",
+      "url": "https://github.com/nwolverson"
+    },
+    {
+      "name": "Derek Cicerone",
+      "url": "https://github.com/derekcicerone"
+    },
+    {
+      "name": "Andrew Gaspar",
+      "url": "https://github.com/AndrewGaspar"
+    },
+    {
+      "name": "Seikichi Kondo",
+      "url": "https://github.com/seikichi"
+    },
+    {
+      "name": "Benjamin Jackman",
+      "url": "https://github.com/benjaminjackman"
+    },
+    {
+      "name": "Poul Sorensen",
+      "url": "https://github.com/s093294"
+    },
+    {
+      "name": "Josh Strobl",
+      "url": "https://github.com/JoshStrobl"
+    },
+    {
+      "name": "John Reilly",
+      "url": "https://github.com/johnnyreilly"
+    },
+    {
+      "name": "Dick van den Brink",
+      "url": "https://github.com/DickvdBrink"
+    },
+    {
+      "name": "Thomas Schulz",
+      "url": "https://github.com/King2500"
+    },
+    {
+      "name": "Terry Mun",
+      "url": "https://github.com/terrymun"
+    }
+  ],
+  "dependencies": {
+    "@types/sizzle": "*"
+  },
+  "deprecated": false,
+  "description": "TypeScript definitions for jquery",
+  "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped#readme",
+  "license": "MIT",
+  "main": "",
+  "name": "@types/jquery",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "directory": "types/jquery"
+  },
+  "scripts": {},
+  "typeScriptVersion": "2.3",
+  "types": "index",
+  "typesPublisherContentHash": "6f3ac74aa9f284b3450b4dcbcabc842bfc2a70fa2d92e745851044d2bb78e94b",
+  "version": "3.3.31"
+}
