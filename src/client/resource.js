@@ -56,9 +56,11 @@ export class Resource {
               const cache = this.loadCache(key)
               if (cache !== null) {
                 this.text = cache
+                console.log(`hit cache: ${key}`)
                 resolve(cache)
               } else {
                 this.text = onlineData[this.rawUrl]
+                console.log(`load online data: ${key}`)
                 settings.cache = Object.assign(settings.cache, {
                   [key]: this.text
                 })
