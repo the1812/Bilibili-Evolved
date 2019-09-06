@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      417.19
+// @version      417.20
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -177,6 +177,16 @@ const customNavbarDefaultOrders = {
   upload: 19,
   blank3: 20,
 }
+const aria2RpcDefaultOption = {
+  secretKey: '',
+  dir: '',
+  host: '127.0.0.1',
+  port: '6800',
+  method: 'get',
+  skipByDefault: false,
+  maxDownloadLimit: '',
+  baseDir: '',
+}
 const settings = {
   useDarkStyle: false,
   compactLayout: false,
@@ -281,15 +291,8 @@ const settings = {
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
-  aria2RpcOption: {
-    secretKey: '',
-    dir: '',
-    host: '127.0.0.1',
-    port: '6800',
-    method: 'get',
-    skipByDefault: false,
-    maxDownloadLimit: '',
-  },
+  aria2RpcOption: {...aria2RpcDefaultOption},
+  aria2RpcOptionProfiles: [],
   searchHistory: [],
   seedsToCoins: true,
   autoSeedsToCoins: true,

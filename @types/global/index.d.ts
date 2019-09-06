@@ -49,6 +49,9 @@ declare global {
     skipByDefault: boolean
     maxDownloadLimit: string
   }
+  interface RpcOptionProfile extends RpcOption {
+    name: string
+  }
   interface SearchHistoryItem {
     keyword: string
     count: number
@@ -334,6 +337,7 @@ declare global {
     foldComment: boolean,
     downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
     aria2RpcOption: RpcOption,
+    aria2RpcOptionProfiles: RpcOptionProfile[],
     searchHistory: SearchHistoryItem[],
     seedsToCoins: boolean,
     autoSeedsToCoins: boolean,
@@ -349,6 +353,7 @@ declare global {
   }
   const settings: BilibiliEvolvedSettings;
   const customNavbarDefaultOrders: CustomNavbarOrders;
+  const aria2RpcDefaultOption: RpcOption;
   const languageNameToCode: { [key: string]: string };
   const languageCodeToName: { [key: string]: string };
   function logError(message: Error | string): void;

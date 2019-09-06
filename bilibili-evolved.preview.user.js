@@ -176,6 +176,16 @@ const customNavbarDefaultOrders = {
   upload: 19,
   blank3: 20,
 }
+const aria2RpcDefaultOption = {
+  secretKey: '',
+  dir: '',
+  host: '127.0.0.1',
+  port: '6800',
+  method: 'get',
+  skipByDefault: false,
+  maxDownloadLimit: '',
+  baseDir: '',
+}
 const settings = {
   useDarkStyle: false,
   compactLayout: false,
@@ -280,15 +290,8 @@ const settings = {
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
-  aria2RpcOption: {
-    secretKey: '',
-    dir: '',
-    host: '127.0.0.1',
-    port: '6800',
-    method: 'get',
-    skipByDefault: false,
-    maxDownloadLimit: '',
-  },
+  aria2RpcOption: {...aria2RpcDefaultOption},
+  aria2RpcOptionProfiles: [],
   searchHistory: [],
   seedsToCoins: true,
   autoSeedsToCoins: true,
