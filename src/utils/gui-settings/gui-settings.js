@@ -139,7 +139,6 @@ function setDisplayNames () {
   if (!style) {
     document.body.insertAdjacentHTML('afterbegin', `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css">`)
   }
-  resources.applyDropdownOptions()
 
   const widgetsContainer = document.querySelector('.widgets-container')
   const emptyTip = widgetsContainer.querySelector('.empty-tip')
@@ -155,7 +154,8 @@ function setDisplayNames () {
 
   const boxes = document.querySelectorAll('.gui-settings-widgets-box,.gui-settings-box')
   const iconPanel = document.querySelector('.gui-settings-icon-panel')
-  iconPanel.addEventListener('mouseover', () => {
+  iconPanel.addEventListener('mouseover', async () => {
+    await resources.applyDropdownOptions()
     raiseEvent(iconPanel, 'be:load')
     raiseEvent(dq('.bilibili-evolved-about'), 'be:about-load')
     boxes.forEach(it => it.classList.add('loaded'))
