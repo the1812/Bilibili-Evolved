@@ -40,7 +40,8 @@
 .container .level-intro,
 .van-popover .upload-item:hover,
 .container .play-all:hover,
-.van-popover .btn-box .btn.reg-btn:hover
+.van-popover .btn-box .btn.reg-btn:hover,
+.international-header .bili-banner
 {
   background-color: #333 !important;
 }
