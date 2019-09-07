@@ -157,6 +157,7 @@ function setDisplayNames () {
   const iconPanel = document.querySelector('.gui-settings-icon-panel')
   iconPanel.addEventListener('mouseover', () => {
     raiseEvent(iconPanel, 'be:load')
+    raiseEvent(dq('.bilibili-evolved-about'), 'be:about-load')
     boxes.forEach(it => it.classList.add('loaded'))
     inputs = [...document.querySelectorAll('input[key]')]
     checkBoxes = inputs.filter(it => it.type === 'checkbox')
