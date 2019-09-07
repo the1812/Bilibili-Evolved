@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      417.74
+// @version      417.75
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -303,6 +303,7 @@ const settings = {
   doubleClickFullscreenPreventSingleClick: false,
   simplifyHome: false,
   simplifyHomeStyle: '清爽',
+  ajaxHook: false,
   cache: {},
 }
 const fixedSettings = {
@@ -2362,7 +2363,6 @@ class ResourceManager {
 try {
   Vue.config.productionTip = false
   Vue.config.devtools = false
-  setupAjaxHook()
   const events = {}
   for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
     events[name] = {
@@ -2396,6 +2396,9 @@ try {
   })
   loadResources()
   loadSettings()
+  if (settings.ajaxHook) {
+    setupAjaxHook()
+  }
   const resources = new ResourceManager()
   events.init.complete()
   resources.styleManager.prefetchStyles()

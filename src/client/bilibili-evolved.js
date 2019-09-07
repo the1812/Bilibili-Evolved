@@ -46,7 +46,6 @@ import { ResourceManager } from './resource-manager'
 try {
   Vue.config.productionTip = false
   Vue.config.devtools = false
-  setupAjaxHook()
   const events = {}
   for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
     events[name] = {
@@ -80,6 +79,9 @@ try {
   })
   loadResources()
   loadSettings()
+  if (settings.ajaxHook) {
+    setupAjaxHook()
+  }
   const resources = new ResourceManager()
   events.init.complete()
   resources.styleManager.prefetchStyles()

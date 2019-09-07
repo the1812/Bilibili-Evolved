@@ -147,6 +147,7 @@ export const settings = {
   doubleClickFullscreenPreventSingleClick: false,
   simplifyHome: false,
   simplifyHomeStyle: '清爽',
+  ajaxHook: false,
   cache: {},
 }
 const fixedSettings = {

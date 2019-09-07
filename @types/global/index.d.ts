@@ -348,6 +348,7 @@ declare global {
     doubleClickFullscreenPreventSingleClick: boolean
     simplifyHome: boolean,
     simplifyHomeStyle: '清爽' | '极简',
+    ajaxHook: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
