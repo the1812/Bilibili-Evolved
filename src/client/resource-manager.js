@@ -61,6 +61,9 @@ export class ResourceManager {
         key += 'Component'
       }
       resource.key = key
+      if (resource.text === undefined) {
+        resource.text = null
+      }
       Resource.all[key] = resource
     }
     return resource
