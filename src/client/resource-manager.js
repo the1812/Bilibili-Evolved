@@ -319,6 +319,9 @@ export class ResourceManager {
         await Promise.all(info.map(applyDropdownOption))
       } else {
         const dropdownInput = dq(`.gui-settings-dropdown input[key=${info.key}]`)
+        if (!dropdownInput) {
+          return
+        }
         dropdownInput.value = settings[info.key]
         dropdownInput.setAttribute('data-name', settings[info.key])
         const dropdown = dropdownInput.parentElement

@@ -149,6 +149,7 @@ export const settings = {
   simplifyHomeStyle: '清爽',
   ajaxHook: false,
   scriptLoadingMode: '延后',
+  scriptDownloadMode: 'bundle',
   cache: {},
 }
 const fixedSettings = {

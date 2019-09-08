@@ -58,7 +58,7 @@ export class Resource {
                 this.text = cache
                 // console.log(`hit cache: ${key}`)
                 resolve(cache)
-              } else {
+              } else if (settings.scriptDownloadMode === 'bundle') {
                 const text = onlineData[this.url]
                 // settings.cache = Object.assign(settings.cache, {
                 //   [key]: this.text
@@ -79,6 +79,22 @@ export class Resource {
                     })
                     .catch(error => reject(error))
                 }
+              }
+              if (settings.scriptDownloadMode !== 'bundle') {
+                Ajax.monkey({ url: this.url })
+                  .then(text => {
+                    this.text = text
+                    if (cache !== this.text) {
+                      if (cache === null) {
+                        resolve(this.text)
+                      }
+                      settings.cache = Object.assign(settings.cache, {
+                        [key]: this.text
+                      })
+                    }
+                    resolve(this.text)
+                  })
+                  .catch(error => reject(error))
               }
             } else {
               Ajax.monkey({ url: this.url })
