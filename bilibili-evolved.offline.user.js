@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      419.02
+// @version      419.03
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2158,7 +2158,7 @@ class ResourceManager {
     this.applyReloadables() // reloadables run sync
     // await this.applyDropdownOptions();
     // this.applyWidgets() // No need to wait the widgets
-    if (!isOffline()) {
+    if (!isOffline() && settings.scriptDownloadMode === 'bundle') {
       const checkUpdates = () => this.checkUpdates(!isCacheValid)
       if ('requestIdleCallback' in window) {
         window.requestIdleCallback(checkUpdates)

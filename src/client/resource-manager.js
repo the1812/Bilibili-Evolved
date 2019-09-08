@@ -153,7 +153,7 @@ export class ResourceManager {
     this.applyReloadables() // reloadables run sync
     // await this.applyDropdownOptions();
     // this.applyWidgets() // No need to wait the widgets
-    if (!isOffline()) {
+    if (!isOffline() && settings.scriptDownloadMode === 'bundle') {
       const checkUpdates = () => this.checkUpdates(!isCacheValid)
       if ('requestIdleCallback' in window) {
         window.requestIdleCallback(checkUpdates)
