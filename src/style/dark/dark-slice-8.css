@@ -47,7 +47,9 @@
 .container .logout a:hover,
 .container .video-card:hover,
 .container .tab-item--normal:hover,
-.guest-home .button-box button
+.guest-home .button-box button,
+.video-editor-ol-wrp,
+.qa-area-ol-wrp
 {
     background-color: #333 !important;
 }
@@ -180,7 +182,9 @@ li.danmaku-info-row.bpui-selecting,
 .mini-header__content .i-frame,
 .round-corner .out-container,
 .round-corner .out-container .tab-bar,
-.container .info .date
+.container .info .date,
+.iframe-comp-container>div,
+.edit-article-wrap #edit-article-box
 {
     background-color: transparent !important;
 }
@@ -258,7 +262,9 @@ li.danmaku-info-row.bpui-selecting,
 .video-list .card-view .collect-num,
 .video-list .card-view .danmu-num,
 .video-list .card-view .play-num,
-.guest-home .title h2
+.guest-home .title h2,
+.video-editor-ol-wrp .video-editor-ol-content a,
+.qa-area-ol-wrp .qa-area-ol-content a
 {
     color: #aaa !important;
 }
@@ -450,7 +456,9 @@ li.danmaku-info-row.bpui-selecting,
 .main-panel .title,
 .main-panel .more,
 .guest-home .title h1,
-.guest-home .button-box .regist
+.guest-home .button-box .regist,
+.video-editor-ol-wrp .video-editor-ol-content p,
+.qa-area-ol-wrp .qa-area-ol-content p
 {
     color: #eee !important;
 }
@@ -761,7 +769,9 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .user-item .attention-btn:hover,
 .follow-right-module .follow-head .follow-more:hover,
 .carousel-wrap .page .next.current,
-.guest-home .button-box button:hover
+.guest-home .button-box button:hover,
+.video-editor-ol-wrp .video-editor-ol-btn,
+.qa-area-ol-wrp .qa-area-ol-btn
 {
     background-color: var(--theme-color) !important;
 }
@@ -868,7 +878,10 @@ li.danmaku-info-row.bpui-selecting,
 .video-item-biref:hover .biref-info .biref-title,
 .video-list .card-txt:hover,
 .main-panel .more:hover,
-.international-home .bilibili-search-history .cancel-icon:hover
+.international-home .bilibili-search-history .cancel-icon:hover,
+.up-info .up-focus-btn,
+.video-editor-ol-wrp .video-editor-ol-content a:hover,
+.qa-area-ol-wrp .qa-area-ol-content a:hover
 {
     color: var(--theme-color) !important;
 }
@@ -906,7 +919,11 @@ li.danmaku-info-row.bpui-selecting,
 .timeline-box .timeline-item.new p.num a,
 .new-stat-module .zone-title .headline .new-stat-more:hover,
 .block-area .timeline-title .headline .timeline-more:hover,
-.guest-home .button-box button:hover
+.guest-home .button-box button:hover,
+.upload-v2-step1-container #homeDrop .upload-btn .upload-btn-title,
+.video-editor-ol-wrp .video-editor-ol-btn,
+.qa-area-ol-wrp .qa-area-ol-btn,
+.upload-v2-step1-container #homeDrop .upload-btn .upload-btn-title
 {
     color: var(--foreground-color) !important;
 }
