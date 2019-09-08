@@ -209,7 +209,7 @@ export class ResourceManager {
     }
   }
   applyComponent (key, text) {
-    const func = eval(text)
+    const func = typeof text === 'string' ? eval(text) : text
     if (func) {
       try {
         const attribute = func(settings, this) || {}
