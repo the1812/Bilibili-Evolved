@@ -105,7 +105,6 @@ blockquote .color-yellow-04,
 #app .sticky-bar .bar-content .message,
 .coupon-content-con .coupon-btn-disable,
 .common .bb-comment .no-login .comment-submit,
-.popup-content-ctnr .bl-button--ghost:hover,
 .customize-wrp .select,
 .manga-detail .episode-list-component .episode-list .list-data .list-item.last-read,
 .live-room-app .tabs.isHundred .item.active,
@@ -114,7 +113,8 @@ blockquote .color-yellow-04,
 .live-room-app .guard-rank-cntr.hundred .page-box .live-skin-main-text,
 .live-room-app .guard-rank-cntr.thousand .page-box .live-skin-main-text,
 .live-room-app .guard-rank-cntr.hundred .live-skin-highlight-text,
-.live-room-app .guard-rank-cntr.thousand .live-skin-highlight-text
+.live-room-app .guard-rank-cntr.thousand .live-skin-highlight-text,
+.popup-content-ctnr .bl-button--ghost
 {
     color: #eee !important;
 }
@@ -215,8 +215,8 @@ blockquote .color-yellow-04,
 .el-date-table td.current:not(.disabled),
 .el-date-table td.end-date,
 .el-date-table td.start-date,
-.popup-content-ctnr .bl-button--ghost,
-.style-section .tag-block .tag-containers .style-tag:active
+.style-section .tag-block .tag-containers .style-tag:active,
+.popup-content-ctnr .bl-button--ghost:hover
 {
     color: var(--foreground-color) !important;
 }

@@ -868,7 +868,8 @@ li.danmaku-info-row.bpui-selecting,
 .video-item-biref:hover .biref-info .biref-title,
 .video-list .card-txt:hover,
 .main-panel .more:hover,
-.international-home .bilibili-search-history .cancel-icon:hover
+.international-home .bilibili-search-history .cancel-icon:hover,
+.up-info .up-focus-btn
 {
     color: var(--theme-color) !important;
 }
@@ -906,7 +907,8 @@ li.danmaku-info-row.bpui-selecting,
 .timeline-box .timeline-item.new p.num a,
 .new-stat-module .zone-title .headline .new-stat-more:hover,
 .block-area .timeline-title .headline .timeline-more:hover,
-.guest-home .button-box button:hover
+.guest-home .button-box button:hover,
+.upload-v2-step1-container #homeDrop .upload-btn .upload-btn-title
 {
     color: var(--foreground-color) !important;
 }
