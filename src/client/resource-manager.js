@@ -244,19 +244,18 @@ export class ResourceManager {
       url,
       responseType: 'blob',
     }))
-    zip.forEach((filename, file) => {
-      const url = Resource.root + 'min/' + filename
+    let cache = {}
+    const files = zip.file(/.+/)
+    for (const file of files) {
+      const url = Resource.root + 'min/' + file.name
       const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
-      if (resource) {
-        file.async('text').then(text => {
-          settings.cache = Object.assign(settings.cache, {
-            [resource.key]: text
-          })
-          // getHash(text).then(hash => console.log(`full download: saved ${resource.key} (${hash})`))
-          console.log(`bundle update: saved ${resource.key}`)
-        })
+      if (resource && !resource.alwaysPreview) {
+        const text = await file.async('text')
+        cache[resource.key] = text
+        console.log(`bundle update: saved ${resource.key}`)
       }
-    })
+    }
+    settings.cache = Object.assign(settings.cache, cache)
     // } else {
     //   const hashJson = await Ajax.monkey({
     //     url: Resource.root + 'min/bundle.json',

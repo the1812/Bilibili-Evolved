@@ -39,7 +39,7 @@ namespace BilibiliEvolved.Build
             {
               var filename = Path.GetFileName(url);
               var hash = string.Join("", sha256.ComputeHash(File.OpenRead(url)).Select(b => b.ToString("X2")).ToArray());
-              zip.CreateEntryFromFile(url, filename);
+              zip.CreateEntryFromFile(url, filename, CompressionLevel.NoCompression);
               hashDict.Add(filename, hash);
             }
           }

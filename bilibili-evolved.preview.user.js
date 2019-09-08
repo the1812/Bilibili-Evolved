@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.9.1
+// @version      1.9.2
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1202,12 +1202,24 @@ class Resource {
                 console.log(`hit cache: ${key}`)
                 resolve(cache)
               } else {
-                this.text = onlineData[this.rawUrl]
-                console.log(`load online data: ${key}`)
-                settings.cache = Object.assign(settings.cache, {
-                  [key]: this.text
-                })
-                resolve(this.text)
+                this.text = onlineData[this.url]
+                // settings.cache = Object.assign(settings.cache, {
+                //   [key]: this.text
+                // })
+                if (text) {
+                  console.log(`load online data: ${key}`)
+                  resolve(this.text)
+                } else {
+                  Ajax.monkey({ url: this.url })
+                    .then(text => {
+                      this.text = text
+                      settings.cache = Object.assign(settings.cache, {
+                        [key]: text
+                      })
+                      resolve(this.text)
+                    })
+                    .catch(error => reject(error))
+                }
               }
             } else {
               Ajax.monkey({ url: this.url })
@@ -2257,19 +2269,18 @@ class ResourceManager {
       url,
       responseType: 'blob',
     }))
-    zip.forEach((filename, file) => {
-      const url = Resource.root + 'min/' + filename
+    let cache = {}
+    const files = zip.file(/.+/)
+    for (const file of files) {
+      const url = Resource.root + 'min/' + file.name
       const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
-      if (resource) {
-        file.async('text').then(text => {
-          settings.cache = Object.assign(settings.cache, {
-            [resource.key]: text
-          })
-          // getHash(text).then(hash => console.log(`full download: saved ${resource.key} (${hash})`))
-          console.log(`bundle update: saved ${resource.key}`)
-        })
+      if (resource && !resource.alwaysPreview) {
+        const text = await file.async('text')
+        cache[resource.key] = text
+        console.log(`bundle update: saved ${resource.key}`)
       }
-    })
+    }
+    settings.cache = Object.assign(settings.cache, cache)
     // } else {
     //   const hashJson = await Ajax.monkey({
     //     url: Resource.root + 'min/bundle.json',
