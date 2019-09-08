@@ -56,13 +56,16 @@ const setBodyClass = (checked, key) => {
     });
   }
 };
-Object.keys(displayNames).forEach(key => {
-  const checked = settings.simplifyLiveroomSettings[key];
-  setBodyClass(checked, key);
-})
+const isLiveroom = () => document.URL.startsWith(`https://live.bilibili.com/`)
+if (isLiveroom()) {
+  Object.keys(displayNames).forEach(key => {
+    const checked = settings.simplifyLiveroomSettings[key];
+    setBodyClass(checked, key);
+  })
+}
 export default {
   widget: {
-    condition: () => document.URL.startsWith(`https://live.bilibili.com/`),
+    condition: isLiveroom,
     content: /*html*/`
       <div class="gui-settings-flat-button" style="position: relative" id="simplify-liveroom">
         <i class="mdi mdi-24px mdi-settings"></i>
