@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      419.24
+// @version      419.27
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -314,7 +314,7 @@ const settings = {
   simplifyHome: false,
   simplifyHomeStyle: '清爽',
   ajaxHook: false,
-  scriptLoadingMode: '延后',
+  scriptLoadingMode: '自动',
   scriptDownloadMode: 'bundle',
   cache: {},
 }
@@ -2354,7 +2354,7 @@ class ResourceManager {
       })
     manifests.push({
       key: 'scriptLoadingMode',
-      items: ['同时', '延后']
+      items: ['同时', '延后', '自动']
     })
     await Promise.all(manifests.map(it => applyDropdownOption(it)))
   }
@@ -2523,6 +2523,15 @@ try {
     fullyLoaded(applyScripts)
   } else if (settings.scriptLoadingMode === '同时') {
     contentLoaded(applyScripts)
+  } else if (settings.scriptLoadingMode === '自动') {
+    const quickLoads = [
+      '//live.bilibili.com',
+    ]
+    if (quickLoads.some(it => document.URL.includes(it))) {
+      contentLoaded(applyScripts)
+    } else {
+      fullyLoaded(applyScripts)
+    }
   }
 } catch (error) {
   logError(error)

@@ -178,6 +178,15 @@ try {
     fullyLoaded(applyScripts)
   } else if (settings.scriptLoadingMode === '同时') {
     contentLoaded(applyScripts)
+  } else if (settings.scriptLoadingMode === '自动') {
+    const quickLoads = [
+      '//live.bilibili.com',
+    ]
+    if (quickLoads.some(it => document.URL.includes(it))) {
+      contentLoaded(applyScripts)
+    } else {
+      fullyLoaded(applyScripts)
+    }
   }
 } catch (error) {
   logError(error)

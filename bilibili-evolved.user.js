@@ -313,7 +313,7 @@ const settings = {
   simplifyHome: false,
   simplifyHomeStyle: '清爽',
   ajaxHook: false,
-  scriptLoadingMode: '延后',
+  scriptLoadingMode: '自动',
   scriptDownloadMode: 'bundle',
   cache: {},
 }
@@ -2407,7 +2407,7 @@ class ResourceManager {
       })
     manifests.push({
       key: 'scriptLoadingMode',
-      items: ['同时', '延后']
+      items: ['同时', '延后', '自动']
     })
     await Promise.all(manifests.map(it => applyDropdownOption(it)))
   }
@@ -2576,6 +2576,15 @@ try {
     fullyLoaded(applyScripts)
   } else if (settings.scriptLoadingMode === '同时') {
     contentLoaded(applyScripts)
+  } else if (settings.scriptLoadingMode === '自动') {
+    const quickLoads = [
+      '//live.bilibili.com',
+    ]
+    if (quickLoads.some(it => document.URL.includes(it))) {
+      contentLoaded(applyScripts)
+    } else {
+      fullyLoaded(applyScripts)
+    }
   }
 } catch (error) {
   logError(error)
