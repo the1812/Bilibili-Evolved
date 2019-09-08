@@ -1202,12 +1202,13 @@ class Resource {
                 console.log(`hit cache: ${key}`)
                 resolve(cache)
               } else {
-                this.text = onlineData[this.url]
+                const text = onlineData[this.url]
                 // settings.cache = Object.assign(settings.cache, {
                 //   [key]: this.text
                 // })
                 if (text) {
                   console.log(`load online data: ${key}`)
+                  this.text = text
                   resolve(this.text)
                 } else {
                   Ajax.monkey({ url: this.url })
