@@ -882,7 +882,9 @@ li.danmaku-info-row.bpui-selecting,
 .international-home .bilibili-search-history .cancel-icon:hover,
 .up-info .up-focus-btn,
 .video-editor-ol-wrp .video-editor-ol-content a:hover,
-.qa-area-ol-wrp .qa-area-ol-content a:hover
+.qa-area-ol-wrp .qa-area-ol-content a:hover,
+.article-container:hover .text-area .title,
+.card .more-panel .child-button:hover
 {
     color: var(--theme-color) !important;
 }
