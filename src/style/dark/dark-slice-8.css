@@ -182,7 +182,9 @@ li.danmaku-info-row.bpui-selecting,
 .mini-header__content .i-frame,
 .round-corner .out-container,
 .round-corner .out-container .tab-bar,
-.container .info .date
+.container .info .date,
+.iframe-comp-container>div,
+.edit-article-wrap #edit-article-box
 {
     background-color: transparent !important;
 }
