@@ -64,7 +64,7 @@ export class Resource {
                 //   [key]: this.text
                 // })
                 if (text) {
-                  // console.log(`load online data: ${key}`)
+                  console.log(`load online data: ${key}`)
                   this.text = text
                   resolve(this.text)
                 } else {
@@ -88,6 +88,7 @@ export class Resource {
                       if (cache === null) {
                         resolve(this.text)
                       }
+                      console.log(`individual cache: ${key}`)
                       settings.cache = Object.assign(settings.cache, {
                         [key]: this.text
                       })

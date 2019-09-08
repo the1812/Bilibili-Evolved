@@ -11,6 +11,55 @@ const displayNames = {
   popup: "抽奖提示",
   skin: "房间皮肤",
 }
+let skinDisabled = settings.simplifyLiveroomSettings.skin;
+const skinSelectors = [
+  "#head-info-vm",
+  "#gift-control-vm",
+  "#rank-list-vm",
+  "#rank-list-ctnr-box",
+  ".gift-panel.base-panel",
+  ".gift-panel.extend-panel",
+  ".seeds-wrap>div:first-child",
+  ".gift-section>div:last-child",
+  ".z-gift-package>div>div",
+  ".right-action"
+];
+const skinClass = "live-skin-coloration-area";
+skinSelectors.forEach(selector => {
+  SpinQuery.select(
+    selector,
+    skin => {
+      Observer.attributes(selector, records => {
+        records.forEach(record => {
+          if (record.attributeName === "class") {
+            // console.log("Observed class change: ", record);
+            if (skinDisabled && skin.classList.contains(skinClass)) {
+              skin.classList.remove(skinClass);
+            }
+            else if (!skinDisabled && !skin.classList.contains(skinClass)) {
+              skin.classList.add(skinClass);
+            }
+          }
+        });
+      });
+    });
+});
+const setBodyClass = (checked, key) => {
+  document.body.classList[checked ? "add" : "remove"](`simplify-${key}`);
+  if (key === "skin") {
+    skinDisabled = checked;
+    skinSelectors.forEach(selector => {
+      SpinQuery.select(
+        selector,
+        skin => skin.classList[checked ? "remove" : "add"]("live-skin-coloration-area")
+      );
+    });
+  }
+};
+Object.keys(displayNames).forEach(key => {
+  const checked = settings.simplifyLiveroomSettings[key];
+  setBodyClass(checked, key);
+})
 export default {
   widget: {
     condition: () => document.URL.startsWith(`https://live.bilibili.com/`),
@@ -40,51 +89,6 @@ export default {
       });
       button.addEventListener("mouseenter", () => mask.classList.add("transparent"));
       button.addEventListener("mouseleave", () => mask.classList.remove("transparent"));
-      let skinDisabled = settings.simplifyLiveroomSettings.skin;
-      const skinSelectors = [
-        "#head-info-vm",
-        "#gift-control-vm",
-        "#rank-list-vm",
-        "#rank-list-ctnr-box",
-        ".gift-panel.base-panel",
-        ".gift-panel.extend-panel",
-        ".seeds-wrap>div:first-child",
-        ".gift-section>div:last-child",
-        ".z-gift-package>div>div",
-        ".right-action"
-      ];
-      const skinClass = "live-skin-coloration-area";
-      skinSelectors.forEach(selector => {
-        SpinQuery.select(
-          selector,
-          skin => {
-            Observer.attributes(selector, records => {
-              records.forEach(record => {
-                if (record.attributeName === "class") {
-                  // console.log("Observed class change: ", record);
-                  if (skinDisabled && skin.classList.contains(skinClass)) {
-                    skin.classList.remove(skinClass);
-                  }
-                  else if (!skinDisabled && !skin.classList.contains(skinClass)) {
-                    skin.classList.add(skinClass);
-                  }
-                }
-              });
-            });
-          });
-      });
-      const setBodyClass = (checked, key) => {
-        document.body.classList[checked ? "add" : "remove"](`simplify-${key}`);
-        if (key === "skin") {
-          skinDisabled = checked;
-          skinSelectors.forEach(selector => {
-            SpinQuery.select(
-              selector,
-              skin => skin.classList[checked ? "remove" : "add"]("live-skin-coloration-area")
-            );
-          });
-        }
-      };
       new Vue({
         el: ".simplify-liveroom-settings",
         data: {
