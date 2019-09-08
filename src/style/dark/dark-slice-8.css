@@ -129,7 +129,8 @@ li.danmaku-info-row.bpui-selecting,
 .main-panel .hot-topic-panel,
 .guest-home .login-panel,
 .international-home .bilibili-search-history .history-item.focus,
-.international-home .bilibili-search-history .history-item:hover
+.international-home .bilibili-search-history .history-item:hover,
+.live-charge-box .tip-popup
 {
     background-color: #444 !important;
 }
@@ -459,7 +460,9 @@ li.danmaku-info-row.bpui-selecting,
 .guest-home .button-box .regist,
 .video-editor-ol-wrp .video-editor-ol-content p,
 .qa-area-ol-wrp .qa-area-ol-content p,
-.up-info .btn-panel .following
+.up-info .btn-panel .following,
+.live-charge-cntr .popup-cntr .tip-content,
+.live-charge-box .popup-cntr .retry
 {
     color: #eee !important;
 }
