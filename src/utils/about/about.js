@@ -1,12 +1,14 @@
 (async () => {
   const html = await import("aboutHtml")
   document.body.insertAdjacentHTML('beforeend', html)
-  document.querySelector('.bilibili-evolved-about').addEventListener('be:about-load', () => {
+  const about = document.querySelector('.bilibili-evolved-about')
+  let aboutVM = null
+  about.addEventListener('be:about-load', () => {
     const nameSorter = (a, b) => a.charCodeAt(0) - b.charCodeAt(0)
     const userSorter = (a, b) => nameSorter(a.name, b.name)
     const clientTypeMatch = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
     const clientType = clientTypeMatch ? clientTypeMatch[1] : 'Stable'
-    new Vue({
+    aboutVM = new Vue({
       el: '.bilibili-evolved-about',
       data: {
         version: settings.currentVersion,
@@ -70,7 +72,7 @@
         ]
       },
       mounted () {
-        this.init()
+        // this.init()
       },
       methods: {
         async getLogos () {
@@ -110,5 +112,8 @@
         }
       }
     })
+  }, { once: true })
+  about.addEventListener('be:about-load-community', () => {
+    aboutVM.init()
   }, { once: true })
 })()

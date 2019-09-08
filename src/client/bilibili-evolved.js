@@ -166,7 +166,11 @@ try {
       Object.assign(unsafeWindow.bilibiliEvolved, { addons })
     })
     .catch(error => logError(error))
-  fullyLoaded(applyScripts)
+  if (settings.scriptLoadingMode === '延后') {
+    fullyLoaded(applyScripts)
+  } else if (settings.scriptLoadingMode === '同时') {
+    contentLoaded(applyScripts)
+  }
 } catch (error) {
   logError(error)
 }
