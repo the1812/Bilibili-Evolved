@@ -66,7 +66,11 @@
           {
             name: 'MDI',
             link: 'https://materialdesignicons.com'
-          }
+          },
+          {
+            name: 'Lodash',
+            link: 'https://lodash.com/',
+          },
         ]
       },
       mounted () {
