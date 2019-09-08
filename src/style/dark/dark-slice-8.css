@@ -458,7 +458,8 @@ li.danmaku-info-row.bpui-selecting,
 .guest-home .title h1,
 .guest-home .button-box .regist,
 .video-editor-ol-wrp .video-editor-ol-content p,
-.qa-area-ol-wrp .qa-area-ol-content p
+.qa-area-ol-wrp .qa-area-ol-content p,
+.up-info .btn-panel .following
 {
     color: #eee !important;
 }
@@ -923,9 +924,16 @@ li.danmaku-info-row.bpui-selecting,
 .upload-v2-step1-container #homeDrop .upload-btn .upload-btn-title,
 .video-editor-ol-wrp .video-editor-ol-btn,
 .qa-area-ol-wrp .qa-area-ol-btn,
-.upload-v2-step1-container #homeDrop .upload-btn .upload-btn-title
+.upload-v2-step1-container #homeDrop .upload-btn .upload-btn-title,
+.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric.little,
+.follow-dialog-wrap .follow-dialog-window .bottom .btn,
+.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-electric
 {
     color: var(--foreground-color) !important;
+}
+.bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-follow .bp-svgicon
+{
+    fill: var(--foreground-color) !important;
 }
 /* a
 {
