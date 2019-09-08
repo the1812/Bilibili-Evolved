@@ -207,7 +207,7 @@ const settings = {
   touchNavBar: false,
   touchVideoPlayer: false,
   customControlBackgroundOpacity: 0.64,
-  customControlBackground: true,
+  customControlBackground: false,
   darkScheduleStart: '18:00',
   darkScheduleEnd: '6:00',
   darkSchedule: false,
