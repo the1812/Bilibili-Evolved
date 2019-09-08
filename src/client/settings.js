@@ -148,6 +148,7 @@ export const settings = {
   simplifyHome: false,
   simplifyHomeStyle: '清爽',
   ajaxHook: false,
+  scriptLoadingMode: '延后',
   cache: {},
 }
 const fixedSettings = {

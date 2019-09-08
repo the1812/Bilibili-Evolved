@@ -166,7 +166,7 @@ try {
       Object.assign(unsafeWindow.bilibiliEvolved, { addons })
     })
     .catch(error => logError(error))
-  contentLoaded(applyScripts)
+  fullyLoaded(applyScripts)
 } catch (error) {
   logError(error)
 }

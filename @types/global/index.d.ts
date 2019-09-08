@@ -349,6 +349,7 @@ declare global {
     simplifyHome: boolean,
     simplifyHomeStyle: '清爽' | '极简',
     ajaxHook: boolean,
+    scriptLoadingMode: '同时' | '延后',
     latestVersionLink: string,
     currentVersion: string,
   }
