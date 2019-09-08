@@ -56,7 +56,7 @@ export class Resource {
               const cache = this.loadCache(key)
               if (cache !== null) {
                 this.text = cache
-                console.log(`hit cache: ${key}`)
+                // console.log(`hit cache: ${key}`)
                 resolve(cache)
               } else {
                 const text = onlineData[this.url]
@@ -64,12 +64,13 @@ export class Resource {
                 //   [key]: this.text
                 // })
                 if (text) {
-                  console.log(`load online data: ${key}`)
+                  // console.log(`load online data: ${key}`)
                   this.text = text
                   resolve(this.text)
                 } else {
                   Ajax.monkey({ url: this.url })
                     .then(text => {
+                      console.log(`load preview data: ${key}`)
                       this.text = text
                       settings.cache = Object.assign(settings.cache, {
                         [key]: text

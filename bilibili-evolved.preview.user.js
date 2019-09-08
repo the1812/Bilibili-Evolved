@@ -152,6 +152,10 @@ const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
 }
 const isOffline = () => typeof offlineData !== 'undefined'
 const getUID = () => document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)DedeUserID\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+const scriptVersion = (() => {
+  const match = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
+  return match ? match[1] : 'Stable'
+})()
 
 const customNavbarDefaultOrders = {
   blank1: 0,
@@ -1199,7 +1203,7 @@ class Resource {
               const cache = this.loadCache(key)
               if (cache !== null) {
                 this.text = cache
-                console.log(`hit cache: ${key}`)
+                // console.log(`hit cache: ${key}`)
                 resolve(cache)
               } else {
                 const text = onlineData[this.url]
@@ -1207,12 +1211,13 @@ class Resource {
                 //   [key]: this.text
                 // })
                 if (text) {
-                  console.log(`load online data: ${key}`)
+                  // console.log(`load online data: ${key}`)
                   this.text = text
                   resolve(this.text)
                 } else {
                   Ajax.monkey({ url: this.url })
                     .then(text => {
+                      console.log(`load preview data: ${key}`)
                       this.text = text
                       settings.cache = Object.assign(settings.cache, {
                         [key]: text
@@ -2275,10 +2280,13 @@ class ResourceManager {
     for (const file of files) {
       const url = Resource.root + 'min/' + file.name
       const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
-      if (resource && !resource.alwaysPreview) {
+      if (resource) {
+        if (scriptVersion === 'Stable' && resource.alwaysPreview) {
+          continue
+        }
         const text = await file.async('text')
         cache[resource.key] = text
-        console.log(`bundle update: saved ${resource.key}`)
+        // console.log(`bundle update: saved ${resource.key}`)
       }
     }
     settings.cache = Object.assign(settings.cache, cache)

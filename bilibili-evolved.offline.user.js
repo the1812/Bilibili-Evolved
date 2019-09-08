@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      418.79
+// @version      418.83
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -153,6 +153,10 @@ const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
 }
 const isOffline = () => typeof offlineData !== 'undefined'
 const getUID = () => document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)DedeUserID\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+const scriptVersion = (() => {
+  const match = GM_info.script.name.match(/Bilibili Evolved (Offline) \((.*)\)/)
+  return match ? match[1] : 'Stable'
+})()
 
 const customNavbarDefaultOrders = {
   blank1: 0,
@@ -2240,10 +2244,13 @@ class ResourceManager {
     for (const file of files) {
       const url = Resource.root + 'min/' + file.name
       const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
-      if (resource && !resource.alwaysPreview) {
+      if (resource) {
+        if (scriptVersion === 'Stable' && resource.alwaysPreview) {
+          continue
+        }
         const text = await file.async('text')
         cache[resource.key] = text
-        console.log(`bundle update: saved ${resource.key}`)
+        // console.log(`bundle update: saved ${resource.key}`)
       }
     }
     settings.cache = Object.assign(settings.cache, cache)

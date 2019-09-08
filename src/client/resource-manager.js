@@ -249,10 +249,13 @@ export class ResourceManager {
     for (const file of files) {
       const url = Resource.root + 'min/' + file.name
       const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
-      if (resource && !resource.alwaysPreview) {
+      if (resource) {
+        if (scriptVersion === 'Stable' && resource.alwaysPreview) {
+          continue
+        }
         const text = await file.async('text')
         cache[resource.key] = text
-        console.log(`bundle update: saved ${resource.key}`)
+        // console.log(`bundle update: saved ${resource.key}`)
       }
     }
     settings.cache = Object.assign(settings.cache, cache)
