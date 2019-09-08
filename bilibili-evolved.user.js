@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.9.2
+// @version      1.9.3
 // @description  强大的哔哩哔哩增强脚本: 下载视频, 音乐, 封面, 弹幕 / 自定义播放器画质, 模式, 布局 / 自定义顶栏, 删除广告, 夜间模式 / 触屏设备支持
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
