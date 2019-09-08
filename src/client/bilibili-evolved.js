@@ -27,6 +27,12 @@
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
+Vue.config.productionTip = false
+Vue.config.devtools = false
+if (GM_getValue('customNavbar') === true
+  && document.URL === 'https://message.bilibili.com/pages/nav/index_new_sync') {
+  return
+}
 import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed } from './utils'
 import { settings, loadSettings, saveSettings, onSettingsChange, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
@@ -44,8 +50,6 @@ import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
 
 try {
-  Vue.config.productionTip = false
-  Vue.config.devtools = false
   const events = {}
   for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
     events[name] = {

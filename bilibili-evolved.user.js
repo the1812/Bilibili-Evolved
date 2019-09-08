@@ -27,6 +27,12 @@
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/logo.png
 // ==/UserScript==
+Vue.config.productionTip = false
+Vue.config.devtools = false
+if (GM_getValue('customNavbar') === true
+  && document.URL === 'https://message.bilibili.com/pages/nav/index_new_sync') {
+  return
+}
 function logError (error) {
   let finalMessage = error
   if (typeof error === 'object' && 'stack' in error) {
@@ -2414,8 +2420,6 @@ class ResourceManager {
 
 
 try {
-  Vue.config.productionTip = false
-  Vue.config.devtools = false
   const events = {}
   for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
     events[name] = {
