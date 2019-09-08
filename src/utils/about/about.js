@@ -1,9 +1,7 @@
 (async () => {
   const html = await import("aboutHtml")
   document.body.insertAdjacentHTML('beforeend', html)
-  const about = document.querySelector('.bilibili-evolved-about')
-  let aboutVM = null
-  about.addEventListener('be:about-load', () => {
+  dq('.bilibili-evolved-about').addEventListener('be:about-load', () => {
     const nameSorter = (a, b) => a.charCodeAt(0) - b.charCodeAt(0)
     const userSorter = (a, b) => nameSorter(a.name, b.name)
     const clientTypeMatch = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
@@ -73,6 +71,9 @@
       },
       mounted () {
         // this.init()
+        dq('.bilibili-evolved-about').addEventListener('be:about-load-community', () => {
+          this.init()
+        }, { once: true })
       },
       methods: {
         async getLogos () {
@@ -112,8 +113,5 @@
         }
       }
     })
-  }, { once: true })
-  about.addEventListener('be:about-load-community', () => {
-    aboutVM.init()
   }, { once: true })
 })()
