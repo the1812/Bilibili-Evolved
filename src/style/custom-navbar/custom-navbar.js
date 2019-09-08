@@ -1638,6 +1638,9 @@ class Subscriptions extends NavbarComponent {
         component.onPopup && component.onPopup()
       }
     },
+    mounted() {
+      document.body.classList.remove('custom-navbar-loading')
+    },
   });
 })();
 return attributes;
