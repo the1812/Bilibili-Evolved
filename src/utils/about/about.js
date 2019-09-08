@@ -6,7 +6,7 @@
     const userSorter = (a, b) => nameSorter(a.name, b.name)
     const clientTypeMatch = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
     const clientType = clientTypeMatch ? clientTypeMatch[1] : 'Stable'
-    aboutVM = new Vue({
+    new Vue({
       el: '.bilibili-evolved-about',
       data: {
         version: settings.currentVersion,
