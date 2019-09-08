@@ -89,14 +89,14 @@ try {
   const resources = new ResourceManager()
   events.init.complete()
   resources.styleManager.prefetchStyles()
-  if (settings.customNavbar) {
-    contentLoaded(() => {
-      document.body.classList.add('custom-navbar-loading')
-      if (settings.useDarkStyle) {
-        document.body.classList.add('dark')
-      }
-    })
-  }
+  // if (settings.customNavbar) {
+  //   contentLoaded(() => {
+  //     document.body.classList.add('custom-navbar-loading')
+  //     if (settings.useDarkStyle) {
+  //       document.body.classList.add('dark')
+  //     }
+  //   })
+  // }
   events.styleLoaded.complete()
 
   Object.assign(unsafeWindow.bilibiliEvolved, {

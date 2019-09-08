@@ -1,6 +1,7 @@
 if (isIframe()) {
   return;
 }
+document.body.classList.add('custom-navbar-loading')
 document.body.style.setProperty("--navbar-bounds-padding", `0 ${settings.customNavbarBoundsPadding}%`);
 document.body.style.setProperty("--navbar-blur-opacity", settings.customNavbarBlurOpacity || 0.7);
 addSettingsListener("customNavbarBlurOpacity", value => {
@@ -229,6 +230,7 @@ const unsupportedUrls = [
 if (!supportedUrls.some(it => document.URL.includes(it))
   || unsupportedUrls.some(it => document.URL.includes(it))) {
   showWidget = false;
+  document.body.classList.remove('custom-navbar-loading')
   return attributes;
 }
 
