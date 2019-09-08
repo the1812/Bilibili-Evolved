@@ -155,6 +155,7 @@ function setDisplayNames () {
     const { loadTooltip } = await import('./tooltip/settings-tooltip.loader')
     await loadTooltip()
     await resources.applyDropdownOptions()
+    resources.applyWidgets()
     raiseEvent(iconPanel, 'be:load')
     raiseEvent(dq('.bilibili-evolved-about'), 'be:about-load')
     new ThemeColors().setupDom()

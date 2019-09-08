@@ -152,8 +152,15 @@ export class ResourceManager {
     // }
     this.applyReloadables() // reloadables run sync
     // await this.applyDropdownOptions();
-    this.applyWidgets() // No need to wait the widgets
-    this.checkUpdates(!isCacheValid)
+    // this.applyWidgets() // No need to wait the widgets
+    if (!isOffline()) {
+      const checkUpdates = () => this.checkUpdates(!isCacheValid)
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(checkUpdates)
+      } else {
+        fullyLoaded(checkUpdates)
+      }
+    }
   }
   applyReloadables () {
     const checkAttribute = (key, attributes) => {
@@ -218,66 +225,67 @@ export class ResourceManager {
       }
     }
   }
-  async checkUpdates (fullDownload) {
+  async checkUpdates () {
     if (isOffline()) {
       return
     }
     // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
-    const getHash = async (message) => {
-      const msgUint8 = new TextEncoder().encode(message)
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
-      const hashArray = Array.from(new Uint8Array(hashBuffer))
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-      return hashHex
-    }
-    if (fullDownload) {
-      const url = Resource.root + 'min/bundle.zip'
-      const zip = new JSZip()
-      await zip.loadAsync(await Ajax.monkey({
-        url,
-        responseType: 'blob',
-      }))
-      zip.forEach((filename, file) => {
-        const url = Resource.root + 'min/' + filename
-        const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
-        if (resource) {
-          file.async('text').then(text => {
-            settings.cache = Object.assign(settings.cache, {
-              [resource.key]: text
-            })
-            getHash(text).then(hash => console.log(`full download: saved ${resource.key} (${hash})`))
+    // const getHash = async (message) => {
+    //   const msgUint8 = new TextEncoder().encode(message)
+    //   const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
+    //   const hashArray = Array.from(new Uint8Array(hashBuffer))
+    //   const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+    //   return hashHex
+    // }
+    // if (fullDownload) {
+    const url = Resource.root + 'min/bundle.zip'
+    const zip = new JSZip()
+    await zip.loadAsync(await Ajax.monkey({
+      url,
+      responseType: 'blob',
+    }))
+    zip.forEach((filename, file) => {
+      const url = Resource.root + 'min/' + filename
+      const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
+      if (resource) {
+        file.async('text').then(text => {
+          settings.cache = Object.assign(settings.cache, {
+            [resource.key]: text
           })
-        }
-      })
-    } else {
-      const hashJson = await Ajax.monkey({
-        url: Resource.root + 'min/bundle.json',
-        responseType: 'json',
-      })
-      const scriptHashWrap = h => `(()=>{return${h}})();`
-      await Promise.all(Object.entries(hashJson).map(async ([name, hash]) => {
-        const url = Resource.root + 'min/' + name
-        const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
-        if (!resource) {
-          return
-        }
-        const cache = settings.cache[resource.key]
-        if (cache) {
-          const cacheHash = await getHash(cache)
-          if (cacheHash.toLowerCase() !== hash.toLowerCase() &&
-            scriptHashWrap(cacheHash).toLowerCase() !== hash.toLowerCase()) {
-            console.log(`hash not match: ${resource.key} (${cacheHash.toLowerCase()}) !== (${hash.toLowerCase()})`)
-            await resource.download()
-            settings.cache = Object.assign(settings.cache, {
-              [resource.key]: resource.text
-            })
-            console.log(`downloaded ${resource.key}`)
-          } else {
-            console.log(`checked hash: ${resource.key}`)
-          }
-        }
-      }))
-    }
+          // getHash(text).then(hash => console.log(`full download: saved ${resource.key} (${hash})`))
+          console.log(`bundle update: saved ${resource.key}`)
+        })
+      }
+    })
+    // } else {
+    //   const hashJson = await Ajax.monkey({
+    //     url: Resource.root + 'min/bundle.json',
+    //     responseType: 'json',
+    //   })
+    //   const scriptHashWrap = h => `(()=>{return${h}})();`
+    //   await Promise.all(Object.entries(hashJson).map(async ([name, hash]) => {
+    //     const url = Resource.root + 'min/' + name
+    //     const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
+    //     if (!resource) {
+    //       return
+    //     }
+    //     const cache = settings.cache[resource.key]
+    //     if (cache) {
+    //       const cacheHash = await getHash(cache)
+    //       if (cacheHash.toLowerCase() !== hash.toLowerCase() &&
+    //         scriptHashWrap(cacheHash).toLowerCase() !== hash.toLowerCase()) {
+    //         console.log(`hash not match: ${resource.key} (${cacheHash.toLowerCase()}) !== (${hash.toLowerCase()})`)
+    //         await resource.download()
+    //         settings.cache = Object.assign(settings.cache, {
+    //           [resource.key]: resource.text
+    //         })
+    //         console.log(`downloaded ${resource.key}`)
+    //       } else {
+    //         console.log(`checked hash: ${resource.key}`)
+    //       }
+    //     }
+    //   }))
+    // }
 
   }
   async applyWidget (info) {
