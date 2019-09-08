@@ -132,7 +132,7 @@ class VideoDownloaderFragment {
 class VideoDownloader {
   format: VideoFormat
   fragments: VideoDownloaderFragment[]
-  fragmentSplitFactor = 6 * 5
+  fragmentSplitFactor = 6 * 2
   workingXhr: XMLHttpRequest[] | null = null
   progress: (progress: number) => void
   progressMap: Map<XMLHttpRequest, number> = new Map()
@@ -192,9 +192,14 @@ class VideoDownloader {
     this.workingXhr = []
     this.progressMap = new Map()
     this.updateProgress()
-    // 按一定大小分段或许对大视频更好
     // const partialLength = Math.round(fragment.size / this.fragmentSplitFactor)
-    const partialLength = 16 * 1024 * 1024 // 16MB
+    // 按一定大小分段或许对大视频更好
+    let partialLength: number
+    if (fragment.size <= 96 * 1024 * 1024) { // 小于等于96MB时, 均分为12段 (this.fragmentSplitFactor)
+      partialLength = fragment.size / this.fragmentSplitFactor
+    } else { // 大于96MB时, 每16MB为一段
+      partialLength = 16 * 1024 * 1024 // 16MB
+    }
     let startByte = 0
     const getPartNumber = (xhr: XMLHttpRequest) => [...this.progressMap.keys()].indexOf(xhr) + 1
     while (startByte < fragment.size) {
