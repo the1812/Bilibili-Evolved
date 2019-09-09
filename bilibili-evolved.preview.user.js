@@ -2213,7 +2213,11 @@ class ResourceManager {
     // await this.applyDropdownOptions();
     // this.applyWidgets() // No need to wait the widgets
     if (!isOffline() && settings.scriptDownloadMode === 'bundle') {
-      const checkUpdates = () => this.checkUpdates(!isCacheValid)
+      console.log('scheduled bundle update')
+      const checkUpdates = () => {
+        console.log('downloading bundle')
+        this.checkUpdates(!isCacheValid)
+      }
       if ('requestIdleCallback' in window) {
         window.requestIdleCallback(checkUpdates)
       } else {
@@ -2318,6 +2322,7 @@ class ResourceManager {
       }
     }
     settings.cache = Object.assign(settings.cache, cache)
+    console.log('bundle updated')
     // } else {
     //   const hashJson = await Ajax.monkey({
     //     url: Resource.root + 'min/bundle.json',

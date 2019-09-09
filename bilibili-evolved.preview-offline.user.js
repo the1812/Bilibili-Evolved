@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      420.23
+// @version      420.27
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2160,7 +2160,11 @@ class ResourceManager {
     // await this.applyDropdownOptions();
     // this.applyWidgets() // No need to wait the widgets
     if (!isOffline() && settings.scriptDownloadMode === 'bundle') {
-      const checkUpdates = () => this.checkUpdates(!isCacheValid)
+      console.log('scheduled bundle update')
+      const checkUpdates = () => {
+        console.log('downloading bundle')
+        this.checkUpdates(!isCacheValid)
+      }
       if ('requestIdleCallback' in window) {
         window.requestIdleCallback(checkUpdates)
       } else {
@@ -2265,6 +2269,7 @@ class ResourceManager {
       }
     }
     settings.cache = Object.assign(settings.cache, cache)
+    console.log('bundle updated')
     // } else {
     //   const hashJson = await Ajax.monkey({
     //     url: Resource.root + 'min/bundle.json',
