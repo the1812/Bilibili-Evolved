@@ -148,8 +148,9 @@ export const settings = {
   simplifyHome: false,
   simplifyHomeStyle: '清爽',
   ajaxHook: false,
-  scriptLoadingMode: '自动',
+  scriptLoadingMode: '延后(自动)',
   scriptDownloadMode: 'bundle',
+  guiSettingsDockSide: '左侧',
   cache: {},
 }
 const fixedSettings = {
