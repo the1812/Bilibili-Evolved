@@ -124,6 +124,19 @@ body {
   --navbar-blur-opacity: 0.7;
   --navbar-icon-size: 24px;
 }
+body.custom-navbar-loading::after {
+  content: "";
+  height: var(--navbar-height);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
+  z-index: 10001;
+}
+body.dark.custom-navbar-loading::after {
+  background-color: #333;
+}
 body.no-banner #banner_link,
 body.no-banner .z-top-container.has-banner > .header,
 .bili-header-m > #banner_link .search,

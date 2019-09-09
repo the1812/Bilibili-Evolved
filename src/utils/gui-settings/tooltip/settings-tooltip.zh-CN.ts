@@ -145,6 +145,12 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>s</kbd> 收藏
 - <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> 播放速度调整`],
   ['doubleClickFullscreen', /*html*/`允许双击播放器切换全屏, 请注意不能与<span>播放器触摸支持-启用双击控制</span>一同使用.`],
+  ['ajaxHook', /*html*/`是否启用 Ajax Hook API, 其他插件或附加功能能够通过此 API 获取 Ajax 请求的信息.`],
+  ['scriptLoadingMode', /*html*/`脚本功能的加载模式:
+- 同时: 与b站页面同时加载
+- 延后: 优先加载b站页面, 在b站页面加载完成后再开始加载脚本功能
+- 同时(自动): 根据页面自动选择加载模式, 默认采用同时模式
+- 延后(自动): 根据页面自动选择加载模式, 默认采用延后模式`],
 ]);
 export default {
   export: { toolTips },

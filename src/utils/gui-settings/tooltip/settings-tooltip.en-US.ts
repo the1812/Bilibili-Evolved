@@ -122,6 +122,12 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - <kbd>s</kbd> Favorite
 - <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> Playback Speed Adjust`],
   ['doubleClickFullscreen', `Allow double click the player to toggle fullscreen, please note that this feature will not work if <span>播放器触摸支持</span> - <span>启用双击控制</span> is also enabled.`],
+  ['ajaxHook', `The Ajax Hook API may help other extensions or add-ons access ajax requests in bilibili.`],
+  ['scriptLoadingMode', `Feature loading mode:
+- Simultaneous: Load features as soon as possible
+- Delay: Load features after the original page has loaded
+- Simultaneous (Auto): Auto determine loading mode and prefer Simultaneous mode
+- Delay (Auto): Auto determine loading mode and prefer Delay mode`],
 ]);
 export default {
   export: { toolTips },

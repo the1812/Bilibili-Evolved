@@ -348,6 +348,10 @@ declare global {
     doubleClickFullscreenPreventSingleClick: boolean
     simplifyHome: boolean,
     simplifyHomeStyle: '清爽' | '极简',
+    ajaxHook: boolean,
+    scriptLoadingMode: '同时' | '延后' | '同时(自动)' | '延后(自动)' | '自动',
+    scriptDownloadMode: 'bundle' | 'legacy'
+    guiSettingsDockSide: '左侧' | '右侧'
     latestVersionLink: string,
     currentVersion: string,
   }
@@ -380,5 +384,7 @@ declare global {
   const getDpiSourceSet: (src: string, baseSize: number | string | { width?: number | string, height?: number | string }, extension?: string) => string
   const isOffline: () => boolean
   const getUID: () => string
+  type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
+  const scriptVersion: ScriptVersion
 }
 export { };

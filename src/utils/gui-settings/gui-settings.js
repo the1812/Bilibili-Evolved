@@ -139,7 +139,6 @@ function setDisplayNames () {
   if (!style) {
     document.body.insertAdjacentHTML('afterbegin', `<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css">`)
   }
-  resources.applyDropdownOptions()
 
   const widgetsContainer = document.querySelector('.widgets-container')
   const emptyTip = widgetsContainer.querySelector('.empty-tip')
@@ -150,13 +149,16 @@ function setDisplayNames () {
       emptyTip.classList.remove('show')
     }
   })
-
-  new ThemeColors().setupDom()
-
   const boxes = document.querySelectorAll('.gui-settings-widgets-box,.gui-settings-box')
   const iconPanel = document.querySelector('.gui-settings-icon-panel')
-  iconPanel.addEventListener('mouseover', () => {
+  iconPanel.addEventListener('mouseover', async () => {
+    const { loadTooltip } = await import('./tooltip/settings-tooltip.loader')
+    await loadTooltip()
+    await resources.applyDropdownOptions()
+    resources.applyWidgets()
     raiseEvent(iconPanel, 'be:load')
+    raiseEvent(dq('.bilibili-evolved-about'), 'be:about-load')
+    new ThemeColors().setupDom()
     boxes.forEach(it => it.classList.add('loaded'))
     inputs = [...document.querySelectorAll('input[key]')]
     checkBoxes = inputs.filter(it => it.type === 'checkbox')

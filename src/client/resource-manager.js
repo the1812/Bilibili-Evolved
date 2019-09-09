@@ -61,6 +61,9 @@ export class ResourceManager {
         key += 'Component'
       }
       resource.key = key
+      if (resource.text === undefined) {
+        resource.text = null
+      }
       Resource.all[key] = resource
     }
     return resource
@@ -149,8 +152,19 @@ export class ResourceManager {
     // }
     this.applyReloadables() // reloadables run sync
     // await this.applyDropdownOptions();
-    this.applyWidgets() // No need to wait the widgets
-    this.checkUpdates(!isCacheValid)
+    // this.applyWidgets() // No need to wait the widgets
+    if (!isOffline() && settings.scriptDownloadMode === 'bundle') {
+      console.log('scheduled bundle update')
+      const checkUpdates = () => {
+        console.log('downloading bundle')
+        this.checkUpdates(!isCacheValid)
+      }
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(checkUpdates)
+      } else {
+        fullyLoaded(checkUpdates)
+      }
+    }
   }
   applyReloadables () {
     const checkAttribute = (key, attributes) => {
@@ -199,7 +213,7 @@ export class ResourceManager {
     }
   }
   applyComponent (key, text) {
-    const func = eval(text)
+    const func = typeof text === 'string' ? eval(text) : text
     if (func) {
       try {
         const attribute = func(settings, this) || {}
@@ -215,66 +229,70 @@ export class ResourceManager {
       }
     }
   }
-  async checkUpdates (fullDownload) {
+  async checkUpdates () {
     if (isOffline()) {
       return
     }
     // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
-    const getHash = async (message) => {
-      const msgUint8 = new TextEncoder().encode(message)
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
-      const hashArray = Array.from(new Uint8Array(hashBuffer))
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-      return hashHex
+    // const getHash = async (message) => {
+    //   const msgUint8 = new TextEncoder().encode(message)
+    //   const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
+    //   const hashArray = Array.from(new Uint8Array(hashBuffer))
+    //   const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+    //   return hashHex
+    // }
+    // if (fullDownload) {
+    const url = Resource.root + 'min/bundle.zip'
+    const zip = new JSZip()
+    await zip.loadAsync(await Ajax.monkey({
+      url,
+      responseType: 'blob',
+    }))
+    let cache = {}
+    const files = zip.file(/.+/)
+    for (const file of files) {
+      const url = Resource.root + 'min/' + file.name
+      const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
+      if (resource) {
+        if (scriptVersion === 'Stable' && resource.alwaysPreview) {
+          continue
+        }
+        const text = await file.async('text')
+        cache[resource.key] = text
+        // console.log(`bundle update: saved ${resource.key}`)
+      }
     }
-    if (fullDownload) {
-      const url = Resource.root + 'min/bundle.zip'
-      const zip = new JSZip()
-      await zip.loadAsync(await Ajax.monkey({
-        url,
-        responseType: 'blob',
-      }))
-      zip.forEach((filename, file) => {
-        const url = Resource.root + 'min/' + filename
-        const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
-        if (resource) {
-          file.async('text').then(text => {
-            settings.cache = Object.assign(settings.cache, {
-              [resource.key]: text
-            })
-            getHash(text).then(hash => console.log(`full download: saved ${resource.key} (${hash})`))
-          })
-        }
-      })
-    } else {
-      const hashJson = await Ajax.monkey({
-        url: Resource.root + 'min/bundle.json',
-        responseType: 'json',
-      })
-      const scriptHashWrap = h => `(()=>{return${h}})();`
-      await Promise.all(Object.entries(hashJson).map(async ([name, hash]) => {
-        const url = Resource.root + 'min/' + name
-        const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
-        if (!resource) {
-          return
-        }
-        const cache = settings.cache[resource.key]
-        if (cache) {
-          const cacheHash = await getHash(cache)
-          if (cacheHash.toLowerCase() !== hash.toLowerCase() &&
-            scriptHashWrap(cacheHash).toLowerCase() !== hash.toLowerCase()) {
-            console.log(`hash not match: ${resource.key} (${cacheHash.toLowerCase()}) !== (${hash.toLowerCase()})`)
-            await resource.download()
-            settings.cache = Object.assign(settings.cache, {
-              [resource.key]: resource.text
-            })
-            console.log(`downloaded ${resource.key}`)
-          } else {
-            console.log(`checked hash: ${resource.key}`)
-          }
-        }
-      }))
-    }
+    settings.cache = Object.assign(settings.cache, cache)
+    console.log('bundle updated')
+    // } else {
+    //   const hashJson = await Ajax.monkey({
+    //     url: Resource.root + 'min/bundle.json',
+    //     responseType: 'json',
+    //   })
+    //   const scriptHashWrap = h => `(()=>{return${h}})();`
+    //   await Promise.all(Object.entries(hashJson).map(async ([name, hash]) => {
+    //     const url = Resource.root + 'min/' + name
+    //     const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
+    //     if (!resource) {
+    //       return
+    //     }
+    //     const cache = settings.cache[resource.key]
+    //     if (cache) {
+    //       const cacheHash = await getHash(cache)
+    //       if (cacheHash.toLowerCase() !== hash.toLowerCase() &&
+    //         scriptHashWrap(cacheHash).toLowerCase() !== hash.toLowerCase()) {
+    //         console.log(`hash not match: ${resource.key} (${cacheHash.toLowerCase()}) !== (${hash.toLowerCase()})`)
+    //         await resource.download()
+    //         settings.cache = Object.assign(settings.cache, {
+    //           [resource.key]: resource.text
+    //         })
+    //         console.log(`downloaded ${resource.key}`)
+    //       } else {
+    //         console.log(`checked hash: ${resource.key}`)
+    //       }
+    //     }
+    //   }))
+    // }
 
   }
   async applyWidget (info) {
@@ -306,6 +324,9 @@ export class ResourceManager {
         await Promise.all(info.map(applyDropdownOption))
       } else {
         const dropdownInput = dq(`.gui-settings-dropdown input[key=${info.key}]`)
+        if (!dropdownInput) {
+          return
+        }
         dropdownInput.value = settings[info.key]
         dropdownInput.setAttribute('data-name', settings[info.key])
         const dropdown = dropdownInput.parentElement
@@ -331,6 +352,10 @@ export class ResourceManager {
           manifests.push(it)
         }
       })
+    manifests.push({
+      key: 'scriptLoadingMode',
+      items: ['同时', '延后', '同时(自动)', '延后(自动)']
+    })
     await Promise.all(manifests.map(it => applyDropdownOption(it)))
   }
   toggleStyle (content, id) {

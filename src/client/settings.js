@@ -42,7 +42,7 @@ export const settings = {
   touchNavBar: false,
   touchVideoPlayer: false,
   customControlBackgroundOpacity: 0.64,
-  customControlBackground: true,
+  customControlBackground: false,
   darkScheduleStart: '18:00',
   darkScheduleEnd: '6:00',
   darkSchedule: false,
@@ -147,6 +147,10 @@ export const settings = {
   doubleClickFullscreenPreventSingleClick: false,
   simplifyHome: false,
   simplifyHomeStyle: '清爽',
+  ajaxHook: false,
+  scriptLoadingMode: '延后(自动)',
+  scriptDownloadMode: 'bundle',
+  guiSettingsDockSide: '左侧',
   cache: {},
 }
 const fixedSettings = {

@@ -123,3 +123,7 @@ export const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
 }
 export const isOffline = () => typeof offlineData !== 'undefined'
 export const getUID = () => document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)DedeUserID\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+export const scriptVersion = (() => {
+  const match = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
+  return match ? match[1] : 'Stable'
+})()

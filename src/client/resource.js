@@ -56,15 +56,46 @@ export class Resource {
               const cache = this.loadCache(key)
               if (cache !== null) {
                 this.text = cache
-                console.log(`hit cache: ${key}`)
+                // console.log(`hit cache: ${key}`)
                 resolve(cache)
-              } else {
-                this.text = onlineData[this.rawUrl]
-                console.log(`load online data: ${key}`)
-                settings.cache = Object.assign(settings.cache, {
-                  [key]: this.text
-                })
-                resolve(this.text)
+              } else if (settings.scriptDownloadMode === 'bundle') {
+                const text = onlineData[this.url]
+                // settings.cache = Object.assign(settings.cache, {
+                //   [key]: this.text
+                // })
+                if (text) {
+                  console.log(`load online data: ${key}`)
+                  this.text = text
+                  resolve(this.text)
+                } else {
+                  Ajax.monkey({ url: this.url })
+                    .then(text => {
+                      console.log(`load preview data: ${key}`)
+                      this.text = text
+                      settings.cache = Object.assign(settings.cache, {
+                        [key]: text
+                      })
+                      resolve(this.text)
+                    })
+                    .catch(error => reject(error))
+                }
+              }
+              if (settings.scriptDownloadMode !== 'bundle') {
+                Ajax.monkey({ url: this.url })
+                  .then(text => {
+                    this.text = text
+                    if (cache !== this.text) {
+                      if (cache === null) {
+                        resolve(this.text)
+                      }
+                      console.log(`individual cache: ${key}`)
+                      settings.cache = Object.assign(settings.cache, {
+                        [key]: this.text
+                      })
+                    }
+                    resolve(this.text)
+                  })
+                  .catch(error => reject(error))
               }
             } else {
               Ajax.monkey({ url: this.url })

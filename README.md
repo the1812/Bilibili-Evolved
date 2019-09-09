@@ -611,6 +611,21 @@
 设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.
 
 </details>
+<details>
+<summary><strong>Ajax Hook API</strong></summary>
+
+是否启用 Ajax Hook API, 其他插件或附加功能能够通过此 API 获取 Ajax 请求的信息.
+
+</details>
+<details>
+<summary><strong>加载模式</strong></summary>
+
+脚本功能的加载模式:
+- 同时: 与b站页面同时加载
+- 延后: 优先加载b站页面, 在b站页面加载完成后再开始加载脚本功能
+- 自动: 根据页面自动选择加载模式
+
+</details>
 
 # 兼容性
 ## 脚本管理器

@@ -455,6 +455,10 @@ li.category.folded i.icon-arrow
 {
     max-width: 120px;
 }
+.gui-settings-dropdown input[key='scriptLoadingMode']
+{
+    max-width: 170px;
+}
 .gui-settings-dropdown input[key='defaultPlayerLayout'],
 .gui-settings-dropdown input[key='defaultBangumiLayout'],
 .gui-settings-dropdown input[key='defaultVideoSpeed']
