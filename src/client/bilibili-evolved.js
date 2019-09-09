@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.9.4
+// @version      1.9.5
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -174,19 +174,42 @@ try {
       Object.assign(unsafeWindow.bilibiliEvolved, { addons })
     })
     .catch(error => logError(error))
-  if (settings.scriptLoadingMode === '延后') {
-    fullyLoaded(applyScripts)
-  } else if (settings.scriptLoadingMode === '同时') {
-    contentLoaded(applyScripts)
-  } else if (settings.scriptLoadingMode === '自动') {
-    const quickLoads = [
-      '//live.bilibili.com',
-    ]
-    if (quickLoads.some(it => document.URL.includes(it))) {
-      contentLoaded(applyScripts)
-    } else {
+  const loadingMode = settings.scriptLoadingMode
+  switch (loadingMode) {
+    case '延后':
       fullyLoaded(applyScripts)
-    }
+      break
+    case '同时':
+      contentLoaded(applyScripts)
+      break
+    case '自动':
+    case '延后(自动)':
+      {
+        const quickLoads = [
+          '//live.bilibili.com',
+        ]
+        if (quickLoads.some(it => document.URL.includes(it))) {
+          contentLoaded(applyScripts)
+        } else {
+          fullyLoaded(applyScripts)
+        }
+        break
+      }
+    case '同时(自动)':
+      {
+        const delayLoads = [
+          '//www.bilibili.com/video/av',
+          '//www.bilibili.com/bangumi/play',
+        ]
+        if (delayLoads.some(it => document.URL.includes(it))) {
+          fullyLoaded(applyScripts)
+        } else {
+          contentLoaded(applyScripts)
+        }
+        break
+      }
+    default:
+      break
   }
 } catch (error) {
   logError(error)

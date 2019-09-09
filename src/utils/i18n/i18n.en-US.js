@@ -676,6 +676,12 @@ export const map = new Map([
   [`快捷键扩展`, `Extended Keymap`],
   [`限速`, `Speed Limit`],
   [`双击全屏`, `Quick fullscreen`],
+  [`启用 Ajax Hook API`, `Enable Ajax Hook API`],
+  [`加载模式`, `Loading Mode`],
+  [`同时`, `Simultaneous`],
+  [`延后`, `Delay`],
+  [`同时(自动)`, `Simultaneous (Auto)`],
+  [`延后(自动)`, `Delay (Auto)`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

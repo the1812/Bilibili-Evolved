@@ -148,7 +148,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['ajaxHook', /*html*/`是否启用 Ajax Hook API, 其他插件或附加功能能够通过此 API 获取 Ajax 请求的信息.`],
   ['scriptLoadingMode', /*html*/`脚本功能的加载模式:
 - 同时: 与b站页面同时加载
-- 延后: 优先加载b站页面, 在b站页面加载完成后再开始加载脚本功能`],
+- 延后: 优先加载b站页面, 在b站页面加载完成后再开始加载脚本功能
+- 同时(自动): 根据页面自动选择加载模式, 默认采用同时模式
+- 延后(自动): 根据页面自动选择加载模式, 默认采用延后模式`],
 ]);
 export default {
   export: { toolTips },

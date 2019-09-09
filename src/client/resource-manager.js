@@ -349,7 +349,7 @@ export class ResourceManager {
       })
     manifests.push({
       key: 'scriptLoadingMode',
-      items: ['同时', '延后', '自动']
+      items: ['同时', '延后', '同时(自动)', '延后(自动)']
     })
     await Promise.all(manifests.map(it => applyDropdownOption(it)))
   }
