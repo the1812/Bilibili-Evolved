@@ -188,7 +188,8 @@ li.danmaku-info-row.bpui-selecting,
 .round-corner .out-container .tab-bar,
 .container .info .date,
 .iframe-comp-container>div,
-.edit-article-wrap #edit-article-box
+.edit-article-wrap #edit-article-box,
+.page-content .-BiliFooter
 {
     background-color: transparent !important;
 }
@@ -783,7 +784,8 @@ li.danmaku-info-row.bpui-selecting,
 .video-editor-ol-wrp .video-editor-ol-btn,
 .qa-area-ol-wrp .qa-area-ol-btn,
 .bui-swiper-wrap .bui-swiper-next:hover,
-.bui-swiper-wrap .bui-swiper-pre:hover
+.bui-swiper-wrap .bui-swiper-pre:hover,
+.channel-menu-itnl .item .name em
 {
     background-color: var(--theme-color) !important;
 }
