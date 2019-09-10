@@ -294,6 +294,10 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     color: var(--navbar-foreground);
     user-select: none;
   }
+  .active .main-content {
+    font-weight: bold;
+    font-size: 11pt;
+  }
   .main-content:hover {
     color: var(--navbar-foreground) !important;
   }
@@ -864,7 +868,6 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     width: 200px;
   }
 }
-
 
 /*
 body.all-navbar-fill .link-navbar,
