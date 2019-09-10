@@ -162,6 +162,7 @@ const scriptVersion = (() => {
   const match = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
   return match ? match[1] : 'Stable'
 })()
+const getCsrf = () => document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
 
 const customNavbarDefaultOrders = {
   blank1: 0,

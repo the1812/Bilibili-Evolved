@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      420.83
+// @version      420.96
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -163,6 +163,7 @@ const scriptVersion = (() => {
   const match = GM_info.script.name.match(/Bilibili Evolved (Preview Offline) \((.*)\)/)
   return match ? match[1] : 'Stable'
 })()
+const getCsrf = () => document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
 
 const customNavbarDefaultOrders = {
   blank1: 0,

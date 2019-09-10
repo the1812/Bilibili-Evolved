@@ -127,3 +127,4 @@ export const scriptVersion = (() => {
   const match = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
   return match ? match[1] : 'Stable'
 })()
+export const getCsrf = () => document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
