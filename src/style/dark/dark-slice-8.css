@@ -278,7 +278,8 @@ li.danmaku-info-row.bpui-selecting,
 .guest-home .title h2,
 .video-editor-ol-wrp .video-editor-ol-content a,
 .qa-area-ol-wrp .qa-area-ol-content a,
-.security_content .common-subtitle
+.security_content .common-subtitle,
+.manga-card-horizontal .text-section .footer-text
 {
     color: #aaa !important;
 }
@@ -481,7 +482,8 @@ li.danmaku-info-row.bpui-selecting,
 .security_content .close-btn,
 .security_content .title-package-name,
 .security_content .title-right-link,
-.security_content .coupon-content-con .coupon-btn
+.security_content .coupon-content-con .coupon-btn,
+.app-layout .search-list .keyword-hinter
 {
     color: #eee !important;
 }
