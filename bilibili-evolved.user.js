@@ -2218,8 +2218,8 @@ class ResourceManager {
         console.log('downloading bundle')
         this.checkUpdates(!isCacheValid)
       }
-      if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(checkUpdates)
+      if ('requestIdleCallback' in unsafeWindow && GM_info.scriptHandler !== 'Violentmonkey') {
+        unsafeWindow.requestIdleCallback(checkUpdates)
       } else {
         fullyLoaded(checkUpdates)
       }
