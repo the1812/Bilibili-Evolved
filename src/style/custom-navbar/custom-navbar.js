@@ -555,7 +555,7 @@ class UserInfo extends NavbarComponent {
           <a class="name" target="_blank" href="https://space.bilibili.com/">{{uname}}</a>
           <a class="type" target="_blank" href="https://account.bilibili.com/account/big">{{userType}}</a>
           <div class="level-info row">
-            <a target="_blank" title="等级" href="https://account.bilibili.com/site/record?type=exp"
+            <a target="_blank" title="等级" href="https://account.bilibili.com/account/record"
               class="level">
               <i class="custom-navbar-iconfont-extended" v-bind:class="'custom-navbar-icon-lv' + level_info.current_level"></i>
             </a>
