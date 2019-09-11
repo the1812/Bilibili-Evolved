@@ -12,26 +12,34 @@
         :href="'https://www.bilibili.com/av' + card.aid"
       >
         <div class="cover-container">
-          <dpi-img class="cover" :src="card.coverUrl" :size="{height: 160, width: 280}"></dpi-img>
+          <dpi-img class="cover" :src="card.coverUrl" :size="{height: 120, width: 200}"></dpi-img>
           <div class="duration">{{card.durationText}}</div>
-          <div class="topics">
-            <a
-              class="topic"
-              v-for="topic of card.topics"
-              :key="topic.id"
-              target="_blank"
-              :href="'https://t.bilibili.com/topic/name/' + card.name + '/feed'"
-            >{{topic.name}}</a>
+          <div class="watchlater" @click.stop.prevent="watchlater(card.id)">
+            <i
+              class="mdi"
+              :class="{'mdi-clock-outline': !card.watchlater, 'mdi-check-circle': card.watchlater}"
+            ></i>
+            {{card.watchlater ? '已添加' : '稍后再看'}}
           </div>
-          <div class="watchlater"></div>
         </div>
-        <h1 class="title">{{card.title}}</h1>
-        <pre class="description">{{card.description}}</pre>
+        <h1 class="title" :title="card.title">{{card.title}}</h1>
+        <div class="topics" v-if="card.topics.length">
+          <a
+            class="topic"
+            v-for="topic of card.topics"
+            :key="topic.id"
+            target="_blank"
+            :href="'https://t.bilibili.com/topic/name/' + topic.name + '/feed'"
+          >#{{topic.name}}#</a>
+        </div>
+        <pre class="description single-line" :title="card.description" v-else>{{card.description}}</pre>
         <a class="up" target="_blank" :href="'https://space.bilibili.com/' + card.upID">
           <dpi-img class="face" :src="card.upFaceUrl" :size="24"></dpi-img>
-          <div class="name">{{card.upName}}</div>
+          <div class="name" :title="card.upName">{{card.upName}}</div>
         </a>
         <div class="stats">
+          <Icon type="extended" icon="like"></Icon>
+          {{card.like}}
           <Icon type="extended" icon="play"></Icon>
           {{card.playCount}}
           <Icon type="extended" icon="danmaku"></Icon>
@@ -55,14 +63,17 @@ interface VideoCard {
   description: string
   duration: number
   durationText: string
-  playCount: number
-  danmakuCount: number
+  playCount: string
+  danmakuCount: string
+  dynamic: string
+  like: string
   timestamp: number
   time: Date
   topics: {
     id: number
     name: string
   }[]
+  watchlater: boolean
 }
 export default {
   components: {
@@ -75,29 +86,44 @@ export default {
       loading: true
     }
   },
+  methods: {
+    async watchlater(id: string) {
+      const card = this.cards.find((it: VideoCard) => it.id === id) as VideoCard
+      try {
+        card.watchlater = !card.watchlater
+        const { toggleWatchlater } = await import(
+          '../../../video/watchlater-api'
+        )
+        toggleWatchlater(card.aid.toString(), card.watchlater)
+      } catch (error) {
+        card.watchlater = !card.watchlater
+        Toast.error(error.message, '稍后再看操作失败', 3000)
+      }
+    }
+  },
   async mounted() {
     try {
       const json = await Ajax.getJsonWithCredentials(
         `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=8`
       )
+      const { getWatchlaterList } = await import(
+        '../../../video/watchlater-api'
+      )
+      const watchlaterList = (await getWatchlaterList()) as number[]
       if (json.code !== 0) {
-        Toast.error(json.message, '视频动态', 3000)
-        return
+        throw new Error(json.message)
       }
       this.cards = json.data.cards.map(
         (c: any): VideoCard => {
           const card = JSON.parse(c.card)
-          console.log(_.get(card, 'display.topic_info.topic_details', []))
-          const topics = _.get(
-            card,
-            'display.topic_info.topic_details',
-            []
-          ).map((it: any) => {
-            return {
-              id: it.topic_id,
-              name: it.topic_name
+          const topics = _.get(c, 'display.topic_info.topic_details', []).map(
+            (it: any) => {
+              return {
+                id: it.topic_id,
+                name: it.topic_name
+              }
             }
-          })
+          )
           return {
             id: c.desc.dynamic_id_str,
             aid: card.aid,
@@ -110,13 +136,18 @@ export default {
             timestamp: c.timestamp,
             time: new Date(c.timestamp * 1000),
             topics,
+            dynamic: card.dynamic,
+            like: formatCount(c.desc.like),
             duration: card.duration,
             durationText: formatDuration(card.duration, 0),
-            playCount: card.stat.view,
-            danmakuCount: card.stat.danmaku
+            playCount: formatCount(card.stat.view),
+            danmakuCount: formatCount(card.stat.danmaku),
+            watchlater: watchlaterList.includes(card.aid)
           }
         }
       )
+    } catch (error) {
+      Toast.error(error.message, '视频动态', 3000)
     } finally {
       this.loading = false
     }
@@ -132,8 +163,8 @@ export default {
 
     .home-video-card {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      grid-template-rows: 1fr 1fr 1fr;
+      grid-template-columns: 200px 1fr;
+      grid-template-rows: 3fr 2fr 3fr;
       grid-template-areas:
         'cover title'
         'cover description'
@@ -154,6 +185,19 @@ export default {
         justify-self: self-start;
         align-self: center;
       }
+      &:hover {
+        transform: scale(1.02);
+        transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
+
+        .duration,
+        .watchlater {
+          opacity: 1;
+        }
+      }
+      .duration,
+      .watchlater {
+        opacity: 0;
+      }
 
       .cover-container {
         grid-area: cover;
@@ -165,12 +209,28 @@ export default {
         & > :not(.cover) {
           position: absolute;
         }
-        .duration {
-          left: 8px;
-          bottom: 8px;
+        .duration,
+        .watchlater {
+          bottom: 6px;
           padding: 4px 8px;
           background-color: #000a;
-          border-radius: 8px;
+          color: white;
+          border-radius: 14px;
+          height: 24px;
+          .mdi {
+            font-size: 12pt;
+            line-height: 1;
+            margin-right: 4px;
+          }
+        }
+        .duration {
+          left: 6px;
+        }
+        .watchlater {
+          right: 6px;
+          display: flex;
+          align-items: center;
+          padding-left: 4px;
         }
       }
       .title {
@@ -183,6 +243,19 @@ export default {
         overflow: hidden;
         justify-self: stretch;
         text-overflow: ellipsis;
+      }
+      .topics {
+        grid-area: description;
+        display: flex;
+        align-items: center;
+        margin-left: 12px;
+        .topic {
+          color: inherit;
+          padding: 4px 8px;
+          background-color: #8882;
+          margin-right: 8px;
+          border-radius: 14px;
+        }
       }
       .description {
         grid-area: description;
@@ -197,6 +270,11 @@ export default {
 
         &::-webkit-scrollbar {
           width: 0px !important;
+        }
+        &.single-line {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
       }
       .up,
@@ -229,7 +307,7 @@ export default {
         opacity: 0.5;
         .be-icon {
           font-size: 12pt;
-          margin: 0 8px;
+          margin: 0 4px 0 12px;
         }
       }
     }

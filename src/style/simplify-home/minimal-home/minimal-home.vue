@@ -12,7 +12,7 @@
           @click="changeTab(tab)"
         >{{tab.displayName}}</div>
       </div>
-      <Search></Search>
+      <!-- <Search></Search> -->
     </div>
     <div class="minimal-home-content">
       <component :is="content"></component>
@@ -31,7 +31,7 @@ interface Tab {
 export default {
   components: {
     Icon: () => import('../../icon.vue'),
-    Search: () => import('../../search.vue'),
+    // Search: () => import('../../search.vue'),
     HomeVideo: () => import('./home-video.vue')
   },
   data() {
@@ -80,6 +80,11 @@ export default {
 </script>
 <style lang="scss">
 .minimal-home {
+  --card-width: 600px;
+  --card-height: 120px;
+  --card-margin: 16px;
+  --card-column-count: 2;
+  transform: translateX(calc(var(--card-margin) / 2));
   &,
   & * {
     box-sizing: border-box;
@@ -97,11 +102,14 @@ export default {
     .home-tabs {
       display: flex;
       flex-grow: 1;
-      justify-content: space-around;
+      justify-content: flex-end;
+      margin-right: var(--card-margin);
       .tab {
         color: #707070;
         opacity: 0.75;
         position: relative;
+        cursor: pointer;
+        margin-left: 32px;
 
         body.dark & {
           color: #eee;
@@ -118,7 +126,7 @@ export default {
           left: 50%;
           transform: translateX(-50%) scaleX(0);
           height: 3px;
-          width: 80%;
+          width: 24px;
           background-color: var(--theme-color);
           border-radius: 2px;
           transition: 0.2s ease-out;
@@ -130,10 +138,15 @@ export default {
     }
   }
   .minimal-home-content {
-    margin-top: 64px;
+    margin-top: 32px;
     width: calc(
       var(--card-column-count) * (var(--card-width) + var(--card-margin))
     );
+  }
+}
+@media screen and (max-width: 1300px) {
+  .minimal-home {
+    --card-column-count: 1;
   }
 }
 </style>
