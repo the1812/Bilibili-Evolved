@@ -83,6 +83,7 @@ export default {
   &,
   & * {
     box-sizing: border-box;
+    transition: 0.2s ease-out;
   }
   .logo {
     font-size: 48px;
@@ -97,11 +98,42 @@ export default {
       display: flex;
       flex-grow: 1;
       justify-content: space-around;
+      .tab {
+        color: #707070;
+        opacity: 0.75;
+        position: relative;
+
+        body.dark & {
+          color: #eee;
+        }
+        &.active {
+          transform: scale(1.2);
+          opacity: 1;
+          font-weight: bold;
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -8px;
+          left: 50%;
+          transform: translateX(-50%) scaleX(0);
+          height: 3px;
+          width: 80%;
+          background-color: var(--theme-color);
+          border-radius: 2px;
+          transition: 0.2s ease-out;
+        }
+        &.active::after {
+          transform: translateX(-50%) scaleX(1);
+        }
+      }
     }
   }
   .minimal-home-content {
     margin-top: 64px;
-    width: calc(var(--card-column-count) * ( var(--card-width) + var(--card-margin) ));
+    width: calc(
+      var(--card-column-count) * (var(--card-width) + var(--card-margin))
+    );
   }
 }
 </style>

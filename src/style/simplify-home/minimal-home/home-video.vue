@@ -27,8 +27,10 @@
         </div>
         <h1 class="title">{{card.title}}</h1>
         <pre class="description">{{card.description}}</pre>
-        <dpi-img class="face" :src="card.upFaceUrl" :size="24"></dpi-img>
-        <div class="up">{{card.upName}}</div>
+        <a class="up" target="_blank" :href="'https://space.bilibili.com/' + card.upID">
+          <dpi-img class="face" :src="card.upFaceUrl" :size="24"></dpi-img>
+          <div class="name">{{card.upName}}</div>
+        </a>
         <div class="stats">
           <Icon type="extended" icon="play"></Icon>
           {{card.playCount}}
@@ -46,6 +48,7 @@ interface VideoCard {
   id: string
   aid: number
   title: string
+  upID: number
   upName: string
   upFaceUrl: string
   coverUrl: string
@@ -54,6 +57,8 @@ interface VideoCard {
   durationText: string
   playCount: number
   danmakuCount: number
+  timestamp: number
+  time: Date
   topics: {
     id: number
     name: string
@@ -62,7 +67,7 @@ interface VideoCard {
 export default {
   components: {
     'dpi-img': () => import('../../dpi-img.vue'),
-    Icon: () => import('../../icon.vue'),
+    Icon: () => import('../../icon.vue')
   },
   data() {
     return {
@@ -79,31 +84,39 @@ export default {
         Toast.error(json.message, '视频动态', 3000)
         return
       }
-      this.cards = json.data.cards.map((c: any) => {
-        const card = JSON.parse(c.card)
-        const topics = _.get(card, 'display.topic_info.topic_details', []).map(
-          (it: any) => {
+      this.cards = json.data.cards.map(
+        (c: any): VideoCard => {
+          const card = JSON.parse(c.card)
+          console.log(_.get(card, 'display.topic_info.topic_details', []))
+          const topics = _.get(
+            card,
+            'display.topic_info.topic_details',
+            []
+          ).map((it: any) => {
             return {
               id: it.topic_id,
               name: it.topic_name
             }
+          })
+          return {
+            id: c.desc.dynamic_id_str,
+            aid: card.aid,
+            title: card.title,
+            upID: c.desc.user_profile.info.uid,
+            upName: c.desc.user_profile.info.uname,
+            upFaceUrl: c.desc.user_profile.info.face,
+            coverUrl: card.pic,
+            description: card.desc,
+            timestamp: c.timestamp,
+            time: new Date(c.timestamp * 1000),
+            topics,
+            duration: card.duration,
+            durationText: formatDuration(card.duration, 0),
+            playCount: card.stat.view,
+            danmakuCount: card.stat.danmaku
           }
-        )
-        return {
-          id: c.desc.dynamic_id_str,
-          aid: card.aid,
-          title: card.title,
-          upName: c.desc.user_profile.info.uname,
-          upFaceUrl: c.desc.user_profile.info.face,
-          coverUrl: card.pic,
-          description: card.desc,
-          topics,
-          duration: card.duration,
-          durationText: formatDuration(card.duration, 0),
-          playCount: card.stat.view,
-          danmakuCount: card.stat.danmaku
         }
-      })
+      )
     } finally {
       this.loading = false
     }
@@ -152,10 +165,17 @@ export default {
         & > :not(.cover) {
           position: absolute;
         }
+        .duration {
+          left: 8px;
+          bottom: 8px;
+          padding: 4px 8px;
+          background-color: #000a;
+          border-radius: 8px;
+        }
       }
       .title {
         grid-area: title;
-        font-size: 16pt;
+        font-size: 12pt;
         font-weight: bold;
         color: inherit;
         padding: 0 12px;
@@ -179,21 +199,38 @@ export default {
           width: 0px !important;
         }
       }
-      .face,
       .up,
       .stats {
         grid-area: up;
       }
-      .face {
-        margin-left: 12px;
-        border-radius: 50%;
-      }
       .up {
-        margin-left: 48px;
+        margin-left: 12px;
+        display: flex;
+        align-items: center;
+        padding: 2px;
+        background-color: #8882;
+        border-radius: 14px;
+        color: inherit;
+        .face {
+          border-radius: 50%;
+        }
+        .name {
+          margin: 0 8px;
+        }
+        &:hover .name {
+          color: var(--theme-color);
+        }
       }
       .stats {
         justify-self: self-end;
         margin-right: 12px;
+        display: flex;
+        align-items: center;
+        opacity: 0.5;
+        .be-icon {
+          font-size: 12pt;
+          margin: 0 8px;
+        }
       }
     }
   }
