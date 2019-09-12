@@ -12,7 +12,7 @@
     <div class="topics" v-if="topics && topics.length">
       <a
         class="topic"
-        v-for="topic of topics"
+        v-for="topic of topics.slice(0,3)"
         :key="topic.id"
         target="_blank"
         :href="'https://t.bilibili.com/topic/name/' + topic.name + '/feed'"
