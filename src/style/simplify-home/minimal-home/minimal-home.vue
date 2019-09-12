@@ -15,7 +15,7 @@
       <!-- <Search></Search> -->
     </div>
     <div class="minimal-home-content">
-      <component :is="content"></component>
+      <component :is="content" :key="activeTab.name" :rank-days="rankDays"></component>
     </div>
   </div>
 </template>
@@ -27,42 +27,56 @@ interface Tab {
   displayName: string
   active: boolean
   more: string
+  rankDays?: number
 }
+const tabs = [
+  {
+    name: 'video',
+    displayName: '视频动态',
+    active: true,
+    more: 'https://t.bilibili.com/?tab=8'
+  },
+  {
+    name: 'ranking7',
+    displayName: '一周排行',
+    active: false,
+    more: 'https://www.bilibili.com/ranking/all/0/0/7',
+    rankDays: 7
+  },
+  {
+    name: 'ranking3',
+    displayName: '三日排行',
+    active: false,
+    more: 'https://www.bilibili.com/ranking',
+    rankDays: 3
+  },
+  {
+    name: 'ranking1',
+    displayName: '昨日排行',
+    active: false,
+    more: 'https://www.bilibili.com/ranking/all/0/0/1',
+    rankDays: 1
+  }
+] as Tab[]
 export default {
   components: {
     Icon: () => import('../../icon.vue'),
     // Search: () => import('../../search.vue'),
-    HomeVideo: () => import('./home-video.vue')
+    HomeVideo: () => import('./home-video.vue'),
+    RankList: () => import('./rank-list.vue')
   },
   data() {
     return {
-      tabs: [
-        {
-          name: 'video',
-          displayName: '视频动态',
-          active: true,
-          more: 'https://t.bilibili.com/?tab=8'
-        },
-        {
-          name: 'ranking7',
-          displayName: '一周排行',
-          active: false,
-          more: 'https://www.bilibili.com/ranking/all/0/0/7'
-        },
-        {
-          name: 'ranking3',
-          displayName: '三日排行',
-          active: false,
-          more: 'https://www.bilibili.com/ranking'
-        },
-        {
-          name: 'ranking1',
-          displayName: '昨日排行',
-          active: false,
-          more: 'https://www.bilibili.com/ranking/all/0/0/1'
-        }
-      ] as Tab[],
+      tabs,
       content: 'HomeVideo'
+    }
+  },
+  computed: {
+    activeTab() {
+      return this.tabs.find((t: Tab) => t.active) as Tab
+    },
+    rankDays(): number {
+      return this.activeTab.rankDays || 0
     }
   },
   methods: {
@@ -71,9 +85,10 @@ export default {
         window.open(tab.more, '_blank')
         return
       }
-      const activeTab = this.tabs.find((t: Tab) => t.active) as Tab
+      const activeTab = this.activeTab
       activeTab.active = false
       tab.active = true
+      this.content = tab.name === 'video' ? 'HomeVideo' : 'RankList'
     }
   }
 }
