@@ -414,10 +414,11 @@ function setupTouchPlayer (player) {
   const brightnessChange = brightness => {
     let finalBrightness = originalBrightness + brightness
     let change = Math.abs(brightness)
-    if (finalBrightness > 100) {
-      finalBrightness = 100
-      change = 100 - originalBrightness
-    } else if (finalBrightness < 0) {
+    // if (finalBrightness > 100) {
+    //   finalBrightness = 100
+    //   change = 100 - originalBrightness
+    // } else
+    if (finalBrightness < 0) {
       finalBrightness = 0
       change = originalBrightness
     }
@@ -427,7 +428,7 @@ function setupTouchPlayer (player) {
     text.classList.remove('cancel')
     text.querySelector('.touch-info').innerHTML = `亮度: ${brightness > 0 ? '+' : '-'}${change}`
     text.querySelector('.touch-result').innerHTML = result
-    $('.touch-progress').css('width', `${finalBrightness}%`)
+    $('.touch-progress').css('width', `${finalBrightness > 100 ? 100 : finalBrightness}%`)
   }
   swiper.action.brightnessUp = brightnessChange
   swiper.action.brightnessDown = brightnessChange
