@@ -321,9 +321,10 @@ function setupTouchPlayer (player) {
   const text = document.querySelector('.touch-video-info')
   const box = document.querySelector('.touch-video-box')
 
+  const throttleTime = 300
   let originalBrightness = 100
   let originalVolume = Math.round(video.prop('volume') * 100)
-  const setVolume = volume => {
+  const setVolume = _.throttle(volume => {
     volume /= 100
     if (volume < 0) {
       volume = 0
@@ -348,7 +349,7 @@ function setupTouchPlayer (player) {
       $('.bilibili-player-video-btn-volume').removeClass('video-state-volume-max')
       video.prop('muted', false)
     }
-  }
+  }, throttleTime)
 
   swiper.action.onActionStart = direction => {
     box.classList.add('adjust-opened')
@@ -411,6 +412,9 @@ function setupTouchPlayer (player) {
   swiper.action.volumeUp = volumeChange
   swiper.action.volumeDown = volumeChange
 
+  const internalBrightnessChange = _.throttle(finalBrightness => {
+    video.css('filter', `brightness(${finalBrightness / 100})`)
+  }, throttleTime)
   const brightnessChange = brightness => {
     let finalBrightness = originalBrightness + brightness
     let change = Math.abs(brightness)
@@ -424,7 +428,7 @@ function setupTouchPlayer (player) {
     }
     const result = `${originalBrightness} 👉 ${finalBrightness}`
     // console.log(brightness, originalBrightness, finalBrightness)
-    video.css('filter', `brightness(${finalBrightness / 100})`)
+    internalBrightnessChange(finalBrightness)
     text.classList.remove('cancel')
     text.querySelector('.touch-info').innerHTML = `亮度: ${brightness > 0 ? '+' : '-'}${change}`
     text.querySelector('.touch-result').innerHTML = result
