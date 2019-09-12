@@ -31,8 +31,16 @@
     </a>
     <div class="stats">
       <template v-if="like">
-        <Icon type="extended" icon="like"></Icon>
+        <Icon type="extended" icon="like-outline"></Icon>
         {{like}}
+      </template>
+      <template v-if="coins">
+        <Icon type="home" icon="coin-outline"></Icon>
+        {{coins}}
+      </template>
+      <template v-if="favorites">
+        <Icon type="home" icon="favorites-outline"></Icon>
+        {{favorites}}
       </template>
       <Icon type="extended" icon="play"></Icon>
       {{playCount}}
@@ -61,6 +69,7 @@ export interface VideoCardInfo {
   dynamic?: string
   like?: string
   coins?: string
+  favorites?: string
   timestamp?: number
   time?: Date
   topics?: {
@@ -77,6 +86,13 @@ export default {
   },
   data() {
     return {
+      upFaceUrl: '',
+      danmakuCount: '',
+      like: '',
+      coins: '',
+      favorites: '',
+      dynamic: '',
+      topics: [],
       ...this.data
     } as VideoCardInfo
   },
@@ -84,7 +100,9 @@ export default {
     async toggleWatchlater() {
       try {
         this.watchlater = !this.watchlater
-        const { toggleWatchlater: toggle } = await import('../../video/watchlater-api')
+        const { toggleWatchlater: toggle } = await import(
+          '../../video/watchlater-api'
+        )
         toggle(this.aid.toString(), this.watchlater)
       } catch (error) {
         this.watchlater = !this.watchlater
@@ -224,6 +242,14 @@ export default {
     background-color: #8882;
     border-radius: 14px;
     color: inherit;
+    &.no-face {
+      background-color: transparent;
+      padding: 0;
+      .be-icon {
+        font-size: 14pt;
+        opacity: 0.75;
+      }
+    }
     .face {
       border-radius: 50%;
     }
@@ -243,6 +269,12 @@ export default {
     .be-icon {
       font-size: 12pt;
       margin: 0 4px 0 12px;
+      &.be-iconfont-favorites-outline {
+        font-size: 14pt;
+      }
+      &.be-iconfont-coin-outline {
+        font-size: 11pt;
+      }
     }
   }
 }
