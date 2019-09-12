@@ -63,6 +63,20 @@ export default {
 </script>
 <style lang="scss">
 .rank-days-list {
+  .loading {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11pt;
+    color: #707070;
+    .mdi {
+      margin-right: 8px;
+    }
+    body.dark & {
+      color: #eee;
+    }
+  }
   .cards {
     display: flex;
     flex-wrap: wrap;

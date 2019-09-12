@@ -15,7 +15,9 @@
       <!-- <Search></Search> -->
     </div>
     <div class="minimal-home-content">
-      <component :is="content" :key="activeTab.name" :rank-days="rankDays"></component>
+      <transition name="minimal-home-content-transition" mode="out-in">
+        <component :is="content" :key="activeTab.name" :rank-days="rankDays"></component>
+      </transition>
     </div>
   </div>
 </template>
@@ -103,7 +105,7 @@ export default {
   &,
   & * {
     box-sizing: border-box;
-    transition: 0.2s ease-out;
+    transition: color .2s ease-out, opacity .2s ease-out, transform .2s ease-out;
   }
   .logo {
     font-size: 48px;
@@ -157,6 +159,17 @@ export default {
     width: calc(
       var(--card-column-count) * (var(--card-width) + var(--card-margin))
     );
+    .minimal-home-content-transition {
+      &-enter-active,
+      &-leave-active {
+        transition: .3s ease-out;
+      }
+      &-enter,
+      &-leave-to {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
   }
 }
 @media screen and (max-width: 1300px) {
