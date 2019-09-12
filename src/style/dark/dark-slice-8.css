@@ -808,8 +808,7 @@ li.danmaku-info-row.bpui-selecting,
 .bui-swiper-wrap .bui-swiper-pre:hover,
 .channel-menu-itnl .item .name em,
 .security_content .close-btn:hover,
-.security_content .coupon-content-con .coupon-btn:hover,
-.security_content .security-list:hover
+.security_content .coupon-content-con .coupon-btn:hover
 {
     background-color: var(--theme-color) !important;
 }
