@@ -384,6 +384,8 @@ declare global {
   const getDpiSourceSet: (src: string, baseSize: number | string | { width?: number | string, height?: number | string }, extension?: string) => string
   const isOffline: () => boolean
   const getUID: () => string
+  const getCsrf: () => string
+  const formatCount: (count: number | string) => string
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const scriptVersion: ScriptVersion
 }

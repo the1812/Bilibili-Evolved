@@ -127,3 +127,16 @@ export const scriptVersion = (() => {
   const match = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
   return match ? match[1] : 'Stable'
 })()
+export const getCsrf = () => document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
+export const formatCount = (count) => {
+  if (typeof count === 'string') {
+    count = parseInt(count)
+  }
+  if (count > 100000000) {
+    return Math.round(count / 10000000) / 10 + '亿'
+  }
+  if (count > 10000) {
+    return Math.round(count / 1000) / 10 + '万'
+  }
+  return count + ''
+}

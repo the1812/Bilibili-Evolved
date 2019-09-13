@@ -1,5 +1,5 @@
 <template>
-  <div class="home-video">
+  <div class="rank-days-list">
     <div class="loading" v-if="loading">
       <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
     </div>
@@ -16,16 +16,17 @@ export default {
   components: {
     VideoCard: () => import('../video-card.vue')
   },
+  props: ['rankDays'],
   data() {
     return {
       cards: [] as VideoCardInfo[],
-      loading: true
+      loading: true,
     }
   },
   async mounted() {
     try {
       const json = await Ajax.getJsonWithCredentials(
-        `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=8`
+        `https://api.bilibili.com/x/web-interface/ranking/index?day=${this.rankDays}`
       )
       const { getWatchlaterList } = await import(
         '../../../video/watchlater-api'
@@ -34,41 +35,26 @@ export default {
       if (json.code !== 0) {
         throw new Error(json.message)
       }
-      this.cards = json.data.cards.map(
-        (c: any): VideoCardInfo => {
-          const card = JSON.parse(c.card)
-          const topics = _.get(c, 'display.topic_info.topic_details', []).map(
-            (it: any) => {
-              return {
-                id: it.topic_id,
-                name: it.topic_name
-              }
-            }
-          )
+      this.cards = json.data.map(
+        (card: any): VideoCardInfo => {
           return {
-            id: c.desc.dynamic_id_str,
-            aid: card.aid,
+            id: card.aid,
+            aid: parseInt(card.aid),
             title: card.title,
-            upID: c.desc.user_profile.info.uid,
-            upName: c.desc.user_profile.info.uname,
-            upFaceUrl: c.desc.user_profile.info.face,
-            coverUrl: card.pic,
-            description: card.desc,
-            timestamp: c.timestamp,
-            time: new Date(c.timestamp * 1000),
-            topics,
-            dynamic: card.dynamic,
-            like: formatCount(c.desc.like),
-            duration: card.duration,
-            durationText: formatDuration(card.duration, 0),
-            playCount: formatCount(card.stat.view),
-            danmakuCount: formatCount(card.stat.danmaku),
+            upID: card.mid,
+            upName: card.author,
+            coverUrl: card.pic.replace('http://', 'https://'),
+            description: card.description,
+            durationText: card.duration,
+            playCount: formatCount(card.play),
+            coins: formatCount(card.coins),
+            favorites: formatCount(card.favorites),
             watchlater: watchlaterList.includes(card.aid)
           }
         }
       )
     } catch (error) {
-      Toast.error(error.message, '视频动态', 3000)
+      Toast.error(error.message, '排行', 3000)
     } finally {
       this.loading = false
     }
@@ -76,7 +62,7 @@ export default {
 }
 </script>
 <style lang="scss">
-.home-video {
+.rank-days-list {
   .loading {
     height: 48px;
     display: flex;

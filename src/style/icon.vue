@@ -116,8 +116,11 @@ export default {
   &.be-iconfont-bind-email::before {
     content: '\E735';
   }
-  &.be-iconfont-coin::before {
+  &.be-iconfont-coin-outline::before {
     content: '\E734';
+  }
+  &.be-iconfont-coin::before {
+    content: '\E6E4';
   }
   &.be-iconfont-b-coin::before {
     content: '\E736';
@@ -128,8 +131,11 @@ export default {
   &.be-iconfont-message::before {
     content: '\E731';
   }
-  &.be-iconfont-favorite::before {
+  &.be-iconfont-favorites-outline::before {
     content: '\E730';
+  }
+  &.be-iconfont-favorites::before {
+    content: '\E6E1';
   }
   &.be-iconfont-history::before {
     content: '\E72F';
@@ -145,6 +151,15 @@ export default {
   }
   &.be-iconfont-like::before {
     content: '\E6E0';
+  }
+  &.be-iconfont-like-outline::before {
+    content: '\E63A';
+  }
+  &.be-iconfont-up::before {
+    content: '\E723';
+  }
+  &.be-iconfont-up-outline::before {
+    content: '\E741';
   }
 }
 </style>

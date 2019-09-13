@@ -40,6 +40,7 @@
     align-items: flex-start;
     padding: 0 12px;
     max-width: calc(100% - 24px - 64px);
+    box-sizing: content-box;
   }
   .bangumi-subscriptions-card .info {
     padding: 2px;

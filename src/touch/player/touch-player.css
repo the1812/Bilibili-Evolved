@@ -20,12 +20,13 @@
     height: 100%;
     background: rgba(0,0,0,0.85);
     position: relative;
-    max-width: 520px;
-    max-height: 240px;
+    max-width: 390px;
+    max-height: 180px;
     border: 4px solid transparent;
     transform-origin: center;
 }
-.round-corner .touch-video-box {
+.round-corner .touch-video-box,
+.round-corner .touch-speed {
     border-radius: var(--corner-radius);
 }
 .touch-video-box-wrapper.simple {
@@ -47,7 +48,7 @@
 .touch-video-info
 {
     color: white;
-    font-size: 2rem;
+    font-size: 14pt;
     text-align: center;
     display: flex;
     align-items: center;
@@ -72,7 +73,7 @@
 .touch-result
 {
     display: block;
-    font-size: 1.5rem;
+    font-size: 12pt;
     line-height: 150%;
 }
 .touch-speed
