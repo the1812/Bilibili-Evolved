@@ -54,7 +54,8 @@
 .grid-area-ctnr .rank-ctnr,
 .van-popover .level-bar,
 .van-popover .btn-box .btn.reg-btn,
-.van-popper-history .view-all
+.van-popper-history .view-all,
+.share-content .video-card
 {
   background-color: #444 !important;
 }
@@ -106,7 +107,9 @@
 .bb-comment .comment-list .list-item .blacklist-font-color,
 .container .split-line .history-tip,
 .comment-bilibili-fold .comment-list .list-item .blacklist-font-color,
-.list-item .publish-time
+.list-item .publish-time,
+.share-content .video-card .up-info .name,
+.share-content .video-card .up-info .tip
 {
   color: #aaa !important;
 }
