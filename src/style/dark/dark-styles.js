@@ -10,10 +10,10 @@ const load = () =>
         () => $(".custom-scrollbar"),
         it => it.removeClass("custom-scrollbar")
     );
-    if (settings.hideBanner)
-    {
-        resources.applyImportantStyle("darkStyleNavBar");
-    }
+    // if (settings.hideBanner)
+    // {
+    // }
+    resources.applyImportantStyle("darkStyleNavBar");
     resources.applyStyle("darkStyle");
     resources.applyImportantStyle("darkStyleImportant");
 };
