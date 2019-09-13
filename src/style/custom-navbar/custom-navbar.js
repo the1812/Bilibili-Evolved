@@ -779,7 +779,8 @@ class SearchBox extends NavbarComponent {
           }
         },
         deleteItem (item, index) {
-          settings.searchHistory = settings.searchHistory.splice(settings.searchHistory.findIndex(it => it.keyword === item.value), 1)
+          settings.searchHistory.splice(settings.searchHistory.findIndex(it => it.keyword === item.value), 1)
+          settings.searchHistory = settings.searchHistory
           this.items.splice(index, 1)
         },
         clearSearchHistory () {
