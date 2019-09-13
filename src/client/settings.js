@@ -106,6 +106,8 @@ export const settings = {
     welcomeMessage: true,
     giftMessage: true,
     guardPurchase: true,
+    giftPanel: true,
+    eventsBanner: false,
     popup: false,
     skin: false,
   },

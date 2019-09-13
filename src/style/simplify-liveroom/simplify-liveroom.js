@@ -8,6 +8,8 @@ const displayNames = {
   welcomeMessage: "欢迎信息",
   giftMessage: "礼物弹幕",
   guardPurchase: "上舰提示",
+  giftPanel: "付费礼物",
+  eventsBanner: "活动横幅",
   popup: "抽奖提示",
   skin: "房间皮肤",
 }
