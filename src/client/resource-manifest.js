@@ -669,5 +669,11 @@ Resource.manifest = {
       simplifyHome: '简化首页'
     },
   },
+  fullActivityContent: {
+    path: 'full-activity-content.min.js',
+    displayNames: {
+      fullActivityContent: '展开动态内容',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

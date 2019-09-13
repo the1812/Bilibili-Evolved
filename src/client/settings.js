@@ -153,6 +153,8 @@ export const settings = {
   scriptLoadingMode: '延后(自动)',
   scriptDownloadMode: 'bundle',
   guiSettingsDockSide: '左侧',
+  fullActivityContent: true,
+  activityFilter: false,
   cache: {},
 }
 const fixedSettings = {

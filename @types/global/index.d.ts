@@ -352,6 +352,8 @@ declare global {
     scriptLoadingMode: '同时' | '延后' | '同时(自动)' | '延后(自动)' | '自动',
     scriptDownloadMode: 'bundle' | 'legacy'
     guiSettingsDockSide: '左侧' | '右侧'
+    fullActivityContent: boolean,
+    activityFilter: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

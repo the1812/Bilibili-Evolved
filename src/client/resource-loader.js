@@ -21,6 +21,7 @@ export function loadResources () {
     'framePlayback',
     'hideCategory',
     'fullTweetsTitle',
+    'fullActivityContent',
   ]
   for (const [key, data] of Object.entries(Resource.manifest)) {
     const resource = new Resource(data.path, { styles: data.styles, alwaysPreview: data.alwaysPreview })
