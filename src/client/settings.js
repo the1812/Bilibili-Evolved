@@ -155,6 +155,8 @@ export const settings = {
   guiSettingsDockSide: '左侧',
   fullActivityContent: true,
   activityFilter: false,
+  activityFilterWords: [],
+  activityFilterTypes: [],
   cache: {},
 }
 const fixedSettings = {

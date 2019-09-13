@@ -354,6 +354,8 @@ declare global {
     guiSettingsDockSide: '左侧' | '右侧'
     fullActivityContent: boolean,
     activityFilter: boolean,
+    activityFilterWords: (string | RegExp)[],
+    activityFilterTypes: string[],
     latestVersionLink: string,
     currentVersion: string,
   }
