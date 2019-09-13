@@ -41,7 +41,12 @@
 .van-popover .upload-item:hover,
 .container .play-all:hover,
 .van-popover .btn-box .btn.reg-btn:hover,
-.international-header .bili-banner
+.international-header .bili-banner,
+.skeleton .skeleton-head,
+.skeleton .skeleton-focusbtn,
+.skeleton .skeleton-user-name,
+.skeleton .skeleton-time,
+.skeleton .skeleton-content
 {
   background-color: #333 !important;
 }
