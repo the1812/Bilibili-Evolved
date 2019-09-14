@@ -209,23 +209,24 @@ const darkHandler = value => {
 addSettingsListener("allNavbarFill", value => classHandler("all-navbar-fill", value, document.body));
 classHandler("all-navbar-fill", settings.allNavbarFill, document.body);
 const supportedUrls = [
-  "/www.bilibili.com",
-  "/t.bilibili.com",
-  "/search.bilibili.com",
-  "/space.bilibili.com",
-  "/account.bilibili.com",
-  "/pay.bilibili.com",
-  "/member.bilibili.com",
-  "/big.bilibili.com",
-  "/message.bilibili.com",
-  "/app.bilibili.com",
-  "/passport.bilibili.com",
-  "/game.bilibili.com",
+  "//www.bilibili.com",
+  "//t.bilibili.com",
+  "//search.bilibili.com",
+  "//space.bilibili.com",
+  "//account.bilibili.com",
+  "//pay.bilibili.com",
+  "//member.bilibili.com",
+  "//big.bilibili.com",
+  "//message.bilibili.com",
+  "//app.bilibili.com",
+  "//passport.bilibili.com",
+  "//game.bilibili.com",
+  "//live.bilibili.com/blackboard/"
 ];
 const unsupportedUrls = [
-  "/t.bilibili.com/lottery/h5/index/#/result",
-  "/member.bilibili.com/video/upload",
-  "/space.bilibili.com/ajax/",
+  "//t.bilibili.com/lottery/h5/index/#/result",
+  "//member.bilibili.com/video/upload",
+  "//space.bilibili.com/ajax/",
 ]
 if (!supportedUrls.some(it => document.URL.includes(it))
   || unsupportedUrls.some(it => document.URL.includes(it))) {
