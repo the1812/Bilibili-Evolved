@@ -94,7 +94,12 @@ Resource.manifest = {
       sideBarOffset: '侧栏垂直偏移量',
       ajaxHook: '启用 Ajax Hook API',
       scriptLoadingMode: '加载模式',
-    }
+      guiSettingsDockSide: '设置面板停靠位置',
+    },
+    dropdown: {
+      key: 'guiSettingsDockSide',
+      items: ['左侧', '右侧']
+    },
   },
   useDarkStyle: {
     path: 'dark-styles.min.js',

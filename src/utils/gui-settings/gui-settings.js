@@ -132,6 +132,9 @@ function setDisplayNames () {
     // return;
   }
 
+  if (settings.guiSettingsDockSide === '右侧') {
+    document.body.classList.add('gui-settings-dock-right')
+  }
   const settingsBox = resources.data.guiSettingsHtml.text
   document.body.insertAdjacentHTML('beforeend', settingsBox)
 
@@ -171,6 +174,9 @@ function setDisplayNames () {
     // foldAllCategories();
     checkCompatibility()
     setDisplayNames()
+    addSettingsListener('guiSettingsDockSide', value => {
+      document.body.classList[value === '右侧' ? 'add' : 'remove']('gui-settings-dock-right')
+    })
     new SettingsSearch()
   }, { once: true })
 })()
