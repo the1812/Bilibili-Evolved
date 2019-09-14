@@ -414,6 +414,41 @@
 
 </details>
 
+<h2 align="center">动态</h2>
+<div align="center">改善动态体验</div>
+
+<details>
+<summary><strong>解除动态存图限制</strong></summary>
+
+右键点击动态大图时, 将弹出带图片的消息方便保存.
+
+</details>
+<details>
+<summary><strong>快速收起动态评论区</strong></summary>
+
+动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.
+
+</details>
+<details>
+<summary><strong>展开动态标题</strong></summary>
+
+在顶栏的动态预览框中, 不管名称多长, 总是完全展开视频的标题.
+![展开动态标题](images/compressed/full-tweets-title.jpg)
+
+</details>
+<details>
+<summary><strong>展开动态内容</strong></summary>
+
+不管内容多长, 总是完全展开动态的内容.
+
+</details>
+<details>
+<summary><strong>旧版动态跳转支持</strong></summary>
+
+将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.
+
+</details>
+
 <h2 align="center">工具</h2>
 <div align="center">各式各样的小玩意</div>
 
@@ -434,13 +469,6 @@
 <summary><strong>隐藏搜索推荐</strong></summary>
 
 将搜索框的推荐词替换为`搜索`.
-
-</details>
-<details>
-<summary><strong>展开动态标题</strong></summary>
-
-在顶栏的动态预览框中, 不管名称多长, 总是完全展开视频的标题.
-![展开动态标题](images/compressed/full-tweets-title.jpg)
 
 </details>
 <details>
@@ -491,12 +519,6 @@
 
 </details>
 <details>
-<summary><strong>旧版动态跳转支持</strong></summary>
-
-将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.
-
-</details>
-<details>
 <summary><strong>界面翻译(实验性)</strong></summary>
 
 为界面中一些常用文本提供翻译, 完成度不高, 目前仅开放日语和英语.
@@ -508,12 +530,6 @@
 禁止直播首页的推荐直播间自动开始播放, 开启后, 还可以通过`隐藏首页推荐直播`直接隐藏掉这个推荐板块.
 
 ![直播首页自动播放](images/compressed/hide-home-live.jpg)
-
-</details>
-<details>
-<summary><strong>快速收起动态评论区</strong></summary>
-
-动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.
 
 </details>
 <details>
@@ -623,7 +639,8 @@
 脚本功能的加载模式:
 - 同时: 与b站页面同时加载
 - 延后: 优先加载b站页面, 在b站页面加载完成后再开始加载脚本功能
-- 自动: 根据页面自动选择加载模式
+- 同时(自动): 根据页面自动选择加载模式, 默认采用同时模式
+- 延后(自动): 根据页面自动选择加载模式, 默认采用延后模式
 
 </details>
 
