@@ -40,6 +40,7 @@ declare global {
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void };
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
   type DanmakuOption = '无' | 'XML' | 'ASS'
+  type Pattern = string | RegExp
   interface RpcOption {
     secretKey: string
     dir: string
@@ -356,9 +357,10 @@ declare global {
     guiSettingsDockSide: '左侧' | '右侧'
     fullActivityContent: boolean,
     activityFilter: boolean,
-    activityFilterWords: (string | RegExp)[],
+    activityFilterPatterns: Pattern[],
     activityFilterTypes: string[],
     activityImageSaver: boolean,
+    scriptBlockPatterns: Pattern[],
     latestVersionLink: string,
     currentVersion: string,
   }

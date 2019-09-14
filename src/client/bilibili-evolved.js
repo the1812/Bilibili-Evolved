@@ -48,6 +48,7 @@ import { Resource } from './resource'
 import { resourceManifest } from './resource-manifest'
 import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
+import { scriptBlocker } from './scriptBlocker'
 
 try {
   const events = {}
@@ -83,6 +84,7 @@ try {
   })
   loadResources()
   loadSettings()
+  scriptBlocker.start()
   if (settings.ajaxHook) {
     setupAjaxHook()
   }
