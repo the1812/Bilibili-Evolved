@@ -133,7 +133,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['useDefaultVideoSpeed', /*html*/`设置是否使用默认视频播放速度.`],
   ['defaultVideoSpeed', /*html*/`设置默认的视频播放速度.`],
   ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`],
-  ['autoDraw', /*html*/`在当前直播间有抽奖活动时, 自动点击抽奖按钮.`],
+  ['autoDraw', /*html*/`在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(`],
   ['keymap', /*html*/`为视频播放器启用更多的快捷键:
 - <kbd>w</kbd> 网页全屏
 - <kbd>t</kbd> 宽屏
