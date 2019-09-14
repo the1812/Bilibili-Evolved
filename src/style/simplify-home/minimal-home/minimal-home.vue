@@ -1,7 +1,8 @@
 <template>
   <div class="minimal-home">
     <div class="minimal-home-header">
-      <Icon class="logo" icon="logo" type="main"></Icon>
+      <img v-if="logoImage" :src="logoImage" width="120" />
+      <Icon v-else class="logo" icon="logo" type="main"></Icon>
       <div class="home-tabs">
         <div
           v-for="(tab, index) of tabs"
@@ -70,7 +71,8 @@ export default {
   data() {
     return {
       tabs,
-      content: 'HomeVideo'
+      content: 'HomeVideo',
+      logoImage: null
     }
   },
   computed: {
@@ -79,6 +81,17 @@ export default {
     },
     rankDays(): number {
       return this.activeTab.rankDays || 0
+    }
+  },
+  async mounted() {
+    if (settings.minimalHomeSeasonLogo) {
+      const json = await Ajax.getJson(
+        'https://api.bilibili.com/x/web-show/res/locs?pf=0&ids=142'
+      )
+      if (json.code !== 0) {
+        return
+      }
+      this.logoImage = json.data[142][0].litpic
     }
   },
   methods: {
@@ -105,10 +118,11 @@ export default {
   &,
   & * {
     box-sizing: border-box;
-    transition: color .2s ease-out, opacity .2s ease-out, transform .2s ease-out;
+    transition: color 0.2s ease-out, opacity 0.2s ease-out,
+      transform 0.2s ease-out;
   }
   .logo {
-    font-size: 48px;
+    font-size: 40px;
     color: var(--theme-color);
   }
   .minimal-home-header {
@@ -162,7 +176,7 @@ export default {
     .minimal-home-content-transition {
       &-enter-active,
       &-leave-active {
-        transition: .3s ease-out;
+        transition: 0.3s ease-out;
       }
       &-enter,
       &-leave-to {
