@@ -176,6 +176,9 @@
   &.disabled div {
     opacity: 0.5;
   }
+  & input[key="filenameFormat"] {
+    max-width: 500px;
+  }
 }
 .gui-settings-dropdown-span {
   margin: 0 16px;
@@ -433,9 +436,6 @@ li.category.folded i.icon-arrow {
     &[key="defaultVideoSpeed"] {
       max-width: 50px;
     }
-    &[key="filenameFormat"] {
-      max-width: 500px;
-    }
   }
 }
 .gui-settings-mask {
@@ -627,4 +627,4 @@ body.round-corner {
     border-radius: var(--corner-radius);
   }
 }
-@import "_gui-settings-dock"
+@import "_gui-settings-dock";

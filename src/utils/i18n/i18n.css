@@ -217,6 +217,11 @@
 {
     left: 470px !important;
 }
+.gui-settings-dock-right .gui-settings-tooltip
+{
+    left: unset !important;
+    right: 470px !important;
+}
 .bb-comment .comment-send .comment-submit,
 .comment-bilibili-fold .comment-send .comment-submit
 {
