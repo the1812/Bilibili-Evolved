@@ -335,6 +335,7 @@ const settings = {
   activityFilter: false,
   activityFilterWords: [],
   activityFilterTypes: [],
+  activityImageSaver: true,
   cache: {},
 }
 const fixedSettings = {
@@ -693,22 +694,31 @@ class DoubleClickEvent {
 let cidHooked = false
 const videoChangeCallbacks = []
 class Observer {
-  constructor (element, callback) {
-    this.element = element
+  constructor (elements, callback) {
+    this.elements = elements || []
     this.callback = callback
     this.observer = null
     this.options = undefined
   }
   start () {
-    if (this.element) {
+    this.elements.forEach(element => {
       this.observer = new MutationObserver(this.callback)
-      this.observer.observe(this.element, this.options)
-    }
+      this.observer.observe(element, this.options)
+    })
+    return this
+  }
+  add (element) {
+    this.elements.push(element)
+    this.observer.observe(element, this.options)
     return this
   }
   stop () {
     this.observer && this.observer.disconnect()
     return this
+  }
+  // 向后兼容的接口, 实际并没有什么遍历
+  forEach (callback) {
+    callback(this)
   }
   static observe (selector, callback, options) {
     callback([])
@@ -718,12 +728,9 @@ class Observer {
     } else if (!Array.isArray(selector)) {
       elements = [selector]
     }
-    return elements.map(
-      it => {
-        const observer = new Observer(it, callback)
-        observer.options = options
-        return observer.start()
-      })
+    const observer = new Observer(elements, callback)
+    observer.options = options
+    return observer.start()
   }
   static childList (selector, callback) {
     return Observer.observe(selector, callback, {
@@ -997,6 +1004,7 @@ onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/mi
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.html"] = `<div class=bilibili-evolved-about><div class=about-header><i class="mdi mdi-information-outline mdi-24px"></i><span class=about-title>关于</span></div><div class=about-content><p v-if=branch class="name light"v-html=logoImage><p v-if=branch class="name dark"v-html=logoImageDark><p class=version>v{{version}} · {{clientType}}<p class=love><a target=_blank href=https://github.com/the1812/Bilibili-Evolved/ >Made with ❤　　</a><a target=_blank href=https://github.com/the1812/Bilibili-Evolved/blob/master/donate.md>Buy me a coffee ☕</a><section class=authors><span class=title>Authors</span><a class=author target=_blank v-for="author of authors"v-bind:href=author.link>{{author.name}}</a></section><section class=contributors><span class=title>Contributors</span><a class=contributor target=_blank v-for="contributor of contributors"v-bind:href=contributor.link>{{contributor.name}}</a></section><section class=supporters><a class=title target=_blank href=https://github.com/the1812/Bilibili-Evolved/blob/preview/donate.md#历史>View Supporters</a></section><section class=participants><span class=title>Community Power</span><span class=fetching v-if=fetching></span><a class=participant target=_blank v-for="participant of participants"v-bind:href=participant.link>{{participant.name}}</a></section><section class=websites><span class=title>Websites</span><a class=website target=_blank v-for="website of websites"v-bind:href=website.link>{{website.name}}</a></section><section class=components><span class=title>Components</span><a class=component target=_blank v-for="component of components"v-bind:href=component.link>{{component.name}}</a></section></div></div>`;
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/about.min.js"] = (()=>{return(t,e)=>{(async()=>{const i=await e.importAsync("aboutHtml");document.body.insertAdjacentHTML("beforeend",i);dq(".bilibili-evolved-about").addEventListener("be:about-load",()=>{const e=(t,e)=>t.charCodeAt(0)-e.charCodeAt(0);const i=(t,i)=>e(t.name,i.name);const o=GM_info.script.name.match(/Bilibili Evolved \((.*)\)/);const n=o?o[1]:"Stable";new Vue({el:".bilibili-evolved-about",data:{version:t.currentVersion,clientType:n,logoImage:null,logoImageDark:null,branch:null,authors:[{name:"Grant Howard",link:"https://github.com/the1812"},{name:"Coulomb-G",link:"https://github.com/Coulomb-G"}],contributors:[{name:"PleiadeSubaru",link:"https://github.com/Etherrrr"}].sort(i),fetching:true,participants:[],websites:[{name:"GitHub",link:"https://github.com/the1812/Bilibili-Evolved/"},{name:"Greasy Fork",link:"https://greasyfork.org/zh-CN/scripts/373563-bilibili-evolved"}],components:[{name:"Vue.js",link:"https://cn.vuejs.org/index.html"},{name:"JSZip",link:"https://stuk.github.io/jszip/"},{name:"jQuery",link:"http://jquery.com/"},{name:"debounce",link:"https://github.com/component/debounce/"},{name:"Slip.js",link:"https://github.com/kornelski/slip"},{name:"MDI",link:"https://materialdesignicons.com"},{name:"Lodash",link:"https://lodash.com/"}]},mounted(){dq(".bilibili-evolved-about").addEventListener("be:about-load-community",()=>{this.init()},{once:true})},methods:{async getLogos(){this.logoImage=await Ajax.getText(`https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/bilibili-evolved-wide.svg`);this.logoImageDark=await Ajax.getText(`https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/images/bilibili-evolved-wide-dark.svg`)},async init(){this.branch=/Preview|Local/.test(n)?"preview":"master";this.getLogos();const t=new Set;let e=[];let o=1;do{e=await Ajax.getJson(`https://api.github.com/repos/the1812/Bilibili-Evolved/issues?state=all&direction=asc&per_page=100&page=${o}`).catch(()=>{e=[{name:"电波无法到达(´･_･`)",link:null}]});o++;for(const i of e){t.add(i.user.login)}}while(e.length>0);this.participants=[...t].map(t=>{return{name:t,link:`https://github.com/${t}`}}).filter(({link:t})=>{return!this.authors.some(e=>e.link===t)&&!this.contributors.some(e=>e.link===t)}).sort(i);this.fetching=false}}})},{once:true})})()}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/activity-apis.min.js"] = (()=>{return(t,e)=>{class s extends EventTarget{constructor(){super(...arguments);this.cards=[]}addCard(t){if(t instanceof Element&&t.classList.contains("card")){if(t.querySelector(".skeleton")!==null){const e=Observer.childList(t,()=>{if(t.querySelector(".skeleton")===null){e.forEach(t=>t.stop());this.addCard(t)}})}else{const e=this.parseCard(t);this.cards.push(e);const s=new CustomEvent("addCard",{detail:e});this.dispatchEvent(s)}}}removeCard(t){if(t instanceof Element&&t.classList.contains("card")){const e=this.parseCard(t).id;const s=this.cards.findIndex(t=>t.id===e);const r=this.cards[s];this.cards.splice(s,1);const n=new CustomEvent("removeCard",{detail:r});this.dispatchEvent(n)}}parseCard(t){const e=e=>{if(t.querySelector(e)===null){console.log(t,e)}return t.querySelector(e).innerText};const s=t=>{const s=parseInt(e(t));if(isNaN(s)){return 0}return s};const r={id:t.getAttribute("data-did"),username:e(".main-content .user-name"),text:e(".card-content .text.description"),reposts:s(".button-bar .single-button:nth-child(1) .text-offset"),comments:s(".button-bar .single-button:nth-child(2) .text-offset"),likes:s(".button-bar .single-button:nth-child(3) .text-offset")};return r}async startWatching(){const t=await SpinQuery.select(".card-list .content");if(!t){return false}const e=[...t.querySelectorAll(".content>.card")];e.forEach(t=>this.addCard(t));Observer.childList(t,t=>{t.forEach(t=>{t.addedNodes.forEach(t=>this.addCard(t));t.removedNodes.forEach(t=>this.removeCard(t))})});return true}}const r=new s;return{export:{activityCardsManager:r}}}})();
+onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/activity-image-saver.min.js"] = (()=>{return(e,o)=>{(async()=>{if(document.domain!=="t.bilibili.com"){return}const e=e=>{const o=e.querySelector(".image-viewer");if(o===null){console.log(e)}else{o.addEventListener("contextmenu",()=>{Toast.success(`<img src="${o.src}" width="200">`,"解除动态存图限制")})}};[...document.body.children].filter(e=>e.classList.contains("photo-imager-container")).forEach(e);Observer.childList(document.body,o=>{o.forEach(o=>{const t=[...o.addedNodes].filter(e=>e instanceof Element&&e.classList.contains("photo-imager-container"));t.forEach(e)})})})()}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/aria2-rpc.min.js"] = (()=>{return(t,e)=>{function o(){const e=t.aria2RpcOption;const o=e.host.match(/^http[s]?:\/\//)?e.host:"http://"+e.host;const r="aria2.addUri";return{option:e,host:o,methodName:r}}async function r(t,e=false){try{let o=await t();if(typeof o==="string"){o=JSON.parse(o)}if(o.error!==undefined){if(o.error.code===1){logError(`请求遭到拒绝, 请检查您的密钥相关设置.`)}else{logError(`请求发生错误, code = ${o.error.code}, message = ${o.error.message}`)}return false}if(!e){Toast.success(`成功发送了请求, GID = ${o.result}`,"aria2 RPC",5e3)}return true}catch(t){logError(`无法连接到RPC主机.`);return false}}async function s(t,e=false){const{option:s,host:n,methodName:a}=o();return await r(async()=>{const e=window.btoa(unescape(encodeURIComponent(JSON.stringify(t.params))));const o=`${n}:${s.port}/jsonrpc?method=${a}&id=${t.id}&params=${e}`;console.log(`RPC request:`,o);if(o.startsWith("http:")){return await new Promise((t,e)=>{GM_xmlhttpRequest({method:"GET",url:o,responseType:"json",onload:e=>t(e.response),onerror:t=>e(t)})})}else{return await Ajax.getJson(o)}},e)}async function n(t,e=false){const{option:s,host:n,methodName:a}=o();return await r(async()=>{const e=`${n}:${s.port}/jsonrpc`;const o={method:a,id:t.id,params:t.params};if(e.startsWith("http:")){return await new Promise((t,r)=>{GM_xmlhttpRequest({method:"POST",url:e,responseType:"json",data:JSON.stringify(o),onload:e=>t(e.response),onerror:t=>r(t)})})}else{return await Ajax.postJson(e,o)}},e)}async function a(e,o=false){const r=t.aria2RpcOption;for(const t of e){let e;if(r.method==="get"){e=await s(t,o)}else{e=await n(t,o)}if(o===true&&e===false){logError(`${decodeURIComponent(t.id)} 导出失败`)}}}return{export:{sendRpc:a}}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/auto-continue.min.js"] = (()=>{return(e,i)=>{if(typeof isEmbeddedPlayer!=="undefined"&&isEmbeddedPlayer()){return}function t(i){const t=i.text();if(/第(\d+)话/.test(t)){if(e.allowJumpContinue){i.parent().find(".bilibili-player-video-toast-item-jump").click()}return}const n=/((\d)*:)?(\d)*:(\d)*/g;const r=t.match(n);if(!r){return}const o=r[0].split(":");const l=(()=>{if(o.length===3){const[e,i,t]=o.map(e=>parseInt(e));return e*60*60+i*60+t}else if(o.length===2){const[e,i]=o.map(e=>parseInt(e));return e*60+i}else{logError(`解析历史时间发生错误: historyTime=${JSON.stringify(o)}`);return NaN}})();const s=i.parent();const a=document.querySelector("video");if(l<a.duration){a.currentTime=l;a.play();s.find(".bilibili-player-video-toast-item-jump").remove();const e=$(`<div class="bilibili-player-video-toast-item-jump">从头开始</div>`);e.appendTo(s).on("click",()=>{a.currentTime=0;s.find(".bilibili-player-video-toast-item-close").get(0).click()});i.html(`<span>已跳转到上次历史记录</span><span>${r[0]}</span>`)}else{s.find(".bilibili-player-video-toast-item-close").get(0).click()}}function n(){SpinQuery.condition(()=>$(".bilibili-player-video-toast-item-text"),e=>e.text().indexOf("上次看到")!==-1,e=>t(e.filter((e,i)=>i.innerText.indexOf("上次看到")!==-1)))}Observer.videoChange(n)}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/auto-draw.min.js"] = (()=>{return(t,n)=>{(async()=>{if(!/^https:\/\/live\.bilibili\.com\/[\d]+/.test(document.URL)){return}const t=await SpinQuery.condition(()=>dq(".chat-popups-section"),t=>t.querySelector("chat-draw-area")===null);if(!t){console.warn("[自动领奖] 未能找到弹窗容器");return}Observer.childListSubtree(t,()=>{let t;console.log("draw button = ",dq(".chat-popups-section .draw>span:nth-child(3)"));t=dq(".chat-popups-section .draw>span:nth-child(3)");if(t===null){const t=dq(".chat-popups-section .function-bar>span:nth-child(3)");if(t!==null){const n=Observer.attributes(t,()=>{if(t.style.display!=="none"){n.forEach(t=>t.stop());t.click()}})}}if(t!==null){t.click()}})})()}})();
@@ -2006,6 +2014,12 @@ Resource.manifest = {
       fullActivityContent: '展开动态内容',
     },
   },
+  activityImageSaver: {
+    path: 'activity-image-saver.min.js',
+    displayNames: {
+      activityImageSaver: '解除动态存图限制',
+    },
+  }
 }
 const resourceManifest = Resource.manifest
 

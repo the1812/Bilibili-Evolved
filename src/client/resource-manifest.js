@@ -675,5 +675,11 @@ Resource.manifest = {
       fullActivityContent: '展开动态内容',
     },
   },
+  activityImageSaver: {
+    path: 'activity-image-saver.min.js',
+    displayNames: {
+      activityImageSaver: '解除动态存图限制',
+    },
+  }
 }
 export const resourceManifest = Resource.manifest

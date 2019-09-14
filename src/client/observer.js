@@ -1,22 +1,31 @@
 let cidHooked = false
 const videoChangeCallbacks = []
 export class Observer {
-  constructor (element, callback) {
-    this.element = element
+  constructor (elements, callback) {
+    this.elements = elements || []
     this.callback = callback
     this.observer = null
     this.options = undefined
   }
   start () {
-    if (this.element) {
+    this.elements.forEach(element => {
       this.observer = new MutationObserver(this.callback)
-      this.observer.observe(this.element, this.options)
-    }
+      this.observer.observe(element, this.options)
+    })
+    return this
+  }
+  add (element) {
+    this.elements.push(element)
+    this.observer.observe(element, this.options)
     return this
   }
   stop () {
     this.observer && this.observer.disconnect()
     return this
+  }
+  // 向后兼容的接口, 实际并没有什么遍历
+  forEach (callback) {
+    callback(this)
   }
   static observe (selector, callback, options) {
     callback([])
@@ -26,12 +35,9 @@ export class Observer {
     } else if (!Array.isArray(selector)) {
       elements = [selector]
     }
-    return elements.map(
-      it => {
-        const observer = new Observer(it, callback)
-        observer.options = options
-        return observer.start()
-      })
+    const observer = new Observer(elements, callback)
+    observer.options = options
+    return observer.start()
   }
   static childList (selector, callback) {
     return Observer.observe(selector, callback, {

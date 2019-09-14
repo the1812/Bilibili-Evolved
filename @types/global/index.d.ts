@@ -218,14 +218,16 @@ declare global {
     constructor(element: Element, callback: MutationCallback);
     start(): Observer;
     stop(): Observer;
+    forEach(callback: (observer: Observer) => void): void;
+    add(element: Element): Observer;
     options: MutationObserverInit;
-    static observe(observable: Observable, callback: MutationCallback, options: MutationObserverInit): Observer[];
-    static childList(observable: Observable, callback: MutationCallback): Observer[];
-    static childListSubtree(observable: Observable, callback: MutationCallback): Observer[];
-    static attributes(observable: Observable, callback: MutationCallback): Observer[];
-    static attributesSubtree(observable: Observable, callback: MutationCallback): Observer[];
-    static all(observable: Observable, callback: MutationCallback): Observer[];
-    static videoChange(callback: MutationCallback): Promise<Observer[] | null>;
+    static observe(observable: Observable, callback: MutationCallback, options: MutationObserverInit): Observer;
+    static childList(observable: Observable, callback: MutationCallback): Observer;
+    static childListSubtree(observable: Observable, callback: MutationCallback): Observer;
+    static attributes(observable: Observable, callback: MutationCallback): Observer;
+    static attributesSubtree(observable: Observable, callback: MutationCallback): Observer;
+    static all(observable: Observable, callback: MutationCallback): Observer;
+    static videoChange(callback: MutationCallback): Promise<void>;
   }
   interface BilibiliEvolvedSettings {
     useDarkStyle: boolean,
@@ -356,6 +358,7 @@ declare global {
     activityFilter: boolean,
     activityFilterWords: (string | RegExp)[],
     activityFilterTypes: string[],
+    activityImageSaver: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

@@ -157,6 +157,7 @@ export const settings = {
   activityFilter: false,
   activityFilterWords: [],
   activityFilterTypes: [],
+  activityImageSaver: true,
   cache: {},
 }
 const fixedSettings = {
