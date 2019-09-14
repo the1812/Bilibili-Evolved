@@ -1,6 +1,6 @@
 .international-home > :not(.international-header),
 .international-header .b-wrap,
 .international-footer,
-.bili-wrapper {
+.bili-header-m .bili-wrapper {
   display: none !important;
 }
