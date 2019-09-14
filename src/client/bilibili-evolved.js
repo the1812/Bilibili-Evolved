@@ -48,7 +48,7 @@ import { Resource } from './resource'
 import { resourceManifest } from './resource-manifest'
 import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
-import { scriptBlocker } from './scriptBlocker'
+import { scriptBlocker } from './script-blocker'
 
 try {
   const events = {}
