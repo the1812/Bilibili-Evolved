@@ -41,19 +41,31 @@ export const scriptBlocker = (() => {
     }
     return false
   }
-  const removeNode = node => {
+  const removeNode = (node, onRemove) => {
     console.log(`Blocked script: `, node)
     node.type = 'text/blocked'
     node.remove()
+    typeof onRemove === 'function' && onRemove(node)
   }
-  const removeNodes = nodeList => {
-    [...nodeList].filter(scriptFilter).filter(patternFilter).forEach(removeNode)
+  const removeNodes = (nodeList, onRemove) => {
+    [...nodeList].filter(scriptFilter).filter(patternFilter).forEach(node => removeNode(node, onRemove))
   }
-  return {
+  class ScriptBlocker extends EventTarget {
+    constructor () {
+      super()
+      this.started = false
+    }
     start () {
+      if (this.started) {
+        return
+      }
+      this.started = true
+      const blockEvent = node => this.dispatchEvent(new CustomEvent('block', {
+        detail: node
+      }))
       const blocker = Observer.childList(document.head, records => {
         records.forEach(r => {
-          removeNodes(r.addedNodes)
+          removeNodes(r.addedNodes, blockEvent)
         })
       })
       const bodyObserver = Observer.childList(document.documentElement, records => {
@@ -61,7 +73,7 @@ export const scriptBlocker = (() => {
           r.addedNodes.forEach(node => {
             if (node === document.body) {
               bodyObserver.stop()
-              removeNodes(document.body.childNodes)
+              removeNodes(document.body.childNodes, blockEvent)
               blocker.add(document.body)
             }
           })
@@ -69,4 +81,5 @@ export const scriptBlocker = (() => {
       })
     }
   }
+  return new ScriptBlocker()
 })()

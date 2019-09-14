@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      424.98
+// @version      424.99
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2493,19 +2493,31 @@ const scriptBlocker = (() => {
     }
     return false
   }
-  const removeNode = node => {
+  const removeNode = (node, onRemove) => {
     console.log(`Blocked script: `, node)
     node.type = 'text/blocked'
     node.remove()
+    typeof onRemove === 'function' && onRemove(node)
   }
-  const removeNodes = nodeList => {
-    [...nodeList].filter(scriptFilter).filter(patternFilter).forEach(removeNode)
+  const removeNodes = (nodeList, onRemove) => {
+    [...nodeList].filter(scriptFilter).filter(patternFilter).forEach(node => removeNode(node, onRemove))
   }
-  return {
+  class ScriptBlocker extends EventTarget {
+    constructor () {
+      super()
+      this.started = false
+    }
     start () {
+      if (this.started) {
+        return
+      }
+      this.started = true
+      const blockEvent = node => this.dispatchEvent(new CustomEvent('block', {
+        detail: node
+      }))
       const blocker = Observer.childList(document.head, records => {
         records.forEach(r => {
-          removeNodes(r.addedNodes)
+          removeNodes(r.addedNodes, blockEvent)
         })
       })
       const bodyObserver = Observer.childList(document.documentElement, records => {
@@ -2513,7 +2525,7 @@ const scriptBlocker = (() => {
           r.addedNodes.forEach(node => {
             if (node === document.body) {
               bodyObserver.stop()
-              removeNodes(document.body.childNodes)
+              removeNodes(document.body.childNodes, blockEvent)
               blocker.add(document.body)
             }
           })
@@ -2521,6 +2533,7 @@ const scriptBlocker = (() => {
       })
     }
   }
+  return new ScriptBlocker()
 })()
 
 try {
@@ -2610,6 +2623,7 @@ try {
     formatFileSize,
     formatDuration,
     getDpiSourceSet,
+    scriptBlocker,
     resources,
     theWorld: waitTime => {
       if (waitTime > 0) {

@@ -137,6 +137,7 @@ try {
     formatFileSize,
     formatDuration,
     getDpiSourceSet,
+    scriptBlocker,
     resources,
     theWorld: waitTime => {
       if (waitTime > 0) {
