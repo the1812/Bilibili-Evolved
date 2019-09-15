@@ -19,3 +19,8 @@ SpinQuery.any(
     })
   }
 )
+SpinQuery.select('.gg-carousel.home-slide').then(slide => {
+  [...slide.querySelectorAll('.gg-icon')]
+    .map(it => it.parentElement.parentElement.parentElement)
+    .forEach(it => it.style.display = 'none')
+})

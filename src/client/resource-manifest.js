@@ -614,6 +614,7 @@ Resource.manifest = {
   },
   hideCategory: {
     path: 'hide-category.min.js',
+    style: 'instant',
     displayNames: {
       hideCategory: '隐藏分区栏',
     },
