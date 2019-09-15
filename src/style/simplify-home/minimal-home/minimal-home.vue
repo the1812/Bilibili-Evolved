@@ -37,7 +37,8 @@ const tabs = [
     name: 'video',
     displayName: '视频动态',
     active: true,
-    more: 'https://t.bilibili.com/?tab=8'
+    more: 'https://t.bilibili.com/?tab=8',
+    rankDays: 0
   },
   {
     name: 'ranking7',
@@ -65,13 +66,12 @@ export default {
   components: {
     Icon: () => import('../../icon.vue'),
     // Search: () => import('../../search.vue'),
-    HomeVideo: () => import('./home-video.vue'),
-    RankList: () => import('./rank-list.vue')
+    VideoList: () => import('./video-list.vue')
   },
   data() {
     return {
       tabs,
-      content: 'HomeVideo',
+      content: 'VideoList',
       logoImage: null
     }
   },
@@ -103,7 +103,6 @@ export default {
       const activeTab = this.activeTab
       activeTab.active = false
       tab.active = true
-      this.content = tab.name === 'video' ? 'HomeVideo' : 'RankList'
     }
   }
 }
