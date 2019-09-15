@@ -134,7 +134,7 @@ export default {
       justify-content: flex-end;
       margin-right: var(--card-margin);
       .tab {
-        color: #707070;
+        color: black;
         opacity: 0.75;
         position: relative;
         cursor: pointer;
@@ -194,7 +194,7 @@ export default {
       display: flex;
       align-items: center;
       padding: 8px 12px 8px 8px;
-      background-color: var(--theme-color-50);
+      background-color: var(--theme-color-80);
       color: var(--foreground-color);
       border-radius: 24px;
       font-size: 11pt;
@@ -203,7 +203,7 @@ export default {
         margin-right: 8px;
       }
       &:hover {
-        background-color: var(--theme-color-60);
+        background-color: var(--theme-color);
       }
     }
   }

@@ -18,7 +18,7 @@
         :href="'https://t.bilibili.com/topic/name/' + topic.name + '/feed'"
       >#{{topic.name}}#</a>
     </div>
-    <pre class="description single-line" :title="description" v-else>{{description}}</pre>
+    <p class="description" :title="description" v-else>{{description}}</p>
     <a
       class="up"
       :class="{'no-face': !upFaceUrl}"
@@ -117,7 +117,7 @@ export default {
 .video-card {
   display: grid;
   grid-template-columns: 200px 1fr;
-  grid-template-rows: 3fr 2fr 3fr;
+  grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
     'cover title'
     'cover description'
@@ -131,9 +131,13 @@ export default {
   margin-bottom: var(--card-margin);
   position: relative;
 
-  body.dark & {
+  body.dark &,
+  body.dark &:hover {
     background-color: #282828;
-    color: white;
+    color: #eee;
+  }
+  &:hover {
+    color: black;
   }
   & > * {
     justify-self: self-start;
@@ -205,21 +209,32 @@ export default {
     margin-left: 12px;
     .topic {
       color: inherit;
-      padding: 4px 8px;
+      padding: 6px 8px;
       background-color: #8882;
       margin-right: 8px;
       border-radius: 14px;
+      white-space: nowrap;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &:hover {
+        background-color: #8884;
+        color: var(--theme-color);
+      }
     }
   }
   .description {
     grid-area: description;
     color: inherit;
-    overflow: auto;
+    overflow: hidden;
     align-self: stretch;
     justify-self: stretch;
     margin: 0 12px;
-    white-space: pre-wrap;
     line-height: 1.5;
+    height: 3em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     scrollbar-width: none !important;
 
     &::-webkit-scrollbar {
@@ -257,8 +272,11 @@ export default {
     .name {
       margin: 0 8px;
     }
-    &:hover .name {
-      color: var(--theme-color);
+    &:hover {
+      background-color: #8884;
+      .name {
+        color: var(--theme-color);
+      }
     }
   }
   .stats {
