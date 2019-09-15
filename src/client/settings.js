@@ -159,7 +159,7 @@ export const settings = {
   activityFilterTypes: [],
   activityImageSaver: true,
   scriptBlockPatterns: [],
-  minimalHomeSeasonLogo: false,
+  customNavbarSeasonLogo: false,
   cache: {},
 }
 const fixedSettings = {

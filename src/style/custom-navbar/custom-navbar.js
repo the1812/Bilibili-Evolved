@@ -286,9 +286,21 @@ class Blank extends NavbarComponent {
 class Logo extends NavbarComponent {
   constructor () {
     super();
+    this.getLogo()
     this.href = `https://www.bilibili.com/`;
-    this.html = /*html*/`<i class="custom-navbar-iconfont custom-navbar-icon-logo"></i>`;
     this.touch = false;
+  }
+  async getLogo () {
+    if (settings.customNavbarSeasonLogo) {
+      const json = await Ajax.getJson(
+        'https://api.bilibili.com/x/web-show/res/locs?pf=0&ids=142'
+      )
+      if (json.code === 0) {
+        this.html = /*html*/`<img height="38" src="${json.data[142][0].litpic}">`
+        return
+      }
+    }
+    this.html = /*html*/`<i class="custom-navbar-iconfont custom-navbar-icon-logo"></i>`
   }
   get name () {
     return "logo";

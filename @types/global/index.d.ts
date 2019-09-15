@@ -361,7 +361,7 @@ declare global {
     activityFilterTypes: string[],
     activityImageSaver: boolean,
     scriptBlockPatterns: Pattern[],
-    minimalHomeSeasonLogo: boolean,
+    customNavbarSeasonLogo: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
