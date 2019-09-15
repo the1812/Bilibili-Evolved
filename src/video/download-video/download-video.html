@@ -83,6 +83,7 @@
         <i :class="{'mdi-close': showRpcSettings, 'mdi-chevron-right': !showRpcSettings}" class="mdi" v-on:click.self="toggleRpcSettings()"></i>
         <div class="rpc-settings" v-bind:class="{show: showRpcSettings}">
           <h1>aria2 RPC 配置</h1>
+          <rpc-profiles @profile-change="profileChange(profile)"></rpc-profiles>
           <div class="rpc-settings-item">
             主机<input type="text" v-model="rpcSettings.host" placeholder="127.0.0.1">
           </div>
