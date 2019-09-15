@@ -122,7 +122,8 @@ export default {
 </script>
 <style lang="scss">
 .minimal-home .video-list {
-  .loading {
+  .loading,
+  .empty {
     height: 48px;
     display: flex;
     align-items: center;
