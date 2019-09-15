@@ -38,7 +38,8 @@ class ActivityCardsManager extends EventTarget {
   parseCard(element: Element): ActivityCard {
     const getText = (selector: string) => {
       if (element.querySelector(selector) === null) {
-        console.log(element, selector)
+        // console.log(element, selector)
+        return ''
       }
       return (element.querySelector(selector) as HTMLElement).innerText
     }
