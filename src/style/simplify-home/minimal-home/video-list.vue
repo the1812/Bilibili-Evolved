@@ -3,7 +3,7 @@
     <div class="loading" v-if="loading">
       <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
     </div>
-    <div class="cards" v-else-if="cards.length">
+    <div class="cards" :class="{'show-rank': showRank}" v-else-if="cards.length">
       <video-card v-for="card of cards" :key="card.id" :data="card"></video-card>
     </div>
     <div class="empty" v-else>空空如也哦 =￣ω￣=</div>
@@ -16,43 +16,48 @@ export default {
   components: {
     VideoCard: () => import('../video-card.vue')
   },
-  props: ['rankDays'],
+  props: ['showRank'],
   data() {
     return {
       cards: [] as VideoCardInfo[],
-      loading: true,
+      loading: true
     }
   },
   methods: {
     async getRankList() {
-      const json = await Ajax.getJsonWithCredentials(
-        `https://api.bilibili.com/x/web-interface/ranking/index?day=${this.rankDays}`
-      )
-      const { getWatchlaterList } = await import(
-        '../../../video/watchlater-api'
-      )
-      const watchlaterList = (await getWatchlaterList()) as number[]
-      if (json.code !== 0) {
-        throw new Error(json.message)
-      }
-      this.cards = json.data.map(
-        (card: any): VideoCardInfo => {
-          return {
-            id: card.aid,
-            aid: parseInt(card.aid),
-            title: card.title,
-            upID: card.mid,
-            upName: card.author,
-            coverUrl: card.pic.replace('http://', 'https://'),
-            description: card.description,
-            durationText: card.duration,
-            playCount: formatCount(card.play),
-            coins: formatCount(card.coins),
-            favorites: formatCount(card.favorites),
-            watchlater: watchlaterList.includes(card.aid)
-          }
+      const getRankListByDays = async (days: number) => {
+        const json = await Ajax.getJsonWithCredentials(
+          `https://api.bilibili.com/x/web-interface/ranking/index?day=${days}`
+        )
+        const { getWatchlaterList } = await import(
+          '../../../video/watchlater-api'
+        )
+        const watchlaterList = (await getWatchlaterList()) as number[]
+        if (json.code !== 0) {
+          throw new Error(json.message)
         }
-      )
+        this.cards.push(
+          ...json.data.map(
+            (card: any): VideoCardInfo => {
+              return {
+                id: card.aid + '-' + days,
+                aid: parseInt(card.aid),
+                title: card.title,
+                upID: card.mid,
+                upName: card.author,
+                coverUrl: card.pic.replace('http://', 'https://'),
+                description: card.description,
+                durationText: card.duration,
+                playCount: formatCount(card.play),
+                coins: formatCount(card.coins),
+                favorites: formatCount(card.favorites),
+                watchlater: watchlaterList.includes(card.aid)
+              }
+            }
+          )
+        )
+      }
+      await Promise.all([1, 3, 7].map(getRankListByDays))
     },
     async getActivityVideos() {
       const json = await Ajax.getJsonWithCredentials(
@@ -98,17 +103,17 @@ export default {
           }
         }
       )
-    },
+    }
   },
   async mounted() {
     try {
-      if (this.rankDays > 0) {
+      if (this.showRank) {
         await this.getRankList()
       } else {
         await this.getActivityVideos()
       }
     } catch (error) {
-      Toast.error(error.message, this.rankDays > 0 ? '排行' : '视频动态', 3000)
+      Toast.error(error.message, this.showRank ? '热门视频' : '视频动态', 3000)
     } finally {
       this.loading = false
     }
@@ -134,7 +139,30 @@ export default {
   .cards {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-end;
+    &.show-rank {
+      .video-card:nth-child(1),
+      .video-card:nth-child(9),
+      .video-card:nth-child(17) {
+        margin-top: 48px;
+        &::before {
+          position: absolute;
+          top: -42px;
+          left: 0;
+          font-size: 14pt;
+          font-weight: bold;
+        }
+      }
+      .video-card:nth-child(1)::before {
+        content: "昨日";
+      }
+      .video-card:nth-child(9)::before {
+        content: "三日";
+      }
+      .video-card:nth-child(17)::before {
+        content: "一周";
+      }
+    }
   }
 }
 </style>

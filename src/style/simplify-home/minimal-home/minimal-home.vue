@@ -17,7 +17,7 @@
     </div>
     <div class="minimal-home-content">
       <transition name="minimal-home-content-transition" mode="out-in">
-        <component :is="content" :key="activeTab.name" :rank-days="rankDays"></component>
+        <component :is="content" :key="activeTab.name" :show-rank="activeTab.showRank"></component>
       </transition>
     </div>
   </div>
@@ -30,7 +30,7 @@ interface Tab {
   displayName: string
   active: boolean
   more: string
-  rankDays?: number
+  showRank: boolean
 }
 const tabs = [
   {
@@ -38,29 +38,15 @@ const tabs = [
     displayName: '视频动态',
     active: true,
     more: 'https://t.bilibili.com/?tab=8',
-    rankDays: 0
+    showRank: false,
   },
   {
     name: 'ranking7',
-    displayName: '一周排行',
+    displayName: '热门视频',
     active: false,
     more: 'https://www.bilibili.com/ranking/all/0/0/7',
-    rankDays: 7
+    showRank: true,
   },
-  {
-    name: 'ranking3',
-    displayName: '三日排行',
-    active: false,
-    more: 'https://www.bilibili.com/ranking',
-    rankDays: 3
-  },
-  {
-    name: 'ranking1',
-    displayName: '昨日排行',
-    active: false,
-    more: 'https://www.bilibili.com/ranking/all/0/0/1',
-    rankDays: 1
-  }
 ] as Tab[]
 export default {
   components: {

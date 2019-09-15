@@ -129,6 +129,7 @@ export default {
   box-shadow: 0 2px 6px 0 #0002;
   margin-right: var(--card-margin);
   margin-bottom: var(--card-margin);
+  position: relative;
 
   body.dark & {
     background-color: #282828;
