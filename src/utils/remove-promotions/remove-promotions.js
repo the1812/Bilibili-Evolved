@@ -20,6 +20,9 @@ SpinQuery.any(
   }
 )
 SpinQuery.select('.gg-carousel.home-slide').then(slide => {
+  if (!slide) {
+    return
+  }
   [...slide.querySelectorAll('.gg-icon')]
     .map(it => it.parentElement.parentElement.parentElement)
     .forEach(it => it.style.display = 'none')
