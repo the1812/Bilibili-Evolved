@@ -1,8 +1,8 @@
 <template>
   <div class="minimal-home">
     <div class="minimal-home-header">
-      <img v-if="logoImage" :src="logoImage" width="120" />
-      <icon v-else class="logo" icon="logo" type="main"></icon>
+      <!-- <img v-if="logoImage" :src="logoImage" width="120" /> -->
+      <!-- <icon v-else class="logo" icon="logo" type="main"></icon> -->
       <div class="home-tabs">
         <div
           v-for="(tab, index) of tabs"
@@ -77,15 +77,15 @@ export default {
     }
   },
   async mounted() {
-    if (settings.minimalHomeSeasonLogo) {
-      const json = await Ajax.getJson(
-        'https://api.bilibili.com/x/web-show/res/locs?pf=0&ids=142'
-      )
-      if (json.code !== 0) {
-        return
-      }
-      this.logoImage = json.data[142][0].litpic
-    }
+    // if (settings.minimalHomeSeasonLogo) {
+    //   const json = await Ajax.getJson(
+    //     'https://api.bilibili.com/x/web-show/res/locs?pf=0&ids=142'
+    //   )
+    //   if (json.code !== 0) {
+    //     return
+    //   }
+    //   this.logoImage = json.data[142][0].litpic
+    // }
   },
   methods: {
     changeTab(tab: Tab) {
@@ -131,15 +131,17 @@ export default {
     .home-tabs {
       display: flex;
       flex-grow: 1;
-      justify-content: flex-end;
+      justify-content: center;
       margin-right: var(--card-margin);
       .tab {
         color: black;
         opacity: 0.75;
         position: relative;
         cursor: pointer;
-        margin-left: 32px;
 
+        &:not(:first-child) {
+          margin-left: 32px;
+        }
         body.dark & {
           color: #eee;
         }
@@ -194,16 +196,19 @@ export default {
       display: flex;
       align-items: center;
       padding: 8px 12px 8px 8px;
-      background-color: var(--theme-color-80);
-      color: var(--foreground-color);
+      background-color: #8882;
+      color: black;
       border-radius: 24px;
       font-size: 11pt;
       cursor: pointer;
       .be-icon {
         margin-right: 8px;
       }
+      body.dark & {
+        color: #eee;
+      }
       &:hover {
-        background-color: var(--theme-color);
+        background-color: #8884;
       }
     }
   }

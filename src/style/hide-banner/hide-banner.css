@@ -9,3 +9,9 @@ div.blur-bg,
 {
     opacity: 0 !important;
 }
+.international-home .bili-banner
+{
+    visibility: hidden !important;
+    height: 50px !important;
+    min-height: unset !important;
+}

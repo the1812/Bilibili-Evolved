@@ -150,7 +150,7 @@ Resource.manifest = {
   },
   hideBanner: {
     path: 'hide-banner.min.js',
-    style: true,
+    style: 'instant',
     displayNames: {
       hideBanner: '隐藏顶部横幅'
     }
