@@ -2,7 +2,7 @@
   <div class="minimal-home">
     <div class="minimal-home-header">
       <img v-if="logoImage" :src="logoImage" width="120" />
-      <Icon v-else class="logo" icon="logo" type="main"></Icon>
+      <icon v-else class="logo" icon="logo" type="main"></icon>
       <div class="home-tabs">
         <div
           v-for="(tab, index) of tabs"
@@ -13,12 +13,19 @@
           @click="changeTab(tab)"
         >{{tab.displayName}}</div>
       </div>
-      <!-- <Search></Search> -->
     </div>
     <div class="minimal-home-content">
       <transition name="minimal-home-content-transition" mode="out-in">
         <component :is="content" :key="activeTab.name" :show-rank="activeTab.showRank"></component>
       </transition>
+    </div>
+    <div class="minimal-home-footer">
+      <div class="footer-button view-more" @click="viewMore()">
+        <icon type="mdi" icon="dots-horizontal-circle-outline"></icon>查看更多
+      </div>
+      <div class="footer-button go-to-top" @click="goToTop()">
+        <icon type="mdi" icon="arrow-up-drop-circle-outline"></icon>返回顶部
+      </div>
     </div>
   </div>
 </template>
@@ -38,15 +45,15 @@ const tabs = [
     displayName: '视频动态',
     active: true,
     more: 'https://t.bilibili.com/?tab=8',
-    showRank: false,
+    showRank: false
   },
   {
-    name: 'ranking7',
+    name: 'ranking',
     displayName: '热门视频',
     active: false,
-    more: 'https://www.bilibili.com/ranking/all/0/0/7',
-    showRank: true,
-  },
+    more: 'https://www.bilibili.com/ranking',
+    showRank: true
+  }
 ] as Tab[]
 export default {
   components: {
@@ -89,6 +96,12 @@ export default {
       const activeTab = this.activeTab
       activeTab.active = false
       tab.active = true
+    },
+    goToTop() {
+      scrollTo(0, 0)
+    },
+    viewMore() {
+      open(this.activeTab.more, '_blank')
     }
   }
 }
@@ -104,7 +117,7 @@ export default {
   & * {
     box-sizing: border-box;
     transition: color 0.2s ease-out, opacity 0.2s ease-out,
-      transform 0.2s ease-out;
+      transform 0.2s ease-out, background-color 0.2s ease-out;
   }
   .logo {
     font-size: 40px;
@@ -155,6 +168,7 @@ export default {
   }
   .minimal-home-content {
     margin-top: 32px;
+    min-height: 100vh;
     width: calc(
       var(--card-column-count) * (var(--card-width) + var(--card-margin))
     );
@@ -170,10 +184,45 @@ export default {
       }
     }
   }
+  .minimal-home-footer {
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: var(--card-margin);
+    .footer-button {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px 8px 8px;
+      background-color: var(--theme-color-50);
+      color: var(--foreground-color);
+      border-radius: 24px;
+      font-size: 11pt;
+      cursor: pointer;
+      .be-icon {
+        margin-right: 8px;
+      }
+      &:hover {
+        background-color: var(--theme-color-60);
+      }
+    }
+  }
 }
 @media screen and (max-width: 1300px) {
   .minimal-home {
     --card-column-count: 1;
+  }
+}
+@media screen and (min-width: 2000px) {
+  .minimal-home {
+    --card-column-count: 3;
+    .cards.show-rank {
+      .video-card:nth-child(8),
+      .video-card:nth-child(16),
+      .video-card:nth-child(24) {
+        margin-right: calc(var(--card-margin) * 2 + var(--card-width));
+      }
+    }
   }
 }
 </style>

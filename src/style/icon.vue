@@ -13,6 +13,9 @@ export default {
       if (this.icon === '' || this.type === '') {
         return []
       }
+      if (this.type === 'mdi') {
+        return ['mdi', `mdi-${this.icon}`]
+      }
       return [`be-iconfont-${this.icon}`, `be-${this.type}-iconfont`]
     }
   }
@@ -39,6 +42,7 @@ export default {
   color: inherit;
   font-size: 24px;
   font-style: normal;
+  line-height: 1;
   &.be-main-iconfont {
     font-family: 'be-main-iconfont' !important;
   }

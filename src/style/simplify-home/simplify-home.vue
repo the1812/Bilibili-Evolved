@@ -30,4 +30,7 @@ export default {
     max-width: 100%;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
 </style>
