@@ -541,6 +541,7 @@ async function loadPanel() {
       rpcSettings: settings.aria2RpcOption,
       showRpcSettings: false,
       busy: false,
+      saveRpcSettingsText: '保存配置',
     },
     computed: {
       displaySize() {
@@ -786,6 +787,8 @@ async function loadPanel() {
           Object.assign(profile, this.rpcSettings)
           settings.aria2RpcOptionProfiles = settings.aria2RpcOptionProfiles
         }
+        this.saveRpcSettingsText = '已保存'
+        setTimeout(() => this.saveRpcSettingsText = '保存配置', 2000)
       },
       updateProfile(profile: RpcOptionProfile) {
         this.rpcSettings = _.omit(profile, 'name') as RpcOption

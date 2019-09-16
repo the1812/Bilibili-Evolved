@@ -2,11 +2,11 @@
   <div class="profile-item" :class="{duplicate: duplicateName, selected}">
     <template v-if="!editing">{{profile.name}}</template>
     <template v-else>
-      <input type="text" v-model="name" @load="$event.target.select()" />
+      <input type="text" v-model="name" />
     </template>
-    <icon v-if="!editing" type="mdi" icon="pencil-outline" title="编辑" @click.native="editing = true"></icon>
+    <icon v-if="!editing" style="transform: scale(0.9)" type="mdi" icon="pencil-outline" title="重命名" @click.native="editing = true"></icon>
     <icon v-if="editing" type="mdi" icon="check" title="确定" @click.native="saveProfile()"></icon>
-    <icon v-if="deletable && !editing" type="mdi" icon="close" title="删除"></icon>
+    <!-- <icon v-if="deletable && !editing" type="mdi" icon="close" title="删除"></icon> -->
   </div>
 </template>
 <script lang="ts">

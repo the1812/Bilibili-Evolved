@@ -329,6 +329,7 @@
     .operations {
       display: flex;
       align-items: center;
+      justify-content: space-evenly;
     }
   }
   .rpc-settings-item {
@@ -336,6 +337,10 @@
     align-items: center;
     justify-content: space-between;
     white-space: nowrap;
+    input[type="text"] {
+      flex-grow: 1;
+      margin-left: 24px;
+    }
   }
   button.start-download,
   button.cancel-download {

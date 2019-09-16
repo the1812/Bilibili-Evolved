@@ -1,6 +1,21 @@
 <template>
   <div class="aria2-rpc-profiles">
-    <h2>预设</h2>
+    <div class="profiles-header">
+      <h2>预设</h2>
+      <div class="profile-operations">
+        <div
+          v-if="profiles.length > 1"
+          class="operation delete-profile"
+          @click="deleteProfile()"
+          title="删除预设"
+        >
+          <icon type="mdi" icon="trash-can-outline"></icon>
+        </div>
+        <div class="operation new-profile" @click="addProfile()" title="新增预设">
+          <icon type="mdi" icon="plus"></icon>
+        </div>
+      </div>
+    </div>
     <div class="profiles-list">
       <profile-item
         v-for="(profile, index) of profiles"
@@ -11,10 +26,6 @@
         :deletable="profiles.length > 1"
         :selected="profile.name === selectedProfile"
       ></profile-item>
-      <div class="profile-item new-profile" @click="addProfile()">
-        新增预设
-        <icon type="mdi" icon="plus"></icon>
-      </div>
     </div>
   </div>
 </template>
@@ -68,31 +79,66 @@ export default {
         let suffix = 1
         while (
           this.profiles.some(
-            (p: RpcOptionProfile) => p.name === profile.name + suffix
+            (p: RpcOptionProfile) => p.name === profile.name + suffix.toString()
           )
         ) {
           suffix++
         }
-        profile.name += suffix
+        profile.name += suffix.toString()
       }
       this.profiles.push(profile)
       settings.aria2RpcOptionProfiles = this.profiles
       this.changeProfile(profile)
+    },
+    deleteProfile() {
+      const selectedIndex = (this.profiles as RpcOptionProfile[]).findIndex(
+        p => p.name === this.selectedProfile
+      )
+      const otherIndex = selectedIndex === 0 ? 0 : selectedIndex - 1
+      const otherProfile = this.profiles[otherIndex]
+      this.profiles.splice(selectedIndex, 1)
+      settings.aria2RpcOptionProfiles = this.profiles
+      this.changeProfile(otherProfile)
     }
   }
 }
 </script>
 <style lang="scss">
 .aria2-rpc-profiles {
-  h2 {
+  .profiles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 8px;
+    .profile-operations {
+      display: flex;
+      align-items: center;
+      .operation {
+        padding: 4px;
+        background-color: #8882;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:not(:last-child) {
+          margin-right: 8px;
+        }
+        &:hover {
+          background-color: #8884;
+        }
+        .mdi {
+          margin: 0;
+        }
+      }
+    }
   }
   .profiles-list {
     display: flex;
     overflow: auto;
     scrollbar-width: none !important;
     &::-webkit-scrollbar {
-      width: 0px !important;
+      height: 0px !important;
     }
   }
 }
