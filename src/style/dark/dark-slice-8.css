@@ -147,7 +147,8 @@ li.danmaku-info-row.bpui-selecting,
 .reply-input .input-area .reply-submit-btn,
 .reply-report .reason-choose .reason-group .list li input[type=radio],
 .reply-report .submit-btn button:disabled,
-.reply-emoji-panel .emoji-cate a.on
+.reply-emoji-panel .emoji-cate a.on,
+.reply-emoji-panel .emoji-list .emoji-pager .pager-dot
 {
     background-color: #444 !important;
 }
@@ -293,7 +294,8 @@ li.danmaku-info-row.bpui-selecting,
 .qa-area-ol-wrp .qa-area-ol-content a,
 .security_content .common-subtitle,
 .manga-card-horizontal .text-section .footer-text,
-.dark .vote-left-time
+.dark .vote-left-time,
+.reply-dialog .subtitle
 {
     color: #aaa !important;
 }
@@ -508,7 +510,8 @@ li.danmaku-info-row.bpui-selecting,
 .reply-report .reason-choose .reason-group .list li,
 .reply-report .submit-btn button:disabled,
 .reply-report .submit-btn button,
-.reply-emoji-panel .emoji-list .emoji-text .text-list span
+.reply-emoji-panel .emoji-list .emoji-text .text-list span,
+.reply-dialog .title
 {
     color: #eee !important;
 }
@@ -844,7 +847,8 @@ li.danmaku-info-row.bpui-selecting,
 .reply-input .input-area .reply-submit-btn:hover,
 .reply-input .input-area .reply-emoji-btn:hover,
 .reply-report .reason-choose .reason-group .list li input[type=radio]:checked:after,
-.reply-report .submit-btn button
+.reply-report .submit-btn button,
+.reply-emoji-panel .emoji-list .emoji-pager .pager-dot.on
 {
     background-color: var(--theme-color) !important;
 }
