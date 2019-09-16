@@ -20,7 +20,10 @@
 .security_content .close-btn,
 .security_content .coupon-wrapper .coupon-content,
 .security_content .title-right-link,
-.reply-bottom-menu-mask .more-ops
+.reply-bottom-menu-mask .more-ops,
+.reply-emoji-panel .emoji-cate,
+.reply-emoji-panel .emoji-cate a,
+.reply-emoji-panel .emoji-list
 {
     background-color: #222 !important;
 }
@@ -141,7 +144,10 @@ li.danmaku-info-row.bpui-selecting,
 .security_content .coupon-content-con .coupon-btn,
 .reply-input .input-area input,
 .reply-input .input-area .reply-emoji-btn,
-.reply-input .input-area .reply-submit-btn
+.reply-input .input-area .reply-submit-btn,
+.reply-report .reason-choose .reason-group .list li input[type=radio],
+.reply-report .submit-btn button:disabled,
+.reply-emoji-panel .emoji-cate a.on
 {
     background-color: #444 !important;
 }
@@ -495,7 +501,10 @@ li.danmaku-info-row.bpui-selecting,
 .reply-bottom-menu-mask .more-ops .cancel,
 .reply-input .input-area .reply-emoji-btn,
 .reply-input .input-area .reply-submit-btn,
-.dark input
+.dark input,
+.reply-report .reason-choose .reason-group .list li,
+.reply-report .submit-btn button:disabled,
+.reply-report .submit-btn button
 {
     color: #eee !important;
 }
@@ -578,7 +587,8 @@ li.danmaku-info-row.bpui-selecting,
 .security_content .title-right-link,
 .reply-bottom-menu-mask .more-ops .cancel,
 .reply-input .input-area .reply-emoji-btn,
-.reply-input .input-area .reply-submit-btn
+.reply-input .input-area .reply-submit-btn,
+.reply-report .reason-choose .reason-group .list li input[type=radio]
 {
     border-color: transparent !important;
 }
@@ -827,7 +837,10 @@ li.danmaku-info-row.bpui-selecting,
 .channel-menu-itnl .item .name em,
 .security_content .close-btn:hover,
 .security_content .coupon-content-con .coupon-btn:hover,
-.reply-input .input-area .reply-submit-btn:hover
+.reply-input .input-area .reply-submit-btn:hover,
+.reply-input .input-area .reply-emoji-btn:hover,
+.reply-report .reason-choose .reason-group .list li input[type=radio]:checked:after,
+.reply-report .submit-btn button
 {
     background-color: var(--theme-color) !important;
 }
@@ -997,7 +1010,8 @@ li.danmaku-info-row.bpui-selecting,
 .security-left .on .security-nav-name,
 .security_content .security-list:hover .security-nav-name,
 .security_content .close-btn:hover,
-.reply-input .input-area .reply-submit-btn:hover
+.reply-input .input-area .reply-submit-btn:hover,
+.reply-input .input-area .reply-emoji-btn:hover
 {
     color: var(--foreground-color) !important;
 }
