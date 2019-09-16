@@ -340,6 +340,7 @@ declare global {
     foldComment: boolean,
     downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
     aria2RpcOption: RpcOption,
+    aria2RpcOptionSelectedProfile: string,
     aria2RpcOptionProfiles: RpcOptionProfile[],
     searchHistory: SearchHistoryItem[],
     seedsToCoins: boolean,

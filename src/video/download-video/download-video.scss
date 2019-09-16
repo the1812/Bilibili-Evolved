@@ -291,7 +291,7 @@
     flex-direction: column;
     align-items: stretch;
     color: var(--download-video-foreground);
-    background: var(--download-video-background);
+    background: #fff;
     bottom: 120%;
     left: 50%;
     cursor: initial;
@@ -303,7 +303,11 @@
     padding: 8px;
     z-index: 3;
     transition: 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    width: 100%;
 
+    body.dark & {
+      background: #282828;
+    }
     & > * {
       margin: 8px;
     }
@@ -321,6 +325,10 @@
     }
     input[type="text"]:focus {
       border-color: var(--theme-color);
+    }
+    .operations {
+      display: flex;
+      align-items: center;
     }
   }
   .rpc-settings-item {

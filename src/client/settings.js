@@ -138,6 +138,7 @@ export const settings = {
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
   aria2RpcOption: {...aria2RpcDefaultOption},
+  aria2RpcOptionSelectedProfile: '',
   aria2RpcOptionProfiles: [],
   searchHistory: [],
   seedsToCoins: true,

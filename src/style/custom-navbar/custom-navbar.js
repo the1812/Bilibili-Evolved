@@ -227,6 +227,7 @@ const unsupportedUrls = [
   "//t.bilibili.com/lottery/h5/index/#/result",
   "//member.bilibili.com/video/upload",
   "//space.bilibili.com/ajax/",
+  "//www.bilibili.com/h5/comment/",
 ]
 if (!supportedUrls.some(it => document.URL.includes(it))
   || unsupportedUrls.some(it => document.URL.includes(it))) {

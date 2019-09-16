@@ -501,8 +501,6 @@ async function loadWidget() {
   }, { once: true })
 }
 async function loadPanel() {
-  const VueDropDown = await import((() => './v-dropdown.vue')())
-  const VueCheckBox = await import((() => './v-checkbox.vue')())
   let workingDownloader: VideoDownloader
   const sizeCache = new Map<VideoFormat, number>()
   type ExportType = 'copyLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD'
@@ -516,8 +514,9 @@ async function loadPanel() {
   const panel = new Vue({
     el: '.download-video',
     components: {
-      'v-dropdown': VueDropDown,
-      'v-checkbox': VueCheckBox,
+      VDropdown: () => import('./v-dropdown.vue'),
+      VCheckbox: () => import('./v-checkbox.vue'),
+      RpcProfiles: () => import('./aria2-rpc-profiles.vue'),
     },
     data: {
       downloadSingle: true,
@@ -782,6 +781,14 @@ async function loadPanel() {
           this.rpcSettings.port = '6800'
         }
         settings.aria2RpcOption = this.rpcSettings
+        const profile = settings.aria2RpcOptionProfiles.find(p => p.name === settings.aria2RpcOptionSelectedProfile)
+        if (profile) {
+          Object.assign(profile, this.rpcSettings)
+          settings.aria2RpcOptionProfiles = settings.aria2RpcOptionProfiles
+        }
+      },
+      updateProfile(profile: RpcOptionProfile) {
+        this.rpcSettings = _.omit(profile, 'name') as RpcOption
       }
     }
   })
