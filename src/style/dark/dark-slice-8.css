@@ -19,7 +19,11 @@
 .international-home .bilibili-search-history,
 .security_content .close-btn,
 .security_content .coupon-wrapper .coupon-content,
-.security_content .title-right-link
+.security_content .title-right-link,
+.reply-bottom-menu-mask .more-ops,
+.reply-emoji-panel .emoji-cate,
+.reply-emoji-panel .emoji-cate a,
+.reply-emoji-panel .emoji-list
 {
     background-color: #222 !important;
 }
@@ -137,7 +141,14 @@ li.danmaku-info-row.bpui-selecting,
 .live-charge-box .tip-popup,
 .bui-swiper-wrap .bui-swiper-next,
 .bui-swiper-wrap .bui-swiper-pre,
-.security_content .coupon-content-con .coupon-btn
+.security_content .coupon-content-con .coupon-btn,
+.reply-input .input-area input,
+.reply-input .input-area .reply-emoji-btn,
+.reply-input .input-area .reply-submit-btn,
+.reply-report .reason-choose .reason-group .list li input[type=radio],
+.reply-report .submit-btn button:disabled,
+.reply-emoji-panel .emoji-cate a.on,
+.reply-emoji-panel .emoji-list .emoji-pager .pager-dot
 {
     background-color: #444 !important;
 }
@@ -193,11 +204,14 @@ li.danmaku-info-row.bpui-selecting,
 .container .info .date,
 .iframe-comp-container>div,
 .edit-article-wrap #edit-article-box,
-.page-content .-BiliFooter
+.page-content .-BiliFooter,
+.reply-emoji-panel .emoji-list .emoji-text:hover,
+#bp-app
 {
     background-color: transparent !important;
 }
-.security_content .coupon-wrapper
+.security_content .coupon-wrapper,
+.reply-item .sub-reply-preview
 {
     background: transparent !important;
 }
@@ -279,7 +293,9 @@ li.danmaku-info-row.bpui-selecting,
 .video-editor-ol-wrp .video-editor-ol-content a,
 .qa-area-ol-wrp .qa-area-ol-content a,
 .security_content .common-subtitle,
-.manga-card-horizontal .text-section .footer-text
+.manga-card-horizontal .text-section .footer-text,
+.dark .vote-left-time,
+.reply-dialog .subtitle
 {
     color: #aaa !important;
 }
@@ -483,7 +499,19 @@ li.danmaku-info-row.bpui-selecting,
 .security_content .title-package-name,
 .security_content .title-right-link,
 .security_content .coupon-content-con .coupon-btn,
-.app-layout .search-list .keyword-hinter
+.app-layout .search-list .keyword-hinter,
+.reply-item .info .name,
+.reply-bottom-menu-mask .more-ops .ops-list li,
+.reply-bottom-menu-mask .more-ops .ops-list li a,
+.reply-bottom-menu-mask .more-ops .cancel,
+.reply-input .input-area .reply-emoji-btn,
+.reply-input .input-area .reply-submit-btn,
+.dark input,
+.reply-report .reason-choose .reason-group .list li,
+.reply-report .submit-btn button:disabled,
+.reply-report .submit-btn button,
+.reply-emoji-panel .emoji-list .emoji-text .text-list span,
+.reply-dialog .title
 {
     color: #eee !important;
 }
@@ -563,7 +591,11 @@ li.danmaku-info-row.bpui-selecting,
 .guest-home .button-box button,
 .international-home .bilibili-search-history,
 .security_content .bcoin-wrapper,
-.security_content .title-right-link
+.security_content .title-right-link,
+.reply-bottom-menu-mask .more-ops .cancel,
+.reply-input .input-area .reply-emoji-btn,
+.reply-input .input-area .reply-submit-btn,
+.reply-report .reason-choose .reason-group .list li input[type=radio]
 {
     border-color: transparent !important;
 }
@@ -590,7 +622,9 @@ li.danmaku-info-row.bpui-selecting,
 .bili-search .bangumi-item,
 .bili-search .topic-item,
 .bili-search .article-item,
-.bili-search .pgc-item
+.bili-search .pgc-item,
+.reply-list .reply-item,
+.reply-bottom-menu-mask .more-ops .ops-list li
 {
     border-color: #444 !important
 }
@@ -671,7 +705,8 @@ li.danmaku-info-row.bpui-selecting,
 .ticket-tips-wrapper .ticket-tips-header span,
 .detail-content .comment .hot-icon span,
 .guest-wrapper .icon-guest,
-.calendar-date-body .wrap-content img
+.calendar-date-body .wrap-content img,
+.dark .checked
 {
     filter: var(--pink-image-filter) !important;
 }
@@ -808,7 +843,12 @@ li.danmaku-info-row.bpui-selecting,
 .bui-swiper-wrap .bui-swiper-pre:hover,
 .channel-menu-itnl .item .name em,
 .security_content .close-btn:hover,
-.security_content .coupon-content-con .coupon-btn:hover
+.security_content .coupon-content-con .coupon-btn:hover,
+.reply-input .input-area .reply-submit-btn:hover,
+.reply-input .input-area .reply-emoji-btn:hover,
+.reply-report .reason-choose .reason-group .list li input[type=radio]:checked:after,
+.reply-report .submit-btn button,
+.reply-emoji-panel .emoji-list .emoji-pager .pager-dot.on
 {
     background-color: var(--theme-color) !important;
 }
@@ -926,7 +966,9 @@ li.danmaku-info-row.bpui-selecting,
 .security_content .coupon-money-2:after,
 .security_content .coupon-money-1:after,
 .security_content .title-right-link:hover,
-.security_content .security-list-link-jump:hover
+.security_content .security-list-link-jump:hover,
+.sub-reply-preview .sub-preview-item a,
+.sub-reply-preview .show-more
 {
     color: var(--theme-color) !important;
 }
@@ -975,7 +1017,9 @@ li.danmaku-info-row.bpui-selecting,
 .security_content .coupon-content-con .coupon-btn:hover,
 .security-left .on .security-nav-name,
 .security_content .security-list:hover .security-nav-name,
-.security_content .close-btn:hover
+.security_content .close-btn:hover,
+.reply-input .input-area .reply-submit-btn:hover,
+.reply-input .input-area .reply-emoji-btn:hover
 {
     color: var(--foreground-color) !important;
 }
