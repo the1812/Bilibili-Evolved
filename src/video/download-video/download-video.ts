@@ -791,7 +791,7 @@ async function loadPanel() {
         setTimeout(() => this.saveRpcSettingsText = '保存配置', 2000)
       },
       updateProfile(profile: RpcOptionProfile) {
-        this.rpcSettings = _.omit(profile, 'name') as RpcOption
+        settings.aria2RpcOption = this.rpcSettings = _.omit(profile, 'name') as RpcOption
       }
     }
   })

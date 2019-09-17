@@ -61,15 +61,19 @@ export default {
   },
   methods: {
     migrateOldProfiles() {
-      const properties = Object.getOwnPropertyNames(settings.aria2RpcOption).filter(it => !it.startsWith('_'))
+      const properties = Object.getOwnPropertyNames(
+        settings.aria2RpcOption
+      ).filter(it => !it.startsWith('_'))
       properties.push('name')
       let migrated = false
       for (const profile of settings.aria2RpcOptionProfiles) {
-        properties.filter(p => !(p in profile)).forEach(p => {
-          profile[p] = settings.aria2RpcOption[p]
-          console.log(`migrated profile property '${p}'`)
-          migrated = true
-        })
+        properties
+          .filter(p => !(p in profile))
+          .forEach(p => {
+            profile[p] = settings.aria2RpcOption[p]
+            console.log(`migrated profile property '${p}'`)
+            migrated = true
+          })
       }
       if (migrated) {
         settings.aria2RpcOptionProfiles = settings.aria2RpcOptionProfiles
@@ -84,11 +88,12 @@ export default {
       this.$emit('profile-change', profile)
     },
     addProfile() {
-      const profile = {
+      const profile: RpcOptionProfile = {
         ...this.profiles.find(
           (p: RpcOptionProfile) => p.name === this.selectedProfile
         )
       }
+      profile.name = profile.name.replace(/[\d]+$/, '')
       if (
         this.profiles.some((p: RpcOptionProfile) => p.name === profile.name)
       ) {
