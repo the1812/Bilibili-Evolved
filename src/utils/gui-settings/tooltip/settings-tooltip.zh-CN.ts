@@ -97,6 +97,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["i18n", /*html*/`为界面中一些常用文本提供翻译.`],
   ["i18nLanguage", /*html*/`翻译的目标语言.`],
   ["customNavbar", /*html*/`启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.`],
+  ["customNavbarSeasonLogo", /*html*/`是否使用季节Logo代替普通的Logo.`],
   ["customNavbarFill", /*html*/`是否使用主题色填充顶栏.`],
   ["allNavbarFill", /*html*/`是否使用主题色填充其他的顶栏, 包括直播/相簿/会员购等.`],
   ["customNavbarShadow", /*html*/`是否为顶栏添加一层阴影效果.`],
