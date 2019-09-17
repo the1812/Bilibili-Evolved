@@ -206,7 +206,8 @@ li.danmaku-info-row.bpui-selecting,
 .edit-article-wrap #edit-article-box,
 .page-content .-BiliFooter,
 .reply-emoji-panel .emoji-list .emoji-text:hover,
-#bp-app
+#bp-app,
+.cc-body #app .container
 {
     background-color: transparent !important;
 }

@@ -34,6 +34,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>l</kbd> いいね
 - <kbd>c</kbd> コインを投げる
 - <kbd>s</kbd> お気に入り
+- <kbd>Shift + w</kbd> 後で見る
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 再生速度を調整する
 - <kbd>Shift + /</kbd> 再生速度をリセットする`],
     ['doubleClickFullscreen', /*html*/`ダブルクリックして全画面に切り替えることができます.ご注意ください<span>播放器触摸支持</span> - <span>启用双击控制</span>と共に使用できない.`],
