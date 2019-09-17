@@ -1,6 +1,8 @@
 # ScriptBlocker API
 脚本启动时, 会根据 `bilibiliEvolved.settings.scriptBlockPatterns` 中的信息来阻止其他脚本载入.
 
+> 似乎在 Firefox 中不起效果
+
 ## 基本用法
 ```JavaScript
 // 设置要阻止的脚本源, 可以为字符串或正则表达式, 构成数组存入 scriptBlockPatterns.
