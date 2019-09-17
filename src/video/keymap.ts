@@ -50,7 +50,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       } else if (key === '?') {
         video.playbackRate = 1
       } else if (key === 'w') {
-        const watchlater = dq('.video-toolbar .ops .watchlater') as HTMLSpanElement
+        const watchlater = dq('.video-toolbar .ops .watchlater,.more-ops-list .ops-watch-later') as HTMLSpanElement
         if (watchlater !== null) {
           watchlater.click()
         }
