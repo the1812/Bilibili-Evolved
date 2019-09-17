@@ -49,7 +49,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
         video.playbackRate = playbackRates.find(it => it < video.playbackRate) || playbackRates[0]
       } else if (key === '?') {
         video.playbackRate = 1
-      } else if (key === 'W') {
+      } else if (key === 'w') {
         const watchlater = dq('.video-toolbar .ops .watchlater') as HTMLSpanElement
         if (watchlater !== null) {
           watchlater.click()
