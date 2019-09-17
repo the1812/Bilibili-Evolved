@@ -336,7 +336,7 @@ const settings = {
   activityFilter: false,
   activityFilterPatterns: [],
   activityFilterTypes: [],
-  activityImageSaver: true,
+  activityImageSaver: false,
   scriptBlockPatterns: [],
   customNavbarSeasonLogo: false,
   cache: {},

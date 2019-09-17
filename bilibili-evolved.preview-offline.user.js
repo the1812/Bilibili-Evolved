@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      427.96
+// @version      428.06
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -337,7 +337,7 @@ const settings = {
   activityFilter: false,
   activityFilterPatterns: [],
   activityFilterTypes: [],
-  activityImageSaver: true,
+  activityImageSaver: false,
   scriptBlockPatterns: [],
   customNavbarSeasonLogo: false,
   cache: {},
