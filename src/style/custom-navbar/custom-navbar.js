@@ -298,7 +298,7 @@ class Logo extends NavbarComponent {
         'https://api.bilibili.com/x/web-show/res/locs?pf=0&ids=142'
       )
       if (json.code === 0) {
-        this.html = /*html*/`<img height="38" src="${json.data[142][0].litpic}">`
+        this.html = /*html*/`<img height="38" src="${json.data[142][0].litpic.replace('http:', 'https:')}">`
         return
       }
     }
