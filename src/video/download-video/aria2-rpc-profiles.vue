@@ -40,6 +40,7 @@ export default {
     Icon: () => import('../../style/icon.vue')
   },
   data() {
+    this.migrateOldProfiles()
     const profiles = [...settings.aria2RpcOptionProfiles]
     if (profiles.length === 0) {
       profiles.push(defaultProfile)
@@ -59,6 +60,21 @@ export default {
     }
   },
   methods: {
+    migrateOldProfiles() {
+      const properties = Object.getOwnPropertyNames(settings.aria2RpcOption).filter(it => !it.startsWith('_'))
+      properties.push('name')
+      let migrated = false
+      for (const profile of settings.aria2RpcOptionProfiles) {
+        properties.filter(p => !(p in profile)).forEach(p => {
+          profile[p] = settings.aria2RpcOption[p]
+          console.log(`migrated profile property '${p}'`)
+          migrated = true
+        })
+      }
+      if (migrated) {
+        settings.aria2RpcOptionProfiles = settings.aria2RpcOptionProfiles
+      }
+    },
     profileUpdate() {
       settings.aria2RpcOptionProfiles = this.profiles
       this.selectedProfile = settings.aria2RpcOptionSelectedProfile
@@ -84,7 +100,7 @@ export default {
         ) {
           suffix++
         }
-        profile.name += suffix.toString()
+        profile.name = profile.name + suffix.toString()
       }
       this.profiles.push(profile)
       settings.aria2RpcOptionProfiles = this.profiles

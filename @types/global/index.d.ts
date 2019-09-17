@@ -49,6 +49,7 @@ declare global {
     method: 'get' | 'post'
     skipByDefault: boolean
     maxDownloadLimit: string
+    [key: string]: any
   }
   interface RpcOptionProfile extends RpcOption {
     name: string
