@@ -1,12 +1,9 @@
 const style = `
-.card-list .card .expand-btn,
-.detail-card .card .expand-btn,
-.card-list .card .content-ellipsis,
-.detail-card .card .content-ellipsis {
+.card .main-content .expand-btn,
+.card .main-content .content-ellipsis {
   display: none !important;
 }
-.detail-card .card .content-full,
-.card-list .card .content-full {
+.card .main-content .content-full{
   display: block !important;
 }
 `
