@@ -544,6 +544,7 @@ Resource.manifest = {
     html: true,
     displayNames: {
       customNavbar: '使用自定义顶栏',
+      customNavbarSeasonLogo: '使用季节Logo',
       customNavbarFill: '主题色填充',
       customNavbarShadow: '投影',
       customNavbarCompact: '紧凑布局',

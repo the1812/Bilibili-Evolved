@@ -290,6 +290,7 @@ class Logo extends NavbarComponent {
     this.getLogo()
     this.href = `https://www.bilibili.com/`;
     this.touch = false;
+    addSettingsListener('customNavbarSeasonLogo', () => this.getLogo())
   }
   async getLogo () {
     if (settings.customNavbarSeasonLogo) {
