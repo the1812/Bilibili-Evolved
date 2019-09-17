@@ -27,7 +27,7 @@ class Batch {
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0',
             out: `${item.title}${indexNumber}.flv`,
             split: fragmentSplitFactor,
-            dir: option.dir || undefined,
+            dir: (option.baseDir + option.dir) || undefined,
             'max-download-limit': option.maxDownloadLimit || undefined,
           })
           const id = encodeURIComponent(`${item.title}${indexNumber}`)

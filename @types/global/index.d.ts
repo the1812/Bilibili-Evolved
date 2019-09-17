@@ -43,6 +43,7 @@ declare global {
   type Pattern = string | RegExp
   interface RpcOption {
     secretKey: string
+    baseDir: string
     dir: string
     host: string
     port: string

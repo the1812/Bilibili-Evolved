@@ -305,7 +305,7 @@ class VideoDownloader {
           'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0',
           out: `${getFriendlyTitle()}${indexNumber}${this.extension(fragment)}`,
           split: this.fragmentSplitFactor,
-          dir: option.dir || undefined,
+          dir: (option.baseDir + option.dir) || undefined,
           'max-download-limit': option.maxDownloadLimit || undefined,
         })
         const id = encodeURIComponent(`${getFriendlyTitle()}${indexNumber}`)
