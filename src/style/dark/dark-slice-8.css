@@ -296,7 +296,8 @@ li.danmaku-info-row.bpui-selecting,
 .security_content .common-subtitle,
 .manga-card-horizontal .text-section .footer-text,
 .dark .vote-left-time,
-.reply-dialog .subtitle
+.reply-dialog .subtitle,
+#page-index .channel .channel-item .small-item .video-desc
 {
     color: #aaa !important;
 }
@@ -849,7 +850,8 @@ li.danmaku-info-row.bpui-selecting,
 .reply-input .input-area .reply-emoji-btn:hover,
 .reply-report .reason-choose .reason-group .list li input[type=radio]:checked:after,
 .reply-report .submit-btn button,
-.reply-emoji-panel .emoji-list .emoji-pager .pager-dot.on
+.reply-emoji-panel .emoji-list .emoji-pager .pager-dot.on,
+.be-tags-container .tag.coop-tag
 {
     background-color: var(--theme-color) !important;
 }
