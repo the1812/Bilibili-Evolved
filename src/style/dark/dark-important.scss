@@ -1,19 +1,35 @@
+@import "./_dark-definitions";
+
+#disable-popup-modal,
+#vip-exchange-modal {
+  .vip-exchange .months button.disabled {
+    @include background-color("2");
+  }
+}
+
+.live-skin-coloration-area,
+.live-skin-coloration-area {
+  .live-skin-separate-area,
+  .live-skin-separate-area-hover:hover {
+    @include background-color("2");
+  }
+}
+
+.action-row {
+  .sch-pub-btn.publishing,
+  .sch-pub-btn.disabled,
+  .publish-btn.publishing,
+  .publish-btn.disabled {
+    @include background-color("2");
+  }
+}
 .link-footer,
 .payment-active,
 .app-body .section-block,
 .bl-button--primary:disabled,
-#disable-popup-modal .vip-exchange .months button.disabled,
-#vip-exchange-modal .vip-exchange .months button.disabled,
 .tab-list .tab-item.active:before,
-.live-skin-coloration-area .live-skin-separate-area,
-.live-skin-coloration-area .live-skin-separate-area-hover:hover,
-.action-row .sch-pub-btn.publishing,
-.action-row .sch-pub-btn.disabled,
-.action-row .publish-btn.publishing,
-.action-row .publish-btn.disabled,
-.player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-indicator
-{
-    background-color: #222 !important;
+.player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-indicator {
+  @include background-color("2");
 }
 .wrapper .elec-btn.disabled,
 .f-list-hover:hover,
@@ -32,62 +48,74 @@
 .main-container .media-info .media-right .media-tool-bar .btn-follow.active,
 .coupon-content-con .coupon-btn-disable,
 .common .bb-comment .no-login .comment-submit,
-.customize-wrp .select
-{
-    background-color: #444 !important;
+.customize-wrp .select {
+  @include background-color("4");
 }
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .bscroll-indicator
-{
-    background-color: #555 !important;
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .bscroll-indicator {
+  @include background-color("5");
 }
-.m-recommend-item div.box,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .bscroll-vertical-scrollbar.mousedown,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap:hover .bscroll-vertical-scrollbar,
-.player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-vertical-scrollbar,
-.player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-vertical-scrollbar.mousedown,
-.player-auxiliary-area .player-auxiliary-bscrollbar:hover .bscroll-vertical-scrollbar
-{
-    background-color: transparent !important;
+.player-auxiliary-area .player-auxiliary-bscrollbar {
+  .bscroll-vertical-scrollbar,
+  .bscroll-vertical-scrollbar.mousedown,
+  &:hover .bscroll-vertical-scrollbar {
+    @include background-color();
+  }
+}
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap {
+  .bscroll-vertical-scrollbar.mousedown,
+  &:hover .bscroll-vertical-scrollbar {
+    @include background-color();
+  }
+}
+.m-recommend-item div.box {
+  @include background-color();
 }
 
-blockquote,
-blockquote *,
-blockquote .color-blue-01,
-blockquote .color-blue-02,
-blockquote .color-blue-03,
-blockquote .color-blue-04,
-blockquote .color-gray-01,
-blockquote .color-gray-02,
-blockquote .color-gray-03,
-blockquote .color-green-01,
-blockquote .color-green-02,
-blockquote .color-green-03,
-blockquote .color-green-04,
-blockquote .color-lblue-01,
-blockquote .color-lblue-02,
-blockquote .color-lblue-03,
-blockquote .color-lblue-04,
-blockquote .color-pink-01,
-blockquote .color-pink-02,
-blockquote .color-pink-03,
-blockquote .color-pink-04,
-blockquote .color-purple-01,
-blockquote .color-purple-02,
-blockquote .color-purple-03,
-blockquote .color-purple-04,
-blockquote .color-yellow-01,
-blockquote .color-yellow-02,
-blockquote .color-yellow-03,
-blockquote .color-yellow-04,
-.status_box .status_btn.disabled,
-.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled,
-.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover,
-.live-skin-coloration-area .live-skin-normal-a-text:link,
-.live-skin-normal-a-text:visited,
-.live-skin-coloration-area .live-skin-normal-a-text,
-.live-skin-coloration-area .live-skin-normal-text
-{
-    color: #aaa !important;
+blockquote {
+  * {
+    @include color("a");
+  }
+  @each $color in "blue", "gray", "green", "lblue", "pink", "purple", "yellow" {
+    @each $value in "01", "02", "03", "04" {
+      .color-#{$color}-#{$value} {
+        @include color("a");
+      }
+    }
+  }
+}
+.open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled {
+  &,
+  &:hover {
+    @include color("a");
+  }
+}
+.live-skin-coloration-area {
+  .live-skin-normal-a-text {
+    &,
+    &:link,
+    &:visited {
+      @include color("a");
+    }
+  }
+  .live-skin-normal-text {
+    @include color("a");
+  }
+}
+.status_box .status_btn.disabled {
+  @include color("a");
+}
+.live-room-app .guard-rank-cntr {
+  .tabs.isHundred .item.active {
+    @include color("e");
+  }
+  &.hundred,
+  &.thousand {
+    .live-skin-main-a-text,
+    .page-box .live-skin-main-text,
+    .live-skin-highlight-text {
+      @include color("e");
+    }
+  }
 }
 .home-page .sticky-bar .bar-content .message,
 .cover .disabled-cover,
@@ -107,16 +135,8 @@ blockquote .color-yellow-04,
 .common .bb-comment .no-login .comment-submit,
 .customize-wrp .select,
 .manga-detail .episode-list-component .episode-list .list-data .list-item.last-read,
-.live-room-app .tabs.isHundred .item.active,
-.live-room-app .guard-rank-cntr.hundred .live-skin-main-a-text,
-.live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text,
-.live-room-app .guard-rank-cntr.hundred .page-box .live-skin-main-text,
-.live-room-app .guard-rank-cntr.thousand .page-box .live-skin-main-text,
-.live-room-app .guard-rank-cntr.hundred .live-skin-highlight-text,
-.live-room-app .guard-rank-cntr.thousand .live-skin-highlight-text,
-.popup-content-ctnr .bl-button--ghost
-{
-    color: #eee !important;
+.popup-content-ctnr .bl-button--ghost {
+  @include color("e");
 }
 
 .link-footer,
@@ -133,9 +153,8 @@ blockquote .color-yellow-04,
 .common .bb-comment .no-login .comment-submit,
 .popup-content-ctnr .bl-button--ghost:hover,
 .song-info .info-wrap .type-list .item-list .type-item.active,
-.enter-failure .password-input .pink-border
-{
-    border-color: transparent !important;
+.enter-failure .password-input .pink-border {
+  @include border-color();
 }
 
 .home-page .sticky-bar .bar-content .message:hover,
@@ -160,8 +179,8 @@ blockquote .color-yellow-04,
 .voucher-no-used .voucher-left-money:before,
 .detail-wrp .detail-content[data-v-00c9b213] p a span,
 .room-info-down-row .icon-label.hover-text-blue:hover .label,
-.room-introduction .edit-button:hover>.icon-font,
-.room-introduction .edit-button:hover>span,
+.room-introduction .edit-button:hover > .icon-font,
+.room-introduction .edit-button:hover > span,
 .im-popup .bp-popup-panel .title-ctnr .popup-title,
 .live-skin-coloration-area .live-skin-highlight-text,
 .live-skin-coloration-area .live-skin-normal-a-text:hover,
@@ -174,9 +193,8 @@ blockquote .color-yellow-04,
 .manga-detail .episode-list-component .episode-list .list-header .header-item.selected,
 .live-room-app .guard-rank-cntr.hundred .live-skin-main-a-text:hover,
 .live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text:hover,
-.container .video-panel .play-all .bilifont
-{
-    color: var(--theme-color) !important;
+.container .video-panel .play-all .bilifont {
+  @include theme-color();
 }
 
 .season-timeline .season-group.today,
@@ -188,9 +206,8 @@ blockquote .color-yellow-04,
 .page-list-box .page-input:hover,
 .live-skin-coloration-area .room-info-ctnr .info-section .live-skin-highlight-border,
 .popup-content-ctnr .bl-button--ghost,
-.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read
-{
-    border-color: var(--theme-color) !important;
+.manga-detail .episode-list-component .episode-list .list-data .list-item.last-read {
+  @include theme-border-color();
 }
 .season-timeline .season-group.today.is-published .group-time::before,
 .bg-blue,
@@ -206,9 +223,8 @@ blockquote .color-yellow-04,
 .live-skin-coloration-area .live-skin-highlight-bg,
 .popup-content-ctnr .bl-button--primary,
 .popup-content-ctnr .bl-button--ghost:hover,
-.song-info .info-wrap .type-list .item-list .type-item.active
-{
-    background-color: var(--theme-color) !important;
+.song-info .info-wrap .type-list .item-list .type-item.active {
+  @include theme-background-color();
 }
 .face-g-tab li.current,
 .current .tab-btn-link,
@@ -216,12 +232,10 @@ blockquote .color-yellow-04,
 .el-date-table td.end-date,
 .el-date-table td.start-date,
 .style-section .tag-block .tag-containers .style-tag:active,
-.popup-content-ctnr .bl-button--ghost:hover
-{
-    color: var(--foreground-color) !important;
+.popup-content-ctnr .bl-button--ghost:hover {
+  @include foreground-color();
 }
 
-#bilibiliPlayer
-{
-    box-shadow: 0 4px 8px 0 #0004;
+#bilibiliPlayer {
+  box-shadow: 0 4px 8px 0 #0004;
 }
