@@ -4,10 +4,9 @@ builder/dotnet/Properties
 .ts-output/
 .sass-output/
 package-lock.json
-dark.scss
 dark.css
-dark-template.scss
 dark-template.css
+_dark-template.scss
 min/dark-slice-*.min.scss
 min/dark-slice-*.min.css
 *.csx
