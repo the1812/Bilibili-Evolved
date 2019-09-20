@@ -124,11 +124,11 @@ namespace BilibiliEvolved.Build
             return new UglifyCss().Run(input);
         }
 
-        // public override ProjectBuilder Build(ProjectBuilder builder)
-        // {
-        //     base.Build(builder);
-        //     return builder.BuildDarkStyles();
-        // }
+        public override ProjectBuilder Build(ProjectBuilder builder)
+        {
+            base.Build(builder);
+            return builder.BuildDarkStyles();
+        }
     }
     sealed class JavascriptMinifier : ResourceMinifier
     {

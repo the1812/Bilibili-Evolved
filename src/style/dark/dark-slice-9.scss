@@ -1,0 +1,265 @@
+@import "./dark-definitions";
+@mixin level-badge($levels, $color) {
+  @each $num in $levels {
+    .level-#{$num} {
+      border-color: $color !important;
+    }
+    .level-#{$num} .label {
+      background-color: $color !important;
+    }
+    .level-#{$num} .level {
+      color: $color !important;
+    }
+  }
+}
+@include level-badge(5 6 7 8, #74b0f6);
+@include level-badge(9 10 11 12, #ba94f2);
+
+.van-popover .level-bar .level-progress {
+  background-color: #ffae00 !important;
+}
+
+#biliAppHomeSetting > div,
+.app-layout .manga-navbar,
+.manga-navbar .drop-list,
+.hover-panel-wrap,
+.hover-panel-wrapper,
+.van-popover .container,
+.container .play-all,
+.container .split-line .history-tip,
+.lang-change .lang-intro {
+  background-color: #222 !important;
+}
+.manga-navbar {
+  .manga-navbar .search-bar .search-bar-bg,
+  .manga-navbar .user-panel .drop-list .logout-btn-container,
+  .manga-navbar .drop-list .more-btn-container {
+    @include background-color("3");
+  }
+}
+.skeleton {
+  .skeleton-head,
+  .skeleton-focusbtn,
+  .skeleton-user-name,
+  .skeleton-time,
+  .skeleton-content {
+    @include background-color("3");
+  }
+}
+.yzly-content-ctnr .btn,
+.recommend-area-ctnr .rec-area-item,
+.container .level-intro,
+.van-popover .upload-item:hover,
+.container .play-all:hover,
+.van-popover .btn-box .btn.reg-btn:hover,
+.international-header .bili-banner {
+  @include background-color("3");
+}
+
+.grid-area-ctnr {
+  .hab-ctnr,
+  .news-ctnr,
+  .rank-ctnr {
+    @include background-color("4");
+  }
+}
+.s_tag .btn-add,
+#biliAppHomeSetting select,
+#biliAppHomeSetting input,
+.highlight-areas-ctnr .highlight-area-item,
+.van-popover .level-bar,
+.van-popover .btn-box .btn.reg-btn,
+.van-popper-history .view-all,
+.share-content .video-card {
+  @include background-color("4");
+}
+.love-card .header::after {
+  @include background-color("5");
+}
+.s_tag .btn-add span {
+  @include background-color("e");
+}
+.coin-dialog-mask .coin-operated .mc .mc-box {
+  @include background-color("f");
+}
+.card .risk-tip-content {
+  background-color: #624f27 !important;
+}
+/* a
+{
+  background-image: none !important;
+} */
+.manga-navbar .nav-list,
+.text-info-ctnr,
+.news-ctnr .more-link:hover,
+.news-ctnr .more-link,
+.news-content {
+  @include background-color();
+}
+/* a
+{
+  background: #fff !important;
+} */
+.manga-navbar .search-bar .placeholder-list .placeholder-item {
+  color: #888 !important;
+}
+
+.manga-navbar .data-list .list-container {
+  .empty-hinter,
+  .failure-hinter,
+  .loading-hinter {
+    @include color("a");
+  }
+}
+#biliAppHomeSetting label ~ span,
+.video-container .text-area .view-danmaku,
+.follow-dialog-wrap .special-tip,
+.center-box .line-3 .action-button,
+.highlight-areas-ctnr .area-desc,
+.rank-item .room-title,
+.bb-comment .comment-list .list-item .blacklist-font-color,
+.container .split-line .history-tip,
+.comment-bilibili-fold .comment-list .list-item .blacklist-font-color,
+.list-item .publish-time,
+.share-content .video-card .up-info .name,
+.share-content .video-card .up-info .tip {
+  @include color("a");
+}
+#biliAppHomeSetting {
+  select,
+  input,
+  a {
+    @include color("e");
+  }
+}
+
+.manga-navbar {
+  .search-bar .search-input,
+  .user-info-panel .user-name,
+  .user-info-panel .info-item,
+  .user-panel .drop-list .logout-btn-container .logout-button,
+  .drop-list .more-btn-container .more-button {
+    @include color("e");
+  }
+}
+
+.center-box .line-1 {
+  .name-field {
+    @include color("e");
+    a {
+      @include color("e");
+    }
+  }
+  .like-item {
+    @include color("e");
+  }
+}
+
+.manga-navbar-history-list .action-button,
+.manga-navbar-favourite-manga .action-button,
+.love-card .header,
+.banner-ctnr .banner-title,
+.item-ctnr .item-title,
+.tab-ctnr .tab-item,
+.rank-item .room-anchor,
+.area-detail-ctnr .area-title,
+.yzly-ctnr .yzly-title,
+.recommend-area-ctnr .title-text,
+.recommend-area-ctnr .area-name,
+.more-ctnr,
+.news-ctnr .more-link,
+.van-popover .coins .info a,
+.van-popper-login .title,
+.van-popover .btn-box .btn.reg-btn,
+.van-popper-history .view-all,
+.van-popper-upload .upload-item .bilifont,
+.news-content {
+  @include color("e");
+}
+.van-popover .vip:hover,
+.international-header .mini-upload:hover {
+  color: #fff !important;
+}
+
+$highlight-map: (
+  1: #a0a7dc,
+  2: #c7aade,
+  3: #deb29c,
+  4: #afb7e8,
+  5: #dcbf94,
+  6: #95c5a8
+);
+.highlight-areas-ctnr .highlight-area-item {
+  @each $nth, $color in $highlight-map {
+    &:nth-child(#{$nth}) .area-name {
+      color: $color !important;
+    }
+  }
+}
+#biliAppHomeSetting {
+  select,
+  input {
+    @include border-color();
+    border-radius: 4px;
+  }
+}
+.hover-panel-wrap,
+.recommend-area-ctnr .rec-area-item,
+.hover-panel-wrapper,
+.van-popover .btn-box .btn.reg-btn,
+.van-popper-history .view-all,
+.at-popup,
+.chat-popups-section .draw-full-ctnr {
+  @include border-color();
+}
+.van-popper-login .container {
+  @include border-color("4");
+}
+.manga-navbar .search-bar .confirm-btn .search-icon,
+.container .level-intro .svg-icon {
+  @include to-white();
+}
+.app-layout .manga-navbar {
+  box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px !important;
+}
+.highlight-areas-ctnr .highlight-area-item.hover {
+  box-shadow: 0 7px 11px 0 rgba(0, 0, 0, 0.18) !important;
+}
+.hover-panel-wrap {
+  box-shadow: 0 13px 20px 0 rgba(0, 0, 0, 0.22) !important;
+}
+.van-popper .popper__arrow {
+  display: none !important;
+}
+.aside-item.active .item-border,
+.aside-item:hover .item-border {
+  @include theme-border-color();
+}
+.aside-item::after {
+  border-right-color: var(--theme-color) !important;
+}
+.interact-dialog .btn,
+.rookie-guide .close-button,
+.video-control-show .bilibili-player-video-interactive-list .check:hover .big-round,
+#biliAppHomeSetting button,
+.van-popover .btn-box .btn,
+.van-popper-history .view-all:hover {
+  background-color: var(--theme-color) !important;
+}
+#biliAppHomeSetting h2,
+.video-desc .subtitle a,
+.tab-ctnr .tab-item:hover,
+.tab-ctnr .tab-item.activated,
+.more-ctnr:hover,
+.news-ctnr .more-link:hover,
+.van-popover .coins .info a:hover,
+.van-popper-upload .upload-item:hover .bilifont {
+  @include theme-color();
+}
+.interact-dialog .btn,
+.rookie-guide .close-button,
+#biliAppHomeSetting button,
+.van-popover .btn-box .btn,
+.van-popper-history .view-all:hover {
+  @include foreground-color();
+}
