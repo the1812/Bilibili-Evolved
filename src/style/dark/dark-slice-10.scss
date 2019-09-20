@@ -1,7 +1,9 @@
 @import "./dark-definitions";
 .coverNews-item {
-  & &-time,
   & &-title {
     @include color("e");
+  }
+  & &-time {
+    @include color("a");
   }
 }
