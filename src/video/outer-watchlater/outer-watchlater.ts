@@ -78,7 +78,7 @@
         tipText: '已从稍后再看移除',
       })
     }
-    if (success == false) {
+    if (success === false) {
       watchlaterButton.classList.toggle('on')
     }
   })
