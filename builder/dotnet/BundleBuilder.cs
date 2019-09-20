@@ -17,8 +17,13 @@ namespace BilibiliEvolved.Build
     {
       using (var cache = new BuildCache())
       {
+        var extensions = new string[] {
+          ".ts", ".js", ".css", ".scss", ".sass", ".vue", ".html", ".htm"
+        };
         var files = ResourceMinifier.GetFiles(file =>
           file.FullName.Contains("src" + Path.DirectorySeparatorChar) &&
+          extensions.Contains(file.Extension) &&
+          !file.Name.EndsWith(".d.ts") &&
           !file.FullName.Contains("client" + Path.DirectorySeparatorChar)
         );
         var changedFiles = files.Where(file => !cache.Contains(file)).ToArray();

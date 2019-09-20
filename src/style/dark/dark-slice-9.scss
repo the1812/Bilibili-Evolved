@@ -28,7 +28,7 @@
 .container .play-all,
 .container .split-line .history-tip,
 .lang-change .lang-intro {
-  background-color: #222 !important;
+  @include background-color("2");
 }
 .manga-navbar {
   .manga-navbar .search-bar .search-bar-bg,
@@ -96,12 +96,8 @@
 .news-content {
   @include background-color();
 }
-/* a
-{
-  background: #fff !important;
-} */
 .manga-navbar .search-bar .placeholder-list .placeholder-item {
-  color: #888 !important;
+  @include color("8");
 }
 
 .manga-navbar .data-list .list-container {
@@ -178,7 +174,7 @@
 }
 .van-popover .vip:hover,
 .international-header .mini-upload:hover {
-  color: #fff !important;
+  @include color("f");
 }
 
 $highlight-map: (
@@ -229,7 +225,7 @@ $highlight-map: (
   box-shadow: 0 13px 20px 0 rgba(0, 0, 0, 0.22) !important;
 }
 .van-popper .popper__arrow {
-  display: none !important;
+  @include hide();
 }
 .aside-item.active .item-border,
 .aside-item:hover .item-border {
@@ -244,7 +240,7 @@ $highlight-map: (
 #biliAppHomeSetting button,
 .van-popover .btn-box .btn,
 .van-popper-history .view-all:hover {
-  background-color: var(--theme-color) !important;
+  @include theme-background-color();
 }
 #biliAppHomeSetting h2,
 .video-desc .subtitle a,
