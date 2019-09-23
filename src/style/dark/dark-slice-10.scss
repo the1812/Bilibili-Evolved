@@ -72,8 +72,11 @@
 }
 .pay-note-panel {
   @include background-color("3");
-  .pay-note-panel .arrow-left,
-  .pay-note-panel .arrow-right {
+  .arrow-left,
+  .arrow-right {
     filter: invert(0.7) !important;
   }
+}
+.chat-history-panel .chat-history-list .chat-item.superChat-card-detail .card-item-middle-top {
+  @include background-color();
 }
