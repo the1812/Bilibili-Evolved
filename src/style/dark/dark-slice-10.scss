@@ -9,6 +9,7 @@
 }
 ._super-chat-dialog {
   .content-top {
+    @include border-color("5");
     .content-top-left {
       .text-desc {
         @include color("e");
@@ -25,8 +26,17 @@
         @include color("a");
       }
     }
-    .card-item-middle .card-item-middle-bottom .input-contain .card-input-message {
-      @include background-color();
+    .card-item-middle .card-item-middle-top .card-item-middle-top-right .price span {
+      @include color("a");
+    }
+    .card-item-middle {
+      .card-item-middle-top .card-item-middle-top-right {
+        @include color("e");
+      }
+      .card-item-middle-top,
+      .card-item-middle-bottom .input-contain .card-input-message {
+        @include background-color();
+      }
     }
   }
   .content-bottom {
@@ -42,7 +52,7 @@
     }
     .process {
       .vue-slider-dot-handle,
-      .vue-slider-process{
+      .vue-slider-process {
         @include theme-background-color();
       }
       .vue-slider-rail {
@@ -51,9 +61,9 @@
     }
     .button {
       @include background-color("2");
-        &:hover {
-          @include theme-background-color();
-        }
+      &:hover {
+        @include theme-background-color();
+      }
     }
   }
 }

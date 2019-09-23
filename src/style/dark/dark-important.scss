@@ -153,7 +153,8 @@ blockquote {
 .common .bb-comment .no-login .comment-submit,
 .popup-content-ctnr .bl-button--ghost:hover,
 .song-info .info-wrap .type-list .item-list .type-item.active,
-.enter-failure .password-input .pink-border {
+.enter-failure .password-input .pink-border,
+.tabs.isHundred .item {
   @include border-color();
 }
 
