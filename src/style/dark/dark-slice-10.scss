@@ -7,3 +7,57 @@
     @include color("a");
   }
 }
+._super-chat-dialog {
+  .content-top {
+    .content-top-left {
+      .text-desc {
+        @include color("e");
+      }
+      .icon-question {
+        @include to-white();
+      }
+    }
+  }
+  .content-middle .card-item {
+    .card-item-top {
+      .card-item-left,
+      .card-item-right {
+        @include color("a");
+      }
+    }
+    .card-item-middle .card-item-middle-bottom .input-contain .card-input-message {
+      @include background-color();
+    }
+  }
+  .content-bottom {
+    .ontent-bottom-up {
+      .inst,
+      span {
+        @include color("e");
+      }
+      .card-input-number {
+        @include background-color("4");
+        @include border-color("5");
+      }
+    }
+    .process {
+      .vue-slider-dot-handle,
+      .vue-slider-process{
+        @include theme-background-color();
+      }
+      .vue-slider-rail {
+        @include background-color("4");
+      }
+    }
+    .button {
+      @include background-color("2");
+        &:hover {
+          @include theme-background-color();
+        }
+    }
+  }
+}
+.pay-note-panel,
+.dialog-ctnr.bottom-left {
+  @include background-color("3");
+}
