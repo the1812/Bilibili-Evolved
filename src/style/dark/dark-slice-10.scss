@@ -65,6 +65,7 @@
       @include background-color("2");
       &:hover {
         @include theme-background-color();
+        @include foreground-color();
       }
     }
   }
@@ -81,4 +82,21 @@
 }
 .chat-history-panel .chat-history-list .chat-item.superChat-card-detail .card-item-middle-top {
   @include background-color();
+  .card-item-middle-top-right .name {
+    @include color("e");
+  }
+}
+.chaos-pk-rank {
+  .link-to-history {
+    @include color("a");
+  }
+  .rank .rank-name {
+    @include color("e");
+  }
+}
+.bl-button--primary:disabled {
+  @include color("e");
+}
+.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover {
+  @include foreground-color();
 }
