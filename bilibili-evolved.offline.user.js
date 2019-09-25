@@ -573,31 +573,35 @@ function loadResources () {
   Resource.root = 'https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/'
   Resource.all = {}
   Resource.displayNames = {}
-  Resource.reloadables = [
-    'useDarkStyle',
-    'hideBanner',
-    'customNavbar',
-    'playerShadow',
-    'narrowDanmaku',
-    'compactLayout',
-    'useCommentStyle',
-    'removeVideoTopMask',
-    'hideOldEntry',
-    'hideBangumiReviews',
-    'videoScreenshot',
-    'blurVideoControl',
-    'customControlBackground',
-    'harunaScale',
-    'removeLiveWatermark',
-    'framePlayback',
-    'hideCategory',
-    'fullTweetsTitle',
-    'fullActivityContent',
-  ]
+  // Resource.reloadables = [
+  //   'useDarkStyle',
+  //   'hideBanner',
+  //   'customNavbar',
+  //   'playerShadow',
+  //   'narrowDanmaku',
+  //   'compactLayout',
+  //   'useCommentStyle',
+  //   'removeVideoTopMask',
+  //   'hideOldEntry',
+  //   'hideBangumiReviews',
+  //   'videoScreenshot',
+  //   'blurVideoControl',
+  //   'customControlBackground',
+  //   'harunaScale',
+  //   'removeLiveWatermark',
+  //   'framePlayback',
+  //   'hideCategory',
+  //   'fullTweetsTitle',
+  //   'fullActivityContent',
+  // ]
+  Resource.reloadables = []
   for (const [key, data] of Object.entries(Resource.manifest)) {
     const resource = new Resource(data.path, { styles: data.styles, alwaysPreview: data.alwaysPreview })
     resource.key = key
     resource.dropdown = data.dropdown
+    if (data.reloadable) {
+      Resource.reloadables.push(key)
+    }
     if (data.displayNames) {
       resource.displayName = data.displayNames[key]
       Object.assign(Resource.displayNames, data.displayNames)
@@ -1399,6 +1403,7 @@ Resource.manifest = {
   },
   useDarkStyle: {
     path: 'dark-styles.min.js',
+    reloadable: true,
     alwaysPreview: true,
     styles: [
       'darkStyle',
@@ -1446,6 +1451,7 @@ Resource.manifest = {
   },
   hideBanner: {
     path: 'hide-banner.min.js',
+    reloadable: true,
     style: 'instant',
     displayNames: {
       hideBanner: '隐藏顶部横幅'
@@ -1496,18 +1502,21 @@ Resource.manifest = {
   },
   harunaScale: {
     path: 'haruna-scale.min.js',
+    reloadable: true,
     displayNames: {
       harunaScale: '缩放直播看板娘'
     }
   },
   removeLiveWatermark: {
     path: 'remove-watermark.min.js',
+    reloadable: true,
     displayNames: {
       removeLiveWatermark: '删除直播水印'
     }
   },
   fullTweetsTitle: {
     path: 'full-tweets-title.min.js',
+    reloadable: true,
     style: 'instant',
     displayNames: {
       fullTweetsTitle: '展开动态标题'
@@ -1550,12 +1559,14 @@ Resource.manifest = {
   },
   removeVideoTopMask: {
     path: 'remove-top-mask.min.js',
+    reloadable: true,
     displayNames: {
       removeVideoTopMask: '删除视频标题层'
     }
   },
   blurVideoControl: {
     path: 'blur-video-control.min.js',
+    reloadable: true,
     style: 'instant',
     displayNames: {
       blurVideoControl: '模糊视频控制栏背景'
@@ -1617,6 +1628,7 @@ Resource.manifest = {
   },
   customControlBackground: {
     path: 'custom-control-background.min.js',
+    reloadable: true,
     style: {
       key: 'customControlBackgroundStyle',
       condition: () => settings.customControlBackgroundOpacity > 0
@@ -1714,6 +1726,7 @@ Resource.manifest = {
   },
   compactLayout: {
     path: 'compact-layout.min.js',
+    reloadable: true,
     style: true,
     displayNames: {
       compactLayout: '首页使用紧凑布局'
@@ -1747,6 +1760,7 @@ Resource.manifest = {
   },
   useCommentStyle: {
     path: 'comment.min.js',
+    reloadable: true,
     style: 'important',
     displayNames: {
       useCommentStyle: '简化评论区'
@@ -1772,6 +1786,7 @@ Resource.manifest = {
   },
   framePlayback: {
     path: 'frame-playback.min.js',
+    reloadable: true,
     style: 'instant',
     html: true,
     displayNames: {
@@ -1836,6 +1851,7 @@ Resource.manifest = {
   },
   customNavbar: {
     path: 'custom-navbar.min.js',
+    reloadable: true,
     style: 'instant',
     html: true,
     displayNames: {
@@ -1864,24 +1880,28 @@ Resource.manifest = {
   },
   playerShadow: {
     path: 'player-shadow.min.js',
+    reloadable: true,
     displayNames: {
       playerShadow: '播放器投影'
     }
   },
   narrowDanmaku: {
     path: 'narrow-danmaku.min.js',
+    reloadable: true,
     displayNames: {
       narrowDanmaku: '强制保留弹幕栏'
     }
   },
   hideOldEntry: {
     path: 'hide-old-entry.min.js',
+    reloadable: true,
     displayNames: {
       hideOldEntry: '隐藏返回旧版'
     }
   },
   videoScreenshot: {
     path: 'screenshot.min.js',
+    reloadable: true,
     style: true,
     displayNames: {
       videoScreenshot: '启用视频截图'
@@ -1892,6 +1912,7 @@ Resource.manifest = {
   },
   hideBangumiReviews: {
     path: 'hide-bangumi-reviews.min.js',
+    reloadable: true,
     displayNames: {
       hideBangumiReviews: '隐藏番剧点评'
     }
@@ -1911,6 +1932,7 @@ Resource.manifest = {
   },
   hideCategory: {
     path: 'hide-category.min.js',
+    reloadable: true,
     style: 'instant',
     displayNames: {
       hideCategory: '隐藏分区栏',
@@ -1974,6 +1996,7 @@ Resource.manifest = {
   },
   fullActivityContent: {
     path: 'full-activity-content.min.js',
+    reloadable: true,
     displayNames: {
       fullActivityContent: '展开动态内容',
     },
@@ -1986,6 +2009,7 @@ Resource.manifest = {
   },
   selectableColumnText: {
     path: 'selectable-column-text.min.js',
+    reloadable: true,
     displayNames: {
       selectableColumnText: '专栏文字选择',
     },
