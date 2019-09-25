@@ -158,6 +158,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 延后(自动): 根据页面自动选择加载模式, 默认采用延后模式`],
   [`fullActivityContent`, /*html*/`不管内容多长, 总是完全展开动态的内容.`],
   [`activityImageSaver`, /*html*/`右键点击动态大图时, 将弹出带图片的消息方便保存.`],
+  [`selectableColumnText`, /*html*/`使专栏的文字可以选择.`],
 ]);
 export default {
   export: { toolTips },

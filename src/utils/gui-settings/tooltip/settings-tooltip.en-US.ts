@@ -129,6 +129,9 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - Delay: Load features after the original page has loaded
 - Simultaneous (Auto): Auto determine loading mode and prefer Simultaneous mode
 - Delay (Auto): Auto determine loading mode and prefer Delay mode`],
+  [`fullActivityContent`, `Always expand for full content of activities.`],
+  [`activityImageSaver`, `When viewing a save-restricted image in activities, you can right-click to get a toast with that image for saving.`],
+  [`selectableColumnText`, `Make texts in column selectable.`],
 ]);
 export default {
   export: { toolTips },
