@@ -161,6 +161,7 @@ export const settings = {
   activityImageSaver: false,
   scriptBlockPatterns: [],
   customNavbarSeasonLogo: false,
+  selectableColumnText: true,
   cache: {},
 }
 const fixedSettings = {

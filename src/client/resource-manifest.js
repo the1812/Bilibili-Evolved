@@ -687,6 +687,12 @@ Resource.manifest = {
     displayNames: {
       activityImageSaver: '解除动态存图限制',
     },
-  }
+  },
+  selectableColumnText: {
+    path: 'selectable-column-text.min.js',
+    displayNames: {
+      selectableColumnText: '专栏文字选择',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

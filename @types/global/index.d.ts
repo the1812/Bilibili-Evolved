@@ -365,6 +365,7 @@ declare global {
     activityImageSaver: boolean,
     scriptBlockPatterns: Pattern[],
     customNavbarSeasonLogo: boolean,
+    selectableColumnText: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
