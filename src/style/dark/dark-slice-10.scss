@@ -20,21 +20,21 @@
     }
   }
   .content-middle .card-item {
-    .card-item-top {
+    &-top {
       .card-item-left,
       .card-item-right {
         @include color("a");
       }
     }
-    .card-item-middle .card-item-middle-top .card-item-middle-top-right .price span {
+    &-middle .card-item-middle-top .card-item-middle-top-right .price span {
       @include color("a");
     }
-    .card-item-middle {
-      .card-item-middle-top .card-item-middle-top-right {
+    &-middle {
+      &-top .card-item-middle-top-right {
         @include color("e");
       }
-      .card-item-middle-top,
-      .card-item-middle-bottom .input-contain .card-input-message {
+      &-top,
+      &-bottom .input-contain .card-input-message {
         @include background-color();
       }
     }
@@ -51,12 +51,14 @@
       }
     }
     .process {
-      .vue-slider-dot-handle,
-      .vue-slider-process {
-        @include theme-background-color();
-      }
-      .vue-slider-rail {
-        @include background-color("4");
+      .vue-slider {
+        &-dot-handle,
+        &-process {
+          @include theme-background-color();
+        }
+        &-rail {
+          @include background-color("4");
+        }
       }
     }
     .button {

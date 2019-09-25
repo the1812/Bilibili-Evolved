@@ -29,6 +29,7 @@ namespace BilibiliEvolved.Build
                     .BuildClient()
                     .BuildPreview()
                     .BuildMaster()
+                    .GetBundleFiles()
                     .PrebuildVue()
                     .BuildTypeScripts()
                     .BuildSass()
