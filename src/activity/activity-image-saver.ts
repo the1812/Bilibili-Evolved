@@ -1,5 +1,5 @@
 (async () => {
-  if (document.domain !== 't.bilibili.com') {
+  if (document.domain !== 't.bilibili.com' && document.domain !== 'space.bilibili.com') {
     return
   }
   const unlock = (container: Element) => {
@@ -8,7 +8,12 @@
       console.log(container)
     } else {
       image.addEventListener('contextmenu', () => {
-        Toast.success(/*html*/`<img src="${image.src}" width="200">`, '解除动态存图限制')
+        setTimeout(() => {
+          const popupMessage = dq('.pop-message .toast-text')
+          if (popupMessage && popupMessage.innerHTML.includes('作者设置了禁止保存')) {
+            Toast.success(/*html*/`<img src="${image.src}" width="200">`, '解除动态存图限制')
+          }
+        }, 200)
       })
     }
   }
