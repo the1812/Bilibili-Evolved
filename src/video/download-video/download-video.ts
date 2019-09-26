@@ -90,24 +90,30 @@ class VideoFormat {
     this.internalName = internalName
     this.displayName = displayName
   }
-  async downloadInfo() {
+  async downloadInfo(dash = false) {
     const videoInfo = new VideoDownloader(this)
-    await videoInfo.fetchVideoInfo()
+    await videoInfo.fetchVideoInfo(dash)
     return videoInfo
   }
   static parseFormats(data: any): VideoFormat[] {
     const qualities = data.accept_quality
     const internalNames = data.accept_format.split(',')
     const displayNames = data.accept_description
-    const formats = []
-    while (qualities.length > 0) {
-      const format = new VideoFormat(
-        qualities.pop(),
-        internalNames.pop(),
-        displayNames.pop()
+    const formats = qualities.map((q: number, index: number) => {
+      return new VideoFormat(
+        q,
+        internalNames[index],
+        displayNames[index]
       )
-      formats.push(format)
-    }
+    })
+    // while (qualities.length > 0) {
+    //   const format = new VideoFormat(
+    //     qualities.pop(),
+    //     internalNames.pop(),
+    //     displayNames.pop()
+    //   )
+    //   formats.push(format)
+    // }
     return formats
   }
   static async getAvailableDashFormats(): Promise<VideoFormat[]> {
@@ -146,30 +152,33 @@ class VideoDownloader {
   get totalSize() {
     return this.fragments.map(it => it.size).reduce((acc, it) => acc + it)
   }
-  fetchVideoInfo() {
-    return new Promise((resolve, reject) => {
-      pageData.entity.getUrl(this.format.quality).then(url => {
-        const xhr = new XMLHttpRequest()
-        xhr.addEventListener('load', () => {
-          const json = JSON.parse(xhr.responseText.replace(/http:/g, 'https:'))
-          const data = json.data || json.result || json
-          if (data.quality !== this.format.quality) {
-            reject('获取下载链接失败, 请确认当前账号有下载权限后重试.')
-          }
-          const urls = data.durl
-          this.fragments = urls.map((it: any) => { return {
-            length: it.length,
-            size: it.size,
-            url: it.url,
-            backupUrls: it.backup_url
-          } as VideoDownloaderFragment})
-          resolve(this.fragments)
-        })
-        xhr.withCredentials = true
-        xhr.open('GET', url)
-        xhr.send()
+  async fetchVideoInfo(dash = false): Promise<VideoDownloaderFragment[]> {
+    if (!dash) {
+      const url = await pageData.entity.getUrl(this.format.quality)
+      const text = await Ajax.getTextWithCredentials(url)
+      const json = JSON.parse(text.replace(/http:/g, 'https:'))
+      const data = json.data || json.result || json
+      if (data.quality !== this.format.quality) {
+        throw new Error('获取下载链接失败, 请确认当前账号有下载权限后重试.')
+      }
+      const urls = data.durl
+      this.fragments = urls.map((it: any) => {
+        return {
+          length: it.length,
+          size: it.size,
+          url: it.url,
+          backupUrls: it.backup_url
+        } as VideoDownloaderFragment
       })
-    })
+    }
+    else {
+      const { dashToFragment, getDashInfo } = await import('./video-dash')
+      const dashes = await getDashInfo(pageData.aid, pageData.cid, this.format.quality)
+      const video = dashes.videoDashes.sort(descendingSort(d => d.bandWidth))[0]
+      const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
+      this.fragments = [dashToFragment(video), dashToFragment(audio)]
+    }
+    return this.fragments
   }
   updateProgress() {
     const progress = this.progressMap
@@ -347,10 +356,18 @@ ${it.url}
     }
   }
   extension(fragment?: VideoDownloaderFragment) {
-    return (fragment || this.fragments[0]).url
-      .indexOf('.flv') !== -1
-      ? '.flv'
-      : '.mp4'
+    const f = (fragment || this.fragments[0])
+    const match = [
+      '.flv',
+      '.mp4',
+      '.m4s',
+    ].find(it => f.url.includes(it))
+    if (match) {
+      return match
+    } else {
+      console.warn('No extension detected.')
+      return '.flv'
+    }
   }
   makeBlob(data: any, fragment?: VideoDownloaderFragment) {
     return new Blob(Array.isArray(data) ? data : [data], {
@@ -563,6 +580,9 @@ async function loadPanel() {
       selectedEpisodeCount() {
         return (this.episodeList as EpisodeItem[]).filter(item => item.checked).length
       },
+      dash() {
+        return this.dashModel.value === 'dash'
+      },
     },
     methods: {
       close() {
@@ -579,8 +599,10 @@ async function loadPanel() {
         } else {
           updatedFormats = await VideoFormat.getAvailableDashFormats()
         }
-        formats = updatedFormats
-        this.qualityModel.items = updatedFormats.map(f => f.displayName)
+        formats = updatedFormats;
+        [selectedFormat] = format
+        this.qualityModel.items = updatedFormats.map(f => f.displayName);
+        [this.qualityModel.value] = this.qualityModel.items
       },
       async formatChange() {
         const format = this.getFormat() as VideoFormat
@@ -591,7 +613,7 @@ async function loadPanel() {
         }
         try {
           this.size = '获取大小中'
-          const videoDownloader = await format.downloadInfo()
+          const videoDownloader = await format.downloadInfo(this.dash)
           this.size = videoDownloader.totalSize
           sizeCache.set(format, this.size)
         } catch (error) {
@@ -617,7 +639,7 @@ async function loadPanel() {
             return
           }
           const format = this.getFormat() as VideoFormat
-          const videoDownloader = await format.downloadInfo()
+          const videoDownloader = await format.downloadInfo(this.dash)
           videoDownloader.danmakuOption = this.danmakuModel.value
           switch (type) {
             case 'copyLink':
@@ -752,7 +774,7 @@ async function loadPanel() {
         const format = this.getFormat() as VideoFormat
         try {
           this.downloading = true
-          const videoDownloader = await format.downloadInfo()
+          const videoDownloader = await format.downloadInfo(this.dash)
           videoDownloader.videoSpeed.speedUpdate = speed => this.speed = speed
           videoDownloader.danmakuOption = this.danmakuModel.value
           videoDownloader.progress = percent => {
