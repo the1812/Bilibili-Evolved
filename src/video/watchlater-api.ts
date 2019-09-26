@@ -1,6 +1,6 @@
 export const toggleWatchlater = async (aid: string, add: boolean) => {
   const api = add ? 'https://api.bilibili.com/x/v2/history/toview/add' : 'https://api.bilibili.com/x/v2/history/toview/del'
-  const csrf = document.cookie.replace(/(?:(?:^|.*\s*)bili_jct\s*\=\s*([^]*).*$)|^.*$/, '$1')
+  const csrf = getCsrf()
   const responseText = await Ajax.postTextWithCredentials(api, `aid=${aid}&csrf=${csrf}`)
   const response = JSON.parse(responseText) as {
     code: number

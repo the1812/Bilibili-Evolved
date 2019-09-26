@@ -47,10 +47,9 @@
     }
   }
   class WatchlaterProvider extends DeadVideoInfoProvider {
-    static csrf = document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
     private async toggleWatchlater(add: boolean, aids: string[]) {
       for (const aid of aids) {
-        await Ajax.postTextWithCredentials(`https://api.bilibili.com/x/v2/history/toview/${add ? 'add' : 'del'}`, `aid=${aid}&csrf=${WatchlaterProvider.csrf}`)
+        await Ajax.postTextWithCredentials(`https://api.bilibili.com/x/v2/history/toview/${add ? 'add' : 'del'}`, `aid=${aid}&csrf=${getCsrf()}}`)
       }
     }
     async queryInfo(aids: string[]) {

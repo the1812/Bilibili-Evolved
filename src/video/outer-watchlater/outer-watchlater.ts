@@ -5,7 +5,7 @@
   await SpinQuery.condition(() => document.querySelector('.video-toolbar .ops .collect'), it => {
     return it !== null && (it as HTMLElement).innerText !== '--'
   })
-  const csrf = document.cookie.replace(/(?:(?:^|.*\s*)bili_jct\s*\=\s*([^]*).*$)|^.*$/, '$1')
+  const csrf = getCsrf()
   const favoriteButton = document.querySelector('.video-toolbar .ops .collect')
   if (!favoriteButton) {
     return

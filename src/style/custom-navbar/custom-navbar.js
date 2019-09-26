@@ -560,8 +560,8 @@ class UserInfo extends NavbarComponent {
     this.href = "https://space.bilibili.com";
     this.html = /*html*/`
       <div class="user-face-container">
-        <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-face"></img>
-        <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-pendant"></img>
+        <img src="${EmptyImageUrl}" class="user-face"></img>
+        <img src="${EmptyImageUrl}" class="user-pendant"></img>
       </div>
     `;
     this.popupHtml = /*html*/`

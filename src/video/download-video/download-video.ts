@@ -302,7 +302,7 @@ class VideoDownloader {
         params.push([fragment.url])
         params.push({
           referer: document.URL.replace(window.location.search, ''),
-          'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0',
+          'user-agent': UserAgent,
           out: `${getFriendlyTitle()}${indexNumber}${this.extension(fragment)}`,
           split: this.fragmentSplitFactor,
           dir: (option.baseDir + option.dir) || undefined,
@@ -328,7 +328,7 @@ ${this.fragments.map((it, index) => {
         return `
 ${it.url}
   referer=${document.URL.replace(window.location.search, '')}
-  user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0
+  user-agent=${UserAgent}
   out=${getFriendlyTitle()}${indexNumber}${this.extension(it)}
   split=${this.fragmentSplitFactor}
   `.trim()
@@ -520,7 +520,7 @@ async function loadPanel() {
     },
     data: {
       downloadSingle: true,
-      coverUrl: 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>',
+      coverUrl: EmptyImageUrl,
       aid: pageData.aid,
       cid: pageData.cid,
       dashModel: {

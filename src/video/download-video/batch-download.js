@@ -24,7 +24,7 @@ class Batch {
           params.push([fragment.url])
           params.push({
             referer: document.URL.replace(window.location.search, ''),
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0',
+            'user-agent': UserAgent,
             out: `${item.title}${indexNumber}.flv`,
             split: fragmentSplitFactor,
             dir: (option.baseDir + option.dir) || undefined,
@@ -47,7 +47,7 @@ ${json.map(item => {
     return `
 ${f.url}
   referer=${item.referer}
-  user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0
+  user-agent=${UserAgent}
   out=${item.title}.flv
   split=${fragmentSplitFactor}
    `.trim()
