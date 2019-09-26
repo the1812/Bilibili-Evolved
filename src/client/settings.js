@@ -163,6 +163,7 @@ export const settings = {
   customNavbarSeasonLogo: false,
   selectableColumnText: true,
   downloadVideoFormat: 'flv',
+  enableDashDownload: false,
   cache: {},
 }
 const fixedSettings = {

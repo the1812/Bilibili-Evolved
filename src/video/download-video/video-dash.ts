@@ -20,7 +20,7 @@ export const dashToFragment = (dash: AudioDash): VideoDownloaderFragment => {
     url: dash.downloadUrl,
     backupUrls: dash.backupUrls,
     length: dash.duration,
-    size: dash.bandWidth,
+    size: Math.trunc(dash.bandWidth * dash.duration / 8),
   }
 }
 export const getDashInfo = async (aid: string | number, cid: string | number, quality: number) => {
@@ -38,7 +38,7 @@ export const getDashInfo = async (aid: string | number, cid: string | number, qu
   }
   const qualityTexts = json.result.accept_description as string[]
   const qualityText = qualityTexts[qualities.indexOf(quality)]
-  const duration = json.result.dash
+  const duration = json.result.dash.duration
   const videoDashes: VideoDash[] = json.result.dash.video
     .filter((d: any) => d.id === quality)
     .map((d: any) => {

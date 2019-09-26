@@ -367,6 +367,7 @@ declare global {
     customNavbarSeasonLogo: boolean,
     selectableColumnText: boolean,
     downloadVideoFormat: 'flv' | 'dash',
+    enableDashDownload: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

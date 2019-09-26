@@ -563,6 +563,7 @@ async function loadPanel() {
       showRpcSettings: false,
       busy: false,
       saveRpcSettingsText: '保存配置',
+      enableDash: settings.enableDashDownload,
     },
     computed: {
       displaySize() {
