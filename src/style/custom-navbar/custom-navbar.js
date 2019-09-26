@@ -560,8 +560,8 @@ class UserInfo extends NavbarComponent {
     this.href = "https://space.bilibili.com";
     this.html = /*html*/`
       <div class="user-face-container">
-        <img src="${EmptyImageUrl}" class="user-face"></img>
-        <img src="${EmptyImageUrl}" class="user-pendant"></img>
+        <img src='${EmptyImageUrl}' class="user-face"></img>
+        <img src='${EmptyImageUrl}' class="user-pendant"></img>
       </div>
     `;
     this.popupHtml = /*html*/`
