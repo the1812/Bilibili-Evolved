@@ -714,5 +714,11 @@ Resource.manifest = {
       selectableColumnText: '专栏文字选择',
     },
   },
+  watchlaterExpireWarnings: {
+    path: 'watchlater-expire-warnings.min.js',
+    displayNames: {
+      watchlaterExpireWarnings: '稍后再看期限提醒',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

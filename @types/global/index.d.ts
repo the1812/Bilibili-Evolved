@@ -368,6 +368,7 @@ declare global {
     selectableColumnText: boolean,
     downloadVideoFormat: 'flv' | 'dash',
     enableDashDownload: boolean,
+    watchlaterExpireWarnings: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
