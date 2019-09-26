@@ -162,6 +162,7 @@ export const settings = {
   scriptBlockPatterns: [],
   customNavbarSeasonLogo: false,
   selectableColumnText: true,
+  downloadVideoFormat: 'flv',
   cache: {},
 }
 const fixedSettings = {

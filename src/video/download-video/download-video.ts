@@ -1,5 +1,6 @@
 import { getFriendlyTitle, formatTitle } from '../title'
 import { VideoInfo, DanmakuInfo } from '../video-info'
+import { VideoDownloaderFragment } from './video-downloader-fragment';
 
 interface PageData {
   entity: Video
@@ -44,6 +45,9 @@ class Video {
     this.menuPanel.classList.remove('error')
     this.resetMenuClass()
   }
+  async getDashUrl(quality?: number): Promise<string> {
+    throw new Error('video dash is not supported')
+  }
   async getUrl(quality?: number) {
     if (quality) {
       return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
@@ -53,6 +57,13 @@ class Video {
   }
 }
 class Bangumi extends Video {
+  async getDashUrl(quality?: number) {
+    if (quality) {
+      return `https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&qn=${quality}&otype=json&fourk=1&fnval=16`
+    } else {
+      return `https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&otype=json&fourk=1&fnval=16`
+    }
+  }
   async getUrl(quality?: number) {
     if (quality) {
       return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
@@ -84,49 +95,37 @@ class VideoFormat {
     await videoInfo.fetchVideoInfo()
     return videoInfo
   }
-  static get availableFormats(): Promise<VideoFormat[]> {
-    return new Promise((resolve, reject) => {
-      pageData.entity.getUrl().then(url => {
-        const xhr = new XMLHttpRequest()
-        xhr.addEventListener('load', () => {
-          const json = JSON.parse(xhr.responseText)
-          if (json.code !== 0) {
-            reject('获取清晰度信息失败.')
-            return
-          }
-          const data = json.data || json.result || json
-          const qualities = data.accept_quality
-          const internalNames = data.accept_format.split(',')
-          const displayNames = data.accept_description
-          const formats = []
-          while (qualities.length > 0) {
-            const format = new VideoFormat(
-              qualities.pop(),
-              internalNames.pop(),
-              displayNames.pop()
-            )
-            formats.push(format)
-          }
-          resolve(formats.reverse())
-        })
-        xhr.addEventListener('error', () => reject(`获取清晰度信息失败.`))
-        xhr.withCredentials = true
-        xhr.open('GET', url)
-        xhr.send()
-      })
-    })
+  static parseFormats(data: any): VideoFormat[] {
+    const qualities = data.accept_quality
+    const internalNames = data.accept_format.split(',')
+    const displayNames = data.accept_description
+    const formats = []
+    while (qualities.length > 0) {
+      const format = new VideoFormat(
+        qualities.pop(),
+        internalNames.pop(),
+        displayNames.pop()
+      )
+      formats.push(format)
+    }
+    return formats
   }
-}
-class VideoDownloaderFragment {
-  length: number
-  size: number
-  url: string
-  backupUrls: string[]
-  constructor(length: number, size: number, url: string, backupUrls: string[]) {
-    this.length = length
-    this.size = size
-    this.url = url
-    this.backupUrls = backupUrls
+  static async getAvailableDashFormats(): Promise<VideoFormat[]> {
+    const url = await pageData.entity.getDashUrl()
+    const json = await Ajax.getJsonWithCredentials(url)
+    if (json.code !== 0) {
+      throw new Error('获取清晰度信息失败.')
+    }
+    return VideoFormat.parseFormats(json.result)
+  }
+  static async getAvailableFormats(): Promise<VideoFormat[]> {
+    const url = await pageData.entity.getUrl()
+    const json = await Ajax.getJsonWithCredentials(url)
+    if (json.code !== 0) {
+      throw new Error('获取清晰度信息失败.')
+    }
+    const data = json.data || json.result || json
+    return VideoFormat.parseFormats(data)
   }
 }
 class VideoDownloader {
@@ -158,11 +157,12 @@ class VideoDownloader {
             reject('获取下载链接失败, 请确认当前账号有下载权限后重试.')
           }
           const urls = data.durl
-          this.fragments = urls.map((it: any) => new VideoDownloaderFragment(
-            it.length, it.size,
-            it.url,
-            it.backup_url
-          ))
+          this.fragments = urls.map((it: any) => { return {
+            length: it.length,
+            size: it.size,
+            url: it.url,
+            backupUrls: it.backup_url
+          } as VideoDownloaderFragment})
           resolve(this.fragments)
         })
         xhr.withCredentials = true
@@ -482,7 +482,7 @@ async function loadPageData() {
     pageData.entity = new Video()
   }
   try {
-    formats = await VideoFormat.availableFormats
+    formats = await VideoFormat.getAvailableFormats()
   } catch (error) {
     return false
   }
@@ -523,6 +523,10 @@ async function loadPanel() {
       coverUrl: 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>',
       aid: pageData.aid,
       cid: pageData.cid,
+      dashModel: {
+        value: settings.downloadVideoFormat,
+        items: ['flv', 'dash'],
+      },
       qualityModel: {
         value: selectedFormat!.displayName,
         items: formats.map(f => f.displayName)
@@ -566,6 +570,17 @@ async function loadPanel() {
       },
       danmakuOptionChange() {
         settings.downloadVideoDefaultDanmaku = this.danmakuModel.value
+      },
+      async dashChange() {
+        const format = this.dashModel.value
+        let updatedFormats = []
+        if (format === 'flv') {
+          updatedFormats = await VideoFormat.getAvailableFormats()
+        } else {
+          updatedFormats = await VideoFormat.getAvailableDashFormats()
+        }
+        formats = updatedFormats
+        this.qualityModel.items = updatedFormats.map(f => f.displayName)
       },
       async formatChange() {
         const format = this.getFormat() as VideoFormat
@@ -813,7 +828,7 @@ async function loadPanel() {
     await videoInfo.fetchInfo()
     panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:')
 
-    formats = await VideoFormat.availableFormats;
+    formats = await VideoFormat.getAvailableFormats();
     [selectedFormat] = formats
     panel.qualityModel = {
       value: selectedFormat.displayName,

@@ -366,6 +366,7 @@ declare global {
     scriptBlockPatterns: Pattern[],
     customNavbarSeasonLogo: boolean,
     selectableColumnText: boolean,
+    downloadVideoFormat: 'flv' | 'dash',
     latestVersionLink: string,
     currentVersion: string,
   }
