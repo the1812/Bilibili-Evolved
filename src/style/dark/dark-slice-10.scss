@@ -100,3 +100,14 @@
 .live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover {
   @include foreground-color();
 }
+.extension-wrapper .dark {
+  .vote-left-time {
+    @include color("a");
+  }
+  input {
+    @include color("e");
+  }
+  .checked {
+    filter: var(--pink-image-filter) !important;
+  }
+}
