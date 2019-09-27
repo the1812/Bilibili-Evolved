@@ -1,8 +1,4 @@
 declare global {
-  function GM_addValueChangeListener(name: string, valueChangeListener: (name: string, oldValue: any, newValue: any, remote: boolean) => void): number;
-  function GM_setClipboard(data: any, info: string | { type?: string, mimetype?: string }): void;
-  function GM_setValue(name: string, value: any): void;
-  function GM_getValue<T>(name: string, defaultValue?: T): T;
   interface MonkeyXhrResponse {
     finalUrl: string
     readyState: number
@@ -372,6 +368,10 @@ declare global {
     latestVersionLink: string,
     currentVersion: string,
   }
+  function GM_addValueChangeListener(name: string, valueChangeListener: (name: string, oldValue: any, newValue: any, remote: boolean) => void): number;
+  function GM_setClipboard(data: any, info: string | { type?: string, mimetype?: string }): void;
+  function GM_setValue(name: keyof BilibiliEvolvedSettings, value: any): void;
+  function GM_getValue<T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T): T;
   const settings: BilibiliEvolvedSettings;
   const customNavbarDefaultOrders: CustomNavbarOrders;
   const aria2RpcDefaultOption: RpcOption;
