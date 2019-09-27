@@ -429,7 +429,7 @@
 <details>
 <summary><strong>解除动态存图限制</strong></summary>
 
-右键点击动态大图时, 将弹出带图片的消息方便保存.
+右键点击动态大图时, 如果这张图的右键菜单被禁止了, 将弹出带图片的消息方便保存.
 
 </details>
 <details>
@@ -547,6 +547,18 @@
 在附加功能中添加`瓜子换硬币`的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.
 
 </details>
+<details>
+<summary><strong>直播间自动领奖</strong></summary>
+
+在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速.
+
+</details><details>
+<summary><strong>专栏文字选择</strong></summary>
+
+使专栏的文字可以选择.
+
+</details>
+
 
 <h2 align="center">触摸</h2>
 <div align="center">为支持触屏的设备特别设计的功能</div>
