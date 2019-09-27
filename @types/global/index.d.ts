@@ -144,12 +144,15 @@ declare global {
     static select<T>(query: () => T, action: (queryResult: T) => void, failed?: () => void): void;
     static select<T>(query: () => T): Promise<T>;
     static select(query: string): Promise<HTMLElement | null>;
+    static select(query: string, action: (queryResult: HTMLElement) => void, failed?: () => void): void;
     static any<T>(query: () => T, action: (queryResult: T) => void, failed?: () => void): void;
     static any<T>(query: () => T): Promise<T>;
-    static any(query: string): Promise<any>;
+    static any(query: string): Promise<JQuery>;
+    static any(query: string, action: (queryResult: JQuery) => void, failed?: () => void): void;
     static count<T>(query: () => T, count: number, success: (queryResult: T) => void, failed?: () => void): void;
     static count<T>(query: () => T, count: number): Promise<T>;
     static count(query: string, count: number): Promise<NodeListOf<Element>>;
+    static count(query: string, count: number, success: (queryResult: NodeListOf<Element>) => void, failed?: () => void): Promise<void>;
     static unsafeJquery(action: () => void, failed?: () => void): void;
     static unsafeJquery(): Promise<void>;
   }
@@ -308,6 +311,7 @@ declare global {
       guardPurchase: boolean,
       popup: boolean,
       skin: boolean,
+      [key: string]: boolean,
     },
     customNavbar: boolean,
     customNavbarFill: boolean,

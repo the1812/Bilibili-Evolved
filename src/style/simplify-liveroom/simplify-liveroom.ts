@@ -13,49 +13,66 @@ const displayNames = {
   popup: "抽奖提示",
   skin: "房间皮肤",
 }
-let skinDisabled = settings.simplifyLiveroomSettings.skin;
-const skinSelectors = [
-  "#head-info-vm",
-  "#gift-control-vm",
-  "#rank-list-vm",
-  "#rank-list-ctnr-box",
-  ".gift-panel.base-panel",
-  ".gift-panel.extend-panel",
-  ".seeds-wrap>div:first-child",
-  ".gift-section>div:last-child",
-  ".z-gift-package>div>div",
-  ".right-action"
-];
-const skinClass = "live-skin-coloration-area";
-skinSelectors.forEach(selector => {
-  SpinQuery.select(
-    selector,
-    skin => {
-      Observer.attributes(selector, records => {
-        records.forEach(record => {
-          if (record.attributeName === "class") {
-            // console.log("Observed class change: ", record);
-            if (skinDisabled && skin.classList.contains(skinClass)) {
-              skin.classList.remove(skinClass);
-            }
-            else if (!skinDisabled && !skin.classList.contains(skinClass)) {
-              skin.classList.add(skinClass);
-            }
-          }
-        });
-      });
-    });
-});
-const setBodyClass = (checked, key) => {
-  document.body.classList[checked ? "add" : "remove"](`simplify-${key}`);
-  if (key === "skin") {
-    skinDisabled = checked;
+class SkinManager {
+  skinDisabled = settings.simplifyLiveroomSettings.skin
+  skinSelectors: string[]
+  skinClass: string
+  constructor(skinSelectors: string[], skinClass: string) {
+    this.skinSelectors = skinSelectors
+    this.skinClass = skinClass
     skinSelectors.forEach(selector => {
       SpinQuery.select(
         selector,
-        skin => skin.classList[checked ? "remove" : "add"]("live-skin-coloration-area")
-      );
-    });
+        skin => {
+          Observer.attributes(selector, records => {
+            records.forEach(record => {
+              if (record.attributeName === 'class') {
+                if (this.skinDisabled && skin.classList.contains(skinClass)) {
+                  skin.classList.remove(skinClass)
+                }
+                else if (!this.skinDisabled && !skin.classList.contains(skinClass)) {
+                  skin.classList.add(skinClass)
+                }
+              }
+            })
+          })
+        })
+    })
+  }
+  setSkin(enable: boolean) {
+    this.skinDisabled = !enable
+    this.skinSelectors.forEach(selector => {
+      SpinQuery.select(
+        selector,
+        skin => skin.classList[enable ? 'add' : 'remove'](this.skinClass)
+      )
+    })
+  }
+}
+const skins = [
+  new SkinManager([
+    '#head-info-vm',
+    '#gift-control-vm',
+    '#rank-list-vm',
+    '#rank-list-ctnr-box',
+    '.gift-panel.base-panel',
+    '.gift-panel.extend-panel',
+    '.seeds-wrap>div:first-child',
+    '.gift-section>div:last-child',
+    '.z-gift-package>div>div',
+    '.right-action'
+  ], 'live-skin-coloration-area'),
+  new SkinManager([
+    '.rank-list-ctnr .tabs'
+  ], 'isHundred'),
+  new SkinManager([
+    '.rank-list-ctnr .tab-content > div'
+  ], 'hundred'),
+]
+const setBodyClass = (checked: boolean, key: string) => {
+  document.body.classList[checked ? "add" : "remove"](`simplify-${key}`);
+  if (key === "skin") {
+    skins.forEach(it => it.setSkin(!checked))
   }
 };
 const isLiveroom = () => document.URL.startsWith(`https://live.bilibili.com/`)
@@ -83,11 +100,11 @@ export default {
       </div>
     `,
     success: () => {
-      const button = document.querySelector("#simplify-liveroom");
-      const mask = document.querySelector(".gui-settings-mask");
+      const button = document.querySelector("#simplify-liveroom") as HTMLButtonElement
+      const mask = document.querySelector(".gui-settings-mask") as HTMLElement
       button.addEventListener("click", e => {
-        const settingsList = document.querySelector(".simplify-liveroom-settings");
-        if (settingsList.contains(e.target) || e.target === settingsList) {
+        const settingsList = document.querySelector(".simplify-liveroom-settings") as HTMLElement
+        if (settingsList.contains(e.target as Node) || e.target === settingsList) {
           return;
         }
         settingsList.classList.toggle("opened");
@@ -106,15 +123,13 @@ export default {
           }),
         },
         methods: {
-          itemClick (item) {
+          itemClick(item: { key: string, name: string, checked: boolean }) {
             item.checked = !item.checked;
             setBodyClass(item.checked, item.key);
             settings.simplifyLiveroomSettings = Object.assign(
               settings.simplifyLiveroomSettings, {
-                [item.key]: item.checked,
-              });
-            // settings.simplifyLiveroomSettings[item.key] = item.checked;
-            // GM_setValue("simplifyLiveroomSettings", settings.simplifyLiveroomSettings);
+              [item.key]: item.checked,
+            });
           },
         },
       });
