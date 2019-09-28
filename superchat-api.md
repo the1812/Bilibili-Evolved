@@ -1,3 +1,4 @@
+可能会查询直播间是否能够使用SuperChat, 顺带返回当前挂在上面的留言
 https://api.live.bilibili.com/av/v1/SuperChat/enable?room_id=21547895
 ```json
 {
@@ -101,6 +102,53 @@ https://api.live.bilibili.com/av/v1/SuperChat/enable?room_id=21547895
 }
 ```
 
+仅查询留言列表
+https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=21547895
+```json
+{
+  "code": 0,
+  "msg": "success",
+  "message": "success",
+  "data": {
+    "list": [
+      {
+        "id": 2566,
+        "uid": 52608326,
+        "background_image": "https://i0.hdslb.com/bfs/live/1aee2d5e9e8f03eed462a7b4bbfd0a7128bbc8b1.png",
+        "background_color": "#FFF4FB",
+        "background_icon": "",
+        "background_bottom_color": "#86105D",
+        "background_price_color": "#AD5990",
+        "font_color": "",
+        "price": 100,
+        "rate": 1000,
+        "time": 232,
+        "start_time": 1569679412,
+        "end_time": 1569679712,
+        "message": "花丸世界一かわいい！！！！！",
+        "message_jpn": "",
+        "ts": 1569679480,
+        "token": "3F73C13",
+        "user_info": {
+          "uname": "我永远单推神楽七奈",
+          "face": "https://i0.hdslb.com/bfs/face/8a263fcf04c683310ef8b9d2ca1ff715c7d9d8cd.jpg",
+          "face_frame": "",
+          "guard_level": 0,
+          "user_level": 9,
+          "is_vip": 0,
+          "is_svip": 0,
+          "is_main_vip": 0
+        }
+      }
+    ]
+  }
+}
+```
+
+这个不知道干什么用的
+https://api.live.bilibili.com/av/v1/SuperChat/ownMessageList?room_id=21547895
+
+留言内容结构
 ```js
 {
   // 醒目留言ID
