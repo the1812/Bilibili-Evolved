@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      439.06
+// @version      439.26
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -544,7 +544,12 @@ class Ajax {
   }
 }
 // https://github.com/the1812/Bilibili-Evolved/issues/84
+let ajaxHooked = false
 function setupAjaxHook () {
+  if (ajaxHooked) {
+    return
+  }
+  ajaxHooked = true
   const original = {
     open: XMLHttpRequest.prototype.open,
     send: XMLHttpRequest.prototype.send
