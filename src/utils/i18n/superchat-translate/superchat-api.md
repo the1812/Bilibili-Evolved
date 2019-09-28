@@ -1,5 +1,5 @@
 可能会查询直播间是否能够使用SuperChat, 顺带返回当前挂在上面的留言
-https://api.live.bilibili.com/av/v1/SuperChat/enable?room_id=21547895
+https://api.live.bilibili.com/av/v1/SuperChat/enable?room_id=21547895&jpn=1
 ```json
 {
   "code": 0,
@@ -103,7 +103,7 @@ https://api.live.bilibili.com/av/v1/SuperChat/enable?room_id=21547895
 ```
 
 仅查询留言列表
-https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=21547895
+https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=21547895&jpn=1
 ```json
 {
   "code": 0,
@@ -173,7 +173,7 @@ https://api.live.bilibili.com/av/v1/SuperChat/ownMessageList?room_id=21547895
   // 结束时间
   "end_time": 1569678422,
   "message": "花丸太可爱了",
-  // 说好的机翻日语文本呢?
+  // (机翻)日语文本
   "message_jpn": "",
   "ts": 1569678366,
   "token": "B04FC859",
