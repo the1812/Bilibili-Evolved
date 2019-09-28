@@ -144,9 +144,58 @@ https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=21547895&jp
   }
 }
 ```
+留言详细信息(稳定日语翻译)
+https://api.live.bilibili.com/av/v1/SuperChat/messageInfo?id=2626
+```json
+{
+  "code": 0,
+  "msg": "",
+  "message": "",
+  "data": {
+    "id": "2626",
+    "uid": "0",
+    "background_image": "https://i0.hdslb.com/bfs/live/1aee2d5e9e8f03eed462a7b4bbfd0a7128bbc8b1.png",
+    "background_color": "#FFF2E3",
+    "background_icon": "https://i0.hdslb.com/bfs/live/e12e931ed8d9e5189ab6d1a3a1da35af4f8a55af.png",
+    "background_bottom_color": "#E09443",
+    "background_price_color": "#E8AF79",
+    "font_color": "",
+    "price": 514,
+    "rate": 1000,
+    "time": 788,
+    "start_time": 1569684426,
+    "end_time": 1569686226,
+    "message": "114514",
+    "message_jpn": "114514",
+    "ts": 1569685438,
+    "token": "1BDF9EF2",
+    "user_info": {
+      "uname": "",
+      "face": "",
+      "face_frame": "",
+      "guard_level": 0,
+      "user_level": 12,
+      "level_color": "#61c05a",
+      "is_vip": 0,
+      "is_svip": 0,
+      "is_main_vip": 1,
+      "title": "0",
+      "manager": 0
+    },
+    "medal_info": {
+      "target_id": 349991143,
+      "medal_level": 5,
+      "medal_name": "財布",
+      "medal_color": "#5896de"
+    }
+  }
+}
+```
 
 这个不知道干什么用的
 https://api.live.bilibili.com/av/v1/SuperChat/ownMessageList?room_id=21547895
+
+----
 
 留言内容结构
 ```js
