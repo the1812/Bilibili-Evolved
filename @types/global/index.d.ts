@@ -396,8 +396,10 @@ declare global {
   function isEmbeddedPlayer(): boolean;
   function isIframe(): boolean;
   function getI18nKey(): string;
-  const dq: (selector: string) => Element | null;
-  const dqa: (selector: string) => Element[];
+  function dq(selector: string): Element | null;
+  function dq(element: Element, selector: string): Element | null;
+  function dqa(selector: string): Element[];
+  function dqa(element: Element, selector: string): Element[];
   const formatFileSize: (bytes: number, fixed?: number) => string
   const formatDuration: (time: number, fixed?: number) => string
   const ascendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number

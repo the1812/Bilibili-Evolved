@@ -28,7 +28,7 @@ export class StyleManager {
     } else {
       const style = document.createElement('style')
       style.id = id
-      style.innerText = text
+      style.innerHTML = text
       document.head.insertAdjacentElement('afterbegin', style)
     }
   }
@@ -38,7 +38,7 @@ export class StyleManager {
     } else {
       const style = document.createElement('style')
       style.id = id
-      style.innerText = text
+      style.innerHTML = text
       document.body.insertAdjacentElement('beforeend', style)
     }
   }
