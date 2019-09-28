@@ -159,6 +159,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`fullActivityContent`, /*html*/`不管内容多长, 总是完全展开动态的内容.`],
   [`activityImageSaver`, /*html*/`右键点击动态大图时, 如果这张图的右键菜单被禁止了, 将弹出带图片的消息方便保存.`],
   [`selectableColumnText`, /*html*/`使专栏的文字可以选择.`],
+  [`watchlaterExpireWarnings`, /*html*/`稍后再看里的视频添加后60天会过期自动删除. 开启此功能可在期限不足14天时在稍后再看列表里显示过期警告.`],
 ]);
 export default {
   export: { toolTips },

@@ -552,10 +552,17 @@
 
 在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速.
 
-</details><details>
+</details>
+<details>
 <summary><strong>专栏文字选择</strong></summary>
 
 使专栏的文字可以选择.
+
+</details>
+<details>
+<summary><strong>稍后再看期限提醒</strong></summary>
+
+稍后再看里的视频添加后60天会过期自动删除. 开启此功能可在期限不足14天时在稍后再看列表里显示过期警告.
 
 </details>
 
