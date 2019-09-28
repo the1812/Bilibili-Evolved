@@ -369,6 +369,7 @@ declare global {
     downloadVideoFormat: 'flv' | 'dash',
     enableDashDownload: boolean,
     watchlaterExpireWarnings: boolean,
+    watchlaterExpireWarningDays: number,
     latestVersionLink: string,
     currentVersion: string,
   }

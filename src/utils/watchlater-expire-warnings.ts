@@ -21,7 +21,7 @@
     }
   `, 'watchlater-expire-warning-style')
   // 少于此天数时提示
-  const WarningDays = 14
+  const WarningDays = settings.watchlaterExpireWarningDays
   const DayInMilliseconds = 24 * 3600 * 1000
   const getRemainingDays = (expireTime: number) => {
     return (expireTime - Number(new Date())) / DayInMilliseconds

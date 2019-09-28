@@ -165,6 +165,7 @@ export const settings = {
   downloadVideoFormat: 'flv',
   enableDashDownload: false,
   watchlaterExpireWarnings: true,
+  watchlaterExpireWarningDays: 14,
   cache: {},
 }
 const fixedSettings = {
