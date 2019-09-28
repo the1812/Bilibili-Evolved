@@ -370,6 +370,7 @@ declare global {
     enableDashDownload: boolean,
     watchlaterExpireWarnings: boolean,
     watchlaterExpireWarningDays: number,
+    superchatTranslate: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

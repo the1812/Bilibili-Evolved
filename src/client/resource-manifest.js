@@ -720,5 +720,12 @@ Resource.manifest = {
       watchlaterExpireWarnings: '稍后再看期限提醒',
     },
   },
+  superchatTranslate: {
+    path: 'superchat-translate.min.js',
+    style: true,
+    displayNames: {
+      superchatTranslate: '醒目留言翻译',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

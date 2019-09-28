@@ -166,6 +166,7 @@ export const settings = {
   enableDashDownload: false,
   watchlaterExpireWarnings: true,
   watchlaterExpireWarningDays: 14,
+  superchatTranslate: false,
   cache: {},
 }
 const fixedSettings = {
