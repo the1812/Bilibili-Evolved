@@ -334,6 +334,7 @@ input[key]:focus {
 input[type="text"][key] {
   height: auto;
   border: none;
+  line-height: normal;
 }
 .gui-settings-label {
   margin: 0 16px;

@@ -132,6 +132,7 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   [`fullActivityContent`, `Always expand for full content of activities.`],
   [`activityImageSaver`, `When viewing a save-restricted image in activities, you can right-click to get a toast with that image for saving.`],
   [`selectableColumnText`, `Make texts in column selectable.`],
+  [`watchlaterExpireWarnings`, `Videos in watchlater will expire and be deleted in 60 days. Enable this feature will show a warning if a video will expire in less than 14 days.`],
 ]);
 export default {
   export: { toolTips },
