@@ -16,7 +16,7 @@
   }
   resources.applyStyle('superchatTranslateStyle')
   const getSuperchatMessageList = async () => {
-    const json = await Ajax.getJson(`https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=${roomID}`)
+    const json = await Ajax.getJson(`https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=${roomID}&jpn=1`)
     if (json.code !== 0) {
       console.warn(`superchat api failed with ${json.code}`)
       return []
