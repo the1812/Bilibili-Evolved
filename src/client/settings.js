@@ -164,7 +164,7 @@ export const settings = {
   selectableColumnText: true,
   downloadVideoFormat: 'flv',
   enableDashDownload: false,
-  watchlaterExpireWarnings: false,
+  watchlaterExpireWarnings: true,
   cache: {},
 }
 const fixedSettings = {
