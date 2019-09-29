@@ -2427,10 +2427,28 @@ class ResourceManager {
     // if (fullDownload) {
     const url = Resource.root + 'min/bundle.zip'
     const zip = new JSZip()
+    let isTimeout = true
+    setTimeout(() => {
+      if (isTimeout) {
+        console.log('bundle request timeout, saving onlineData to cache...')
+        let cache = {}
+        for (const [url, data] of Object.entries(onlineData)) {
+          const resource = Object.values(Resource.all).find(it => it.rawUrl === url)
+          if (resource) {
+            if (scriptVersion === 'Stable' && resource.alwaysPreview) {
+              continue
+            }
+            cache[resource.key] = data
+          }
+        }
+        settings.cache = Object.assign(settings.cache, cache)
+      }
+    }, 60 * 1000)
     await zip.loadAsync(await Ajax.monkey({
       url,
       responseType: 'blob',
     }))
+    isTimeout = false
     let cache = {}
     const files = zip.file(/.+/)
     for (const file of files) {
