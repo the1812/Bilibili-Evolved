@@ -140,6 +140,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 延後(自動): さまざまなページに従って読み込みモードを自動的に選択します．デフォルトは「延後」モード`],
     [`fullActivityContent`, /*html*/`情報内容がどれぐらい長いにも関わらず、いつも完全な内容を展開します.`],
     [`activityImageSaver`, /*html*/`大きなフィード画像を右クリックすると、画像付きのメッセージがポップアップ表示され、簡単に保存できます.`],
+    [`selectableColumnText`, /*html*/`コラムのテキストを選択可能にする.`],
+    [`watchlaterExpireWarnings`, /*html*/`「後で見る」の動画は、追加後60日で有効期限が切れます.この機能を開くと、14日より後のリストに有効期限の警告が表示されます.`],
 ]);
 export default {
     export: { toolTips },
