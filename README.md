@@ -358,19 +358,15 @@
 在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
 
 </details>
-<details>
+<!-- <details>
 <summary><strong>模糊视频控制栏背景</strong></summary>
-
 模糊视频控制栏背景, 原有的阴影效果将无效.
 此功能需要浏览器支持背景模糊效果, 详情见[背景模糊兼容性](backdrop-filter.md)一节.
-
 **启用前**
 ![不模糊背景](images/compressed/original-control.jpg)
-
 **启用后**
 ![模糊背景](images/compressed/blur-video-control.jpg)
-
-</details>
+</details> -->
 <details>
 <summary><strong>控制栏着色</strong></summary>
 

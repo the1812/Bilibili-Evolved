@@ -46,7 +46,6 @@ export const settings = {
   darkScheduleStart: '18:00',
   darkScheduleEnd: '6:00',
   darkSchedule: false,
-  blurVideoControl: false,
   toast: true,
   fullTweetsTitle: true,
   fullPageTitle: false,
@@ -186,6 +185,7 @@ const fixedSettings = {
   touchVideoPlayerAnimation: false,
   allNavbarFill: false,
   showDeadVideoTitle: false,
+  blurVideoControl: false,
   latestVersionLink: 'https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js',
   currentVersion: GM_info.script.version,
 }
