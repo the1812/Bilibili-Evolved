@@ -175,7 +175,20 @@
 .card-detail .card-item-middle-top {
   @include background-color("3");
   .card-item-middle-top-right {
+    .content-bottom .price,
     .name {
+      @include color("e");
+    }
+  }
+}
+.super-chat-bubble-main .super-chat-bubble .content-top {
+  @include background-color("3");
+  .content {
+    &-price .sub-price {
+      @include color("a");
+    }
+    &-name,
+    &-price {
       @include color("e");
     }
   }
