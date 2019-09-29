@@ -669,6 +669,12 @@
 - 延后(自动): 根据页面自动选择加载模式, 默认采用延后模式
 
 </details>
+<details>
+<summary><strong>设置面板停靠位置</strong></summary>
+
+可以把左侧那栏图标放在右边.
+
+</details>
 
 # 兼容性
 ## 脚本管理器
