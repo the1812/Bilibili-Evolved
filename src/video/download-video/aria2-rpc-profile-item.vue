@@ -2,7 +2,7 @@
   <div class="profile-item" :class="{duplicate: duplicateName, selected}">
     <template v-if="!editing">{{profile.name}}</template>
     <template v-else>
-      <input type="text" v-model="name" />
+      <input type="text" v-model="name" @keydown.enter="saveProfile()" />
     </template>
     <icon v-if="!editing" style="transform: scale(0.9)" type="mdi" icon="pencil-outline" title="重命名" @click.native="editing = true"></icon>
     <icon v-if="editing" type="mdi" icon="check" title="确定" @click.native="saveProfile()"></icon>
