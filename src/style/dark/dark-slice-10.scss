@@ -125,7 +125,7 @@
     @include color("e");
   }
   .checked {
-    filter: var(--pink-image-filter) !important;
+    @include to-theme("pink");
   }
 }
 .app-layout {
@@ -137,7 +137,7 @@
   }
   .manga-navbar {
     &-history-list .drop-list .more-btn-container,
-    &-manga-navbar-favourite-manga .drop-list .more-btn-container {
+    &-favourite-manga .drop-list .more-btn-container {
       @include background-color();
     }
   }
@@ -157,11 +157,11 @@
       @include theme-color();
     }
     .arrow {
-      filter: var(--blue-image-filter) !important;
+      @include to-theme("blue");
     }
   }
   .nav-list .nav-item .item-icon {
-    filter: var(--blue-image-filter) !important;
+    @include to-theme("blue");
   }
   .rank-title {
     @include color("e");
