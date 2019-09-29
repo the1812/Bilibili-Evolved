@@ -528,6 +528,8 @@
 
 为界面中一些常用文本提供翻译, 完成度不高, 目前仅开放日语和英语.
 
+> 如果希望贡献翻译, 请参阅[翻译指南](https://github.com/the1812/Bilibili-Evolved/blob/preview/src/utils/i18n/i18n.md). 在文件中添加翻译文本后即可发送 Pull Request (到 preview 分支), 不需要编译. ~~因为本项目的开发环境弄得很烂, 请不要把时间和精力浪费在搭建开发环境上.~~
+
 </details>
 <details>
 <summary><strong>禁止直播首页自动播放</strong></summary>
