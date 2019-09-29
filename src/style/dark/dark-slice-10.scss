@@ -7,6 +7,7 @@
     @include color("a");
   }
 }
+
 ._super-chat-dialog {
   .content-top {
     @include border-color("5");
@@ -70,6 +71,15 @@
     }
   }
 }
+.vote-backdrop .extension-wrapper {
+  .title-box {
+    @include background-color("2");
+    @include border-color();
+  }
+  iframe {
+    @include background-color("2");
+  }
+}
 .dialog-ctnr.bottom-left {
   @include background-color("3");
 }
@@ -94,12 +104,24 @@
     @include color("e");
   }
 }
+
 .bl-button--primary:disabled {
   @include color("e");
 }
+.ranking-jump {
+  @include color("e");
+  &:hover {
+    @include theme-color();
+  }
+}
+.vote-pc-container .card {
+  @include border-color();
+}
+
 .live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover {
   @include foreground-color();
 }
+
 .extension-wrapper .dark {
   .vote-left-time {
     @include color("a");
