@@ -51,11 +51,11 @@ Tip: Every item can be toggled individually in Add-ons.`],
   ["watchLaterRedirect", `Redirects all watchlater videos to the normal video page in order to use new layout.`],
   ["favoritesRedirect", `Redirects all videos in favorites from favorites playlist to the individual video page.`],
   ["hideTopSearch", `Use <span>"Search"</span> in place of search recommendations.`],
-  ["fullTweetsTitle", `Always expand full title in the activities peek in navbar.`],
+  ["fullTweetsTitle", `Always expand full title in the feeds peek in navbar.`],
   ["fullPageTitle", `Always expand full title of video episodes. (Not work for bangumi)`],
   ["biliplusRedirect", `Append "Jump to BiliPlus" button to Add-ons.`],
   ["imageResolution", `Request hi-resolution images by your screen DPI. But also cause longer loading time.`],
-  ["oldTweets", `Replace activities link by the old version, and you can switch between new and old versions in Add-ons.`],
+  ["oldTweets", `Replace feeds link by the old version, and you can switch between new and old versions in Add-ons.`],
   ["touchNavBar", `Allow to tap on a navbar item to view its popup info, instead of open the top-level link.`],
   ["comboLike", `Allow long press the like button to perform a combo like.`],
   ["touchVideoPlayer", `Increase margin of video control buttons for better touch experience. And enable touch gestures:
@@ -103,7 +103,7 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   ['hideHomeLive', `Hide recommended live rooms on live homepage.`],
   ['sideBarOffset', `Set vertical offset of side bar (in percent). Valid range: -40% ~ 40%.`],
   ['hideCategory', `Hide category bar on main site, you can select category from Home in navbar.`],
-  ['foldComment', `Append a <span>"Fold comments"</span> button on the bottom of page when viewing comments in activities. Then you can quickly fold comments without scrolling up.`],
+  ['foldComment', `Append a <span>"Fold comments"</span> button on the bottom of page when viewing comments in feeds. Then you can quickly fold comments without scrolling up.`],
   ['showDeadVideoTitle', `Retrieve title and cover of dead videos in your space`],
   ['useBiliplusRedirect', `Jump to BiliPlus for dead videos.`],
   ['deadVideoTitleProvider', `Select dead video info provider: Watchlater is stable but takes some time, BiliPlus runs fast but it's not implemented yet.`],
@@ -129,8 +129,8 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - Delay: Load features after the original page has loaded
 - Simultaneous (Auto): Auto determine loading mode and prefer Simultaneous mode
 - Delay (Auto): Auto determine loading mode and prefer Delay mode`],
-  [`fullActivityContent`, `Always expand for full content of activities.`],
-  [`activityImageSaver`, `When viewing a save-restricted image in activities, you can right-click to get a toast with that image for saving.`],
+  [`fullActivityContent`, `Always expand for full content of feeds.`],
+  [`activityImageSaver`, `When viewing a save-restricted image in feeds, you can right-click to get a toast with that image for saving.`],
   [`selectableColumnText`, `Make texts in column selectable.`],
   [`watchlaterExpireWarnings`, `Videos in watchlater will expire and be deleted in 60 days. Enable this feature will show a warning if a video will expire in less than 14 days.`],
 ]);
