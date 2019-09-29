@@ -3,6 +3,9 @@ const id = 'selectable-column-text-style'
 const load = () => {
   resources.applyStyleFromText(style, id)
   SpinQuery.unsafeJquery().then(async () => {
+    if (!unsafeWindow.$) {
+      return
+    }
     await SpinQuery.select('.article-holder')
     unsafeWindow.$('.article-holder').unbind('copy')
   })
