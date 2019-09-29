@@ -41,7 +41,7 @@
       console.warn('message not found')
       return
     }
-    const translation = await getTranslation(message.id)
+    const translation = message.message_jpn || await getTranslation(message.id)
     textElement.classList.add('original')
     const translationElement = document.createElement('span')
     translationElement.classList.add('text', 'jpn')
@@ -69,7 +69,7 @@
             console.warn('message not found')
             return
           }
-          const translation = await getTranslation(message.id)
+          const translation = message.message_jpn || await getTranslation(message.id)
           const textElement = await SpinQuery.select(`.superChat-card-detail[data-danmaku='${original}'] .input-contain .text:not(.original):not(.jpn)`)
           if (!textElement) {
             console.warn('textElement not found')
