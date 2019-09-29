@@ -108,12 +108,7 @@
 .bl-button--primary:disabled {
   @include color("e");
 }
-.ranking-jump {
-  @include color("e");
-  &:hover {
-    @include theme-color();
-  }
-}
+
 .vote-pc-container .card {
   @include border-color();
 }
@@ -131,5 +126,40 @@
   }
   .checked {
     filter: var(--pink-image-filter) !important;
+  }
+}
+.app-layout {
+  .search-bar .search-bar-bg {
+    @include background-color("4");
+  }
+  .rank-item-wrapper {
+    background-image: none !important;
+  }
+  .ranking-jump,
+  .manga-title,
+  .show-status-text {
+    @include color("e");
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .sidebar-item,
+  .time-selector-ctnr {
+    @include color("e");
+    &.activated,
+    &:hover {
+      @include theme-color();
+    }
+    .arrow {
+      filter: var(--blue-image-filter) !important;
+    }
+  }
+  .rank-title {
+    @include color("e");
+  }
+  .rank-hint,
+  .meta-ctnr,
+  .manga-info-ctnr {
+    @include color("a");
   }
 }
