@@ -181,3 +181,15 @@
     }
   }
 }
+.super-chat-bubble-main .super-chat-bubble .content-top {
+  @include background-color("3");
+  .content {
+    &-price .sub-price {
+      @include color("a");
+    }
+    &-name,
+    &-price {
+      @include color("e");
+    }
+  }
+}
