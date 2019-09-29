@@ -2,19 +2,8 @@
 この説明では、ブラウザに「Bilibili-Evolved」をインストールするのに役立ちます.
 
 ## 1. インストール前の注意
-ブラウザが「Bilibili-Evolved」の互換性を確保するよう、下記互換性情報をチェックしてください.
+ブラウザを確認してください.「Bilibili-Evolved」は **最新** の「Chrome / Firefox / Safari」で実行する必要があります.
 
-> 簡単に言えば、Chrome、Edge (Chromium)、Firefox、Safariがサポートされています.下記の注意事項のほとんどは、それらの機能に影響を与えません.
-
-### Chrome / Edge (Chromium)
-- 背景ぼかし効果([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter))を使用するには 、このページで手動で有効にする必要があります `chrome://flags/#enable-experimental-web-platform-features`. (For Edge, change `chrome` to `edge`)
-- 背景ぼかし効果は、アニメーションのフレームドロップを引き起こす可能性があります.
-- もし、君の Chrome のバージョンが ≥ 73 と 画面のDPI/ページのズームが 100% よりも大きい、背景ぼかし効果が正しく表示されない. 詳しい原因はこのページ [Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910) をご覧ください.
-### Firefox
-- 背景ぼかし効果が無効です、詳しい原因はこのページ [Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765) をご覧ください.
-- タッチジェスチャの使用時にアニメーションの現象があります. (原因は CSS `transition`. プロパティ値は現在値ではなく、常に初期値から変更する)
-### Safari
-- Safari でテストされない. (私はMacを持っていません)
 ### Edge (UWP) [**サポート停止**]
 - 上記のブラウザを使用してください. あるいはこの[Chromium-based Edge](https://microsoftedgeinsider.com/)に切り替えることができます.
 
