@@ -135,6 +135,12 @@
   .rank-item-wrapper {
     background-image: none !important;
   }
+  .manga-navbar {
+    &-history-list .drop-list .more-btn-container,
+    &-manga-navbar-favourite-manga .drop-list .more-btn-container {
+      @include background-color();
+    }
+  }
   .ranking-jump,
   .manga-title,
   .show-status-text {
@@ -153,6 +159,9 @@
     .arrow {
       filter: var(--blue-image-filter) !important;
     }
+  }
+  .nav-list .nav-item .item-icon {
+    filter: var(--blue-image-filter) !important;
   }
   .rank-title {
     @include color("e");
