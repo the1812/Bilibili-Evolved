@@ -85,11 +85,11 @@ function checkOfflineData () {
   }
 }
 function checkCompatibility () {
-  if (!CSS.supports('backdrop-filter', 'blur(24px)') &&
-    !CSS.supports('-webkit-backdrop-filter', 'blur(24px)')) {
-    inputs.find(it => it.getAttribute('key') === 'blurVideoControl').disabled = true
-    settings.blurVideoControl = false
-  }
+  // if (!CSS.supports('backdrop-filter', 'blur(24px)') &&
+  //   !CSS.supports('-webkit-backdrop-filter', 'blur(24px)')) {
+  //   inputs.find(it => it.getAttribute('key') === 'blurVideoControl').disabled = true
+  //   settings.blurVideoControl = false
+  // }
   if (window.devicePixelRatio === 1) {
     inputs.find(it => it.getAttribute('key') === 'harunaScale').disabled = true
     inputs.find(it => it.getAttribute('key') === 'imageResolution').disabled = true
@@ -132,6 +132,9 @@ function setDisplayNames () {
     // return;
   }
 
+  if (settings.guiSettingsDockSide === '右侧') {
+    document.body.classList.add('gui-settings-dock-right')
+  }
   const settingsBox = resources.data.guiSettingsHtml.text
   document.body.insertAdjacentHTML('beforeend', settingsBox)
 
@@ -171,6 +174,9 @@ function setDisplayNames () {
     // foldAllCategories();
     checkCompatibility()
     setDisplayNames()
+    addSettingsListener('guiSettingsDockSide', value => {
+      document.body.classList[value === '右侧' ? 'add' : 'remove']('gui-settings-dock-right')
+    })
     new SettingsSearch()
   }, { once: true })
 })()

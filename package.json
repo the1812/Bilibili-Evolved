@@ -2,8 +2,7 @@
   "name": "bilibili-evolved",
   "description": "「 强大的哔哩哔哩增强脚本 」",
   "main": "bilibili-evolved.user.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jquery": "^3.3.31",
     "@types/lodash": "^4.14.138",

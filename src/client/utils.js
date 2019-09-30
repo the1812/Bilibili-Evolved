@@ -76,8 +76,18 @@ export const languageCodeToName = {
 export function getI18nKey () {
   return settings.i18n ? languageNameToCode[settings.i18nLanguage] : 'zh-CN'
 }
-export const dq = (selector) => document.querySelector(selector)
-export const dqa = (selector) => [...document.querySelectorAll(selector)]
+export const dq = (selector, scopedSelector) => {
+  if (!scopedSelector) {
+    return document.querySelector(selector)
+  }
+  return selector.querySelector(scopedSelector)
+}
+export const dqa = (selector, scopedSelector) => {
+  if (!scopedSelector) {
+    return [...document.querySelectorAll(selector)]
+  }
+  return [...selector.querySelectorAll(scopedSelector)]
+}
 export const UserAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0`
 export const EmptyImageUrl = 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>'
 export const ascendingSort = (itemProp) => {
@@ -122,7 +132,7 @@ export const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
   }).join(",")
 }
 export const isOffline = () => typeof offlineData !== 'undefined'
-export const getUID = () => document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)DedeUserID\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+export const getUID = () => document.cookie.replace(/(?:(?:^|.*;\s*)DedeUserID\s*\=\s*([^;]*).*$)|^.*$/, '$1')
 export const scriptVersion = (() => {
   const match = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
   return match ? match[1] : 'Stable'

@@ -1,0 +1,195 @@
+@import "./dark-definitions";
+.coverNews-item {
+  & &-title {
+    @include color("e");
+  }
+  & &-time {
+    @include color("a");
+  }
+}
+
+._super-chat-dialog {
+  .content-top {
+    @include border-color("5");
+    .content-top-left {
+      .text-desc {
+        @include color("e");
+      }
+      .icon-question {
+        @include to-white();
+      }
+    }
+  }
+  .content-middle .card-item {
+    &-top {
+      .card-item-left,
+      .card-item-right {
+        @include color("a");
+      }
+    }
+    &-middle .card-item-middle-top .card-item-middle-top-right .price span {
+      @include color("a");
+    }
+    &-middle {
+      &-top .card-item-middle-top-right {
+        @include color("e");
+      }
+      &-top,
+      &-bottom .input-contain .card-input-message {
+        @include background-color();
+      }
+    }
+  }
+  .content-bottom {
+    .ontent-bottom-up {
+      .inst,
+      span {
+        @include color("e");
+      }
+      .card-input-number {
+        @include background-color("4");
+        @include border-color("5");
+      }
+    }
+    .process {
+      .vue-slider {
+        &-dot-handle,
+        &-process {
+          @include theme-background-color();
+        }
+        &-rail {
+          @include background-color("4");
+        }
+      }
+    }
+    .button {
+      @include background-color("2");
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+}
+.vote-backdrop .extension-wrapper {
+  .title-box {
+    @include background-color("2");
+    @include border-color();
+  }
+  iframe {
+    @include background-color("2");
+  }
+}
+.dialog-ctnr.bottom-left {
+  @include background-color("3");
+}
+.pay-note-panel {
+  @include background-color("3");
+  .arrow-left,
+  .arrow-right {
+    filter: invert(0.7) !important;
+  }
+}
+.chat-history-panel .chat-history-list .chat-item.superChat-card-detail .card-item-middle-top {
+  @include background-color();
+  .card-item-middle-top-right .name {
+    @include color("e");
+  }
+}
+.chaos-pk-rank {
+  .link-to-history {
+    @include color("a");
+  }
+  .rank .rank-name {
+    @include color("e");
+  }
+}
+
+.bl-button--primary:disabled {
+  @include color("e");
+}
+
+.vote-pc-container .card {
+  @include border-color();
+}
+
+.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover {
+  @include foreground-color();
+}
+
+.extension-wrapper .dark {
+  .vote-left-time {
+    @include color("a");
+  }
+  input {
+    @include color("e");
+  }
+  .checked {
+    @include to-theme("pink");
+  }
+}
+.app-layout {
+  .search-bar .search-bar-bg {
+    @include background-color("4");
+  }
+  .rank-item-wrapper {
+    background-image: none !important;
+  }
+  .manga-navbar {
+    &-history-list .drop-list .more-btn-container,
+    &-favourite-manga .drop-list .more-btn-container {
+      @include background-color();
+    }
+  }
+  .ranking-jump,
+  .manga-title,
+  .show-status-text {
+    @include color("e");
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .sidebar-item,
+  .time-selector-ctnr {
+    @include color("e");
+    &.activated,
+    &:hover {
+      @include theme-color();
+    }
+    .arrow {
+      @include to-theme("blue");
+    }
+  }
+  .nav-list .nav-item .item-icon {
+    @include to-theme("blue");
+  }
+  .rank-title {
+    @include color("e");
+  }
+  .rank-hint,
+  .meta-ctnr,
+  .manga-info-ctnr {
+    @include color("a");
+  }
+}
+.card-detail .card-item-middle-top {
+  @include background-color("3");
+  .card-item-middle-top-right {
+    .content-bottom .price,
+    .name {
+      @include color("e");
+    }
+  }
+}
+.super-chat-bubble-main .super-chat-bubble .content-top {
+  @include background-color("3");
+  .content {
+    &-price .sub-price {
+      @include color("a");
+    }
+    &-name,
+    &-price {
+      @include color("e");
+    }
+  }
+}

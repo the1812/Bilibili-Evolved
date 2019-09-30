@@ -2,30 +2,35 @@ export function loadResources () {
   Resource.root = 'https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/'
   Resource.all = {}
   Resource.displayNames = {}
-  Resource.reloadables = [
-    'useDarkStyle',
-    'hideBanner',
-    'customNavbar',
-    'playerShadow',
-    'narrowDanmaku',
-    'compactLayout',
-    'useCommentStyle',
-    'removeVideoTopMask',
-    'hideOldEntry',
-    'hideBangumiReviews',
-    'videoScreenshot',
-    'blurVideoControl',
-    'customControlBackground',
-    'harunaScale',
-    'removeLiveWatermark',
-    'framePlayback',
-    'hideCategory',
-    'fullTweetsTitle',
-  ]
+  // Resource.reloadables = [
+  //   'useDarkStyle',
+  //   'hideBanner',
+  //   'customNavbar',
+  //   'playerShadow',
+  //   'narrowDanmaku',
+  //   'compactLayout',
+  //   'useCommentStyle',
+  //   'removeVideoTopMask',
+  //   'hideOldEntry',
+  //   'hideBangumiReviews',
+  //   'videoScreenshot',
+  //   'blurVideoControl',
+  //   'customControlBackground',
+  //   'harunaScale',
+  //   'removeLiveWatermark',
+  //   'framePlayback',
+  //   'hideCategory',
+  //   'fullTweetsTitle',
+  //   'fullActivityContent',
+  // ]
+  Resource.reloadables = []
   for (const [key, data] of Object.entries(Resource.manifest)) {
     const resource = new Resource(data.path, { styles: data.styles, alwaysPreview: data.alwaysPreview })
     resource.key = key
     resource.dropdown = data.dropdown
+    if (data.reloadable) {
+      Resource.reloadables.push(key)
+    }
     if (data.displayNames) {
       resource.displayName = data.displayNames[key]
       Object.assign(Resource.displayNames, data.displayNames)

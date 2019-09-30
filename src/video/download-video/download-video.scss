@@ -18,7 +18,6 @@
   align-items: stretch;
   justify-content: space-between;
   max-height: 90%;
-  overflow: auto;
 
   &,
   * {
@@ -236,7 +235,7 @@
     border: 1px dashed var(--theme-color);
     z-index: 2;
     font-size: 10pt;
-    width: 300px;
+    width: 200px;
     padding: 8px;
     box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
     pointer-events: none;
@@ -291,7 +290,7 @@
     flex-direction: column;
     align-items: stretch;
     color: var(--download-video-foreground);
-    background: var(--download-video-background);
+    background: #fff;
     bottom: 120%;
     left: 50%;
     cursor: initial;
@@ -303,7 +302,11 @@
     padding: 8px;
     z-index: 3;
     transition: 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    width: 100%;
 
+    body.dark & {
+      background: #282828;
+    }
     & > * {
       margin: 8px;
     }
@@ -322,12 +325,21 @@
     input[type="text"]:focus {
       border-color: var(--theme-color);
     }
+    .operations {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
   }
   .rpc-settings-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     white-space: nowrap;
+    input[type="text"] {
+      flex-grow: 1;
+      margin-left: 24px;
+    }
   }
   button.start-download,
   button.cancel-download {

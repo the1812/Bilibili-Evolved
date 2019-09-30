@@ -27,6 +27,12 @@
     </div>
   </div>
   <div class="options">
+    <div class="option-item" v-if="enableDash">
+      格式
+      <v-dropdown style="text-transform: uppercase;" v-on:change="dashChange()" v-bind:items="dashModel.items"
+        v-bind:value.sync="dashModel.value">
+      </v-dropdown>
+    </div>
     <div class="option-item">
       清晰度
       <v-dropdown v-on:change="formatChange()" v-bind:items="qualityModel.items" v-bind:value.sync="qualityModel.value"></v-dropdown>
@@ -73,8 +79,8 @@
   <div class="exports">
     <h2>导出</h2>
     <div class="actions" v-bind:class="{busy: busy}">
-      <!-- <button class="copy-link" v-bind:disabled="downloadSingle ? null : 'disabled'" v-on:click="exportData('copyLink')">复制链接</button> -->
-      <button class="idm-export" disabled title="暂不支持导出IDM, 详见 GitHub issue #149">IDM</button>
+      <button class="copy-link" v-bind:disabled="downloadSingle ? null : 'disabled'" v-on:click="exportData('copyLink')">复制链接</button>
+      <!-- <button class="idm-export" disabled title="暂不支持导出IDM, 详见 GitHub issue #149">IDM</button> -->
       <button class="aria2-file" v-on:click="exportData('aria2')">aria2</button>
       <!-- <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>
       <button class="vld-export" v-on:click="exportData('exportVLD')">导出vld数据</button> -->
@@ -82,7 +88,9 @@
         {{showRpcSettings ? '取消' : 'aria2 RPC'}}
         <i :class="{'mdi-close': showRpcSettings, 'mdi-chevron-right': !showRpcSettings}" class="mdi" v-on:click.self="toggleRpcSettings()"></i>
         <div class="rpc-settings" v-bind:class="{show: showRpcSettings}">
-          <h1>aria2 RPC 配置</h1>
+          <h1>aria2 RPC</h1>
+          <rpc-profiles @profile-change="updateProfile"></rpc-profiles>
+          <h2>配置</h2>
           <div class="rpc-settings-item">
             主机<input type="text" v-model="rpcSettings.host" placeholder="127.0.0.1">
           </div>
@@ -96,12 +104,21 @@
             限速<input type="text" v-model="rpcSettings.maxDownloadLimit" placeholder="无">
           </div>
           <div class="rpc-settings-item">
+            默认路径<input type="text" v-model="rpcSettings.baseDir">
+          </div>
+          <div class="rpc-settings-item">
             路径<input type="text" v-model="rpcSettings.dir">
+          </div>
+          <div class="final-dir">
+            最终路径: {{rpcSettings.baseDir + rpcSettings.dir}}
           </div>
           <div class="rpc-settings-item">
             方法<v-dropdown style="text-transform: uppercase;" v-bind:items="['get', 'post']" v-bind:value.sync="rpcSettings.method">
           </div>
-          <div class="primary button" v-on:click="saveRpcSettings();toggleRpcSettings();exportData('aria2RPC')">确定</div>
+          <div class="operations">
+            <div class="primary button" v-on:click="saveRpcSettings();toggleRpcSettings();exportData('aria2RPC')">开始下载</div>
+            <div class="button" v-on:click="saveRpcSettings()">{{saveRpcSettingsText}}</div>
+          </div>
         </div>
       </div>
     </div>

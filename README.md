@@ -61,9 +61,10 @@
 - 下载后的格式通常为`.flv`, 若需要`.mp4`格式则要手动用其他软件转换, 例如 [ffmpeg](https://ffmpeg.org/) 或 [Handbrake](http://handbrake.fr/).
 - **分段**的视频会把所有视频打包成`.zip`格式.
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
-- 如果以您的账号权限无法观看某些视频(地区限制, 大会员专享等), 那么这种视频也是无法下载的.
+- 如果以您的账号权限无法观看某些视频(地区限制, 大会员专享等), 就算使用了类似[解除B站区域限制](https://greasyfork.org/zh-CN/scripts/25718-%E8%A7%A3%E9%99%A4b%E7%AB%99%E5%8C%BA%E5%9F%9F%E9%99%90%E5%88%B6)的脚本也是无法下载的. ~~除非您有对应节点的梯子~~
 - 直接下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 可以考虑[导出 aria2](aria2-notice.md)来进行下载.
-- 使用`复制链接`得到的链接并不是直接就能用的, 因为**下载时的请求Header必须包含`Referer=https://www.bilibili.com`和正确的`User-Agent`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接)
+
+<!-- - 使用`复制链接`得到的链接并不是直接就能用的, 因为**下载时的请求Header必须包含`Referer=https://www.bilibili.com`和正确的`User-Agent`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接) -->
 
 <div>
 <img height="500" alt="single" src="images/compressed/download-video-single.jpg">
@@ -203,6 +204,11 @@
 - `r` 循环播放
 - `m` 静音
 - `d` 弹幕开关
+- `l` 点赞
+- `c` 投币
+- `s` 收藏
+- `Shift + ↑/↓` / `Shift + ,/.` 播放速度调整
+- `Shift + /` 重置播放速度
 
 附: b站原生快捷键列表:
 - `f` 全屏/退出全屏
@@ -244,6 +250,7 @@
 启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 直播/相簿/会员购等仍使用原来的顶栏.
 
 可用的选项包括:
+- 使用季节Logo
 - 使用主题色填充顶栏
 - 为顶栏添加一层阴影效果
 - 为顶栏使用更紧凑的布局, 紧凑布局将使用更小的间距, 以及在视频标题过长时用...省略后面的部分
@@ -252,7 +259,7 @@
 - 改变顶栏边缘两侧的间距
 - 改变顶栏里栏目的顺序和显示状态
 
-前5个是整体的外观设置, 可以在设置里直接开关, 后面2个是对顶栏里面内容的详细布局设定, 可以在`附加功能`里设置.
+前6个是整体的外观设置, 可以在设置里直接开关, 后面2个是对顶栏里面内容的详细布局设定, 可以在`附加功能`里设置.
 
 下图展示了顶栏在不同设置下的整体外观: (从上到下依次为: 不使用主题色填充, 不填充+夜间模式, 填充主题色, 使用不同的主题色)
 ![效果图](images/compressed/custom-navbar-effects.jpg)
@@ -323,6 +330,8 @@
 - 隐藏欢迎信息 (xxx姥爷进入直播间)
 - 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
 - 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
+- 隐藏付费礼物 (播放器下面的各种金瓜子礼物, 以及许愿瓶, 上舰等)
+- 隐藏活动横幅
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
 - 禁用直播间皮肤
 
@@ -349,19 +358,15 @@
 在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
 
 </details>
-<details>
+<!-- <details>
 <summary><strong>模糊视频控制栏背景</strong></summary>
-
 模糊视频控制栏背景, 原有的阴影效果将无效.
 此功能需要浏览器支持背景模糊效果, 详情见[背景模糊兼容性](backdrop-filter.md)一节.
-
 **启用前**
 ![不模糊背景](images/compressed/original-control.jpg)
-
 **启用后**
 ![模糊背景](images/compressed/blur-video-control.jpg)
-
-</details>
+</details> -->
 <details>
 <summary><strong>控制栏着色</strong></summary>
 
@@ -414,6 +419,41 @@
 
 </details>
 
+<h2 align="center">动态</h2>
+<div align="center">改善动态体验</div>
+
+<details>
+<summary><strong>解除动态存图限制</strong></summary>
+
+右键点击动态大图时, 如果这张图的右键菜单被禁止了, 将弹出带图片的消息方便保存.
+
+</details>
+<details>
+<summary><strong>快速收起动态评论区</strong></summary>
+
+动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.
+
+</details>
+<details>
+<summary><strong>展开动态标题</strong></summary>
+
+在顶栏的动态预览框中, 不管名称多长, 总是完全展开视频的标题.
+![展开动态标题](images/compressed/full-tweets-title.jpg)
+
+</details>
+<details>
+<summary><strong>展开动态内容</strong></summary>
+
+不管内容多长, 总是完全展开动态的内容.
+
+</details>
+<details>
+<summary><strong>旧版动态跳转支持</strong></summary>
+
+将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.
+
+</details>
+
 <h2 align="center">工具</h2>
 <div align="center">各式各样的小玩意</div>
 
@@ -434,13 +474,6 @@
 <summary><strong>隐藏搜索推荐</strong></summary>
 
 将搜索框的推荐词替换为`搜索`.
-
-</details>
-<details>
-<summary><strong>展开动态标题</strong></summary>
-
-在顶栏的动态预览框中, 不管名称多长, 总是完全展开视频的标题.
-![展开动态标题](images/compressed/full-tweets-title.jpg)
 
 </details>
 <details>
@@ -491,15 +524,11 @@
 
 </details>
 <details>
-<summary><strong>旧版动态跳转支持</strong></summary>
-
-将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.
-
-</details>
-<details>
 <summary><strong>界面翻译(实验性)</strong></summary>
 
 为界面中一些常用文本提供翻译, 完成度不高, 目前仅开放日语和英语.
+
+> 如果希望贡献翻译, 请参阅[翻译指南](https://github.com/the1812/Bilibili-Evolved/blob/preview/src/utils/i18n/i18n.md). 在文件中添加翻译文本后即可发送 Pull Request (到 preview 分支), 不需要编译. ~~因为本项目的开发环境弄得很烂, 请不要把时间和精力浪费在搭建开发环境上.~~
 
 </details>
 <details>
@@ -511,17 +540,30 @@
 
 </details>
 <details>
-<summary><strong>快速收起动态评论区</strong></summary>
-
-动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.
-
-</details>
-<details>
 <summary><strong>瓜子换硬币</strong></summary>
 
 在附加功能中添加`瓜子换硬币`的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.
 
 </details>
+<details>
+<summary><strong>直播间自动领奖</strong></summary>
+
+在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速.
+
+</details>
+<details>
+<summary><strong>专栏文字选择</strong></summary>
+
+使专栏的文字可以选择.
+
+</details>
+<details>
+<summary><strong>稍后再看期限提醒</strong></summary>
+
+稍后再看里的视频添加后60天会过期自动删除. 开启此功能可在期限不足14天时在稍后再看列表里显示过期警告.
+
+</details>
+
 
 <h2 align="center">触摸</h2>
 <div align="center">为支持触屏的设备特别设计的功能</div>
@@ -623,7 +665,14 @@
 脚本功能的加载模式:
 - 同时: 与b站页面同时加载
 - 延后: 优先加载b站页面, 在b站页面加载完成后再开始加载脚本功能
-- 自动: 根据页面自动选择加载模式
+- 同时(自动): 根据页面自动选择加载模式, 默认采用同时模式
+- 延后(自动): 根据页面自动选择加载模式, 默认采用延后模式
+
+</details>
+<details>
+<summary><strong>设置面板停靠位置</strong></summary>
+
+可以把左侧那栏图标放在右边.
 
 </details>
 

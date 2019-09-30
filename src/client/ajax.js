@@ -99,7 +99,12 @@ export class Ajax {
   }
 }
 // https://github.com/the1812/Bilibili-Evolved/issues/84
+let ajaxHooked = false
 export function setupAjaxHook () {
+  if (ajaxHooked) {
+    return
+  }
+  ajaxHooked = true
   const original = {
     open: XMLHttpRequest.prototype.open,
     send: XMLHttpRequest.prototype.send

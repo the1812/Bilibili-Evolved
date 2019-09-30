@@ -23,6 +23,7 @@ export function formatTitle (format, includesPageTitle = true) {
   const data = {
     title: document.title
       .replace(includesPageTitle ? /：([^：]+?)_番剧_bilibili_哔哩哔哩/ : '_番剧_bilibili_哔哩哔哩', '')
+      .replace(includesPageTitle ? /：([^：]+?)_国创_bilibili_哔哩哔哩/ : '_国创_bilibili_哔哩哔哩', '')
       .replace(includesPageTitle ? /：([^：]+?)_电影_bilibili_哔哩哔哩/ : '_电影_bilibili_哔哩哔哩', '')
       .replace(includesPageTitle ? /：([^：]+?)_纪录片_bilibili_哔哩哔哩/ : '_纪录片_bilibili_哔哩哔哩', '')
       .replace('_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili', '')

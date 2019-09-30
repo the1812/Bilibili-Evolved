@@ -1,5 +1,8 @@
 .international-home > :not(.international-header),
 .international-header .b-wrap,
-.international-footer {
+.international-footer,
+#app > .bili-wrapper,
+#app > .elevator-module,
+.bili-header-m .head-banner .head-content .head-logo {
   display: none !important;
 }

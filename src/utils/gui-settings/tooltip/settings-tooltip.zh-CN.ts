@@ -56,6 +56,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 隐藏欢迎信息 (xxx老爷进入直播间)
 - 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
 - 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
+- 隐藏付费礼物 (播放器下面的各种金瓜子礼物, 以及许愿瓶, 上舰等)
+- 隐藏活动横幅
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
 - 禁用直播间皮肤
 每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`],
@@ -97,6 +99,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["i18n", /*html*/`为界面中一些常用文本提供翻译.`],
   ["i18nLanguage", /*html*/`翻译的目标语言.`],
   ["customNavbar", /*html*/`启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.`],
+  ["customNavbarSeasonLogo", /*html*/`是否使用季节Logo代替普通的Logo.`],
   ["customNavbarFill", /*html*/`是否使用主题色填充顶栏.`],
   ["allNavbarFill", /*html*/`是否使用主题色填充其他的顶栏, 包括直播/相簿/会员购等.`],
   ["customNavbarShadow", /*html*/`是否为顶栏添加一层阴影效果.`],
@@ -133,7 +136,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['useDefaultVideoSpeed', /*html*/`设置是否使用默认视频播放速度.`],
   ['defaultVideoSpeed', /*html*/`设置默认的视频播放速度.`],
   ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`],
-  ['autoDraw', /*html*/`在当前直播间有抽奖活动时, 自动点击抽奖按钮.`],
+  ['autoDraw', /*html*/`在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(`],
   ['keymap', /*html*/`为视频播放器启用更多的快捷键:
 - <kbd>w</kbd> 网页全屏
 - <kbd>t</kbd> 宽屏
@@ -143,7 +146,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>l</kbd> 点赞
 - <kbd>c</kbd> 投币
 - <kbd>s</kbd> 收藏
-- <kbd>Shift</kbd> + <kbd>↑</kbd>/<kbd>↓</kbd> 播放速度调整`],
+- <kbd>Shift + w</kbd> 稍后再看
+- <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 播放速度调整
+- <kbd>Shift + /</kbd> 重置播放速度`],
   ['doubleClickFullscreen', /*html*/`允许双击播放器切换全屏, 请注意不能与<span>播放器触摸支持-启用双击控制</span>一同使用.`],
   ['ajaxHook', /*html*/`是否启用 Ajax Hook API, 其他插件或附加功能能够通过此 API 获取 Ajax 请求的信息.`],
   ['scriptLoadingMode', /*html*/`脚本功能的加载模式:
@@ -151,6 +156,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 延后: 优先加载b站页面, 在b站页面加载完成后再开始加载脚本功能
 - 同时(自动): 根据页面自动选择加载模式, 默认采用同时模式
 - 延后(自动): 根据页面自动选择加载模式, 默认采用延后模式`],
+  [`fullActivityContent`, /*html*/`不管内容多长, 总是完全展开动态的内容.`],
+  [`activityImageSaver`, /*html*/`右键点击动态大图时, 如果这张图的右键菜单被禁止了, 将弹出带图片的消息方便保存.`],
+  [`selectableColumnText`, /*html*/`使专栏的文字可以选择.`],
+  [`watchlaterExpireWarnings`, /*html*/`稍后再看里的视频添加后60天会过期自动删除. 开启此功能可在期限不足14天时在稍后再看列表里显示过期警告.`],
 ]);
 export default {
   export: { toolTips },

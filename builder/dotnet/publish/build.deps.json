@@ -1,11 +1,11 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v2.1",
-    "signature": "2c37baa92b17a561f3beba6277fd58f0f52df851"
+    "name": ".NETCoreApp,Version=v3.0",
+    "signature": ""
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v2.1": {
+    ".NETCoreApp,Version=v3.0": {
       "build/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration": "2.1.1",
@@ -127,14 +127,7 @@
         }
       },
       "System.Memory/4.5.1": {},
-      "System.Runtime.CompilerServices.Unsafe/4.5.1": {
-        "runtime": {
-          "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
-            "assemblyVersion": "4.0.4.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
+      "System.Runtime.CompilerServices.Unsafe/4.5.1": {},
       "TextCopy/1.5.1": {
         "runtime": {
           "lib/netstandard2.0/TextCopy.dll": {

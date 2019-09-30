@@ -1,8 +1,4 @@
 declare global {
-  function GM_addValueChangeListener(name: string, valueChangeListener: (name: string, oldValue: any, newValue: any, remote: boolean) => void): number;
-  function GM_setClipboard(data: any, info: string | { type?: string, mimetype?: string }): void;
-  function GM_setValue(name: string, value: any): void;
-  function GM_getValue<T>(name: string, defaultValue?: T): T;
   interface MonkeyXhrResponse {
     finalUrl: string
     readyState: number
@@ -40,14 +36,17 @@ declare global {
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void };
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
   type DanmakuOption = '无' | 'XML' | 'ASS'
+  type Pattern = string | RegExp
   interface RpcOption {
     secretKey: string
+    baseDir: string
     dir: string
     host: string
     port: string
     method: 'get' | 'post'
     skipByDefault: boolean
     maxDownloadLimit: string
+    [key: string]: any
   }
   interface RpcOptionProfile extends RpcOption {
     name: string
@@ -145,12 +144,15 @@ declare global {
     static select<T>(query: () => T, action: (queryResult: T) => void, failed?: () => void): void;
     static select<T>(query: () => T): Promise<T>;
     static select(query: string): Promise<HTMLElement | null>;
+    static select(query: string, action: (queryResult: HTMLElement) => void, failed?: () => void): void;
     static any<T>(query: () => T, action: (queryResult: T) => void, failed?: () => void): void;
     static any<T>(query: () => T): Promise<T>;
-    static any(query: string): Promise<any>;
+    static any(query: string): Promise<JQuery>;
+    static any(query: string, action: (queryResult: JQuery) => void, failed?: () => void): void;
     static count<T>(query: () => T, count: number, success: (queryResult: T) => void, failed?: () => void): void;
     static count<T>(query: () => T, count: number): Promise<T>;
     static count(query: string, count: number): Promise<NodeListOf<Element>>;
+    static count(query: string, count: number, success: (queryResult: NodeListOf<Element>) => void, failed?: () => void): Promise<void>;
     static unsafeJquery(action: () => void, failed?: () => void): void;
     static unsafeJquery(): Promise<void>;
   }
@@ -218,14 +220,16 @@ declare global {
     constructor(element: Element, callback: MutationCallback);
     start(): Observer;
     stop(): Observer;
+    forEach(callback: (observer: Observer) => void): void;
+    add(element: Element): Observer;
     options: MutationObserverInit;
-    static observe(observable: Observable, callback: MutationCallback, options: MutationObserverInit): Observer[];
-    static childList(observable: Observable, callback: MutationCallback): Observer[];
-    static childListSubtree(observable: Observable, callback: MutationCallback): Observer[];
-    static attributes(observable: Observable, callback: MutationCallback): Observer[];
-    static attributesSubtree(observable: Observable, callback: MutationCallback): Observer[];
-    static all(observable: Observable, callback: MutationCallback): Observer[];
-    static videoChange(callback: MutationCallback): Promise<Observer[] | null>;
+    static observe(observable: Observable, callback: MutationCallback, options: MutationObserverInit): Observer;
+    static childList(observable: Observable, callback: MutationCallback): Observer;
+    static childListSubtree(observable: Observable, callback: MutationCallback): Observer;
+    static attributes(observable: Observable, callback: MutationCallback): Observer;
+    static attributesSubtree(observable: Observable, callback: MutationCallback): Observer;
+    static all(observable: Observable, callback: MutationCallback): Observer;
+    static videoChange(callback: MutationCallback): Promise<void>;
   }
   interface BilibiliEvolvedSettings {
     useDarkStyle: boolean,
@@ -307,6 +311,7 @@ declare global {
       guardPurchase: boolean,
       popup: boolean,
       skin: boolean,
+      [key: string]: boolean,
     },
     customNavbar: boolean,
     customNavbarFill: boolean,
@@ -337,6 +342,7 @@ declare global {
     foldComment: boolean,
     downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
     aria2RpcOption: RpcOption,
+    aria2RpcOptionSelectedProfile: string,
     aria2RpcOptionProfiles: RpcOptionProfile[],
     searchHistory: SearchHistoryItem[],
     seedsToCoins: boolean,
@@ -352,9 +358,26 @@ declare global {
     scriptLoadingMode: '同时' | '延后' | '同时(自动)' | '延后(自动)' | '自动',
     scriptDownloadMode: 'bundle' | 'legacy'
     guiSettingsDockSide: '左侧' | '右侧'
+    fullActivityContent: boolean,
+    activityFilter: boolean,
+    activityFilterPatterns: Pattern[],
+    activityFilterTypes: string[],
+    activityImageSaver: boolean,
+    scriptBlockPatterns: Pattern[],
+    customNavbarSeasonLogo: boolean,
+    selectableColumnText: boolean,
+    downloadVideoFormat: 'flv' | 'dash',
+    enableDashDownload: boolean,
+    watchlaterExpireWarnings: boolean,
+    watchlaterExpireWarningDays: number,
+    superchatTranslate: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
+  function GM_addValueChangeListener(name: string, valueChangeListener: (name: string, oldValue: any, newValue: any, remote: boolean) => void): number;
+  function GM_setClipboard(data: any, info: string | { type?: string, mimetype?: string }): void;
+  function GM_setValue(name: keyof BilibiliEvolvedSettings, value: any): void;
+  function GM_getValue<T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T): T;
   const settings: BilibiliEvolvedSettings;
   const customNavbarDefaultOrders: CustomNavbarOrders;
   const aria2RpcDefaultOption: RpcOption;
@@ -375,8 +398,10 @@ declare global {
   function isEmbeddedPlayer(): boolean;
   function isIframe(): boolean;
   function getI18nKey(): string;
-  const dq: (selector: string) => Element | null;
-  const dqa: (selector: string) => Element[];
+  function dq(selector: string): Element | null;
+  function dq(element: Element, selector: string): Element | null;
+  function dqa(selector: string): Element[];
+  function dqa(element: Element, selector: string): Element[];
   const formatFileSize: (bytes: number, fixed?: number) => string
   const formatDuration: (time: number, fixed?: number) => string
   const ascendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number

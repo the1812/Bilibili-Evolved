@@ -2,24 +2,9 @@
 This tutorial will help you install Bilibili-Evolved in your browser.
 
 ## 1. Before install
-Please check the compatibility information below to make sure your browser is compatible with Bilibili-Evolved.
+Please check your browser, Bilibili-Evolved must run with the **latest** Chrome / Firefox / Safari.
 
-> In short, Chrome, Edge (Chromium), Firefox and Safari are supported well. Most of the attention listed below won't affect functionalities. Doesn't support Edge (UWP).
-
-### Chrome
-- To use background blur effect ([backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter)), you need enable it manually in `chrome://flags/#enable-experimental-web-platform-features`. (For Edge, change `chrome` to `edge`)
-- Background blur effect may cause frame drops in animation.
-- If your Chrome version is ≥ 73, and screen DPI/page zoom is larger than 100%, the background blur effect will display incorrectly. See [Chromium Issue #942910](https://bugs.chromium.org/p/chromium/issues/detail?id=942910) for more information.
-### Edge (Chromium)
-- Slider (`input[type='range']`) has a strange black bar.
-- Background blur effect seems not working with videos. So `Background blur for video controls` will have no effect.
-### Firefox
-- The background blur effect is not supported, see [Bugzilla #1178765](https://bugzilla.mozilla.org/show_bug.cgi?id=1178765) for more information.
-- There are some animation issues when using touch gestures. (Caused by CSS `transition`. Property value always transits from its initial value rather than current value)
-### Safari
-- Not tested in Safari. (I don't own a Mac)
-### Edge (UWP) [**Stopped supporting**]
-- Please use the browsers listed above. Or you can try [Chromium-based Edge](https://microsoftedgeinsider.com/).
+> You can also use the new [Chromium-based Edge](https://www.microsoftedgeinsider.com/en-us/), while UWP Edge (Windows 10 built-in) is **not** supported.
 
 In this tutorial, I'll use Chrome as an example:
 

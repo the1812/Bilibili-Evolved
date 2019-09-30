@@ -209,23 +209,25 @@ const darkHandler = value => {
 addSettingsListener("allNavbarFill", value => classHandler("all-navbar-fill", value, document.body));
 classHandler("all-navbar-fill", settings.allNavbarFill, document.body);
 const supportedUrls = [
-  "/www.bilibili.com",
-  "/t.bilibili.com",
-  "/search.bilibili.com",
-  "/space.bilibili.com",
-  "/account.bilibili.com",
-  "/pay.bilibili.com",
-  "/member.bilibili.com",
-  "/big.bilibili.com",
-  "/message.bilibili.com",
-  "/app.bilibili.com",
-  "/passport.bilibili.com",
-  "/game.bilibili.com",
+  "//www.bilibili.com",
+  "//t.bilibili.com",
+  "//search.bilibili.com",
+  "//space.bilibili.com",
+  "//account.bilibili.com",
+  "//pay.bilibili.com",
+  "//member.bilibili.com",
+  "//big.bilibili.com",
+  "//message.bilibili.com",
+  "//app.bilibili.com",
+  "//passport.bilibili.com",
+  "//game.bilibili.com",
+  "//live.bilibili.com/blackboard/"
 ];
 const unsupportedUrls = [
-  "/t.bilibili.com/lottery/h5/index/#/result",
-  "/member.bilibili.com/video/upload",
-  "/space.bilibili.com/ajax/",
+  "//t.bilibili.com/lottery/h5/index/#/result",
+  "//member.bilibili.com/video/upload",
+  "//space.bilibili.com/ajax/",
+  "//www.bilibili.com/h5/comment/",
 ]
 if (!supportedUrls.some(it => document.URL.includes(it))
   || unsupportedUrls.some(it => document.URL.includes(it))) {
@@ -285,9 +287,22 @@ class Blank extends NavbarComponent {
 class Logo extends NavbarComponent {
   constructor () {
     super();
+    this.getLogo()
     this.href = `https://www.bilibili.com/`;
-    this.html = /*html*/`<i class="custom-navbar-iconfont custom-navbar-icon-logo"></i>`;
     this.touch = false;
+    addSettingsListener('customNavbarSeasonLogo', () => this.getLogo())
+  }
+  async getLogo () {
+    if (settings.customNavbarSeasonLogo) {
+      const json = await Ajax.getJson(
+        'https://api.bilibili.com/x/web-show/res/locs?pf=0&ids=142'
+      )
+      if (json.code === 0) {
+        this.html = /*html*/`<img height="38" src="${json.data[142][0].litpic.replace('http:', 'https:')}">`
+        return
+      }
+    }
+    this.html = /*html*/`<i class="custom-navbar-iconfont custom-navbar-icon-logo"></i>`
   }
   get name () {
     return "logo";
@@ -545,8 +560,8 @@ class UserInfo extends NavbarComponent {
     this.href = "https://space.bilibili.com";
     this.html = /*html*/`
       <div class="user-face-container">
-        <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-face"></img>
-        <img src='data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>' class="user-pendant"></img>
+        <img src='${EmptyImageUrl}' class="user-face"></img>
+        <img src='${EmptyImageUrl}' class="user-pendant"></img>
       </div>
     `;
     this.popupHtml = /*html*/`
@@ -779,7 +794,8 @@ class SearchBox extends NavbarComponent {
           }
         },
         deleteItem (item, index) {
-          settings.searchHistory = settings.searchHistory.splice(settings.searchHistory.findIndex(it => it.keyword === item.value), 1)
+          settings.searchHistory.splice(settings.searchHistory.findIndex(it => it.keyword === item.value), 1)
+          settings.searchHistory = settings.searchHistory
           this.items.splice(index, 1)
         },
         clearSearchHistory () {

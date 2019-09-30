@@ -1,15 +1,15 @@
 (async () => {
   if (document.URL.replace(window.location.search, '') !== 'https://www.bilibili.com/') {
+    resources.removeStyle('simplifyHomeStyle')
     return
   }
-  const SimplifyHome = await import((() => 'simplify-home.vue')())
   document.body.insertAdjacentHTML('beforeend', /*html*/`
     <simplify-home :home-style="homeStyle"></simplify-home>
   `)
   const vm = new Vue({
     el: 'simplify-home',
     components: {
-      'simplify-home': SimplifyHome,
+      SimplifyHome: () => import('simplify-home.vue'),
     },
     data: {
       homeStyle: settings.simplifyHomeStyle,

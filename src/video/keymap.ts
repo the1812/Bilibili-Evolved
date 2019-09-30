@@ -43,10 +43,17 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       e.stopPropagation()
       e.preventDefault()
       const playbackRates = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
-      if (key === 'ArrowUp'.toLowerCase()) {
+      if (key === '>' || key === 'ArrowUp'.toLowerCase()) {
         video.playbackRate = playbackRates.find(it => it > video.playbackRate) || playbackRates[playbackRates.length - 1]
-      } else if (key === 'ArrowDown'.toLowerCase()) {
+      } else if (key === '<' || key === 'ArrowDown'.toLowerCase()) {
         video.playbackRate = playbackRates.find(it => it < video.playbackRate) || playbackRates[0]
+      } else if (key === '?') {
+        video.playbackRate = 1
+      } else if (key === 'w') {
+        const watchlater = dq('.video-toolbar .ops .watchlater,.more-ops-list .ops-watch-later') as HTMLSpanElement
+        if (watchlater !== null) {
+          watchlater.click()
+        }
       }
     }
   })

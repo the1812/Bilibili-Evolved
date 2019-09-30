@@ -1,5 +1,6 @@
 import { getFriendlyTitle, formatTitle } from '../title'
 import { VideoInfo, DanmakuInfo } from '../video-info'
+import { VideoDownloaderFragment } from './video-downloader-fragment';
 
 interface PageData {
   entity: Video
@@ -44,6 +45,9 @@ class Video {
     this.menuPanel.classList.remove('error')
     this.resetMenuClass()
   }
+  async getDashUrl(quality?: number): Promise<string> {
+    throw new Error('video dash is not supported')
+  }
   async getUrl(quality?: number) {
     if (quality) {
       return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
@@ -53,6 +57,13 @@ class Video {
   }
 }
 class Bangumi extends Video {
+  async getDashUrl(quality?: number) {
+    if (quality) {
+      return `https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&qn=${quality}&otype=json&fourk=1&fnval=16`
+    } else {
+      return `https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&otype=json&fourk=1&fnval=16`
+    }
+  }
   async getUrl(quality?: number) {
     if (quality) {
       return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
@@ -79,54 +90,48 @@ class VideoFormat {
     this.internalName = internalName
     this.displayName = displayName
   }
-  async downloadInfo() {
+  async downloadInfo(dash = false) {
     const videoInfo = new VideoDownloader(this)
-    await videoInfo.fetchVideoInfo()
+    await videoInfo.fetchVideoInfo(dash)
     return videoInfo
   }
-  static get availableFormats(): Promise<VideoFormat[]> {
-    return new Promise((resolve, reject) => {
-      pageData.entity.getUrl().then(url => {
-        const xhr = new XMLHttpRequest()
-        xhr.addEventListener('load', () => {
-          const json = JSON.parse(xhr.responseText)
-          if (json.code !== 0) {
-            reject('获取清晰度信息失败.')
-            return
-          }
-          const data = json.data || json.result || json
-          const qualities = data.accept_quality
-          const internalNames = data.accept_format.split(',')
-          const displayNames = data.accept_description
-          const formats = []
-          while (qualities.length > 0) {
-            const format = new VideoFormat(
-              qualities.pop(),
-              internalNames.pop(),
-              displayNames.pop()
-            )
-            formats.push(format)
-          }
-          resolve(formats.reverse())
-        })
-        xhr.addEventListener('error', () => reject(`获取清晰度信息失败.`))
-        xhr.withCredentials = true
-        xhr.open('GET', url)
-        xhr.send()
-      })
+  static parseFormats(data: any): VideoFormat[] {
+    const qualities = data.accept_quality
+    const internalNames = data.accept_format.split(',')
+    const displayNames = data.accept_description
+    const formats = qualities.map((q: number, index: number) => {
+      return new VideoFormat(
+        q,
+        internalNames[index],
+        displayNames[index]
+      )
     })
+    // while (qualities.length > 0) {
+    //   const format = new VideoFormat(
+    //     qualities.pop(),
+    //     internalNames.pop(),
+    //     displayNames.pop()
+    //   )
+    //   formats.push(format)
+    // }
+    return formats
   }
-}
-class VideoDownloaderFragment {
-  length: number
-  size: number
-  url: string
-  backupUrls: string[]
-  constructor(length: number, size: number, url: string, backupUrls: string[]) {
-    this.length = length
-    this.size = size
-    this.url = url
-    this.backupUrls = backupUrls
+  static async getAvailableDashFormats(): Promise<VideoFormat[]> {
+    const url = await pageData.entity.getDashUrl()
+    const json = await Ajax.getJsonWithCredentials(url)
+    if (json.code !== 0) {
+      throw new Error('获取清晰度信息失败.')
+    }
+    return VideoFormat.parseFormats(json.result)
+  }
+  static async getAvailableFormats(): Promise<VideoFormat[]> {
+    const url = await pageData.entity.getUrl()
+    const json = await Ajax.getJsonWithCredentials(url)
+    if (json.code !== 0) {
+      throw new Error('获取清晰度信息失败.')
+    }
+    const data = json.data || json.result || json
+    return VideoFormat.parseFormats(data)
   }
 }
 class VideoDownloader {
@@ -147,29 +152,33 @@ class VideoDownloader {
   get totalSize() {
     return this.fragments.map(it => it.size).reduce((acc, it) => acc + it)
   }
-  fetchVideoInfo() {
-    return new Promise((resolve, reject) => {
-      pageData.entity.getUrl(this.format.quality).then(url => {
-        const xhr = new XMLHttpRequest()
-        xhr.addEventListener('load', () => {
-          const json = JSON.parse(xhr.responseText.replace(/http:/g, 'https:'))
-          const data = json.data || json.result || json
-          if (data.quality !== this.format.quality) {
-            reject('获取下载链接失败, 请确认当前账号有下载权限后重试.')
-          }
-          const urls = data.durl
-          this.fragments = urls.map((it: any) => new VideoDownloaderFragment(
-            it.length, it.size,
-            it.url,
-            it.backup_url
-          ))
-          resolve(this.fragments)
-        })
-        xhr.withCredentials = true
-        xhr.open('GET', url)
-        xhr.send()
+  async fetchVideoInfo(dash = false): Promise<VideoDownloaderFragment[]> {
+    if (!dash) {
+      const url = await pageData.entity.getUrl(this.format.quality)
+      const text = await Ajax.getTextWithCredentials(url)
+      const json = JSON.parse(text.replace(/http:/g, 'https:'))
+      const data = json.data || json.result || json
+      if (data.quality !== this.format.quality) {
+        throw new Error('获取下载链接失败, 请确认当前账号有下载权限后重试.')
+      }
+      const urls = data.durl
+      this.fragments = urls.map((it: any) => {
+        return {
+          length: it.length,
+          size: it.size,
+          url: it.url,
+          backupUrls: it.backup_url
+        } as VideoDownloaderFragment
       })
-    })
+    }
+    else {
+      const { dashToFragment, getDashInfo } = await import('./video-dash')
+      const dashes = await getDashInfo(pageData.aid, pageData.cid, this.format.quality)
+      const video = dashes.videoDashes.sort(descendingSort(d => d.bandWidth))[0]
+      const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
+      this.fragments = [dashToFragment(video), dashToFragment(audio)]
+    }
+    return this.fragments
   }
   updateProgress() {
     const progress = this.progressMap
@@ -302,10 +311,10 @@ class VideoDownloader {
         params.push([fragment.url])
         params.push({
           referer: document.URL.replace(window.location.search, ''),
-          'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0',
+          'user-agent': UserAgent,
           out: `${getFriendlyTitle()}${indexNumber}${this.extension(fragment)}`,
           split: this.fragmentSplitFactor,
-          dir: option.dir || undefined,
+          dir: (option.baseDir + option.dir) || undefined,
           'max-download-limit': option.maxDownloadLimit || undefined,
         })
         const id = encodeURIComponent(`${getFriendlyTitle()}${indexNumber}`)
@@ -328,7 +337,7 @@ ${this.fragments.map((it, index) => {
         return `
 ${it.url}
   referer=${document.URL.replace(window.location.search, '')}
-  user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0
+  user-agent=${UserAgent}
   out=${getFriendlyTitle()}${indexNumber}${this.extension(it)}
   split=${this.fragmentSplitFactor}
   `.trim()
@@ -347,10 +356,18 @@ ${it.url}
     }
   }
   extension(fragment?: VideoDownloaderFragment) {
-    return (fragment || this.fragments[0]).url
-      .indexOf('.flv') !== -1
-      ? '.flv'
-      : '.mp4'
+    const f = (fragment || this.fragments[0])
+    const match = [
+      '.flv',
+      '.mp4',
+      '.m4s',
+    ].find(it => f.url.includes(it))
+    if (match) {
+      return match
+    } else {
+      console.warn('No extension detected.')
+      return '.flv'
+    }
   }
   makeBlob(data: any, fragment?: VideoDownloaderFragment) {
     return new Blob(Array.isArray(data) ? data : [data], {
@@ -482,7 +499,7 @@ async function loadPageData() {
     pageData.entity = new Video()
   }
   try {
-    formats = await VideoFormat.availableFormats
+    formats = await VideoFormat.getAvailableFormats()
   } catch (error) {
     return false
   }
@@ -501,8 +518,6 @@ async function loadWidget() {
   }, { once: true })
 }
 async function loadPanel() {
-  const VueDropDown = await import((() => './v-dropdown.vue')())
-  const VueCheckBox = await import((() => './v-checkbox.vue')())
   let workingDownloader: VideoDownloader
   const sizeCache = new Map<VideoFormat, number>()
   type ExportType = 'copyLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD'
@@ -516,14 +531,19 @@ async function loadPanel() {
   const panel = new Vue({
     el: '.download-video',
     components: {
-      'v-dropdown': VueDropDown,
-      'v-checkbox': VueCheckBox,
+      VDropdown: () => import('./v-dropdown.vue'),
+      VCheckbox: () => import('./v-checkbox.vue'),
+      RpcProfiles: () => import('./aria2-rpc-profiles.vue'),
     },
     data: {
       downloadSingle: true,
-      coverUrl: 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>',
+      coverUrl: EmptyImageUrl,
       aid: pageData.aid,
       cid: pageData.cid,
+      dashModel: {
+        value: settings.downloadVideoFormat,
+        items: ['flv', 'dash'],
+      },
       qualityModel: {
         value: selectedFormat!.displayName,
         items: formats.map(f => f.displayName)
@@ -542,6 +562,8 @@ async function loadPanel() {
       rpcSettings: settings.aria2RpcOption,
       showRpcSettings: false,
       busy: false,
+      saveRpcSettingsText: '保存配置',
+      enableDash: settings.enableDashDownload,
     },
     computed: {
       displaySize() {
@@ -559,6 +581,9 @@ async function loadPanel() {
       selectedEpisodeCount() {
         return (this.episodeList as EpisodeItem[]).filter(item => item.checked).length
       },
+      dash() {
+        return this.dashModel.value === 'dash'
+      },
     },
     methods: {
       close() {
@@ -566,6 +591,19 @@ async function loadPanel() {
       },
       danmakuOptionChange() {
         settings.downloadVideoDefaultDanmaku = this.danmakuModel.value
+      },
+      async dashChange() {
+        const format = this.dashModel.value
+        let updatedFormats = []
+        if (format === 'flv') {
+          updatedFormats = await VideoFormat.getAvailableFormats()
+        } else {
+          updatedFormats = await VideoFormat.getAvailableDashFormats()
+        }
+        formats = updatedFormats;
+        [selectedFormat] = format
+        this.qualityModel.items = updatedFormats.map(f => f.displayName);
+        [this.qualityModel.value] = this.qualityModel.items
       },
       async formatChange() {
         const format = this.getFormat() as VideoFormat
@@ -576,7 +614,7 @@ async function loadPanel() {
         }
         try {
           this.size = '获取大小中'
-          const videoDownloader = await format.downloadInfo()
+          const videoDownloader = await format.downloadInfo(this.dash)
           this.size = videoDownloader.totalSize
           sizeCache.set(format, this.size)
         } catch (error) {
@@ -602,7 +640,7 @@ async function loadPanel() {
             return
           }
           const format = this.getFormat() as VideoFormat
-          const videoDownloader = await format.downloadInfo()
+          const videoDownloader = await format.downloadInfo(this.dash)
           videoDownloader.danmakuOption = this.danmakuModel.value
           switch (type) {
             case 'copyLink':
@@ -737,7 +775,7 @@ async function loadPanel() {
         const format = this.getFormat() as VideoFormat
         try {
           this.downloading = true
-          const videoDownloader = await format.downloadInfo()
+          const videoDownloader = await format.downloadInfo(this.dash)
           videoDownloader.videoSpeed.speedUpdate = speed => this.speed = speed
           videoDownloader.danmakuOption = this.danmakuModel.value
           videoDownloader.progress = percent => {
@@ -782,6 +820,16 @@ async function loadPanel() {
           this.rpcSettings.port = '6800'
         }
         settings.aria2RpcOption = this.rpcSettings
+        const profile = settings.aria2RpcOptionProfiles.find(p => p.name === settings.aria2RpcOptionSelectedProfile)
+        if (profile) {
+          Object.assign(profile, this.rpcSettings)
+          settings.aria2RpcOptionProfiles = settings.aria2RpcOptionProfiles
+        }
+        this.saveRpcSettingsText = '已保存'
+        setTimeout(() => this.saveRpcSettingsText = '保存配置', 2000)
+      },
+      updateProfile(profile: RpcOptionProfile) {
+        settings.aria2RpcOption = this.rpcSettings = _.omit(profile, 'name') as RpcOption
       }
     }
   })
@@ -803,7 +851,7 @@ async function loadPanel() {
     await videoInfo.fetchInfo()
     panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:')
 
-    formats = await VideoFormat.availableFormats;
+    formats = await VideoFormat.getAvailableFormats();
     [selectedFormat] = formats
     panel.qualityModel = {
       value: selectedFormat.displayName,

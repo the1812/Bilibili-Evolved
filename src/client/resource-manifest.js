@@ -94,10 +94,16 @@ Resource.manifest = {
       sideBarOffset: '侧栏垂直偏移量',
       ajaxHook: '启用 Ajax Hook API',
       scriptLoadingMode: '加载模式',
-    }
+      guiSettingsDockSide: '设置面板停靠位置',
+    },
+    dropdown: {
+      key: 'guiSettingsDockSide',
+      items: ['左侧', '右侧']
+    },
   },
   useDarkStyle: {
     path: 'dark-styles.min.js',
+    reloadable: true,
     alwaysPreview: true,
     styles: [
       'darkStyle',
@@ -145,7 +151,8 @@ Resource.manifest = {
   },
   hideBanner: {
     path: 'hide-banner.min.js',
-    style: true,
+    reloadable: true,
+    style: 'instant',
     displayNames: {
       hideBanner: '隐藏顶部横幅'
     }
@@ -195,18 +202,21 @@ Resource.manifest = {
   },
   harunaScale: {
     path: 'haruna-scale.min.js',
+    reloadable: true,
     displayNames: {
       harunaScale: '缩放直播看板娘'
     }
   },
   removeLiveWatermark: {
     path: 'remove-watermark.min.js',
+    reloadable: true,
     displayNames: {
       removeLiveWatermark: '删除直播水印'
     }
   },
   fullTweetsTitle: {
     path: 'full-tweets-title.min.js',
+    reloadable: true,
     style: 'instant',
     displayNames: {
       fullTweetsTitle: '展开动态标题'
@@ -249,12 +259,14 @@ Resource.manifest = {
   },
   removeVideoTopMask: {
     path: 'remove-top-mask.min.js',
+    reloadable: true,
     displayNames: {
       removeVideoTopMask: '删除视频标题层'
     }
   },
   blurVideoControl: {
     path: 'blur-video-control.min.js',
+    reloadable: true,
     style: 'instant',
     displayNames: {
       blurVideoControl: '模糊视频控制栏背景'
@@ -316,6 +328,7 @@ Resource.manifest = {
   },
   customControlBackground: {
     path: 'custom-control-background.min.js',
+    reloadable: true,
     style: {
       key: 'customControlBackgroundStyle',
       condition: () => settings.customControlBackgroundOpacity > 0
@@ -413,6 +426,7 @@ Resource.manifest = {
   },
   compactLayout: {
     path: 'compact-layout.min.js',
+    reloadable: true,
     style: true,
     displayNames: {
       compactLayout: '首页使用紧凑布局'
@@ -446,6 +460,7 @@ Resource.manifest = {
   },
   useCommentStyle: {
     path: 'comment.min.js',
+    reloadable: true,
     style: 'important',
     displayNames: {
       useCommentStyle: '简化评论区'
@@ -471,6 +486,7 @@ Resource.manifest = {
   },
   framePlayback: {
     path: 'frame-playback.min.js',
+    reloadable: true,
     style: 'instant',
     html: true,
     displayNames: {
@@ -535,10 +551,12 @@ Resource.manifest = {
   },
   customNavbar: {
     path: 'custom-navbar.min.js',
+    reloadable: true,
     style: 'instant',
     html: true,
     displayNames: {
       customNavbar: '使用自定义顶栏',
+      customNavbarSeasonLogo: '使用季节Logo',
       customNavbarFill: '主题色填充',
       customNavbarShadow: '投影',
       customNavbarCompact: '紧凑布局',
@@ -562,24 +580,28 @@ Resource.manifest = {
   },
   playerShadow: {
     path: 'player-shadow.min.js',
+    reloadable: true,
     displayNames: {
       playerShadow: '播放器投影'
     }
   },
   narrowDanmaku: {
     path: 'narrow-danmaku.min.js',
+    reloadable: true,
     displayNames: {
       narrowDanmaku: '强制保留弹幕栏'
     }
   },
   hideOldEntry: {
     path: 'hide-old-entry.min.js',
+    reloadable: true,
     displayNames: {
       hideOldEntry: '隐藏返回旧版'
     }
   },
   videoScreenshot: {
     path: 'screenshot.min.js',
+    reloadable: true,
     style: true,
     displayNames: {
       videoScreenshot: '启用视频截图'
@@ -590,6 +612,7 @@ Resource.manifest = {
   },
   hideBangumiReviews: {
     path: 'hide-bangumi-reviews.min.js',
+    reloadable: true,
     displayNames: {
       hideBangumiReviews: '隐藏番剧点评'
     }
@@ -609,6 +632,8 @@ Resource.manifest = {
   },
   hideCategory: {
     path: 'hide-category.min.js',
+    reloadable: true,
+    style: 'instant',
     displayNames: {
       hideCategory: '隐藏分区栏',
     },
@@ -667,6 +692,39 @@ Resource.manifest = {
     style: 'instant',
     displayNames: {
       simplifyHome: '简化首页'
+    },
+  },
+  fullActivityContent: {
+    path: 'full-activity-content.min.js',
+    reloadable: true,
+    displayNames: {
+      fullActivityContent: '展开动态内容',
+    },
+  },
+  activityImageSaver: {
+    path: 'activity-image-saver.min.js',
+    displayNames: {
+      activityImageSaver: '解除动态存图限制',
+    },
+  },
+  selectableColumnText: {
+    path: 'selectable-column-text.min.js',
+    reloadable: true,
+    displayNames: {
+      selectableColumnText: '专栏文字选择',
+    },
+  },
+  watchlaterExpireWarnings: {
+    path: 'watchlater-expire-warnings.min.js',
+    displayNames: {
+      watchlaterExpireWarnings: '稍后再看期限提醒',
+    },
+  },
+  superchatTranslate: {
+    path: 'superchat-translate.min.js',
+    style: true,
+    displayNames: {
+      superchatTranslate: '醒目留言翻译',
     },
   },
 }

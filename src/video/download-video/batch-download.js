@@ -24,10 +24,10 @@ class Batch {
           params.push([fragment.url])
           params.push({
             referer: document.URL.replace(window.location.search, ''),
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0',
+            'user-agent': UserAgent,
             out: `${item.title}${indexNumber}.flv`,
             split: fragmentSplitFactor,
-            dir: option.dir || undefined,
+            dir: (option.baseDir + option.dir) || undefined,
             'max-download-limit': option.maxDownloadLimit || undefined,
           })
           const id = encodeURIComponent(`${item.title}${indexNumber}`)
@@ -47,7 +47,7 @@ ${json.map(item => {
     return `
 ${f.url}
   referer=${item.referer}
-  user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0
+  user-agent=${UserAgent}
   out=${item.title}.flv
   split=${fragmentSplitFactor}
    `.trim()
@@ -106,7 +106,7 @@ class VideoEpisodeBatch extends Batch {
       })
       result.push({
         fragments,
-        title: item.title,
+        title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ''),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')
@@ -165,7 +165,7 @@ class BangumiBatch extends Batch {
       })
       result.push({
         fragments,
-        title: item.title,
+        title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ''),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')

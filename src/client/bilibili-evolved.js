@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.9.5
+// @version      1.9.10
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -29,10 +29,6 @@
 // ==/UserScript==
 Vue.config.productionTip = false
 Vue.config.devtools = false
-if (GM_getValue('customNavbar') === true
-  && document.URL === 'https://message.bilibili.com/pages/nav/index_new_sync') {
-  return
-}
 import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed } from './utils'
 import { settings, loadSettings, saveSettings, onSettingsChange, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
@@ -48,6 +44,31 @@ import { Resource } from './resource'
 import { resourceManifest } from './resource-manifest'
 import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
+import { scriptBlocker } from './script-blocker'
+
+if (GM_getValue('customNavbar') === true
+  && document.URL === 'https://message.bilibili.com/pages/nav/index_new_sync') {
+  if (GM_getValue('useDarkStyle') === true) {
+    document.documentElement.style.setProperty('--theme-color', GM_getValue('customStyleColor'))
+    if (typeof offlineData === 'undefined') {
+      const cache = GM_getValue('cache', {})
+      if ('darkStyle' in cache) {
+        const style = document.createElement('style')
+        style.innerHTML = cache.darkStyle
+        style.id = 'dark-style'
+        document.head.insertAdjacentElement('afterbegin', style)
+      }
+    } else {
+      const style = document.createElement('style')
+      style.innerHTML = Object.entries(offlineData).find(([key]) => {
+        return key.includes('/dark.min.css')
+      })[1]
+      style.id = 'dark-style'
+      document.head.insertAdjacentElement('afterbegin', style)
+    }
+  }
+  return
+}
 
 try {
   const events = {}
@@ -83,6 +104,7 @@ try {
   })
   loadResources()
   loadSettings()
+  scriptBlocker.start()
   if (settings.ajaxHook) {
     setupAjaxHook()
   }
@@ -135,6 +157,7 @@ try {
     formatFileSize,
     formatDuration,
     getDpiSourceSet,
+    scriptBlocker,
     resources,
     theWorld: waitTime => {
       if (waitTime > 0) {

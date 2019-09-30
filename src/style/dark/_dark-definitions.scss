@@ -1,0 +1,107 @@
+@mixin set-color($name, $level: "") {
+  $length: str-length($level);
+  @if $length == 1 or $length == 2 {
+    #{$name}: #{"#" + $level + $level + $level} !important;
+  } @else if $length == 3 or $length == 6 {
+    #{$name}: #{"#" + $level} !important;
+  } @else if $length == 0 {
+    #{$name}: transparent !important;
+  }
+}
+@mixin set-theme-color($name, $level: "") {
+  @if $level == "" {
+    #{$name}: var(--theme-color) !important;
+  } @else {
+    #{$name}: var(--theme-color-#{$level}) !important;
+  }
+}
+@mixin set-foreground-color($name, $level: "") {
+  @if $level == "" {
+    #{$name}: var(--foreground-color) !important;
+  } @else {
+    #{$name}: var(--foreground-color-#{$level}) !important;
+  }
+}
+@mixin background-color($level: "") {
+  @include set-color("background-color", $level);
+}
+@mixin color($level: "") {
+  @include set-color("color", $level);
+}
+@mixin background($level: "") {
+  @include set-color("background", $level);
+}
+@mixin border-color($level: "") {
+  @include set-color("border-color", $level);
+}
+@mixin fill($level: "") {
+  @include set-color("fill", $level);
+}
+
+@mixin theme-background-color($level: "") {
+  @include set-theme-color("background-color", $level);
+}
+@mixin theme-color($level: "") {
+  @include set-theme-color("color", $level);
+}
+@mixin theme-background($level: "") {
+  @include set-theme-color("background", $level);
+}
+@mixin theme-border-color($level: "") {
+  @include set-theme-color("border-color", $level);
+}
+@mixin theme-fill($level: "") {
+  @include set-theme-color("fill", $level);
+}
+
+@mixin foreground-background-color($level: "") {
+  @include set-foreground-color("background-color", $level);
+}
+@mixin foreground-color($level: "") {
+  @include set-foreground-color("color", $level);
+}
+@mixin foreground-background($level: "") {
+  @include set-foreground-color("background", $level);
+}
+@mixin foreground-border-color($level: "") {
+  @include set-foreground-color("border-color", $level);
+}
+@mixin foreground-fill($level: "") {
+  @include set-foreground-color("fill", $level);
+}
+
+@mixin to-white {
+  filter: brightness(0) invert(1) !important;
+}
+@mixin to-gray($invert: 0.7) {
+  filter: brightness(0) invert($invert) !important;
+}
+@mixin grayscale($value: 1) {
+  filter: grayscale($value) !important;
+}
+@mixin brightness($value: 1) {
+  filter: brightness($value) !important;
+}
+@mixin to-theme($from) {
+  filter: var(--#{$from}-image-filter) !important;
+}
+@mixin no-image {
+  background-image: none !important;
+}
+@mixin no-shadow {
+  box-shadow: none !important;
+}
+@mixin theme-shadow($lighter: true) {
+  @if $lighter {
+    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
+  } @else {
+    box-shadow: 0px 4px 16px 0px var(--theme-color-40) !important;
+  }
+}
+@mixin hide($hideLayout: true) {
+  @if $hideLayout {
+    display: none !important;
+  } @else {
+    visibility: hidden !important;
+  }
+}

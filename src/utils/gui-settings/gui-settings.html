@@ -61,6 +61,7 @@
       <!-- <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox> -->
       <!-- <textbox indent="1" key="blurBackgroundOpacity" dependencies="useNewStyle"></textbox> -->
       <checkbox indent="0" key="customNavbar" dependencies=""></checkbox>
+      <checkbox indent="1" key="customNavbarSeasonLogo" dependencies="customNavbar"></checkbox>
       <checkbox indent="1" key="customNavbarFill" dependencies="customNavbar"></checkbox>
       <!-- <checkbox indent="1" key="allNavbarFill" dependencies="customNavbar"></checkbox> -->
       <checkbox indent="1" key="customNavbarShadow" dependencies="customNavbar"></checkbox>
@@ -80,7 +81,7 @@
       <!-- <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox> -->
       <!-- <checkbox indent="0" key="showBanner" dependencies=""></checkbox> -->
       <!-- <checkbox indent="1" key="preserveRank" dependencies="overrideNavBar"></checkbox> -->
-      <checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox>
+      <!-- <checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox> -->
       <checkbox indent="0" key="customControlBackground" dependencies=""></checkbox>
       <textbox indent="1" key="customControlBackgroundOpacity" dependencies="customControlBackground"></textbox>
       <checkbox indent="0" key="harunaScale" dependencies=""></checkbox>
@@ -89,27 +90,32 @@
       <checkbox indent="0" key="hideOldEntry" dependencies=""></checkbox>
       <checkbox indent="0" key="hideBangumiReviews" dependencies=""></checkbox>
       <checkbox indent="0" key="hideCategory" dependencies=""></checkbox>
+      <category icon="activity">动态</category>
+      <checkbox indent="0" key="activityImageSaver" dependencies=""></checkbox>
+      <checkbox indent="0" key="foldComment" dependencies=""></checkbox>
+      <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
+      <checkbox indent="0" key="fullActivityContent" dependencies=""></checkbox>
+      <checkbox indent="0" key="oldTweets" dependencies=""></checkbox>
       <category icon="tool">工具</category>
       <checkbox indent="0" key="removeAds" dependencies=""></checkbox>
       <checkbox indent="1" key="showBlockedAdsTip" dependencies="removeAds"></checkbox>
       <checkbox indent="0" key="watchLaterRedirect" dependencies=""></checkbox>
       <checkbox indent="0" key="favoritesRedirect" dependencies=""></checkbox>
       <checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox>
-      <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
       <checkbox indent="0" key="fullPageTitle" dependencies=""></checkbox>
       <!-- <checkbox indent="0" key="showDeadVideoTitle" dependencies=""></checkbox>
       <checkbox indent="1" key="useBiliplusRedirect" dependencies="showDeadVideoTitle"></checkbox>
       <dropdown indent="1" key="deadVideoTitleProvider" dependencies="showDeadVideoTitle"></dropdown> -->
       <checkbox indent="0" key="biliplusRedirect" dependencies=""></checkbox>
       <checkbox indent="0" key="imageResolution" dependencies=""></checkbox>
-      <checkbox indent="0" key="oldTweets" dependencies=""></checkbox>
       <checkbox indent="0" key="i18n" dependencies=""></checkbox>
       <dropdown indent="1" key="i18nLanguage" dependencies="i18n"></dropdown>
       <checkbox indent="0" key="noLiveAutoplay" dependencies=""></checkbox>
       <checkbox indent="1" key="hideHomeLive" dependencies="noLiveAutoplay"></checkbox>
-      <checkbox indent="0" key="foldComment" dependencies=""></checkbox>
       <checkbox indent="0" key="seedsToCoins" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="autoDraw" dependencies=""></checkbox> -->
+      <checkbox indent="0" key="autoDraw" dependencies=""></checkbox>
+      <checkbox indent="0" key="selectableColumnText" dependencies=""></checkbox>
+      <checkbox indent="0" key="watchlaterExpireWarnings" dependencies=""></checkbox>
       <!-- <checkbox indent="0" key="noMiniVideoAutoplay" dependencies=""></checkbox> -->
       <category icon="touch">触摸</category>
       <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
@@ -124,6 +130,7 @@
       <textbox indent="0" key="sideBarOffset" dependencies=""></textbox>
       <checkbox indent="0" key="ajaxHook" dependencies=""></checkbox>
       <dropdown indent="0" key="scriptLoadingMode" dependencies=""></dropdown>
+      <dropdown indent="0" key="guiSettingsDockSide" dependencies=""></dropdown>
     </ul>
   </div>
   <div class="gui-settings-tooltip"></div>

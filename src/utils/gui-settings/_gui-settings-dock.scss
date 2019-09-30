@@ -1,0 +1,27 @@
+.gui-settings-dock-right {
+  .gui-settings-icon-panel {
+    right: 0;
+    left: unset;
+    .gui-settings,
+    .gui-settings-widgets {
+      transform: translateX(16px);
+      border-radius: 50% 0 0 50%;
+      &:hover {
+        transform: translateX(0);
+      }
+    }
+  }
+  .gui-settings-box,
+  .gui-settings-widgets-box {
+    right: 0;
+    left: unset;
+    transform: translateX(100%);
+    &.opened {
+      transform: translateX(0);
+    }
+  }
+  .gui-settings-tooltip {
+    right: 440px;
+    left: unset;
+  }
+}
