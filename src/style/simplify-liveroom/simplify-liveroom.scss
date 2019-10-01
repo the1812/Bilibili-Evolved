@@ -80,6 +80,9 @@
       background-image: none !important;
     }
   }
+  [class*='guard-level-']::after {
+    display: none !important;
+  }
 }
 .simplify-liveroom-settings > ul > li {
   padding: 8px 12px;

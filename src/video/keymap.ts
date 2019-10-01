@@ -12,6 +12,9 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     c: '.video-toolbar .coin,.tool-bar .coin-info', // 投币
     s: '.video-toolbar .collect', // 收藏
   } as { [key: string]: string }
+  const showPlaybackTip = () => {
+
+  }
   document.body.addEventListener('keydown', e => {
     if (document.activeElement && ["input", "textarea"].includes(document.activeElement.nodeName.toLowerCase())) {
       return
