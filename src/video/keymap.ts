@@ -46,7 +46,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       if (key === '>' || key === 'ArrowUp'.toLowerCase()) {
         video.playbackRate = playbackRates.find(it => it > video.playbackRate) || playbackRates[playbackRates.length - 1]
       } else if (key === '<' || key === 'ArrowDown'.toLowerCase()) {
-        video.playbackRate = playbackRates.find(it => it < video.playbackRate) || playbackRates[0]
+        video.playbackRate = [...playbackRates].reverse().find(it => it < video.playbackRate) || playbackRates[0]
       } else if (key === '?') {
         video.playbackRate = 1
       } else if (key === 'w') {
