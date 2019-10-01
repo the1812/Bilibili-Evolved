@@ -106,7 +106,7 @@ class VideoEpisodeBatch extends Batch {
       })
       result.push({
         fragments,
-        title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ''),
+        title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')
@@ -165,7 +165,7 @@ class BangumiBatch extends Batch {
       })
       result.push({
         fragments,
-        title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ''),
+        title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')

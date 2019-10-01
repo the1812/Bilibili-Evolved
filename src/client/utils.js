@@ -150,3 +150,6 @@ export const formatCount = (count) => {
   }
   return count + ''
 }
+export const escapeFilename = (filename, replacement = '') => {
+  return filename.replace(/[\/\\:\*\?"<>\|]/g, replacement)
+}
