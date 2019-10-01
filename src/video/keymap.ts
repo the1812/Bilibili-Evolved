@@ -103,6 +103,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
         showPlaybackTip(video.playbackRate)
       } else if (key === '?') {
         video.playbackRate = 1
+        showPlaybackTip(video.playbackRate)
       } else if (key === 'w') {
         const watchlater = dq('.video-toolbar .ops .watchlater,.more-ops-list .ops-watch-later') as HTMLSpanElement
         if (watchlater !== null) {
