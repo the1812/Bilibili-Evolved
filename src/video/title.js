@@ -4,7 +4,7 @@ function oldGetFriendlyTitle (includesPageTitle = true) {
     .replace('_电影_bilibili_哔哩哔哩', '')
     .replace('_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili', '')
     .replace(' - 哔哩哔哩直播，二次元弹幕直播平台', '')
-    .replace(/[\/\\:\*\?"<>\|]/g, '')
+    .replace(/[\/\\:\*\?"<>\|]/g, ' ')
     .trim()
   if (!includesPageTitle || document.URL.indexOf('/bangumi') !== -1) {
     return title
@@ -58,7 +58,7 @@ export function formatTitle (format, includesPageTitle = true) {
   const filename = Object.keys(data).reduce((result, name) => {
     return result.replace(new RegExp(`\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]`, 'g'), data[name] ? `$1${data[name]}$2` : '')
   }, format)
-  return filename.replace(/[\/\\:\*\?"<>\|]/g, '')
+  return filename.replace(/[\/\\:\*\?"<>\|]/g, ' ')
 }
 export function getFriendlyTitle (includesPageTitle = true) {
   if (settings.filenameFormat === undefined) {

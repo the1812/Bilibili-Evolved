@@ -12,6 +12,58 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     c: '.video-toolbar .coin,.tool-bar .coin-info', // 投币
     s: '.video-toolbar .collect', // 收藏
   } as { [key: string]: string }
+  let showPlaybackTipOldTimeout: number
+  const showPlaybackTip = (speed: number) => {
+    let tip = dq('.keymap-playback-tip') as HTMLDivElement
+    if (!tip) {
+      const player = dq('.bilibili-player-video-wrap')
+      if (!player) {
+        return
+      }
+      player.insertAdjacentHTML('afterbegin', /*html*/`
+        <div class="keymap-playback-tip-container">
+          <i class="mdi mdi-fast-forward"></i>
+          <div class="keymap-playback-tip"></div>x
+        </div>
+      `)
+      resources.applyStyleFromText(`
+        .keymap-playback-tip-container {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          padding: 8px 16px;
+          background-color: #000A;
+          color: white;
+          pointer-events: none;
+          opacity: 0;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          font-size: 14pt;
+          border-radius: 4px;
+          transition: .2s ease-out;
+        }
+        .keymap-playback-tip-container.show {
+          opacity: 1;
+        }
+        .keymap-playback-tip-container i {
+          line-height: 1;
+          margin-right: 8px;
+          font-size: 18pt;
+        }
+      `, 'keymapStyle')
+      tip = dq('.keymap-playback-tip') as HTMLDivElement
+    }
+    tip.innerHTML = speed.toString()
+    if (showPlaybackTipOldTimeout) {
+      clearTimeout(showPlaybackTipOldTimeout)
+    }
+    (dq('.keymap-playback-tip-container') as HTMLDivElement).classList.add('show')
+    showPlaybackTipOldTimeout = setTimeout(() => {
+      (dq('.keymap-playback-tip-container') as HTMLDivElement).classList.remove('show')
+    }, 2000)
+  }
   document.body.addEventListener('keydown', e => {
     if (document.activeElement && ["input", "textarea"].includes(document.activeElement.nodeName.toLowerCase())) {
       return
@@ -45,10 +97,13 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       const playbackRates = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
       if (key === '>' || key === 'ArrowUp'.toLowerCase()) {
         video.playbackRate = playbackRates.find(it => it > video.playbackRate) || playbackRates[playbackRates.length - 1]
+        showPlaybackTip(video.playbackRate)
       } else if (key === '<' || key === 'ArrowDown'.toLowerCase()) {
-        video.playbackRate = playbackRates.find(it => it < video.playbackRate) || playbackRates[0]
+        video.playbackRate = [...playbackRates].reverse().find(it => it < video.playbackRate) || playbackRates[0]
+        showPlaybackTip(video.playbackRate)
       } else if (key === '?') {
         video.playbackRate = 1
+        showPlaybackTip(video.playbackRate)
       } else if (key === 'w') {
         const watchlater = dq('.video-toolbar .ops .watchlater,.more-ops-list .ops-watch-later') as HTMLSpanElement
         if (watchlater !== null) {
