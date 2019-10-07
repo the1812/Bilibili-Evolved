@@ -193,3 +193,61 @@
     }
   }
 }
+.wrapper .edit-video-modal {
+  .target-favlist {
+    .target-favitem {
+      &.disabled .target-fav-title .fav-meta .fav-name,
+      &.full .target-fav-title .fav-meta .fav-name {
+        @include color("a");
+      }
+      .target-fav-title{
+        .fav-meta .fav-name {
+          @include color("e");
+        }
+        .fav-select {
+          @include border-color("a");
+          &.selected {
+            @include to-theme("blue");
+          }
+        }
+      }
+      &:hover {
+        @include background-color();
+        .target-fav-title .fav-meta .fav-name {
+          @include theme-color();
+        }
+      }
+    }
+    .collection-mask {
+      @include background-color();
+    }
+  }
+  .addfav-container {
+    .fake-fav-input {
+      @include background-color("4");
+      @include border-color();
+      &:hover {
+        @include border-color();
+      }
+    }
+    .favlist-body:after {
+      @include background-color("a");
+    }
+    .fav-add-tip {
+      @include theme-background-color();
+      @include color("e");
+      .blue-arrow {
+        @include to-theme("blue");
+      }
+    }
+    .fav-container {
+      @include theme-border-color();
+      .add-fav-input,
+      .fav-add-btn {
+        @include background-color();
+        @include color("e");
+        @include border-color();
+      }
+    }
+  }
+}
