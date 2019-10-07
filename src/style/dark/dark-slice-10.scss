@@ -200,7 +200,7 @@
       &.full .target-fav-title .fav-meta .fav-name {
         @include color("a");
       }
-      .target-fav-title{
+      .target-fav-title {
         .fav-meta .fav-name {
           @include color("e");
         }
@@ -230,9 +230,6 @@
         @include border-color();
       }
     }
-    .favlist-body:after {
-      @include background-color("a");
-    }
     .fav-add-tip {
       @include theme-background-color();
       @include color("e");
@@ -249,5 +246,8 @@
         @include border-color();
       }
     }
+  }
+  .favlist-body:after {
+    @include background-color("a");
   }
 }
