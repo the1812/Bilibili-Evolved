@@ -79,7 +79,9 @@
   <div class="exports">
     <h2>导出</h2>
     <div class="actions" v-bind:class="{busy: busy}">
-      <button class="copy-link" v-bind:disabled="downloadSingle ? null : 'disabled'" v-on:click="exportData('copyLink')">复制链接</button>
+      <!-- <button class="copy-link" v-bind:disabled="downloadSingle ? null : 'disabled'" v-on:click="exportData('copyLink')">复制链接</button> -->
+      <button class="show-link" v-bind:disabled="downloadSingle ? null : 'disabled'"
+        v-on:click="exportData('showLink')">显示链接</button>
       <!-- <button class="idm-export" disabled title="暂不支持导出IDM, 详见 GitHub issue #149">IDM</button> -->
       <button class="aria2-file" v-on:click="exportData('aria2')">aria2</button>
       <!-- <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>

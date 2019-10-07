@@ -255,6 +255,12 @@ class VideoDownloader {
     const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + '\r\n' + it)
     GM_setClipboard(urls, 'text')
   }
+  async showUrl() {
+    const message = this.fragments.map(it => /*html*/`
+      <a href="${it.url}">${it.url}</a>
+    `).reduce((acc, it) => acc + '\r\n' + it)
+    Toast.success(message, '显示链接')
+  }
   static downloadBlob(blobOrUrl: Blob | string, filename: string) {
     const a = document.createElement('a')
     let url: string
@@ -520,7 +526,7 @@ async function loadWidget() {
 async function loadPanel() {
   let workingDownloader: VideoDownloader
   const sizeCache = new Map<VideoFormat, number>()
-  type ExportType = 'copyLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD'
+  type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD'
   interface EpisodeItem {
     title: string
     checked: boolean
@@ -646,6 +652,9 @@ async function loadPanel() {
             case 'copyLink':
               await videoDownloader.copyUrl()
               Toast.success('已复制链接到剪贴板.', '下载视频', 3000)
+              break
+            case 'showLink':
+              await videoDownloader.showUrl()
               break
             case 'aria2':
               await videoDownloader.exportAria2(false)
@@ -863,14 +872,13 @@ async function loadPanel() {
 }
 
 export default {
-  widget:
-  {
+  widget: {
     content: /*html*/`
       <button class="gui-settings-flat-button" style="position: relative; z-index: 100;" id="download-video">
         <i class="icon-download"></i>
         <span>下载视频</span>
       </button>`,
     condition: loadPageData,
-    success: loadWidget
-  }
+    success: loadWidget,
+  },
 }
