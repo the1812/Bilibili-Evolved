@@ -29,7 +29,7 @@ export class Toast {
     }
   }
   get element() {
-    return dq(`.toast-card[key='${this.key}']`)
+    return dq(`.toast-card[data-key='${this.key}']`)
   }
   get key() {
     return this.creationTime.toISOString()
@@ -44,7 +44,7 @@ export class Toast {
     if (!document.querySelector('.toast-card-container')) {
       document.body.insertAdjacentHTML('beforeend', /* html */`
         <transition-group class="toast-card-container" name="toast-card-container" tag="div">
-          <toast-card v-for="card of cards" v-bind:key="card.key" v-bind:card="card"></toast-card>
+          <toast-card v-for="card of cards" :data-key="card.key" :key="card.key" :card="card"></toast-card>
         </transition-group>`)
       container = new Vue({
         el: '.toast-card-container',
@@ -52,11 +52,11 @@ export class Toast {
           'toast-card': {
             props: ['card'],
             template: /*html*/`
-              <div class="toast-card icons-enabled visible" v-bind:class="'toast-' + card.type">
+              <div class="toast-card icons-enabled visible" :class="'toast-' + card.type">
                 <div class="toast-card-border"></div>
                 <div class="toast-card-header">
                   <h1 class="toast-card-title">{{card.title}}</h1>
-                  <div class="toast-card-dismiss" v-on:click="card.dismiss()">
+                  <div class="toast-card-dismiss" @click="card.dismiss()">
                     <svg style="width:22px;height:22px" viewBox="0 0 24 24">
                       <path
                         d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />

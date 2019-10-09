@@ -257,9 +257,13 @@ class VideoDownloader {
   }
   async showUrl() {
     const message = this.fragments.map(it => /*html*/`
-      <a href="${it.url}">${it.url}</a>
+      <a class="download-link" href="${it.url}">${it.url}</a>
     `).reduce((acc, it) => acc + '\r\n' + it)
-    Toast.success(message, '显示链接')
+    Toast.success(message + /*html*/`<a class="link" id="copy-link">复制全部</a>`, '显示链接')
+    const copyLinkButton = await SpinQuery.select('#copy-link') as HTMLElement
+    copyLinkButton.addEventListener('click', async () => {
+      await this.copyUrl()
+    })
   }
   static downloadBlob(blobOrUrl: Blob | string, filename: string) {
     const a = document.createElement('a')
