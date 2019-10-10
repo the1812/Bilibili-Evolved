@@ -189,6 +189,12 @@ const formatCount = (count) => {
 const escapeFilename = (filename, replacement = '') => {
   return filename.replace(/[\/\\:\*\?"<>\|]/g, replacement)
 }
+function html(strings, ...values) {
+  return [...strings].reduce((previous, current, index) => {
+    const value = values[index]
+    return previous + current + (value === undefined ? '' : value)
+  }, '')
+}
 
 const customNavbarDefaultOrders = {
   blank1: 0,

@@ -408,6 +408,7 @@ declare global {
   function dq(element: Element, selector: string): Element | null;
   function dqa(selector: string): Element[];
   function dqa(element: Element, selector: string): Element[];
+  function html(strings: TemplateStringsArray, ...values: unknown[]): string
   const formatFileSize: (bytes: number, fixed?: number) => string
   const formatDuration: (time: number, fixed?: number) => string
   const ascendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
