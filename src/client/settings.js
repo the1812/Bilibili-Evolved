@@ -187,7 +187,7 @@ const fixedSettings = {
   showDeadVideoTitle: false,
   blurVideoControl: false,
   latestVersionLink: 'https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js',
-  currentVersion: GM_info.script.version,
+  currentVersion: GM.info.script.version,
 }
 export const settingsChangeHandlers = {}
 export function addSettingsListener (key, handler, initCall) {
@@ -208,20 +208,20 @@ export function removeSettingsListener (key, handler) {
   }
   handlers.splice(handlers.indexOf(handler), 1)
 }
-export function loadSettings () {
+export async function loadSettings () {
   for (const key in fixedSettings) {
     settings[key] = fixedSettings[key]
-    GM_setValue(key, fixedSettings[key])
+    await GM.setValue(key, fixedSettings[key])
   }
   if (Object.keys(languageCodeToName).includes(navigator.language)) {
     settings.i18n = true
     settings.i18nLanguage = languageCodeToName[navigator.language]
   }
   for (const key in settings) {
-    let value = GM_getValue(key)
+    let value = await GM.getValue(key)
     if (value === undefined) {
       value = settings[key]
-      GM_setValue(key, settings[key])
+      GM.setValue(key, settings[key])
     } else if (settings[key] !== undefined && value.constructor === Object) {
       value = Object.assign(settings[key], value)
     }
@@ -231,7 +231,7 @@ export function loadSettings () {
       },
       set (newValue) {
         value = newValue
-        GM_setValue(key, newValue)
+        GM.setValue(key, newValue)
 
         const handlers = settingsChangeHandlers[key]
         if (handlers) {
@@ -252,9 +252,4 @@ export function loadSettings () {
       }
     })
   }
-}
-export function saveSettings (newSettings) {
-}
-export function onSettingsChange () {
-  console.warn('此功能已弃用.')
 }

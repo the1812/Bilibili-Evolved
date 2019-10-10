@@ -33,7 +33,6 @@ declare global {
     ontimeout?: (response: MonkeyXhrResponse) => void
     onload?: (response: MonkeyXhrResponse) => void
   }
-  function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void };
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
   type DanmakuOption = '无' | 'XML' | 'ASS'
   type Pattern = string | RegExp
@@ -128,7 +127,6 @@ declare global {
     blank3: number;
   }
   type CustomNavbarOrders = { [key in keyof CustomNavbarComponents]: number };
-  const GM_info: MonkeyInfo;
   const unsafeWindow: Window;
   const UserAgent: string
   const EmptyImageUrl: string
@@ -376,10 +374,18 @@ declare global {
     latestVersionLink: string,
     currentVersion: string,
   }
-  function GM_addValueChangeListener(name: string, valueChangeListener: (name: string, oldValue: any, newValue: any, remote: boolean) => void): number;
+  const GM_info: MonkeyInfo;
+  function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void };
   function GM_setClipboard(data: any, info: string | { type?: string, mimetype?: string }): void;
   function GM_setValue(name: keyof BilibiliEvolvedSettings, value: any): void;
   function GM_getValue<T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T): T;
+  const GM: {
+    info: MonkeyInfo
+    xmlhttpRequest: typeof GM_xmlhttpRequest
+    setClipboard: typeof GM_setClipboard
+    setValue: (name: keyof BilibiliEvolvedSettings, value: any) => Promise<void>
+    getValue: <T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T) => Promise<T>
+  }
   const settings: BilibiliEvolvedSettings;
   const customNavbarDefaultOrders: CustomNavbarOrders;
   const aria2RpcDefaultOption: RpcOption;
@@ -387,10 +393,8 @@ declare global {
   const languageCodeToName: { [key: string]: string };
   function logError(message: Error | string): void;
   function loadSettings(): void
-  function saveSettings(newSettings: BilibiliEvolvedSettings): void;
   function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void, initCall?: boolean): void;
   function removeSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void;
-  function onSettingsChange(change: (key: string, oldValue: any, newValue: any) => void): void;
   function raiseEvent(element: Element, eventName: string): void;
   function loadLazyPanel(selector: string): Promise<void>;
   function loadDanmakuSettingsPanel(): Promise<void>;

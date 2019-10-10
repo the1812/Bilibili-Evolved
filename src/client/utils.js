@@ -134,7 +134,7 @@ export const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
 export const isOffline = () => typeof offlineData !== 'undefined'
 export const getUID = () => document.cookie.replace(/(?:(?:^|.*;\s*)DedeUserID\s*\=\s*([^;]*).*$)|^.*$/, '$1')
 export const scriptVersion = (() => {
-  const match = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
+  const match = GM.info.script.name.match(/Bilibili Evolved \((.*)\)/)
   return match ? match[1] : 'Stable'
 })()
 export const getCsrf = () => document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')

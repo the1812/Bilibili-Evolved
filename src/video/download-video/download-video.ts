@@ -253,7 +253,7 @@ class VideoDownloader {
   }
   async copyUrl() {
     const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + '\r\n' + it)
-    GM_setClipboard(urls, 'text')
+    GM.setClipboard(urls, 'text')
   }
   async showUrl() {
     const message = this.fragments.map(it => /*html*/`
@@ -288,7 +288,7 @@ class VideoDownloader {
       referer: document.URL.replace(window.location.search, '')
     }])
     if (copy) {
-      GM_setClipboard(data, 'text')
+      GM.setClipboard(data, 'text')
     } else {
       const blob = new Blob([data], { type: 'text/json' })
       const danmaku = await this.downloadDanmaku()
@@ -735,7 +735,7 @@ async function loadPanel() {
               Toast.success(`成功发送了批量请求.`, 'aria2 RPC', 3000)
               return
             case 'copyVLD':
-              GM_setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
+              GM.setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
               Toast.success('已复制批量vld数据到剪贴板.', '批量导出', 3000)
               return
             case 'exportVLD':

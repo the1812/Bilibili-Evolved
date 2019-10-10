@@ -5,8 +5,7 @@
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
-// @match        *://*.bilibili.com/*
-// @match        *://*.bilibili.com
+// @match        https://*.bilibili.com/*
 // @run-at       document-start
 // @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
 // @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
@@ -18,8 +17,14 @@
 // @grant        GM_setClipboard
 // @grant        GM_info
 // @grant        GM_xmlhttpRequest
+// @grant        GM.getValue
+// @grant        GM.setValue
+// @grant        GM.setClipboard
+// @grant        GM.info
+// @grant        GM.xmlhttpRequest
 // @connect      raw.githubusercontent.com
 // @connect      *
+// @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
@@ -165,7 +170,7 @@ const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
 const isOffline = () => typeof offlineData !== 'undefined'
 const getUID = () => document.cookie.replace(/(?:(?:^|.*;\s*)DedeUserID\s*\=\s*([^;]*).*$)|^.*$/, '$1')
 const scriptVersion = (() => {
-  const match = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
+  const match = GM.info.script.name.match(/Bilibili Evolved \((.*)\)/)
   return match ? match[1] : 'Stable'
 })()
 const getCsrf = () => document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
@@ -374,7 +379,7 @@ const fixedSettings = {
   showDeadVideoTitle: false,
   blurVideoControl: false,
   latestVersionLink: 'https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js',
-  currentVersion: GM_info.script.version,
+  currentVersion: GM.info.script.version,
 }
 const settingsChangeHandlers = {}
 function addSettingsListener (key, handler, initCall) {
@@ -395,20 +400,20 @@ function removeSettingsListener (key, handler) {
   }
   handlers.splice(handlers.indexOf(handler), 1)
 }
-function loadSettings () {
+async function loadSettings () {
   for (const key in fixedSettings) {
     settings[key] = fixedSettings[key]
-    GM_setValue(key, fixedSettings[key])
+    await GM.setValue(key, fixedSettings[key])
   }
   if (Object.keys(languageCodeToName).includes(navigator.language)) {
     settings.i18n = true
     settings.i18nLanguage = languageCodeToName[navigator.language]
   }
   for (const key in settings) {
-    let value = GM_getValue(key)
+    let value = await GM.getValue(key)
     if (value === undefined) {
       value = settings[key]
-      GM_setValue(key, settings[key])
+      GM.setValue(key, settings[key])
     } else if (settings[key] !== undefined && value.constructor === Object) {
       value = Object.assign(settings[key], value)
     }
@@ -418,7 +423,7 @@ function loadSettings () {
       },
       set (newValue) {
         value = newValue
-        GM_setValue(key, newValue)
+        GM.setValue(key, newValue)
 
         const handlers = settingsChangeHandlers[key]
         if (handlers) {
@@ -439,11 +444,6 @@ function loadSettings () {
       }
     })
   }
-}
-function saveSettings (newSettings) {
-}
-function onSettingsChange () {
-  console.warn('此功能已弃用.')
 }
 
 class Ajax {
@@ -542,7 +542,7 @@ class Ajax {
       if (!('method' in fullDetails)) {
         fullDetails.method = 'GET'
       }
-      GM_xmlhttpRequest(fullDetails)
+      GM.xmlhttpRequest(fullDetails)
     })
   }
 }
@@ -1029,12 +1029,12 @@ class ColorProcessor {
 const onlineData = {};
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/about.min.css"] = `.bilibili-evolved-about{height:100%;width:450px;background:#fff;color:#000;position:fixed;top:0;left:0;z-index:100000;transform:translateX(-100%);transition:.3s cubic-bezier(0,.86,.58,1);display:flex;flex-direction:column;box-shadow:4px 0 16px 0 #0000}body.dark .bilibili-evolved-about{background:#222;color:#eee}.bilibili-evolved-about.opened{transform:translateX(0);box-shadow:4px 0 16px 0 #0005}.about-header{padding:32px;display:flex;align-items:center;justify-content:flex-start}.about-header i{margin-right:8px;display:flex}.about-title{font-size:16pt}.about-content{padding:16px 36px 0;margin-bottom:36px;display:flex;flex-direction:column;overflow:auto}.about-content .name{font-size:24pt;display:none;align-items:center}.about-content .name svg{width:100%}body.dark .about-content .name.dark,body:not(.dark) .about-content .name.light{display:flex}.about-content .version{font-size:10pt;font-weight:700;opacity:.6;margin-top:6px;margin-bottom:6px;align-self:center}.about-content .love{font-size:10pt;margin-bottom:24px;align-self:center}.about-content .love a{color:inherit!important}.about-content section{font-size:10pt;margin-top:16px}.about-content section .title{display:flex;justify-content:center;text-transform:uppercase;font-weight:700;font-size:13pt;letter-spacing:3px;margin:8px 0 16px}.about-content section .supporter,.about-content section a{color:var(--theme-color)!important;margin-right:8px;display:inline-flex}.about-content section .supporter{user-select:none}.about-content section .supporter:not(:last-child)::after,.about-content section a:not(:last-child)::after{content:","}@keyframes spinner{to{transform:translate(-50%,-50%) rotate(360deg)}}.about-content section.participants .fetching{margin-right:8px;position:relative;display:inline-flex}.about-content section.participants .fetching::before{content:"Loading..."}`;
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/about.min.html"] = `<div class=bilibili-evolved-about><div class=about-header><i class="mdi mdi-information-outline mdi-24px"></i><span class=about-title>关于</span></div><div class=about-content><p v-if=branch class="name light"v-html=logoImage></p><p v-if=branch class="name dark"v-html=logoImageDark></p><p class=version>v{{version}} · {{clientType}}</p><p class=love><a target=_blank href=https://github.com/the1812/Bilibili-Evolved/ >Made with ❤　　</a><a target=_blank href=https://github.com/the1812/Bilibili-Evolved/blob/master/donate.md>Buy me a coffee ☕</a></p><section class=authors><span class=title>Authors</span><a class=author target=_blank v-for="author of authors"v-bind:href=author.link>{{author.name}}</a></section><section class=contributors><span class=title>Contributors</span><a class=contributor target=_blank v-for="contributor of contributors"v-bind:href=contributor.link>{{contributor.name}}</a></section><section class=supporters><a class=title target=_blank href=https://github.com/the1812/Bilibili-Evolved/blob/preview/donate.md#历史>View Supporters</a></section><section class=participants><span class=title>Community Power</span><span class=fetching v-if=fetching></span><a class=participant target=_blank v-for="participant of participants"v-bind:href=participant.link>{{participant.name}}</a></section><section class=websites><span class=title>Websites</span><a class=website target=_blank v-for="website of websites"v-bind:href=website.link>{{website.name}}</a></section><section class=components><span class=title>Components</span><a class=component target=_blank v-for="component of components"v-bind:href=component.link>{{component.name}}</a></section></div></div>`;
-onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/about.min.js"] = (()=>{return(t,e)=>{(async()=>{const i=await e.importAsync("aboutHtml");document.body.insertAdjacentHTML("beforeend",i);dq(".bilibili-evolved-about").addEventListener("be:about-load",()=>{const e=(t,e)=>t.charCodeAt(0)-e.charCodeAt(0);const i=(t,i)=>e(t.name,i.name);const o=GM_info.script.name.match(/Bilibili Evolved \((.*)\)/);const n=o?o[1]:"Stable";new Vue({el:".bilibili-evolved-about",data:{version:t.currentVersion,clientType:n,logoImage:null,logoImageDark:null,branch:null,authors:[{name:"Grant Howard",link:"https://github.com/the1812"},{name:"Coulomb-G",link:"https://github.com/Coulomb-G"}],contributors:[{name:"PleiadeSubaru",link:"https://github.com/Etherrrr"}].sort(i),fetching:true,participants:[],websites:[{name:"GitHub",link:"https://github.com/the1812/Bilibili-Evolved/"},{name:"Greasy Fork",link:"https://greasyfork.org/zh-CN/scripts/373563-bilibili-evolved"}],components:[{name:"Vue.js",link:"https://cn.vuejs.org/index.html"},{name:"JSZip",link:"https://stuk.github.io/jszip/"},{name:"jQuery",link:"http://jquery.com/"},{name:"debounce",link:"https://github.com/component/debounce/"},{name:"Slip.js",link:"https://github.com/kornelski/slip"},{name:"MDI",link:"https://materialdesignicons.com"},{name:"Lodash",link:"https://lodash.com/"}]},mounted(){dq(".bilibili-evolved-about").addEventListener("be:about-load-community",()=>{this.init()},{once:true})},methods:{async getLogos(){this.logoImage=await Ajax.getText(`https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/bilibili-evolved-wide.svg`);this.logoImageDark=await Ajax.getText(`https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/bilibili-evolved-wide-dark.svg`)},async init(){this.branch=/Preview|Local/.test(n)?"preview":"master";this.getLogos();const t=new Set;let e=[];let o=1;do{e=await Ajax.getJson(`https://api.github.com/repos/the1812/Bilibili-Evolved/issues?state=all&direction=asc&per_page=100&page=${o}`).catch(()=>{e=[{name:"电波无法到达(´･_･`)",link:null}]});o++;for(const i of e){t.add(i.user.login)}}while(e.length>0);this.participants=[...t].map(t=>{return{name:t,link:`https://github.com/${t}`}}).filter(({link:t})=>{return!this.authors.some(e=>e.link===t)&&!this.contributors.some(e=>e.link===t)}).sort(i);this.fetching=false}}})},{once:true})})()}})();
+onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/about.min.js"] = (()=>{return(t,e)=>{(async()=>{const i=await e.importAsync("aboutHtml");document.body.insertAdjacentHTML("beforeend",i);dq(".bilibili-evolved-about").addEventListener("be:about-load",()=>{const e=(t,e)=>t.charCodeAt(0)-e.charCodeAt(0);const i=(t,i)=>e(t.name,i.name);const o=GM.info.script.name.match(/Bilibili Evolved \((.*)\)/);const n=o?o[1]:"Stable";new Vue({el:".bilibili-evolved-about",data:{version:t.currentVersion,clientType:n,logoImage:null,logoImageDark:null,branch:null,authors:[{name:"Grant Howard",link:"https://github.com/the1812"},{name:"Coulomb-G",link:"https://github.com/Coulomb-G"}],contributors:[{name:"PleiadeSubaru",link:"https://github.com/Etherrrr"}].sort(i),fetching:true,participants:[],websites:[{name:"GitHub",link:"https://github.com/the1812/Bilibili-Evolved/"},{name:"Greasy Fork",link:"https://greasyfork.org/zh-CN/scripts/373563-bilibili-evolved"}],components:[{name:"Vue.js",link:"https://cn.vuejs.org/index.html"},{name:"JSZip",link:"https://stuk.github.io/jszip/"},{name:"jQuery",link:"http://jquery.com/"},{name:"debounce",link:"https://github.com/component/debounce/"},{name:"Slip.js",link:"https://github.com/kornelski/slip"},{name:"MDI",link:"https://materialdesignicons.com"},{name:"Lodash",link:"https://lodash.com/"}]},mounted(){dq(".bilibili-evolved-about").addEventListener("be:about-load-community",()=>{this.init()},{once:true})},methods:{async getLogos(){this.logoImage=await Ajax.getText(`https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/bilibili-evolved-wide.svg`);this.logoImageDark=await Ajax.getText(`https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/bilibili-evolved-wide-dark.svg`)},async init(){this.branch=/Preview|Local/.test(n)?"preview":"master";this.getLogos();const t=new Set;let e=[];let o=1;do{e=await Ajax.getJson(`https://api.github.com/repos/the1812/Bilibili-Evolved/issues?state=all&direction=asc&per_page=100&page=${o}`).catch(()=>{e=[{name:"电波无法到达(´･_･`)",link:null}]});o++;for(const i of e){t.add(i.user.login)}}while(e.length>0);this.participants=[...t].map(t=>{return{name:t,link:`https://github.com/${t}`}}).filter(({link:t})=>{return!this.authors.some(e=>e.link===t)&&!this.contributors.some(e=>e.link===t)}).sort(i);this.fetching=false}}})},{once:true})})()}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/activity-apis.min.js"] = (()=>{return(t,e)=>{class s extends EventTarget{constructor(){super(...arguments);this.cards=[]}addCard(t){if(t instanceof Element&&t.classList.contains("card")){if(t.querySelector(".skeleton")!==null){const e=Observer.childList(t,()=>{if(t.querySelector(".skeleton")===null){e.forEach(t=>t.stop());this.addCard(t)}})}else{const e=this.parseCard(t);this.cards.push(e);const s=new CustomEvent("addCard",{detail:e});this.dispatchEvent(s)}}}removeCard(t){if(t instanceof Element&&t.classList.contains("card")){const e=this.parseCard(t).id;const s=this.cards.findIndex(t=>t.id===e);const r=this.cards[s];this.cards.splice(s,1);const n=new CustomEvent("removeCard",{detail:r});this.dispatchEvent(n)}}parseCard(t){const e=e=>{if(t.querySelector(e)===null){return""}return t.querySelector(e).innerText};const s=t=>{const s=parseInt(e(t));if(isNaN(s)){return 0}return s};const r={id:t.getAttribute("data-did"),username:e(".main-content .user-name"),text:e(".card-content .text.description"),reposts:s(".button-bar .single-button:nth-child(1) .text-offset"),comments:s(".button-bar .single-button:nth-child(2) .text-offset"),likes:s(".button-bar .single-button:nth-child(3) .text-offset")};return r}async startWatching(){const t=await SpinQuery.select(".card-list .content");if(!t){return false}const e=[...t.querySelectorAll(".content>.card")];e.forEach(t=>this.addCard(t));Observer.childList(t,t=>{t.forEach(t=>{t.addedNodes.forEach(t=>this.addCard(t));t.removedNodes.forEach(t=>this.removeCard(t))})});return true}}const r=new s;return{export:{activityCardsManager:r}}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/activity-image-saver.min.js"] = (()=>{return(e,t)=>{(async()=>{if(document.domain!=="t.bilibili.com"&&document.domain!=="space.bilibili.com"){return}const e=e=>{const t=e.querySelector(".image-viewer");if(t===null){console.log(e)}else{t.addEventListener("contextmenu",()=>{setTimeout(()=>{const e=dq(".pop-message .toast-text");if(e&&e.innerHTML.includes("作者设置了禁止保存")){Toast.success(`<img src="${t.src}" width="200">`,"解除动态存图限制")}},200)})}};[...document.body.children].filter(e=>e.classList.contains("photo-imager-container")).forEach(e);Observer.childList(document.body,t=>{t.forEach(t=>{const o=[...t.addedNodes].filter(e=>e instanceof Element&&e.classList.contains("photo-imager-container"));o.forEach(e)})})})()}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/aria2-rpc-profile-item.vue.min.js"] = (()=>{return(e,i)=>{const t=`<div class=profile-item :class="{duplicate: duplicateName, selected}"><template v-if=!editing>{{profile.name}}</template><template v-else><input type=text v-model=name @keydown.enter=saveProfile()></template><icon v-if=!editing style="transform: scale(0.9)"type=mdi icon=pencil-outline title=重命名 @click.native="editing = true"></icon><icon v-if=editing type=mdi icon=check title=确定 @click.native=saveProfile()></icon></div>`;i.applyStyleFromText(`.profile-item{display:flex;align-items:center;padding:4px 8px;background-color:#8882;border-radius:4px;border:2px solid transparent;flex-shrink:0;cursor:pointer}.profile-item:not(:last-child){margin-right:8px}.profile-item.duplicate{border-color:red}.profile-item.selected:not(.duplicate){border-color:var(--theme-color)}.profile-item input[type=text]{width:5em;border:none!important;padding:0!important;margin:0!important;line-height:normal}`,"aria2-rpc-profile-item-style");return{export:Object.assign({template:t},{components:{Icon:()=>i.importAsync("icon.vue")},props:["profile","deletable","selected"],data(){return{name:this.profile.name,editing:false,duplicateName:false}},methods:{saveProfile(){if(this.name===this.profile.name){this.duplicateName=false;this.editing=false;return}if(this.name===""||e.aria2RpcOptionProfiles.some(e=>e.name===this.name)){this.duplicateName=true;return}else{this.duplicateName=false;if(e.aria2RpcOptionSelectedProfile===this.profile.name){e.aria2RpcOptionSelectedProfile=this.name}this.profile.name=this.name;this.editing=false;this.$emit("profile-update")}}}})}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/aria2-rpc-profiles.vue.min.js"] = (()=>{return(e,i)=>{const r=`<div class=aria2-rpc-profiles><div class=profiles-header><h2>预设</h2><div class=profile-operations><div v-if="profiles.length > 1"class="operation delete-profile"@click=deleteProfile() title=删除预设><icon type=mdi icon=trash-can-outline></icon></div><div class="operation new-profile"@click=addProfile() title=新增预设><icon type=mdi icon=plus></icon></div></div></div><div class=profiles-list><profile-item v-for="(profile, index) of profiles":key="profile.name + index"@profile-update=profileUpdate() @click.native=changeProfile(profile) :profile=profile :deletable="profiles.length > 1":selected="profile.name === selectedProfile"></profile-item></div></div>`;i.applyStyleFromText(`.aria2-rpc-profiles .profiles-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.aria2-rpc-profiles .profiles-header .profile-operations{display:flex;align-items:center}.aria2-rpc-profiles .profiles-header .profile-operations .operation{padding:4px;background-color:#8882;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}.aria2-rpc-profiles .profiles-header .profile-operations .operation:not(:last-child){margin-right:8px}.aria2-rpc-profiles .profiles-header .profile-operations .operation:hover{background-color:#8884}.aria2-rpc-profiles .profiles-header .profile-operations .operation .mdi{margin:0}.aria2-rpc-profiles .profiles-list{display:flex;overflow:auto;scrollbar-width:none!important}.aria2-rpc-profiles .profiles-list::-webkit-scrollbar{height:0!important}`,"aria2-rpc-profiles-style");const o={name:"未命名",...e.aria2RpcOption};return{export:Object.assign({template:r},{components:{ProfileItem:()=>i.importAsync("aria2-rpc-profile-item.vue"),Icon:()=>i.importAsync("icon.vue")},data(){this.migrateOldProfiles();const i=[...e.aria2RpcOptionProfiles];if(i.length===0){i.push(o);e.aria2RpcOptionProfiles=i}return{profiles:i,selectedProfile:e.aria2RpcOptionSelectedProfile||o.name}},watch:{selectedProfile(i){if(e.aria2RpcOptionSelectedProfile!==i){e.aria2RpcOptionSelectedProfile=i}}},methods:{migrateOldProfiles(){const i=Object.getOwnPropertyNames(e.aria2RpcOption).filter(e=>!e.startsWith("_"));i.push("name");let r=false;for(const o of e.aria2RpcOptionProfiles){i.filter(e=>!(e in o)).forEach(i=>{o[i]=e.aria2RpcOption[i];console.log(`migrated profile property '${i}'`);r=true})}if(r){e.aria2RpcOptionProfiles=e.aria2RpcOptionProfiles}},profileUpdate(){e.aria2RpcOptionProfiles=this.profiles;this.selectedProfile=e.aria2RpcOptionSelectedProfile},changeProfile(e){this.selectedProfile=e.name;this.$emit("profile-change",e)},addProfile(){const i={...this.profiles.find(e=>e.name===this.selectedProfile)};i.name=i.name.replace(/[\d]+$/,"");if(this.profiles.some(e=>e.name===i.name)){let e=1;while(this.profiles.some(r=>r.name===i.name+e.toString())){e++}i.name=i.name+e.toString()}this.profiles.push(i);e.aria2RpcOptionProfiles=this.profiles;this.changeProfile(i)},deleteProfile(){const i=this.profiles.findIndex(e=>e.name===this.selectedProfile);const r=i===0?0:i-1;const o=this.profiles[r];this.profiles.splice(i,1);e.aria2RpcOptionProfiles=this.profiles;this.changeProfile(o)}}})}}})();
-onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/aria2-rpc.min.js"] = (()=>{return(t,e)=>{function o(){const e=t.aria2RpcOption;const o=e.host.match(/^http[s]?:\/\//)?e.host:"http://"+e.host;const r="aria2.addUri";return{option:e,host:o,methodName:r}}async function r(t,e=false){try{let o=await t();if(typeof o==="string"){o=JSON.parse(o)}if(o.error!==undefined){if(o.error.code===1){logError(`请求遭到拒绝, 请检查您的密钥相关设置.`)}else{logError(`请求发生错误, code = ${o.error.code}, message = ${o.error.message}`)}return false}if(!e){Toast.success(`成功发送了请求, GID = ${o.result}`,"aria2 RPC",5e3)}return true}catch(t){logError(`无法连接到RPC主机.`);return false}}async function s(t,e=false){const{option:s,host:n,methodName:a}=o();return await r(async()=>{const e=window.btoa(unescape(encodeURIComponent(JSON.stringify(t.params))));const o=`${n}:${s.port}/jsonrpc?method=${a}&id=${t.id}&params=${e}`;console.log(`RPC request:`,o);if(o.startsWith("http:")){return await new Promise((t,e)=>{GM_xmlhttpRequest({method:"GET",url:o,responseType:"json",onload:e=>t(e.response),onerror:t=>e(t)})})}else{return await Ajax.getJson(o)}},e)}async function n(t,e=false){const{option:s,host:n,methodName:a}=o();return await r(async()=>{const e=`${n}:${s.port}/jsonrpc`;const o={method:a,id:t.id,params:t.params};if(e.startsWith("http:")){return await new Promise((t,r)=>{GM_xmlhttpRequest({method:"POST",url:e,responseType:"json",data:JSON.stringify(o),onload:e=>t(e.response),onerror:t=>r(t)})})}else{return await Ajax.postJson(e,o)}},e)}async function a(e,o=false){const r=t.aria2RpcOption;for(const t of e){let e;if(r.method==="get"){e=await s(t,o)}else{e=await n(t,o)}if(o===true&&e===false){logError(`${decodeURIComponent(t.id)} 导出失败`)}}}return{export:{sendRpc:a}}}})();
+onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/aria2-rpc.min.js"] = (()=>{return(t,e)=>{function o(){const e=t.aria2RpcOption;const o=e.host.match(/^http[s]?:\/\//)?e.host:"http://"+e.host;const r="aria2.addUri";return{option:e,host:o,methodName:r}}async function r(t,e=false){try{let o=await t();if(typeof o==="string"){o=JSON.parse(o)}if(o.error!==undefined){if(o.error.code===1){logError(`请求遭到拒绝, 请检查您的密钥相关设置.`)}else{logError(`请求发生错误, code = ${o.error.code}, message = ${o.error.message}`)}return false}if(!e){Toast.success(`成功发送了请求, GID = ${o.result}`,"aria2 RPC",5e3)}return true}catch(t){logError(`无法连接到RPC主机.`);return false}}async function s(t,e=false){const{option:s,host:n,methodName:a}=o();return await r(async()=>{const e=window.btoa(unescape(encodeURIComponent(JSON.stringify(t.params))));const o=`${n}:${s.port}/jsonrpc?method=${a}&id=${t.id}&params=${e}`;console.log(`RPC request:`,o);if(o.startsWith("http:")){return await new Promise((t,e)=>{GM.xmlhttpRequest({method:"GET",url:o,responseType:"json",onload:e=>t(e.response),onerror:t=>e(t)})})}else{return await Ajax.getJson(o)}},e)}async function n(t,e=false){const{option:s,host:n,methodName:a}=o();return await r(async()=>{const e=`${n}:${s.port}/jsonrpc`;const o={method:a,id:t.id,params:t.params};if(e.startsWith("http:")){return await new Promise((t,r)=>{GM.xmlhttpRequest({method:"POST",url:e,responseType:"json",data:JSON.stringify(o),onload:e=>t(e.response),onerror:t=>r(t)})})}else{return await Ajax.postJson(e,o)}},e)}async function a(e,o=false){const r=t.aria2RpcOption;for(const t of e){let e;if(r.method==="get"){e=await s(t,o)}else{e=await n(t,o)}if(o===true&&e===false){logError(`${decodeURIComponent(t.id)} 导出失败`)}}}return{export:{sendRpc:a}}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/auto-continue.min.js"] = (()=>{return(e,i)=>{if(typeof isEmbeddedPlayer!=="undefined"&&isEmbeddedPlayer()){return}function t(i){const t=i.text();if(/第(\d+)话/.test(t)){if(e.allowJumpContinue){i.parent().find(".bilibili-player-video-toast-item-jump").click()}return}const n=/((\d)*:)?(\d)*:(\d)*/g;const r=t.match(n);if(!r){return}const o=r[0].split(":");const l=(()=>{if(o.length===3){const[e,i,t]=o.map(e=>parseInt(e));return e*60*60+i*60+t}else if(o.length===2){const[e,i]=o.map(e=>parseInt(e));return e*60+i}else{logError(`解析历史时间发生错误: historyTime=${JSON.stringify(o)}`);return NaN}})();const s=i.parent();const a=document.querySelector("video");if(l<a.duration){a.currentTime=l;a.play();s.find(".bilibili-player-video-toast-item-jump").remove();const e=$(`<div class="bilibili-player-video-toast-item-jump">从头开始</div>`);e.appendTo(s).on("click",()=>{a.currentTime=0;s.find(".bilibili-player-video-toast-item-close").get(0).click()});i.html(`<span>已跳转到上次历史记录</span><span>${r[0]}</span>`)}else{s.find(".bilibili-player-video-toast-item-close").get(0).click()}}function n(){SpinQuery.condition(()=>$(".bilibili-player-video-toast-item-text"),e=>e.text().indexOf("上次看到")!==-1,e=>t(e.filter((e,i)=>i.innerText.indexOf("上次看到")!==-1)))}Observer.videoChange(n)}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/auto-draw.min.js"] = (()=>{return(t,n)=>{(async()=>{if(!/^https:\/\/live\.bilibili\.com\/[\d]+/.test(document.URL)){return}const t=await SpinQuery.condition(()=>dq(".chat-popups-section"),t=>t.querySelector("chat-draw-area")===null);if(!t){console.warn("[自动领奖] 未能找到弹窗容器");return}Observer.childListSubtree(t,()=>{let t;console.log("draw button = ",dq(".chat-popups-section .draw>span:nth-child(3)"));t=dq(".chat-popups-section .draw>span:nth-child(3)");if(t===null){const t=dq(".chat-popups-section .function-bar>span:nth-child(3)");if(t!==null){const n=Observer.attributes(t,()=>{if(t.style.display!=="none"){n.forEach(t=>t.stop());t.click()}})}}if(t!==null){t.click()}})})()}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/auto-play.min.js"] = (()=>{return(e,d)=>{if(typeof isEmbeddedPlayer!=="undefined"&&isEmbeddedPlayer()){return}SpinQuery.condition(()=>document.querySelector(".bilibili-player-video video"),e=>e&&e.paused===true,e=>e.play())}})();
@@ -1072,7 +1072,7 @@ onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/m
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/download-danmaku.min.js"] = (()=>{return(t,e)=>{const{getFriendlyTitle:n}=e.import("title");const{DanmakuInfo:i}=e.import("video-info");const{DanmakuConverter:a}=e.import("danmaku-converter");async function o(t){const e=n();let i={title:e};try{await loadDanmakuSettingsPanel();const t=t=>{const e=parseFloat(dq(t).style.transform.replace(/translateX\(([\d\.]+)/,"$1"));const n={0:0,44:1,94:2,144:3,188:4}[e];return n};i.font=dq(".bilibili-player-video-danmaku-setting-right-font .bui-select-result").innerText;i.alpha=parseFloat(dq(".bilibili-player-setting-opacity .bui-bar").style.transform.replace(/scaleX\(([\d\.]+)\)/,"$1"));i.duration=(()=>{const e=[18,14,10,8,6][t(".bilibili-player-setting-speedplus .bui-thumb")];return t=>{switch(t.type){case 4:case 5:return 4;default:return e}}})();i.blockTypes=(()=>{let t=[];const e={".bilibili-player-block-filter-type[ftype=scroll]":[1,2,3],".bilibili-player-block-filter-type[ftype=top]":[5],".bilibili-player-block-filter-type[ftype=bottom]":[4],".bilibili-player-block-filter-type[ftype=color]":["color"]};for(const[n,i]of Object.entries(e)){if(dq(n).classList.contains("disabled")){t=t.concat(i)}}return t.concat(7,8)})();const e=[1.4,1.2,1,.8,.6][t(".bilibili-player-setting-fontsize .bui-thumb")];i.resolution={x:1920*e,y:1080*e};i.bottomMarginPercent=[.75,.5,.25,0,0][t(".bilibili-player-setting-area .bui-thumb")];if(i.bottomMarginPercent===0&&dq(".bilibili-player-video-danmaku-setting-left-preventshade input").checked){i.bottomMarginPercent=.15}i.bold=dq(".bilibili-player-video-danmaku-setting-right-font-bold input").checked}catch(t){i={font:"微软雅黑",alpha:.6,duration:t=>{switch(t.type){case 4:case 5:return 4;default:return 6}},blockTypes:[7,8],resolution:{x:1920,y:1080},bottomMarginPercent:.15,bold:false}}const o=new a(i);const l=o.convertToAssDocument(t);return l.generateAss()}async function l(t,e){const a=n();const l=new i((unsafeWindow||window).cid);await l.fetchInfo();const r=await(async()=>{if(t===true){return new Blob([await o(l.rawXML)],{type:"text/plain"})}else{return new Blob([l.rawXML],{type:"text/plain"})}})();const s=URL.createObjectURL(r);const c=dq("#danmaku-link");const d=c.getAttribute("href");if(d){URL.revokeObjectURL(d)}clearTimeout(e);dq("#download-danmaku>span").innerHTML="下载弹幕";c.setAttribute("download",`${a}.${t?"ass":"xml"}`);c.setAttribute("href",s);c.click()}return{export:{downloadDanmaku:l,convertToAss:o},widget:{content:`\n<button\nclass="gui-settings-flat-button"\nid="download-danmaku">\n<i class="icon-danmaku"></i>\n<span>下载弹幕</span>\n<a id="danmaku-link" style="display:none"></a>\n</button>`,condition:async()=>{let t=await SpinQuery.select(()=>(unsafeWindow||window).cid);return Boolean(t)},success:()=>{const t=document.querySelector("#danmaku-link");dq("#download-danmaku").addEventListener("click",e=>{if(e.target!==t){const t=setTimeout(()=>dq("#download-danmaku>span").innerHTML="请稍侯...",200);l(e.shiftKey,t)}})}}}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/download-video.min.css"] = `.download-video{--download-video-background:white;--download-video-foreground:black;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);background:var(--download-video-background);color:var(--download-video-foreground);box-shadow:rgba(0,0,0,.2) 0 4px 8px 0;z-index:10001;pointer-events:none;opacity:0;padding:16px;width:300px;display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;max-height:90%}.download-video,.download-video *{transition:.2s ease-out;-webkit-tap-highlight-color:transparent!important}.download-video.opened{pointer-events:initial;opacity:1;transform:translate(-50%,-50%) scale(1)}body.dark .download-video{--download-video-background:#222;--download-video-foreground:#eee}.round-corner .download-video,.round-corner .download-video .episode-list .v-checkbox,.round-corner .download-video .rpc-settings{border-radius:var(--large-corner-radius)}.round-corner .download-video .button,.round-corner .download-video .cover,.round-corner .download-video .direct-download .progress .background,.round-corner .download-video .direct-download .progress .foreground,.round-corner .download-video .rpc-settings input[type=text],.round-corner .download-video .title,.round-corner .download-video button{border-radius:var(--corner-radius)}.download-video .cover{width:240px;min-height:135px;background-color:#8882}.download-video .header{display:flex;justify-content:space-between;align-items:center}.download-video h1{font-size:16pt;font-weight:700;color:var(--download-video-foreground)}.download-video .header .mdi-close{font-size:16pt;color:var(--download-video-foreground);cursor:pointer}.download-video .header .mdi-close:hover{color:var(--theme-color)}.download-video .info{display:flex;flex-direction:column;align-items:center;margin-top:12px}.download-video .title{display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;margin-top:12px}.download-video .title .bold{width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}.download-video .title .size{font-size:10pt;color:var(--download-video-foreground);align-self:center;display:flex;align-items:center;height:24px}.download-video .bold{color:var(--download-video-foreground);font-weight:700;font-size:12pt}.download-video .option-item{display:flex;justify-content:space-between;align-items:center;padding-top:12px;font-size:10pt}.download-video .tabs{display:flex;padding-top:12px;font-size:10pt}.download-video .tabs .tab{padding:6px 12px;border-bottom:2px solid transparent;cursor:pointer}.download-video .tabs .tab.active{color:var(--theme-color);border-bottom-color:var(--theme-color)}.download-video .separator{height:1px;background:#8884;width:100%;margin:12px 0;flex-shrink:0}.download-video h2{font-size:12pt;font-weight:700;color:var(--download-video-foreground)}.download-video .direct-download{display:flex;flex-direction:column;align-items:start;justify-content:space-between}.download-video .button,.download-video button{border:none;outline:0!important;padding:6px 16px;font-size:10pt;cursor:pointer;background:#8884;color:var(--download-video-foreground)}.download-video .button:hover,.download-video button:hover{background:#8886}.download-video .primary{background:var(--theme-color);color:var(--foreground-color);align-self:center}.download-video .primary:hover{background:var(--theme-color-90)}.download-video .busy .button,.download-video .busy .primary,.download-video .busy button,.download-video button:disabled{background-color:#0001;color:#8884;cursor:not-allowed}.download-video .busy .button,.download-video .busy button{cursor:wait!important}.download-video .direct-download .progress{align-self:stretch;display:flex;align-items:center;margin-top:8px}.download-video .direct-download .progress .background{flex-grow:1;height:4px;background:#8884;margin-right:4px;position:relative}.download-video .direct-download .progress .background .foreground{position:absolute;top:0;left:0;height:4px;background:linear-gradient(to right,var(--theme-color),var(--theme-color-60))}.download-video .direct-download .progress .percent{width:50px;text-align:right}.download-video .actions{display:flex;flex-wrap:wrap;justify-content:space-between;margin:8px -4px 0}.download-video .actions>*{margin:4px;flex-grow:1;flex-basis:calc(50% - 16px);display:flex;justify-content:center;align-items:center}.download-video i.mdi-alert-circle{font-size:14pt;color:#ff9800}.download-video .size-warning{position:relative;padding:0 8px}.download-video .size-warning-tip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--download-video-background);color:var(--download-video-foreground);border:1px dashed var(--theme-color);z-index:2;font-size:10pt;width:200px;padding:8px;box-shadow:rgba(0,0,0,.2) 0 4px 8px 0;pointer-events:none;opacity:0}.download-video .size-warning:hover .size-warning-tip{opacity:1}.download-video .episode-list .v-checkbox{padding:4px 8px;margin:4px 0;position:relative;background-color:transparent}.download-video .episode-list .v-checkbox.checked{background-color:#8882}.download-video .episode-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.download-video .episode-list{overflow:auto;max-height:320px}.download-video button.list-tool{padding:4px;line-height:1;font-size:12pt;margin:0 4px}.download-video .episode-header h2{flex-grow:1}.download-video .selected-count{width:64px;text-align:right}.download-video .aria2-rpc .mdi{margin-left:8px;font-size:14pt;line-height:1}.download-video .aria2-rpc{position:relative}.download-video .rpc-settings{position:absolute;display:flex;flex-direction:column;align-items:stretch;color:var(--download-video-foreground);background:#fff;bottom:120%;left:50%;cursor:initial;box-shadow:rgba(0,0,0,.2) 0 4px 8px 0;transform-origin:bottom;transform:translateX(-50%) scale(.9);opacity:0;pointer-events:none;padding:8px;z-index:3;transition:.3s cubic-bezier(.18,.89,.32,1.28);width:100%}body.dark .download-video .rpc-settings{background:#282828}.download-video .rpc-settings>*{margin:8px}.download-video .rpc-settings.show{opacity:1;transform:translateX(-50%) scale(1);pointer-events:initial}.download-video .rpc-settings input[type=text]{background:0 0;color:var(--download-video-foreground);border:1px solid #8884;padding:4px;margin-left:8px}.download-video .rpc-settings input[type=text]:focus{border-color:var(--theme-color)}.download-video .rpc-settings .operations{display:flex;align-items:center;justify-content:space-evenly}.download-video .rpc-settings-item{display:flex;align-items:center;justify-content:space-between;white-space:nowrap}.download-video .rpc-settings-item input[type=text]{flex-grow:1;margin-left:24px}.download-video button.cancel-download,.download-video button.start-download{margin-top:8px}.download-video .direct-download-header{align-self:stretch;display:flex;justify-content:space-between;align-items:center}body.dark .download-video .direct-download .progress .foreground{background:linear-gradient(to right,var(--theme-color-70),var(--theme-color))}`;
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/download-video.min.html"] = `<div class=download-video><a v-bind:href=blobUrl id=video-complete style="display: none"></a><div class=header><h1>下载视频</h1><i class="mdi mdi-close"v-on:click=close()></i></div><div v-if=batch class=tabs><div class="tab download-single"v-bind:class="{active: downloadSingle}"v-on:click="downloadSingle = true">单个视频</div><div class="tab download-batch"v-bind:class="{active: !downloadSingle}"v-on:click="downloadSingle = false">批量导出</div></div><div v-show=downloadSingle class=info><img v-bind:src=coverUrl class=cover><div class=title><span class=size><div v-if=sizeWarning class=size-warning><i class="mdi mdi-alert-circle"></i><div class=size-warning-tip>警告: 过大的视频大小会在直接下载时占用大量内存, 并可能导致浏览器标签页崩溃. 请考虑降低清晰度或使用导出选项.</div></div>预计大小: {{displaySize}}</span></div></div><div class=options><div class=option-item v-if=enableDash>格式<v-dropdown style="text-transform: uppercase;"v-on:change=dashChange() v-bind:items=dashModel.items v-bind:value.sync=dashModel.value></v-dropdown></div><div class=option-item>清晰度<v-dropdown v-on:change=formatChange() v-bind:items=qualityModel.items v-bind:value.sync=qualityModel.value></v-dropdown></div><div class=option-item>弹幕<v-dropdown v-on:change=danmakuOptionChange() v-bind:items=danmakuModel.items v-bind:value.sync=danmakuModel.value></v-dropdown></div></div><div class=separator></div><div v-show=downloadSingle class=direct-download><div class=direct-download-header><h2>直接下载</h2><span class=download-speed>{{speed}}</span></div><button v-if=!downloading class="primary start-download"v-on:click=startDownload()>开始</button><button v-else class="primary cancel-download"v-on:click=cancelDownload()>取消</button><div class=progress><div class=background><div class=foreground v-bind:style="{width: progressPercent + '%'}"></div></div><span class=percent>{{progressPercent}}%</span></div></div><div v-show=!downloadSingle class=batch-download><div class=episode-header><h2>选集</h2><button class=list-tool title=全选 v-on:click=selectAllEpisodes()><i class="mdi mdi-checkbox-multiple-marked-circle"></i></button><button class=list-tool title=全不选 v-on:click=unselectAllEpisodes()><i class="mdi mdi-checkbox-multiple-blank-circle-outline"></i></button><button class=list-tool title=反选 v-on:click=inverseAllEpisodes()><i class="mdi mdi-circle-slice-4"></i></button><span class=selected-count>{{selectedEpisodeCount}}/{{episodeList.length}}</span></div><div class=episode-list><v-checkbox v-for="ep of episodeList"v-bind:key=ep.index v-bind:title=ep.title v-bind:checked.sync=ep.checked></v-checkbox></div></div><div class=separator></div><div class=exports><h2>导出</h2><div class=actions v-bind:class="{busy: busy}"><button class=show-link v-bind:disabled="downloadSingle ? null : 'disabled'"v-on:click="exportData('showLink')">显示链接</button><button class=aria2-file v-on:click="exportData('aria2')">aria2</button><div class="button aria2-rpc"v-on:click.self=toggleRpcSettings()>{{showRpcSettings ? '取消' : 'aria2 RPC'}}<i :class="{'mdi-close': showRpcSettings, 'mdi-chevron-right': !showRpcSettings}"class=mdi v-on:click.self=toggleRpcSettings()></i><div class=rpc-settings v-bind:class="{show: showRpcSettings}"><h1>aria2 RPC</h1><rpc-profiles @profile-change=updateProfile></rpc-profiles><h2>配置</h2><div class=rpc-settings-item>主机<input type=text v-model=rpcSettings.host placeholder=127.0.0.1></div><div class=rpc-settings-item>端口<input type=text v-model=rpcSettings.port placeholder=6800></div><div class=rpc-settings-item>密钥<input type=text v-model=rpcSettings.secretKey></div><div class=rpc-settings-item>限速<input type=text v-model=rpcSettings.maxDownloadLimit placeholder=无></div><div class=rpc-settings-item>默认路径<input type=text v-model=rpcSettings.baseDir></div><div class=rpc-settings-item>路径<input type=text v-model=rpcSettings.dir></div><div class=final-dir>最终路径: {{rpcSettings.baseDir + rpcSettings.dir}}</div><div class=rpc-settings-item>方法<v-dropdown style="text-transform: uppercase;"v-bind:items="['get', 'post']"v-bind:value.sync=rpcSettings.method></v-dropdown></div><div class=operations><div class="primary button"v-on:click="saveRpcSettings();toggleRpcSettings();exportData('aria2RPC')">开始下载</div><div class=button v-on:click=saveRpcSettings()>{{saveRpcSettingsText}}</div></div></div></div></div></div></div>`;
-onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/download-video.min.js"] = (()=>{return(e,t)=>{const{getFriendlyTitle:s}=t.import("title");const{VideoInfo:a,DanmakuInfo:i}=t.import("video-info");class n{constructor(){this.menuClasses=["quality","action","progress"];[this.currentMenuClass]=this.menuClasses}get menuPanel(){return document.querySelector(".download-video-panel")}addMenuClass(){this.menuPanel.classList.remove(...this.menuClasses);this.menuPanel.classList.add(this.currentMenuClass);return this.currentMenuClass}resetMenuClass(){[this.currentMenuClass]=this.menuClasses;this.addMenuClass()}nextMenuClass(){const e=this.menuClasses.indexOf(this.currentMenuClass)+1;const t=this.menuClasses[e>=this.menuClasses.length?0:e];this.currentMenuClass=t;this.addMenuClass();return t}closeMenu(){this.menuPanel.classList.remove("opened");setTimeout(()=>this.resetMenuClass(),200)}addError(){this.menuPanel.classList.add("error")}removeError(){this.menuPanel.classList.remove("error");this.resetMenuClass()}async getDashUrl(e){throw new Error("video dash is not supported")}async getUrl(e){if(e){return`https://api.bilibili.com/x/player/playurl?avid=${r.aid}&cid=${r.cid}&qn=${e}&otype=json`}else{return`https://api.bilibili.com/x/player/playurl?avid=${r.aid}&cid=${r.cid}&otype=json`}}}class o extends n{async getDashUrl(e){if(e){return`https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&qn=${e}&otype=json&fourk=1&fnval=16`}else{return`https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&otype=json&fourk=1&fnval=16`}}async getUrl(e){if(e){return`https://api.bilibili.com/pgc/player/web/playurl?avid=${r.aid}&cid=${r.cid}&qn=${e}&otype=json`}else{return`https://api.bilibili.com/pgc/player/web/playurl?avid=${r.aid}&cid=${r.cid}&qn=&otype=json`}}}const r={entity:new n,aid:"",cid:""};let l=[];let c=null;class d{constructor(e,t,s){this.quality=e;this.internalName=t;this.displayName=s}async downloadInfo(e=false){const t=new h(this);await t.fetchVideoInfo(e);return t}static parseFormats(e){const t=e.accept_quality;const s=e.accept_format.split(",");const a=e.accept_description;const i=t.map((e,t)=>{return new d(e,s[t],a[t])});return i}static async getAvailableDashFormats(){const e=await r.entity.getDashUrl();const t=await Ajax.getJsonWithCredentials(e);if(t.code!==0){throw new Error("获取清晰度信息失败.")}return d.parseFormats(t.result)}static async getAvailableFormats(){const e=await r.entity.getUrl();const t=await Ajax.getJsonWithCredentials(e);if(t.code!==0){throw new Error("获取清晰度信息失败.")}const s=t.data||t.result||t;return d.parseFormats(s)}}class h{constructor(e,t){this.fragmentSplitFactor=6*2;this.workingXhr=null;this.progressMap=new Map;this.format=e;this.fragments=t||[];this.videoSpeed=new u(this)}get totalSize(){return this.fragments.map(e=>e.size).reduce((e,t)=>e+t)}async fetchVideoInfo(e=false){if(!e){const e=await r.entity.getUrl(this.format.quality);const t=await Ajax.getTextWithCredentials(e);const s=JSON.parse(t.replace(/http:/g,"https:"));const a=s.data||s.result||s;if(a.quality!==this.format.quality){throw new Error("获取下载链接失败, 请确认当前账号有下载权限后重试.")}const i=a.durl;this.fragments=i.map(e=>{return{length:e.length,size:e.size,url:e.url,backupUrls:e.backup_url}})}else{const{dashToFragment:e,getDashInfo:s}=await t.importAsync("video-dash");const a=await s(r.aid,r.cid,this.format.quality);const i=a.videoDashes.sort(descendingSort(e=>e.bandWidth))[0];const n=a.audioDashes.sort(descendingSort(e=>e.bandWidth))[0];this.fragments=[e(i),e(n)]}return this.fragments}updateProgress(){const e=this.progressMap?[...this.progressMap.values()].reduce((e,t)=>e+t,0)/this.totalSize:0;if(e>1||e<0){console.error(`[下载视频] 进度异常: ${e}`,this.progressMap.values())}this.progress&&this.progress(e)}cancelDownload(){this.videoSpeed.stopMeasure();if(this.workingXhr!==null){this.workingXhr.forEach(e=>e.abort())}else{logError("Cancel Download Failed: forEach in this.workingXhr not found.")}}downloadFragment(e){const t=[];this.workingXhr=[];this.progressMap=new Map;this.updateProgress();let s;if(e.size<=96*1024*1024){s=e.size/this.fragmentSplitFactor}else{s=16*1024*1024}let a=0;const i=e=>[...this.progressMap.keys()].indexOf(e)+1;while(a<e.size){const n=Math.min(e.size-1,Math.round(a+s));const o=`bytes=${a}-${n}`;const r=n-a+1;t.push(new Promise((t,s)=>{const a=new XMLHttpRequest;a.open("GET",e.url);a.responseType="arraybuffer";a.withCredentials=false;a.addEventListener("progress",e=>{console.log(`[下载视频] 视频片段${i(a)}下载进度: ${e.loaded}/${r} bytes loaded, ${o}`);this.progressMap.set(a,e.loaded);this.updateProgress()});a.addEventListener("load",()=>{if((""+a.status)[0]==="2"){console.log(`[下载视频] 视频片段${i(a)}下载完成`);t(a.response)}else{s(`视频片段${i(a)}请求失败, response = ${a.status}`)}});a.addEventListener("abort",()=>s("canceled"));a.addEventListener("error",()=>{console.error(`[下载视频] 视频片段${i(a)}下载失败: ${o}`);this.progressMap.set(a,0);this.updateProgress();a.open("GET",e.url);a.setRequestHeader("Range",o);a.send()});a.setRequestHeader("Range",o);this.progressMap.set(a,0);a.send();this.workingXhr.push(a)}));a=Math.round(a+s)+1}return Promise.all(t)}async copyUrl(){const e=this.fragments.map(e=>e.url).reduce((e,t)=>e+"\r\n"+t);GM_setClipboard(e,"text")}async showUrl(){const e=this.fragments.map(e=>`\n<a class="download-link" href="${e.url}">${e.url}</a>\n`).reduce((e,t)=>e+"\r\n"+t);Toast.success(e+`<a class="link" id="copy-link">复制全部</a>`,"显示链接");const t=await SpinQuery.select("#copy-link");t.addEventListener("click",async()=>{await this.copyUrl()})}static downloadBlob(e,t){const s=document.createElement("a");let a;if(typeof e==="string"){a=e}else{a=URL.createObjectURL(e)}s.setAttribute("href",a);s.setAttribute("download",t);document.body.appendChild(s);s.click();s.remove();URL.revokeObjectURL(a)}async exportData(e=false){const t=JSON.stringify([{fragments:this.fragments,title:s(),totalSize:this.fragments.map(e=>e.size).reduce((e,t)=>e+t),referer:document.URL.replace(window.location.search,"")}]);if(e){GM_setClipboard(t,"text")}else{const e=new Blob([t],{type:"text/json"});const a=await this.downloadDanmaku();if(a!==null){const t=new JSZip;t.file(`${s()}.json`,e);t.file(s()+"."+this.danmakuOption.toLowerCase(),a);h.downloadBlob(await t.generateAsync({type:"blob"}),`${s()}.zip`)}else{h.downloadBlob(e,`${s()}.json`)}}}async exportAria2(a=false){if(a){const a=await this.downloadDanmaku();if(a!==null){h.downloadBlob(new Blob([a]),`${s()}.${this.danmakuOption==="ASS"?"ass":"xml"}`)}const i=e.aria2RpcOption;const n=this.fragments.map((e,t)=>{let a="";if(this.fragments.length>1){a=" - "+(t+1)}const n=[];if(i.secretKey!==""){n.push(`token:${i.secretKey}`)}n.push([e.url]);n.push({referer:document.URL.replace(window.location.search,""),"user-agent":UserAgent,out:`${s()}${a}${this.extension(e)}`,split:this.fragmentSplitFactor,dir:i.baseDir+i.dir||undefined,"max-download-limit":i.maxDownloadLimit||undefined});const o=encodeURIComponent(`${s()}${a}`);return{params:n,id:o}});const{sendRpc:o}=await t.importAsync("aria2-rpc");await o(n)}else{const e=`\n# Generated by Bilibili Evolved Video Export\n# https://github.com/the1812/Bilibili-Evolved/\n${this.fragments.map((e,t)=>{let a="";if(this.fragments.length>1){a=" - "+(t+1)}return`\n${e.url}\nreferer=${document.URL.replace(window.location.search,"")}\nuser-agent=${UserAgent}\nout=${s()}${a}${this.extension(e)}\nsplit=${this.fragmentSplitFactor}\n`.trim()}).join("\n")}\n`.trim();const t=new Blob([e],{type:"text/plain"});const a=await this.downloadDanmaku();if(a!==null){const e=new JSZip;e.file(`${s()}.txt`,t);e.file(s()+"."+this.danmakuOption.toLowerCase(),a);h.downloadBlob(await e.generateAsync({type:"blob"}),`${s()}.zip`)}else{h.downloadBlob(t,`${s()}.txt`)}}}extension(e){const t=e||this.fragments[0];const s=[".flv",".mp4",".m4s"].find(e=>t.url.includes(e));if(s){return s}else{console.warn("No extension detected.");return".flv"}}makeBlob(e,t){return new Blob(Array.isArray(e)?e:[e],{type:this.extension(t)===".flv"?"video/x-flv":"video/mp4"})}cleanUpOldBlobUrl(){const e=dq("a#video-complete").getAttribute("href");if(e&&!dq(`.link[href="${e}"]`)){URL.revokeObjectURL(e)}dqa(".toast-card-header").filter(e=>e.innerText.includes("下载视频")).forEach(e=>e.querySelector(".toast-card-dismiss").click())}async downloadDanmaku(){if(this.danmakuOption!=="无"){const e=new i(r.cid);await e.fetchInfo();if(this.danmakuOption==="XML"){return e.rawXML}else{const{convertToAss:s}=await t.importAsync("download-danmaku");return s(e.rawXML)}}else{return null}}async downloadSingle(e){const t=await this.downloadDanmaku();const[a]=e;if(t===null){const e=this.makeBlob(a);const t=s()+this.extension();return{blob:e,filename:t}}else{const e=new JSZip;e.file(s()+this.extension(),this.makeBlob(a));e.file(s()+"."+this.danmakuOption.toLowerCase(),t);const i=await e.generateAsync({type:"blob"});const n=s()+".zip";return{blob:i,filename:n}}}async downloadMultiple(e){const t=new JSZip;const a=s();if(e.length>1){e.forEach((e,s)=>{const i=this.fragments[s];t.file(`${a} - ${s+1}${this.extension(i)}`,this.makeBlob(e,i))})}else{const[s]=e;t.file(`${a}${this.extension()}`,this.makeBlob(s))}const i=await this.downloadDanmaku();if(i!==null){t.file(s()+"."+this.danmakuOption.toLowerCase(),i)}const n=await t.generateAsync({type:"blob"});const o=a+".zip";return{blob:n,filename:o}}async download(){const e=[];this.videoSpeed.startMeasure();for(const t of this.fragments){const s=await this.downloadFragment(t);e.push(s)}if(e.length<1){throw new Error("下载失败.")}let{blob:t,filename:s}=await(async()=>{if(e.length===1){return await this.downloadSingle(e)}else{return await this.downloadMultiple(e)}})();this.cleanUpOldBlobUrl();const a=URL.createObjectURL(t);this.progress&&this.progress(0);this.videoSpeed.stopMeasure();return{url:a,filename:s}}}class u{constructor(e){this.lastProgress=0;this.measureInterval=1e3;this.workingDownloader=e}startMeasure(){this.intervalTimer=setInterval(()=>{const e=this.workingDownloader.progressMap?[...this.workingDownloader.progressMap.values()].reduce((e,t)=>e+t,0):0;const t=e-this.lastProgress;if(this.speedUpdate!==undefined){this.speedUpdate(formatFileSize(t)+"/s")}this.lastProgress=e},this.measureInterval)}stopMeasure(){clearInterval(this.intervalTimer)}}async function p(){const e=await SpinQuery.select(()=>(unsafeWindow||window).aid);const t=await SpinQuery.select(()=>(unsafeWindow||window).cid);if(!(e&&t)){return false}r.aid=e;r.cid=t;if(document.URL.indexOf("bangumi")!==-1){r.entity=new o}else{r.entity=new n}try{l=await d.getAvailableFormats()}catch(e){return false}return true}async function f(){c=l[0];t.applyStyle("downloadVideoStyle");dq("#download-video").addEventListener("click",()=>{dq(".download-video").classList.toggle("opened");dq(".gui-settings-mask").click()});dq("#download-video").addEventListener("mouseover",()=>{document.body.insertAdjacentHTML("beforeend",t.import("downloadVideoHtml"));w()},{once:true})}async function w(){let n;const o=new Map;const u=new Vue({el:".download-video",components:{VDropdown:()=>t.importAsync("v-dropdown.vue"),VCheckbox:()=>t.importAsync("v-checkbox.vue"),RpcProfiles:()=>t.importAsync("aria2-rpc-profiles.vue")},data:{downloadSingle:true,coverUrl:EmptyImageUrl,aid:r.aid,cid:r.cid,dashModel:{value:e.downloadVideoFormat,items:["flv","dash"]},qualityModel:{value:c.displayName,items:l.map(e=>e.displayName)},danmakuModel:{value:e.downloadVideoDefaultDanmaku,items:["无","XML","ASS"]},progressPercent:0,size:"获取大小中",blobUrl:"",episodeList:[],downloading:false,speed:"",batch:false,rpcSettings:e.aria2RpcOption,showRpcSettings:false,busy:false,saveRpcSettingsText:"保存配置",enableDash:e.enableDashDownload},computed:{displaySize(){if(typeof this.size==="string"){return this.size}return formatFileSize(this.size)},sizeWarning(){if(typeof this.size==="string"){return false}return this.size>1073741824},selectedEpisodeCount(){return this.episodeList.filter(e=>e.checked).length},dash(){return this.dashModel.value==="dash"}},methods:{close(){this.$el.classList.remove("opened")},danmakuOptionChange(){e.downloadVideoDefaultDanmaku=this.danmakuModel.value},async dashChange(){const e=this.dashModel.value;let t=[];if(e==="flv"){t=await d.getAvailableFormats()}else{t=await d.getAvailableDashFormats()}l=t;[c]=e;this.qualityModel.items=t.map(e=>e.displayName);[this.qualityModel.value]=this.qualityModel.items},async formatChange(){const e=this.getFormat();const t=o.get(e);if(t){this.size=t;return}try{this.size="获取大小中";const t=await e.downloadInfo(this.dash);this.size=t.totalSize;o.set(e,this.size)}catch(e){this.size="获取大小失败"}},getFormat(){const e=l.find(e=>e.displayName===this.qualityModel.value);if(!e){console.error(`No format found. model value = ${this.qualityModel.value}`);return null}return e},async exportData(e){if(this.busy===true){return}try{this.busy=true;if(!this.downloadSingle){await this.exportBatchData(e);return}const t=this.getFormat();const s=await t.downloadInfo(this.dash);s.danmakuOption=this.danmakuModel.value;switch(e){case"copyLink":await s.copyUrl();Toast.success("已复制链接到剪贴板.","下载视频",3e3);break;case"showLink":await s.showUrl();break;case"aria2":await s.exportAria2(false);break;case"aria2RPC":await s.exportAria2(true);break;case"copyVLD":await s.exportData(true);Toast.success("已复制VLD数据到剪贴板.","下载视频",3e3);break;case"exportVLD":await s.exportData(false);break;default:break}}catch(e){logError(e)}finally{this.busy=false}},async exportBatchData(e){const a=this.episodeList;if(a.every(e=>e.checked===false)){Toast.info("请至少选择1集或以上的数量!","批量导出",3e3);return}const n=e=>{const t=a.find(t=>t.cid===e.cid);if(t===undefined){return false}return t.checked};const o=this.getFormat();if(this.danmakuModel.value!=="无"){const e=Toast.info("下载弹幕中...","批量导出");const s=new JSZip;try{if(this.danmakuModel.value==="XML"){for(const e of a.filter(n)){const t=new i(e.cid);await t.fetchInfo();s.file(e.title+".xml",t.rawXML)}}else{const{convertToAss:e}=await t.importAsync("download-danmaku");for(const t of a.filter(n)){const a=new i(t.cid);await a.fetchInfo();s.file(t.title+".ass",await e(a.rawXML))}}h.downloadBlob(await s.generateAsync({type:"blob"}),this.cid+".danmakus.zip")}catch(e){logError(`弹幕下载失败`)}finally{e.dismiss()}}const r=Toast.info("获取链接中...","批量导出");this.batchExtractor.itemFilter=n;let l;try{switch(e){case"aria2":l=await this.batchExtractor.collectAria2(o,r);h.downloadBlob(new Blob([l],{type:"text/plain"}),s(false)+".txt");return;case"aria2RPC":await this.batchExtractor.collectAria2(o,r,true);Toast.success(`成功发送了批量请求.`,"aria2 RPC",3e3);return;case"copyVLD":GM_setClipboard(await this.batchExtractor.collectData(o,r),{mimetype:"text/plain"});Toast.success("已复制批量vld数据到剪贴板.","批量导出",3e3);return;case"exportVLD":l=await this.batchExtractor.collectData(o,r);h.downloadBlob(new Blob([l],{type:"text/json"}),s(false)+".json");return;default:return}}catch(e){logError(e)}finally{r.dismiss()}},async checkBatch(){const e=["/www.bilibili.com/bangumi","/www.bilibili.com/video/av"];if(!e.some(e=>document.URL.includes(e))){this.batch=false;this.episodeList=[];return}const{BatchExtractor:s}=await t.importAsync("batch-download");if(await s.test()!==true){this.batch=false;this.episodeList=[];return}this.batchExtractor=new s;this.batch=true;this.episodeList=(await this.batchExtractor.getItemList()).map((e,t)=>{return{aid:e.aid,cid:e.cid,title:e.title,index:t,checked:true}})},cancelDownload(){if(n){n.cancelDownload()}},async startDownload(){const e=this.getFormat();try{this.downloading=true;const t=await e.downloadInfo(this.dash);t.videoSpeed.speedUpdate=(e=>this.speed=e);t.danmakuOption=this.danmakuModel.value;t.progress=(e=>{this.progressPercent=Math.trunc(e*100)});n=t;const s=await t.download();const a=document.getElementById("video-complete");a.setAttribute("href",s.url);a.setAttribute("download",s.filename);a.click();Toast.success(`下载完成: ${s.filename} <a class="link" href="${s.url}" download="${s.filename.replace(/"/g,"&quot;")}">再次保存</a>`,"下载视频")}catch(e){if(e!=="canceled"){logError(e)}this.progressPercent=0}finally{this.downloading=false;this.speed=""}},selectAllEpisodes(){this.episodeList.forEach(e=>e.checked=true)},unselectAllEpisodes(){this.episodeList.forEach(e=>e.checked=false)},inverseAllEpisodes(){this.episodeList.forEach(e=>e.checked=!e.checked)},toggleRpcSettings(){this.showRpcSettings=!this.showRpcSettings},saveRpcSettings(){if(this.rpcSettings.host===""){this.rpcSettings.host="127.0.0.1"}if(this.rpcSettings.port===""){this.rpcSettings.port="6800"}e.aria2RpcOption=this.rpcSettings;const t=e.aria2RpcOptionProfiles.find(t=>t.name===e.aria2RpcOptionSelectedProfile);if(t){Object.assign(t,this.rpcSettings);e.aria2RpcOptionProfiles=e.aria2RpcOptionProfiles}this.saveRpcSettingsText="已保存";setTimeout(()=>this.saveRpcSettingsText="保存配置",2e3)},updateProfile(t){e.aria2RpcOption=this.rpcSettings=_.omit(t,"name")}}});Observer.videoChange(async()=>{u.close();u.batch=false;u.downloadSingle=true;const e=dq("#download-video");const t=await p();e.style.display=t?"flex":"none";if(!t){return}u.aid=r.aid;u.cid=r.cid;const s=new a(r.aid);await s.fetchInfo();u.coverUrl=s.coverUrl.replace("http:","https:");l=await d.getAvailableFormats();[c]=l;u.qualityModel={value:c.displayName,items:l.map(e=>e.displayName)};u.formatChange();await u.checkBatch()})}return{widget:{content:`\n<button class="gui-settings-flat-button" style="position: relative; z-index: 100;" id="download-video">\n<i class="icon-download"></i>\n<span>下载视频</span>\n</button>`,condition:p,success:f}}}})();
+onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/download-video.min.js"] = (()=>{return(e,t)=>{const{getFriendlyTitle:s}=t.import("title");const{VideoInfo:a,DanmakuInfo:i}=t.import("video-info");class n{constructor(){this.menuClasses=["quality","action","progress"];[this.currentMenuClass]=this.menuClasses}get menuPanel(){return document.querySelector(".download-video-panel")}addMenuClass(){this.menuPanel.classList.remove(...this.menuClasses);this.menuPanel.classList.add(this.currentMenuClass);return this.currentMenuClass}resetMenuClass(){[this.currentMenuClass]=this.menuClasses;this.addMenuClass()}nextMenuClass(){const e=this.menuClasses.indexOf(this.currentMenuClass)+1;const t=this.menuClasses[e>=this.menuClasses.length?0:e];this.currentMenuClass=t;this.addMenuClass();return t}closeMenu(){this.menuPanel.classList.remove("opened");setTimeout(()=>this.resetMenuClass(),200)}addError(){this.menuPanel.classList.add("error")}removeError(){this.menuPanel.classList.remove("error");this.resetMenuClass()}async getDashUrl(e){throw new Error("video dash is not supported")}async getUrl(e){if(e){return`https://api.bilibili.com/x/player/playurl?avid=${r.aid}&cid=${r.cid}&qn=${e}&otype=json`}else{return`https://api.bilibili.com/x/player/playurl?avid=${r.aid}&cid=${r.cid}&otype=json`}}}class o extends n{async getDashUrl(e){if(e){return`https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&qn=${e}&otype=json&fourk=1&fnval=16`}else{return`https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&otype=json&fourk=1&fnval=16`}}async getUrl(e){if(e){return`https://api.bilibili.com/pgc/player/web/playurl?avid=${r.aid}&cid=${r.cid}&qn=${e}&otype=json`}else{return`https://api.bilibili.com/pgc/player/web/playurl?avid=${r.aid}&cid=${r.cid}&qn=&otype=json`}}}const r={entity:new n,aid:"",cid:""};let l=[];let c=null;class d{constructor(e,t,s){this.quality=e;this.internalName=t;this.displayName=s}async downloadInfo(e=false){const t=new h(this);await t.fetchVideoInfo(e);return t}static parseFormats(e){const t=e.accept_quality;const s=e.accept_format.split(",");const a=e.accept_description;const i=t.map((e,t)=>{return new d(e,s[t],a[t])});return i}static async getAvailableDashFormats(){const e=await r.entity.getDashUrl();const t=await Ajax.getJsonWithCredentials(e);if(t.code!==0){throw new Error("获取清晰度信息失败.")}return d.parseFormats(t.result)}static async getAvailableFormats(){const e=await r.entity.getUrl();const t=await Ajax.getJsonWithCredentials(e);if(t.code!==0){throw new Error("获取清晰度信息失败.")}const s=t.data||t.result||t;return d.parseFormats(s)}}class h{constructor(e,t){this.fragmentSplitFactor=6*2;this.workingXhr=null;this.progressMap=new Map;this.format=e;this.fragments=t||[];this.videoSpeed=new u(this)}get totalSize(){return this.fragments.map(e=>e.size).reduce((e,t)=>e+t)}async fetchVideoInfo(e=false){if(!e){const e=await r.entity.getUrl(this.format.quality);const t=await Ajax.getTextWithCredentials(e);const s=JSON.parse(t.replace(/http:/g,"https:"));const a=s.data||s.result||s;if(a.quality!==this.format.quality){throw new Error("获取下载链接失败, 请确认当前账号有下载权限后重试.")}const i=a.durl;this.fragments=i.map(e=>{return{length:e.length,size:e.size,url:e.url,backupUrls:e.backup_url}})}else{const{dashToFragment:e,getDashInfo:s}=await t.importAsync("video-dash");const a=await s(r.aid,r.cid,this.format.quality);const i=a.videoDashes.sort(descendingSort(e=>e.bandWidth))[0];const n=a.audioDashes.sort(descendingSort(e=>e.bandWidth))[0];this.fragments=[e(i),e(n)]}return this.fragments}updateProgress(){const e=this.progressMap?[...this.progressMap.values()].reduce((e,t)=>e+t,0)/this.totalSize:0;if(e>1||e<0){console.error(`[下载视频] 进度异常: ${e}`,this.progressMap.values())}this.progress&&this.progress(e)}cancelDownload(){this.videoSpeed.stopMeasure();if(this.workingXhr!==null){this.workingXhr.forEach(e=>e.abort())}else{logError("Cancel Download Failed: forEach in this.workingXhr not found.")}}downloadFragment(e){const t=[];this.workingXhr=[];this.progressMap=new Map;this.updateProgress();let s;if(e.size<=96*1024*1024){s=e.size/this.fragmentSplitFactor}else{s=16*1024*1024}let a=0;const i=e=>[...this.progressMap.keys()].indexOf(e)+1;while(a<e.size){const n=Math.min(e.size-1,Math.round(a+s));const o=`bytes=${a}-${n}`;const r=n-a+1;t.push(new Promise((t,s)=>{const a=new XMLHttpRequest;a.open("GET",e.url);a.responseType="arraybuffer";a.withCredentials=false;a.addEventListener("progress",e=>{console.log(`[下载视频] 视频片段${i(a)}下载进度: ${e.loaded}/${r} bytes loaded, ${o}`);this.progressMap.set(a,e.loaded);this.updateProgress()});a.addEventListener("load",()=>{if((""+a.status)[0]==="2"){console.log(`[下载视频] 视频片段${i(a)}下载完成`);t(a.response)}else{s(`视频片段${i(a)}请求失败, response = ${a.status}`)}});a.addEventListener("abort",()=>s("canceled"));a.addEventListener("error",()=>{console.error(`[下载视频] 视频片段${i(a)}下载失败: ${o}`);this.progressMap.set(a,0);this.updateProgress();a.open("GET",e.url);a.setRequestHeader("Range",o);a.send()});a.setRequestHeader("Range",o);this.progressMap.set(a,0);a.send();this.workingXhr.push(a)}));a=Math.round(a+s)+1}return Promise.all(t)}async copyUrl(){const e=this.fragments.map(e=>e.url).reduce((e,t)=>e+"\r\n"+t);GM.setClipboard(e,"text")}async showUrl(){const e=this.fragments.map(e=>`\n<a class="download-link" href="${e.url}">${e.url}</a>\n`).reduce((e,t)=>e+"\r\n"+t);Toast.success(e+`<a class="link" id="copy-link">复制全部</a>`,"显示链接");const t=await SpinQuery.select("#copy-link");t.addEventListener("click",async()=>{await this.copyUrl()})}static downloadBlob(e,t){const s=document.createElement("a");let a;if(typeof e==="string"){a=e}else{a=URL.createObjectURL(e)}s.setAttribute("href",a);s.setAttribute("download",t);document.body.appendChild(s);s.click();s.remove();URL.revokeObjectURL(a)}async exportData(e=false){const t=JSON.stringify([{fragments:this.fragments,title:s(),totalSize:this.fragments.map(e=>e.size).reduce((e,t)=>e+t),referer:document.URL.replace(window.location.search,"")}]);if(e){GM.setClipboard(t,"text")}else{const e=new Blob([t],{type:"text/json"});const a=await this.downloadDanmaku();if(a!==null){const t=new JSZip;t.file(`${s()}.json`,e);t.file(s()+"."+this.danmakuOption.toLowerCase(),a);h.downloadBlob(await t.generateAsync({type:"blob"}),`${s()}.zip`)}else{h.downloadBlob(e,`${s()}.json`)}}}async exportAria2(a=false){if(a){const a=await this.downloadDanmaku();if(a!==null){h.downloadBlob(new Blob([a]),`${s()}.${this.danmakuOption==="ASS"?"ass":"xml"}`)}const i=e.aria2RpcOption;const n=this.fragments.map((e,t)=>{let a="";if(this.fragments.length>1){a=" - "+(t+1)}const n=[];if(i.secretKey!==""){n.push(`token:${i.secretKey}`)}n.push([e.url]);n.push({referer:document.URL.replace(window.location.search,""),"user-agent":UserAgent,out:`${s()}${a}${this.extension(e)}`,split:this.fragmentSplitFactor,dir:i.baseDir+i.dir||undefined,"max-download-limit":i.maxDownloadLimit||undefined});const o=encodeURIComponent(`${s()}${a}`);return{params:n,id:o}});const{sendRpc:o}=await t.importAsync("aria2-rpc");await o(n)}else{const e=`\n# Generated by Bilibili Evolved Video Export\n# https://github.com/the1812/Bilibili-Evolved/\n${this.fragments.map((e,t)=>{let a="";if(this.fragments.length>1){a=" - "+(t+1)}return`\n${e.url}\nreferer=${document.URL.replace(window.location.search,"")}\nuser-agent=${UserAgent}\nout=${s()}${a}${this.extension(e)}\nsplit=${this.fragmentSplitFactor}\n`.trim()}).join("\n")}\n`.trim();const t=new Blob([e],{type:"text/plain"});const a=await this.downloadDanmaku();if(a!==null){const e=new JSZip;e.file(`${s()}.txt`,t);e.file(s()+"."+this.danmakuOption.toLowerCase(),a);h.downloadBlob(await e.generateAsync({type:"blob"}),`${s()}.zip`)}else{h.downloadBlob(t,`${s()}.txt`)}}}extension(e){const t=e||this.fragments[0];const s=[".flv",".mp4",".m4s"].find(e=>t.url.includes(e));if(s){return s}else{console.warn("No extension detected.");return".flv"}}makeBlob(e,t){return new Blob(Array.isArray(e)?e:[e],{type:this.extension(t)===".flv"?"video/x-flv":"video/mp4"})}cleanUpOldBlobUrl(){const e=dq("a#video-complete").getAttribute("href");if(e&&!dq(`.link[href="${e}"]`)){URL.revokeObjectURL(e)}dqa(".toast-card-header").filter(e=>e.innerText.includes("下载视频")).forEach(e=>e.querySelector(".toast-card-dismiss").click())}async downloadDanmaku(){if(this.danmakuOption!=="无"){const e=new i(r.cid);await e.fetchInfo();if(this.danmakuOption==="XML"){return e.rawXML}else{const{convertToAss:s}=await t.importAsync("download-danmaku");return s(e.rawXML)}}else{return null}}async downloadSingle(e){const t=await this.downloadDanmaku();const[a]=e;if(t===null){const e=this.makeBlob(a);const t=s()+this.extension();return{blob:e,filename:t}}else{const e=new JSZip;e.file(s()+this.extension(),this.makeBlob(a));e.file(s()+"."+this.danmakuOption.toLowerCase(),t);const i=await e.generateAsync({type:"blob"});const n=s()+".zip";return{blob:i,filename:n}}}async downloadMultiple(e){const t=new JSZip;const a=s();if(e.length>1){e.forEach((e,s)=>{const i=this.fragments[s];t.file(`${a} - ${s+1}${this.extension(i)}`,this.makeBlob(e,i))})}else{const[s]=e;t.file(`${a}${this.extension()}`,this.makeBlob(s))}const i=await this.downloadDanmaku();if(i!==null){t.file(s()+"."+this.danmakuOption.toLowerCase(),i)}const n=await t.generateAsync({type:"blob"});const o=a+".zip";return{blob:n,filename:o}}async download(){const e=[];this.videoSpeed.startMeasure();for(const t of this.fragments){const s=await this.downloadFragment(t);e.push(s)}if(e.length<1){throw new Error("下载失败.")}let{blob:t,filename:s}=await(async()=>{if(e.length===1){return await this.downloadSingle(e)}else{return await this.downloadMultiple(e)}})();this.cleanUpOldBlobUrl();const a=URL.createObjectURL(t);this.progress&&this.progress(0);this.videoSpeed.stopMeasure();return{url:a,filename:s}}}class u{constructor(e){this.lastProgress=0;this.measureInterval=1e3;this.workingDownloader=e}startMeasure(){this.intervalTimer=setInterval(()=>{const e=this.workingDownloader.progressMap?[...this.workingDownloader.progressMap.values()].reduce((e,t)=>e+t,0):0;const t=e-this.lastProgress;if(this.speedUpdate!==undefined){this.speedUpdate(formatFileSize(t)+"/s")}this.lastProgress=e},this.measureInterval)}stopMeasure(){clearInterval(this.intervalTimer)}}async function p(){const e=await SpinQuery.select(()=>(unsafeWindow||window).aid);const t=await SpinQuery.select(()=>(unsafeWindow||window).cid);if(!(e&&t)){return false}r.aid=e;r.cid=t;if(document.URL.indexOf("bangumi")!==-1){r.entity=new o}else{r.entity=new n}try{l=await d.getAvailableFormats()}catch(e){return false}return true}async function f(){c=l[0];t.applyStyle("downloadVideoStyle");dq("#download-video").addEventListener("click",()=>{dq(".download-video").classList.toggle("opened");dq(".gui-settings-mask").click()});dq("#download-video").addEventListener("mouseover",()=>{document.body.insertAdjacentHTML("beforeend",t.import("downloadVideoHtml"));w()},{once:true})}async function w(){let n;const o=new Map;const u=new Vue({el:".download-video",components:{VDropdown:()=>t.importAsync("v-dropdown.vue"),VCheckbox:()=>t.importAsync("v-checkbox.vue"),RpcProfiles:()=>t.importAsync("aria2-rpc-profiles.vue")},data:{downloadSingle:true,coverUrl:EmptyImageUrl,aid:r.aid,cid:r.cid,dashModel:{value:e.downloadVideoFormat,items:["flv","dash"]},qualityModel:{value:c.displayName,items:l.map(e=>e.displayName)},danmakuModel:{value:e.downloadVideoDefaultDanmaku,items:["无","XML","ASS"]},progressPercent:0,size:"获取大小中",blobUrl:"",episodeList:[],downloading:false,speed:"",batch:false,rpcSettings:e.aria2RpcOption,showRpcSettings:false,busy:false,saveRpcSettingsText:"保存配置",enableDash:e.enableDashDownload},computed:{displaySize(){if(typeof this.size==="string"){return this.size}return formatFileSize(this.size)},sizeWarning(){if(typeof this.size==="string"){return false}return this.size>1073741824},selectedEpisodeCount(){return this.episodeList.filter(e=>e.checked).length},dash(){return this.dashModel.value==="dash"}},methods:{close(){this.$el.classList.remove("opened")},danmakuOptionChange(){e.downloadVideoDefaultDanmaku=this.danmakuModel.value},async dashChange(){const e=this.dashModel.value;let t=[];if(e==="flv"){t=await d.getAvailableFormats()}else{t=await d.getAvailableDashFormats()}l=t;[c]=e;this.qualityModel.items=t.map(e=>e.displayName);[this.qualityModel.value]=this.qualityModel.items},async formatChange(){const e=this.getFormat();const t=o.get(e);if(t){this.size=t;return}try{this.size="获取大小中";const t=await e.downloadInfo(this.dash);this.size=t.totalSize;o.set(e,this.size)}catch(e){this.size="获取大小失败"}},getFormat(){const e=l.find(e=>e.displayName===this.qualityModel.value);if(!e){console.error(`No format found. model value = ${this.qualityModel.value}`);return null}return e},async exportData(e){if(this.busy===true){return}try{this.busy=true;if(!this.downloadSingle){await this.exportBatchData(e);return}const t=this.getFormat();const s=await t.downloadInfo(this.dash);s.danmakuOption=this.danmakuModel.value;switch(e){case"copyLink":await s.copyUrl();Toast.success("已复制链接到剪贴板.","下载视频",3e3);break;case"showLink":await s.showUrl();break;case"aria2":await s.exportAria2(false);break;case"aria2RPC":await s.exportAria2(true);break;case"copyVLD":await s.exportData(true);Toast.success("已复制VLD数据到剪贴板.","下载视频",3e3);break;case"exportVLD":await s.exportData(false);break;default:break}}catch(e){logError(e)}finally{this.busy=false}},async exportBatchData(e){const a=this.episodeList;if(a.every(e=>e.checked===false)){Toast.info("请至少选择1集或以上的数量!","批量导出",3e3);return}const n=e=>{const t=a.find(t=>t.cid===e.cid);if(t===undefined){return false}return t.checked};const o=this.getFormat();if(this.danmakuModel.value!=="无"){const e=Toast.info("下载弹幕中...","批量导出");const s=new JSZip;try{if(this.danmakuModel.value==="XML"){for(const e of a.filter(n)){const t=new i(e.cid);await t.fetchInfo();s.file(e.title+".xml",t.rawXML)}}else{const{convertToAss:e}=await t.importAsync("download-danmaku");for(const t of a.filter(n)){const a=new i(t.cid);await a.fetchInfo();s.file(t.title+".ass",await e(a.rawXML))}}h.downloadBlob(await s.generateAsync({type:"blob"}),this.cid+".danmakus.zip")}catch(e){logError(`弹幕下载失败`)}finally{e.dismiss()}}const r=Toast.info("获取链接中...","批量导出");this.batchExtractor.itemFilter=n;let l;try{switch(e){case"aria2":l=await this.batchExtractor.collectAria2(o,r);h.downloadBlob(new Blob([l],{type:"text/plain"}),s(false)+".txt");return;case"aria2RPC":await this.batchExtractor.collectAria2(o,r,true);Toast.success(`成功发送了批量请求.`,"aria2 RPC",3e3);return;case"copyVLD":GM.setClipboard(await this.batchExtractor.collectData(o,r),{mimetype:"text/plain"});Toast.success("已复制批量vld数据到剪贴板.","批量导出",3e3);return;case"exportVLD":l=await this.batchExtractor.collectData(o,r);h.downloadBlob(new Blob([l],{type:"text/json"}),s(false)+".json");return;default:return}}catch(e){logError(e)}finally{r.dismiss()}},async checkBatch(){const e=["/www.bilibili.com/bangumi","/www.bilibili.com/video/av"];if(!e.some(e=>document.URL.includes(e))){this.batch=false;this.episodeList=[];return}const{BatchExtractor:s}=await t.importAsync("batch-download");if(await s.test()!==true){this.batch=false;this.episodeList=[];return}this.batchExtractor=new s;this.batch=true;this.episodeList=(await this.batchExtractor.getItemList()).map((e,t)=>{return{aid:e.aid,cid:e.cid,title:e.title,index:t,checked:true}})},cancelDownload(){if(n){n.cancelDownload()}},async startDownload(){const e=this.getFormat();try{this.downloading=true;const t=await e.downloadInfo(this.dash);t.videoSpeed.speedUpdate=(e=>this.speed=e);t.danmakuOption=this.danmakuModel.value;t.progress=(e=>{this.progressPercent=Math.trunc(e*100)});n=t;const s=await t.download();const a=document.getElementById("video-complete");a.setAttribute("href",s.url);a.setAttribute("download",s.filename);a.click();Toast.success(`下载完成: ${s.filename} <a class="link" href="${s.url}" download="${s.filename.replace(/"/g,"&quot;")}">再次保存</a>`,"下载视频")}catch(e){if(e!=="canceled"){logError(e)}this.progressPercent=0}finally{this.downloading=false;this.speed=""}},selectAllEpisodes(){this.episodeList.forEach(e=>e.checked=true)},unselectAllEpisodes(){this.episodeList.forEach(e=>e.checked=false)},inverseAllEpisodes(){this.episodeList.forEach(e=>e.checked=!e.checked)},toggleRpcSettings(){this.showRpcSettings=!this.showRpcSettings},saveRpcSettings(){if(this.rpcSettings.host===""){this.rpcSettings.host="127.0.0.1"}if(this.rpcSettings.port===""){this.rpcSettings.port="6800"}e.aria2RpcOption=this.rpcSettings;const t=e.aria2RpcOptionProfiles.find(t=>t.name===e.aria2RpcOptionSelectedProfile);if(t){Object.assign(t,this.rpcSettings);e.aria2RpcOptionProfiles=e.aria2RpcOptionProfiles}this.saveRpcSettingsText="已保存";setTimeout(()=>this.saveRpcSettingsText="保存配置",2e3)},updateProfile(t){e.aria2RpcOption=this.rpcSettings=_.omit(t,"name")}}});Observer.videoChange(async()=>{u.close();u.batch=false;u.downloadSingle=true;const e=dq("#download-video");const t=await p();e.style.display=t?"flex":"none";if(!t){return}u.aid=r.aid;u.cid=r.cid;const s=new a(r.aid);await s.fetchInfo();u.coverUrl=s.coverUrl.replace("http:","https:");l=await d.getAvailableFormats();[c]=l;u.qualityModel={value:c.displayName,items:l.map(e=>e.displayName)};u.formatChange();await u.checkBatch()})}return{widget:{content:`\n<button class="gui-settings-flat-button" style="position: relative; z-index: 100;" id="download-video">\n<i class="icon-download"></i>\n<span>下载视频</span>\n</button>`,condition:p,success:f}}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/dpi-img.vue.min.js"] = (()=>{return(t,e)=>{const i=`<img :width=width :height=height :srcset=srcset :src=src :style="{filter: blur ? 'blur(' + blur + 'px)' : undefined}">`;return{export:Object.assign({template:i},{props:["size","src","blur"],computed:{srcset(){if(!this.src||!this.size){return null}return getDpiSourceSet(this.src,this.size)},width(){if(typeof this.size==="object"&&"width"in this.size){return this.size.width}return null},height(){if(typeof this.size==="object"&&"height"in this.size){return this.size.height}return null}}})}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/expand-danmaku.min.js"] = (()=>{return(e,a)=>{if(typeof isEmbeddedPlayer!=="undefined"&&isEmbeddedPlayer()){return}Observer.videoChange(async()=>{const e=await SpinQuery.select(".bui-collapse-wrap");if(e&&e.classList.contains("bui-collapse-wrap-folded")){const e=await SpinQuery.select(".bui-collapse-header");e.click()}})}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/expand-description.min.css"] = `.play-up-info .play-up-self,.video-desc .info{height:auto!important}.play-up-info .play-up-self-btn,.video-desc .btn{display:none!important}`;
@@ -1183,7 +1183,7 @@ onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/m
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/video-info.min.js"] = (()=>{return(t,i)=>{class e{constructor(t){this.aid=t}async fetchInfo(){const t=JSON.parse(await Ajax.getText(`https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`));if(t.code!==0){throw new Error(t.message)}const i=t.data;this.cid=i.cid;this.pageCount=i.videos;this.coverUrl=i.pic;this.tagId=i.tid;this.tagName=i.tname;this.title=i.title;this.description=i.desc;this.up={uid:i.owner.mid,name:i.owner.name,faceUrl:i.owner.face};this.pages=i.pages.map(t=>{return{cid:t.cid,title:t.part,pageNumber:t.page}});return this}async fetchDanmaku(){this.danmaku=new s(this.cid.toString());return this.danmaku.fetchInfo()}}class a{constructor(t,i){this.text=t;this.p=i}}class s{constructor(t){this.cid=t}async fetchInfo(){const t=await Ajax.getText(`https://api.bilibili.com/x/v1/dm/list.so?oid=${this.cid}`);this.rawXML=t;const i=(new DOMParser).parseFromString(t,"application/xml").documentElement;this.xml=i;this.danmakus=[...i.querySelectorAll("d[p]")].map(t=>{return new a(t.innerHTML,t.getAttribute("p"))})}}class n{constructor(t){this.ep=t;this.videos=[]}async fetchInfo(){const t=await Ajax.getText(`https://www.bilibili.com/bangumi/play/ep${this.ep}/`);const i=JSON.parse(t.match(/window\.__INITIAL_STATE__=(.*);\(function\(\){/)[1]);this.title=i.mediaInfo.title;this.cover=i.mediaInfo.cover;this.squareCover=i.mediaInfo.square_cover;this.aid=i.epInfo.aid;this.cid=i.epInfo.cid;this.videos=i.epList.map(async t=>{return{title:t.index_title,aid:t.aid,cid:t.cid,info:await new e(t.aid).fetchInfo()}});return this}}return{export:{VideoInfo:e,BangumiInfo:n,Danmaku:a,DanmakuInfo:s}}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/video-list.vue.min.js"] = (()=>{return(i,t)=>{const a=`<div class=video-list><div class=loading v-if=loading><i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...</div><div class=cards :class="{'show-rank': showRank}"v-else-if=cards.length><video-card v-for="card of cards":key=card.id :data=card></video-card></div><div class=empty v-else>空空如也哦 =￣ω￣=</div></div>`;t.applyStyleFromText(`.minimal-home .video-list .empty,.minimal-home .video-list .loading{height:48px;display:flex;align-items:center;justify-content:center;font-size:11pt;color:#707070}.minimal-home .video-list .empty .mdi,.minimal-home .video-list .loading .mdi{margin-right:8px}body.dark .minimal-home .video-list .empty,body.dark .minimal-home .video-list .loading{color:#eee}.minimal-home .video-list .cards{display:flex;flex-wrap:wrap;align-items:flex-end}.minimal-home .video-list .cards.show-rank .video-card:nth-child(1),.minimal-home .video-list .cards.show-rank .video-card:nth-child(17),.minimal-home .video-list .cards.show-rank .video-card:nth-child(9){margin-top:48px}.minimal-home .video-list .cards.show-rank .video-card:nth-child(1)::before,.minimal-home .video-list .cards.show-rank .video-card:nth-child(17)::before,.minimal-home .video-list .cards.show-rank .video-card:nth-child(9)::before{position:absolute;top:-42px;left:0;font-size:14pt;font-weight:700}.minimal-home .video-list .cards.show-rank .video-card:nth-child(1)::before{content:"昨日"}.minimal-home .video-list .cards.show-rank .video-card:nth-child(9)::before{content:"三日"}.minimal-home .video-list .cards.show-rank .video-card:nth-child(17)::before{content:"一周"}`,"video-list-style");return{export:Object.assign({template:a},{components:{VideoCard:()=>t.importAsync("video-card.vue")},props:["showRank"],data(){return{cards:[],loading:true}},methods:{async getRankList(){const i=async i=>{const a=await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/ranking/index?day=${i}`);const{getWatchlaterList:e}=await t.importAsync("watchlater-api");const o=await e();if(a.code!==0){throw new Error(a.message)}this.cards.push(...a.data.map(t=>{return{id:t.aid+"-"+i,aid:parseInt(t.aid),title:t.title,upID:t.mid,upName:t.author,coverUrl:t.pic.replace("http://","https://"),description:t.description,durationText:t.duration,playCount:formatCount(t.play),coins:formatCount(t.coins),favorites:formatCount(t.favorites),watchlater:o.includes(t.aid)}}))};await Promise.all([1,3,7].map(i))},async getActivityVideos(){const i=await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=8`);const{getWatchlaterList:a}=await t.importAsync("watchlater-api");const e=await a();if(i.code!==0){throw new Error(i.message)}this.cards=i.data.cards.map(i=>{const t=JSON.parse(i.card);const a=_.get(i,"display.topic_info.topic_details",[]).map(i=>{return{id:i.topic_id,name:i.topic_name}});return{id:i.desc.dynamic_id_str,aid:t.aid,title:t.title,upID:i.desc.user_profile.info.uid,upName:i.desc.user_profile.info.uname,upFaceUrl:i.desc.user_profile.info.face,coverUrl:t.pic,description:t.desc,timestamp:i.timestamp,time:new Date(i.timestamp*1e3),topics:a,dynamic:t.dynamic,like:formatCount(i.desc.like),duration:t.duration,durationText:formatDuration(t.duration,0),playCount:formatCount(t.stat.view),danmakuCount:formatCount(t.stat.danmaku),watchlater:e.includes(t.aid)}})}},async mounted(){try{if(this.showRank){await this.getRankList()}else{await this.getActivityVideos()}}catch(i){Toast.error(i.message,this.showRank?"热门视频":"视频动态",3e3)}finally{this.loading=false}}})}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/video-story.min.js"] = (()=>{return(t,i)=>{class e{constructor(t){this.title=t.option;this.nodeID=t.node_id;this.cid=t.cid;this.default=t.is_default===1}}class s{constructor(t,i,e){this.title=t.title;this.nodeID=t.node_id;this.aid=i;this.cid=t.cid;this.graphVersion=e;this.choices=[];this.choiceTime=-1}async getChoices(){if(this.choices.length>0){return}const t=`https://api.bilibili.com/x/stein/nodeinfo?aid=${this.aid}&node_id=${this.nodeID}&graph_version=504`;const i=await Ajax.getJsonWithCredentials(t);if(i.code!==0){console.error(`获取选项失败: ${i.message}`);return}this.choices=i.data.edges.choices.map(t=>new e(t))}}class o{constructor(t,i){this.nodeList=t;if(i){this.startingNode=i}else{[this.startingNode]=t}}async getAllChoices(){return await Promise.all(this.nodeList.map(t=>t.getChoices()))}}const n=async(t,i)=>{const n=`https://api.bilibili.com/x/stein/nodeinfo?aid=${t}&graph_version=${i}`;const c=await Ajax.getJsonWithCredentials(n);if(c.code!==0){return c.message}const a=c.data.story_list.map(e=>new s(e,t,i));const d=a.find(t=>t.nodeID===c.data.node_id);if(!d){return"获取起始结点失败"}d.choiceTime=c.data.edges.show_time;const r=c.data.edges.choices.map(t=>new e(t));d.choices=r;return new o(a,d)};return{export:{StoryChoice:e,StoryNode:s,Story:o,getStoryNodes:n}}}})();
-onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/view-cover.min.js"] = (()=>{return(e,t)=>{const{VideoInfo:i}=t.import("video-info");const{getFriendlyTitle:n}=t.import("title");class o{constructor(e){this.url=e;if(document.querySelector(".image-viewer")===null){this.createContainer()}this.viewer=document.querySelector(".image-viewer-container");this.downloadImage();addSettingsListener("filenameFormat",()=>{this.viewer.querySelector(".download").setAttribute("download",this.filename)})}createContainer(){document.body.insertAdjacentHTML("beforeend",t.import("imageViewerHtml"));document.querySelector(".image-viewer-container .close").addEventListener("click",()=>this.hide());t.applyStyle("imageViewerStyle")}downloadImage(){document.querySelector("#view-cover").style.display=this.url?"flex":"none";if(this.url===""){return}const e=new XMLHttpRequest;e.open("GET",this.url.replace("http:","https:"),true);e.responseType="blob";e.onload=(()=>{const t=URL.createObjectURL(e.response);if(this.imageData){URL.revokeObjectURL(this.imageData)}this.imageData=t;const i=this.viewer.querySelector(".download");i.setAttribute("href",t);i.setAttribute("download",this.filename);this.viewer.querySelector(".copy-link").addEventListener("click",()=>GM_setClipboard(this.url));this.viewer.querySelector(".new-tab").setAttribute("href",this.url);this.viewer.querySelector(".image").src=t});e.send()}show(){this.viewer.classList.add("opened")}hide(){this.viewer.classList.remove("opened")}get filename(){return n(document.URL.includes("/www.bilibili.com/bangumi/"))+this.url.substring(this.url.lastIndexOf("."))}}return(()=>{if(!document.URL.includes("live.bilibili.com")){return{widget:{content:`\n<button\nclass="gui-settings-flat-button"\nid="view-cover">\n<i class="icon-view"></i>\n<span>查看封面</span>\n</button>`,condition:async()=>{const e=await SpinQuery.select(()=>(unsafeWindow||window).aid);return Boolean(e)},success:async()=>{async function e(){const e=(unsafeWindow||window).aid;const t=new i(e);try{await t.fetchInfo()}catch(e){return""}return t.coverUrl}let t=new o(await e());document.querySelector("#view-cover").addEventListener("click",()=>{t.show()});const n=async()=>{t=new o(await e())};Observer.videoChange(n)}}}}else{return{widget:{content:`\n<button\nclass="gui-settings-flat-button"\nid="view-cover">\n<i class="icon-view"></i>\n<span>查看封面</span>\n</button>`,condition:async()=>{const e=await SpinQuery.select(()=>document.querySelector(".header-info-ctnr .room-cover"));return Boolean(e)},success:async()=>{const e=document.querySelector(".header-info-ctnr .room-cover");const t=e.getAttribute("href").match(/space\.bilibili\.com\/([\d]+)/);if(t&&t[1]){const e=t[1];const i=`https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${e}`;const n=await Ajax.getJson(i);const r=n.data.cover;const s=new o(r);document.querySelector("#view-cover").addEventListener("click",()=>{s.show()})}}}}}})()}})();
+onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/view-cover.min.js"] = (()=>{return(e,t)=>{const{VideoInfo:i}=t.import("video-info");const{getFriendlyTitle:n}=t.import("title");class o{constructor(e){this.url=e;if(document.querySelector(".image-viewer")===null){this.createContainer()}this.viewer=document.querySelector(".image-viewer-container");this.downloadImage();addSettingsListener("filenameFormat",()=>{this.viewer.querySelector(".download").setAttribute("download",this.filename)})}createContainer(){document.body.insertAdjacentHTML("beforeend",t.import("imageViewerHtml"));document.querySelector(".image-viewer-container .close").addEventListener("click",()=>this.hide());t.applyStyle("imageViewerStyle")}downloadImage(){document.querySelector("#view-cover").style.display=this.url?"flex":"none";if(this.url===""){return}const e=new XMLHttpRequest;e.open("GET",this.url.replace("http:","https:"),true);e.responseType="blob";e.onload=(()=>{const t=URL.createObjectURL(e.response);if(this.imageData){URL.revokeObjectURL(this.imageData)}this.imageData=t;const i=this.viewer.querySelector(".download");i.setAttribute("href",t);i.setAttribute("download",this.filename);this.viewer.querySelector(".copy-link").addEventListener("click",()=>GM.setClipboard(this.url));this.viewer.querySelector(".new-tab").setAttribute("href",this.url);this.viewer.querySelector(".image").src=t});e.send()}show(){this.viewer.classList.add("opened")}hide(){this.viewer.classList.remove("opened")}get filename(){return n(document.URL.includes("/www.bilibili.com/bangumi/"))+this.url.substring(this.url.lastIndexOf("."))}}return(()=>{if(!document.URL.includes("live.bilibili.com")){return{widget:{content:`\n<button\nclass="gui-settings-flat-button"\nid="view-cover">\n<i class="icon-view"></i>\n<span>查看封面</span>\n</button>`,condition:async()=>{const e=await SpinQuery.select(()=>(unsafeWindow||window).aid);return Boolean(e)},success:async()=>{async function e(){const e=(unsafeWindow||window).aid;const t=new i(e);try{await t.fetchInfo()}catch(e){return""}return t.coverUrl}let t=new o(await e());document.querySelector("#view-cover").addEventListener("click",()=>{t.show()});const n=async()=>{t=new o(await e())};Observer.videoChange(n)}}}}else{return{widget:{content:`\n<button\nclass="gui-settings-flat-button"\nid="view-cover">\n<i class="icon-view"></i>\n<span>查看封面</span>\n</button>`,condition:async()=>{const e=await SpinQuery.select(()=>document.querySelector(".header-info-ctnr .room-cover"));return Boolean(e)},success:async()=>{const e=document.querySelector(".header-info-ctnr .room-cover");const t=e.getAttribute("href").match(/space\.bilibili\.com\/([\d]+)/);if(t&&t[1]){const e=t[1];const i=`https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${e}`;const n=await Ajax.getJson(i);const r=n.data.cover;const s=new o(r);document.querySelector("#view-cover").addEventListener("click",()=>{s.show()})}}}}}})()}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/watchlater-api.min.js"] = (()=>{return(t,i)=>{const e=async(t,i)=>{const e=i?"https://api.bilibili.com/x/v2/history/toview/add":"https://api.bilibili.com/x/v2/history/toview/del";const a=getCsrf();const s=await Ajax.postTextWithCredentials(e,`aid=${t}&csrf=${a}`);const r=JSON.parse(s);if(r.code!==0){throw new Error(`稍后再看操作失败: ${r.message}`)}};async function a(t){const i=`https://api.bilibili.com/x/v2/history/toview/web`;const e=await Ajax.getJsonWithCredentials(i);if(e.code!==0){throw new Error(`获取稍后再看列表失败: ${e.message}`)}if(!e.data.list){return[]}if(t){return e.data.list}return e.data.list.map(t=>t.aid)}return{export:{toggleWatchlater:e,getWatchlaterList:a}}}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/watchlater-expire-warnings.min.js"] = (()=>{return(e,n)=>{(async()=>{if(!["//www.bilibili.com/watchlater/#/list"].some(e=>document.URL.includes(e))){return}const{getWatchlaterList:t}=await n.importAsync("watchlater-api");const i=await SpinQuery.select(".watch-later-list .list-box");if(i===null){return}n.applyStyleFromText(`\n.expire-warning {\npadding: 3px 25px;\ncolor: #F78C6C;\ndisplay: inline-flex;\nalign-items: center;\n}\n.expire-warning .mdi {\nline-height: 1;\nmargin-right: 8px;\nfont-size: 16px;\n}\n`,"watchlater-expire-warning-style");const r=e.watchlaterExpireWarningDays;const a=24*3600*1e3;const l=e=>{return(e-Number(new Date))/a};Observer.childListSubtree(i,async()=>{const e=[...i.querySelectorAll(".av-item .state")];const n=await t(true);e.forEach((e,t)=>{const i=n[t].add_at*1e3+60*a;const c=l(i);console.log(n[t].aid,c);if(c<r){if(e.querySelector(".expire-warning")===null){const n=-Math.floor(-c);e.insertAdjacentHTML("afterbegin",`\n<span class="expire-warning" title="到期时间: ${new Date(i).toLocaleString()}"><i class="mdi mdi-alert-circle-outline"></i>还剩${n}天过期</span>`)}}else{e.querySelectorAll(".expire-warning").forEach(e=>e.remove())}})})})()}})();
 onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/min/watchlater.min.js"] = (()=>{return(e,t)=>{const i=e=>{const t=e.match(/(av[\d]+)\/p([\d]+)/);if(t){return`https://www.bilibili.com/video/${t[1]}/?p=${t[2]}`}else{return"javascript:;"}};const r=e=>{const t=e.map(e=>{const t=e.getAttribute("href");if(!t){return"javascript:;"}if(t.match(/.*watchlater.*|javascript:;/g)){return i(t)}if(t.indexOf("video/av")!==-1){return t}});e.forEach((e,i)=>{e.setAttribute("href",t[i]);e.setAttribute("target","_blank")})};const a=(...e)=>{for(const t of e){SpinQuery.select(()=>document.querySelectorAll(t),e=>r([...e]))}};SpinQuery.select(".watch-later-list").then(()=>{Observer.childListSubtree("#viewlater-app",()=>{SpinQuery.condition(()=>document.URL.match(/(av[\d]+)\/p([\d]+)/),e=>e&&document.URL.indexOf("watchlater")!==-1,()=>{const e=i(document.URL);if(e!==null){window.location.replace(e)}});SpinQuery.select("#viewlater-app .s-btn[href='#/']",e=>e.remove());a(".av-pic",".av-about>a")})});SpinQuery.select("li.nav-item[report-id*=watchlater]").then(()=>{Observer.childListSubtree("li.nav-item[report-id*=watchlater]",()=>{a(".av-item>a",".av-about>a","div.watch-later-m>ul>div>li>a");SpinQuery.select(".read-more.mr",e=>e.remove());SpinQuery.select(".read-more-grp>.read-more",e=>{e.style.width="auto";e.style.float="none"})})});SpinQuery.select(".van-popper-favorite").then(async e=>{if(!e){return}const t=Observer.childListSubtree(e,()=>{const i=e.querySelector(".play-all");if(i){const e="//www.bilibili.com/watchlater/#/list";Observer.attributes(i,()=>{if(i.getAttribute("href")==="//www.bilibili.com/watchlater/"){i.setAttribute("href",e);i.firstChild.classList.remove("bili-icon_dingdao_bofang");i.firstChild.classList.add("bili-icon_xinxi_yuedushu");i.lastChild.nodeValue="查看全部"}else if(i.getAttribute("href")!==e){i.firstChild.classList.add("bili-icon_dingdao_bofang");i.firstChild.classList.remove("bili-icon_xinxi_yuedushu");i.lastChild.nodeValue="播放全部"}});t.forEach(e=>e.stop())}})})}})();
@@ -2345,7 +2345,7 @@ class ResourceManager {
         console.log('downloading bundle')
         this.checkUpdates(!isCacheValid)
       }
-      if ('requestIdleCallback' in unsafeWindow && GM_info.scriptHandler !== 'Violentmonkey') {
+      if ('requestIdleCallback' in unsafeWindow && GM.info.scriptHandler !== 'Violentmonkey') {
         unsafeWindow.requestIdleCallback(checkUpdates)
       } else {
         fullyLoaded(checkUpdates)
@@ -2597,10 +2597,14 @@ class ResourceManager {
   }
 }
 
-const scriptBlocker = (() => {
-  let blockPatterns = GM_getValue('scriptBlockPatterns') || []
+let scriptBlocker
+const getScriptBlocker = async () => {
+  if (scriptBlocker) {
+    return scriptBlocker
+  }
+  let blockPatterns = (await GM.getValue('scriptBlockPatterns')) || []
   // 开启简化首页时, 阻断所有其他的<script>
-  if (GM_getValue('simplifyHome') && document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
+  if (await GM.getValue('simplifyHome') && document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
     blockPatterns = [/./]
     // 加个空函数避免一些图片 onload 里调用 reportfs 报错
     unsafeWindow.reportfs = () => { }
@@ -2680,197 +2684,200 @@ const scriptBlocker = (() => {
       })
     }
   }
-  return new ScriptBlocker()
-})()
+  scriptBlocker = new ScriptBlocker()
+  return scriptBlocker
+}
 
-if (GM_getValue('customNavbar') === true
-  && document.URL === 'https://message.bilibili.com/pages/nav/index_new_sync') {
-  if (GM_getValue('useDarkStyle') === true) {
-    document.documentElement.style.setProperty('--theme-color', GM_getValue('customStyleColor'))
-    if (typeof offlineData === 'undefined') {
-      const cache = GM_getValue('cache', {})
-      if ('darkStyle' in cache) {
+
+(async () => {
+  if (await GM.getValue('customNavbar') === true
+    && document.URL === 'https://message.bilibili.com/pages/nav/index_new_sync') {
+    if (await GM.getValue('useDarkStyle') === true) {
+      document.documentElement.style.setProperty('--theme-color', await GM.getValue('customStyleColor'))
+      if (typeof offlineData === 'undefined') {
+        const cache = await GM.getValue('cache', {})
+        if ('darkStyle' in cache) {
+          const style = document.createElement('style')
+          style.innerHTML = cache.darkStyle
+          style.id = 'dark-style'
+          document.head.insertAdjacentElement('afterbegin', style)
+        }
+      } else {
         const style = document.createElement('style')
-        style.innerHTML = cache.darkStyle
+        style.innerHTML = Object.entries(offlineData).find(([key]) => {
+          return key.includes('/dark.min.css')
+        })[1]
         style.id = 'dark-style'
         document.head.insertAdjacentElement('afterbegin', style)
       }
-    } else {
-      const style = document.createElement('style')
-      style.innerHTML = Object.entries(offlineData).find(([key]) => {
-        return key.includes('/dark.min.css')
-      })[1]
-      style.id = 'dark-style'
-      document.head.insertAdjacentElement('afterbegin', style)
     }
+    return
   }
-  return
-}
-
-try {
-  const events = {}
-  for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
-    events[name] = {
-      completed: false,
-      subscribers: [],
-      complete () {
-        this.completed = true
-        this.subscribers.forEach(it => it())
-      }
-    }
-  }
-  if (unsafeWindow.bilibiliEvolved === undefined) {
-    unsafeWindow.bilibiliEvolved = { addons: [] }
-  }
-  Object.assign(unsafeWindow.bilibiliEvolved, {
-    subscribe (type, callback) {
-      const event = events[type]
-      if (callback) {
-        if (event && !event.completed) {
-          event.subscribers.push(callback)
-        } else {
-          callback()
+  try {
+    const events = {}
+    for (const name of ['init', 'styleLoaded', 'scriptLoaded']) {
+      events[name] = {
+        completed: false,
+        subscribers: [],
+        complete () {
+          this.completed = true
+          this.subscribers.forEach(it => it())
         }
-      } else {
-        return new Promise((resolve) => this.subscribe(type, () => resolve()))
       }
     }
-  })
-  contentLoaded(() => {
-    document.body.classList.add('round-corner')
-  })
-  loadResources()
-  loadSettings()
-  scriptBlocker.start()
-  if (settings.ajaxHook) {
-    setupAjaxHook()
-  }
-  const resources = new ResourceManager()
-  events.init.complete()
-  resources.styleManager.prefetchStyles()
-  // if (settings.customNavbar) {
-  //   contentLoaded(() => {
-  //     document.body.classList.add('custom-navbar-loading')
-  //     if (settings.useDarkStyle) {
-  //       document.body.classList.add('dark')
-  //     }
-  //   })
-  // }
-  events.styleLoaded.complete()
-
-  Object.assign(unsafeWindow.bilibiliEvolved, {
-    SpinQuery,
-    Toast,
-    Observer,
-    DoubleClickEvent,
-    ColorProcessor,
-    StyleManager,
-    ResourceManager,
-    Resource,
-    ResourceType,
-    Ajax,
-    resourceManifest,
-    loadSettings,
-    saveSettings,
-    onSettingsChange,
-    logError,
-    raiseEvent,
-    loadLazyPanel,
-    contentLoaded,
-    fixed,
-    settings,
-    settingsChangeHandlers,
-    addSettingsListener,
-    removeSettingsListener,
-    isEmbeddedPlayer,
-    isIframe,
-    getI18nKey,
-    dq,
-    dqa,
-    UserAgent,
-    EmptyImageUrl,
-    ascendingSort,
-    descendingSort,
-    formatFileSize,
-    formatDuration,
-    getDpiSourceSet,
-    scriptBlocker,
-    resources,
-    theWorld: waitTime => {
-      if (waitTime > 0) {
-        setTimeout(() => { debugger }, waitTime)
-      } else {
-        debugger
-      }
-    },
-    newHomePage: () => {
-      document.cookie = 'INTVER=1; domain=.bilibili.com; path=/; expires=Fri, 21 Aug 2020 02:13:04 GMT'
-    },
-    monkeyInfo: GM_info,
-    monkeyApis: {
-      getValue: GM_getValue,
-      setValue: GM_setValue,
-      setClipboard: GM_setClipboard,
-      xhr: GM_xmlhttpRequest,
-      addValueChangeListener: () => console.warn('此功能已弃用.')
+    if (unsafeWindow.bilibiliEvolved === undefined) {
+      unsafeWindow.bilibiliEvolved = { addons: [] }
     }
-  })
-  const applyScripts = () => resources.fetch()
-    .then(() => {
-      events.scriptLoaded.complete()
-      const addons = new Proxy(unsafeWindow.bilibiliEvolved.addons || [], {
-        apply: function (target, thisArg, argumentsList) {
-          return thisArg[target].apply(this, argumentsList)
-        },
-        set: function (target, property, value) {
-          if (target[property] === undefined) {
-            resources.applyWidget(value)
+    Object.assign(unsafeWindow.bilibiliEvolved, {
+      subscribe (type, callback) {
+        const event = events[type]
+        if (callback) {
+          if (event && !event.completed) {
+            event.subscribers.push(callback)
+          } else {
+            callback()
           }
-          target[property] = value
-          return true
+        } else {
+          return new Promise((resolve) => this.subscribe(type, () => resolve()))
         }
-      })
-      addons.forEach(it => resources.applyWidget(it))
-      Object.assign(unsafeWindow.bilibiliEvolved, { addons })
+      }
     })
-    .catch(error => logError(error))
-  const loadingMode = settings.scriptLoadingMode
-  switch (loadingMode) {
-    case '延后':
-      fullyLoaded(applyScripts)
-      break
-    case '同时':
-      contentLoaded(applyScripts)
-      break
-    case '自动':
-    case '延后(自动)':
-      {
-        const quickLoads = [
-          '//live.bilibili.com',
-        ]
-        if (quickLoads.some(it => document.URL.includes(it))) {
-          contentLoaded(applyScripts)
+    contentLoaded(() => {
+      document.body.classList.add('round-corner')
+    })
+    loadResources()
+    await loadSettings()
+    getScriptBlocker().then(scriptBlocker => {
+      scriptBlocker.start()
+    })
+    if (settings.ajaxHook) {
+      setupAjaxHook()
+    }
+    const resources = new ResourceManager()
+    events.init.complete()
+    resources.styleManager.prefetchStyles()
+    // if (settings.customNavbar) {
+    //   contentLoaded(() => {
+    //     document.body.classList.add('custom-navbar-loading')
+    //     if (settings.useDarkStyle) {
+    //       document.body.classList.add('dark')
+    //     }
+    //   })
+    // }
+    events.styleLoaded.complete()
+
+    Object.assign(unsafeWindow.bilibiliEvolved, {
+      SpinQuery,
+      Toast,
+      Observer,
+      DoubleClickEvent,
+      ColorProcessor,
+      StyleManager,
+      ResourceManager,
+      Resource,
+      ResourceType,
+      Ajax,
+      resourceManifest,
+      loadSettings,
+      logError,
+      raiseEvent,
+      loadLazyPanel,
+      contentLoaded,
+      fixed,
+      settings,
+      settingsChangeHandlers,
+      addSettingsListener,
+      removeSettingsListener,
+      isEmbeddedPlayer,
+      isIframe,
+      getI18nKey,
+      dq,
+      dqa,
+      UserAgent,
+      EmptyImageUrl,
+      ascendingSort,
+      descendingSort,
+      formatFileSize,
+      formatDuration,
+      getDpiSourceSet,
+      getScriptBlocker,
+      resources,
+      theWorld: waitTime => {
+        if (waitTime > 0) {
+          setTimeout(() => { debugger }, waitTime)
         } else {
-          fullyLoaded(applyScripts)
+          debugger
         }
-        break
+      },
+      newHomePage: () => {
+        document.cookie = 'INTVER=1; domain=.bilibili.com; path=/; expires=Fri, 21 Aug 2020 02:13:04 GMT'
+      },
+      monkeyInfo: GM.info,
+      monkeyApis: {
+        getValue: GM.getValue,
+        setValue: GM.setValue,
+        setClipboard: GM.setClipboard,
+        xhr: GM.xmlhttpRequest,
+        addValueChangeListener: () => console.warn('此功能已弃用.')
       }
-    case '同时(自动)':
-      {
-        const delayLoads = [
-          '//www.bilibili.com/video/av',
-          '//www.bilibili.com/bangumi/play',
-        ]
-        if (delayLoads.some(it => document.URL.includes(it))) {
-          fullyLoaded(applyScripts)
-        } else {
-          contentLoaded(applyScripts)
+    })
+    const applyScripts = () => resources.fetch()
+      .then(() => {
+        events.scriptLoaded.complete()
+        const addons = new Proxy(unsafeWindow.bilibiliEvolved.addons || [], {
+          apply: function (target, thisArg, argumentsList) {
+            return thisArg[target].apply(this, argumentsList)
+          },
+          set: function (target, property, value) {
+            if (target[property] === undefined) {
+              resources.applyWidget(value)
+            }
+            target[property] = value
+            return true
+          }
+        })
+        addons.forEach(it => resources.applyWidget(it))
+        Object.assign(unsafeWindow.bilibiliEvolved, { addons })
+      })
+      .catch(error => logError(error))
+    const loadingMode = settings.scriptLoadingMode
+    switch (loadingMode) {
+      case '延后':
+        fullyLoaded(applyScripts)
+        break
+      case '同时':
+        contentLoaded(applyScripts)
+        break
+      case '自动':
+      case '延后(自动)':
+        {
+          const quickLoads = [
+            '//live.bilibili.com',
+          ]
+          if (quickLoads.some(it => document.URL.includes(it))) {
+            contentLoaded(applyScripts)
+          } else {
+            fullyLoaded(applyScripts)
+          }
+          break
         }
+      case '同时(自动)':
+        {
+          const delayLoads = [
+            '//www.bilibili.com/video/av',
+            '//www.bilibili.com/bangumi/play',
+          ]
+          if (delayLoads.some(it => document.URL.includes(it))) {
+            fullyLoaded(applyScripts)
+          } else {
+            contentLoaded(applyScripts)
+          }
+          break
+        }
+      default:
         break
-      }
-    default:
-      break
+    }
+  } catch (error) {
+    logError(error)
   }
-} catch (error) {
-  logError(error)
-}
+})()

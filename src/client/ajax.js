@@ -94,7 +94,7 @@ export class Ajax {
       if (!('method' in fullDetails)) {
         fullDetails.method = 'GET'
       }
-      GM_xmlhttpRequest(fullDetails)
+      GM.xmlhttpRequest(fullDetails)
     })
   }
 }
