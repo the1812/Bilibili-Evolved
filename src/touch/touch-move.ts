@@ -27,11 +27,24 @@ const composeMouseEvent = (type: string, position: {
     detail: 1
   })
 }
+type TouchEventHandler = (e: TouchEvent) => any
+interface TouchEventHandlers {
+  element: HTMLElement
+  touchstart: TouchEventHandler
+  touchmove: TouchEventHandler
+  touchend: TouchEventHandler
+  [key: string]: any
+}
+const attachedElements: TouchEventHandlers[] = []
+const listenerOptions = { passive: false, capture: true }
 export const enableTouchMove = (element: HTMLElement) => {
+  if (attachedElements.some(h => h.element === element)) {
+    return
+  }
   let startPoint: Point
   let lastTouch: Touch
   let move: boolean
-  element.addEventListener('touchstart', e => {
+  const touchstart = (e: TouchEvent) => {
     if (e.touches.length < 1) {
       return
     }
@@ -41,8 +54,9 @@ export const enableTouchMove = (element: HTMLElement) => {
       y: touch.clientY,
     };
     (e.target as HTMLElement).dispatchEvent(composeMouseEvent('mousedown', touch))
-  }, { passive: false, capture: true })
-  element.addEventListener('touchmove', e => {
+  }
+  element.addEventListener('touchstart', touchstart, listenerOptions)
+  const touchmove = (e: TouchEvent) => {
     if (e.touches.length !== 1) {
       return
     }
@@ -61,8 +75,9 @@ export const enableTouchMove = (element: HTMLElement) => {
     } else {
       move = false
     }
-  }, { passive: false, capture: true })
-  element.addEventListener('touchend', e => {
+  }
+  element.addEventListener('touchmove', touchmove, listenerOptions)
+  const touchend = (e: TouchEvent) => {
     if (move) {
       (e.target as HTMLElement).dispatchEvent(composeMouseEvent('mouseup', lastTouch))
       if (e.cancelable) {
@@ -70,10 +85,28 @@ export const enableTouchMove = (element: HTMLElement) => {
       }
       move = false
     }
-  }, { passive: false, capture: true })
+  }
+  element.addEventListener('touchend', touchend, listenerOptions)
+  attachedElements.push({
+    element,
+    touchstart,
+    touchmove,
+    touchend,
+  })
+}
+// 仅能取消使用 enableTouchMove 建立的触摸事件
+export const disableTouchMove = (element: HTMLElement) => {
+  const handlers = attachedElements.find(h => h.element === element)
+  if (handlers === undefined) {
+    return
+  }
+  ['touchstart', 'touchmove', 'touchend'].forEach(event => {
+    element.removeEventListener(event, handlers[event], listenerOptions)
+  })
 }
 export default {
   export: {
     enableTouchMove,
+    disableTouchMove,
   },
 }

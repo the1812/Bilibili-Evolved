@@ -730,6 +730,7 @@ Resource.manifest = {
   miniPlayerTouchMove: {
     path: 'mini-player-touch-move.min.js',
     style: true,
+    reloadable: true,
     displayNames: {
       miniPlayerTouchMove: '迷你播放器触摸拖动',
     },

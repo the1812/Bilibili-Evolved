@@ -1,4 +1,4 @@
-(async () => {
+const load = async (enable = true) => {
   if (![
     '//www.bilibili.com/bangumi/play/',
     '//www.bilibili.com/video/'
@@ -10,7 +10,17 @@
     console.warn('mini player touch move: player not found')
     return
   }
-  resources.applyStyle('miniPlayerTouchMoveStyle')
-  const { enableTouchMove } = await import('../touch-move')
-  enableTouchMove(player)
-})()
+  const { enableTouchMove, disableTouchMove } = await import('../touch-move')
+  if (enable) {
+    resources.applyStyle('miniPlayerTouchMoveStyle')
+    enableTouchMove(player)
+  } else {
+    resources.removeStyle('miniPlayerTouchMoveStyle')
+    disableTouchMove(player)
+  }
+}
+load()
+export default {
+  reload: load,
+  unload: () => load(false),
+}
