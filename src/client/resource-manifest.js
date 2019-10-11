@@ -727,5 +727,12 @@ Resource.manifest = {
       superchatTranslate: '醒目留言翻译',
     },
   },
+  miniPlayerTouchMove: {
+    path: 'mini-player-touch-move.min.js',
+    style: true,
+    displayNames: {
+      miniPlayerTouchMove: '迷你播放器触摸拖动',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

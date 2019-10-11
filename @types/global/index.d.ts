@@ -371,6 +371,7 @@ declare global {
     watchlaterExpireWarnings: boolean,
     watchlaterExpireWarningDays: number,
     superchatTranslate: boolean,
+    miniPlayerTouchMove: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
