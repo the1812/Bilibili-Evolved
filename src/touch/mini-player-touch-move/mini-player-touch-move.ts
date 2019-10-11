@@ -13,14 +13,14 @@ const load = async (enable = true) => {
   const { enableTouchMove, disableTouchMove } = await import('../touch-move')
   if (enable) {
     resources.applyStyle('miniPlayerTouchMoveStyle')
-    enableTouchMove(player)
+    enableTouchMove(player, 0)
   } else {
     resources.removeStyle('miniPlayerTouchMoveStyle')
     disableTouchMove(player)
   }
 }
-load()
+load(true)
 export default {
-  reload: load,
+  reload: () => load(true),
   unload: () => load(false),
 }
