@@ -259,7 +259,7 @@ class VideoDownloader {
     const message = this.fragments.map(it => /*html*/`
       <a class="download-link" href="${it.url}">${it.url}</a>
     `).reduce((acc, it) => acc + '\r\n' + it)
-    Toast.success(message + /*html*/`<a class="link" id="copy-link">复制全部</a>`, '显示链接')
+    Toast.success(message + /*html*/`<a class="link" id="copy-link" style="cursor: pointer;margin: 8px 0 0 0;">复制全部</a>`, '显示链接')
     const copyLinkButton = await SpinQuery.select('#copy-link') as HTMLElement
     copyLinkButton.addEventListener('click', async () => {
       await this.copyUrl()
