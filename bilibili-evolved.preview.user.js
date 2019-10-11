@@ -5,7 +5,7 @@
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
-// @match        https://*.bilibili.com/*
+// @match        *://*.bilibili.com/*
 // @run-at       document-start
 // @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
 // @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js

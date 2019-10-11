@@ -677,11 +677,14 @@
 </details>
 
 # 兼容性
+
 ## 脚本管理器
+
 ### [Tampermonkey](https://tampermonkey.net/) / [Violentmonkey](https://violentmonkey.github.io/)
-完全兼容.
+完全兼容, 但在较旧的浏览器中 Violentmonkey 可能无法运行此脚本.
+
 ### [Greasemonkey](https://www.greasespot.net/)
-不支持, 请使用以上的两种管理器.
+可以安装, 但是由于 Greasemonkey 4 只允许脚本在页面完全加载后运行, 样式相关功能体验会比较糟糕, 比如打开夜间模式后每个页面在完全加载之前都是亮色的. 所以还是强烈建议您使用上述的两种脚本管理器.
 
 ## 浏览器
 
