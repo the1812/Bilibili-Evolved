@@ -302,7 +302,7 @@
     padding: 8px;
     z-index: 3;
     transition: 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    width: 100%;
+    width: 120%;
 
     body.dark & {
       background: #282828;
@@ -330,6 +330,9 @@
       align-items: center;
       justify-content: space-evenly;
     }
+  }
+  .final-dir {
+    word-break: break-all;
   }
   .rpc-settings-item {
     display: flex;

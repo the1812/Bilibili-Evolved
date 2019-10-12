@@ -721,7 +721,6 @@ export const map = new Map([
   [`新增预设`, `New preset`],
   [`删除预设`, `Delete preset`],
   [`默认路径`, `Default Path`],
-  [`最终路径`, `Final Path`],
   [`方法`, `Method`],
   [`开始下载`, `Start Download`],
   [`保存配置`, `Save Config`],
