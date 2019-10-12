@@ -133,6 +133,7 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   [`activityImageSaver`, `When viewing a save-restricted image in feeds, you can right-click to get a toast with that image for saving.`],
   [`selectableColumnText`, `Make texts in column selectable.`],
   [`watchlaterExpireWarnings`, `Videos in watchlater will expire and be deleted in 60 days. Enable this feature will show a warning if a video will expire in less than 14 days.`],
+  [`miniPlayerTouchMove`, `Allow touch drag to move mini player.`],
 ]);
 export default {
   export: { toolTips },

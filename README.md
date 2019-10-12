@@ -602,6 +602,12 @@
 将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.
 
 </details>
+<details>
+<summary><strong>迷你播放器触摸拖动</strong></summary>
+
+使迷你播放器的拖动条可以触摸拖动.
+
+</details>
 
 <h2 align="center">其他</h2>
 <div align="center">关于脚本自身的一些设定</div>
