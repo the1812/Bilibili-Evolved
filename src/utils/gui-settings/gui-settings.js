@@ -160,7 +160,10 @@ function setDisplayNames () {
     await resources.applyDropdownOptions()
     resources.applyWidgets()
     raiseEvent(iconPanel, 'be:load')
-    raiseEvent(dq('.bilibili-evolved-about'), 'be:about-load')
+    const aboutPanel = dq('.bilibili-evolved-about')
+    if (aboutPanel) {
+      raiseEvent(aboutPanel, 'be:about-load')
+    }
     new ThemeColors().setupDom()
     boxes.forEach(it => it.classList.add('loaded'))
     inputs = [...document.querySelectorAll('input[key]')]

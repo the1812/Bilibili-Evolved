@@ -2,29 +2,39 @@ interface Point {
   x: number
   y: number
 }
+interface Position {
+  screenX: number
+  screenY: number
+  clientX: number
+  clientY: number
+}
 const isValidMove = (startPoint: Point, currentPoint: Point, minMoveDistance: number) => {
   const x2 = Math.pow(Math.abs(startPoint.x - currentPoint.x), 2)
   const y2 = Math.pow(Math.abs(startPoint.y - currentPoint.y), 2)
   return x2 + y2 >= minMoveDistance * minMoveDistance
 }
-const composeMouseEvent = (type: string, position: {
-  screenX: number,
-  screenY: number,
-  clientX: number,
-  clientY: number,
-}) => {
-  const positionData = {
+const composeMouseEvent = (type: string, position: Position) => {
+  return new MouseEvent(type, {
     screenX: position.screenX,
     screenY: position.screenY,
     clientX: position.clientX,
     clientY: position.clientY,
-  }
-  return new MouseEvent(type, {
-    ...positionData,
     bubbles: true,
     cancelable: true,
     view: unsafeWindow,
     detail: 1
+  })
+}
+const composeWheelEvent = (startPoint: Point, currentPoint: Point, position: Position) => {
+  return new WheelEvent('wheel', {
+    deltaY: currentPoint.y - startPoint.y,
+    screenX: position.screenX,
+    screenY: position.screenY,
+    clientX: position.clientX,
+    clientY: position.clientY,
+    bubbles: true,
+    cancelable: true,
+    view: unsafeWindow,
   })
 }
 type TouchEventHandler = (e: TouchEvent) => any
@@ -37,18 +47,26 @@ interface TouchEventHandlers {
 }
 const attachedHandlers: TouchEventHandlers[] = []
 const listenerOptions = { passive: false, capture: true }
-export const enableTouchMove = (element: HTMLElement, minMoveDistance = 20) => {
+interface TouchMoveOptions {
+  minMoveDistance?: number
+  scroll?: boolean
+}
+export const enableTouchMove = (element: HTMLElement, options?: TouchMoveOptions) => {
   if (attachedHandlers.some(h => h.element === element)) {
     return
   }
   let startPoint: Point
+  let startTouch: Touch
   let lastTouch: Touch
   let move: boolean
+  const minMoveDistance = _.get(options, 'minMoveDistance', 20)
+  const scroll = _.get(options, 'scroll', false)
   const touchstart = (e: TouchEvent) => {
     if (e.touches.length < 1) {
       return
     }
     const touch = e.touches[0]
+    startTouch = touch
     startPoint = {
       x: touch.clientX,
       y: touch.clientY,
@@ -65,16 +83,25 @@ export const enableTouchMove = (element: HTMLElement, minMoveDistance = 20) => {
       x: touch.clientX,
       y: touch.clientY,
     }
-    lastTouch = touch
-    if (isValidMove(startPoint, currentPoint, minMoveDistance)) {
-      (e.target as HTMLElement).dispatchEvent(composeMouseEvent('mousemove', touch))
-      move = true
-      if (e.cancelable) {
-        e.preventDefault()
+    if (!scroll) {
+      if (isValidMove(startPoint, currentPoint, minMoveDistance)) {
+        (e.target as HTMLElement).dispatchEvent(composeMouseEvent('mousemove', touch))
+        move = true
+        if (e.cancelable) {
+          e.preventDefault()
+        }
+      } else {
+        move = false
       }
     } else {
-      move = false
+      const lastPoint = {
+        x: lastTouch ? lastTouch.clientX : startPoint.x,
+        y: lastTouch ? lastTouch.clientY : startPoint.y,
+      };
+      console.log('touch scroll', lastPoint, currentPoint);
+      (e.target as HTMLElement).dispatchEvent(composeWheelEvent(lastPoint, currentPoint, startTouch))
     }
+    lastTouch = touch
   }
   element.addEventListener('touchmove', touchmove, listenerOptions)
   const touchend = (e: TouchEvent) => {

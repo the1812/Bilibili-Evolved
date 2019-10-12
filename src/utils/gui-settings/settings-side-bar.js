@@ -13,7 +13,10 @@ if (document.querySelector('.gui-settings-icon-panel') === null) {
       dqa('.gui-settings-box,.gui-settings-mask').forEach(it => it.classList.add('opened'))
     } else {
       dqa('.bilibili-evolved-about,.gui-settings-mask').forEach(it => it.classList.add('opened'))
-      raiseEvent(dq('.bilibili-evolved-about'), 'be:about-load-community')
+      const aboutPanel = dq('.bilibili-evolved-about')
+      if (aboutPanel) {
+        raiseEvent(aboutPanel, 'be:about-load-community')
+      }
     }
   })
   dq('.gui-settings-widgets').addEventListener('click', e => {
