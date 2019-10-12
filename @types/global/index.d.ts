@@ -382,7 +382,7 @@ declare global {
   function GM_getValue<T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T): T;
   const GM: {
     info: MonkeyInfo
-    xmlhttpRequest: typeof GM_xmlhttpRequest
+    xmlHttpRequest: typeof GM_xmlhttpRequest
     setClipboard: typeof GM_setClipboard
     setValue: (name: keyof BilibiliEvolvedSettings, value: any) => Promise<void>
     getValue: <T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T) => Promise<T>

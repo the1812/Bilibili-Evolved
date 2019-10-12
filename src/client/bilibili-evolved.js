@@ -21,7 +21,7 @@
 // @grant        GM.setValue
 // @grant        GM.setClipboard
 // @grant        GM.info
-// @grant        GM.xmlhttpRequest
+// @grant        GM.xmlHttpRequest
 // @connect      raw.githubusercontent.com
 // @connect      *
 // @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
@@ -179,7 +179,7 @@ import { getScriptBlocker } from './script-blocker'
         getValue: GM.getValue,
         setValue: GM.setValue,
         setClipboard: GM.setClipboard,
-        xhr: GM.xmlhttpRequest,
+        xhr: GM.xmlHttpRequest,
         addValueChangeListener: () => console.warn('此功能已弃用.')
       }
     })

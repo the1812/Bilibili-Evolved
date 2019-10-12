@@ -43,7 +43,7 @@ async function getRpc(rpcParam: RpcParam, batch = false) {
     console.log(`RPC request:`, url)
     if (url.startsWith('http:')) {
       return await new Promise((resolve, reject) => {
-        GM.xmlhttpRequest({
+        GM.xmlHttpRequest({
           method: 'GET',
           url,
           responseType: 'json',
@@ -67,7 +67,7 @@ async function postRpc(rpcParam: RpcParam, batch = false) {
     }
     if (url.startsWith('http:')) {
       return await new Promise((resolve, reject) => {
-        GM.xmlhttpRequest({
+        GM.xmlHttpRequest({
           method: 'POST',
           url,
           responseType: 'json',
