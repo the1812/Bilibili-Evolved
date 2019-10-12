@@ -1,6 +1,6 @@
 const seedsToCoinsApi = `https://api.live.bilibili.com/pay/v1/Exchange/silver2coin`
 // const [bCoins, coupons] = (() => {
-//   const csrf = document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
+//   const csrf = getCsrf()
 //   const vipReceive = (type: number) => {
 //     return async (): Promise<{ code: number, message: string }> => {
 //       return await (await fetch('https://api.bilibili.com/x/vip/privilege/receive',

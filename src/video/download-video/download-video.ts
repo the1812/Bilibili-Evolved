@@ -253,7 +253,17 @@ class VideoDownloader {
   }
   async copyUrl() {
     const urls = this.fragments.map(it => it.url).reduce((acc, it) => acc + '\r\n' + it)
-    GM_setClipboard(urls, 'text')
+    GM.setClipboard(urls, 'text')
+  }
+  async showUrl() {
+    const message = this.fragments.map(it => /*html*/`
+      <a class="download-link" href="${it.url}">${it.url}</a>
+    `).reduce((acc, it) => acc + '\r\n' + it)
+    Toast.success(message + /*html*/`<a class="link" id="copy-link" style="cursor: pointer;margin: 8px 0 0 0;">复制全部</a>`, '显示链接')
+    const copyLinkButton = await SpinQuery.select('#copy-link') as HTMLElement
+    copyLinkButton.addEventListener('click', async () => {
+      await this.copyUrl()
+    })
   }
   static downloadBlob(blobOrUrl: Blob | string, filename: string) {
     const a = document.createElement('a')
@@ -278,7 +288,7 @@ class VideoDownloader {
       referer: document.URL.replace(window.location.search, '')
     }])
     if (copy) {
-      GM_setClipboard(data, 'text')
+      GM.setClipboard(data, 'text')
     } else {
       const blob = new Blob([data], { type: 'text/json' })
       const danmaku = await this.downloadDanmaku()
@@ -520,7 +530,7 @@ async function loadWidget() {
 async function loadPanel() {
   let workingDownloader: VideoDownloader
   const sizeCache = new Map<VideoFormat, number>()
-  type ExportType = 'copyLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD'
+  type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD'
   interface EpisodeItem {
     title: string
     checked: boolean
@@ -647,6 +657,9 @@ async function loadPanel() {
               await videoDownloader.copyUrl()
               Toast.success('已复制链接到剪贴板.', '下载视频', 3000)
               break
+            case 'showLink':
+              await videoDownloader.showUrl()
+              break
             case 'aria2':
               await videoDownloader.exportAria2(false)
               break
@@ -722,7 +735,7 @@ async function loadPanel() {
               Toast.success(`成功发送了批量请求.`, 'aria2 RPC', 3000)
               return
             case 'copyVLD':
-              GM_setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
+              GM.setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
               Toast.success('已复制批量vld数据到剪贴板.', '批量导出', 3000)
               return
             case 'exportVLD':
@@ -863,14 +876,13 @@ async function loadPanel() {
 }
 
 export default {
-  widget:
-  {
+  widget: {
     content: /*html*/`
       <button class="gui-settings-flat-button" style="position: relative; z-index: 100;" id="download-video">
         <i class="icon-download"></i>
         <span>下载视频</span>
       </button>`,
     condition: loadPageData,
-    success: loadWidget
-  }
+    success: loadWidget,
+  },
 }

@@ -174,7 +174,7 @@ namespace BilibiliEvolved.Build
 })();";
             }
             // Console.WriteLine(input);
-            return new Regex(@"\\n( )+").Replace(new UglifyJs().Run(input), @"\n");
+            return new Regex(@"\\n( )+([<`])").Replace(new UglifyJs().Run(input), @"\n$2");
         }
     }
     sealed class HtmlMinifier : ResourceMinifier

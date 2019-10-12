@@ -721,13 +721,15 @@ export const map = new Map([
   [`新增预设`, `New preset`],
   [`删除预设`, `Delete preset`],
   [`默认路径`, `Default Path`],
-  [`最终路径`, `Final Path`],
   [`方法`, `Method`],
   [`开始下载`, `Start Download`],
   [`保存配置`, `Save Config`],
   [`已保存`, `Saved!`],
   [`全部动态`, `View all`],
   [`已添加`, `Added`],
+  [`迷你播放器触摸拖动`, `Touch move for mini player`],
+  [`显示链接`, `Show link`],
+  [`复制全部`, `Copy All`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

@@ -41,6 +41,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["customStyleColor", /*html*/`頂欄(スタイルの調整が有効な場合）とダークテーマのテーマ色で埋める、カラープレビューサークルをクリックして、设定の16種類のテーマカラーにできるの、右側のテキストボックスに任意の有効な16進数のカラー値を直接入力することもできます.(<span>#rrggbb</span>或<span>#rgb</span>).`],
     ["blurBackgroundOpacity", `设置顶栏对横幅的透明度(0~1), 数值越高顶栏越淡, 当横幅关闭时此选项无效.`],
     ["customNavbar", /*html*/`カスタム頂欄を使用する.伝統的な頂欄に取って代わる.メインステーション専用です.「生放送」、「アルバム」、「会員購」などには影響しません.`],
+    ["customNavbarSeasonLogo", /*html*/`通常のロゴの代わりに季節のロゴを使用するかどうか.`],
     ["customNavbarFill", /*html*/`テーマ色で頂欄を埋める.`],
     ["allNavbarFill", /*html*/`テーマ色で他の頂欄を埋める.「生放送」、「アルバム」、「会員購」などが含まれています.`],
     ["customNavbarShadow", /*html*/`頂欄に投影効果を追加する.`],
@@ -66,10 +67,11 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 「ウェルカムメッセージ」を隠す (例えば、「xxx老爷进入直播间」)
 - 「ギフト弾幕」を隠す (弾幕リストのみ. 例えば「节奏风暴」など特殊効果は影響を受けません)
 - 「艦長購入のヒント」を隠す (弾幕リストの「xxxは艦長を購入する」)
+- 「有料ギフト」を隠す (プレーヤーの下でのさまざまな有料ギフト欄)
+- 「イベント横断幕」を隠す
 - 「抽選のヒント」を隠す (例えば、「艦長」を購入する時、「小飞船」を購入する時、ギフトを抽選のヒント)
 - 配信ルームの「特殊な背景」を無効にする（ダークテーマでは、デフォルトでは「特殊な背景」も無効になっています）
 各項目は、非表示にするかどうかを<span>附加功能</span>の中で個別に選択することができる.`],
-    ["preserveRank", `控制是否在搜索框左侧显示排行榜图标.`],
     ["hideBanner", /*html*/`トップページの横断幕を非表示.`],
     ["playerShadow", /*html*/`プレーヤーにテーマカラーの投影の追加する.`],
     ["narrowDanmaku", /*html*/`ウェブの全画面表示されている場合は、幅が狭すぎても弾幕欄を強制的に保持し.この場合には右側の機能ボタンが境界線を押し出してしまう可能性があることに注意する.`],
@@ -142,6 +144,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`activityImageSaver`, /*html*/`大きなフィード画像を右クリックすると、画像付きのメッセージがポップアップ表示され、簡単に保存できます.`],
     [`selectableColumnText`, /*html*/`コラムのテキストを選択可能にする.`],
     [`watchlaterExpireWarnings`, /*html*/`「後で見る」の動画は、追加後60日で有効期限が切れます.この機能を開くと、14日より後のリストに有効期限の警告が表示されます.`],
+    [`miniPlayerTouchMove`, /*html*/`ミニプレーヤーをタッチしてドラッグする.`],
 ]);
 export default {
     export: { toolTips },

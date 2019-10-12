@@ -36,7 +36,7 @@ class ImageViewer {
       link.setAttribute("href", data);
       link.setAttribute("download", this.filename);
 
-      this.viewer.querySelector(".copy-link").addEventListener("click", () => GM_setClipboard(this.url));
+      this.viewer.querySelector(".copy-link").addEventListener("click", () => GM.setClipboard(this.url));
       this.viewer.querySelector(".new-tab").setAttribute("href", this.url);
       this.viewer.querySelector(".image").src = data;
     };

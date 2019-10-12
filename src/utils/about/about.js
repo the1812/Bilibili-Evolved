@@ -4,7 +4,7 @@
   dq('.bilibili-evolved-about').addEventListener('be:about-load', () => {
     const nameSorter = (a, b) => a.charCodeAt(0) - b.charCodeAt(0)
     const userSorter = (a, b) => nameSorter(a.name, b.name)
-    const clientTypeMatch = GM_info.script.name.match(/Bilibili Evolved \((.*)\)/)
+    const clientTypeMatch = GM.info.script.name.match(/Bilibili Evolved \((.*)\)/)
     const clientType = clientTypeMatch ? clientTypeMatch[1] : 'Stable'
     new Vue({
       el: '.bilibili-evolved-about',

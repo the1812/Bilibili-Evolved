@@ -159,7 +159,7 @@ export class ResourceManager {
         console.log('downloading bundle')
         this.checkUpdates(!isCacheValid)
       }
-      if ('requestIdleCallback' in unsafeWindow && GM_info.scriptHandler !== 'Violentmonkey') {
+      if ('requestIdleCallback' in unsafeWindow && GM.info.scriptHandler !== 'Violentmonkey') {
         unsafeWindow.requestIdleCallback(checkUpdates)
       } else {
         fullyLoaded(checkUpdates)

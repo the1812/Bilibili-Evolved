@@ -602,6 +602,12 @@
 将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.
 
 </details>
+<details>
+<summary><strong>迷你播放器触摸拖动</strong></summary>
+
+使迷你播放器的拖动条可以触摸拖动.
+
+</details>
 
 <h2 align="center">其他</h2>
 <div align="center">关于脚本自身的一些设定</div>
@@ -677,15 +683,18 @@
 </details>
 
 # 兼容性
+
 ## 脚本管理器
+
 ### [Tampermonkey](https://tampermonkey.net/) / [Violentmonkey](https://violentmonkey.github.io/)
-完全兼容.
+完全兼容, 但在较旧的浏览器中 Violentmonkey 可能无法运行此脚本.
+
 ### [Greasemonkey](https://www.greasespot.net/)
-不支持, 请使用以上的两种管理器.
+可以安装, 但是由于 Greasemonkey 4 只允许脚本在页面完全加载后运行, 样式相关功能体验会比较糟糕, 比如打开夜间模式后每个页面在完全加载之前都是亮色的. 所以还是强烈建议您使用上述的两种脚本管理器.
 
 ## 浏览器
 
-支持 Chrome, Edge (Chromium 内核), Firefox, Safari, 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)中完美运行.
+支持**最新版** Chrome, Edge (Chromium 内核), Firefox, Safari, 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)或者较长时间没更新的浏览器中完美运行.
 
 UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://microsoftedgeinsider.com/).
 

@@ -1,7 +1,11 @@
-export const scriptBlocker = (() => {
-  let blockPatterns = GM_getValue('scriptBlockPatterns') || []
+let scriptBlocker
+export const getScriptBlocker = async () => {
+  if (scriptBlocker) {
+    return scriptBlocker
+  }
+  let blockPatterns = (await GM.getValue('scriptBlockPatterns')) || []
   // 开启简化首页时, 阻断所有其他的<script>
-  if (GM_getValue('simplifyHome') && document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
+  if (await GM.getValue('simplifyHome') && document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
     blockPatterns = [/./]
     // 加个空函数避免一些图片 onload 里调用 reportfs 报错
     unsafeWindow.reportfs = () => { }
@@ -81,5 +85,6 @@ export const scriptBlocker = (() => {
       })
     }
   }
-  return new ScriptBlocker()
-})()
+  scriptBlocker = new ScriptBlocker()
+  return scriptBlocker
+}
