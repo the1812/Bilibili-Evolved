@@ -19,7 +19,7 @@
 
 [📖 相关文档](https://github.com/the1812/Bilibili-Evolved/wiki)
 
-[❤ 投喂](donate.md)
+[❤ 捐助](donate.md)
 
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
@@ -701,10 +701,20 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 另外, Chromium 内核的 Edge 可以通过特殊手段启用中文界面, 网上搜一下就有, 或者也可以参考这篇 [Gist](https://gist.github.com/the1812/bd5c3edabd61b03696428fcfde53d74f). (需要梯子)
 
 # 关于源码
-虽然本项目的源代码是公开的, 但是我并不推荐您花太多时间阅读这些代码. 因为这是我的第一个JavaScript项目, 它包含了从我初学JavaScript到如今形成一定风格以来写下的各种代码(各种祖传代码), 不同的几个模块可能风格差异会很大, 像是早期DOM操作经常使用jQuery到后期完全转向原生API, 4空格缩进变成2空格缩进等等. 一些比较复杂的模块里也是放飞自我.
+虽然本项目的源代码是公开的, 但是我并不推荐您花太多时间阅读这些代码. 因为这是我的第一个JavaScript项目, 它包含了从我初学JavaScript到如今形成一定风格以来写下的各种代码(各种祖传代码), 不同的几个模块可能风格差异会很大, 像是早期DOM操作经常使用jQuery到后期转向原生API和Vue, 4空格缩进变成2空格缩进等等. 一些比较复杂的模块里也是放飞自我.
 
 所以, 如果您希望通过阅读源码来学习知识的话, 建议去看看那些更专业更成熟的项目.
 
 ------
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
+
+**或者也可以考虑[捐助](donate.md)支持一下哦(｀・ω・´)**
+
+支付宝
+
+<img alt="支付宝" src="images/compressed/alipay.jpg" height="200">
+
+微信
+
+<img alt="微信" src="images/compressed/wechat.jpg" height="200">
