@@ -9,7 +9,7 @@
 
 下記のチュートリアルでは、例として Chrome を使用します:
 
-![Chrome](images/original/chrome.en-US.png)
+<img height="300" alt="Chrome" src="images/compressed/chrome.en-US.jpg">
 
 ## 2. インストール前の準備
 > ユーザースクリプトマネージャ(user script manager)が既にある場合は、このステップをスキップします.
@@ -23,7 +23,7 @@
 
 例えば、Chrome Web StoreからTampermonkeyをインストールする.
 
-![Install from Chrome Web Store](images/original/tampermonkey.en-US.png)
+<img height="300" alt="Install from Chrome Web Store" src="images/compressed/tampermonkey.en-US.jpg">
 
 ## 3. インストール
 少なくとも1つのユーザスクリプトマネージャをインストールしたら、「Bilibili-Evolved」のバージョンを選択してインストールできます. (インストールしたいバージョンの名をクリックしてください)
@@ -36,8 +36,7 @@
 
 例えば、オフライン版をインストールする
 
-![Install Offline version](images/original/install-script.zh-CN.png)
-
+<img height="350" alt="Install Offline version" src="images/compressed/install-script.zh-CN.jpg">
 
 ## 4. 翻訳言語を変更する (オプション)
 > 翻訳言语は自分自身のブラウザのデフォルト言语に自动的に设定します.それがなければ、このステップに従って翻訳言语を変えることができます.
@@ -50,8 +49,8 @@
 
 例えば、翻訳言語として「英語」を選択する
 
-![Open settings](images/original/settings-icon.en-US.png)
-![Change settings](images/original/settings.en-US.png)
+<img height="500" alt="Open settings" src="images/compressed/settings-icon.en-US.jpg">
+<img height="500" alt="Change settings" src="images/compressed/settings.en-US.jpg">
 
 ## 5. 最後
 今、準備万端です！ 設定や追加機能を探索して興味深い機能を発見できます.

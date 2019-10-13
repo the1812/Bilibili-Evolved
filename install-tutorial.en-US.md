@@ -8,7 +8,7 @@ Please check your browser, Bilibili-Evolved must run with the **latest** Chrome 
 
 In this tutorial, I'll use Chrome as an example:
 
-![Chrome](images/original/chrome.en-US.png)
+<img height="300" alt="Chrome" src="images/compressed/chrome.en-US.jpg">
 
 ## 2. Get a user script manager
 > If you already have one, skip this step.
@@ -22,7 +22,7 @@ Choose the one you like and click the link to visit its homepage, or get it in y
 
 e.g. Install Tampermonkey from Chrome Web Store
 
-![Install from Chrome Web Store](images/original/tampermonkey.en-US.png)
+<img height="300" alt="Install from Chrome Web Store" src="images/compressed/tampermonkey.en-US.jpg">
 
 ## 3. Install
 Having at least one user script manager installed, you can now select a version of Bilibili-Evolved to install. (Click the name to install)
@@ -35,8 +35,7 @@ Having at least one user script manager installed, you can now select a version 
 
 e.g. Install the Offline version
 
-![Install Offline version](images/original/install-script.zh-CN.png)
-
+<img height="350" alt="Install Offline version" src="images/compressed/install-script.zh-CN.jpg">
 
 ## 4. Change the display language (Optional)
 > Language should be automatically set to your browser's default language. If not, you can follow this step to change the display language.
@@ -49,8 +48,8 @@ Enable it and select a target language you want to see, then refresh the page.
 
 e.g. Select English as the target language
 
-![Open settings](images/original/settings-icon.en-US.png)
-![Change settings](images/original/settings.en-US.png)
+<img height="500" alt="Open settings" src="images/compressed/settings-icon.en-US.jpg">
+<img height="500" alt="Change settings" src="images/compressed/settings.en-US.jpg">
 
 ## 5. Enjoy
 You are all set! Explore settings and add-ons to discover interesting features, and feel free to suggest a new feature or report a bug on my GitHub repo.

@@ -41,7 +41,7 @@
 
 **绝大部分设置保存后, 需要刷新网页才能生效. 仅有一些样式设置可以立即生效.**
 
-![设置](images/compressed/gui-settings.jpg)
+<img alt="设置" height="500" src="images/compressed/gui-settings.jpg">
 
 # 功能
 大部分功能可通过设置面板开启, 有一些功能会以`附加功能`的形式生效, 或者是可以在`附加功能`做进一步设置. `附加功能`可从网页左侧中央的功能按钮进入.
@@ -84,7 +84,7 @@
 
 在视频播放页面/直播间中, `查看封面`按钮将在`附加功能`中启用, 点击可以查看或保存封面. (其实还可以看专栏的封面, 不过专栏的封面本来就显示在标题上方了)
 
-![查看封面/下载视频/下载弹幕](images/compressed/download-video-view-cover.jpg)
+<img height="400" alt="查看封面/下载视频/下载弹幕" src="images/compressed/download-video-view-cover.jpg">
 
 </details>
 <details>
@@ -168,7 +168,7 @@
 - `1080P60`/`720P60`: 1001 / 60000 秒 (59.94006 fps)
 - `其他清晰度`: 1001 / 30000 秒 (29.97003 fps)
 
-![时间右边的按钮](images/compressed/control-enhance-buttons.jpg)
+<img height="100" alt="时间右边的按钮" src="images/compressed/control-enhance-buttons.jpg">
 
 </details>
 <details>
@@ -178,7 +178,7 @@
 
 如果弹幕渲染类型选择了Canvas, 则可以再按住`Shift`键来截取带弹幕的截图. 也就是鼠标操作为"按住`Shift`点击截图按钮", 键盘操作为"`Ctrl + Shift + Alt + C`".
 
-![时间右边的按钮](images/compressed/control-enhance-buttons.jpg)
+<img height="100" alt="时间右边的按钮" src="images/compressed/control-enhance-buttons.jpg">
 
 </details>
 <details>
@@ -192,7 +192,7 @@
 
 将视频页面菜单里的`稍后再看`移到外面.
 
-![外置稍后再看](images/compressed/watchlater.jpg)
+<img height="100" alt="外置稍后再看" src="images/compressed/watchlater.jpg">
 
 </details>
 <details>
@@ -241,7 +241,7 @@
 
 设定顶栏和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(`#rrggbb`或`#rgb`).
 
-![颜色设置](images/compressed/theme-color.jpg)
+<img height="200" alt="颜色设置" src="images/compressed/theme-color.jpg">
 
 </details>
 <details>
@@ -275,11 +275,8 @@
 
 目前仅支持部分常用页面, 其他页面会陆续添加, 不支持推广板块(会被`删除广告`功能去除的部分).
 
-**启用前**
-![日间](images/compressed/light-style.jpg)
-
-**启用后**
-![夜间](images/compressed/dark-style.jpg)
+<img width="500" alt="日间" src="images/compressed/light-style.jpg">
+<img width="500" alt="夜间" src="images/compressed/dark-style.jpg">
 
 </details>
 <details>
@@ -295,10 +292,12 @@
 设置首页是否使用紧凑布局, 视频的间距会减小, 番剧的图片和排名序号会变成圆形, 分区栏的图标会使用高清重制版.
 
 **启用前**
-![原版布局](images/compressed/compact-layout-disabled.jpg)
+
+<img width="500" alt="原版布局" src="images/compressed/compact-layout-disabled.jpg">
 
 **启用后**
-![紧凑布局](images/compressed/compact-layout.jpg)
+
+<img width="500" alt="紧凑布局" src="images/compressed/compact-layout.jpg">
 
 </details>
 <details>
@@ -335,9 +334,9 @@
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
 - 禁用直播间皮肤
 
-每一项都可以在`附加功能`中单独选择是否隐藏. 图片中展示的是全部隐藏时的效果对比.
+每一项都可以在`附加功能`中单独选择是否隐藏. 图片中展示的是全部隐藏时的弹幕区效果对比.
 
-![简化直播间](images/compressed/simplify-liveroom.jpg)
+<img height="500" alt="简化直播间" src="images/compressed/simplify-liveroom.jpg">
 
 </details>
 <details>
@@ -395,7 +394,8 @@
 <summary><strong>删除视频标题层</strong></summary>
 
 删除视频里鼠标经过时出现在右上角的标题层.
-![覆盖层](images/compressed/remove-top-mask.jpg)
+
+<img height="400" alt="覆盖层" src="images/compressed/remove-top-mask.jpg">
 
 </details>
 <details>
@@ -415,7 +415,7 @@
 
 隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.
 
-![分区栏](images/compressed/hide-category.jpg)
+<img height="300" alt="分区栏" src="images/compressed/hide-category.jpg">
 
 </details>
 
@@ -438,7 +438,8 @@
 <summary><strong>展开动态标题</strong></summary>
 
 在顶栏的动态预览框中, 不管名称多长, 总是完全展开视频的标题.
-![展开动态标题](images/compressed/full-tweets-title.jpg)
+
+<img height="300" alt="展开动态标题" src="images/compressed/full-tweets-title.jpg">
 
 </details>
 <details>
@@ -482,7 +483,7 @@
 在视频选集列表中, 当标题超出一行时, 另起一行以显示完整标题.
 > 因为番剧选集用的绝对布局, 所以此功能在番剧区无效.
 
-![展开选集标题](images/compressed/full-page-title.jpg)
+<img height="600" alt="展开选集标题" src="images/compressed/full-page-title.jpg">
 
 </details>
 <details>
@@ -520,7 +521,7 @@
 根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.
 适用于2K, 4K等的显示屏, DPI缩放为100%的用户不需要此功能.
 
-![高分辨率图片](images/compressed/image-resolution.jpg)
+<img height="600" alt="高分辨率图片" src="images/compressed/image-resolution.jpg">
 
 </details>
 <details>
@@ -592,8 +593,8 @@
     - 左侧上下滑动可调整亮度
     - 右侧上下滑动可调整音量
 
-![进度调整](images/compressed/touch-gestures.jpg)
-![亮度和音量调整](images/compressed/touch-gestures-vertical.jpg)
+<img width="600" alt="进度调整" src="images/compressed/touch-gestures.jpg">
+<img width="600" alt="亮度和音量调整" src="images/compressed/touch-gestures-vertical.jpg">
 
 </details>
 <details>
@@ -616,7 +617,8 @@
 <summary><strong>显示消息</strong></summary>
 
 允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.
-![消息](images/compressed/toast.jpg)
+
+<img height="200" alt="消息" src="images/compressed/toast.jpg">
 
 </details>
 <details>
