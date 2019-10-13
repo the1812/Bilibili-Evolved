@@ -71,6 +71,17 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 
 所以, 如果您希望通过阅读源码来学习知识的话, 建议去看看那些更专业更成熟的项目.
 
+# 第三方开源组件
+👍感谢这些组件帮助我们极大地提升了开发效率.
+
+- [Vue.js](https://cn.vuejs.org/index.html)
+- [JSZip](https://stuk.github.io/jszip/)
+- [jQuery](http://jquery.com/)
+- [debounce](https://github.com/component/debounce/)
+- [Slip.js](https://github.com/kornelski/slip)
+- [MDI](https://materialdesignicons.com)
+- [Lodash](https://lodash.com/)
+
 ------
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
