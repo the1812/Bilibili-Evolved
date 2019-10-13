@@ -960,7 +960,7 @@ class Activities extends NavbarComponent {
         </div>
       </div>
     `;
-    this.active = document.URL.replace(/\?.*$/, "") === "https://t.bilibili.com/";
+    this.active = document.URL.replace(/\?.*$/, "") === this.href;
     this.initialPopup = () => {
       this.init()
     }
@@ -1074,7 +1074,7 @@ class Activities extends NavbarComponent {
               <li v-for="item of items" class="activity-tab" :data-count="item.notifyCount" :class="{selected: item.name === tab}" @click="changeTab(item)">
                 <div class="tab-name">{{item.name}}</div>
               </li>
-              <a class="view-all" target="_blank" href="https://t.bilibili.com/">
+              <a class="view-all" target="_blank" href="${settings.oldTweets ? 'https://www.bilibili.com/account/dynamic' : 'https://t.bilibili.com/'}">
                 全部动态
                 <i class="custom-navbar-iconfont-new-home custom-navbar-icon-activity"></i>
               </a>
