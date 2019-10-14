@@ -2,7 +2,9 @@
   "name": "bilibili-evolved",
   "description": "「 强大的哔哩哔哩增强脚本 」",
   "main": "bilibili-evolved.user.js",
-  "dependencies": {},
+  "dependencies": {
+    "ffmpeg.js": "^3.1.9001"
+  },
   "devDependencies": {
     "@types/jquery": "^3.3.31",
     "@types/lodash": "^4.14.138",
