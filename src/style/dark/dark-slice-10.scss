@@ -252,9 +252,9 @@
   }
 }
 .video-item.list {
-  @include border-color(4);
+  @include border-color("4");
   .type {
-    @include background-color(4);
+    @include background-color("4");
     @include color("e");
     @include border-color();
   }
