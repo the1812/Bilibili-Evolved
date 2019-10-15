@@ -251,3 +251,30 @@
     @include background-color("a");
   }
 }
+.video-item.list {
+  @include border-color(4);
+  .type {
+    @include background-color(4);
+    @include color("e");
+    @include border-color();
+  }
+  .headline.singleav {
+    .avid {
+      @include theme-background-color();
+      @include color("e");
+      @include border-color();
+    }
+    .title {
+      @include theme-color();
+    }
+  }
+  .title {
+    @include color("e");
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .des {
+    @include color("a");
+  }
+}
