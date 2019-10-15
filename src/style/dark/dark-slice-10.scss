@@ -261,7 +261,7 @@
   .headline.singleav {
     .avid {
       @include theme-background-color();
-      @include color("e");
+      @include foreground-color();
       @include border-color();
     }
     .title {
