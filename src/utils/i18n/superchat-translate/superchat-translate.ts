@@ -21,7 +21,7 @@
     }
     return _.get(json, 'data.list', [])
   }
-  const getTranslation = async (id: number | string): Promise<string> => {
+  const getTranslation = (id: number | string): Promise<string> => {
     return new Promise(resolve => {
       setTimeout(async () => {
         const json = await Ajax.getJson(`https://api.live.bilibili.com/av/v1/SuperChat/messageInfo?id=${id}`)
