@@ -359,9 +359,9 @@ declare global {
     scriptDownloadMode: 'bundle' | 'legacy'
     guiSettingsDockSide: '左侧' | '右侧'
     fullActivityContent: boolean,
-    activityFilter: boolean,
-    activityFilterPatterns: Pattern[],
-    activityFilterTypes: string[],
+    feedsFilter: boolean,
+    feedsFilterPatterns: Pattern[],
+    feedsFilterTypes: number[],
     activityImageSaver: boolean,
     scriptBlockPatterns: Pattern[],
     customNavbarSeasonLogo: boolean,

@@ -735,5 +735,11 @@ Resource.manifest = {
       miniPlayerTouchMove: '迷你播放器触摸拖动',
     },
   },
+  feedsFilter: {
+    path: 'feeds-filter.min.js',
+    displayNames: {
+      feedsFilter: '动态过滤器',
+    },
+  }
 }
 export const resourceManifest = Resource.manifest
