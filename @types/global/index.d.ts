@@ -35,7 +35,7 @@ declare global {
   }
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
   type DanmakuOption = '无' | 'XML' | 'ASS'
-  type Pattern = string | RegExp
+  type Pattern = string
   interface RpcOption {
     secretKey: string
     baseDir: string
