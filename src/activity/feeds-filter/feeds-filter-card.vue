@@ -13,7 +13,12 @@
       </div>
     </div>
     <div class="add-pattern">
-      <input placeholder="支持正则表达式 /^xxx$/" type="text" v-model="newPattern" @keydown.enter="addPattern(newPattern)" />
+      <input
+        placeholder="支持正则表达式 /^xxx$/"
+        type="text"
+        v-model="newPattern"
+        @keydown.enter="addPattern(newPattern)"
+      />
       <icon title="添加" type="mdi" icon="plus" @click.native="addPattern(newPattern)"></icon>
     </div>
   </div>
@@ -31,7 +36,9 @@ export default {
       if (
         settings.feedsFilterPatterns.some(pattern => {
           if (pattern.startsWith('/') && pattern.endsWith('/')) {
-            return new RegExp(pattern.slice(1, pattern.length - 1)).test(card.text)
+            return new RegExp(pattern.slice(1, pattern.length - 1)).test(
+              card.text
+            )
           }
           return card.text.includes(pattern)
         })
@@ -73,10 +80,23 @@ export default {
     }
   },
   async mounted() {
+    const tabBar = await SpinQuery.select('.feed-card .tab-bar')
+    if (!tabBar) {
+      console.error('tabBar not found')
+      return
+    }
+    const tab = tabBar.querySelector(
+      '.tab:nth-child(2) .tab-text'
+    ) as HTMLAnchorElement
+    Observer.attributes(tab, () => {
+      document.body.classList[
+        tab.classList.contains('selected') ? 'add' : 'remove'
+      ]('enable-feeds-filter')
+    })
     const { feedsCardsManager, feedsCardTypes } = await import('../feeds-apis')
     const success = await feedsCardsManager.startWatching()
     if (!success) {
-      console.error('feedsCardsManager.startWatching() failed!')
+      console.error('feedsCardsManager.startWatching() failed')
       return
     }
     this.allTypes = Object.entries(feedsCardTypes)
@@ -91,7 +111,7 @@ export default {
 </script>
 
 <style lang="scss">
-body {
+body.enable-feeds-filter {
   @each $name,
     $value
       in (
@@ -122,9 +142,12 @@ body {
   border-radius: 4px;
   margin-top: 8px;
   box-sizing: border-box;
-  display: flex;
+  display: none;
   flex-direction: column;
 
+  body.enable-feeds-filter & {
+    display: flex;
+  }
   &,
   & * {
     transition: 0.2s ease-out;
