@@ -691,7 +691,12 @@ Resource.manifest = {
     path: 'simplify-home.min.js',
     style: 'instant',
     displayNames: {
-      simplifyHome: '简化首页'
+      simplifyHome: '简化首页',
+      simplifyHomeStyle: '首页风格',
+    },
+    dropdown: {
+      key: 'simplifyHomeStyle',
+      items: ['极简'],
     },
   },
   fullActivityContent: {
