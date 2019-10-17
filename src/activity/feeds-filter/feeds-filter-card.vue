@@ -33,16 +33,23 @@ export default {
   },
   methods: {
     updateCard(card: FeedsCard) {
-      if (
-        settings.feedsFilterPatterns.some(pattern => {
-          if (pattern.startsWith('/') && pattern.endsWith('/')) {
-            return new RegExp(pattern.slice(1, pattern.length - 1)).test(
-              card.text
-            )
+      const testPattern = (pattern: Pattern, text: string) => {
+        if (pattern.startsWith('/') && pattern.endsWith('/')) {
+          return new RegExp(pattern.slice(1, pattern.length - 1)).test(text)
+        }
+        return text.includes(pattern)
+      }
+      const block: boolean = (() => {
+        return settings.feedsFilterPatterns.some(pattern => {
+          const upNameMatch = pattern.match(/(.+) up:([^ ]+)/)
+          if (upNameMatch) {
+            return testPattern(upNameMatch[1], card.text) &&
+              testPattern(upNameMatch[2], card.username)
           }
-          return card.text.includes(pattern)
+          return testPattern(pattern, card.text)
         })
-      ) {
+      })()
+      if (block) {
         card.element.classList.add('pattern-block')
       } else {
         card.element.classList.remove('pattern-block')
