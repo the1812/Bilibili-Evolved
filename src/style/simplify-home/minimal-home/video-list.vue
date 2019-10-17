@@ -32,7 +32,7 @@ export default {
         const { getWatchlaterList } = await import(
           '../../../video/watchlater-api'
         )
-        const watchlaterList = (await getWatchlaterList()) as number[]
+        const watchlaterList = await getWatchlaterList()
         if (json.code !== 0) {
           throw new Error(json.message)
         }
@@ -66,7 +66,7 @@ export default {
       const { getWatchlaterList } = await import(
         '../../../video/watchlater-api'
       )
-      const watchlaterList = (await getWatchlaterList()) as number[]
+      const watchlaterList = await getWatchlaterList()
       if (json.code !== 0) {
         throw new Error(json.message)
       }
