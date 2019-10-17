@@ -72,7 +72,7 @@ export const settings = {
     smartMask: false,
   },
   defaultPlayerLayout: '新版',
-  defaultBangumiLayout: '旧版',
+  defaultBangumiLayout: '新版',
   useDefaultPlayerLayout: false,
   skipChargeList: false,
   comboLike: false,
