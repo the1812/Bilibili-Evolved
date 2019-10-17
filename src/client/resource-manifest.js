@@ -696,7 +696,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'simplifyHomeStyle',
-      items: ['极简'],
+      items: ['清爽', '极简'],
     },
   },
   fullActivityContent: {
