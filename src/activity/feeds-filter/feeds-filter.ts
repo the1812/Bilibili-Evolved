@@ -14,3 +14,7 @@
     },
   })
 })()
+export default {
+  reload: () => document.body.classList.remove('disable-feeds-filter'),
+  unload: () => document.body.classList.add('disable-feeds-filter'),
+}

@@ -167,6 +167,7 @@ export const settings = {
   watchlaterExpireWarningDays: 14,
   superchatTranslate: false,
   miniPlayerTouchMove: false,
+  hideHashTags: false,
   cache: {},
 }
 const fixedSettings = {

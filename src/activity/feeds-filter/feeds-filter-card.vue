@@ -111,7 +111,7 @@ export default {
 </script>
 
 <style lang="scss">
-body.enable-feeds-filter {
+body.enable-feeds-filter:not(.disable-feeds-filter) {
   @each $name,
     $value
       in (
@@ -145,7 +145,7 @@ body.enable-feeds-filter {
   display: none;
   flex-direction: column;
 
-  body.enable-feeds-filter & {
+  body.enable-feeds-filter:not(.disable-feeds-filter) & {
     display: flex;
   }
   &,
