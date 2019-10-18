@@ -362,6 +362,7 @@ declare global {
     feedsFilter: boolean,
     feedsFilterPatterns: Pattern[],
     feedsFilterTypes: number[],
+    feedsFilterSideCards: number[],
     activityImageSaver: boolean,
     scriptBlockPatterns: Pattern[],
     customNavbarSeasonLogo: boolean,
@@ -372,7 +373,6 @@ declare global {
     watchlaterExpireWarningDays: number,
     superchatTranslate: boolean,
     miniPlayerTouchMove: boolean,
-    hideHashTags: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

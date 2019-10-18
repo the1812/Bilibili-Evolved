@@ -157,6 +157,7 @@ export const settings = {
   feedsFilter: false,
   feedsFilterPatterns: [],
   feedsFilterTypes: [],
+  feedsFilterSideCards: [],
   activityImageSaver: false,
   scriptBlockPatterns: [],
   customNavbarSeasonLogo: false,
@@ -167,7 +168,6 @@ export const settings = {
   watchlaterExpireWarningDays: 14,
   superchatTranslate: false,
   miniPlayerTouchMove: false,
-  hideHashTags: false,
   cache: {},
 }
 const fixedSettings = {

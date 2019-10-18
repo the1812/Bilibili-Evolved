@@ -747,12 +747,5 @@ Resource.manifest = {
       feedsFilter: '动态过滤器',
     },
   },
-  hideHashTags: {
-    path: 'hide-hash-tags.min.js',
-    reloadable: true,
-    displayNames: {
-      hideHashTags: '隐藏话题面板',
-    },
-  },
 }
 export const resourceManifest = Resource.manifest
