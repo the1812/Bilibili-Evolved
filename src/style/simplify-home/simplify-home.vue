@@ -21,11 +21,15 @@ export default {
 </script>
 <style lang="scss">
 .simplify-home {
-  margin-top: 32px;
+  padding-top: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #f4f4f4;
 
+  body.dark & {
+    background-color: #181818;
+  }
   .simplify-home-component {
     max-width: 100%;
   }

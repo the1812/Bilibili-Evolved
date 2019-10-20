@@ -943,6 +943,7 @@ const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, templat
     },
   }
 }
+// https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=39717974&offset_dynamic_id=311158827135150245&type=8
 class Activities extends NavbarComponent {
   constructor () {
     super();

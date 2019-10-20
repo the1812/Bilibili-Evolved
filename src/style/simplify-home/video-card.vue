@@ -125,8 +125,9 @@ export default {
   height: var(--card-height);
   width: var(--card-width);
   color: black;
+  background-color: #fff;
   border-radius: 16px;
-  box-shadow: 0 2px 6px 0 #0002;
+  box-shadow: 0 4px 8px 0 #0001;
   margin-right: var(--card-margin);
   margin-bottom: var(--card-margin);
   position: relative;
