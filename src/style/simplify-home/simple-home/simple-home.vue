@@ -36,7 +36,7 @@
         </a>
       </div>
     </div>
-    <!-- <div class="trendings">
+    <div class="trendings">
       <div class="header">
         <div class="title">热门</div>
         <div class="tabs">
@@ -44,17 +44,26 @@
             class="tab"
             v-for="tab in tabs"
             :key="tab.day"
+            @click="currentTab = tab"
             :class="{active: currentTab === tab}"
-          >{{tab.name}}</div>
+          >
+            <div class="tab-name">{{tab.name}}</div>
+          </div>
         </div>
       </div>
-      <div class="contents"></div>
-    </div> -->
+      <div class="contents">
+        <video-card v-for="card in trendingCards" :key="card.id" :data="card"></video-card>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
 import { Blackboard } from './blackboard'
-const tabs = [
+interface Tab {
+  name: string
+  day: number
+}
+const tabs: Tab[] = [
   {
     name: '一周',
     day: 7
@@ -70,34 +79,49 @@ const tabs = [
 ]
 export default {
   components: {
-    Icon: () => import('../../icon.vue')
+    Icon: () => import('../../icon.vue'),
+    VideoCard: () => import('../video-card.vue'),
   },
   data() {
     return {
       blackboards: [] as Blackboard[],
       tabs,
-      currentTab: tabs[0]
+      currentTab: tabs[0],
+      interval: 0,
+      trendingCards: []
     }
   },
-  computed: {
-    trendingCards() {}
+  watch: {
+    async currentTab(tab: Tab) {
+      const { getTrendingVideos } = await import('../trending-videos')
+      this.trendingCards = await getTrendingVideos(tab.day)
+    }
+  },
+  destroyed() {
+    if (this.interval) {
+      clearInterval(this.interval)
+    }
   },
   async mounted() {
     const { getBlackboards } = await import('./blackboard')
     this.blackboards = (await getBlackboards()).filter(it => !it.isAd)
     const blackboards = dq('.blackboards') as HTMLDivElement
-    setInterval(() => {
+    this.interval = setInterval(() => {
       if (!document.hasFocus() || blackboards.matches('.blackboards:hover')) {
         return
       }
-      const currentIndex = parseInt(dq(`.blackboard-radio:checked`)!.getAttribute('data-index')!)
+      const currentIndex = parseInt(
+        dq(`.blackboard-radio:checked`)!.getAttribute('data-index')!
+      )
       let targetIndex: number
       if (currentIndex === this.blackboards.length - 1) {
         targetIndex = 0
       } else {
         targetIndex = currentIndex + 1
       }
-      (dq(`.blackboard-radio[data-index='${targetIndex}']`) as HTMLInputElement).checked = true
+      ;(dq(
+        `.blackboard-radio[data-index='${targetIndex}']`
+      ) as HTMLInputElement).checked = true
     }, 5000)
   }
 }
@@ -106,6 +130,12 @@ export default {
 .simple-home {
   --title-color: black;
   color: #444;
+  display: grid;
+  grid-template-areas: 'blackboards trendings' 'info info' 'categories categories';
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, auto);
+  column-gap: 60px;
+  row-gap: 32px;
   &,
   & * {
     transition: 0.2s ease-out;
@@ -171,11 +201,14 @@ export default {
       background-color: #333;
     }
   }
+
+  $first-row-height: 250px;
   .blackboards {
+    grid-area: blackboards;
     display: grid;
     grid-template-areas: 'header header' 'dots cards';
     grid-template-columns: 8px 1fr;
-    grid-template-rows: 1fr 250px;
+    grid-template-rows: 1fr $first-row-height;
     row-gap: 16px;
     column-gap: 16px;
 
@@ -229,6 +262,57 @@ export default {
           font-weight: bold;
           border-radius: 14px;
           white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  .trendings {
+    grid-area: trendings;
+    display: flex;
+    flex-direction: column;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .title {
+        color: var(--title-color);
+        font-weight: bold;
+        font-size: 24px;
+      }
+      .tabs {
+        display: flex;
+        align-items: center;
+        .tab {
+          cursor: pointer;
+          position: relative;
+          .tab-name {
+            opacity: 0.5;
+            font-size: 14px;
+          }
+          &:not(:last-child) {
+            margin-right: 24px;
+          }
+          &::after {
+            content: '';
+            width: calc(80%);
+            height: 3px;
+            border-radius: 2px;
+            position: absolute;
+            background-color: var(--theme-color);
+            left: 10%;
+            bottom: -6px;
+            transform: scaleX(0);
+            transition: 0.2s ease-out;
+          }
+          &.active::after {
+            transform: scaleX(1);
+          }
+          &.active .tab-name {
+            font-weight: bold;
+            opacity: 1;
+            transform: scale(1.1);
+          }
         }
       }
     }
