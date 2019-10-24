@@ -152,7 +152,6 @@ export default {
       'cover cover'
       'title title'
       'up up';
-    margin-bottom: 24px;
     .description {
       display: none;
     }

@@ -144,6 +144,13 @@ export default {
   grid-template-rows: repeat(3, auto);
   column-gap: 52px;
   row-gap: 32px;
+  @media screen and (max-width: 900px) {
+    & {
+      grid-template-areas: 'blackboards' 'trendings' 'info' 'categories';
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(4, auto);
+    }
+  }
   &,
   & * {
     transition: 0.2s ease-out;
@@ -220,6 +227,7 @@ export default {
     row-gap: 16px;
     column-gap: 16px;
     align-self: start;
+    justify-self: center;
 
     .header {
       grid-area: header;
@@ -322,14 +330,35 @@ export default {
     .contents {
       --card-width: 200px;
       --card-height: 250px;
+      --card-count: 3;
       margin-top: 16px;
       display: flex;
       overflow: auto;
       height: calc(var(--card-height) + 16px);
-      width: calc(var(--card-width) * 3 + (16px * 3));
+      width: calc((var(--card-width) + 16px) * var(--card-count));
       scroll-snap-type: x mandatory;
       scrollbar-width: none !important;
 
+      @media screen and (max-width: 1250px) and (min-width: 900px) {
+        & {
+          --card-count: 2;
+        }
+      }
+      @media screen and (max-width: 1050px) and (min-width: 900px) {
+        & {
+          --card-count: 1;
+        }
+      }
+      @media screen and (min-width: 1600px) {
+        & {
+          --card-count: 4;
+        }
+      }
+      @media screen and (min-width: 1900px) {
+        & {
+          --card-count: 5;
+        }
+      }
       &::-webkit-scrollbar {
         width: 0 !important;
         height: 0 !important;
