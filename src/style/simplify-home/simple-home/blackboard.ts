@@ -4,12 +4,14 @@ export interface Blackboard {
   isAd: boolean
   imageUrl: string
 }
-export const getBlackboards = (): Blackboard[] => {
+export const getBlackboards = async (): Promise<Blackboard[]> => {
   if (dq('.international-home')) {
+    const initData = await SpinQuery.condition(() => unsafeWindow['__INITIAL_STATE__'], it => it !== undefined)
     return dqa('.home-slide .item')
-      .map(it => {
+      .map((it, index) => {
+        const locID = it.querySelector('a')!.getAttribute('data-loc-id')!
         return {
-          url: it.querySelector('a')!.getAttribute('href'),
+          url: initData.locsData[locID][index].url,
           title: (it.querySelector('.title') as HTMLElement).innerText!.trim(),
           isAd: Boolean(it.querySelector('.gg-icon')),
           imageUrl: it.querySelector('img')!.getAttribute('src'),

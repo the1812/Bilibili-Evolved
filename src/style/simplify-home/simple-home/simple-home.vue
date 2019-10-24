@@ -7,13 +7,20 @@
           <icon type="mdi" icon="dots-horizontal"></icon>更多
         </div>
       </div>
+      <input
+        class="hidden-input blackboard-radio"
+        type="radio"
+        name="blackboard"
+        v-for="(b, i) of blackboards"
+        :checked="i === 0"
+        :id="'blackboard' + i"
+        :data-index="i"
+        :key="i"
+      />
       <div class="jump-dots">
-        <div
-          class="jump-dot"
-          v-for="(b, i) of blackboards"
-          :key="i"
-          :class="{active: i === currentBlackboardIndex}"
-        ></div>
+        <label v-for="(b, i) of blackboards" :for="'blackboard' + i" :key="i">
+          <div class="jump-dot"></div>
+        </label>
       </div>
       <div class="blackboard-cards">
         <a
@@ -29,39 +36,119 @@
         </a>
       </div>
     </div>
-    <div class="rankings">
+    <!-- <div class="trendings">
       <div class="header">
-
+        <div class="title">热门</div>
+        <div class="tabs">
+          <div
+            class="tab"
+            v-for="tab in tabs"
+            :key="tab.day"
+            :class="{active: currentTab === tab}"
+          >{{tab.name}}</div>
+        </div>
       </div>
-    </div>
+      <div class="contents"></div>
+    </div> -->
   </div>
 </template>
 <script lang="ts">
 import { Blackboard } from './blackboard'
+const tabs = [
+  {
+    name: '一周',
+    day: 7
+  },
+  {
+    name: '三日',
+    day: 3
+  },
+  {
+    name: '昨日',
+    day: 1
+  }
+]
 export default {
   components: {
-    Icon: () => import('../../icon.vue'),
+    Icon: () => import('../../icon.vue')
   },
   data() {
     return {
       blackboards: [] as Blackboard[],
-      currentBlackboardIndex: 0
+      tabs,
+      currentTab: tabs[0]
     }
+  },
+  computed: {
+    trendingCards() {}
   },
   async mounted() {
     const { getBlackboards } = await import('./blackboard')
-    this.blackboards = getBlackboards().filter(it => !it.isAd)
-  },
+    this.blackboards = (await getBlackboards()).filter(it => !it.isAd)
+    const blackboards = dq('.blackboards') as HTMLDivElement
+    setInterval(() => {
+      if (!document.hasFocus() || blackboards.matches('.blackboards:hover')) {
+        return
+      }
+      const currentIndex = parseInt(dq(`.blackboard-radio:checked`)!.getAttribute('data-index')!)
+      let targetIndex: number
+      if (currentIndex === this.blackboards.length - 1) {
+        targetIndex = 0
+      } else {
+        targetIndex = currentIndex + 1
+      }
+      (dq(`.blackboard-radio[data-index='${targetIndex}']`) as HTMLInputElement).checked = true
+    }, 5000)
+  }
 }
 </script>
 <style lang="scss">
 .simple-home {
   --title-color: black;
   color: #444;
-
+  &,
+  & * {
+    transition: 0.2s ease-out;
+  }
   body.dark & {
     --title-color: white;
     color: #ddd;
+  }
+  .jump-dots {
+    grid-area: dots;
+    align-self: center;
+    justify-self: center;
+    & label {
+      display: block;
+    }
+    & label:not(:last-child) {
+      margin-bottom: 6px;
+    }
+    .jump-dot {
+      background-color: #ddd;
+      width: 8px;
+      height: 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      body.dark & {
+        background-color: #444;
+      }
+    }
+  }
+  .hidden-input {
+    display: none;
+    @for $i from 1 to 16 {
+      &:checked:nth-of-type(#{$i})
+        ~ .jump-dots
+        label:nth-child(#{$i})
+        .jump-dot {
+        background-color: var(--theme-color);
+        height: 40px;
+      }
+      &:checked:nth-of-type(#{$i}) ~ .blackboard-cards .blackboard-card {
+        transform: translateY(calc(-1 * #{$i - 1} * var(--card-height)));
+      }
+    }
   }
   .more {
     background-color: #ddd;
@@ -73,7 +160,7 @@ export default {
     font-size: 14px;
     .be-icon {
       margin-right: 8px;
-      transition: .3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     &:hover {
       .be-icon {
@@ -103,50 +190,31 @@ export default {
         font-size: 24px;
       }
     }
-    .jump-dots {
-      grid-area: dots;
-      align-self: center;
-      justify-self: center;
-      .jump-dot {
-        background-color: #ddd;
-        width: 8px;
-        height: 20px;
-        border-radius: 8px;
-        cursor: pointer;
-        &.active {
-          background-color: var(--theme-color);
-          height: 40px;
-        }
-        &:not(:last-child) {
-          margin-bottom: 6px;
-        }
-        body.dark &:not(.active) {
-          background-color: #444;
-        }
-      }
-    }
     .blackboard-cards {
       grid-area: cards;
-      width: 500px;
-      height: 250px;
-      overflow: auto;
-      scroll-snap-type: y mandatory;
-      scrollbar-width: none !important;
-      &::-webkit-scrollbar {
-        width: 0 !important;
-        height: 0 !important;
-      }
+      --card-width: 500px;
+      --card-height: 250px;
+      width: var(--card-width);
+      height: var(--card-height);
+      border-radius: 16px;
+      overflow: hidden;
+      // scroll-snap-type: y mandatory;
+      // scrollbar-width: none !important;
+      // &::-webkit-scrollbar {
+      //   width: 0 !important;
+      //   height: 0 !important;
+      // }
       .blackboard-card {
         width: 100%;
         height: 100%;
         scroll-snap-align: start;
         position: relative;
         display: block;
+        transition: 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
         img {
           width: 100%;
           height: 100%;
           object-fit: fill;
-          border-radius: 16px;
           display: block;
         }
         .title {
