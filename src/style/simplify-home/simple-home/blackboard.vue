@@ -30,7 +30,7 @@
         :href="b.url"
         :title="b.title"
       >
-        <img :src="b.imageUrl" :alt="b.title" />
+        <dpi-img :src="b.imageUrl" :alt="b.title" :size="{width: 500, height: 250}"></dpi-img>
         <div class="title">{{b.title}}</div>
       </a>
     </div>
@@ -41,7 +41,8 @@
 import { Blackboard } from './blackboard'
 export default {
   components: {
-    Icon: () => import('../../icon.vue')
+    Icon: () => import('../../icon.vue'),
+    'dpi-img': () => import('../../dpi-img.vue'),
   },
   data() {
     return {

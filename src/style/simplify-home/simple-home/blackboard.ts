@@ -14,7 +14,7 @@ export const getBlackboards = async (): Promise<Blackboard[]> => {
           url: initData.locsData[locID][index].url,
           title: (it.querySelector('.title') as HTMLElement).innerText!.trim(),
           isAd: Boolean(it.querySelector('.gg-icon')),
-          imageUrl: it.querySelector('img')!.getAttribute('src'),
+          imageUrl: it.querySelector('img')!.getAttribute('src')!.replace(/@.+$/, ''),
         } as Blackboard
       })
   } else {
@@ -27,7 +27,7 @@ export const getBlackboards = async (): Promise<Blackboard[]> => {
         url: title.getAttribute('href'),
         title: title.innerText!.trim(),
         isAd: Boolean(title.querySelector('.gg-pic')),
-        imageUrl: li.querySelector('img')!.getAttribute('src'),
+        imageUrl: li.querySelector('img')!.getAttribute('src')!.replace(/@.+$/, ''),
       } as Blackboard
     })
   }
