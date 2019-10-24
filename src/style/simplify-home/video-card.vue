@@ -1,5 +1,10 @@
 <template>
-  <a class="video-card" target="_blank" :href="'https://www.bilibili.com/av' + aid">
+  <a
+    class="video-card"
+    target="_blank"
+    :href="'https://www.bilibili.com/av' + aid"
+    :class="{vertical: orientation === 'vertical'}"
+  >
     <div class="cover-container">
       <dpi-img class="cover" :src="coverUrl" :size="{height: 120, width: 200}"></dpi-img>
       <div class="duration">{{durationText}}</div>
@@ -79,7 +84,7 @@ export interface VideoCardInfo {
   watchlater: boolean
 }
 export default {
-  props: ['data'],
+  props: ['data', 'orientation'],
   components: {
     'dpi-img': () => import('../dpi-img.vue'),
     Icon: () => import('../icon.vue')
@@ -140,14 +145,50 @@ export default {
   &:hover {
     color: black;
   }
+  &.vertical {
+    grid-template-columns: auto auto;
+    grid-template-rows: 2fr 1fr 1fr;
+    grid-template-areas:
+      'cover cover'
+      'title title'
+      'up up';
+    margin-bottom: 24px;
+    .description {
+      display: none;
+    }
+    .cover-container {
+      border-radius: 16px 16px 0 0;
+    }
+    .title {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      max-height: 3em;
+      word-break: break-all;
+      white-space: normal;
+      line-height: 1.5;
+      font-size: 11pt;
+    }
+    .up {
+      align-self: start;
+      margin-top: 8px;
+    }
+    .stats {
+      align-self: end;
+      justify-self: start;
+      margin-bottom: 12px;
+      margin-right: 0;
+    }
+  }
   & > * {
     justify-self: self-start;
     align-self: center;
   }
   &:hover {
-    transform: scale(1.02);
-    transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
-
+    .cover {
+      transform: scale(1.05);
+      transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
+    }
     .duration,
     .watchlater {
       opacity: 1;
@@ -160,10 +201,15 @@ export default {
 
   .cover-container {
     grid-area: cover;
+    border-radius: 16px 0 0 16px;
     position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     .cover {
-      border-radius: 16px 0 0 16px;
       object-fit: cover;
+      width: 100%;
+      height: 100%;
     }
     & > :not(.cover) {
       position: absolute;
@@ -273,9 +319,12 @@ export default {
     .name {
       margin: 0 8px;
     }
-    &:hover {
+    &:not(.no-face):hover {
       background-color: #8884;
-      .name {
+    }
+    &:hover {
+      .name,
+      .be-icon {
         color: var(--theme-color);
       }
     }

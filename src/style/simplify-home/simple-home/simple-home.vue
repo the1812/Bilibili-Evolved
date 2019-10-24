@@ -52,7 +52,9 @@
         </div>
       </div>
       <div class="contents">
-        <video-card v-for="card in trendingCards" :key="card.id" :data="card"></video-card>
+        <div class="card-wrapper" v-for="card in trendingCards" :key="card.id">
+          <video-card :data="card" orientation="vertical"></video-card>
+        </div>
       </div>
     </div>
   </div>
@@ -80,7 +82,7 @@ const tabs: Tab[] = [
 export default {
   components: {
     Icon: () => import('../../icon.vue'),
-    VideoCard: () => import('../video-card.vue'),
+    VideoCard: () => import('../video-card.vue')
   },
   data() {
     return {
@@ -91,10 +93,15 @@ export default {
       trendingCards: []
     }
   },
-  watch: {
-    async currentTab(tab: Tab) {
+  methods: {
+    async updateTrendingTab(tab: Tab) {
       const { getTrendingVideos } = await import('../trending-videos')
       this.trendingCards = await getTrendingVideos(tab.day)
+    }
+  },
+  watch: {
+    currentTab(tab: Tab) {
+      this.updateTrendingTab(tab)
     }
   },
   destroyed() {
@@ -103,6 +110,7 @@ export default {
     }
   },
   async mounted() {
+    this.updateTrendingTab(this.currentTab)
     const { getBlackboards } = await import('./blackboard')
     this.blackboards = (await getBlackboards()).filter(it => !it.isAd)
     const blackboards = dq('.blackboards') as HTMLDivElement
@@ -132,9 +140,9 @@ export default {
   color: #444;
   display: grid;
   grid-template-areas: 'blackboards trendings' 'info info' 'categories categories';
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(3, auto);
-  column-gap: 60px;
+  column-gap: 52px;
   row-gap: 32px;
   &,
   & * {
@@ -176,7 +184,7 @@ export default {
         height: 40px;
       }
       &:checked:nth-of-type(#{$i}) ~ .blackboard-cards .blackboard-card {
-        transform: translateY(calc(-1 * #{$i - 1} * var(--card-height)));
+        transform: translateY(calc(-1 * #{$i - 1} * var(--blackboard-height)));
       }
     }
   }
@@ -211,6 +219,7 @@ export default {
     grid-template-rows: 1fr $first-row-height;
     row-gap: 16px;
     column-gap: 16px;
+    align-self: start;
 
     .header {
       grid-area: header;
@@ -225,22 +234,15 @@ export default {
     }
     .blackboard-cards {
       grid-area: cards;
-      --card-width: 500px;
-      --card-height: 250px;
-      width: var(--card-width);
-      height: var(--card-height);
+      --blackboard-width: 500px;
+      --blackboard-height: 250px;
+      width: var(--blackboard-width);
+      height: var(--blackboard-height);
       border-radius: 16px;
       overflow: hidden;
-      // scroll-snap-type: y mandatory;
-      // scrollbar-width: none !important;
-      // &::-webkit-scrollbar {
-      //   width: 0 !important;
-      //   height: 0 !important;
-      // }
       .blackboard-card {
         width: 100%;
         height: 100%;
-        scroll-snap-align: start;
         position: relative;
         display: block;
         transition: 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
@@ -275,6 +277,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 0 8px;
       .title {
         color: var(--title-color);
         font-weight: bold;
@@ -314,6 +317,27 @@ export default {
             transform: scale(1.1);
           }
         }
+      }
+    }
+    .contents {
+      --card-width: 200px;
+      --card-height: 250px;
+      margin-top: 16px;
+      display: flex;
+      overflow: auto;
+      height: calc(var(--card-height) + 16px);
+      width: calc(var(--card-width) * 3 + (16px * 3));
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none !important;
+
+      &::-webkit-scrollbar {
+        width: 0 !important;
+        height: 0 !important;
+      }
+      .card-wrapper {
+        padding: 0 8px;
+        scroll-snap-align: start;
+        flex-shrink: 0;
       }
     }
   }

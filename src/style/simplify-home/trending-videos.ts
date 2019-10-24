@@ -25,7 +25,7 @@ export const getTrendingVideos = async (days: number, watchlaterList?: number[])
       playCount: formatCount(card.play),
       coins: formatCount(card.coins),
       favorites: formatCount(card.favorites),
-      watchlater: watchlaterList!.includes(card.aid)
+      watchlater: watchlaterList!.includes(parseInt(card.aid))
     })
   )
 }
