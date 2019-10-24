@@ -96,7 +96,7 @@ class FeedsCardsManager extends EventTarget {
   parseCard(element: HTMLElement): FeedsCard {
     const getText = (selector: string) => {
       if (element.querySelector(selector) === null) {
-        // console.log(element, selector)
+        console.warn(element, selector)
         return ''
       }
       return (element.querySelector(selector) as HTMLElement).innerText
