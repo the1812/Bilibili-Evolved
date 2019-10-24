@@ -52,7 +52,8 @@
   .cover {
     width: 240px;
     min-height: 135px;
-    background-color: #8882;
+    max-height: 200px;
+    object-fit: contain;
   }
   .header {
     display: flex;
