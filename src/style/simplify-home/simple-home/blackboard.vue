@@ -100,7 +100,7 @@ $first-row-height: 250px;
     .title {
       color: var(--title-color);
       font-weight: bold;
-      font-size: 24px;
+      font-size: 22px;
     }
   }
   .blackboard-cards {

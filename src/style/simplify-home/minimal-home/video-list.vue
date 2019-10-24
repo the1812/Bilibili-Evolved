@@ -26,10 +26,13 @@ export default {
   methods: {
     async getRankList() {
       const { getTrendingVideos } = await import('../trending-videos')
-      const { getWatchlaterList } = await import('../../../video/watchlater-api')
+      const { getWatchlaterList } = await import(
+        '../../../video/watchlater-api'
+      )
       const watchlaterList = await getWatchlaterList()
       const getRankListByDays = async (days: number) => {
-        this.cards.push(await getTrendingVideos(days, watchlaterList))
+        const cards = await getTrendingVideos(days, watchlaterList)
+        this.cards.push(...cards)
       }
       await Promise.all([1, 3, 7].map(getRankListByDays))
     },

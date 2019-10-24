@@ -81,7 +81,7 @@ export default {
     .title {
       color: var(--title-color);
       font-weight: bold;
-      font-size: 24px;
+      font-size: 22px;
     }
     .tabs {
       display: flex;
