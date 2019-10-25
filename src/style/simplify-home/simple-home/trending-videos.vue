@@ -74,15 +74,7 @@ export default {
   display: flex;
   flex-direction: column;
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 0 8px;
-    .title {
-      color: var(--title-color);
-      font-weight: bold;
-      font-size: 22px;
-    }
     .tabs {
       display: flex;
       align-items: center;

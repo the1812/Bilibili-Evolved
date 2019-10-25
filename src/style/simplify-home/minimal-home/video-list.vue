@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { VideoCardInfo } from '../video-card.vue'
+import { VideoCardInfo } from '../video-card-info'
 export default {
   components: {
     VideoCard: () => import('../video-card.vue')

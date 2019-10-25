@@ -1,4 +1,4 @@
-import { VideoCardInfo } from './video-card.vue'
+import { VideoCardInfo } from './video-card-info'
 export const getTrendingVideos = async (days: number, watchlaterList?: number[]): Promise<VideoCardInfo[]> => {
   const json = await Ajax.getJsonWithCredentials(
     `https://api.bilibili.com/x/web-interface/ranking/index?day=${days}`

@@ -7,8 +7,8 @@
   >
     <div class="cover-container">
       <dpi-img class="cover" :src="coverUrl" :size="{height: 120, width: 200}"></dpi-img>
-      <div class="duration">{{durationText}}</div>
-      <div class="watchlater" @click.stop.prevent="toggleWatchlater()">
+      <div v-if="durationText" class="duration">{{durationText}}</div>
+      <div v-if="durationText" class="watchlater" @click.stop.prevent="toggleWatchlater()">
         <i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>
         {{watchlater ? '已添加' : '稍后再看'}}
       </div>
@@ -28,18 +28,18 @@
       class="up"
       :class="{'no-face': !upFaceUrl}"
       target="_blank"
-      :href="'https://space.bilibili.com/' + upID"
+      :href="upID ? ('https://space.bilibili.com/' + upID) : null"
     >
       <dpi-img v-if="upFaceUrl" class="face" :src="upFaceUrl" :size="24"></dpi-img>
       <Icon v-else icon="up" type="extended"></Icon>
       <div class="name" :title="upName">{{upName}}</div>
     </a>
     <div class="stats">
-      <template v-if="like">
+      <template v-if="like && !vertical">
         <Icon type="extended" icon="like-outline"></Icon>
         {{like}}
       </template>
-      <template v-if="coins">
+      <template v-if="coins && !vertical">
         <Icon type="home" icon="coin-outline"></Icon>
         {{coins}}
       </template>
@@ -58,31 +58,7 @@
 </template>
 
 <script lang="ts">
-export interface VideoCardInfo {
-  id: string
-  aid: number
-  title: string
-  upID: number
-  upName: string
-  upFaceUrl?: string
-  coverUrl: string
-  description: string
-  duration?: number
-  durationText: string
-  playCount: string
-  danmakuCount?: string
-  dynamic?: string
-  like?: string
-  coins?: string
-  favorites?: string
-  timestamp?: number
-  time?: Date
-  topics?: {
-    id: number
-    name: string
-  }[]
-  watchlater: boolean
-}
+import { VideoCardInfo } from './video-card-info'
 export default {
   props: ['data', 'orientation'],
   components: {
@@ -98,8 +74,14 @@ export default {
       favorites: '',
       dynamic: '',
       topics: [],
+      upID: 0,
       ...this.data
     } as VideoCardInfo
+  },
+  computed: {
+    vertical() {
+      return this.orientation === 'vertical'
+    }
   },
   methods: {
     async toggleWatchlater() {
@@ -152,7 +134,8 @@ export default {
       'cover cover'
       'title title'
       'up up';
-    .description {
+    .description,
+    .topics {
       display: none;
     }
     .cover-container {
@@ -170,12 +153,14 @@ export default {
     }
     .up {
       align-self: start;
-      margin-top: 8px;
+      &.no-face {
+        margin-top: 8px;
+      }
     }
     .stats {
       align-self: end;
       justify-self: start;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       margin-right: 0;
     }
   }

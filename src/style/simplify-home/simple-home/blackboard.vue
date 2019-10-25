@@ -2,9 +2,9 @@
   <div class="blackboards">
     <div class="header">
       <div class="title">活动</div>
-      <div class="more">
+      <a class="more">
         <icon type="mdi" icon="dots-horizontal"></icon>更多
-      </div>
+      </a>
     </div>
     <input
       class="hidden-input blackboard-radio"
@@ -92,17 +92,6 @@ $first-row-height: 250px;
   align-self: start;
   justify-self: center;
 
-  .header {
-    grid-area: header;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .title {
-      color: var(--title-color);
-      font-weight: bold;
-      font-size: 22px;
-    }
-  }
   .blackboard-cards {
     grid-area: cards;
     --blackboard-width: 500px;
