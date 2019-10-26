@@ -220,6 +220,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
         return {
           id: c.desc.dynamic_id_str,
           aid: card.aid,
+          epID: card.episode_id,
           title: card.new_desc,
           upName: card.apiSeasonInfo.title,
           upFaceUrl: card.apiSeasonInfo.cover,

@@ -2,7 +2,7 @@
   <a
     class="video-card"
     target="_blank"
-    :href="'https://www.bilibili.com/av' + aid"
+    :href="epID ? ('https://www.bilibili.com/bangumi/play/ep' + epID) : ('https://www.bilibili.com/av' + aid)"
     :class="{vertical: orientation === 'vertical'}"
   >
     <div class="cover-container">
@@ -75,6 +75,7 @@ export default {
       dynamic: '',
       topics: [],
       upID: 0,
+      epID: 0,
       ...this.data
     } as VideoCardInfo
   },

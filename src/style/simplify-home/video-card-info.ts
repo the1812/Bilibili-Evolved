@@ -1,7 +1,8 @@
 
 export interface VideoCardInfo {
   id: string
-  aid: number
+  aid?: number
+  epID?: number
   title: string
   upID?: number
   upName: string
