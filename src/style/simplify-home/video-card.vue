@@ -153,8 +153,18 @@ export default {
     }
     .up {
       align-self: start;
+      white-space: nowrap;
+      .name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      &:not(.no-face) {
+        margin-left: 8px;
+        max-width: calc(var(--card-width) - 16px);
+      }
       &.no-face {
         margin-top: 8px;
+        max-width: calc(var(--card-width) - 24px);
       }
     }
     .stats {
