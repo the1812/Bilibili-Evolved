@@ -2,7 +2,7 @@
   <div class="blackboards">
     <div class="header">
       <div class="title">活动</div>
-      <a class="more">
+      <a class="more" href="https://www.bilibili.com/blackboard/x/act_list/" target="_blank">
         <icon type="mdi" icon="dots-horizontal"></icon>更多
       </a>
     </div>

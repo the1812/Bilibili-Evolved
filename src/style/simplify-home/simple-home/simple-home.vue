@@ -75,14 +75,17 @@ export default {
   }
   .more {
     cursor: pointer;
-    padding: 2px 16px 2px 8px;
+    padding: 4px 12px 4px 8px;
     display: flex;
     align-items: center;
     border-radius: 16px;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: bold;
     .be-icon {
       margin-right: 8px;
       transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      font-size: 22px;
+      font-weight: normal;
     }
     &:hover {
       .be-icon {

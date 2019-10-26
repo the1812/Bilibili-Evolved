@@ -7,7 +7,7 @@
           class="tab"
           v-for="tab in tabs"
           :key="tab.day"
-          @click="currentTab = tab"
+          @click="changeTab(tab)"
           :class="{active: currentTab === tab}"
         >
           <div class="tab-name">{{tab.name}}</div>
@@ -26,19 +26,23 @@
 interface Tab {
   name: string
   day: number
+  url: string
 }
 const tabs: Tab[] = [
   {
     name: '一周',
-    day: 7
+    day: 7,
+    url: 'https://www.bilibili.com/ranking/all/0/0/7',
   },
   {
     name: '三日',
-    day: 3
+    day: 3,
+    url: 'https://www.bilibili.com/ranking',
   },
   {
     name: '昨日',
-    day: 1
+    day: 1,
+    url: 'https://www.bilibili.com/ranking/all/0/0/1',
   }
 ]
 export default {
@@ -61,6 +65,13 @@ export default {
     async updateTrendingTab(tab: Tab) {
       const { getTrendingVideos } = await import('../trending-videos')
       this.trendingCards = await getTrendingVideos(tab.day)
+    },
+    changeTab(tab: Tab) {
+      if (this.currentTab === tab) {
+        open(tab.url, '_blank')
+      } else {
+        this.currentTab = tab
+      }
     }
   },
   mounted() {

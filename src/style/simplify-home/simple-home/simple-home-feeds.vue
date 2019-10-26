@@ -7,7 +7,7 @@
           class="tab"
           v-for="tab in tabs"
           :key="tab.type"
-          @click="currentTab = tab"
+          @click="changeTab(tab)"
           :class="{active: currentTab === tab}"
         >
           <div class="tab-name">{{tab.name}}</div>
@@ -18,8 +18,8 @@
         target="_blank"
         href="https://www.bilibili.com/video/online.html"
       >在线人数: {{online}}</a>
-      <a class="more">
-        <icon type="mdi" icon="dots-horizontal"></icon>更多
+      <a class="more" href="//t.bilibili.com/" target="_blank">
+        <icon type="home" icon="activity"></icon>全部动态
       </a>
     </div>
     <div class="contents">
@@ -49,15 +49,18 @@
 interface Tab {
   name: string
   type: 'video' | 'bangumi'
+  url: string
 }
 const tabs: Tab[] = [
   {
     name: '视频',
-    type: 'video'
+    type: 'video',
+    url: 'https://t.bilibili.com/?tab=8'
   },
   {
     name: '番剧',
-    type: 'bangumi'
+    type: 'bangumi',
+    url: 'https://t.bilibili.com/?tab=512'
   }
 ]
 export default {
@@ -82,6 +85,13 @@ export default {
     async updateFeedCards(tab: Tab) {
       const { getVideoFeeds } = await import('../../../activity/feeds-apis')
       this.feedCards = await getVideoFeeds(tab.type)
+    },
+    changeTab(tab: Tab) {
+      if (this.currentTab === tab) {
+        open(tab.url, '_blank')
+      } else {
+        this.currentTab = tab
+      }
     }
   },
   async mounted() {
