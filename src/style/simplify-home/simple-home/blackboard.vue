@@ -95,7 +95,6 @@ $first-row-height: 250px;
   row-gap: 16px;
   column-gap: 16px;
   align-self: start;
-  justify-self: center;
 
   .blackboard-cards {
     grid-area: cards;

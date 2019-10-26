@@ -2,25 +2,22 @@
   <div class="feeds">
     <div class="header">
       <div class="title">动态</div>
-      <div class="tabs">
-        <div
-          class="tab"
-          v-for="tab of tabs"
-          :key="tab.type"
-          :class="{active: tab === currentTab}"
-          @click="currentTab = tab"
-        >
-          <div class="tab-name">{{tab.name}}</div>
-        </div>
-      </div>
-      <div class="flex-grow"></div>
       <a class="more">
         <icon type="mdi" icon="dots-horizontal"></icon>更多
       </a>
     </div>
-    <div class="contents-wrapper">
+    <div class="video-feeds">
+      <div class="sub-header">视频</div>
       <div class="contents">
-        <div class="card-wrapper" v-for="card in feeds" :key="card.id">
+        <div class="card-wrapper" v-for="card in videoFeeds" :key="card.id">
+          <video-card :data="card" orientation="vertical"></video-card>
+        </div>
+      </div>
+    </div>
+    <div class="bangumi-feeds">
+      <div class="sub-header">番剧</div>
+      <div class="contents">
+        <div class="card-wrapper" v-for="card in bangumiFeeds" :key="card.id">
           <video-card :data="card" orientation="vertical"></video-card>
         </div>
       </div>
@@ -28,20 +25,6 @@
   </div>
 </template>
 <script lang="ts">
-interface Tab {
-  name: string
-  type: 'video' | 'bangumi'
-}
-const tabs: Tab[] = [
-  {
-    name: '视频',
-    type: 'video'
-  },
-  {
-    name: '番剧',
-    type: 'bangumi'
-  }
-]
 export default {
   components: {
     VideoCard: () => import('../video-card.vue'),
@@ -49,24 +32,14 @@ export default {
   },
   data() {
     return {
-      tabs,
-      currentTab: tabs[0],
-      feeds: []
+      videoFeeds: [],
+      bangumiFeeds: []
     }
   },
-  watch: {
-    currentTab(tab: Tab) {
-      this.updateFeedsTab(tab)
-    }
-  },
-  methods: {
-    async updateFeedsTab(tab: Tab) {
-      const { getVideoFeeds } = await import('../../../activity/feeds-apis')
-      this.feeds = await getVideoFeeds(tab.type)
-    }
-  },
-  mounted() {
-    this.updateFeedsTab(this.currentTab)
+  async mounted() {
+    const { getVideoFeeds } = await import('../../../activity/feeds-apis')
+    this.videoFeeds = await getVideoFeeds('video')
+    this.bangumiFeeds = await getVideoFeeds('bangumi')
   }
 }
 </script>
@@ -75,66 +48,34 @@ export default {
 .simple-home .feeds {
   width: calc(100% + 16px);
   justify-self: center;
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  .header {
+  // display: flex;
+  // align-items: stretch;
+  // flex-direction: column;
+  display: grid;
+  grid-template-areas: 'header header' 'video bangumi';
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+  row-gap: 16px;
+  column-gap: 16px;
+  .header,
+  .sub-header {
     padding: 0 8px;
-    .flex-grow {
-      flex-grow: 1;
-    }
-    .tabs {
-      margin-left: 24px;
-      display: flex;
-      align-items: center;
-      .tab {
-        cursor: pointer;
-        position: relative;
-        .tab-name {
-          opacity: 0.5;
-          font-size: 14px;
-        }
-        &:not(:last-child) {
-          margin-right: 24px;
-        }
-        &::after {
-          content: '';
-          width: calc(80%);
-          height: 3px;
-          border-radius: 2px;
-          position: absolute;
-          background-color: var(--theme-color);
-          left: 10%;
-          bottom: -6px;
-          transform: scaleX(0);
-          transition: 0.2s ease-out;
-        }
-        &.active::after {
-          transform: scaleX(1);
-        }
-        &.active .tab-name {
-          font-weight: bold;
-          opacity: 1;
-          transform: scale(1.1);
-        }
-      }
-    }
   }
-  .contents-wrapper {
-    margin-top: 16px;
+  .video-feeds,
+  .bangumi-feeds {
     display: flex;
-    width: 100%;
+    flex-direction: column;
+    --card-width: 200px;
+    --card-height: 250px;
+    --card-count: 1;
     .contents {
-      --card-width: 200px;
-      --card-height: 250px;
+      width: calc((var(--card-width) + 16px) * var(--card-count));
       padding-bottom: 16px;
+      margin-top: 16px;
       display: flex;
       overflow: auto;
       scroll-snap-type: x mandatory;
       scrollbar-width: none !important;
-      width: 0;
-      flex: 1 0 0;
-
       &::-webkit-scrollbar {
         width: 0 !important;
         height: 0 !important;
@@ -144,6 +85,31 @@ export default {
         scroll-snap-align: start;
         flex-shrink: 0;
       }
+    }
+  }
+  .video-feeds {
+    grid-area: video;
+    @media screen and (min-width: 800px) {
+      --card-count: 2;
+    }
+    @media screen and (min-width: 1180px) {
+      --card-count: 3;
+    }
+    @media screen and (min-width: 1700px) {
+      --card-count: 4;
+    }
+  }
+  .bangumi-feeds {
+    grid-area: bangumi;
+    justify-self: end;
+    @media screen and (min-width: 950px) {
+      --card-count: 2;
+    }
+    @media screen and (min-width: 1450px) {
+      --card-count: 3;
+    }
+    @media screen and (min-width: 1900px) {
+      --card-count: 4;
     }
   }
 }

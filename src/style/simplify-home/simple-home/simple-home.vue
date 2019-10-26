@@ -12,8 +12,8 @@ export default {
     Blackboards: () => import('./blackboard.vue'),
     TrendingVideos: () => import('./trending-videos.vue'),
     InfoRow: () => import('./online-info-row.vue'),
-    Feeds: () => import('./simple-home-feeds.vue'),
-  },
+    Feeds: () => import('./simple-home-feeds.vue')
+  }
 }
 </script>
 <style lang="scss">
@@ -31,6 +31,12 @@ export default {
       grid-template-areas: 'blackboards' 'trendings' 'info' 'feeds' 'categories';
       grid-template-columns: 1fr;
       grid-template-rows: repeat(5, auto);
+      .blackboards {
+        justify-self: center;
+      }
+      .trendings {
+        justify-self: center;
+      }
     }
   }
   &,
@@ -93,11 +99,13 @@ export default {
         transform: rotate(180deg);
       }
     }
-    &, &.hover {
+    &,
+    &.hover {
       color: inherit !important;
       background-color: #ddd !important;
     }
-    body.dark &, body.dark &:hover {
+    body.dark &,
+    body.dark &:hover {
       color: inherit !important;
       background-color: #333 !important;
     }
@@ -113,13 +121,30 @@ export default {
       font-size: 22px;
     }
   }
-
+  .sub-header {
+    color: var(--title-color);
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    &::before {
+      content: '';
+      display: block;
+      width: 12px;
+      height: 12px;
+      background-color: var(--theme-color);
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+  }
   .blackboards {
     grid-area: blackboards;
+    justify-self: start;
   }
   .trendings {
     grid-area: trendings;
     transform: translateX(8px);
+    justify-self: end;
   }
   .info-row {
     grid-area: info;
