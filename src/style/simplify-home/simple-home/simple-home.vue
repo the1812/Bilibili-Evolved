@@ -78,7 +78,6 @@ export default {
     }
   }
   .more {
-    background-color: #ddd;
     cursor: pointer;
     padding: 2px 16px 2px 8px;
     display: flex;
@@ -94,8 +93,13 @@ export default {
         transform: rotate(180deg);
       }
     }
-    body.dark & {
-      background-color: #333;
+    &, &.hover {
+      color: inherit !important;
+      background-color: #ddd !important;
+    }
+    body.dark &, body.dark &:hover {
+      color: inherit !important;
+      background-color: #333 !important;
     }
   }
   .header {

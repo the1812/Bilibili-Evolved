@@ -129,6 +129,10 @@ $first-row-height: 250px;
         font-weight: bold;
         border-radius: 14px;
         white-space: nowrap;
+        opacity: 0;
+      }
+      &:hover .title {
+        opacity: 1;
       }
     }
   }
