@@ -4,6 +4,7 @@
     <trending-videos></trending-videos>
     <info-row></info-row>
     <feeds></feeds>
+    <!-- <categories></categories> -->
   </div>
 </template>
 <script lang="ts">
@@ -12,7 +13,8 @@ export default {
     Blackboards: () => import('./blackboard.vue'),
     TrendingVideos: () => import('./trending-videos.vue'),
     InfoRow: () => import('./online-info-row.vue'),
-    Feeds: () => import('./simple-home-feeds.vue')
+    Feeds: () => import('./simple-home-feeds.vue'),
+    Categories: () => import('./categories/simple-home-categories.vue'),
   }
 }
 </script>
@@ -176,19 +178,22 @@ export default {
   }
   .info-row {
     grid-area: info;
+    justify-self: end;
   }
   .feeds {
     grid-area: feeds;
+    transform: translateX(-8px);
+    justify-self: start;
+  }
+  .categories {
+    grid-area: categories;
   }
   @media screen and (max-width: 900px) {
     & {
       grid-template-areas: 'blackboards' 'trendings' 'info' 'feeds' 'categories';
       grid-template-columns: 1fr;
       grid-template-rows: repeat(5, auto);
-      .blackboards {
-        justify-self: center;
-      }
-      .trendings {
+      .blackboards, .trendings, .info-row, .feeds, .categories {
         justify-self: center;
       }
     }

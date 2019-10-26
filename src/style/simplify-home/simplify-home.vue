@@ -23,8 +23,9 @@ export default {
 .simplify-home {
   padding-top: 32px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  min-height: 100vh;
   background-color: #f4f4f4;
 
   body.dark & {
