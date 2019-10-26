@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { VideoCardInfo } from '../video-card.vue'
+import { VideoCardInfo } from '../video-card-info'
 export default {
   components: {
     VideoCard: () => import('../video-card.vue')
@@ -25,37 +25,14 @@ export default {
   },
   methods: {
     async getRankList() {
+      const { getTrendingVideos } = await import('../trending-videos')
+      const { getWatchlaterList } = await import(
+        '../../../video/watchlater-api'
+      )
+      const watchlaterList = await getWatchlaterList()
       const getRankListByDays = async (days: number) => {
-        const json = await Ajax.getJsonWithCredentials(
-          `https://api.bilibili.com/x/web-interface/ranking/index?day=${days}`
-        )
-        const { getWatchlaterList } = await import(
-          '../../../video/watchlater-api'
-        )
-        const watchlaterList = await getWatchlaterList()
-        if (json.code !== 0) {
-          throw new Error(json.message)
-        }
-        this.cards.push(
-          ...json.data.map(
-            (card: any): VideoCardInfo => {
-              return {
-                id: card.aid + '-' + days,
-                aid: parseInt(card.aid),
-                title: card.title,
-                upID: card.mid,
-                upName: card.author,
-                coverUrl: card.pic.replace('http://', 'https://'),
-                description: card.description,
-                durationText: card.duration,
-                playCount: formatCount(card.play),
-                coins: formatCount(card.coins),
-                favorites: formatCount(card.favorites),
-                watchlater: watchlaterList.includes(card.aid)
-              }
-            }
-          )
-        )
+        const cards = await getTrendingVideos(days, watchlaterList)
+        this.cards.push(...cards)
       }
       await Promise.all([1, 3, 7].map(getRankListByDays))
     },
@@ -155,13 +132,13 @@ export default {
         }
       }
       .video-card:nth-child(1)::before {
-        content: "昨日";
+        content: '昨日';
       }
       .video-card:nth-child(9)::before {
-        content: "三日";
+        content: '三日';
       }
       .video-card:nth-child(17)::before {
-        content: "一周";
+        content: '一周';
       }
     }
   }

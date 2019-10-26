@@ -135,6 +135,7 @@ declare global {
     cid: string | undefined
     pageno: string | number | undefined
     $: JQueryStatic
+    [key: string]: any
   }
   class SpinQuery {
     static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void;

@@ -1,3 +1,5 @@
+import { VideoCardInfo } from '../style/simplify-home/video-card-info'
+
 export interface FeedsCardType {
   id: number
   name: string
@@ -96,7 +98,7 @@ class FeedsCardsManager extends EventTarget {
   parseCard(element: HTMLElement): FeedsCard {
     const getText = (selector: string) => {
       if (element.querySelector(selector) === null) {
-        // console.log(element, selector)
+        console.warn(element, selector)
         return ''
       }
       return (element.querySelector(selector) as HTMLElement).innerText
@@ -166,9 +168,84 @@ class FeedsCardsManager extends EventTarget {
 }
 export const feedsCardsManager = new FeedsCardsManager()
 
+export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promise<VideoCardInfo[]> => {
+  const json = await Ajax.getJsonWithCredentials(
+    `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${type === 'video' ? 8 : 512}`
+  )
+  if (json.code !== 0) {
+    throw new Error(json.message)
+  }
+  if (type === 'video') {
+    const { getWatchlaterList } = await import(
+      '../video/watchlater-api'
+    )
+    const watchlaterList = await getWatchlaterList()
+    return json.data.cards.map(
+      (c: any): VideoCardInfo => {
+        const card = JSON.parse(c.card)
+        const topics = _.get(c, 'display.topic_info.topic_details', []).map(
+          (it: any) => {
+            return {
+              id: it.topic_id,
+              name: it.topic_name
+            }
+          }
+        )
+        return {
+          id: c.desc.dynamic_id_str,
+          aid: card.aid,
+          title: card.title,
+          upID: c.desc.user_profile.info.uid,
+          upName: c.desc.user_profile.info.uname,
+          upFaceUrl: c.desc.user_profile.info.face,
+          coverUrl: card.pic,
+          description: card.desc,
+          timestamp: c.timestamp,
+          time: new Date(c.timestamp * 1000),
+          topics,
+          dynamic: card.dynamic,
+          like: formatCount(c.desc.like),
+          duration: card.duration,
+          durationText: formatDuration(card.duration, 0),
+          playCount: formatCount(card.stat.view),
+          danmakuCount: formatCount(card.stat.danmaku),
+          watchlater: watchlaterList.includes(card.aid)
+        }
+      }
+    )
+  } else if (type === 'bangumi') {
+    return json.data.cards.map(
+      (c: any): VideoCardInfo => {
+        const card = JSON.parse(c.card)
+        return {
+          id: c.desc.dynamic_id_str,
+          aid: card.aid,
+          epID: card.episode_id,
+          title: card.new_desc,
+          upName: card.apiSeasonInfo.title,
+          upFaceUrl: card.apiSeasonInfo.cover,
+          coverUrl: card.cover,
+          description: '',
+          timestamp: c.timestamp,
+          time: new Date(c.timestamp * 1000),
+          like: formatCount(c.desc.like),
+          durationText: '',
+          playCount: formatCount(card.play_count),
+          danmakuCount: formatCount(card.bullet_count),
+          watchlater: false,
+        }
+      }
+    )
+
+  } else {
+    return []
+  }
+}
+
 export default {
   export: {
     feedsCardsManager,
     feedsCardTypes,
+    getVideoFeeds,
   },
 }
