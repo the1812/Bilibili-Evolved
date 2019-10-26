@@ -30,7 +30,7 @@
         :href="b.url"
         :title="b.title"
       >
-        <dpi-img :src="b.imageUrl" :alt="b.title" :size="{width: 500, height: 250}"></dpi-img>
+        <dpi-img :src="b.imageUrl" :alt="b.title" :size="{width: 500, height: 250}" :root="cardsContainer"></dpi-img>
         <div class="title">{{b.title}}</div>
       </a>
     </div>
@@ -53,6 +53,11 @@ export default {
   destroyed() {
     if (this.interval) {
       clearInterval(this.interval)
+    }
+  },
+  computed: {
+    cardsContainer() {
+      return this.$el.querySelector('.blackboard-cards')
     }
   },
   async mounted() {

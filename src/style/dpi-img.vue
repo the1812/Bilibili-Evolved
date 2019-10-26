@@ -27,7 +27,6 @@ export default {
       rootMargin: this.rootMargin || '200px',
       threshold: this.threshold,
     }
-    console.log(options)
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
