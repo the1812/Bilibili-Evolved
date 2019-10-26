@@ -154,6 +154,9 @@ const formatDuration = (time, fixed = 0) => {
 }
 const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
   const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4]
+  if (extension.startsWith('.')) {
+    extension = extension.substring(1)
+  }
   return dpis.map(dpi => {
     if (typeof baseSize === 'object') {
       if ('width' in baseSize && 'height' in baseSize) {
