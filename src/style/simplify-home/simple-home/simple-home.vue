@@ -21,24 +21,14 @@ export default {
   --title-color: black;
   color: #444;
   display: grid;
-  grid-template-areas: 'blackboards trendings' 'info info' 'feeds feeds' 'categories categories';
-  grid-template-columns: repeat(2, auto);
-  grid-template-rows: repeat(4, auto);
+  grid-template-areas:
+    'blackboards trendings trendings'
+    'feeds feeds info'
+    'categories categories categories';
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(3, auto);
   column-gap: 44px;
   row-gap: 16px;
-  @media screen and (max-width: 900px) {
-    & {
-      grid-template-areas: 'blackboards' 'trendings' 'info' 'feeds' 'categories';
-      grid-template-columns: 1fr;
-      grid-template-rows: repeat(5, auto);
-      .blackboards {
-        justify-self: center;
-      }
-      .trendings {
-        justify-self: center;
-      }
-    }
-  }
   &,
   & * {
     transition: 0.2s ease-out;
@@ -120,6 +110,41 @@ export default {
       font-weight: bold;
       font-size: 22px;
     }
+    .tabs {
+      display: flex;
+      align-items: center;
+      .tab {
+        cursor: pointer;
+        position: relative;
+        .tab-name {
+          opacity: 0.5;
+          font-size: 14px;
+        }
+        &:not(:last-child) {
+          margin-right: 24px;
+        }
+        &::after {
+          content: '';
+          width: calc(80%);
+          height: 3px;
+          border-radius: 2px;
+          position: absolute;
+          background-color: var(--theme-color);
+          left: 10%;
+          bottom: -6px;
+          transform: scaleX(0);
+          transition: 0.2s ease-out;
+        }
+        &.active::after {
+          transform: scaleX(1);
+        }
+        &.active .tab-name {
+          font-weight: bold;
+          opacity: 1;
+          transform: scale(1.1);
+        }
+      }
+    }
   }
   .sub-header {
     color: var(--title-color);
@@ -151,6 +176,19 @@ export default {
   }
   .feeds {
     grid-area: feeds;
+  }
+  @media screen and (max-width: 900px) {
+    & {
+      grid-template-areas: 'blackboards' 'trendings' 'info' 'feeds' 'categories';
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(5, auto);
+      .blackboards {
+        justify-self: center;
+      }
+      .trendings {
+        justify-self: center;
+      }
+    }
   }
 }
 </style>

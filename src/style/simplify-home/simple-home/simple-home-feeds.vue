@@ -1,12 +1,33 @@
 <template>
   <div class="feeds">
     <div class="header">
-      <div class="title">动态</div>
+      <div class="tabs">
+        <div class="title">动态</div>
+        <div
+          class="tab"
+          v-for="tab in tabs"
+          :key="tab.type"
+          @click="currentTab = tab"
+          :class="{active: currentTab === tab}"
+        >
+          <div class="tab-name">{{tab.name}}</div>
+        </div>
+      </div>
+      <a
+        class="online"
+        target="_blank"
+        href="https://www.bilibili.com/video/online.html"
+      >在线人数: {{online}}</a>
       <a class="more">
         <icon type="mdi" icon="dots-horizontal"></icon>更多
       </a>
     </div>
-    <div class="video-feeds">
+    <div class="contents">
+      <div class="card-wrapper" v-for="card in feedCards" :key="card.id">
+        <video-card :data="card" orientation="vertical"></video-card>
+      </div>
+    </div>
+    <!-- <div class="video-feeds">
       <div class="sub-header">视频</div>
       <div class="contents">
         <div class="card-wrapper" v-for="card in videoFeeds" :key="card.id">
@@ -21,10 +42,24 @@
           <video-card :data="card" orientation="vertical"></video-card>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 <script lang="ts">
+interface Tab {
+  name: string
+  type: 'video' | 'bangumi'
+}
+const tabs: Tab[] = [
+  {
+    name: '视频',
+    type: 'video'
+  },
+  {
+    name: '番剧',
+    type: 'bangumi'
+  }
+]
 export default {
   components: {
     VideoCard: () => import('../video-card.vue'),
@@ -32,27 +67,46 @@ export default {
   },
   data() {
     return {
-      videoFeeds: [],
-      bangumiFeeds: []
+      online: '--',
+      tabs,
+      currentTab: tabs[0],
+      feedCards: []
+    }
+  },
+  watch: {
+    currentTab(tab: Tab) {
+      this.updateFeedCards(tab)
+    }
+  },
+  methods: {
+    async updateFeedCards(tab: Tab) {
+      const { getVideoFeeds } = await import('../../../activity/feeds-apis')
+      this.feedCards = await getVideoFeeds(tab.type)
     }
   },
   async mounted() {
-    const { getVideoFeeds } = await import('../../../activity/feeds-apis')
-    this.videoFeeds = await getVideoFeeds('video')
-    this.bangumiFeeds = await getVideoFeeds('bangumi')
+    this.updateFeedCards(this.currentTab)
+    // const { getVideoFeeds } = await import('../../../activity/feeds-apis')
+    // this.videoFeeds = await getVideoFeeds('video')
+    // this.bangumiFeeds = await getVideoFeeds('bangumi')
+    const json = await Ajax.getJson(
+      'https://api.bilibili.com/x/web-interface/online'
+    )
+    if (json.code === 0) {
+      this.online = json.data.web_online
+    }
   }
 }
 </script>
 
 <style lang="scss">
 .simple-home .feeds {
-  width: calc(100% + 16px);
-  justify-self: center;
+  justify-self: start;
   // display: flex;
   // align-items: stretch;
   // flex-direction: column;
   display: grid;
-  grid-template-areas: 'header header' 'video bangumi';
+  grid-template-areas: 'header header' 'contents contents';
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
   row-gap: 16px;
@@ -60,57 +114,105 @@ export default {
   .header,
   .sub-header {
     padding: 0 8px;
+    .tab:nth-child(2) {
+      margin-left: 32px;
+    }
+    .online {
+      padding: 8px 16px;
+      height: 32px;
+      border-radius: 16px;
+      background-color: #8882;
+      color: inherit;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+    }
   }
-  .video-feeds,
-  .bangumi-feeds {
+  .contents {
+    grid-area: contents;
     display: flex;
-    flex-direction: column;
+    overflow: auto;
+
     --card-width: 200px;
     --card-height: 250px;
-    --card-count: 1;
-    .contents {
-      width: calc((var(--card-width) + 16px) * var(--card-count));
-      padding-bottom: 16px;
-      margin-top: 16px;
-      display: flex;
-      overflow: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none !important;
-      &::-webkit-scrollbar {
-        width: 0 !important;
-        height: 0 !important;
-      }
-      .card-wrapper {
-        padding: 0 8px;
-        scroll-snap-align: start;
-        flex-shrink: 0;
-      }
-    }
-  }
-  .video-feeds {
-    grid-area: video;
-    @media screen and (min-width: 800px) {
-      --card-count: 2;
-    }
-    @media screen and (min-width: 1180px) {
-      --card-count: 3;
-    }
-    @media screen and (min-width: 1700px) {
+    --card-count: 3;
+    width: calc((var(--card-width) + 16px) * var(--card-count));
+    padding-bottom: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none !important;
+    @media screen and (min-width: 1050px) {
       --card-count: 4;
     }
-  }
-  .bangumi-feeds {
-    grid-area: bangumi;
-    justify-self: end;
-    @media screen and (min-width: 950px) {
-      --card-count: 2;
+    @media screen and (min-width: 1300px) {
+      --card-count: 5;
     }
-    @media screen and (min-width: 1450px) {
-      --card-count: 3;
+    @media screen and (min-width: 1600px) {
+      --card-count: 6;
     }
     @media screen and (min-width: 1900px) {
-      --card-count: 4;
+      --card-count: 7;
+    }
+    &::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0 !important;
+    }
+    .card-wrapper {
+      padding: 0 8px;
+      scroll-snap-align: start;
+      flex-shrink: 0;
     }
   }
+  // .video-feeds,
+  // .bangumi-feeds {
+  //   display: flex;
+  //   flex-direction: column;
+  //   --card-width: 200px;
+  //   --card-height: 250px;
+  //   --card-count: 1;
+  //   .contents {
+  //     width: calc((var(--card-width) + 16px) * var(--card-count));
+  //     padding-bottom: 16px;
+  //     margin-top: 16px;
+  //     display: flex;
+  //     overflow: auto;
+  //     scroll-snap-type: x mandatory;
+  //     scrollbar-width: none !important;
+  //     &::-webkit-scrollbar {
+  //       width: 0 !important;
+  //       height: 0 !important;
+  //     }
+  //     .card-wrapper {
+  //       padding: 0 8px;
+  //       scroll-snap-align: start;
+  //       flex-shrink: 0;
+  //     }
+  //   }
+  // }
+  // .video-feeds {
+  //   grid-area: video;
+  //   @media screen and (min-width: 800px) {
+  //     --card-count: 2;
+  //   }
+  //   @media screen and (min-width: 1180px) {
+  //     --card-count: 3;
+  //   }
+  //   @media screen and (min-width: 1700px) {
+  //     --card-count: 4;
+  //   }
+  // }
+  // .bangumi-feeds {
+  //   grid-area: bangumi;
+  //   justify-self: end;
+  //   @media screen and (min-width: 950px) {
+  //     --card-count: 2;
+  //   }
+  //   @media screen and (min-width: 1450px) {
+  //     --card-count: 3;
+  //   }
+  //   @media screen and (min-width: 1900px) {
+  //     --card-count: 4;
+  //   }
+  // }
 }
 </style>

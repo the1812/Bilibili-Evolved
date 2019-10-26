@@ -75,41 +75,6 @@ export default {
   flex-direction: column;
   .header {
     padding: 0 8px;
-    .tabs {
-      display: flex;
-      align-items: center;
-      .tab {
-        cursor: pointer;
-        position: relative;
-        .tab-name {
-          opacity: 0.5;
-          font-size: 14px;
-        }
-        &:not(:last-child) {
-          margin-right: 24px;
-        }
-        &::after {
-          content: '';
-          width: calc(80%);
-          height: 3px;
-          border-radius: 2px;
-          position: absolute;
-          background-color: var(--theme-color);
-          left: 10%;
-          bottom: -6px;
-          transform: scaleX(0);
-          transition: 0.2s ease-out;
-        }
-        &.active::after {
-          transform: scaleX(1);
-        }
-        &.active .tab-name {
-          font-weight: bold;
-          opacity: 1;
-          transform: scale(1.1);
-        }
-      }
-    }
   }
   .contents {
     --card-width: 200px;

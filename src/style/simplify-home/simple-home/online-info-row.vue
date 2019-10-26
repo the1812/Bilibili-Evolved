@@ -1,10 +1,13 @@
 <template>
   <div class="info-row">
-    <a
+    <div class="header">
+      <div class="title">栏目</div>
+    </div>
+    <!-- <a
       class="online"
       target="_blank"
       href="https://www.bilibili.com/video/online.html"
-    >在线人数: {{online}}</a>
+    >在线人数: {{online}}</a>-->
     <div class="entries">
       <a
         class="entry"
@@ -107,18 +110,8 @@ export default {
   },
   data() {
     return {
-      online: '--',
       entries
     }
-  },
-  async mounted() {
-    const json = await Ajax.getJson(
-      'https://api.bilibili.com/x/web-interface/online'
-    )
-    if (json.code !== 0) {
-      return
-    }
-    this.online = json.data.web_online
   }
 }
 </script>
@@ -126,48 +119,56 @@ export default {
 <style lang="scss">
 .simple-home .info-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .online {
-    padding: 8px 16px;
-    height: 32px;
-    border-radius: 16px;
-    background-color: #8882;
-    color: inherit;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-  }
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
   .entries {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+    height: 100%;
+    margin-top: 16px;
+    padding-bottom: 16px;
     .entry {
       display: flex;
       align-items: center;
-      font-weight: bold;
-      padding: 8px 24px 8px 16px;
-      height: 32px;
-      border-radius: 16px;
+      border-radius: 8px;
       font-size: 14px;
       color: inherit;
       box-sizing: border-box;
+      flex: 0 0 auto;
+      height: 36px;
+      justify-content: center;
+      padding: 0px 12px 0 8px;
 
       .icon {
-        margin-right: 16px;
         width: 24px;
         height: 24px;
         transition-duration: 0.5s;
+        margin-right: 8px;
       }
       &:hover .icon {
         transform: rotate(360deg);
       }
+      // &:not(:last-child) {
+      //   margin-bottom: 24px;
+      // }
+      // @media screen and (max-width: 900px) {
+      //   &:not(:last-child) {
+      //     margin-right: 16px;
+      //   }
+      // }
+    }
+
+    @media screen and (max-width: 900px) {
+      flex-direction: row;
+      .entry {
+        flex: 1 0 0;
+
       &:not(:last-child) {
-        margin-right: 24px;
+        margin-right: 16px;
       }
-      @media screen and (max-width: 900px) {
-        &:not(:last-child) {
-          margin-right: 16px;
-        }
       }
     }
   }
