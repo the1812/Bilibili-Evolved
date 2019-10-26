@@ -4,7 +4,7 @@
     <trending-videos></trending-videos>
     <info-row></info-row>
     <feeds></feeds>
-    <!-- <categories></categories> -->
+    <categories></categories>
   </div>
 </template>
 <script lang="ts">
