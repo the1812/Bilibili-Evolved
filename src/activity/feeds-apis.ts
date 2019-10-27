@@ -102,7 +102,7 @@ class FeedsCardsManager extends EventTarget {
         it => it !== null
       ) as HTMLElement
       if (subElement === null) {
-        // console.warn(element, selector)
+        console.warn(element, selector)
         return ''
       }
       return subElement.innerText
@@ -144,7 +144,7 @@ class FeedsCardsManager extends EventTarget {
     const card = {
       id: element.getAttribute('data-did') as string,
       username: await getText('.main-content .user-name'),
-      text: await getText('.card-content .text.description'),
+      text: await getText('.card-content .text.description,.video-container .title,.bangumi-container .title'),
       reposts: await getNumber('.button-bar .single-button:nth-child(1) .text-offset'),
       comments: await getNumber('.button-bar .single-button:nth-child(2) .text-offset'),
       likes: await getNumber('.button-bar .single-button:nth-child(3) .text-offset'),
