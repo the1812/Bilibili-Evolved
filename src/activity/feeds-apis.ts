@@ -68,26 +68,26 @@ class FeedsCardsManager extends EventTarget {
   ): void {
     super.removeEventListener(type, callback, options)
   }
-  addCard(node: Node) {
+  async addCard(node: Node) {
     if (node instanceof HTMLElement && node.classList.contains('card')) {
       if (node.querySelector('.skeleton') !== null) {
         const obs = Observer.childList(node, () => {
           if (node.querySelector('.skeleton') === null) {
-            obs.forEach(it => it.stop())
+            obs.stop()
             this.addCard(node)
           }
         })
       } else {
-        const card = this.parseCard(node)
+        const card = await this.parseCard(node)
         this.cards.push(card)
         const event = new CustomEvent('addCard', { detail: card })
         this.dispatchEvent(event)
       }
     }
   }
-  removeCard(node: Node) {
+  async removeCard(node: Node) {
     if (node instanceof HTMLElement && node.classList.contains('card')) {
-      const id = this.parseCard(node).id
+      const id = (await this.parseCard(node)).id
       const index = this.cards.findIndex(c => c.id === id)
       const card = this.cards[index]
       this.cards.splice(index, 1)
@@ -95,16 +95,20 @@ class FeedsCardsManager extends EventTarget {
       this.dispatchEvent(event)
     }
   }
-  parseCard(element: HTMLElement): FeedsCard {
-    const getText = (selector: string) => {
-      if (element.querySelector(selector) === null) {
+  async parseCard(element: HTMLElement): Promise<FeedsCard> {
+    const getText = async (selector: string) => {
+      const subElement = await SpinQuery.condition(
+        () => element.querySelector(selector),
+        it => it !== null
+      ) as HTMLElement
+      if (subElement === null) {
         console.warn(element, selector)
         return ''
       }
-      return (element.querySelector(selector) as HTMLElement).innerText
+      return subElement.innerText
     }
-    const getNumber = (selector: string) => {
-      const result = parseInt(getText(selector))
+    const getNumber = async (selector: string) => {
+      const result = parseInt(await getText(selector))
       if (isNaN(result)) {
         return 0
       }
@@ -139,11 +143,11 @@ class FeedsCardsManager extends EventTarget {
     })()
     const card = {
       id: element.getAttribute('data-did') as string,
-      username: getText('.main-content .user-name'),
-      text: getText('.card-content .text.description'),
-      reposts: getNumber('.button-bar .single-button:nth-child(1) .text-offset'),
-      comments: getNumber('.button-bar .single-button:nth-child(2) .text-offset'),
-      likes: getNumber('.button-bar .single-button:nth-child(3) .text-offset'),
+      username: await getText('.main-content .user-name'),
+      text: await getText('.card-content .text.description'),
+      reposts: await getNumber('.button-bar .single-button:nth-child(1) .text-offset'),
+      comments: await getNumber('.button-bar .single-button:nth-child(2) .text-offset'),
+      likes: await getNumber('.button-bar .single-button:nth-child(3) .text-offset'),
       element,
       type,
     }
