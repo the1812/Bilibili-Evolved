@@ -102,7 +102,7 @@ class FeedsCardsManager extends EventTarget {
         it => it !== null
       ) as HTMLElement
       if (subElement === null) {
-        console.warn(element, selector)
+        // console.warn(element, selector)
         return ''
       }
       return subElement.innerText

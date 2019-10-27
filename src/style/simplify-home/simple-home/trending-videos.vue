@@ -30,24 +30,24 @@ interface Tab {
 }
 const tabs: Tab[] = [
   {
-    name: '一周',
-    day: 7,
-    url: 'https://www.bilibili.com/ranking/all/0/0/7',
+    name: '昨日',
+    day: 1,
+    url: 'https://www.bilibili.com/ranking/all/0/0/1'
   },
   {
     name: '三日',
     day: 3,
-    url: 'https://www.bilibili.com/ranking',
+    url: 'https://www.bilibili.com/ranking'
   },
   {
-    name: '昨日',
-    day: 1,
-    url: 'https://www.bilibili.com/ranking/all/0/0/1',
+    name: '一周',
+    day: 7,
+    url: 'https://www.bilibili.com/ranking/all/0/0/7'
   }
 ]
 export default {
   components: {
-    VideoCard: () => import('../video-card.vue'),
+    VideoCard: () => import('../video-card.vue')
   },
   data() {
     return {
@@ -76,7 +76,7 @@ export default {
   },
   mounted() {
     this.updateTrendingTab(this.currentTab)
-  },
+  }
 }
 </script>
 
