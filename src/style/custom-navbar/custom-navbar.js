@@ -354,10 +354,10 @@ class Messages extends NavbarComponent {
     this.html = "消息";
     this.popupHtml = /*html*/`
       <ul id="message-list">
-        <li><a data-name="reply_me" target="_blank" href="https://message.bilibili.com/#/reply">回复我的</a></li>
-        <li><a data-name="at_me" target="_blank" href="https://message.bilibili.com/#/at">@我的</a></li>
-        <li><a data-name="praise_me" target="_blank" href="https://message.bilibili.com/#/love">收到的赞</a></li>
-        <li><a data-name="notify_me" target="_blank" href="https://message.bilibili.com/#/system">系统通知</a></li>
+        <li><a data-name="reply_me" target="_blank" href="https://message.bilibili.com/new/#/reply">回复我的</a></li>
+        <li><a data-name="at_me" target="_blank" href="https://message.bilibili.com/new/#/at">@我的</a></li>
+        <li><a data-name="praise_me" target="_blank" href="https://message.bilibili.com/new/#/love">收到的赞</a></li>
+        <li><a data-name="notify_me" target="_blank" href="https://message.bilibili.com/new/#/system">系统通知</a></li>
       </ul>
     `;
     this.requestedPopup = true;
