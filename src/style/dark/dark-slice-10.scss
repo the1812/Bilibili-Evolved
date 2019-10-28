@@ -373,5 +373,16 @@
         @include color("a");
       }
     }
+    .user-contain {
+      .page-btn {
+        @include background-color("4");
+        @include color("a");
+        @include border-color();
+      }
+      .primary-btn:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
   }
 }
