@@ -379,9 +379,13 @@
         @include color("a");
         @include border-color();
       }
-      .primary-btn:hover {
-        @include theme-background-color();
-        @include foreground-color();
+      .primary-btn {
+        @include background-color("4");
+        @include color("e");
+        &:hover {
+          @include theme-background-color();
+          @include foreground-color();
+        }
       }
     }
   }
