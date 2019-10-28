@@ -109,7 +109,8 @@
   @include color("e");
 }
 
-.vote-pc-container .card {
+.vote-pc-container .card,
+.vote-result-comment .reply-item {
   @include border-color();
 }
 
