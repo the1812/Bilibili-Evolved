@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-type-switch">
+  <div class="filter-type-switch feeds-filter-swtich">
     <label :class="{disabled}">
       <span class="name" :class="{disabled}">{{type.name}}</span>
       <input type="checkbox" v-model="disabled" />
@@ -48,38 +48,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.filter-type-switch {
-  label {
-    cursor: pointer;
-    margin: 0;
-    padding: 4px 8px;
-    border-radius: 4px;
-    background-color: #0001;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid transparent;
-
-    .name {
-      font-size: 12px;
-    }
-    .disabled {
-      color: var(--theme-color) !important;
-    }
-    &:hover {
-      background-color: #0002;
-    }
-    &.disabled {
-      border-color: var(--theme-color);
-    }
-    input {
-      display: none;
-    }
-    .be-icon {
-      font-size: 16px;
-    }
-  }
-}
-</style>
