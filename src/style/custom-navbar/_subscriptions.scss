@@ -32,6 +32,9 @@
     display: flex;
     margin-bottom: 12px;
     flex-shrink: 0;
+    body.dark & {
+      background-color: #2d2d2d;
+    }
   }
   .bangumi-subscriptions-card .card-info {
     flex-grow: 1;
