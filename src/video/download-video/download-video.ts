@@ -8,43 +8,6 @@ interface PageData {
   cid: string
 }
 class Video {
-  menuClasses: string[]
-  currentMenuClass: string
-
-  constructor() {
-    this.menuClasses = ['quality', 'action', 'progress'];
-    [this.currentMenuClass] = this.menuClasses
-  }
-  get menuPanel() {
-    return document.querySelector('.download-video-panel') as HTMLDivElement
-  }
-  addMenuClass() {
-    this.menuPanel.classList.remove(...this.menuClasses)
-    this.menuPanel.classList.add(this.currentMenuClass)
-    return this.currentMenuClass
-  }
-  resetMenuClass() {
-    [this.currentMenuClass] = this.menuClasses
-    this.addMenuClass()
-  }
-  nextMenuClass() {
-    const index = this.menuClasses.indexOf(this.currentMenuClass) + 1
-    const next = this.menuClasses[index >= this.menuClasses.length ? 0 : index]
-    this.currentMenuClass = next
-    this.addMenuClass()
-    return next
-  }
-  closeMenu() {
-    this.menuPanel.classList.remove('opened')
-    setTimeout(() => this.resetMenuClass(), 200)
-  }
-  addError() {
-    this.menuPanel.classList.add('error')
-  }
-  removeError() {
-    this.menuPanel.classList.remove('error')
-    this.resetMenuClass()
-  }
   async getDashUrl(quality?: number): Promise<string> {
     throw new Error('video dash is not supported')
   }
@@ -265,21 +228,21 @@ class VideoDownloader {
       await this.copyUrl()
     })
   }
-  static downloadBlob(blobOrUrl: Blob | string, filename: string) {
-    const a = document.createElement('a')
-    let url: string
-    if (typeof blobOrUrl === 'string') {
-      url = blobOrUrl
-    } else {
-      url = URL.createObjectURL(blobOrUrl)
-    }
-    a.setAttribute('href', url)
-    a.setAttribute('download', filename)
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-    URL.revokeObjectURL(url)
-  }
+  // static downloadBlob(blobOrUrl: Blob | string, filename: string) {
+  //   const a = document.createElement('a')
+  //   let url: string
+  //   if (typeof blobOrUrl === 'string') {
+  //     url = blobOrUrl
+  //   } else {
+  //     url = URL.createObjectURL(blobOrUrl)
+  //   }
+  //   a.setAttribute('href', url)
+  //   a.setAttribute('download', filename)
+  //   document.body.appendChild(a)
+  //   a.click()
+  //   a.remove()
+  //   URL.revokeObjectURL(url)
+  // }
   async exportData(copy = false) {
     const data = JSON.stringify([{
       fragments: this.fragments,
@@ -292,21 +255,22 @@ class VideoDownloader {
     } else {
       const blob = new Blob([data], { type: 'text/json' })
       const danmaku = await this.downloadDanmaku()
-      if (danmaku !== null) {
-        const zip = new JSZip()
-        zip.file(`${getFriendlyTitle()}.json`, blob)
-        zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
-        VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), `${getFriendlyTitle()}.zip`)
-      } else {
-        VideoDownloader.downloadBlob(blob, `${getFriendlyTitle()}.json`)
-      }
+      const { DownloadVideoPackage } = await import('./download-video-package')
+      const pack = new DownloadVideoPackage()
+      pack.add(`${getFriendlyTitle()}.json`, blob)
+      pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
+      await pack.emit(`${getFriendlyTitle()}.zip`)
     }
   }
   async exportAria2(rpc = false) {
     if (rpc) { // https://aria2.github.io/manual/en/html/aria2c.html#json-rpc-using-http-get
       const danmaku = await this.downloadDanmaku()
       if (danmaku !== null) {
-        VideoDownloader.downloadBlob(new Blob([danmaku]), `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`)
+        const { DownloadVideoPackage } = await import('./download-video-package')
+        DownloadVideoPackage.single(
+          `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
+          danmaku
+        )
       }
       const option = settings.aria2RpcOption
       const params = this.fragments.map((fragment, index) => {
@@ -355,14 +319,11 @@ ${it.url}
       `.trim()
       const blob = new Blob([input], { type: 'text/plain' })
       const danmaku = await this.downloadDanmaku()
-      if (danmaku !== null) {
-        const zip = new JSZip()
-        zip.file(`${getFriendlyTitle()}.txt`, blob)
-        zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
-        VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), `${getFriendlyTitle()}.zip`)
-      } else {
-        VideoDownloader.downloadBlob(blob, `${getFriendlyTitle()}.txt`)
-      }
+      const { DownloadVideoPackage } = await import('./download-video-package')
+      const pack = new DownloadVideoPackage()
+      pack.add(`${getFriendlyTitle()}.txt`, blob)
+      pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
+      await pack.emit(`${getFriendlyTitle()}.zip`)
     }
   }
   extension(fragment?: VideoDownloaderFragment) {
@@ -696,25 +657,26 @@ async function loadPanel() {
           return match.checked
         }
         const format = this.getFormat()
+        const { DownloadVideoPackage } = await import('./download-video-package')
         if (this.danmakuModel.value !== '无') {
           const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
-          const zip = new JSZip()
+          const pack = new DownloadVideoPackage()
           try {
             if (this.danmakuModel.value === 'XML') {
               for (const item of episodeList.filter(episodeFilter)) {
                 const danmakuInfo = new DanmakuInfo(item.cid)
                 await danmakuInfo.fetchInfo()
-                zip.file(item.title + '.xml', danmakuInfo.rawXML)
+                pack.add(item.title + '.xml', danmakuInfo.rawXML)
               }
             } else {
               const { convertToAss } = await import('../download-danmaku')
               for (const item of episodeList.filter(episodeFilter)) {
                 const danmakuInfo = new DanmakuInfo(item.cid)
                 await danmakuInfo.fetchInfo()
-                zip.file(item.title + '.ass', await convertToAss(danmakuInfo.rawXML))
+                pack.add(item.title + '.ass', await convertToAss(danmakuInfo.rawXML))
               }
             }
-            VideoDownloader.downloadBlob(await zip.generateAsync({ type: 'blob' }), this.cid + '.danmakus.zip')
+            await pack.emit(this.cid + '.danmakus.zip')
           } catch (error) {
             logError(`弹幕下载失败`)
           } finally {
@@ -728,7 +690,10 @@ async function loadPanel() {
           switch (type) {
             case 'aria2':
               result = await this.batchExtractor.collectAria2(format, toast)
-              VideoDownloader.downloadBlob(new Blob([result], { type: 'text/plain' }), getFriendlyTitle(false) + '.txt')
+              await DownloadVideoPackage.single(
+                getFriendlyTitle(false) + '.txt',
+                new Blob([result], { type: 'text/plain' })
+              )
               return
             case 'aria2RPC':
               await this.batchExtractor.collectAria2(format, toast, true)
@@ -740,7 +705,10 @@ async function loadPanel() {
               return
             case 'exportVLD':
               result = await this.batchExtractor.collectData(format, toast)
-              VideoDownloader.downloadBlob(new Blob([result], { type: 'text/json' }), getFriendlyTitle(false) + '.json')
+              await DownloadVideoPackage.single(
+                getFriendlyTitle(false) + '.json',
+                new Blob([result], { type: 'text/json' })
+              )
               return
             default:
               return
