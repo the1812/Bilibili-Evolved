@@ -1,10 +1,10 @@
 .download-video {
   --download-video-background: white;
   --download-video-foreground: black;
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 64px;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
+  transform: translateX(-50%) scale(0.95);
   background: var(--download-video-background);
   color: var(--download-video-foreground);
   box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
@@ -17,7 +17,6 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
-  max-height: 90%;
 
   &,
   * {
@@ -27,7 +26,7 @@
   &.opened {
     pointer-events: initial;
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translateX(-50%) scale(1);
   }
   body.dark & {
     --download-video-background: #222;
