@@ -82,7 +82,7 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 - [MDI](https://materialdesignicons.com)
 - [Lodash](https://lodash.com/)
 
-------
+----
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 
@@ -95,3 +95,18 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 微信
 
 <img alt="微信" src="images/compressed/wechat.jpg" height="200">
+
+----
+
+# 相关推荐
+这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配并保持无冲突.
+
+## 解除B站区域限制
+作者: [ipcjs](https://github.com/ipcjs)
+- [GitHub](https://github.com/ipcjs/bilibili-helper/blob/user.js/bilibili_bangumi_area_limit_hack.md)
+- [GreasyFork](https://greasyfork.org/zh-CN/scripts/25718-%E8%A7%A3%E9%99%A4b%E7%AB%99%E5%8C%BA%E5%9F%9F%E9%99%90%E5%88%B6)
+
+## bilibili网页端添加APP首页推荐
+作者: [indefined](https://github.com/indefined)
+- [GitHub](https://github.com/indefined/UserScripts/tree/master/bilibiliHome)
+- [GreasyFork](https://greasyfork.org/zh-CN/scripts/368446-bilibili%E7%BD%91%E9%A1%B5%E7%AB%AF%E6%B7%BB%E5%8A%A0app%E9%A6%96%E9%A1%B5%E6%8E%A8%E8%8D%90)
