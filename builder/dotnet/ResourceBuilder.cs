@@ -53,12 +53,12 @@ namespace BilibiliEvolved.Build
                     {
                         var fullName = file.FullName;
                         return predicate(file)
-                        && !fullName.Contains(@".vs\")
-                        && !fullName.Contains(@".vscode\")
-                        && !fullName.Contains(@"build-scripts\")
-                        && !fullName.Contains(@"node_modules\")
-                        && !fullName.Contains(@".backup.")
-                        && !fullName.Contains(@"extras");
+                        && !fullName.Contains($".vs{Path.DirectorySeparatorChar}")
+                        && !fullName.Contains($".vscode{Path.DirectorySeparatorChar}")
+                        && !fullName.Contains($"build-scripts{Path.DirectorySeparatorChar}")
+                        && !fullName.Contains($"node_modules{Path.DirectorySeparatorChar}")
+                        && !fullName.Contains($".backup.")
+                        && !fullName.Contains($"extras");
                     })
                     .Select(file => getRelativePath(file.FullName)));
                 foreach (var subDir in currentDirectory.EnumerateDirectories())
