@@ -582,6 +582,7 @@ async function loadPanel() {
         [selectedFormat] = format
         this.qualityModel.items = updatedFormats.map(f => f.displayName);
         [this.qualityModel.value] = this.qualityModel.items
+        await this.formatChange()
       },
       async formatChange() {
         const format = this.getFormat() as VideoFormat
