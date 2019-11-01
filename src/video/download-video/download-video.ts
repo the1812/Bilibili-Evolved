@@ -144,8 +144,8 @@ class VideoDownloader {
         await pageData.entity.getDashUrl(this.format.quality),
         this.format.quality
       )
-      const video = dashes.videoDashes.sort(descendingSort(d => d.bandWidth))[0]
-      const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
+      const video = dashes.videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
+      const audio = dashes.audioDashes.sort(ascendingSort(d => d.bandWidth))[0]
       this.fragments = [dashToFragment(video), dashToFragment(audio)]
     }
     return this.fragments
