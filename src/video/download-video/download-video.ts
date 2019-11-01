@@ -8,8 +8,12 @@ interface PageData {
   cid: string
 }
 class Video {
-  async getDashUrl(quality?: number): Promise<string> {
-    throw new Error('video dash is not supported')
+  async getDashUrl(quality?: number) {
+    if (quality) {
+      return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json&fnver=0&fnval=16`
+    } else {
+      return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json&fnver=0&fnval=16`
+    }
   }
   async getUrl(quality?: number) {
     if (quality) {
@@ -85,7 +89,7 @@ class VideoFormat {
     if (json.code !== 0) {
       throw new Error('获取清晰度信息失败.')
     }
-    return VideoFormat.parseFormats(json.result)
+    return VideoFormat.parseFormats(json.data || json.result || json)
   }
   static async getAvailableFormats(): Promise<VideoFormat[]> {
     const url = await pageData.entity.getUrl()
@@ -136,7 +140,10 @@ class VideoDownloader {
     }
     else {
       const { dashToFragment, getDashInfo } = await import('./video-dash')
-      const dashes = await getDashInfo(pageData.aid, pageData.cid, this.format.quality)
+      const dashes = await getDashInfo(
+        await pageData.entity.getDashUrl(this.format.quality),
+        this.format.quality
+      )
       const video = dashes.videoDashes.sort(descendingSort(d => d.bandWidth))[0]
       const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
       this.fragments = [dashToFragment(video), dashToFragment(audio)]
