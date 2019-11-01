@@ -3,10 +3,11 @@
   "description": "「 强大的哔哩哔哩增强脚本 」",
   "main": "bilibili-evolved.user.js",
   "dependencies": {
-    "ffmpeg.js": "^3.1.9001"
+    "vue": "^2.6.10"
   },
   "devDependencies": {
     "@types/jquery": "^3.3.31",
+    "@types/jszip": "^3.1.6",
     "@types/lodash": "^4.14.138",
     "clean-css-cli": "^4.3.0",
     "html-minifier": "^4.0.0",
