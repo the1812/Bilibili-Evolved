@@ -1,6 +1,7 @@
 import { getFriendlyTitle, formatTitle } from '../title'
 import { VideoInfo, DanmakuInfo } from '../video-info'
-import { VideoDownloaderFragment } from './video-downloader-fragment';
+import { VideoDownloaderFragment } from './video-downloader-fragment'
+import { DownloadVideoPackage } from './download-video-package'
 
 interface PageData {
   entity: Video
@@ -36,6 +37,24 @@ class Bangumi extends Video {
       return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
     } else {
       return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=&otype=json`
+    }
+  }
+}
+// 课程, 不知道为什么b站给它起名cheese
+class Cheese extends Video {
+  constructor(public ep: number | string) { super() }
+  async getDashUrl(quality?: number) {
+    if (quality) {
+      return `https://api.bilibili.com/pugv/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json&ep_id=${this.ep}&fnver=0&fnval=16`
+    } else {
+      return `https://api.bilibili.com/pugv/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json&ep_id=${this.ep}&fnver=0&fnval=16`
+    }
+  }
+  async getUrl(quality?: number) {
+    if (quality) {
+      return `https://api.bilibili.com/pugv/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json&ep_id=${this.ep}`
+    } else {
+      return `https://api.bilibili.com/pugv/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json&ep_id=${this.ep}`
     }
   }
 }
@@ -108,7 +127,8 @@ class VideoDownloader {
   workingXhr: XMLHttpRequest[] | null = null
   progress: (progress: number) => void
   progressMap: Map<XMLHttpRequest, number> = new Map()
-  danmakuOption: DanmakuOption
+  danmakuOption: DanmakuOption = '无'
+  ffmpegOption: FfmpegOption = '无'
   videoSpeed: VideoSpeed
 
   constructor(format: VideoFormat, fragments?: VideoDownloaderFragment[]) {
@@ -167,17 +187,17 @@ class VideoDownloader {
     }
   }
   downloadFragment(fragment: VideoDownloaderFragment) {
-    const promises: Promise<any>[] = []
+    const promises: Promise<ArrayBuffer>[] = []
     this.workingXhr = []
     this.progressMap = new Map()
     this.updateProgress()
     // const partialLength = Math.round(fragment.size / this.fragmentSplitFactor)
     // 按一定大小分段或许对大视频更好
     let partialLength: number
-    if (fragment.size <= 96 * 1024 * 1024) { // 小于等于96MB时, 均分为12段 (this.fragmentSplitFactor)
+    if (fragment.size <= 48 * 1024 * 1024) { // 小于等于48MB时, 均分为12段 (this.fragmentSplitFactor)
       partialLength = fragment.size / this.fragmentSplitFactor
-    } else { // 大于96MB时, 每16MB为一段
-      partialLength = 16 * 1024 * 1024 // 16MB
+    } else { // 大于48MB时, 每4MB为一段
+      partialLength = 4 * 1024 * 1024 // 4MB
     }
     let startByte = 0
     const getPartNumber = (xhr: XMLHttpRequest) => [...this.progressMap.keys()].indexOf(xhr) + 1
@@ -185,7 +205,7 @@ class VideoDownloader {
       const endByte = Math.min(fragment.size - 1, Math.round(startByte + partialLength))
       const range = `bytes=${startByte}-${endByte}`
       const rangeLength = endByte - startByte + 1
-      promises.push(new Promise<any>((resolve, reject) => {
+      promises.push(new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest()
         xhr.open('GET', fragment.url)
         xhr.responseType = 'arraybuffer'
@@ -262,8 +282,7 @@ class VideoDownloader {
     } else {
       const blob = new Blob([data], { type: 'text/json' })
       const danmaku = await this.downloadDanmaku()
-      const { DownloadVideoPackage } = await import('./download-video-package')
-      const pack = new DownloadVideoPackage()
+      const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption })
       pack.add(`${getFriendlyTitle()}.json`, blob)
       pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
       await pack.emit(`${getFriendlyTitle()}.zip`)
@@ -272,13 +291,12 @@ class VideoDownloader {
   async exportAria2(rpc = false) {
     if (rpc) { // https://aria2.github.io/manual/en/html/aria2c.html#json-rpc-using-http-get
       const danmaku = await this.downloadDanmaku()
-      if (danmaku !== null) {
-        const { DownloadVideoPackage } = await import('./download-video-package')
-        DownloadVideoPackage.single(
-          `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
-          danmaku
-        )
-      }
+      const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption })
+      pack.add(
+        `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
+        danmaku
+      )
+      await pack.emit()
       const option = settings.aria2RpcOption
       const params = this.fragments.map((fragment, index) => {
         let indexNumber = ''
@@ -326,8 +344,7 @@ ${it.url}
       `.trim()
       const blob = new Blob([input], { type: 'text/plain' })
       const danmaku = await this.downloadDanmaku()
-      const { DownloadVideoPackage } = await import('./download-video-package')
-      const pack = new DownloadVideoPackage()
+      const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption })
       pack.add(`${getFriendlyTitle()}.txt`, blob)
       pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
       await pack.emit(`${getFriendlyTitle()}.zip`)
@@ -347,20 +364,20 @@ ${it.url}
       return '.flv'
     }
   }
-  makeBlob(data: any, fragment?: VideoDownloaderFragment) {
-    return new Blob(Array.isArray(data) ? data : [data], {
-      type: this.extension(fragment) === '.flv' ? 'video/x-flv' : 'video/mp4'
-    })
-  }
-  cleanUpOldBlobUrl() {
-    const oldBlobUrl = dq('a#video-complete')!.getAttribute('href')
-    if (oldBlobUrl && !dq(`.link[href="${oldBlobUrl}"]`)) {
-      URL.revokeObjectURL(oldBlobUrl)
-    }
-    dqa('.toast-card-header')
-      .filter((it: HTMLElement) => it.innerText.includes('下载视频'))
-      .forEach((it: HTMLElement) => (it.querySelector('.toast-card-dismiss') as HTMLElement).click())
-  }
+  // makeBlob(data: any, fragment?: VideoDownloaderFragment) {
+  //   return new Blob(Array.isArray(data) ? data : [data], {
+  //     type: this.extension(fragment) === '.flv' ? 'video/x-flv' : 'video/mp4'
+  //   })
+  // }
+  // cleanUpOldBlobUrl() {
+  //   const oldBlobUrl = dq('a#video-complete')!.getAttribute('href')
+  //   if (oldBlobUrl && !dq(`.link[href="${oldBlobUrl}"]`)) {
+  //     URL.revokeObjectURL(oldBlobUrl)
+  //   }
+  //   dqa('.toast-card-header')
+  //     .filter((it: HTMLElement) => it.innerText.includes('下载视频'))
+  //     .forEach((it: HTMLElement) => (it.querySelector('.toast-card-dismiss') as HTMLElement).click())
+  // }
   async downloadDanmaku() {
     if (this.danmakuOption !== '无') {
       const danmakuInfo = new DanmakuInfo(pageData.cid)
@@ -375,44 +392,51 @@ ${it.url}
       return null
     }
   }
-  async downloadSingle(downloadedData: any[]) {
-    const danmaku = await this.downloadDanmaku()
-    const [data] = downloadedData
-    if (danmaku === null) {
-      const blob = this.makeBlob(data)
-      const filename = getFriendlyTitle() + this.extension()
-      return { blob, filename }
-    } else {
-      const zip = new JSZip()
-      zip.file(getFriendlyTitle() + this.extension(), this.makeBlob(data))
-      zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
-      const blob = await zip.generateAsync({ type: 'blob' })
-      const filename = getFriendlyTitle() + '.zip'
-      return { blob, filename }
-    }
-  }
-  async downloadMultiple(downloadedData: any[]) {
-    const zip = new JSZip()
-    const title = getFriendlyTitle()
-    if (downloadedData.length > 1) {
-      downloadedData.forEach((data, index) => {
-        const fragment = this.fragments[index]
-        zip.file(`${title} - ${index + 1}${this.extension(fragment)}`, this.makeBlob(data, fragment))
-      })
-    } else {
-      const [data] = downloadedData
-      zip.file(`${title}${this.extension()}`, this.makeBlob(data))
-    }
-    const danmaku = await this.downloadDanmaku()
-    if (danmaku !== null) {
-      zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
-    }
-    const blob = await zip.generateAsync({ type: 'blob' })
-    const filename = title + '.zip'
-    return { blob, filename }
-  }
+  // async downloadSingle(downloadedData: any[]) {
+  //   const danmaku = await this.downloadDanmaku()
+  //   const [data] = downloadedData
+  //   const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption })
+  //   pack.add(getFriendlyTitle() + this.extension(), this.makeBlob(data))
+  //   pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
+  //   return {
+  //     blob: await pack.blob(),
+  //     filename: getFriendlyTitle() + '.zip'
+  //   }
+  //   // if (danmaku === null) {
+  //   //   const blob = this.makeBlob(data)
+  //   //   const filename = getFriendlyTitle() + this.extension()
+  //   //   return { blob, filename }
+  //   // } else {
+  //   //   const zip = new JSZip()
+  //   //   zip.file(getFriendlyTitle() + this.extension(), this.makeBlob(data))
+  //   //   zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
+  //   //   const blob = await zip.generateAsync({ type: 'blob' })
+  //   //   const filename = getFriendlyTitle() + '.zip'
+  //   //   return { blob, filename }
+  //   // }
+  // }
+  // async downloadMultiple(downloadedData: any[]) {
+  //   const zip = new JSZip()
+  //   const title = getFriendlyTitle()
+  //   if (downloadedData.length > 1) {
+  //     downloadedData.forEach((data, index) => {
+  //       const fragment = this.fragments[index]
+  //       zip.file(`${title} - ${index + 1}${this.extension(fragment)}`, this.makeBlob(data, fragment))
+  //     })
+  //   } else {
+  //     const [data] = downloadedData
+  //     zip.file(`${title}${this.extension()}`, this.makeBlob(data))
+  //   }
+  //   const danmaku = await this.downloadDanmaku()
+  //   if (danmaku !== null) {
+  //     zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
+  //   }
+  //   const blob = await zip.generateAsync({ type: 'blob' })
+  //   const filename = title + '.zip'
+  //   return { blob, filename }
+  // }
   async download() {
-    const downloadedData = []
+    const downloadedData: ArrayBuffer[][] = []
     this.videoSpeed.startMeasure()
     for (const fragment of this.fragments) {
       const data = await this.downloadFragment(fragment)
@@ -422,21 +446,41 @@ ${it.url}
       throw new Error('下载失败.')
     }
 
-    let { blob, filename } = await (async () => {
-      if (downloadedData.length === 1) {
-        return await this.downloadSingle(downloadedData)
+    // let { blob, filename } = await (async () => {
+    //   if (downloadedData.length === 1) {
+    //     return await this.downloadSingle(downloadedData)
+    //   } else {
+    //     return await this.downloadMultiple(downloadedData)
+    //   }
+    // })()
+    // this.cleanUpOldBlobUrl()
+    // const blobUrl = URL.createObjectURL(blob)
+    const pack = new DownloadVideoPackage({ffmpeg: this.ffmpegOption})
+    const title = getFriendlyTitle()
+    downloadedData.forEach((data, index) => {
+      let filename: string
+      const fragment = this.fragments[index]
+      if (downloadedData.length > 1) {
+        filename = `${title} - ${index + 1}${this.extension(fragment)}`
       } else {
-        return await this.downloadMultiple(downloadedData)
+        filename = `${title}${this.extension(fragment)}`
       }
-    })()
-    this.cleanUpOldBlobUrl()
-    const blobUrl = URL.createObjectURL(blob)
+      pack.add(filename, new Blob(Array.isArray(data) ? data : [data], {
+        type: this.extension(fragment) === '.flv' ? 'video/x-flv' : 'video/mp4'
+      }))
+    })
+    const danmaku = await this.downloadDanmaku()
+    pack.add(
+      `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
+      danmaku
+    )
+    await pack.emit(title + '.zip')
     this.progress && this.progress(0)
     this.videoSpeed.stopMeasure()
-    return {
-      url: blobUrl,
-      filename: filename
-    }
+    // return {
+    //   url: blobUrl,
+    //   filename: filename
+    // }
   }
 }
 class VideoSpeed {
@@ -471,8 +515,11 @@ async function loadPageData() {
   }
   pageData.aid = aid
   pageData.cid = cid
-  if (document.URL.indexOf('bangumi') !== -1) {
+  if (document.URL.includes('bangumi')) {
     pageData.entity = new Bangumi()
+  } else if (document.URL.includes('cheese')) {
+    const match = document.URL.match(/cheese\/play\/ep([\d]+)/)!
+    pageData.entity = new Cheese(match[1])
   } else {
     pageData.entity = new Video()
   }
@@ -530,6 +577,10 @@ async function loadPanel() {
         value: settings.downloadVideoDefaultDanmaku as DanmakuOption,
         items: ['无', 'XML', 'ASS'] as DanmakuOption[]
       },
+      ffmpegModel: {
+        value: settings.downloadVideoFfmpegSupport,
+        items: ['无', '文件列表', '文件列表+脚本']
+      },
       progressPercent: 0,
       size: '获取大小中' as number | string,
       blobUrl: '',
@@ -542,6 +593,7 @@ async function loadPanel() {
       busy: false,
       saveRpcSettingsText: '保存配置',
       enableDash: settings.enableDashDownload,
+      lastDirectDownloadLink: '',
     },
     computed: {
       displaySize() {
@@ -665,7 +717,6 @@ async function loadPanel() {
           return match.checked
         }
         const format = this.getFormat()
-        const { DownloadVideoPackage } = await import('./download-video-package')
         if (this.danmakuModel.value !== '无') {
           const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
           const pack = new DownloadVideoPackage()
@@ -700,7 +751,8 @@ async function loadPanel() {
               result = await this.batchExtractor.collectAria2(format, toast)
               await DownloadVideoPackage.single(
                 getFriendlyTitle(false) + '.txt',
-                new Blob([result], { type: 'text/plain' })
+                new Blob([result], { type: 'text/plain' }),
+                { ffmpeg: this.ffmpegOption }
               )
               return
             case 'aria2RPC':
@@ -715,7 +767,8 @@ async function loadPanel() {
               result = await this.batchExtractor.collectData(format, toast)
               await DownloadVideoPackage.single(
                 getFriendlyTitle(false) + '.json',
-                new Blob([result], { type: 'text/json' })
+                new Blob([result], { type: 'text/json' }),
+                { ffmpeg: this.ffmpegOption }
               )
               return
             default:
@@ -767,16 +820,13 @@ async function loadPanel() {
           const videoDownloader = await format.downloadInfo(this.dash)
           videoDownloader.videoSpeed.speedUpdate = speed => this.speed = speed
           videoDownloader.danmakuOption = this.danmakuModel.value
+          videoDownloader.ffmpegOption = this.ffmpegModel.value
           videoDownloader.progress = percent => {
             this.progressPercent = Math.trunc(percent * 100)
           }
           workingDownloader = videoDownloader
-          const result = await videoDownloader.download()
-          const completeLink = document.getElementById('video-complete') as HTMLAnchorElement
-          completeLink.setAttribute('href', result.url)
-          completeLink.setAttribute('download', result.filename)
-          completeLink.click()
-          Toast.success(/*html*/`下载完成: ${result.filename} <a class="link" href="${result.url}" download="${result.filename.replace(/"/g, '&quot;')}">再次保存</a>`, '下载视频')
+          await videoDownloader.download()
+          this.lastDirectDownloadLink = DownloadVideoPackage.lastPackageUrl
         }
         catch (error) {
           if (error !== 'canceled') {
@@ -836,9 +886,13 @@ async function loadPanel() {
 
     panel.aid = pageData.aid
     panel.cid = pageData.cid
-    const videoInfo = new VideoInfo(pageData.aid)
-    await videoInfo.fetchInfo()
-    panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:')
+    try {
+      const videoInfo = new VideoInfo(pageData.aid)
+      await videoInfo.fetchInfo()
+      panel.coverUrl = videoInfo.coverUrl.replace('http:', 'https:')
+    } catch (error) {
+      panel.coverUrl = EmptyImageUrl
+    }
 
     formats = await VideoFormat.getAvailableFormats();
     [selectedFormat] = formats

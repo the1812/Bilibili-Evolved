@@ -286,13 +286,17 @@ Resource.manifest = {
       useCache: '启用缓存'
     }
   },
+  videoDownloadPackage: {
+    path: 'download-video-package.min.js',
+  },
   downloadVideo: {
     path: 'download-video.min.js',
     html: true,
     style: 'instant',
-    dependencies: ['title', 'videoInfo'],
+    dependencies: ['title', 'videoInfo', 'videoDownloadPackage'],
     displayNames: {
       'downloadVideo': '下载视频',
+      'videoDownloadPackage': '下载视频打包器',
       'batchDownload': '批量下载',
       'aria2Rpc': 'aria2 RPC',
     }

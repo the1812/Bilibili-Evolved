@@ -163,6 +163,7 @@ export const settings = {
   customNavbarSeasonLogo: false,
   selectableColumnText: true,
   downloadVideoFormat: 'flv',
+  downloadVideoFfmpegSupport: '无',
   enableDashDownload: false,
   watchlaterExpireWarnings: true,
   watchlaterExpireWarningDays: 14,

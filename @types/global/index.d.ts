@@ -35,6 +35,7 @@ declare global {
   }
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
   type DanmakuOption = '无' | 'XML' | 'ASS'
+  type FfmpegOption = '无' | '文件列表' | '文件列表+脚本'
   type Pattern = string
   interface RpcOption {
     secretKey: string
@@ -369,6 +370,7 @@ declare global {
     customNavbarSeasonLogo: boolean,
     selectableColumnText: boolean,
     downloadVideoFormat: 'flv' | 'dash',
+    downloadVideoFfmpegSupport: FfmpegOption,
     enableDashDownload: boolean,
     watchlaterExpireWarnings: boolean,
     watchlaterExpireWarningDays: number,

@@ -51,8 +51,8 @@ export const getDashInfo = async (api: string, quality: number) => {
         codecId: d.codecid,
         bandWidth: d.bandwidth,
         frameRate: d.frameRate,
-        backupUrls: d.backupUrl,
-        downloadUrl: d.baseUrl,
+        backupUrls: (d.backupUrl || d.backup_url || '').replace('http:', 'https:'),
+        downloadUrl: (d.baseUrl || d.base_url || '').replace('http:', 'https:'),
         duration,
       }
       return dash
@@ -62,8 +62,8 @@ export const getDashInfo = async (api: string, quality: number) => {
       bandWidth: d.bandwidth,
       codecs: d.codecs,
       codecId: d.codecid,
-      backupUrls: d.backupUrl,
-      downloadUrl: d.baseUrl,
+      backupUrls: (d.backupUrl || d.backup_url || '').replace('http:', 'https:'),
+      downloadUrl: (d.baseUrl || d.base_url || '').replace('http:', 'https:'),
       duration,
     }
   })
