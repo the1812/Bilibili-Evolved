@@ -1,7 +1,9 @@
 <div class="download-video">
   <a v-bind:href="blobUrl" id="video-complete" style="display: none"></a>
   <div class="header">
+    <i class="mdi mdi-download"></i>
     <h1>下载视频</h1>
+    <div class="grow"></div>
     <i class="mdi mdi-close" v-on:click="close()"></i>
   </div>
   <div v-if="batch" class="tabs">
