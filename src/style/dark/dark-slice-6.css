@@ -259,7 +259,8 @@ input[type=radio]:checked+.custom-radio,
 .live-item .live-item-link .live-img-box,
 .bangumi-pagelistbox.clearfix .custom-right .result,
 .chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after,
+#app-ctnr .article-content .content
 {
     background-color: transparent !important;
 }
