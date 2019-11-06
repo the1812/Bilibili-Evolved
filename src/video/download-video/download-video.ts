@@ -136,6 +136,9 @@ class VideoDownloader {
     this.fragments = fragments || []
     this.videoSpeed = new VideoSpeed(this)
   }
+  get isDash () {
+    return this.fragments.some(it => it.url.includes('.m4s'))
+  }
   get totalSize() {
     return this.fragments.map(it => it.size).reduce((acc, it) => acc + it)
   }
@@ -188,16 +191,20 @@ class VideoDownloader {
   }
   downloadFragment(fragment: VideoDownloaderFragment) {
     const promises: Promise<ArrayBuffer>[] = []
-    this.workingXhr = []
-    this.progressMap = new Map()
-    this.updateProgress()
-    // const partialLength = Math.round(fragment.size / this.fragmentSplitFactor)
-    // 按一定大小分段或许对大视频更好
+    /* 按一定大小分段或许对大视频更好
+    DASH:
+      - 小于等于24MB时, 均分为12段 (this.fragmentSplitFactor = 12)
+      - 大于24MB时, 每4MB为一段
+    FLV:
+      - 小于等于96MB时, 均分为12段
+      - 大于96MB时, 每16MB为一段
+    */
+    const minimalLength = this.isDash ? 4 * 1024 * 1024 : 16 * 1024 * 1024
     let partialLength: number
-    if (fragment.size <= 48 * 1024 * 1024) { // 小于等于48MB时, 均分为12段 (this.fragmentSplitFactor)
+    if (fragment.size <= minimalLength * 6) {
       partialLength = fragment.size / this.fragmentSplitFactor
-    } else { // 大于48MB时, 每4MB为一段
-      partialLength = 4 * 1024 * 1024 // 4MB
+    } else {
+      partialLength = minimalLength
     }
     let startByte = 0
     const getPartNumber = (xhr: XMLHttpRequest) => [...this.progressMap.keys()].indexOf(xhr) + 1
@@ -436,6 +443,9 @@ ${it.url}
   //   return { blob, filename }
   // }
   async download() {
+    this.workingXhr = []
+    this.progressMap = new Map()
+    this.updateProgress()
     const downloadedData: ArrayBuffer[][] = []
     this.videoSpeed.startMeasure()
     for (const fragment of this.fragments) {
