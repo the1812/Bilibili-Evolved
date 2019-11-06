@@ -67,6 +67,9 @@ export class DownloadVideoPackage {
     return await zip.generateAsync({ type: 'blob' })
   }
   async emit(filename?: string) {
+    if (this.entries.length === 0) {
+      return
+    }
     if (!filename || this.entries.length === 1) {
       filename = this.entries[0].name
     }
