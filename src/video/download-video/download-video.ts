@@ -834,16 +834,16 @@ async function loadPanel() {
           this.episodeList = []
           return
         }
-        this.batchExtractor = new BatchExtractor()
+        const batchExtractor = this.batchExtractor = new BatchExtractor()
         this.batch = true
-        this.episodeList = (await this.batchExtractor.getItemList()).map((item: EpisodeItem, index: number) => {
+        this.episodeList = (await batchExtractor.getItemList()).map((item, index) => {
           return {
             aid: item.aid,
             cid: item.cid,
             title: item.title,
             index,
             checked: true,
-          }
+          } as EpisodeItem
         })
       },
       cancelDownload() {
