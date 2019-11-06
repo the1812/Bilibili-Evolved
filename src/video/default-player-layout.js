@@ -27,8 +27,10 @@ class VideoLayoutCookie extends LayoutCookie {
     super.checkCookies()
     const value = this.getValue(this.cookieKey)
     if (value === '' || parseInt(value) < 0 && settings.defaultPlayerLayout !== '旧版') {
+      console.log(`default/old -> new`)
       this.useNewLayout()
     } else if (settings.defaultPlayerLayout !== '新版') {
+      console.log(`new -> old`)
       this.useOldLayout()
     }
   }
@@ -51,8 +53,10 @@ class BangumiLayoutCookie extends LayoutCookie {
     super.checkCookies()
     const value = this.getValue(this.cookieKey)
     if (value === '' || parseInt(value) <= 0 && settings.defaultBangumiLayout !== '旧版') {
+      console.log(`default/old -> new`)
       this.useNewLayout()
     } else if (settings.defaultBangumiLayout !== '新版') {
+      console.log(`new -> old`)
       this.useOldLayout()
     }
   }

@@ -413,6 +413,7 @@ Resource.manifest = {
   playerLayout: {
     path: 'default-player-layout.min.js',
     displayNames: {
+      playerLayout: '指定播放器布局',
       useDefaultPlayerLayout: '指定播放器布局',
       defaultPlayerLayout: '视频区布局',
       defaultBangumiLayout: '番剧区布局'
