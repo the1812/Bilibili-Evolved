@@ -2,6 +2,7 @@ import { getFriendlyTitle, formatTitle } from '../title'
 import { VideoInfo, DanmakuInfo } from '../video-info'
 import { VideoDownloaderFragment } from './video-downloader-fragment'
 import { DownloadVideoPackage } from './download-video-package'
+import { VideoDash } from './video-dash'
 
 interface PageData {
   entity: Video
@@ -127,14 +128,18 @@ class VideoDownloader {
   workingXhr: XMLHttpRequest[] | null = null
   progress: (progress: number) => void
   progressMap: Map<XMLHttpRequest, number> = new Map()
-  danmakuOption: DanmakuOption = '无'
-  ffmpegOption: FfmpegOption = '无'
   videoSpeed: VideoSpeed
 
   constructor(format: VideoFormat, fragments?: VideoDownloaderFragment[]) {
     this.format = format
     this.fragments = fragments || []
     this.videoSpeed = new VideoSpeed(this)
+  }
+  get danmakuOption() {
+    return settings.downloadVideoDefaultDanmaku
+  }
+  get ffmpegOption() {
+    return settings.downloadVideoFfmpegSupport
   }
   get isDash () {
     return this.fragments.some(it => it.url.includes('.m4s'))
@@ -167,8 +172,20 @@ class VideoDownloader {
         await pageData.entity.getDashUrl(this.format.quality),
         this.format.quality
       )
-      const video = dashes.videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
-      const audio = dashes.audioDashes.sort(ascendingSort(d => d.bandWidth))[0]
+      // 画面按照首选编码选择, 若没有相应编码则选择大小较小的编码
+      console.log(dashes.videoDashes)
+      const video = (() => {
+        const matchPreferredCodec = (d: VideoDash) => d.videoCodec === settings.downloadVideoDashCodec
+        if (dashes.videoDashes.some(matchPreferredCodec)) {
+          return dashes.videoDashes
+            .filter(matchPreferredCodec)
+            .sort(ascendingSort(d => d.bandWidth))[0]
+        } else {
+          return dashes.videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
+        }
+      })()
+      // 声音倒序排, 选择最高音质
+      const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
       this.fragments = [dashToFragment(video), dashToFragment(audio)]
     }
     return this.fragments
@@ -554,7 +571,7 @@ async function loadWidget() {
 }
 async function loadPanel() {
   let workingDownloader: VideoDownloader
-  const sizeCache = new Map<VideoFormat, number>()
+  // const sizeCache = new Map<VideoFormat, number>()
   type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD'
   interface EpisodeItem {
     title: string
@@ -586,6 +603,10 @@ async function loadPanel() {
       danmakuModel: {
         value: settings.downloadVideoDefaultDanmaku as DanmakuOption,
         items: ['无', 'XML', 'ASS'] as DanmakuOption[]
+      },
+      codecModel: {
+        value: settings.downloadVideoDashCodec,
+        items: ['AVC/H.264', 'HEVC/H.265']
       },
       ffmpegModel: {
         value: settings.downloadVideoFfmpegSupport,
@@ -632,7 +653,13 @@ async function loadPanel() {
       danmakuOptionChange() {
         settings.downloadVideoDefaultDanmaku = this.danmakuModel.value
       },
+      async codecChange() {
+        settings.downloadVideoDashCodec = this.codecModel.value
+        await this.formatChange()
+      },
       async dashChange() {
+        console.log('dash change')
+        settings.downloadVideoFormat = this.dashModel.value
         const format = this.dashModel.value
         let updatedFormats = []
         if (format === 'flv') {
@@ -647,19 +674,21 @@ async function loadPanel() {
         await this.formatChange()
       },
       async formatChange() {
+        console.log('format change')
         const format = this.getFormat() as VideoFormat
-        const cache = sizeCache.get(format)
-        if (cache) {
-          this.size = cache
-          return
-        }
+        // const cache = sizeCache.get(format)
+        // if (cache) {
+        //   this.size = cache
+        //   return
+        // }
         try {
           this.size = '获取大小中'
           const videoDownloader = await format.downloadInfo(this.dash)
           this.size = videoDownloader.totalSize
-          sizeCache.set(format, this.size)
+          // sizeCache.set(format, this.size)
         } catch (error) {
           this.size = '获取大小失败'
+          throw error
         }
       },
       getFormat() {
@@ -682,7 +711,6 @@ async function loadPanel() {
           }
           const format = this.getFormat() as VideoFormat
           const videoDownloader = await format.downloadInfo(this.dash)
-          videoDownloader.danmakuOption = this.danmakuModel.value
           switch (type) {
             case 'copyLink':
               await videoDownloader.copyUrl()
@@ -829,8 +857,6 @@ async function loadPanel() {
           this.downloading = true
           const videoDownloader = await format.downloadInfo(this.dash)
           videoDownloader.videoSpeed.speedUpdate = speed => this.speed = speed
-          videoDownloader.danmakuOption = this.danmakuModel.value
-          videoDownloader.ffmpegOption = this.ffmpegModel.value
           videoDownloader.progress = percent => {
             this.progressPercent = Math.trunc(percent * 100)
           }
@@ -880,6 +906,13 @@ async function loadPanel() {
       updateProfile(profile: RpcOptionProfile) {
         settings.aria2RpcOption = this.rpcSettings = _.omit(profile, 'name') as RpcOption
       }
+    },
+    async mounted() {
+      // if (settings.downloadVideoFormat === 'dash') {
+      //   console.log('init set dash')
+      //   this.dashModel.value = 'dash'
+      //   await this.dashChange()
+      // }
     }
   })
 
@@ -904,13 +937,13 @@ async function loadPanel() {
       panel.coverUrl = EmptyImageUrl
     }
 
-    formats = await VideoFormat.getAvailableFormats();
-    [selectedFormat] = formats
-    panel.qualityModel = {
-      value: selectedFormat.displayName,
-      items: formats.map(f => f.displayName)
-    }
-    panel.formatChange()
+    // formats = await VideoFormat.getAvailableFormats();
+    // [selectedFormat] = formats
+    // panel.qualityModel = {
+    //   value: selectedFormat.displayName,
+    //   items: formats.map(f => f.displayName)
+    // }
+    panel.dashChange()
     await panel.checkBatch()
   })
 }

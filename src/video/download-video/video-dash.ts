@@ -14,6 +14,7 @@ export interface VideoDash extends AudioDash {
   frameRate: string
   height: number
   width: number
+  videoCodec: DashCodec
 }
 export const dashToFragment = (dash: AudioDash): VideoDownloaderFragment => {
   return {
@@ -42,6 +43,15 @@ export const getDashInfo = async (api: string, quality: number) => {
   const videoDashes: VideoDash[] = data.dash.video
     .filter((d: any) => d.id === quality)
     .map((d: any) => {
+      const videoCodec: DashCodec = (() => {
+        switch (d.codecid) {
+          case 12:
+            return 'HEVC/H.265'
+          default:
+          case 7:
+            return 'AVC/H.264'
+        }
+      })()
       const dash: VideoDash = {
         quality,
         qualityText,
@@ -51,9 +61,10 @@ export const getDashInfo = async (api: string, quality: number) => {
         codecId: d.codecid,
         bandWidth: d.bandwidth,
         frameRate: d.frameRate,
-        backupUrls: (d.backupUrl || d.backup_url || '').replace('http:', 'https:'),
+        backupUrls: (d.backupUrl || d.backup_url || []).forEach((it: string) => it.replace('http:', 'https:')),
         downloadUrl: (d.baseUrl || d.base_url || '').replace('http:', 'https:'),
         duration,
+        videoCodec,
       }
       return dash
     })
@@ -62,7 +73,7 @@ export const getDashInfo = async (api: string, quality: number) => {
       bandWidth: d.bandwidth,
       codecs: d.codecs,
       codecId: d.codecid,
-      backupUrls: (d.backupUrl || d.backup_url || '').replace('http:', 'https:'),
+      backupUrls: (d.backupUrl || d.backup_url || []).forEach((it: string) => it.replace('http:', 'https:')),
       downloadUrl: (d.baseUrl || d.base_url || '').replace('http:', 'https:'),
       duration,
     }

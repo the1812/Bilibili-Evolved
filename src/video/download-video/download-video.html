@@ -43,6 +43,11 @@
       弹幕
       <v-dropdown v-on:change="danmakuOptionChange()" v-bind:items="danmakuModel.items" v-bind:value.sync="danmakuModel.value"></v-dropdown>
     </div>
+    <div class="option-item" v-if="enableDash && dashModel.value === 'dash'">
+      首选编码
+      <v-dropdown v-on:change="codecChange()" v-bind:items="codecModel.items" v-bind:value.sync="codecModel.value">
+      </v-dropdown>
+    </div>
     <div class="option-item" v-if="enableDash">
       ffmpeg支持
       <v-dropdown v-on:change="ffmpegChange()" v-bind:items="ffmpegModel.items"

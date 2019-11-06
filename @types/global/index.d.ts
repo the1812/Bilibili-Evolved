@@ -36,6 +36,7 @@ declare global {
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
   type DanmakuOption = '无' | 'XML' | 'ASS'
   type FfmpegOption = '无' | '文件列表' | '文件列表+脚本'
+  type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
   type Pattern = string
   interface RpcOption {
     secretKey: string
@@ -342,7 +343,7 @@ declare global {
     defaultVideoSpeed: string,
     hideCategory: boolean,
     foldComment: boolean,
-    downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
+    downloadVideoDefaultDanmaku: DanmakuOption,
     aria2RpcOption: RpcOption,
     aria2RpcOptionSelectedProfile: string,
     aria2RpcOptionProfiles: RpcOptionProfile[],
@@ -371,6 +372,7 @@ declare global {
     selectableColumnText: boolean,
     downloadVideoFormat: 'flv' | 'dash',
     downloadVideoFfmpegSupport: FfmpegOption,
+    downloadVideoDashCodec: DashCodec,
     enableDashDownload: boolean,
     watchlaterExpireWarnings: boolean,
     watchlaterExpireWarningDays: number,

@@ -163,6 +163,7 @@ export const settings = {
   selectableColumnText: true,
   downloadVideoFormat: 'flv',
   downloadVideoFfmpegSupport: '无',
+  downloadVideoDashCodec: 'AVC/H.264',
   enableDashDownload: false,
   watchlaterExpireWarnings: true,
   watchlaterExpireWarningDays: 14,
