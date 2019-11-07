@@ -1,10 +1,25 @@
+export interface FfmpegBatchItem {
+  fragmentNames: string[]
+  originalName: string
+}
 export interface DownloadVideoPackageConfig {
   ffmpeg?: FfmpegOption
+  titleList?: string[],
+  batchItems?: FfmpegBatchItem[],
 }
+type PackageEntry = { name: string; data: Blob | string }
+// 以后再重构吧... 先堆if凑合下
+// abstract class PackagePreprocessor {
+//   abstract preprocess(config: DownloadVideoPackageConfig): PackageEntry[]
+
+// }
 export class DownloadVideoPackage {
   static lastPackageUrl: string = ''
-  entries: { name: string; data: Blob | string }[] = []
+  entries: PackageEntry[] = []
   constructor(private config: DownloadVideoPackageConfig = {}) {
+    if (this.config.titleList === undefined) {
+      this.config.titleList = []
+    }
   }
   private download(filename: string, blob: Blob) {
     const a = document.createElement('a')
@@ -27,14 +42,25 @@ export class DownloadVideoPackage {
   }
   private async preEmit() {
     const videoFiles = this.entries
-      .filter(it => ['.flv', '.mp4', '.m4s']
+      // .filter(it => ['.flv', '.mp4', '.m4s']
+      .filter(it => ['.flv', '.mp4']
         .some(ext => it.name.endsWith(ext)))
+    console.log(videoFiles, this.config)
     if (this.config.ffmpeg !== undefined && videoFiles.length >= 2) {
       if (this.config.ffmpeg === '文件列表' || this.config.ffmpeg === '文件列表+脚本') {
-        this.entries.push({
-          name: 'ffmpeg-files.txt',
-          data: videoFiles.map(it => `file '${it.name}'`).join('\n'),
-        })
+        if (!this.config.batchItems) {
+          this.entries.push({
+            name: 'ffmpeg-files.txt',
+            data: videoFiles.map(it => `file '${it.name}'`).join('\n'),
+          })
+        } else {
+          this.config.batchItems.forEach((item) => {
+            this.entries.push({
+              name: `${item.originalName}.txt`,
+              data: item.fragmentNames.map(name => `file '${name}'`).join('\n'),
+            })
+          })
+        }
       }
       if (this.config.ffmpeg === '文件列表+脚本') {
         const command = `ffmpeg -f concat -i ffmpeg-files.txt -c copy ""`

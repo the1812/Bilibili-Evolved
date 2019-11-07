@@ -141,7 +141,7 @@ class VideoDownloader {
   get ffmpegOption() {
     return settings.downloadVideoFfmpegSupport
   }
-  get isDash () {
+  get isDash() {
     return this.fragments.some(it => it.url.includes('.m4s'))
   }
   get totalSize() {
@@ -306,7 +306,7 @@ class VideoDownloader {
     } else {
       const blob = new Blob([data], { type: 'text/json' })
       const danmaku = await this.downloadDanmaku()
-      const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption })
+      const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption, titleList: [getFriendlyTitle()] })
       pack.add(`${getFriendlyTitle()}.json`, blob)
       pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
       await pack.emit(`${getFriendlyTitle()}.zip`)
@@ -315,7 +315,7 @@ class VideoDownloader {
   async exportAria2(rpc = false) {
     if (rpc) { // https://aria2.github.io/manual/en/html/aria2c.html#json-rpc-using-http-get
       const danmaku = await this.downloadDanmaku()
-      const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption })
+      const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption, titleList: [getFriendlyTitle()] })
       pack.add(
         `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
         danmaku
@@ -368,7 +368,7 @@ ${it.url}
       `.trim()
       const blob = new Blob([input], { type: 'text/plain' })
       const danmaku = await this.downloadDanmaku()
-      const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption })
+      const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption, titleList: [getFriendlyTitle()] })
       pack.add(`${getFriendlyTitle()}.txt`, blob)
       pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
       await pack.emit(`${getFriendlyTitle()}.zip`)
@@ -419,7 +419,7 @@ ${it.url}
   // async downloadSingle(downloadedData: any[]) {
   //   const danmaku = await this.downloadDanmaku()
   //   const [data] = downloadedData
-  //   const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption })
+  //   const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption, titleList: [getFriendlyTitle()] })
   //   pack.add(getFriendlyTitle() + this.extension(), this.makeBlob(data))
   //   pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
   //   return {
@@ -482,8 +482,8 @@ ${it.url}
     // })()
     // this.cleanUpOldBlobUrl()
     // const blobUrl = URL.createObjectURL(blob)
-    const pack = new DownloadVideoPackage({ffmpeg: this.ffmpegOption})
     const title = getFriendlyTitle()
+    const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption, titleList: [title] })
     downloadedData.forEach((data, index) => {
       let filename: string
       const fragment = this.fragments[index]
@@ -610,7 +610,8 @@ async function loadPanel() {
       },
       ffmpegModel: {
         value: settings.downloadVideoFfmpegSupport,
-        items: ['无', '文件列表', '文件列表+脚本']
+        items: ['无', '文件列表']
+        // items: ['无', '文件列表', '文件列表+脚本']
       },
       progressPercent: 0,
       size: '获取大小中' as number | string,
@@ -652,6 +653,9 @@ async function loadPanel() {
       },
       danmakuOptionChange() {
         settings.downloadVideoDefaultDanmaku = this.danmakuModel.value
+      },
+      ffmpegChange() {
+        settings.downloadVideoFfmpegSupport = this.ffmpegModel.value
       },
       async codecChange() {
         settings.downloadVideoDashCodec = this.codecModel.value
