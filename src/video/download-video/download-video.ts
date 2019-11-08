@@ -738,10 +738,16 @@ async function loadPanel() {
               await videoDownloader.exportData(false)
               break
             case 'ffmpegFragments':
-              console.log('fragments')
+              if (videoDownloader.fragments.length < 2) {
+                Toast.info('当前视频没有分段.', '分段列表', 3000)
+              } else {
+                const { getFragmentsList } = await import('./ffmpeg-support')
+                const pack = new DownloadVideoPackage()
+                pack.add('ffmpeg-files.txt', getFragmentsList(videoDownloader.fragments.length, getFriendlyTitle(), videoDownloader.extension(videoDownloader.fragments[0])))
+                await pack.emit()
+              }
               break
             case 'ffmpegEpisodes':
-              console.log('episodes')
               break
             default:
               break
