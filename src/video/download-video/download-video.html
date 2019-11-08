@@ -48,11 +48,11 @@
       <v-dropdown v-on:change="codecChange()" v-bind:items="codecModel.items" v-bind:value.sync="codecModel.value">
       </v-dropdown>
     </div>
-    <div class="option-item" v-if="enableDash">
+    <!-- <div class="option-item" v-if="enableDash">
       ffmpeg支持
       <v-dropdown v-on:change="ffmpegChange()" v-bind:items="ffmpegModel.items"
         v-bind:value.sync="ffmpegModel.value"></v-dropdown>
-    </div>
+    </div> -->
   </div>
   <div class="separator"></div>
   <div v-show="downloadSingle" class="direct-download">
@@ -96,6 +96,8 @@
         v-on:click="exportData('showLink')">显示链接</button>
       <!-- <button class="idm-export" disabled title="暂不支持导出IDM, 详见 GitHub issue #149">IDM</button> -->
       <button class="aria2-file" v-on:click="exportData('aria2')">aria2</button>
+      <button class="ffmpeg-fragments" v-on:click="exportData('ffmpegFragments')">ffmpeg - 分段列表</button>
+      <button class="ffmpeg-episodes" v-bind:disabled="downloadSingle ? 'disabled' : null" v-on:click="exportData('ffmpegEpisodes')">ffmpeg - 分P列表</button>
       <!-- <button class="vld-copy" v-on:click="exportData('copyVLD')">复制vld数据</button>
       <button class="vld-export" v-on:click="exportData('exportVLD')">导出vld数据</button> -->
       <div class="button aria2-rpc" v-on:click.self="toggleRpcSettings()">

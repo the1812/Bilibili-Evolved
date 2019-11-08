@@ -217,7 +217,9 @@ export class BatchExtractor {
     toast.dismiss()
     return result
   }
-  async collectAria2(format: { quality: number | string }, toast: Toast, rpc: boolean) {
+  async collectAria2(format: { quality: number | string }, toast: Toast, rpc: false): Promise<string>
+  async collectAria2(format: { quality: number | string }, toast: Toast, rpc: true): Promise<undefined>
+  async collectAria2(format: { quality: number | string }, toast: Toast, rpc = false) {
     const extractor = this.getExtractor()
     const result = await extractor.collectAria2(format.quality, rpc)
     toast.dismiss()

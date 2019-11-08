@@ -35,7 +35,6 @@ declare global {
   }
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
   type DanmakuOption = '无' | 'XML' | 'ASS'
-  type FfmpegOption = '无' | '文件列表' | '文件列表+脚本'
   type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
   type Pattern = string
   interface RpcOption {
@@ -371,7 +370,6 @@ declare global {
     customNavbarSeasonLogo: boolean,
     selectableColumnText: boolean,
     downloadVideoFormat: 'flv' | 'dash',
-    downloadVideoFfmpegSupport: FfmpegOption,
     downloadVideoDashCodec: DashCodec,
     enableDashDownload: boolean,
     watchlaterExpireWarnings: boolean,
