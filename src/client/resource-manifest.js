@@ -752,5 +752,26 @@ Resource.manifest = {
       feedsFilter: '动态过滤器',
     },
   },
+  hideBangumiSponsors: {
+    path: 'hide-bangumi-sponsors.min.js',
+    reloadable: true,
+    displayNames: {
+      hideBangumiSponsors: '隐藏番剧承包',
+    },
+  },
+  hideRecommendLive: {
+    path: 'hide-recommend-live.min.js',
+    reloadable: true,
+    displayNames: {
+      hideRecommendLive: '隐藏推荐直播',
+    },
+  },
+  hideRelatedVideos: {
+    path: 'hide-related-videos.min.js',
+    reloadable: true,
+    displayNames: {
+      hideRelatedVideos: '隐藏视频推荐',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

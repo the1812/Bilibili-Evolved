@@ -167,6 +167,9 @@ export const settings = {
   watchlaterExpireWarningDays: 14,
   superchatTranslate: false,
   miniPlayerTouchMove: false,
+  hideBangumiSponsors: false,
+  hideRecommendLive: false,
+  hideRelatedVideos: false,
   cache: {},
 }
 const fixedSettings = {

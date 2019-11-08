@@ -376,6 +376,9 @@ declare global {
     watchlaterExpireWarningDays: number,
     superchatTranslate: boolean,
     miniPlayerTouchMove: boolean,
+    hideBangumiSponsors: boolean,
+    hideRecommendLive: boolean,
+    hideRelatedVideos: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
