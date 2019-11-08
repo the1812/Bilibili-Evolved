@@ -826,21 +826,32 @@ async function loadPanel() {
               )
               return
             case 'ffmpegFragments':
-              const items = await batchExtractor.getRawItems(format)
-              const videoDownloader = new VideoDownloader(format, items[0].fragments)
-              const { getBatchFragmentsList } = await import('./ffmpeg-support')
-              const map = getBatchFragmentsList(items, videoDownloader.extension())
-              if (!map) {
-                Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
-              } else {
-                const pack = new DownloadVideoPackage()
-                for (const [filename, content] of map.entries()) {
-                  pack.add(filename, content)
+              {
+                const items = await batchExtractor.getRawItems(format)
+                const videoDownloader = new VideoDownloader(format, items[0].fragments)
+                const { getBatchFragmentsList } = await import('./ffmpeg-support')
+                const map = getBatchFragmentsList(items, videoDownloader.extension())
+                if (!map) {
+                  Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
+                } else {
+                  const pack = new DownloadVideoPackage()
+                  for (const [filename, content] of map.entries()) {
+                    pack.add(filename, content)
+                  }
+                  await pack.emit(escapeFilename(`${getFriendlyTitle(false)}.zip`))
                 }
-                await pack.emit(escapeFilename(`${getFriendlyTitle(false)}.zip`))
               }
               break
             case 'ffmpegEpisodes':
+              {
+                const items = await batchExtractor.getRawItems(format)
+                const videoDownloader = new VideoDownloader(format, items[0].fragments)
+                const { getBatchEpisodesList } = await import('./ffmpeg-support')
+                const content = getBatchEpisodesList(items, videoDownloader.extension())
+                const pack = new DownloadVideoPackage()
+                pack.add('ffmpeg-files.txt', content)
+                await pack.emit()
+              }
               break
             default:
               return

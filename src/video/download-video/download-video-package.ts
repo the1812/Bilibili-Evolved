@@ -14,7 +14,7 @@ export class DownloadVideoPackage {
     }
     DownloadVideoPackage.lastPackageUrl = url
     a.setAttribute('href', url)
-    a.setAttribute('download', filename)
+    a.setAttribute('download', escapeFilename(filename))
     document.body.appendChild(a)
     a.click()
     a.remove()
@@ -23,7 +23,7 @@ export class DownloadVideoPackage {
     if (data === null || data === undefined) {
       return
     }
-    this.entries.push({ name, data })
+    this.entries.push({ name: escapeFilename(name), data })
   }
   // private async preEmit() {
   //   const videoFiles = this.entries
