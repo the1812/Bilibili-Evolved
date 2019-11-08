@@ -30,7 +30,7 @@ interface Tab {
 }
 const tabs: Tab[] = [
   {
-    name: '昨日',
+    name: '今日',
     day: 1,
     url: 'https://www.bilibili.com/ranking/all/0/0/1'
   },
