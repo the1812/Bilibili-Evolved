@@ -8,8 +8,12 @@ export const getFragmentsList = (count: number, originalTitle: string, extension
   }
   return names.join('\n')
 }
+export const getEpisodesList = () => {
+
+}
 export default {
   export: {
     getFragmentsList,
+    getEpisodesList,
   },
 }
