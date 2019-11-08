@@ -4,8 +4,8 @@ interface BatchItem {
   cid: number | string
   title: string
 }
-interface RawItemFragment { length: number, size: number, url: string }
-interface RawItem {
+export interface RawItemFragment { length: number, size: number, url: string }
+export interface RawItem {
   fragments: RawItemFragment[]
   title: string
   totalSize: number
@@ -17,8 +17,11 @@ abstract class Batch {
   itemFilter: (item: BatchItem) => boolean = () => true
   abstract async getItemList(): Promise<BatchItem[]>
   abstract async collectData(quality: number | string): Promise<string>
+  async getRawItems(quality: number | string): Promise<RawItem[]> {
+    return JSON.parse(await this.collectData(quality))
+  }
   async collectAria2(quality: number | string, rpc: boolean) {
-    const json: RawItem[] = JSON.parse(await this.collectData(quality))
+    const json = await this.getRawItems(quality)
     if (rpc) {
       const option = settings.aria2RpcOption
       const { sendRpc } = await import('./aria2-rpc')
@@ -214,6 +217,10 @@ export class BatchExtractor {
   async getItemList() {
     const extractor = this.getExtractor()
     return await extractor.getItemList()
+  }
+  async getRawItems(format: { quality: number | string }) {
+    const extractor = this.getExtractor()
+    return await extractor.getRawItems(format.quality)
   }
   async collectData(format: { quality: number | string }, toast: Toast) {
     const extractor = this.getExtractor()

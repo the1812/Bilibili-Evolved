@@ -747,8 +747,6 @@ async function loadPanel() {
                 await pack.emit()
               }
               break
-            case 'ffmpegEpisodes':
-              break
             default:
               break
           }
@@ -771,7 +769,7 @@ async function loadPanel() {
           }
           return match.checked
         }
-        const format = this.getFormat()
+        const format: VideoFormat = this.getFormat()
         if (this.danmakuModel.value !== '无') {
           const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
           const pack = new DownloadVideoPackage()
@@ -812,21 +810,38 @@ async function loadPanel() {
               )
               return
             case 'aria2RPC':
-              await this.batchExtractor.collectAria2(format, toast, true)
+              await batchExtractor.collectAria2(format, toast, true)
               Toast.success(`成功发送了批量请求.`, 'aria2 RPC', 3000)
               return
             case 'copyVLD':
-              GM.setClipboard(await this.batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
+              GM.setClipboard(await batchExtractor.collectData(format, toast), { mimetype: 'text/plain' })
               Toast.success('已复制批量vld数据到剪贴板.', '批量导出', 3000)
               return
             case 'exportVLD':
-              result = await this.batchExtractor.collectData(format, toast)
+              result = await batchExtractor.collectData(format, toast)
               await DownloadVideoPackage.single(
                 getFriendlyTitle(false) + '.json',
                 new Blob([result], { type: 'text/json' }),
                 { ffmpeg: this.ffmpegOption }
               )
               return
+            case 'ffmpegFragments':
+              const items = await batchExtractor.getRawItems(format)
+              const videoDownloader = new VideoDownloader(format, items[0].fragments)
+              const { getBatchFragmentsList } = await import('./ffmpeg-support')
+              const map = getBatchFragmentsList(items, videoDownloader.extension())
+              if (!map) {
+                Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
+              } else {
+                const pack = new DownloadVideoPackage()
+                for (const [filename, content] of map.entries()) {
+                  pack.add(filename, content)
+                }
+                await pack.emit(escapeFilename(`${getFriendlyTitle(false)}.zip`))
+              }
+              break
+            case 'ffmpegEpisodes':
+              break
             default:
               return
           }
