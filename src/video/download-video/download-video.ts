@@ -325,7 +325,7 @@ class VideoDownloader {
       const option = settings.aria2RpcOption
       const params = this.fragments.map((fragment, index) => {
         let indexNumber = ''
-        if (this.fragments.length > 1) {
+        if (this.fragments.length > 1 && !this.isDash) {
           indexNumber = ' - ' + (index + 1)
         }
         const params = []
@@ -355,7 +355,7 @@ class VideoDownloader {
 # https://github.com/the1812/Bilibili-Evolved/
 ${this.fragments.map((it, index) => {
         let indexNumber = ''
-        if (this.fragments.length > 1) {
+        if (this.fragments.length > 1 && !this.isDash) {
           indexNumber = ' - ' + (index + 1)
         }
         return `
@@ -380,10 +380,11 @@ ${it.url}
     const match = [
       '.flv',
       '.mp4',
-      '.m4s',
     ].find(it => f.url.includes(it))
     if (match) {
       return match
+    } else if (f.url.includes('.m4s')) {
+      return this.fragments.indexOf(f) === 0 ? '.mp4' : '.m4a'
     } else {
       console.warn('No extension detected.')
       return '.flv'
@@ -488,14 +489,12 @@ ${it.url}
     downloadedData.forEach((data, index) => {
       let filename: string
       const fragment = this.fragments[index]
-      if (downloadedData.length > 1) {
+      if (downloadedData.length > 1 && !this.isDash) {
         filename = `${title} - ${index + 1}${this.extension(fragment)}`
       } else {
         filename = `${title}${this.extension(fragment)}`
       }
-      pack.add(filename, new Blob(Array.isArray(data) ? data : [data], {
-        type: this.extension(fragment) === '.flv' ? 'video/x-flv' : 'video/mp4'
-      }))
+      pack.add(filename, new Blob(Array.isArray(data) ? data : [data]))
     })
     const danmaku = await this.downloadDanmaku()
     pack.add(
@@ -746,7 +745,7 @@ async function loadPanel() {
               } else {
                 const { getFragmentsList } = await import('./ffmpeg-support')
                 const pack = new DownloadVideoPackage()
-                pack.add('ffmpeg-files.txt', getFragmentsList(videoDownloader.fragments.length, getFriendlyTitle(), videoDownloader.extension(videoDownloader.fragments[0])))
+                pack.add('ffmpeg-files.txt', getFragmentsList(videoDownloader.fragments.length, getFriendlyTitle(), videoDownloader.fragments.map(f => videoDownloader.extension(f))))
                 await pack.emit()
               }
               break
@@ -833,7 +832,8 @@ async function loadPanel() {
                 const items = await batchExtractor.getRawItems(format)
                 const videoDownloader = new VideoDownloader(format, items[0].fragments)
                 const { getBatchFragmentsList } = await import('./ffmpeg-support')
-                const map = getBatchFragmentsList(items, videoDownloader.extension())
+                const extensions = this.dash ? ['.mp4', 'm4a'] : [videoDownloader.extension()]
+                const map = getBatchFragmentsList(items, extensions)
                 if (!map) {
                   Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
                 } else {
@@ -850,7 +850,8 @@ async function loadPanel() {
                 const items = await batchExtractor.getRawItems(format)
                 const videoDownloader = new VideoDownloader(format, items[0].fragments)
                 const { getBatchEpisodesList } = await import('./ffmpeg-support')
-                const content = getBatchEpisodesList(items, videoDownloader.extension())
+                const extensions = this.dash ? ['.mp4', 'm4a'] : [videoDownloader.extension()]
+                const content = getBatchEpisodesList(items, extensions)
                 const pack = new DownloadVideoPackage()
                 pack.add('ffmpeg-files.txt', content)
                 await pack.emit()
