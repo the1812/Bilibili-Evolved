@@ -561,11 +561,14 @@ async function loadPageData() {
 async function loadWidget() {
   selectedFormat = formats[0]
   resources.applyStyle('downloadVideoStyle')
-  dq('#download-video')!.addEventListener('click', () => {
-    dq('.download-video')!.classList.toggle('opened');
+  const button = dq('#download-video') as HTMLElement
+  button.addEventListener('click', () => {
+    const panel = dq('.download-video') as HTMLElement
+    panel.classList.toggle('opened')
+    window.scroll(0, 0);
     (dq('.gui-settings-mask') as HTMLDivElement).click()
   })
-  dq('#download-video')!.addEventListener('mouseover', () => {
+  button.addEventListener('mouseover', () => {
     document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
     loadPanel()
   }, { once: true })
