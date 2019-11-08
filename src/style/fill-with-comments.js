@@ -9,6 +9,7 @@ export const fillWithComments = (enable) => {
       top: 0 !important;
       right: 0 !important;
     }
+    .video-desc .info { width: auto !important; }
     `, styleID)
   } else {
     dqa('#' + styleID).forEach(it => it.remove())
