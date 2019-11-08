@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      479.97
+// @version      480.01
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -365,7 +365,6 @@ const settings = {
   selectableColumnText: true,
   downloadVideoFormat: 'flv',
   downloadVideoDashCodec: 'AVC/H.264',
-  enableDashDownload: false,
   watchlaterExpireWarnings: true,
   watchlaterExpireWarningDays: 14,
   superchatTranslate: false,
@@ -378,6 +377,7 @@ const fixedSettings = {
   notifyNewVersion: true,
   clearCache: true,
   downloadVideo: true,
+  enableDashDownload: true,
   downloadDanmaku: true,
   downloadAudio: true,
   medalHelper: true,
