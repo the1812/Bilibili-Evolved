@@ -134,6 +134,13 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   [`selectableColumnText`, `Make texts in column selectable.`],
   [`watchlaterExpireWarnings`, `Videos in watchlater will expire and be deleted in 60 days. Enable this feature will show a warning if a video will expire in less than 14 days.`],
   [`miniPlayerTouchMove`, `Allow touch drag to move mini player.`],
+  [`feedsFilter`, `Filter out unwanted feeds by type or keywords, and remove side cards in your feeds homepage.`],
+  [`hideBangumiSponsors`, `Hide bangumi sponsors sections and buttons.`],
+  [`hideRecommendLive`, `Hide recommended live broadcasts in video pages.`],
+  [`hideRelatedVideos`, `Hide related videos in video and bangumi pages.`],
+  [`simplifyHome`, `Replace the original homepage by one of these style:
+- Simple: A clean design with additional feeds section.
+- Minimal: Only video feeds and trending videos, no other sections.`],
 ]);
 export default {
   export: { toolTips },

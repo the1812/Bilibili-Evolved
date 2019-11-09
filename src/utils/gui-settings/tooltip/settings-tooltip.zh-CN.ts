@@ -161,6 +161,13 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`selectableColumnText`, /*html*/`使专栏的文字可以选择.`],
   [`watchlaterExpireWarnings`, /*html*/`稍后再看里的视频添加后60天会过期自动删除. 开启此功能可在期限不足14天时在稍后再看列表里显示过期警告.`],
   [`miniPlayerTouchMove`, /*html*/`使迷你播放器的拖动条可以触摸拖动.`],
+  [`feedsFilter`, /*html*/`按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 注意目前仅仅在全部动态里生效, 切换到别的类别时无效.`],
+  [`hideBangumiSponsors`, /*html*/`隐藏番剧页面下方的承包榜, 以及右边的承包按钮.`],
+  [`hideRecommendLive`, /*html*/`隐藏视频页面右侧下方的推荐直播.`],
+  [`hideRelatedVideos`, /*html*/`隐藏番剧和视频页面右侧的推荐视频列表.`],
+  [`simplifyHome`, /*html*/`替换原本的首页, 有两种样式可用:
+- 清爽: 布局与原主页类似, 多一个动态栏目.
+- 极简: 去除其他所有栏目, 只保留视频动态和热门视频两个功能.`],
 ]);
 export default {
   export: { toolTips },

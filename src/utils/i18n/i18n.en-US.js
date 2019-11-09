@@ -730,6 +730,14 @@ export const map = new Map([
   [`迷你播放器触摸拖动`, `Touch move for mini player`],
   [`显示链接`, `Show link`],
   [`复制全部`, `Copy All`],
+  [`简化首页`, `Simplify home`],
+  [`首页风格`, `Style`],
+  [`清爽`, `Simple`],
+  [`极简`, `Minimal`],
+  [`隐藏番剧承包`, `Hide bangumi sponsors`],
+  [`隐藏推荐直播`, `Hide recommended live`],
+  [`隐藏视频推荐`, `Hide related videos`],
+  [`动态过滤器`, `Feeds filter`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
