@@ -11,7 +11,8 @@ export const getFragmentsList = (count: number, originalTitle: string, extension
     if (extensions.includes('.m4a')) {
       indexNumber = ''
     }
-    names.push(escapeFilename(`file '${originalTitle}${indexNumber}${extensions[index - 1]}'`))
+    const filename = escapeFilename(`${originalTitle}${indexNumber}${extensions[index - 1]}`).replace(/'/g, "'\\''")
+    names.push(`file '${filename}'`)
   }
   return names.join('\n')
 }
@@ -28,7 +29,8 @@ export const getBatchFragmentsList = (items: RawItem[], extensionOrDash: string 
       if (extensionOrDash === true) {
         indexNumber = ''
       }
-      return escapeFilename(`file '${item.title}${indexNumber}${extensionOrDash === true ? dashExtensions[index] : extensionOrDash}'`)
+      const filename = escapeFilename(`${item.title}${indexNumber}${extensionOrDash === true ? dashExtensions[index] : extensionOrDash}`).replace(/'/g, "'\\''")
+      return `file '${filename}'`
     }).join('\n'))
   })
   return names
@@ -41,7 +43,8 @@ export const getBatchEpisodesList = (items: RawItem[], extensionOrDash: string |
       if (item.fragments.length > 1 && extensionOrDash !== true) {
         indexNumber = ` - ${index + 1}`
       }
-      names.push(escapeFilename(`file '${item.title}${indexNumber}${extensionOrDash === true ? dashExtensions[index] : extensionOrDash}'`))
+      const filename = escapeFilename(`${item.title}${indexNumber}${extensionOrDash === true ? dashExtensions[index] : extensionOrDash}`).replace(/'/g, "'\\''")
+      names.push(`file '${filename}'`)
     })
   })
   return names.join('\n')
