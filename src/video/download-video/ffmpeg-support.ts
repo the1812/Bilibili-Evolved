@@ -1,5 +1,6 @@
 import { RawItem } from './batch-download'
 
+const dashExtensions = ['.mp4', '.m4a']
 export const getFragmentsList = (count: number, originalTitle: string, extensions: string[]) => {
   if (count < 2) {
     return null
@@ -14,7 +15,7 @@ export const getFragmentsList = (count: number, originalTitle: string, extension
   }
   return names.join('\n')
 }
-export const getBatchFragmentsList = (items: RawItem[], extensions: string[]) => {
+export const getBatchFragmentsList = (items: RawItem[], extensionOrDash: string | boolean) => {
   const multipleFragments = (item: RawItem) => item.fragments.length > 1
   const fragmentsItems = items.filter(multipleFragments)
   if (fragmentsItems.length === 0) {
@@ -23,20 +24,24 @@ export const getBatchFragmentsList = (items: RawItem[], extensions: string[]) =>
   const names = new Map<string, string>()
   fragmentsItems.forEach(item => {
     names.set(escapeFilename(`ffmpeg-files-${item.title}.txt`), item.fragments.map((_, index) => {
-      return escapeFilename(`file '${item.title} - ${index + 1}${extensions[index]}'`)
+      let indexNumber = ` - ${index + 1}`
+      if (extensionOrDash === true) {
+        indexNumber = ''
+      }
+      return escapeFilename(`file '${item.title}${indexNumber}${extensionOrDash === true ? dashExtensions[index] : extensionOrDash}'`)
     }).join('\n'))
   })
   return names
 }
-export const getBatchEpisodesList = (items: RawItem[], extensions: string[]) => {
+export const getBatchEpisodesList = (items: RawItem[], extensionOrDash: string | boolean) => {
   const names: string[] = []
   items.forEach(item => {
     item.fragments.forEach((_, index) => {
       let indexNumber = ''
-      if (item.fragments.length > 1 && !extensions.includes('.m4a')) {
+      if (item.fragments.length > 1 && extensionOrDash !== true) {
         indexNumber = ` - ${index + 1}`
       }
-      names.push(escapeFilename(`file '${item.title}${indexNumber}${extensions[index]}'`))
+      names.push(escapeFilename(`file '${item.title}${indexNumber}${extensionOrDash === true ? dashExtensions[index] : extensionOrDash}'`))
     })
   })
   return names.join('\n')

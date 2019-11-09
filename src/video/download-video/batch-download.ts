@@ -1,4 +1,10 @@
 const fragmentSplitFactor = 12
+const dashExtensions = ['.mp4', '.m4a']
+
+export interface BatchExtractorConfig {
+  itemFilter: (item: BatchItem) => boolean
+  api?: (aid: number | string, cid: number | string, quality?: number | string) => string
+}
 interface BatchItem {
   aid: number | string
   cid: number | string
@@ -13,12 +19,25 @@ export interface RawItem {
   referer: string
 }
 abstract class Batch {
+  constructor(public config: BatchExtractorConfig) { }
   itemList: BatchItem[] = []
-  itemFilter: (item: BatchItem) => boolean = () => true
   abstract async getItemList(): Promise<BatchItem[]>
   abstract async collectData(quality: number | string): Promise<string>
   async getRawItems(quality: number | string): Promise<RawItem[]> {
     return JSON.parse(await this.collectData(quality))
+  }
+  extension(url: string, index: number) {
+    const match = [
+      '.flv',
+      '.mp4'
+    ].find(it => url.includes(it))
+    if (match) {
+      return match
+    } else if (url.includes('.m4s')) {
+      return dashExtensions[index]
+    } else {
+      return '.flv'
+    }
   }
   async collectAria2(quality: number | string, rpc: boolean) {
     const json = await this.getRawItems(quality)
@@ -39,7 +58,7 @@ abstract class Batch {
           params.push({
             referer: document.URL.replace(window.location.search, ''),
             'user-agent': UserAgent,
-            out: `${item.title}${indexNumber}.flv`,
+            out: `${item.title}${indexNumber}${this.extension(fragment.url, index)}`,
             split: fragmentSplitFactor,
             dir: (option.baseDir + option.dir) || undefined,
             'max-download-limit': option.maxDownloadLimit || undefined,
@@ -66,7 +85,7 @@ ${json.map(item => {
 ${f.url}
   referer=${item.referer}
   user-agent=${UserAgent}
-  out=${item.title}${indexNumber}.flv
+  out=${item.title}${indexNumber}${this.extension(f.url, index)}
   split=${fragmentSplitFactor}
    `.trim()
         })
@@ -108,20 +127,27 @@ class VideoEpisodeBatch extends Batch {
   }
   async collectData(quality: number | string) {
     const result = []
-    for (const item of (await this.getItemList()).filter(this.itemFilter)) {
-      const url = `https://api.bilibili.com/x/player/playurl?avid=${item.aid}&cid=${item.cid}&qn=${quality}&otype=json`
+    for (const item of (await this.getItemList()).filter(this.config.itemFilter)) {
+      const url = this.config.api ? this.config.api(item.aid, item.cid, quality) : `https://api.bilibili.com/x/player/playurl?avid=${item.aid}&cid=${item.cid}&qn=${quality}&otype=json`
       const json = await Ajax.getJsonWithCredentials(url)
       const data = json.data || json.result || json
       if (data.quality !== quality) {
         console.warn(`${item.title} 不支持所选画质, 已回退到较低画质. (quality=${data.quality})`)
       }
-      const fragments: RawItemFragment[] = data.durl.map((it: any) => {
-        return {
-          length: it.length,
-          size: it.size,
-          url: it.url
-        }
-      })
+      let fragments: RawItemFragment[]
+      if (data.durl) {
+        fragments = data.durl.map((it: any) => {
+          return {
+            length: it.length,
+            size: it.size,
+            url: it.url
+          }
+        })
+      } else {
+        const { getDashInfo, dashToFragments } = await import('./video-dash')
+        const info = await getDashInfo(url, typeof quality === 'string' ? parseInt(quality) : quality)
+        fragments = dashToFragments(info)
+      }
       result.push({
         fragments,
         title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
@@ -167,20 +193,27 @@ class BangumiBatch extends Batch {
   }
   async collectData(quality: string | number) {
     const result = []
-    for (const item of (await this.getItemList()).filter(this.itemFilter)) {
-      const url = `https://api.bilibili.com/pgc/player/web/playurl?avid=${item.aid}&cid=${item.cid}&qn=${quality}&otype=json`
+    for (const item of (await this.getItemList()).filter(this.config.itemFilter)) {
+      const url = this.config.api ? this.config.api(item.aid, item.cid, quality) : `https://api.bilibili.com/pgc/player/web/playurl?avid=${item.aid}&cid=${item.cid}&qn=${quality}&otype=json`
       const json = await Ajax.getJsonWithCredentials(url)
       const data = json.data || json.result || json
       if (data.quality !== quality) {
         console.warn(`${item.title} 不支持所选画质, 已回退到较低画质. (quality=${data.quality})`)
       }
-      const fragments: RawItemFragment[] = data.durl.map((it: any) => {
-        return {
-          length: it.length,
-          size: it.size,
-          url: it.url
-        }
-      })
+      let fragments: RawItemFragment[]
+      if (data.durl) {
+        fragments = data.durl.map((it: any) => {
+          return {
+            length: it.length,
+            size: it.size,
+            url: it.url
+          }
+        })
+      } else {
+        const { getDashInfo, dashToFragments } = await import('./video-dash')
+        const info = await getDashInfo(url, typeof quality === 'string' ? parseInt(quality) : quality)
+        fragments = dashToFragments(info)
+      }
       result.push({
         fragments,
         title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
@@ -193,9 +226,14 @@ class BangumiBatch extends Batch {
   }
 }
 const extractors = [BangumiBatch, VideoEpisodeBatch]
-let ExtractorClass: new() => Batch
+let ExtractorClass: new (config: BatchExtractorConfig) => Batch
 export class BatchExtractor {
-  itemFilter: (item: BatchItem) => boolean = () => true
+  config: BatchExtractorConfig
+  constructor(config?: BatchExtractorConfig) {
+    this.config = Object.assign({
+      itemFilter: () => true,
+    }, config)
+  }
   static async test() {
     for (const e of extractors) {
       if (await e.test() === true) {
@@ -210,8 +248,7 @@ export class BatchExtractor {
       logError('[批量下载] 未找到合适的解析模块.')
       throw new Error(`[Batch Download] module not found.`)
     }
-    const extractor = new ExtractorClass()
-    extractor.itemFilter = this.itemFilter
+    const extractor = new ExtractorClass(this.config)
     return extractor
   }
   async getItemList() {

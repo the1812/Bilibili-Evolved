@@ -16,13 +16,30 @@ export interface VideoDash extends AudioDash {
   width: number
   videoCodec: DashCodec
 }
-export const dashToFragment = (dash: AudioDash): VideoDownloaderFragment => {
+const dashToFragment = (dash: AudioDash): VideoDownloaderFragment => {
   return {
     url: dash.downloadUrl,
     backupUrls: dash.backupUrls,
     length: dash.duration,
     size: Math.trunc(dash.bandWidth * dash.duration / 8),
   }
+}
+export const dashToFragments = (dashes: { videoDashes: VideoDash[], audioDashes: AudioDash[] }) => {
+  // 画面按照首选编码选择, 若没有相应编码则选择大小较小的编码
+  console.log(dashes.videoDashes)
+  const video = (() => {
+    const matchPreferredCodec = (d: VideoDash) => d.videoCodec === settings.downloadVideoDashCodec
+    if (dashes.videoDashes.some(matchPreferredCodec)) {
+      return dashes.videoDashes
+        .filter(matchPreferredCodec)
+        .sort(ascendingSort(d => d.bandWidth))[0]
+    } else {
+      return dashes.videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
+    }
+  })()
+  // 声音倒序排, 选择最高音质
+  const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
+  return [dashToFragment(video), dashToFragment(audio)]
 }
 export const getDashInfo = async (api: string, quality: number) => {
   const json = await Ajax.getJsonWithCredentials(api)
@@ -86,6 +103,6 @@ export const getDashInfo = async (api: string, quality: number) => {
 export default {
   export: {
     getDashInfo,
-    dashToFragment,
+    dashToFragments,
   },
 }

@@ -11,53 +11,71 @@ interface PageData {
   cid: string
 }
 class Video {
-  async getDashUrl(quality?: number) {
-    if (quality) {
-      return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json&fnver=0&fnval=16`
-    } else {
-      return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json&fnver=0&fnval=16`
+  async getApiGenerator(dash = false) {
+    function api(aid: number | string, cid: number | string, quality?: number) {
+      if (dash) {
+        if (quality) {
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fnver=0&fnval=16`
+        } else {
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json&fnver=0&fnval=16`
+        }
+      } else {
+        if (quality) {
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json`
+        } else {
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json`
+        }
+      }
     }
+    return api.bind(this) as typeof api
+  }
+  async getDashUrl(quality?: number) {
+    return (await this.getApiGenerator(true))(pageData.aid, pageData.cid, quality)
   }
   async getUrl(quality?: number) {
-    if (quality) {
-      return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
-    } else {
-      return `https://api.bilibili.com/x/player/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json`
-    }
+    return (await this.getApiGenerator())(pageData.aid, pageData.cid, quality)
   }
 }
 class Bangumi extends Video {
-  async getDashUrl(quality?: number) {
-    if (quality) {
-      return `https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&qn=${quality}&otype=json&fourk=1&fnval=16`
-    } else {
-      return `https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&otype=json&fourk=1&fnval=16`
+  async getApiGenerator(dash = false) {
+    function api(aid: number | string, cid: number | string, quality?: number) {
+      if (dash) {
+        if (quality) {
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnval=16`
+        } else {
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&otype=json&fourk=1&fnval=16`
+        }
+      } else {
+        if (quality) {
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
+        } else {
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=&otype=json`
+        }
+      }
     }
-  }
-  async getUrl(quality?: number) {
-    if (quality) {
-      return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
-    } else {
-      return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=&otype=json`
-    }
+    return api.bind(this) as typeof api
   }
 }
 // 课程, 不知道为什么b站给它起名cheese
 class Cheese extends Video {
   constructor(public ep: number | string) { super() }
-  async getDashUrl(quality?: number) {
-    if (quality) {
-      return `https://api.bilibili.com/pugv/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json&ep_id=${this.ep}&fnver=0&fnval=16`
-    } else {
-      return `https://api.bilibili.com/pugv/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json&ep_id=${this.ep}&fnver=0&fnval=16`
+  async getApiGenerator(dash = false) {
+    function api(aid: number | string, cid: number | string, quality?: number) {
+      if (dash) {
+        if (quality) {
+          return `https://api.bilibili.com/pugv/player/web/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&ep_id=${this.ep}&fnver=0&fnval=16`
+        } else {
+          return `https://api.bilibili.com/pugv/player/web/playurl?avid=${aid}&cid=${cid}&otype=json&ep_id=${this.ep}&fnver=0&fnval=16`
+        }
+      } else {
+        if (quality) {
+          return `https://api.bilibili.com/pugv/player/web/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&ep_id=${this.ep}`
+        } else {
+          return `https://api.bilibili.com/pugv/player/web/playurl?avid=${aid}&cid=${cid}&otype=json&ep_id=${this.ep}`
+        }
+      }
     }
-  }
-  async getUrl(quality?: number) {
-    if (quality) {
-      return `https://api.bilibili.com/pugv/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json&ep_id=${this.ep}`
-    } else {
-      return `https://api.bilibili.com/pugv/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&otype=json&ep_id=${this.ep}`
-    }
+    return api.bind(this) as typeof api
   }
 }
 
@@ -168,26 +186,12 @@ class VideoDownloader {
       })
     }
     else {
-      const { dashToFragment, getDashInfo } = await import('./video-dash')
+      const { dashToFragments, getDashInfo } = await import('./video-dash')
       const dashes = await getDashInfo(
         await pageData.entity.getDashUrl(this.format.quality),
         this.format.quality
       )
-      // 画面按照首选编码选择, 若没有相应编码则选择大小较小的编码
-      console.log(dashes.videoDashes)
-      const video = (() => {
-        const matchPreferredCodec = (d: VideoDash) => d.videoCodec === settings.downloadVideoDashCodec
-        if (dashes.videoDashes.some(matchPreferredCodec)) {
-          return dashes.videoDashes
-            .filter(matchPreferredCodec)
-            .sort(ascendingSort(d => d.bandWidth))[0]
-        } else {
-          return dashes.videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
-        }
-      })()
-      // 声音倒序排, 选择最高音质
-      const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
-      this.fragments = [dashToFragment(video), dashToFragment(audio)]
+      this.fragments = dashToFragments(dashes)
     }
     return this.fragments
   }
@@ -799,7 +803,8 @@ async function loadPanel() {
         }
         const toast = Toast.info('获取链接中...', '批量导出')
         const batchExtractor = this.batchExtractor as BatchExtractor
-        batchExtractor.itemFilter = episodeFilter
+        batchExtractor.config.itemFilter = episodeFilter
+        batchExtractor.config.api = await pageData.entity.getApiGenerator(this.dash)
         let result: string
         try {
           switch (type) {
@@ -832,8 +837,7 @@ async function loadPanel() {
                 const items = await batchExtractor.getRawItems(format)
                 const videoDownloader = new VideoDownloader(format, items[0].fragments)
                 const { getBatchFragmentsList } = await import('./ffmpeg-support')
-                const extensions = this.dash ? ['.mp4', 'm4a'] : [videoDownloader.extension()]
-                const map = getBatchFragmentsList(items, extensions)
+                const map = getBatchFragmentsList(items, this.dash || videoDownloader.extension())
                 if (!map) {
                   Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
                 } else {
@@ -850,8 +854,7 @@ async function loadPanel() {
                 const items = await batchExtractor.getRawItems(format)
                 const videoDownloader = new VideoDownloader(format, items[0].fragments)
                 const { getBatchEpisodesList } = await import('./ffmpeg-support')
-                const extensions = this.dash ? ['.mp4', 'm4a'] : [videoDownloader.extension()]
-                const content = getBatchEpisodesList(items, extensions)
+                const content = getBatchEpisodesList(items, this.dash || videoDownloader.extension())
                 const pack = new DownloadVideoPackage()
                 pack.add('ffmpeg-files.txt', content)
                 await pack.emit()

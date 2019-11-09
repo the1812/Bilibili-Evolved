@@ -162,3 +162,4 @@ export function html(strings, ...values) {
     return previous + current + (value === undefined ? '' : value)
   }, '')
 }
+export const dashExtensions = ['.mp4', '.m4a']
