@@ -690,22 +690,31 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     left: 50%;
     top: 0;
     background-color: var(--theme-color);
-    color: var(--foreground-color);
     padding: 0 8px;
     display: flex;
     justify-content: center;
     font-size: 11px;
     transform: translateX(-50%);
-    border-radius: 0 0 8px 8px;
     opacity: 0;
     line-height: 14px;
     white-space: nowrap;
+    color: var(--foreground-color);
+    border-radius: 0 0 8px 8px;
+
+    &:not(:empty):not(.hidden) {
+      opacity: 1;
+    }
+    &.dot {
+      color: transparent;
+      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      top: 2px;
+    }
   }
   &.fill .notify-count {
     background-color: rgba(0, 0, 0, 0.3);
-  }
-  .notify-count:not(:empty) {
-    opacity: 1;
   }
   .blur-layer-container {
     overflow: hidden;
