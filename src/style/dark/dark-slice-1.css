@@ -1625,10 +1625,10 @@ ul.filter-disable .icon-copy,
 {
     background-position: -194px -376px !important;
 }
-.multi-page .cur-list ul
+/* .multi-page .cur-list ul
 {
     max-height: none !important;
-}
+} */
 div.live-box,
 div.box,
 div.im-list-box,
