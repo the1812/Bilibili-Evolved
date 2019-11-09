@@ -1,6 +1,9 @@
 const styleID = 'fill-with-comments-style'
 export const fillWithComments = (enable) => {
   if (enable) {
+    if (dq('#' + styleID)) {
+      return
+    }
     resources.applyStyleFromText(`
     .v-wrap { position: relative !important; }
     .v-wrap .l-con { width: 100% !important; }
@@ -9,7 +12,6 @@ export const fillWithComments = (enable) => {
       top: 0 !important;
       right: 0 !important;
     }
-    .video-desc .info { width: auto !important; }
     `, styleID)
   } else {
     dqa('#' + styleID).forEach(it => it.remove())
