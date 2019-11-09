@@ -47,7 +47,7 @@ abstract class Batch {
       for (const item of json) {
         const params = item.fragments.map((fragment: { url: string }, index: number) => {
           let indexNumber = ''
-          if (item.fragments.length > 1) {
+          if (item.fragments.length > 1 && !fragment.url.includes('.m4s')) {
             indexNumber = ' - ' + (index + 1)
           }
           const params = []
@@ -78,7 +78,7 @@ abstract class Batch {
 ${json.map(item => {
         return item.fragments.map((f, index) => {
           let indexNumber = ''
-          if (item.fragments.length > 1) {
+          if (item.fragments.length > 1 && !f.url.includes('.m4s')) {
             indexNumber = ` - ${index + 1}`
           }
           return `
@@ -88,7 +88,7 @@ ${f.url}
   out=${item.title}${indexNumber}${this.extension(f.url, index)}
   split=${fragmentSplitFactor}
    `.trim()
-        })
+        }).join('\n')
       }).join('\n')}
       `.trim()
     }
