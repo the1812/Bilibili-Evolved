@@ -279,6 +279,25 @@
     @include color("a");
   }
 }
+.cc-album-manage .article-card {
+  .cover-wrp {
+    @include background-color("4");
+  }
+  .meta {
+    &-status .description,
+    &-status .pubdate,
+    &-footer .view-stat {
+      @include color("a");
+    }
+    &-view .delete {
+      @include background-color("3");
+      @include color("a");
+      &:hover {
+        @include background-color("2");
+      }
+    }
+  }
+}
 
 .game-content {
   .score-contain {
