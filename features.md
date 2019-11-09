@@ -293,6 +293,18 @@
 
 </details>
 <details>
+<summary><strong>简化首页</strong></summary>
+
+> **低完成度警告**
+
+> 此功能需要非Chrome用户做一些额外设置, 详见[简化首页注意事项](src/style/simplify-home/simplify-home.md)
+
+替换原本的首页, 有两种样式可用:
+- `清爽`: 布局与原主页类似, 多一个`动态`栏目.
+- `极简`: 去除其他所有栏目, 只保留`视频动态`和`热门视频`两个功能.
+
+</details>
+<details>
 <summary><strong>隐藏顶部横幅</strong></summary>
 
 隐藏主站顶部的横幅, 注意这会导致搜索框也被隐藏, 除非开启了自定义顶栏.
@@ -364,6 +376,24 @@
 
 </details>
 <details>
+<summary><strong>隐藏推荐视频</strong></summary>
+
+隐藏番剧和视频页面右侧的推荐视频列表.
+
+</details>
+<details>
+<summary><strong>隐藏推荐直播</strong></summary>
+
+隐藏视频页面右侧下方的推荐直播.
+
+</details>
+<details>
+<summary><strong>隐藏承包榜</strong></summary>
+
+隐藏番剧页面下方的承包榜, 以及右边的承包按钮.
+
+</details>
+<details>
 <summary><strong>隐藏分区栏</strong></summary>
 
 隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.
@@ -405,6 +435,12 @@
 <summary><strong>旧版动态跳转支持</strong></summary>
 
 将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.
+
+</details>
+<details>
+<summary><strong>动态过滤器</strong></summary>
+
+按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 注意目前仅仅在全部动态里生效, 切换到别的类别时无效.
 
 </details>
 
