@@ -200,6 +200,7 @@ function html(strings, ...values) {
   }, '')
 }
 const dashExtensions = ['.mp4', '.m4a']
+const dashFragmentExtension = 'm4s'
 
 const customNavbarDefaultOrders = {
   blank1: 0,

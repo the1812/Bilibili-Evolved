@@ -163,3 +163,4 @@ export function html(strings, ...values) {
   }, '')
 }
 export const dashExtensions = ['.mp4', '.m4a']
+export const dashFragmentExtension = 'm4s'

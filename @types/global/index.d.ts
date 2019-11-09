@@ -427,6 +427,8 @@ declare global {
   const getCsrf: () => string
   const formatCount: (count: number | string) => string
   const escapeFilename: (filename: string, replacement?: string) => string
+  const dashExtensions: string[]
+  const dashFragmentExtension: string
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const scriptVersion: ScriptVersion
 }
