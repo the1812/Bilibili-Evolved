@@ -80,7 +80,8 @@
     @include background-color("2");
   }
 }
-.dialog-ctnr.bottom-left {
+.dialog-ctnr.bottom-left,
+.suggest-wrap .keyword-wrap .keyword.focus {
   @include background-color("3");
 }
 .pay-note-panel {
@@ -279,21 +280,25 @@
     @include color("a");
   }
 }
-.cc-album-manage .article-card {
-  .cover-wrp {
+.cc-album-manage {
+  .article-card {
     @include background-color("4");
-  }
-  .meta {
-    &-status .description,
-    &-status .pubdate,
-    &-footer .view-stat {
-      @include color("a");
+    @include border-color();
+    .cover-wrp {
+      @include background-color("4");
     }
-    &-view .delete {
-      @include background-color("3");
-      @include color("a");
-      &:hover {
-        @include background-color("2");
+    .meta {
+      &-status .description,
+      &-status .pubdate,
+      &-footer .view-stat {
+        @include color("a");
+      }
+      &-view .delete {
+        @include background-color("3");
+        @include color("a");
+        &:hover {
+          @include background-color("2");
+        }
       }
     }
   }
