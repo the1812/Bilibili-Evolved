@@ -89,7 +89,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["favoritesRedirect", /*html*/`個人センターの「お気に入り」の動画を通常の再生ページに変更して、「お気に入り」再生の放送ページではなく.`],
     ["hideTopSearch", /*html*/`検索欄の推薦語を<span>搜索</span>に置き換える.`],
     ["fullTweetsTitle", /*html*/`頂欄のフィードプレビューページでは、常に完全なタイトルが展開されます.`],
-    ["fullPageTitle", /*html*/`動画選集一覧では、常に完全なタイトルが展開されます.`],
+    ["fullPageTitle", /*html*/`動画選集リストですべでを展開し、タイトルが1行を超えたら、別の行を開始して完全なタイトルを表示します.`],
     ["showDeadVideoTitle", /*html*/`個人センターの中に、失効した動画のタイトルとサムネイルを復元する.`],
     ["useBiliplusRedirect", /*html*/`失効した動画のリンクを「BiliPlus」ページに変更して.`],
     ["deadVideoTitleProvider", /*html*/`失効した動画の情報源: 「後で見る」は安定していますが、少し時間がかかります; 「BiliPlus」のスピードは速いですが、書き残していますので、しばらく開けません.`],
@@ -145,6 +145,13 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`selectableColumnText`, /*html*/`コラムのテキストを選択可能にする.`],
     [`watchlaterExpireWarnings`, /*html*/`「後で見る」の動画は、追加後60日で有効期限が切れます.この機能を開くと、14日より後のリストに有効期限の警告が表示されます.`],
     [`miniPlayerTouchMove`, /*html*/`ミニプレーヤーをタッチしてドラッグする.`],
+    [`feedsFilter`, /*html*/`タイプまたはキーワードでフィードホームページの内容をフィルタリングするか、フィードページのいくつかのサイドカードを削除します. ご注意ください：今、「すべてのフィード」でのみ有効にする、別のカテゴリに切り替える場合は無効.`],
+    [`hideBangumiSponsors`, /*html*/`番組ページの下のスポンサーランクと右側のスポンサーボタンを隠す.`],
+    [`hideRecommendLive`, /*html*/`動画ページ右側のおすすめ生放送を隠す.`],
+    [`hideRelatedVideos`, /*html*/`番組と動画ページ右側のおすすめ動画を隠す.`],
+    [`simplifyHome`, /*html*/`ホームページを置き換えます.2つのスタイルがあります:
+- さわやか: レイアウトは元のホームページに似ており、フィードセクションが追加されています.
+- ミニマル: 他のすべてのセクションを削除し、動画フィードと人気動画のみを残します.`],
 ]);
 export default {
     export: { toolTips },

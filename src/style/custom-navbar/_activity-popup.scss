@@ -166,6 +166,7 @@
   &.dark .activity-popup-content .view-more,
   &.dark .column-card {
     box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px 0px;
+    background-color: #2d2d2d;
   }
   .video-activity-card .cover {
     width: var(--card-width);
@@ -274,6 +275,7 @@
   &.dark .bangumi-card,
   &.dark .live-card {
     box-shadow: rgba(0, 0, 0, 0.3) 0 2px 8px 0px;
+    background-color: #2d2d2d;
   }
   .bangumi-card .up {
     grid-area: title;
@@ -292,6 +294,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0 6px;
+    line-height: normal;
   }
   .bangumi-card .ep-title {
     grid-area: epTitle;
@@ -303,6 +306,7 @@
     text-overflow: ellipsis;
     align-self: center;
     color: inherit;
+    line-height: normal;
   }
   .bangumi-card:hover .ep-title {
     color: var(--theme-color);
@@ -423,6 +427,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     color: inherit;
+    line-height: normal;
   }
   .live-card:hover .live-title {
     color: var(--theme-color);
@@ -434,6 +439,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: normal;
   }
   .activity-content-enter-active,
   .activity-content-leave-active,

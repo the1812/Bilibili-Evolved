@@ -92,9 +92,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       if (video === null) {
         return
       }
-      e.stopPropagation()
-      e.preventDefault()
       const playbackRates = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
+      let preventDefault = true
       if (key === '>' || key === 'ArrowUp'.toLowerCase()) {
         video.playbackRate = playbackRates.find(it => it > video.playbackRate) || playbackRates[playbackRates.length - 1]
         showPlaybackTip(video.playbackRate)
@@ -109,6 +108,13 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
         if (watchlater !== null) {
           watchlater.click()
         }
+      } else {
+        preventDefault = false
+      }
+
+      if (preventDefault) {
+        e.stopPropagation()
+        e.preventDefault()
       }
     }
   })

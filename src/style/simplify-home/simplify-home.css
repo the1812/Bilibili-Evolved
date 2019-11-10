@@ -3,6 +3,7 @@
 .international-footer,
 #app > .bili-wrapper,
 #app > .elevator-module,
+#app > .bili-header-m.stardust-common > .bili-wrapper,
 .bili-header-m .head-banner .head-content .head-logo {
   display: none !important;
 }

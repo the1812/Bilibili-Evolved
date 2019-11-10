@@ -84,9 +84,10 @@ export interface RawWatchlaterItem {
   progress: number;
   add_at: number;
 }
+export async function getWatchlaterList(): Promise<number[]>
 export async function getWatchlaterList(raw: true): Promise<RawWatchlaterItem[]>
 export async function getWatchlaterList(raw: false): Promise<number[]>
-export async function getWatchlaterList(raw: boolean): Promise<number[] | RawWatchlaterItem[]> {
+export async function getWatchlaterList(raw = false): Promise<number[] | RawWatchlaterItem[]> {
   const api = `https://api.bilibili.com/x/v2/history/toview/web`
   const response = await Ajax.getJsonWithCredentials(api)
   if (response.code !== 0) {

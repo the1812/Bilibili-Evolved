@@ -80,7 +80,8 @@
     @include background-color("2");
   }
 }
-.dialog-ctnr.bottom-left {
+.dialog-ctnr.bottom-left,
+.suggest-wrap .keyword-wrap .keyword.focus {
   @include background-color("3");
 }
 .pay-note-panel {
@@ -109,7 +110,8 @@
   @include color("e");
 }
 
-.vote-pc-container .card {
+.vote-pc-container .card,
+.vote-result-comment .reply-item {
   @include border-color();
 }
 
@@ -249,5 +251,166 @@
   }
   .favlist-body:after {
     @include background-color("a");
+  }
+}
+.video-item.list {
+  @include border-color("4");
+  .type {
+    @include background-color("4");
+    @include color("e");
+    @include border-color();
+  }
+  .headline.singleav {
+    .avid {
+      @include theme-background-color();
+      @include foreground-color();
+      @include border-color();
+    }
+    .title {
+      @include theme-color();
+    }
+  }
+  .title {
+    @include color("e");
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .des {
+    @include color("a");
+  }
+}
+.cc-album-manage {
+  .article-card {
+    @include background-color("4");
+    @include border-color();
+    .cover-wrp {
+      @include background-color("4");
+    }
+    .meta {
+      &-status .description,
+      &-status .pubdate,
+      &-footer .view-stat {
+        @include color("a");
+      }
+      &-view .delete {
+        @include background-color("3");
+        @include color("a");
+        &:hover {
+          @include background-color("2");
+        }
+      }
+    }
+  }
+}
+
+.game-content {
+  .score-contain {
+    .page-btn {
+      @include background-color("4");
+      @include color("a");
+      @include border-color();
+    }
+    .allmatch {
+      @include background-color("4");
+      @include color("e");
+      @include border-color();
+      .more-match {
+        @include background();
+      }
+    }
+  }
+  .card-score .score-wrap {
+    @include border-color("4");
+    .title .title-text {
+      @include color("a");
+    }
+    .time-wrap {
+      @include color("e");
+      .text.state.nobegin {
+        @include theme-color();
+      }
+    }
+    .primary-btn,
+    .default-btn {
+      @include background-color("4");
+      @include color("e");
+      @include border-color();
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+  .match-box {
+    .main-title,
+    .sub-title {
+      @include color("e");
+    }
+    .card-video .video-wrap .video-info {
+      .title a {
+        @include color("e");
+        &:hover {
+          @include theme-color();
+        }
+      }
+      .detail {
+        @include color("a");
+      }
+    }
+    .matchlist-contain {
+      .match-wrap {
+        .matchlist-title a {
+          @include color("e");
+          &:hover {
+            @include theme-color();
+          }
+        }
+        .match-time {
+          @include color("a");
+        }
+      }
+      .more-match {
+        @include background-color("4");
+        @include color("e");
+        @include border-color();
+        &:hover {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
+    .newslist-contain .news-wrap {
+      .news-title {
+        a {
+          @include color("e");
+          &:hover {
+            @include theme-color();
+          }
+        }
+        .hot-label {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+      .news-time {
+        @include color("a");
+      }
+    }
+    .user-contain {
+      .page-btn {
+        @include background-color("4");
+        @include color("a");
+        @include border-color();
+      }
+      .primary-btn {
+        @include background-color("4");
+        @include color("e");
+        &:hover {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
   }
 }

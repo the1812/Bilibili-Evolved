@@ -18,6 +18,19 @@ export default {
   methods: {
     toggleDropdown() {
       this.dropdownOpen = !this.dropdownOpen
+      if (this.dropdownOpen) {
+        document.addEventListener(
+          'click',
+          e => {
+            const target = e.target as HTMLElement
+            if (target === this.$el || this.$el.contains(target)) {
+              return
+            }
+            this.dropdownOpen = false
+          },
+          { once: true, capture: true }
+        )
+      }
     },
     select(item: string) {
       this.$emit('update:value', item)
@@ -28,35 +41,42 @@ export default {
 </script>
 <style lang="scss">
 .v-dropdown {
+  --background-color: #eee;
   position: relative;
-  background-color: #8884;
+  background-color: var(--background-color);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-width: 100px;
 
+  body.dark & {
+    --background-color: #333;
+  }
   .dropdown-menu {
     transform-origin: top;
-    transform: scaleY(0) translateX(-50%);
+    transform: translateY(-4px) translateX(-50%);
+    pointer-events: none;
+    opacity: 0;
     position: absolute;
     top: calc(100% + 2px);
     left: 50%;
-    background-color: var(--download-video-background);
+    background-color: var(--background-color);
     z-index: 1;
-    transition: 0.2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+    transition: 0.2s ease-out;
     box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
     &.opened {
-      transform: scaleY(1) translateX(-50%);
-      transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      transform: translateY(0) translateX(-50%);
+      pointer-events: initial;
+      opacity: 1;
     }
     li {
-      padding: 4px 8px;
+      padding: 4px 16px;
       white-space: nowrap;
-      min-width: 80px;
+      min-width: 64px;
       text-align: center;
       cursor: pointer;
-      color: var(--download-video-foreground);
+      color: inherit;
       background-color: transparent;
       &:hover {
         background-color: rgba(0, 0, 0, 0.16);

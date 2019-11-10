@@ -16,18 +16,22 @@
   const getSuperchatMessageList = async () => {
     const json = await Ajax.getJson(`https://api.live.bilibili.com/av/v1/SuperChat/getMessageList?room_id=${roomID}&jpn=1`)
     if (json.code !== 0) {
-      console.warn(`getMessageList api failed with ${json.code}`)
+      console.warn(`getMessageList api failed: ${json.message}`)
       return []
     }
     return _.get(json, 'data.list', [])
   }
-  const getTranslation = async (id: number | string) => {
-    const json = await Ajax.getJson(`https://api.live.bilibili.com/av/v1/SuperChat/messageInfo?id=${id}`)
-    if (json.code !== 0) {
-      console.warn(`messageInfo api failed with ${json.code}`)
-      return ''
-    }
-    return _.get(json, 'data.message_jpn', '')
+  const getTranslation = (id: number | string): Promise<string> => {
+    return new Promise(resolve => {
+      setTimeout(async () => {
+        const json = await Ajax.getJson(`https://api.live.bilibili.com/av/v1/SuperChat/messageInfo?id=${id}`)
+        if (json.code !== 0) {
+          console.warn(`messageInfo api failed: ${json.message}`)
+          resolve('')
+        }
+        resolve(_.get(json, 'data.message_jpn', ''))
+      }, 3000)
+    })
   }
   Observer.childListSubtree('.pay-note-panel', async () => {
     console.log('.pay-note-panel')
@@ -54,7 +58,6 @@
     })
   })
   Observer.childList(chatList, records => {
-    console.log('chat-list')
     records.forEach(record => {
       record.addedNodes.forEach(async node => {
         if (node instanceof HTMLElement && node.classList.contains('superChat-card-detail')) {

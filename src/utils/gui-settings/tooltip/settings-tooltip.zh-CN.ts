@@ -76,7 +76,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["favoritesRedirect", /*html*/`将个人空间收藏夹里的视频重定向为直链, 而不是收藏夹播单链接.`],
   ["hideTopSearch", /*html*/`将搜索框的推荐词替换为<span>搜索</span>.`],
   ["fullTweetsTitle", /*html*/`在顶栏的动态预览框中, 总是展开完整的视频标题.`],
-  ["fullPageTitle", /*html*/`在视频选集列表中, 总是展开完整的标题.`],
+  ["fullPageTitle", /*html*/`在视频选集列表中, (选集多时)展开整个列表, 当标题超出一行时, 另起一行以显示完整标题.`],
   ["showDeadVideoTitle", /*html*/`在个人空间中, 为已失效视频恢复标题和封面.`],
   ["useBiliplusRedirect", /*html*/`将失效视频重定向到BiliPlus.`],
   ["deadVideoTitleProvider", /*html*/`失效视频的信息来源: 稍后再看较稳定, 但需要一点时间来查询; BiliPlus速度更快, 但是因为没写完暂不开放.`],
@@ -161,6 +161,13 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`selectableColumnText`, /*html*/`使专栏的文字可以选择.`],
   [`watchlaterExpireWarnings`, /*html*/`稍后再看里的视频添加后60天会过期自动删除. 开启此功能可在期限不足14天时在稍后再看列表里显示过期警告.`],
   [`miniPlayerTouchMove`, /*html*/`使迷你播放器的拖动条可以触摸拖动.`],
+  [`feedsFilter`, /*html*/`按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 注意目前仅仅在全部动态里生效, 切换到别的类别时无效.`],
+  [`hideBangumiSponsors`, /*html*/`隐藏番剧页面下方的承包榜, 以及右边的承包按钮.`],
+  [`hideRecommendLive`, /*html*/`隐藏视频页面右侧下方的推荐直播.`],
+  [`hideRelatedVideos`, /*html*/`隐藏番剧和视频页面右侧的推荐视频列表.`],
+  [`simplifyHome`, /*html*/`替换原本的首页, 有两种样式可用:
+- 清爽: 布局与原主页类似, 多一个动态栏目.
+- 极简: 去除其他所有栏目, 只保留视频动态和热门视频两个功能.`],
 ]);
 export default {
   export: { toolTips },

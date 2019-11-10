@@ -1,0 +1,380 @@
+<template>
+  <div class="feeds-filter">
+    <h1>动态过滤</h1>
+    <h2>类型</h2>
+    <div class="filter-types">
+      <filter-type-switch v-for="[name, type] of allTypes" :name="name" :type="type" :key="type.id"></filter-type-switch>
+    </div>
+    <h2>关键词</h2>
+    <div class="filter-patterns">
+      <div class="pattern" v-for="p of patterns" :key="p">
+        {{p}}
+        <icon title="删除" type="mdi" icon="trash-can-outline" @click.native="deletePattern(p)"></icon>
+      </div>
+    </div>
+    <div class="add-pattern">
+      <input
+        placeholder="支持正则表达式 /^xxx$/"
+        type="text"
+        v-model="newPattern"
+        @keydown.enter="addPattern(newPattern)"
+      />
+      <icon title="添加" type="mdi" icon="plus" @click.native="addPattern(newPattern)"></icon>
+    </div>
+    <h2>侧边栏</h2>
+    <div class="filter-side-card">
+      <div
+        class="filter-side-card-switch feeds-filter-swtich"
+        v-for="[id, type] of Object.entries(allSideCards)"
+        :key="id"
+        @click="toggleBlockSide(id)"
+      >
+        <label :class="{disabled: sideDisabled(id)}">
+          <span class="name" :class="{disabled: sideDisabled(id)}">{{type.displayName}}</span>
+          <icon class="disabled" type="mdi" icon="cancel"></icon>
+          <icon type="mdi" icon="check"></icon>
+        </label>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { FeedsCard, FeedsCardType } from '../feeds-apis'
+interface SideCardType {
+  className: string
+  displayName: string
+}
+const sideCards: { [id: number]: SideCardType } = {
+  0: {
+    className: 'profile',
+    displayName: '个人资料'
+  },
+  1: {
+    className: 'following-tags',
+    displayName: '关注的话题'
+  },
+  2: {
+    className: 'notice',
+    displayName: '公告栏'
+  },
+  3: {
+    className: 'live',
+    displayName: '正在直播'
+  },
+  4: {
+    className: 'trending-tags',
+    displayName: '热门话题'
+  }
+}
+const sideBlock = 'feeds-filter-side-block-'
+export default {
+  components: {
+    FilterTypeSwitch: () => import('./filter-type-switch.vue'),
+    Icon: () => import('../../style/icon.vue')
+  },
+  methods: {
+    updateCard(card: FeedsCard) {
+      const testPattern = (pattern: Pattern, text: string) => {
+        if (pattern.startsWith('/') && pattern.endsWith('/')) {
+          return new RegExp(pattern.slice(1, pattern.length - 1)).test(text)
+        }
+        return text.includes(pattern)
+      }
+      const block: boolean = (() => {
+        return settings.feedsFilterPatterns.some(pattern => {
+          const upNameMatch = pattern.match(/(.+) up:([^ ]+)/)
+          if (upNameMatch) {
+            return (
+              testPattern(upNameMatch[1], card.text) &&
+              testPattern(upNameMatch[2], card.username)
+            )
+          }
+          return testPattern(pattern, card.text)
+        })
+      })()
+      if (block) {
+        card.element.classList.add('pattern-block')
+      } else {
+        card.element.classList.remove('pattern-block')
+      }
+    },
+    deletePattern(pattern: Pattern) {
+      const index = settings.feedsFilterPatterns.indexOf(pattern)
+      if (index !== -1) {
+        this.patterns.splice(index, 1)
+      }
+    },
+    addPattern(pattern: Pattern) {
+      if (pattern && !this.patterns.includes(pattern)) {
+        this.patterns.push(pattern)
+      }
+      this.newPattern = ''
+    },
+    updateBlockSide() {
+      Object.entries(sideCards).forEach(([id, type]) => {
+        const name = sideBlock + type.className
+        document.body.classList[
+          this.blockSideCards.includes(id) ? 'add' : 'remove'
+        ](name)
+      })
+    },
+    toggleBlockSide(id: number) {
+      const index = this.blockSideCards.indexOf(id)
+      const type = sideCards[id]
+      if (index !== -1) {
+        this.blockSideCards.splice(index, 1)
+        document.body.classList.remove(sideBlock + type.className)
+      } else {
+        this.blockSideCards.push(id)
+        document.body.classList.add(sideBlock + type.className)
+      }
+      settings.feedsFilterSideCards = this.blockSideCards
+    },
+    sideDisabled(id: number) {
+      return this.blockSideCards.includes(id)
+    }
+  },
+  watch: {
+    patterns() {
+      settings.feedsFilterPatterns = this.patterns
+      if (this.feedsCardsManager !== null) {
+        this.feedsCardsManager.cards.forEach((card: FeedsCard) =>
+          this.updateCard(card)
+        )
+      }
+    }
+  },
+  data() {
+    return {
+      allTypes: [] as [string, FeedsCardType][],
+      patterns: [...settings.feedsFilterPatterns],
+      newPattern: '',
+      feedsCardsManager: null,
+      allSideCards: sideCards,
+      blockSideCards: [...settings.feedsFilterSideCards]
+    }
+  },
+  async mounted() {
+    this.updateBlockSide()
+    const tabBar = await SpinQuery.select('.feed-card .tab-bar')
+    if (!tabBar) {
+      console.error('tabBar not found')
+      return
+    }
+    const tab = tabBar.querySelector(
+      '.tab:nth-child(2) .tab-text'
+    ) as HTMLAnchorElement
+    Observer.attributes(tab, () => {
+      document.body.classList[
+        tab.classList.contains('selected') ? 'add' : 'remove'
+      ]('enable-feeds-filter')
+    })
+    const { feedsCardsManager, feedsCardTypes } = await import('../feeds-apis')
+    const success = await feedsCardsManager.startWatching()
+    if (!success) {
+      console.error('feedsCardsManager.startWatching() failed')
+      return
+    }
+    this.allTypes = Object.entries(feedsCardTypes)
+    feedsCardsManager.cards.forEach(card => this.updateCard(card))
+    feedsCardsManager.addEventListener('addCard', (e: CustomEvent) => {
+      const card = e.detail as FeedsCard
+      this.updateCard(card)
+    })
+    this.feedsCardsManager = feedsCardsManager
+  }
+}
+</script>
+
+<style lang="scss">
+body.enable-feeds-filter:not(.disable-feeds-filter) {
+  @each $name,
+    $value
+      in (
+        'repost': 1,
+        'textWithImages': 2,
+        'text': 4,
+        'video': 8,
+        'miniVideo': 16,
+        'column': 64,
+        'audio': 256,
+        'bangumi': 512,
+        'share': 2048
+      )
+  {
+    &.feeds-filter-block-#{$name} .feed-card .card[data-type='#{$value}'] {
+      display: none !important;
+    }
+  }
+  $side-block: 'feeds-filter-side-block';
+  .left-panel > *,
+  .right-panel > * {
+    margin: 0 !important;
+    margin-bottom: 8px !important;
+  }
+  &.#{$side-block}-profile {
+    .left-panel .user-wrapper {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-following-tags {
+    .left-panel .tag-panel {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-notice {
+    .right-panel .notice-panel {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-live {
+    .right-panel .live-panel {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-trending-tags {
+    .right-panel .tag-panel {
+      display: none !important;
+    }
+  }
+  .feed-card .card.pattern-block {
+    display: none !important;
+  }
+}
+.feeds-filter {
+  background-color: white;
+  width: 100%;
+  padding: 12px 16px;
+  float: left;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: none;
+  flex-direction: column;
+
+  body.enable-feeds-filter:not(.disable-feeds-filter) & {
+    display: flex;
+  }
+  &,
+  & * {
+    transition: 0.2s ease-out;
+  }
+  body.dark & {
+    color: #eee;
+    background-color: #444;
+  }
+  h1 {
+    font-weight: normal;
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 14px;
+  }
+  h2 {
+    font-weight: bold;
+    font-size: 13px;
+    margin: 0;
+    margin-bottom: 8px;
+  }
+  .feeds-filter-swtich {
+    &:not(:last-child) {
+      margin-bottom: 4px;
+    }
+    label {
+      cursor: pointer;
+      margin: 0;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: #0001;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid transparent;
+
+      .name {
+        font-size: 12px;
+      }
+      .disabled {
+        color: var(--theme-color) !important;
+      }
+      &:hover {
+        background-color: #0002;
+      }
+      input {
+        display: none;
+      }
+      .be-icon {
+        font-size: 16px;
+        &.disabled {
+          display: none;
+        }
+      }
+      &.disabled {
+        border-color: var(--theme-color);
+        .be-icon {
+          display: none;
+          &.disabled {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+  .filter-type-switch {
+    flex: 0 0 49%;
+  }
+  .filter-side-card-switch {
+    flex: 0 0 100%;
+  }
+  .filter-types {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .filter-patterns {
+    &:not(:empty) {
+      margin-bottom: 8px;
+    }
+    .pattern {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: #0001;
+      font-size: 12px;
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+      .be-icon {
+        font-size: 18px;
+        cursor: pointer;
+      }
+    }
+  }
+  .add-pattern {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    input {
+      color: inherit;
+      background-color: transparent;
+      font-size: 12px;
+      border: 1px solid #8884;
+      border-radius: 4px;
+      outline: none !important;
+      padding: 4px;
+      flex: 1 0 0;
+      width: 0;
+      &:focus {
+        border-color: var(--theme-color);
+      }
+    }
+    .be-icon {
+      font-size: 18px;
+      cursor: pointer;
+      margin-left: 8px;
+    }
+  }
+}
+</style>

@@ -93,6 +93,8 @@
   line-height: 1.5;
   flex-wrap: wrap;
   word-break: break-all;
+  max-height: 200px;
+  overflow: auto;
 }
 .toast-card.toast-default {
   border-left-color: #444;

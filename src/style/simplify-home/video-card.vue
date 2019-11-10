@@ -1,9 +1,14 @@
 <template>
-  <a class="video-card" target="_blank" :href="'https://www.bilibili.com/av' + aid">
+  <a
+    class="video-card"
+    target="_blank"
+    :href="epID ? ('https://www.bilibili.com/bangumi/play/ep' + epID) : ('https://www.bilibili.com/av' + aid)"
+    :class="{vertical: orientation === 'vertical'}"
+  >
     <div class="cover-container">
       <dpi-img class="cover" :src="coverUrl" :size="{height: 120, width: 200}"></dpi-img>
-      <div class="duration">{{durationText}}</div>
-      <div class="watchlater" @click.stop.prevent="toggleWatchlater()">
+      <div v-if="durationText" class="duration">{{durationText}}</div>
+      <div v-if="durationText" class="watchlater" @click.stop.prevent="toggleWatchlater()">
         <i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>
         {{watchlater ? '已添加' : '稍后再看'}}
       </div>
@@ -23,18 +28,18 @@
       class="up"
       :class="{'no-face': !upFaceUrl}"
       target="_blank"
-      :href="'https://space.bilibili.com/' + upID"
+      :href="upID ? ('https://space.bilibili.com/' + upID) : null"
     >
       <dpi-img v-if="upFaceUrl" class="face" :src="upFaceUrl" :size="24"></dpi-img>
       <Icon v-else icon="up" type="extended"></Icon>
       <div class="name" :title="upName">{{upName}}</div>
     </a>
     <div class="stats">
-      <template v-if="like">
+      <template v-if="like && !vertical">
         <Icon type="extended" icon="like-outline"></Icon>
         {{like}}
       </template>
-      <template v-if="coins">
+      <template v-if="coins && !vertical">
         <Icon type="home" icon="coin-outline"></Icon>
         {{coins}}
       </template>
@@ -53,33 +58,9 @@
 </template>
 
 <script lang="ts">
-export interface VideoCardInfo {
-  id: string
-  aid: number
-  title: string
-  upID: number
-  upName: string
-  upFaceUrl?: string
-  coverUrl: string
-  description: string
-  duration?: number
-  durationText: string
-  playCount: string
-  danmakuCount?: string
-  dynamic?: string
-  like?: string
-  coins?: string
-  favorites?: string
-  timestamp?: number
-  time?: Date
-  topics?: {
-    id: number
-    name: string
-  }[]
-  watchlater: boolean
-}
+import { VideoCardInfo } from './video-card-info'
 export default {
-  props: ['data'],
+  props: ['data', 'orientation'],
   components: {
     'dpi-img': () => import('../dpi-img.vue'),
     Icon: () => import('../icon.vue')
@@ -93,8 +74,15 @@ export default {
       favorites: '',
       dynamic: '',
       topics: [],
+      upID: 0,
+      epID: 0,
       ...this.data
     } as VideoCardInfo
+  },
+  computed: {
+    vertical() {
+      return this.orientation === 'vertical'
+    }
   },
   methods: {
     async toggleWatchlater() {
@@ -125,8 +113,9 @@ export default {
   height: var(--card-height);
   width: var(--card-width);
   color: black;
+  background-color: #fff;
   border-radius: 16px;
-  box-shadow: 0 2px 6px 0 #0002;
+  box-shadow: 0 4px 8px 0 #0001;
   margin-right: var(--card-margin);
   margin-bottom: var(--card-margin);
   position: relative;
@@ -139,14 +128,62 @@ export default {
   &:hover {
     color: black;
   }
+  &.vertical {
+    grid-template-columns: auto auto;
+    grid-template-rows: 2fr 1fr 1fr;
+    grid-template-areas:
+      'cover cover'
+      'title title'
+      'up up';
+    .description,
+    .topics {
+      display: none;
+    }
+    .cover-container {
+      border-radius: 16px 16px 0 0;
+    }
+    .title {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      max-height: 3em;
+      word-break: break-all;
+      white-space: normal;
+      line-height: 1.5;
+      font-size: 11pt;
+    }
+    .up {
+      align-self: start;
+      white-space: nowrap;
+      .name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      &:not(.no-face) {
+        margin-left: 8px;
+        max-width: calc(var(--card-width) - 16px);
+      }
+      &.no-face {
+        margin-top: 8px;
+        max-width: calc(var(--card-width) - 24px);
+      }
+    }
+    .stats {
+      align-self: end;
+      justify-self: start;
+      margin-bottom: 8px;
+      margin-right: 0;
+    }
+  }
   & > * {
     justify-self: self-start;
     align-self: center;
   }
   &:hover {
-    transform: scale(1.02);
-    transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
-
+    .cover {
+      transform: scale(1.05);
+      transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
+    }
     .duration,
     .watchlater {
       opacity: 1;
@@ -159,10 +196,15 @@ export default {
 
   .cover-container {
     grid-area: cover;
+    border-radius: 16px 0 0 16px;
     position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     .cover {
-      border-radius: 16px 0 0 16px;
       object-fit: cover;
+      width: 100%;
+      height: 100%;
     }
     & > :not(.cover) {
       position: absolute;
@@ -272,9 +314,12 @@ export default {
     .name {
       margin: 0 8px;
     }
-    &:hover {
+    &:not(.no-face):hover {
       background-color: #8884;
-      .name {
+    }
+    &:hover {
+      .name,
+      .be-icon {
         color: var(--theme-color);
       }
     }

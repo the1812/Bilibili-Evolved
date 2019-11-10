@@ -1,1 +1,1 @@
-resources.applyStyle("fullPageTitleStyle");
+export default resources.toggleStyle('fullPageTitleStyle')

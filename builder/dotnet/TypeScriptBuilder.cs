@@ -15,7 +15,7 @@ namespace BilibiliEvolved.Build
       var tsc = new TypeScriptCompiler();
       var uglifyJs = new JavascriptMinifier();
       var files = ResourceMinifier.GetFiles(file =>
-        file.FullName.Contains(@"src\") &&
+        file.FullName.Contains($"src{Path.DirectorySeparatorChar}") &&
         file.Extension == ".ts" &&
         !file.Name.EndsWith(".d.ts")
       );

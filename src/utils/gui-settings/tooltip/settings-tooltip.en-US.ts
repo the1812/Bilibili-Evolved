@@ -52,7 +52,7 @@ Tip: Every item can be toggled individually in Add-ons.`],
   ["favoritesRedirect", `Redirects all videos in favorites from favorites playlist to the individual video page.`],
   ["hideTopSearch", `Use <span>"Search"</span> in place of search recommendations.`],
   ["fullTweetsTitle", `Always expand full title in the feeds peek in navbar.`],
-  ["fullPageTitle", `Always expand full title of video episodes. (Not work for bangumi)`],
+  ["fullPageTitle", `Always expand full title of video episodes and (when there are many episodes) expand the entire list. (Not work for bangumi)`],
   ["biliplusRedirect", `Append "Jump to BiliPlus" button to Add-ons.`],
   ["imageResolution", `Request hi-resolution images by your screen DPI. But also cause longer loading time.`],
   ["oldTweets", `Replace feeds link by the old version, and you can switch between new and old versions in Add-ons.`],
@@ -134,6 +134,13 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   [`selectableColumnText`, `Make texts in column selectable.`],
   [`watchlaterExpireWarnings`, `Videos in watchlater will expire and be deleted in 60 days. Enable this feature will show a warning if a video will expire in less than 14 days.`],
   [`miniPlayerTouchMove`, `Allow touch drag to move mini player.`],
+  [`feedsFilter`, `Filter out unwanted feeds by type or keywords, and remove side cards in your feeds homepage.`],
+  [`hideBangumiSponsors`, `Hide bangumi sponsors sections and buttons.`],
+  [`hideRecommendLive`, `Hide recommended live broadcasts in video pages.`],
+  [`hideRelatedVideos`, `Hide related videos in video and bangumi pages.`],
+  [`simplifyHome`, `Replace the original homepage by one of these style:
+- Simple: A clean design with additional feeds section.
+- Minimal: Only video feeds and trending videos, no other sections.`],
 ]);
 export default {
   export: { toolTips },

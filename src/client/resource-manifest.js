@@ -225,8 +225,9 @@ Resource.manifest = {
   fullPageTitle: {
     path: 'full-page-title.min.js',
     style: 'instant',
+    reloadable: true,
     displayNames: {
-      fullPageTitle: '展开选集标题'
+      fullPageTitle: '展开选集列表'
     }
   },
   viewCover: {
@@ -286,13 +287,17 @@ Resource.manifest = {
       useCache: '启用缓存'
     }
   },
+  videoDownloadPackage: {
+    path: 'download-video-package.min.js',
+  },
   downloadVideo: {
     path: 'download-video.min.js',
     html: true,
     style: 'instant',
-    dependencies: ['title', 'videoInfo'],
+    dependencies: ['title', 'videoInfo', 'videoDownloadPackage'],
     displayNames: {
       'downloadVideo': '下载视频',
+      'videoDownloadPackage': '下载视频打包器',
       'batchDownload': '批量下载',
       'aria2Rpc': 'aria2 RPC',
     }
@@ -409,6 +414,7 @@ Resource.manifest = {
   playerLayout: {
     path: 'default-player-layout.min.js',
     displayNames: {
+      playerLayout: '指定播放器布局',
       useDefaultPlayerLayout: '指定播放器布局',
       defaultPlayerLayout: '视频区布局',
       defaultBangumiLayout: '番剧区布局'
@@ -691,7 +697,12 @@ Resource.manifest = {
     path: 'simplify-home.min.js',
     style: 'instant',
     displayNames: {
-      simplifyHome: '简化首页'
+      simplifyHome: '简化首页',
+      simplifyHomeStyle: '首页风格',
+    },
+    dropdown: {
+      key: 'simplifyHomeStyle',
+      items: ['清爽', '极简'],
     },
   },
   fullActivityContent: {
@@ -733,6 +744,34 @@ Resource.manifest = {
     reloadable: true,
     displayNames: {
       miniPlayerTouchMove: '迷你播放器触摸拖动',
+    },
+  },
+  feedsFilter: {
+    path: 'feeds-filter.min.js',
+    reloadable: true,
+    displayNames: {
+      feedsFilter: '动态过滤器',
+    },
+  },
+  hideBangumiSponsors: {
+    path: 'hide-bangumi-sponsors.min.js',
+    reloadable: true,
+    displayNames: {
+      hideBangumiSponsors: '隐藏番剧承包',
+    },
+  },
+  hideRecommendLive: {
+    path: 'hide-recommend-live.min.js',
+    reloadable: true,
+    displayNames: {
+      hideRecommendLive: '隐藏推荐直播',
+    },
+  },
+  hideRelatedVideos: {
+    path: 'hide-related-videos.min.js',
+    reloadable: true,
+    displayNames: {
+      hideRelatedVideos: '隐藏视频推荐',
     },
   },
 }

@@ -67,7 +67,6 @@ textarea,
 .coin-operated-m,
 .follow-dialog-window,
 #app,
-.back-top,
 .repost,
 .not-support,
 .deleted,
@@ -481,7 +480,8 @@ body,
 .fjw-point .line,
 font>span,
 .list-item .close .close-icon,
-.bb-comment
+.bb-comment,
+.back-top
 {
     background-color: transparent !important;
 }
@@ -1625,10 +1625,10 @@ ul.filter-disable .icon-copy,
 {
     background-position: -194px -376px !important;
 }
-.multi-page .cur-list ul
+/* .multi-page .cur-list ul
 {
     max-height: none !important;
-}
+} */
 div.live-box,
 div.box,
 div.im-list-box,

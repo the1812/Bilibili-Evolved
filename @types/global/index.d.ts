@@ -35,7 +35,8 @@ declare global {
   }
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu";
   type DanmakuOption = '无' | 'XML' | 'ASS'
-  type Pattern = string | RegExp
+  type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
+  type Pattern = string
   interface RpcOption {
     secretKey: string
     baseDir: string
@@ -135,6 +136,7 @@ declare global {
     cid: string | undefined
     pageno: string | number | undefined
     $: JQueryStatic
+    [key: string]: any
   }
   class SpinQuery {
     static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void;
@@ -340,7 +342,7 @@ declare global {
     defaultVideoSpeed: string,
     hideCategory: boolean,
     foldComment: boolean,
-    downloadVideoDefaultDanmaku: '无' | 'XML' | 'ASS',
+    downloadVideoDefaultDanmaku: DanmakuOption,
     aria2RpcOption: RpcOption,
     aria2RpcOptionSelectedProfile: string,
     aria2RpcOptionProfiles: RpcOptionProfile[],
@@ -359,19 +361,24 @@ declare global {
     scriptDownloadMode: 'bundle' | 'legacy'
     guiSettingsDockSide: '左侧' | '右侧'
     fullActivityContent: boolean,
-    activityFilter: boolean,
-    activityFilterPatterns: Pattern[],
-    activityFilterTypes: string[],
+    feedsFilter: boolean,
+    feedsFilterPatterns: Pattern[],
+    feedsFilterTypes: number[],
+    feedsFilterSideCards: number[],
     activityImageSaver: boolean,
     scriptBlockPatterns: Pattern[],
     customNavbarSeasonLogo: boolean,
     selectableColumnText: boolean,
     downloadVideoFormat: 'flv' | 'dash',
+    downloadVideoDashCodec: DashCodec,
     enableDashDownload: boolean,
     watchlaterExpireWarnings: boolean,
     watchlaterExpireWarningDays: number,
     superchatTranslate: boolean,
     miniPlayerTouchMove: boolean,
+    hideBangumiSponsors: boolean,
+    hideRecommendLive: boolean,
+    hideRelatedVideos: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
@@ -420,6 +427,8 @@ declare global {
   const getCsrf: () => string
   const formatCount: (count: number | string) => string
   const escapeFilename: (filename: string, replacement?: string) => string
+  const dashExtensions: string[]
+  const dashFragmentExtension: string
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const scriptVersion: ScriptVersion
 }

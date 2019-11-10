@@ -272,6 +272,19 @@ class NavbarComponent {
     }
     notifyElement.innerHTML = count
   }
+  async setNotifyStyle (style) {
+    const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`)
+    if (!notifyElement) {
+      return
+    }
+    const styleMap = {
+      1: 'number',
+      2: 'dot',
+      3: 'hidden'
+    }
+    notifyElement.classList.remove(Object.values(styleMap))
+    notifyElement.classList.add(styleMap[style])
+  }
 }
 class Blank extends NavbarComponent {
   constructor (number) {
@@ -345,44 +358,56 @@ class Upload extends NavbarComponent {
   }
 }
 class Messages extends NavbarComponent {
-  // TODO: try alt api: https://api.bilibili.com/x/msgfeed/unread
-  // https://api.vc.bilibili.com/web_im/v1/web_im/unread_msgs
-  // https://api.vc.bilibili.com/link_setting/v1/link_setting/get?msg_notify=1
   constructor () {
     super();
     this.href = "https://message.bilibili.com/";
     this.html = "消息";
     this.popupHtml = /*html*/`
       <ul id="message-list">
-        <li><a data-name="reply_me" target="_blank" href="https://message.bilibili.com/#/reply">回复我的</a></li>
-        <li><a data-name="at_me" target="_blank" href="https://message.bilibili.com/#/at">@我的</a></li>
-        <li><a data-name="praise_me" target="_blank" href="https://message.bilibili.com/#/love">收到的赞</a></li>
-        <li><a data-name="notify_me" target="_blank" href="https://message.bilibili.com/#/system">系统通知</a></li>
+        <li><a data-name="reply" target="_blank" href="https://message.bilibili.com/new/#/reply">回复我的</a></li>
+        <li><a data-name="at" target="_blank" href="https://message.bilibili.com/new/#/at">@我的</a></li>
+        <li><a data-name="like" target="_blank" href="https://message.bilibili.com/new/#/love">收到的赞</a></li>
+        <li><a data-name="user_msg" target="_blank" href="https://message.bilibili.com/new/#/whisper">我的消息</a></li>
+        <li><a data-name="sys_msg" target="_blank" href="https://message.bilibili.com/new/#/system">系统通知</a></li>
       </ul>
     `;
-    this.requestedPopup = true;
-    this.active = document.URL.startsWith("https://message.bilibili.com/");
-    this.init();
+    this.requestedPopup = true
+    this.active = document.URL.startsWith("https://message.bilibili.com/")
+    this.fetchSettings().then(notify => {
+      if (notify) {
+        this.init()
+      }
+    })
   }
   get name () {
     return "messages";
   }
-  async init () {
-    const json = await Ajax.getJsonWithCredentials("https://message.bilibili.com/api/notify/query.notify.count.do");
-    const list = await SpinQuery.select("#message-list");
-    const items = [...list.querySelectorAll("a[data-name]")];
-    const names = items.map(it => it.getAttribute("data-name"));
-
+  async fetchSettings() {
+    const json = await bilibiliEvolved.Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/link_setting/v1/link_setting/get?msg_notify=1`)
     if (json.code !== 0) {
-      return;
+      return
     }
-    let totalCount = names.reduce((acc, it) => acc + json.data[it], 0);
+    await this.setNotifyStyle(json.data.msg_notify)
+    return json.data.msg_notify !== 3
+  }
+  async init () {
+    const mainJson = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/msgfeed/unread`)
+    const messageJson = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/session_svr/v1/session_svr/single_unread`)
+    const list = await SpinQuery.select("#message-list")
+    const items = [...list.querySelectorAll("a[data-name]")]
+    const names = items.map(it => it.getAttribute("data-name"))
+
+    if (mainJson.code !== 0 || messageJson.code !== 0) {
+      return
+    }
+    mainJson.data['user_msg'] = messageJson.data.unfollow_unread + messageJson.data.follow_unread
+    let totalCount = names.reduce((acc, it) => acc + mainJson.data[it], 0);
     if (!totalCount) {
-      return;
+      return
     }
     await this.setNotifyCount(totalCount);
     names.forEach((name, index) => {
-      const count = json.data[name];
+      const count = mainJson.data[name];
       if (count > 0) {
         items[index].setAttribute("data-count", count);
       }
@@ -943,6 +968,7 @@ const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, templat
     },
   }
 }
+// https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=39717974&offset_dynamic_id=311158827135150245&type=8
 class Activities extends NavbarComponent {
   constructor () {
     super();
@@ -960,7 +986,7 @@ class Activities extends NavbarComponent {
         </div>
       </div>
     `;
-    this.active = document.URL.replace(/\?.*$/, "") === "https://t.bilibili.com/";
+    this.active = document.URL.replace(/\?.*$/, "") === this.href;
     this.initialPopup = () => {
       this.init()
     }
@@ -1074,7 +1100,7 @@ class Activities extends NavbarComponent {
               <li v-for="item of items" class="activity-tab" :data-count="item.notifyCount" :class="{selected: item.name === tab}" @click="changeTab(item)">
                 <div class="tab-name">{{item.name}}</div>
               </li>
-              <a class="view-all" target="_blank" href="https://t.bilibili.com/">
+              <a class="view-all" target="_blank" href="${settings.oldTweets ? 'https://www.bilibili.com/account/dynamic' : 'https://t.bilibili.com/'}">
                 全部动态
                 <i class="custom-navbar-iconfont-new-home custom-navbar-icon-activity"></i>
               </a>
