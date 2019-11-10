@@ -169,7 +169,8 @@
 .van-popover .btn-box .btn.reg-btn,
 .van-popper-history .view-all,
 .van-popper-upload .upload-item .bilifont,
-.news-content {
+.news-content,
+.bilibili-player-video-danmaku-setting-left-block-word {
   @include color("e");
 }
 .van-popover .vip:hover,
