@@ -2,6 +2,7 @@
   "name": "bilibili-evolved",
   "description": "「 强大的哔哩哔哩增强脚本 」",
   "main": "bilibili-evolved.user.js",
+  "private": true,
   "dependencies": {
     "vue": "^2.6.10"
   },
