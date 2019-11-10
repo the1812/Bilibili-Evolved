@@ -1,4 +1,4 @@
-@import "./touch-gestures", "./disable-original-hover";
+@import "./touch-gestures";
 .bilibili-player-video-control-top {
   left: 0 !important;
   right: 0 !important;
@@ -8,9 +8,9 @@
 .bilibili-player-video-progress-detail {
   bottom: 0 !important;
 }
-.video-control-show .bilibili-player-video-progress-detail {
-  bottom: 36px !important;
-}
+// .video-control-show .bilibili-player-video-progress-detail {
+//   bottom: 36px !important;
+// }
 .bilibili-player-video-control-bottom {
   padding: 0 !important;
 }
@@ -103,6 +103,23 @@ div.bilibili-player-video-control {
     bottom: 0 !important;
   }
   .bilibili-player-area {
+    #bilibili_pbp_canvas {
+      left: 0 !important;
+      width: 100% !important;
+    }
+    &.video-control-show:not(.disable-original-hover) {
+      .bilibili-player-video-control-top {
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 31px !important;
+      }
+      #bilibili_pbp_canvas {
+        bottom: calc(100% + 3px) !important;
+      }
+      .bilibili-player-video-progress-detail {
+        bottom: 5px !important;
+      }
+    }
     .bilibili-player-video-control {
       .bilibili-player-video-btn {
         &.bilibili-player-video-btn-fullscreen {
@@ -161,26 +178,9 @@ div.bilibili-player-video-control {
         right: 0 !important;
       }
     }
-    .disable-original-hover.bilibili-player-video-control-wrap .bilibili-player-video-control-top {
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-    }
-    .disable-original-hover.touch-video-control-show .bilibili-player-video-control-top {
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 54px !important;
-    }
-    .bilibili-player-area.video-control-show:not(.disable-original-hover),
-    .bilibili-player-area.mouse-hover:not(.disable-original-hover) {
-      .bilibili-player-video-control-top {
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 48px !important;
-      }
-    }
   }
   .bilibili-player-video-btn.bilibili-player-video-btn-start {
     flex-grow: 0.5 !important;
   }
 }
+@import "./disable-original-hover";
