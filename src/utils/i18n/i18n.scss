@@ -231,42 +231,63 @@
   display: inline-block;
   white-space: nowrap;
 }
-
-html[lang="ja-JP"] .player-auxiliary-area .danmaku-info-row-block::after {
-  content: "ブロック" !important;
+html[lang="ja-JP"] {
+  .player-auxiliary-area .danmaku-info-row-block::after {
+    content: "ブロック" !important;
+  }
+  .minimal-home .video-list .cards.show-rank .video-card {
+    &:nth-child(17)::before {
+      content: "一週間";
+    }
+  }
 }
-html[lang="en-US"] .player-auxiliary-area .danmaku-info-row-block::after {
-  content: "Blocked" !important;
-}
-html[lang="en-US"] .player-auxiliary-area .danmaku-info-row-super::after {
-  content: "Special" !important;
-}
-html[lang="en-US"] .player-auxiliary-area .danmaku-info-row-special::after {
-  content: "Code" !important;
+html[lang="en-US"] {
+  .player-auxiliary-area .danmaku-info-row {
+    &-block::after {
+      content: "Blocked" !important;
+    }
+    &-super::after {
+      content: "Special" !important;
+    }
+    &-special::after {
+      content: "Code" !important;
+    }
+  }
+  .minimal-home .video-list .cards.show-rank .video-card {
+    &:nth-child(1)::before {
+      content: "Today";
+    }
+    &:nth-child(9)::before {
+      content: "3 days";
+    }
+    &:nth-child(17)::before {
+      content: "Weekly";
+    }
+  }
 }
 .season-list li.season-item .season-body .season-title span.follow {
   background-image: none;
   filter: none !important;
   width: 24px;
-}
-.season-list li.season-item .season-body .season-title span.follow::after {
-  content: "\F8CF";
+  &::after {
+    content: "\F8CF";
 
-  font: normal normal normal 24px/1 "Material Design Icons";
-  font-size: inherit;
-  text-rendering: auto;
-  line-height: inherit;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font: normal normal normal 24px/1 "Material Design Icons";
+    font-size: inherit;
+    text-rendering: auto;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  background-color: var(--theme-color);
-  color: var(--foreground-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2px;
-  position: absolute;
-  padding: 0 4px;
+    background-color: var(--theme-color);
+    color: var(--foreground-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    position: absolute;
+    padding: 0 4px;
+  }
 }
 
 @media screen and (max-width: 1400px) {

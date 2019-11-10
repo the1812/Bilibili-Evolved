@@ -132,7 +132,7 @@ export default {
         }
       }
       .video-card:nth-child(1)::before {
-        content: '昨日';
+        content: '今日';
       }
       .video-card:nth-child(9)::before {
         content: '三日';
