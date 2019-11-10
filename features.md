@@ -467,9 +467,9 @@
 
 </details>
 <details>
-<summary><strong>展开选集标题</strong></summary>
+<summary><strong>展开选集列表</strong></summary>
 
-在视频选集列表中, 当标题超出一行时, 另起一行以显示完整标题.
+在视频选集列表中, (选集多时)展开整个列表, 当标题超出一行时, 另起一行以显示完整标题.
 > 因为番剧选集用的绝对布局, 所以此功能在番剧区无效.
 
 <img height="600" alt="展开选集标题" src="images/compressed/full-page-title.jpg">

@@ -328,7 +328,7 @@ export const map = new Map([
   [`收藏夹视频重定向`, `Favorites redirect`],
   [`隐藏搜索推荐`, `Hide search recommendation`],
   [`展开动态标题`, `Expand title in feeds`],
-  [`展开选集标题`, `Expand episode titles`],
+  [`展开选集列表`, `Expand episode list`],
   [`BiliPlus跳转支持`, `BiliPlus support`],
   [`高分辨率图片`, `DPI-aware images`],
   [`旧版动态跳转支持`, `Old feeds support`],

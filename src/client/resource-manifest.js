@@ -225,8 +225,9 @@ Resource.manifest = {
   fullPageTitle: {
     path: 'full-page-title.min.js',
     style: 'instant',
+    reloadable: true,
     displayNames: {
-      fullPageTitle: '展开选集标题'
+      fullPageTitle: '展开选集列表'
     }
   },
   viewCover: {
