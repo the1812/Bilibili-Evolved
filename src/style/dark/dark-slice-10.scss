@@ -350,7 +350,7 @@
     .card-video .video-wrap .video-info {
       .title a {
         @include color("e");
-        &::hover {
+        &:hover {
           @include theme-color();
         }
       }
