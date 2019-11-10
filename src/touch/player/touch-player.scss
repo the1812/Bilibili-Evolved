@@ -29,6 +29,23 @@ div.bilibili-player-video-control {
 .pbp-panel-icon-wrap {
   height: auto !important;
   display: flex !important;
+  transform: translateY(-1px) !important;
+}
+.bilibili-player-video-btn-pagelist {
+  .bilibili-player-video-btn-name {
+    display: none !important;
+  }
+  &::before {
+    display: block;
+    width: 36px;
+    color: #eee;
+    content: "\F279";
+    font: normal normal normal 22px/1 "Material Design Icons";
+    text-rendering: auto;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 .bilibili-player-video-inputbar,
 .bilibili-player-video-progress {
@@ -159,6 +176,9 @@ div.bilibili-player-video-control {
 @media screen and (min-width: 750px) {
   .bilibili-player.mode-fullscreen,
   .bilibili-player.mode-webfullscreen {
+    .bilibili-player-video-btn-pagelist::before {
+      font-size: 26px;
+    }
     .bilibili-player-video-control-wrap {
       .bilibili-player-video-inputbar {
         background: #fff1 !important;
