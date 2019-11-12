@@ -178,7 +178,7 @@ function setDisplayNames () {
     checkCompatibility()
     setDisplayNames()
     addSettingsListener('guiSettingsDockSide', value => {
-      document.body.classList[value === '右侧' ? 'add' : 'remove']('gui-settings-dock-right')
+      document.body.classList.toggle('gui-settings-dock-right', value === '右侧')
     })
     new SettingsSearch()
   }, { once: true })

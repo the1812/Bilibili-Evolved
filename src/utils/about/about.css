@@ -13,10 +13,16 @@
   flex-direction: column;
   box-shadow: 4px 0px 16px 0px #0000;
 }
+.gui-settings-dock-right .bilibili-evolved-about {
+  right: 0;
+  left: unset;
+  transform: translateX(101%);
+}
 body.dark .bilibili-evolved-about {
   background: #222;
   color: #eee;
 }
+.gui-settings-dock-right .bilibili-evolved-about.opened,
 .bilibili-evolved-about.opened {
   transform: translateX(0);
   box-shadow: 4px 0px 16px 0px #0005;
