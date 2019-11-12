@@ -414,3 +414,42 @@
     }
   }
 }
+.proxy-box {
+  .manga-panel {
+    .tab-switch,
+    .app-download-link,
+    .manga-list-box .manga-card .manga-tag {
+      @include color("a");
+      .tab-switch-item.on {
+        @include theme-color();
+        @include theme-border-color();
+      }
+    }
+  }
+  .manga-rank {
+    .tab-switch .tab-switch-item.on {
+      @include theme-color();
+      @include theme-border-color();
+    }
+    .manga-rank-item {
+      .rank-number {
+        @include background-color("4");
+        @include color("e");
+        &.on {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+      a {
+        @include color("e");
+        &:hover {
+          @include theme-color();
+        }
+      }
+      .style,
+      .update {
+        @include color("a");
+      }
+    }
+  }
+}
