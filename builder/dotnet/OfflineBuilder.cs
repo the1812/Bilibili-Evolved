@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace BilibiliEvolved.Build
 {
@@ -44,18 +45,17 @@ namespace BilibiliEvolved.Build
       //                as IEnumerable<Match>
       //                select "min/" + match.Groups[1].Value.Trim()
       //               ).ToList();
-      var urlList = from file in Directory.GetFiles("min")
-                    where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
-                    select file.Replace(@"\", "/");
+      // var urlList = from file in Directory.GetFiles("min")
+      //               where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
+      //               select file.Replace(@"\", "/");
 
       var downloadCodeStart = @"// \+#Offline build placeholder";
       var downloadCodeEnd = @"// \-#Offline build placeholder";
       var downloadCodes = new Regex($"({downloadCodeStart}([^\0]*){downloadCodeEnd})").Match(offlineText).Groups[0].Value;
 
       var offlineData = "const offlineData = {};" + Environment.NewLine;
-      foreach (var url in urlList)
+      foreach (var (url, text) in GetCachedMinFiles())
       {
-        var text = File.ReadAllText(url);
         if (url.EndsWith(".js"))
         {
           offlineData = offlineData + $"offlineData[\"{onlineRoot + url}\"] = {text}" + Environment.NewLine;

@@ -38,7 +38,7 @@ namespace BilibiliEvolved.Build
       var builder = ProjectBuilder.CreateBuilder();
       builder
         .BuildClient() // inject client files
-        .BuildPreview() // preview file, versions
+        .BuildVersions() // preview file, versions
         .BuildMaster() // stable source code
         .GetBundleFiles() // detect if bundle needs rebuild or can skip
         .PrebuildVue() // generate vue.ts files from vue files

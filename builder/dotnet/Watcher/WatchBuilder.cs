@@ -23,7 +23,7 @@ namespace BilibiliEvolved.Build.Watcher
     public void StartWatching() {
       builder
         .BuildClient()
-        .BuildPreview()
+        .BuildVersions()
         .BuildMaster();
       watchers.ForEach(w => w.Start(builder));
       builder.WriteInfo("Watcher started, input 'q' or press 'Ctrl + C' to exit.");

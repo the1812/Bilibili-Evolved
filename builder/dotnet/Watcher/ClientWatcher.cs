@@ -21,7 +21,7 @@ namespace BilibiliEvolved.Build.Watcher
       builder.WriteInfo($"[Client] {e.Name} changed.");
       builder
         .BuildClient()
-        .BuildPreview()
+        .BuildVersions()
         .BuildMaster();
     }
   }

@@ -96,11 +96,11 @@ namespace BilibiliEvolved.Build
           });
         cache.SaveCache();
       }
-      files.ForEach(file =>
-      {
-        builder.OriginalResourceLength += new FileInfo(file).Length;
-        builder.MinimizedResourceLength += new FileInfo(GetMinimizedFileName(file)).Length;
-      });
+      // files.ForEach(file =>
+      // {
+      //   builder.OriginalResourceLength += new FileInfo(file).Length;
+      //   builder.MinimizedResourceLength += new FileInfo(GetMinimizedFileName(file)).Length;
+      // });
       builder.WriteSuccess($"{ResourceType} minify complete.");
       return builder;
     }

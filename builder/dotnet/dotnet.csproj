@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,6 +7,9 @@
     <Product>Bilibili-Evolved Project Builder</Product>
     <StartupObject>BilibiliEvolved.Build.Program</StartupObject>
     <AssemblyName>build</AssemblyName>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+    <ApplicationIcon>Bilibili-Evolved.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

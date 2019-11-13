@@ -34,9 +34,9 @@ namespace BilibiliEvolved.Build
     {
       if (changedBundleFiles.Any())
       {
-        var urlList = from file in Directory.GetFiles("min")
-                      where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
-                      select file.Replace(@"\", "/");
+        // var urlList = from file in Directory.GetFiles("min")
+        //               where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
+        //               select file.Replace(@"\", "/");
         var hashDict = new Dictionary<string, string>();
         var zipName = "min/bundle.zip";
         if (File.Exists(zipName))
@@ -46,10 +46,10 @@ namespace BilibiliEvolved.Build
         using (var sha256 = new SHA256Managed())
         using (var zip = ZipFile.Open(zipName, ZipArchiveMode.Update))
         {
-          foreach (var url in urlList)
+          foreach (var (url, text) in GetCachedMinFiles())
           {
             var filename = Path.GetFileName(url);
-            var hash = string.Join("", sha256.ComputeHash(File.OpenRead(url)).Select(b => b.ToString("X2")).ToArray());
+            var hash = string.Join("", sha256.ComputeHash(Encoding.UTF8.GetBytes(text)).Select(b => b.ToString("X2")).ToArray());
             zip.CreateEntryFromFile(url, filename, CompressionLevel.NoCompression);
             hashDict.Add(filename, hash);
           }
