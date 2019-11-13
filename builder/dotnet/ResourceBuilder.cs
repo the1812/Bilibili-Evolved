@@ -19,7 +19,7 @@ namespace BilibiliEvolved.Build
       return this;
     }
   }
-  abstract class ResourceMinifier
+  public abstract class ResourceMinifier
   {
     public abstract Predicate<FileInfo> FileFilter { get; }
     public abstract string ResourceType { get; }

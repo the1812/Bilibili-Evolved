@@ -13,6 +13,8 @@ namespace BilibiliEvolved.Build.Watcher
     private List<Watcher> watchers = new List<Watcher>{
       new ClientWatcher(),
       new JavaScriptWatcher(),
+      new CssWatcher(),
+      new HtmlWatcher(),
     };
     private ProjectBuilder builder = ProjectBuilder.CreateBuilder();
     public void StartWatching() {
