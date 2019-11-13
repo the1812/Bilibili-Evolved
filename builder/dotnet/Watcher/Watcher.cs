@@ -22,7 +22,15 @@ namespace BilibiliEvolved.Build.Watcher
     protected abstract void OnFileChanged(FileSystemEventArgs e);
     protected virtual void OnFileDeleted(FileSystemEventArgs e)
     {
-      OnFileChanged(e);
+      var minimizedFilename = ResourceMinifier.GetMinimizedFileName(e.FullPath);
+      if (File.Exists(minimizedFilename))
+      {
+        File.Delete(minimizedFilename);
+      }
+      builder
+        .GetBundleFiles()
+        .BuildBundle();
+      RebuildOutputs();
     }
     // protected void RebuildBundle()
     // {
@@ -112,7 +120,8 @@ namespace BilibiliEvolved.Build.Watcher
         {
           // watcher.WaitForChanged(WatcherChangeTypes.All);
           await Task.Delay(HandleFileChangesPeriod);
-          if (changedFiles.IsEmpty) {
+          if (changedFiles.IsEmpty)
+          {
             continue;
           }
           lock (changedFiles)
