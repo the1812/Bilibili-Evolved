@@ -24,6 +24,9 @@ namespace BilibiliEvolved.Build.Watcher
       cache.AddCache(e.FullPath);
       cache.SaveCache();
       File.WriteAllText(ResourceMinifier.GetMinimizedFileName(e.FullPath), Minifier.Minify(File.ReadAllText(e.FullPath)));
+      if (e.Name.Contains("dark-slice")) {
+        builder.BuildDarkStyles();
+      }
     }
   }
   public class JavaScriptWatcher : ResourceWatcher

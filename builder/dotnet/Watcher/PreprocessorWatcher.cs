@@ -48,6 +48,10 @@ namespace BilibiliEvolved.Build.Watcher
       if (!Path.GetFileNameWithoutExtension(e.FullPath).EndsWith(".vue"))
       {
         File.WriteAllText(ResourceMinifier.GetMinimizedFileName(e.FullPath), Minifier.Minify(PostBuild(content)));
+        if (e.Name.Contains("dark-slice"))
+        {
+          builder.BuildDarkStyles();
+        }
       }
     }
     protected override void OnFileDeleted(FileSystemEventArgs e)

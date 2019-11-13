@@ -127,15 +127,15 @@ namespace BilibiliEvolved.Build.Watcher
           lock (changedFiles)
           {
             builder.GetBundleFiles();
-            changedFiles
+            var distinctChanges = changedFiles
               .GroupBy(e => e.FullPath)
               .Select(g => g.First())
-              .ToArray()
-              .ForEach(e =>
-              {
-                HandleFileChange(e);
-                ChangedFilesHistory.Add(e.FullPath);
-              });
+              .ToArray();
+            distinctChanges.ForEach(e =>
+            {
+              HandleFileChange(e);
+              ChangedFilesHistory.Add(e.FullPath);
+            });
             changedFiles.Clear();
             builder.BuildBundle();
             RebuildOutputs();
