@@ -1,19 +1,22 @@
-.simplify-vip .vip-icon,
-.simplify-fansMedal .fans-medal-item-ctnr,
-.simplify-title .title-label,
-.simplify-userLevel .user-level-icon,
-.simplify-guard i.guard-icon,
-.simplify-systemMessage .system-msg,
-.simplify-systemMessage .announcement-wrapper,
-.simplify-welcomeMessage .welcome-guard,
-.simplify-welcomeMessage .welcome-msg,
-.simplify-popup .chat-popups-section,
-.simplify-popup .link-popup-ctnr,
-.simplify-giftMessage .chat-item.gift-item,
-.simplify-guardPurchase .chat-item.guard-buy,
-.simplify-eventsBanner .flip-view,
-.simplify-eventsBanner .activity-pushing-out {
-  display: none !important;
+.simplify {
+  &-vip .vip-icon,
+  &-fansMedal .fans-medal-item-ctnr,
+  &-title .title-label,
+  &-userLevel .user-level-icon,
+  &-guard i.guard-icon,
+  &-systemMessage .system-msg,
+  &-systemMessage .announcement-wrapper,
+  &-welcomeMessage .welcome-guard,
+  &-welcomeMessage .welcome-msg,
+  &-popup .chat-popups-section,
+  &-popup .link-popup-ctnr,
+  &-giftMessage .chat-item.gift-item,
+  &-guardPurchase .chat-item.guard-buy,
+  &-eventsBanner .flip-view,
+  &-eventsBanner .activity-pushing-out,
+  &-kanban .live-haruna-ctnr {
+    display: none !important;
+  }
 }
 .simplify-giftPanel {
   .gift-panel,
