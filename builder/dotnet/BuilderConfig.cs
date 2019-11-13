@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BilibiliEvolved.Build
 {
-    class BuilderConfig
+    public class BuilderConfig
     {
         public string Master { get; set; }
         public string Preview { get; set; }
