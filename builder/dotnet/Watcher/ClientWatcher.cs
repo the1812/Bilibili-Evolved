@@ -23,7 +23,6 @@ namespace BilibiliEvolved.Build.Watcher
         .BuildClient()
         .BuildPreview()
         .BuildMaster();
-      RebuildOutputs();
     }
   }
 }

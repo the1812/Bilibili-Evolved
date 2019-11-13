@@ -21,9 +21,9 @@ namespace BilibiliEvolved.Build.Watcher
     protected override sealed void OnFileChanged(FileSystemEventArgs e)
     {
       builder.WriteInfo($"[{Name}] {e.Name} changed.");
+      cache.AddCache(e.FullPath);
+      cache.SaveCache();
       File.WriteAllText(ResourceMinifier.GetMinimizedFileName(e.FullPath), Minifier.Minify(File.ReadAllText(e.FullPath)));
-      RebuildBundle();
-      RebuildOutputs();
     }
   }
   public class JavaScriptWatcher : ResourceWatcher

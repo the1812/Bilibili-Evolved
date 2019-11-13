@@ -28,7 +28,7 @@ namespace BilibiliEvolved.Build
             cache.AddCache(file);
             WriteInfo($"Sass build: {file}");
           });
-          Console.Write(sass.Run().Trim());
+          Console.Write(sass.Run("").Trim());
           var results = ResourceMinifier.GetFiles(f => f.FullName.Contains(".sass-output" + Path.DirectorySeparatorChar));
           Parallel.ForEach(results, file =>
           {

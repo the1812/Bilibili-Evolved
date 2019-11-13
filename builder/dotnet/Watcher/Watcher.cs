@@ -24,12 +24,12 @@ namespace BilibiliEvolved.Build.Watcher
     {
       OnFileChanged(e);
     }
-    protected void RebuildBundle()
-    {
-      builder
-        .GetBundleFiles()
-        .BuildBundle();
-    }
+    // protected void RebuildBundle()
+    // {
+    //   builder
+    //     .GetBundleFiles()
+    //     .BuildBundle();
+    // }
     protected void RebuildOutputs()
     {
       builder
@@ -39,9 +39,9 @@ namespace BilibiliEvolved.Build.Watcher
         .BuildFinalOutput();
     }
 
+    protected BuildCache cache = new BuildCache();
     protected ProjectBuilder builder;
     private FileSystemWatcher watcher;
-    private BuildCache cache = new BuildCache();
     private bool started = false;
     // https://github.com/dotnet/corefx/issues/25117
     private ConcurrentBag<FileSystemEventArgs> changedFiles = new ConcurrentBag<FileSystemEventArgs>();
@@ -115,9 +115,9 @@ namespace BilibiliEvolved.Build.Watcher
           if (changedFiles.IsEmpty) {
             continue;
           }
-          using var cache = new BuildCache();
           lock (changedFiles)
           {
+            builder.GetBundleFiles();
             changedFiles
               .GroupBy(e => e.FullPath)
               .Select(g => g.First())
@@ -126,15 +126,15 @@ namespace BilibiliEvolved.Build.Watcher
               {
                 HandleFileChange(e);
                 ChangedFilesHistory.Add(e.FullPath);
-                cache.AddCache(e.FullPath);
-                cache.SaveCache();
               });
             changedFiles.Clear();
+            builder.BuildBundle();
+            RebuildOutputs();
           }
         }
       });
     }
-    public void Stop()
+    public virtual void Stop()
     {
       watcher.EnableRaisingEvents = false;
       started = false;

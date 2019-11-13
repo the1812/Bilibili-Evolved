@@ -17,6 +17,10 @@ namespace BilibiliEvolved.Build
       try
       {
         if (args.Length > 0 && args[0].ToLowerInvariant() == "watch") {
+          if (!File.Exists(BuildCache.CacheFilename)) {
+            Console.WriteLine("No build cache found, running full build...");
+            RunFullBuild();
+          }
           var watchBuilder = new WatchBuilder();
           watchBuilder.StartWatching();
         } else {
