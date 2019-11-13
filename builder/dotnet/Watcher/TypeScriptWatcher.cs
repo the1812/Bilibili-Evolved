@@ -10,38 +10,17 @@ using System.Diagnostics;
 
 namespace BilibiliEvolved.Build.Watcher
 {
-  public class TypeScriptWatcher : Watcher
+  public class TypeScriptWatcher : PreprocessorWatcher
   {
-    private Process tsc;
-    private JavascriptMinifier minifier = new JavascriptMinifier();
-    private string GetOriginalFilePath(string path) {
-      return Path.ChangeExtension(path, ".ts").Replace(WatcherPath, "src");
-    }
-    public TypeScriptWatcher() : base($".ts-output")
-    {
-      tsc = new TypeScriptWatchCompiler().Run();
-      GenericFilter = "*.js";
-      FileFilter = file => {
-        var originalFile = GetOriginalFilePath(file);
-        return !cache.Contains(originalFile);
-      };
-    }
-    public override void Stop() {
-      tsc.Kill();
-      base.Stop();
-    }
-    protected override void OnFileChanged(FileSystemEventArgs e)
-    {
-      var originalFile = GetOriginalFilePath(e.FullPath);
-      builder.WriteInfo($"[TypeScript] {Path.GetFileName(originalFile)} changed.");
-      var content = File.ReadAllText(e.FullPath);
-      var importOptimized = RegexReplacer.Replace(content, @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match =>
+    public TypeScriptWatcher() : base(".ts", ".js", $".ts-output") { }
+    protected override ResourceMinifier Minifier { get; } = new JavascriptMinifier();
+    protected override NodeInteract WatcherComplier { get; } = new TypeScriptWatchCompiler();
+    protected override string Name { get; } = "TypeScript";
+    protected override string PostBuild(string content) {
+      return RegexReplacer.Replace(content, @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match =>
       {
         return $"import({match.Groups[1].Value})";
       });
-      cache.AddCache(originalFile);
-      cache.SaveCache();
-      File.WriteAllText(ResourceMinifier.GetMinimizedFileName(e.FullPath), minifier.Minify(importOptimized));
     }
   }
 }

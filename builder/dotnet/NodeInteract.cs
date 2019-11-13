@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace BilibiliEvolved.Build
 {
-  abstract class NodeInteract
+  public abstract class NodeInteract
   {
     public static readonly string LocalModulePath = @"node_modules/";
     public static readonly string GlobalModulePath = Environment.GetEnvironmentVariable("AppData") + @"/npm/node_modules/";
@@ -83,6 +83,11 @@ namespace BilibiliEvolved.Build
   {
     protected override string ExecutablePath => "sass/sass.js";
     protected override string Arguments => "--quiet --no-source-map src:.sass-output";
+  }
+  sealed class SassWatchCompiler : NodeInteract
+  {
+    protected override string ExecutablePath => "sass/sass.js";
+    protected override string Arguments => "--watch --quiet --no-source-map src:.sass-output";
   }
   sealed class SassSingleCompiler : NodeInteract
   {
