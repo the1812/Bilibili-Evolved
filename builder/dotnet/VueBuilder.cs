@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BilibiliEvolved.Build
 {
-  sealed class VueFile
+  public sealed class VueFile
   {
     public string TamplateLang { get; private set; }
     public string Tamplate { get; private set; }
@@ -76,7 +76,7 @@ namespace BilibiliEvolved.Build
       }
     }
   }
-  sealed class VueBuildException : Exception
+  public sealed class VueBuildException : Exception
   {
     public VueBuildException(string message) : base(message) { }
   }

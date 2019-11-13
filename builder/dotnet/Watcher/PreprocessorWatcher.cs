@@ -45,7 +45,17 @@ namespace BilibiliEvolved.Build.Watcher
       var content = File.ReadAllText(e.FullPath);
       cache.AddCache(originalFile);
       cache.SaveCache();
-      File.WriteAllText(ResourceMinifier.GetMinimizedFileName(e.FullPath), Minifier.Minify(PostBuild(content)));
+      if (!Path.GetFileNameWithoutExtension(e.FullPath).EndsWith(".vue"))
+      {
+        File.WriteAllText(ResourceMinifier.GetMinimizedFileName(e.FullPath), Minifier.Minify(PostBuild(content)));
+      }
+    }
+    protected override void OnFileDeleted(FileSystemEventArgs e)
+    {
+      if (!Path.GetFileNameWithoutExtension(e.FullPath).EndsWith(".vue"))
+      {
+        base.OnFileDeleted(e);
+      }
     }
   }
 }

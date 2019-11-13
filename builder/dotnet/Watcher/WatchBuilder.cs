@@ -17,6 +17,7 @@ namespace BilibiliEvolved.Build.Watcher
       new HtmlWatcher(),
       new TypeScriptWatcher(),
       new SassWatcher(),
+      new VueWatcher(),
     };
     private ProjectBuilder builder = ProjectBuilder.CreateBuilder();
     public void StartWatching() {

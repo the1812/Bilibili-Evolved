@@ -16,11 +16,6 @@ namespace BilibiliEvolved.Build.Watcher
     protected override ResourceMinifier Minifier { get; } = new JavascriptMinifier();
     protected override NodeInteract WatcherComplier { get; } = new TypeScriptWatchCompiler();
     protected override string Name { get; } = "TypeScript";
-    protected override string PostBuild(string content) {
-      return RegexReplacer.Replace(content, @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match =>
-      {
-        return $"import({match.Groups[1].Value})";
-      });
-    }
+    protected override string PostBuild(string content) => content;
   }
 }
