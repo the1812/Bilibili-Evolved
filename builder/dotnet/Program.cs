@@ -24,7 +24,7 @@ namespace BilibiliEvolved.Build
           var watchBuilder = new WatchBuilder();
           watchBuilder.StartWatching();
         } else {
-          // RunFullBuild();
+          RunFullBuild();
         }
       }
       catch (Exception ex)
