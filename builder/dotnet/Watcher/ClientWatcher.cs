@@ -22,16 +22,8 @@ namespace BilibiliEvolved.Build.Watcher
       builder
         .BuildClient()
         .BuildPreview()
-        .BuildMaster()
-        .BuildPreviewOffline()
-        .BuildOffline()
-        .BuildPreviewData()
-        .BuildFinalOutput();
-    }
-
-    protected override void OnFileDeleted(FileSystemEventArgs e)
-    {
-      OnFileChanged(e);
+        .BuildMaster();
+      RebuildOutputs();
     }
   }
 }

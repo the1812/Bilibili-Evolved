@@ -12,9 +12,14 @@ namespace BilibiliEvolved.Build.Watcher
   public class WatchBuilder {
     private List<Watcher> watchers = new List<Watcher>{
       new ClientWatcher(),
+      new JavaScriptWatcher(),
     };
     private ProjectBuilder builder = ProjectBuilder.CreateBuilder();
     public void StartWatching() {
+      builder
+        .BuildClient()
+        .BuildPreview()
+        .BuildMaster();
       watchers.ForEach(w => w.Start(builder));
       builder.WriteInfo("Watcher started, input 'q' or press 'Ctrl + C' to exit.");
       var input = "";

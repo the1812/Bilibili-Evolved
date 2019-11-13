@@ -18,14 +18,33 @@ namespace BilibiliEvolved.Build.Watcher
     public string WatcherPath { get; private set; }
     public string GenericFilter { get; set; } = "";
     public Predicate<string> FileFilter { get; set; } = s => true;
+    public ConcurrentBag<string> ChangedFilesHistory { get; } = new ConcurrentBag<string>();
     protected abstract void OnFileChanged(FileSystemEventArgs e);
-    protected abstract void OnFileDeleted(FileSystemEventArgs e);
+    protected virtual void OnFileDeleted(FileSystemEventArgs e)
+    {
+      OnFileChanged(e);
+    }
+    protected void RebuildBundle()
+    {
+      builder
+        .GetBundleFiles()
+        .BuildBundle();
+    }
+    protected void RebuildOutputs()
+    {
+      builder
+        .BuildPreviewOffline()
+        .BuildOffline()
+        .BuildPreviewData()
+        .BuildFinalOutput();
+    }
 
     protected ProjectBuilder builder;
     private FileSystemWatcher watcher;
+    private BuildCache cache = new BuildCache();
     private bool started = false;
     // https://github.com/dotnet/corefx/issues/25117
-    private ConcurrentBag<FileSystemEventArgs> changeFiles = new ConcurrentBag<FileSystemEventArgs>();
+    private ConcurrentBag<FileSystemEventArgs> changedFiles = new ConcurrentBag<FileSystemEventArgs>();
     private const int HandleFileChangesPeriod = 200;
     private void HandleFileChange(FileSystemEventArgs e)
     {
@@ -33,17 +52,33 @@ namespace BilibiliEvolved.Build.Watcher
       {
         case WatcherChangeTypes.Changed:
         case WatcherChangeTypes.Created:
-          // Console.WriteLine($"change {e.Name} {e.ChangeType}");
+          // Console.WriteLine($"OnChange {e.Name}");
           OnFileChanged(e);
           break;
         case WatcherChangeTypes.Deleted:
-          Console.WriteLine($"delete {e.Name} {e.ChangeType}");
+          // Console.WriteLine($"delete {e.Name} {e.ChangeType}");
           OnFileDeleted(e);
           break;
         default:
           break;
       }
     }
+    // private string GetRelativePath(string fullPath)
+    // {
+    //   var cwd = Environment.CurrentDirectory;
+    //   if (!cwd.EndsWith(Path.DirectorySeparatorChar))
+    //   {
+    //     cwd += Path.DirectorySeparatorChar;
+    //   }
+    //   if (fullPath.StartsWith(cwd))
+    //   {
+    //     return fullPath.Substring(0, cwd.Length);
+    //   }
+    //   else
+    //   {
+    //     throw new ArgumentException($"The path is not relative to cwd. {nameof(fullPath)}={fullPath}, {nameof(cwd)}={cwd}", nameof(fullPath));
+    //   }
+    // }
     public void Start(ProjectBuilder builder)
     {
       if (started)
@@ -61,11 +96,12 @@ namespace BilibiliEvolved.Build.Watcher
           {
             return;
           }
-          changeFiles.Add(e);
+          changedFiles.Add(e);
         };
         watcher.Changed += handler;
         // watcher.Created += handler;
         watcher.Deleted += handler;
+        watcher.IncludeSubdirectories = true;
       }
       watcher.Path = WatcherPath;
       watcher.Filter = GenericFilter;
@@ -74,15 +110,26 @@ namespace BilibiliEvolved.Build.Watcher
       {
         while (watcher.EnableRaisingEvents)
         {
+          // watcher.WaitForChanged(WatcherChangeTypes.All);
           await Task.Delay(HandleFileChangesPeriod);
-          lock (changeFiles)
+          if (changedFiles.IsEmpty) {
+            continue;
+          }
+          using var cache = new BuildCache();
+          lock (changedFiles)
           {
-            changeFiles
+            changedFiles
               .GroupBy(e => e.FullPath)
               .Select(g => g.First())
               .ToArray()
-              .ForEach(e => HandleFileChange(e));
-            changeFiles.Clear();
+              .ForEach(e =>
+              {
+                HandleFileChange(e);
+                ChangedFilesHistory.Add(e.FullPath);
+                cache.AddCache(e.FullPath);
+                cache.SaveCache();
+              });
+            changedFiles.Clear();
           }
         }
       });
@@ -95,6 +142,7 @@ namespace BilibiliEvolved.Build.Watcher
 
     public void Dispose()
     {
+      cache?.Dispose();
       watcher?.Dispose();
     }
   }
