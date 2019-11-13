@@ -35,7 +35,7 @@ namespace BilibiliEvolved.Build
       var version = new Regex(@"//[ ]*@version[ ]*(.+)").Match(Source).Groups[1].Value.Trim();
       Source = ownerRegex
         .Replace(Source, "${1}" + config.Owner + "${3}");
-      File.WriteAllText(SourcePath, Source);
+      // File.WriteAllText(SourcePath, Source);
       File.WriteAllText("version.txt", version);
       return this;
     }

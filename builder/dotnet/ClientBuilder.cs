@@ -17,8 +17,8 @@ namespace BilibiliEvolved.Build
                 var module = File.ReadAllText("src/client/" + match.Groups[2].Value.Replace("./", "") + ".js").Replace("export ", "");
                 return module;
             });
-            File.WriteAllText(SourcePath, source);
-            Source = File.ReadAllText(SourcePath);
+            // File.WriteAllText(SourcePath, source);
+            Source = source;
             WriteSuccess("Client Build complete.");
             return this;
         }
