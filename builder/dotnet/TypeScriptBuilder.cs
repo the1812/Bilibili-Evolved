@@ -29,7 +29,7 @@ namespace BilibiliEvolved.Build
             cache.AddCache(file);
             WriteInfo($"TypeScript build: {file}");
           });
-          tsc.Run();
+          tsc.Run("");
           Parallel.ForEach(changedFiles.Where(f => !f.EndsWith(".vue.ts")).Select(f => ".ts-output/" + f.Replace(".ts", ".js").Replace($"src{Path.DirectorySeparatorChar}", "")), file => {
             var text = RegexReplacer.Replace(File.ReadAllText(file), @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match => {
               return $"import({match.Groups[1].Value})";

@@ -159,8 +159,8 @@ declare global {
   class Toast {
     show(): void;
     dismiss(): void;
-    get element(): HTMLElement;
-    get key(): string;
+    element: HTMLElement;
+    key: string;
     static show(message: string, title: string, duration?: number): Toast;
     static info(message: string, title: string, duration?: number): Toast;
     static success(message: string, title: string, duration?: number): Toast;
