@@ -239,4 +239,5 @@ blockquote {
 
 #bilibiliPlayer {
   box-shadow: 0 4px 8px 0 #0004;
+  @include background-color("2");
 }
