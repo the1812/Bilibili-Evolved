@@ -47,9 +47,9 @@ class Bangumi extends Video {
         }
       } else {
         if (quality) {
-          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json`
         } else {
-          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=&otype=json`
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=&otype=json`
         }
       }
     }
@@ -797,6 +797,7 @@ async function loadPanel() {
             await pack.emit(this.cid + '.danmakus.zip')
           } catch (error) {
             logError(`弹幕下载失败`)
+            throw error
           } finally {
             danmakuToast.dismiss()
           }
