@@ -74,9 +74,10 @@ namespace BilibiliEvolved.Build
     public void WriteError(string message) => WriteInfo(message, ConsoleColor.Red);
     public void WriteHint(string message) => WriteInfo(message, ConsoleColor.DarkGray);
 
-    public ConcurrentDictionary<string, string> CachedMinFiles {get; private set;} = new ConcurrentDictionary<string, string>();
+    public ConcurrentDictionary<string, string> CachedMinFiles { get; private set; } = new ConcurrentDictionary<string, string>();
     public void UpdateCachedMinFile(string url)
     {
+      Console.WriteLine($"Update min url: {url}");
       CachedMinFiles[url] = File.ReadAllText(url);
     }
   }
