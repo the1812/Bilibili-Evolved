@@ -71,20 +71,20 @@ namespace BilibiliEvolved.Build
     }
     private void buildFile(string path)
     {
-      if (File.Exists(path))
-      {
-        var offlineFileText = File.ReadAllText(path);
+      // if (File.Exists(path))
+      // {
+      //   var offlineFileText = File.ReadAllText(path);
 
-        var noVersion = new Regex(@"// @version[ ]*(.*)" + Environment.NewLine);
-        var originalOffline = noVersion.Replace(offlineFileText, "");
-        var currentOffline = noVersion.Replace(offlineText, "");
+      //   var noVersion = new Regex(@"// @version[ ]*(.*)" + Environment.NewLine);
+      //   var originalOffline = noVersion.Replace(offlineFileText, "");
+      //   var currentOffline = noVersion.Replace(offlineText, "");
 
-        if (currentOffline == originalOffline)
-        {
-          offlineVersion = noVersion.Match(offlineFileText).Groups[1].Value.Trim();
-          return;
-        }
-      }
+      //   if (currentOffline == originalOffline)
+      //   {
+      //     offlineVersion = noVersion.Match(offlineFileText).Groups[1].Value.Trim();
+      //     return;
+      //   }
+      // }
 
       File.WriteAllText(path, offlineText);
     }

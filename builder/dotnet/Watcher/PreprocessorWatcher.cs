@@ -33,10 +33,21 @@ namespace BilibiliEvolved.Build.Watcher
         return !cache.Contains(originalFile);
       };
     }
+    private void KillExternalWatcher() {
+      if (!externalWatcherProcess.HasExited)
+      {
+        externalWatcherProcess.Kill();
+      }
+    }
     public override void Stop()
     {
-      externalWatcherProcess.Kill();
+      KillExternalWatcher();
       base.Stop();
+    }
+    public override void Dispose()
+    {
+      KillExternalWatcher();
+      base.Dispose();
     }
     protected override sealed void OnFileChanged(FileSystemEventArgs e)
     {

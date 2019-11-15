@@ -19,6 +19,8 @@ namespace BilibiliEvolved.Build.Watcher
     public string GenericFilter { get; set; } = "";
     public Predicate<string> FileFilter { get; set; } = s => true;
     public ConcurrentBag<string> ChangedFilesHistory { get; } = new ConcurrentBag<string>();
+    public event Action<FileSystemEventArgs> FileChanged;
+    public event Action<FileSystemEventArgs> FileDeleted;
     protected abstract void OnFileChanged(FileSystemEventArgs e);
     protected virtual void OnFileDeleted(FileSystemEventArgs e)
     {
@@ -27,10 +29,11 @@ namespace BilibiliEvolved.Build.Watcher
       {
         File.Delete(minimizedFilename);
       }
-      builder
-        .GetBundleFiles()
-        .BuildBundle();
-      RebuildOutputs();
+      builder.GetBundleFiles();
+      // builder
+      //   .GetBundleFiles()
+      //   .BuildBundle();
+      // RebuildOutputs();
     }
     // protected void RebuildBundle()
     // {
@@ -53,7 +56,7 @@ namespace BilibiliEvolved.Build.Watcher
     private bool started = false;
     // https://github.com/dotnet/corefx/issues/25117
     private ConcurrentBag<FileSystemEventArgs> changedFiles = new ConcurrentBag<FileSystemEventArgs>();
-    private const int HandleFileChangesPeriod = 200;
+    public const int HandleFileChangesPeriod = 200;
     private void HandleFileChange(FileSystemEventArgs e)
     {
       switch (e.ChangeType)
@@ -62,10 +65,12 @@ namespace BilibiliEvolved.Build.Watcher
         case WatcherChangeTypes.Created:
           // Console.WriteLine($"OnChange {e.Name}");
           OnFileChanged(e);
+          FileChanged?.Invoke(e);
           break;
         case WatcherChangeTypes.Deleted:
           // Console.WriteLine($"delete {e.Name} {e.ChangeType}");
           OnFileDeleted(e);
+          FileDeleted?.Invoke(e);
           break;
         default:
           break;
@@ -134,14 +139,16 @@ namespace BilibiliEvolved.Build.Watcher
             distinctChanges.ForEach(e =>
             {
               HandleFileChange(e);
+              builder.UpdateCachedMinFile(e.FullPath);
               ChangedFilesHistory.Add(e.FullPath);
             });
             changedFiles.Clear();
-            builder.BuildBundle();
-            RebuildOutputs();
+            // builder.BuildBundle();
+            // RebuildOutputs();
           }
         }
       });
+
     }
     public virtual void Stop()
     {
@@ -149,7 +156,7 @@ namespace BilibiliEvolved.Build.Watcher
       started = false;
     }
 
-    public void Dispose()
+    public virtual void Dispose()
     {
       cache?.Dispose();
       watcher?.Dispose();
