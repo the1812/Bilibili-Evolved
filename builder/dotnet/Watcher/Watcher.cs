@@ -107,7 +107,7 @@ namespace BilibiliEvolved.Build.Watcher
         {
           builder.GetBundleFiles();
           HandleFileChange(e);
-          builder.UpdateCachedMinFile(e.FullPath);
+          builder.UpdateCachedMinFile(ResourceMinifier.GetMinimizedFileName(e.FullPath));
           ChangedFilesHistory.Add(e.FullPath);
         }, HandleFileChangesPeriod);
         FileSystemEventHandler handler = (s, e) =>

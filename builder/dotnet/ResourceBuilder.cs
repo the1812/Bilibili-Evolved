@@ -27,7 +27,7 @@ namespace BilibiliEvolved.Build
     public static string GetMinimizedFileName(string path)
     {
       var filename = Path.GetFileName(path);
-      return "min" + Path.DirectorySeparatorChar + filename.Insert(filename.LastIndexOf("."), ".min");
+      return "min/" + filename.Insert(filename.LastIndexOf("."), ".min");
     }
     public static IEnumerable<string> GetFiles(Predicate<FileInfo> filter)
     {

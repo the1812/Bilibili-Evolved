@@ -46,15 +46,15 @@ namespace BilibiliEvolved.Build.Watcher
             while (queue.Count > 1)
             {
               queue.TryDequeue(out var e);
-              Console.WriteLine($"dequeued {e.FullPath}");
+              // Console.WriteLine($"dequeued {e.FullPath}");
             }
-            Console.WriteLine($"restarting rebuild");
+            // Console.WriteLine($"restarting rebuild");
             rebuild();
           }
           else if (queue.Count == 1)
           {
             queue.Clear();
-            Console.WriteLine($"rebuild complete with clean queue");
+            // Console.WriteLine($"rebuild complete with clean queue");
             return;
           }
           else
@@ -67,7 +67,7 @@ namespace BilibiliEvolved.Build.Watcher
       {
         lock (queue) {
           queue.Enqueue(e);
-          Console.WriteLine($"enqueue to {queue.Count}");
+          // Console.WriteLine($"enqueue to {queue.Count}");
           if (queue.Count == 1) {
             rebuild();
           }
