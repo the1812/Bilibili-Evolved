@@ -28,27 +28,62 @@ namespace BilibiliEvolved.Build.Watcher
         .BuildClient()
         .BuildVersions()
         .BuildMaster();
-      var rebuild = Extensions.Debounce(() =>
+      var queue = new Queue<FileSystemEventArgs>();
+      async void rebuild()
       {
-        builder
+        await Task.Run(() => {
+          builder
           .BuildBundle()
           .BuildPreviewOffline()
           .BuildOffline()
           .BuildPreviewData()
           .BuildFinalOutput();
-      }, 200);
+        });
+        lock (queue)
+        {
+          if (queue.Count > 1)
+          {
+            while (queue.Count > 1)
+            {
+              queue.TryDequeue(out var e);
+              Console.WriteLine($"dequeued {e.FullPath}");
+            }
+            Console.WriteLine($"restarting rebuild");
+            rebuild();
+          }
+          else if (queue.Count == 1)
+          {
+            queue.Clear();
+            Console.WriteLine($"rebuild complete with clean queue");
+            return;
+          }
+          else
+          {
+            throw new Exception("Invalid state of queue!");
+          }
+        }
+      }
+      var notifyRebuild = Extensions.Debounce((FileSystemEventArgs e) =>
+      {
+        lock (queue) {
+          queue.Enqueue(e);
+          Console.WriteLine($"enqueue to {queue.Count}");
+          if (queue.Count == 1) {
+            rebuild();
+          }
+        }
+      }, Watcher.HandleFileChangesPeriod);
       watchers.ForEach(w =>
       {
         w.Start(builder);
-        w.FileChanged += e => rebuild();
-        w.FileDeleted += e => rebuild();
+        w.FileChanged += notifyRebuild;
+        w.FileDeleted += notifyRebuild;
       });
       builder.WriteInfo("Watcher started, input 'q' or press 'Ctrl + C' to exit.");
       var input = "";
       Console.CancelKeyPress += (s, e) =>
       {
         StopWatching();
-        Environment.Exit(0);
       };
       while (input.ToLowerInvariant() != "q")
       {
@@ -60,6 +95,7 @@ namespace BilibiliEvolved.Build.Watcher
     {
       watchers.ForEach(w => w.Stop());
       builder.WriteInfo("Watcher stopped.");
+      Environment.Exit(0);
     }
   }
 }
