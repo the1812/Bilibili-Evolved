@@ -456,6 +456,10 @@
   }
 }
 .round-corner {
+  .detail-info-wrapper .title,
+  .remind-title {
+    @include color("e");
+  }
   .selectable-option {
     @include background-color("4");
     @include border-color();
