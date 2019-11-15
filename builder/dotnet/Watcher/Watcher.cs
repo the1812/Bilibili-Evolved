@@ -15,6 +15,7 @@ namespace BilibiliEvolved.Build.Watcher
     {
       WatcherPath = path;
     }
+    public bool IsWatching { get; private set; } = false;
     public string WatcherPath { get; private set; }
     public string GenericFilter { get; set; } = "";
     public Predicate<string> FileFilter { get; set; } = s => true;
@@ -53,7 +54,6 @@ namespace BilibiliEvolved.Build.Watcher
     protected BuildCache cache = new BuildCache();
     protected ProjectBuilder builder;
     private FileSystemWatcher watcher;
-    private bool started = false;
     // https://github.com/dotnet/corefx/issues/25117
     private ConcurrentBag<FileSystemEventArgs> changedFiles = new ConcurrentBag<FileSystemEventArgs>();
     public const int HandleFileChangesPeriod = 200;
@@ -94,22 +94,30 @@ namespace BilibiliEvolved.Build.Watcher
     // }
     public void Start(ProjectBuilder builder)
     {
-      if (started)
+      if (IsWatching)
       {
         return;
       }
-      started = true;
+      IsWatching = true;
       this.builder = builder;
       if (watcher == null)
       {
         watcher = new FileSystemWatcher();
+        var fileChange = Extensions.Debounce((FileSystemEventArgs e) =>
+        {
+          builder.GetBundleFiles();
+          HandleFileChange(e);
+          builder.UpdateCachedMinFile(e.FullPath);
+          ChangedFilesHistory.Add(e.FullPath);
+        }, HandleFileChangesPeriod);
         FileSystemEventHandler handler = (s, e) =>
         {
           if (!FileFilter(e.FullPath))
           {
             return;
           }
-          changedFiles.Add(e);
+          fileChange(e);
+          // changedFiles.Add(e);
         };
         watcher.Changed += handler;
         // watcher.Created += handler;
@@ -119,41 +127,41 @@ namespace BilibiliEvolved.Build.Watcher
       watcher.Path = WatcherPath;
       watcher.Filter = GenericFilter;
       watcher.EnableRaisingEvents = true;
-      Task.Run(async () =>
-      {
-        while (watcher.EnableRaisingEvents)
-        {
-          // watcher.WaitForChanged(WatcherChangeTypes.All);
-          await Task.Delay(HandleFileChangesPeriod);
-          if (changedFiles.IsEmpty)
-          {
-            continue;
-          }
-          lock (changedFiles)
-          {
-            builder.GetBundleFiles();
-            var distinctChanges = changedFiles
-              .GroupBy(e => e.FullPath)
-              .Select(g => g.First())
-              .ToArray();
-            distinctChanges.ForEach(e =>
-            {
-              HandleFileChange(e);
-              builder.UpdateCachedMinFile(e.FullPath);
-              ChangedFilesHistory.Add(e.FullPath);
-            });
-            changedFiles.Clear();
-            // builder.BuildBundle();
-            // RebuildOutputs();
-          }
-        }
-      });
+      // Task.Run(async () =>
+      // {
+      //   while (watcher.EnableRaisingEvents)
+      //   {
+      //     // watcher.WaitForChanged(WatcherChangeTypes.All);
+      //     await Task.Delay(HandleFileChangesPeriod);
+      //     if (changedFiles.IsEmpty)
+      //     {
+      //       continue;
+      //     }
+      //     lock (changedFiles)
+      //     {
+      //       builder.GetBundleFiles();
+      //       var distinctChanges = changedFiles
+      //         .GroupBy(e => e.FullPath)
+      //         .Select(g => g.First())
+      //         .ToArray();
+      //       distinctChanges.ForEach(e =>
+      //       {
+      //         HandleFileChange(e);
+      //         builder.UpdateCachedMinFile(e.FullPath);
+      //         ChangedFilesHistory.Add(e.FullPath);
+      //       });
+      //       changedFiles.Clear();
+      //       // builder.BuildBundle();
+      //       // RebuildOutputs();
+      //     }
+      //   }
+      // });
 
     }
     public virtual void Stop()
     {
       watcher.EnableRaisingEvents = false;
-      started = false;
+      IsWatching = false;
     }
 
     public virtual void Dispose()

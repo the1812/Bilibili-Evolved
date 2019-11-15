@@ -21,6 +21,7 @@ namespace BilibiliEvolved.Build.Watcher
       new VueWatcher(),
     };
     private ProjectBuilder builder = ProjectBuilder.CreateBuilder();
+    public bool IsWatching => watchers.All(w => w.IsWatching);
     public void StartWatching()
     {
       builder
@@ -47,6 +48,7 @@ namespace BilibiliEvolved.Build.Watcher
       Console.CancelKeyPress += (s, e) =>
       {
         StopWatching();
+        Environment.Exit(0);
       };
       while (input.ToLowerInvariant() != "q")
       {

@@ -11,7 +11,8 @@ namespace BilibiliEvolved.Build
 {
   public partial class ProjectBuilder
   {
-    public static ProjectBuilder CreateBuilder() {
+    public static ProjectBuilder CreateBuilder()
+    {
       var configFile = new ConfigurationBuilder()
         .AddJsonFile(
           Path.Combine(Environment.CurrentDirectory, "builder/builder-config.json"),
@@ -31,6 +32,13 @@ namespace BilibiliEvolved.Build
       WriteInfo("[Bilibili Evolved] Project builder started.");
       WriteInfo($"Working directory: {Environment.CurrentDirectory}");
       WriteInfo();
+      var urlList = from file in Directory.GetFiles("min")
+                    where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
+                    select file.Replace(@"\", "/");
+      Parallel.ForEach(urlList, url =>
+      {
+        CachedMinFiles[url] = File.ReadAllText(url);
+      });
     }
     private BuilderConfig config;
     // public double MinimizedResourceLength { get; set; }
@@ -66,21 +74,10 @@ namespace BilibiliEvolved.Build
     public void WriteError(string message) => WriteInfo(message, ConsoleColor.Red);
     public void WriteHint(string message) => WriteInfo(message, ConsoleColor.DarkGray);
 
-    private ConcurrentDictionary<string, string> cachedMinFiles = new ConcurrentDictionary<string, string>();
-    public ConcurrentDictionary<string, string> GetCachedMinFiles() {
-      if (cachedMinFiles.Count == 0) {
-        var urlList = from file in Directory.GetFiles("min")
-                      where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
-                      select file.Replace(@"\", "/");
-        Parallel.ForEach(urlList, url =>
-        {
-          cachedMinFiles[url] = File.ReadAllText(url);
-        });
-      }
-      return cachedMinFiles;
-    }
-    public void UpdateCachedMinFile(string url) {
-      cachedMinFiles[url] = File.ReadAllText(url);
+    public ConcurrentDictionary<string, string> CachedMinFiles {get; private set;} = new ConcurrentDictionary<string, string>();
+    public void UpdateCachedMinFile(string url)
+    {
+      CachedMinFiles[url] = File.ReadAllText(url);
     }
   }
 }

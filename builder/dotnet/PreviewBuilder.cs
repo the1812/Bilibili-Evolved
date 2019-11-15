@@ -16,7 +16,7 @@ namespace BilibiliEvolved.Build
       //               where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
       //               select file.Replace(@"\", "/");
       var onlineData = "const onlineData = {};" + Environment.NewLine;
-      foreach (var (url, text) in GetCachedMinFiles())
+      foreach (var (url, text) in CachedMinFiles)
       {
         if (url.EndsWith(".js"))
         {

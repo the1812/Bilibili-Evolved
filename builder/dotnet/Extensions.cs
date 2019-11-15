@@ -18,6 +18,24 @@ namespace BilibiliEvolved.Build
         action(item);
       }
     }
+    public static Action<T> Debounce<T>(Action<T> action, int waitTime)
+    {
+      var queue = new ConcurrentQueue<Action<T>>();
+      return async (T arg) =>
+      {
+        queue.Enqueue(action);
+        await Task.Delay(waitTime);
+        lock (queue) {
+          if (queue.TryDequeue(out var a))
+          {
+            if (queue.Count == 0)
+            {
+              a?.Invoke(arg);
+            }
+          }
+        }
+      };
+    }
     public static Action Debounce(Action action, int waitTime)
     {
       var queue = new ConcurrentQueue<Action>();
