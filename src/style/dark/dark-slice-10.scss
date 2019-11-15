@@ -455,3 +455,40 @@
     }
   }
 }
+.round-corner {
+  .selectable-option.unable {
+    @include background-color("1");
+    @include color("6");
+    @include border-color();
+  }
+  .ticket-count {
+    @include background-color("4");
+    @include border-color();
+  }
+  .product-buy-wrapper {
+    .unsale-btn {
+      @include to-theme("pink");
+    }
+    .promo-btn.remind-btn {
+      @include background-color("4");
+      @include color("e");
+      @include border-color();
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+  .whole-guest-wrapper .guest-list-content .guest {
+    &-left,
+    &-right {
+      filter: invert(0.8) !important;
+    }
+  }
+  .activity-info-body .info-body {
+    ul li .title,
+    p strong {
+      @include color("e");
+    }
+  }
+}
