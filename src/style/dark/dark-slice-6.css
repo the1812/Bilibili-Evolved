@@ -17,7 +17,7 @@
 .lottery-box .title,
 .ban-app .case-tip .click-btn,
 .common-dialig-left-btn,
-.bnj-main>.content,
+.bnj-main > .content,
 #area-list ul li:after,
 .live-room-app .app-content .link-footer-ctnr,
 .group-helper-msg-list,
@@ -36,7 +36,7 @@
 #vip-exchange-modal .btn-transparent,
 #vip-exchange-modal .btn-white,
 .player-his-info,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item[data-state-play=true],
+.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item[data-state-play="true"],
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover,
 .btn-my-operate,
 .range-picker.dp-i-block .range.active,
@@ -86,16 +86,14 @@
 #ssr-app.wrap,
 .bangumi-pagelistbox .p,
 .bangumi-pagelistbox .custom-right .custom-right-inner.custompage,
-.container .content .comment-area
-{
-    background-color: #222 !important;
+.container .content .comment-area {
+  background-color: #222 !important;
 }
 .main-container .review-module .review-list .review-item .review-body,
 .pika-button:hover,
 .area-panel,
-.rank-list-ctnr .tab-content
-{
-    background-color: #333 !important;
+.rank-list-ctnr .tab-content {
+  background-color: #333 !important;
 }
 .main-container .ep-list-wrapper,
 .player-module .stardust-player.mini-player .drag-bar span,
@@ -118,8 +116,13 @@
 .z-top-container.has-stardust,
 .ep-section-module,
 .main-container .recom-wrapper .expand-more,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-contact-information-input,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-submit-wrap
+  .bilibili-player-feedback-submit.disable,
 .rank-main .rank-box .child-nav,
 .top3 li div.content-detail,
 .rank-detail .top50,
@@ -181,14 +184,14 @@
 .video-list .vl-hd .float_window .selet-datebox .sse a:hover,
 .datepicker.range_start.hasDatepicker .input,
 .video-list .vl-hd .vl-hd-sub .selector-block .date-select,
-.calendar-month>a:hover,
+.calendar-month > a:hover,
 .calendar-table td.inrange,
 .calendar-table td:hover,
-.calendar-year>a:hover,
+.calendar-year > a:hover,
 .sub-nav-m .tips,
 .narrowscreen .ov-box,
 .coin-dialog-mask .coin-operated .coin-bottom .coin-btn,
-input[type=radio]:checked+.custom-radio,
+input[type="radio"]:checked + .custom-radio,
 .player-his-round div,
 #app-ctnr .content .nav-wrapper,
 .sidebar-wrapper .sidebar .profile-wrapper .info-wrapper,
@@ -200,27 +203,25 @@ input[type=radio]:checked+.custom-radio,
 .recommend-box .section-title .action-tab,
 .side-box .side-title.f-clear .action-tab,
 .up-info .btn-panel .following-charge-btn,
-.up-info .btn-panel .following
-{
-    background-color: #444 !important;
+.up-info .btn-panel .following {
+  background-color: #444 !important;
 }
 .pgc-space-follow-item .pgc-item-info .type-and-area i,
-.pgc-space-follow-item .pgc-item-info .pgc-item-state i
-{
-    background-color: #aaa !important;
+.pgc-space-follow-item .pgc-item-info .pgc-item-state i {
+  background-color: #aaa !important;
 }
 #head-info-vm,
 #gift-control-vm,
-#rank-list-ctnr-box
-{
-    background-image: none !important;
+#rank-list-ctnr-box {
+  background-image: none !important;
 }
 .upper-right-ctnr.p-absolute.none-select .btn.primary,
 .area-category-item.dp-i-block.p-relative.t-center.pointer .category-divider,
 #app-ctnr .content .container,
 .rank-main .rank-box .child-nav .nav-remind,
 .page-item.disabled .pager .pages .page-item button,
-.page-item.disabled .pager .pages .page-item .next, .pager .pages .page-item .next.disabled,
+.page-item.disabled .pager .pages .page-item .next,
+.pager .pages .page-item .next.disabled,
 .page-item.disabled .pager .pages .page-item .next.disabled:hover,
 .row .col-4-med.col-4 .pager .pages .page-item.active button,
 .row .col-4-med.col-4 .pager .pages .page-item button:hover,
@@ -228,10 +229,19 @@ input[type=radio]:checked+.custom-radio,
 .all-hot-list-warp .pager .pages .page-item.active button,
 .all-hot-list-warp .pager .pages .page-item button:hover,
 .row .col-4-med.col-4 .pager .pages .page-item button,
-.pk-container.p-absolute.normal-pk .player-area.p-absolute.init-player.normal-pk .player-area.init-player.normal-pk .pk-result,
-.pk-container.p-absolute.normal-pk .player-area.p-absolute.match-player.normal-pk .player-area.match-player.normal-pk .pk-result,
+.pk-container.p-absolute.normal-pk
+  .player-area.p-absolute.init-player.normal-pk
+  .player-area.init-player.normal-pk
+  .pk-result,
+.pk-container.p-absolute.normal-pk
+  .player-area.p-absolute.match-player.normal-pk
+  .player-area.match-player.normal-pk
+  .pk-result,
 .tab-list .tab-item.active:before,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-part-list:before,
+.bilibili-player
+  .bilibili-player-auxiliary-area
+  .bilibili-player-playlist-item:hover
+  .bilibili-player-playlist-part-list:before,
 .list-row:nth-child(odd),
 .list-row:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-list:before,
@@ -252,28 +262,26 @@ input[type=radio]:checked+.custom-radio,
 .live-room-app .app-content .app-body .player-and-aside-area .aside-area .chat-control-panel,
 .original-card-content .media-list .content,
 .share-content.plain .music-card .media-list.share-media-list .content,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*="guard-level-"]:before,
 .info-wrap .bk-text-con p span,
 .report-wrap-module.ban-modal.pub-list.init-end .info dl dt p span,
 .sidebar-wrapper .sidebar .profile-wrapper .img-wrapper,
 .live-item .live-item-link .live-img-box,
 .bangumi-pagelistbox.clearfix .custom-right .result,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after,
-#app-ctnr .article-content .content
-{
-    background-color: transparent !important;
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*="week-all-area-top-"]:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*="week-all-area-top-"]:after,
+#app-ctnr .article-content .content {
+  background-color: transparent !important;
 }
 .d-state-highlight,
 .static-popup.bp-arrow:before,
 .follow-dialog-wrap .follow-dialog-window .content .group-list ul .follow-group-mask,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group input,
 .follow-dialog-wrap .follow-dialog-window .content .group-list .add-group .input-group .submit,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after
-{
-    background: transparent !important;
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*="guard-level-"]:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*="week-all-area-top-"]:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*="week-all-area-top-"]:after {
+  background: transparent !important;
 }
 /* a
 {
@@ -281,9 +289,8 @@ input[type=radio]:checked+.custom-radio,
 } */
 .bnj-reserve .content h5,
 .operation .inner .bnj-button .content,
-.bnj-progress-inner-operation .operation .programme .show-programme .content
-{
-    color: #222 !important;
+.bnj-progress-inner-operation .operation .programme .show-programme .content {
+  color: #222 !important;
 }
 .main-container .ep-list-wrapper .list-title .ep-list-progress,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-info .pub-info,
@@ -325,7 +332,7 @@ input[type=radio]:checked+.custom-radio,
 .draw-popup-warp .rules .tips,
 .you-not-win .tips,
 .winner-list .gift-name,
-.user-list .up-item .up-info>span,
+.user-list .up-item .up-info > span,
 .gift-items.col-3 .gift-item,
 #disable-popup-modal .vip-exchange .selector li p.cost,
 #vip-exchange-modal .vip-exchange .selector li p.cost,
@@ -355,7 +362,7 @@ input[type=radio]:checked+.custom-radio,
 .article-wrap .article .so-icon a,
 .face-buy-item,
 .face-buy-price,
-.wrap .state-null>.txt,
+.wrap .state-null > .txt,
 .ban-app .case-tip .tips,
 .article-content-ctnr .article-footer,
 .main-content .group .bp-input .indicator,
@@ -405,9 +412,8 @@ input[type=radio]:checked+.custom-radio,
 .pgc-space-follow-item .pgc-item-info .pgc-item-desc,
 .pgc-space-follow-item .pgc-item-info .type-and-area,
 .pgc-space-follow-item .pgc-item-info .pgc-item-state,
-.video-info .video-data .a-crumbs a
-{
-    color: #aaa !important;
+.video-info .video-data .a-crumbs a {
+  color: #aaa !important;
 }
 .main-container .pay-bar .vip .btn-pay.active,
 .main-container .ep-list-wrapper .list-title h4,
@@ -457,17 +463,25 @@ input[type=radio]:checked+.custom-radio,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-hint,
 .bilibili-player-feedback-title,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-tabmenu,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-contact-information-input,
 .bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-submit-wrap
+  .bilibili-player-feedback-submit.disable,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-submit-wrap
+  .bilibili-player-feedback-submit,
 .area-category-selector .area-category-item,
 .rank-main .rank-box .child-nav li,
 .rank-main .rank-box .child-nav li.active,
 li.normal-item .uname,
 li.log-item .txt-block,
 .lottery-box .title,
-.up-info>a .up-name,
+.up-info > a .up-name,
 .bb-comment .no-login .baffle,
 #article-list-index .title-holder .title,
 .list-gap .list-title,
@@ -492,7 +506,7 @@ li.log-item .txt-block,
 .you-not-win .title,
 .you-win .gift-name,
 .winner-list,
-.button-box .item>button,
+.button-box .item > button,
 .group-item .name-box .name,
 .group-helper-msg-list .tab-list,
 .list.dp-i-block.v-top .item .title,
@@ -562,8 +576,7 @@ th.list-head-text,
 .ban-vote .vote-dialog .dialog-footer .blue-btn,
 .history-dlg .dlg-txt,
 .history-dlg .hsbtn .sure,
-.history-dlg .hsbtn .cancel
-.history-dlg .hsbtn .cancel:hover,
+.history-dlg .hsbtn .cancel .history-dlg .hsbtn .cancel:hover,
 .p-rel.f-clear.publish-panel .textarea,
 .bp-vote-container.vote-box .create-vote .main-content .group .title .title-content,
 .title .slot-right .bp-radio,
@@ -624,9 +637,9 @@ th.list-head-text,
 .datepicker.range_start.hasDatepicker .input,
 .video-list .vl-hd .vl-hd-sub .selector-block .date-select,
 .float_content .selet-datebox .inpt .datepicker,
-.calendar-month>a.current,
+.calendar-month > a.current,
 .calendar-table td.current,
-.calendar-year>a.current,
+.calendar-year > a.current,
 .calendar-content .calendar-table .today,
 .sub-nav-m .tips,
 .narrowscreen .ov-box .title,
@@ -658,10 +671,8 @@ th.list-head-text,
 .bangumi-pagelistbox .p:hover,
 .bangumi-pagelistbox .p.active,
 .bangumi-pagelistbox .custom-right .custom-right-inner,
-.pgc-space-follow-item a.pgc-item-cover .badge,
-.up-info .btn-panel .following-charge-btn
-{
-    color: #eee !important;
+.up-info .btn-panel .following-charge-btn {
+  color: #eee !important;
 }
 /* a
 {
@@ -687,7 +698,9 @@ th.list-head-text,
 .media-tab-module-content .sl-ep-list .section-item,
 .bilibili-player-feedback,
 .bilibili-player-feedback-title,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-contact-information-input,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-contact-information-input,
 .room-introduction .edit-button,
 .area-category-selector,
 .lottery-box,
@@ -798,9 +811,8 @@ th.list-head-text,
 .bangumi-pagelistbox .p.active,
 .bangumi-pagelistbox .custom-right .custom-right-inner.custompage,
 .up-info .btn-panel .charge-btn,
-.up-info .btn-panel .following
-{
-    border-color: transparent !important;
+.up-info .btn-panel .following {
+  border-color: transparent !important;
 }
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item,
 .core-player-filter,
@@ -808,11 +820,10 @@ th.list-head-text,
 .core-player-video-control,
 .face-buy-item,
 .face-buy-price,
-.wrap .state-null>.txt,
+.wrap .state-null > .txt,
 .ban-vote .vote-dialog .dialog-header,
-.item-footer .button-line .button-wrapper .button-item
-{
-    border-color: #aaa !important;
+.item-footer .button-line .button-wrapper .button-item {
+  border-color: #aaa !important;
 }
 .main-container .media-info,
 .main-container .review-module,
@@ -830,19 +841,17 @@ th.list-head-text,
 .video-list .vl-hd .float_window .float_content h3,
 .player-his-tip-date .player-his-round,
 .player-his-tip .player-his-tip-des,
-.jumping-ctnr .jumping-input
-{
-    border-color: #444 !important;
+.jumping-ctnr .jumping-input {
+  border-color: #444 !important;
 }
 /* a
 {
     border-color: white !important;
 } */
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='guard-level-']:before,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:before,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*='week-all-area-top-']:after
-{
-    border-image: none !important;
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*="guard-level-"]:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*="week-all-area-top-"]:before,
+.chat-history-panel .chat-history-list .chat-item.danmaku-item[class*="week-all-area-top-"]:after {
+  border-image: none !important;
 }
 /* a
 {
@@ -859,9 +868,8 @@ th.list-head-text,
 .video-list .vl-hd .float_window .close,
 .area-list-item.dp-i-block.t-over-hidden.t-nowrap.v-top.border-box.a-move-in-left.ts-dot-2 .live-icon-16,
 .link-navbar .main-ctnr .nav-logo,
-.link-btn-ctnr.dp-i-block.v-middle .my-link-btn .icon
-{
-    filter: brightness(0) invert(1) !important;
+.link-btn-ctnr.dp-i-block.v-middle .my-link-btn .icon {
+  filter: brightness(0) invert(1) !important;
 }
 /* a
 {
@@ -891,13 +899,11 @@ th.list-head-text,
 .slidesjs-pagination li a:hover,
 .popup-content-ctnr .content .selector-box .type-selector .radio-selected,
 .bb-comment .comment-list .list-item .text .vote-link img,
-.aside-area-toggle-btn .btn-ctnr .restore-btn
-{
-    filter: var(--blue-image-filter) !important;
+.aside-area-toggle-btn .btn-ctnr .restore-btn {
+  filter: var(--blue-image-filter) !important;
 }
-.z-top-container .b-icon
-{
-    filter: var(--pink-image-filter) !important;
+.z-top-container .b-icon {
+  filter: var(--pink-image-filter) !important;
 }
 /* a
 {
@@ -923,9 +929,8 @@ th.list-head-text,
 .section-block .publish-panel .emoji-box,
 #app-container .main .share-step,
 #app-container .main .share-success,
-.video-list .vl-hd .float_window .close:hover
-{
-    box-shadow: none !important;
+.video-list .vl-hd .float_window .close:hover {
+  box-shadow: none !important;
 }
 /* a
 {
@@ -942,24 +947,22 @@ th.list-head-text,
 .datepicker.range_start.hasDatepicker .datepicker-popup,
 .sub-nav-m .tips,
 .narrowscreen .ov-box,
-.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip
-{
-    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
+.item-footer .button-line .button-wrapper .button-item.support .tooltip-wrapper .tooltip {
+  box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
 }
 /* a
 {
     display: none !important;
 } */
-.textarea
-{
-    transition: all .2s;
+.textarea {
+  transition: all 0.2s;
 }
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:hover,
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
 .send-tabs-item-active,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover,
 .container .live,
-.comment-bilibili-con .con input[type=radio]:checked+label:before,
+.comment-bilibili-con .con input[type="radio"]:checked + label:before,
 .gift-item.active .gift-img,
 .tab-list .tab-item.active:before,
 .group-item .name-box .operate-btn,
@@ -991,24 +994,22 @@ th.list-head-text,
 .video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover,
 .coin-dialog-mask .coin-operated .mc .mc-box,
 .score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute,
-input[type=radio]:checked+.custom-radio,
+input[type="radio"]:checked + .custom-radio,
 .live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark,
 .sub-area em.active,
 .sub-area em:hover,
 .sub-tabs a.active,
 .sub-tabs a.active:before,
 .bangumi-pagelistbox .custom-right .custom-right-inner.custompage:hover,
-.report-image-candidate-ctnr.t-center .upload-hint
-{
-    border-color: var(--theme-color) !important;
+.report-image-candidate-ctnr.t-center .upload-hint {
+  border-color: var(--theme-color) !important;
 }
 /* a
 {
     border-top-color: var(--theme-color) !important;
 } */
-.tab-wrap .tab-item.active:after
-{
-    border-bottom-color: var(--theme-color) !important;
+.tab-wrap .tab-item.active:after {
+  border-bottom-color: var(--theme-color) !important;
 }
 /* a
 {
@@ -1032,9 +1033,18 @@ input[type=radio]:checked+.custom-radio,
 .main-container .season-list .ss-list-wrapper .ss-item .ss-cover .ss-badge.pink,
 .main-container .pay-bar .sponsor .btn-pay:hover,
 .main-container .sponsor-module .sponsor-info .btn-sponsor,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit.disable:hover,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit:hover,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-submit-wrap .bilibili-player-feedback-submit,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-submit-wrap
+  .bilibili-player-feedback-submit.disable:hover,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-submit-wrap
+  .bilibili-player-feedback-submit:hover,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-submit-wrap
+  .bilibili-player-feedback-submit,
 .rank-main .rank-box .child-nav li.active,
 .comment-bilibili-con .con label:after,
 .share-board .list-playbtn,
@@ -1052,7 +1062,10 @@ input[type=radio]:checked+.custom-radio,
 #vip-exchange-modal .btn:hover,
 .player-his-title div,
 .player-his-nav.active,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-part-item[data-state-play=true] .bilibili-player-playlist-plist-play,
+.bilibili-player
+  .bilibili-player-auxiliary-area
+  .bilibili-player-playlist-part-item[data-state-play="true"]
+  .bilibili-player-playlist-plist-play,
 .btn-no-my-operate,
 .el-radio__input.is-checked .el-radio__inner,
 .is-selected .pika-button,
@@ -1086,9 +1099,9 @@ input[type=radio]:checked+.custom-radio,
 .history-wrap .warn .btn:hover,
 #page-channel-detail .channel-option .modify-channel:hover,
 .video-list .vl-hd .float_window .selet-datebox .sse a.on,
-.calendar-month>a.current,
+.calendar-month > a.current,
 .calendar-table td.current,
-.calendar-year>a.current,
+.calendar-year > a.current,
 .coin-dialog-mask .coin-operated .coin-bottom .coin-btn:hover,
 .danmaku-item.pointer .custom-radio:after,
 .aside-area-toggle-btn .btn-ctnr:hover .btn-slider,
@@ -1099,9 +1112,8 @@ ul.navigation li span:after,
 .pgc-space-follow-item a.pgc-item-cover .badge.type_0,
 .bangumi-pagelistbox .p:hover,
 .bangumi-pagelistbox .p.active,
-.up-info .btn-panel .following-charge-btn:hover
-{
-    background-color: var(--theme-color) !important;
+.up-info .btn-panel .following-charge-btn:hover {
+  background-color: var(--theme-color) !important;
 }
 /* a
 {
@@ -1122,8 +1134,8 @@ ul.navigation li span:after,
 .main-container .tool-bar .coin-info:hover span,
 .main-container .tool-bar .coin-info.active i,
 .main-container .tool-bar .coin-info:hover i,
-.main-container .tool-bar .share-info:hover>i,
-.main-container .tool-bar .share-info:hover>span,
+.main-container .tool-bar .share-info:hover > i,
+.main-container .tool-bar .share-info:hover > span,
 .main-container .tool-bar .mobile-info:hover i,
 .main-container .tool-bar .mobile-info:hover span,
 .main-container .media-info .media-right .media-title:hover,
@@ -1146,7 +1158,10 @@ ul.navigation li span:after,
 .up-info .btn-follow-up,
 .main-container .review-module .review-list .review-item .review-header .review-author:hover,
 .count-wrapper div.up-info a:hover,
-.bilibili-player-feedback-content .bilibili-player-feedback-default-content .bilibili-player-feedback-version-wrap a:hover,
+.bilibili-player-feedback-content
+  .bilibili-player-feedback-default-content
+  .bilibili-player-feedback-version-wrap
+  a:hover,
 .area-category-selector .area-category-item.active,
 .tags-inner-ctnr.dp-i-block.v-top.border-box .area-tag-item:hover,
 .rank-main .rank-box .child-nav li:hover,
@@ -1154,7 +1169,7 @@ ul.navigation li span:after,
 li.normal-item a:hover .uname,
 .container .live,
 .mvp-info .user-info .title,
-.up-info>a .up-name:hover,
+.up-info > a .up-name:hover,
 .list-info .list-li .song-title .song-collection.font-blue,
 .list-info .list-li .song-title .song-float:hover,
 .row .col-4-med.col-4 .pager .pages .page-item.active button,
@@ -1167,7 +1182,7 @@ li.normal-item a:hover .uname,
 .lottery-notice-cntr .win .uname,
 .winner-list .list-wrap .title,
 .group-item .name-box .operate-btn,
-.button-box .item>button.active,
+.button-box .item > button.active,
 #disable-popup-modal .vip-exchange .selector li.current p.cost,
 #disable-popup-modal .vip-exchange .selector li:hover,
 #disable-popup-modal .vip-exchange .selector li:hover p.cost,
@@ -1179,7 +1194,10 @@ li.normal-item a:hover .uname,
 #dyn_wnd .dyn_list a:hover,
 .player-his-nav:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-title:hover,
-.bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-item:hover .bilibili-player-playlist-info-title,
+.bilibili-player
+  .bilibili-player-auxiliary-area
+  .bilibili-player-playlist-item:hover
+  .bilibili-player-playlist-info-title,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-order-play,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-ownername:hover,
 .bilibili-player .bilibili-player-auxiliary-area .bilibili-player-playlist-nav-loop.bppl-state-selected,
@@ -1225,7 +1243,7 @@ li.normal-item a:hover .uname,
 .container .play-coin-bg .play-coin .play-coin-content .play-one-coin.active,
 #pin-wrapper .pin-layer-video-empty a,
 #page-channel-detail .channel-add-video:hover .text,
-.calendar-header>a:hover,
+.calendar-header > a:hover,
 .card .focus-btn .focus .focus-text:hover,
 .coin-dialog-mask .coin-operated .mc .mc-box .c-num,
 .coin-dialog-mask .coin-operated .coin-title span,
@@ -1254,9 +1272,8 @@ li.normal-item a:hover .uname,
 .pgc-space-follow-item .pgc-item-info .pgc-item-title:hover,
 .video-info .video-data .a-crumbs a:hover,
 .up-info .u-info .name .message:hover,
-.up-info .u-info .name .message:hover i
-{
-    color: var(--theme-color) !important;
+.up-info .u-info .name .message:hover i {
+  color: var(--theme-color) !important;
 }
 /* a
 {
@@ -1276,8 +1293,7 @@ li.normal-item a:hover .uname,
     border-top-color: transparent !important;
     border-left-color: transparent !important;
 } */
-.sub-tabs a.active:before
-{
-    border-left-color: transparent !important;
-    border-right-color: transparent !important;
+.sub-tabs a.active:before {
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
 }
