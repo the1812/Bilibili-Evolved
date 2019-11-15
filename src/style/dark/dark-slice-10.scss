@@ -456,10 +456,13 @@
   }
 }
 .round-corner {
-  .selectable-option.unable {
-    @include background-color("1");
-    @include color("6");
+  .selectable-option {
+    @include background-color("4");
     @include border-color();
+    &.unable {
+      @include background-color("1");
+      @include color("6");
+    }
   }
   .ticket-count {
     @include background-color("4");
