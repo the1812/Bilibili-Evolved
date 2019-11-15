@@ -115,7 +115,9 @@
   @include border-color();
 }
 
-.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover {
+.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover,
+.pgc-space-follow-item a.pgc-item-cover .badge,
+.channel-menu-itnl .item .name em {
   @include foreground-color();
 }
 
