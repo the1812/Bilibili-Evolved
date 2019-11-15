@@ -21,7 +21,6 @@ namespace BilibiliEvolved.Build
           ".ts", ".js", ".css", ".scss", ".sass", ".vue", ".html", ".htm"
         };
         var files = ResourceMinifier.GetFiles(file =>
-          file.FullName.Contains("src" + Path.DirectorySeparatorChar) &&
           extensions.Contains(file.Extension) &&
           !file.Name.EndsWith(".d.ts") &&
           !file.FullName.Contains("client" + Path.DirectorySeparatorChar)

@@ -27,7 +27,7 @@ namespace BilibiliEvolved.Build
     public static string GetMinimizedFileName(string path)
     {
       var filename = Path.GetFileName(path);
-      return "min/" + filename.Insert(filename.LastIndexOf("."), ".min");
+      return "min" + Path.DirectorySeparatorChar + filename.Insert(filename.LastIndexOf("."), ".min");
     }
     public static IEnumerable<string> GetFiles(Predicate<FileInfo> filter)
     {
@@ -52,13 +52,7 @@ namespace BilibiliEvolved.Build
           .Where(file =>
           {
             var fullName = file.FullName;
-            return predicate(file)
-              && !fullName.Contains($".vs{Path.DirectorySeparatorChar}")
-              && !fullName.Contains($".vscode{Path.DirectorySeparatorChar}")
-              && !fullName.Contains($"build-scripts{Path.DirectorySeparatorChar}")
-              && !fullName.Contains($"node_modules{Path.DirectorySeparatorChar}")
-              && !fullName.Contains($".backup.")
-              && !fullName.Contains($"extras");
+            return predicate(file) && !fullName.Contains($".backup.");
           })
           .Select(file => getRelativePath(file.FullName)));
         foreach (var subDir in currentDirectory.EnumerateDirectories())
@@ -67,7 +61,7 @@ namespace BilibiliEvolved.Build
         }
         return list;
       }
-      var directory = Environment.CurrentDirectory;
+      var directory = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}src";
       if (!directory.EndsWith(Path.DirectorySeparatorChar))
       {
         directory = directory + Path.DirectorySeparatorChar;
@@ -109,8 +103,7 @@ namespace BilibiliEvolved.Build
   {
     public override Predicate<FileInfo> FileFilter { get; } = file =>
     {
-      return file.FullName.Contains("src" + Path.DirectorySeparatorChar) &&
-        !file.FullName.Contains(".min")
+      return !file.FullName.Contains(".min.")
         && file.Name != "dark.css"
         && file.Name != "dark-template.css"
         && file.Extension == ".css"
@@ -134,8 +127,7 @@ namespace BilibiliEvolved.Build
   {
     public override Predicate<FileInfo> FileFilter { get; } = file =>
     {
-      return file.FullName.Contains("src" + Path.DirectorySeparatorChar) &&
-        !file.FullName.Contains("client" + Path.DirectorySeparatorChar) &&
+      return !file.FullName.Contains("client" + Path.DirectorySeparatorChar) &&
         file.Extension == ".js" && !file.Name.EndsWith(".vue.js");
     };
 
@@ -181,7 +173,7 @@ namespace BilibiliEvolved.Build
   {
     public override Predicate<FileInfo> FileFilter { get; } = file =>
     {
-      return !file.FullName.Contains(".min") && file.Extension == ".html";
+      return !file.FullName.Contains(".min.") && file.Extension == ".html";
     };
 
     public override string ResourceType { get; } = "HTML";

@@ -85,7 +85,6 @@ namespace BilibiliEvolved.Build
     public ProjectBuilder PrebuildVue()
     {
       var files = ResourceMinifier.GetFiles(file =>
-        file.FullName.Contains($"src{Path.DirectorySeparatorChar}") &&
         file.Extension == ".vue"
       );
       using (var cache = new BuildCache())
@@ -113,7 +112,6 @@ namespace BilibiliEvolved.Build
     public ProjectBuilder BuildVue()
     {
       var files = ResourceMinifier.GetFiles(file =>
-        file.FullName.Contains($"src{Path.DirectorySeparatorChar}") &&
         file.Extension == ".vue"
       );
       using (var cache = new BuildCache())
