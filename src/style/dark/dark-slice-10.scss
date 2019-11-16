@@ -455,9 +455,8 @@
     }
   }
 }
-.round-corner {
-  .detail-info-wrapper .title,
-  .remind-title {
+.buyticket {
+  .detail-info-wrapper .title {
     @include color("e");
   }
   .selectable-option {
@@ -486,6 +485,30 @@
       }
     }
   }
+  .modal-container {
+    .remind {
+      &-title {
+        @include color("e");
+      }
+      &-tel input {
+        @include background-color("3");
+        @include color("e");
+        @include border-color();
+        border-radius: 4px;
+      }
+    }
+    .modal-footer-btn div {
+      @include background-color("3");
+      @include color("e");
+      @include border-color();
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+}
+.detail-content {
   .whole-guest-wrapper .guest-list-content .guest {
     &-left,
     &-right {
