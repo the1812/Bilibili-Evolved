@@ -117,7 +117,10 @@
 
 .live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover,
 .pgc-space-follow-item a.pgc-item-cover .badge,
-.channel-menu-itnl .item .name em {
+.channel-menu-itnl .item .name em,
+.bi-btn,
+.ep-list-wrapper .ep-item .badge,
+.ss-list-wrapper .ss-item .ss-cover .ss-badge {
   @include foreground-color();
 }
 
@@ -520,5 +523,37 @@
     p strong {
       @include color("e");
     }
+  }
+}
+
+.bilibili-player .bilibili-player-video-control .bilibili-player-video-btn {
+  &-menu-list {
+    &.bilibili-player {
+      &-active {
+        @include theme-color();
+        &:before {
+          @include to-theme("blue");
+        }
+      &.bilibili-player-blink {
+        @include theme-color();
+      }
+    }
+    &-blink {
+      @include color("e");
+      .bilibili-player-tips {
+        @include theme-background-color();
+      }
+      &:hover,
+      &:active {
+        @include theme-color();
+      }
+    }
+  }
+  .bilibili-player-tips {
+    @include foreground-color();
+  }
+}
+  .bilibili-player-video-quality-menu .bilibili-player-bigvip {
+    @include foreground-color();
   }
 }
