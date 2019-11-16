@@ -64,6 +64,133 @@
     @include background-color("4");
   }
 }
+.confirmorder-container {
+  @include background-color("4");
+  @include no-shadow();
+  h1 {
+    @include color("e");
+    span {
+      @include color("a");
+    }
+  }
+  .card {
+    .card-bottom .delete {
+      @include to-gray();
+      &:hover {
+        @include to-theme("pink");
+      }
+    }
+    &.active {
+      @include theme-border-color();
+      &::before {
+        @include to-theme("pink");
+      }
+    }
+  }
+  .discounts {
+    @include border-color("5");
+    .discounts-list p {
+      @include border-color();
+      @include background-color("1");
+      @include color("6");
+    }
+  }
+  .total-container div span {
+    @include color("e");
+    &.total {
+      @include theme-color();
+    }
+  }
+  .confirm-bottom .confirm-paybtn.active {
+    @include to-theme("pink");
+  }
+  .confirm-bottom .service-term {
+    @include color("a");
+    .check-icon,
+    .check-icon.checked {
+      @include to-theme("pink");
+    }
+    .term-content {
+      @include theme-color();
+    }
+  }
+}
+.eticket-container {
+  .top-box .header {
+    @include border-color();
+    @include background-color("3");
+    .header-back {
+      @include to-white();
+    }
+    h1 {
+      @include color("e");
+    }
+    &::after {
+      @include border-color();
+    }
+  }
+  .eticket-info-container {
+    @include background-color("4");
+    @include no-shadow();
+  }
+  .eticket-info-right {
+    div {
+      @include color("e");
+    }
+    p {
+      @include color("a");
+    }
+  }
+  .qrcode-container {
+    @include background-color("4");
+    .qrcode-tip {
+      @include background-color();
+      @include color("e");
+    }
+    .qrcode-container-item .qrcode-hide-tip {
+      @include color("e");
+    }
+    .ticket-code,
+    .ticket-type {
+      &,
+      .color-gray-light {
+        @include color("a");
+      }
+      span {
+        @include color("e");
+      }
+    }
+    .addr-map {
+      @include background-color("38");
+      h1 {
+        @include color("e");
+      }
+      p {
+        @include color("a");
+      }
+      .map-icon {
+        @include to-theme("pink");
+      }
+    }
+  }
+}
+.orderdetail-container {
+  .orderdetail-wrapper {
+    @include color("a");
+    .wrapper-ticket {
+      @include color("e");
+      .tip {
+        @include theme-color();
+      }
+    }
+  }
+  .total-container div span {
+    @include color("e");
+    &.total {
+      @include theme-color();
+    }
+  }
+}
 .s_tag .btn-add,
 #biliAppHomeSetting select,
 #biliAppHomeSetting input,
@@ -217,6 +344,7 @@ $highlight-map: (
 .container .level-intro .svg-icon {
   @include to-white();
 }
+.confirmorder-container .confirm-bottom .confirm-paybtn.active,
 .whole-detail-info-wrapper .product-buy-wrapper .unsale-btn {
   box-shadow: 0 3px 4px 0 #6e4752 !important;
 }
@@ -233,7 +361,7 @@ $highlight-map: (
   @include hide();
 }
 .nav-tab-bar .tab-item[data-tab-id="1"]:not(.on)::before {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAQAAAACj/OVAAAD00lEQVRYw+2YbWhVdRzHb2aWsILo4UVC5Pd3drfdIZNW1sRod7eW1gSxLIxo5aWgB1GHbkNaDILoAaJYtKQNRDHQTcp6McQoISusXuSLZTXXICVoa3Nmtu0+nE8vdtzd1T3c7dzzzu/31b2X+//w+//+5/y+54RCVzSLKq+zqD1t9driPB4uCxjm3G+f6ILI2E7bu+ElgcB0u3UJIXcd23mT19jMqnHsiF6vXJjv2iqtX5S5HzDAZHWzFbnCjjq35BFnK21UxBlmKv3ESlfoRKQgf5vZL17F9QBDfMkRkpOQf1ON0Of5qm+/iHu4f2jEQYhDWVWeptwVzmN5wIVXiFL3LwB6qEAYMRou6SXsR1jvhqv919cq3gIgyVpEDT9P2UmXGMKiPnFcpT/FLwC0Ie5hiOn0DsJafAKLbhMrvAUfRbQxvX5A2Dd+O3i3WOcteC/ixxmAZxDq89vBKvGUt+Au6iYujak0jNCg3ztMRDxEbvoNYd1+gTfILXHHcgJ2IazL/2XxnTiSE3AbwqnzD9whanPA9RNxRdFS38BlN2pQfDUrsB5hB/Jz894qyt0/ZsQdQNhoofICbF6gz0SUnmlxnYRdYc/kbR5GCnRcLHP3kboMNkAjQjjNeY5O2itElBa6GfNG1VGaiLhCI1ab/0wTEzYRnpYTyUSpzqKiAEKU7RJvJz5idQZ1VsetySkNJo0utAHxKwCfIuzrisXBJtJqUe0dk+cQeiHgCKw28Z53VIpRym4NFFd+jQbFKQAOIuyLgOuzNWKNt6GbEPZ80MDd4n1vyFrCkuGbA8VFFums6Ju4Z+pwwPUV1ogab0NrEc6mvCPCZc5L1qp2zz1iOTFixHBQWnvVrnZrceJ5mQ6RAmuVO/kZcHrbmL3iO2vbx6KUnYl9dNBBB7tpyHKL9/0etiSUFtbkD7dalLl9Oea0b91CLGGOH+AesYonc/ZdiKU75/2cZMdy691lvTzo2Dwyto2JZTzAxjlU+ASVlCBsoDg8t+qW2DnR9N8Ic9cQ8YSw3sii2UbOtU6FnnXiTtyJO4dEufvycD3zcR02IuzD8bWsquj6qWq6T7/Pr2M5eEgbL+2YY+dFdbqBRuqTm89FU9FkllNV6ap0VTrmXnTm0/gvWf9IRVPRVHVy2/kdifrU+qSQW/hg9kDtFNtnfPjyo1aETk7CVSzWvw6DBKcKRGFJ5risFesJUg0INWZFvpZAgYcRdiwDPCO6AwVeoBilim8a39BScSen6A3Uj4wKZ0MoFAqFiu/Idd759sMXD82LOqGTAft7543mBVfeoAeg/wFlFeKImou+wAAAAABJRU5ErkJggg==') !important;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAQAAAACj/OVAAAD00lEQVRYw+2YbWhVdRzHb2aWsILo4UVC5Pd3drfdIZNW1sRod7eW1gSxLIxo5aWgB1GHbkNaDILoAaJYtKQNRDHQTcp6McQoISusXuSLZTXXICVoa3Nmtu0+nE8vdtzd1T3c7dzzzu/31b2X+//w+//+5/y+54RCVzSLKq+zqD1t9driPB4uCxjm3G+f6ILI2E7bu+ElgcB0u3UJIXcd23mT19jMqnHsiF6vXJjv2iqtX5S5HzDAZHWzFbnCjjq35BFnK21UxBlmKv3ESlfoRKQgf5vZL17F9QBDfMkRkpOQf1ON0Of5qm+/iHu4f2jEQYhDWVWeptwVzmN5wIVXiFL3LwB6qEAYMRou6SXsR1jvhqv919cq3gIgyVpEDT9P2UmXGMKiPnFcpT/FLwC0Ie5hiOn0DsJafAKLbhMrvAUfRbQxvX5A2Dd+O3i3WOcteC/ixxmAZxDq89vBKvGUt+Au6iYujak0jNCg3ztMRDxEbvoNYd1+gTfILXHHcgJ2IazL/2XxnTiSE3AbwqnzD9whanPA9RNxRdFS38BlN2pQfDUrsB5hB/Jz894qyt0/ZsQdQNhoofICbF6gz0SUnmlxnYRdYc/kbR5GCnRcLHP3kboMNkAjQjjNeY5O2itElBa6GfNG1VGaiLhCI1ab/0wTEzYRnpYTyUSpzqKiAEKU7RJvJz5idQZ1VsetySkNJo0utAHxKwCfIuzrisXBJtJqUe0dk+cQeiHgCKw28Z53VIpRym4NFFd+jQbFKQAOIuyLgOuzNWKNt6GbEPZ80MDd4n1vyFrCkuGbA8VFFums6Ju4Z+pwwPUV1ogab0NrEc6mvCPCZc5L1qp2zz1iOTFixHBQWnvVrnZrceJ5mQ6RAmuVO/kZcHrbmL3iO2vbx6KUnYl9dNBBB7tpyHKL9/0etiSUFtbkD7dalLl9Oea0b91CLGGOH+AesYonc/ZdiKU75/2cZMdy691lvTzo2Dwyto2JZTzAxjlU+ASVlCBsoDg8t+qW2DnR9N8Ic9cQ8YSw3sii2UbOtU6FnnXiTtyJO4dEufvycD3zcR02IuzD8bWsquj6qWq6T7/Pr2M5eEgbL+2YY+dFdbqBRuqTm89FU9FkllNV6ap0VTrmXnTm0/gvWf9IRVPRVHVy2/kdifrU+qSQW/hg9kDtFNtnfPjyo1aETk7CVSzWvw6DBKcKRGFJ5risFesJUg0INWZFvpZAgYcRdiwDPCO6AwVeoBilim8a39BScSen6A3Uj4wKZ0MoFAqFiu/Idd759sMXD82LOqGTAft7543mBVfeoAeg/wFlFeKImou+wAAAAABJRU5ErkJggg==") !important;
 }
 .aside-item.active .item-border,
 .aside-item:hover .item-border {
