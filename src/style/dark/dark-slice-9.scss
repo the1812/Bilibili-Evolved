@@ -52,7 +52,8 @@
 .van-popover .upload-item:hover,
 .container .play-all:hover,
 .van-popover .btn-box .btn.reg-btn:hover,
-.international-header .bili-banner {
+.international-header .bili-banner,
+.message-list-content .notify-wrapper .notify-text {
   @include background-color("3");
 }
 
@@ -215,6 +216,9 @@ $highlight-map: (
 .manga-navbar .search-bar .confirm-btn .search-icon,
 .container .level-intro .svg-icon {
   @include to-white();
+}
+.whole-detail-info-wrapper .product-buy-wrapper .unsale-btn {
+  box-shadow: 0 3px 4px 0 #6e4752 !important;
 }
 .app-layout .manga-navbar {
   box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px !important;
