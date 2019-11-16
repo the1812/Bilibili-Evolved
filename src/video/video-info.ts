@@ -18,6 +18,12 @@ export class VideoInfo {
     pageNumber: number
   }[]
   danmaku: DanmakuInfo
+  subtitles: {
+    id: number
+    languageCode: string
+    language: string
+    url: string
+  }[]
 
   constructor(aid: string) {
     this.aid = aid
@@ -45,6 +51,14 @@ export class VideoInfo {
         cid: it.cid,
         title: it.part,
         pageNumber: it.page
+      }
+    })
+    this.subtitles = data.subtitle.list.map((it: any) => {
+      return {
+        id: it.id,
+        languageCode: it.lan,
+        language: it.lan_doc,
+        url: it.subtitle_url,
       }
     })
     return this
