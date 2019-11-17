@@ -571,10 +571,12 @@ async function loadWidget() {
     window.scroll(0, 0);
     (dq('.gui-settings-mask') as HTMLDivElement).click()
   })
-  button.addEventListener('mouseover', () => {
-    document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
-    loadPanel()
-  }, { once: true })
+  document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
+  loadPanel()
+  // button.addEventListener('mouseover', () => {
+  //   document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
+  //   loadPanel()
+  // }, { once: true })
 }
 async function loadPanel() {
   let workingDownloader: VideoDownloader
