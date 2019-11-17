@@ -382,7 +382,7 @@ class Messages extends NavbarComponent {
   get name () {
     return "messages";
   }
-  async fetchSettings() {
+  async fetchSettings () {
     const json = await bilibiliEvolved.Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/link_setting/v1/link_setting/get?msg_notify=1`)
     if (json.code !== 0) {
       return
@@ -564,7 +564,7 @@ class Category extends NavbarComponent {
           info: [],
           loading: true,
         },
-        async mounted() {
+        async mounted () {
           try {
             this.info = Object.entries(await getOnlineInfo())
           } finally {
@@ -760,13 +760,21 @@ class SearchBox extends NavbarComponent {
       const historyItem = settings.searchHistory.find(item => item.keyword === keywordInput.value)
       if (historyItem) {
         historyItem.count++
+        historyItem.date = new Date().toJSON()
+        console.log(historyItem)
       } else {
-        settings.searchHistory.push({
+        settings.searchHistory.unshift({
           count: 1,
-          keyword: keywordInput.value
+          keyword: keywordInput.value,
+          date: new Date().toJSON(),
+        })
+        console.log({
+          count: 1,
+          keyword: keywordInput.value,
+          date: new Date().toJSON(),
         })
       }
-      settings.searchHistory = settings.searchHistory // save history
+      settings.searchHistory = settings.searchHistory.slice(0, 10) // save history
       return true;
     });
     if (!settings.hideTopSearch) {
@@ -835,12 +843,18 @@ class SearchBox extends NavbarComponent {
       const text = keywordInput.value
       searchList.isHistory = text === ''
       if (searchList.isHistory) {
-        searchList.items = settings.searchHistory.sort((a, b) => b.count - a.count).map(item => {
-          return {
-            value: item.keyword,
-            html: item.keyword,
-          }
-        }).slice(0, 10)
+        searchList.items = settings.searchHistory
+          .sort((a, b) => {
+            const aDate = a.date ? new Date(a.date) : new Date(0)
+            const bDate = b.date ? new Date(b.date) : new Date(0)
+            return Number(bDate) - Number(aDate)
+          })
+          .map(item => {
+            return {
+              value: item.keyword,
+              html: item.keyword,
+            }
+          }).slice(0, 10)
       } else {
         const url = `https://s.search.bilibili.com/main/suggest?func=suggest&suggest_type=accurate&sub_type=tag&main_ver=v1&highlight=&userid=${userInfo.mid}&bangumi_acc_num=1&special_acc_num=1&topic_acc_num=1&upuser_acc_num=3&tag_num=10&special_num=10&bangumi_num=10&upuser_num=3&term=${text}`
         lastQueuedRequest = url
@@ -1681,7 +1695,7 @@ class Subscriptions extends NavbarComponent {
         component.onPopup && component.onPopup()
       }
     },
-    mounted() {
+    mounted () {
       document.body.classList.remove('custom-navbar-loading')
     },
   });

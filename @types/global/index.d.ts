@@ -54,6 +54,7 @@ declare global {
   interface SearchHistoryItem {
     keyword: string
     count: number
+    date: string
   }
   interface MonkeyInfo {
     script: {
