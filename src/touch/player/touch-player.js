@@ -321,10 +321,10 @@ function setupTouchPlayer (player) {
   const text = document.querySelector('.touch-video-info')
   const box = document.querySelector('.touch-video-box')
 
-  const throttleTime = 300
+  const debounceTime = 300
   let originalBrightness = 100
   let originalVolume = Math.round(video.prop('volume') * 100)
-  const setVolume = _.throttle(volume => {
+  const setVolume = _.debounce(volume => {
     volume /= 100
     if (volume < 0) {
       volume = 0
@@ -349,7 +349,7 @@ function setupTouchPlayer (player) {
       $('.bilibili-player-video-btn-volume').removeClass('video-state-volume-max')
       video.prop('muted', false)
     }
-  }, throttleTime)
+  }, debounceTime)
 
   swiper.action.onActionStart = direction => {
     box.classList.add('adjust-opened')
@@ -412,9 +412,9 @@ function setupTouchPlayer (player) {
   swiper.action.volumeUp = volumeChange
   swiper.action.volumeDown = volumeChange
 
-  const internalBrightnessChange = _.throttle(finalBrightness => {
+  const internalBrightnessChange = _.debounce(finalBrightness => {
     video.css('filter', `brightness(${finalBrightness / 100})`)
-  }, throttleTime)
+  }, debounceTime)
   const brightnessChange = brightness => {
     let finalBrightness = originalBrightness + brightness
     let change = Math.abs(brightness)
