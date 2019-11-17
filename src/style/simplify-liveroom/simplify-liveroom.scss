@@ -3,7 +3,7 @@
   &-fansMedal .fans-medal-item-ctnr,
   &-title .title-label,
   &-userLevel .user-level-icon,
-  &-guard i.guard-icon,
+  &-guard .chat-history-panel .guard-icon,
   &-systemMessage .system-msg,
   &-systemMessage .announcement-wrapper,
   &-welcomeMessage .welcome-guard,
@@ -84,7 +84,7 @@
       background-image: none !important;
     }
   }
-  [class*="guard-level-"] {
+  .chat-history-panel [class*="guard-level-"] {
     padding: 0 !important;
     margin: 0 !important;
     &::after {
