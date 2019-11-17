@@ -321,7 +321,7 @@ function setupTouchPlayer (player) {
   const text = document.querySelector('.touch-video-info')
   const box = document.querySelector('.touch-video-box')
 
-  const debounceTime = 300
+  const debounceTime = 50
   let originalBrightness = 100
   let originalVolume = Math.round(video.prop('volume') * 100)
   const setVolume = _.debounce(volume => {
