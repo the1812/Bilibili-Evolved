@@ -113,7 +113,7 @@ $first-row-height: 250px;
       img {
         width: 100%;
         height: 100%;
-        object-fit: fill;
+        object-fit: cover;
         display: block;
       }
       .title {
