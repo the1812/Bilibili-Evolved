@@ -19,6 +19,7 @@ namespace BilibiliEvolved.Build.Watcher
     private Dictionary<string, TaskCompletionSource<string>> waitRequests = new Dictionary<string, TaskCompletionSource<string>>();
     public Task<string> WaitForBuild(string path) {
       var tcs = new TaskCompletionSource<string>();
+      // Console.WriteLine($"add request: {path}");
       waitRequests[path] = tcs;
       return tcs.Task;
     }
@@ -28,9 +29,10 @@ namespace BilibiliEvolved.Build.Watcher
       if (File.Exists(originalFilename)) {
         File.Delete(originalFilename);
       }
-      if (waitRequests.ContainsKey(e.FullPath)) {
-        waitRequests[e.FullPath].SetResult(File.ReadAllText(e.FullPath));
-        waitRequests.Remove(e.FullPath);
+      // Console.WriteLine($"test filename: {originalFilename}");
+      if (waitRequests.ContainsKey(originalFilename)) {
+        waitRequests[originalFilename].SetResult(File.ReadAllText(e.FullPath));
+        waitRequests.Remove(originalFilename);
       }
     }
   }
@@ -40,7 +42,10 @@ namespace BilibiliEvolved.Build.Watcher
     public VueWatcher() : base($"src{Path.DirectorySeparatorChar}")
     {
       GenericFilter = "*.vue";
+    }
+    public override void Start(ProjectBuilder builder) {
       tsWatcher.Start(builder);
+      base.Start(builder);
     }
     public override void Stop() {
       base.Stop();
@@ -58,6 +63,7 @@ namespace BilibiliEvolved.Build.Watcher
       var minFile = $"min{Path.DirectorySeparatorChar + Path.GetFileName(e.FullPath)}.min.js";
       var minifier = new JavascriptMinifier();
       File.WriteAllText(minFile, minifier.Minify(compiledText.ToString()));
+      builder.UpdateCachedMinFile(minFile);
       cache.AddCache(e.FullPath);
       cache.SaveCache();
     }
@@ -118,8 +124,8 @@ namespace BilibiliEvolved.Build.Watcher
         else if (vueFile.ScriptLang == "ts" || vueFile.ScriptLang == "typescript")
         {
           var tsFile = path + ".ts";
+          var task = tsWatcher.WaitForBuild(tsFile);
           File.WriteAllText(tsFile, vueFile.Script);
-          var task = tsWatcher.WaitForBuild(path);
           var script = task.Result.Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
           compiledText.Append($"{script})}}");
         }

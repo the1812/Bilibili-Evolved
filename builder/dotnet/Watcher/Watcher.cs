@@ -92,13 +92,16 @@ namespace BilibiliEvolved.Build.Watcher
     //     throw new ArgumentException($"The path is not relative to cwd. {nameof(fullPath)}={fullPath}, {nameof(cwd)}={cwd}", nameof(fullPath));
     //   }
     // }
-    public void Start(ProjectBuilder builder)
+    public virtual void Start(ProjectBuilder builder)
     {
       if (IsWatching)
       {
         return;
       }
       IsWatching = true;
+      if (builder is null) {
+        throw new NullReferenceException("Project Builder cannot be null");
+      }
       this.builder = builder;
       if (watcher == null)
       {
@@ -107,7 +110,7 @@ namespace BilibiliEvolved.Build.Watcher
         {
           builder.GetBundleFiles();
           HandleFileChange(e);
-          builder.UpdateCachedMinFile(ResourceMinifier.GetMinimizedFileName(e.FullPath));
+          // builder.UpdateCachedMinFile(ResourceMinifier.GetMinimizedFileName(e.FullPath));
           ChangedFilesHistory.Add(e.FullPath);
         }, HandleFileChangesPeriod);
         FileSystemEventHandler handler = (s, e) =>

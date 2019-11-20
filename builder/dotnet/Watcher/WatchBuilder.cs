@@ -85,15 +85,17 @@ namespace BilibiliEvolved.Build.Watcher
       {
         StopWatching();
       };
-      while (input.ToLowerInvariant() != "q")
+      while (input != null && input.ToLowerInvariant() != "q")
       {
         input = Console.ReadLine();
       }
-      StopWatching();
+      if (input != null) {
+        StopWatching();
+      }
     }
     private void StopWatching()
     {
-      watchers.ForEach(w => w.Stop());
+      watchers.Where(w => w.IsWatching).ForEach(w => w.Stop());
       builder.WriteInfo("Watcher stopped.");
       Environment.Exit(0);
     }

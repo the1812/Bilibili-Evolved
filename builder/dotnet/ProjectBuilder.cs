@@ -77,7 +77,8 @@ namespace BilibiliEvolved.Build
     public ConcurrentDictionary<string, string> CachedMinFiles { get; private set; } = new ConcurrentDictionary<string, string>();
     public void UpdateCachedMinFile(string url)
     {
-      Console.WriteLine($"Update min url: {url}");
+      url = url.Replace(@"\", "/");
+      // Console.WriteLine($"Update min url: {url}");
       CachedMinFiles[url] = File.ReadAllText(url);
     }
   }

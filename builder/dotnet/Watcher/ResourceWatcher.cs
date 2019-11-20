@@ -23,7 +23,9 @@ namespace BilibiliEvolved.Build.Watcher
       builder.WriteInfo($"[{Name}] {e.Name} changed.");
       cache.AddCache(e.FullPath);
       cache.SaveCache();
-      File.WriteAllText(ResourceMinifier.GetMinimizedFileName(e.FullPath), Minifier.Minify(File.ReadAllText(e.FullPath)));
+      string minFile = ResourceMinifier.GetMinimizedFileName(e.FullPath);
+      File.WriteAllText(minFile, Minifier.Minify(File.ReadAllText(e.FullPath)));
+      builder.UpdateCachedMinFile(minFile);
       if (e.Name.Contains("dark-slice")) {
         builder.BuildDarkStyles();
       }

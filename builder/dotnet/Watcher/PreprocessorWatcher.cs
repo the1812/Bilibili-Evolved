@@ -33,7 +33,8 @@ namespace BilibiliEvolved.Build.Watcher
         return !cache.Contains(originalFile);
       };
     }
-    private void KillExternalWatcher() {
+    private void KillExternalWatcher()
+    {
       if (!externalWatcherProcess.HasExited)
       {
         externalWatcherProcess.Kill();
@@ -58,7 +59,9 @@ namespace BilibiliEvolved.Build.Watcher
       cache.SaveCache();
       if (!Path.GetFileNameWithoutExtension(e.FullPath).EndsWith(".vue"))
       {
-        File.WriteAllText(ResourceMinifier.GetMinimizedFileName(e.FullPath), Minifier.Minify(PostBuild(content)));
+        var minFile = ResourceMinifier.GetMinimizedFileName(e.FullPath);
+        File.WriteAllText(minFile, Minifier.Minify(PostBuild(content)));
+        builder.UpdateCachedMinFile(minFile);
         if (e.Name.Contains("dark-slice"))
         {
           builder.BuildDarkStyles();
