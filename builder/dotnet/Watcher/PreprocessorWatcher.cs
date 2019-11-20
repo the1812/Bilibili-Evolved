@@ -52,13 +52,13 @@ namespace BilibiliEvolved.Build.Watcher
     }
     protected override sealed void OnFileChanged(FileSystemEventArgs e)
     {
-      var originalFile = GetOriginalFilePath(e.FullPath);
-      builder.WriteInfo($"[{Name}] {Path.GetFileName(originalFile)} changed.");
-      var content = File.ReadAllText(e.FullPath);
-      cache.AddCache(originalFile);
-      cache.SaveCache();
       if (!Path.GetFileNameWithoutExtension(e.FullPath).EndsWith(".vue"))
       {
+        var originalFile = GetOriginalFilePath(e.FullPath);
+        builder.WriteInfo($"[{Name}] {Path.GetFileName(originalFile)} changed.");
+        var content = File.ReadAllText(e.FullPath);
+        cache.AddCache(originalFile);
+        cache.SaveCache();
         var minFile = ResourceMinifier.GetMinimizedFileName(e.FullPath);
         File.WriteAllText(minFile, Minifier.Minify(PostBuild(content)));
         builder.UpdateCachedMinFile(minFile);

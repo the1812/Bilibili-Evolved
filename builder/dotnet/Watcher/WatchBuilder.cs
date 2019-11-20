@@ -31,7 +31,8 @@ namespace BilibiliEvolved.Build.Watcher
       var queue = new Queue<FileSystemEventArgs>();
       async void rebuild()
       {
-        await Task.Run(() => {
+        await Task.Run(() =>
+        {
           builder
           .BuildBundle()
           .BuildPreviewOffline()
@@ -65,11 +66,16 @@ namespace BilibiliEvolved.Build.Watcher
       }
       var notifyRebuild = Extensions.Debounce((FileSystemEventArgs e) =>
       {
-        lock (queue) {
-          queue.Enqueue(e);
-          // Console.WriteLine($"enqueue to {queue.Count}");
-          if (queue.Count == 1) {
-            rebuild();
+        if (!Path.GetFileNameWithoutExtension(e.FullPath).EndsWith(".vue"))
+        {
+          lock (queue)
+          {
+            queue.Enqueue(e);
+            // Console.WriteLine($"enqueue to {queue.Count}");
+            if (queue.Count == 1)
+            {
+              rebuild();
+            }
           }
         }
       }, Watcher.HandleFileChangesPeriod);
@@ -89,7 +95,8 @@ namespace BilibiliEvolved.Build.Watcher
       {
         input = Console.ReadLine();
       }
-      if (input != null) {
+      if (input != null)
+      {
         StopWatching();
       }
     }
