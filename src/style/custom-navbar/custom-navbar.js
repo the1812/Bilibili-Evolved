@@ -55,12 +55,12 @@ const attributes = {
         Vue.component("order-item", {
           props: ["item"],
           template: /*html*/`
-            <li v-on:mouseenter="viewBorder(true)"
-                v-on:mouseleave="viewBorder(false)"
-                v-bind:class="{hidden: hidden()}">
+            <li @mouseenter="viewBorder(true)"
+                @mouseleave="viewBorder(false)"
+                :class="{hidden: hidden()}">
               <i class="mdi mdi-menu"></i>
               {{item.displayName}}
-              <button v-on:click="toggleHidden()">
+              <button @click="toggleHidden()">
                   <i v-if="hidden()" class="mdi mdi-eye-off"></i>
                   <i v-else class="mdi mdi-eye"></i>
               </button>
@@ -594,15 +594,23 @@ class UserInfo extends NavbarComponent {
         <div v-if="isLogin" class="logged-in">
           <a class="name" target="_blank" href="https://space.bilibili.com/">{{uname}}</a>
           <a class="type" target="_blank" href="https://account.bilibili.com/account/big">{{userType}}</a>
+          <div class="privileges row" v-if="this.vipType === 2">
+            <div class="b-coin" :class="{received: privileges.bCoin.received}" @click="privilegeReceive(1)" :title="'有效期限: ' + privileges.bCoin.expire">
+              {{privileges.bCoin.received ? '已领取B币' : '领取B币'}}
+            </div>
+            <div class="coupons" :class="{received: privileges.coupons.received}" @click="privilegeReceive(2)" :title="'有效期限: ' + privileges.coupons.expire">
+              {{privileges.coupons.received ? '已领取优惠券' : '领取优惠券'}}
+            </div>
+          </div>
           <div class="level-info row">
             <a target="_blank" title="等级" href="https://account.bilibili.com/account/record"
               class="level">
-              <i class="custom-navbar-iconfont-extended" v-bind:class="'custom-navbar-icon-lv' + level_info.current_level"></i>
+              <i class="custom-navbar-iconfont-extended" :class="'custom-navbar-icon-lv' + level_info.current_level"></i>
             </a>
             <span class="level-progress-label">{{level_info.current_exp}} / {{level_info.next_exp}}</span>
           </div>
           <div class="level-progress separator">
-            <div class="level-progress-thumb" v-bind:style="levelProgressStyle"></div>
+            <div class="level-progress-thumb" :style="levelProgressStyle"></div>
           </div>
           <div class="items">
             <a class="item" target="_blank" title="手机验证"
@@ -666,10 +674,20 @@ class UserInfo extends NavbarComponent {
   }
   async init () {
     const panel = await SpinQuery.select(".custom-navbar .user-info-panel");
-    new Vue({
+    const vm = new Vue({
       el: panel,
       data: {
         ...userInfo,
+        privileges: {
+          bCoin: {
+            received: false,
+            expire: '',
+          },
+          coupons: {
+            received: false,
+            expire: '',
+          },
+        },
       },
       computed: {
         userType () {
@@ -696,6 +714,33 @@ class UserInfo extends NavbarComponent {
           };
         }
       },
+      methods: {
+        async privilegeReceive (type) {
+          const typeMapping = {
+            1: 'bCoin',
+            2: 'coupons'
+          }
+          if (this.privileges[typeMapping[type]].received) {
+            return
+          }
+          this.privileges[typeMapping[type]].received = true
+          const csrf = getCsrf()
+          const result = await (await fetch('https://api.bilibili.com/x/vip/privilege/receive',
+            {
+              credentials: 'include',
+              headers: { 'content-type': 'application/x-www-form-urlencoded' },
+              body: `type=${type}&csrf=${csrf}`,
+              method: 'POST'
+            })).json()
+          console.log(result)
+          if (result.code === 0 || result.code === 69801) { // 领取成功 || 已领过
+            return
+          } else {
+            this.privileges[typeMapping[type]].received = false
+            logError(result.message)
+          }
+        },
+      },
     });
     const face = await SpinQuery.select(".custom-navbar .user-face-container .user-face");
     if (userInfo.isLogin) {
@@ -716,6 +761,17 @@ class UserInfo extends NavbarComponent {
           return acc + `, ${pendantUrl}@${parseInt(pendantBaseSize * dpi)}w_${parseInt(pendantBaseSize * dpi)}h.png ${dpi}x`;
         }, ""));
         // pendant.style.backgroundImage = `url('${userInfo.pendant.image}@116w_116h.jpg')`;
+      }
+      if (userInfo.vipType === 2) { // 年度大会员权益
+        const privileges = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/vip/privilege/my')
+        if (privileges.code === 0) {
+          const bCoin = privileges.data.list.find(it => it.type === 1)
+          vm.privileges.bCoin.received = bCoin.state === 1
+          vm.privileges.bCoin.expire = new Date(bCoin.expire_time * 1000).toLocaleDateString()
+          const coupons = privileges.data.list.find(it => it.type === 2)
+          vm.privileges.coupons.received = coupons.state === 1
+          vm.privileges.coupons.expire = new Date(coupons.expire_time * 1000).toLocaleDateString()
+        }
       }
     }
     else {

@@ -447,6 +447,24 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     .row.level-info {
       margin-bottom: -5px;
     }
+    .privileges {
+      justify-content: center;
+      & > * {
+        font-size: 11px;
+        background-color: #8882;
+        padding: 2px 4px;
+        margin: 0 2px;
+        border-radius: 4px;
+        cursor: pointer;
+        &.received {
+          cursor: default;
+          opacity: 0.5;
+        }
+        &:not(.received):hover {
+          background-color: #8884;
+        }
+      }
+    }
     .operation {
       height: 36px;
       display: flex;
