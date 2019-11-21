@@ -56,7 +56,12 @@
 .message-list-content .notify-wrapper .notify-text {
   @include background-color("3");
 }
-
+.wide-members .avatar-list i {
+  @include background-color("4");
+  &:hover {
+    @include theme-color();
+  }
+}
 .grid-area-ctnr {
   .hab-ctnr,
   .news-ctnr,
@@ -336,6 +341,9 @@ $highlight-map: (
 .at-popup,
 .chat-popups-section .draw-full-ctnr {
   @include border-color();
+}
+.wide-members .avatar {
+  @include border-color("3");
 }
 .van-popper-login .container {
   @include border-color("4");
