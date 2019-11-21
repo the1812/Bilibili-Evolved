@@ -173,6 +173,9 @@ class FeedsCardsManager extends EventTarget {
 export const feedsCardsManager = new FeedsCardsManager()
 
 export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promise<VideoCardInfo[]> => {
+  if (!getUID()) {
+    return []
+  }
   const json = await Ajax.getJsonWithCredentials(
     `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${type === 'video' ? 8 : 512}`
   )

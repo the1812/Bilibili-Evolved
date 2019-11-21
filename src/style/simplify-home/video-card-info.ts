@@ -23,5 +23,5 @@ export interface VideoCardInfo {
     id: number
     name: string
   }[]
-  watchlater: boolean
+  watchlater?: boolean
 }

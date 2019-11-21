@@ -26,10 +26,13 @@ export default {
   methods: {
     async getRankList() {
       const { getTrendingVideos } = await import('../trending-videos')
-      const { getWatchlaterList } = await import(
-        '../../../video/watchlater-api'
-      )
-      const watchlaterList = await getWatchlaterList()
+      let watchlaterList: number[] | undefined = undefined
+      if (getUID()) {
+        const { getWatchlaterList } = await import(
+          '../../../video/watchlater-api'
+        )
+        watchlaterList = await getWatchlaterList()
+      }
       const getRankListByDays = async (days: number) => {
         const cards = await getTrendingVideos(days, watchlaterList)
         this.cards.push(...cards)
@@ -40,10 +43,13 @@ export default {
       const json = await Ajax.getJsonWithCredentials(
         `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=8`
       )
-      const { getWatchlaterList } = await import(
-        '../../../video/watchlater-api'
-      )
-      const watchlaterList = await getWatchlaterList()
+      let watchlaterList: number[] | undefined = undefined
+      if (getUID()) {
+        const { getWatchlaterList } = await import(
+          '../../../video/watchlater-api'
+        )
+        watchlaterList = await getWatchlaterList()
+      }
       if (json.code !== 0) {
         throw new Error(json.message)
       }
@@ -76,7 +82,7 @@ export default {
             durationText: formatDuration(card.duration, 0),
             playCount: formatCount(card.stat.view),
             danmakuCount: formatCount(card.stat.danmaku),
-            watchlater: watchlaterList.includes(card.aid)
+            watchlater: watchlaterList ? watchlaterList.includes(card.aid) : undefined,
           }
         }
       )

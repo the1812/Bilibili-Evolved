@@ -8,7 +8,7 @@
     <div class="cover-container">
       <dpi-img class="cover" :src="coverUrl" :size="{height: 120, width: 200}"></dpi-img>
       <div v-if="durationText" class="duration">{{durationText}}</div>
-      <div v-if="durationText" class="watchlater" @click.stop.prevent="toggleWatchlater()">
+      <div v-if="durationText && watchlater !== null && watchlater !== undefined" class="watchlater" @click.stop.prevent="toggleWatchlater()">
         <i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>
         {{watchlater ? '已添加' : '稍后再看'}}
       </div>
@@ -217,6 +217,7 @@ export default {
       color: white;
       border-radius: 14px;
       height: 24px;
+      box-sizing: border-box;
       .mdi {
         font-size: 12pt;
         line-height: 1;
