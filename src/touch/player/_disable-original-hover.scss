@@ -13,6 +13,7 @@
     right: 0 !important;
     bottom: 0px !important;
   }
+  #bilibili_pbp,
   #bilibili_pbp_canvas {
     left: 0 !important;
     width: 100% !important;
@@ -30,6 +31,7 @@
         visibility: visible !important;
       }
     }
+    #bilibili_pbp,
     #bilibili_pbp_canvas {
       bottom: calc(100% + 3px) !important;
       opacity: 1 !important;

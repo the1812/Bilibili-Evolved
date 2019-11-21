@@ -120,6 +120,7 @@ div.bilibili-player-video-control {
     bottom: 0 !important;
   }
   .bilibili-player-area {
+    #bilibili_pbp,
     #bilibili_pbp_canvas {
       left: 0 !important;
       width: 100% !important;
@@ -130,6 +131,7 @@ div.bilibili-player-video-control {
         right: 0 !important;
         bottom: 31px !important;
       }
+    #bilibili_pbp,
       #bilibili_pbp_canvas {
         bottom: calc(100% + 3px) !important;
       }
