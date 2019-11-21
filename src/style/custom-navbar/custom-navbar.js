@@ -733,7 +733,9 @@ class UserInfo extends NavbarComponent {
               method: 'POST'
             })).json()
           console.log(result)
-          if (result.code === 0 || result.code === 69801) { // 领取成功 || 已领过
+          if (result.code === 0) {
+            this.wallet.bcoin_balance += 5
+          } else if (result.code === 69801) { // 已领过
             return
           } else {
             this.privileges[typeMapping[type]].received = false
