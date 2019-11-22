@@ -31,11 +31,14 @@
   .gift-control-panel {
     height: 48px !important;
   }
+  .anchor-lottery-entry,
   .treasure-box {
     display: flex !important;
     align-items: center !important;
     padding: 10px 0 0 16px !important;
+    .anchor-lot-icon,
     .box-icon {
+      margin: 0 !important;
       width: 24px !important;
       height: 24px !important;
       background-position: 0 -2.5px !important;
@@ -43,6 +46,7 @@
         background-position: 0 -1px !important;
       }
     }
+    .anchor-lot-text,
     .count-down {
       margin-left: 12px !important;
       padding: 4px 8px !important;
@@ -51,6 +55,9 @@
     .awarding-panel {
       bottom: 42px !important;
     }
+  }
+  .anchor-lottery-entry {
+    padding-top: 12px !important;
   }
   .gift-control-panel .right-part {
     height: 48px !important;
