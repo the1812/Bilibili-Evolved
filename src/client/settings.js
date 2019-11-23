@@ -171,6 +171,7 @@ export const settings = {
   hideBangumiSponsors: false,
   hideRecommendLive: false,
   hideRelatedVideos: false,
+  defaultMedalID: 0,
   cache: {},
 }
 const fixedSettings = {

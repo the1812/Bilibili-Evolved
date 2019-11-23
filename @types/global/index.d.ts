@@ -383,6 +383,7 @@ declare global {
     hideBangumiSponsors: boolean,
     hideRecommendLive: boolean,
     hideRelatedVideos: boolean,
+    defaultMedalID: number,
     latestVersionLink: string,
     currentVersion: string,
   }
