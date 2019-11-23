@@ -172,6 +172,7 @@ export const settings = {
   hideRecommendLive: false,
   hideRelatedVideos: false,
   defaultMedalID: 0,
+  autoMatchMedal: false,
   cache: {},
 }
 const fixedSettings = {

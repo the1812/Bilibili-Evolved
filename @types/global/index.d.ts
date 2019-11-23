@@ -384,6 +384,7 @@ declare global {
     hideRecommendLive: boolean,
     hideRelatedVideos: boolean,
     defaultMedalID: number,
+    autoMatchMedal: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
