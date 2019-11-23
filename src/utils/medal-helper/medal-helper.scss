@@ -1,0 +1,106 @@
+.medal-popup {
+  * {
+    transition: all 0.2s;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .round-corner & ul > li {
+    border-radius: var(--corner-radius);
+  }
+  ul > li.active {
+    box-shadow: 0 0 4px 0 var(--theme-color);
+  }
+  ul > li:hover {
+    background-color: rgba(0, 0, 0, 0.16);
+  }
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px;
+  }
+  label > * {
+    flex-shrink: 0;
+  }
+  input[type="radio"] {
+    visibility: collapse;
+    width: 0;
+    margin: 0;
+    padding: 0;
+  }
+  input[type="radio"] ~ i {
+    opacity: 0;
+    transform: scale(0.8);
+    margin: 0;
+  }
+  input[type="radio"] ~ .fans-medal-item {
+    margin: 0 8px;
+  }
+  input[type="radio"]:checked ~ i {
+    opacity: 1;
+  }
+}
+
+.title-image {
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+}
+
+$rankColors: (
+  0: #61decb,
+  1: #5896de,
+  2: #a068f1,
+  3: #ff86b2,
+  4: #f6be18
+);
+.fans-medal-item {
+  display: inline-block;
+  height: 14px;
+  line-height: 14px;
+  color: #fff;
+  border: 1px solid map-get($rankColors, 0);
+  border-left: 0;
+  white-space: nowrap;
+  border-radius: 2px;
+  flex-shrink: 0;
+  font-size: 12px;
+  .label {
+    width: 40px;
+    text-align: center;
+    padding: 0 2px;
+    color: #fff;
+  }
+  .level {
+    width: 16px;
+    background-color: #fff;
+    text-align: center;
+    color: map-get($rankColors, 0);
+  }
+  .label,
+  .level {
+    position: relative;
+    display: block;
+    float: left;
+  }
+}
+
+@for $rank from 0 to 5 {
+  @for $level from 1 to 5 {
+    $color: map-get($rankColors, $rank);
+    .level-#{$rank * 4 + $level} {
+      border-color: $color;
+      .label {
+        background-color: $color;
+      }
+      .level {
+        color: $color;
+      }
+    }
+  }
+}
