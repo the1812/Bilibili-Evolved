@@ -352,6 +352,10 @@ $highlight-map: (
 .container .level-intro .svg-icon {
   @include to-white();
 }
+.side-bar-btn .size-bar-text {
+  filter: brightness(.6) invert(1) hue-rotate(180deg) !important;
+  text-shadow: 0 0 0px;
+}
 .confirmorder-container .confirm-bottom .confirm-paybtn.active,
 .whole-detail-info-wrapper .product-buy-wrapper .unsale-btn {
   box-shadow: 0 3px 4px 0 #6e4752 !important;
