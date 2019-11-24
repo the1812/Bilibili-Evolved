@@ -19,14 +19,16 @@ class Medal extends Badge {
   level: number
   name: string
   upName: string
+  roomID: number
   constructor(json: any) {
-    const { medal_id, status, level, medalName, uname } = json
+    const { medal_id, status, level, medalName, uname, roomid } = json
     super(status === 1, medal_id)
     this.level = level
     this.name = medalName
     this.upName = uname
+    this.roomID = roomid
   }
-  static async getList() {
+  static async getList(): Promise<Medal[]> {
     return Badge.parseJson(
       await Ajax.getTextWithCredentials("https://api.live.bilibili.com/i/api/medal?page=1&pageSize=256"),
       {
@@ -54,11 +56,17 @@ class Medal extends Badge {
       </li>`
   }
   async activate() {
+    if (this.isActive) {
+      return true
+    }
     return Badge.parseJson(
       await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearFansMedal?medal_id=${this.id}`),
       {
         successAction: () => {
           this.isActive = true
+          if (!settings.defaultMedalID) {
+            settings.defaultMedalID = this.id
+          }
           return true
         },
         errorAction: () => false,
@@ -66,6 +74,9 @@ class Medal extends Badge {
       })
   }
   async deactivate() {
+    if (!this.isActive) {
+      return true
+    }
     return Badge.parseJson(
       await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWear`),
       {
@@ -116,7 +127,7 @@ class Title extends Badge {
       return Title.imageMap
     }
   }
-  static async getList() {
+  static async getList(): Promise<Title[]> {
     return Badge.parseJson(
       await Ajax.getTextWithCredentials("https://api.live.bilibili.com/i/api/ajaxTitleInfo?page=1&pageSize=256&had=1"),
       {
@@ -141,8 +152,11 @@ class Title extends Badge {
       </li>`
   }
   async activate() {
+    if (this.isActive) {
+      return true
+    }
     return Badge.parseJson(
-      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearTitle`, `id=${this.tid}&cid=${this.cid}`),
+      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearTitle`, `id=${this.tid}&cid=${this.cid}&csrf=${getCsrf()}&csrf_token=${getCsrf()}`),
       {
         successAction: () => {
           this.isActive = true
@@ -153,6 +167,9 @@ class Title extends Badge {
       })
   }
   async deactivate() {
+    if (!this.isActive) {
+      return true
+    }
     return Badge.parseJson(
       await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWearTitle`, ""),
       {
@@ -202,6 +219,41 @@ async function loadBadges<T extends Badge>(getContainer: () => HTMLElement, getL
       }
     })
   })
+}
+if (settings.autoMatchMedal) {
+  (async () => {
+    const match = document.URL.match(/live\.bilibili\.com\/(\d+)/)
+    if (!match) {
+      return
+    }
+    const roomID = parseInt(match[1])
+    if (isNaN(roomID)) {
+      console.warn(`roomID not found`)
+      return
+    }
+    const medalList = await Medal.getList()
+    if (!settings.defaultMedalID) {
+      const activeMedal = medalList.find(m => m.isActive)
+      if (activeMedal) {
+        settings.defaultMedalID = activeMedal.id
+        console.log(`set defaultMedalID to activeMedal (${activeMedal.id})`)
+      }
+    }
+    const defaultMedal = settings.defaultMedalID
+      ? medalList.find(m => m.id === settings.defaultMedalID)
+      : medalList.find(m => m.isActive)
+
+    const matchMedal = medalList.find(m => m.roomID === roomID)
+    if (!matchMedal) {
+      if (defaultMedal) {
+        await defaultMedal.activate()
+        console.log(`no matchMedal, fallback to defaultMedal (${defaultMedal.id})`)
+      }
+    } else {
+      await matchMedal.activate()
+      console.log(`activated matchMedal (${matchMedal.id})`)
+    }
+  })()
 }
 export default {
   export: {

@@ -12,7 +12,7 @@
     border-radius: var(--corner-radius);
   }
   ul > li.active {
-    box-shadow: 0 0 4px 0 var(--theme-color);
+    box-shadow: 0 0 0px 1px var(--theme-color);
   }
   ul > li:hover {
     background-color: rgba(0, 0, 0, 0.16);
@@ -84,6 +84,7 @@ $rankColors: (
   }
   .label,
   .level {
+    cursor: pointer;
     position: relative;
     display: block;
     float: left;
