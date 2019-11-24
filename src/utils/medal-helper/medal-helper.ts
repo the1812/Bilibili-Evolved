@@ -1,3 +1,15 @@
+const getRoomID = () => {
+  const match = document.URL.match(/live\.bilibili\.com\/(\d+)/)
+  if (!match) {
+    return
+  }
+  const roomID = parseInt(match[1])
+  if (isNaN(roomID)) {
+    console.warn(`roomID not found`)
+    return
+  }
+  return roomID
+}
 abstract class Badge {
   constructor(public isActive: boolean = false, public id: number = 0) {
   }
@@ -64,9 +76,6 @@ class Medal extends Badge {
       {
         successAction: () => {
           this.isActive = true
-          if (!settings.defaultMedalID) {
-            settings.defaultMedalID = this.id
-          }
           return true
         },
         errorAction: () => false,
@@ -215,7 +224,11 @@ async function loadBadges<T extends Badge>(getContainer: () => HTMLElement, getL
         if (activeBadge) {
           activeBadge.isActive = false
         }
-        badge.activate().then(updateList)
+        badge.activate().then(() => {
+          if (badge instanceof Medal) {
+            settings.defaultMedalID = badge.id
+          }
+        }).then(updateList)
       }
     })
   })
