@@ -56,6 +56,13 @@ declare global {
     count: number
     date: string
   }
+  interface CustomStyle {
+    style: string
+    name: string
+    displayName: string
+    enabled: boolean
+    mode?: 'default' | 'instant' | 'important'
+  }
   interface MonkeyInfo {
     script: {
       author: string;
@@ -385,6 +392,7 @@ declare global {
     hideRelatedVideos: boolean,
     defaultMedalID: number,
     autoMatchMedal: boolean,
+    customStyles: CustomStyle[],
     latestVersionLink: string,
     currentVersion: string,
   }

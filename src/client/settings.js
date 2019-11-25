@@ -173,6 +173,7 @@ export const settings = {
   hideRelatedVideos: false,
   defaultMedalID: 0,
   autoMatchMedal: false,
+  customStyles: [],
   cache: {},
 }
 const fixedSettings = {

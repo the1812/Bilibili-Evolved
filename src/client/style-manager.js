@@ -73,5 +73,13 @@ export class StyleManager {
         this.fetchStyleByKey(key)
       }
     }
+    for (const style of settings.customStyles.filter(it => it.mode === 'instant' && it.enabled)) {
+      this.applyStyleFromText(style.style, this.getDefaultStyleId(style.name))
+    }
+  }
+  applyCustomStyles() {
+    for (const style of settings.customStyles.filter(it => it.mode !== 'instant' && it.enabled)) {
+      this[style.mode === 'important' ? 'applyImportantStyleFromText' : 'applyStyleFromText'](style.style, this.getDefaultStyleId(style.name))
+    }
   }
 }
