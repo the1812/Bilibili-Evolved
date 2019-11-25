@@ -766,6 +766,7 @@ export const map = new Map([
   [`三日`, `3 days`],
   [`一周`, `Weekly`],
   [`栏目`, `Sites`],
+  [`自动选择当前直播间勋章`, `Auto wear medal of current live room`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
