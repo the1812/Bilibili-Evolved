@@ -767,6 +767,9 @@ export const map = new Map([
   [`一周`, `Weekly`],
   [`栏目`, `Sites`],
   [`自动选择当前直播间勋章`, `Auto wear medal of current live room`],
+  [`付费礼物`, `Paid gifts`],
+  [`看板娘`, `Showgirl`],
+  [`活动横幅`, `Event banner`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
