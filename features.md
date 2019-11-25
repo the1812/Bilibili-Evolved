@@ -297,7 +297,7 @@
 
 > **低完成度警告**
 
-> 此功能需要非Chrome用户做一些额外设置, 详见[简化首页注意事项](src/style/simplify-home/simplify-home.md)
+> 此功能需要做一些额外设置, 详见[简化首页注意事项](src/style/simplify-home/simplify-home.md)
 
 替换原本的首页, 有两种样式可用:
 - `清爽`: 布局与原主页类似, 多一个`动态`栏目.
