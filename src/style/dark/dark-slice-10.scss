@@ -620,3 +620,11 @@
     }
   }
 }
+.up-info .u-info .name .live-status {
+  @include theme-color();
+  @include theme-border-color();
+  &:hover {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
