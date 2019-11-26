@@ -90,7 +90,7 @@ export default {
       font-size: 22px;
       font-weight: normal;
     }
-    &:hover {
+    &:not(.toggle-reorder):hover {
       .be-icon {
         transform: rotate(180deg);
       }

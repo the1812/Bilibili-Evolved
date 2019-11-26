@@ -2,11 +2,12 @@
   <div class="categories">
     <div class="header">
       <div class="title">分区</div>
-      <div class="tabs">
+      <div class="tabs" ref="reorderContainer">
         <div
           class="tab"
           v-for="t of tabs"
           :key="t.key"
+          :data-key="t.key"
           :style="{order: getOrder(t.key)}"
           :class="{active: selectedTab === t.key}"
           @click="selectedTab = t.key"
@@ -15,8 +16,9 @@
         </div>
       </div>
       <div class="buttons">
-        <div class="toggle-reorder">
-          <icon type="mdi" icon="swap-horizontal"></icon>排序
+        <div class="toggle-reorder" @click="reordering = !reordering; reorder.toggle()">
+          <icon type="mdi" :icon="reordering ? 'check' : 'swap-horizontal'"></icon>
+          {{reordering ? '完成' : '排序'}}
         </div>
       </div>
     </div>
@@ -60,8 +62,27 @@ export default {
       }),
       selectedTab: Object.entries(settings.simpleHomeCategoryOrders).sort(
         (a, b) => a[1] - b[1]
-      )[0][0]
+      )[0][0],
+      reordering: false,
+      reorder: null
     }
+  },
+  async mounted() {
+    const container = this.$refs.reorderContainer as HTMLElement
+    const { Reorder } = await import('../../../../utils/reorder')
+    const reorder = new Reorder(container)
+    this.reorder = reorder
+    reorder.addEventListener('reorder', (e: CustomEvent) => {
+      const orders = e.detail
+      for (const orderDetail of orders) {
+        const { element, order } = orderDetail as {
+          element: HTMLElement
+          order: number
+        }
+        settings.simpleHomeCategoryOrders[element.getAttribute('data-key')!] = order
+      }
+      settings.simpleHomeCategoryOrders = settings.simpleHomeCategoryOrders
+    })
   },
   methods: {
     getOrder(key: string) {
@@ -88,6 +109,9 @@ export default {
       &::-webkit-scrollbar {
         height: 0 !important;
         width: 0 !important;
+      }
+      .tab {
+        transition: none;
       }
     }
   }
