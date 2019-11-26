@@ -47,7 +47,8 @@
     .button,
     .direct-download .progress .background,
     .direct-download .progress .foreground,
-    .rpc-settings input[type="text"] {
+    .rpc-settings input[type="text"],
+    .size-warning-tip {
       border-radius: var(--corner-radius);
     }
   }

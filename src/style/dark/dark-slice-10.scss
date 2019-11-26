@@ -557,3 +557,78 @@
     @include foreground-color();
   }
 }
+.home-page .publish-panel {
+  .core-style {
+    @include background-color("2");
+    @include color("e");
+    @include border-color();
+    &:hover {
+       @include theme-border-color();
+    }
+  }
+  .schedule-bar {
+    @include background-color("3");
+    .s-label,
+    .dp-label {
+      @include color("e");
+    }
+    .scroll-input .s-input {
+      @include background-color("2");
+      @include color("e");
+      @include border-color();
+    }
+    .s-panel {
+      @include background-color("2");
+      @include border-color();
+      .s-item {
+        @include color("e");
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  .toolbar {
+    .static-popup {
+      @include background-color("2");
+      @include border-color();
+      .title {
+        @include color("e");
+      }
+      .upload-image .upload-btn:hover {
+        @include theme-color();
+        @include theme-border-color();
+      }
+    }
+    .bp-vote-container {
+      .create-vote {
+        @include background-color("2");
+        @include color("e");
+        @include border-color();
+        .title {
+          @include color("e");
+        }
+        .bp-button:nth-child(2) {
+          @include theme-background();
+          @include foreground-color();
+        }
+      }
+    }
+    .publish-btn {
+      @include theme-background-color();
+      @include foreground-color();
+      &.disabled {
+        @include background-color("2");
+        @include color("e");
+      }
+    }
+  }
+}
+.up-info .u-info .name .live-status {
+  @include theme-color();
+  @include theme-border-color();
+  &:hover {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
