@@ -75,6 +75,7 @@ export default {
       }
     }
   }
+  .toggle-reorder,
   .more {
     cursor: pointer;
     padding: 4px 12px 4px 8px;
@@ -121,6 +122,7 @@ export default {
       .tab {
         cursor: pointer;
         position: relative;
+        white-space: nowrap;
         .tab-name {
           opacity: 0.5;
           font-size: 14px;

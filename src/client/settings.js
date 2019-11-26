@@ -21,6 +21,27 @@ export const customNavbarDefaultOrders = {
   upload: 19,
   blank3: 20,
 }
+export const simpleHomeCategoryDefaultOrders = {
+  anime: 0,
+  bangumi: 1,
+  china: 2,
+  manga: 3,
+  music: 4,
+  dance: 5,
+  game: 6,
+  tech: 7,
+  digital: 8,
+  life: 9,
+  kichiku: 10,
+  fashion: 11,
+  ads: 12,
+  entertainment: 13,
+  column: 14,
+  movie: 15,
+  tv: 16,
+  film: 17,
+  documentary: 18,
+}
 export const aria2RpcDefaultOption = {
   secretKey: '',
   dir: '',
@@ -136,7 +157,7 @@ export const settings = {
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
-  aria2RpcOption: {...aria2RpcDefaultOption},
+  aria2RpcOption: { ...aria2RpcDefaultOption },
   aria2RpcOptionSelectedProfile: '',
   aria2RpcOptionProfiles: [],
   searchHistory: [],
@@ -174,6 +195,7 @@ export const settings = {
   defaultMedalID: 0,
   autoMatchMedal: false,
   customStyles: [],
+  simpleHomeCategoryOrders: { ...simpleHomeCategoryDefaultOrders },
   cache: {},
 }
 const fixedSettings = {

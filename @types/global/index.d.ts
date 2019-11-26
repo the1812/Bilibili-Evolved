@@ -136,6 +136,28 @@ declare global {
     blank3: number;
   }
   type CustomNavbarOrders = { [key in keyof CustomNavbarComponents]: number };
+  interface SimpleHomeCategoryOrders {
+    anime: number
+    bangumi: number
+    china: number
+    manga: number
+    music: number
+    dance: number
+    game: number
+    tech: number
+    digital: number
+    life: number
+    kichiku: number
+    fashion: number
+    ads: number
+    entertainment: number
+    column: number
+    movie: number
+    tv: number
+    film: number
+    documentary: number
+    [key: string]: number
+  }
   const unsafeWindow: Window;
   const UserAgent: string
   const EmptyImageUrl: string
@@ -393,6 +415,7 @@ declare global {
     defaultMedalID: number,
     autoMatchMedal: boolean,
     customStyles: CustomStyle[],
+    simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
     latestVersionLink: string,
     currentVersion: string,
   }
