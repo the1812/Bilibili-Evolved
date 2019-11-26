@@ -557,3 +557,66 @@
     @include foreground-color();
   }
 }
+.home-page .publish-panel {
+  .core-style {
+    @include background-color("2");
+    @include color("e");
+    @include border-color();
+    &:hover {
+       @include theme-border-color();
+    }
+  }
+  .schedule-bar {
+    @include background-color("3");
+    .scroll-input .s-input {
+      @include background-color("2");
+      @include color("e");
+      @include border-color();
+    }
+    .s-panel {
+      @include background-color("2");
+      @include border-color();
+      .s-item {
+        @include color("e");
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  .toolbar {
+    .static-popup {
+      @include background-color("2");
+      @include border-color();
+      .title {
+        @include color("e");
+      }
+      .upload-image .upload-btn:hover {
+        @include theme-color();
+        @include theme-border-color();
+      }
+    }
+    .bp-vote-container {
+      .create-vote {
+        @include background-color("2");
+        @include color("e");
+        @include border-color();
+        .title {
+          @include color("e");
+        }
+      }
+    }
+    .publish-btn {
+      @include background-color("2");
+      @include color("e");
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+      &.disabled {
+        @include background-color("2");
+        @include color("e");
+      }
+    }
+  }
+}

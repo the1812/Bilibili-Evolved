@@ -28,7 +28,8 @@
 .app-body .section-block,
 .bl-button--primary:disabled,
 .tab-list .tab-item.active:before,
-.player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-indicator {
+.player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-indicator,
+.home-content .publish-btn.disabled {
   @include background-color("2");
 }
 .wrapper .elec-btn.disabled,
