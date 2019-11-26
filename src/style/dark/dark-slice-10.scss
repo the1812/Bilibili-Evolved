@@ -568,6 +568,10 @@
   }
   .schedule-bar {
     @include background-color("3");
+    .s-label,
+    .dp-label {
+      @include color("e");
+    }
     .scroll-input .s-input {
       @include background-color("2");
       @include color("e");
@@ -604,15 +608,15 @@
         .title {
           @include color("e");
         }
+        .bp-button:nth-child(2) {
+          @include theme-background();
+          @include foreground-color();
+        }
       }
     }
     .publish-btn {
-      @include background-color("2");
-      @include color("e");
-      &:hover {
-        @include theme-background-color();
-        @include foreground-color();
-      }
+      @include theme-background-color();
+      @include foreground-color();
       &.disabled {
         @include background-color("2");
         @include color("e");
