@@ -115,7 +115,12 @@
   @include border-color();
 }
 
-.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover {
+.live-room-app .guard-rank-cntr .rank-cntr .btn-box .buy:hover,
+.pgc-space-follow-item a.pgc-item-cover .badge,
+.channel-menu-itnl .item .name em,
+.bi-btn,
+.ep-list-wrapper .ep-item .badge,
+.ss-list-wrapper .ss-item .ss-cover .ss-badge {
   @include foreground-color();
 }
 
@@ -412,5 +417,143 @@
         }
       }
     }
+  }
+}
+.proxy-box {
+  .manga-panel {
+    .tab-switch,
+    .app-download-link,
+    .manga-list-box .manga-card .manga-tag {
+      @include color("a");
+      .tab-switch-item.on {
+        @include theme-color();
+        @include theme-border-color();
+      }
+    }
+  }
+  .manga-rank {
+    .tab-switch .tab-switch-item.on {
+      @include theme-color();
+      @include theme-border-color();
+    }
+    .manga-rank-item {
+      .rank-number {
+        @include background-color("4");
+        @include color("e");
+        &.on {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+      a {
+        @include color("e");
+        &:hover {
+          @include theme-color();
+        }
+      }
+      .style,
+      .update {
+        @include color("a");
+      }
+    }
+  }
+}
+.buyticket {
+  .detail-info-wrapper .title {
+    @include color("e");
+  }
+  .selectable-option {
+    @include background-color("4");
+    @include border-color();
+    &.unable {
+      @include background-color("1");
+      @include color("6");
+    }
+  }
+  .ticket-count {
+    @include background-color("4");
+    @include border-color();
+  }
+  .product-buy-wrapper {
+    .unsale-btn {
+      @include to-theme("pink");
+    }
+    .promo-btn.remind-btn {
+      @include background-color("4");
+      @include color("e");
+      @include border-color();
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+  .modal-container {
+    .remind {
+      &-title {
+        @include color("e");
+      }
+      &-tel input {
+        @include background-color("3");
+        @include color("e");
+        @include border-color();
+        border-radius: 4px;
+      }
+    }
+    .modal-footer-btn div {
+      @include background-color("3");
+      @include color("e");
+      @include border-color();
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+}
+.detail-content {
+  .whole-guest-wrapper .guest-list-content .guest {
+    &-left,
+    &-right {
+      filter: invert(0.8) !important;
+    }
+  }
+  .activity-info-body .info-body {
+    ul li .title,
+    p strong {
+      @include color("e");
+    }
+  }
+}
+
+.bilibili-player .bilibili-player-video-control .bilibili-player-video-btn {
+  &-menu-list {
+    &.bilibili-player {
+      &-active {
+        @include theme-color();
+        &:before {
+          @include to-theme("blue");
+        }
+      &.bilibili-player-blink {
+        @include theme-color();
+      }
+    }
+    &-blink {
+      @include color("e");
+      .bilibili-player-tips {
+        @include theme-background-color();
+      }
+      &:hover,
+      &:active {
+        @include theme-color();
+      }
+    }
+  }
+  .bilibili-player-tips {
+    @include foreground-color();
+  }
+}
+  .bilibili-player-video-quality-menu .bilibili-player-bigvip {
+    @include foreground-color();
   }
 }

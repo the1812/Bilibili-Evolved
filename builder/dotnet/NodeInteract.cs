@@ -7,14 +7,13 @@ using System.Text.RegularExpressions;
 
 namespace BilibiliEvolved.Build
 {
-  abstract class NodeInteract
+  public abstract class NodeInteract
   {
     public static readonly string LocalModulePath = @"node_modules/";
     public static readonly string GlobalModulePath = Environment.GetEnvironmentVariable("AppData") + @"/npm/node_modules/";
     protected abstract string ExecutablePath { get; }
     protected abstract string Arguments { get; }
-    public string Run(string input = "")
-    {
+    public Process Run() {
       var filename = "";
       if (File.Exists(LocalModulePath + ExecutablePath))
       {
@@ -37,7 +36,11 @@ namespace BilibiliEvolved.Build
         RedirectStandardError = true,
         RedirectStandardOutput = true,
       };
-      var process = Process.Start(processInfo);
+      return Process.Start(processInfo);
+    }
+    public string Run(string input)
+    {
+      var process = Run();
       using (var writer = new StreamWriter(process.StandardInput.BaseStream, Encoding.UTF8))
       {
         writer.Write(input);
@@ -71,10 +74,20 @@ namespace BilibiliEvolved.Build
     protected override string ExecutablePath => "typescript/bin/tsc";
     protected override string Arguments => "";
   }
+  sealed class TypeScriptWatchCompiler : NodeInteract
+  {
+    protected override string ExecutablePath => "typescript/bin/tsc";
+    protected override string Arguments => "--watch";
+  }
   sealed class SassCompiler : NodeInteract
   {
     protected override string ExecutablePath => "sass/sass.js";
     protected override string Arguments => "--quiet --no-source-map src:.sass-output";
+  }
+  sealed class SassWatchCompiler : NodeInteract
+  {
+    protected override string ExecutablePath => "sass/sass.js";
+    protected override string Arguments => "--watch --quiet --no-source-map src:.sass-output";
   }
   sealed class SassSingleCompiler : NodeInteract
   {

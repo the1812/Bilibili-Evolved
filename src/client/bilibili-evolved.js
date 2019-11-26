@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.9.16
+// @version      1.9.19
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -34,7 +34,7 @@
 // ==/UserScript==
 Vue.config.productionTip = false
 Vue.config.devtools = false
-import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed } from './utils'
+import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename } from './utils'
 import { settings, loadSettings, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
 import { loadResources } from './resource-loader'
@@ -50,6 +50,7 @@ import { resourceManifest } from './resource-manifest'
 import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
 import { getScriptBlocker } from './script-blocker'
+import { installStyle, uninstallStyle } from './custom-styles'
 
 (async () => {
   if (await GM.getValue('customNavbar') === true
@@ -163,6 +164,14 @@ import { getScriptBlocker } from './script-blocker'
       formatDuration,
       getDpiSourceSet,
       getScriptBlocker,
+      isOffline,
+      getUID,
+      scriptVersion,
+      getCsrf,
+      formatCount,
+      escapeFilename,
+      installStyle,
+      uninstallStyle,
       resources,
       theWorld: waitTime => {
         if (waitTime > 0) {

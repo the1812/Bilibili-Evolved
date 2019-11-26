@@ -443,7 +443,8 @@ Resource.manifest = {
     html: true,
     style: 'instant',
     displayNames: {
-      medalHelper: '直播勋章快速更换'
+      medalHelper: '直播勋章快速更换',
+      autoMatchMedal: '自动选择当前直播间勋章',
     }
   },
   showDeadVideoTitle: {

@@ -297,7 +297,7 @@
 
 > **低完成度警告**
 
-> 此功能需要非Chrome用户做一些额外设置, 详见[简化首页注意事项](src/style/simplify-home/simplify-home.md)
+> 此功能需要做一些额外设置, 详见[简化首页注意事项](src/style/simplify-home/simplify-home.md)
 
 替换原本的首页, 有两种样式可用:
 - `清爽`: 布局与原主页类似, 多一个`动态`栏目.
@@ -551,6 +551,12 @@
 <summary><strong>稍后再看期限提醒</strong></summary>
 
 稍后再看里的视频添加后60天会过期自动删除. 开启此功能可在期限不足14天时在稍后再看列表里显示过期警告.
+
+</details>
+<details>
+<summary><strong>自动选择当前直播间勋章</strong></summary>
+
+如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.
 
 </details>
 

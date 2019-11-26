@@ -47,9 +47,9 @@ class Bangumi extends Video {
         }
       } else {
         if (quality) {
-          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=${quality}&otype=json`
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json`
         } else {
-          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${pageData.aid}&cid=${pageData.cid}&qn=&otype=json`
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=&otype=json`
         }
       }
     }
@@ -571,10 +571,12 @@ async function loadWidget() {
     window.scroll(0, 0);
     (dq('.gui-settings-mask') as HTMLDivElement).click()
   })
-  button.addEventListener('mouseover', () => {
-    document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
-    loadPanel()
-  }, { once: true })
+  document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
+  loadPanel()
+  // button.addEventListener('mouseover', () => {
+  //   document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
+  //   loadPanel()
+  // }, { once: true })
 }
 async function loadPanel() {
   let workingDownloader: VideoDownloader
@@ -797,6 +799,7 @@ async function loadPanel() {
             await pack.emit(this.cid + '.danmakus.zip')
           } catch (error) {
             logError(`弹幕下载失败`)
+            throw error
           } finally {
             danmakuToast.dismiss()
           }

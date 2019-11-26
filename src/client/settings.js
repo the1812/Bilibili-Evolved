@@ -105,6 +105,7 @@ export const settings = {
     giftMessage: true,
     guardPurchase: true,
     giftPanel: true,
+    kanban: true,
     eventsBanner: false,
     popup: false,
     skin: false,
@@ -170,6 +171,9 @@ export const settings = {
   hideBangumiSponsors: false,
   hideRecommendLive: false,
   hideRelatedVideos: false,
+  defaultMedalID: 0,
+  autoMatchMedal: false,
+  customStyles: [],
   cache: {},
 }
 const fixedSettings = {

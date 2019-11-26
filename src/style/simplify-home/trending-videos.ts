@@ -3,7 +3,7 @@ export const getTrendingVideos = async (days: number, watchlaterList?: number[])
   const json = await Ajax.getJsonWithCredentials(
     `https://api.bilibili.com/x/web-interface/ranking/index?day=${days}`
   )
-  if (watchlaterList === undefined) {
+  if (getUID() && watchlaterList === undefined) {
     const { getWatchlaterList } = await import(
       '../../video/watchlater-api'
     )
@@ -25,7 +25,7 @@ export const getTrendingVideos = async (days: number, watchlaterList?: number[])
       playCount: formatCount(card.play),
       coins: formatCount(card.coins),
       favorites: formatCount(card.favorites),
-      watchlater: watchlaterList!.includes(parseInt(card.aid))
+      watchlater: watchlaterList ? watchlaterList.includes(parseInt(card.aid)) : null
     })
   )
 }

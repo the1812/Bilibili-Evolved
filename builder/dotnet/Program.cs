@@ -6,54 +6,51 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using BilibiliEvolved.Build.Watcher;
 
 namespace BilibiliEvolved.Build
 {
-    class Program
+  class Program
+  {
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            try
-            {
-                var configFile = new ConfigurationBuilder()
-                    .AddJsonFile(
-                        Path.Combine(Environment.CurrentDirectory, "builder/builder-config.json"),
-                        optional: false,
-                        reloadOnChange: false)
-                    .Build();
-                var config = new BuilderConfig();
-                configFile.Bind(config);
-
-                var builder = new ProjectBuilder(config);
-                builder
-                    .BuildClient()
-                    .BuildPreview()
-                    .BuildMaster()
-                    .GetBundleFiles()
-                    .PrebuildVue()
-                    .BuildTypeScripts()
-                    .BuildSass()
-                    .BuildVue()
-                    .BuildResources()
-                    .BuildPreviewOffline()
-                    .BuildOffline()
-                    .BuildBundle()
-                    .BuildPreviewData()
-                    .BuildFinalOutput();
-
-                if (config.CopyOnBuild)
-                {
-                    var text = File.ReadAllText(config.PreviewOffline);
-                    TextCopy.Clipboard.SetText(text);
-                    builder.WriteHint($"Copied {text.Length} characters");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Error.WriteLine($"Unexpected Error: {ex.Message}");
-                throw;
-            }
+      try
+      {
+        if (args.Length > 0 && args[0].ToLowerInvariant() == "watch") {
+          if (!File.Exists(BuildCache.CacheFilename)) {
+            Console.WriteLine("No build cache found, running full build...");
+            RunFullBuild();
+          }
+          var watchBuilder = new WatchBuilder();
+          watchBuilder.StartWatching();
+        } else {
+          RunFullBuild();
         }
+      }
+      catch (Exception ex)
+      {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.Error.WriteLine($"Unexpected Error: {ex.Message}");
+        throw;
+      }
     }
+    public static void RunFullBuild() {
+      var builder = ProjectBuilder.CreateBuilder();
+      builder
+        .BuildClient() // inject client files
+        .BuildVersions() // preview file, versions
+        .BuildMaster() // stable source code
+        .GetBundleFiles() // detect if bundle needs rebuild or can skip
+        .PrebuildVue() // generate vue.ts files from vue files
+        .BuildTypeScripts() // build ts files
+        .BuildSass() // build sass files
+        .BuildVue() // build vue files (js, sass, css, html)
+        .BuildResources() // build js, css, html files
+        .BuildPreviewOffline() // preview-offline file + offline data
+        .BuildOffline() // offline file + offline data
+        .BuildBundle() // bundle file
+        .BuildPreviewData() // preview online data
+        .BuildFinalOutput(); // stable file + online data
+    }
+  }
 }

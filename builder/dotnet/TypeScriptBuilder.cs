@@ -15,7 +15,6 @@ namespace BilibiliEvolved.Build
       var tsc = new TypeScriptCompiler();
       var uglifyJs = new JavascriptMinifier();
       var files = ResourceMinifier.GetFiles(file =>
-        file.FullName.Contains($"src{Path.DirectorySeparatorChar}") &&
         file.Extension == ".ts" &&
         !file.Name.EndsWith(".d.ts")
       );
@@ -29,15 +28,20 @@ namespace BilibiliEvolved.Build
             cache.AddCache(file);
             WriteInfo($"TypeScript build: {file}");
           });
-          tsc.Run();
-          Parallel.ForEach(changedFiles.Where(f => !f.EndsWith(".vue.ts")).Select(f => ".ts-output/" + f.Replace(".ts", ".js").Replace($"src{Path.DirectorySeparatorChar}", "")), file => {
-            var text = RegexReplacer.Replace(File.ReadAllText(file), @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match => {
-              return $"import({match.Groups[1].Value})";
-            });
-            var min = uglifyJs.Minify(text);
-            var minFile = ResourceMinifier.GetMinimizedFileName(file);
-            File.WriteAllText(minFile, min);
-            WriteHint($"\t=> {minFile}");
+          Console.Write(tsc.Run("").Trim());
+          Parallel.ForEach(changedFiles
+            .Where(f => !f.EndsWith(".vue.ts"))
+            .Select(f => ".ts-output/" + f
+              .Replace(".ts", ".js")
+              .Replace($"src{Path.DirectorySeparatorChar}", "")
+            ), file => {
+              var text = RegexReplacer.Replace(File.ReadAllText(file), @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match => {
+                return $"import({match.Groups[1].Value})";
+              });
+              var min = uglifyJs.Minify(text);
+              var minFile = ResourceMinifier.GetMinimizedFileName(file);
+              File.WriteAllText(minFile, min);
+              WriteHint($"\t=> {minFile}");
           });
         }
         cache.SaveCache();

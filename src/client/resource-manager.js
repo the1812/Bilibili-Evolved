@@ -151,6 +151,7 @@ export class ResourceManager {
     //   loadingToast.dismiss()
     // }
     this.applyReloadables() // reloadables run sync
+    this.styleManager.applyCustomStyles()
     // await this.applyDropdownOptions();
     // this.applyWidgets() // No need to wait the widgets
     if (!isOffline() && settings.scriptDownloadMode === 'bundle') {

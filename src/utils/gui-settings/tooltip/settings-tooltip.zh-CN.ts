@@ -57,6 +57,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
 - 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
 - 隐藏付费礼物 (播放器下面的各种金瓜子礼物, 以及许愿瓶, 上舰等)
+- 隐藏看板娘
 - 隐藏活动横幅
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
 - 禁用直播间皮肤
@@ -168,6 +169,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`simplifyHome`, /*html*/`替换原本的首页, 有两种样式可用:
 - 清爽: 布局与原主页类似, 多一个动态栏目.
 - 极简: 去除其他所有栏目, 只保留视频动态和热门视频两个功能.`],
+  [`autoMatchMedal`, /*html*/`如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.`],
 ]);
 export default {
   export: { toolTips },

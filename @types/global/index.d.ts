@@ -54,6 +54,14 @@ declare global {
   interface SearchHistoryItem {
     keyword: string
     count: number
+    date: string
+  }
+  interface CustomStyle {
+    style: string
+    name: string
+    displayName: string
+    enabled: boolean
+    mode?: 'default' | 'instant' | 'important'
   }
   interface MonkeyInfo {
     script: {
@@ -159,8 +167,8 @@ declare global {
   class Toast {
     show(): void;
     dismiss(): void;
-    get element(): HTMLElement;
-    get key(): string;
+    element: HTMLElement;
+    key: string;
     static show(message: string, title: string, duration?: number): Toast;
     static info(message: string, title: string, duration?: number): Toast;
     static success(message: string, title: string, duration?: number): Toast;
@@ -311,6 +319,9 @@ declare global {
       welcomeMessage: boolean,
       giftMessage: boolean,
       guardPurchase: boolean,
+      giftPanel: boolean,
+      kanban: boolean,
+      eventsBanner: boolean,
       popup: boolean,
       skin: boolean,
       [key: string]: boolean,
@@ -379,6 +390,9 @@ declare global {
     hideBangumiSponsors: boolean,
     hideRecommendLive: boolean,
     hideRelatedVideos: boolean,
+    defaultMedalID: number,
+    autoMatchMedal: boolean,
+    customStyles: CustomStyle[],
     latestVersionLink: string,
     currentVersion: string,
   }

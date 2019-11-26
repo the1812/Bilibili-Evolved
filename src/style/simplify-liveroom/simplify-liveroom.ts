@@ -9,6 +9,7 @@ const displayNames = {
   giftMessage: "礼物弹幕",
   guardPurchase: "上舰提示",
   giftPanel: "付费礼物",
+  kanban: "看板娘",
   eventsBanner: "活动横幅",
   popup: "抽奖提示",
   skin: "房间皮肤",
