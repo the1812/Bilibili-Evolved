@@ -119,6 +119,9 @@ namespace BilibiliEvolved.Build.Watcher
           {
             return;
           }
+          // if (e.FullPath.Contains("simple-home.vue.js")) {
+          //   Console.WriteLine("simple-home.vue.js changed");
+          // }
           fileChange(e);
           // changedFiles.Add(e);
         };

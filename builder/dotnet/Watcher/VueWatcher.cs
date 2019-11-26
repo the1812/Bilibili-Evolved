@@ -126,6 +126,9 @@ namespace BilibiliEvolved.Build.Watcher
         {
           var tsFile = path + ".ts";
           var task = tsWatcher.WaitForBuild(tsFile);
+          if (File.Exists(tsFile)) {
+            File.Delete(tsFile);
+          }
           Console.WriteLine($"writing file {tsFile}");
           File.WriteAllText(tsFile, vueFile.Script);
           Console.WriteLine($"waiting for tsc...");

@@ -13,7 +13,7 @@ export const ReorderOrientations: { [key: string]: ReorderOrientation } = {
     getMoveTransform: (xOffset, yOffset) => {
       return `translateX(${xOffset}px)`
     },
-    setOtherTransform: _.throttle((snapshots, currentElement, xOffset, yOffset) => {
+    setOtherTransform: _.throttle((snapshots: ReorderItemSnapshot[], currentElement, xOffset, yOffset) => {
       if (!currentElement.classList.contains(Reorder.ReorderingClassName)) {
         return
       }
@@ -82,7 +82,7 @@ export const ReorderOrientations: { [key: string]: ReorderOrientation } = {
     getMoveTransform: (xOffset, yOffset) => {
       return `translateY(${yOffset}px)`
     },
-    setOtherTransform: _.throttle((snapshots, currentElement, xOffset, yOffset) => {
+    setOtherTransform: _.throttle((snapshots: ReorderItemSnapshot[], currentElement, xOffset, yOffset) => {
       if (!currentElement.classList.contains(Reorder.ReorderingClassName)) {
         return
       }
@@ -107,7 +107,7 @@ export const ReorderOrientations: { [key: string]: ReorderOrientation } = {
           snapshot.element.style.transform = ''
           snapshot.element.classList.remove(Reorder.ReorderIncreaseClassName)
         })
-        lowerSide.forEach((snapshot) => {
+        lowerSide.forEach(snapshot => {
           if (currentRect.top + yOffset + currentRect.height >= snapshot.rect.top + snapshot.rect.height / 2) {
             snapshot.element.classList.add(Reorder.ReorderDecreaseClassName)
             snapshot.element.style.transform = `translateY(-${firstSnapshot.rect.top - currentRect.top}px)`
@@ -122,7 +122,7 @@ export const ReorderOrientations: { [key: string]: ReorderOrientation } = {
           snapshot.element.style.transform = ''
           snapshot.element.classList.remove(Reorder.ReorderDecreaseClassName)
         })
-        upperSide.forEach((snapshot) => {
+        upperSide.forEach(snapshot => {
           if (currentRect.top + yOffset <= snapshot.rect.top + snapshot.rect.height / 2) {
             snapshot.element.classList.add(Reorder.ReorderIncreaseClassName)
             snapshot.element.style.transform = `translateY(${currentRect.top + currentRect.height - firstSnapshot.rect.top - firstSnapshot.rect.height}px)`

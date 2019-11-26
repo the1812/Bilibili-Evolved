@@ -22,6 +22,7 @@ namespace BilibiliEvolved.Build
         };
         var files = ResourceMinifier.GetFiles(file =>
           extensions.Contains(file.Extension) &&
+          !file.Name.EndsWith(".vue.ts") &&
           !file.Name.EndsWith(".d.ts") &&
           !file.FullName.Contains("client" + Path.DirectorySeparatorChar)
         );
