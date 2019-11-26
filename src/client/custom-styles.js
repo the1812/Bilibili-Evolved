@@ -7,7 +7,7 @@ export const installStyle = style => {
   console.log(`已安装自定义样式'${style.displayName}'`)
 }
 export const uninstallStyle = name => {
-  const styleIndex = settings.customStyles.findIndex(it => it.name === name)
+  const styleIndex = settings.customStyles.findIndex(it => it.name === name || it.displayName === name)
   if (styleIndex !== -1) {
     settings.customStyles.splice(styleIndex, 1)
     settings.customStyles = settings.customStyles
