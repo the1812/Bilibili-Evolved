@@ -97,7 +97,6 @@ export default {
   display: flex;
   flex-direction: column;
   .header {
-    align-items: stretch;
     .tabs {
       display: flex;
       flex: 1 1 0;
@@ -105,6 +104,7 @@ export default {
       justify-content: space-between;
       overflow: auto;
       width: 0;
+      height: 42px;
       scrollbar-width: none !important;
       &::-webkit-scrollbar {
         height: 0 !important;
@@ -112,6 +112,7 @@ export default {
       }
       .tab {
         transition: none;
+
       }
     }
   }
