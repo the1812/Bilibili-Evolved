@@ -28,7 +28,7 @@
     flex-shrink: 0;
   }
   input[type="radio"] {
-    visibility: collapse;
+    display: none;
     width: 0;
     margin: 0;
     padding: 0;
@@ -39,7 +39,7 @@
     margin: 0;
   }
   input[type="radio"] ~ .fans-medal-item {
-    margin: 0 8px;
+    margin: 0 4px;
   }
   input[type="radio"]:checked ~ i {
     opacity: 1;
