@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+import { VideoCardInfo } from '../../video-card-info'
 // 有新动态 https://api.bilibili.com/x/web-interface/dynamic/region?ps=10&rid=1
 // 最新发布 https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=1
 // 排行 https://api.bilibili.com/x/web-interface/ranking/region?rid=1&day=3&original=0
@@ -45,8 +46,65 @@ export default {
       }
     }
   },
+  methods: {
+    async loadNewActivity() {
+      try {
+        const json = await Ajax.getJson(
+          `https://api.bilibili.com/x/web-interface/dynamic/region?ps=10&rid=1`
+        )
+        if (json.code !== 0) {
+          this.newActivity.error = true
+        }
+        const { getWatchlaterList } = await import(
+          '../../../../video/watchlater-api'
+        )
+        const uid = getUID()
+        const watchlaterList = uid ? await getWatchlaterList() : []
+        const items = _.get(json, 'data.archives', [])
+        const videos: VideoCardInfo[] = items.map((item: any) => {
+          return {
+            id: item.aid,
+            aid: item.aid,
+            coverUrl: item.pic,
+            title: item.title,
+            upName: item.owner.name,
+            upFaceUrl: item.owner.face,
+            upID: item.owner.mid,
+            playCount: item.stat.view,
+            danmakuCount: item.stat.danmaku,
+            like: item.stat.like,
+            coins: item.stat.coin,
+            description: item.desc,
+            watchlater: uid ? watchlaterList.includes(item.aid) : null,
+          } as VideoCardInfo
+        })
+        this.newActivity.videos = videos
+      } catch (error) {
+        logError(error)
+      } finally {
+        this.newActivity.loading = false
+      }
+    },
+    async loadNewPost() {},
+    async loadRank() {},
+    updateVideos() {
+      this.loadNewActivity()
+      this.loadNewPost()
+      this.loadRank()
+    }
+  },
+  watch: {
+    rid(value: number) {
+      if (value > 0) {
+        this.updateVideos()
+      } else {
+        console.warn(`rid=${value}`)
+      }
+    }
+  },
   mounted() {
     console.log(this.rid)
+    this.updateVideos()
   }
 }
 </script>
@@ -79,7 +137,7 @@ export default {
     height: 100%;
     width: 100%;
     border-radius: 16px;
-    animation: .64s infinite alternate normal-category-loading ease-in-out;
+    animation: 0.64s infinite alternate normal-category-loading ease-in-out;
     &.new-activity {
       height: 40vh;
     }
