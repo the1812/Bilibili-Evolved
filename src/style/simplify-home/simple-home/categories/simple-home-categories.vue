@@ -22,7 +22,9 @@
         </div>
       </div>
     </div>
-    {{selectedTab}}
+    <transition>
+      <component class="category-content" :is="content" :rid="rid"></component>
+    </transition>
   </div>
 </template>
 
@@ -50,7 +52,8 @@ const tabNames = {
 }
 export default {
   components: {
-    Icon: () => import('../../../icon.vue')
+    Icon: () => import('../../../icon.vue'),
+    NormalCategory: () => import('./simple-home-normal-category.vue')
   },
   data() {
     return {
@@ -64,11 +67,14 @@ export default {
         (a, b) => a[1] - b[1]
       )[0][0],
       reordering: false,
-      reorder: null
+      reorder: null,
+      regionCodes: null,
     }
   },
   async mounted() {
     const container = this.$refs.reorderContainer as HTMLElement
+    const { RegionCodes } = await import('./category-regions')
+    this.regionCodes = RegionCodes
     const { Reorder } = await import('../../../../utils/reorder')
     const reorder = new Reorder(container)
     this.reorder = reorder
@@ -79,7 +85,9 @@ export default {
           element: HTMLElement
           order: number
         }
-        settings.simpleHomeCategoryOrders[element.getAttribute('data-key')!] = order
+        settings.simpleHomeCategoryOrders[
+          element.getAttribute('data-key')!
+        ] = order
       }
       settings.simpleHomeCategoryOrders = settings.simpleHomeCategoryOrders
     })
@@ -87,6 +95,27 @@ export default {
   methods: {
     getOrder(key: string) {
       return settings.simpleHomeCategoryOrders[key]
+    }
+  },
+  computed: {
+    content() {
+      if (['bangumi', 'china'].includes(this.selectedTab)) {
+        return null
+      } else if (this.selectedTab === 'manga') {
+        return null
+      } else if (this.selectedTab === 'column') {
+        return null
+      } else {
+        return 'NormalCategory'
+      }
+    },
+    rid() {
+      console.log(this.regionCodes)
+      if (!this.regionCodes) {
+        return -1
+      } else {
+        return this.regionCodes[this.selectedTab]
+      }
     }
   }
 }
@@ -96,6 +125,12 @@ export default {
 .simple-home .categories {
   display: flex;
   flex-direction: column;
+  &,
+  & *,
+  ::after,
+  ::before {
+    transition: all 0.2s ease-out;
+  }
   .header {
     .tabs {
       display: flex;
@@ -112,8 +147,15 @@ export default {
       }
       .tab {
         transition: none;
-
       }
+    }
+  }
+  .category-content {
+    margin-top: 12px;
+    margin-bottom: 36px;
+    &-enter,
+    &-leave-to {
+      opacity: 0;
     }
   }
 }
