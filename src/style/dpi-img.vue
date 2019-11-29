@@ -1,5 +1,11 @@
 <template>
-  <img :width="width" :height="height" :srcset="srcset" :src="actualSrc" :style="{filter: blur ? 'blur(' + blur + 'px)' : undefined}">
+  <img
+    :width="width"
+    :height="height"
+    :srcset="srcset"
+    :src="actualSrc"
+    :style="{filter: blur ? 'blur(' + blur + 'px)' : undefined}"
+  />
 </template>
 
 <script>
@@ -8,7 +14,7 @@ export default {
   data() {
     return {
       srcset: null,
-      actualSrc: null,
+      actualSrc: null
     }
   },
   watch: {
@@ -17,7 +23,7 @@ export default {
     },
     src() {
       this.sourceChange()
-    },
+    }
   },
   methods: {
     sourceChange() {
@@ -28,18 +34,24 @@ export default {
     },
     calcSrc() {
       if (!this.src || !this.size) {
-        return null
+        return
+      }
+      if (this.src.includes('//static.hdslb.com/images/member/noface.gif')) {
+        // 这张图无法缩放
+        this.srcset = this.src
+        this.actualSrc = this.src
+        return
       }
       const extension = this.src.substring(this.src.lastIndexOf('.') + 1)
       this.srcset = getDpiSourceSet(this.src, this.size, extension)
       this.actualSrc = this.src
-    },
+    }
   },
   mounted() {
     const options = {
       root: this.root,
       rootMargin: this.rootMargin || '200px',
-      threshold: this.threshold,
+      threshold: this.threshold
     }
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -52,18 +64,18 @@ export default {
     observer.observe(this.$el)
   },
   computed: {
-    width () {
+    width() {
       if (typeof this.size === 'object' && 'width' in this.size) {
         return this.size.width
       }
       return null
     },
-    height () {
+    height() {
       if (typeof this.size === 'object' && 'height' in this.size) {
         return this.size.height
       }
       return null
     }
-  },
+  }
 }
 </script>
