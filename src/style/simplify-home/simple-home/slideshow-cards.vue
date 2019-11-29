@@ -18,8 +18,10 @@
         </a>
         <button
           class="watchlater"
+          :class="{checked: currentCard.watchlater}"
           v-if="currentCard.watchlater !== null"
-          :title="currentCard.watchalter ? '已添加至稍后再看' : '稍后再看'"
+          :title="currentCard.watchlater ? '已添加至稍后再看' : '稍后再看'"
+          @click="toggleWatchlater(currentCard)"
         >
           <icon type="mdi" icon="clock-outline"></icon>
         </button>
@@ -63,6 +65,7 @@
 </template>
 
 <script lang="ts">
+import { VideoCardInfo } from '../video-card-info'
 export default {
   components: {
     Icon: () => import('../../icon.vue'),
@@ -94,6 +97,18 @@ export default {
     },
     nextCard() {
       this.cardQueue.push(this.cardQueue.shift())
+    },
+    async toggleWatchlater(card: VideoCardInfo) {
+      try {
+        card.watchlater = !card.watchlater
+        const { toggleWatchlater } = await import(
+          '../../../video/watchlater-api'
+        )
+        await toggleWatchlater(card.aid!.toString(), card.watchlater)
+      } catch (error) {
+        card.watchlater = !card.watchlater
+        logError(error)
+      }
     }
   },
   watch: {
@@ -128,7 +143,6 @@ export default {
     background-color: #ddd;
     border-radius: 50%;
     border: none;
-    padding: 4px;
     display: flex;
     height: 32px;
     width: 32px;
@@ -145,6 +159,9 @@ export default {
       &:hover {
         background-color: #444;
       }
+    }
+    &.checked {
+      border: 2px solid var(--theme-color);
     }
   }
   display: grid;
