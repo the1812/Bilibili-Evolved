@@ -11,7 +11,21 @@ export default {
       actualSrc: null,
     }
   },
+  watch: {
+    size() {
+      this.sourceChange()
+    },
+    src() {
+      this.sourceChange()
+    },
+  },
   methods: {
+    sourceChange() {
+      if (this.actualSrc === null || this.srcset === null) {
+        return
+      }
+      this.calcSrc()
+    },
     calcSrc() {
       if (!this.src || !this.size) {
         return null

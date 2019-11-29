@@ -177,5 +177,8 @@ export default {
   &.be-iconfont-down-arrow::before {
     content: '\E6EB';
   }
+  &.be-iconfont-play-triangle::before {
+    content: '\E737';
+  }
 }
 </style>

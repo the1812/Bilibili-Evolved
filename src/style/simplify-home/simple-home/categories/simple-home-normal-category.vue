@@ -69,10 +69,10 @@ export default {
           return {
             id: item.aid,
             aid: item.aid,
-            coverUrl: item.pic,
+            coverUrl: item.pic.replace('http:', 'https:'),
             title: item.title,
             upName: item.owner.name,
-            upFaceUrl: item.owner.face,
+            upFaceUrl: item.owner.face.replace('http:', 'https:'),
             upID: item.owner.mid,
             playCount: item.stat.view,
             danmakuCount: item.stat.danmaku,

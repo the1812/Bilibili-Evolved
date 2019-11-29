@@ -12,7 +12,18 @@
       >
         <img :src="card.coverUrl" :alt="card.title" />
       </a>
-      <div class="operations"></div>
+      <div class="operations">
+        <a class="play" title="播放" target="_blank" :href="'https://www.bilibili.com/av' + currentCard.aid">
+          <icon type="home" icon="play-triangle"></icon>
+        </a>
+        <button
+          class="watchlater"
+          v-if="currentCard.watchlater !== null"
+          :title="currentCard.watchalter ? '已添加至稍后再看' : '稍后再看'"
+        >
+          <icon type="mdi" icon="clock-outline"></icon>
+        </button>
+      </div>
       <div class="info">
         <a
           class="title"
@@ -21,7 +32,7 @@
           :href="'https://www.bilibili.com/av' + currentCard.aid"
         >{{currentCard.title}}</a>
         <a class="up" target="_blank" :href="'https://space.bilibili.com/' + currentCard.upID">
-          <img :src="currentCard.upFaceUrl" :alt="currentCard.upName" class="face" />
+          <dpi-img :size="24" :src="currentCard.upFaceUrl" :alt="currentCard.upName" class="face"></dpi-img>
           {{currentCard.upName}}
         </a>
 
@@ -54,7 +65,8 @@
 <script lang="ts">
 export default {
   components: {
-    Icon: () => import('../../icon.vue')
+    Icon: () => import('../../icon.vue'),
+    DpiImg: () => import('../../dpi-img.vue'),
   },
   filters: {
     bigNumber(value: number) {
@@ -112,6 +124,29 @@ export default {
     line-height: $line-height;
     max-height: #{$line * $line-height}em;
   }
+  @mixin round-button {
+    background-color: #ddd;
+    border-radius: 50%;
+    border: none;
+    padding: 4px;
+    display: flex;
+    height: 32px;
+    width: 32px;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    margin-right: 8px;
+    cursor: pointer;
+    &:hover {
+      background-color: #ccc;
+    }
+    body.dark & {
+      background-color: #333;
+      &:hover {
+        background-color: #444;
+      }
+    }
+  }
   display: grid;
   position: relative;
   --card-height: 300px;
@@ -129,7 +164,7 @@ export default {
     font-size: 11pt;
     margin-bottom: 12px;
     &::before {
-      content: "";
+      content: '';
       display: inline-flex;
       height: 10px;
       width: 10px;
@@ -146,6 +181,34 @@ export default {
   }
   .operations {
     grid-area: operations;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-self: end;
+    margin-right: 8px;
+    & > * {
+      @include round-button();
+      .be-icon {
+        font-size: 22px;
+      }
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
+    .play {
+      .be-icon {
+        font-size: 16px;
+        transform: translateX(1.5px);
+      }
+      &,
+      body.dark & {
+        color: var(--foreground-color);
+        background-color: var(--theme-color);
+        &:hover {
+          background-color: var(--theme-color-80);
+        }
+      }
+    }
   }
   .info {
     grid-area: info;
@@ -187,7 +250,7 @@ export default {
       flex-grow: 1;
       white-space: pre-wrap;
       text-align: right;
-      opacity: .75;
+      opacity: 0.75;
     }
     .buttons {
       .be-icon {
@@ -198,24 +261,7 @@ export default {
         cursor: pointer;
       }
       .previous {
-        background-color: #ddd;
-        border-radius: 50%;
-        border: none;
-        padding: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-        margin-right: 8px;
-        &:hover {
-          background-color: #ccc;
-        }
-        body.dark & {
-          background-color: #333;
-          &:hover {
-            background-color: #444;
-          }
-        }
+        @include round-button();
         .be-icon {
           transform: translateX(-1px);
         }
@@ -250,6 +296,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: #8882;
+    border-radius: 16px;
     &:not(:first-child) {
       transform-origin: right;
     }
@@ -297,7 +344,7 @@ export default {
     & {
       --card-height: 200px;
       --card-width: 330px;
-      grid-template-columns: var(--card-width) 1fr calc(1.5 * var(--card-width));
+      grid-template-columns: var(--card-width) 1fr calc(1.4 * var(--card-width));
     }
     .info {
       .title {
