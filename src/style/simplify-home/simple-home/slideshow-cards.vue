@@ -13,7 +13,12 @@
         <img :src="card.coverUrl" :alt="card.title" />
       </a>
       <div class="operations">
-        <a class="play" title="播放" target="_blank" :href="'https://www.bilibili.com/av' + currentCard.aid">
+        <a
+          class="play"
+          title="播放"
+          target="_blank"
+          :href="'https://www.bilibili.com/av' + currentCard.aid"
+        >
           <icon type="home" icon="play-triangle"></icon>
         </a>
         <button
@@ -33,12 +38,17 @@
           :title="currentCard.title"
           :href="'https://www.bilibili.com/av' + currentCard.aid"
         >{{currentCard.title}}</a>
-        <a class="up" target="_blank" :href="'https://space.bilibili.com/' + currentCard.upID">
+        <a
+          class="up"
+          target="_blank"
+          :href="'https://space.bilibili.com/' + currentCard.upID"
+          :title="currentCard.upName"
+        >
           <dpi-img :size="24" :src="currentCard.upFaceUrl" :alt="currentCard.upName" class="face"></dpi-img>
           {{currentCard.upName}}
         </a>
 
-        <div class="stat">
+        <div class="stat" v-if="showStat">
           <icon type="extended" icon="play"></icon>
           <div class="number">{{currentCard.playCount | bigNumber}}</div>
           <icon type="extended" icon="danmaku"></icon>
@@ -48,8 +58,15 @@
           <icon type="extended" icon="coin"></icon>
           <div class="number">{{currentCard.coins | bigNumber}}</div>
         </div>
+        <div class="type" v-else>
+          <icon type="mdi" icon="tag"></icon>
+          {{currentCard.type}}
+        </div>
         <div class="description" :title="currentCard.description">{{currentCard.description}}</div>
         <div class="buttons">
+          <button class="refresh" @click="refresh()" title="刷新">
+            <icon type="home" icon="refresh"></icon>
+          </button>
           <button class="previous" @click="previousCard()" title="上一个">
             <icon type="extended" icon="left-arrow"></icon>
           </button>
@@ -69,14 +86,14 @@ import { VideoCardInfo } from '../video-card-info'
 export default {
   components: {
     Icon: () => import('../../icon.vue'),
-    DpiImg: () => import('../../dpi-img.vue'),
+    DpiImg: () => import('../../dpi-img.vue')
   },
   filters: {
     bigNumber(value: number) {
       return formatCount(value)
     }
   },
-  props: ['cards', 'error', 'title'],
+  props: ['cards', 'error', 'title', 'showStat'],
   data() {
     return {
       cardQueue: []
@@ -97,6 +114,9 @@ export default {
     },
     nextCard() {
       this.cardQueue.push(this.cardQueue.shift())
+    },
+    refresh() {
+      this.$emit('refresh')
     },
     async toggleWatchlater(card: VideoCardInfo) {
       try {
@@ -254,6 +274,7 @@ export default {
         margin-right: 8px;
       }
     }
+    .type,
     .stat {
       opacity: 0.75;
       align-items: center;
@@ -276,6 +297,17 @@ export default {
       & > button {
         outline: none !important;
         cursor: pointer;
+      }
+      .refresh {
+        @include round-button();
+        .be-icon {
+          transform: scale(0.85);
+        }
+        &:hover {
+          .be-icon {
+            transform: scale(0.85) rotate(180deg);
+          }
+        }
       }
       .previous {
         @include round-button();

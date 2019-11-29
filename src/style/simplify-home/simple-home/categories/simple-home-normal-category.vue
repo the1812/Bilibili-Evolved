@@ -7,9 +7,18 @@
       class="new-activity"
       :cards="newActivity.videos"
       :error="newActivity.error"
+      :show-stat="true"
+      @refresh="loadNewActivity()"
       title="有新动态"
     ></slideshow-cards>
-    <slideshow-cards class="new-post" :cards="newPost.videos" :error="newPost.errors" title="最新发布"></slideshow-cards>
+    <slideshow-cards
+      class="new-post"
+      :cards="newPost.videos"
+      :error="newPost.errors"
+      :show-stat="false"
+      @refresh="loadNewPost()"
+      title="最新发布"
+    ></slideshow-cards>
     <div class="rank"></div>
 
     <div class="new-activity loading"></div>
@@ -55,6 +64,7 @@ export default {
   methods: {
     async loadSlideshowCards(entityName: string, api: string) {
       try {
+        this[entityName].loading = true
         const json = await Ajax.getJson(api)
         if (json.code !== 0) {
           this[entityName].error = true
@@ -79,6 +89,7 @@ export default {
             like: item.stat.like,
             coins: item.stat.coin,
             description: item.desc,
+            type: item.tname,
             watchlater: uid ? watchlaterList.includes(item.aid) : null
           } as VideoCardInfo
         })
@@ -96,7 +107,10 @@ export default {
       )
     },
     async loadNewPost() {
-      await this.loadSlideshowCards('newPost', `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${this.rid}`)
+      await this.loadSlideshowCards(
+        'newPost',
+        `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${this.rid}`
+      )
     },
     async loadRank() {},
     updateVideos() {
@@ -155,9 +169,9 @@ export default {
     border-radius: 16px;
     animation: 0.64s infinite alternate normal-category-loading ease-in-out;
     position: absolute;
-    &.new-activity {
-      height: 30vh;
-    }
+    // &.new-activity {
+    //   height: 30vh;
+    // }
   }
   @each $name in ('new-activity', 'new-post', 'rank') {
     .#{$name} {

@@ -180,5 +180,8 @@ export default {
   &.be-iconfont-play-triangle::before {
     content: '\E737';
   }
+  &.be-iconfont-refresh::before {
+    content: '\E73C';
+  }
 }
 </style>
