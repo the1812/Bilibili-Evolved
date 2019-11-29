@@ -165,5 +165,17 @@ export default {
   &.be-iconfont-up-outline::before {
     content: '\E741';
   }
+  &.be-iconfont-left-arrow::before {
+    content: '\E6F1';
+  }
+  &.be-iconfont-right-arrow::before {
+    content: '\E6F0';
+  }
+  &.be-iconfont-up-arrow::before {
+    content: '\E6EC';
+  }
+  &.be-iconfont-down-arrow::before {
+    content: '\E6EB';
+  }
 }
 </style>

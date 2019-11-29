@@ -3,12 +3,18 @@
     class="category-view"
     :class="{'new-activity-loading': newActivity.loading,'new-post-loading': newPost.loading,'rank-loading': rank.loading}"
   >
+    <slideshow-cards
+      class="new-activity"
+      :cards="newActivity.videos"
+      :error="newActivity.error"
+      title="有新动态"
+    ></slideshow-cards>
+    <slideshow-cards class="new-post" :cards="newPost.videos" :error="newPost.errors" title="最新发布"></slideshow-cards>
+    <div class="rank"></div>
+
     <div class="new-activity loading"></div>
     <div class="new-post loading"></div>
     <div class="rank loading"></div>
-    <slideshow-cards class="new-activity" :cards="newActivity.videos" :error="newActivity.error"></slideshow-cards>
-    <slideshow-cards class="new-post" :cards="newPost.videos" :error="newPost.errors"></slideshow-cards>
-    <div class="rank"></div>
   </div>
 </template>
 
@@ -47,13 +53,11 @@ export default {
     }
   },
   methods: {
-    async loadNewActivity() {
+    async loadSlideshowCards(entityName: string, api: string) {
       try {
-        const json = await Ajax.getJson(
-          `https://api.bilibili.com/x/web-interface/dynamic/region?ps=10&rid=1`
-        )
+        const json = await Ajax.getJson(api)
         if (json.code !== 0) {
-          this.newActivity.error = true
+          this[entityName].error = true
         }
         const { getWatchlaterList } = await import(
           '../../../../video/watchlater-api'
@@ -75,17 +79,25 @@ export default {
             like: item.stat.like,
             coins: item.stat.coin,
             description: item.desc,
-            watchlater: uid ? watchlaterList.includes(item.aid) : null,
+            watchlater: uid ? watchlaterList.includes(item.aid) : null
           } as VideoCardInfo
         })
-        this.newActivity.videos = videos
+        this[entityName].videos = videos
       } catch (error) {
         logError(error)
       } finally {
-        this.newActivity.loading = false
+        this[entityName].loading = false
       }
     },
-    async loadNewPost() {},
+    async loadNewActivity() {
+      await this.loadSlideshowCards(
+        'newActivity',
+        `https://api.bilibili.com/x/web-interface/dynamic/region?ps=10&rid=${this.rid}`
+      )
+    },
+    async loadNewPost() {
+      await this.loadSlideshowCards('newPost', `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${this.rid}`)
+    },
     async loadRank() {},
     updateVideos() {
       this.loadNewActivity()
@@ -117,6 +129,8 @@ export default {
     'new-post rank' 1fr / 3fr 1fr;
   grid-gap: 24px;
   gap: 24px;
+  --loading-from: #d4d4d4;
+  --loading-to: #ddd;
   &,
   & *,
   ::after,
@@ -125,21 +139,24 @@ export default {
   }
   @keyframes normal-category-loading {
     from {
-      background-color: #8882;
+      background-color: var(--loading-from);
     }
     to {
-      background-color: #8881;
+      background-color: var(--loading-to);
     }
+  }
+  body.dark & {
+    --loading-from: #333;
+    --loading-to: #262626;
   }
   .loading {
     opacity: 0;
     pointer-events: none;
-    height: 100%;
-    width: 100%;
     border-radius: 16px;
     animation: 0.64s infinite alternate normal-category-loading ease-in-out;
+    position: absolute;
     &.new-activity {
-      height: 40vh;
+      height: 30vh;
     }
   }
   @each $name in ('new-activity', 'new-post', 'rank') {
@@ -148,6 +165,7 @@ export default {
     }
     &.#{$name}-loading {
       .#{$name}.loading {
+        position: static;
         opacity: 1;
         pointer-events: initial;
       }

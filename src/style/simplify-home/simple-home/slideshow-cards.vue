@@ -12,13 +12,56 @@
       >
         <img :src="card.coverUrl" :alt="card.title" />
       </a>
+      <div class="operations"></div>
+      <div class="info">
+        <a
+          class="title"
+          target="_blank"
+          :title="currentCard.title"
+          :href="'https://www.bilibili.com/av' + currentCard.aid"
+        >{{currentCard.title}}</a>
+        <a class="up" target="_blank" :href="'https://space.bilibili.com/' + currentCard.upID">
+          <img :src="currentCard.upFaceUrl" :alt="currentCard.upName" class="face" />
+          {{currentCard.upName}}
+        </a>
+
+        <div class="stat">
+          <icon type="extended" icon="play"></icon>
+          <div class="number">{{currentCard.playCount | bigNumber}}</div>
+          <icon type="extended" icon="danmaku"></icon>
+          <div class="number">{{currentCard.danmakuCount | bigNumber}}</div>
+          <icon type="extended" icon="like"></icon>
+          <div class="number">{{currentCard.like | bigNumber}}</div>
+          <icon type="extended" icon="coin"></icon>
+          <div class="number">{{currentCard.coins | bigNumber}}</div>
+        </div>
+        <div class="description" :title="currentCard.description">{{currentCard.description}}</div>
+        <div class="buttons">
+          <button class="previous" @click="previousCard()" title="上一个">
+            <icon type="extended" icon="left-arrow"></icon>
+          </button>
+          <button class="next" @click="nextCard()">
+            下一个
+            <icon type="extended" icon="right-arrow"></icon>
+          </button>
+        </div>
+      </div>
     </template>
+    <div class="area-header">{{title}}</div>
   </div>
 </template>
 
 <script lang="ts">
 export default {
-  props: ['cards', 'error'],
+  components: {
+    Icon: () => import('../../icon.vue')
+  },
+  filters: {
+    bigNumber(value: number) {
+      return formatCount(value)
+    }
+  },
+  props: ['cards', 'error', 'title'],
   data() {
     return {
       cardQueue: []
@@ -33,6 +76,12 @@ export default {
       cardQueue.unshift(cardQueue.pop())
       this.cardQueue = cardQueue
       console.log(cardQueue)
+    },
+    previousCard() {
+      this.cardQueue.unshift(this.cardQueue.pop())
+    },
+    nextCard() {
+      this.cardQueue.push(this.cardQueue.shift())
     }
   },
   watch: {
@@ -53,21 +102,142 @@ export default {
 
 <style lang="scss">
 .slideshow-cards {
+  @mixin max-line($line, $line-height: 1.5) {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+    line-height: $line-height;
+    max-height: #{$line * $line-height}em;
+  }
   display: grid;
   position: relative;
   --card-height: 300px;
   --card-width: 500px;
-  grid-template: 'cards operations info' var(--card-height) / var(--card-width) 64px 1fr;
-  @media screen and (max-width: 1400px) {
-    & {
-      --card-height: 200px;
-      --card-width: 334px;
+  grid-template:
+    'header header header' auto
+    'cards operations info' var(--card-height) / var(--card-width) 1fr calc(1.2 *
+        var(--card-width));
+  .area-header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: bold;
+    font-size: 11pt;
+    margin-bottom: 12px;
+    &::before {
+      content: "";
+      display: inline-flex;
+      height: 10px;
+      width: 10px;
+      background-color: var(--theme-color);
+      border-radius: 50%;
+      margin-right: 8px;
     }
   }
   .error {
     grid-column: 1 / 4;
+    grid-row: 2 / 3;
     align-self: stretch;
     justify-self: stretch;
+  }
+  .operations {
+    grid-area: operations;
+  }
+  .info {
+    grid-area: info;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    & > * {
+      display: flex;
+      align-items: center;
+    }
+    .title {
+      color: inherit !important;
+      font-size: 12pt;
+      font-weight: bold;
+      line-height: normal;
+      @include max-line(2);
+    }
+    .up {
+      font-size: 10pt;
+      color: inherit !important;
+      .face {
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+    }
+    .stat {
+      opacity: 0.75;
+      align-items: center;
+      .be-icon {
+        margin: 0 4px 0 16px;
+        font-size: 12pt;
+      }
+    }
+    .description {
+      @include max-line(6);
+      flex-grow: 1;
+      white-space: pre-wrap;
+      text-align: right;
+      opacity: .75;
+    }
+    .buttons {
+      .be-icon {
+        font-weight: normal;
+      }
+      & > button {
+        outline: none !important;
+        cursor: pointer;
+      }
+      .previous {
+        background-color: #ddd;
+        border-radius: 50%;
+        border: none;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        margin-right: 8px;
+        &:hover {
+          background-color: #ccc;
+        }
+        body.dark & {
+          background-color: #333;
+          &:hover {
+            background-color: #444;
+          }
+        }
+        .be-icon {
+          transform: translateX(-1px);
+        }
+      }
+      .next {
+        display: flex;
+        align-items: center;
+        padding: 4px 6px 4px 12px;
+        background-color: var(--theme-color);
+        border: none;
+        color: var(--foreground-color);
+        height: 32px;
+        box-sizing: border-box;
+        line-height: normal;
+        font-size: 11pt;
+        font-weight: bold;
+        border-radius: 16px;
+        &:hover {
+          background-color: var(--theme-color-80);
+        }
+      }
+    }
   }
   .slideshow-card {
     grid-area: cards;
@@ -79,6 +249,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: #8882;
     &:not(:first-child) {
       transform-origin: right;
     }
@@ -121,6 +292,21 @@ export default {
   .slideshow-card:nth-child(6) {
     transform: translateX(37.5px) scale(0.5);
     opacity: 0.0625;
+  }
+  @media screen and (max-width: 1400px) {
+    & {
+      --card-height: 200px;
+      --card-width: 330px;
+      grid-template-columns: var(--card-width) 1fr calc(1.5 * var(--card-width));
+    }
+    .info {
+      .title {
+        @include max-line(1);
+      }
+      .description {
+        @include max-line(3);
+      }
+    }
   }
 }
 </style>
