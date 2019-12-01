@@ -734,7 +734,9 @@ class UserInfo extends NavbarComponent {
             })).json()
           console.log(result)
           if (result.code === 0) {
-            this.wallet.bcoin_balance += 5
+            if (typeMapping[type] === 'bCoin') {
+              this.wallet.bcoin_balance += 5
+            }
           } else if (result.code === 69801) { // 已领过
             return
           } else {

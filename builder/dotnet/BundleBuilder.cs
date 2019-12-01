@@ -46,7 +46,7 @@ namespace BilibiliEvolved.Build
         using (var sha256 = new SHA256Managed())
         using (var zip = ZipFile.Open(zipName, ZipArchiveMode.Update))
         {
-          foreach (var (url, text) in CachedMinFiles)
+          foreach (var (url, text) in CachedMinFiles.OrderBy(p => p.Key))
           {
             var filename = Path.GetFileName(url);
             var hash = string.Join("", sha256.ComputeHash(Encoding.UTF8.GetBytes(text)).Select(b => b.ToString("X2")).ToArray());

@@ -54,7 +54,7 @@ namespace BilibiliEvolved.Build
       var downloadCodes = new Regex($"({downloadCodeStart}([^\0]*){downloadCodeEnd})").Match(offlineText).Groups[0].Value;
 
       var offlineData = "const offlineData = {};" + Environment.NewLine;
-      foreach (var (url, text) in CachedMinFiles)
+      foreach (var (url, text) in CachedMinFiles.OrderBy(p => p.Key))
       {
         if (url.EndsWith(".js"))
         {
