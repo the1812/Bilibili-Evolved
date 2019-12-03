@@ -189,27 +189,9 @@ export default {
   --card-height: 300px;
   --card-width: 500px;
   grid-template:
-    'header header header' auto
-    'cards operations info' var(--card-height) / var(--card-width) 1fr calc(1.2 *
+    'header header header header' auto
+    'cards . operations info' var(--card-height) / var(--card-width) 40px 1fr calc(1.2 *
         var(--card-width));
-  .area-header {
-    grid-area: header;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-weight: bold;
-    font-size: 11pt;
-    margin-bottom: 12px;
-    &::before {
-      content: '';
-      display: inline-flex;
-      height: 10px;
-      width: 10px;
-      background-color: var(--theme-color);
-      border-radius: 50%;
-      margin-right: 8px;
-    }
-  }
   .error {
     grid-column: 1 / 4;
     grid-row: 2 / 3;
@@ -393,7 +375,7 @@ export default {
     & {
       --card-height: 200px;
       --card-width: 330px;
-      grid-template-columns: var(--card-width) 1fr calc(1.4 * var(--card-width));
+      grid-template-columns: var(--card-width) 40px 1fr calc(1.4 * var(--card-width));
     }
     .info {
       .title {

@@ -27,35 +27,41 @@
         target="_blank"
         :href="'https://www.bilibili.com/av' + c.aid"
       >
-        <div class="cover">
+        <div v-if="index < 3" class="cover">
           <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
         </div>
         <div class="rank-number">{{index + 1}}</div>
-        <div class="grow"></div>
-        <div class="title">{{c.title}}</div>
-        <div class="up">
-          <div class="points">
-            <Icon icon="fire" type="mdi"></Icon>
-            {{c.points | bigNumber}}
-          </div>
-          <div class="up-info">
-            <Icon icon="up" type="extended"></Icon>
-            <div class="up-name">{{c.upName}}</div>
-          </div>
-        </div>
-        <div class="stats">
-          <icon type="extended" icon="play"></icon>
-          <div class="number">{{c.playCount | bigNumber}}</div>
-          <icon type="extended" icon="coin"></icon>
-          <div class="number">{{c.coins | bigNumber}}</div>
-          <icon type="extended" icon="favorites"></icon>
-          <div class="number">{{c.favorites | bigNumber}}</div>
-        </div>
+        <div v-if="index === 0 || index > 2" class="title">{{c.title}}</div>
         <!-- <div class="watchlater" v-if="c.watchlater !== null" :title="watchlater ? '已添加' : '稍后再看'">
           <icon v-if="c.watchlater" type="mdi" icon="clock-outline"></icon>
           <icon v-else type="mdi" icon="check-cricle"></icon>
         </div>-->
+        <div class="details">
+          <div v-if="index > 0" class="title">{{c.title}}</div>
+          <div v-if="index > 0" class="cover">
+            <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
+          </div>
+          <div class="up">
+            <div class="points">
+              <Icon icon="fire" type="mdi"></Icon>
+              {{c.points | bigNumber}}
+            </div>
+            <div class="up-info">
+              <Icon icon="up" type="extended"></Icon>
+              <div class="up-name">{{c.upName}}</div>
+            </div>
+          </div>
+          <div class="stats">
+            <icon type="extended" icon="play"></icon>
+            <div class="number">{{c.playCount | bigNumber}}</div>
+            <icon type="extended" icon="coin"></icon>
+            <div class="number">{{c.coins | bigNumber}}</div>
+            <icon type="extended" icon="favorites"></icon>
+            <div class="number">{{c.favorites | bigNumber}}</div>
+          </div>
+        </div>
       </a>
+      <div class="area-header">排行榜</div>
     </div>
 
     <div class="new-activity loading"></div>
@@ -222,14 +228,23 @@ export default {
 
 <style lang="scss">
 .category-view {
+  --loading-from: #d4d4d4;
+  --loading-to: #ddd;
+  --rank-width: 420px;
+  --rank-height: 250px;
   display: grid;
   grid-template:
     'new-activity rank' 1fr
-    'new-post rank' 1fr / 3fr 1fr;
+    'new-post rank' 1fr / 1fr var(--rank-width);
   grid-gap: 24px;
   gap: 24px;
-  --loading-from: #d4d4d4;
-  --loading-to: #ddd;
+  position: relative;
+  @media screen and (max-width: 1400px) {
+    & {
+      --rank-width: 290px;
+      --rank-height: 170px;
+    }
+  }
   &,
   & *,
   ::after,
@@ -258,20 +273,40 @@ export default {
     //   height: 30vh;
     // }
   }
+  .area-header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: bold;
+    font-size: 11pt;
+    margin-bottom: 12px;
+    &::before {
+      content: '';
+      display: inline-flex;
+      height: 10px;
+      width: 10px;
+      background-color: var(--theme-color);
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+  }
   .rank {
     display: grid;
-    width: 290px;
+    width: var(--rank-width);
     grid-template:
-      'first first' 170px
-      'second third' 85px/1fr 1fr;
-    grid-gap: 10px;
-    gap: 10px;
+      'header header' auto
+      'first first' calc(10px + var(--rank-height))
+      'second third' calc(var(--rank-height) / 2 + 10px) / 1fr 1fr;
     .rank-item {
-      border-radius: 16px;
       grid-column: 1 / 3;
       box-shadow: 0 4px 8px 0 #0001;
+      background-color: #fff;
       color: inherit !important;
       position: relative;
+      body.dark & {
+        background-color: #282828;
+      }
       .cover {
         position: absolute;
         top: 0;
@@ -301,25 +336,107 @@ export default {
         text-align: center;
         font-weight: bold;
         font-size: 13px;
-        background-color: #ddd;
-        body.dark & {
-          background-color: #333;
-        }
-      }
-      & > :not(.cover):not(.rank-number) {
-        z-index: 10;
+        z-index: 9;
+        background-color: #8884;
       }
       .be-icon {
         font-size: 16px;
+        &.mdi-fire {
+          transform: scale(calc(18 / 16));
+          margin-right: 2px;
+        }
+      }
+      &:not(:first-child) {
+        & > .title {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 34px;
+          padding: 0 8px 0 34px;
+          opacity: 0.9;
+        }
+        &:hover {
+          background-color: var(--theme-color-30);
+          & > .title {
+            opacity: 1;
+          }
+        }
+        .details {
+          position: absolute;
+          top: 50%;
+          right: calc(100% + 10px);
+          transform: translateY(-50%);
+          width: var(--rank-width);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: stretch;
+          z-index: 10;
+          opacity: 0;
+          pointer-events: none;
+          .title {
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            padding: 8px;
+            z-index: 10;
+          }
+          .cover {
+            overflow: hidden;
+            background-color: black;
+            img {
+              filter: blur(16px) brightness(0.5);
+              transform: scale(1.5);
+            }
+          }
+          .up,
+          .stats {
+            z-index: 10;
+            display: flex;
+            color: #fff;
+            .be-icon:not(.mdi-fire) {
+              margin: 0 4px 0 8px;
+            }
+          }
+          .up {
+            justify-content: space-between;
+            margin: 0 10px 0 6px;
+            & > * {
+              display: flex;
+              align-items: center;
+            }
+          }
+          .stats {
+            margin: 8px;
+            .be-icon:first-child {
+              margin-left: 0;
+            }
+          }
+        }
+        &:hover .details {
+          opacity: 1;
+          pointer-events: initial;
+        }
       }
 
       &:first-child,
       &:nth-child(2),
       &:nth-child(3) {
+        border-radius: 16px;
         .rank-number {
           background-color: var(--theme-color);
           color: var(--foreground-color);
+          opacity: 0.9;
         }
+      }
+      &:nth-child(4) {
+        border-radius: 16px 16px 0 0;
+      }
+      &:nth-last-child(2) {
+        border-radius: 0 0 16px 16px;
       }
       &:first-child {
         grid-area: first;
@@ -327,7 +444,11 @@ export default {
         flex-direction: column;
         justify-content: flex-end;
         align-items: flex-start;
-        &::after {
+        margin-bottom: 10px;
+        .details {
+          align-self: stretch;
+        }
+        .cover::after {
           content: '';
           position: absolute;
           top: 0;
@@ -336,10 +457,7 @@ export default {
           height: 100%;
           border-radius: 16px;
           background-image: linear-gradient(to top, #000a 0%, transparent 61%);
-          z-index: 9;
-        }
-        .grow {
-          flex: 1 0 0;
+          z-index: 0;
         }
         .title {
           font-weight: bold;
@@ -347,6 +465,7 @@ export default {
           line-height: 1.5;
           color: #fff;
           padding: 0 8px;
+          z-index: 10;
         }
         .up {
           display: flex;
@@ -357,13 +476,10 @@ export default {
           color: #fff;
           padding: 0 12px 0 6px;
           margin: 4px 0 8px 0;
+          z-index: 10;
           & > * {
             display: flex;
             align-items: center;
-          }
-          .mdi-fire {
-            transform: scale(calc(18 / 16));
-            margin-right: 2px;
           }
           .be-iconfont-up {
             margin-right: 4px;
@@ -392,6 +508,7 @@ export default {
           position: absolute;
           bottom: 8px;
           left: 0;
+          z-index: 10;
           .be-icon {
             margin: 0 2px 0 8px;
             &:first-child {
@@ -410,11 +527,21 @@ export default {
       }
       &:nth-child(2) {
         grid-area: second;
+        margin-right: 5px;
+        margin-bottom: 10px;
       }
       &:nth-child(3) {
         grid-area: third;
+        margin-left: 5px;
+        margin-bottom: 10px;
       }
     }
+  }
+  .new-activity {
+    align-self: start;
+  }
+  .new-post {
+    align-self: end;
   }
   @each $name in ('new-activity', 'new-post', 'rank') {
     .#{$name} {
@@ -425,6 +552,8 @@ export default {
         position: static;
         opacity: 1;
         pointer-events: initial;
+        width: 100%;
+        height: 100%;
       }
       .#{$name}:not(.loading) {
         opacity: 0;
