@@ -91,6 +91,9 @@
     filter: invert(0.7) !important;
   }
 }
+.vote-result-comment {
+  @include background-color();
+}
 .chat-history-panel .chat-history-list .chat-item.superChat-card-detail .card-item-middle-top {
   @include background-color();
   .card-item-middle-top-right .name {
@@ -136,7 +139,8 @@
   }
 }
 .app-layout {
-  .search-bar .search-bar-bg {
+  .search-bar .search-bar-bg,
+  .vertical-block-card {
     @include background-color("4");
   }
   .rank-item-wrapper {
@@ -167,16 +171,35 @@
       @include to-theme("blue");
     }
   }
+  .banner-manga-container .tab-item {
+    @include color("e");
+    &.activated {
+      @include theme-color();
+      &:after {
+        @include theme-background-color();
+      }
+    }
+  }
   .nav-list .nav-item .item-icon {
     @include to-theme("blue");
   }
-  .rank-title {
+  .rank-title,
+  .list-item {
     @include color("e");
+  }
+  .item-title {
+    @include color("e");
+    &:hover {
+      @include theme-color();
+    }
   }
   .rank-hint,
   .meta-ctnr,
   .manga-info-ctnr {
     @include color("a");
+  }
+  .section-navigator {
+    @include border-color();
   }
 }
 .card-detail .card-item-middle-top {
