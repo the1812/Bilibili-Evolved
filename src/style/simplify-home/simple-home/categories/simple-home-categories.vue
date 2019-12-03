@@ -110,7 +110,7 @@ export default {
       }
     },
     rid() {
-      console.log(this.regionCodes)
+      // console.log(this.regionCodes)
       if (!this.regionCodes) {
         return -1
       } else {

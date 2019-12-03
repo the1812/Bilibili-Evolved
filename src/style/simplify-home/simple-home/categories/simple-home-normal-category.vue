@@ -109,7 +109,8 @@ export default {
         loading: true,
         videos: []
       },
-      watchlaterList: null
+      watchlaterList: null,
+      loaded: false,
     }
   },
   methods: {
@@ -159,6 +160,7 @@ export default {
         this[entityName].videos = parseJson(json)
       } catch (error) {
         logError(error)
+        this[entityName].error = true
       } finally {
         this[entityName].loading = false
       }
@@ -213,15 +215,22 @@ export default {
   watch: {
     rid(value: number) {
       if (value > 0) {
-        this.updateVideos()
+        if (this.loaded) {
+          this.updateVideos()
+        }
       } else {
         console.warn(`rid=${value}`)
       }
     }
   },
   mounted() {
-    console.log(this.rid)
-    this.updateVideos()
+    // console.log(this.rid)
+    const observer = new IntersectionObserver(() => {
+      this.updateVideos()
+      this.loaded = true
+      observer.disconnect()
+    })
+    observer.observe(this.$el)
   }
 }
 </script>
@@ -240,14 +249,18 @@ export default {
   grid-gap: 24px;
   gap: 24px;
   position: relative;
-  @for $width from 18 through 9 {
+  @for $width from 18 through 7 {
     @media screen and (max-width: #{$width * 100}px) {
-      & {
+      $rank-width: 0;
+      @if $width > 11 {
         $rank-width: 420 - (19 - $width) * 30;
-        --rank-width: #{$rank-width}px;
-        --rank-height: #{$rank-width * 25 / 42}px;
         --slideshow-ratio: #{1.2 * ($width / 18)};
+      } @else {
+        $rank-width: 420 - (17 - $width) * 30;
+        --slideshow-ratio: #{1.2 * (($width + 2) / 18)};
       }
+      --rank-width: #{$rank-width}px;
+      --rank-height: #{$rank-width * 25 / 42}px;
     }
   }
   --card-height: calc((8 * 34px + 20px + 1.5 * var(--rank-height)) / 2 - 32px);
@@ -301,6 +314,7 @@ export default {
   .rank {
     display: grid;
     width: var(--rank-width);
+    justify-self: right;
     grid-template:
       'header header' auto
       'first first' calc(10px + var(--rank-height))
@@ -570,6 +584,16 @@ export default {
         opacity: 0;
         pointer-events: none;
       }
+    }
+  }
+  @media screen and (max-width: 1100px) {
+    grid-template:
+      'new-activity' 1fr
+      'new-post' 1fr
+      'rank' auto / 1fr;
+    .rank {
+      --rank-width: 420px;
+      --rank-height: 250px;
     }
   }
 }

@@ -151,6 +151,7 @@ export default {
     padding-bottom: 16px;
     scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
+    min-height: var(--card-height);
     @media screen and (min-width: 1050px) {
       --card-count: 4;
     }

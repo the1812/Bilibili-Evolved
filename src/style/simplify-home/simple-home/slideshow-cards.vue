@@ -107,7 +107,7 @@ export default {
       const cardQueue = [...this.cards]
       cardQueue.unshift(cardQueue.pop())
       this.cardQueue = cardQueue
-      console.log(cardQueue)
+      // console.log(cardQueue)
     },
     previousCard() {
       this.cardQueue.unshift(this.cardQueue.pop())
