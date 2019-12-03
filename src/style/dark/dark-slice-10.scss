@@ -660,3 +660,20 @@
     @include foreground-color();
   }
 }
+.popover-video-card {
+  @include background-color("3");
+  .count {
+    @include border-color("4");
+    ul li {
+      @include color("a");
+    }
+  }
+  .content .info {
+    .subtitle {
+      @include color("a");
+    }
+    .f-title {
+      @include color("e");
+    }
+  }
+}
