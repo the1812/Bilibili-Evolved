@@ -147,6 +147,7 @@ export default {
       }
       .tab {
         transition: none;
+        margin-right: 24px;
       }
     }
   }

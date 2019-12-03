@@ -303,7 +303,7 @@ export default {
         padding: 4px 6px 4px 12px;
         background-color: var(--theme-color);
         border: none;
-        color: var(--foreground-color);
+        color: var(--foreground-color) !important; // 防止又被夜间盖了
         height: 32px;
         box-sizing: border-box;
         line-height: normal;
