@@ -24,5 +24,6 @@ export interface VideoCardInfo {
     name: string
   }[]
   type?: string
+  points?: number
   watchlater?: boolean
 }
