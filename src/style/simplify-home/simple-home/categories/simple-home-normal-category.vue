@@ -31,13 +31,13 @@
           <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
         </div>
         <div class="rank-number">{{index + 1}}</div>
-        <div v-if="index === 0 || index > 2" class="title">{{c.title}}</div>
+        <div v-if="index === 0 || index > 2" class="title" :title="c.title">{{c.title}}</div>
         <!-- <div class="watchlater" v-if="c.watchlater !== null" :title="watchlater ? '已添加' : '稍后再看'">
           <icon v-if="c.watchlater" type="mdi" icon="clock-outline"></icon>
           <icon v-else type="mdi" icon="check-cricle"></icon>
         </div>-->
         <div class="details">
-          <div v-if="index > 0" class="title">{{c.title}}</div>
+          <div v-if="index > 0" class="title" :title="c.title">{{c.title}}</div>
           <div v-if="index > 0" class="cover">
             <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
           </div>
@@ -232,6 +232,7 @@ export default {
   --loading-to: #ddd;
   --rank-width: 420px;
   --rank-height: 250px;
+  --slideshow-ratio: 1.2;
   display: grid;
   grid-template:
     'new-activity rank' 1fr
@@ -239,12 +240,18 @@ export default {
   grid-gap: 24px;
   gap: 24px;
   position: relative;
-  @media screen and (max-width: 1400px) {
-    & {
-      --rank-width: 290px;
-      --rank-height: 170px;
+  @for $width from 18 through 9 {
+    @media screen and (max-width: #{$width * 100}px) {
+      & {
+        $rank-width: 420 - (19 - $width) * 30;
+        --rank-width: #{$rank-width}px;
+        --rank-height: #{$rank-width * 25 / 42}px;
+        --slideshow-ratio: #{1.2 * ($width / 18)};
+      }
     }
   }
+  --card-height: calc((8 * 34px + 20px + 1.5 * var(--rank-height)) / 2 - 32px);
+  --card-width: calc(var(--card-height) * (42 / 25));
   &,
   & *,
   ::after,
@@ -352,7 +359,7 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           font-weight: bold;
-          font-size: 14px;
+          font-size: 13px;
           line-height: 34px;
           padding: 0 8px 0 34px;
           opacity: 0.9;
@@ -369,6 +376,7 @@ export default {
           right: calc(100% + 10px);
           transform: translateY(-50%);
           width: var(--rank-width);
+          padding: 4px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -418,7 +426,6 @@ export default {
         }
         &:hover .details {
           opacity: 1;
-          pointer-events: initial;
         }
       }
 
@@ -466,6 +473,10 @@ export default {
           color: #fff;
           padding: 0 8px;
           z-index: 10;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 100%;
+          text-overflow: ellipsis;
         }
         .up {
           display: flex;

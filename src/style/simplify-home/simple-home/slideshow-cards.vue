@@ -186,11 +186,11 @@ export default {
   }
   display: grid;
   position: relative;
-  --card-height: 300px;
-  --card-width: 500px;
+  // --card-height: 300px;
+  // --card-width: 500px;
   grid-template:
     'header header header header' auto
-    'cards . operations info' var(--card-height) / var(--card-width) 40px 1fr calc(1.2 *
+    'cards . operations info' var(--card-height) / var(--card-width) 44px 1fr calc(var(--slideshow-ratio) *
         var(--card-width));
   .error {
     grid-column: 1 / 4;
@@ -203,8 +203,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-self: center;
-    justify-self: end;
-    margin-right: 8px;
+    justify-self: start;
     & > * {
       @include round-button();
       .be-icon {
@@ -244,6 +243,7 @@ export default {
       font-size: 12pt;
       font-weight: bold;
       line-height: normal;
+      text-align: right;
       @include max-line(2);
     }
     .up {
@@ -371,18 +371,38 @@ export default {
     transform: translateX(37.5px) scale(0.5);
     opacity: 0.0625;
   }
-  @media screen and (max-width: 1400px) {
-    & {
-      --card-height: 200px;
-      --card-width: 330px;
-      grid-template-columns: var(--card-width) 40px 1fr calc(1.4 * var(--card-width));
+  @media screen and (max-width: 1600px) {
+    .info {
+      .description {
+        @include max-line(4);
+      }
     }
+  }
+  @media screen and (max-width: 1400px) {
+    .info {
+      .description {
+        @include max-line(3);
+      }
+    }
+  }
+  @media screen and (max-width: 1200px) {
+    .info {
+      .description {
+        @include max-line(2);
+      }
+    }
+  }
+  @media screen and (max-width: 1050px) {
+    .info {
+      .description {
+        @include max-line(1);
+      }
+    }
+  }
+  @media screen and (max-width: 950px) {
     .info {
       .title {
         @include max-line(1);
-      }
-      .description {
-        @include max-line(3);
       }
     }
   }
