@@ -1,4 +1,4 @@
-export const toggleWatchlater = async (aid: string, add: boolean) => {
+export const toggleWatchlater = async (aid: string | number, add: boolean) => {
   const api = add ? 'https://api.bilibili.com/x/v2/history/toview/add' : 'https://api.bilibili.com/x/v2/history/toview/del'
   const csrf = getCsrf()
   const responseText = await Ajax.postTextWithCredentials(api, `aid=${aid}&csrf=${csrf}`)

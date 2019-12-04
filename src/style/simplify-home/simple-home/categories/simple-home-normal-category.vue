@@ -32,10 +32,10 @@
         </div>
         <div class="rank-number">{{index + 1}}</div>
         <div v-if="index === 0 || index > 2" class="title" :title="index === 0 ? c.title : null">{{c.title}}</div>
-        <!-- <div class="watchlater" v-if="c.watchlater !== null" :title="watchlater ? '已添加' : '稍后再看'">
-          <icon v-if="c.watchlater" type="mdi" icon="clock-outline"></icon>
-          <icon v-else type="mdi" icon="check-cricle"></icon>
-        </div>-->
+        <div class="watchlater" v-if="c.watchlater !== null" :title="c.watchlater ? '已添加' : '稍后再看'" @click.prevent="toggleWatchlater(c)">
+          <icon v-if="c.watchlater" type="mdi" icon="check-circle"></icon>
+          <icon v-else type="mdi" icon="clock-outline"></icon>
+        </div>
         <div class="details">
           <div v-if="index > 0" class="title" :title="c.title">{{c.title}}</div>
           <div v-if="index > 0" class="cover">
@@ -210,7 +210,19 @@ export default {
       this.loadNewActivity()
       this.loadNewPost()
       this.loadRank()
-    }
+    },
+    async toggleWatchlater(card: VideoCardInfo) {
+      try {
+        card.watchlater = !card.watchlater
+        const { toggleWatchlater } = await import(
+          '../../../../video/watchlater-api'
+        )
+        await toggleWatchlater(card.aid!, card.watchlater)
+      } catch (error) {
+        logError(error)
+        card.watchlater = !card.watchlater
+      }
+    },
   },
   watch: {
     rid(value: number) {
@@ -360,6 +372,25 @@ export default {
         z-index: 9;
         background-color: #8884;
       }
+      .watchlater {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        box-sizing: border-box;
+        z-index: 9;
+        background-color: #000A;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+      }
+      &:hover .watchlater {
+        opacity: 1;
+      }
       .be-icon {
         font-size: 16px;
         &.mdi-fire {
@@ -476,7 +507,6 @@ export default {
           left: 0;
           width: 100%;
           height: 100%;
-          border-radius: 16px;
           background-image: linear-gradient(to top,#000C 0,transparent 100%);
           z-index: 0;
         }
