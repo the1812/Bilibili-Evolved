@@ -287,7 +287,7 @@ export default {
         }
         &:hover {
           .be-icon {
-            transform: scale(0.85) rotate(180deg);
+            transform: scale(0.85) rotate(-180deg);
           }
         }
       }

@@ -189,6 +189,7 @@ export default {
   }
   .categories {
     grid-area: categories;
+    padding-bottom: 32px;
   }
   @media screen and (max-width: 900px) {
     & {

@@ -31,7 +31,7 @@
           <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
         </div>
         <div class="rank-number">{{index + 1}}</div>
-        <div v-if="index === 0 || index > 2" class="title" :title="c.title">{{c.title}}</div>
+        <div v-if="index === 0 || index > 2" class="title" :title="index === 0 ? c.title : null">{{c.title}}</div>
         <!-- <div class="watchlater" v-if="c.watchlater !== null" :title="watchlater ? '已添加' : '稍后再看'">
           <icon v-if="c.watchlater" type="mdi" icon="clock-outline"></icon>
           <icon v-else type="mdi" icon="check-cricle"></icon>
@@ -477,7 +477,7 @@ export default {
           width: 100%;
           height: 100%;
           border-radius: 16px;
-          background-image: linear-gradient(to top, #000a 0%, transparent 61%);
+          background-image: linear-gradient(to top,#000C 0,transparent 100%);
           z-index: 0;
         }
         .title {
