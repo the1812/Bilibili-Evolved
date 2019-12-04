@@ -73,7 +73,7 @@
 }
 
 blockquote {
-  * {
+  &, * {
     @include color("a");
   }
   @each $color in "blue", "gray", "green", "lblue", "pink", "purple", "yellow" {
