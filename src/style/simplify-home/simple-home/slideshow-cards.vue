@@ -65,7 +65,7 @@
         <div class="description" :title="currentCard.description">{{currentCard.description}}</div>
         <div class="buttons">
           <button class="refresh" @click="refresh()" title="刷新">
-            <icon type="home" icon="refresh"></icon>
+            <icon type="mdi" icon="refresh"></icon>
           </button>
           <button class="previous" @click="previousCard()" title="上一个">
             <icon type="extended" icon="left-arrow"></icon>
@@ -190,8 +190,9 @@ export default {
   // --card-width: 500px;
   grid-template:
     'header header header header' auto
-    'cards . operations info' var(--card-height) / var(--card-width) 44px 1fr calc(var(--slideshow-ratio) *
-        var(--card-width));
+    'cards . operations info' var(--card-height) / var(--card-width) 44px 1fr calc(var(
+          --slideshow-ratio
+        ) * var(--card-width));
   .error {
     grid-column: 1 / 4;
     grid-row: 2 / 3;
@@ -283,11 +284,12 @@ export default {
       .refresh {
         @include round-button();
         .be-icon {
-          transform: scale(0.85);
+          transition-duration: 0.5s;
+          transform: scale(0.9);
         }
         &:hover {
           .be-icon {
-            transform: scale(0.85) rotate(-180deg);
+            transform: scale(0.9) rotate(360deg);
           }
         }
       }
