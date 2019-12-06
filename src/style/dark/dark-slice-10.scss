@@ -281,31 +281,46 @@
     @include background-color("a");
   }
 }
-.video-item.list {
-  @include border-color("4");
-  .type {
-    @include background-color("4");
-    @include color("e");
-    @include border-color();
-  }
-  .headline.singleav {
-    .avid {
-      @include theme-background-color();
-      @include foreground-color();
+#all-list {
+  .video-item.list {
+    @include border-color("4");
+    .type {
+      @include background-color("4");
+      @include color("e");
       @include border-color();
     }
+    .headline.singleav {
+      .avid {
+        @include theme-background-color();
+        @include foreground-color();
+        @include border-color();
+      }
+      .title {
+        @include theme-color();
+      }
+    }
     .title {
-      @include theme-color();
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .des {
+      @include color("a");
     }
   }
-  .title {
-    @include color("e");
-    &:hover {
-      @include theme-color();
+  .game-item .info {
+    .title {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
     }
-  }
-  .des {
-    @include color("a");
+    .type {
+      @include background-color("4");
+      @include color("e");
+      @include border-color();
+    }
   }
 }
 .cc-album-manage {
