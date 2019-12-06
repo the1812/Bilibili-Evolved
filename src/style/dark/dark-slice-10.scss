@@ -692,3 +692,32 @@
     }
   }
 }
+.v-wrap {
+  .video-toolbar,
+  .season-tabs .tabs {
+    @include border-color("4");
+  }
+  .season-info {
+    @include border-color("4");
+    .stat {
+      @include color("a");
+    }
+    .title,
+    .desc {
+      @include color("e");
+    }
+  }
+  .season-owner .info {
+    h3 a,
+    .desc {
+      @include color("e");
+    }
+  }
+  .season-detail {
+    .content-img,
+    .faq.faq,
+    .note.faq {
+      @include border-color("4");
+    }
+  }
+}
