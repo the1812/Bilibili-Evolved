@@ -40,7 +40,8 @@
 <img height="400" alt="查看封面/下载视频/下载弹幕" src="images/compressed/download-video-view-cover.jpg">
 
 </details>
-<details>
+
+<!-- <details>
 <summary><strong>指定播放器布局</strong></summary>
 
 设置默认的播放器布局, 可分别设置视频区和番剧区. 尽量在相应的页面里设置(比如在番剧播放页面设置番剧播放器布局), 否则可能没有效果.
@@ -50,7 +51,8 @@
 - 旧版: 传统布局
 - 新版: 视频区默认的新版布局
 
-</details>
+</details> -->
+
 <details>
 <summary><strong>默认播放器模式</strong></summary>
 
