@@ -721,3 +721,12 @@
     }
   }
 }
+.message {
+  .message-content {
+    @include background-color("2");
+  }
+  .context-menu {
+    @include background-color("4");
+    @include color("e");
+  }
+}
