@@ -81,7 +81,8 @@
   }
 }
 .dialog-ctnr.bottom-left,
-.suggest-wrap .keyword-wrap .keyword.focus {
+.suggest-wrap .keyword-wrap .keyword.focus,
+.action-menu .menu-list a {
   @include background-color("3");
 }
 .pay-note-panel {
