@@ -96,7 +96,7 @@ class FeedsCardsManager extends EventTarget {
     }
   }
   async parseCard(element: HTMLElement): Promise<FeedsCard> {
-    const getText = async (selector: string) => {
+    const getText = async (selector: string, withRepost = false) => {
       const subElement = await SpinQuery.condition(
         () => element.querySelector(selector),
         it => it !== null
@@ -105,7 +105,8 @@ class FeedsCardsManager extends EventTarget {
         console.warn(element, selector)
         return ''
       }
-      return subElement.innerText
+      const repost = element.querySelector('.original-card-content .description') as HTMLElement
+      return (repost && withRepost) ? (subElement.innerText + '\n' + repost.innerText).trim() : subElement.innerText
     }
     const getNumber = async (selector: string) => {
       const result = parseInt(await getText(selector))
@@ -144,7 +145,7 @@ class FeedsCardsManager extends EventTarget {
     const card = {
       id: element.getAttribute('data-did') as string,
       username: await getText('.main-content .user-name'),
-      text: await getText('.card-content .text.description,.video-container .title,.bangumi-container .title'),
+      text: await getText('.card-content .text.description,.video-container .title,.bangumi-container .title', true),
       reposts: await getNumber('.button-bar .single-button:nth-child(1) .text-offset'),
       comments: await getNumber('.button-bar .single-button:nth-child(2) .text-offset'),
       likes: await getNumber('.button-bar .single-button:nth-child(3) .text-offset'),
