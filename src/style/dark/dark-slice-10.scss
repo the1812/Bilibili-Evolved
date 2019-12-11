@@ -667,34 +667,6 @@
   .h5share-container:hover .text-area .text {
     @include theme-color();
   }
-  .shop-panel {
-    .panel-desc {
-      @include color("e");
-      .shop-icon {
-        @include to-white();
-      }
-    }
-    .shop-list {
-      @include background-color("2");
-      .shop-desc {
-        .desc-box {
-          .title {
-            @include color("e");
-          }
-          .sub-title {
-            @include color("a");
-          }
-          .price-desc {
-            @include theme-color();
-          }
-        }
-        .btn-box .jump-btn {
-          @include theme-background-color();
-          @include foreground-color();
-        }
-      }
-    }
-  }
 }
 .up-info .u-info .name .live-status {
   @include theme-color();
@@ -759,3 +731,31 @@
     @include color("e");
   }
 }
+.shop-panel {
+    .panel-desc {
+      @include color("e");
+      .shop-icon {
+        @include to-white();
+      }
+    }
+    .shop-list {
+      @include background-color("2");
+      .shop-desc {
+        .desc-box {
+          .title {
+            @include color("e");
+          }
+          .sub-title {
+            @include color("a");
+          }
+          .price-desc {
+            @include theme-color();
+          }
+        }
+        .btn-box .jump-btn {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
+  }
