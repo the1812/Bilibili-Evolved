@@ -53,8 +53,13 @@ import { getScriptBlocker } from './script-blocker'
 import { installStyle, uninstallStyle } from './custom-styles'
 
 (async () => {
+  const redundantFrames = [
+    'https://message.bilibili.com/pages/nav/index_new_sync',
+    'https://message.bilibili.com/pages/nav/index_new_pc_sync',
+    'https://t.bilibili.com/h5/dynamic/specification',
+  ]
   if (await GM.getValue('customNavbar') === true
-    && document.URL === 'https://message.bilibili.com/pages/nav/index_new_sync') {
+    && redundantFrames.includes(document.URL)) {
     if (await GM.getValue('useDarkStyle') === true) {
       document.documentElement.style.setProperty('--theme-color', await GM.getValue('customStyleColor'))
       if (typeof offlineData === 'undefined') {
