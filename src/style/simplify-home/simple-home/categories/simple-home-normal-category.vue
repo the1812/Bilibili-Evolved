@@ -31,8 +31,17 @@
           <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
         </div>
         <div class="rank-number">{{index + 1}}</div>
-        <div v-if="index === 0 || index > 2" class="title" :title="index === 0 ? c.title : null">{{c.title}}</div>
-        <div class="watchlater" v-if="c.watchlater !== null" :title="c.watchlater ? '已添加' : '稍后再看'" @click.prevent="toggleWatchlater(c)">
+        <div
+          v-if="index === 0 || index > 2"
+          class="title"
+          :title="index === 0 ? c.title : null"
+        >{{c.title}}</div>
+        <div
+          class="watchlater"
+          v-if="c.watchlater !== null"
+          :title="c.watchlater ? '已添加' : '稍后再看'"
+          @click.prevent="toggleWatchlater(c)"
+        >
           <icon v-if="c.watchlater" type="mdi" icon="check-circle"></icon>
           <icon v-else type="mdi" icon="clock-outline"></icon>
         </div>
@@ -110,7 +119,7 @@ export default {
         videos: []
       },
       watchlaterList: null,
-      loaded: false,
+      loaded: false
     }
   },
   methods: {
@@ -222,7 +231,7 @@ export default {
         logError(error)
         card.watchlater = !card.watchlater
       }
-    },
+    }
   },
   watch: {
     rid(value: number) {
@@ -330,7 +339,9 @@ export default {
     grid-template:
       'header header' auto
       'first first' calc(10px + var(--rank-height))
-      'second third' calc(var(--rank-height) / 2 + 10px) / 1fr 1fr;
+      'second third' calc(var(--rank-height) / 2 + 10px) / calc(
+        var(--rank-width) / 2
+      ) calc(var(--rank-width) / 2);
     .rank-item {
       grid-column: 1 / 3;
       box-shadow: 0 4px 8px 0 #0001;
@@ -381,7 +392,7 @@ export default {
         border-radius: 50%;
         box-sizing: border-box;
         z-index: 9;
-        background-color: #000A;
+        background-color: #000a;
         color: white;
         display: flex;
         align-items: center;
@@ -507,7 +518,7 @@ export default {
           left: 0;
           width: 100%;
           height: 100%;
-          background-image: linear-gradient(to top,#000C 0,transparent 100%);
+          background-image: linear-gradient(to top, #000c 0, transparent 100%);
           z-index: 0;
         }
         .title {
