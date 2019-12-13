@@ -732,30 +732,30 @@
   }
 }
 .shop-panel {
-    .panel-desc {
-      @include color("e");
-      .shop-icon {
-        @include to-white();
-      }
+  .panel-desc {
+    @include color("e");
+    .shop-icon {
+      @include to-white();
     }
-    .shop-list {
-      @include background-color("2");
-      .shop-desc {
-        .desc-box {
-          .title {
-            @include color("e");
-          }
-          .sub-title {
-            @include color("a");
-          }
-          .price-desc {
-            @include theme-color();
-          }
+  }
+  .shop-list {
+    @include background-color("2");
+    .shop-desc {
+      .desc-box {
+        .title {
+          @include color("e");
         }
-        .btn-box .jump-btn {
-          @include theme-background-color();
-          @include foreground-color();
+        .sub-title {
+          @include color("a");
         }
+        .price-desc {
+          @include theme-color();
+        }
+      }
+      .btn-box .jump-btn {
+        @include theme-background-color();
+        @include foreground-color();
       }
     }
   }
+}
