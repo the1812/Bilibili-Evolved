@@ -323,6 +323,22 @@
       @include border-color();
     }
   }
+  .pgc-item {
+    .v-switcher-header-wrap:before {
+      @include background-color();
+    }
+    .v-switcher-header-item {
+      @include color("e");
+      &.is-active,
+      &:hover {
+        @include theme-color();
+        @include theme-border-color();
+      }
+      &.is-active:after {
+        @include to-theme("blue");
+      }
+    }
+  }
 }
 .cc-album-manage {
   .article-card {
