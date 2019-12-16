@@ -125,6 +125,10 @@ div.bilibili-player-video-control {
       left: 0 !important;
       width: 100% !important;
     }
+    #bilibili_pbp_pin,
+    .bilibili-player-video-control-wrap:hover #bilibili_pbp_pin {
+      right: 0 !important;
+    }
     &.video-control-show:not(.disable-original-hover) {
       .bilibili-player-video-control-top {
         left: 0 !important;

@@ -353,7 +353,7 @@ $highlight-map: (
   @include to-white();
 }
 .side-bar-btn .size-bar-text {
-  filter: brightness(.6) invert(1) hue-rotate(180deg) !important;
+  filter: brightness(0.6) invert(1) hue-rotate(180deg) !important;
   text-shadow: 0 0 0px;
 }
 .confirmorder-container .confirm-bottom .confirm-paybtn.active,
@@ -381,6 +381,10 @@ $highlight-map: (
 }
 .aside-item::after {
   border-right-color: var(--theme-color) !important;
+}
+#bilibili_pbp,
+#bilibili_pbp_canvas {
+  @include to-theme("pink");
 }
 .interact-dialog .btn,
 .rookie-guide .close-button,
