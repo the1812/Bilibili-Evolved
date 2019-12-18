@@ -817,6 +817,11 @@ class SearchBox extends NavbarComponent {
         e.preventDefault();
         return false;
       }
+      if (/^av[\d]+$/.test(keywordInput.value)) {
+        window.open(`https://www.bilibili.com/${keywordInput.value}`)
+        e.preventDefault()
+        return false
+      }
       const historyItem = settings.searchHistory.find(item => item.keyword === keywordInput.value)
       if (historyItem) {
         historyItem.count++
