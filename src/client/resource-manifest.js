@@ -775,5 +775,11 @@ Resource.manifest = {
       hideRelatedVideos: '隐藏视频推荐',
     },
   },
+  urlParamsClean: {
+    path: 'url-params-clean.min.js',
+    displayNames: {
+      urlParamsClean: '网址参数清理',
+    },
+  }
 }
 export const resourceManifest = Resource.manifest

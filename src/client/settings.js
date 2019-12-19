@@ -197,6 +197,7 @@ export const settings = {
   customStyles: [],
   simpleHomeCategoryOrders: { ...simpleHomeCategoryDefaultOrders },
   keymapJumpSeconds: 85,
+  urlParamsClean: false,
   cache: {},
 }
 const fixedSettings = {
