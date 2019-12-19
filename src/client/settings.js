@@ -196,6 +196,7 @@ export const settings = {
   autoMatchMedal: false,
   customStyles: [],
   simpleHomeCategoryOrders: { ...simpleHomeCategoryDefaultOrders },
+  keymapJumpSeconds: 85,
   cache: {},
 }
 const fixedSettings = {

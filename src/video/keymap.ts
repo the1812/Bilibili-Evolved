@@ -4,6 +4,7 @@ const supportedUrls = [
 ]
 if (supportedUrls.some(url => document.URL.startsWith(url))) {
   const clickableKeymap = {
+    f: '.bilibili-player-video-fullscreen', // 全屏
     w: '.bilibili-player-video-web-fullscreen', // 网页全屏
     t: '.bilibili-player-video-btn-widescreen', // 宽屏
     r: '.bilibili-player-video-btn-repeat', // 切换循环模式
@@ -11,6 +12,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     l: '.video-toolbar .like', // 点赞
     c: '.video-toolbar .coin,.tool-bar .coin-info', // 投币
     s: '.video-toolbar .collect', // 收藏
+    ' ': '.bilibili-player-video-btn-start', // 砸瓦撸多
   } as { [key: string]: string }
   let showPlaybackTipOldTimeout: number
   const showPlaybackTip = (speed: number) => {
@@ -87,6 +89,11 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       e.preventDefault()
       checkbox.checked = !checkbox.checked
       raiseEvent(checkbox, 'change')
+    } else if (key === 'j' && noModifyKeys) { // 绯红之王
+      const video = dq('.bilibili-player-video video') as HTMLVideoElement
+      video.currentTime += settings.keymapJumpSeconds
+      e.stopPropagation()
+      e.preventDefault()
     } else if (e.shiftKey) {
       const video = dq('.bilibili-player-video video') as HTMLVideoElement
       if (video === null) {
@@ -94,20 +101,22 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       }
       const playbackRates = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
       let preventDefault = true
-      if (key === '>' || key === 'ArrowUp'.toLowerCase()) {
+      if (key === '>' || key === 'ArrowUp'.toLowerCase()) { // 天堂制造
         video.playbackRate = playbackRates.find(it => it > video.playbackRate) || playbackRates[playbackRates.length - 1]
         showPlaybackTip(video.playbackRate)
-      } else if (key === '<' || key === 'ArrowDown'.toLowerCase()) {
+      } else if (key === '<' || key === 'ArrowDown'.toLowerCase()) { // 时间减速
         video.playbackRate = [...playbackRates].reverse().find(it => it < video.playbackRate) || playbackRates[0]
         showPlaybackTip(video.playbackRate)
-      } else if (key === '?') {
+      } else if (key === '?') { // 重置速度
         video.playbackRate = 1
         showPlaybackTip(video.playbackRate)
-      } else if (key === 'w') {
+      } else if (key === 'w') { // 稍后再看
         const watchlater = dq('.video-toolbar .ops .watchlater,.more-ops-list .ops-watch-later') as HTMLSpanElement
         if (watchlater !== null) {
           watchlater.click()
         }
+      } else if (key === 'j') { // 败者食尘
+        video.currentTime -= settings.keymapJumpSeconds
       } else {
         preventDefault = false
       }

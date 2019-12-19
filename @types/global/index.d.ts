@@ -416,6 +416,7 @@ declare global {
     autoMatchMedal: boolean,
     customStyles: CustomStyle[],
     simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
+    keymapJumpSeconds: number,
     latestVersionLink: string,
     currentVersion: string,
   }
