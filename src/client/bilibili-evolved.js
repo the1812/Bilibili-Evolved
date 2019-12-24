@@ -79,6 +79,7 @@ import { installStyle, uninstallStyle } from './custom-styles'
         document.head.insertAdjacentElement('afterbegin', style)
       }
     }
+    console.log(`Skipped <iframe> loading for ${document.URL}`)
     return
   }
   try {
