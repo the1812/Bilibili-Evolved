@@ -262,3 +262,103 @@
     }
   }
 }
+.round-corner {
+  .international-header .mini-type {
+    @include background-color("2");
+    box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px 1px !important;
+    .nav-link .nav-link-ul {
+      .nav-link-item .link .bili-Navbar_logo,
+      &.mini .bili-icon_dingdao_xiazaiapp {
+        @include color("e");
+      }
+    }
+    .nav-user-center .user-con .item .name {
+      @include color("e");
+    }
+  }
+  .channel-menu-mini {
+    @include background-color("2");
+    box-shadow: rgba(0, 0, 0, .3) 0 4px 8px 0px !important;
+    .r-box {
+      @include border-color("4");
+    }
+    .box a:hover {
+      @include background-color("0001");
+    }
+  }
+  .van-popper {
+    &-avatar {
+      .level-info .grade {
+        @include color("e");
+      }
+      .coins,
+      .counts {
+        @include border-color("4");
+      }
+      .count-item .item {
+        &-key,
+        &-value {
+          @include color("e");
+        }
+      }
+      .links {
+        @include border-color("4");
+        .link-title {
+          @include color("e");
+        }
+        .link-item:hover {
+          @include background-color("3");
+        }
+      }
+    }
+    &-favorite {
+      .tab-item--normal,
+      .video-info .line-2 {
+        @include color("e");
+      }
+      .tab-item--active {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+      .tabs-panel {
+        @include border-color("4");
+      }
+      .video-card:hover,
+      .tab-item--normal:hover {
+        @include background-color("3");
+      }
+      .play-all {
+        @include background-color();
+        @include border-color("4");
+      }
+    }
+    &-history {
+      .tab-header {
+        @include border-color("4");
+        .tab-item {
+          @include color("e");
+          &--active {
+            @include theme-background-color();
+            @include foreground-color();
+          }
+        }
+      }
+      .panel {
+        .video-card:hover {
+          @include background-color("3");
+        }
+        .progress {
+          @include theme-background-color();
+        }
+        .video-info {
+          span.date {
+            @include background-color();
+          }
+          .line-2 {
+            @include color("e");
+          }
+        }
+      }
+    }
+  }
+}

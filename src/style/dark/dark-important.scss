@@ -195,7 +195,8 @@ blockquote {
 .manga-detail .episode-list-component .episode-list .list-header .header-item.selected,
 .live-room-app .guard-rank-cntr.hundred .live-skin-main-a-text:hover,
 .live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text:hover,
-.container .video-panel .play-all .bilifont {
+.container .video-panel .play-all .bilifont,
+.round-corner .van-popper-favorite .play-all .bilifont {
   @include theme-color();
 }
 

@@ -128,7 +128,7 @@
   @include foreground-color();
 }
 
-.extension-wrapper .dark {
+.extension-wrapper {
   .vote-left-time {
     @include color("a");
   }
