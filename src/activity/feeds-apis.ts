@@ -105,8 +105,24 @@ class FeedsCardsManager extends EventTarget {
         console.warn(element, selector)
         return ''
       }
-      const repost = element.querySelector('.original-card-content .description') as HTMLElement
-      return (repost && withRepost) ? (subElement.innerText + '\n' + repost.innerText).trim() : subElement.innerText
+      const subElementText = subElement.innerText.trim()
+      if (withRepost) {
+        const repost = await SpinQuery.condition(
+          () => element.querySelector('.original-card-content .description'),
+          it => {
+            if (it === null) {
+              return false
+            }
+            if (subElementText) {
+              return true
+            }
+            return Boolean(it.innerText)
+          }
+        ) as HTMLElement
+        // console.log(repost, repost.innerText, subElementText)
+        return repost ? (subElement.innerText + '\n' + repost.innerText).trim() : subElementText
+      }
+      return subElementText
     }
     const getNumber = async (selector: string) => {
       const result = parseInt(await getText(selector))
