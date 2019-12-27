@@ -128,7 +128,7 @@
   @include foreground-color();
 }
 
-.extension-wrapper .dark {
+.extension-wrapper {
   .vote-left-time {
     @include color("a");
   }
@@ -321,6 +321,9 @@
       @include background-color("4");
       @include color("e");
       @include border-color();
+    }
+    .desc {
+      @include color("a");
     }
   }
   .pgc-item {
