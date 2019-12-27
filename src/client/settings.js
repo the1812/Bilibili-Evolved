@@ -198,6 +198,7 @@ export const settings = {
   simpleHomeCategoryOrders: { ...simpleHomeCategoryDefaultOrders },
   keymapJumpSeconds: 85,
   urlParamsClean: false,
+  collapseLiveSideBar: true,
   cache: {},
 }
 const fixedSettings = {

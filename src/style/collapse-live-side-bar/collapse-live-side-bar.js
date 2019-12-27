@@ -1,0 +1,1 @@
+export default resources.toggleStyle('collapseLiveSideBarStyle')

@@ -780,6 +780,14 @@ Resource.manifest = {
     displayNames: {
       urlParamsClean: '网址参数清理',
     },
+  },
+  collapseLiveSideBar: {
+    path: 'collapse-live-side-bar.min.js',
+    style: 'instant',
+    reloadable: true,
+    displayNames: {
+      collapseLiveSideBar: '收起直播间侧栏',
+    },
   }
 }
 export const resourceManifest = Resource.manifest
