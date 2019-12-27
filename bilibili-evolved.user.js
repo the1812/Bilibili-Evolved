@@ -400,7 +400,7 @@ const settings = {
   customStyles: [],
   simpleHomeCategoryOrders: { ...simpleHomeCategoryDefaultOrders },
   keymapJumpSeconds: 85,
-  urlParamsClean: false,
+  urlParamsClean: true,
   collapseLiveSideBar: true,
   cache: {},
 }
