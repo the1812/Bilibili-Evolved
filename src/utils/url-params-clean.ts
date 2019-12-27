@@ -3,6 +3,8 @@ const blockParams = [
   'from_source',
   'from',
   'seid',
+  'share_source',
+  'share_medium',
 ]
 const clean = () => {
   const urlParams = location.search.substring(1).split('&')
