@@ -98,7 +98,7 @@ $first-row-height: 250px;
 
   .blackboard-cards {
     grid-area: cards;
-    --blackboard-width: 500px;
+    --blackboard-width: 568.5px;
     --blackboard-height: 250px;
     width: var(--blackboard-width);
     height: var(--blackboard-height);

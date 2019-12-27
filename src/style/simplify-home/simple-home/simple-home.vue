@@ -29,7 +29,7 @@ export default {
     'categories categories categories';
   grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(3, auto);
-  column-gap: 44px;
+  column-gap: 32px;
   row-gap: 16px;
   &,
   & * {
