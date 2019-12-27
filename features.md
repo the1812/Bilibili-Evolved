@@ -354,6 +354,12 @@
 
 </details>
 <details>
+<summary><strong>收起直播间侧栏</strong></summary>
+
+自动收起直播间的侧边栏.
+
+</details>
+<details>
 <summary><strong>删除直播水印</strong></summary>
 
 删除观看直播时角落的水印.
@@ -561,6 +567,12 @@
 <summary><strong>自动选择当前直播间勋章</strong></summary>
 
 如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.
+
+</details>
+<details>
+<summary><strong>网址参数清理</strong></summary>
+
+自动删除链接中的多余跟踪参数, 例如`spm_id_from`, `from_source`, `share_source`等.
 
 </details>
 

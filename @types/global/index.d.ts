@@ -418,6 +418,7 @@ declare global {
     simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
     keymapJumpSeconds: number,
     urlParamsClean: boolean,
+    collapseLiveSideBar: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

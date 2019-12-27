@@ -144,6 +144,8 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - Simple: A clean design with additional feeds section.
 - Minimal: Only video feeds and trending videos, no other sections.`],
   [`autoMatchMedal`, `Auto wear medal when you have the medal of the current live room, or wear the last manually selected medal.`],
+  [`urlParamsClean`, `Auto remove redundant params in URL.`],
+  [`collapseLiveSideBar`, `Collapse the side bar of live room.`],
 ]);
 export default {
   export: { toolTips },

@@ -154,6 +154,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - さわやか: レイアウトは元のホームページに似ており、フィードセクションが追加されています.
 - ミニマル: 他のすべてのセクションを削除し、動画フィードと人気動画のみを残します.`],
     [`autoMatchMedal`, /*html*/`今の配信ルームの勲章を持っている場合は、自動的にそれを着用します.それ以外の場合は、最後に手動で選択した勲章を着用します.`],
+    [`urlParamsClean`, /*html*/`冗長な追跡パラメーターをリンクから自動的に削除します.`],
+    [`collapseLiveSideBar`, /*html*/`生放送のサイドカードを自動的に収めます.`],
 ]);
 export default {
     export: { toolTips },
