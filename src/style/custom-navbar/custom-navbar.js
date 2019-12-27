@@ -749,9 +749,9 @@ class UserInfo extends NavbarComponent {
     const face = await SpinQuery.select(".custom-navbar .user-face-container .user-face");
     if (userInfo.isLogin) {
       const faceUrl = userInfo.face.replace("http", "https");
+      const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4];
       if (!faceUrl.includes('static.hdslb.com/images/member/noface.gif')) { // 没上传过头像的不做缩放
         const faceBaseSize = 68;
-        const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4];
         face.setAttribute("srcset", dpis.map(dpi => {
           return `${faceUrl}@${parseInt(faceBaseSize * dpi)}w_${parseInt(faceBaseSize * dpi)}h.jpg ${dpi}x`;
         }).join(","));

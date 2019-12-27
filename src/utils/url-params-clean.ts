@@ -4,11 +4,19 @@ const blockParams = [
   'from',
   'seid',
 ]
-const urlParams = location.search.substring(1).split('&')
-const filteredParams = urlParams.filter(p => {
-  if (blockParams.some(b => p.startsWith(`${b}=`))) {
-    return false
+const clean = () => {
+  const urlParams = location.search.substring(1).split('&')
+  const filteredParams = urlParams.filter(p => {
+    if (blockParams.some(b => p.startsWith(`${b}=`))) {
+      return false
+    }
+    return true
+  })
+  if (urlParams.length !== filteredParams.length) {
+    const filteredParamsString = filteredParams.join('&')
+    const newUrl = document.URL.replace(location.search, filteredParamsString ? ('?' + filteredParamsString) : '')
+    console.log('[URL params clean]', document.URL, newUrl)
+    history.replaceState({}, document.title, newUrl)
   }
-  return true
-}).join('&')
-history.pushState({}, document.title, document.URL.replace(location.search, filteredParams ? ('?' + filteredParams) : ''))
+}
+Observer.videoChange(() => clean())
