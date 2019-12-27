@@ -56,8 +56,58 @@
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
-  z-index: 10;
+  // z-index: 10;
   padding: 32px;
+}
+.gui-settings-header {
+  .operations {
+    margin-left: 16px;
+    cursor: pointer;
+    position: relative;
+    &,
+    & * {
+      transition: 0.2s ease-out;
+    }
+    .mdi {
+      font-size: 20px;
+    }
+    .operations-menu {
+      transition-delay: 0.2s;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform-origin: top;
+      transform: scaleY(0);
+      z-index: 102;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px 1px #0002;
+      body.dark & {
+        background-color: #333;
+      }
+      .operation {
+        display: flex;
+        align-items: center;
+        padding: 8px 16px;
+        white-space: nowrap;
+        font-size: 14px;
+        border-radius: 8px;
+        .mdi {
+          margin-right: 8px;
+        }
+        &:hover {
+          background-color: #8882;
+        }
+      }
+    }
+    &:hover .operations-menu {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
 }
 .gui-settings-footer {
   height: 80px;
@@ -349,17 +399,17 @@ input[type="text"][key] {
     backdrop-filter: blur(24px);
     background: transparent;
   }
-  .gui-settings-box.blur,
-  .gui-settings-box.blur .gui-settings-content,
-  .gui-settings-box.blur .gui-settings-header,
-  .gui-settings-box.blur .gui-settings-footer {
-    background: #fff8;
-  }
-  .gui-settings-box.blur .gui-settings-content,
-  .gui-settings-box.blur .gui-settings-header,
-  .gui-settings-box.blur .gui-settings-footer {
-    -webkit-backdrop-filter: blur(64px);
-    backdrop-filter: blur(64px);
+  .gui-settings-box.blur {
+    & {
+      background: #fff8;
+    }
+    .gui-settings-content,
+    .gui-settings-header,
+    .gui-settings-footer {
+      background: #fff8;
+      -webkit-backdrop-filter: blur(64px);
+      backdrop-filter: blur(64px);
+    }
   }
 }
 li.category i.icon-arrow {

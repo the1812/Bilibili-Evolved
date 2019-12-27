@@ -42,6 +42,42 @@ function setupEvents () {
       e.currentTarget.parentElement.classList.toggle('opened')
     })
   })
+  dqa('.gui-settings-header .operation').forEach(it => {
+    it.addEventListener('click', e => {
+      if (e.target.classList.contains('export')) {
+        const a = document.createElement('a')
+        a.style.display = 'none'
+        const url = URL.createObjectURL(new Blob([JSON.stringify(_.omit(settings, 'cache'))]))
+        a.href = url
+        a.download = 'bilibili-evolved-settings.json'
+        document.body.insertAdjacentElement('beforeend', a)
+        a.click()
+        URL.revokeObjectURL(url)
+        a.remove()
+      } else if (e.target.classList.contains('import')) {
+        const input = document.createElement('input')
+        input.style.display = 'none'
+        input.type = 'file'
+        input.accept = '.json,text/json'
+        document.body.insertAdjacentElement('beforeend', input)
+        input.addEventListener('change', async () => {
+          try {
+            const file = input.files[0]
+            const obj = JSON.parse(await new Response(file).text())
+            for (const [key, value] of Object.entries(obj)) {
+              settings[key] = value
+            }
+            Toast.success('已成功导入设置, 部分设置需要刷新后生效.', '导入设置', 3000)
+          } catch (error) {
+            Toast.error('选择的设置文件无效.', '导入设置', 3000)
+          } finally {
+            input.remove()
+          }
+        }, { once: true })
+        input.click()
+      }
+    })
+  })
 }
 function listenSettingsChange () {
   checkBoxes.forEach(element => {
