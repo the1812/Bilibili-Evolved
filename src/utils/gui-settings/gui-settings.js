@@ -65,7 +65,9 @@ function setupEvents () {
             const file = input.files[0]
             const obj = JSON.parse(await new Response(file).text())
             for (const [key, value] of Object.entries(obj)) {
-              settings[key] = value
+              if (key in settings && key !== 'cache') {
+                settings[key] = value
+              }
             }
             Toast.success('已成功导入设置, 部分设置需要刷新后生效.', '导入设置', 3000)
           } catch (error) {
