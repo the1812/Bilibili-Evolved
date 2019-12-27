@@ -322,6 +322,9 @@
       @include color("e");
       @include border-color();
     }
+    .desc {
+      @include color("a");
+    }
   }
   .pgc-item {
     .v-switcher-header-wrap:before {
