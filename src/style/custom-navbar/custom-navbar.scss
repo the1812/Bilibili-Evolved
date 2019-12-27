@@ -152,7 +152,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   z-index: 10002 !important;
 }
 :not(.international-home) > .international-header {
-  height: var(--navbar-height) !important;
+  min-height: var(--navbar-height) !important;
 }
 
 .bili-header-m > .nav-menu,
