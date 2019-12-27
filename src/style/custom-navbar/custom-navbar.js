@@ -755,6 +755,8 @@ class UserInfo extends NavbarComponent {
         face.setAttribute("srcset", dpis.map(dpi => {
           return `${faceUrl}@${parseInt(faceBaseSize * dpi)}w_${parseInt(faceBaseSize * dpi)}h.jpg ${dpi}x`;
         }).join(","));
+      } else {
+        face.setAttribute('src', '//static.hdslb.com/images/member/noface.gif')
       }
       if (userInfo.pendant.image) {
         const pendant = await SpinQuery.select(".custom-navbar .user-face-container .user-pendant");
