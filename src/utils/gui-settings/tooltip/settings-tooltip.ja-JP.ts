@@ -43,7 +43,6 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["customNavbar", /*html*/`カスタム頂欄を使用する.伝統的な頂欄に取って代わる.メインステーション専用です.「生放送」、「アルバム」、「会員購」などには影響しません.`],
     ["customNavbarSeasonLogo", /*html*/`通常のロゴの代わりに季節のロゴを使用するかどうか.`],
     ["customNavbarFill", /*html*/`テーマ色で頂欄を埋める.`],
-    ["allNavbarFill", /*html*/`テーマ色で他の頂欄を埋める.「生放送」、「アルバム」、「会員購」などが含まれています.`],
     ["customNavbarShadow", /*html*/`頂欄に投影効果を追加する.`],
     ["customNavbarCompact", /*html*/`トップページにコンパクトなレイアウトを使する.コンパクトなレイアウトはより小さなスペースを使用し、そして動画のタイトルが長すぎる場合に後者の部分を省略するための 「...」を使用する.`],
     ["customNavbarBlur", /*html*/`トップの横断幕が存在する場合は、背景のぼかし効果を使用します.`],

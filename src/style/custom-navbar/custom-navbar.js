@@ -206,7 +206,7 @@ const darkHandler = value => {
   document.querySelector(".custom-navbar").classList[value ? "add" : "remove"]("dark");
   document.querySelector(".custom-navbar-settings").classList[value ? "add" : "remove"]("dark");
 };
-addSettingsListener("allNavbarFill", value => classHandler("all-navbar-fill", value, document.body), true)
+// addSettingsListener("allNavbarFill", value => classHandler("all-navbar-fill", value, document.body), true)
 const supportedUrls = [
   "//www.bilibili.com",
   "//t.bilibili.com",

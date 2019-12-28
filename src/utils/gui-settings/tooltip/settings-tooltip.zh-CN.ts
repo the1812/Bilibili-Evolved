@@ -102,7 +102,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["customNavbar", /*html*/`启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.`],
   ["customNavbarSeasonLogo", /*html*/`是否使用季节Logo代替普通的Logo.`],
   ["customNavbarFill", /*html*/`是否使用主题色填充顶栏.`],
-  ["allNavbarFill", /*html*/`是否使用主题色填充其他的顶栏, 包括直播/相簿/会员购等.`],
+  [`customNavbarTransparent`, /*html*/`在有横幅的时候使顶栏透明.`],
   ["customNavbarShadow", /*html*/`是否为顶栏添加一层阴影效果.`],
   ["customNavbarCompact", /*html*/`是否为顶栏使用更紧凑的布局, 紧凑布局将使用更小的间距, 以及在视频标题过长时用...省略后面的部分.`],
   ["customNavbarBlur", /*html*/`是否在顶部横幅存在时, 使用背景模糊效果.`],
