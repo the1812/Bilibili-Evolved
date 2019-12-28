@@ -326,6 +326,36 @@ $highlight-map: (
     }
   }
 }
+.bili-header-m,
+.international-header,
+.van-popover {
+  .mini-type .nav-search {
+    #nav_searchform {
+      @include background-color("3");
+      @include border-color();
+      .nav-search-keyword {
+        @include color("a");
+        &:focus {
+          @include color("e");
+        }
+      }
+    }
+    .nav-search-btn {
+      @include background-color("4");
+      .nav-search-submit {
+        @include color("e");
+      }
+      &:hover .nav-search-submit {
+        @include theme-color();
+      }
+    }
+  }
+}
+.bilibili-search-suggest,
+.bilibili-search-history {
+  @include background-color("3");
+  @include border-color();
+}
 #biliAppHomeSetting {
   select,
   input {
@@ -401,7 +431,8 @@ $highlight-map: (
 .more-ctnr:hover,
 .news-ctnr .more-link:hover,
 .van-popover .coins .info a:hover,
-.van-popper-upload .upload-item:hover .bilifont {
+.van-popper-upload .upload-item:hover .bilifont,
+.bilibili-search-suggest .suggest-item .suggest_high_light {
   @include theme-color();
 }
 .interact-dialog .btn,

@@ -1,11 +1,11 @@
 if (isIframe()) {
-  return;
+  return
 }
-document.body.style.setProperty("--navbar-bounds-padding", `0 ${settings.customNavbarBoundsPadding}%`);
-document.body.style.setProperty("--navbar-blur-opacity", settings.customNavbarBlurOpacity || 0.7);
+document.body.style.setProperty("--navbar-bounds-padding", `0 ${settings.customNavbarBoundsPadding}%`)
+document.body.style.setProperty("--navbar-blur-opacity", settings.customNavbarBlurOpacity || 0.7)
 addSettingsListener("customNavbarBlurOpacity", value => {
-  document.body.style.setProperty("--navbar-blur-opacity", value);
-});
+  document.body.style.setProperty("--navbar-blur-opacity", value)
+})
 let showWidget = true
 const attributes = {
   widget: {
@@ -21,23 +21,23 @@ const attributes = {
     },
   },
   unload: () => {
-    const navbar = document.querySelectorAll(".custom-navbar,.custom-navbar-settings");
-    navbar.forEach(it => it.style.display = "none");
-    resources.removeStyle("customNavbarStyle");
+    const navbar = document.querySelectorAll(".custom-navbar,.custom-navbar-settings")
+    navbar.forEach(it => it.style.display = "none")
+    resources.removeStyle("customNavbarStyle")
   },
   reload: () => {
-    const navbar = document.querySelectorAll(".custom-navbar,.custom-navbar-settings");
-    navbar.forEach(it => it.style.display = "flex");
-    resources.applyImportantStyle("customNavbarStyle");
+    const navbar = document.querySelectorAll(".custom-navbar,.custom-navbar-settings")
+    navbar.forEach(it => it.style.display = "flex")
+    resources.applyImportantStyle("customNavbarStyle")
   },
-};
+}
 const classHandler = (key, value, element) => {
   element.classList.toggle(key, value)
 }
 const darkHandler = value => {
-  document.querySelector(".custom-navbar").classList[value ? "add" : "remove"]("dark");
-  document.querySelector(".custom-navbar-settings").classList[value ? "add" : "remove"]("dark");
-};
+  document.querySelector(".custom-navbar").classList[value ? "add" : "remove"]("dark")
+  document.querySelector(".custom-navbar-settings").classList[value ? "add" : "remove"]("dark")
+}
 // addSettingsListener("allNavbarFill", value => classHandler("all-navbar-fill", value, document.body), true)
 const supportedUrls = [
   "//www.bilibili.com",
@@ -53,7 +53,7 @@ const supportedUrls = [
   "//passport.bilibili.com",
   "//game.bilibili.com",
   "//live.bilibili.com/blackboard/"
-];
+]
 const unsupportedUrls = [
   "//t.bilibili.com/lottery/h5/index/#/result",
   "//member.bilibili.com/video/upload",
@@ -62,38 +62,38 @@ const unsupportedUrls = [
 ]
 if (!supportedUrls.some(it => document.URL.includes(it))
   || unsupportedUrls.some(it => document.URL.includes(it))) {
-  showWidget = false;
-  return attributes;
+  showWidget = false
+  return attributes
 }
 document.body.classList.add('custom-navbar-loading')
-let userInfo = {};
+let userInfo = {}
 let orders = {
 
-};
+}
 let latestID
 
 class NavbarComponent {
   constructor () {
-    this.html = ``;
-    this.popupHtml = ``;
-    this.flex = `0 0 auto`;
-    this.disabled = false;
-    this.requestedPopup = false;
-    this.initialPopup = null;
-    this.onPopup = null;
-    this.href = null;
-    this.notifyCount = 0;
-    this.touch = settings.touchNavBar;
-    this.active = false;
+    this.html = ``
+    this.popupHtml = ``
+    this.flex = `0 0 auto`
+    this.disabled = false
+    this.requestedPopup = false
+    this.initialPopup = null
+    this.onPopup = null
+    this.href = null
+    this.notifyCount = 0
+    this.touch = settings.touchNavBar
+    this.active = false
   }
   get name () {
-    return "undefined";
+    return "undefined"
   }
   get order () {
-    return settings.customNavbarOrder[this.name];
+    return settings.customNavbarOrder[this.name]
   }
   get hidden () {
-    return settings.customNavbarHidden.includes(this.name);
+    return settings.customNavbarHidden.includes(this.name)
   }
   async setNotifyCount (count) {
     const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`)
@@ -119,20 +119,20 @@ class NavbarComponent {
 }
 class Blank extends NavbarComponent {
   constructor (number) {
-    super();
-    this.number = number;
-    this.flex = "1 0 auto";
-    this.disabled = true;
+    super()
+    this.number = number
+    this.flex = "1 0 auto"
+    this.disabled = true
   }
   get name () {
-    return "blank" + this.number;
+    return "blank" + this.number
   }
 }
 class Logo extends NavbarComponent {
   constructor () {
-    super();
-    this.href = `https://www.bilibili.com/`;
-    this.touch = false;
+    super()
+    this.href = `https://www.bilibili.com/`
+    this.touch = false
     addSettingsListener('customNavbarSeasonLogo', () => this.getLogo(), true)
   }
   async getLogo () {
@@ -148,31 +148,31 @@ class Logo extends NavbarComponent {
     this.html = /*html*/`<i class="custom-navbar-iconfont custom-navbar-icon-logo"></i>`
   }
   get name () {
-    return "logo";
+    return "logo"
   }
 }
 class SimpleLink extends NavbarComponent {
   constructor (name, link, linkName) {
-    super();
-    this.linkName = linkName;
-    this.html = name;
-    this.href = link;
-    this.touch = false;
-    this.active = document.URL.startsWith(link);
+    super()
+    this.linkName = linkName
+    this.html = name
+    this.href = link
+    this.touch = false
+    this.active = document.URL.startsWith(link)
   }
   get name () {
-    return this.linkName + "Link";
+    return this.linkName + "Link"
   }
 }
 class Upload extends NavbarComponent {
   constructor () {
-    super();
-    this.href = "https://member.bilibili.com/v2#/upload/video/frame";
+    super()
+    this.href = "https://member.bilibili.com/v2#/upload/video/frame"
     this.html = /*html*/`
-      <svg style="width:16px;height:16px;padding:3px;box-sizing:content-box;" viewBox="0 0 785 886">
+      <svg style="width:16pxheight:16pxpadding:3pxbox-sizing:content-box" viewBox="0 0 785 886">
         <path d="M582,374L582,566C582,585.333 576.167,600.833 564.5,612.5C552.833,624.167 537.333,630 518,630L262,630C242.667,630 227.167,624.167 215.5,612.5C203.833,600.833 198,585.333 198,566L198,374L32,374C22,374 14.1667,371.167 8.5,365.5C2.83333,359.833 0,352 0,342C0,338.667 1.16666,334.5 3.5,329.5C5.83333,324.5 8.66666,320 12,316L371,9C377.667,3.00006 385.167,6.10352e-005 393.5,0C401.833,6.10352e-005 409.333,3.00006 416,9L774,316C780,322.667 783.333,330.167 784,338.5C784.667,346.833 783.333,354.333 780,361L764,370C760,372.667 754.667,374 748,374ZM70,758L710,758C729.333,758 744.833,763.833 756.5,775.5C768.167,787.167 774,802.667 774,822C774,841.333 768.167,856.833 756.5,868.5C744.833,880.167 729.333,886 710,886L70,886C50.6667,886 35.1667,880.167 23.5,868.5C11.8333,856.833 6,841.333 6,822C6,802.667 11.8333,787.167 23.5,775.5C35.1667,763.833 50.6667,758 70,758Z" />
       </svg>
-      <div id="upload-button">投稿</div>`;
+      <div id="upload-button">投稿</div>`
     this.popupHtml = /*html*/`
       <ul id="upload-actions">
         <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/text/apply">专栏投稿</a></li>
@@ -181,17 +181,17 @@ class Upload extends NavbarComponent {
         <li><a target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">投稿管理</a></li>
         <li><a target="_blank" href="https://member.bilibili.com/v2#/home">创作中心</a></li>
       </ul>
-    `;
+    `
   }
   get name () {
-    return "upload";
+    return "upload"
   }
 }
 class Messages extends NavbarComponent {
   constructor () {
-    super();
-    this.href = "https://message.bilibili.com/";
-    this.html = "消息";
+    super()
+    this.href = "https://message.bilibili.com/"
+    this.html = "消息"
     this.popupHtml = /*html*/`
       <ul id="message-list">
         <li><a data-name="reply" target="_blank" href="https://message.bilibili.com/new/#/reply">回复我的</a></li>
@@ -200,7 +200,7 @@ class Messages extends NavbarComponent {
         <li><a data-name="user_msg" target="_blank" href="https://message.bilibili.com/new/#/whisper">我的消息</a></li>
         <li><a data-name="sys_msg" target="_blank" href="https://message.bilibili.com/new/#/system">系统通知</a></li>
       </ul>
-    `;
+    `
     this.requestedPopup = true
     this.active = document.URL.startsWith("https://message.bilibili.com/")
     this.fetchSettings().then(notify => {
@@ -210,7 +210,7 @@ class Messages extends NavbarComponent {
     })
   }
   get name () {
-    return "messages";
+    return "messages"
   }
   async fetchSettings () {
     const json = await bilibiliEvolved.Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/link_setting/v1/link_setting/get?msg_notify=1`)
@@ -231,35 +231,35 @@ class Messages extends NavbarComponent {
       return
     }
     mainJson.data['user_msg'] = messageJson.data.unfollow_unread + messageJson.data.follow_unread
-    let totalCount = names.reduce((acc, it) => acc + mainJson.data[it], 0);
+    let totalCount = names.reduce((acc, it) => acc + mainJson.data[it], 0)
     if (!totalCount) {
       return
     }
-    await this.setNotifyCount(totalCount);
+    await this.setNotifyCount(totalCount)
     names.forEach((name, index) => {
-      const count = mainJson.data[name];
+      const count = mainJson.data[name]
       if (count > 0) {
-        items[index].setAttribute("data-count", count);
+        items[index].setAttribute("data-count", count)
       }
       else {
-        items[index].removeAttribute("data-count");
+        items[index].removeAttribute("data-count")
       }
-    });
+    })
     items.forEach(item => {
       item.addEventListener("click", () => {
-        const count = item.getAttribute("data-count");
-        item.removeAttribute("data-count");
-        totalCount -= count;
+        const count = item.getAttribute("data-count")
+        item.removeAttribute("data-count")
+        totalCount -= count
         this.setNotifyCount(totalCount)
-      });
+      })
     })
   }
 }
 class Category extends NavbarComponent {
   constructor () {
-    super();
-    this.html = `主站`;
-    // this.requestedPopup = true;
+    super()
+    this.html = `主站`
+    // this.requestedPopup = true
     this.popupHtml = /*html*/`
       <ul id="custom-navbar-home-popup">
         <li class="category-item" v-if="loading">
@@ -280,22 +280,22 @@ class Category extends NavbarComponent {
           </div>
         </li>
       </ul>
-    `;
+    `
     // this.getOnlineInfo().then(info => {
     //   new Vue({
     //     el: "#custom-navbar-home-popup",
     //     data: {
     //       info: Object.entries(info),
     //     },
-    //   });
-    // });
+    //   })
+    // })
     const getOnlineInfo = async () => {
-      const json = await Ajax.getJson("https://api.bilibili.com/x/web-interface/online");
+      const json = await Ajax.getJson("https://api.bilibili.com/x/web-interface/online")
       if (parseInt(json.code) !== 0) {
-        throw new Error(`[自定义顶栏] 分区投稿信息获取失败: ${json.message}`);
+        throw new Error(`[自定义顶栏] 分区投稿信息获取失败: ${json.message}`)
       }
-      const regionCount = json.data.region_count;
-      await SpinQuery.select("#custom-navbar-home-popup");
+      const regionCount = json.data.region_count
+      await SpinQuery.select("#custom-navbar-home-popup")
       return {
         动画: {
           icon: "douga",
@@ -385,7 +385,7 @@ class Category extends NavbarComponent {
         小黑屋: { icon: "blackroom", count: ``, link: `https://www.bilibili.com/blackroom/`, },
         话题: { icon: "topic", count: ``, link: `https://www.bilibili.com/blackboard/topic_list.html`, },
         活动: { icon: "activit", count: ``, link: `https://www.bilibili.com/blackboard/x/act_list`, },
-      };
+      }
     }
     this.initialPopup = async () => {
       new Vue({
@@ -405,20 +405,20 @@ class Category extends NavbarComponent {
     }
   }
   get name () {
-    return "category";
+    return "category"
   }
 }
 class UserInfo extends NavbarComponent {
   constructor () {
-    super();
-    this.noPadding = true;
-    this.href = "https://space.bilibili.com";
+    super()
+    this.noPadding = true
+    this.href = "https://space.bilibili.com"
     this.html = /*html*/`
       <div class="user-face-container">
         <img src='${EmptyImageUrl}' class="user-face"></img>
         <img src='${EmptyImageUrl}' class="user-pendant"></img>
       </div>
-    `;
+    `
     this.popupHtml = /*html*/`
       <div class="user-info-panel">
         <div v-if="isLogin" class="logged-in">
@@ -499,16 +499,16 @@ class UserInfo extends NavbarComponent {
           <a href="https://passport.bilibili.com/login" class="login theme-button">登录</a>
         </div>
       </div>
-    `;
-    this.requestedPopup = true;
-    this.init();
+    `
+    this.requestedPopup = true
+    this.init()
   }
   get name () {
-    return "userInfo";
+    return "userInfo"
   }
   async init () {
-    const panel = await SpinQuery.select(".custom-navbar .user-info-panel");
-    const face = await SpinQuery.select(".custom-navbar .user-face-container .user-face");
+    const panel = await SpinQuery.select(".custom-navbar .user-info-panel")
+    const face = await SpinQuery.select(".custom-navbar .user-face-container .user-face")
     const userInfoJson = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')
     const userStatJson = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav/stat')
     Object.assign(userInfo, userInfoJson.data)
@@ -531,26 +531,26 @@ class UserInfo extends NavbarComponent {
       computed: {
         userType () {
           if (!this.isLogin) {
-            return "未登录";
+            return "未登录"
           }
           if (this.level_info.current_level === 0) {
-            return "注册会员";
+            return "注册会员"
           }
           if (this.vipStatus === 1) {
             if (this.vipType === 1) {
-              return this.vip_theme_type ? "小会员" : "大会员";
+              return this.vip_theme_type ? "小会员" : "大会员"
             }
             else if (this.vipType === 2) {
-              return this.vip_theme_type ? "年度小会员" : "年度大会员";
+              return this.vip_theme_type ? "年度小会员" : "年度大会员"
             }
           }
-          return "正式会员";
+          return "正式会员"
         },
         levelProgressStyle () {
-          const progress = (this.level_info.current_exp - this.level_info.current_min) / (this.level_info.next_exp - this.level_info.current_min);
+          const progress = (this.level_info.current_exp - this.level_info.current_min) / (this.level_info.next_exp - this.level_info.current_min)
           return {
             transform: `scaleX(${progress})`
-          };
+          }
         }
       },
       methods: {
@@ -584,26 +584,26 @@ class UserInfo extends NavbarComponent {
           }
         },
       },
-    });
+    })
     if (userInfo.isLogin) {
-      const faceUrl = userInfo.face.replace("http", "https");
-      const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4];
+      const faceUrl = userInfo.face.replace("http", "https")
+      const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4]
       if (!faceUrl.includes('static.hdslb.com/images/member/noface.gif')) { // 没上传过头像的不做缩放
-        const faceBaseSize = 68;
+        const faceBaseSize = 68
         face.setAttribute("srcset", dpis.map(dpi => {
-          return `${faceUrl}@${parseInt(faceBaseSize * dpi)}w_${parseInt(faceBaseSize * dpi)}h.jpg ${dpi}x`;
-        }).join(","));
+          return `${faceUrl}@${parseInt(faceBaseSize * dpi)}w_${parseInt(faceBaseSize * dpi)}h.jpg ${dpi}x`
+        }).join(","))
       } else {
         face.setAttribute('src', '//static.hdslb.com/images/member/noface.gif')
       }
       if (userInfo.pendant.image) {
-        const pendant = await SpinQuery.select(".custom-navbar .user-face-container .user-pendant");
-        const pendantUrl = userInfo.pendant.image.replace("http", "https");
-        // pendant.setAttribute("src", pendantUrl);
-        const pendantBaseSize = 116;
+        const pendant = await SpinQuery.select(".custom-navbar .user-face-container .user-pendant")
+        const pendantUrl = userInfo.pendant.image.replace("http", "https")
+        // pendant.setAttribute("src", pendantUrl)
+        const pendantBaseSize = 116
         pendant.setAttribute("srcset", dpis.reduce((acc, dpi) => {
-          return acc + `, ${pendantUrl}@${parseInt(pendantBaseSize * dpi)}w_${parseInt(pendantBaseSize * dpi)}h.png ${dpi}x`;
-        }, ""));
+          return acc + `, ${pendantUrl}@${parseInt(pendantBaseSize * dpi)}w_${parseInt(pendantBaseSize * dpi)}h.png ${dpi}x`
+        }, ""))
       }
       if (userInfo.vipType === 2) { // 年度大会员权益
         const privileges = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/vip/privilege/my')
@@ -618,22 +618,22 @@ class UserInfo extends NavbarComponent {
       }
     }
     else {
-      face.setAttribute("src", "https://static.hdslb.com/images/akari.jpg");
-      // face.style.backgroundImage = `url('https://static.hdslb.com/images/akari.jpg')`;
+      face.setAttribute("src", "https://static.hdslb.com/images/akari.jpg")
+      // face.style.backgroundImage = `url('https://static.hdslb.com/images/akari.jpg')`
     }
   }
 }
 class SearchBox extends NavbarComponent {
   constructor () {
-    super();
-    this.disabled = true;
+    super()
+    this.disabled = true
     this.html = /*html*/`
       <form id="custom-navbar-search" autocomplete="off" target="_blank" method="get" action="https://search.bilibili.com/all">
         <input type="text" placeholder="搜索" name="keyword">
         <input type="hidden" name="from_source" value="banner_search">
         <a style="display: none" target="_blank" class="recommended-target"></a>
         <button type="submit" title="搜索" tabindex="-1">
-          <svg style="width:22px;height:22px" viewBox="0 0 24 24">
+          <svg style="width:22pxheight:22px" viewBox="0 0 24 24">
             <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
           </svg>
         </button>
@@ -642,19 +642,19 @@ class SearchBox extends NavbarComponent {
         <div class="search-list-item" tabindex="0" v-for="(item, index) of items" v-html="item.html" @keydown.enter="submit(item.value)" @click.self="submit(item.value)" @keydown.shift.delete="deleteItem(item, index)" @keydown.down.prevent="nextItem(index)" @keydown.up.prevent="previousItem(index)"></div>
         <div tabindex="0" v-if="items.length > 0 && isHistory" class="search-list-item clear-history" @click="clearSearchHistory()" @keydown.enter="clearSearchHistory()" @keydown.down.prevent="nextItem(items.length)" @keydown.up.prevent="previousItem(items.length)"><i class="mdi mdi-18px mdi-delete-sweep"></i>清除搜索历史</div>
       </div>
-    `;
-    this.init();
+    `
+    this.init()
   }
   async init () {
-    const form = await SpinQuery.select("#custom-navbar-search");
-    const keywordInput = form.querySelector("input[name='keyword']");
+    const form = await SpinQuery.select("#custom-navbar-search")
+    const keywordInput = form.querySelector("input[name='keyword']")
     form.addEventListener("submit", e => {
       if (keywordInput.value === "") {
         if (!settings.hideTopSearch) {
-          form.querySelector(".recommended-target").click();
+          form.querySelector(".recommended-target").click()
         }
-        e.preventDefault();
-        return false;
+        e.preventDefault()
+        return false
       }
       if (/^av[\d]+$/.test(keywordInput.value)) {
         window.open(`https://www.bilibili.com/${keywordInput.value}`)
@@ -679,26 +679,26 @@ class SearchBox extends NavbarComponent {
         })
       }
       settings.searchHistory = settings.searchHistory.slice(0, 10) // save history
-      return true;
-    });
+      return true
+    })
     if (!settings.hideTopSearch) {
-      const json = await Ajax.getJson("https://api.bilibili.com/x/web-interface/search/default");
+      const json = await Ajax.getJson("https://api.bilibili.com/x/web-interface/search/default")
       if (json.code === 0) {
-        keywordInput.setAttribute("placeholder", json.data.show_name);
-        let href;
+        keywordInput.setAttribute("placeholder", json.data.show_name)
+        let href
         if (json.data.url !== "") {
-          href = json.data.url;
+          href = json.data.url
         }
         else if (json.data.name.startsWith("av")) {
-          href = `https://www.bilibili.com/${json.data.name}`;
+          href = `https://www.bilibili.com/${json.data.name}`
         }
         else {
-          href = `https://search.bilibili.com/all?keyword=${json.data.name}`;
+          href = `https://search.bilibili.com/all?keyword=${json.data.name}`
         }
-        form.querySelector(".recommended-target").setAttribute("href", href);
+        form.querySelector(".recommended-target").setAttribute("href", href)
       }
       else {
-        console.error("[自定义顶栏] 获取搜索推荐词失败");
+        console.error("[自定义顶栏] 获取搜索推荐词失败")
       }
     }
     const searchList = new Vue({
@@ -741,7 +741,7 @@ class SearchBox extends NavbarComponent {
         }
       },
     })
-    const { debounce } = await import('debounce');
+    const { debounce } = await import('debounce')
     let lastQueuedRequest = ''
     const updateSuggest = async () => {
       const text = keywordInput.value
@@ -800,48 +800,48 @@ class SearchBox extends NavbarComponent {
     })
   }
   get name () {
-    return "search";
+    return "search"
   }
 }
 class Iframe extends NavbarComponent {
   constructor (name, link, { src, width, height, lazy, iframeName }) {
-    super();
-    this.iframeName = iframeName;
-    this.html = name;
-    this.href = link;
+    super()
+    this.iframeName = iframeName
+    this.html = name
+    this.href = link
     this.popupHtml = /*html*/`
       <iframe src="${src}" frameborder="0" width="${width}" height="${height}"></iframe>
-    `;
-    this.noPadding = true;
-    this.requestedPopup = lazy ? false : true;
-    this.touch = false;
-    this.transparent = true;
+    `
+    this.noPadding = true
+    this.requestedPopup = lazy ? false : true
+    this.touch = false
+    this.transparent = true
   }
   get name () {
-    return this.iframeName + "Iframe";
+    return this.iframeName + "Iframe"
   }
 }
 class NotifyIframe extends Iframe {
   constructor (...args) {
-    super(...args);
-    this.touch = settings.touchNavBar;
-    this.getNotifyCount();
+    super(...args)
+    this.touch = settings.touchNavBar
+    this.getNotifyCount()
   }
   getApiUrl () {
-    return null;
+    return null
   }
   getCount () {
-    return 0;
+    return 0
   }
   async getNotifyCount () {
-    const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`);
-    const json = await Ajax.getJsonWithCredentials(this.getApiUrl());
-    const count = this.getCount(json);
+    const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`)
+    const json = await Ajax.getJsonWithCredentials(this.getApiUrl())
+    const count = this.getCount(json)
     if (json.code === 0 && count) {
-      notifyElement.innerHTML = count;
+      notifyElement.innerHTML = count
       this.initialPopup = () => {
-        notifyElement.innerHTML = '';
-      };
+        notifyElement.innerHTML = ''
+      }
     }
   }
 }
@@ -889,10 +889,10 @@ const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, templat
 // https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=39717974&offset_dynamic_id=311158827135150245&type=8
 class Activities extends NavbarComponent {
   constructor () {
-    super();
-    this.noPadding = true;
-    this.href = settings.oldTweets ? "https://www.bilibili.com/account/dynamic" : "https://t.bilibili.com/";
-    this.html = "动态";
+    super()
+    this.noPadding = true
+    this.href = settings.oldTweets ? "https://www.bilibili.com/account/dynamic" : "https://t.bilibili.com/"
+    this.html = "动态"
     this.popupHtml = /*html*/`
       <div class="activity-popup">
         <activity-tabs :tab.sync="selectedTab" :items="tabs"></activity-tabs>
@@ -903,8 +903,8 @@ class Activities extends NavbarComponent {
           <!-- <a class="view-more" target="_blank" :href="viewMoreUrl">查看更多<i class="mdi mdi-dots-horizontal-circle-outline"></i></a> -->
         </div>
       </div>
-    `;
-    this.active = document.URL.replace(/\?.*$/, "") === this.href;
+    `
+    this.active = document.URL.replace(/\?.*$/, "") === this.href
     this.initialPopup = () => {
       this.init()
     }
@@ -922,14 +922,14 @@ class Activities extends NavbarComponent {
     return 5 * 60 * 1000 // 每5分钟更新1次动态提醒数字
   }
   static getLatestID () {
-    return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+    return document.cookie.replace(new RegExp(`(?:(?:^|.*\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^]*).*$)|^.*$`), '$1')
   }
   static setLatestID (id) {
     const currentID = Activities.getLatestID()
     if (Activities.compareID(id, currentID) < 0) {
       return
     }
-    document.cookie = `bp_t_offset_${userInfo.mid}=${id};path=/;domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`
+    document.cookie = `bp_t_offset_${userInfo.mid}=${id}path=/domain=.bilibili.commax-age=${60 * 60 * 24 * 30}`
   }
   static compareID (a, b) {
     if (a === b) {
@@ -1260,65 +1260,45 @@ class Activities extends NavbarComponent {
     })
   }
   get name () {
-    return "activities";
+    return "activities"
   }
 }
-// class Messages extends NotifyIframe
-// {
-//     constructor()
-//     {
-//         super("消息", "https://message.bilibili.com/", {
-//             src: `https://message.bilibili.com/pages/nav/index`,
-//             width: `110px`,
-//             height: `210px`,
-//             lazy: false,
-//         });
-//     }
-//     getApiUrl()
-//     {
-//         return "https://message.bilibili.com/api/notify/query.notify.count.do";
-//     }
-//     getCount(json)
-//     {
-//         return Object.values(json.data).reduce((a, b) => a + b, 0);
-//     }
-// }
 class VideoList extends NavbarComponent {
   constructor ({ mainUrl, name, apiUrl, listName, listMap }) {
-    super();
-    this.href = mainUrl;
-    this.listName = listName;
-    this.html = name;
-    this.noPadding = true;
-    this.requestedPopup = false;
+    super()
+    this.href = mainUrl
+    this.listName = listName
+    this.html = name
+    this.noPadding = true
+    this.requestedPopup = false
     this.popupHtml = /*html*/`
       <ol class="video-list ${listName}">
           <li class="loading">加载中...</li>
       </ol>
-    `;
+    `
     this.initialPopup = async () => {
       if (!listMap) {
-        return;
+        return
       }
-      const videoListElement = await SpinQuery.select(`.video-list.${listName}`);
+      const videoListElement = await SpinQuery.select(`.video-list.${listName}`)
       if (videoListElement === null) {
-        return;
+        return
       }
-      const json = await Ajax.getJsonWithCredentials(apiUrl);
+      const json = await Ajax.getJsonWithCredentials(apiUrl)
       let videoList = ''
       if (json.code !== 0) {
         logError(`加载${name}信息失败. 错误码: ${json.code} ${json.message}`)
       } else {
-        videoList = listMap(json).join("");
+        videoList = listMap(json).join("")
       }
       videoListElement.insertAdjacentHTML("beforeend", videoList + /*html*/`
         <li class="more"><a target="_blank" href="${mainUrl}">查看更多</a></li>
-      `);
-      videoListElement.classList.add("loaded");
-    };
+      `)
+      videoListElement.classList.add("loaded")
+    }
   }
   get name () {
-    return this.listName + "List";
+    return this.listName + "List"
   }
 }
 class WatchlaterList extends VideoList {
@@ -1337,19 +1317,19 @@ class WatchlaterList extends VideoList {
             if (item.pages === undefined) {
               return settings.watchLaterRedirect ?
                 `https://www.bilibili.com/video/av${item.aid}` :
-                `https://www.bilibili.com/watchlater/#/av${item.aid}`;
+                `https://www.bilibili.com/watchlater/#/av${item.aid}`
             }
-            const pages = item.pages.map(it => it.cid);
-            const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1;
+            const pages = item.pages.map(it => it.cid)
+            const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
             return settings.watchLaterRedirect ?
               `https://www.bilibili.com/video/av${item.aid}?p=${page}` :
-              `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`;
-          })();
-          return /*html*/`<li><a target="_blank" href="${href}">${item.title}</a></li>`;
+              `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`
+          })()
+          return /*html*/`<li><a target="_blank" href="${href}">${item.title}</a></li>`
         })
       },
-    });
-    this.active = document.URL.startsWith("https://www.bilibili.com/watchlater/");
+    })
+    this.active = document.URL.startsWith("https://www.bilibili.com/watchlater/")
   }
 }
 class FavoritesList extends VideoList {
@@ -1367,11 +1347,11 @@ class FavoritesList extends VideoList {
           return /*html*/`
             <li>
               <a target="_blank" href="https://www.bilibili.com/video/av${item.id}">${item.title}</a>
-            </li>`;
-        });
+            </li>`
+        })
       },
-    });
-    this.active = document.URL.replace(/\?.*$/, "") === `https://space.bilibili.com/${userInfo.mid}/favlist`;
+    })
+    this.active = document.URL.replace(/\?.*$/, "") === `https://space.bilibili.com/${userInfo.mid}/favlist`
   }
 }
 class HistoryList extends VideoList {
@@ -1386,27 +1366,27 @@ class HistoryList extends VideoList {
           return [/*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`]
         }
         return json.data.map(item => {
-          let parameter = [];
-          let description = "";
-          const page = item.page ? item.page.page : 1;
-          let progress = item.progress >= 0 ? item.progress / item.duration : 1;
+          let parameter = []
+          let description = ""
+          const page = item.page ? item.page.page : 1
+          let progress = item.progress >= 0 ? item.progress / item.duration : 1
           if (isNaN(progress)) {
             progress = 0
           }
 
           if (page !== 1) {
-            parameter.push(`p=${page}`);
-            description += `看到第${page}话`;
+            parameter.push(`p=${page}`)
+            description += `看到第${page}话`
           }
           if (item.progress > 0 && item.progress < item.duration) {
-            parameter.push(`t=${item.progress}`);
-            description += ` ${Math.floor(progress * 100)}%`;
+            parameter.push(`t=${item.progress}`)
+            description += ` ${Math.floor(progress * 100)}%`
           }
           else if (item.progress === 0) {
-            description += ` 刚开始看`;
+            description += ` 刚开始看`
           }
           else {
-            description += " 100%";
+            description += " 100%"
           }
           return /*html*/`
             <li class="history-item">
@@ -1417,11 +1397,11 @@ class HistoryList extends VideoList {
                   <div class="progress foreground" style="--progress: ${progress * 100}%"></div>
                 </div>
               </a>
-            </li>`;
-        });
+            </li>`
+        })
       },
-    });
-    this.active = document.URL.replace(/\?.*$/, "") === "https://www.bilibili.com/account/history";
+    })
+    this.active = document.URL.replace(/\?.*$/, "") === "https://www.bilibili.com/account/history"
   }
 }
 class Subscriptions extends NavbarComponent {
@@ -1518,30 +1498,30 @@ class Subscriptions extends NavbarComponent {
     })
   }
   get name () {
-    return 'bangumi';
+    return 'bangumi'
   }
 }
 
 (async () => {
-  const html = await import("customNavbarHtml");
+  const html = await import("customNavbarHtml")
   userInfo = {
     mid: getUID(),
     isLogin: Boolean(getUID()),
   }
   latestID = Activities.getLatestID()
-  document.body.insertAdjacentHTML("beforeend", html);
+  document.body.insertAdjacentHTML("beforeend", html)
   addSettingsListener("useDarkStyle", darkHandler, true);
   ["Fill", "Shadow", "Compact", "Blur"].forEach(item => {
     addSettingsListener("customNavbar" + item, value => classHandler(item.toLowerCase(), value, document.querySelector(".custom-navbar")), true)
-  });
+  })
   SpinQuery.condition(() => dq("#banner_link,.international-header .bili-banner"),
     banner => banner === null ? null : banner.style.backgroundImage,
     banner => {
       Observer.attributes(banner, () => {
-        const blurLayers = document.querySelectorAll(".custom-navbar .blur-layer");
+        const blurLayers = document.querySelectorAll(".custom-navbar .blur-layer")
         blurLayers.forEach(blurLayer => {
-          blurLayer.style.backgroundImage = banner.style.backgroundImage;
-          blurLayer.setAttribute("data-image", banner.style.backgroundImage);
+          blurLayer.style.backgroundImage = banner.style.backgroundImage
+          blurLayer.setAttribute("data-image", banner.style.backgroundImage)
         })
         addSettingsListener('customNavbarTransparent', value => {
           if (!settings.hideBanner) {
@@ -1582,7 +1562,7 @@ class Subscriptions extends NavbarComponent {
     new Blank(2),
     new SearchBox,
     new UserInfo,
-  ];
+  ]
   if (userInfo.isLogin) {
     components.push(
       new Messages,
@@ -1592,9 +1572,9 @@ class Subscriptions extends NavbarComponent {
       new WatchlaterList,
       new FavoritesList,
       new HistoryList,
-    );
+    )
   }
-  components.push(new Upload, new Blank(3));
+  components.push(new Upload, new Blank(3))
   new Vue({
     el: ".custom-navbar",
     data: {
@@ -1603,8 +1583,8 @@ class Subscriptions extends NavbarComponent {
     methods: {
       requestPopup (component) {
         if (!component.requestedPopup && !component.disabled && !component.active) {
-          this.$set(component, `requestedPopup`, true);
-          component.initialPopup && component.initialPopup();
+          this.$set(component, `requestedPopup`, true)
+          component.initialPopup && component.initialPopup()
         }
         component.onPopup && component.onPopup()
       }
@@ -1612,6 +1592,6 @@ class Subscriptions extends NavbarComponent {
     mounted () {
       document.body.classList.remove('custom-navbar-loading')
     },
-  });
-})();
-return attributes;
+  })
+})()
+return attributes
