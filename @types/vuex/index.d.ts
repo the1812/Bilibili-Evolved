@@ -151,15 +151,7 @@ export default _default;
 
 declare global {
   const Vuex: typeof _default
-
   const store: Store<{
     watchlaterList: number[]
   }>
-
-  interface ComponentOptions<V extends Vue> {
-    store?: Store<any>
-  }
-  interface Vue {
-    $store: Store<any>
-  }
 }

@@ -1,5 +1,6 @@
 import { Vue, CreateElement, CombinedVueInstance } from "./vue";
 import { VNode, VNodeData, VNodeDirective, NormalizedScopedSlot } from "./vnode";
+import { Store } from '../vuex/index'
 
 type Constructor = {
   new(...args: any[]): any;
@@ -79,6 +80,7 @@ export interface ComponentOptions<
   computed?: Accessors<Computed>;
   methods?: Methods;
   watch?: Record<string, WatchOptionsWithHandler<any> | WatchHandler<any> | string>;
+  store?: Store<any>;
 
   el?: Element | string;
   template?: string;

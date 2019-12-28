@@ -29,6 +29,9 @@ export const store = (() => {
     },
     mutations: {
       toggleWatchlater (state, { aid, add }) {
+        if (typeof aid === 'string') {
+          aid = parseInt(aid)
+        }
         if (add && !state.watchlaterList.includes(aid)) {
           state.watchlaterList.push(aid)
         } else if (!add) {
@@ -63,6 +66,9 @@ export const store = (() => {
         commit('updateWatchlaterList', list)
       },
       toggleWatchlater ({ commit, state }, aid) {
+        if (typeof aid === 'string') {
+          aid = parseInt(aid)
+        }
         const add = !state.watchlaterList.includes(aid)
         commit('toggleWatchlater', {
           aid,
