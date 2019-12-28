@@ -6,7 +6,7 @@ document.body.style.setProperty("--navbar-blur-opacity", settings.customNavbarBl
 addSettingsListener("customNavbarBlurOpacity", value => {
   document.body.style.setProperty("--navbar-blur-opacity", value);
 });
-let showWidget = true;
+let showWidget = true
 const attributes = {
   widget: {
     content: /*html*/`
@@ -16,176 +16,8 @@ const attributes = {
       </div>`,
     condition: () => showWidget,
     success: async () => {
-      await SpinQuery.select(".custom-navbar-settings");
-      await import("slip");
-      const { debounce } = await import("debounce");
-      // const customNavbar = document.querySelector(".custom-navbar");
-      const button = document.querySelector("#custom-navbar-settings");
-      button.addEventListener("click", async () => {
-        const settingsPanel = dq(".custom-navbar-settings");
-        if (settingsPanel) {
-          settingsPanel.classList.toggle("show");
-          document.querySelector(".gui-settings-mask").click();
-        }
-      });
-      button.addEventListener("mouseover", () => {
-        const displayNames = {
-          blank1: "弹性空白1",
-          logo: "Logo",
-          category: "主站",
-          rankingLink: "排行",
-          drawingLink: "相簿",
-          musicLink: "音频",
-          gamesIframe: "游戏中心",
-          livesIframe: "直播",
-          shopLink: "会员购",
-          mangaLink: "漫画",
-          blank2: "弹性空白2",
-          search: "搜索框",
-          userInfo: "用户信息",
-          messages: "消息",
-          activities: "动态",
-          bangumi: '订阅',
-          watchlaterList: "稍后再看",
-          favoritesList: "收藏",
-          historyList: "历史",
-          upload: "投稿入口",
-          blank3: "弹性空白3",
-        };
-        Vue.component("order-item", {
-          props: ["item"],
-          template: /*html*/`
-            <li @mouseenter="viewBorder(true)"
-                @mouseleave="viewBorder(false)"
-                :class="{hidden: hidden()}">
-              <i class="mdi mdi-menu"></i>
-              {{item.displayName}}
-              <button @click="toggleHidden()">
-                  <i v-if="hidden()" class="mdi mdi-eye-off"></i>
-                  <i v-else class="mdi mdi-eye"></i>
-              </button>
-            </li>
-          `,
-          methods: {
-            hidden () {
-              return settings.customNavbarHidden.includes(this.item.name);
-            },
-            viewBorder (view) {
-              const navbarItem = document.querySelector(`.custom-navbar li[data-name='${this.item.name}']`);
-              if (navbarItem !== null) {
-                navbarItem.classList[view ? "add" : "remove"]("view-border");
-              }
-            },
-            toggleHidden () {
-              const isHidden = this.hidden();
-              if (isHidden === false) {
-                settings.customNavbarHidden.push(this.item.name);
-                settings.customNavbarHidden = settings.customNavbarHidden;
-              }
-              else {
-                const index = settings.customNavbarHidden.indexOf(this.item.name);
-                if (index === -1) {
-                  return;
-                }
-                settings.customNavbarHidden.splice(index, 1);
-                settings.customNavbarHidden = settings.customNavbarHidden;
-              }
-              this.$forceUpdate();
-              const navbarItem = document.querySelector(`.custom-navbar li[data-name='${this.item.name}']`);
-              if (navbarItem !== null) {
-                navbarItem.style.display = isHidden ? "flex" : "none";
-              }
-            }
-          }
-        });
-
-        const updateBoundsPadding = debounce(value => {
-          settings.customNavbarBoundsPadding = value;
-          document.body.style.setProperty("--navbar-bounds-padding", `0 ${value}%`);
-        }, 200);
-        new Vue({
-          el: ".custom-navbar-settings",
-          mounted () {
-            const list = document.querySelector(".custom-navbar-settings .order-list");
-            const reorder = ({ sourceItem, targetItem, orderBefore, orderAfter }) => {
-              if (orderBefore === orderAfter) {
-                return;
-              }
-              const entires = Object.entries(settings.customNavbarOrder).filter(([key,]) => key in customNavbarDefaultOrders);
-              const names = entires.sort((a, b) => a[1] - b[1]).map(it => it[0]);
-              if (orderBefore < orderAfter) {
-                for (let i = orderBefore + 1; i <= orderAfter; i++) {
-                  const name = names[i];
-                  settings.customNavbarOrder[name] = i - 1;
-                  document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i - 1;
-                }
-              } else {
-                for (let i = orderBefore - 1; i >= orderAfter; i--) {
-                  const name = names[i];
-                  settings.customNavbarOrder[name] = i + 1;
-                  document.querySelector(`.custom-navbar li[data-name='${name}']`).style.order = i + 1;
-                }
-              }
-              settings.customNavbarOrder[names[orderBefore]] = orderAfter;
-              document.querySelector(`.custom-navbar li[data-name='${names[orderBefore]}']`).style.order = orderAfter;
-              settings.customNavbarOrder = settings.customNavbarOrder;
-              list.insertBefore(sourceItem, targetItem);
-            };
-            new Slip(list);
-            list.addEventListener("slip:beforewait", e => {
-              if (e.target.classList.contains("mdi-menu")) {
-                e.preventDefault();
-              }
-            }, false);
-            list.addEventListener("slip:beforeswipe", e => e.preventDefault(), false);
-            list.addEventListener("slip:reorder", e => {
-              reorder({
-                sourceItem: e.target,
-                targetItem: e.detail.insertBefore,
-                orderBefore: e.detail.originalIndex,
-                orderAfter: e.detail.spliceIndex,
-              });
-              return false;
-            }, false);
-          },
-          computed: {
-            orderList () {
-              const orders = Object.entries(settings.customNavbarOrder);
-              return orders.filter(it => it[0] in displayNames).sort((a, b) => a[1] - b[1]).map(it => {
-                return {
-                  displayName: displayNames[it[0]],
-                  name: it[0],
-                  order: it[1],
-                };
-              });
-            },
-          },
-          data: {
-            boundsPadding: settings.customNavbarBoundsPadding,
-          },
-          watch: {
-            boundsPadding (value) {
-              updateBoundsPadding(value);
-            },
-          },
-          methods: {
-            close () {
-              document.querySelector(".custom-navbar-settings").classList.remove("show");
-            },
-            restoreDefault () {
-              if (typeof customNavbarDefaultOrders === "undefined") {
-                Toast.error("未找到默认值设定, 请更新您的脚本.");
-                return;
-              }
-              if (confirm("确定要恢复默认顶栏布局吗? 恢复后页面将刷新.")) {
-                this.boundsPadding = 5;
-                settings.customNavbarOrder = customNavbarDefaultOrders;
-                location.reload();
-              }
-            },
-          },
-        });
-      }, { once: true });
+      const { initSettingsPanel } = await import('./custom-navbar-settings')
+      await initSettingsPanel()
     },
   },
   unload: () => {
@@ -676,6 +508,11 @@ class UserInfo extends NavbarComponent {
   }
   async init () {
     const panel = await SpinQuery.select(".custom-navbar .user-info-panel");
+    const face = await SpinQuery.select(".custom-navbar .user-face-container .user-face");
+    const userInfoJson = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')
+    const userStatJson = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav/stat')
+    Object.assign(userInfo, userInfoJson.data)
+    Object.assign(userInfo, userStatJson.data)
     const vm = new Vue({
       el: panel,
       data: {
@@ -748,7 +585,6 @@ class UserInfo extends NavbarComponent {
         },
       },
     });
-    const face = await SpinQuery.select(".custom-navbar .user-face-container .user-face");
     if (userInfo.isLogin) {
       const faceUrl = userInfo.face.replace("http", "https");
       const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4];
@@ -1688,8 +1524,10 @@ class Subscriptions extends NavbarComponent {
 
 (async () => {
   const html = await import("customNavbarHtml");
-  const json = await Ajax.getJsonWithCredentials("https://api.bilibili.com/x/web-interface/nav");
-  userInfo = json.data;
+  userInfo = {
+    mid: getUID(),
+    isLogin: Boolean(getUID()),
+  }
   latestID = Activities.getLatestID()
   document.body.insertAdjacentHTML("beforeend", html);
   addSettingsListener("useDarkStyle", darkHandler, true);

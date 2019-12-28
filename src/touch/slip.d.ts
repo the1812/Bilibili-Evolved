@@ -1,0 +1,1 @@
+export const Slip: new (element: Element | null) => void

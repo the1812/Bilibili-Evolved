@@ -113,7 +113,7 @@
     - Change slip:beforewait time from 300 to 150.
 */
 
-window['Slip'] = (function ()
+export const Slip = (function ()
 {
     'use strict';
 
@@ -1092,3 +1092,8 @@ window['Slip'] = (function ()
     }
     return Slip;
 })();
+export default {
+    export: {
+        Slip
+    }
+}
