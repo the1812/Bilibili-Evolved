@@ -29,17 +29,20 @@ export const store = (() => {
     },
     mutations: {
       addToWatchlater (state, aid) {
+        console.log('add', aid)
         if (!state.watchlaterList.includes(aid)) {
           state.watchlaterList.push(aid)
         }
       },
       removeFromWatchlater (state, aid) {
+        console.log('remove', aid)
         const index = state.watchlaterList.indexOf(aid)
         if (index !== -1) {
           state.watchlaterList.splice(index, 1)
         }
       },
       updateWatchlaterList (state, list) {
+        console.log('updateWatchlaterList', list)
         state.watchlaterList = list
         state.watchlaterListCached = true
       }
@@ -49,30 +52,27 @@ export const store = (() => {
         const list = await getWatchlaterList()
         commit('updateWatchlaterList', list)
       },
-      async addToWatchlater ({ commit, dispatch, watchlaterListCached }, aid) {
-        if (!watchlaterListCached) {
-          await dispatch('fetchWatchlaterList')
-        }
+      addToWatchlater ({ commit, dispatch, watchlaterListCached }, aid) {
+        // if (!watchlaterListCached) {
+        //   await dispatch('fetchWatchlaterList')
+        // }
         commit('addToWatchlater', aid)
-        try {
-          await toggleWatchlater(aid, true)
-        } catch (error) {
+        toggleWatchlater(aid, true).catch(error => {
           logError(error)
           commit('removeFromWatchlater', aid)
-        }
+        })
       },
-      async removeFromWatchlater ({ commit, dispatch, watchlaterListCached }, aid) {
-        if (!watchlaterListCached) {
-          await dispatch('fetchWatchlaterList')
-        }
+      removeFromWatchlater ({ commit, dispatch, watchlaterListCached }, aid) {
+        // if (!watchlaterListCached) {
+        //   await dispatch('fetchWatchlaterList')
+        // }
         commit('removeFromWatchlater', aid)
-        try {
-          await toggleWatchlater(aid, false)
-        } catch (error) {
+        toggleWatchlater(aid, false).catch(error => {
           logError(error)
           commit('addToWatchlater', aid)
-        }
+        })
       }
     }
   })
 })()
+fullyLoaded(() => store.dispatch('fetchWatchlaterList'))

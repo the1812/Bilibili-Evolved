@@ -1053,8 +1053,8 @@ class Activities extends NavbarComponent {
             </div>
           `,
           handleJson: async function (json) {
-            const { getWatchlaterList } = await import('../../video/watchlater-api')
-            const watchlaterList = await getWatchlaterList()
+            // const { getWatchlaterList } = await import('../../video/watchlater-api')
+            // const watchlaterList = await getWatchlaterList()
             const cards = json.data.cards.map(card => {
               const cardJson = JSON.parse(card.card)
               return {
@@ -1069,7 +1069,7 @@ class Activities extends NavbarComponent {
                 upName: card.desc.user_profile.info.uname,
                 upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
                 id: card.desc.dynamic_id_str,
-                watchlater: watchlaterList.includes(cardJson.aid),
+                watchlater: true,
                 get new () { return Activities.isNewID(this.id) },
               }
             })
@@ -1084,29 +1084,46 @@ class Activities extends NavbarComponent {
           components: {
             'video-card': {
               props: ['card', 'watchlaterInit'],
+              store,
               data () {
                 return {
-                  watchlater: this.watchlaterInit,
+                  // watchlater: this.watchlaterInit,
+                }
+              },
+              computed: {
+                ...Vuex.mapState(['watchlaterList']),
+                watchlater () {
+                  if (this.watchlaterInit !== null) {
+                    return this.watchlaterList.includes(this.card.aid)
+                  } else {
+                    return null
+                  }
                 }
               },
               components: {
                 'dpi-img': () => import('../dpi-img.vue'),
               },
               methods: {
+                ...Vuex.mapActions(['addToWatchlater', 'removeFromWatchlater']),
                 async toggleWatchlater () {
-                  try {
-                    this.watchlater = !this.watchlater
-                    const { toggleWatchlater } = await import('../../video/watchlater-api')
-                    await toggleWatchlater(this.card.aid, this.watchlater)
-                  } catch (error) {
-                    logError(error)
-                    this.watchlater = !this.watchlater
+                  // try {
+                  //   this.watchlater = !this.watchlater
+                  //   const { toggleWatchlater } = await import('../../video/watchlater-api')
+                  //   await toggleWatchlater(this.card.aid, this.watchlater)
+                  // } catch (error) {
+                  //   logError(error)
+                  //   this.watchlater = !this.watchlater
+                  // }
+                  if (this.watchlater === true) {
+                    await this.removeFromWatchlater(this.card.aid)
+                  } else {
+                    await this.addToWatchlater(this.card.aid)
                   }
                 },
               },
               async mounted () {
                 // 预加载稍后再看的API
-                await import('../../video/watchlater-api')
+                // await import('../../video/watchlater-api')
               },
               template: /*html*/`
                 <a class="video-activity-card" :class="{new: card.new}" target="_blank" :href="card.videoUrl">

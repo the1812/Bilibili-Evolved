@@ -23,9 +23,9 @@
         </a>
         <button
           class="watchlater"
-          :class="{checked: currentCard.watchlater}"
           v-if="currentCard.watchlater !== null"
-          :title="currentCard.watchlater ? '已添加至稍后再看' : '稍后再看'"
+          :class="{checked: watchlaterList.includes(currentCard.aid)}"
+          :title="watchlaterList.includes(currentCard.aid) ? '已添加至稍后再看' : '稍后再看'"
           @click="toggleWatchlater(currentCard)"
         >
           <icon type="mdi" icon="clock-outline"></icon>
@@ -88,6 +88,7 @@ export default {
     Icon: () => import('../../icon.vue'),
     DpiImg: () => import('../../dpi-img.vue')
   },
+  store,
   filters: {
     bigNumber(value: number) {
       return formatCount(value)
@@ -100,6 +101,7 @@ export default {
     }
   },
   methods: {
+    ...Vuex.mapActions(['addToWatchlater', 'removeFromWatchlater']),
     regenerateQueue() {
       if (this.cards.length < 7) {
         return
@@ -119,15 +121,20 @@ export default {
       this.$emit('refresh')
     },
     async toggleWatchlater(card: VideoCardInfo) {
-      try {
-        card.watchlater = !card.watchlater
-        const { toggleWatchlater } = await import(
-          '../../../video/watchlater-api'
-        )
-        await toggleWatchlater(card.aid!.toString(), card.watchlater)
-      } catch (error) {
-        card.watchlater = !card.watchlater
-        logError(error)
+      // try {
+      //   card.watchlater = !card.watchlater
+      //   const { toggleWatchlater } = await import(
+      //     '../../../video/watchlater-api'
+      //   )
+      //   await toggleWatchlater(card.aid!.toString(), card.watchlater)
+      // } catch (error) {
+      //   card.watchlater = !card.watchlater
+      //   logError(error)
+      // }
+      if (this.watchlaterList.includes(card.aid)) {
+        await this.removeFromWatchlater(card.aid)
+      } else {
+        await this.addToWatchlater(card.aid)
       }
     }
   },
@@ -137,6 +144,7 @@ export default {
     }
   },
   computed: {
+    ...Vuex.mapState(['watchlaterList']),
     currentCard() {
       return this.cardQueue[1]
     }

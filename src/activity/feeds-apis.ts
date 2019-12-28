@@ -200,10 +200,10 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
     throw new Error(json.message)
   }
   if (type === 'video') {
-    const { getWatchlaterList } = await import(
-      '../video/watchlater-api'
-    )
-    const watchlaterList = await getWatchlaterList()
+    // const { getWatchlaterList } = await import(
+    //   '../video/watchlater-api'
+    // )
+    // const watchlaterList = await getWatchlaterList()
     return json.data.cards.map(
       (c: any): VideoCardInfo => {
         const card = JSON.parse(c.card)
@@ -233,7 +233,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
           durationText: formatDuration(card.duration, 0),
           playCount: formatCount(card.stat.view),
           danmakuCount: formatCount(card.stat.danmaku),
-          watchlater: watchlaterList.includes(card.aid)
+          watchlater: store.state.watchlaterList.includes(card.aid)
         }
       }
     )

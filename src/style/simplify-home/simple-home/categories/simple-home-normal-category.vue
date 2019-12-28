@@ -39,10 +39,10 @@
         <div
           class="watchlater"
           v-if="c.watchlater !== null"
-          :title="c.watchlater ? '已添加' : '稍后再看'"
+          :title="watchlaterList.includes(c.aid) ? '已添加' : '稍后再看'"
           @click.prevent="toggleWatchlater(c)"
         >
-          <icon v-if="c.watchlater" type="mdi" icon="check-circle"></icon>
+          <icon v-if="watchlaterList.includes(c.aid)" type="mdi" icon="check-circle"></icon>
           <icon v-else type="mdi" icon="clock-outline"></icon>
         </div>
         <div class="details">
@@ -90,6 +90,7 @@ export default {
     Icon: () => import('../../../icon.vue'),
     DpiImg: () => import('../../../dpi-img.vue')
   },
+  store,
   filters: {
     bigNumber(value: number) {
       return formatCount(value)
@@ -118,9 +119,12 @@ export default {
         loading: true,
         videos: []
       },
-      watchlaterList: null,
+      // watchlaterList: null,
       loaded: false
     }
+  },
+  computed: {
+    ...Vuex.mapState(['watchlaterList']),
   },
   methods: {
     async loadCards(
@@ -159,13 +163,13 @@ export default {
         if (json.code !== 0) {
           this[entityName].error = true
         }
-        const { getWatchlaterList } = await import(
-          '../../../../video/watchlater-api'
-        )
-        if (this.watchlaterList === null) {
-          const uid = getUID()
-          this.watchlaterList = uid ? await getWatchlaterList() : []
-        }
+        // const { getWatchlaterList } = await import(
+        //   '../../../../video/watchlater-api'
+        // )
+        // if (this.watchlaterList === null) {
+        //   const uid = getUID()
+        //   this.watchlaterList = uid ? await getWatchlaterList() : []
+        // }
         this[entityName].videos = parseJson(json)
       } catch (error) {
         logError(error)
@@ -215,21 +219,27 @@ export default {
         }
       )
     },
+    ...Vuex.mapActions(['addToWatchlater', 'removeFromWatchlater']),
     updateVideos() {
       this.loadNewActivity()
       this.loadNewPost()
       this.loadRank()
     },
     async toggleWatchlater(card: VideoCardInfo) {
-      try {
-        card.watchlater = !card.watchlater
-        const { toggleWatchlater } = await import(
-          '../../../../video/watchlater-api'
-        )
-        await toggleWatchlater(card.aid!, card.watchlater)
-      } catch (error) {
-        logError(error)
-        card.watchlater = !card.watchlater
+      // try {
+      //   card.watchlater = !card.watchlater
+      //   const { toggleWatchlater } = await import(
+      //     '../../../../video/watchlater-api'
+      //   )
+      //   await toggleWatchlater(card.aid!, card.watchlater)
+      // } catch (error) {
+      //   logError(error)
+      //   card.watchlater = !card.watchlater
+      // }
+      if (this.watchlaterList.includes(card.aid)) {
+        await this.removeFromWatchlater(card.aid)
+      } else {
+        await this.addToWatchlater(card.aid)
       }
     }
   },

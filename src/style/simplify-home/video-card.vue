@@ -8,7 +8,11 @@
     <div class="cover-container">
       <dpi-img class="cover" :src="coverUrl" :size="{height: 120, width: 200}"></dpi-img>
       <div v-if="durationText" class="duration">{{durationText}}</div>
-      <div v-if="durationText && watchlater !== null && watchlater !== undefined" class="watchlater" @click.stop.prevent="toggleWatchlater()">
+      <div
+        v-if="durationText && watchlater !== null && watchlater !== undefined"
+        class="watchlater"
+        @click.stop.prevent="toggleWatchlater()"
+      >
         <i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>
         {{watchlater ? '已添加' : '稍后再看'}}
       </div>
@@ -61,6 +65,7 @@
 import { VideoCardInfo } from './video-card-info'
 export default {
   props: ['data', 'orientation'],
+  store,
   components: {
     'dpi-img': () => import('../dpi-img.vue'),
     Icon: () => import('../icon.vue')
@@ -76,25 +81,40 @@ export default {
       topics: [],
       upID: 0,
       epID: 0,
-      ...this.data
-    } as VideoCardInfo
+      ...(_.omit(this.data, 'watchlater')),
+      watchlaterInit: this.data.watchlater
+    }
   },
   computed: {
     vertical() {
       return this.orientation === 'vertical'
+    },
+    ...Vuex.mapState(['watchlaterList']),
+    watchlater() {
+      if (getUID() && this.watchlaterInit !== null) {
+        return this.watchlaterList.includes(this.aid)
+      } else {
+        return null
+      }
     }
   },
   methods: {
+    ...Vuex.mapActions(['addToWatchlater', 'removeFromWatchlater']),
     async toggleWatchlater() {
-      try {
-        this.watchlater = !this.watchlater
-        const { toggleWatchlater: toggle } = await import(
-          '../../video/watchlater-api'
-        )
-        toggle(this.aid.toString(), this.watchlater)
-      } catch (error) {
-        this.watchlater = !this.watchlater
-        Toast.error(error.message, '稍后再看操作失败', 3000)
+      // try {
+      //   this.watchlater = !this.watchlater
+      //   const { toggleWatchlater: toggle } = await import(
+      //     '../../video/watchlater-api'
+      //   )
+      //   toggle(this.aid.toString(), this.watchlater)
+      // } catch (error) {
+      //   this.watchlater = !this.watchlater
+      //   Toast.error(error.message, '稍后再看操作失败', 3000)
+      // }
+      if (this.watchlater === true) {
+        await this.removeFromWatchlater(this.aid)
+      } else {
+        await this.addToWatchlater(this.aid)
       }
     }
   }
