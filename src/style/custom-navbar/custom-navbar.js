@@ -655,6 +655,10 @@ class UserInfo extends NavbarComponent {
             <i class="icon custom-navbar-icon-order-center custom-navbar-iconfont-new-home"></i>
             订单中心
           </a>
+          <a class="operation" target="_blank" href="https://www.bilibili.com/v/cheese/mine">
+            <i class="icon custom-navbar-icon-course custom-navbar-iconfont-new-home"></i>
+            我的课程
+          </a>
           <a class="logout grey-button" href="https://account.bilibili.com/login?act=exit">
             退出登录
           </a>

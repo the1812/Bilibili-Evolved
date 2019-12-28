@@ -8,7 +8,7 @@
 }
 @font-face {
   font-family: "custom-navbar-font-new-home";
-  src: url("//s1.hdslb.com/bfs/static/jinkela/international-home/asserts/iconfont.ttf") format("truetype");
+  src: url("//s1.hdslb.com/bfs/seed/jinkela/header-v2/asserts/iconfont.ttf") format("truetype");
 }
 .custom-navbar-iconfont,
 .custom-navbar-iconfont-extended,
@@ -111,6 +111,9 @@
 }
 .custom-navbar-icon-vip::before {
   content: "\E72E";
+}
+.custom-navbar-icon-course::before {
+  content: "\E60E";
 }
 [class^="custom-navbar-icon-lv"]::before {
   font-size: 24px;
