@@ -1104,22 +1104,7 @@ class Activities extends NavbarComponent {
                 'dpi-img': () => import('../dpi-img.vue'),
               },
               methods: {
-                ...Vuex.mapActions(['addToWatchlater', 'removeFromWatchlater']),
-                async toggleWatchlater () {
-                  // try {
-                  //   this.watchlater = !this.watchlater
-                  //   const { toggleWatchlater } = await import('../../video/watchlater-api')
-                  //   await toggleWatchlater(this.card.aid, this.watchlater)
-                  // } catch (error) {
-                  //   logError(error)
-                  //   this.watchlater = !this.watchlater
-                  // }
-                  if (this.watchlater === true) {
-                    await this.removeFromWatchlater(this.card.aid)
-                  } else {
-                    await this.addToWatchlater(this.card.aid)
-                  }
-                },
+                ...Vuex.mapActions(['toggleWatchlater']),
               },
               async mounted () {
                 // 预加载稍后再看的API
@@ -1130,7 +1115,7 @@ class Activities extends NavbarComponent {
                   <div class="cover-container">
                     <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
                     <div class="time">{{card.time}}</div>
-                    <div @click.stop.prevent="toggleWatchlater()" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
+                    <div @click.stop.prevent="toggleWatchlater(card.aid)" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
                   </div>
                   <h1 class="title" :title="card.title">{{card.title}}</h1>
                   <a class="up" target="_blank" :href="card.upUrl" :title="card.upName">

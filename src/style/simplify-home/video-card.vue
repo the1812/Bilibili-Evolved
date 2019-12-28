@@ -11,7 +11,7 @@
       <div
         v-if="durationText && watchlater !== null && watchlater !== undefined"
         class="watchlater"
-        @click.stop.prevent="toggleWatchlater()"
+        @click.stop.prevent="toggleWatchlater(aid)"
       >
         <i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>
         {{watchlater ? '已添加' : '稍后再看'}}
@@ -99,24 +99,7 @@ export default {
     }
   },
   methods: {
-    ...Vuex.mapActions(['addToWatchlater', 'removeFromWatchlater']),
-    async toggleWatchlater() {
-      // try {
-      //   this.watchlater = !this.watchlater
-      //   const { toggleWatchlater: toggle } = await import(
-      //     '../../video/watchlater-api'
-      //   )
-      //   toggle(this.aid.toString(), this.watchlater)
-      // } catch (error) {
-      //   this.watchlater = !this.watchlater
-      //   Toast.error(error.message, '稍后再看操作失败', 3000)
-      // }
-      if (this.watchlater === true) {
-        await this.removeFromWatchlater(this.aid)
-      } else {
-        await this.addToWatchlater(this.aid)
-      }
-    }
+    ...Vuex.mapActions(['toggleWatchlater']),
   }
 }
 </script>

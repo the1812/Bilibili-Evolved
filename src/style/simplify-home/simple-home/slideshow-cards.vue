@@ -26,7 +26,7 @@
           v-if="currentCard.watchlater !== null"
           :class="{checked: watchlaterList.includes(currentCard.aid)}"
           :title="watchlaterList.includes(currentCard.aid) ? '已添加至稍后再看' : '稍后再看'"
-          @click="toggleWatchlater(currentCard)"
+          @click="toggleWatchlater(currentCard.aid)"
         >
           <icon type="mdi" icon="clock-outline"></icon>
         </button>
@@ -101,7 +101,7 @@ export default {
     }
   },
   methods: {
-    ...Vuex.mapActions(['addToWatchlater', 'removeFromWatchlater']),
+    ...Vuex.mapActions(['toggleWatchlater']),
     regenerateQueue() {
       if (this.cards.length < 7) {
         return
@@ -120,23 +120,6 @@ export default {
     refresh() {
       this.$emit('refresh')
     },
-    async toggleWatchlater(card: VideoCardInfo) {
-      // try {
-      //   card.watchlater = !card.watchlater
-      //   const { toggleWatchlater } = await import(
-      //     '../../../video/watchlater-api'
-      //   )
-      //   await toggleWatchlater(card.aid!.toString(), card.watchlater)
-      // } catch (error) {
-      //   card.watchlater = !card.watchlater
-      //   logError(error)
-      // }
-      if (this.watchlaterList.includes(card.aid)) {
-        await this.removeFromWatchlater(card.aid)
-      } else {
-        await this.addToWatchlater(card.aid)
-      }
-    }
   },
   watch: {
     cards() {

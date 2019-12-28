@@ -1,5 +1,5 @@
 export const store = (() => {
-  const toggleWatchlater = async (aid, add) => {
+  const toggle = async (aid, add) => {
     const api = add ? 'https://api.bilibili.com/x/v2/history/toview/add' : 'https://api.bilibili.com/x/v2/history/toview/del'
     const csrf = getCsrf()
     const responseText = await Ajax.postTextWithCredentials(api, `aid=${aid}&csrf=${csrf}`)
@@ -28,19 +28,29 @@ export const store = (() => {
       watchlaterListCached: false,
     },
     mutations: {
-      addToWatchlater (state, aid) {
-        console.log('add', aid)
-        if (!state.watchlaterList.includes(aid)) {
+      toggleWatchlater (state, { aid, add }) {
+        if (add && !state.watchlaterList.includes(aid)) {
           state.watchlaterList.push(aid)
+        } else if (!add) {
+          const index = state.watchlaterList.indexOf(aid)
+          if (index !== -1) {
+            state.watchlaterList.splice(index, 1)
+          }
         }
       },
-      removeFromWatchlater (state, aid) {
-        console.log('remove', aid)
-        const index = state.watchlaterList.indexOf(aid)
-        if (index !== -1) {
-          state.watchlaterList.splice(index, 1)
-        }
-      },
+      // addToWatchlater (state, aid) {
+      //   console.log('add', aid)
+      //   if (!state.watchlaterList.includes(aid)) {
+      //     state.watchlaterList.push(aid)
+      //   }
+      // },
+      // removeFromWatchlater (state, aid) {
+      //   console.log('remove', aid)
+      //   const index = state.watchlaterList.indexOf(aid)
+      //   if (index !== -1) {
+      //     state.watchlaterList.splice(index, 1)
+      //   }
+      // },
       updateWatchlaterList (state, list) {
         console.log('updateWatchlaterList', list)
         state.watchlaterList = list
@@ -52,27 +62,35 @@ export const store = (() => {
         const list = await getWatchlaterList()
         commit('updateWatchlaterList', list)
       },
-      addToWatchlater ({ commit, dispatch, watchlaterListCached }, aid) {
-        // if (!watchlaterListCached) {
-        //   await dispatch('fetchWatchlaterList')
-        // }
-        commit('addToWatchlater', aid)
-        toggleWatchlater(aid, true).catch(error => {
-          logError(error)
-          commit('removeFromWatchlater', aid)
+      toggleWatchlater ({ commit, state }, aid) {
+        const add = !state.watchlaterList.includes(aid)
+        commit('toggleWatchlater', {
+          aid,
+          add,
         })
-      },
-      removeFromWatchlater ({ commit, dispatch, watchlaterListCached }, aid) {
-        // if (!watchlaterListCached) {
-        //   await dispatch('fetchWatchlaterList')
-        // }
-        commit('removeFromWatchlater', aid)
-        toggleWatchlater(aid, false).catch(error => {
+        toggle(aid, add).catch(error => {
           logError(error)
-          commit('addToWatchlater', aid)
+          commit('toggleWatchlater', {
+            aid,
+            add,
+          })
         })
       }
+      // addToWatchlater ({ commit }, aid) {
+      //   commit('addToWatchlater', aid)
+      //   toggleWatchlater(aid, true).catch(error => {
+      //     logError(error)
+      //     commit('removeFromWatchlater', aid)
+      //   })
+      // },
+      // removeFromWatchlater ({ commit }, aid) {
+      //   commit('removeFromWatchlater', aid)
+      //   toggleWatchlater(aid, false).catch(error => {
+      //     logError(error)
+      //     commit('addToWatchlater', aid)
+      //   })
+      // }
     }
   })
 })()
-fullyLoaded(() => store.dispatch('fetchWatchlaterList'))
+fullyLoaded(() => getUID() && store.dispatch('fetchWatchlaterList'))
