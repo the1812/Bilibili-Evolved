@@ -133,6 +133,7 @@ export const settings = {
   },
   customNavbar: true,
   customNavbarFill: false,
+  customNavbarTransparent: false,
   customNavbarShadow: true,
   customNavbarCompact: false,
   customNavbarBlur: true,

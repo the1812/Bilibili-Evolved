@@ -200,14 +200,13 @@ const attributes = {
   },
 };
 const classHandler = (key, value, element) => {
-  element.classList[value ? "add" : "remove"](key);
+  element.classList.toggle(key, value)
 }
 const darkHandler = value => {
   document.querySelector(".custom-navbar").classList[value ? "add" : "remove"]("dark");
   document.querySelector(".custom-navbar-settings").classList[value ? "add" : "remove"]("dark");
 };
-addSettingsListener("allNavbarFill", value => classHandler("all-navbar-fill", value, document.body));
-classHandler("all-navbar-fill", settings.allNavbarFill, document.body);
+addSettingsListener("allNavbarFill", value => classHandler("all-navbar-fill", value, document.body), true)
 const supportedUrls = [
   "//www.bilibili.com",
   "//t.bilibili.com",
@@ -300,10 +299,9 @@ class Blank extends NavbarComponent {
 class Logo extends NavbarComponent {
   constructor () {
     super();
-    this.getLogo()
     this.href = `https://www.bilibili.com/`;
     this.touch = false;
-    addSettingsListener('customNavbarSeasonLogo', () => this.getLogo())
+    addSettingsListener('customNavbarSeasonLogo', () => this.getLogo(), true)
   }
   async getLogo () {
     if (settings.customNavbarSeasonLogo) {
@@ -1694,11 +1692,9 @@ class Subscriptions extends NavbarComponent {
   userInfo = json.data;
   latestID = Activities.getLatestID()
   document.body.insertAdjacentHTML("beforeend", html);
-  addSettingsListener("useDarkStyle", darkHandler);
-  darkHandler(settings.useDarkStyle);
+  addSettingsListener("useDarkStyle", darkHandler, true);
   ["Fill", "Shadow", "Compact", "Blur"].forEach(item => {
-    addSettingsListener("customNavbar" + item, value => classHandler(item.toLowerCase(), value, document.querySelector(".custom-navbar")));
-    classHandler(item.toLowerCase(), settings["customNavbar" + item], document.querySelector(".custom-navbar"));
+    addSettingsListener("customNavbar" + item, value => classHandler(item.toLowerCase(), value, document.querySelector(".custom-navbar")), true)
   });
   SpinQuery.condition(() => dq("#banner_link,.international-header .bili-banner"),
     banner => banner === null ? null : banner.style.backgroundImage,
@@ -1708,9 +1704,19 @@ class Subscriptions extends NavbarComponent {
         blurLayers.forEach(blurLayer => {
           blurLayer.style.backgroundImage = banner.style.backgroundImage;
           blurLayer.setAttribute("data-image", banner.style.backgroundImage);
-        });
-      });
-    });
+        })
+        addSettingsListener('customNavbarTransparent', value => {
+          if (!settings.hideBanner) {
+            dq('.custom-navbar').classList.toggle('transparent', value)
+          }
+        }, true)
+        addSettingsListener('hideBanner', value => {
+          if (settings.customNavbarTransparent) {
+            dq('.custom-navbar').classList.toggle('transparent', !value)
+          }
+        })
+      })
+    })
 
   const components = [
     new Blank(1),

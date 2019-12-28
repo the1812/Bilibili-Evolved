@@ -147,6 +147,7 @@ li.nav-item[report-id="playpage_dynamic"] iframe,
 li.nav-item[report-id="playpage_dynamic"] .i-frame,
 .z-top-container > .header .search,
 .i_menu_login,
+.international-header .b-wrap,
 .bili-banner .taper-line,
 .international-header .mini-header {
   display: none !important;
@@ -201,15 +202,28 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   &.fill path {
     fill: var(--foreground-color-d);
   }
-  &.shadow {
+  &.shadow:not(.transparent) {
     box-shadow: #0002 0 1px 10px 1px;
   }
-  &.dark.shadow {
+  &.dark.shadow:not(.transparent) {
     box-shadow: #0004 0px 2px 10px 1px;
   }
-  &.dark:not(.fill) {
+  &.dark:not(.fill):not(.transparent) {
     --navbar-background: #222;
     --navbar-foreground: #eee;
+  }
+  &.transparent {
+    --navbar-background: transparent;
+    --navbar-foreground: #eee;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(2 * var(--navbar-height));
+      background-image: linear-gradient(to bottom, #000a 0, #0004 65%, transparent 100%);
+    }
   }
   .popup {
     color: black;
@@ -229,7 +243,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     height: var(--navbar-height);
     width: 100%;
   }
-  &.fill.shadow {
+  &.fill.shadow:not(.transparent) {
     box-shadow: var(--theme-color-30) 0px 2px 10px 1px;
   }
   & > ul {
@@ -265,6 +279,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     border-radius: 1.5px;
     display: none;
   }
+  &.transparent li .active-bar,
   &.fill li .active-bar {
     background-color: rgba(0, 0, 0, 0.3);
   }
@@ -749,7 +764,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     top: 0;
     left: 0;
   }
-  &.blur .blur-layer-container {
+  &.blur:not(.transparent) .blur-layer-container {
     display: flex;
   }
   .blur-layer {

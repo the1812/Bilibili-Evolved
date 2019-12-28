@@ -350,7 +350,7 @@ declare global {
     },
     customNavbar: boolean,
     customNavbarFill: boolean,
-    allNavbarFill: boolean,
+    customNavbarTransparent: boolean,
     customNavbarShadow: boolean,
     customNavbarCompact: boolean,
     customNavbarBlur: boolean,
