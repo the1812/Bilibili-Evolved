@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.9.22
+// @version      1.9.23
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -29,6 +29,7 @@
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
+// @require      https://unpkg.com/vuex@3.1.2/dist/vuex.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
@@ -51,8 +52,9 @@ import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
 import { getScriptBlocker } from './script-blocker'
 import { installStyle, uninstallStyle } from './custom-styles'
+import { store } from './store'
 
-(async () => {
+;(async () => {
   const redundantFrames = [
     'https://message.bilibili.com/pages/nav/index_new_sync',
     'https://message.bilibili.com/pages/nav/index_new_pc_sync',
@@ -178,6 +180,7 @@ import { installStyle, uninstallStyle } from './custom-styles'
       escapeFilename,
       installStyle,
       uninstallStyle,
+      store,
       resources,
       theWorld: waitTime => {
         if (waitTime > 0) {
