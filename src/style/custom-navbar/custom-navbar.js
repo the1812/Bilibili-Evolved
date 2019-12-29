@@ -929,7 +929,7 @@ class Activities extends NavbarComponent {
     if (Activities.compareID(id, currentID) < 0) {
       return
     }
-    document.cookie = `bp_t_offset_${userInfo.mid}=${id}path=/domain=.bilibili.commax-age=${60 * 60 * 24 * 30}`
+    document.cookie = `bp_t_offset_${userInfo.mid}=${id}path=/domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`
   }
   static compareID (a, b) {
     if (a === b) {
@@ -1303,35 +1303,160 @@ class VideoList extends NavbarComponent {
     return this.listName + "List"
   }
 }
-class WatchlaterList extends VideoList {
+// class WatchlaterList extends VideoList {
+//   constructor () {
+//     super({
+//       name: "稍后再看",
+//       mainUrl: "https://www.bilibili.com/watchlater/#/list",
+//       apiUrl: "https://api.bilibili.com/x/v2/history/toview/web",
+//       listName: "watchlater",
+//       listMap: json => {
+//         if (!json.data.list) {
+//           return [/*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`]
+//         }
+//         return json.data.list.slice(0, 6).map(item => {
+//           const href = (() => {
+//             if (item.pages === undefined) {
+//               return settings.watchLaterRedirect ?
+//                 `https://www.bilibili.com/video/av${item.aid}` :
+//                 `https://www.bilibili.com/watchlater/#/av${item.aid}`
+//             }
+//             const pages = item.pages.map(it => it.cid)
+//             const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
+//             return settings.watchLaterRedirect ?
+//               `https://www.bilibili.com/video/av${item.aid}?p=${page}` :
+//               `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`
+//           })()
+//           return /*html*/`<li><a target="_blank" href="${href}">${item.title}</a></li>`
+//         })
+//       },
+//     })
+//     this.active = document.URL.startsWith("https://www.bilibili.com/watchlater/")
+//   }
+// }
+class WatchlaterList extends NavbarComponent {
   constructor () {
-    super({
-      name: "稍后再看",
-      mainUrl: "https://www.bilibili.com/watchlater/#/list",
-      apiUrl: "https://api.bilibili.com/x/v2/history/toview/web",
-      listName: "watchlater",
-      listMap: json => {
-        if (!json.data.list) {
-          return [/*html*/`<li class="loading empty">空空如也哦 =￣ω￣=</li>`]
+    super()
+    this.noPadding = true
+    this.href = 'https://www.bilibili.com/watchlater/#/list'
+    this.html = '稍后再看'
+    this.active = document.URL.startsWith('https://www.bilibili.com/watchlater/')
+    this.popupHtml = /*html*/`
+      <div class="watchlater-list">
+        <div class="header">
+          <div class="operations">
+            <div class="round-button" title="播放全部"><i class="mdi mdi-play-circle-outline"></i></div>
+            <div class="round-button" title="移除已观看"><i class="mdi mdi-eye-check-outline"></i></div>
+            <div class="round-button" title="清空全部"><i class="mdi mdi-trash-can-outline"></i></div>
+          </div>
+          <a class="more-info" href="https://www.bilibili.com/watchlater/#/list" target="_blank">
+            详细信息
+            <i class="mdi mdi-dots-horizontal"></i>
+          </a>
+        </div>
+        <transition-group name="cards" tag="div" class="cards">
+          <div class="watchlater-card" v-for="(card, index) of cards" :key="card.aid">
+            <a class="cover-container" target="_blank" :href="card.href">
+              <dpi-img class="cover" :src="card.coverUrl" :size="{width: 200, height: 120}"></dpi-img>
+              <div class="floating remove" title="移除" @click.prevent="remove(card.aid, index)"><i class="mdi mdi-close"></i></div>
+              <div class="floating duration">{{card.durationText}}</div>
+            </a>
+            <a class="title" target="_blank" :href="card.href">{{card.title}}</a>
+            <a class="up" target="_blank" :href="'https://space.bilibili.com/' + card.upID">
+              <dpi-img class="face" :src="card.upFaceUrl" :size="24"></dpi-img>
+              <div class="name">{{card.upName}}</div>
+            </a>
+            <div class="viewed" v-if="card.complete" :title="'已观看' + (card.percent * 100) + '%'">已观看</div>
+          </div>
+        </transition-group>
+        <!--<div class="undo round-button">
+          <i class="mdi mdi-undo-variant"></i>
+          撤销
+        </div>-->
+      </div>
+    `
+    this.initialPopup = () => {
+      this.init()
+    }
+  }
+  async init () {
+    console.log(await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .watchlater-list`))
+    new Vue({
+      el: await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .watchlater-list`),
+      store,
+      components: {
+        DpiImg: () => import('../dpi-img.vue'),
+      },
+      data: {
+        cards: [],
+        loading: true,
+        lastRemovedAid: 0,
+      },
+      computed: {
+        ...Vuex.mapState(['watchlaterList']),
+      },
+      watch: {
+        watchlaterList () {
+          this.updateList()
         }
-        return json.data.list.slice(0, 6).map(item => {
-          const href = (() => {
-            if (item.pages === undefined) {
+      },
+      methods: {
+        ...Vuex.mapActions(['toggleWatchlater']),
+        async updateList () {
+          const { getWatchlaterList } = await import('../../video/watchlater-api')
+          const rawList = await getWatchlaterList(true)
+          if (!rawList) {
+            this.cards = []
+            return
+          }
+          this.cards = rawList.map(item => {
+            const href = (() => {
+              if (item.pages === undefined) {
+                return settings.watchLaterRedirect ?
+                  `https://www.bilibili.com/video/av${item.aid}` :
+                  `https://www.bilibili.com/watchlater/#/av${item.aid}`
+              }
+              const pages = item.pages.map(it => it.cid)
+              const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
               return settings.watchLaterRedirect ?
-                `https://www.bilibili.com/video/av${item.aid}` :
-                `https://www.bilibili.com/watchlater/#/av${item.aid}`
+                `https://www.bilibili.com/video/av${item.aid}?p=${page}` :
+                `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`
+            })()
+            const percent = Math.round(1000 * item.progress / item.duration) / 1000
+            return {
+              aid: item.aid,
+              href,
+              coverUrl: item.pic.replace('http:', 'https:'),
+              durationText: formatDuration(item.duration),
+              duration: item.duration,
+              percent,
+              complete: percent > 0.95, // 进度过95%算看完
+              title: item.title,
+              upName: item.owner.name,
+              upFaceUrl: item.owner.face.replace('http:', 'https:'),
+              upID: item.owner.mid,
             }
-            const pages = item.pages.map(it => it.cid)
-            const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
-            return settings.watchLaterRedirect ?
-              `https://www.bilibili.com/video/av${item.aid}?p=${page}` :
-              `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`
-          })()
-          return /*html*/`<li><a target="_blank" href="${href}">${item.title}</a></li>`
-        })
+          })
+        },
+        async remove (aid, index) {
+          this.cards.splice(index, 1)
+          await this.toggleWatchlater(aid)
+          this.lastRemovedAid = aid
+        },
+        async undo () {
+          const aid = this.lastRemovedAid
+          if (aid !== 0) {
+            await this.toggleWatchlater(aid)
+          }
+        }
+      },
+      mounted () {
+        this.updateList()
       },
     })
-    this.active = document.URL.startsWith("https://www.bilibili.com/watchlater/")
+  }
+  get name () {
+    return 'watchlaterList'
   }
 }
 class FavoritesList extends VideoList {
