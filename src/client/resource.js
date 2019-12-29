@@ -64,13 +64,13 @@ export class Resource {
                 //   [key]: this.text
                 // })
                 if (text) {
-                  console.log(`load online data: ${key}`)
+                  // console.log(`load online data: ${key}`)
                   this.text = text
                   resolve(this.text)
                 } else {
                   Ajax.monkey({ url: this.url })
                     .then(text => {
-                      console.log(`load preview data: ${key}`)
+                      // console.log(`load preview data: ${key}`)
                       this.text = text
                       settings.cache = Object.assign(settings.cache, {
                         [key]: text

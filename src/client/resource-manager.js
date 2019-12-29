@@ -266,7 +266,12 @@ export class ResourceManager {
       url,
       responseType: 'blob',
     }))
+    const latestVersion = await Ajax.monkey({ url: Resource.root + 'version.txt' })
     isTimeout = false
+    if (settings.currentVersion !== latestVersion) {
+      console.log(`bundle version not match. current=${settings.currentVersion}, latest=${latestVersion}`)
+      return
+    }
     let cache = {}
     const files = zip.file(/.+/)
     for (const file of files) {
