@@ -25,7 +25,8 @@
     background-color: #000a;
   }
   .popup .watchlater-list {
-    height: 600px;
+    min-height: 200px;
+    max-height: 600px;
     width: 224px;
     font-size: 12px;
     display: flex;
