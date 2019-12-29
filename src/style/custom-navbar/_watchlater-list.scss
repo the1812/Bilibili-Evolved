@@ -130,6 +130,7 @@
       flex: 1;
       overflow: auto;
       overscroll-behavior: contain;
+      position: relative;
       @include no-scrollbar();
       // display: flex;
       // flex-flow: column nowrap;
