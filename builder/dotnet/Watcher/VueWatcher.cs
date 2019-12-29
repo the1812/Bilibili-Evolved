@@ -19,7 +19,7 @@ namespace BilibiliEvolved.Build.Watcher
     private Dictionary<string, TaskCompletionSource<string>> waitRequests = new Dictionary<string, TaskCompletionSource<string>>();
     public Task<string> WaitForBuild(string path) {
       var tcs = new TaskCompletionSource<string>();
-      // Console.WriteLine($"add request: {path}");
+      Console.WriteLine($"add request: {path}");
       waitRequests[path] = tcs;
       return tcs.Task;
     }
@@ -29,8 +29,9 @@ namespace BilibiliEvolved.Build.Watcher
       if (File.Exists(originalFilename)) {
         File.Delete(originalFilename);
       }
-      // Console.WriteLine($"test filename: {originalFilename}");
+      Console.WriteLine($"test filename: {originalFilename}");
       if (waitRequests.ContainsKey(originalFilename)) {
+        Console.WriteLine($"set result for: {originalFilename}");
         waitRequests[originalFilename].SetResult(File.ReadAllText(e.FullPath));
         waitRequests.Remove(originalFilename);
       }
@@ -125,7 +126,12 @@ namespace BilibiliEvolved.Build.Watcher
         {
           var tsFile = path + ".ts";
           var task = tsWatcher.WaitForBuild(tsFile);
+          if (File.Exists(tsFile)) {
+            File.Delete(tsFile);
+          }
+          Console.WriteLine($"writing file {tsFile}");
           File.WriteAllText(tsFile, vueFile.Script);
+          Console.WriteLine($"waiting for tsc...");
           var script = task.Result.Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
           compiledText.Append($"{script})}}");
         }

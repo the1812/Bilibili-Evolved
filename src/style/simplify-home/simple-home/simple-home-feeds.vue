@@ -151,16 +151,17 @@ export default {
     padding-bottom: 16px;
     scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
-    @media screen and (min-width: 1050px) {
+    min-height: var(--card-height);
+    @media screen and (min-width: 1100px) {
       --card-count: 4;
     }
     @media screen and (min-width: 1300px) {
       --card-count: 5;
     }
-    @media screen and (min-width: 1600px) {
+    @media screen and (min-width: 1550px) {
       --card-count: 6;
     }
-    @media screen and (min-width: 1900px) {
+    @media screen and (min-width: 1850px) {
       --card-count: 7;
     }
     &::-webkit-scrollbar {

@@ -120,6 +120,8 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - <kbd>l</kbd> Like
 - <kbd>c</kbd> Coin
 - <kbd>s</kbd> Favorite
+- <kbd>j</kbd> 85s forward
+- <kbd>Shift + j</kbd> 85s backward
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> Playback speed adjust
 - <kbd>Shift + /</kbd> Reset playback speed`],
   ['doubleClickFullscreen', `Allow double click the player to toggle fullscreen, please note that this feature will not work if <span>播放器触摸支持</span> - <span>启用双击控制</span> is also enabled.`],
@@ -142,6 +144,8 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - Simple: A clean design with additional feeds section.
 - Minimal: Only video feeds and trending videos, no other sections.`],
   [`autoMatchMedal`, `Auto wear medal when you have the medal of the current live room, or wear the last manually selected medal.`],
+  [`urlParamsClean`, `Auto remove redundant params in URL.`],
+  [`collapseLiveSideBar`, `Collapse the side bar of live room.`],
 ]);
 export default {
   export: { toolTips },

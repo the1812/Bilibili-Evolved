@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.9.19
+// @version      1.9.22
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -53,8 +53,13 @@ import { getScriptBlocker } from './script-blocker'
 import { installStyle, uninstallStyle } from './custom-styles'
 
 (async () => {
+  const redundantFrames = [
+    'https://message.bilibili.com/pages/nav/index_new_sync',
+    'https://message.bilibili.com/pages/nav/index_new_pc_sync',
+    'https://t.bilibili.com/h5/dynamic/specification',
+  ]
   if (await GM.getValue('customNavbar') === true
-    && document.URL === 'https://message.bilibili.com/pages/nav/index_new_sync') {
+    && redundantFrames.includes(document.URL)) {
     if (await GM.getValue('useDarkStyle') === true) {
       document.documentElement.style.setProperty('--theme-color', await GM.getValue('customStyleColor'))
       if (typeof offlineData === 'undefined') {
@@ -74,6 +79,7 @@ import { installStyle, uninstallStyle } from './custom-styles'
         document.head.insertAdjacentElement('afterbegin', style)
       }
     }
+    console.log(`Skipped <iframe> loading for ${document.URL}`)
     return
   }
   try {

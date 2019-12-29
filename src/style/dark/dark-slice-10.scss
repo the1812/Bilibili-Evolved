@@ -81,7 +81,8 @@
   }
 }
 .dialog-ctnr.bottom-left,
-.suggest-wrap .keyword-wrap .keyword.focus {
+.suggest-wrap .keyword-wrap .keyword.focus,
+.action-menu .menu-list a {
   @include background-color("3");
 }
 .pay-note-panel {
@@ -90,6 +91,9 @@
   .arrow-right {
     filter: invert(0.7) !important;
   }
+}
+.vote-result-comment {
+  @include background-color();
 }
 .chat-history-panel .chat-history-list .chat-item.superChat-card-detail .card-item-middle-top {
   @include background-color();
@@ -124,7 +128,7 @@
   @include foreground-color();
 }
 
-.extension-wrapper .dark {
+.extension-wrapper {
   .vote-left-time {
     @include color("a");
   }
@@ -136,7 +140,8 @@
   }
 }
 .app-layout {
-  .search-bar .search-bar-bg {
+  .search-bar .search-bar-bg,
+  .vertical-block-card {
     @include background-color("4");
   }
   .rank-item-wrapper {
@@ -167,16 +172,35 @@
       @include to-theme("blue");
     }
   }
+  .banner-manga-container .tab-item {
+    @include color("e");
+    &.activated {
+      @include theme-color();
+      &:after {
+        @include theme-background-color();
+      }
+    }
+  }
   .nav-list .nav-item .item-icon {
     @include to-theme("blue");
   }
-  .rank-title {
+  .rank-title,
+  .list-item {
     @include color("e");
+  }
+  .item-title {
+    @include color("e");
+    &:hover {
+      @include theme-color();
+    }
   }
   .rank-hint,
   .meta-ctnr,
   .manga-info-ctnr {
     @include color("a");
+  }
+  .section-navigator {
+    @include border-color();
   }
 }
 .card-detail .card-item-middle-top {
@@ -258,31 +282,65 @@
     @include background-color("a");
   }
 }
-.video-item.list {
-  @include border-color("4");
-  .type {
-    @include background-color("4");
-    @include color("e");
-    @include border-color();
-  }
-  .headline.singleav {
-    .avid {
-      @include theme-background-color();
-      @include foreground-color();
+#all-list {
+  .video-item.list {
+    @include border-color("4");
+    .type {
+      @include background-color("4");
+      @include color("e");
       @include border-color();
     }
+    .headline.singleav {
+      .avid {
+        @include theme-background-color();
+        @include foreground-color();
+        @include border-color();
+      }
+      .title {
+        @include theme-color();
+      }
+    }
     .title {
-      @include theme-color();
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .des {
+      @include color("a");
     }
   }
-  .title {
-    @include color("e");
-    &:hover {
-      @include theme-color();
+  .game-item .info {
+    .title {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .type {
+      @include background-color("4");
+      @include color("e");
+      @include border-color();
+    }
+    .desc {
+      @include color("a");
     }
   }
-  .des {
-    @include color("a");
+  .pgc-item {
+    .v-switcher-header-wrap:before {
+      @include background-color();
+    }
+    .v-switcher-header-item {
+      @include color("e");
+      &.is-active,
+      &:hover {
+        @include theme-color();
+        @include theme-border-color();
+      }
+      &.is-active:after {
+        @include to-theme("blue");
+      }
+    }
   }
 }
 .cc-album-manage {
@@ -556,4 +614,170 @@
   .bilibili-player-video-quality-menu .bilibili-player-bigvip {
     @include foreground-color();
   }
+}
+.home-page {
+  .publish-panel {
+    .core-style {
+      @include background-color("2");
+      @include color("e");
+      @include border-color();
+      &:hover {
+        @include theme-border-color();
+      }
+    }
+    .schedule-bar {
+      @include background-color("3");
+      .s-label,
+      .dp-label {
+        @include color("e");
+      }
+      .scroll-input .s-input {
+        @include background-color("2");
+        @include color("e");
+        @include border-color();
+      }
+      .s-panel {
+        @include background-color("2");
+        @include border-color();
+        .s-item {
+          @include color("e");
+          &:hover {
+            @include theme-color();
+          }
+        }
+      }
+    }
+    .toolbar {
+      .static-popup {
+        @include background-color("2");
+        @include border-color();
+        .title {
+          @include color("e");
+        }
+        .upload-image .upload-btn:hover {
+          @include theme-color();
+          @include theme-border-color();
+        }
+      }
+      .bp-vote-container {
+        .create-vote {
+          @include background-color("2");
+          @include color("e");
+          @include border-color();
+          .title {
+            @include color("e");
+          }
+          .bp-button:nth-child(2) {
+            @include theme-background();
+            @include foreground-color();
+          }
+        }
+      }
+      .publish-btn {
+        @include theme-background-color();
+        @include foreground-color();
+        &.disabled {
+          @include background-color("2");
+          @include color("e");
+        }
+      }
+    }
+  }
+  .h5share-container:hover .text-area .text {
+    @include theme-color();
+  }
+}
+.up-info .u-info .name .live-status {
+  @include theme-color();
+  @include theme-border-color();
+  &:hover {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
+.popover-video-card {
+  @include background-color("3");
+  .count {
+    @include border-color("4");
+    ul li {
+      @include color("a");
+    }
+  }
+  .content .info {
+    .subtitle {
+      @include color("a");
+    }
+    .f-title {
+      @include color("e");
+    }
+  }
+}
+.v-wrap {
+  .video-toolbar,
+  .season-tabs .tabs {
+    @include border-color("4");
+  }
+  .season-info {
+    @include border-color("4");
+    .stat {
+      @include color("a");
+    }
+    .title,
+    .desc {
+      @include color("e");
+    }
+  }
+  .season-owner .info {
+    h3 a,
+    .desc {
+      @include color("e");
+    }
+  }
+  .season-detail {
+    .content-img,
+    .faq.faq,
+    .note.faq {
+      @include border-color("4");
+    }
+  }
+}
+.message {
+  .message-content {
+    @include background-color("2");
+  }
+  .context-menu {
+    @include background-color("4");
+    @include color("e");
+  }
+}
+.shop-panel {
+  .panel-desc {
+    @include color("e");
+    .shop-icon {
+      @include to-white();
+    }
+  }
+  .shop-list {
+    @include background-color("2");
+    .shop-desc {
+      .desc-box {
+        .title {
+          @include color("e");
+        }
+        .sub-title {
+          @include color("a");
+        }
+        .price-desc {
+          @include theme-color();
+        }
+      }
+      .btn-box .jump-btn {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+}
+.link-navbar {
+  background-image: none !important;
 }

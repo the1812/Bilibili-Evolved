@@ -23,6 +23,9 @@
       opacity: 1 !important;
     }
   }
+  #bilibili_pbp_pin {
+    opacity: 0 !important;
+  }
   &.touch-video-control-show {
     .bilibili-player-video-control {
       &-bottom,
@@ -34,6 +37,9 @@
     #bilibili_pbp,
     #bilibili_pbp_canvas {
       bottom: calc(100% + 3px) !important;
+      opacity: 1 !important;
+    }
+    #bilibili_pbp_pin {
       opacity: 1 !important;
     }
     .bilibili-player-video-progress-detail {

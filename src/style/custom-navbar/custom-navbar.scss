@@ -152,7 +152,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   z-index: 10002 !important;
 }
 :not(.international-home) > .international-header {
-  height: var(--navbar-height) !important;
+  min-height: var(--navbar-height) !important;
 }
 
 .bili-header-m > .nav-menu,
@@ -223,6 +223,8 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   &.fill {
     --navbar-background: var(--theme-color);
     --navbar-foreground: var(--foreground-color-d);
+    height: var(--navbar-height);
+    width: 100%;
   }
   &.fill.shadow {
     box-shadow: var(--theme-color-30) 0px 2px 10px 1px;

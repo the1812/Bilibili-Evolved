@@ -1,0 +1,364 @@
+@import "./dark-definitions";
+#app {
+  .header {
+    .left-block {
+      .logo {
+        @include theme-color();
+      }
+      .main-site {
+        @include color("e");
+      }
+    }
+    .right-block {
+      @include color("e");
+      .i-frame::before {
+        @include background-color();
+      }
+    }
+  }
+  .cc-nav-wrp {
+    @include background-color();
+    .slider-bar .bar-item .bcc-nav-slider {
+      &-sub-menu {
+        &>span,
+        a {
+          @include color("e");
+        }
+        .router {
+          &-item.active {
+            @include theme-color();
+            i {
+              @include theme-color();
+            }
+          }
+          &_wrap {
+            i {
+              @include color("a");
+            }
+            &.active {
+              @include theme-color();
+              i {
+                @include theme-color();
+              }
+            }
+          }
+        }
+        &:hover {
+          @include background();
+        }
+        &__group {
+          .router-item,
+          a {
+            @include color("a");
+          }
+        }
+      }
+      &-item__wrap {
+        .router {
+          &-item.active {
+            @include theme-color();
+            i {
+              @include theme-color();
+            }
+          }
+          &_wrap {
+            i {
+              @include color("a");
+            }
+          }
+        }
+        &:hover {
+          @include background();
+        }
+      }
+    }
+  }
+  .cc-body {
+    @include background-color();
+    .message-notice_wrap .tips-item_wrap {
+      @include background-color("4");
+    }
+    .chief-recommend-module .carousel-box,
+    .data-card {
+      @include background-color();
+    }
+    .new-calendar-wrap {
+      @include background-color("2");
+      .calendarEntry_box .calendarEntry_content {
+        @include color("e");
+        .luck_wrap .luck_title {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+      .headerClass {
+        @include color("e");
+      }
+      .calendar-header {
+        @include border-color("4");
+      }
+      .calendar-body {
+        .date-wrap {
+          @include color("a");
+          .wrap-content .today {
+            @include theme-color();
+          }
+        }
+        .date-desc_wrap {
+          @include background();
+          .item-desc_card {
+            @include background-color("3");
+            .item-desc_title .item-title {
+              @include color("e");
+            }
+            .item-desc_body .item-desc__content {
+              @include color("e");
+              @include border-color();
+              .nothing-wrap {
+                @include background();
+                .release-link {
+                  @include theme-color();
+                }
+              }
+            }
+          }
+        }
+        .calendar-box {
+          @include border-color();
+        }
+      }
+    }
+    .notice_wrap {
+      @include background-color("4");
+      .notice_title .notice-txt {
+        @include color("e");
+      }
+      .notice_body .hot-item {
+        .item-left p,
+        .item-right {
+          @include color("a");
+        }
+      }
+    }
+    .academy-wrap {
+      @include background-color();
+      .header .academy-tag {
+        @include color("e");
+      }
+      .content {
+        .tabs .tabs__header {
+          @include border-color("4");
+          .tabs__header-item {
+            @include color("a");
+            &.is-active {
+              @include theme-color();
+              &:after {
+                @include theme-background-color();
+              }
+            }
+          }
+        }
+        .list-item {
+          .title {
+            @include color("e");
+          }
+          .view {
+            @include color("a");
+          }
+        }
+      }
+    }
+    .side-utils .feedback-container {
+      .item-desc {
+        @include color("e");
+      }
+      .bcc-popover {
+        @include background-color("4");
+        @include color("e");
+        @include border-color();
+        box-shadow: 0 7px 11px 0 rgba(0, 0, 0, 0.18) !important;
+        .help-wrap li {
+          .title {
+            @include color("e");
+            .bcc-icon-ic_enter {
+              @include color("e");
+            }
+          }
+          &:hover {
+            @include background-color("3");
+          }
+        }
+        &[x-placement^=left] .popper__arrow {
+          @include border-color();
+          &:after {
+            @include border-color();
+          }
+        }
+      }
+    }
+    .dc-section1-body {
+      @include background-color();
+      .dc-section-item1_title_name p {
+        @include color("e");
+      }
+    }
+    .lab-wrap {
+      @include background-color();
+      .lab-guide img {
+        filter: brightness(0.5) contrast(3) !important;
+      }
+      .lab-title {
+        @include color("a");
+      }
+      .lab-item {
+        @include border-color("4");
+        .lab-item-header {
+          .item-info .item-title {
+            .title {
+              @include color("e");
+            }
+            .desc {
+              @include color("a");
+            }
+          }
+          .item-operate span {
+            @include color("e");
+          }
+        }
+        .lab-item-content {
+          @include background-color();
+          .divide-line {
+            @include background-color("4");
+          }
+          .content-detail {
+            p {
+              @include color("e");
+            }
+            .detail-desc,
+            .feedback {
+              @include color("a");
+              a {
+                @include theme-color();
+              }
+            }
+            .carousel-wrapper .panel .pic .card-img img {
+              filter: brightness(0.5) contrast(3) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.el-popover {
+  @include background-color("2");
+  @include border-color();
+  &.header-popover-download .link {
+    div p:first-child {
+      @include color("e");
+    }
+    &:hover {
+      @include background-color("4");
+    }
+  }
+}
+.round-corner {
+  .international-header .mini-type {
+    @include background-color("2");
+    box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px 1px !important;
+    .nav-link .nav-link-ul {
+      .nav-link-item .link .bili-Navbar_logo,
+      &.mini .bili-icon_dingdao_xiazaiapp {
+        @include color("e");
+      }
+    }
+    .nav-user-center .user-con .item .name {
+      @include color("e");
+    }
+  }
+  .channel-menu-mini {
+    @include background-color("2");
+    box-shadow: rgba(0, 0, 0, .3) 0 4px 8px 0px !important;
+    .r-box {
+      @include border-color("4");
+    }
+    .box a:hover {
+      @include background-color("0001");
+    }
+  }
+  .van-popper {
+    &-avatar {
+      .level-info .grade {
+        @include color("e");
+      }
+      .coins,
+      .counts {
+        @include border-color("4");
+      }
+      .count-item .item {
+        &-key,
+        &-value {
+          @include color("e");
+        }
+      }
+      .links {
+        @include border-color("4");
+        .link-title {
+          @include color("e");
+        }
+        .link-item:hover {
+          @include background-color("3");
+        }
+      }
+    }
+    &-favorite {
+      .tab-item--normal,
+      .video-info .line-2 {
+        @include color("e");
+      }
+      .tab-item--active {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+      .tabs-panel {
+        @include border-color("4");
+      }
+      .video-card:hover,
+      .tab-item--normal:hover {
+        @include background-color("3");
+      }
+      .play-all {
+        @include background-color();
+        @include border-color("4");
+      }
+    }
+    &-history {
+      .tab-header {
+        @include border-color("4");
+        .tab-item {
+          @include color("e");
+          &--active {
+            @include theme-background-color();
+            @include foreground-color();
+          }
+        }
+      }
+      .panel {
+        .video-card:hover {
+          @include background-color("3");
+        }
+        .progress {
+          @include theme-background-color();
+        }
+        .video-info {
+          span.date {
+            @include background-color();
+          }
+          .line-2 {
+            @include color("e");
+          }
+        }
+      }
+    }
+  }
+}

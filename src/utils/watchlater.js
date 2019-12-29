@@ -41,7 +41,7 @@ SpinQuery.select('.watch-later-list').then(() => {
       () => {
         const url = getRedirectLink(document.URL)
         if (url !== null) {
-          window.location.replace(url)
+          window.location.assign(url)
         }
       }
     )

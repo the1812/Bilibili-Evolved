@@ -40,7 +40,8 @@
 <img height="400" alt="查看封面/下载视频/下载弹幕" src="images/compressed/download-video-view-cover.jpg">
 
 </details>
-<details>
+
+<!-- <details>
 <summary><strong>指定播放器布局</strong></summary>
 
 设置默认的播放器布局, 可分别设置视频区和番剧区. 尽量在相应的页面里设置(比如在番剧播放页面设置番剧播放器布局), 否则可能没有效果.
@@ -50,7 +51,8 @@
 - 旧版: 传统布局
 - 新版: 视频区默认的新版布局
 
-</details>
+</details> -->
+
 <details>
 <summary><strong>默认播放器模式</strong></summary>
 
@@ -160,14 +162,16 @@
 - `l` 点赞
 - `c` 投币
 - `s` 收藏
+- `j` 前进85秒
+- `Shift + j` 倒退85秒
 - `Shift + ↑/↓` / `Shift + ,/.` 播放速度调整
 - `Shift + /` 重置播放速度
 
 附: b站原生快捷键列表:
 - `f` 全屏/退出全屏
 - `space` 播放/暂停
-- `→` 步进5s
-- `←` 步退5s
+- `→` 前进5s
+- `←` 倒退5s
 - `↑` 音量增加10%
 - `↓` 音量降低10%
 - `媒体键 play/pause` 播放/暂停
@@ -176,7 +180,7 @@
 - `]` 多P 下一个
 - `enter` 发弹幕
 
-> ⚠ 此功能与原生快捷键有一点差异: 在网页任何地方点下快捷键都会生效, 除非正在打字. (原生快捷键需要聚焦到播放器才能用)
+> ⚠ 此功能与原生快捷键有一点差异: 在网页任何地方点下快捷键都会生效, 除非正在打字. (原生快捷键需要聚焦到播放器才能用, 除了`f`和`space`快捷键会被额外再扩展到全网页范围)
 
 </details>
 <details>
@@ -347,6 +351,12 @@
 <summary><strong>缩放直播看板娘</strong></summary>
 
 根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度, DPI缩放为100%的用户不需要此功能.
+
+</details>
+<details>
+<summary><strong>收起直播间侧栏</strong></summary>
+
+自动收起直播间的侧边栏.
 
 </details>
 <details>
@@ -557,6 +567,12 @@
 <summary><strong>自动选择当前直播间勋章</strong></summary>
 
 如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.
+
+</details>
+<details>
+<summary><strong>网址参数清理</strong></summary>
+
+自动删除链接中的多余跟踪参数, 例如`spm_id_from`, `from_source`, `share_source`等.
 
 </details>
 

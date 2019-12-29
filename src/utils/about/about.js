@@ -28,7 +28,11 @@
           {
             name: 'PleiadeSubaru',
             link: 'https://github.com/Etherrrr'
-          }
+          },
+          {
+            name: 'Lets-Halloween',
+            link: 'https://github.com/Lets-Halloween'
+          },
         ].sort(userSorter),
         fetching: true,
         participants: [],

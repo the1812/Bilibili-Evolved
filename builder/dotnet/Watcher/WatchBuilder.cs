@@ -33,12 +33,15 @@ namespace BilibiliEvolved.Build.Watcher
       {
         await Task.Run(() =>
         {
-          builder
-          .BuildBundle()
-          .BuildPreviewOffline()
-          .BuildOffline()
-          .BuildPreviewData()
-          .BuildFinalOutput();
+          lock (builder)
+          {
+            builder
+              .BuildBundle()
+              .BuildPreviewOffline()
+              .BuildOffline()
+              .BuildPreviewData()
+              .BuildFinalOutput();
+          }
         });
         lock (queue)
         {

@@ -190,6 +190,7 @@ namespace BilibiliEvolved.Build
             var minFile = "min" + Path.DirectorySeparatorChar + Path.GetFileName(file) + ".min.js";
             var jsc = new JavascriptMinifier();
             File.WriteAllText(minFile, jsc.Minify(compiledText.ToString()));
+            UpdateCachedMinFile(minFile);
             WriteHint($"\t=> {minFile}");
           });
         }

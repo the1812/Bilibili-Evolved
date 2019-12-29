@@ -2,6 +2,10 @@ html.image-viewer-opened,
 body.image-viewer-opened {
   overflow: hidden !important;
 }
+.image-viewer-container,
+.image-viewer-container * {
+  transition: .2s ease-out;
+}
 .image-viewer-container {
   background: rgba(0, 0, 0, 0.85);
   width: 100%;
@@ -10,12 +14,15 @@ body.image-viewer-opened {
   top: 0;
   left: 0;
   z-index: 100002;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  pointer-events: none;
 }
 .image-viewer-container.opened {
-  display: flex;
+  opacity: 1;
+  pointer-events: initial;
 }
 .image-viewer {
   width: 90%;
@@ -37,6 +44,10 @@ body.image-viewer-opened {
   justify-content: stretch;
   align-items: center;
   align-content: stretch;
+  transform: scale(.95);
+}
+.image-viewer-container.opened .image-viewer {
+  transform: scale(1);
 }
 .image-viewer .image {
   grid-area: image;

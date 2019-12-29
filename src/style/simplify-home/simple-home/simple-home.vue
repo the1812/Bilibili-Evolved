@@ -29,7 +29,7 @@ export default {
     'categories categories categories';
   grid-template-columns: repeat(3, auto);
   grid-template-rows: repeat(3, auto);
-  column-gap: 44px;
+  column-gap: 32px;
   row-gap: 16px;
   &,
   & * {
@@ -75,6 +75,7 @@ export default {
       }
     }
   }
+  .toggle-reorder,
   .more {
     cursor: pointer;
     padding: 4px 12px 4px 8px;
@@ -89,7 +90,7 @@ export default {
       font-size: 22px;
       font-weight: normal;
     }
-    &:hover {
+    &:not(.toggle-reorder):hover {
       .be-icon {
         transform: rotate(180deg);
       }
@@ -121,6 +122,7 @@ export default {
       .tab {
         cursor: pointer;
         position: relative;
+        white-space: nowrap;
         .tab-name {
           opacity: 0.5;
           font-size: 14px;
@@ -187,6 +189,7 @@ export default {
   }
   .categories {
     grid-area: categories;
+    padding-bottom: 32px;
   }
   @media screen and (max-width: 900px) {
     & {

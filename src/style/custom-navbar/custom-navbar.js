@@ -734,7 +734,9 @@ class UserInfo extends NavbarComponent {
             })).json()
           console.log(result)
           if (result.code === 0) {
-            this.wallet.bcoin_balance += 5
+            if (typeMapping[type] === 'bCoin') {
+              this.wallet.bcoin_balance += 5
+            }
           } else if (result.code === 69801) { // 已领过
             return
           } else {
@@ -747,13 +749,15 @@ class UserInfo extends NavbarComponent {
     const face = await SpinQuery.select(".custom-navbar .user-face-container .user-face");
     if (userInfo.isLogin) {
       const faceUrl = userInfo.face.replace("http", "https");
-      // face.setAttribute("src", faceUrl);
-      const faceBaseSize = 68;
       const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4];
-      face.setAttribute("srcset", dpis.map(dpi => {
-        return `${faceUrl}@${parseInt(faceBaseSize * dpi)}w_${parseInt(faceBaseSize * dpi)}h.jpg ${dpi}x`;
-      }).join(","));
-      // face.style.backgroundImage = `url('${userInfo.face}@68w_68h.jpg')`;
+      if (!faceUrl.includes('static.hdslb.com/images/member/noface.gif')) { // 没上传过头像的不做缩放
+        const faceBaseSize = 68;
+        face.setAttribute("srcset", dpis.map(dpi => {
+          return `${faceUrl}@${parseInt(faceBaseSize * dpi)}w_${parseInt(faceBaseSize * dpi)}h.jpg ${dpi}x`;
+        }).join(","));
+      } else {
+        face.setAttribute('src', '//static.hdslb.com/images/member/noface.gif')
+      }
       if (userInfo.pendant.image) {
         const pendant = await SpinQuery.select(".custom-navbar .user-face-container .user-pendant");
         const pendantUrl = userInfo.pendant.image.replace("http", "https");
@@ -762,7 +766,6 @@ class UserInfo extends NavbarComponent {
         pendant.setAttribute("srcset", dpis.reduce((acc, dpi) => {
           return acc + `, ${pendantUrl}@${parseInt(pendantBaseSize * dpi)}w_${parseInt(pendantBaseSize * dpi)}h.png ${dpi}x`;
         }, ""));
-        // pendant.style.backgroundImage = `url('${userInfo.pendant.image}@116w_116h.jpg')`;
       }
       if (userInfo.vipType === 2) { // 年度大会员权益
         const privileges = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/vip/privilege/my')
@@ -814,6 +817,11 @@ class SearchBox extends NavbarComponent {
         }
         e.preventDefault();
         return false;
+      }
+      if (/^av[\d]+$/.test(keywordInput.value)) {
+        window.open(`https://www.bilibili.com/${keywordInput.value}`)
+        e.preventDefault()
+        return false
       }
       const historyItem = settings.searchHistory.find(item => item.keyword === keywordInput.value)
       if (historyItem) {

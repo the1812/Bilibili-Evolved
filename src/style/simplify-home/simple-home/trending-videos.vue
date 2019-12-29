@@ -99,22 +99,22 @@ export default {
     scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
 
-    @media screen and (max-width: 1250px) and (min-width: 900px) {
+    @media screen and (max-width: 1300px) and (min-width: 900px) {
       & {
         --card-count: 2;
       }
     }
-    @media screen and (max-width: 1050px) and (min-width: 900px) {
+    @media screen and (max-width: 1100px) and (min-width: 900px) {
       & {
         --card-count: 1;
       }
     }
-    @media screen and (min-width: 1600px) {
+    @media screen and (min-width: 1550px) {
       & {
         --card-count: 4;
       }
     }
-    @media screen and (min-width: 1900px) {
+    @media screen and (min-width: 1850px) {
       & {
         --card-count: 5;
       }

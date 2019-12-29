@@ -147,6 +147,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>l</kbd> 点赞
 - <kbd>c</kbd> 投币
 - <kbd>s</kbd> 收藏
+- <kbd>j</kbd> 前进85秒
+- <kbd>Shift + j</kbd> 倒退85秒
 - <kbd>Shift + w</kbd> 稍后再看
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 播放速度调整
 - <kbd>Shift + /</kbd> 重置播放速度`],
@@ -170,6 +172,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 清爽: 布局与原主页类似, 多一个动态栏目.
 - 极简: 去除其他所有栏目, 只保留视频动态和热门视频两个功能.`],
   [`autoMatchMedal`, /*html*/`如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.`],
+  [`urlParamsClean`, /*html*/`自动删除链接中的多余跟踪参数.`],
+  [`collapseLiveSideBar`, /*html*/`自动收起直播间的侧边栏.`],
 ]);
 export default {
   export: { toolTips },

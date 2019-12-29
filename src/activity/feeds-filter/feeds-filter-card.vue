@@ -163,12 +163,10 @@ export default {
       return
     }
     const tab = tabBar.querySelector(
-      '.tab:nth-child(2) .tab-text'
+      '.tab:nth-child(1) .tab-text'
     ) as HTMLAnchorElement
     Observer.attributes(tab, () => {
-      document.body.classList[
-        tab.classList.contains('selected') ? 'add' : 'remove'
-      ]('enable-feeds-filter')
+      document.body.classList.toggle('enable-feeds-filter', tab.classList.contains('selected'))
     })
     const { feedsCardsManager, feedsCardTypes } = await import('../feeds-apis')
     const success = await feedsCardsManager.startWatching()

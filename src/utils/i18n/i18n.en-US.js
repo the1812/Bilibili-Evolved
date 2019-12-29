@@ -667,7 +667,7 @@ export const map = new Map([
   [`失效视频重定向`, `Redirect dead video`],
   [`信息来源`, `Info provider`],
   [`快速收起动态评论区`, `Quick fold comments`],
-  [`收起评论`, `Fold comments`],
+  [`收起评论`, `Close comments`],
   [`我的直播间地址`, `My live room address`],
   [`选择分类`, `Category`],
   [`必须选择分类才能开播`, `You can't start live broadcasting before select a category.`],
@@ -770,6 +770,12 @@ export const map = new Map([
   [`付费礼物`, `Paid gifts`],
   [`看板娘`, `Showgirl`],
   [`活动横幅`, `Event banner`],
+  [`网址参数清理`, `URL clean up`],
+  [`收起直播间侧栏`, `Collapse live room side bar`],
+  [`导入设置`, `Import settings`],
+  [`导出设置`, `Export settings`],
+  [`已成功导入设置, 部分设置需要刷新后生效.`, `Import settings successful, refresh to take effect.`],
+  [`选择的设置文件无效.`, `Invalid settings file.`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
