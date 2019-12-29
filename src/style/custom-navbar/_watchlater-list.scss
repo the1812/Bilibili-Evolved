@@ -25,12 +25,36 @@
     background-color: #000a;
   }
   .popup .watchlater-list {
-    height: 500px;
+    height: 600px;
     width: 224px;
     font-size: 12px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
+    .empty-tip,
+    .loading-tip {
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      @include h-center();
+      .mdi {
+        margin-right: 6px;
+      }
+    }
+    .empty-tip {
+      opacity: 1;
+    }
+    &.loading {
+      .loading-tip {
+        opacity: 1;
+      }
+      & > :not(.loading-tip) {
+        opacity: 0;
+      }
+    }
     .mdi {
       line-height: 1;
       font-size: 18px;
@@ -47,6 +71,7 @@
       @include round-bar(20);
       @include h-center();
       @include floating-button-background();
+      color: white;
       justify-content: center;
       cursor: pointer;
     }
@@ -54,6 +79,35 @@
       @include h-center();
       justify-content: space-between;
       margin: 16px 12px;
+      .search {
+        position: relative;
+        input {
+          width: 150px;
+          padding: 4px;
+          border: none;
+          outline: none !important;
+          color: inherit;
+          background-color: transparent;
+          border-radius: 4px;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          top: calc(100%);
+          left: 0;
+          width: 100%;
+          height: 2px;
+          border-radius: 2px;
+          transition: 0.24s ease-out;
+          background-color: #8882;
+        }
+        &.not-empty,
+        &:focus-within {
+          &::after {
+            background-color: var(--theme-color);
+          }
+        }
+      }
       .operations {
         @include h-center();
         .round-button {
@@ -75,6 +129,7 @@
     .cards {
       flex: 1;
       overflow: auto;
+      overscroll-behavior: contain;
       @include no-scrollbar();
       // display: flex;
       // flex-flow: column nowrap;
@@ -86,6 +141,7 @@
         transform: translateY(-16px) scale(0.75);
       }
       &-leave-active {
+        transition: 0.24s cubic-bezier(0.22, 0.61, 0.36, 1);
         position: absolute;
       }
       .watchlater-card {
@@ -97,9 +153,9 @@
         background-color: #fff;
         display: grid;
         grid-template:
-          "cover cover" 120px
-          "title title" auto
-          "up viewed" auto / auto auto;
+          "cover" 120px
+          "title" auto
+          "info" auto / 200px;
         body.dark & {
           background-color: #282828;
           color: #eee;
@@ -112,17 +168,24 @@
           overflow: hidden;
           border-radius: 8px 8px 0 0;
           position: relative;
+          $padding: 6px;
           .remove {
-            top: 8px;
-            right: 8px;
+            top: $padding;
+            right: $padding;
             width: 20px;
             .mdi {
               font-size: 16px;
             }
           }
           .duration {
-            left: 4px;
-            bottom: 4px;
+            left: $padding;
+            bottom: $padding;
+            padding: 0 8px;
+          }
+          .viewed {
+            white-space: nowrap;
+            left: $padding;
+            top: $padding;
             padding: 0 8px;
           }
           .floating {
@@ -147,13 +210,24 @@
           line-height: 1.5;
           overflow: hidden;
           margin: 8px 8px 0 8px;
+          &:hover {
+            color: var(--theme-color) !important;
+          }
         }
+        // .info {
+        //   grid-area: info;
+        //   display: flex;
+        //   align-items: center;
+        //   justify-content: space-around;
+        //   margin: 8px;
+        // }
         .up {
-          grid-area: up;
+          flex: 0 1 auto;
           padding: 2px 10px 2px 2px;
           margin: 8px;
           justify-self: start;
-          max-width: 90%;
+          align-self: center;
+          max-width: calc(100% - 16px);
           @include h-center();
           @include button-background();
           @include round-bar(28);
@@ -166,15 +240,9 @@
             white-space: nowrap;
             text-overflow: ellipsis;
           }
-          &:hover {
+          &:hover .name {
             color: var(--theme-color);
           }
-        }
-        .viewed {
-          grid-area: viewed;
-          opacity: 0.75;
-          margin: 8px;
-          justify-self: end;
         }
       }
     }

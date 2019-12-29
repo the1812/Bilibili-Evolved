@@ -922,14 +922,14 @@ class Activities extends NavbarComponent {
     return 5 * 60 * 1000 // 每5分钟更新1次动态提醒数字
   }
   static getLatestID () {
-    return document.cookie.replace(new RegExp(`(?:(?:^|.*\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^]*).*$)|^.*$`), '$1')
+    return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${userInfo.mid}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
   }
   static setLatestID (id) {
     const currentID = Activities.getLatestID()
     if (Activities.compareID(id, currentID) < 0) {
       return
     }
-    document.cookie = `bp_t_offset_${userInfo.mid}=${id}path=/domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`
+    document.cookie = `bp_t_offset_${userInfo.mid}=${id};path=/;domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`
   }
   static compareID (a, b) {
     if (a === b) {
@@ -1342,31 +1342,42 @@ class WatchlaterList extends NavbarComponent {
     this.html = '稍后再看'
     this.active = document.URL.startsWith('https://www.bilibili.com/watchlater/')
     this.popupHtml = /*html*/`
-      <div class="watchlater-list">
+      <div class="watchlater-list loading">
+        <div class="loading-tip">
+          <i class="mdi mdi-loading mdi-spin"></i>
+          加载中...
+        </div>
+        <div class="empty-tip" v-if="filteredCards.length === 0">
+          空空如也哦 =￣ω￣=
+        </div>
         <div class="header">
-          <div class="operations">
-            <div class="round-button" title="播放全部"><i class="mdi mdi-play-circle-outline"></i></div>
+          <!--<div class="operations">
+            <div v-if="!redirect" class="round-button" title="播放全部"><i class="mdi mdi-play-circle-outline"></i></div>
             <div class="round-button" title="移除已观看"><i class="mdi mdi-eye-check-outline"></i></div>
             <div class="round-button" title="清空全部"><i class="mdi mdi-trash-can-outline"></i></div>
+          </div>-->
+          <div class="search">
+            <input type="text" placeholder="搜索" v-model="search">
           </div>
-          <a class="more-info" href="https://www.bilibili.com/watchlater/#/list" target="_blank">
-            详细信息
+          <a class="round-button" href="https://www.bilibili.com/watchlater/#/list" title="查看更多" target="_blank">
             <i class="mdi mdi-dots-horizontal"></i>
           </a>
         </div>
         <transition-group name="cards" tag="div" class="cards">
-          <div class="watchlater-card" v-for="(card, index) of cards" :key="card.aid">
+          <div class="watchlater-card" v-for="(card, index) of filteredCards" :key="card.aid">
             <a class="cover-container" target="_blank" :href="card.href">
               <dpi-img class="cover" :src="card.coverUrl" :size="{width: 200, height: 120}"></dpi-img>
               <div class="floating remove" title="移除" @click.prevent="remove(card.aid, index)"><i class="mdi mdi-close"></i></div>
               <div class="floating duration">{{card.durationText}}</div>
+              <div class="floating viewed" :title="'已观看' + card.percent">
+                {{card.complete ? '已观看' : card.percent}}
+              </div>
             </a>
-            <a class="title" target="_blank" :href="card.href">{{card.title}}</a>
-            <a class="up" target="_blank" :href="'https://space.bilibili.com/' + card.upID">
+            <a class="title" target="_blank" :href="card.href" :title="card.title">{{card.title}}</a>
+            <a class="up" target="_blank" :href="'https://space.bilibili.com/' + card.upID" :title="card.upName">
               <dpi-img class="face" :src="card.upFaceUrl" :size="24"></dpi-img>
               <div class="name">{{card.upName}}</div>
             </a>
-            <div class="viewed" v-if="card.complete" :title="'已观看' + (card.percent * 100) + '%'">已观看</div>
           </div>
         </transition-group>
         <!--<div class="undo round-button">
@@ -1389,11 +1400,18 @@ class WatchlaterList extends NavbarComponent {
       },
       data: {
         cards: [],
-        loading: true,
+        search: '',
         lastRemovedAid: 0,
+        // redirect: settings.watchLaterRedirect,
       },
       computed: {
         ...Vuex.mapState(['watchlaterList']),
+        filteredCards() {
+          const search = this.search.toLowerCase()
+          return this.cards.filter(card => {
+            return card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search)
+          })
+        }
       },
       watch: {
         watchlaterList () {
@@ -1429,7 +1447,7 @@ class WatchlaterList extends NavbarComponent {
               coverUrl: item.pic.replace('http:', 'https:'),
               durationText: formatDuration(item.duration),
               duration: item.duration,
-              percent,
+              percent: `${fixed(percent * 100)}%`,
               complete: percent > 0.95, // 进度过95%算看完
               title: item.title,
               upName: item.owner.name,
@@ -1450,8 +1468,12 @@ class WatchlaterList extends NavbarComponent {
           }
         }
       },
-      mounted () {
-        this.updateList()
+      async mounted () {
+        try {
+          await this.updateList()
+        } finally {
+          this.$el.classList.remove('loading')
+        }
       },
     })
   }
@@ -1546,7 +1568,7 @@ class Subscriptions extends NavbarComponent {
         <div class="tab-placeholder"></div>
         <a class="view-all" target="_blank" :href="'https://space.bilibili.com/${userInfo.mid}/' + (bangumi ? 'bangumi' : 'cinema')">
           查看更多
-          <i class="mdi mdi-dots-horizontal-circle-outline"></i>
+          <i class="mdi mdi-dots-horizontal"></i>
         </a>
       </ul>
       <div class="content">
