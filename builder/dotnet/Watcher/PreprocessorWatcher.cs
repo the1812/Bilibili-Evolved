@@ -30,6 +30,9 @@ namespace BilibiliEvolved.Build.Watcher
       FileFilter = file =>
       {
         var originalFile = GetOriginalFilePath(file);
+        if (originalExtension == ".scss") {
+          return true;
+        }
         return !cache.Contains(originalFile);
       };
     }
