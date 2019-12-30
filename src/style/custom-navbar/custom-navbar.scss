@@ -199,7 +199,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   path {
     fill: var(--navbar-foreground);
   }
-  &.fill path {
+  &.fill:not(.transparent) path {
     fill: var(--foreground-color-d);
   }
   &.shadow:not(.transparent) {
@@ -237,7 +237,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   &.dark .popup iframe {
     box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
   }
-  &.fill {
+  &.fill:not(.transparent) {
     --navbar-background: var(--theme-color);
     --navbar-foreground: var(--foreground-color-d);
     height: var(--navbar-height);
@@ -356,7 +356,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     opacity: 0.4;
     margin: 0;
   }
-  &.fill form {
+  &.fill:not(.transparent) form {
     opacity: 0.8;
   }
   form:focus-within,

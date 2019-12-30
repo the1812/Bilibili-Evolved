@@ -1427,7 +1427,7 @@ class WatchlaterList extends NavbarComponent {
             this.cards = []
             return
           }
-          this.cards = rawList.map(item => {
+          const cards = rawList.map(item => {
             const href = (() => {
               if (item.pages === undefined) {
                 return settings.watchLaterRedirect ?
@@ -1455,6 +1455,13 @@ class WatchlaterList extends NavbarComponent {
               upID: item.owner.mid,
             }
           })
+          // const noChange = cards.length === this.cards.length && cards.every((c, i) => this.cards[i].aid === c.aid)
+          // console.log(noChange)
+          // if (noChange) {
+          //   console.log('skipped cards update')
+          //   return
+          // }
+          this.cards = cards
         },
         async remove (aid, index) {
           this.cards.splice(index, 1)
