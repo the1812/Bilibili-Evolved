@@ -493,14 +493,6 @@
 
 </details>
 <details>
-<summary><strong>显示失效视频信息</strong></summary>
-
-在个人空间中, 为已失效视频恢复标题和封面. 如果还启用了`失效视频重定向`, 还会把视频的链接替换为BiliPlus里对应的页面.
-
-`信息来源`默认为`稍后再看`, 脚本将把视频添加到稍后再看, 拿到标题和封面后再从稍后再看删掉, 会消耗一定时间. 之后如果 BiliPlus API 弄好了, 将开放`BiliPlus`的选项, 速度相对更快.
-
-</details>
-<details>
 <summary><strong>BiliPlus跳转支持</strong></summary>
 
 在视频/番剧/空间中, 附加功能`转到BiliPlus`, 点击可以转到[BiliPlus](https://biliplus.com)上对应的页面.
