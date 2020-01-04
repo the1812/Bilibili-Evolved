@@ -7,6 +7,10 @@ export async function convertToAss(xml: string) {
   let config: any = { title }
   try {
     await loadDanmakuSettingsPanel()
+    const getSliderFactor = (selector: string) => {
+      const transform = parseFloat((dq(selector) as HTMLElement).style.transform!.replace(/translateX\(([\d\.]+)/, '$1'))
+      return transform * 4 / 188
+    }
     const getSliderIndex = (selector: string) => {
       const transform = parseFloat((dq(selector) as HTMLElement).style.transform!.replace(/translateX\(([\d\.]+)/, '$1')) as 0 | 44 | 94 | 144 | 188
       const index = {
@@ -21,7 +25,7 @@ export async function convertToAss(xml: string) {
     config.font = (dq('.bilibili-player-video-danmaku-setting-right-font .bui-select-result') as HTMLElement).innerText
     config.alpha = parseFloat((dq('.bilibili-player-setting-opacity .bui-bar') as HTMLElement).style.transform!.replace(/scaleX\(([\d\.]+)\)/, '$1'))
     config.duration = (() => {
-      const scrollDuration = [18, 14, 10, 8, 6][getSliderIndex('.bilibili-player-setting-speedplus .bui-thumb')]
+      const scrollDuration = 18 - 3 * getSliderFactor('.bilibili-player-setting-speedplus .bui-thumb')
       return (danmaku: { type: number }) => {
         switch (danmaku.type) {
           case 4:
@@ -49,7 +53,7 @@ export async function convertToAss(xml: string) {
       }
       return result.concat(7, 8)
     })()
-    const resolutionFactor = [1.4, 1.2, 1, 0.8, 0.6][getSliderIndex('.bilibili-player-setting-fontsize .bui-thumb')] // 改变分辨率来调整字体大小
+    const resolutionFactor = 1.4 - 0.2 * getSliderFactor('.bilibili-player-setting-fontsize .bui-thumb') // 改变分辨率来调整字体大小
     config.resolution = {
       x: 1920 * resolutionFactor,
       y: 1080 * resolutionFactor
