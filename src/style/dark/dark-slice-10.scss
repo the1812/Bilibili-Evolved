@@ -785,3 +785,21 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-list .danmaku-info-row-code {
   background: #ffa20011 !important;
 }
+
+.notice-item .notice{
+  &-main .notice {
+    &-title {
+      @include color("e");
+      &:before {
+        @include theme-background-color();
+      }
+    }
+    &-time {
+      @include color("a");
+    }
+  }
+  &-btn {
+    @include color("e");
+    @include background-color("2");
+  }
+}
