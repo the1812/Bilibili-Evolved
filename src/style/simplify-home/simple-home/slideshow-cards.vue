@@ -181,9 +181,7 @@ export default {
   // --card-width: 500px;
   grid-template:
     'header header header header' auto
-    'cards . operations info' var(--card-height) / var(--card-width) 44px 1fr calc(var(
-          --slideshow-ratio
-        ) * var(--card-width));
+    'cards . operations info' var(--card-height) / var(--card-width) 48px auto calc(var(--card-width) * var(--slideshow-ratio));
   .error {
     grid-column: 1 / 4;
     grid-row: 2 / 3;
@@ -198,6 +196,7 @@ export default {
     justify-self: start;
     & > * {
       @include round-button();
+      margin-right: 16px;
       .be-icon {
         font-size: 22px;
       }

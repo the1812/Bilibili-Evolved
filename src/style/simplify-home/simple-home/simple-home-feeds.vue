@@ -161,9 +161,9 @@ export default {
     @media screen and (min-width: 1550px) {
       --card-count: 6;
     }
-    @media screen and (min-width: 1850px) {
-      --card-count: 7;
-    }
+    // @media screen and (min-width: 1850px) {
+    //   --card-count: 7;
+    // }
     &::-webkit-scrollbar {
       width: 0 !important;
       height: 0 !important;

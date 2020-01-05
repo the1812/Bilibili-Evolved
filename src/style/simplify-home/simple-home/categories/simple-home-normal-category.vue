@@ -124,7 +124,7 @@ export default {
     }
   },
   computed: {
-    ...Vuex.mapState(['watchlaterList']),
+    ...Vuex.mapState(['watchlaterList'])
   },
   methods: {
     async loadCards(
@@ -224,7 +224,7 @@ export default {
       this.loadNewActivity()
       this.loadNewPost()
       this.loadRank()
-    },
+    }
   },
   watch: {
     rid(value: number) {
@@ -253,32 +253,26 @@ export default {
 .category-view {
   --loading-from: #d4d4d4;
   --loading-to: #ddd;
-  --rank-width: 420px;
-  --rank-height: 250px;
-  --slideshow-ratio: 1.2;
+  --rank-width: 370px;
+  --rank-height: calc(var(--rank-width) / 16 * 9);
+  --slideshow-ratio: 0.6;
+  --card-height: 300px;
+  --card-width: calc(var(--card-height) * (42 / 25));
   display: grid;
   grid-template:
     'new-activity rank' 1fr
-    'new-post rank' 1fr / 1fr var(--rank-width);
-  grid-gap: 24px;
-  gap: 24px;
+    'new-post rank' 1fr / 1fr calc(1.5 * var(--rank-width) + 10px);
+  grid-row-gap: 24px;
+  row-gap: 24px;
+  grid-column-gap: 32px;
+  column-gap: 32px;
   position: relative;
   @for $width from 18 through 7 {
     @media screen and (max-width: #{$width * 100}px) {
-      $rank-width: 0;
-      @if $width > 11 {
-        $rank-width: 420 - (19 - $width) * 30;
-        --slideshow-ratio: #{1.2 * ($width / 18)};
-      } @else {
-        $rank-width: 420 - (17 - $width) * 30;
-        --slideshow-ratio: #{1.2 * (($width + 2) / 18)};
-      }
-      --rank-width: #{$rank-width}px;
-      --rank-height: #{$rank-width * 25 / 42}px;
+      --card-height: #{300 - 12 * (19 - $width)}px;
+      --rank-width: #{370 - 20 * (19 - $width)}px;
     }
   }
-  --card-height: calc((8 * 34px + 20px + 1.5 * var(--rank-height)) / 2 - 32px);
-  --card-width: calc(var(--card-height) * (42 / 25));
   &,
   & *,
   ::after,
@@ -327,14 +321,20 @@ export default {
   }
   .rank {
     display: grid;
-    width: var(--rank-width);
+    width: calc(1.5 * var(--rank-width) + 10px);
     justify-self: right;
+    // grid-template:
+    //   'header header' auto
+    //   'first first' calc(10px + var(--rank-height))
+    //   'second third' calc(var(--rank-height) / 2 + 10px) / calc(
+    //     var(--rank-width) / 2
+    //   )
+    //   calc(var(--rank-width) / 2);
     grid-template:
       'header header' auto
-      'first first' calc(10px + var(--rank-height))
-      'second third' calc(var(--rank-height) / 2 + 10px) / calc(
-        var(--rank-width) / 2
-      ) calc(var(--rank-width) / 2);
+      'first second' calc(var(--rank-height) / 2 + 10px)
+      'first third' calc(var(--rank-height) / 2 + 10px)
+      / calc(var(--rank-width)) calc(10px + var(--rank-width) / 2);
     .rank-item {
       grid-column: 1 / 3;
       box-shadow: 0 4px 8px 0 #0001;
@@ -586,13 +586,15 @@ export default {
       }
       &:nth-child(2) {
         grid-area: second;
-        margin-right: 5px;
+        // margin-right: 5px;
         margin-bottom: 10px;
+        margin-left: 10px;
       }
       &:nth-child(3) {
         grid-area: third;
-        margin-left: 5px;
+        // margin-left: 5px;
         margin-bottom: 10px;
+        margin-left: 10px;
       }
     }
   }
@@ -620,14 +622,15 @@ export default {
       }
     }
   }
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1300px) {
     grid-template:
       'new-activity' 1fr
       'new-post' 1fr
       'rank' auto / 1fr;
+    --card-height: 300px;
     .rank {
       --rank-width: 420px;
-      --rank-height: 250px;
+      justify-self: center;
     }
   }
 }

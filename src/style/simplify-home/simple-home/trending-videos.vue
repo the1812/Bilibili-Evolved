@@ -114,11 +114,11 @@ export default {
         --card-count: 4;
       }
     }
-    @media screen and (min-width: 1850px) {
-      & {
-        --card-count: 5;
-      }
-    }
+    // @media screen and (min-width: 1850px) {
+    //   & {
+    //     --card-count: 5;
+    //   }
+    // }
     &::-webkit-scrollbar {
       width: 0 !important;
       height: 0 !important;
