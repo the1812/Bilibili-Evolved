@@ -295,7 +295,6 @@ export default {
     opacity: 0;
     pointer-events: none;
     border-radius: 16px;
-    animation: 0.64s infinite alternate normal-category-loading ease-in-out;
     position: absolute;
     // &.new-activity {
     //   height: 30vh;
@@ -713,6 +712,7 @@ export default {
     &.#{$name}-loading {
       .#{$name}.loading {
         position: static;
+        animation: 0.64s infinite alternate normal-category-loading ease-in-out;
         opacity: 1;
         pointer-events: initial;
         width: 100%;
