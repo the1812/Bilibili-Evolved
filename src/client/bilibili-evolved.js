@@ -35,6 +35,9 @@
 // ==/UserScript==
 Vue.config.productionTip = false
 Vue.config.devtools = false
+// if (unsafeWindow.Vue === undefined) {
+//   unsafeWindow.Vue = Vue
+// }
 import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename } from './utils'
 import { settings, loadSettings, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'

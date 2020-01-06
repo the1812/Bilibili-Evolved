@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      538.84
+// @version      538.86
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -36,6 +36,9 @@
 /* eslint-disable */ /* spell-checker: disable */
 Vue.config.productionTip = false
 Vue.config.devtools = false
+// if (unsafeWindow.Vue === undefined) {
+//   unsafeWindow.Vue = Vue
+// }
 function logError (error) {
   let finalMessage = error
   if (typeof error === 'object' && 'stack' in error) {
@@ -2773,6 +2776,7 @@ const getScriptBlocker = async () => {
           removeNodes(r.addedNodes, blockEvent)
         })
       })
+      removeNodes(document.head.childNodes, blockEvent)
       const bodyObserver = Observer.childList(document.documentElement, records => {
         records.forEach(r => {
           r.addedNodes.forEach(node => {

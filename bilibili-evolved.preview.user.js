@@ -35,6 +35,9 @@
 // ==/UserScript==
 Vue.config.productionTip = false
 Vue.config.devtools = false
+// if (unsafeWindow.Vue === undefined) {
+//   unsafeWindow.Vue = Vue
+// }
 function logError (error) {
   let finalMessage = error
   if (typeof error === 'object' && 'stack' in error) {
@@ -2826,6 +2829,7 @@ const getScriptBlocker = async () => {
           removeNodes(r.addedNodes, blockEvent)
         })
       })
+      removeNodes(document.head.childNodes, blockEvent)
       const bodyObserver = Observer.childList(document.documentElement, records => {
         records.forEach(r => {
           r.addedNodes.forEach(node => {
