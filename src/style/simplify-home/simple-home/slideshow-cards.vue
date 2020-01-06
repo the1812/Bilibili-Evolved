@@ -10,7 +10,7 @@
         :href="'https://www.bilibili.com/av' + card.aid"
         :title="card.title"
       >
-        <img :src="card.coverUrl" :alt="card.title" />
+        <dpi-img :src="card.coverUrl" :alt="card.title" :size="{ height: 300 }"></dpi-img>
       </a>
       <div class="operations">
         <a
@@ -119,7 +119,7 @@ export default {
     },
     refresh() {
       this.$emit('refresh')
-    },
+    }
   },
   watch: {
     cards() {
@@ -181,7 +181,7 @@ export default {
   // --card-width: 500px;
   grid-template:
     'header header header header' auto
-    'cards . operations info' var(--card-height) / var(--card-width) 48px auto calc(var(--card-width) * var(--slideshow-ratio));
+    'cards . operations info' var(--card-height) / var(--card-width) 48px auto 320px;
   .error {
     grid-column: 1 / 4;
     grid-row: 2 / 3;

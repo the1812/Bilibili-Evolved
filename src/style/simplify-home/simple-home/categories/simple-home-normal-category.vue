@@ -20,6 +20,7 @@
       title="最新发布"
     ></slideshow-cards>
     <div class="rank">
+      <div class="area-header">排行榜</div>
       <a
         class="rank-item"
         v-for="(c, index) of rank.videos"
@@ -27,8 +28,8 @@
         target="_blank"
         :href="'https://www.bilibili.com/av' + c.aid"
       >
-        <div v-if="index < 3" class="cover">
-          <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
+        <div class="cover">
+          <dpi-img :src="c.coverUrl" :size="{ width: 370 }"></dpi-img>
         </div>
         <div class="rank-number">{{index + 1}}</div>
         <div
@@ -46,9 +47,9 @@
           <icon v-else type="mdi" icon="clock-outline"></icon>
         </div>
         <div class="details">
-          <div v-if="index > 0" class="title" :title="c.title">{{c.title}}</div>
-          <div v-if="index > 0" class="cover">
-            <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
+          <div v-if="index > 0 && index < 3" class="title" :title="c.title">{{c.title}}</div>
+          <div v-if="index > 0 && index < 3" class="cover">
+            <dpi-img :src="c.coverUrl" :size="{ width: 370 }"></dpi-img>
           </div>
           <div class="up">
             <div class="points">
@@ -70,7 +71,6 @@
           </div>
         </div>
       </a>
-      <div class="area-header">排行榜</div>
     </div>
 
     <div class="new-activity loading"></div>
@@ -322,7 +322,14 @@ export default {
   .rank {
     display: grid;
     width: calc(1.5 * var(--rank-width) + 10px);
+    height: calc(2 * (var(--card-height) + 20px) + 48px);
     justify-self: right;
+    overflow: auto;
+    scrollbar-width: none !important;
+    &::-webkit-scrollbar {
+      height: 0 !important;
+      width: 0 !important;
+    }
     // grid-template:
     //   'header header' auto
     //   'first first' calc(10px + var(--rank-height))
@@ -335,14 +342,86 @@ export default {
       'first second' calc(var(--rank-height) / 2 + 10px)
       'first third' calc(var(--rank-height) / 2 + 10px)
       / calc(var(--rank-width)) calc(10px + var(--rank-width) / 2);
+    @mixin hover-details {
+      .details {
+        position: absolute;
+        top: 0;
+        right: calc(100% + 10px);
+        // transform: translateY(-50%);
+        width: var(--rank-width);
+        padding: 4px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: stretch;
+        z-index: 10;
+        opacity: 0;
+        pointer-events: none;
+        .title {
+          font-weight: bold;
+          font-size: 14px;
+          line-height: 1.5;
+          color: #fff;
+          padding: 8px;
+          z-index: 10;
+        }
+        .cover {
+          overflow: hidden;
+          background-color: black;
+          img {
+            filter: blur(16px) brightness(0.5);
+            transform: scale(1.5);
+          }
+        }
+        .up,
+        .stats {
+          z-index: 10;
+          display: flex;
+          color: #fff;
+          .be-icon:not(.mdi-fire) {
+            margin: 0 4px 0 8px;
+          }
+        }
+        .up {
+          justify-content: space-between;
+          margin: 0 10px 0 6px;
+          & > * {
+            display: flex;
+            align-items: center;
+          }
+        }
+        .stats {
+          margin: 8px;
+          .be-icon:first-child {
+            margin-left: 0;
+          }
+        }
+      }
+      &:hover .details {
+        opacity: 1;
+      }
+    }
+    .area-header {
+      margin-bottom: 0;
+      padding-bottom: 12px;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #F4F4F4;
+      body.dark & {
+        background-color: #161616;
+      }
+    }
     .rank-item {
       grid-column: 1 / 3;
-      box-shadow: 0 4px 8px 0 #0001;
-      background-color: #fff;
       color: inherit !important;
       position: relative;
-      body.dark & {
-        background-color: #282828;
+      &:not(:nth-child(n + 5)) {
+        background-color: #fff;
+        body.dark & {
+          background-color: #282828;
+        }
       }
       .cover {
         position: absolute;
@@ -350,7 +429,7 @@ export default {
         left: 0;
         width: 100%;
         height: 100%;
-        border-radius: 16px;
+        border-radius: 12px;
         overflow: hidden;
         img {
           width: 100%;
@@ -363,25 +442,26 @@ export default {
       }
       .rank-number {
         position: absolute;
-        top: 6px;
-        left: 6px;
-        width: 22px;
-        height: 22px;
-        line-height: 22px;
+        top: 4px;
+        left: 4px;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
         border-radius: 50%;
         box-sizing: border-box;
         text-align: center;
-        font-weight: bold;
-        font-size: 13px;
+        font-weight: 700;
+        font-size: 12px;
         z-index: 9;
-        background-color: #8884;
+        background-color: #000c;
+        color: #fff;
       }
       .watchlater {
         position: absolute;
-        top: 6px;
-        right: 6px;
-        width: 22px;
-        height: 22px;
+        top: 4px;
+        right: 4px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
         box-sizing: border-box;
         z-index: 9;
@@ -402,85 +482,33 @@ export default {
           margin-right: 2px;
         }
       }
-      &:not(:first-child) {
+      &:not(:nth-child(2)) {
         & > .title {
-          white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           font-weight: bold;
-          font-size: 13px;
-          line-height: 34px;
-          padding: 0 8px 0 34px;
-          opacity: 0.9;
+          font-size: 14px;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          max-height: 2.8em;
+          word-break: break-all;
+          line-height: 1.4;
+          padding: 0 8px;
+          margin-top: 4px;
+          // opacity: 0.9;
         }
-        &:hover {
-          background-color: var(--theme-color-30);
-          & > .title {
-            opacity: 1;
-          }
-        }
-        .details {
-          position: absolute;
-          top: 50%;
-          right: calc(100% + 10px);
-          transform: translateY(-50%);
-          width: var(--rank-width);
-          padding: 4px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: stretch;
-          z-index: 10;
-          opacity: 0;
-          pointer-events: none;
-          .title {
-            font-weight: bold;
-            font-size: 14px;
-            line-height: 1.5;
-            color: #fff;
-            padding: 8px;
-            z-index: 10;
-          }
-          .cover {
-            overflow: hidden;
-            background-color: black;
-            img {
-              filter: blur(16px) brightness(0.5);
-              transform: scale(1.5);
-            }
-          }
-          .up,
-          .stats {
-            z-index: 10;
-            display: flex;
-            color: #fff;
-            .be-icon:not(.mdi-fire) {
-              margin: 0 4px 0 8px;
-            }
-          }
-          .up {
-            justify-content: space-between;
-            margin: 0 10px 0 6px;
-            & > * {
-              display: flex;
-              align-items: center;
-            }
-          }
-          .stats {
-            margin: 8px;
-            .be-icon:first-child {
-              margin-left: 0;
-            }
-          }
-        }
-        &:hover .details {
-          opacity: 1;
-        }
+        // &:hover {
+        //   background-color: var(--theme-color-30);
+        //   & > .title {
+        //     opacity: 1;
+        //   }
+        // }
       }
 
-      &:first-child,
       &:nth-child(2),
-      &:nth-child(3) {
+      &:nth-child(3),
+      &:nth-child(4) {
         border-radius: 16px;
         .rank-number {
           background-color: var(--theme-color);
@@ -488,13 +516,13 @@ export default {
           opacity: 0.9;
         }
       }
-      &:nth-child(4) {
-        border-radius: 16px 16px 0 0;
-      }
-      &:nth-last-child(2) {
-        border-radius: 0 0 16px 16px;
-      }
-      &:first-child {
+      // &:nth-child(4) {
+      //   border-radius: 16px 16px 0 0;
+      // }
+      // &:nth-last-child(2) {
+      //   border-radius: 0 0 16px 16px;
+      // }
+      &:nth-child(2) {
         grid-area: first;
         display: flex;
         flex-direction: column;
@@ -584,17 +612,91 @@ export default {
           }
         }
       }
-      &:nth-child(2) {
+      &:nth-child(3) {
         grid-area: second;
         // margin-right: 5px;
         margin-bottom: 10px;
         margin-left: 10px;
+        @include hover-details();
       }
-      &:nth-child(3) {
+      &:nth-child(4) {
         grid-area: third;
         // margin-left: 5px;
         margin-bottom: 10px;
         margin-left: 10px;
+        @include hover-details();
+      }
+      &:nth-child(n + 5) {
+        background-color: transparent;
+        display: grid;
+        grid-template:
+          'cover title watchlater' 2fr
+          'cover up up' 1fr / 120px 1fr auto;
+        &:not(:nth-child(5)) {
+          // padding-top: 6px;
+          // border-top: 1px solid #8882 !important;
+          margin-top: 12px;
+          &::before {
+            content: "";
+            width: 100%;
+            height: 1px;
+            background-color: #8882;
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 0;
+          }
+        }
+        & > .cover {
+          grid-area: cover;
+          position: static;
+          width: 120px;
+          height: 70px;
+        }
+        & > .title {
+          grid-area: title;
+        }
+        .watchlater {
+          grid-area: watchlater;
+        }
+        .details {
+          grid-area: up;
+          opacity: .75;
+          &,
+          & * {
+            display: flex;
+            align-items: center;
+          }
+          .up {
+            margin: 4px 6px;
+            position: absolute;
+            bottom: 0;
+            .up-info {
+              margin-left: 16px;
+              .up-name {
+                margin-left: 4px;
+              }
+            }
+          }
+          .stats {
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            margin: 4px 8px;
+            opacity: 0;
+            .number {
+              margin: 0 12px 0 4px;
+            }
+          }
+        }
+        &:hover {
+          .up {
+            opacity: 0;
+          }
+          .stats {
+            opacity: 1;
+          }
+        }
       }
     }
   }
