@@ -256,7 +256,7 @@ export default {
   --rank-width: 370px;
   --rank-height: calc(var(--rank-width) / 16 * 9);
   --slideshow-ratio: 0.6;
-  --card-height: 300px;
+  --card-height: 280px;
   --card-width: calc(var(--card-height) * (42 / 25));
   display: grid;
   grid-template:
@@ -269,7 +269,7 @@ export default {
   position: relative;
   @for $width from 18 through 7 {
     @media screen and (max-width: #{$width * 100}px) {
-      --card-height: #{300 - 12 * (19 - $width)}px;
+      --card-height: #{280 - 8 * (19 - $width)}px;
       --rank-width: #{370 - 20 * (19 - $width)}px;
     }
   }
