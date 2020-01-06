@@ -147,12 +147,12 @@ export default {
 
     --card-width: 200px;
     --card-height: 250px;
-    --card-count: 2;
+    --card-count: 3;
     width: calc((var(--card-width) + 16px) * var(--card-count));
     padding-bottom: 16px;
     scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
-    min-height: var(--card-height);
+    min-height: calc(var(--card-height) + 16px);
     @media screen and (min-width: 1100px) {
       --card-count: 3;
     }

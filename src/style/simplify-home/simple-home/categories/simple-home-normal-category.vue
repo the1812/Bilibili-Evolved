@@ -629,8 +629,8 @@ export default {
         background-color: transparent;
         display: grid;
         grid-template:
-          'cover title watchlater' 2fr
-          'cover up up' 1fr / 120px 1fr auto;
+          'cover title' 2fr
+          'cover up' 1fr / 120px 1fr;
         &:not(:nth-child(5)) {
           // padding-top: 6px;
           // border-top: 1px solid #8882 !important;
@@ -655,7 +655,8 @@ export default {
           grid-area: title;
         }
         .watchlater {
-          grid-area: watchlater;
+          right: unset;
+          left: 96px;
         }
         .details {
           grid-area: up;
@@ -729,9 +730,9 @@ export default {
       'new-activity' 1fr
       'new-post' 1fr
       'rank' auto / 1fr;
-    --card-height: 300px;
+    // --card-height: 300px;
     .rank {
-      --rank-width: 420px;
+      // --rank-width: 420px;
       justify-self: center;
     }
   }

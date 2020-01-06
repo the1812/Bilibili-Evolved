@@ -137,6 +137,7 @@ export default {
         background-color: #8882;
         position: relative;
         width: 370px;
+        height: 204px;
         border-radius: 8px;
         overflow: hidden;
         .image {
@@ -156,23 +157,26 @@ export default {
         border-radius: 8px;
         font-size: 14px;
         color: inherit;
-        background-color: #8882;
+        background-color: #fff;
+        box-shadow: 0 4px 8px 0 #0001;
         box-sizing: border-box;
         flex: 0 0 auto;
         height: 36px;
         justify-content: center;
         padding: 0px 12px 0 8px;
+        body.dark & {
+          background-color: #282828;
+        }
         .name {
           color: inherit;
         }
         .icon {
           width: 24px;
           height: 24px;
-          transition-duration: 0.5s;
           margin-right: 8px;
         }
-        &:hover {
-          background-color: #8884;
+        &:hover .icon {
+          margin-right: 16px;
         }
         // &:not(:last-child) {
         //   margin-bottom: 24px;
