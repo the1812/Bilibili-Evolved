@@ -313,6 +313,7 @@
   }
   .bangumi-card .ep-cover {
     width: var(--cover-width);
+    min-height: 62.5px;
     background-color: #8884;
     grid-area: cover;
   }
