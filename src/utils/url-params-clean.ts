@@ -21,4 +21,5 @@ const clean = () => {
     history.replaceState({}, document.title, newUrl)
   }
 }
+clean()
 Observer.videoChange(() => clean())
