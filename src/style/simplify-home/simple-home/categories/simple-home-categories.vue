@@ -136,7 +136,7 @@ export default {
       display: flex;
       flex: 1 1 0;
       margin: 0 32px;
-      justify-content: space-between;
+      justify-content: flex-start;
       overflow: auto;
       width: 0;
       height: 42px;

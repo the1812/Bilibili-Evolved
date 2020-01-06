@@ -26,6 +26,7 @@
       <div class="card-wrapper" v-for="card in feedCards" :key="card.id">
         <video-card :data="card" orientation="vertical"></video-card>
       </div>
+      <div class="empty" v-if="feedCards.length === 0">没有动态哦(´･_･`)</div>
     </div>
     <!-- <div class="video-feeds">
       <div class="sub-header">视频</div>
@@ -172,6 +173,13 @@ export default {
       padding: 0 8px;
       scroll-snap-align: start;
       flex-shrink: 0;
+    }
+    .empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      font-size: 16px;
     }
   }
   // .video-feeds,
