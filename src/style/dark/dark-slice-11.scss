@@ -249,6 +249,12 @@
       }
     }
   }
+  .detail {
+    @include background-color();
+  }
+  .category {
+    @include background-color("4");
+  }
 }
 .el-popover {
   @include background-color("2");
@@ -358,6 +364,64 @@
             @include color("e");
           }
         }
+      }
+    }
+  }
+  .page-container {
+    .bangumi-spoiler-container {
+      @include background-color("4");
+      @include color("e");
+    }
+    .tag-container {
+      .tag-item {
+        span {
+          @include color("e");
+        }
+        .tag-border .tag-border-inner {
+          display: none;
+        }
+        .tag-content {
+          @include background-color("4");
+          @include border-color();
+        }
+        &:hover .tag-content {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
+    .publish-panel {
+      .core-style {
+        @include background-color("2");
+        @include color("e");
+        @include border-color();
+        &:hover {
+          @include theme-border-color();
+        }
+      }
+      .publish-btn {
+        @include background-color("2");
+        @include color("e");
+        &:hover {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
+  }
+  .container-body {
+    .b-head.topic {
+      @include border-color();
+    }
+    .art_list li {
+      @include background-color();
+      @include border-color();
+      h2 a {
+        @include color("e");
+      }
+      .info,
+      .artInfo {
+        @include color("a");
       }
     }
   }
