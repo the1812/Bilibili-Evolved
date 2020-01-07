@@ -249,6 +249,12 @@
       }
     }
   }
+  .detail {
+    @include background-color();
+  }
+  .category {
+    @include background-color("4");
+  }
 }
 .el-popover {
   @include background-color("2");
