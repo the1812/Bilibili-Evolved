@@ -367,4 +367,28 @@
       }
     }
   }
+  .page-container {
+    .bangumi-spoiler-container {
+      @include background-color("4");
+      @include color("e");
+    }
+    .tag-container {
+      .tag-item {
+        span {
+          @include color("e");
+        }
+        .tag-border .tag-border-inner {
+          display: none;
+        }
+        .tag-content {
+          @include background-color("4");
+          @include border-color();
+        }
+        &:hover .tag-content {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
+  }
 }
