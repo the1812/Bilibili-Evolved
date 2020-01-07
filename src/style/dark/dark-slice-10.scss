@@ -110,7 +110,8 @@
   }
 }
 
-.bl-button--primary:disabled {
+.bl-button--primary:disabled,
+.notice-info-wrapper .notice-info-title {
   @include color("e");
 }
 
