@@ -391,4 +391,20 @@
       }
     }
   }
+  .container-body {
+    .b-head.topic {
+      @include border-color();
+    }
+    .art_list li {
+      @include background-color();
+      @include border-color();
+      h2 a {
+        @include color("e");
+      }
+      .info,
+      .artInfo {
+        @include color("a");
+      }
+    }
+  }
 }
