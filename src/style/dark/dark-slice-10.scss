@@ -576,6 +576,21 @@
       filter: invert(0.8) !important;
     }
   }
+  .announcement-wrapper {
+    @include background-color("4");
+    @include border-color();
+    .announcement {
+      &-icon,
+      &-item.active .circle {
+        @include to-theme("pink");
+      }
+      &-title,
+      &-item.active .announcement-item-time,
+      &-item-desc a {
+        @include color("e");
+      }
+    }
+  }
   .activity-info-body .info-body {
     ul li .title,
     p strong {
