@@ -383,7 +383,7 @@ class Category extends NavbarComponent {
           count: ``, link: `https://live.bilibili.com`, subRegions: { "全部直播": "https://live.bilibili.com/all?visit_id=5icxsa0kmts0", "游戏直播": "https://live.bilibili.com/p/eden/area-tags?parentAreaId=2&areaId=0&visit_id=5icxsa0kmts0#/2/0", "手游直播": "https://live.bilibili.com/p/eden/area-tags?parentAreaId=3&areaId=0&visit_id=5icxsa0kmts0#/3/0", "娱乐直播": "https://live.bilibili.com/p/eden/area-tags?parentAreaId=1&areaId=0&visit_id=5icxsa0kmts0#/1/0", "电台直播": "https://live.bilibili.com/p/eden/area-tags?parentAreaId=5&areaId=0&visit_id=5icxsa0kmts0#/5/0", "绘画直播": "https://live.bilibili.com/p/eden/area-tags?parentAreaId=4&areaId=0&visit_id=5icxsa0kmts0#/4/0" },
         },
         小黑屋: { icon: "blackroom", count: ``, link: `https://www.bilibili.com/blackroom/`, },
-        话题: { icon: "topic", count: ``, link: `https://www.bilibili.com/blackboard/topic_list.html`, },
+        专题: { icon: "topic", count: ``, link: `https://www.bilibili.com/blackboard/topic_list.html`, },
         活动: { icon: "activit", count: ``, link: `https://www.bilibili.com/blackboard/x/act_list`, },
       }
     }

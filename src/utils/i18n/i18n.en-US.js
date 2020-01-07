@@ -249,6 +249,7 @@ export const map = new Map([
   [`人气值`, `Popularity`],
   [`友爱社`, `Club`],
   [`话题`, `#Tags#`],
+  [`专题`, `Topics`],
   [`活动`, `Event`],
   [`活动中心`, `Event center`],
   [`消息中心`, `Messages`],

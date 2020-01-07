@@ -53,7 +53,7 @@ const entries: InfoEntry[] = [
     `
   },
   {
-    name: '话题',
+    name: '专题',
     url: 'https://www.bilibili.com/blackboard/topic_list.html',
     color: '#A1FF8040',
     icon: `
