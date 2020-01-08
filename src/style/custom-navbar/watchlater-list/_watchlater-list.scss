@@ -200,6 +200,9 @@
             position: absolute;
             opacity: 0;
           }
+          .cover {
+            object-fit: cover;
+          }
           &:hover {
             .floating {
               opacity: 1;
