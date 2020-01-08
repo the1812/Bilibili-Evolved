@@ -262,8 +262,8 @@ class Category extends NavbarComponent {
     // this.requestedPopup = true
     this.popupHtml = /*html*/`
       <ul id="custom-navbar-home-popup">
-        <li class="category-item" v-if="loading">
-          <i class="mdi mdi-18px mdi-loading mdi-spin" style="margin-right: 8px"></i>加载中...
+        <li class="category-item loading" v-if="loading">
+          加载中...
         </li>
         <li class="category-item" style="display: none" :style="{display: loading ? 'none' : 'list-item'}" v-for="item of info" :class="{ main: item[1].count }">
           <a :href="item[1].link">
