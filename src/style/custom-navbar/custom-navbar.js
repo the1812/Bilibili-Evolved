@@ -1344,7 +1344,6 @@ class WatchlaterList extends NavbarComponent {
     this.popupHtml = /*html*/`
       <div class="watchlater-list loading">
         <div class="loading-tip">
-          <i class="mdi mdi-loading mdi-spin"></i>
           加载中...
         </div>
         <div class="empty-tip" v-if="filteredCards.length === 0">
@@ -1359,18 +1358,19 @@ class WatchlaterList extends NavbarComponent {
           <div class="search">
             <input type="text" placeholder="搜索" v-model="search">
           </div>
-          <a class="round-button" href="https://www.bilibili.com/watchlater/#/list" title="查看更多" target="_blank">
+          <a class="more-info" href="https://www.bilibili.com/watchlater/#/list" title="查看更多" target="_blank">
+            查看更多
             <i class="mdi mdi-dots-horizontal"></i>
           </a>
         </div>
         <transition-group name="cards" tag="div" class="cards">
           <div class="watchlater-card" v-for="(card, index) of filteredCards" :key="card.aid">
             <a class="cover-container" target="_blank" :href="card.href">
-              <dpi-img class="cover" :src="card.coverUrl" :size="{width: 200, height: 120}"></dpi-img>
+              <dpi-img class="cover" :src="card.coverUrl" :size="{width: 140, height: 90}"></dpi-img>
               <div class="floating remove" title="移除" @click.prevent="remove(card.aid, index)"><i class="mdi mdi-close"></i></div>
               <div class="floating duration">{{card.durationText}}</div>
-              <div class="floating viewed" :title="'已观看' + card.percent">
-                {{card.complete ? '已观看' : card.percent}}
+              <div class="floating viewed" v-if="card.complete">
+                已观看
               </div>
             </a>
             <a class="title" target="_blank" :href="card.href" :title="card.title">{{card.title}}</a>
@@ -1447,8 +1447,8 @@ class WatchlaterList extends NavbarComponent {
               coverUrl: item.pic.replace('http:', 'https:'),
               durationText: formatDuration(item.duration),
               duration: item.duration,
-              percent: `${fixed(percent * 100)}%`,
-              complete: percent > 0.95, // 进度过95%算看完
+              // percent: `${fixed(percent * 100)}%`,
+              complete: item.progress < 0 || percent > 0.95, // 进度过95%算看完, -1值表示100%
               title: item.title,
               upName: item.owner.name,
               upFaceUrl: item.owner.face.replace('http:', 'https:'),
