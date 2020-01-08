@@ -200,6 +200,7 @@ export const settings = {
   keymapJumpSeconds: 85,
   urlParamsClean: true,
   collapseLiveSideBar: true,
+  downloadVideoQuality: 120,
   cache: {},
 }
 const fixedSettings = {

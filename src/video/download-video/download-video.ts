@@ -561,8 +561,20 @@ async function loadPageData() {
   }
   return true
 }
+const getDefaultFormat = (formats: VideoFormat[]) => {
+  const defaultQuality = settings.downloadVideoQuality
+  const format = formats.find(f => f.quality === defaultQuality)
+  if (format) {
+    return format
+  }
+  const nextFormat = formats.filter(f => f.quality < defaultQuality).shift()
+  if (nextFormat) {
+    return nextFormat
+  }
+  return formats.shift()!!
+}
 async function loadWidget() {
-  selectedFormat = formats[0]
+  selectedFormat = getDefaultFormat(formats)
   resources.applyStyle('downloadVideoStyle')
   const button = dq('#download-video') as HTMLElement
   button.addEventListener('click', () => {
@@ -672,18 +684,17 @@ async function loadPanel() {
       },
       async dashChange() {
         console.log('dash change')
-        settings.downloadVideoFormat = this.dashModel.value
-        const format = this.dashModel.value
+        const format = settings.downloadVideoFormat = this.dashModel.value as typeof settings.downloadVideoFormat
         let updatedFormats = []
         if (format === 'flv') {
           updatedFormats = await VideoFormat.getAvailableFormats()
         } else {
           updatedFormats = await VideoFormat.getAvailableDashFormats()
         }
-        formats = updatedFormats;
-        [selectedFormat] = format
+        formats = updatedFormats
+        selectedFormat = getDefaultFormat(formats)
         this.qualityModel.items = updatedFormats.map(f => f.displayName);
-        [this.qualityModel.value] = this.qualityModel.items
+        this.qualityModel.value = this.qualityModel.items[formats.indexOf(selectedFormat)]
         await this.formatChange()
       },
       async formatChange() {
@@ -694,6 +705,7 @@ async function loadPanel() {
         //   this.size = cache
         //   return
         // }
+        settings.downloadVideoQuality = format.quality
         try {
           this.size = '获取大小中'
           const videoDownloader = await format.downloadInfo(this.dash)
@@ -990,13 +1002,6 @@ async function loadPanel() {
     } catch (error) {
       panel.coverUrl = EmptyImageUrl
     }
-
-    // formats = await VideoFormat.getAvailableFormats();
-    // [selectedFormat] = formats
-    // panel.qualityModel = {
-    //   value: selectedFormat.displayName,
-    //   items: formats.map(f => f.displayName)
-    // }
     panel.dashChange()
     await panel.checkBatch()
   })

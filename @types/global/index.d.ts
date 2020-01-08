@@ -419,6 +419,7 @@ declare global {
     keymapJumpSeconds: number,
     urlParamsClean: boolean,
     collapseLiveSideBar: boolean,
+    downloadVideoQuality: number,
     latestVersionLink: string,
     currentVersion: string,
   }
