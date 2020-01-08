@@ -19,5 +19,5 @@ jobs:
         stale-pr-label: 'stale'
         exempt-issue-label: long-term
         exempt-pr-label: long-term
-        days-before-stale: 30
+        days-before-stale: 60
         days-before-close: 1
