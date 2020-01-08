@@ -1,4 +1,4 @@
-import { NavbarComponent } from './custom-navbar-component'
+import { NavbarComponent } from '../custom-navbar-component'
 interface WatchlaterCard {
   aid: number
   href: string
@@ -98,7 +98,7 @@ export class WatchlaterList extends NavbarComponent {
       methods: {
         ...Vuex.mapActions(['toggleWatchlater']),
         async updateList() {
-          const { getWatchlaterList } = await import('../../video/watchlater-api')
+          const { getWatchlaterList } = await import('../../../video/watchlater-api')
           const rawList = await getWatchlaterList(true)
           if (!rawList) {
             this.cards = []

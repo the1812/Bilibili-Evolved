@@ -1,6 +1,6 @@
 export const initSettingsPanel = async () => {
   await SpinQuery.select('.custom-navbar-settings')
-  const { Slip } = await import('../../touch/slip')
+  const { Slip } = await import('../../../touch/slip')
   const button = dq('#custom-navbar-settings') as HTMLDivElement
   button.addEventListener('click', async () => {
     const settingsPanel = dq('.custom-navbar-settings')

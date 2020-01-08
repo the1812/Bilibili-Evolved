@@ -837,7 +837,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     width: 250px;
   }
 }
-@import "_activity-popup", "_subscriptions", "_round-corner", "_custom-navbar-settings", "_home-popup", "_watchlater-list";
+@import "./activities/activities", "./subscriptions/subscriptions", "_round-corner", "./settings/settings", "./category/category", "./watchlater-list/watchlater-list";
 
 .custom-navbar > ul > li:not(.disabled):hover > .popup,
 #custom-navbar-home-popup .category-item:hover .popup,

@@ -1,6 +1,7 @@
 type PopupAction = (() => void) | null
 export class NavbarComponent {
   public noPadding = false
+  public transparent = false
   constructor(
     public html = '',
     public popupHtml = '',
