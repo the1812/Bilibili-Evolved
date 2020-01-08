@@ -556,13 +556,18 @@ Resource.manifest = {
       oldTweets: '旧版动态跳转支持'
     }
   },
+  customNavbarComponent: {
+    path: 'custom-navbar-component.min.js',
+  },
   customNavbar: {
     path: 'custom-navbar.min.js',
     reloadable: true,
     style: 'instant',
     html: true,
+    dependencies: ['customNavbarComponent'],
     displayNames: {
       customNavbar: '使用自定义顶栏',
+      customNavbarComponent: '顶栏组件',
       customNavbarSeasonLogo: '使用季节Logo',
       customNavbarFill: '主题色填充',
       customNavbarTransparent: '透明填充',
