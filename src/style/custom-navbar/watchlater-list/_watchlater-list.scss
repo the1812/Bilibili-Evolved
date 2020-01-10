@@ -221,7 +221,7 @@
           line-height: 1.5;
           overflow: hidden;
           margin-top: 8px;
-          padding: 0 8px;
+          padding: 0 10px;
           &:hover {
             color: var(--theme-color) !important;
           }
@@ -236,7 +236,7 @@
         .up {
           flex: 0 1 auto;
           padding: 2px 10px 2px 2px;
-          margin: 4px 8px;
+          margin: 0 8px 6px;
           justify-self: start;
           align-self: center;
           max-width: calc(100% - 16px);
@@ -246,6 +246,8 @@
           .face {
             border-radius: 50%;
             margin-right: 6px;
+            height: 24px;
+            width: 24px;
           }
           .name {
             overflow: hidden;
