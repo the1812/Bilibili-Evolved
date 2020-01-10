@@ -248,6 +248,19 @@
         }
       }
     }
+    .cc-article-wrp .article {
+      &-header .search-wrp {
+        @include border-color();
+      }
+      &-card {
+        .meta-status .status {
+          @include theme-color();
+        }
+        .select-box .select-item.is-disabled {
+          @include background-color();
+        }
+      }
+    }
   }
   .detail {
     @include background-color();
@@ -511,7 +524,7 @@
     }
     .upload-3-v2-success {
       &-split {
-        @include border-color("4");
+        @include background-color("4");
       }
       &-go-url a {
         @include background-color("4");
