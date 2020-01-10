@@ -1,5 +1,6 @@
 export function loadResources () {
   Resource.root = 'https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/'
+  Resource.cdnRoot = 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/'
   Resource.all = {}
   Resource.displayNames = {}
   // Resource.reloadables = [

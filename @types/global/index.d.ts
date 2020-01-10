@@ -213,6 +213,7 @@ declare global {
     static displayNames: object
     static manifest: object
     static root: string
+    static cdnRoot: string
   }
   class ResourceManager {
     import(compnentName: string): any

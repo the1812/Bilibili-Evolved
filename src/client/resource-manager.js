@@ -243,7 +243,7 @@ export class ResourceManager {
     //   return hashHex
     // }
     // if (fullDownload) {
-    const url = Resource.root + 'min/bundle.zip'
+    const url = (Resource.cdnRoot || Resource.root) + 'min/bundle.zip'
     const zip = new JSZip()
     let isTimeout = true
     setTimeout(() => {

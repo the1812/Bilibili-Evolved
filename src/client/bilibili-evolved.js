@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.9.24
+// @version      1.9.25
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @run-at       document-start
-// @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
-// @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
+// @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js
+// @downloadURL  https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js
 // @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
 // @homepage     https://github.com/the1812/Bilibili-Evolved
 // @grant        unsafeWindow
@@ -23,6 +23,7 @@
 // @grant        GM.info
 // @grant        GM.xmlHttpRequest
 // @connect      raw.githubusercontent.com
+// @connect      cdn.jsdelivr.net
 // @connect      *
 // @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
@@ -30,8 +31,8 @@
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
 // @require      https://unpkg.com/vuex@3.1.2/dist/vuex.js
-// @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
-// @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
+// @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
+// @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
 // ==/UserScript==
 Vue.config.productionTip = false
 Vue.config.devtools = false
