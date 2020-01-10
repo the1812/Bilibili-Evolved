@@ -24,6 +24,9 @@ export class NavbarComponent {
   get hidden() {
     return settings.customNavbarHidden.includes(this.name)
   }
+  get element() {
+    return dq(`.custom-navbar li[data-name='${this.name}']`) as HTMLLIElement
+  }
   async setNotifyCount(count: number) {
     const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`) as HTMLElement
     if (!notifyElement || !count) {
@@ -44,6 +47,28 @@ export class NavbarComponent {
     } as { [key: number]: string }
     notifyElement.classList.remove(...Object.values(styleMap))
     notifyElement.classList.add(styleMap[style])
+  }
+  async checkPosition() {
+    const element = this.element
+    const popup = element.querySelector('.main-content ~ .popup')
+    if (popup) {
+      console.log(popup, popup.childElementCount)
+    }
+    if (!popup || popup.childElementCount === 0) {
+      return
+    }
+    const rect = popup.getBoundingClientRect()
+    console.log(this.name, rect)
+    const totalWidth = document.documentElement.clientWidth
+    if (rect.left < 0) {
+      element.classList.remove('right-side')
+      element.classList.add('left-side')
+    } else if (rect.right > totalWidth) {
+      element.classList.remove('left-side')
+      element.classList.add('right-side')
+    } else {
+      element.classList.remove('left-side', 'right-side')
+    }
   }
 }
 export default {

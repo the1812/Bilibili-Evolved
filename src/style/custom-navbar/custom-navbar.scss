@@ -339,6 +339,14 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
       box-shadow: none;
     }
   }
+  li.left-side .popup {
+    left: 0;
+    transform: translateY(-6px) translateX(0);
+  }
+  li.right-side .popup {
+    left: 100%;
+    transform: translateY(-6px) translateX(-100%);
+  }
   &.dark .popup {
     box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px 0px;
   }
@@ -837,7 +845,8 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     width: 250px;
   }
 }
-@import "./activities/activities", "./subscriptions/subscriptions", "_round-corner", "./settings/settings", "./category/category", "./watchlater-list/watchlater-list";
+@import "./activities/activities", "./subscriptions/subscriptions", "_round-corner", "./settings/settings",
+  "./category/category", "./watchlater-list/watchlater-list";
 
 .custom-navbar > ul > li:not(.disabled):hover > .popup,
 #custom-navbar-home-popup .category-item:hover .popup,
@@ -846,6 +855,14 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   transform: translateY(0) translateX(-50%);
   pointer-events: initial;
   opacity: 1;
+}
+.custom-navbar > ul > li:not(.disabled).right-side:hover > .popup {
+  transform: translateY(0) translateX(-100%);
+  left: 100%;
+}
+.custom-navbar > ul > li:not(.disabled).left-side:hover > .popup {
+  transform: translateY(0) translateX(0);
+  left: 0;
 }
 #custom-navbar-home-popup .category-item:hover .popup {
   transform: scaleX(1);
@@ -876,7 +893,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     height: 2px;
     border-radius: 2px;
     background-color: var(--theme-color);
-    transition: .16s .1s ease-out;
+    transition: 0.16s 0.1s ease-out;
     transform: scaleX(0);
   }
 }

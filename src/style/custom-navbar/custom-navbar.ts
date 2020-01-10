@@ -139,12 +139,15 @@ export default (() => {
             if (!component.requestedPopup && !component.disabled && !component.active) {
               this.$set(component, `requestedPopup`, true)
               component.initialPopup && component.initialPopup()
+              // console.log('lazy popup: ', component.name)
+              // component.checkPosition()
             }
             component.onPopup && component.onPopup()
           }
         },
         mounted() {
           document.body.classList.remove('custom-navbar-loading')
+          // components.forEach(c => c.checkPosition())
         },
       })
     })()
