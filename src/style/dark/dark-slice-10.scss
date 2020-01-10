@@ -819,3 +819,95 @@
     @include background-color("2");
   }
 }
+.recent-danmu-wrp {
+  .danmu-filter .left {
+    @include border-color("a");
+    .plain {
+      @include color("e");
+      @include border-color("a");
+      &.disable {
+        @include color("a");
+      }
+    }
+    .delete .option-wrp .act-btn {
+      @include background-color();
+    }
+    .option-menu {
+      @include background-color("4");
+      @include border-color();
+      .menu-item {
+        @include color("e");
+        &:hover {
+          @include background-color("3");
+        }
+      }
+      .option-arrow {
+        @include border-color();
+        &-border {
+          @include border-color("4");
+          border-top-color: transparent !important;
+          border-left-color: transparent !important;
+          border-right-color: transparent !important;
+        }
+      }
+    }
+  }
+  .danmu-container .danmu-table {
+    @include color("e");
+    .box-header {
+      @include background-color("4");
+      @include border-color();
+      th {
+        @include color("e");
+      }
+    }
+    tr:hover {
+      @include background-color("4");
+    }
+    .danmu-item {
+      @include background-color("5");
+      @include border-color();
+      &:nth-child(2n) {
+        @include background-color("4");
+      }
+      &:hover {
+        @include background-color("3");
+      }
+      .item {
+        &-name a {
+          @include color("e");
+        }
+        &-content {
+          @include color("e");
+          a {
+            @include color("a");
+            &:hover {
+              @include theme-color();
+            }
+          }
+        }
+        &-act .option-wrp {
+          .act-btn {
+            @include background-color("3");
+            @include color("a");
+            @include border-color();
+            &:hover {
+              @include theme-color();
+            }
+          }
+          .menu-item {
+            @include color("e");
+            &:hover {
+              @include background-color("3");
+            }
+          }
+        }
+      }
+    }
+    .bili-checkbox:checked+span:before {
+      @include theme-background-color();
+      @include foreground-color();
+      @include border-color();
+    }
+  }
+}
