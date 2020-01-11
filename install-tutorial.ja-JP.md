@@ -28,7 +28,7 @@
 ## 3. インストール
 少なくとも1つのユーザスクリプトマネージャをインストールしたら、「Bilibili-Evolved」のバージョンを選択してインストールできます. (インストールしたいバージョンの名をクリックしてください)
 
-| [公式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [プレビュー版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [オフライン版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js) | [プレビュー・オフライン版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js) |
+| [公式版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [プレビュー版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js) | [オフライン版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) | [プレビュー・オフライン版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js) |
 | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | 安定した機能を提供しますが、頻繁には更新されません.                                     | 新機能はここでテストされ、より頻繁に更新されます.                                              | GitHubサーバーの問題を回避するためにすべての依存関係をインライン化しました.                                          | その名の通り、プレビュー＋オフライン.                                                                                |
 

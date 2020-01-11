@@ -248,6 +248,19 @@
         }
       }
     }
+    .cc-article-wrp .article {
+      &-header .search-wrp {
+        @include border-color();
+      }
+      &-card {
+        .meta-status .status {
+          @include theme-color();
+        }
+        .select-box .select-item.is-disabled {
+          @include background-color();
+        }
+      }
+    }
   }
   .detail {
     @include background-color();
@@ -422,6 +435,120 @@
       .info,
       .artInfo {
         @include color("a");
+      }
+    }
+  }
+}
+.canary-container {
+  .file-list-v2-container {
+    .file-title h1,
+    .normal-v2-container .normal-title-wrp>h1,
+    .fans-dynamic-v2-container .fans-dynamic-v2-title-wrp>h1 {
+      @include color("e");
+    }
+    .upload-v2-sortable {
+      &-chosen,
+      &-ghost {
+        @include background-color("4");
+      }
+    }
+    .input-box-v2-3-container {
+      @include background-color("4");
+      @include border-color();
+      &>input {
+        @include color("e");
+      }
+      &.input-box-v2-3-active,
+      &:hover {
+        @include theme-border-color();
+      }
+    }
+  }
+  .file-content-v2-container {
+    .normal-v2-container .normal-title-wrp>h1 {
+      @include color("e");
+    }
+    .cover-v2-detail-wrp .cover-v2-selector {
+      @include border-color("4");
+      .cover-v2-selector-deg {
+        @include background-color("4");
+        @include border-color();
+      }
+    }
+    .cover-preview-modal-container .cover-preview-modal-content {
+      @include background-color("4");
+      .cover-preview-modal-head {
+        @include color("e");
+        @include border-color();
+      }
+      .cover-preview-modal-body .cover-preview-modal-body-item-selected {
+        @include theme-border-color();
+        &-icon {
+          @include to-theme("blue");
+        }
+      }
+      .cover-preview-modal-foot div:first-child {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+  .upload-step-3-container-v2 {
+    @include background-color();
+    .step-controller-v2-container .step-ctrl {
+      &-complete-content,
+      &-wait-content {
+        @include color("a");
+      }
+      &-active-content {
+        @include color("e");
+      }
+      &-complete-icon {
+        @include theme-color();
+        @include theme-border-color();
+      }
+      &-line-active {
+        @include theme-background-color();
+      }
+      &-active-icon {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+      &-line.step-ctrl-line-wait {
+        @include background-color("4");
+      }
+      &-wait-icon {
+        @include color("4");
+        @include border-color("4");
+      }
+    }
+    .upload-3-v2-success {
+      &-split {
+        @include background-color("4");
+      }
+      &-go-url a {
+        @include background-color("4");
+        @include color("e");
+        @include border-color();
+        &:hover {
+          @include theme-background-color();
+          @include foreground-color();
+          @include border-color();
+        }
+      }
+      &-hint-2 {
+        @include color("a");
+      }
+    }
+    .upload-3-v2-follow {
+      @include background-color();
+      &-title,
+      &-name {
+        @include color("a");
+      }
+      &-btn.follow {
+        @include theme-background-color();
+        @include foreground-color();
       }
     }
   }
