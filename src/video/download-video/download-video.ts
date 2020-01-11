@@ -697,15 +697,13 @@ async function loadPanel() {
         this.qualityModel.value = this.qualityModel.items[formats.indexOf(selectedFormat)]
         await this.formatChange()
       },
-      async formatChange() {
+      // userSelect 用于区分用户操作和自动更新, 只有用户操作才应更新默认选择的画质
+      async formatChange(userSelect = false) {
         console.log('format change')
         const format = this.getFormat() as VideoFormat
-        // const cache = sizeCache.get(format)
-        // if (cache) {
-        //   this.size = cache
-        //   return
-        // }
-        settings.downloadVideoQuality = format.quality
+        if (userSelect) {
+          settings.downloadVideoQuality = format.quality
+        }
         try {
           this.size = '获取大小中'
           const videoDownloader = await format.downloadInfo(this.dash)
