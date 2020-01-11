@@ -52,6 +52,10 @@
             link: 'https://cn.vuejs.org/index.html'
           },
           {
+            name: 'Vuex',
+            link: 'https://vuex.vuejs.org/zh/',
+          },
+          {
             name: 'JSZip',
             link: 'https://stuk.github.io/jszip/'
           },

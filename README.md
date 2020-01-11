@@ -87,12 +87,12 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 👍感谢这些组件帮助我们极大地提升了开发效率.
 
 - [Vue.js](https://cn.vuejs.org/index.html)
+- [Vuex](https://vuex.vuejs.org/zh/)
 - [JSZip](https://stuk.github.io/jszip/)
-- [jQuery](http://jquery.com/)
-- [debounce](https://github.com/component/debounce/)
 - [Slip.js](https://github.com/kornelski/slip)
-- [MDI](https://materialdesignicons.com)
 - [Lodash](https://lodash.com/)
+- [jQuery](http://jquery.com/)
+- [MDI](https://materialdesignicons.com)
 
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配并保持无冲突.
