@@ -1,18 +1,19 @@
 const displayNames = {
-  vip: "老爷图标",
-  fansMedal: "粉丝勋章",
-  title: "活动头衔",
-  userLevel: "用户等级",
-  guard: "舰长图标",
-  systemMessage: "全区广播",
-  welcomeMessage: "欢迎信息",
-  giftMessage: "礼物弹幕",
-  guardPurchase: "上舰提示",
-  giftPanel: "付费礼物",
-  kanban: "看板娘",
-  eventsBanner: "活动横幅",
-  popup: "抽奖提示",
-  skin: "房间皮肤",
+  vip: '老爷图标',
+  fansMedal: '粉丝勋章',
+  title: '活动头衔',
+  userLevel: '用户等级',
+  guard: '舰长图标',
+  systemMessage: '全区广播',
+  welcomeMessage: '欢迎信息',
+  giftMessage: '礼物弹幕',
+  guardPurchase: '上舰提示',
+  giftPanel: '付费礼物',
+  userEffect: '入场特效',
+  kanban: '看板娘',
+  eventsBanner: '活动横幅',
+  popup: '抽奖提示',
+  skin: '房间皮肤',
 }
 class SkinManager {
   skinDisabled = settings.simplifyLiveroomSettings.skin
@@ -71,16 +72,16 @@ const skins = [
   ], 'hundred'),
 ]
 const setBodyClass = (checked: boolean, key: string) => {
-  document.body.classList[checked ? "add" : "remove"](`simplify-${key}`);
-  if (key === "skin") {
+  document.body.classList.toggle(`simplify-${key}`, checked)
+  if (key === 'skin') {
     skins.forEach(it => it.setSkin(!checked))
   }
-};
+}
 const isLiveroom = () => document.URL.startsWith(`https://live.bilibili.com/`)
 if (isLiveroom()) {
   Object.keys(displayNames).forEach(key => {
-    const checked = settings.simplifyLiveroomSettings[key];
-    setBodyClass(checked, key);
+    const checked = settings.simplifyLiveroomSettings[key]
+    setBodyClass(checked, key)
   })
 }
 export default {
@@ -92,8 +93,8 @@ export default {
         <span>简化直播间</span>
         <div class="simplify-liveroom-settings popup">
           <ul>
-            <li v-for="item in items" v-on:click="itemClick(item)">
-              <i class="mdi mdi-18px" v-bind:class="{'mdi-eye': !item.checked, 'mdi-eye-off': item.checked}"></i>
+            <li v-for="item in items" @click="itemClick(item)" :class="{checked: item.checked}">
+              <i class="mdi mdi-18px" :class="{'mdi-eye': !item.checked, 'mdi-eye-off': item.checked}"></i>
               {{item.name}}
             </li>
           </ul>
@@ -101,39 +102,39 @@ export default {
       </div>
     `,
     success: () => {
-      const button = document.querySelector("#simplify-liveroom") as HTMLButtonElement
-      const mask = document.querySelector(".gui-settings-mask") as HTMLElement
-      button.addEventListener("click", e => {
-        const settingsList = document.querySelector(".simplify-liveroom-settings") as HTMLElement
+      const button = document.querySelector('#simplify-liveroom') as HTMLButtonElement
+      const mask = document.querySelector('.gui-settings-mask') as HTMLElement
+      button.addEventListener('click', e => {
+        const settingsList = document.querySelector('.simplify-liveroom-settings') as HTMLElement
         if (settingsList.contains(e.target as Node) || e.target === settingsList) {
-          return;
+          return
         }
-        settingsList.classList.toggle("opened");
-      });
-      button.addEventListener("mouseenter", () => mask.classList.add("transparent"));
-      button.addEventListener("mouseleave", () => mask.classList.remove("transparent"));
+        settingsList.classList.toggle('opened')
+      })
+      button.addEventListener('mouseenter', () => mask.classList.add('transparent'))
+      button.addEventListener('mouseleave', () => mask.classList.remove('transparent'))
       new Vue({
-        el: ".simplify-liveroom-settings",
+        el: '.simplify-liveroom-settings',
         data: {
           items: Object.entries(displayNames).map(([key, name]) => {
-            const checked = settings.simplifyLiveroomSettings[key];
-            setBodyClass(checked, key);
+            const checked = settings.simplifyLiveroomSettings[key]
+            setBodyClass(checked, key)
             return {
               key, name, checked
-            };
+            }
           }),
         },
         methods: {
           itemClick(item: { key: string, name: string, checked: boolean }) {
-            item.checked = !item.checked;
-            setBodyClass(item.checked, item.key);
+            item.checked = !item.checked
+            setBodyClass(item.checked, item.key)
             settings.simplifyLiveroomSettings = Object.assign(
               settings.simplifyLiveroomSettings, {
               [item.key]: item.checked,
-            });
+            })
           },
         },
-      });
+      })
     },
   },
-};
+}

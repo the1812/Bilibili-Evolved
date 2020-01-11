@@ -203,7 +203,8 @@
 .van-popover .level-bar,
 .van-popover .btn-box .btn.reg-btn,
 .van-popper-history .view-all,
-.share-content .video-card {
+.share-content .video-card,
+.section-block .flip-view {
   @include background-color("4");
 }
 .love-card .header::after {

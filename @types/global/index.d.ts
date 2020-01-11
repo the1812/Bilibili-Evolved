@@ -216,7 +216,7 @@ declare global {
     static cdnRoot: string
   }
   class ResourceManager {
-    import(compnentName: string): any
+    import(componentName: string): any
     getDefaultStyleId(key: string): string
     applyStyle(key: string, id?: string): void
     removeStyle(key: string): void
@@ -343,6 +343,7 @@ declare global {
       giftMessage: boolean,
       guardPurchase: boolean,
       giftPanel: boolean,
+      userEffect: boolean,
       kanban: boolean,
       eventsBanner: boolean,
       popup: boolean,

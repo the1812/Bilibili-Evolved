@@ -127,6 +127,7 @@ export const settings = {
     guardPurchase: true,
     giftPanel: true,
     kanban: true,
+    userEffect: true,
     eventsBanner: false,
     popup: false,
     skin: false,

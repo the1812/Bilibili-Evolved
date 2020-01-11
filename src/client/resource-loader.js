@@ -3,27 +3,6 @@ export function loadResources () {
   Resource.cdnRoot = 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/'
   Resource.all = {}
   Resource.displayNames = {}
-  // Resource.reloadables = [
-  //   'useDarkStyle',
-  //   'hideBanner',
-  //   'customNavbar',
-  //   'playerShadow',
-  //   'narrowDanmaku',
-  //   'compactLayout',
-  //   'useCommentStyle',
-  //   'removeVideoTopMask',
-  //   'hideOldEntry',
-  //   'hideBangumiReviews',
-  //   'videoScreenshot',
-  //   'blurVideoControl',
-  //   'customControlBackground',
-  //   'harunaScale',
-  //   'removeLiveWatermark',
-  //   'framePlayback',
-  //   'hideCategory',
-  //   'fullTweetsTitle',
-  //   'fullActivityContent',
-  // ]
   Resource.reloadables = []
   for (const [key, data] of Object.entries(Resource.manifest)) {
     const resource = new Resource(data.path, { styles: data.styles, alwaysPreview: data.alwaysPreview })
