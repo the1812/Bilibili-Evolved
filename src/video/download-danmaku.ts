@@ -91,7 +91,7 @@ export async function convertToAss(xml: string) {
   const assDocument = converter.convertToAssDocument(xml)
   return assDocument.generateAss()
 }
-export async function downloadDanmaku(ass: boolean, timeout: number | undefined) {
+export async function downloadDanmaku(ass: boolean) {
   const title = getFriendlyTitle()
   const danmaku = new DanmakuInfo((unsafeWindow || window).cid!)
   await danmaku.fetchInfo()
@@ -112,8 +112,8 @@ export async function downloadDanmaku(ass: boolean, timeout: number | undefined)
   if (oldUrl) {
     URL.revokeObjectURL(oldUrl)
   }
-  clearTimeout(timeout);
-  (dq('#download-danmaku>span') as HTMLElement).innerHTML = '下载弹幕'
+  // clearTimeout(timeout);
+  // (dq('#download-danmaku>span') as HTMLElement).innerHTML = '下载弹幕'
   link.setAttribute('download', `${title}.${(ass ? 'ass' : 'xml')}`)
   link.setAttribute('href', url)
   link.click()
@@ -137,13 +137,21 @@ export default {
       return Boolean(cid)
     },
     success: () => {
-      const link = document.querySelector('#danmaku-link')
-      dq('#download-danmaku')!.addEventListener('click', (e: MouseEvent) => {
+      const link = dq('#danmaku-link')
+      const button = dq('#download-danmaku') as HTMLButtonElement
+      button.addEventListener('click', (e: MouseEvent) => {
         if (e.target !== link) {
-          const timeout = setTimeout(
-            () => (dq('#download-danmaku>span') as HTMLElement).innerHTML = '请稍侯...',
-            200)
-          downloadDanmaku(e.shiftKey, timeout)
+          // const timeout = setTimeout(
+          //   () => (dq('#download-danmaku>span') as HTMLElement).innerHTML = '请稍侯...',
+          //   200)
+          try {
+            button.disabled = true
+            downloadDanmaku(e.shiftKey)
+          } catch (error) {
+            logError(error)
+          } finally {
+            button.disabled = false
+          }
         }
       })
     }
