@@ -452,7 +452,7 @@ const fixedSettings = {
   allNavbarFill: false,
   showDeadVideoTitle: false,
   blurVideoControl: false,
-  latestVersionLink: 'https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js',
+  latestVersionLink: 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js',
   currentVersion: GM.info.script.version,
 }
 const settingsChangeHandlers = {}
