@@ -212,6 +212,7 @@ const fixedSettings = {
   downloadVideo: true,
   enableDashDownload: true,
   downloadDanmaku: true,
+  downloadSubtitle: true,
   downloadAudio: true,
   medalHelper: true,
   about: true,

@@ -794,6 +794,12 @@ Resource.manifest = {
     displayNames: {
       collapseLiveSideBar: '收起直播间侧栏',
     },
-  }
+  },
+  downloadSubtitle: {
+    path: 'download-subtitle.min.js',
+    displayNames: {
+      downloadSubtitle: '下载字幕',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
