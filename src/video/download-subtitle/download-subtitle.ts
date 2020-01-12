@@ -54,9 +54,9 @@ export default {
           const json = await Ajax.getJson(subtitle.url)
           const rawData = json.body
           if (e.shiftKey) {
-            download(JSON.stringify(rawData), getFriendlyTitle(true) + '.json')
-          } else {
             // TODO:
+          } else {
+            download(JSON.stringify(rawData), getFriendlyTitle(true) + '.json')
           }
         } catch (error) {
           logError(error)
