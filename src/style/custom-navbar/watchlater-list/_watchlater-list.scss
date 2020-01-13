@@ -22,7 +22,7 @@
     }
   }
   @mixin floating-button-background {
-    background-color: #000a;
+    background-color: #000C;
   }
   .popup .watchlater-list {
     min-height: 200px;
@@ -133,6 +133,7 @@
       flex: 1;
       overflow: auto;
       overscroll-behavior: contain;
+      scroll-behavior: smooth;
       position: relative;
       @include no-scrollbar();
       // display: flex;
@@ -162,8 +163,8 @@
         //   "info" auto / 200px;
         grid-template:
           "cover title" 2fr
-          "cover info" 1fr / 140px 1fr;
-        height: 90px;
+          "cover info" 1fr / 130px 1fr;
+        height: 85px;
         body.dark & {
           background-color: #282828;
           color: #eee;
@@ -188,30 +189,31 @@
           .duration {
             left: $padding;
             bottom: $padding;
-            padding: 0 8px;
+            padding: 0 6px;
           }
           .viewed {
             white-space: nowrap;
             right: $padding;
             top: $padding;
-            padding: 0 8px;
+            padding: 0 6px;
           }
           .floating {
             position: absolute;
             opacity: 0;
+            font-size: 11px;
           }
           .cover {
             object-fit: cover;
           }
-          &:hover {
-            .floating {
-              opacity: 1;
-            }
+        }
+        &:hover {
+          .floating {
+            opacity: 1;
           }
         }
         .title {
           grid-area: title;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: bold;
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -242,17 +244,18 @@
           max-width: calc(100% - 16px);
           @include h-center();
           @include button-background();
-          @include round-bar(28);
+          @include round-bar(24);
           .face {
             border-radius: 50%;
             margin-right: 6px;
-            height: 24px;
-            width: 24px;
+            height: 20px;
+            width: 20px;
           }
           .name {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            font-size: 11px;
           }
           &:hover .name {
             color: var(--theme-color);

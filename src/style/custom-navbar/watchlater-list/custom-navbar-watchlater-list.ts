@@ -43,7 +43,7 @@ export class WatchlaterList extends NavbarComponent {
         <transition-group name="cards" tag="div" class="cards">
           <div class="watchlater-card" v-for="(card, index) of filteredCards" :key="card.aid">
             <a class="cover-container" target="_blank" :href="card.href">
-              <dpi-img class="cover" :src="card.coverUrl" :size="{width: 140, height: 90}"></dpi-img>
+              <dpi-img class="cover" :src="card.coverUrl" :size="{width: 130, height: 85}"></dpi-img>
               <div class="floating remove" title="移除" @click.prevent="remove(card.aid, index)"><i class="mdi mdi-close"></i></div>
               <div class="floating duration">{{card.durationText}}</div>
               <div class="floating viewed" v-if="card.complete">
@@ -52,7 +52,7 @@ export class WatchlaterList extends NavbarComponent {
             </a>
             <a class="title" target="_blank" :href="card.href" :title="card.title">{{card.title}}</a>
             <a class="up" target="_blank" :href="'https://space.bilibili.com/' + card.upID" :title="card.upName">
-              <dpi-img class="face" :src="card.upFaceUrl" :size="24"></dpi-img>
+              <dpi-img class="face" :src="card.upFaceUrl" :size="20"></dpi-img>
               <div class="name">{{card.upName}}</div>
             </a>
           </div>
@@ -77,23 +77,29 @@ export class WatchlaterList extends NavbarComponent {
       },
       data: {
         cards: [],
+        filteredCards: [],
         search: '',
         lastRemovedAid: 0,
         // redirect: settings.watchLaterRedirect,
       },
       computed: {
         ...Vuex.mapState(['watchlaterList']),
-        filteredCards() {
-          const search = this.search.toLowerCase()
-          return (this.cards as WatchlaterCard[]).filter(card => {
-            return card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search)
-          })
-        }
+        // filteredCards() {
+        //   const search = this.search.toLowerCase()
+        //   const cardsList = this.$el.querySelector('.cards') as HTMLElement
+        //   cardsList.scrollTo(0, 0)
+        //   return (this.cards as WatchlaterCard[]).filter(card => {
+        //     return card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search)
+        //   })
+        // }
       },
       watch: {
         watchlaterList() {
           this.updateList()
-        }
+        },
+        search() {
+          this.updateFilteredCards()
+        },
       },
       methods: {
         ...Vuex.mapActions(['toggleWatchlater']),
@@ -133,6 +139,11 @@ export class WatchlaterList extends NavbarComponent {
             } as WatchlaterCard
           })
           this.cards = cards
+          if (this.search) {
+            this.updateFilteredCards()
+          } else {
+            this.filteredCards = cards
+          }
         },
         async remove(aid: number, index: number) {
           this.cards.splice(index, 1)
@@ -144,7 +155,15 @@ export class WatchlaterList extends NavbarComponent {
           if (aid !== 0) {
             await this.toggleWatchlater(aid)
           }
-        }
+        },
+        updateFilteredCards: _.debounce(function () {
+          const search = this.search.toLowerCase()
+          const cardsList = this.$el.querySelector('.cards') as HTMLElement
+          cardsList.scrollTo(0, 0)
+          this.filteredCards = (this.cards as WatchlaterCard[]).filter(card => {
+            return card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search)
+          })
+        }, 200),
       },
       async mounted() {
         try {
