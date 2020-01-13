@@ -19,7 +19,7 @@ const unsupportedUrls = [
   '//member.bilibili.com/video/upload',
   '//space.bilibili.com/ajax/',
   '//www.bilibili.com/h5/comment/',
-  '//www.bilibili.com/blackboard/'
+  '//www.bilibili.com/blackboard/topic/'
 ]
 const loadSettings = () => {
   document.body.style.setProperty('--navbar-bounds-padding', `0 ${settings.customNavbarBoundsPadding}%`)

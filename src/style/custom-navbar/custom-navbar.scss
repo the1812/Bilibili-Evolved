@@ -149,7 +149,8 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 .i_menu_login,
 .international-header .b-logo,
 .bili-banner .taper-line,
-.international-header .mini-header {
+.international-header .mini-header,
+.bili-header-m .head-banner .head-content .head-logo {
   display: none !important;
 }
 .van-popover {
@@ -157,6 +158,9 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 }
 :not(.international-home) > .international-header {
   min-height: var(--navbar-height) !important;
+}
+.bili-header-m .head-banner {
+  margin-top: calc(-1 * var(--navbar-height)) !important;
 }
 
 .bili-header-m > .nav-menu,
