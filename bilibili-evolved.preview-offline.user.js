@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      545.32
+// @version      545.82
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -25,7 +25,6 @@
 // @connect      raw.githubusercontent.com
 // @connect      cdn.jsdelivr.net
 // @connect      *
-// @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
@@ -40,6 +39,40 @@ Vue.config.devtools = false
 // if (unsafeWindow.Vue === undefined) {
 //   unsafeWindow.Vue = Vue
 // }
+
+// GM4 polyfill start
+if (typeof GM == 'undefined') {
+  this.GM = {}
+}
+Object.entries({
+  'log': console.log.bind(console),
+  'info': GM_info,
+}).forEach(([newKey, old]) => {
+  if (old && (typeof GM[newKey] == 'undefined')) {
+    GM[newKey] = old
+  }
+})
+Object.entries({
+  'GM_getValue': 'getValue',
+  'GM_setClipboard': 'setClipboard',
+  'GM_setValue': 'setValue',
+  'GM_xmlhttpRequest': 'xmlHttpRequest',
+}).forEach(([oldKey, newKey]) => {
+  let old = this[oldKey]
+  if (old && (typeof GM[newKey] == 'undefined')) {
+    GM[newKey] = function (...args) {
+      return new Promise((resolve, reject) => {
+        try {
+          resolve(old.apply(this, args))
+        } catch (e) {
+          reject(e)
+        }
+      })
+    }
+  }
+})
+// GM4 polyfill end
+
 function logError (error) {
   let finalMessage = error
   if (typeof error === 'object' && 'stack' in error) {

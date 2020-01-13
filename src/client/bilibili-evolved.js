@@ -25,7 +25,6 @@
 // @connect      raw.githubusercontent.com
 // @connect      cdn.jsdelivr.net
 // @connect      *
-// @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
@@ -39,6 +38,40 @@ Vue.config.devtools = false
 // if (unsafeWindow.Vue === undefined) {
 //   unsafeWindow.Vue = Vue
 // }
+
+// GM4 polyfill start
+if (typeof GM == 'undefined') {
+  this.GM = {}
+}
+Object.entries({
+  'log': console.log.bind(console),
+  'info': GM_info,
+}).forEach(([newKey, old]) => {
+  if (old && (typeof GM[newKey] == 'undefined')) {
+    GM[newKey] = old
+  }
+})
+Object.entries({
+  'GM_getValue': 'getValue',
+  'GM_setClipboard': 'setClipboard',
+  'GM_setValue': 'setValue',
+  'GM_xmlhttpRequest': 'xmlHttpRequest',
+}).forEach(([oldKey, newKey]) => {
+  let old = this[oldKey]
+  if (old && (typeof GM[newKey] == 'undefined')) {
+    GM[newKey] = function (...args) {
+      return new Promise((resolve, reject) => {
+        try {
+          resolve(old.apply(this, args))
+        } catch (e) {
+          reject(e)
+        }
+      })
+    }
+  }
+})
+// GM4 polyfill end
+
 import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename } from './utils'
 import { settings, loadSettings, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
