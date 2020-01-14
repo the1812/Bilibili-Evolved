@@ -18,9 +18,12 @@ function oldGetFriendlyTitle (includesPageTitle = true) {
     }
   }
 }
-export function formatTitle (format, includesPageTitle = true, extraData = {}) {
+type StringMap = {
+  [key: string]: string | undefined | null
+}
+export function formatTitle (format: string, includesPageTitle = true, extraData: StringMap = {}) {
   const now = new Date()
-  const data = {
+  const data: StringMap = {
     title: document.title
       .replace(/：([^：]+?)_番剧_bilibili_哔哩哔哩/, '')
       .replace(/：([^：]+?)_国创_bilibili_哔哩哔哩/, '')
@@ -31,9 +34,9 @@ export function formatTitle (format, includesPageTitle = true, extraData = {}) {
       .trim(),
     ep: (() => {
       if (!includesPageTitle) {
-        return null
+        return
       }
-      const bangumiPage = dq('#eplist_module li.cursor .ep-title')
+      const bangumiPage = dq('#eplist_module li.cursor .ep-title') as HTMLElement
       if (bangumiPage !== null) {
         return bangumiPage.innerText
       }
@@ -41,7 +44,6 @@ export function formatTitle (format, includesPageTitle = true, extraData = {}) {
       if (pageLink !== null) {
         return pageLink.getAttribute('title')
       }
-      return null
     })(),
     aid: unsafeWindow.aid,
     cid: unsafeWindow.cid,
