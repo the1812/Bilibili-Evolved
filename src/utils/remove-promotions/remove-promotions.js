@@ -1,4 +1,7 @@
 if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
+  addSettingsListener('removeGameMatchModule', value => {
+    document.body.classList.toggle('remove-game-match-module', value)
+  }, true)
   SpinQuery.any(
     () => dqa('.gg-pic'),
     it => {
@@ -11,8 +14,8 @@ if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.c
           li.style.display = 'flex'
           const lia = li.querySelector('a:not(.more-text)')
           lia.insertAdjacentHTML('afterend', /*html*/`
-          <div class="blocked-ads">${settings.showBlockedAdsTip ? '🚫已屏蔽广告' : ''}</div>
-        `)
+            <div class="blocked-ads">${settings.showBlockedAdsTip ? '🚫已屏蔽广告' : ''}</div>
+          `)
           lia.style.visibility = 'hidden'
           li.querySelector('a.more-text').style.display = 'none'
           li.querySelector('img').style.display = 'none'
@@ -20,12 +23,17 @@ if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.c
       })
     }
   )
+  SpinQuery.select('.gg-carousel.home-slide').then(slide => {
+    if (!slide) {
+      return
+    }
+    [...slide.querySelectorAll('.gg-icon')]
+      .map(it => it.parentElement.parentElement)
+      .forEach(it => {
+        it.style.display = 'none'
+        it.insertAdjacentHTML('afterend', /*html*/`
+          <div class="blocked-ads new">${settings.showBlockedAdsTip ? '🚫已屏蔽广告' : ''}</div>
+        `)
+      })
+  })
 }
-SpinQuery.select('.gg-carousel.home-slide').then(slide => {
-  if (!slide) {
-    return
-  }
-  [...slide.querySelectorAll('.gg-icon')]
-    .map(it => it.parentElement.parentElement.parentElement)
-    .forEach(it => it.style.display = 'none')
-})

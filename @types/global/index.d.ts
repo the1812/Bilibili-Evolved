@@ -423,6 +423,7 @@ declare global {
     collapseLiveSideBar: boolean,
     downloadVideoQuality: number,
     downloadSubtitle: boolean,
+    removeGameMatchModule: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
