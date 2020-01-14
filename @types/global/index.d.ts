@@ -369,6 +369,7 @@ declare global {
     videoScreenshot: boolean,
     cache: {} | { version: string } | undefined,
     filenameFormat: string,
+    batchFilenameFormat: string,
     sideBarOffset: number,
     noLiveAutoplay: boolean,
     hideHomeLive: boolean,

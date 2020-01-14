@@ -1,3 +1,5 @@
+import { formatTitle } from '../title'
+
 const fragmentSplitFactor = 12
 const dashExtensions = ['.mp4', '.m4a']
 
@@ -5,9 +7,15 @@ export interface BatchExtractorConfig {
   itemFilter: (item: BatchItem) => boolean
   api?: (aid: number | string, cid: number | string, quality?: number | string) => string
 }
+export interface BatchTitleParameter {
+  [key: string]: string
+  n: string
+  ep: string
+}
 interface BatchItem {
   aid: number | string
   cid: number | string
+  titleParameters?: BatchTitleParameter
   title: string
 }
 export interface RawItemFragment { length: number, size: number, url: string }
@@ -23,6 +31,11 @@ abstract class Batch {
   itemList: BatchItem[] = []
   abstract async getItemList(): Promise<BatchItem[]>
   abstract async collectData(quality: number | string): Promise<string>
+  formatTitle(parameters: BatchTitleParameter | undefined) {
+    const format = settings.batchFilenameFormat
+    const title = formatTitle(format, true, parameters)
+    return escapeFilename(title, ' ')
+  }
   async getRawItems(quality: number | string): Promise<RawItem[]> {
     return JSON.parse(await this.collectData(quality))
   }
@@ -119,9 +132,13 @@ class VideoEpisodeBatch extends Batch {
     this.itemList = pages.map((page: any) => {
       return {
         title: `P${page.page} ${page.part}`,
+        titleParameters: {
+          n: page.page,
+          ep: page.part
+        },
         cid: page.cid,
         aid: unsafeWindow.aid,
-      }
+      } as BatchItem
     })
     return this.itemList
   }
@@ -150,7 +167,8 @@ class VideoEpisodeBatch extends Batch {
       }
       result.push({
         fragments,
-        title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
+        // title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
+        title: this.formatTitle(item.titleParameters),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')
@@ -183,11 +201,18 @@ class BangumiBatch extends Batch {
       return []
     }
     this.itemList = json.result.main_section.episodes.map((it: any, index: number) => {
+      const n: string = it.long_title ? it.title : (index + 1).toString()
+      const title: string = it.long_title ? it.long_title : it.title
       return {
         aid: it.aid,
         cid: it.cid,
-        title: it.long_title ? `${it.title} - ${it.long_title}` : `${index + 1} - ${it.title}`,
-      }
+        title: `${n} - ${title}`,
+        // title: it.long_title ? `${it.title} - ${it.long_title}` : `${index + 1} - ${it.title}`,
+        titleParameters: {
+          n,
+          ep: title,
+        },
+      } as BatchItem
     })
     return this.itemList
   }
@@ -216,7 +241,8 @@ class BangumiBatch extends Batch {
       }
       result.push({
         fragments,
-        title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
+        // title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
+        title: this.formatTitle(item.titleParameters),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')

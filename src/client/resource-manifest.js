@@ -477,7 +477,8 @@ Resource.manifest = {
   title: {
     path: 'title.min.js',
     displayNames: {
-      filenameFormat: '文件命名格式'
+      filenameFormat: '文件命名格式',
+      batchFilenameFormat: '批量命名格式',
     }
   },
   imageResolution: {

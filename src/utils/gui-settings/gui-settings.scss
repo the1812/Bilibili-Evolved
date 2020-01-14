@@ -227,6 +227,7 @@
   &.disabled div {
     opacity: 0.5;
   }
+  & input[key="batchFilenameFormat"],
   & input[key="filenameFormat"] {
     max-width: 500px;
   }

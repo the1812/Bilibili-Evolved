@@ -150,6 +150,7 @@ export const settings = {
   videoScreenshot: false,
   hideBangumiReviews: false,
   filenameFormat: '[title][ - ep]',
+  batchFilenameFormat: '[n - ][title]',
   sideBarOffset: 0,
   noLiveAutoplay: false,
   hideHomeLive: false,
