@@ -556,3 +556,65 @@
 .room-feed .tabs .item>span:after {
   @include theme-background-color();
 }
+.customer-service {
+  .self-panel .scroll-container .item>span,
+  .panel-title {
+    @include color("e");
+  }
+  .customer-card {
+    @include border-color("4");
+    .card-header {
+      @include background-color("4");
+      .name {
+        @include color("e");
+      }
+    }
+    .card-content>a {
+      @include color("a");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .guess-panel {
+    .panel-header .title {
+      @include color("e");
+    }
+    .question-container {
+      @include border-color("4");
+      .title {
+        .circle {
+          @include theme-background-color();
+        }
+        &>p {
+          @include color("e");
+        }
+      }
+      .answer {
+        @include color("a");
+        &>a {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  .other-panel .card {
+    .title {
+      @include color("e");
+      @include border-color();
+    }
+    .detail {
+      &-text,
+      p {
+        @include color("e");
+        &>a {
+          @include theme-color();
+        }
+      }
+      .ask-btn {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+}
