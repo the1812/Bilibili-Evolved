@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      548.27
+// @version      548.33
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -461,6 +461,7 @@ const settings = {
   autoMatchMedal: false,
   customStyles: [],
   simpleHomeCategoryOrders: { ...simpleHomeCategoryDefaultOrders },
+  simpleHomeBangumiLayout: '时间表',
   keymapJumpSeconds: 85,
   urlParamsClean: true,
   collapseLiveSideBar: true,

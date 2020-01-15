@@ -419,6 +419,7 @@ declare global {
     autoMatchMedal: boolean,
     customStyles: CustomStyle[],
     simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
+    simpleHomeBangumiLayout: '时间表' | '动态',
     keymapJumpSeconds: number,
     urlParamsClean: boolean,
     collapseLiveSideBar: boolean,

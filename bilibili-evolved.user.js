@@ -460,6 +460,7 @@ const settings = {
   autoMatchMedal: false,
   customStyles: [],
   simpleHomeCategoryOrders: { ...simpleHomeCategoryDefaultOrders },
+  simpleHomeBangumiLayout: '时间表',
   keymapJumpSeconds: 85,
   urlParamsClean: true,
   collapseLiveSideBar: true,
