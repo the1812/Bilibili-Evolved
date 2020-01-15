@@ -151,7 +151,8 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 .bili-banner .taper-line,
 .international-header .mini-header,
 .bili-header-m .head-banner .head-content .head-logo {
-  display: none !important;
+  visibility: collapse !important;
+  position: absolute !important;
 }
 .van-popover {
   z-index: 10002 !important;
