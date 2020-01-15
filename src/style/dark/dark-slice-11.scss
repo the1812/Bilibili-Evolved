@@ -553,3 +553,6 @@
     }
   }
 }
+.room-feed .tabs .item>span:after {
+  @include theme-background-color();
+}
