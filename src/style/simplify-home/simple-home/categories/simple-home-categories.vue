@@ -53,7 +53,8 @@ const tabNames = {
 export default {
   components: {
     Icon: () => import('../../../icon.vue'),
-    NormalCategory: () => import('./simple-home-normal-category.vue')
+    NormalCategory: () => import('./simple-home-normal-category.vue'),
+    BangumiCategory: () => import('./simple-home-bangumi-category.vue'),
   },
   data() {
     return {
@@ -100,7 +101,7 @@ export default {
   computed: {
     content() {
       if (['bangumi', 'china'].includes(this.selectedTab)) {
-        return null
+        return 'BangumiCategory'
       } else if (this.selectedTab === 'manga') {
         return null
       } else if (this.selectedTab === 'column') {
@@ -123,8 +124,29 @@ export default {
 
 <style lang="scss">
 .simple-home .categories {
+  --loading-from: #d4d4d4;
+  --loading-to: #ddd;
+  --slideshow-ratio: 0.6;
+  --rank-width: 370px;
+  --rank-height: calc(var(--rank-width) / 16 * 9);
+  --card-height: 280px;
+  --card-width: calc(var(--card-height) * (42 / 25));
   display: flex;
   flex-direction: column;
+  @keyframes category-loading {
+    from {
+      background-color: var(--loading-from);
+    }
+    to {
+      background-color: var(--loading-to);
+    }
+  }
+  @for $width from 18 through 7 {
+    @media screen and (max-width: #{$width * 100}px) {
+      --card-height: #{280 - 8 * (19 - $width)}px;
+      --rank-width: #{370 - 20 * (19 - $width)}px;
+    }
+  }
   &,
   & *,
   ::after,
@@ -149,6 +171,24 @@ export default {
         transition: none;
         margin-right: 24px;
       }
+    }
+  }
+  .area-header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: bold;
+    font-size: 11pt;
+    margin-bottom: 12px;
+    &::before {
+      content: '';
+      display: inline-flex;
+      height: 10px;
+      width: 10px;
+      background-color: var(--theme-color);
+      border-radius: 50%;
+      margin-right: 8px;
     }
   }
   .category-content {
