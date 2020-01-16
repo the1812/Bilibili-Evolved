@@ -618,3 +618,18 @@
     }
   }
 }
+#app-body {
+  #player-and-interaction-area {
+    #head-info,
+    .gift-control-panel,
+    .aside-area {
+      @include background-color("4");
+    }
+    #gift-control-area {
+      @include border-color();
+    }
+  }
+  #section-ctnr .header{
+    @include background-color();
+  }
+}
