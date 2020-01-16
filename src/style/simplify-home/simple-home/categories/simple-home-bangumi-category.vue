@@ -1,9 +1,13 @@
 <template>
   <div
     class="bangumi-category"
-    :class="{'rank-loading': rank.loading}"
+    :class="{'rank-loading': rank.loading, 'timeline-loading': timeline.loading}"
   >
-    <bangumi-timeline class="timeline" @load="timeline.loading = false" @error="timeline.error = true"></bangumi-timeline>
+    <bangumi-timeline
+      class="timeline"
+      @load="timeline.loading = false"
+      @error="timeline.error = true"
+    ></bangumi-timeline>
     <!-- <div class="feeds" v-if="layout === '动态'">
     </div>-->
     <rank-list :videos="rank.videos"></rank-list>
@@ -24,7 +28,7 @@ export default {
       // layout: settings.simpleHomeBangumiLayout,
       timeline: {
         error: false,
-        loading: true,
+        loading: true
       },
       rank: {
         error: false,
@@ -55,7 +59,7 @@ export default {
             epTitle: item.new_ep.index_show,
             playCount: item.stat.view,
             danmakuCount: item.stat.danmaku,
-            watchlater: null,
+            watchlater: null
           }
         })
         this.rank.videos = list.slice(0, 10)
@@ -69,7 +73,7 @@ export default {
   },
   mounted() {
     this.loadRankList()
-  },
+  }
 }
 </script>
 
@@ -87,6 +91,15 @@ export default {
   ::after,
   ::before {
     transition: 0.2s ease-out;
+  }
+  .loading {
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 16px;
+    position: absolute;
+  }
+  .rank {
+    height: 700px;
   }
   @each $name in ('timeline', 'rank') {
     .#{$name} {

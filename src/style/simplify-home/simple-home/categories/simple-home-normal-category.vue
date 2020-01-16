@@ -207,18 +207,11 @@ export default {
   ::before {
     transition: 0.2s ease-out;
   }
-  body.dark & {
-    --loading-from: #333;
-    --loading-to: #262626;
-  }
   .loading {
     opacity: 0;
     pointer-events: none;
     border-radius: 16px;
     position: absolute;
-    // &.new-activity {
-    //   height: 30vh;
-    // }
   }
   .new-activity {
     align-self: start;

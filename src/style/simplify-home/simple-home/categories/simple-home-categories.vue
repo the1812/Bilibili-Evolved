@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <transition>
+    <transition mode="out-in">
       <component class="category-content" :is="content" :rid="rid"></component>
     </transition>
   </div>
@@ -133,6 +133,10 @@ export default {
   --card-width: calc(var(--card-height) * (42 / 25));
   display: flex;
   flex-direction: column;
+  body.dark & {
+    --loading-from: #333;
+    --loading-to: #262626;
+  }
   @keyframes category-loading {
     from {
       background-color: var(--loading-from);
@@ -180,7 +184,7 @@ export default {
     justify-content: flex-start;
     font-weight: bold;
     font-size: 11pt;
-    margin-bottom: 12px;
+    padding-bottom: 12px;
     &::before {
       content: '';
       display: inline-flex;
