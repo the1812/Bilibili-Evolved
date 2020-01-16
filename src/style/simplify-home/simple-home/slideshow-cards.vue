@@ -88,7 +88,6 @@ export default {
     Icon: () => import('../../icon.vue'),
     DpiImg: () => import('../../dpi-img.vue')
   },
-  store,
   filters: {
     bigNumber(value: number) {
       return formatCount(value)
