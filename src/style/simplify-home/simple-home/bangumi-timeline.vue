@@ -163,7 +163,7 @@ export default {
       z-index: 1;
       background-color: #f4f4f4;
       body.dark & {
-        background-color: #161616;
+        background-color: #181818;
       }
       .icon {
         grid-area: icon;
