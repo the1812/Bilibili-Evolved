@@ -11,7 +11,7 @@
         v-for="[time, bangumis] of Object.entries(t.bangumis)"
         :key="time"
       >
-        <div class="time">
+        <div class="time" :class="{'recent': t.isToday && time === recentTime}">
           <icon type="mdi" icon="clock-fast"></icon>
           {{time}}
         </div>
@@ -35,6 +35,26 @@
 </template>
 
 <script lang="ts">
+interface Timeline {
+  date: string
+  dayOfWeek: number
+  dayOfWeekText: string
+  isToday: boolean
+  bangumis: {
+    [time: string]: {
+      coverUrl: string
+      squareCoverUrl: string
+      time: string
+      timestamp: number
+      url: string
+      follow: boolean
+      epTitle: string
+      title: string
+      delay: boolean
+      published: boolean
+    }[]
+  }
+}
 export default {
   components: {
     Icon: () => import('../../icon.vue'),
@@ -54,7 +74,28 @@ export default {
     }
     return {
       apiUrl: apiMapping[this.type] || apiMapping.global,
-      timeline: []
+      timeline: [],
+      recentTime: '',
+    }
+  },
+  methods: {
+    calculateRecentTime() {
+      const today = (this.timeline as Timeline[]).find(it => it.isToday)!
+      const now = Number(new Date())
+      const timestamps = Object.entries(today.bangumis).map(
+        ([time, bangumis]) => {
+          return { time, timestamp: bangumis[0].timestamp, bangumis }
+        }
+      )
+      const recentTimestamp = timestamps
+        .filter(it => it.timestamp < now)
+        .pop()
+      if (!recentTimestamp) {
+        this.recentTime = timestamps[0].time // 没有更早的时间就取下一个即将更新的时间
+      } else {
+        this.recentTime = recentTimestamp.time
+      }
+      console.log(this.recentTime)
     }
   },
   async mounted() {
@@ -102,11 +143,21 @@ export default {
       })
       // console.log(_.cloneDeep(results))
       this.timeline = results
+      this.calculateRecentTime()
+      setInterval(() => {
+        if (document.hasFocus()) {
+          this.calculateRecentTime()
+        }
+      }, 60 * 1000)
       await this.$nextTick()
       const el = this.$el as HTMLElement
       const style = getComputedStyle(el)
-      const width = parseInt(style.getPropertyValue('--column-width').match(/(.+)px/)![1])
-      const gap = parseInt(style.getPropertyValue('--column-gap').match(/(.+)px/)![1])
+      const width = parseInt(
+        style.getPropertyValue('--column-width').match(/(.+)px/)![1]
+      )
+      const gap = parseInt(
+        style.getPropertyValue('--column-gap').match(/(.+)px/)![1]
+      )
       el.scrollLeft = 5 * (width + gap) // 第7个是今日
     } catch (error) {
       logError(error)
@@ -184,14 +235,14 @@ export default {
       .date {
         grid-area: date;
         align-self: end;
-        opacity: .75;
+        opacity: 0.75;
       }
       .day-of-week {
         grid-area: dow;
         align-self: start;
         font-weight: bold;
         font-size: 15px;
-        opacity: .75;
+        opacity: 0.75;
       }
       &.today {
         .icon {
@@ -211,7 +262,7 @@ export default {
       }
       body.dark & {
         .icon {
-          filter: brightness(.8);
+          filter: brightness(0.8);
         }
         &.today .icon {
           filter: invert(1);
