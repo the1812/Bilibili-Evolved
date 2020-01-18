@@ -278,6 +278,9 @@ export default {
         display: flex;
         align-items: center;
         font-weight: bold;
+        &.recent {
+          color: var(--theme-color);
+        }
         .be-icon {
           margin-right: 6px;
           font-size: 18px;
