@@ -34,11 +34,12 @@ window.addEventListener('load', async () => {
       })
     }
   })
-  setInterval(async () => {
+  let nextTime = 3000
+  const dishClick = async () => {
     if (unsafeWindow.startAutoClick !== true) {
       return
     }
-    const count = Math.floor(Math.random() * (10 - 2)) + 2
+    const count = Math.floor(Math.random() * (30 - 2)) + 2
     const response = await (await fetch('https://api.bilibili.com/x/activity/bnj2020/hotpot/increase', {
       credentials: 'include',
       headers: {
@@ -56,5 +57,8 @@ window.addEventListener('load', async () => {
     } else {
       log('连点失败! ', response.message)
     }
-  }, 3000)
+    nextTime = Math.floor(Math.random() * (3000 - 500)) + 500
+    setTimeout(dishClick, nextTime)
+  }
+  dishClick()
 })
