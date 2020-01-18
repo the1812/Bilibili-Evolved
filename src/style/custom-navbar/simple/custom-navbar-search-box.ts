@@ -41,6 +41,12 @@ export class SearchBox extends NavbarComponent {
         e.preventDefault()
         return false
       }
+      const now = Number(new Date())
+      if (keywordInput.value === '拜年祭' && Number(new Date('2020-01-17')) < now && now < Number(new Date('2020-02-01'))) {
+        window.open(`https://www.bilibili.com/blackboard/xianxing2020bnj.html`)
+        e.preventDefault()
+        return false
+      }
       const historyItem = settings.searchHistory.find(item => item.keyword === keywordInput.value)
       if (historyItem) {
         historyItem.count++
