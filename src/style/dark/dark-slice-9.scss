@@ -357,6 +357,9 @@ $highlight-map: (
   @include background-color("3");
   @include border-color();
 }
+.module-game .rule .detail .content {
+  @include color("0");
+}
 #biliAppHomeSetting {
   select,
   input {
