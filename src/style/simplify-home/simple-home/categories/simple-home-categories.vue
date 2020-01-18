@@ -101,7 +101,8 @@ export default {
   computed: {
     content() {
       if (['bangumi', 'china'].includes(this.selectedTab)) {
-        return 'BangumiCategory'
+        // return 'BangumiCategory'
+        return null
       } else if (this.selectedTab === 'manga') {
         return null
       } else if (this.selectedTab === 'column') {
