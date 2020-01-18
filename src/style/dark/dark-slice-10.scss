@@ -111,7 +111,9 @@
 }
 
 .bl-button--primary:disabled,
-.notice-info-wrapper .notice-info-title {
+.notice-info-wrapper .notice-info-title,
+.ep-item.v4.cursor .ep-pub,
+.chasing-frame-cntr .chasing {
   @include color("e");
 }
 
