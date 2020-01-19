@@ -95,7 +95,7 @@ export default {
       } else {
         this.recentTime = recentTimestamp.time
       }
-      console.log(this.recentTime)
+      // console.log(this.recentTime)
     }
   },
   async mounted() {
@@ -159,6 +159,8 @@ export default {
         style.getPropertyValue('--column-gap').match(/(.+)px/)![1]
       )
       el.scrollLeft = 5 * (width + gap) // 第7个是今日
+      const recentBangumi = el.querySelector('.time.recent') as HTMLElement
+      recentBangumi.scrollIntoView()
     } catch (error) {
       logError(error)
       this.$emit('error')
@@ -200,6 +202,7 @@ export default {
     flex: 0 0 auto;
     padding-bottom: 16px;
     // overscroll-behavior-y: contain;
+    scroll-behavior: smooth;
     @include no-scrollbar();
     .date-container {
       display: grid;
@@ -208,7 +211,8 @@ export default {
         'icon dow' 1fr / auto 1fr;
       grid-column-gap: 8px;
       column-gap: 8px;
-      height: 48px;
+      height: 60px;
+      padding-bottom: 12px;
       position: sticky;
       top: 0;
       z-index: 1;
