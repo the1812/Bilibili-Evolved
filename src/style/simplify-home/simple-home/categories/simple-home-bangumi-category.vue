@@ -10,7 +10,7 @@
     ></bangumi-timeline>
     <!-- <div class="feeds" v-if="layout === '动态'">
     </div>-->
-    <rank-list :videos="rank.videos"></rank-list>
+    <rank-list :videos="rank.videos" view-mode="bangumi"></rank-list>
     <div class="timeline loading"></div>
     <div class="rank loading"></div>
   </div>
@@ -80,12 +80,26 @@ export default {
 <style lang="scss">
 .simple-home .bangumi-category {
   display: grid;
-  grid-template: 'timeline rank' 1fr / 1fr calc(1.5 * var(--rank-width) + 10px);
+  --rank-width: 350px;
+  --rank-height: calc(var(--rank-width) / 16 * 10);
+  grid-template: 'timeline rank' 1fr / 1fr var(--rank-width);
   grid-row-gap: 24px;
   row-gap: 24px;
   grid-column-gap: 32px;
   column-gap: 32px;
   position: relative;
+  @for $width from 18 through 16 {
+    $rank-width: #{350 + (19 - $width) * 15};
+    @media screen and (min-width: #{$width * 100}px) {
+      --rank-width: #{$rank-width}px;
+    }
+    @media screen and (min-width: #{($width - 3) * 100}px) {
+      --rank-width: #{$rank-width}px;
+    }
+    @media screen and (min-width: #{($width - 6) * 100}px) {
+      --rank-width: #{$rank-width}px;
+    }
+  }
   &,
   & *,
   ::after,
@@ -101,6 +115,9 @@ export default {
   .rank {
     height: 700px;
   }
+  // .timeline {
+  //   justify-self: center;
+  // }
   @each $name in ('timeline', 'rank') {
     .#{$name} {
       grid-area: unquote($name);

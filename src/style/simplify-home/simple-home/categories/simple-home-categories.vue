@@ -129,7 +129,7 @@ export default {
   --loading-to: #ddd;
   --slideshow-ratio: 0.6;
   --rank-width: 370px;
-  --rank-height: calc(var(--rank-width) / 16 * 9);
+  --rank-height: calc(var(--rank-width) / 16 * 10);
   --card-height: 280px;
   --card-width: calc(var(--card-height) * (42 / 25));
   display: flex;
