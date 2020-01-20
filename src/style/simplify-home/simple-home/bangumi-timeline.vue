@@ -11,7 +11,7 @@
         v-for="[time, bangumis] of Object.entries(t.bangumis)"
         :key="time"
       >
-        <div class="time" :class="{'recent': t.isToday && time === recentTime}">
+        <div class="time" :class="{'recent': t.isToday && recentTime.includes(time)}">
           <icon type="mdi" icon="clock-fast"></icon>
           {{time}}
         </div>
@@ -87,13 +87,13 @@ export default {
           return { time, timestamp: bangumis[0].timestamp, bangumis }
         }
       )
-      const recentTimestamp = timestamps
+      const recentTimestamps = timestamps
         .filter(it => it.timestamp < now)
-        .pop()
-      if (!recentTimestamp) {
-        this.recentTime = timestamps[0].time // 没有更早的时间就取下一个即将更新的时间
+        // .pop()
+      if (recentTimestamps.length === 0) {
+        this.recentTime = [timestamps[0].time] // 没有更早的时间就取下一个即将更新的时间
       } else {
-        this.recentTime = recentTimestamp.time
+        this.recentTime = recentTimestamps.map(it => it.time)
       }
       // console.log(this.recentTime)
     }
@@ -284,6 +284,13 @@ export default {
         font-weight: bold;
         &.recent {
           color: var(--theme-color);
+          & ~ .bangumi-item {
+            box-shadow: 0 4px 8px 0 #0001, inset 0 0px 0px 2px var(--theme-color);
+            .cover-container {
+              margin: 2px;
+              border-radius: 6px 0 0 6px;
+            }
+          }
         }
         .be-icon {
           margin-right: 6px;
