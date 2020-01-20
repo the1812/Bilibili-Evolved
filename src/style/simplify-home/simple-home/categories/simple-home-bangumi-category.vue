@@ -5,6 +5,7 @@
   >
     <bangumi-timeline
       class="timeline"
+      :type="timelineType"
       @load="timeline.loading = false"
       @error="timeline.error = true"
     ></bangumi-timeline>
@@ -23,6 +24,7 @@ export default {
     // SlideshowCards: () => import('../slideshow-cards.vue'),
     RankList: () => import('../rank-list.vue')
   },
+  props: ['rid'],
   data() {
     return {
       // layout: settings.simpleHomeBangumiLayout,
@@ -37,13 +39,27 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    timelineType() {
+      // RegionCodes.bangumi === 13
+      return this.rid === 13 ? 'global' : 'chinese'
+    }
+  },
+  watch: {
+    rid() {
+      this.loadRankList()
+    }
+  },
   methods: {
     // changeLayout(layoutName: typeof settings.simpleHomeBangumiLayout) {
     //   this.layout = settings.simpleHomeBangumiLayout = layoutName
     // }
     async loadRankList() {
-      const api = `https://api.bilibili.com/pgc/web/rank/list?season_type=1&day=3`
+      const { RegionCodes } = await import('./category-regions')
+      const api =
+        this.rid === RegionCodes.bangumi
+          ? `https://api.bilibili.com/pgc/web/rank/list?season_type=1&day=3`
+          : `https://api.bilibili.com/pgc/web/rank/list?season_type=4&day=3`
       try {
         const json = await Ajax.getJson(api)
         if (json.code !== 0) {

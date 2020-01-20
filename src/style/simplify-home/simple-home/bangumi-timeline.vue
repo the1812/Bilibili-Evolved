@@ -58,6 +58,10 @@ interface Timeline {
     }[]
   }
 }
+const apiMapping: { [key: string]: string | undefined } = {
+  global: 'https://bangumi.bilibili.com/web_api/timeline_global',
+  chinese: 'https://bangumi.bilibili.com/web_api/timeline_cn'
+}
 export default {
   components: {
     Icon: () => import('../../icon.vue'),
@@ -71,14 +75,19 @@ export default {
     }
   },
   data() {
-    const apiMapping: { [key: string]: string | undefined } = {
-      global: 'https://bangumi.bilibili.com/web_api/timeline_global',
-      chinese: 'https://bangumi.bilibili.com/web_api/timeline_cn'
-    }
     return {
-      apiUrl: apiMapping[this.type] || apiMapping.global,
       timeline: [],
       recentTime: ''
+    }
+  },
+  computed: {
+    apiUrl() {
+      return apiMapping[this.type] || apiMapping.global
+    }
+  },
+  watch: {
+    type() {
+      this.updateTimeline()
     }
   },
   methods: {
@@ -98,86 +107,89 @@ export default {
         this.recentTime = recentTimestamps.map(it => it.time)
       }
       // console.log(this.recentTime)
+    },
+    async updateTimeline() {
+      try {
+        const json = await Ajax.getJsonWithCredentials(this.apiUrl)
+        if (json.code !== 0) {
+          throw new Error(json.message)
+        }
+        const results = (json.result as any[]).map(item => {
+          return {
+            date: item.date,
+            dayOfWeek: item.day_of_week,
+            dayOfWeekText:
+              '星期' +
+              [
+                ,
+                // undefined for index 0
+                '一',
+                '二',
+                '三',
+                '四',
+                '五',
+                '六',
+                '日'
+              ][item.day_of_week],
+            isToday: Boolean(item.is_today),
+            bangumis: _.groupBy(
+              (item.seasons as any[]).map(s => {
+                return {
+                  coverUrl: s.cover.replace('http:', 'https:'),
+                  squareCoverUrl: s.square_cover.replace('http:', 'https:'),
+                  time: s.pub_time,
+                  timestamp: s.pub_ts * 1000,
+                  url: s.url,
+                  follow: Boolean(s.follow),
+                  epTitle: s.pub_index || s.delay_reason + ' ' + s.delay_index,
+                  title: s.title,
+                  delay: Boolean(s.delay),
+                  published: Boolean(s.is_published)
+                }
+              }),
+              it => it.time
+            )
+          }
+        })
+        // console.log(_.cloneDeep(results))
+        this.timeline = results
+        this.calculateRecentTime()
+        setInterval(() => {
+          if (document.hasFocus()) {
+            this.calculateRecentTime()
+          }
+        }, 60 * 1000)
+        await this.$nextTick()
+        const el = this.$el as HTMLElement
+        const timeline = this.$el.querySelector(
+          '.bangumi-timeline'
+        ) as HTMLElement
+        const style = getComputedStyle(timeline)
+        const oldWidth = parseInt(
+          style.getPropertyValue('--column-width').match(/(.+)px/)![1]
+        )
+        const gap = parseInt(
+          style.getPropertyValue('--column-gap').match(/(.+)px/)![1]
+        )
+        // const count = parseInt(style.getPropertyValue('--column-count'))
+        // const width = (el.clientWidth - gap * (count - 1)) / 3
+        // timeline.style.setProperty('--column-width', `${width}px`)
+        timeline.scrollLeft = 5 * (oldWidth + gap) // 第7个是今日
+        // console.log(width, count, gap, 5 * (width + gap))
+        const recentBangumi = timeline.querySelector(
+          '.time.recent'
+        ) as HTMLElement
+        recentBangumi.scrollIntoView()
+      } catch (error) {
+        logError(error)
+        this.$emit('error')
+      } finally {
+        this.$emit('load')
+      }
     }
   },
   async mounted() {
-    try {
-      const json = await Ajax.getJsonWithCredentials(this.apiUrl)
-      if (json.code !== 0) {
-        throw new Error(json.message)
-      }
-      const results = (json.result as any[]).map(item => {
-        return {
-          date: item.date,
-          dayOfWeek: item.day_of_week,
-          dayOfWeekText:
-            '星期' +
-            [
-              ,
-              // undefined for index 0
-              '一',
-              '二',
-              '三',
-              '四',
-              '五',
-              '六',
-              '日'
-            ][item.day_of_week],
-          isToday: Boolean(item.is_today),
-          bangumis: _.groupBy(
-            (item.seasons as any[]).map(s => {
-              return {
-                coverUrl: s.cover.replace('http:', 'https:'),
-                squareCoverUrl: s.square_cover.replace('http:', 'https:'),
-                time: s.pub_time,
-                timestamp: s.pub_ts * 1000,
-                url: s.url,
-                follow: Boolean(s.follow),
-                epTitle: s.pub_index || s.delay_reason + ' ' + s.delay_index,
-                title: s.title,
-                delay: Boolean(s.delay),
-                published: Boolean(s.is_published)
-              }
-            }),
-            it => it.time
-          )
-        }
-      })
-      // console.log(_.cloneDeep(results))
-      this.timeline = results
-      this.calculateRecentTime()
-      setInterval(() => {
-        if (document.hasFocus()) {
-          this.calculateRecentTime()
-        }
-      }, 60 * 1000)
-      await this.$nextTick()
-      const el = this.$el as HTMLElement
-      const timeline = this.$el.querySelector(
-        '.bangumi-timeline'
-      ) as HTMLElement
-      const style = getComputedStyle(timeline)
-      const oldWidth = parseInt(
-        style.getPropertyValue('--column-width').match(/(.+)px/)![1]
-      )
-      const gap = parseInt(
-        style.getPropertyValue('--column-gap').match(/(.+)px/)![1]
-      )
-      // const count = parseInt(style.getPropertyValue('--column-count'))
-      // const width = (el.clientWidth - gap * (count - 1)) / 3
-      // timeline.style.setProperty('--column-width', `${width}px`)
-      timeline.scrollLeft = 5 * (oldWidth + gap) // 第7个是今日
-      // console.log(width, count, gap, 5 * (width + gap))
-      const recentBangumi = timeline.querySelector(
-        '.time.recent'
-      ) as HTMLElement
-      recentBangumi.scrollIntoView()
-    } catch (error) {
-      logError(error)
-      this.$emit('error')
-    } finally {
-      this.$emit('load')
-    }
+    await this.updateTimeline()
   }
 }
 </script>
