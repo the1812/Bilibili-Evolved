@@ -29,7 +29,10 @@
               <dpi-img :size="72" :src="b.squareCoverUrl"></dpi-img>
             </div>
             <div class="title">{{b.title}}</div>
-            <div class="ep-title">{{b.epTitle}}</div>
+            <div class="ep-title">
+              <icon type="mdi" icon="heart-outline" title="已追番" v-if="b.follow"></icon>
+              {{b.epTitle}}
+            </div>
           </a>
         </div>
       </div>
@@ -378,6 +381,14 @@ export default {
             grid-area: ep;
             align-self: start;
             margin: 0 12px;
+            display: flex;
+            align-items: center;
+            .be-icon {
+              color: var(--theme-color);
+              margin-right: 4px;
+              font-size: 18px;
+              line-height: 1;
+            }
           }
         }
       }
