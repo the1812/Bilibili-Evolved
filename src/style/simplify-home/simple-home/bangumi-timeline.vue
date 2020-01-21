@@ -3,7 +3,7 @@
     <div class="area-header">时间表</div>
     <div class="bangumi-timeline">
       <div class="timeline-day" v-for="t of timeline" :key="t.date">
-        <div class="date-container" :class="{today: t.isToday}">
+        <div class="date-container" :class="{today: t.isToday}" @click="moveTimeline">
           <div class="icon" :class="['day-of-week-' + t.dayOfWeek]"></div>
           <div class="date">{{t.date}}</div>
           <div class="day-of-week">{{t.dayOfWeekText}}</div>
@@ -111,6 +111,23 @@ export default {
       }
       // console.log(this.recentTime)
     },
+    moveTimeline(e: MouseEvent) {
+      const dateElement = e.currentTarget as HTMLElement
+      const dayElement = dateElement.parentElement!
+      const timelineElement = dayElement.parentElement!
+      const style = getComputedStyle(timelineElement)
+      const width =
+        parseInt(style.getPropertyValue('--column-width').match(/(.+)px/)![1]) +
+        parseInt(style.getPropertyValue('--column-gap').match(/(.+)px/)![1])
+      const offset = dayElement.offsetLeft - timelineElement.scrollLeft
+      if (offset < width) {
+        timelineElement.scrollLeft -= width
+      } else if (offset >= width * 2) {
+        timelineElement.scrollLeft += width
+      }
+      console.log(e, dateElement, dayElement, timelineElement)
+      console.log(width, width * 2,  dayElement.offsetLeft, timelineElement.scrollLeft, offset)
+    },
     async updateTimeline() {
       try {
         const json = await Ajax.getJsonWithCredentials(this.apiUrl)
@@ -179,10 +196,10 @@ export default {
         // timeline.style.setProperty('--column-width', `${width}px`)
         timeline.scrollLeft = 5 * (oldWidth + gap) // 第7个是今日
         // console.log(width, count, gap, 5 * (width + gap))
-        const recentBangumi = timeline.querySelector(
-          '.time.recent'
-        ) as HTMLElement
-        recentBangumi.scrollIntoView()
+        // const recentBangumi = timeline.querySelector(
+        //   '.time.recent'
+        // ) as HTMLElement
+        // recentBangumi.scrollIntoView()
       } catch (error) {
         logError(error)
         this.$emit('error')
@@ -225,7 +242,7 @@ export default {
     .timeline-day {
       scroll-snap-align: start;
       width: var(--column-width);
-      max-height: 668px;
+      max-height: calc(var(--total-height) - 32px);
       overflow: auto;
       flex: 0 0 auto;
       padding-bottom: 16px;
@@ -241,6 +258,7 @@ export default {
         column-gap: 8px;
         height: 60px;
         padding-bottom: 12px;
+        cursor: pointer;
         position: sticky;
         top: 0;
         z-index: 1;

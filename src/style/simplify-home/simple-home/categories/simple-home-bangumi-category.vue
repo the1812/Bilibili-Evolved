@@ -96,6 +96,7 @@ export default {
 <style lang="scss">
 .simple-home .bangumi-category {
   display: grid;
+  --total-height: 1010px;
   --rank-width: 350px;
   --rank-height: calc(var(--rank-width) / 16 * 10);
   grid-template: 'timeline rank' 1fr / 1fr var(--rank-width);
@@ -129,7 +130,7 @@ export default {
     position: absolute;
   }
   .rank {
-    height: 700px;
+    height: var(--total-height);
   }
   // .timeline {
   //   justify-self: center;
