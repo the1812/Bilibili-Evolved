@@ -1,4 +1,4 @@
-(() => {
+const main = () => {
   const supportedUrls = [
     'https://www.bilibili.com/bangumi/',
     'https://www.bilibili.com/video/',
@@ -35,4 +35,5 @@
       doubleClick.bind(video[0])
     }
   })
-})()
+}
+main()

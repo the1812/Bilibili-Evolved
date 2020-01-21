@@ -473,7 +473,6 @@ function overrideClickHandler (playerArea) {
       e => originalClickHandler(e),
       () => playerArea.toggleClass(hoverClassName)
     )
-
     video.unbind('click')
     doubleClick.bind(video[0])
   }
