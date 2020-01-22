@@ -159,7 +159,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`collapseLiveSideBar`, /*html*/`生放送のサイドカードを自動的に収めます.`],
     [`batchFilenameFormat`, /*html*/`バッチダウンロードファイルの命名形式をカスタマイズする、ルールは単一<span>文件命名格式</span>と同じです.
 新しい変数:
-- <span>n</span>: 番号、n番目のビデオを意味します.`],
+- <span>n</span>: 番号、n番目の動画を意味します.`],
     [`removeGameMatchModule`, /*html*/`電子スポーツプレート区を削除.`],
 ]);
 export default {
