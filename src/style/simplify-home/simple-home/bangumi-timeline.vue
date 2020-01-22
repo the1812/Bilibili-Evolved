@@ -139,7 +139,7 @@ export default {
             date: item.date,
             dayOfWeek: item.day_of_week,
             dayOfWeekText:
-              '星期' +
+              '周' +
               [
                 ,
                 // undefined for index 0

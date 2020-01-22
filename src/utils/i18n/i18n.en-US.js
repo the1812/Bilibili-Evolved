@@ -777,6 +777,18 @@ export const map = new Map([
   [`导出设置`, `Export settings`],
   [`已成功导入设置, 部分设置需要刷新后生效.`, `Import settings successful, refresh to take effect.`],
   [`选择的设置文件无效.`, `Invalid settings file.`],
+  [`上一个`, `Previous`],
+  [`下一个`, `Next`],
+  [`刷新`, `Refresh`],
+  [`有新动态`, `Trends`],
+  [`最新发布`, `Newest`],
+  [`时间表`, `Timetable`],
+  [`批量命名格式`, `Batch format`],
+  [`删除电竞赛事`, `Remove e-sports`],
+  [`透明填充`, `Transparent Fill`],
+  [`下载字幕`, `Download Subtitles`],
+  [`当前视频没有字幕.`, `There is no subtitle for this video.`],
+  [`入场特效`, `Entrance Effects`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
@@ -845,6 +857,7 @@ export const regex = new Map([
   [/^兑换成功\n剩余银瓜子:([\d]+)$/, `Exchanged successfully.\nYou have $1 silver seeds left.`],
   [/^预计大小: (.+)$/, `Estimated size: $1`],
   [/^最终路径: (.+)$/, `Final path: $1`],
+  [/^最高全站日排行(.+)名$/, `Daily Ranking Record: $1`],
 ]);
 export default {
   export: { map, regex },
