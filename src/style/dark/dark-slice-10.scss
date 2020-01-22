@@ -639,7 +639,9 @@
       @include background-color("2");
       @include color("e");
       @include border-color();
-      &:hover {
+      &:hover,
+      &:focus-within,
+      &:active {
         @include theme-border-color();
       }
     }

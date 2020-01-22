@@ -20,7 +20,7 @@
     @include background-color();
     .slider-bar .bar-item .bcc-nav-slider {
       &-sub-menu {
-        &>span,
+        & > span,
         a {
           @include color("e");
         }
@@ -188,7 +188,7 @@
             @include background-color("3");
           }
         }
-        &[x-placement^=left] .popper__arrow {
+        &[x-placement^="left"] .popper__arrow {
           @include border-color();
           &:after {
             @include border-color();
@@ -297,7 +297,7 @@
   }
   .channel-menu-mini {
     @include background-color("2");
-    box-shadow: rgba(0, 0, 0, .3) 0 4px 8px 0px !important;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px 0px !important;
     .r-box {
       @include border-color("4");
     }
@@ -408,7 +408,9 @@
         @include background-color("2");
         @include color("e");
         @include border-color();
-        &:hover {
+        &:hover,
+        &:focus-within,
+        &:active {
           @include theme-border-color();
         }
       }
@@ -442,8 +444,8 @@
 .canary-container {
   .file-list-v2-container {
     .file-title h1,
-    .normal-v2-container .normal-title-wrp>h1,
-    .fans-dynamic-v2-container .fans-dynamic-v2-title-wrp>h1 {
+    .normal-v2-container .normal-title-wrp > h1,
+    .fans-dynamic-v2-container .fans-dynamic-v2-title-wrp > h1 {
       @include color("e");
     }
     .upload-v2-sortable {
@@ -455,7 +457,7 @@
     .input-box-v2-3-container {
       @include background-color("4");
       @include border-color();
-      &>input {
+      & > input {
         @include color("e");
       }
       &.input-box-v2-3-active,
@@ -465,7 +467,7 @@
     }
   }
   .file-content-v2-container {
-    .normal-v2-container .normal-title-wrp>h1 {
+    .normal-v2-container .normal-title-wrp > h1 {
       @include color("e");
     }
     .cover-v2-detail-wrp .cover-v2-selector {
@@ -553,11 +555,11 @@
     }
   }
 }
-.room-feed .tabs .item>span:after {
+.room-feed .tabs .item > span:after {
   @include theme-background-color();
 }
 .customer-service {
-  .self-panel .scroll-container .item>span,
+  .self-panel .scroll-container .item > span,
   .panel-title {
     @include color("e");
   }
@@ -569,7 +571,7 @@
         @include color("e");
       }
     }
-    .card-content>a {
+    .card-content > a {
       @include color("a");
       &:hover {
         @include theme-color();
@@ -586,13 +588,13 @@
         .circle {
           @include theme-background-color();
         }
-        &>p {
+        & > p {
           @include color("e");
         }
       }
       .answer {
         @include color("a");
-        &>a {
+        & > a {
           @include theme-color();
         }
       }
@@ -607,7 +609,7 @@
       &-text,
       p {
         @include color("e");
-        &>a {
+        & > a {
           @include theme-color();
         }
       }
@@ -629,7 +631,7 @@
       @include border-color();
     }
   }
-  #section-ctnr .header{
+  #section-ctnr .header {
     @include background-color();
   }
 }
