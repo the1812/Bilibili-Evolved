@@ -175,6 +175,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`autoMatchMedal`, /*html*/`如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.`],
   [`urlParamsClean`, /*html*/`自动删除链接中的多余跟踪参数.`],
   [`collapseLiveSideBar`, /*html*/`自动收起直播间的侧边栏.`],
+  [`batchFilenameFormat`, /*html*/`自定义批量下载的文件命名格式, 规则同单个的<span>文件命名格式</span>.
+新增的变量:
+- <span>n</span>: 数字, 表示第n个视频.`],
+  [`removeGameMatchModule`, /*html*/`删除电竞赛事板块`],
 ]);
 export default {
   export: { toolTips },

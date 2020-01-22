@@ -146,6 +146,11 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   [`autoMatchMedal`, `Auto wear medal when you have the medal of the current live room, or wear the last manually selected medal.`],
   [`urlParamsClean`, `Auto remove redundant params in URL.`],
   [`collapseLiveSideBar`, `Collapse the side bar of live room.`],
+  [`batchFilenameFormat`, `Customize the filename format of batch downloads, following the same rule as <span>Filename format</span>.
+Additional variables:
+- <span>n</span>: The counting number of n-th video in batch downloads`],
+  [`removeGameMatchModule`, `Also remove e-sports module.`],
+  [`customNavbarTransparent`, `Use transparent fill when banner exists.`],
 ]);
 export default {
   export: { toolTips },
