@@ -12,7 +12,9 @@
 .gg-window .operate-card,
 #reportFirst2 .extension,
 .video-page-special-card,
-.mascot {
+.mascot,
+body.remove-game-match-module .bili-wrapper > .home-match,
+body.remove-game-match-module #reportFirst3 {
   display: none !important;
 }
 /* .carousel-module .panel .pic li[data-id='0']
@@ -47,6 +49,10 @@
   font-weight: bold;
   align-items: center;
   justify-content: space-evenly;
+}
+.blocked-ads.new {
+  width: 459px;
+  height: 202px;
 }
 body.compact .blocked-ads {
   width: 480px;

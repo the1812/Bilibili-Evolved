@@ -43,7 +43,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["customNavbar", /*html*/`カスタム頂欄を使用する.伝統的な頂欄に取って代わる.メインステーション専用です.「生放送」、「アルバム」、「会員購」などには影響しません.`],
     ["customNavbarSeasonLogo", /*html*/`通常のロゴの代わりに季節のロゴを使用するかどうか.`],
     ["customNavbarFill", /*html*/`テーマ色で頂欄を埋める.`],
-    ["allNavbarFill", /*html*/`テーマ色で他の頂欄を埋める.「生放送」、「アルバム」、「会員購」などが含まれています.`],
+    [`customNavbarTransparent`, /*html*/`トップの横断幕が存在する場合は、背景の透明効果を使用します.`],
     ["customNavbarShadow", /*html*/`頂欄に投影効果を追加する.`],
     ["customNavbarCompact", /*html*/`トップページにコンパクトなレイアウトを使する.コンパクトなレイアウトはより小さなスペースを使用し、そして動画のタイトルが長すぎる場合に後者の部分を省略するための 「...」を使用する.`],
     ["customNavbarBlur", /*html*/`トップの横断幕が存在する場合は、背景のぼかし効果を使用します.`],
@@ -68,6 +68,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 「ギフト弾幕」を隠す (弾幕リストのみ. 例えば「节奏风暴」など特殊効果は影響を受けません)
 - 「艦長購入のヒント」を隠す (弾幕リストの「xxxは艦長を購入する」)
 - 「有料ギフト」を隠す (プレーヤーの下でのさまざまな有料ギフト欄)
+- 「入場特殊効果」を隠す
 - 「看板娘」を隠す
 - 「イベント横断幕」を隠す
 - 「抽選のヒント」を隠す (例えば、「艦長」を購入する時、「小飞船」を購入する時、ギフトを抽選のヒント)
@@ -156,6 +157,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`autoMatchMedal`, /*html*/`今の配信ルームの勲章を持っている場合は、自動的にそれを着用します.それ以外の場合は、最後に手動で選択した勲章を着用します.`],
     [`urlParamsClean`, /*html*/`冗長な追跡パラメーターをリンクから自動的に削除します.`],
     [`collapseLiveSideBar`, /*html*/`生放送のサイドカードを自動的に収めます.`],
+    [`batchFilenameFormat`, /*html*/`バッチダウンロードファイルの命名形式をカスタマイズする、ルールは単一<span>文件命名格式</span>と同じです.
+新しい変数:
+- <span>n</span>: 番号、n番目の動画を意味します.`],
+    [`removeGameMatchModule`, /*html*/`電子スポーツプレート区を削除.`],
 ]);
 export default {
     export: { toolTips },

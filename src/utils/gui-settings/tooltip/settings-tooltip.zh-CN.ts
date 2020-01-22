@@ -57,6 +57,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
 - 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
 - 隐藏付费礼物 (播放器下面的各种金瓜子礼物, 以及许愿瓶, 上舰等)
+- 隐藏入场特效
 - 隐藏看板娘
 - 隐藏活动横幅
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
@@ -102,7 +103,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["customNavbar", /*html*/`启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.`],
   ["customNavbarSeasonLogo", /*html*/`是否使用季节Logo代替普通的Logo.`],
   ["customNavbarFill", /*html*/`是否使用主题色填充顶栏.`],
-  ["allNavbarFill", /*html*/`是否使用主题色填充其他的顶栏, 包括直播/相簿/会员购等.`],
+  [`customNavbarTransparent`, /*html*/`在有横幅的时候使顶栏透明.`],
   ["customNavbarShadow", /*html*/`是否为顶栏添加一层阴影效果.`],
   ["customNavbarCompact", /*html*/`是否为顶栏使用更紧凑的布局, 紧凑布局将使用更小的间距, 以及在视频标题过长时用...省略后面的部分.`],
   ["customNavbarBlur", /*html*/`是否在顶部横幅存在时, 使用背景模糊效果.`],
@@ -174,6 +175,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`autoMatchMedal`, /*html*/`如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.`],
   [`urlParamsClean`, /*html*/`自动删除链接中的多余跟踪参数.`],
   [`collapseLiveSideBar`, /*html*/`自动收起直播间的侧边栏.`],
+  [`batchFilenameFormat`, /*html*/`自定义批量下载的文件命名格式, 规则同单个的<span>文件命名格式</span>.
+新增的变量:
+- <span>n</span>: 数字, 表示第n个视频.`],
+  [`removeGameMatchModule`, /*html*/`删除电竞赛事板块`],
 ]);
 export default {
   export: { toolTips },

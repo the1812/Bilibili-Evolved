@@ -227,6 +227,7 @@
   &.disabled div {
     opacity: 0.5;
   }
+  & input[key="batchFilenameFormat"],
   & input[key="filenameFormat"] {
     max-width: 500px;
   }
@@ -570,6 +571,11 @@ li.category.folded i.icon-arrow {
     overscroll-behavior: contain;
     overflow: auto;
     height: 100%;
+    scrollbar-width: none !important;
+    &::-webkit-scrollbar {
+      height: 0 !important;
+      width: 0 !important;
+    }
   }
   & > .widgets-container .empty-tip {
     font-size: 10pt;
@@ -593,6 +599,7 @@ li.category.folded i.icon-arrow {
 }
 .gui-settings-flat-button {
   width: auto;
+  white-space: nowrap;
   padding: 8px 16px;
   background: #8882;
   border: none;
@@ -630,9 +637,13 @@ li.category.folded i.icon-arrow {
   .popup {
     position: absolute;
     top: calc(100% + 2px);
-    transition: 0.2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
-    transform-origin: top;
-    transform: scaleY(0) translateX(-50%);
+    // transition: 0.2s cubic-bezier(0.6, -0.28, 0.74, 0.05);
+    // transform-origin: top;
+    // transform: scaleY(0) translateX(-50%);
+    transition: 0.2s ease-out;
+    transform: translateX(-50%) translateY(-6px);
+    opacity: 0;
+    pointer-events: none;
     left: 50%;
     background: white;
     box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
@@ -645,8 +656,11 @@ li.category.folded i.icon-arrow {
       transition: all 0.2s;
     }
     &.opened {
-      transform: scaleY(1) translateX(-50%);
-      transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      // transform: scaleY(1) translateX(-50%);
+      transform: translateX(-50%) translateY(0px);
+      opacity: 1;
+      pointer-events: initial;
+      // transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
     }
     ul {
       list-style: none;

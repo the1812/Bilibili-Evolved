@@ -17,7 +17,7 @@
   #bilibili_pbp_canvas {
     left: 0 !important;
     width: 100% !important;
-    bottom: 3px !important;
+    bottom: 4px !important;
     opacity: 0 !important;
     &.pin {
       opacity: 1 !important;
@@ -36,7 +36,7 @@
     }
     #bilibili_pbp,
     #bilibili_pbp_canvas {
-      bottom: calc(100% + 3px) !important;
+      bottom: calc(100% + 4px) !important;
       opacity: 1 !important;
     }
     #bilibili_pbp_pin {
@@ -119,7 +119,7 @@
         .bilibili-player-video-control-top {
           left: 0 !important;
           right: 0 !important;
-          bottom: 48px !important;
+          bottom: 54px !important;
         }
       }
     }

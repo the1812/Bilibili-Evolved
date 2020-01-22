@@ -7,10 +7,7 @@ const setPlaybackRate = (video: HTMLVideoElement) => {
     () => video.playbackRate = speed
   )
 }
-Observer.videoChange(() => {
-  const video = dq('.bilibili-player-video video') as HTMLVideoElement
-  if (!video) {
-    return
-  }
+Observer.videoChange(async () => {
+  const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
   setPlaybackRate(video)
 })

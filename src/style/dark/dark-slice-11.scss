@@ -20,7 +20,7 @@
     @include background-color();
     .slider-bar .bar-item .bcc-nav-slider {
       &-sub-menu {
-        &>span,
+        & > span,
         a {
           @include color("e");
         }
@@ -188,7 +188,7 @@
             @include background-color("3");
           }
         }
-        &[x-placement^=left] .popper__arrow {
+        &[x-placement^="left"] .popper__arrow {
           @include border-color();
           &:after {
             @include border-color();
@@ -248,6 +248,25 @@
         }
       }
     }
+    .cc-article-wrp .article {
+      &-header .search-wrp {
+        @include border-color();
+      }
+      &-card {
+        .meta-status .status {
+          @include theme-color();
+        }
+        .select-box .select-item.is-disabled {
+          @include background-color();
+        }
+      }
+    }
+  }
+  .detail {
+    @include background-color();
+  }
+  .category {
+    @include background-color("4");
   }
 }
 .el-popover {
@@ -278,7 +297,7 @@
   }
   .channel-menu-mini {
     @include background-color("2");
-    box-shadow: rgba(0, 0, 0, .3) 0 4px 8px 0px !important;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px 0px !important;
     .r-box {
       @include border-color("4");
     }
@@ -360,5 +379,259 @@
         }
       }
     }
+  }
+  .page-container {
+    .bangumi-spoiler-container {
+      @include background-color("4");
+      @include color("e");
+    }
+    .tag-container {
+      .tag-item {
+        span {
+          @include color("e");
+        }
+        .tag-border .tag-border-inner {
+          display: none;
+        }
+        .tag-content {
+          @include background-color("4");
+          @include border-color();
+        }
+        &:hover .tag-content {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
+    .publish-panel {
+      .core-style {
+        @include background-color("2");
+        @include color("e");
+        @include border-color();
+        &:hover,
+        &:focus-within,
+        &:active {
+          @include theme-border-color();
+        }
+      }
+      .publish-btn {
+        @include background-color("2");
+        @include color("e");
+        &:hover {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
+  }
+  .container-body {
+    .b-head.topic {
+      @include border-color();
+    }
+    .art_list li {
+      @include background-color();
+      @include border-color();
+      h2 a {
+        @include color("e");
+      }
+      .info,
+      .artInfo {
+        @include color("a");
+      }
+    }
+  }
+}
+.canary-container {
+  .file-list-v2-container {
+    .file-title h1,
+    .normal-v2-container .normal-title-wrp > h1,
+    .fans-dynamic-v2-container .fans-dynamic-v2-title-wrp > h1 {
+      @include color("e");
+    }
+    .upload-v2-sortable {
+      &-chosen,
+      &-ghost {
+        @include background-color("4");
+      }
+    }
+    .input-box-v2-3-container {
+      @include background-color("4");
+      @include border-color();
+      & > input {
+        @include color("e");
+      }
+      &.input-box-v2-3-active,
+      &:hover {
+        @include theme-border-color();
+      }
+    }
+  }
+  .file-content-v2-container {
+    .normal-v2-container .normal-title-wrp > h1 {
+      @include color("e");
+    }
+    .cover-v2-detail-wrp .cover-v2-selector {
+      @include border-color("4");
+      .cover-v2-selector-deg {
+        @include background-color("4");
+        @include border-color();
+      }
+    }
+    .cover-preview-modal-container .cover-preview-modal-content {
+      @include background-color("4");
+      .cover-preview-modal-head {
+        @include color("e");
+        @include border-color();
+      }
+      .cover-preview-modal-body .cover-preview-modal-body-item-selected {
+        @include theme-border-color();
+        &-icon {
+          @include to-theme("blue");
+        }
+      }
+      .cover-preview-modal-foot div:first-child {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+  .upload-step-3-container-v2 {
+    @include background-color();
+    .step-controller-v2-container .step-ctrl {
+      &-complete-content,
+      &-wait-content {
+        @include color("a");
+      }
+      &-active-content {
+        @include color("e");
+      }
+      &-complete-icon {
+        @include theme-color();
+        @include theme-border-color();
+      }
+      &-line-active {
+        @include theme-background-color();
+      }
+      &-active-icon {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+      &-line.step-ctrl-line-wait {
+        @include background-color("4");
+      }
+      &-wait-icon {
+        @include color("4");
+        @include border-color("4");
+      }
+    }
+    .upload-3-v2-success {
+      &-split {
+        @include background-color("4");
+      }
+      &-go-url a {
+        @include background-color("4");
+        @include color("e");
+        @include border-color();
+        &:hover {
+          @include theme-background-color();
+          @include foreground-color();
+          @include border-color();
+        }
+      }
+      &-hint-2 {
+        @include color("a");
+      }
+    }
+    .upload-3-v2-follow {
+      @include background-color();
+      &-title,
+      &-name {
+        @include color("a");
+      }
+      &-btn.follow {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+}
+.room-feed .tabs .item > span:after {
+  @include theme-background-color();
+}
+.customer-service {
+  .self-panel .scroll-container .item > span,
+  .panel-title {
+    @include color("e");
+  }
+  .customer-card {
+    @include border-color("4");
+    .card-header {
+      @include background-color("4");
+      .name {
+        @include color("e");
+      }
+    }
+    .card-content > a {
+      @include color("a");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .guess-panel {
+    .panel-header .title {
+      @include color("e");
+    }
+    .question-container {
+      @include border-color("4");
+      .title {
+        .circle {
+          @include theme-background-color();
+        }
+        & > p {
+          @include color("e");
+        }
+      }
+      .answer {
+        @include color("a");
+        & > a {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  .other-panel .card {
+    .title {
+      @include color("e");
+      @include border-color();
+    }
+    .detail {
+      &-text,
+      p {
+        @include color("e");
+        & > a {
+          @include theme-color();
+        }
+      }
+      .ask-btn {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+}
+#app-body {
+  #player-and-interaction-area {
+    #head-info,
+    .gift-control-panel,
+    .aside-area {
+      @include background-color("4");
+    }
+    #gift-control-area {
+      @include border-color();
+    }
+  }
+  #section-ctnr .header {
+    @include background-color();
   }
 }

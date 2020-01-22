@@ -1,4 +1,4 @@
-(async () => {
+const main = () => {
   const supportedUrls = [
     'https://www.bilibili.com/bangumi/',
     'https://www.bilibili.com/video/',
@@ -11,26 +11,29 @@
     settings.doubleClickFullscreen = false
     return
   }
-  await SpinQuery.unsafeJquery()
-  const playerArea = await SpinQuery.condition(
-    () => dq('.bilibili-player-area'),
-    it => it !== null && unsafeWindow.$('.bilibili-player-video').data('events')
-  )
-  if (playerArea === null) {
-    return
-  }
-  const className = 'double-click-fullscreen'
-  if (!playerArea.classList.contains(className)) {
-    playerArea.classList.add(className)
-    const video = unsafeWindow.$('.bilibili-player-video')
-    const originalClickHandler = settings.doubleClickFullscreenPreventSingleClick ? video.data('events').click[0].handler : () => {}
-    const doubleClick = new DoubleClickEvent(
-      () => (dq('.bilibili-player-video-btn-fullscreen') as HTMLDivElement).click(),
-      e => originalClickHandler(e),
+  Observer.videoChange(async () => {
+    await SpinQuery.unsafeJquery()
+    const playerArea = await SpinQuery.condition(
+      () => dq('.bilibili-player-area'),
+      it => it !== null && unsafeWindow.$('.bilibili-player-video').data('events')
     )
-    if (settings.doubleClickFullscreenPreventSingleClick) {
-      video.unbind('click')
+    if (playerArea === null) {
+      return
     }
-    doubleClick.bind(video[0])
-  }
-})()
+    const className = 'double-click-fullscreen'
+    if (!playerArea.classList.contains(className)) {
+      playerArea.classList.add(className)
+      const video = unsafeWindow.$('.bilibili-player-video')
+      const originalClickHandler = settings.doubleClickFullscreenPreventSingleClick ? video.data('events').click[0].handler : () => { }
+      const doubleClick = new DoubleClickEvent(
+        () => (dq('.bilibili-player-video-btn-fullscreen') as HTMLDivElement).click(),
+        e => originalClickHandler(e),
+      )
+      if (settings.doubleClickFullscreenPreventSingleClick) {
+        video.unbind('click')
+      }
+      doubleClick.bind(video[0])
+    }
+  })
+}
+main()

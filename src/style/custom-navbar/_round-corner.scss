@@ -2,7 +2,7 @@
 .round-corner {
   .custom-navbar .popup,
   .custom-navbar .popup iframe {
-    border-radius: 0 0 var(--corner-radius) var(--corner-radius);
+    border-radius: var(--large-corner-radius);
   }
   #custom-navbar-home-popup .category-item {
     border-radius: var(--corner-radius);

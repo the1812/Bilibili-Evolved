@@ -26,15 +26,15 @@ export default {
   methods: {
     async getRankList() {
       const { getTrendingVideos } = await import('../trending-videos')
-      let watchlaterList: number[] | undefined = undefined
-      if (getUID()) {
-        const { getWatchlaterList } = await import(
-          '../../../video/watchlater-api'
-        )
-        watchlaterList = await getWatchlaterList()
-      }
+      // let watchlaterList: number[] | undefined = undefined
+      // if (getUID()) {
+      //   const { getWatchlaterList } = await import(
+      //     '../../../video/watchlater-api'
+      //   )
+      //   watchlaterList = await getWatchlaterList()
+      // }
       const getRankListByDays = async (days: number) => {
-        const cards = await getTrendingVideos(days, watchlaterList)
+        const cards = await getTrendingVideos(days)
         this.cards.push(...cards)
       }
       await Promise.all([1, 3, 7].map(getRankListByDays))
@@ -43,13 +43,13 @@ export default {
       const json = await Ajax.getJsonWithCredentials(
         `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=8`
       )
-      let watchlaterList: number[] | undefined = undefined
-      if (getUID()) {
-        const { getWatchlaterList } = await import(
-          '../../../video/watchlater-api'
-        )
-        watchlaterList = await getWatchlaterList()
-      }
+      // let watchlaterList: number[] | undefined = undefined
+      // if (getUID()) {
+      //   const { getWatchlaterList } = await import(
+      //     '../../../video/watchlater-api'
+      //   )
+      //   watchlaterList = await getWatchlaterList()
+      // }
       if (json.code !== 0) {
         throw new Error(json.message)
       }
@@ -82,7 +82,8 @@ export default {
             durationText: formatDuration(card.duration, 0),
             playCount: formatCount(card.stat.view),
             danmakuCount: formatCount(card.stat.danmaku),
-            watchlater: watchlaterList ? watchlaterList.includes(card.aid) : undefined,
+            watchlater: true,
+            // watchlater: watchlaterList ? watchlaterList.includes(card.aid) : undefined,
           }
         }
       )

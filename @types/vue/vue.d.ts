@@ -14,6 +14,7 @@ import {
 } from "./options";
 import { VNode, VNodeData, VNodeChildren, NormalizedScopedSlot } from "./vnode";
 import { PluginFunction, PluginObject } from "./plugin";
+import { Store } from '../vuex/index'
 
 export interface CreateElement {
   (tag?: string | Component<any, any, any, any> | AsyncComponent<any, any, any, any> | (() => Component), children?: VNodeChildren): VNode;
@@ -37,6 +38,7 @@ export interface Vue {
   readonly $attrs: Record<string, string>;
   readonly $listeners: Record<string, Function | Function[]>;
 
+  $store: Store<any>;
   $mount(elementOrSelector?: Element | string, hydrating?: boolean): this;
   $forceUpdate(): void;
   $destroy(): void;

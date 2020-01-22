@@ -3,6 +3,11 @@
   left: 0 !important;
   right: 0 !important;
   bottom: 0px !important;
+  opacity: 1 !important;
+  transition: none !important;
+  .bui-track-video-progress {
+    align-self: flex-end !important;
+  }
 }
 .bilibili-player-video-control-top,
 .bilibili-player-video-progress-detail {
@@ -12,6 +17,7 @@
 //   bottom: 36px !important;
 // }
 .bilibili-player-video-control-bottom {
+  transition: none !important;
   padding: 0 !important;
 }
 
@@ -113,9 +119,9 @@ div.bilibili-player-video-control {
     margin: 0 !important;
     padding: 0 !important;
   }
-  &.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-right {
-    flex-grow: 1 !important;
-  }
+  // &.mode-webfullscreen .bilibili-player-video-control-wrap .bilibili-player-video-control-bottom-right {
+  //   flex-grow: 1 !important;
+  // }
   &.mode-fullscreen .bilibili-player-video-sendbar {
     bottom: 0 !important;
   }
@@ -124,6 +130,7 @@ div.bilibili-player-video-control {
     #bilibili_pbp_canvas {
       left: 0 !important;
       width: 100% !important;
+      bottom: 4px !important;
     }
     #bilibili_pbp_pin,
     .bilibili-player-video-control-wrap:hover #bilibili_pbp_pin {
@@ -133,17 +140,20 @@ div.bilibili-player-video-control {
       .bilibili-player-video-control-top {
         left: 0 !important;
         right: 0 !important;
-        bottom: 31px !important;
+        bottom: 38px !important;
       }
-    #bilibili_pbp,
+      #bilibili_pbp,
       #bilibili_pbp_canvas {
-        bottom: calc(100% + 3px) !important;
+        bottom: calc(100% + 4px) !important;
       }
       .bilibili-player-video-progress-detail {
         bottom: 7px !important;
       }
     }
     .bilibili-player-video-control {
+      .bilibili-player-video-progress-shadow {
+        display: none !important;
+      }
       .bilibili-player-video-btn {
         &.bilibili-player-video-btn-fullscreen {
           margin-right: 0 !important;
@@ -179,6 +189,14 @@ div.bilibili-player-video-control {
   -webkit-tap-highlight-color: transparent !important;
 }
 
+@media screen and (max-width: 1400px) {
+  .bilibili-player.mode-fullscreen,
+  .bilibili-player.mode-webfullscreen {
+    .bilibili-player-video-control-bottom-center {
+      padding: 0 24px !important;
+    }
+  }
+}
 @media screen and (min-width: 750px) {
   .bilibili-player.mode-fullscreen,
   .bilibili-player.mode-webfullscreen {

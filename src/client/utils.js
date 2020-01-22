@@ -21,14 +21,30 @@ export async function loadLazyPanel (selector) {
   if (!panel) {
     throw new Error(`Panel not found: ${selector}`)
   }
-  panel.mouseover().mouseout()
+  panel.mouseover()
+  // 懒加载面板带有 300ms 的 denounce
+  return new Promise(resolve => {
+    setTimeout(() => {
+      panel.mouseout()
+      resolve()
+    }, 310)
+  })
+}
+export async function loadLazyPlayerSettingsPanel (buttonSelector, panelSelector) {
+  // 暂时隐藏面板
+  const style = document.createElement('style')
+  style.innerText = `${panelSelector} { display: none !important; }`
+  document.body.insertAdjacentElement('beforeend', style)
+  await loadLazyPanel(buttonSelector)
+  // 有些面板有 300ms 的 transition delay
+  setTimeout(() => style.remove(), 300)
+  return dq(panelSelector)
 }
 export async function loadDanmakuSettingsPanel () {
-  const style = document.createElement('style')
-  style.innerText = `.bilibili-player-video-danmaku-setting-wrap { display: none !important; }`
-  document.body.insertAdjacentElement('beforeend', style)
-  await loadLazyPanel('.bilibili-player-video-danmaku-setting')
-  setTimeout(() => style.remove(), 300)
+  return await loadLazyPlayerSettingsPanel('.bilibili-player-video-danmaku-setting', '.bilibili-player-video-danmaku-setting-wrap')
+}
+export async function loadSubtitleSettingsPanel () {
+  return await loadLazyPlayerSettingsPanel('.bilibili-player-video-btn-subtitle', '.bilibili-player-video-subtitle-setting-wrap')
 }
 export function contentLoaded (callback) {
   if (/complete|interactive|loaded/.test(document.readyState)) {
@@ -156,7 +172,7 @@ export const formatCount = (count) => {
 export const escapeFilename = (filename, replacement = '') => {
   return filename.replace(/[\/\\:\*\?"<>\|]/g, replacement)
 }
-export function html(strings, ...values) {
+export function html (strings, ...values) {
   return [...strings].reduce((previous, current, index) => {
     const value = values[index]
     return previous + current + (value === undefined ? '' : value)
@@ -164,3 +180,7 @@ export function html(strings, ...values) {
 }
 export const dashExtensions = ['.mp4', '.m4a']
 export const dashFragmentExtension = 'm4s'
+export const videoCondition = async () => {
+  let cid = await SpinQuery.select(() => (unsafeWindow || window).cid)
+  return Boolean(cid)
+}

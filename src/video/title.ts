@@ -18,22 +18,25 @@ function oldGetFriendlyTitle (includesPageTitle = true) {
     }
   }
 }
-export function formatTitle (format, includesPageTitle = true) {
+type StringMap = {
+  [key: string]: string | undefined | null
+}
+export function formatTitle (format: string, includesPageTitle = true, extraData: StringMap = {}) {
   const now = new Date()
-  const data = {
+  const data: StringMap = {
     title: document.title
-      .replace(includesPageTitle ? /：([^：]+?)_番剧_bilibili_哔哩哔哩/ : '_番剧_bilibili_哔哩哔哩', '')
-      .replace(includesPageTitle ? /：([^：]+?)_国创_bilibili_哔哩哔哩/ : '_国创_bilibili_哔哩哔哩', '')
-      .replace(includesPageTitle ? /：([^：]+?)_电影_bilibili_哔哩哔哩/ : '_电影_bilibili_哔哩哔哩', '')
-      .replace(includesPageTitle ? /：([^：]+?)_纪录片_bilibili_哔哩哔哩/ : '_纪录片_bilibili_哔哩哔哩', '')
+      .replace(/：([^：]+?)_番剧_bilibili_哔哩哔哩/, '')
+      .replace(/：([^：]+?)_国创_bilibili_哔哩哔哩/, '')
+      .replace(/：([^：]+?)_电影_bilibili_哔哩哔哩/, '')
+      .replace(/：([^：]+?)_纪录片_bilibili_哔哩哔哩/, '')
       .replace('_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili', '')
       .replace(/(.*?) - (.*?) - 哔哩哔哩直播，二次元弹幕直播平台/, '$1')
       .trim(),
     ep: (() => {
       if (!includesPageTitle) {
-        return null
+        return
       }
-      const bangumiPage = dq('#eplist_module li.cursor .ep-title')
+      const bangumiPage = dq('#eplist_module li.cursor .ep-title') as HTMLElement
       if (bangumiPage !== null) {
         return bangumiPage.innerText
       }
@@ -41,7 +44,6 @@ export function formatTitle (format, includesPageTitle = true) {
       if (pageLink !== null) {
         return pageLink.getAttribute('title')
       }
-      return null
     })(),
     aid: unsafeWindow.aid,
     cid: unsafeWindow.cid,
@@ -55,6 +57,7 @@ export function formatTitle (format, includesPageTitle = true) {
     s: now.getSeconds().toString().padStart(2, '0'),
     ms: now.getMilliseconds().toString().substr(0, 3)
   }
+  Object.assign(data, extraData)
   const filename = Object.keys(data).reduce((result, name) => {
     return result.replace(new RegExp(`\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]`, 'g'), data[name] ? `$1${data[name]}$2` : '')
   }, format)

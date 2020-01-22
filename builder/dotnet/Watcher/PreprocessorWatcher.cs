@@ -30,6 +30,9 @@ namespace BilibiliEvolved.Build.Watcher
       FileFilter = file =>
       {
         var originalFile = GetOriginalFilePath(file);
+        if (originalExtension == ".scss") {
+          return true;
+        }
         return !cache.Contains(originalFile);
       };
     }
@@ -58,6 +61,10 @@ namespace BilibiliEvolved.Build.Watcher
       if (!Path.GetFileNameWithoutExtension(e.FullPath).EndsWith(".vue"))
       {
         var originalFile = GetOriginalFilePath(e.FullPath);
+        if (!File.Exists(originalFile))
+        {
+          return;
+        }
         builder.WriteInfo($"[{Name}] {Path.GetFileName(originalFile)} changed.");
         var content = File.ReadAllText(e.FullPath);
         cache.AddCache(originalFile);

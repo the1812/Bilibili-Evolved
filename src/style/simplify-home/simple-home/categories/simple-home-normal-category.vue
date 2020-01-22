@@ -19,60 +19,7 @@
       @refresh="loadNewPost()"
       title="最新发布"
     ></slideshow-cards>
-    <div class="rank">
-      <a
-        class="rank-item"
-        v-for="(c, index) of rank.videos"
-        :key="c.id"
-        target="_blank"
-        :href="'https://www.bilibili.com/av' + c.aid"
-      >
-        <div v-if="index < 3" class="cover">
-          <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
-        </div>
-        <div class="rank-number">{{index + 1}}</div>
-        <div
-          v-if="index === 0 || index > 2"
-          class="title"
-          :title="index === 0 ? c.title : null"
-        >{{c.title}}</div>
-        <div
-          class="watchlater"
-          v-if="c.watchlater !== null"
-          :title="c.watchlater ? '已添加' : '稍后再看'"
-          @click.prevent="toggleWatchlater(c)"
-        >
-          <icon v-if="c.watchlater" type="mdi" icon="check-circle"></icon>
-          <icon v-else type="mdi" icon="clock-outline"></icon>
-        </div>
-        <div class="details">
-          <div v-if="index > 0" class="title" :title="c.title">{{c.title}}</div>
-          <div v-if="index > 0" class="cover">
-            <dpi-img :src="c.coverUrl" :size="{ width: 200, height: 120 }"></dpi-img>
-          </div>
-          <div class="up">
-            <div class="points">
-              <Icon icon="fire" type="mdi"></Icon>
-              {{c.points | bigNumber}}
-            </div>
-            <div class="up-info">
-              <Icon icon="up" type="extended"></Icon>
-              <div class="up-name">{{c.upName}}</div>
-            </div>
-          </div>
-          <div class="stats">
-            <icon type="extended" icon="play"></icon>
-            <div class="number">{{c.playCount | bigNumber}}</div>
-            <icon type="extended" icon="coin"></icon>
-            <div class="number">{{c.coins | bigNumber}}</div>
-            <icon type="extended" icon="favorites"></icon>
-            <div class="number">{{c.favorites | bigNumber}}</div>
-          </div>
-        </div>
-      </a>
-      <div class="area-header">排行榜</div>
-    </div>
-
+    <rank-list :videos="rank.videos"></rank-list>
     <div class="new-activity loading"></div>
     <div class="new-post loading"></div>
     <div class="rank loading"></div>
@@ -87,14 +34,9 @@ import { VideoCardInfo } from '../../video-card-info'
 export default {
   components: {
     SlideshowCards: () => import('../slideshow-cards.vue'),
-    Icon: () => import('../../../icon.vue'),
-    DpiImg: () => import('../../../dpi-img.vue')
+    RankList: () => import('../rank-list.vue'),
   },
-  filters: {
-    bigNumber(value: number) {
-      return formatCount(value)
-    }
-  },
+  store,
   props: {
     rid: {
       type: Number,
@@ -118,9 +60,12 @@ export default {
         loading: true,
         videos: []
       },
-      watchlaterList: null,
+      // watchlaterList: null,
       loaded: false
     }
+  },
+  computed: {
+    ...Vuex.mapState(['watchlaterList'])
   },
   methods: {
     async loadCards(
@@ -159,13 +104,13 @@ export default {
         if (json.code !== 0) {
           this[entityName].error = true
         }
-        const { getWatchlaterList } = await import(
-          '../../../../video/watchlater-api'
-        )
-        if (this.watchlaterList === null) {
-          const uid = getUID()
-          this.watchlaterList = uid ? await getWatchlaterList() : []
-        }
+        // const { getWatchlaterList } = await import(
+        //   '../../../../video/watchlater-api'
+        // )
+        // if (this.watchlaterList === null) {
+        //   const uid = getUID()
+        //   this.watchlaterList = uid ? await getWatchlaterList() : []
+        // }
         this[entityName].videos = parseJson(json)
       } catch (error) {
         logError(error)
@@ -215,22 +160,11 @@ export default {
         }
       )
     },
+    ...Vuex.mapActions(['toggleWatchlater']),
     updateVideos() {
       this.loadNewActivity()
       this.loadNewPost()
       this.loadRank()
-    },
-    async toggleWatchlater(card: VideoCardInfo) {
-      try {
-        card.watchlater = !card.watchlater
-        const { toggleWatchlater } = await import(
-          '../../../../video/watchlater-api'
-        )
-        await toggleWatchlater(card.aid!, card.watchlater)
-      } catch (error) {
-        logError(error)
-        card.watchlater = !card.watchlater
-      }
     }
   },
   watch: {
@@ -258,350 +192,26 @@ export default {
 
 <style lang="scss">
 .category-view {
-  --loading-from: #d4d4d4;
-  --loading-to: #ddd;
-  --rank-width: 420px;
-  --rank-height: 250px;
-  --slideshow-ratio: 1.2;
   display: grid;
   grid-template:
     'new-activity rank' 1fr
-    'new-post rank' 1fr / 1fr var(--rank-width);
-  grid-gap: 24px;
-  gap: 24px;
+    'new-post rank' 1fr / 1fr calc(1.5 * var(--rank-width) + 10px);
+  grid-row-gap: 24px;
+  row-gap: 24px;
+  grid-column-gap: 32px;
+  column-gap: 32px;
   position: relative;
-  @for $width from 18 through 7 {
-    @media screen and (max-width: #{$width * 100}px) {
-      $rank-width: 0;
-      @if $width > 11 {
-        $rank-width: 420 - (19 - $width) * 30;
-        --slideshow-ratio: #{1.2 * ($width / 18)};
-      } @else {
-        $rank-width: 420 - (17 - $width) * 30;
-        --slideshow-ratio: #{1.2 * (($width + 2) / 18)};
-      }
-      --rank-width: #{$rank-width}px;
-      --rank-height: #{$rank-width * 25 / 42}px;
-    }
-  }
-  --card-height: calc((8 * 34px + 20px + 1.5 * var(--rank-height)) / 2 - 32px);
-  --card-width: calc(var(--card-height) * (42 / 25));
   &,
   & *,
   ::after,
   ::before {
     transition: 0.2s ease-out;
   }
-  @keyframes normal-category-loading {
-    from {
-      background-color: var(--loading-from);
-    }
-    to {
-      background-color: var(--loading-to);
-    }
-  }
-  body.dark & {
-    --loading-from: #333;
-    --loading-to: #262626;
-  }
   .loading {
     opacity: 0;
     pointer-events: none;
     border-radius: 16px;
-    animation: 0.64s infinite alternate normal-category-loading ease-in-out;
     position: absolute;
-    // &.new-activity {
-    //   height: 30vh;
-    // }
-  }
-  .area-header {
-    grid-area: header;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-weight: bold;
-    font-size: 11pt;
-    margin-bottom: 12px;
-    &::before {
-      content: '';
-      display: inline-flex;
-      height: 10px;
-      width: 10px;
-      background-color: var(--theme-color);
-      border-radius: 50%;
-      margin-right: 8px;
-    }
-  }
-  .rank {
-    display: grid;
-    width: var(--rank-width);
-    justify-self: right;
-    grid-template:
-      'header header' auto
-      'first first' calc(10px + var(--rank-height))
-      'second third' calc(var(--rank-height) / 2 + 10px) / calc(
-        var(--rank-width) / 2
-      ) calc(var(--rank-width) / 2);
-    .rank-item {
-      grid-column: 1 / 3;
-      box-shadow: 0 4px 8px 0 #0001;
-      background-color: #fff;
-      color: inherit !important;
-      position: relative;
-      body.dark & {
-        background-color: #282828;
-      }
-      .cover {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 16px;
-        overflow: hidden;
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-      &:hover .cover img {
-        transform: scale(1.05);
-      }
-      .rank-number {
-        position: absolute;
-        top: 6px;
-        left: 6px;
-        width: 22px;
-        height: 22px;
-        line-height: 22px;
-        border-radius: 50%;
-        box-sizing: border-box;
-        text-align: center;
-        font-weight: bold;
-        font-size: 13px;
-        z-index: 9;
-        background-color: #8884;
-      }
-      .watchlater {
-        position: absolute;
-        top: 6px;
-        right: 6px;
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-        box-sizing: border-box;
-        z-index: 9;
-        background-color: #000a;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-      }
-      &:hover .watchlater {
-        opacity: 1;
-      }
-      .be-icon {
-        font-size: 16px;
-        &.mdi-fire {
-          transform: scale(calc(18 / 16));
-          margin-right: 2px;
-        }
-      }
-      &:not(:first-child) {
-        & > .title {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          font-weight: bold;
-          font-size: 13px;
-          line-height: 34px;
-          padding: 0 8px 0 34px;
-          opacity: 0.9;
-        }
-        &:hover {
-          background-color: var(--theme-color-30);
-          & > .title {
-            opacity: 1;
-          }
-        }
-        .details {
-          position: absolute;
-          top: 50%;
-          right: calc(100% + 10px);
-          transform: translateY(-50%);
-          width: var(--rank-width);
-          padding: 4px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: stretch;
-          z-index: 10;
-          opacity: 0;
-          pointer-events: none;
-          .title {
-            font-weight: bold;
-            font-size: 14px;
-            line-height: 1.5;
-            color: #fff;
-            padding: 8px;
-            z-index: 10;
-          }
-          .cover {
-            overflow: hidden;
-            background-color: black;
-            img {
-              filter: blur(16px) brightness(0.5);
-              transform: scale(1.5);
-            }
-          }
-          .up,
-          .stats {
-            z-index: 10;
-            display: flex;
-            color: #fff;
-            .be-icon:not(.mdi-fire) {
-              margin: 0 4px 0 8px;
-            }
-          }
-          .up {
-            justify-content: space-between;
-            margin: 0 10px 0 6px;
-            & > * {
-              display: flex;
-              align-items: center;
-            }
-          }
-          .stats {
-            margin: 8px;
-            .be-icon:first-child {
-              margin-left: 0;
-            }
-          }
-        }
-        &:hover .details {
-          opacity: 1;
-        }
-      }
-
-      &:first-child,
-      &:nth-child(2),
-      &:nth-child(3) {
-        border-radius: 16px;
-        .rank-number {
-          background-color: var(--theme-color);
-          color: var(--foreground-color);
-          opacity: 0.9;
-        }
-      }
-      &:nth-child(4) {
-        border-radius: 16px 16px 0 0;
-      }
-      &:nth-last-child(2) {
-        border-radius: 0 0 16px 16px;
-      }
-      &:first-child {
-        grid-area: first;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: flex-start;
-        margin-bottom: 10px;
-        .details {
-          align-self: stretch;
-        }
-        .cover::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-image: linear-gradient(to top, #000c 0, transparent 100%);
-          z-index: 0;
-        }
-        .title {
-          font-weight: bold;
-          font-size: 16px;
-          line-height: 1.5;
-          color: #fff;
-          padding: 0 8px;
-          z-index: 10;
-          white-space: nowrap;
-          overflow: hidden;
-          max-width: 100%;
-          text-overflow: ellipsis;
-        }
-        .up {
-          display: flex;
-          align-self: stretch;
-          justify-content: space-between;
-          align-items: center;
-          opacity: 0.75;
-          color: #fff;
-          padding: 0 12px 0 6px;
-          margin: 4px 0 8px 0;
-          z-index: 10;
-          & > * {
-            display: flex;
-            align-items: center;
-          }
-          .be-iconfont-up {
-            margin-right: 4px;
-          }
-          .points {
-            flex-shrink: 0;
-            margin-right: 8px;
-          }
-          .up-info {
-            max-width: 61%;
-            .up-name {
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              word-break: break-all;
-            }
-          }
-        }
-        .stats {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          color: #fff;
-          opacity: 0;
-          padding: 0 8px;
-          position: absolute;
-          bottom: 8px;
-          left: 0;
-          z-index: 10;
-          .be-icon {
-            margin: 0 2px 0 8px;
-            &:first-child {
-              margin-left: 0;
-            }
-          }
-        }
-        &:hover {
-          .up {
-            opacity: 0;
-          }
-          .stats {
-            opacity: 0.75;
-          }
-        }
-      }
-      &:nth-child(2) {
-        grid-area: second;
-        margin-right: 5px;
-        margin-bottom: 10px;
-      }
-      &:nth-child(3) {
-        grid-area: third;
-        margin-left: 5px;
-        margin-bottom: 10px;
-      }
-    }
   }
   .new-activity {
     align-self: start;
@@ -616,6 +226,7 @@ export default {
     &.#{$name}-loading {
       .#{$name}.loading {
         position: static;
+        animation: 0.64s infinite alternate category-loading ease-in-out;
         opacity: 1;
         pointer-events: initial;
         width: 100%;
@@ -627,14 +238,15 @@ export default {
       }
     }
   }
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1300px) {
     grid-template:
       'new-activity' 1fr
       'new-post' 1fr
       'rank' auto / 1fr;
+    // --card-height: 300px;
     .rank {
-      --rank-width: 420px;
-      --rank-height: 250px;
+      // --rank-width: 420px;
+      justify-self: center;
     }
   }
 }

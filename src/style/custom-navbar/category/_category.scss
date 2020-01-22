@@ -12,8 +12,15 @@
     cursor: pointer;
     position: relative;
   }
+  .category-item.loading {
+    font-size: 10pt;
+    cursor: initial;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-  .category-item:hover {
+  .category-item:not(.loading):hover {
     background-color: #0001;
   }
   .category-item a {

@@ -12,8 +12,9 @@
   &-popup .link-popup-ctnr,
   &-giftMessage .chat-item.gift-item,
   &-guardPurchase .chat-item.guard-buy,
-  &-eventsBanner .flip-view,
+  &-eventsBanner .z-section-blocks .left-container .flip-view,
   &-eventsBanner .activity-pushing-out,
+  &-userEffect .live-room-app .aside-area .activity-welcome-section,
   &-kanban .live-haruna-ctnr {
     display: none !important;
   }
@@ -36,6 +37,7 @@
     display: flex !important;
     align-items: center !important;
     padding: 10px 0 0 16px !important;
+    max-height: 36px !important;
     .anchor-lot-icon,
     .box-icon {
       margin: 0 !important;
@@ -46,8 +48,18 @@
         background-position: 0 -1px !important;
       }
     }
+    #BLRHH_treasure_div_tip br {
+      display: none !important;
+    }
+    #BLRHH_treasure_div {
+      img, canvas {
+        max-height: 24px !important;
+      }
+    }
     .anchor-lot-text,
-    .count-down {
+    .count-down,
+    #BLRHH_treasure_div_tip,
+    #BLRHH_treasure_div_timer {
       margin-left: 12px !important;
       padding: 4px 8px !important;
       max-width: unset !important;
@@ -63,6 +75,7 @@
     height: 48px !important;
     display: flex !important;
     justify-content: flex-end !important;
+    min-width: unset !important;
     > .dp-table-cell {
       display: flex !important;
       align-items: center !important;
@@ -108,5 +121,8 @@
   }
   .round-corner & {
     border-radius: var(--corner-radius);
+  }
+  &.checked {
+    opacity: .5;
   }
 }

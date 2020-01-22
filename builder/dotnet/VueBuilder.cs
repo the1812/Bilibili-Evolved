@@ -34,7 +34,7 @@ namespace BilibiliEvolved.Build
         Tamplate = null;
         return;
       }
-      Tamplate = match.Groups[3].Value.Trim();
+      Tamplate = match.Groups[3].Value.Trim().Replace("`", "\\`");
       TamplateLang = match.Groups[2].Value.Trim();
       if (TamplateLang == "")
       {

@@ -73,6 +73,7 @@ export const getScriptBlocker = async () => {
           removeNodes(r.addedNodes, blockEvent)
         })
       })
+      removeNodes(document.head.childNodes, blockEvent)
       const bodyObserver = Observer.childList(document.documentElement, records => {
         records.forEach(r => {
           r.addedNodes.forEach(node => {

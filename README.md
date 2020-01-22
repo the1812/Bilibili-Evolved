@@ -26,11 +26,12 @@
 
 点击名称即可安装👇 (点了之后需要一点时间下载)
 
-| [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js) |
+| [正式版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [预览版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js) | [离线版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) | [预览离线版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js) |
 | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | 正式发布的版本, 最稳定, 更新频率较低.                                                     | 新增内容测试的地方, 更新频率高, 但功能不稳定.                                                      | 内置所有依赖项, 体积较大, 更新频率高于正式版.                                                     | 兼备预览版和离线版的特点.                                                                                      |
-
+<!--
 > **虽然这个脚本只有 1MB 多, 但是 GitHub 的服务器很烂, 可能点了很久都没反应, 或者下载一半失败了, 导致安装了不完整的代码. 请务必检查脚本是否安装完整, 特别是发现安装后网页没有任何变化的时候. 或者可以去 [Greasy Fork](https://greasyfork.org/zh-CN/scripts/373563-bilibili-evolved) 那边下载, 相对稳定一些.**
+-->
 
 > 使用过程中脚本管理器可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
 
@@ -86,12 +87,12 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 👍感谢这些组件帮助我们极大地提升了开发效率.
 
 - [Vue.js](https://cn.vuejs.org/index.html)
+- [Vuex](https://vuex.vuejs.org/zh/)
 - [JSZip](https://stuk.github.io/jszip/)
-- [jQuery](http://jquery.com/)
-- [debounce](https://github.com/component/debounce/)
 - [Slip.js](https://github.com/kornelski/slip)
-- [MDI](https://materialdesignicons.com)
 - [Lodash](https://lodash.com/)
+- [jQuery](http://jquery.com/)
+- [MDI](https://materialdesignicons.com)
 
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配并保持无冲突.

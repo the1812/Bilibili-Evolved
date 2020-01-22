@@ -1,3 +1,5 @@
+// 移除已观看: https://api.bilibili.com/x/v2/history/toview/del  viewed=true&csrf=csrf
+// 清空: https://api.bilibili.com/x/v2/history/toview/clear  csrf=csrf
 export const toggleWatchlater = async (aid: string | number, add: boolean) => {
   const api = add ? 'https://api.bilibili.com/x/v2/history/toview/add' : 'https://api.bilibili.com/x/v2/history/toview/del'
   const csrf = getCsrf()

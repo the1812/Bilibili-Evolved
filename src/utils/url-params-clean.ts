@@ -5,6 +5,8 @@ const blockParams = [
   'seid',
   'share_source',
   'share_medium',
+  'bbid',
+  'ts',
 ]
 const clean = () => {
   const urlParams = location.search.substring(1).split('&')
@@ -21,4 +23,5 @@ const clean = () => {
     history.replaceState({}, document.title, newUrl)
   }
 }
+clean()
 Observer.videoChange(() => clean())

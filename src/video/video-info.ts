@@ -29,7 +29,13 @@ export class VideoInfo {
     this.aid = aid
   }
   async fetchInfo() {
-    const json = JSON.parse(await Ajax.getText(`https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`))
+    let url
+    if (this.cid) {
+      url = `https://api.bilibili.com/x/web-interface/view?aid=${this.aid}&cid=${this.cid}`
+    } else {
+      url = `https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`
+    }
+    const json = JSON.parse(await Ajax.getText(url))
     if (json.code !== 0) {
       throw new Error(json.message)
     }
@@ -58,7 +64,7 @@ export class VideoInfo {
         id: it.id,
         languageCode: it.lan,
         language: it.lan_doc,
-        url: it.subtitle_url,
+        url: it.subtitle_url.replace('http:', 'https:'),
       }
     })
     return this

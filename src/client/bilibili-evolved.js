@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.9.22
+// @version      1.10.0
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @run-at       document-start
-// @updateURL    https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
-// @downloadURL  https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js
+// @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js
+// @downloadURL  https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js
 // @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
 // @homepage     https://github.com/the1812/Bilibili-Evolved
 // @grant        unsafeWindow
@@ -23,17 +23,55 @@
 // @grant        GM.info
 // @grant        GM.xmlHttpRequest
 // @connect      raw.githubusercontent.com
+// @connect      cdn.jsdelivr.net
 // @connect      *
-// @require      https://greasemonkey.github.io/gm4-polyfill/gm4-polyfill.js
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
 // @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
-// @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
-// @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
+// @require      https://unpkg.com/vuex@3.1.2/dist/vuex.js
+// @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
+// @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
 // ==/UserScript==
 Vue.config.productionTip = false
 Vue.config.devtools = false
+// if (unsafeWindow.Vue === undefined) {
+//   unsafeWindow.Vue = Vue
+// }
+
+// GM4 polyfill start
+if (typeof GM == 'undefined') {
+  this.GM = {}
+}
+Object.entries({
+  'log': console.log.bind(console),
+  'info': GM_info,
+}).forEach(([newKey, old]) => {
+  if (old && (typeof GM[newKey] == 'undefined')) {
+    GM[newKey] = old
+  }
+})
+Object.entries({
+  'GM_getValue': 'getValue',
+  'GM_setClipboard': 'setClipboard',
+  'GM_setValue': 'setValue',
+  'GM_xmlhttpRequest': 'xmlHttpRequest',
+}).forEach(([oldKey, newKey]) => {
+  let old = this[oldKey]
+  if (old && (typeof GM[newKey] == 'undefined')) {
+    GM[newKey] = function (...args) {
+      return new Promise((resolve, reject) => {
+        try {
+          resolve(old.apply(this, args))
+        } catch (e) {
+          reject(e)
+        }
+      })
+    }
+  }
+})
+// GM4 polyfill end
+
 import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename } from './utils'
 import { settings, loadSettings, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
@@ -51,8 +89,9 @@ import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
 import { getScriptBlocker } from './script-blocker'
 import { installStyle, uninstallStyle } from './custom-styles'
+import { store } from './store'
 
-(async () => {
+;(async () => {
   const redundantFrames = [
     'https://message.bilibili.com/pages/nav/index_new_sync',
     'https://message.bilibili.com/pages/nav/index_new_pc_sync',
@@ -178,6 +217,7 @@ import { installStyle, uninstallStyle } from './custom-styles'
       escapeFilename,
       installStyle,
       uninstallStyle,
+      store,
       resources,
       theWorld: waitTime => {
         if (waitTime > 0) {

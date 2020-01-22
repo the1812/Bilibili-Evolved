@@ -10,7 +10,7 @@
         :href="'https://www.bilibili.com/av' + card.aid"
         :title="card.title"
       >
-        <img :src="card.coverUrl" :alt="card.title" />
+        <dpi-img :src="card.coverUrl" :alt="card.title" :size="{ height: 300 }"></dpi-img>
       </a>
       <div class="operations">
         <a
@@ -23,10 +23,10 @@
         </a>
         <button
           class="watchlater"
-          :class="{checked: currentCard.watchlater}"
           v-if="currentCard.watchlater !== null"
-          :title="currentCard.watchlater ? '已添加至稍后再看' : '稍后再看'"
-          @click="toggleWatchlater(currentCard)"
+          :class="{checked: watchlaterList.includes(currentCard.aid)}"
+          :title="watchlaterList.includes(currentCard.aid) ? '已添加至稍后再看' : '稍后再看'"
+          @click="toggleWatchlater(currentCard.aid)"
         >
           <icon type="mdi" icon="clock-outline"></icon>
         </button>
@@ -100,6 +100,7 @@ export default {
     }
   },
   methods: {
+    ...Vuex.mapActions(['toggleWatchlater']),
     regenerateQueue() {
       if (this.cards.length < 7) {
         return
@@ -117,18 +118,6 @@ export default {
     },
     refresh() {
       this.$emit('refresh')
-    },
-    async toggleWatchlater(card: VideoCardInfo) {
-      try {
-        card.watchlater = !card.watchlater
-        const { toggleWatchlater } = await import(
-          '../../../video/watchlater-api'
-        )
-        await toggleWatchlater(card.aid!.toString(), card.watchlater)
-      } catch (error) {
-        card.watchlater = !card.watchlater
-        logError(error)
-      }
     }
   },
   watch: {
@@ -137,6 +126,7 @@ export default {
     }
   },
   computed: {
+    ...Vuex.mapState(['watchlaterList']),
     currentCard() {
       return this.cardQueue[1]
     }
@@ -190,9 +180,7 @@ export default {
   // --card-width: 500px;
   grid-template:
     'header header header header' auto
-    'cards . operations info' var(--card-height) / var(--card-width) 44px 1fr calc(var(
-          --slideshow-ratio
-        ) * var(--card-width));
+    'cards . operations info' var(--card-height) / var(--card-width) 48px auto 320px;
   .error {
     grid-column: 1 / 4;
     grid-row: 2 / 3;
@@ -207,6 +195,7 @@ export default {
     justify-self: start;
     & > * {
       @include round-button();
+      margin-right: 16px;
       .be-icon {
         font-size: 22px;
       }

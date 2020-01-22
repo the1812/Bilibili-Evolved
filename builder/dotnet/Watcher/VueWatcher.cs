@@ -17,22 +17,25 @@ namespace BilibiliEvolved.Build.Watcher
       GenericFilter = "*.vue.js";
     }
     private Dictionary<string, TaskCompletionSource<string>> waitRequests = new Dictionary<string, TaskCompletionSource<string>>();
-    public Task<string> WaitForBuild(string path) {
+    public Task<string> WaitForBuild(string path)
+    {
       var tcs = new TaskCompletionSource<string>();
-      Console.WriteLine($"add request: {path}");
+      // Console.WriteLine($"add request: {path}");
       waitRequests[path] = tcs;
       return tcs.Task;
     }
     protected override void OnFileChanged(FileSystemEventArgs e)
     {
       var originalFilename = Path.ChangeExtension(e.FullPath, ".ts").Replace(WatcherPath, "src");
-      if (File.Exists(originalFilename)) {
-        File.Delete(originalFilename);
-      }
-      Console.WriteLine($"test filename: {originalFilename}");
-      if (waitRequests.ContainsKey(originalFilename)) {
-        Console.WriteLine($"set result for: {originalFilename}");
+      // Console.WriteLine($"test filename: {originalFilename}");
+      if (waitRequests.ContainsKey(originalFilename))
+      {
+        // Console.WriteLine($"set result for: {originalFilename}");
         waitRequests[originalFilename].SetResult(File.ReadAllText(e.FullPath));
+        if (File.Exists(originalFilename))
+        {
+          File.Delete(originalFilename);
+        }
         waitRequests.Remove(originalFilename);
       }
     }
@@ -44,11 +47,13 @@ namespace BilibiliEvolved.Build.Watcher
     {
       GenericFilter = "*.vue";
     }
-    public override void Start(ProjectBuilder builder) {
+    public override void Start(ProjectBuilder builder)
+    {
       tsWatcher.Start(builder);
       base.Start(builder);
     }
-    public override void Stop() {
+    public override void Stop()
+    {
       base.Stop();
       tsWatcher.Stop();
     }
@@ -126,12 +131,12 @@ namespace BilibiliEvolved.Build.Watcher
         {
           var tsFile = path + ".ts";
           var task = tsWatcher.WaitForBuild(tsFile);
-          if (File.Exists(tsFile)) {
-            File.Delete(tsFile);
-          }
-          Console.WriteLine($"writing file {tsFile}");
+          // if (File.Exists(tsFile)) {
+          //   File.Delete(tsFile);
+          // }
+          // Console.WriteLine($"writing file {tsFile}");
           File.WriteAllText(tsFile, vueFile.Script);
-          Console.WriteLine($"waiting for tsc...");
+          // Console.WriteLine($"waiting for tsc...");
           var script = task.Result.Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
           compiledText.Append($"{script})}}");
         }

@@ -186,6 +186,7 @@ Resource.manifest = {
     displayNames: {
       removeAds: '删除广告',
       showBlockedAdsTip: '显示占位文本',
+      removeGameMatchModule: '删除电竞赛事',
     }
   },
   watchLaterRedirect: {
@@ -476,7 +477,8 @@ Resource.manifest = {
   title: {
     path: 'title.min.js',
     displayNames: {
-      filenameFormat: '文件命名格式'
+      filenameFormat: '文件命名格式',
+      batchFilenameFormat: '批量命名格式',
     }
   },
   imageResolution: {
@@ -556,15 +558,21 @@ Resource.manifest = {
       oldTweets: '旧版动态跳转支持'
     }
   },
+  customNavbarComponent: {
+    path: 'custom-navbar-component.min.js',
+  },
   customNavbar: {
     path: 'custom-navbar.min.js',
     reloadable: true,
     style: 'instant',
     html: true,
+    dependencies: ['customNavbarComponent'],
     displayNames: {
       customNavbar: '使用自定义顶栏',
+      customNavbarComponent: '顶栏组件',
       customNavbarSeasonLogo: '使用季节Logo',
       customNavbarFill: '主题色填充',
+      customNavbarTransparent: '透明填充',
       customNavbarShadow: '投影',
       customNavbarCompact: '紧凑布局',
       customNavbarBlur: '背景模糊',
@@ -788,6 +796,12 @@ Resource.manifest = {
     displayNames: {
       collapseLiveSideBar: '收起直播间侧栏',
     },
-  }
+  },
+  downloadSubtitle: {
+    path: 'download-subtitle.min.js',
+    displayNames: {
+      downloadSubtitle: '下载字幕',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

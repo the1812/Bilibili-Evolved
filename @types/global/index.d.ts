@@ -213,9 +213,10 @@ declare global {
     static displayNames: object
     static manifest: object
     static root: string
+    static cdnRoot: string
   }
   class ResourceManager {
-    import(compnentName: string): any
+    import(componentName: string): any
     getDefaultStyleId(key: string): string
     applyStyle(key: string, id?: string): void
     removeStyle(key: string): void
@@ -342,6 +343,7 @@ declare global {
       giftMessage: boolean,
       guardPurchase: boolean,
       giftPanel: boolean,
+      userEffect: boolean,
       kanban: boolean,
       eventsBanner: boolean,
       popup: boolean,
@@ -350,7 +352,7 @@ declare global {
     },
     customNavbar: boolean,
     customNavbarFill: boolean,
-    allNavbarFill: boolean,
+    customNavbarTransparent: boolean,
     customNavbarShadow: boolean,
     customNavbarCompact: boolean,
     customNavbarBlur: boolean,
@@ -367,6 +369,7 @@ declare global {
     videoScreenshot: boolean,
     cache: {} | { version: string } | undefined,
     filenameFormat: string,
+    batchFilenameFormat: string,
     sideBarOffset: number,
     noLiveAutoplay: boolean,
     hideHomeLive: boolean,
@@ -416,9 +419,13 @@ declare global {
     autoMatchMedal: boolean,
     customStyles: CustomStyle[],
     simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
+    simpleHomeBangumiLayout: '时间表' | '动态',
     keymapJumpSeconds: number,
     urlParamsClean: boolean,
     collapseLiveSideBar: boolean,
+    downloadVideoQuality: number,
+    downloadSubtitle: boolean,
+    removeGameMatchModule: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
@@ -444,8 +451,10 @@ declare global {
   function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void, initCall?: boolean): void
   function removeSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void
   function raiseEvent(element: Element, eventName: string): void
-  function loadLazyPanel(selector: string): Promise<void>
-  function loadDanmakuSettingsPanel(): Promise<void>
+  function loadLazyPanel(selector: string): Promise<HTMLElement>
+  function loadLazyPlayerSettingsPanel(buttonSelector: string, panelSelector: string): Promise<HTMLElement>
+  function loadDanmakuSettingsPanel(): Promise<HTMLElement>
+  function loadSubtitleSettingsPanel(): Promise<HTMLElement>
   function contentLoaded(callback: () => void): void
   function fullyLoaded(callback: () => void): void
   function fixed(number: number, precision?: number): string
@@ -469,6 +478,7 @@ declare global {
   const escapeFilename: (filename: string, replacement?: string) => string
   const dashExtensions: string[]
   const dashFragmentExtension: string
+  const videoCondition: () => Promise<boolean>
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const scriptVersion: ScriptVersion
 }

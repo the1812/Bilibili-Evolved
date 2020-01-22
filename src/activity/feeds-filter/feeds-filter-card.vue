@@ -307,7 +307,6 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
         }
       }
       &.disabled {
-        border-color: var(--theme-color);
         .be-icon {
           display: none;
           &.disabled {

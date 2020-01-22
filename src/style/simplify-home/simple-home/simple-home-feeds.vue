@@ -26,6 +26,7 @@
       <div class="card-wrapper" v-for="card in feedCards" :key="card.id">
         <video-card :data="card" orientation="vertical"></video-card>
       </div>
+      <div class="empty" v-if="feedCards.length === 0">没有动态哦(´･_･`)</div>
     </div>
     <!-- <div class="video-feeds">
       <div class="sub-header">视频</div>
@@ -151,19 +152,19 @@ export default {
     padding-bottom: 16px;
     scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
-    min-height: var(--card-height);
+    min-height: calc(var(--card-height) + 16px);
     @media screen and (min-width: 1100px) {
-      --card-count: 4;
+      --card-count: 3;
     }
     @media screen and (min-width: 1300px) {
-      --card-count: 5;
+      --card-count: 4;
     }
     @media screen and (min-width: 1550px) {
-      --card-count: 6;
+      --card-count: 5;
     }
-    @media screen and (min-width: 1850px) {
-      --card-count: 7;
-    }
+    // @media screen and (min-width: 1850px) {
+    //   --card-count: 7;
+    // }
     &::-webkit-scrollbar {
       width: 0 !important;
       height: 0 !important;
@@ -172,6 +173,13 @@ export default {
       padding: 0 8px;
       scroll-snap-align: start;
       flex-shrink: 0;
+    }
+    .empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      font-size: 16px;
     }
   }
   // .video-feeds,
