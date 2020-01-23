@@ -26,16 +26,27 @@
 
 点击名称即可安装👇 (点了之后需要一点时间下载)
 
-| [正式版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [预览版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js) | [离线版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) | [预览离线版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js) |
+| [正式版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js) | [离线版](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js) | [预览离线版](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js) |
 | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | 正式发布的版本, 最稳定, 更新频率较低.                                                     | 新增内容测试的地方, 更新频率高, 但功能不稳定.                                                      | 内置所有依赖项, 体积较大, 更新频率高于正式版.                                                     | 兼备预览版和离线版的特点.                                                                                      |
+
 <!--
 > **虽然这个脚本只有 1MB 多, 但是 GitHub 的服务器很烂, 可能点了很久都没反应, 或者下载一半失败了, 导致安装了不完整的代码. 请务必检查脚本是否安装完整, 特别是发现安装后网页没有任何变化的时候. 或者可以去 [Greasy Fork](https://greasyfork.org/zh-CN/scripts/373563-bilibili-evolved) 那边下载, 相对稳定一些.**
 -->
 
 > 使用过程中脚本管理器可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
 
-> 某些破坏性的大更新会使旧版脚本**完全**无法工作, 请及时检查更新.
+> 某些破坏性的大更新会使旧版脚本**完全**无法运行, 请及时检查更新.
+
+## 备用安装源
+如果默认的安装链接没法安装, 可以尝试使用以下的备用安装源:
+
+|            | 正式版                                                                                         | 预览版                                                                                                             | 离线版                                                                                                             | 预览离线版                                                                                                                           |
+| ---------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| GreasyFork | [安装](https://greasyfork.org/scripts/373563-bilibili-evolved/code/Bilibili%20Evolved.user.js) | [安装](https://greasyfork.org/scripts/373564-bilibili-evolved-preview/code/Bilibili%20Evolved%20(Preview).user.js) | [安装](https://greasyfork.org/scripts/373565-bilibili-evolved-offline/code/Bilibili%20Evolved%20(Offline).user.js) | [安装](https://greasyfork.org/scripts/373566-bilibili-evolved-preview-offline/code/Bilibili%20Evolved%20(Preview%20Offline).user.js) |
+| jsDelivr   | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js)   | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js)              | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js)               | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js)                        |
+| GitHub     | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)        | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)                   | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)                    | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)                             |
+
 
 # 设置
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置. 默认只启用了一部分功能, 您可以根据需要自由调整设置.
@@ -60,6 +71,9 @@
 
 ### [Greasemonkey](https://www.greasespot.net/)
 可以安装, 但是由于 Greasemonkey 4 只允许脚本在页面完全加载后运行, 样式相关功能体验会比较糟糕, 比如打开夜间模式后每个页面在完全加载之前都是亮色的. 所以还是强烈建议您使用上述的两种脚本管理器.
+
+### [AdGuard](https://adguard.com/zh_cn/adguard-windows/overview.html)
+不兼容.
 
 ## 浏览器
 
