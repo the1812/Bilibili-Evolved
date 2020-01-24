@@ -227,7 +227,8 @@
 .text-info-ctnr,
 .news-ctnr .more-link:hover,
 .news-ctnr .more-link,
-.news-content {
+.news-content,
+.live-room-app .aside-area .chat-history-panel-top {
   @include background-color();
 }
 .manga-navbar .search-bar .placeholder-list .placeholder-item {
@@ -326,6 +327,9 @@ $highlight-map: (
       color: $color !important;
     }
   }
+}
+.live-room-app .aside-area .chat-control-panel {
+  @include no-image();
 }
 .bili-header-m,
 .international-header,
