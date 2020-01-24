@@ -11,11 +11,13 @@ export class Toast {
   title: string
   duration: number | undefined
   creationTime = new Date()
+  randomKey: number
   constructor(message = '', title = '', type = ToastType.Default) {
     this.type = type
     this.message = message
     this.title = title
     this.duration = 3000
+    this.randomKey = Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER + 1))
   }
   show() {
     Toast.containerVM.cards.splice(0, 0, this)
@@ -32,7 +34,7 @@ export class Toast {
     return dq(`.toast-card[data-key='${this.key}']`)
   }
   get key() {
-    return this.creationTime.toISOString()
+    return this.creationTime.toISOString() + `[${this.randomKey}]`
   }
   static get containerVM() {
     if (!container) {

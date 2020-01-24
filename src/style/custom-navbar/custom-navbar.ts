@@ -42,6 +42,7 @@ export default (() => {
   loadSettings()
   const showWidget = !(!supportedUrls.some(it => document.URL.includes(it))
     || unsupportedUrls.some(it => document.URL.includes(it)))
+    || document.URL.includes('//www.bilibili.com/blackboard/bnj2020.html') // 拜年祭2020
   if (showWidget) {
     document.body.classList.add('custom-navbar-loading');
     (async () => {
