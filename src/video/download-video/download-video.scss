@@ -20,6 +20,8 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
+  box-sizing: content-box;
+  line-height: normal;
 
   &,
   * {
@@ -232,6 +234,7 @@
   .direct-download .progress .percent {
     width: 50px;
     text-align: right;
+    font-size: 12px;
   }
   .actions {
     display: flex;
