@@ -220,7 +220,10 @@ export class Activities extends NavbarComponent {
           handleJson: async function (json) {
             // const { getWatchlaterList } = await import('../../video/watchlater-api')
             // const watchlaterList = await getWatchlaterList()
-            const cards = json.data.cards.map((card: any) => {
+            const cards = json.data.cards.filter((c: any) => {
+              // 合作视频仅取UP主的
+              return c.desc.orig_dy_id === 0
+            }).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
                 coverUrl: cardJson.pic,
