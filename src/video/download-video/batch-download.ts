@@ -31,7 +31,7 @@ abstract class Batch {
   itemList: BatchItem[] = []
   abstract async getItemList(): Promise<BatchItem[]>
   abstract async collectData(quality: number | string): Promise<string>
-  formatTitle(parameters: BatchTitleParameter | undefined) {
+  static formatTitle(parameters: BatchTitleParameter | undefined) {
     const format = settings.batchFilenameFormat
     const title = formatTitle(format, true, parameters)
     return escapeFilename(title, ' ')
@@ -169,7 +169,7 @@ class VideoEpisodeBatch extends Batch {
       result.push({
         fragments,
         // title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
-        title: this.formatTitle(item.titleParameters),
+        title: Batch.formatTitle(item.titleParameters),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')
@@ -264,7 +264,7 @@ class BangumiBatch extends Batch {
       result.push({
         fragments,
         // title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
-        title: this.formatTitle(item.titleParameters),
+        title: Batch.formatTitle(item.titleParameters),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')
@@ -320,6 +320,9 @@ export class BatchExtractor {
     const result = await extractor.collectAria2(format.quality, rpc)
     toast.dismiss()
     return result
+  }
+  formatTitle(parameters: BatchTitleParameter | undefined) {
+    return Batch.formatTitle(parameters)
   }
 }
 export default {
