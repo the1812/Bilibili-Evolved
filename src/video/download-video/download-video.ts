@@ -3,7 +3,7 @@ import { VideoInfo, DanmakuInfo } from '../video-info'
 import { VideoDownloaderFragment } from './video-downloader-fragment'
 import { DownloadVideoPackage } from './download-video-package'
 import { VideoDash } from './video-dash'
-import { BatchExtractor } from './batch-download'
+import { BatchExtractor, BatchTitleParameter } from './batch-download'
 
 interface PageData {
   entity: Video
@@ -596,6 +596,7 @@ async function loadPanel() {
   type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD' | 'ffmpegEpisodes' | 'ffmpegFragments'
   interface EpisodeItem {
     title: string
+    titleParameters?: BatchTitleParameter
     checked: boolean
     index: number
     cid: string
@@ -787,6 +788,7 @@ async function loadPanel() {
           }
           return match.checked
         }
+        const batchExtractor = this.batchExtractor as BatchExtractor
         const format: VideoFormat = this.getFormat()
         if (this.danmakuModel.value !== '无') {
           const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
@@ -796,14 +798,14 @@ async function loadPanel() {
               for (const item of episodeList.filter(episodeFilter)) {
                 const danmakuInfo = new DanmakuInfo(item.cid)
                 await danmakuInfo.fetchInfo()
-                pack.add(item.title + '.xml', danmakuInfo.rawXML)
+                pack.add(batchExtractor.formatTitle(item.titleParameters) + '.xml', danmakuInfo.rawXML)
               }
             } else {
               const { convertToAss } = await import('../download-danmaku')
               for (const item of episodeList.filter(episodeFilter)) {
                 const danmakuInfo = new DanmakuInfo(item.cid)
                 await danmakuInfo.fetchInfo()
-                pack.add(item.title + '.ass', await convertToAss(danmakuInfo.rawXML))
+                pack.add(batchExtractor.formatTitle(item.titleParameters) + '.ass', await convertToAss(danmakuInfo.rawXML))
               }
             }
             await pack.emit(this.cid + '.danmakus.zip')
@@ -815,7 +817,6 @@ async function loadPanel() {
           }
         }
         const toast = Toast.info('获取链接中...', '批量导出')
-        const batchExtractor = this.batchExtractor as BatchExtractor
         batchExtractor.config.itemFilter = episodeFilter
         batchExtractor.config.api = await pageData.entity.getApiGenerator(this.dash)
         let result: string
@@ -884,8 +885,9 @@ async function loadPanel() {
       },
       async checkBatch() {
         const urls = [
-          '/www.bilibili.com/bangumi',
-          '/www.bilibili.com/video/av'
+          '//www.bilibili.com/bangumi',
+          '//www.bilibili.com/video/av',
+          '//www.bilibili.com/blackboard/bnj2020.html'
         ]
         if (!urls.some(url => document.URL.includes(url))) {
           this.batch = false
@@ -905,6 +907,7 @@ async function loadPanel() {
             aid: item.aid,
             cid: item.cid,
             title: item.title,
+            titleParameters: item.titleParameters,
             index,
             checked: true,
           } as EpisodeItem

@@ -72,6 +72,7 @@ export default {
     }
     li {
       padding: 4px 16px;
+      box-sizing: content-box;
       white-space: nowrap;
       min-width: 64px;
       text-align: center;

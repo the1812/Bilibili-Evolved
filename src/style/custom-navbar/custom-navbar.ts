@@ -15,6 +15,7 @@ const supportedUrls = [
   '//live.bilibili.com/blackboard/'
 ]
 const unsupportedUrls = [
+  '//t.bilibili.com/vote/h5/index/#/result',
   '//t.bilibili.com/lottery/h5/index/#/result',
   '//member.bilibili.com/video/upload',
   '//space.bilibili.com/ajax/',

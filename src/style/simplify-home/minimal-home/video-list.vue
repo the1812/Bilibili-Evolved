@@ -53,40 +53,45 @@ export default {
       if (json.code !== 0) {
         throw new Error(json.message)
       }
-      this.cards = json.data.cards.map(
-        (c: any): VideoCardInfo => {
-          const card = JSON.parse(c.card)
-          const topics = _.get(c, 'display.topic_info.topic_details', []).map(
-            (it: any) => {
-              return {
-                id: it.topic_id,
-                name: it.topic_name
+      this.cards = json.data.cards
+        .filter((c: any) => {
+          // 合作视频仅取UP主的
+          return c.desc.orig_dy_id === 0
+        })
+        .map(
+          (c: any): VideoCardInfo => {
+            const card = JSON.parse(c.card)
+            const topics = _.get(c, 'display.topic_info.topic_details', []).map(
+              (it: any) => {
+                return {
+                  id: it.topic_id,
+                  name: it.topic_name
+                }
               }
+            )
+            return {
+              id: c.desc.dynamic_id_str,
+              aid: card.aid,
+              title: card.title,
+              upID: c.desc.user_profile.info.uid,
+              upName: c.desc.user_profile.info.uname,
+              upFaceUrl: c.desc.user_profile.info.face,
+              coverUrl: card.pic,
+              description: card.desc,
+              timestamp: c.timestamp,
+              time: new Date(c.timestamp * 1000),
+              topics,
+              dynamic: card.dynamic,
+              like: formatCount(c.desc.like),
+              duration: card.duration,
+              durationText: formatDuration(card.duration, 0),
+              playCount: formatCount(card.stat.view),
+              danmakuCount: formatCount(card.stat.danmaku),
+              watchlater: true
+              // watchlater: watchlaterList ? watchlaterList.includes(card.aid) : undefined,
             }
-          )
-          return {
-            id: c.desc.dynamic_id_str,
-            aid: card.aid,
-            title: card.title,
-            upID: c.desc.user_profile.info.uid,
-            upName: c.desc.user_profile.info.uname,
-            upFaceUrl: c.desc.user_profile.info.face,
-            coverUrl: card.pic,
-            description: card.desc,
-            timestamp: c.timestamp,
-            time: new Date(c.timestamp * 1000),
-            topics,
-            dynamic: card.dynamic,
-            like: formatCount(c.desc.like),
-            duration: card.duration,
-            durationText: formatDuration(card.duration, 0),
-            playCount: formatCount(card.stat.view),
-            danmakuCount: formatCount(card.stat.danmaku),
-            watchlater: true,
-            // watchlater: watchlaterList ? watchlaterList.includes(card.aid) : undefined,
           }
-        }
-      )
+        )
     }
   },
   async mounted() {

@@ -31,7 +31,7 @@ abstract class Batch {
   itemList: BatchItem[] = []
   abstract async getItemList(): Promise<BatchItem[]>
   abstract async collectData(quality: number | string): Promise<string>
-  formatTitle(parameters: BatchTitleParameter | undefined) {
+  static formatTitle(parameters: BatchTitleParameter | undefined) {
     const format = settings.batchFilenameFormat
     const title = formatTitle(format, true, parameters)
     return escapeFilename(title, ' ')
@@ -108,17 +108,18 @@ ${f.url}
   }
 }
 class VideoEpisodeBatch extends Batch {
+  aid = unsafeWindow.aid!
   static async test() {
-    if (!document.URL.includes('/www.bilibili.com/video/av')) {
-      return false
+    if (document.URL.includes('//www.bilibili.com/video/av')) {
+      return await SpinQuery.select('#multi_page') !== null
     }
-    return await SpinQuery.select('#multi_page') !== null
+    return false
   }
   async getItemList() {
     if (this.itemList.length > 0) {
       return this.itemList
     }
-    const api = `https://api.bilibili.com/x/web-interface/view?aid=${unsafeWindow.aid}`
+    const api = `https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`
     const json = await Ajax.getJson(api)
     if (json.code !== 0) {
       Toast.error(`获取视频选集列表失败, message=${json.message}`, '批量下载')
@@ -137,7 +138,7 @@ class VideoEpisodeBatch extends Batch {
           ep: page.part
         },
         cid: page.cid,
-        aid: unsafeWindow.aid,
+        aid: this.aid,
       } as BatchItem
     })
     return this.itemList
@@ -168,13 +169,34 @@ class VideoEpisodeBatch extends Batch {
       result.push({
         fragments,
         // title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
-        title: this.formatTitle(item.titleParameters),
+        title: Batch.formatTitle(item.titleParameters),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')
       })
     }
     return JSON.stringify(result)
+  }
+}
+class Bnj2020Batch extends Batch {
+  mainVideo: VideoEpisodeBatch
+  spVideo: VideoEpisodeBatch
+  constructor(config: BatchExtractorConfig) {
+    super(config)
+    // 拜年祭就硬编码 aid 了(
+    this.mainVideo = new VideoEpisodeBatch(config)
+    this.mainVideo.aid = '78976165'
+    this.spVideo = new VideoEpisodeBatch(config)
+    this.spVideo.aid = '78979124'
+  }
+  static async test() {
+    return document.URL.includes('//www.bilibili.com/blackboard/bnj2020.html')
+  }
+  async getItemList() {
+    return (await this.mainVideo.getItemList()).concat(await this.spVideo.getItemList())
+  }
+  async collectData(quality: string | number) {
+    return (await this.mainVideo.collectData(quality)).concat(await this.spVideo.collectData(quality))
   }
 }
 class BangumiBatch extends Batch {
@@ -242,7 +264,7 @@ class BangumiBatch extends Batch {
       result.push({
         fragments,
         // title: item.title.replace(/[\/\\:\*\?"<>\|]/g, ' '),
-        title: this.formatTitle(item.titleParameters),
+        title: Batch.formatTitle(item.titleParameters),
         totalSize: fragments.map(it => it.size).reduce((acc, it) => acc + it),
         cid: item.cid,
         referer: document.URL.replace(window.location.search, '')
@@ -251,7 +273,7 @@ class BangumiBatch extends Batch {
     return JSON.stringify(result)
   }
 }
-const extractors = [BangumiBatch, VideoEpisodeBatch]
+const extractors = [BangumiBatch, VideoEpisodeBatch, Bnj2020Batch]
 let ExtractorClass: new (config: BatchExtractorConfig) => Batch
 export class BatchExtractor {
   config: BatchExtractorConfig
@@ -298,6 +320,9 @@ export class BatchExtractor {
     const result = await extractor.collectAria2(format.quality, rpc)
     toast.dismiss()
     return result
+  }
+  formatTitle(parameters: BatchTitleParameter | undefined) {
+    return Batch.formatTitle(parameters)
   }
 }
 export default {

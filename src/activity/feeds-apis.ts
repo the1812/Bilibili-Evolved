@@ -204,7 +204,10 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
     //   '../video/watchlater-api'
     // )
     // const watchlaterList = await getWatchlaterList()
-    return json.data.cards.map(
+    return json.data.cards.filter((c: any) => {
+      // 合作视频仅取UP主的
+      return c.desc.orig_dy_id === 0
+    }).map(
       (c: any): VideoCardInfo => {
         const card = JSON.parse(c.card)
         const topics = _.get(c, 'display.topic_info.topic_details', []).map(
