@@ -31,9 +31,6 @@ export class FavoritesList extends NavbarComponent {
             </a>
           </div>
           <transition-group name="cards" tag="div" class="cards">
-            <div class="loading-tip" v-if="cardsLoading" key="loading-tip">
-              加载中...
-            </div>
             <div class="empty-tip" v-if="!cardsLoading && cards.length === 0" key="empty-tip">
               空空如也哦 =￣ω￣=
             </div>
@@ -48,6 +45,9 @@ export class FavoritesList extends NavbarComponent {
                 <dpi-img class="face" :src="card.upFaceUrl" :size="20"></dpi-img>
                 <div class="name">{{card.upName}}</div>
               </a>
+            </div>
+            <div class="loading-tip" v-if="cardsLoading" key="loading-tip">
+              加载中...
             </div>
           </transition-group>
         </div>
@@ -76,6 +76,7 @@ export class FavoritesList extends NavbarComponent {
         cards: [],
         selectedListName: '',
         cardsLoading: true,
+        cardsPage: 1,
       },
       computed: {
         listNames() {
@@ -94,41 +95,74 @@ export class FavoritesList extends NavbarComponent {
         },
       },
       methods: {
+        async getCards() {
+          const url = `https://api.bilibili.com/medialist/gateway/base/spaceDetail?media_id=${this.selectedListId}&pn=${this.cardsPage}&ps=20`
+          const json = await Ajax.getJsonWithCredentials(url)
+          if (json.code !== 0) {
+            throw new Error(`加载收藏夹内容失败: ${json.message}`)
+          }
+          if (!json.data.medias) { // 超过最后一页后返回空数组
+            return []
+          }
+          return json.data.medias.filter((item: any) => {
+            return item.attr === 0 // 过滤掉已失效视频
+          }).map((item: any) => {
+            return {
+              id: item.id,
+              aid: item.id,
+              coverUrl: item.cover.replace('http:', 'https:'),
+              favoriteTimestamp: item.fav_time * 1000,
+              favoriteTime: new Date(item.fav_time * 1000),
+              title: item.title,
+              description: item.intro,
+              duration: item.duration,
+              durationText: formatDuration(item.duration),
+              playCount: item.cnt_info.play,
+              danmakuCount: item.cnt_info.danmaku,
+              upName: item.upper.name,
+              upFaceUrl: item.upper.face.replace('http:', 'https:'),
+              upID: item.upper.mid,
+            } as FavoritesItemInfo
+          })
+        },
         async changeList() {
           try {
             this.cards = []
+            this.cardsPage = 1
             this.cardsLoading = true
-            const url = `https://api.bilibili.com/medialist/gateway/base/spaceDetail?media_id=${this.selectedListId}&pn=1&ps=20`
-            const json = await Ajax.getJsonWithCredentials(url)
-            if (json.code !== 0) {
-              throw new Error(`加载收藏夹内容失败: ${json.message}`)
-            }
-            this.cards = json.data.medias.filter((item: any) => {
-              return item.attr === 0 // 过滤掉已失效视频
-            }).map((item: any) => {
-              return {
-                id: item.id,
-                aid: item.id,
-                coverUrl: item.cover.replace('http:', 'https:'),
-                favoriteTimestamp: item.fav_time * 1000,
-                favoriteTime: new Date(item.fav_time * 1000),
-                title: item.title,
-                description: item.intro,
-                duration: item.duration,
-                durationText: formatDuration(item.duration),
-                playCount: item.cnt_info.play,
-                danmakuCount: item.cnt_info.danmaku,
-                upName: item.upper.name,
-                upFaceUrl: item.upper.face.replace('http:', 'https:'),
-                upID: item.upper.mid,
-              } as FavoritesItemInfo
-            })
+            this.cards = await this.getCards()
+            this.setInfiniteScroll()
           } catch (error) {
             logError(error)
           } finally {
             this.cardsLoading = false
           }
-        }
+        },
+        async loadNextPage() {
+          try {
+            this.cardsLoading = true
+            this.cardsPage++
+            const cards = await this.getCards()
+            this.cards.push(...cards)
+            if (cards.length > 0) {
+              this.setInfiniteScroll()
+            }
+          } catch (error) {
+            logError(error)
+          } finally {
+            this.cardsLoading = false
+          }
+        },
+        setInfiniteScroll() {
+          const cardsContainer = this.$el.querySelector('.cards') as HTMLElement
+          const scrollHandler = _.debounce(() => {
+            if (cardsContainer.scrollTop + cardsContainer.clientHeight >= cardsContainer.scrollHeight - 48) {
+              cardsContainer.removeEventListener('scroll', scrollHandler)
+              this.loadNextPage()
+            }
+          }, 200)
+          cardsContainer.addEventListener('scroll', scrollHandler)
+        },
       },
       async mounted() {
         try {
