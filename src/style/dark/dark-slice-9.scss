@@ -12,6 +12,7 @@
     }
   }
 }
+@include level-badge(1 2 3 4, #44b0a0);
 @include level-badge(5 6 7 8, #74b0f6);
 @include level-badge(9 10 11 12, #ba94f2);
 
@@ -387,7 +388,8 @@ $highlight-map: (
   @include border-color("4");
 }
 .manga-navbar .search-bar .confirm-btn .search-icon,
-.container .level-intro .svg-icon {
+.container .level-intro .svg-icon,
+#page-fav .fav-sidenav .icon:not(.icon-cursor) {
   @include to-white();
 }
 .side-bar-btn .size-bar-text {
