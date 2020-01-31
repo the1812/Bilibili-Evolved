@@ -67,7 +67,7 @@
       scroll-behavior: smooth;
       position: relative;
       @include no-scrollbar();
-      margin: 0 12px;
+      padding: 0 12px;
       padding-bottom: 12px;
       &-enter,
       &-leave-to {

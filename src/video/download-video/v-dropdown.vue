@@ -89,6 +89,9 @@ export default {
       background-color: transparent;
       border-radius: var(--corner-radius);
       &:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+      }
+      body.dark &:hover {
         background-color: rgba(0, 0, 0, 0.16);
       }
     }
