@@ -119,7 +119,8 @@ export default (() => {
         const { Messages } = await import('./simple/custom-navbar-messages')
         const { Activities } = await import('./activities/custom-navbar-activities')
         const { Subscriptions } = await import('./subscriptions/custom-navbar-subscriptions')
-        const { FavoritesList, HistoryList } = await import('./simple/custom-navbar-video-list')
+        const { FavoritesList } = await import('./favorites-list/custom-navbar-favorites-list')
+        const { HistoryList } = await import('./simple/custom-navbar-video-list')
         components.push(
           new Messages(),
           new Subscriptions(),

@@ -1,5 +1,5 @@
 <template>
-  <div class="v-dropdown" @click="toggleDropdown()">
+  <div class="v-dropdown" @click="toggleDropdown()" :class="{round}">
     <span class="selected">{{ value }}</span>
     <ul class="dropdown-menu" :class="{ opened: dropdownOpen }">
       <li v-for="item in items" :key="item" :data-value="item" @click="select(item)">{{ item }}</li>
@@ -9,7 +9,7 @@
 </template>
 <script lang="ts">
 export default {
-  props: ['items', 'value'],
+  props: ['items', 'value', 'round'],
   data() {
     return {
       dropdownOpen: false
@@ -33,8 +33,10 @@ export default {
       }
     },
     select(item: string) {
-      this.$emit('update:value', item)
-      this.$emit('change', item)
+      if (item !== this.value) {
+        this.$emit('update:value', item)
+        this.$emit('change', item)
+      }
     }
   }
 }
@@ -49,9 +51,14 @@ export default {
   align-items: center;
   justify-content: space-between;
   min-width: 100px;
+  border-radius: var(--corner-radius);
 
   body.dark & {
     --background-color: #333;
+  }
+  &.round {
+    border-radius: 14px;
+    padding: 0 4px;
   }
   .dropdown-menu {
     transform-origin: top;
@@ -65,6 +72,7 @@ export default {
     z-index: 1;
     transition: 0.2s ease-out;
     box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
+    border-radius: var(--corner-radius);
     &.opened {
       transform: translateY(0) translateX(-50%);
       pointer-events: initial;
@@ -79,6 +87,7 @@ export default {
       cursor: pointer;
       color: inherit;
       background-color: transparent;
+      border-radius: var(--corner-radius);
       &:hover {
         background-color: rgba(0, 0, 0, 0.16);
       }
@@ -95,15 +104,6 @@ export default {
   .selected {
     user-select: none;
     padding: 4px 8px;
-  }
-
-  .round-corner & {
-    border-radius: var(--corner-radius);
-
-    .dropdown-menu,
-    .dropdown-menu li {
-      border-radius: var(--corner-radius);
-    }
   }
 }
 </style>

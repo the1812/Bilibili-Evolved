@@ -851,7 +851,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   }
 }
 @import "./activities/activities", "./subscriptions/subscriptions", "_round-corner", "./settings/settings",
-  "./category/category", "./watchlater-list/watchlater-list";
+  "./category/category", "./watchlater-list/watchlater-list", "./favorites-list/favorites-list";
 
 .custom-navbar > ul > li:not(.disabled):hover > .popup,
 #custom-navbar-home-popup .category-item:hover .popup,

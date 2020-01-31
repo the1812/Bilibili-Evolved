@@ -1,0 +1,30 @@
+@mixin h-center {
+  display: flex;
+  align-items: center;
+}
+@mixin v-center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+@mixin h-stretch {
+  display: flex;
+  align-items: stretch;
+}
+@mixin v-stretch {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+}
+@mixin round-bar($height) {
+  box-sizing: border-box;
+  height: #{$height}px;
+  border-radius: #{$height / 2}px;
+}
+@mixin no-scrollbar {
+  scrollbar-width: none !important;
+  &::-webkit-scrollbar {
+    height: 0 !important;
+    width: 0 !important;
+  }
+}

@@ -1,62 +1,41 @@
 @import "../../common";
-.custom-navbar {
-  @mixin button-background {
-    background-color: #8882;
-    &:hover {
-      background-color: #8884;
-    }
-  }
-  @mixin floating-button-background {
-    background-color: #000C;
-  }
-  .popup .watchlater-list {
-    min-height: 200px;
-    max-height: 600px;
-    width: 380px;
-    font-size: 12px;
+.custom-navbar .favorites-list {
+  width: 380px;
+  height: 600px;
+  font-size: 12px;
+  @include v-stretch();
+  justify-content: center;
+  .empty-tip,
+  .loading-tip {
     display: flex;
-    flex-flow: column nowrap;
+    justify-content: center;
+    width: 100%;
+  }
+  & > .loading-tip {
+    display: none;
+  }
+  .mdi {
+    line-height: 1;
+    font-size: 18px;
+  }
+  &.loading {
+    & > .loading-tip {
+      display: flex;
+    }
+    & > :not(.loading-tip) {
+      display: none;
+    }
+  }
+  .content {
+    @include v-stretch();
+    @include no-scrollbar();
     justify-content: space-between;
-    .empty-tip,
-    .loading-tip {
-      opacity: 0;
-      pointer-events: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      @include h-center();
-      .mdi {
-        margin-right: 6px;
-      }
-    }
-    .empty-tip {
-      opacity: 1;
-    }
-    &.loading {
-      .loading-tip {
-        opacity: 1;
-      }
-      & > :not(.loading-tip) {
-        opacity: 0;
-      }
-    }
-    .mdi {
-      line-height: 1;
-      font-size: 18px;
-    }
-    .round-button {
-      @include round-bar(28);
-      @include h-center();
-      @include button-background();
-      justify-content: center;
-      cursor: pointer;
-      width: 28px;
-    }
+    flex-grow: 1;
+    overflow: auto;
     .floating {
       @include round-bar(20);
       @include h-center();
-      @include floating-button-background();
+      background-color: #000c;
       color: white;
       justify-content: center;
       cursor: pointer;
@@ -65,50 +44,17 @@
       @include h-center();
       justify-content: space-between;
       margin: 16px 12px;
-      .search {
-        position: relative;
-        flex-grow: 1;
-        margin-right: 16px;
-        input {
-          width: 100%;
-          padding: 4px;
-          border: none;
-          outline: none !important;
-          color: inherit;
-          background-color: transparent;
-          border-radius: 4px;
-        }
-        &::after {
-          content: "";
-          position: absolute;
-          top: calc(100%);
-          left: 0;
-          width: 100%;
-          height: 2px;
-          border-radius: 2px;
-          transition: 0.24s ease-out;
-          background-color: #8882;
-        }
-        &.not-empty,
-        &:focus-within {
-          &::after {
-            background-color: var(--theme-color);
-          }
-        }
-      }
-      .operations {
-        @include h-center();
-        .round-button {
-          &:not(:last-child) {
-            margin-right: 4px;
-          }
-        }
+      .list-select {
+        height: 26px;
       }
       .more-info {
         @include h-center();
-        @include round-bar(28);
+        @include round-bar(26);
         padding: 4px 6px 4px 10px;
-        @include button-background();
+        background-color: #8882;
+        &:hover {
+          background-color: #8884;
+        }
         .mdi {
           margin-left: 8px;
         }
@@ -132,7 +78,7 @@
         transition: 0.24s cubic-bezier(0.22, 0.61, 0.36, 1);
         position: absolute;
       }
-      .watchlater-card {
+      .favorite-card {
         cursor: pointer;
         flex-shrink: 0;
         border-radius: 8px;
@@ -140,10 +86,6 @@
         color: black;
         background-color: #fff;
         display: grid;
-        // grid-template:
-        //   "cover" 120px
-        //   "title" auto
-        //   "info" auto / 200px;
         grid-template:
           "cover title" 2fr
           "cover info" 1fr / 130px 1fr;
@@ -161,23 +103,14 @@
           border-radius: 8px 0 0 8px;
           position: relative;
           $padding: 6px;
-          .remove {
+          .favorite-time{
             top: $padding;
             left: $padding;
-            width: 20px;
-            .mdi {
-              font-size: 16px;
-            }
+            padding: 0 6px;
           }
           .duration {
             left: $padding;
             bottom: $padding;
-            padding: 0 6px;
-          }
-          .viewed {
-            white-space: nowrap;
-            right: $padding;
-            top: $padding;
             padding: 0 6px;
           }
           .floating {
@@ -211,13 +144,6 @@
             color: var(--theme-color) !important;
           }
         }
-        // .info {
-        //   grid-area: info;
-        //   display: flex;
-        //   align-items: center;
-        //   justify-content: space-around;
-        //   margin: 8px;
-        // }
         .up {
           flex: 0 1 auto;
           padding: 2px 10px 2px 2px;
@@ -226,8 +152,11 @@
           align-self: center;
           max-width: calc(100% - 16px);
           @include h-center();
-          @include button-background();
           @include round-bar(24);
+          background-color: #8882;
+          &:hover {
+            background-color: #8884;
+          }
           .face {
             border-radius: 50%;
             margin-right: 6px;
@@ -244,17 +173,6 @@
             color: var(--theme-color);
           }
         }
-      }
-    }
-    .undo {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      opacity: 0;
-      transform: translateX(-50%) translateY(8px);
-      &.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0px);
       }
     }
   }
