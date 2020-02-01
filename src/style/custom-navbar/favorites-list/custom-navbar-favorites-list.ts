@@ -25,6 +25,11 @@ export class FavoritesList extends NavbarComponent {
           <div class="header">
             <v-dropdown class="list-select" @change="changeList()" :round="true" :items="listNames" :value.sync="selectedListName">
             </v-dropdown>
+            <div class="play-all-container">
+              <a class="play-all" :href="playLink" title="播放全部" target="_blank">
+                <i class="mdi mdi-play"></i>
+              </a>
+            </div>
             <a class="more-info" :href="moreLink" title="查看更多" target="_blank">
               查看更多
               <i class="mdi mdi-dots-horizontal"></i>
@@ -93,6 +98,13 @@ export class FavoritesList extends NavbarComponent {
           }
           return `https://space.bilibili.com/${getUID()}/favlist?fid=${id}`
         },
+        playLink() {
+          const id = this.selectedListId
+          if (id === 0) {
+            return undefined
+          }
+          return `https://www.bilibili.com/medialist/play/ml${id}`
+        }
       },
       methods: {
         async getCards() {

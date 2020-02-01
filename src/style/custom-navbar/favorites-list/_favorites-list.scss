@@ -59,6 +59,21 @@
           margin-left: 8px;
         }
       }
+      .play-all-container {
+        flex-grow: 1;
+        padding: 0 6px;
+        @include h-center();
+        justify-content: flex-start;
+        .play-all {
+          @include h-center();
+          @include round-bar(26);
+          padding: 4px;
+          background-color: #8882;
+          &:hover {
+            background-color: #8884;
+          }
+        }
+      }
     }
     .cards {
       flex: 1;
@@ -103,7 +118,7 @@
           border-radius: 8px 0 0 8px;
           position: relative;
           $padding: 6px;
-          .favorite-time{
+          .favorite-time {
             top: $padding;
             left: $padding;
             padding: 0 6px;
