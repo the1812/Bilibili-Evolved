@@ -275,15 +275,22 @@
   }
 }
 
-.center-box .line-1 {
-  .name-field {
-    @include color("e");
-    a {
+.center-box {
+  .line-1 {
+    .name-field {
+      @include color("e");
+      a {
+        @include color("e");
+      }
+    }
+    .like-item {
       @include color("e");
     }
   }
-  .like-item {
-    @include color("e");
+  .line-2 {
+    .im-dynamic-link {
+      @include theme-color();
+    }
   }
 }
 
