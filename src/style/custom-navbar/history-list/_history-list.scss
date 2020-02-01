@@ -1,0 +1,117 @@
+@import "../../common";
+.custom-navbar .history-list {
+  width: 300px;
+  height: 600px;
+  font-size: 12px;
+  @include v-stretch();
+  justify-content: center;
+  .loading-tip {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  & > .loading-tip {
+    display: none;
+  }
+  .mdi {
+    line-height: 1;
+    font-size: 18px;
+  }
+  &.loading {
+    & > .loading-tip {
+      display: flex;
+    }
+    & > :not(.loading-tip) {
+      display: none;
+    }
+  }
+  .content {
+    @include v-stretch();
+    @include no-scrollbar();
+    justify-content: space-between;
+    flex-grow: 1;
+    overflow: auto;
+    .floating {
+      @include round-bar(20);
+      @include h-center();
+      background-color: #000c;
+      color: white;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .header {
+      @include h-center();
+      justify-content: space-between;
+      margin: 16px 12px;
+      .tabs {
+        flex-grow: 1;
+        margin-right: 48px;
+        padding: 0 6px;
+        @include h-center();
+        justify-content: space-between;
+        .tab {
+          cursor: pointer;
+          position: relative;
+          white-space: nowrap;
+          &::after {
+            content: "";
+            width: calc(80%);
+            height: 2px;
+            border-radius: 1px;
+            position: absolute;
+            background-color: var(--theme-color);
+            left: 10%;
+            bottom: -4px;
+            transform: scaleX(0);
+            transition: 0.2s ease-out;
+          }
+          &.active::after {
+            transform: scaleX(1);
+          }
+          .tab-name {
+            opacity: 0.5;
+            line-height: normal;
+          }
+          &.active {
+            transform: scale(1.2);
+            .tab-name {
+              font-weight: bold;
+              opacity: 1;
+            }
+          }
+        }
+      }
+      .more-info {
+        @include h-center();
+        @include round-bar(26);
+        padding: 4px 6px 4px 10px;
+        background-color: #8882;
+        &:hover {
+          background-color: #8884;
+        }
+        .mdi {
+          margin-left: 8px;
+        }
+      }
+    }
+    .history-content {
+      &-enter-active,
+      &-leave-active {
+        transition: 0.2s ease-out;
+      }
+      &-enter,
+      &-leave-to {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      flex: 1;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scroll-behavior: smooth;
+      position: relative;
+      @include no-scrollbar();
+      padding: 0 12px;
+      padding-bottom: 12px;
+    }
+  }
+}
