@@ -1,7 +1,18 @@
 const removeBadScrollbar = () => {
   SpinQuery.select('.custom-scrollbar').then(it => it && it.classList.remove('custom-scrollbar'))
 }
+const unload = () => {
+  document.body.classList.remove('dark')
+  resources.removeStyle('scrollbarStyle')
+  resources.removeStyle('darkStyleNavBar')
+  resources.removeStyle('darkStyle')
+  resources.removeStyle('darkStyleImportant')
+}
 const load = () => {
+  if (settings.noDarkOnMember && document.URL.startsWith('https://member.bilibili.com/v2')) {
+    unload()
+    return
+  }
   document.body.classList.add('dark')
   removeBadScrollbar()
   resources.applyStyle('scrollbarStyle')
@@ -12,11 +23,5 @@ const load = () => {
 load()
 export default {
   reload: load,
-  unload: () => {
-    document.body.classList.remove('dark')
-    resources.removeStyle('scrollbarStyle')
-    resources.removeStyle('darkStyleNavBar')
-    resources.removeStyle('darkStyle')
-    resources.removeStyle('darkStyleImportant')
-  }
+  unload: unload,
 }

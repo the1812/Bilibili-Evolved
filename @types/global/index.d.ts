@@ -426,6 +426,7 @@ declare global {
     downloadVideoQuality: number,
     downloadSubtitle: boolean,
     removeGameMatchModule: boolean,
+    noDarkOnMember: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

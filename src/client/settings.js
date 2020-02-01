@@ -204,6 +204,7 @@ export const settings = {
   urlParamsClean: true,
   collapseLiveSideBar: true,
   removeGameMatchModule: false,
+  noDarkOnMember: true,
   downloadVideoQuality: 120,
   cache: {},
 }

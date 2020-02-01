@@ -12,7 +12,7 @@ const supportedUrls = [
   '//app.bilibili.com',
   '//passport.bilibili.com',
   '//game.bilibili.com',
-  '//live.bilibili.com/blackboard/'
+  '//live.bilibili.com/blackboard/',
 ]
 const unsupportedUrls = [
   '//t.bilibili.com/vote/h5/index/#/result',
@@ -20,7 +20,8 @@ const unsupportedUrls = [
   '//member.bilibili.com/video/upload',
   '//space.bilibili.com/ajax/',
   '//www.bilibili.com/h5/comment/',
-  '//www.bilibili.com/blackboard/'
+  '//www.bilibili.com/blackboard/',
+  '//member.bilibili.com/v2',
 ]
 const loadSettings = () => {
   document.body.style.setProperty('--navbar-bounds-padding', `0 ${settings.customNavbarBoundsPadding}%`)
