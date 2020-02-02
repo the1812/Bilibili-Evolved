@@ -3146,6 +3146,11 @@ fullyLoaded(() => getUID() && store.dispatch('fetchWatchlaterList'))
     // }
     events.styleLoaded.complete()
 
+    const prefetchLink = document.createElement('link')
+    prefetchLink.rel = 'dns-prefetch'
+    prefetchLink.href = 'https://api.bilibili.com'
+    document.head.insertAdjacentElement('afterbegin', prefetchLink)
+
     Object.assign(unsafeWindow.bilibiliEvolved, {
       SpinQuery,
       Toast,

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      565.01
+// @version      565.98
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -3092,6 +3092,11 @@ fullyLoaded(() => getUID() && store.dispatch('fetchWatchlaterList'))
     //   })
     // }
     events.styleLoaded.complete()
+
+    const prefetchLink = document.createElement('link')
+    prefetchLink.rel = 'dns-prefetch'
+    prefetchLink.href = 'https://api.bilibili.com'
+    document.head.insertAdjacentElement('afterbegin', prefetchLink)
 
     Object.assign(unsafeWindow.bilibiliEvolved, {
       SpinQuery,
