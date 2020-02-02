@@ -36,6 +36,9 @@ export default {
       if (!this.src || !this.size) {
         return
       }
+      if (this.src.startsWith('http:')) {
+        this.src = this.src.replace('http:', 'https:')
+      }
       if (this.src.includes('//static.hdslb.com/images/member/noface.gif')) {
         // 这张图无法缩放
         this.srcset = this.src
