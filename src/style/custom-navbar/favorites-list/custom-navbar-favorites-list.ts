@@ -15,7 +15,7 @@ export class FavoritesList extends NavbarComponent {
     this.noPadding = true
     this.href = `https://space.bilibili.com/${getUID()}/favlist`
     this.html = `收藏`
-    this.active = document.URL.replace(/\?.*$/, "") === `https://space.bilibili.com/${getUID()}/favlist`
+    this.active = document.URL.replace(/\?.*$/, "") === this.href
     this.popupHtml = /*html*/`
       <div class="favorites-list loading">
         <div class="loading-tip">
@@ -73,7 +73,7 @@ export class FavoritesList extends NavbarComponent {
         }
       },
       components: {
-        DpiImg: () => import('../dpi-img.vue'),
+        DpiImg: () => import('../../dpi-img.vue'),
         VDropdown: () => import('../../../video/download-video/v-dropdown.vue'),
       },
       data: {
