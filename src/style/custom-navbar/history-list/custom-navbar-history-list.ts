@@ -233,7 +233,7 @@ export class HistoryList extends NavbarComponent {
               throw new Error(`加载历史记录失败: ${json.message}`)
             }
             this.timeline = tab.getTimeline(json)
-            console.log(_.cloneDeep(this.timeline))
+            // console.log(_.cloneDeep(this.timeline))
           } catch (error) {
             logError(error)
           } finally {
@@ -252,9 +252,11 @@ export class HistoryList extends NavbarComponent {
           this.updateTimeline()
         }
       },
+      async created() {
+        this.updateTimeline()
+      },
       async mounted() {
         this.$el.classList.remove('loading')
-        this.updateTimeline()
       },
     })
   }

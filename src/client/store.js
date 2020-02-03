@@ -55,7 +55,7 @@ export const store = (() => {
       //   }
       // },
       updateWatchlaterList (state, list) {
-        console.log('updateWatchlaterList', list)
+        // console.log('updateWatchlaterList', list)
         state.watchlaterList = list
         state.watchlaterListCached = true
       }
