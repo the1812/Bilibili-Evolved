@@ -28,3 +28,13 @@
     width: 0 !important;
   }
 }
+@mixin max-line($line, $line-height: 1.5) {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  line-height: $line-height;
+  max-height: #{$line * $line-height}em;
+}
