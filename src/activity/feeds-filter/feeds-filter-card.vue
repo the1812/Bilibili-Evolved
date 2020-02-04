@@ -176,8 +176,8 @@ export default {
     }
     this.allTypes = Object.entries(feedsCardTypes)
     feedsCardsManager.cards.forEach(card => this.updateCard(card))
-    feedsCardsManager.addEventListener('addCard', (e: CustomEvent) => {
-      const card = e.detail as FeedsCard
+    feedsCardsManager.addEventListener('addCard', (e) => {
+      const card = e.detail
       this.updateCard(card)
     })
     this.feedsCardsManager = feedsCardsManager

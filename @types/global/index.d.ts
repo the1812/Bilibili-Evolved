@@ -427,6 +427,9 @@ declare global {
     downloadSubtitle: boolean,
     removeGameMatchModule: boolean,
     noDarkOnMember: boolean,
+    feedsTranslate: boolean,
+    feedsTranslateProvider: 'Bing' | 'Google' | 'Baidu' | 'GoogleCN',
+    feedsTranslateLanguage: string,
     latestVersionLink: string,
     currentVersion: string,
   }

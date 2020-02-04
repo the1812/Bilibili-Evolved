@@ -205,6 +205,9 @@ export const settings = {
   collapseLiveSideBar: true,
   removeGameMatchModule: false,
   noDarkOnMember: true,
+  feedsTranslate: false,
+  feedsTranslateProvider: 'Bing',
+  feedsTranslateLanguage: '',
   downloadVideoQuality: 120,
   cache: {},
 }

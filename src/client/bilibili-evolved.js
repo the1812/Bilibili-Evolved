@@ -24,6 +24,10 @@
 // @grant        GM.xmlHttpRequest
 // @connect      raw.githubusercontent.com
 // @connect      cdn.jsdelivr.net
+// @connect      cn.bing.com
+// @connect      www.bing.com
+// @connect      translate.google.cn
+// @connect      translate.google.com
 // @connect      *
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js

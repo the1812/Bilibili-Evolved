@@ -803,5 +803,17 @@ Resource.manifest = {
       downloadSubtitle: '下载字幕',
     },
   },
+  feedsTranslate: {
+    path: 'feeds-translate.min.js',
+    style: true,
+    displayNames: {
+      feedsTranslate: '动态翻译',
+      feedsTranslateProvider: '翻译器',
+    },
+    dropdown: {
+      key: 'feedsTranslateProvider',
+      items: ['Bing', 'Google', 'GoogleCN'],
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
