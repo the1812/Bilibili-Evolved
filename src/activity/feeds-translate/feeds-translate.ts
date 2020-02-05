@@ -15,7 +15,9 @@ import { FeedsCard } from '../feeds-apis'
   const Translator = Vue.extend({
     template: /*html*/`
       <div class="translate-container">
-        <div class="translate" v-if="!working && !translated" @click="translate()">翻译</div>
+        <div class="translate" v-if="!working && !translated" @click="translate()">
+          <i class="mdi mdi-earth"></i>翻译
+        </div>
         <i v-if="working" class="translating mdi mdi-18px mdi-loading mdi-spin"></i>
         <div class="translated" v-if="translated">翻译自<a :href="activeTranslator.link" target="_blank">{{activeTranslator.name}}</a>:</div>
         <div v-if="translated" class="translate-result">{{result}}</div>

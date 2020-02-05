@@ -8,9 +8,18 @@
     }
   }
   .translate {
+    display: flex;
+    align-items: center;
     font-size: 12px;
-    color: var(--theme-color);
+    color: #aaa;
     cursor: pointer;
+    &:hover {
+      color: var(--theme-color);
+    }
+    .mdi {
+      font-size: 14px;
+      margin-right: 2px;
+    }
   }
   .translating {
     font-size: 18px;
