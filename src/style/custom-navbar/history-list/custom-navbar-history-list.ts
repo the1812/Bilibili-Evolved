@@ -103,13 +103,14 @@ const tabs: HistoryTab[] = [
       const list: any[] = json.data.list
       const historyItems = list.map(item => {
         const timestamp = item.view_at * 1000
+        const id = item.history.cid || item.kid
         const historyItem = {
-          id: item.kid,
+          id,
           title: item.title,
           coverUrl: item.covers[0],
           upName: item.author_name,
           upID: item.author_mid,
-          href: `https://www.bilibili.com/read/cv${item.kid}`,
+          href: `https://www.bilibili.com/read/cv${id}`,
           timestamp: timestamp,
           time: new Date(timestamp),
         } as HistoryItem & TimeData
