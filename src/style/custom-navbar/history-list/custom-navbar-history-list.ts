@@ -32,12 +32,22 @@ interface HistoryTab {
   moreLink: string
   getTimeline: (json: any) => Timeline
 }
-const simpleTimeGrouper = (historyItems: (HistoryItem & TimeData)[]) => {
+const getTimeData = () => {
   const now = new Date()
   const today = Number(new Date(now.getFullYear(), now.getMonth(), now.getDate()))
   const oneDay = 24 * 3600000
   const yesterday = today - oneDay
   const lastWeek = today - 7 * oneDay
+  return {
+    now,
+    today,
+    oneDay,
+    yesterday,
+    lastWeek,
+  }
+}
+const simpleTimeGrouper = (historyItems: (HistoryItem & TimeData)[]) => {
+  const { today, yesterday, lastWeek } = getTimeData()
   const groups = _.groupBy(historyItems, h => {
     if (h.timestamp >= today) {
       return '今天'
@@ -58,7 +68,12 @@ const simpleTimeGrouper = (historyItems: (HistoryItem & TimeData)[]) => {
   })
 }
 const formatTime = (date: Date) => {
-  return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+  const { yesterday } = getTimeData()
+  const timestamp = Number(date)
+  if (timestamp >= yesterday) {
+    return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+  }
+  return `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
 }
 const tabs: HistoryTab[] = [
   {
@@ -187,14 +202,14 @@ export class HistoryList extends NavbarComponent {
                     <div v-if="h.progressText" class="floating progress-number">{{h.progress >= 1 ? '已看完' : h.progressText}}</div>
                     <div v-if="h.durationText" class="floating duration">{{h.durationText}}</div>
                   </a>
-                  <a class="title" target="_blank" :href="h.href">
+                  <a class="title" target="_blank" :href="h.href" :title="h.title">
                     {{h.title}}
                   </a>
-                  <a class="up" target="_blank" :href="h.isBangumi ? h.href : 'https://space.bilibili.com/' + h.upID">
+                  <a class="up" target="_blank" :href="h.isBangumi ? h.href : 'https://space.bilibili.com/' + h.upID" :title="h.upName">
                     <!--<icon type="extended" icon="up"></icon>-->
                     <div class="up-name">{{h.upName}}</div>
                   </a>
-                  <div v-if="h.timeText" class="time">
+                  <div v-if="h.timeText" class="time" :title="h.time.toLocaleString()">
                     {{h.timeText}}
                   </div>
                 </div>

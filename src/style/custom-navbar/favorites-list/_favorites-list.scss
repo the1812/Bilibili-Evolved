@@ -112,6 +112,9 @@
         &:not(:last-child) {
           margin-bottom: 12px;
         }
+        &:hover .cover {
+          transform: scale(1.05);
+        }
         .cover-container {
           grid-area: cover;
           overflow: hidden;
