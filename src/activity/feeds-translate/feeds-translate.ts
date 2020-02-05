@@ -66,7 +66,7 @@ import { FeedsCard } from '../feeds-apis'
     },
   })
   const injectButton = (card: FeedsCard) => {
-    if (card.text === '') {
+    if (card.text.replace(/#(.+?)#/g, '') === '') {
       return
     }
     const cardContent = card.element.querySelector('.card-content') as HTMLElement
