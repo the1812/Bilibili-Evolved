@@ -152,7 +152,7 @@
             grid-template:
               "cover title title" 3fr
               "cover up time" 2fr / 80px 1fr auto;
-            border-radius: 4px;
+            border-radius: 4px 8px 8px 4px;
             color: black;
             background-color: #fff;
             box-shadow: 0 4px 8px 0 #0001;
@@ -173,7 +173,7 @@
             }
             .cover-container {
               $height: 55px;
-              $padding: 4px;
+              $padding: 2px;
               grid-area: cover;
               position: relative;
               height: $height;
