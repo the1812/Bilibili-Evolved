@@ -1101,8 +1101,6 @@ table.invtable td,
 .season-timeline .season-group .group-time:before,
 li.history,
 .elec .elec-monthly-count,
-.player-auxiliary-block-tabpanel .player-auxiliary-block-string:not(:focus),
-.player-auxiliary-block-tabpanel .player-auxiliary-block-string-short:not(:focus),
 .h-list-item,
 .h-mp-space,
 .go-secuirty,
@@ -1124,6 +1122,10 @@ li.history,
 .player-auxiliary-modal-header
 {
     border-color: #444 !important;
+}
+.player-auxiliary-block-tabpanel .player-auxiliary-block-string:not(:focus),
+.player-auxiliary-block-tabpanel .player-auxiliary-block-string-short:not(:focus) {
+    border-color: #666 !important;
 }
 
 .player-auxiliary-danmaku-date-picker-btn,

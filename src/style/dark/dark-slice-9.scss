@@ -438,7 +438,8 @@ $highlight-map: (
 .video-control-show .bilibili-player-video-interactive-list .check:hover .big-round,
 #biliAppHomeSetting button,
 .van-popover .btn-box .btn,
-.van-popper-history .view-all:hover {
+.van-popper-history .view-all:hover,
+.bui-button.bui-button-gray:hover {
   @include theme-background-color();
 }
 #biliAppHomeSetting h2,
@@ -456,6 +457,7 @@ $highlight-map: (
 .rookie-guide .close-button,
 #biliAppHomeSetting button,
 .van-popover .btn-box .btn,
-.van-popper-history .view-all:hover {
+.van-popper-history .view-all:hover,
+.bui-button.bui-button-gray:hover {
   @include foreground-color();
 }
