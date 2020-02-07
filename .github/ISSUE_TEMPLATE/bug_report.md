@@ -3,11 +3,14 @@ name: Bug report
 about: Bug 反馈
 
 ---
-<!-- Tip: 最好先在预览离线版(Preview Offline)中测试一下, 有些问题可能已经修复了但还未正式发布 -->
+<!-- 最好先在预览离线版(Preview Offline)中测试一下, 有些问题可能已经修复了但还未正式发布 -->
 
-**关于哪一项功能**
+<!-- 请先确保您已在此搜索过相关问题, 避免重复 -->
+
 <!-- 请先确保您已阅读过 README 中对此功能的相关说明, 其中一些细节说明可能就能解决您的问题 -->
 <!-- https://github.com/the1812/Bilibili-Evolved/blob/master/README.md#%E5%8A%9F%E8%83%BD -->
+
+**关于哪一项功能**
 
 
 **问题描述**
