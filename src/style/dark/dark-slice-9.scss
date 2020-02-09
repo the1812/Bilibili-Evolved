@@ -30,7 +30,8 @@
 .container .split-line .history-tip,
 .lang-change .lang-intro,
 #gift-package-item-box .panel-wrapper,
-.title-renew-panel .actions {
+.title-renew-panel .actions,
+.user-title-using-cntr .panel {
   @include background-color("2");
 }
 .manga-navbar {
@@ -56,7 +57,8 @@
 .container .play-all:hover,
 .van-popover .btn-box .btn.reg-btn:hover,
 .international-header .bili-banner,
-.message-list-content .notify-wrapper .notify-text {
+.message-list-content .notify-wrapper .notify-text,
+.user-title-using-cntr .user-title-box {
   @include background-color("3");
 }
 .wide-members .avatar-list i {
@@ -316,7 +318,8 @@
 .van-popper-history .view-all,
 .van-popper-upload .upload-item .bilifont,
 .news-content,
-.bilibili-player-video-danmaku-setting-left-block-word {
+.bilibili-player-video-danmaku-setting-left-block-word,
+.user-title-using-cntr .user-title-box .name {
   @include color("e");
 }
 .van-popover .vip:hover,
