@@ -635,3 +635,6 @@
     @include background-color();
   }
 }
+.imagesbox .boost-slider-wrap .boost-slider-border {
+  @include theme-border-color();
+}
