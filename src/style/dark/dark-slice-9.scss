@@ -234,7 +234,10 @@
 .news-ctnr .more-link,
 .news-content,
 .live-room-app .aside-area .chat-history-panel-top,
-.title-renew-panel .card {
+.title-renew-panel .card,
+.publish-panel .editor:hover,
+.publish-panel .editor:focus,
+.publish-panel .editor:focus-within {
   @include background-color();
 }
 .manga-navbar .search-bar .placeholder-list .placeholder-item {
@@ -326,6 +329,9 @@
 .international-header .mini-upload:hover {
   @include color("f");
 }
+.editor .placeholder-shown::before {
+  @include color("6");
+}
 
 $highlight-map: (
   1: #a0a7dc,
@@ -340,6 +346,25 @@ $highlight-map: (
     &:nth-child(#{$nth}) .area-name {
       color: $color !important;
     }
+  }
+}
+.card-content .like-users-panel {
+  &::before {
+    @include background-color("6");
+  }
+  .users-box {
+    @include color("e");
+    .like-users-list {
+      &,
+      &:active,
+      &:link,
+      &:visited {
+        @include color("e");
+      }
+    }
+  }
+  .suffix-text {
+    @include color("a");
   }
 }
 .live-room-app .aside-area .chat-control-panel {
