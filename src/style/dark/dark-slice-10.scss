@@ -190,6 +190,15 @@
   .rank-title,
   .list-item {
     @include color("e");
+    .title-tooltip {
+      @include background-color("5");
+      &:before {
+        @include background-color();
+      }
+      .tooltip-text {
+        @include color("e");
+      }
+    }
   }
   .item-title {
     @include color("e");
