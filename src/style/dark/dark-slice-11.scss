@@ -648,6 +648,9 @@
         @include to-white();
       }
     }
+    .close {
+      @include to-white();
+    }
     .superchat-textarea {
       .base-info {
         @include background-color();
@@ -673,7 +676,7 @@
     }
     .price-options {
       .price-option {
-        @include color("a");
+        @include color("e");
         &.selected {
           @include theme-color();
           @include theme-border-color();
