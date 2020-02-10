@@ -19,6 +19,20 @@
     display: none !important;
   }
 }
+.simplify-rankList {
+  .live-room-app {
+    .rank-list-section {
+      display: none !important;
+    }
+    .chat-history-panel {
+      height: calc(100% - 145px) !important;
+      border-radius: 11px 11px 0 0 !important;
+      .chat-history-list::-webkit-scrollbar-track {
+        background: transparent !important;
+      }
+    }
+  }
+}
 .simplify-giftPanel {
   .gift-panel,
   .gift-panel-switch,
@@ -52,7 +66,8 @@
       display: none !important;
     }
     #BLRHH_treasure_div {
-      img, canvas {
+      img,
+      canvas {
         max-height: 24px !important;
       }
     }
@@ -113,7 +128,7 @@
   }
 }
 .simplify-liveroom-settings > ul > li {
-  padding: 8px 12px;
+  padding: 4px 12px;
   display: flex;
   align-items: center;
   &:hover {
@@ -123,6 +138,6 @@
     border-radius: var(--corner-radius);
   }
   &.checked {
-    opacity: .5;
+    opacity: 0.5;
   }
 }

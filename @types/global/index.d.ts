@@ -346,6 +346,7 @@ declare global {
       userEffect: boolean,
       kanban: boolean,
       eventsBanner: boolean,
+      rankList: boolean,
       popup: boolean,
       skin: boolean,
       [key: string]: boolean,

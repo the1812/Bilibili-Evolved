@@ -129,6 +129,7 @@ export const settings = {
     kanban: true,
     userEffect: true,
     eventsBanner: false,
+    rankList: false,
     popup: false,
     skin: false,
   },
