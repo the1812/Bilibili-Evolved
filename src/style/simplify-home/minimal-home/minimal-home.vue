@@ -218,6 +218,18 @@ export default {
     --card-column-count: 1;
   }
 }
+@media screen and (max-width: 680px) {
+  .minimal-home {
+    --card-column-count: 2;
+    --card-width: 210px;
+    --card-height: 240px;
+  }
+}
+@media screen and (max-width: 470px) {
+  .minimal-home {
+    --card-column-count: 1;
+  }
+}
 @media screen and (min-width: 2000px) {
   .minimal-home {
     --card-column-count: 3;
