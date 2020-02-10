@@ -638,3 +638,58 @@
 .imagesbox .boost-slider-wrap .boost-slider-border {
   @include theme-border-color();
 }
+.superchat-content {
+  @include background-color("4");
+  .home-page {
+    background-image: none !important;
+    .introduction {
+      @include color("e");
+      &:before {
+        @include to-white();
+      }
+    }
+    .superchat-textarea {
+      .base-info {
+        @include background-color();
+        .duration-tip {
+          @include color("e");
+          .time-icon {
+            @include to-white();
+          }
+        }
+      }
+      .user-info {
+        @include color("e");
+      }
+      .text-ctnr,
+      .textarea,
+      .textarea:hover {
+        @include background-color();
+      }
+    }
+    .trans-btn {
+      @include theme-color();
+      @include theme-border-color();
+    }
+    .price-options {
+      .price-option {
+        @include color("a");
+        &.selected {
+          @include theme-color();
+          @include theme-border-color();
+        }
+      }
+      .other {
+        @include color("e");
+        .input {
+          @include background-color();
+          @include color("e");
+        }
+      }
+    }
+  }
+  .buy-btn {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}

@@ -8,69 +8,6 @@
   }
 }
 
-._super-chat-dialog {
-  .content-top {
-    @include border-color("5");
-    .content-top-left {
-      .text-desc {
-        @include color("e");
-      }
-      .icon-question {
-        @include to-white();
-      }
-    }
-  }
-  .content-middle .card-item {
-    &-top {
-      .card-item-left,
-      .card-item-right {
-        @include color("a");
-      }
-    }
-    &-middle .card-item-middle-top .card-item-middle-top-right .price span {
-      @include color("a");
-    }
-    &-middle {
-      &-top .card-item-middle-top-right {
-        @include color("e");
-      }
-      &-top,
-      &-bottom .input-contain .card-input-message {
-        @include background-color();
-      }
-    }
-  }
-  .content-bottom {
-    .ontent-bottom-up {
-      .inst,
-      span {
-        @include color("e");
-      }
-      .card-input-number {
-        @include background-color("4");
-        @include border-color("5");
-      }
-    }
-    .process {
-      .vue-slider {
-        &-dot-handle,
-        &-process {
-          @include theme-background-color();
-        }
-        &-rail {
-          @include background-color("4");
-        }
-      }
-    }
-    .button {
-      @include background-color("2");
-      &:hover {
-        @include theme-background-color();
-        @include foreground-color();
-      }
-    }
-  }
-}
 .vote-backdrop .extension-wrapper {
   .title-box {
     @include background-color("2");
@@ -95,12 +32,7 @@
 .vote-result-comment {
   @include background-color();
 }
-.chat-history-panel .chat-history-list .chat-item.superChat-card-detail .card-item-middle-top {
-  @include background-color();
-  .card-item-middle-top-right .name {
-    @include color("e");
-  }
-}
+
 .chaos-pk-rank {
   .link-to-history {
     @include color("a");
