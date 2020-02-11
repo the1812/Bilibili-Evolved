@@ -857,3 +857,16 @@
     }
   }
 }
+.s-space {
+  .v-search {
+    &-result {
+      @include color("a");
+    }
+    &-count {
+      @include theme-color();
+    }
+  }
+  .article-con a:hover {
+    @include theme-color();
+  }
+}
