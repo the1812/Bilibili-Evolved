@@ -50,7 +50,8 @@
 }
 
 .vote-pc-container .card,
-.vote-result-comment .reply-item {
+.vote-result-comment .reply-item,
+.primary-menu-itnl {
   @include border-color();
 }
 

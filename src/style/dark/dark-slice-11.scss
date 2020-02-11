@@ -781,3 +781,20 @@
     }
   }
 }
+.rank-item {
+  @include border-color("4");
+  .other {
+    @include border-color("4");
+    span {
+      @include color("a");
+    }
+    .other-link {
+      .title {
+        @include color("e");
+      }
+      &:hover .title {
+        @include theme-color();
+      }
+    }
+  }
+}
