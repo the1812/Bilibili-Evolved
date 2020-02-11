@@ -301,7 +301,12 @@
     }
   }
 }
-
+.bb-comment,
+.comment-bilibili-fold {
+  .comment-send .dynamic-repost {
+    @include color("c");
+  }
+}
 .manga-navbar-history-list .action-button,
 .manga-navbar-favourite-manga .action-button,
 .love-card .header,
