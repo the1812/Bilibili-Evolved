@@ -29,7 +29,8 @@
     filter: invert(0.7) !important;
   }
 }
-.vote-result-comment {
+.vote-result-comment,
+.chat-history-panel .card-item-middle-top {
   @include background-color();
 }
 
