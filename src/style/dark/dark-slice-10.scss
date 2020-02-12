@@ -50,7 +50,8 @@
 }
 
 .vote-pc-container .card,
-.vote-result-comment .reply-item {
+.vote-result-comment .reply-item,
+.primary-menu-itnl {
   @include border-color();
 }
 
@@ -854,5 +855,18 @@
       @include foreground-color();
       @include border-color();
     }
+  }
+}
+.s-space {
+  .v-search {
+    &-result {
+      @include color("a");
+    }
+    &-count {
+      @include theme-color();
+    }
+  }
+  .article-con a:hover {
+    @include theme-color();
   }
 }

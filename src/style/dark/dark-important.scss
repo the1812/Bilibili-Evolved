@@ -196,7 +196,8 @@ blockquote {
 .live-room-app .guard-rank-cntr.hundred .live-skin-main-a-text:hover,
 .live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text:hover,
 .container .video-panel .play-all .bilifont,
-.round-corner .van-popper-favorite .play-all .bilifont {
+.round-corner .van-popper-favorite .play-all .bilifont,
+.rank-item .content .info:hover .title {
   @include theme-color();
 }
 
