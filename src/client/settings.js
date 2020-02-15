@@ -214,6 +214,7 @@ export const settings = {
   feedsTranslateProvider: 'Bing',
   feedsTranslateLanguage: '',
   downloadVideoQuality: 120,
+  forceHighQualityLive: false,
   cache: {},
 }
 const fixedSettings = {
@@ -226,6 +227,7 @@ const fixedSettings = {
   downloadDanmaku: true,
   downloadSubtitle: true,
   downloadAudio: true,
+  downloadLiveRecords: true,
   medalHelper: true,
   about: true,
   playerLayout: false,

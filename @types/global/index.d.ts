@@ -435,6 +435,8 @@ declare global {
     feedsTranslate: boolean,
     feedsTranslateProvider: 'Bing' | 'Google' | 'Baidu' | 'GoogleCN',
     feedsTranslateLanguage: string,
+    downloadLiveRecords: boolean
+    forceHighQualityLive: boolean
     latestVersionLink: string,
     currentVersion: string,
   }
