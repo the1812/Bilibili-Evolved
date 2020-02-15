@@ -151,7 +151,7 @@ export const settings = {
   videoScreenshot: false,
   hideBangumiReviews: false,
   filenameFormat: '[title][ - ep]',
-  batchFilenameFormat: '[n - ][title]',
+  batchFilenameFormat: '[n - ][ep]',
   sideBarOffset: 0,
   noLiveAutoplay: false,
   hideHomeLive: false,
@@ -265,6 +265,10 @@ export async function loadSettings () {
   }
   for (const key in settings) {
     let value = await GM.getValue(key)
+    if (key === 'batchFilenameFormat' && value === '[n - ][title]') {
+      value = '[n - ][ep]'
+      GM.setValue(key, value)
+    }
     if (value === undefined) {
       value = settings[key]
       GM.setValue(key, settings[key])
