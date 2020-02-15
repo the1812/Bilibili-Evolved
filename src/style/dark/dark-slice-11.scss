@@ -798,3 +798,7 @@
     }
   }
 }
+.card-content .tag {
+  @include theme-background-color();
+  @include foreground-color();
+}
