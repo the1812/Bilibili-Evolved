@@ -393,6 +393,10 @@ declare global {
     doubleClickFullscreenPreventSingleClick: boolean
     simplifyHome: boolean,
     simplifyHomeStyle: '清爽' | '极简',
+    minimalHomeSettings: {
+      showSearch: boolean,
+      backgroundImage: string,
+    },
     ajaxHook: boolean,
     scriptLoadingMode: '同时' | '延后' | '同时(自动)' | '延后(自动)' | '自动',
     scriptDownloadMode: 'bundle' | 'legacy'

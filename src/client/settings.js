@@ -174,6 +174,10 @@ export const settings = {
   doubleClickFullscreenPreventSingleClick: false,
   simplifyHome: false,
   simplifyHomeStyle: '清爽',
+  minimalHomeSettings: {
+    showSearch: true,
+    backgroundImage: '',
+  },
   ajaxHook: false,
   scriptLoadingMode: '延后(自动)',
   scriptDownloadMode: 'bundle',
