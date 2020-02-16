@@ -71,7 +71,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       return
     }
     const key = e.key.toLowerCase()
-    const noModifyKeys = !e.shiftKey && !e.altKey && !e.ctrlKey
+    const noModifyKeys = !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey
     if (key in clickableKeymap && noModifyKeys) {
       const element = dq(clickableKeymap[key]) as HTMLElement
       if (!element) {
