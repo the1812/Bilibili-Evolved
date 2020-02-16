@@ -183,7 +183,7 @@ export class UserInfo extends NavbarComponent {
     })
     if (this.userInfo.isLogin) {
       const faceUrl = this.userInfo.face.replace('http', 'https')
-      const noFaceUrl = 'static.hdslb.com/images/member/noface.gif'
+      const noFaceUrl = '//static.hdslb.com/images/member/noface.gif'
       if (!faceUrl.includes(noFaceUrl)) { // 没上传过头像的不做缩放
         const faceBaseSize = 68
         face.setAttribute('srcset', getDpiSourceSet(faceUrl, faceBaseSize))
