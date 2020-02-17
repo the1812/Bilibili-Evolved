@@ -86,6 +86,10 @@ const pageData: PageData = {
 }
 let formats: VideoFormat[] = []
 let selectedFormat: VideoFormat | null = null
+let userInfo: {
+  isLogin: boolean
+  vipStatus: number
+} | null = null
 
 class VideoFormat {
   quality: number
@@ -122,13 +126,31 @@ class VideoFormat {
     // }
     return formats
   }
+  static async filterFormats(formats: VideoFormat[]) {
+    // return formats
+    if (userInfo === null) {
+      userInfo = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')
+    }
+    _.remove(formats, f => {
+      const q = f.quality
+      if (!userInfo!.isLogin) {
+        return q >= 64
+      }
+      if (userInfo!.vipStatus !== 1) {
+        return q === 116 || q === 112 || q === 74
+      }
+      return false
+    })
+    return formats
+  }
   static async getAvailableDashFormats(): Promise<VideoFormat[]> {
     const url = await pageData.entity.getDashUrl()
     const json = await Ajax.getJsonWithCredentials(url)
     if (json.code !== 0) {
       throw new Error('获取清晰度信息失败.')
     }
-    return VideoFormat.parseFormats(json.data || json.result || json)
+    const data = json.data || json.result || json
+    return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
   }
   static async getAvailableFormats(): Promise<VideoFormat[]> {
     const url = await pageData.entity.getUrl()
@@ -137,7 +159,7 @@ class VideoFormat {
       throw new Error('获取清晰度信息失败.')
     }
     const data = json.data || json.result || json
-    return VideoFormat.parseFormats(data)
+    return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
   }
 }
 class VideoDownloader {
@@ -172,8 +194,10 @@ class VideoDownloader {
       const text = await Ajax.getTextWithCredentials(url)
       const json = JSON.parse(text.replace(/http:/g, 'https:'))
       const data = json.data || json.result || json
-      if (data.quality !== this.format.quality) {
-        throw new Error('获取下载链接失败, 请确认当前账号有下载权限后重试.')
+      const q = this.format.quality
+      if (data.quality !== q) {
+        const { throwQualityError } = await import('./quality-errors')
+        throwQualityError(q)
       }
       const urls = data.durl
       this.fragments = urls.map((it: any) => {
@@ -694,7 +718,7 @@ async function loadPanel() {
         }
         formats = updatedFormats
         selectedFormat = getDefaultFormat(formats)
-        this.qualityModel.items = updatedFormats.map(f => f.displayName);
+        this.qualityModel.items = updatedFormats.map(f => f.displayName)
         this.qualityModel.value = this.qualityModel.items[formats.indexOf(selectedFormat)]
         await this.formatChange()
       },
@@ -988,7 +1012,7 @@ async function loadPanel() {
     panel.batch = false
     panel.downloadSingle = true
     const button = dq('#download-video') as HTMLElement
-    const canDownload = await loadPageData();
+    const canDownload = await loadPageData()
     button.style.display = canDownload ? 'flex' : 'none'
     if (!canDownload) {
       return
