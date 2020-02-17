@@ -117,7 +117,7 @@ export class FavoritesList extends NavbarComponent {
             return []
           }
           return json.data.medias.filter((item: any) => {
-            return item.attr === 0 // 过滤掉已失效视频
+            return item.attr !== 9 // 过滤掉已失效视频
           }).map((item: any) => {
             return {
               id: item.id,
