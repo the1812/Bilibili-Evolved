@@ -129,11 +129,11 @@ class VideoFormat {
   static async filterFormats(formats: VideoFormat[]) {
     // return formats
     if (userInfo === null) {
-      userInfo = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')
+      userInfo = (await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')).data
     }
     _.remove(formats, f => {
       const q = f.quality
-      if (!userInfo!.isLogin) {
+      if (userInfo!.isLogin === false) {
         return q >= 64
       }
       if (userInfo!.vipStatus !== 1) {
