@@ -7,6 +7,8 @@ const blockParams = [
   'share_medium',
   'bbid',
   'ts',
+  'rt',
+  'tdsourcetag',
 ]
 const clean = () => {
   const urlParams = location.search.substring(1).split('&')
