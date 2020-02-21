@@ -802,3 +802,18 @@
   @include theme-background-color();
   @include foreground-color();
 }
+.wide-members .avatar {
+  &-list .van-icon-general {
+    &_back_s:after {
+      background: linear-gradient(-270deg,#444,hsla(0,0%,100%,0)) !important;
+    }
+    &_enter_s:after {
+      background: linear-gradient(270deg,#444,hsla(0,0%,100%,0)) !important;
+    }
+  }
+  .tag {
+    @include background-color("2");
+    @include color("e");
+    @include theme-border-color();
+  }
+}
