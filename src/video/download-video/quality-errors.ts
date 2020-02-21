@@ -7,7 +7,7 @@ export const throwQualityError = (q: number) => {
   if (q === 80 || q === 64) {
     throw new Error('您选择的清晰度需要先登录.')
   }
-  throw new Error('获取下载链接失败, 请确认当前账号有下载权限后重试.')
+  throw new Error('获取下载链接失败, 请尝试更换清晰度或更换视频格式.')
 }
 export default {
   export: {
