@@ -437,6 +437,7 @@ declare global {
     feedsTranslateLanguage: string,
     downloadLiveRecords: boolean
     forceHighQualityLive: boolean
+    recordLiveDanmaku: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

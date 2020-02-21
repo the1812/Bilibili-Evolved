@@ -815,5 +815,11 @@ Resource.manifest = {
       items: ['Bing', 'Google', 'GoogleCN'],
     },
   },
+  recordLiveDanmaku: {
+    path: 'record-live-danmaku.min.js',
+    displayNames: {
+      recordLiveDanmaku: '直播弹幕记录器',
+    },
+  }
 }
 export const resourceManifest = Resource.manifest

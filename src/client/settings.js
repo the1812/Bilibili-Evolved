@@ -215,6 +215,7 @@ export const settings = {
   feedsTranslateLanguage: '',
   downloadVideoQuality: 120,
   forceHighQualityLive: false,
+  recordLiveDanmaku: false,
   cache: {},
 }
 const fixedSettings = {
