@@ -18,7 +18,8 @@
     </div>
     <template v-if="!collapsed">
       <div class="record-stats">已记录{{danmakus.length}}条弹幕</div>
-      <div class="toggle-record" @click="isRecording = !isRecording">
+      <div class="loading-tip" v-if="loading">正在连接...</div>
+      <div class="toggle-record" v-else @click="isRecording = !isRecording">
         <template v-if="isRecording">
           <Icon type="mdi" icon="square"></Icon>记录中
         </template>
@@ -42,35 +43,42 @@ export default {
   },
   data() {
     return {
-      isRecording: false,
+      isRecording: true,
       danmakus: [],
       opened: false,
-      collapsed: false
+      collapsed: false,
+      loading: true
     }
   },
   async mounted() {
-    const { LiveSocket } = await import('./live-socket')
-    // 绕了一大圈拿 room id, 不知道为啥 URL 里那个数字有些直播间不是 room id
-    const user = (await SpinQuery.select(
-      '.header-info-ctnr .room-cover'
-    )) as HTMLAnchorElement
-    const uid = user.href.match(/space\.bilibili\.com\/(\d+)/)![1]
-    const json = await Ajax.getJson(
-      `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`
-    )
-    const roomID = _.get(
-      json,
-      'data.roomid',
-      document.URL.match(/live\.bilibili\.com\/(\d+)/)![1]
-    )
-    const socket = new LiveSocket(parseInt(roomID))
-    socket.addEventListener('danmaku', (e: CustomEvent<LiveDanmaku>) => {
-      if (this.isRecording) {
-        console.log(e.detail.content)
-        this.danmakus.push(e.detail)
-      }
-    })
-    await socket.start()
+    try {
+      const { LiveSocket } = await import('./live-socket')
+      // 绕了一大圈拿 room id, 不知道为啥 URL 里那个数字有些直播间不是 room id
+      const user = (await SpinQuery.select(
+        '.header-info-ctnr .room-cover'
+      )) as HTMLAnchorElement
+      const uid = user.href.match(/space\.bilibili\.com\/(\d+)/)![1]
+      const json = await Ajax.getJson(
+        `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`
+      )
+      const roomID = _.get(
+        json,
+        'data.roomid',
+        document.URL.match(/live\.bilibili\.com\/(\d+)/)![1]
+      )
+      const socket = new LiveSocket(parseInt(roomID))
+      socket.addEventListener('danmaku', (e: CustomEvent<LiveDanmaku>) => {
+        if (this.isRecording) {
+          console.log(e.detail.content)
+          this.danmakus.push(e.detail)
+        }
+      })
+      await socket.start()
+    } catch (error) {
+      logError(error)
+    } finally {
+      this.loading = false
+    }
   },
   methods: {
     getXML() {
