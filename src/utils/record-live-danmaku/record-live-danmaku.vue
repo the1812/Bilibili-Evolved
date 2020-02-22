@@ -1,24 +1,36 @@
 <template>
   <div class="live-danmaku-recorder" :class="{opened}">
     <div class="header">
-      <div class="title">记录弹幕</div>
+      <div class="title" v-if="!(collapsed && isRecording)">记录弹幕</div>
+      <template v-if="collapsed && isRecording">
+        <Icon type="mdi" icon="record-rec"></Icon>
+        <div class="collapse-danmaku-count">{{danmakus.length}}</div>
+      </template>
+      <Icon
+        class="collapse"
+        type="mdi"
+        :icon="collapsed ? 'chevron-up' : 'chevron-down'"
+        @click.native="collapsed = !collapsed"
+      ></Icon>
       <div class="close" @click="opened = false">
         <Icon type="mdi" icon="close"></Icon>
       </div>
     </div>
-    <div class="record-stats">已记录{{danmakus.length}}条弹幕</div>
-    <div class="toggle-record" @click="isRecording = !isRecording">
-      <template v-if="isRecording">
-        <Icon type="mdi" icon="square"></Icon>记录中
-      </template>
-      <template v-else>
-        <Icon type="mdi" icon="circle"></Icon>开始记录
-      </template>
-    </div>
-    <div class="exports">
-      <div class="export-xml" @click="exportXML()">导出XML</div>
-      <div class="export-ass" @click="exportASS()">导出ASS</div>
-    </div>
+    <template v-if="!collapsed">
+      <div class="record-stats">已记录{{danmakus.length}}条弹幕</div>
+      <div class="toggle-record" @click="isRecording = !isRecording">
+        <template v-if="isRecording">
+          <Icon type="mdi" icon="square"></Icon>记录中
+        </template>
+        <template v-else>
+          <Icon type="mdi" icon="circle"></Icon>开始记录
+        </template>
+      </div>
+      <div class="exports">
+        <div class="export-xml" @click="exportXML()">导出XML</div>
+        <!-- <div class="export-ass" @click="exportASS()">导出ASS</div> -->
+      </div>
+    </template>
   </div>
 </template>
 
@@ -32,14 +44,26 @@ export default {
     return {
       isRecording: false,
       danmakus: [],
-      opened: false
+      opened: false,
+      collapsed: false
     }
   },
   async mounted() {
     const { LiveSocket } = await import('./live-socket')
-    const socket = new LiveSocket(
-      parseInt(document.URL.match(/live\.bilibili\.com\/(\d+)/)![1])
+    // 绕了一大圈拿 room id, 不知道为啥 URL 里那个数字有些直播间不是 room id
+    const user = (await SpinQuery.select(
+      '.header-info-ctnr .room-cover'
+    )) as HTMLAnchorElement
+    const uid = user.href.match(/space\.bilibili\.com\/(\d+)/)![1]
+    const json = await Ajax.getJson(
+      `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`
     )
+    const roomID = _.get(
+      json,
+      'data.roomid',
+      document.URL.match(/live\.bilibili\.com\/(\d+)/)![1]
+    )
+    const socket = new LiveSocket(parseInt(roomID))
     socket.addEventListener('danmaku', (e: CustomEvent<LiveDanmaku>) => {
       if (this.isRecording) {
         console.log(e.detail.content)
@@ -69,8 +93,14 @@ export default {
       `.trim()
       return xml
     },
-    exportXML() {
-      console.log(this.getXML())
+    async exportXML() {
+      const { getFriendlyTitle } = await import('../../video/title')
+      const { DownloadVideoPackage } = await import(
+        '../../video/download-video/download-video-package'
+      )
+      const pack = new DownloadVideoPackage()
+      pack.add(getFriendlyTitle() + '.xml', this.getXML())
+      await pack.emit()
     },
     async exportASS() {
       const xml = this.getXML()
@@ -88,24 +118,27 @@ export default {
   position: fixed;
   top: 100%;
   left: 0;
-  transform: translateX(8px) translateY(calc(-100% - 8px)) scale(0.95);
+  transform: translateX(8px) translateY(calc(-100% + 8px));
   opacity: 0;
   pointer-events: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16px;
+  padding: 12px;
   z-index: 1000;
+  color: black;
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
-  @include round();
+  border-radius: 8px 8px 0 0;
+  min-width: 200px;
   &.opened {
-    transform: translateX(8px) translateY(calc(-100% - 8px));
+    transform: translateX(8px) translateY(calc(-100%));
     opacity: 1;
     pointer-events: initial;
   }
   body.dark & {
-    background-color: #222;
+    color: white;
+    background-color: #282828;
   }
   &,
   & * {
@@ -115,24 +148,23 @@ export default {
     display: flex;
     align-items: center;
     align-self: stretch;
-    padding-bottom: 8px;
+    .collapse {
+      cursor: pointer;
+    }
+    .collapse-danmaku-count {
+      flex-grow: 1;
+      padding-right: 24px;
+    }
     .title {
       flex-grow: 1;
       font-weight: bold;
       font-size: 15px;
-      color: black;
       padding-right: 16px;
-      body.dark & {
-        color: white;
-      }
     }
     .close {
       cursor: pointer;
       .be-icon {
         font-size: 20px;
-      }
-      &:hover {
-        color: var(--theme-color);
       }
     }
   }
@@ -156,6 +188,8 @@ export default {
   }
   .exports {
     align-self: stretch;
+    display: flex;
+    align-items: center;
     & > * {
       @include round();
       cursor: pointer;
@@ -167,8 +201,12 @@ export default {
         background-color: #8884;
       }
     }
+    .export-xml {
+      flex: 2 0 0;
+    }
     .export-ass {
-      margin-top: 8px;
+      flex: 1 0 0;
+      margin-left: 8px;
     }
   }
 }
