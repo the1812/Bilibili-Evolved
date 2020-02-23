@@ -161,6 +161,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 新しい変数:
 - <span>n</span>: 番号、n番目の動画を意味します.`],
     [`removeGameMatchModule`, /*html*/`電子スポーツプレート区を削除.`],
+    [`recordLiveDanmaku`, /*html*/`追加機能に生放送弾幕レコーダーを追加し、生放送弾幕を記録して「XML」をエクスポートできます.`],
 ]);
 export default {
     export: { toolTips },
