@@ -575,6 +575,14 @@
 自动删除链接中的多余跟踪参数, 例如`spm_id_from`, `from_source`, `share_source`等.
 
 </details>
+<details>
+<summary><strong>直播弹幕记录器</strong></summary>
+
+开启后, 在直播间里可以从附加功能中启动弹幕记录器, 会记录启动后所有收到的弹幕, 并可以导出为XML弹幕文件.
+
+> 弹幕的发送时间是相对于直播开始时间确定的.
+
+</details>
 
 
 <h2 align="center">触摸</h2>
