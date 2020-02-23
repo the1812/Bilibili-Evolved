@@ -180,6 +180,9 @@ export default {
     margin-top: 16px;
     margin-bottom: 8px;
   }
+  .loading-tip {
+    margin-bottom: 16px;
+  }
   .toggle-record {
     display: flex;
     align-items: center;
