@@ -52,7 +52,8 @@ export const getDashInfo = async (api: string, quality: number) => {
     throw new Error('没有找到请求的清晰度')
   }
   if (data.quality !== quality) {
-    throw new Error('无法获取请求的清晰度, 请确认当前账号有相应的权限')
+    const { throwQualityError } = await import('./quality-errors')
+    throwQualityError(quality)
   }
   const qualityTexts = data.accept_description as string[]
   const qualityText = qualityTexts[qualities.indexOf(quality)]

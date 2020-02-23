@@ -46,7 +46,15 @@ async function checkNewVersion () {
     return false
   }
   try {
-    const latestVersionText = await Ajax.monkey({ url: Resource.cdnRoot || Resource.root + 'version.txt' })
+    let latestVersionText
+    try {
+      const latestScript = await Ajax.monkey({
+        url: settings.latestVersionLink
+      })
+      latestVersionText = latestScript.match(/@version[ ]*([\d\.]+)/)[1]
+    } catch (error) {
+      latestVersionText = await Ajax.monkey({ url: Resource.cdnRoot || Resource.root + 'version.txt' })
+    }
     const latestVersion = new Version(latestVersionText)
     const currentVersion = new Version(settings.currentVersion)
     const hasNewVersion = latestVersion.greaterThan(currentVersion)

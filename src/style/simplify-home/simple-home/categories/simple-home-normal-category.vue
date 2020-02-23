@@ -246,6 +246,7 @@ export default {
     // --card-height: 300px;
     .rank {
       // --rank-width: 420px;
+      display: none;
       justify-self: center;
     }
   }

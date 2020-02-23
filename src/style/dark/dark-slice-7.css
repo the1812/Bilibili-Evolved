@@ -695,7 +695,8 @@
 .section-block .col-full .meta .icon,
 .case-list .info .jury-time i,
 .view-later-module .share-box .s-text .icon,
-.l-item .v-info .b-icon
+.l-item .v-info .b-icon,
+#page-fav .fav-main .search-input .icon-search
 {
     filter: brightness(0) invert(.7) !important;
 }

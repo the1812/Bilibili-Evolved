@@ -314,6 +314,8 @@ export default {
     }
     .face {
       border-radius: 50%;
+      width: 24px;
+      height: 24px;
     }
     .name {
       margin: 0 8px;

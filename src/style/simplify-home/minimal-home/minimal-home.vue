@@ -1,5 +1,6 @@
 <template>
   <div class="minimal-home">
+    <home-search></home-search>
     <div class="minimal-home-header">
       <!-- <img v-if="logoImage" :src="logoImage" width="120" /> -->
       <!-- <icon v-else class="logo" icon="logo" type="main"></icon> -->
@@ -214,6 +215,18 @@ export default {
   }
 }
 @media screen and (max-width: 1300px) {
+  .minimal-home {
+    --card-column-count: 1;
+  }
+}
+@media screen and (max-width: 680px) {
+  .minimal-home {
+    --card-column-count: 2;
+    --card-width: 210px;
+    --card-height: 240px;
+  }
+}
+@media screen and (max-width: 470px) {
   .minimal-home {
     --card-column-count: 1;
   }

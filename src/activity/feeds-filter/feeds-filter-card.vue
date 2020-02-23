@@ -62,10 +62,10 @@ const sideCards: { [id: number]: SideCardType } = {
     className: 'live',
     displayName: '正在直播'
   },
-  4: {
-    className: 'trending-tags',
-    displayName: '热门话题'
-  }
+  // 4: {
+  //   className: 'trending-tags',
+  //   displayName: '热门话题'
+  // }
 }
 const sideBlock = 'feeds-filter-side-block-'
 export default {
@@ -176,8 +176,8 @@ export default {
     }
     this.allTypes = Object.entries(feedsCardTypes)
     feedsCardsManager.cards.forEach(card => this.updateCard(card))
-    feedsCardsManager.addEventListener('addCard', (e: CustomEvent) => {
-      const card = e.detail as FeedsCard
+    feedsCardsManager.addEventListener('addCard', (e) => {
+      const card = e.detail
       this.updateCard(card)
     })
     this.feedsCardsManager = feedsCardsManager

@@ -151,6 +151,7 @@ Additional variables:
 - <span>n</span>: The counting number of n-th video in batch downloads`],
   [`removeGameMatchModule`, `Also remove e-sports module.`],
   [`customNavbarTransparent`, `Use transparent fill when banner exists.`],
+  [`recordLiveDanmaku`, `Record and export XML file in live danmaku recorder from add-ons.`],
 ]);
 export default {
   export: { toolTips },

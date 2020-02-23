@@ -178,7 +178,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`batchFilenameFormat`, /*html*/`自定义批量下载的文件命名格式, 规则同单个的<span>文件命名格式</span>.
 新增的变量:
 - <span>n</span>: 数字, 表示第n个视频.`],
-  [`removeGameMatchModule`, /*html*/`删除电竞赛事板块`],
+  [`removeGameMatchModule`, /*html*/`删除电竞赛事板块.`],
+  [`recordLiveDanmaku`, /*html*/`在附加功能中添加直播弹幕记录器, 可以记录直播弹幕并导出XML.`],
 ]);
 export default {
   export: { toolTips },

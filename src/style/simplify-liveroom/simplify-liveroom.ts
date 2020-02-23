@@ -12,6 +12,7 @@ const displayNames = {
   userEffect: '入场特效',
   kanban: '看板娘',
   eventsBanner: '活动横幅',
+  rankList: '排行榜',
   popup: '抽奖提示',
   skin: '房间皮肤',
 }

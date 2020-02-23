@@ -1,20 +1,5 @@
+@import "../../common";
 .custom-navbar {
-  @mixin h-center {
-    display: flex;
-    align-items: center;
-  }
-  @mixin round-bar($height) {
-    box-sizing: border-box;
-    height: #{$height}px;
-    border-radius: #{$height / 2}px;
-  }
-  @mixin no-scrollbar {
-    scrollbar-width: none !important;
-    &::-webkit-scrollbar {
-      height: 0 !important;
-      width: 0 !important;
-    }
-  }
   @mixin button-background {
     background-color: #8882;
     &:hover {
@@ -136,9 +121,7 @@
       scroll-behavior: smooth;
       position: relative;
       @include no-scrollbar();
-      // display: flex;
-      // flex-flow: column nowrap;
-      margin: 0 12px;
+      padding: 0 12px;
       padding-bottom: 12px;
       &-enter,
       &-leave-to {
@@ -171,6 +154,9 @@
         }
         &:not(:last-child) {
           margin-bottom: 12px;
+        }
+        &:hover .cover {
+          transform: scale(1.05);
         }
         .cover-container {
           grid-area: cover;

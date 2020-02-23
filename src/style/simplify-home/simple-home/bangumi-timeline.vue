@@ -8,6 +8,7 @@
           <div class="date">{{t.date}}</div>
           <div class="day-of-week">{{t.dayOfWeekText}}</div>
         </div>
+        <div class="empty-day" :class="{alt: t.isToday}" v-if="Object.entries(t.bangumis).length === 0"></div>
         <div
           class="time-container"
           v-for="[time, bangumis] of Object.entries(t.bangumis)"
@@ -102,6 +103,9 @@ export default {
           return { time, timestamp: bangumis[0].timestamp, bangumis }
         }
       )
+      if (timestamps.length === 0) {
+        return
+      }
       const recentTimestamps = timestamps.filter(it => it.timestamp < now)
       // .pop()
       if (recentTimestamps.length === 0) {
@@ -126,7 +130,13 @@ export default {
         timelineElement.scrollLeft += width
       }
       console.log(e, dateElement, dayElement, timelineElement)
-      console.log(width, width * 2,  dayElement.offsetLeft, timelineElement.scrollLeft, offset)
+      console.log(
+        width,
+        width * 2,
+        dayElement.offsetLeft,
+        timelineElement.scrollLeft,
+        offset
+      )
     },
     async updateTimeline() {
       try {
@@ -230,7 +240,7 @@ export default {
     overflow: auto;
     @include no-scrollbar();
     scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
+    // scroll-snap-type: x mandatory;
 
     --column-count: 1;
     --column-width: 250px;
@@ -317,6 +327,15 @@ export default {
           &.today .icon {
             filter: invert(1);
           }
+        }
+      }
+      .empty-day {
+        margin-top: 26px;
+        width: 246px;
+        height: 469px;
+        background: url('//s1.hdslb.com/bfs/static/bangumi-timeline/asserts/empty-1.png') no-repeat;
+        &.alt {
+          background: url('//s1.hdslb.com/bfs/static/bangumi-timeline/asserts/empty-2.png') no-repeat;
         }
       }
       .time-container {

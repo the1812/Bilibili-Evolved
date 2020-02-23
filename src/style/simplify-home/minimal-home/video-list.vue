@@ -4,7 +4,12 @@
       <i class="mdi mdi-18px mdi-loading mdi-spin"></i>加载中...
     </div>
     <div class="cards" :class="{'show-rank': showRank}" v-else-if="cards.length">
-      <video-card v-for="card of cards" :key="card.id" :data="card"></video-card>
+      <video-card
+        v-for="card of cards"
+        :orientation="useVerticalCards ? 'vertical' : 'horizontal'"
+        :key="card.id"
+        :data="card"
+      ></video-card>
     </div>
     <div class="empty" v-else>空空如也哦 =￣ω￣=</div>
   </div>
@@ -20,6 +25,7 @@ export default {
   data() {
     return {
       cards: [] as VideoCardInfo[],
+      useVerticalCards: false,
       loading: true
     }
   },
@@ -96,6 +102,11 @@ export default {
   },
   async mounted() {
     try {
+      const media = matchMedia('(max-width: 680px)')
+      this.useVerticalCards = media.matches
+      media.addListener(e => {
+        this.useVerticalCards = e.matches
+      })
       if (this.showRank) {
         await this.getRankList()
       } else {

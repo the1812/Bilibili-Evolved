@@ -346,6 +346,7 @@ declare global {
       userEffect: boolean,
       kanban: boolean,
       eventsBanner: boolean,
+      rankList: boolean,
       popup: boolean,
       skin: boolean,
       [key: string]: boolean,
@@ -392,6 +393,10 @@ declare global {
     doubleClickFullscreenPreventSingleClick: boolean
     simplifyHome: boolean,
     simplifyHomeStyle: '清爽' | '极简',
+    minimalHomeSettings: {
+      showSearch: boolean,
+      backgroundImage: string,
+    },
     ajaxHook: boolean,
     scriptLoadingMode: '同时' | '延后' | '同时(自动)' | '延后(自动)' | '自动',
     scriptDownloadMode: 'bundle' | 'legacy'
@@ -426,6 +431,13 @@ declare global {
     downloadVideoQuality: number,
     downloadSubtitle: boolean,
     removeGameMatchModule: boolean,
+    noDarkOnMember: boolean,
+    feedsTranslate: boolean,
+    feedsTranslateProvider: 'Bing' | 'Google' | 'Baidu' | 'GoogleCN',
+    feedsTranslateLanguage: string,
+    downloadLiveRecords: boolean
+    forceHighQualityLive: boolean
+    recordLiveDanmaku: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

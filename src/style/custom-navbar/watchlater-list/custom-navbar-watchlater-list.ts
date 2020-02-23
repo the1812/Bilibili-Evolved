@@ -68,7 +68,7 @@ export class WatchlaterList extends NavbarComponent {
     }
   }
   async init() {
-    console.log(await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .watchlater-list`))
+    // console.log(await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .watchlater-list`))
     new Vue({
       el: await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .watchlater-list`) as HTMLElement,
       store,

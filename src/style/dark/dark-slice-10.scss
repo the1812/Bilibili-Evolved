@@ -8,69 +8,6 @@
   }
 }
 
-._super-chat-dialog {
-  .content-top {
-    @include border-color("5");
-    .content-top-left {
-      .text-desc {
-        @include color("e");
-      }
-      .icon-question {
-        @include to-white();
-      }
-    }
-  }
-  .content-middle .card-item {
-    &-top {
-      .card-item-left,
-      .card-item-right {
-        @include color("a");
-      }
-    }
-    &-middle .card-item-middle-top .card-item-middle-top-right .price span {
-      @include color("a");
-    }
-    &-middle {
-      &-top .card-item-middle-top-right {
-        @include color("e");
-      }
-      &-top,
-      &-bottom .input-contain .card-input-message {
-        @include background-color();
-      }
-    }
-  }
-  .content-bottom {
-    .ontent-bottom-up {
-      .inst,
-      span {
-        @include color("e");
-      }
-      .card-input-number {
-        @include background-color("4");
-        @include border-color("5");
-      }
-    }
-    .process {
-      .vue-slider {
-        &-dot-handle,
-        &-process {
-          @include theme-background-color();
-        }
-        &-rail {
-          @include background-color("4");
-        }
-      }
-    }
-    .button {
-      @include background-color("2");
-      &:hover {
-        @include theme-background-color();
-        @include foreground-color();
-      }
-    }
-  }
-}
 .vote-backdrop .extension-wrapper {
   .title-box {
     @include background-color("2");
@@ -92,15 +29,11 @@
     filter: invert(0.7) !important;
   }
 }
-.vote-result-comment {
+.vote-result-comment,
+.chat-history-panel .card-item-middle-top {
   @include background-color();
 }
-.chat-history-panel .chat-history-list .chat-item.superChat-card-detail .card-item-middle-top {
-  @include background-color();
-  .card-item-middle-top-right .name {
-    @include color("e");
-  }
-}
+
 .chaos-pk-rank {
   .link-to-history {
     @include color("a");
@@ -113,12 +46,14 @@
 .bl-button--primary:disabled,
 .notice-info-wrapper .notice-info-title,
 .ep-item.v4.cursor .ep-pub,
-.chasing-frame-cntr .chasing {
+.chasing-frame-cntr .chasing,
+.chat-history-panel .chat-history-list .chat-item.superChat-card-detail .card-item-middle-top .card-item-middle-top-right {
   @include color("e");
 }
 
 .vote-pc-container .card,
-.vote-result-comment .reply-item {
+.vote-result-comment .reply-item,
+.primary-menu-itnl {
   @include border-color();
 }
 
@@ -190,6 +125,15 @@
   .rank-title,
   .list-item {
     @include color("e");
+    .title-tooltip {
+      @include background-color("5");
+      &:before {
+        @include background-color();
+      }
+      .tooltip-text {
+        @include color("e");
+      }
+    }
   }
   .item-title {
     @include color("e");
@@ -913,5 +857,18 @@
       @include foreground-color();
       @include border-color();
     }
+  }
+}
+.s-space {
+  .v-search {
+    &-result {
+      @include color("a");
+    }
+    &-count {
+      @include theme-color();
+    }
+  }
+  .article-con a:hover {
+    @include theme-color();
   }
 }

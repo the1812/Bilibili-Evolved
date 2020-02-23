@@ -12,6 +12,7 @@
     }
   }
 }
+@include level-badge(1 2 3 4, #44b0a0);
 @include level-badge(5 6 7 8, #74b0f6);
 @include level-badge(9 10 11 12, #ba94f2);
 
@@ -27,7 +28,10 @@
 .van-popover .container,
 .container .play-all,
 .container .split-line .history-tip,
-.lang-change .lang-intro {
+.lang-change .lang-intro,
+#gift-package-item-box .panel-wrapper,
+.title-renew-panel .actions,
+.user-title-using-cntr .panel {
   @include background-color("2");
 }
 .manga-navbar {
@@ -53,7 +57,8 @@
 .container .play-all:hover,
 .van-popover .btn-box .btn.reg-btn:hover,
 .international-header .bili-banner,
-.message-list-content .notify-wrapper .notify-text {
+.message-list-content .notify-wrapper .notify-text,
+.user-title-using-cntr .user-title-box {
   @include background-color("3");
 }
 .wide-members .avatar-list i {
@@ -228,7 +233,11 @@
 .news-ctnr .more-link:hover,
 .news-ctnr .more-link,
 .news-content,
-.live-room-app .aside-area .chat-history-panel-top {
+.live-room-app .aside-area .chat-history-panel-top,
+.title-renew-panel .card,
+.publish-panel .editor:hover,
+.publish-panel .editor:focus,
+.publish-panel .editor:focus-within {
   @include background-color();
 }
 .manga-navbar .search-bar .placeholder-list .placeholder-item {
@@ -274,18 +283,30 @@
   }
 }
 
-.center-box .line-1 {
-  .name-field {
-    @include color("e");
-    a {
+.center-box {
+  .line-1 {
+    .name-field {
+      @include color("e");
+      a {
+        @include color("e");
+      }
+    }
+    .like-item {
       @include color("e");
     }
   }
-  .like-item {
-    @include color("e");
+  .line-2 {
+    .im-dynamic-link {
+      @include theme-color();
+    }
   }
 }
-
+.bb-comment,
+.comment-bilibili-fold {
+  .comment-send .dynamic-repost {
+    @include color("c");
+  }
+}
 .manga-navbar-history-list .action-button,
 .manga-navbar-favourite-manga .action-button,
 .love-card .header,
@@ -305,12 +326,16 @@
 .van-popper-history .view-all,
 .van-popper-upload .upload-item .bilifont,
 .news-content,
-.bilibili-player-video-danmaku-setting-left-block-word {
+.bilibili-player-video-danmaku-setting-left-block-word,
+.user-title-using-cntr .user-title-box .name {
   @include color("e");
 }
 .van-popover .vip:hover,
 .international-header .mini-upload:hover {
   @include color("f");
+}
+.editor .placeholder-shown::before {
+  @include color("6");
 }
 
 $highlight-map: (
@@ -326,6 +351,25 @@ $highlight-map: (
     &:nth-child(#{$nth}) .area-name {
       color: $color !important;
     }
+  }
+}
+.card-content .like-users-panel {
+  &::before {
+    @include background-color("6");
+  }
+  .users-box {
+    @include color("e");
+    .like-users-list {
+      &,
+      &:active,
+      &:link,
+      &:visited {
+        @include color("e");
+      }
+    }
+  }
+  .suffix-text {
+    @include color("a");
   }
 }
 .live-room-app .aside-area .chat-control-panel {
@@ -377,7 +421,9 @@ $highlight-map: (
 .van-popover .btn-box .btn.reg-btn,
 .van-popper-history .view-all,
 .at-popup,
-.chat-popups-section .draw-full-ctnr {
+.chat-popups-section .draw-full-ctnr,
+#gift-package-item-box .panel-wrapper::before,
+.title-renew-panel .actions {
   @include border-color();
 }
 .wide-members .avatar {
@@ -387,7 +433,8 @@ $highlight-map: (
   @include border-color("4");
 }
 .manga-navbar .search-bar .confirm-btn .search-icon,
-.container .level-intro .svg-icon {
+.container .level-intro .svg-icon,
+#page-fav .fav-sidenav .icon:not(.icon-cursor) {
   @include to-white();
 }
 .side-bar-btn .size-bar-text {
@@ -429,7 +476,8 @@ $highlight-map: (
 .video-control-show .bilibili-player-video-interactive-list .check:hover .big-round,
 #biliAppHomeSetting button,
 .van-popover .btn-box .btn,
-.van-popper-history .view-all:hover {
+.van-popper-history .view-all:hover,
+.bui-button.bui-button-gray:hover {
   @include theme-background-color();
 }
 #biliAppHomeSetting h2,
@@ -447,6 +495,7 @@ $highlight-map: (
 .rookie-guide .close-button,
 #biliAppHomeSetting button,
 .van-popover .btn-box .btn,
-.van-popper-history .view-all:hover {
+.van-popper-history .view-all:hover,
+.bui-button.bui-button-gray:hover {
   @include foreground-color();
 }

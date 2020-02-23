@@ -3,44 +3,56 @@ import { VideoCardInfo } from '../style/simplify-home/video-card-info'
 export interface FeedsCardType {
   id: number
   name: string
+  // getText: (element: HTMLElement) => Promise<string>
 }
-export const feedsCardTypes: { [name: string]: FeedsCardType } = {
+// const getOriginalElement = async (element: Element) => {
+//   const originalElement = await SpinQuery.condition(
+//     () => element.querySelector('.card-content > .text.description'),
+//     it => it !== null
+//   ) as HTMLElement
+//   if (originalElement === null) {
+//     return ''
+//   }
+//   const text = originalElement.style.display === 'none' ? '' : originalElement.textContent!.trim()
+//   return text
+// }
+export const feedsCardTypes = {
   repost: {
     id: 1,
     name: '转发',
-  },
+  } as FeedsCardType,
   textWithImages: {
     id: 2,
-    name: '图文',
-  },
+    name: '图文'
+  } as FeedsCardType,
   text: {
     id: 4,
     name: '文字',
-  },
+  } as FeedsCardType,
   video: {
     id: 8,
     name: '视频',
-  },
+  } as FeedsCardType,
   miniVideo: {
     id: 16,
     name: '小视频',
-  },
+  } as FeedsCardType,
   column: {
     id: 64,
     name: '专栏',
-  },
+  } as FeedsCardType,
   audio: {
     id: 256,
     name: '音频',
-  },
+  } as FeedsCardType,
   bangumi: {
     id: 512,
     name: '番剧',
-  },
+  } as FeedsCardType,
   share: {
     id: 2048,
     name: '分享',
-  },
+  } as FeedsCardType,
 }
 export interface FeedsCard {
   id: string
@@ -51,19 +63,48 @@ export interface FeedsCard {
   likes: number
   element: HTMLElement
   type: FeedsCardType
+  getText: () => Promise<string>
+}
+const getFeedsCardType = (element: HTMLElement) => {
+  if (element.querySelector('.repost')) {
+    return feedsCardTypes.repost
+  }
+  if (element.querySelector('.imagesbox')) {
+    return feedsCardTypes.textWithImages
+  }
+  if (element.querySelector('.video-container')) {
+    return feedsCardTypes.video
+  }
+  if (element.querySelector('.bangumi-container')) {
+    return feedsCardTypes.bangumi
+  }
+  if (element.querySelector('.article-container')) {
+    return feedsCardTypes.column
+  }
+  if (element.querySelector('.music-container')) {
+    return feedsCardTypes.audio
+  }
+  if (element.querySelector('.h5share-container')) {
+    return feedsCardTypes.share
+  }
+  if (element.querySelector('.vc-ctnr')) {
+    return feedsCardTypes.miniVideo
+  }
+  return feedsCardTypes.text
 }
 class FeedsCardsManager extends EventTarget {
+  watching = false
   cards: FeedsCard[] = []
   addEventListener(
     type: 'addCard' | 'removeCard',
-    listener: EventListener | EventListenerObject | null,
+    listener: (event: CustomEvent<FeedsCard>) => void,
     options?: boolean | AddEventListenerOptions | undefined
   ): void {
     super.addEventListener(type, listener, options)
   }
   removeEventListener(
     type: 'addCard' | 'removeCard',
-    callback: EventListener | EventListenerObject | null,
+    callback: (event: CustomEvent<FeedsCard>) => void,
     options?: boolean | AddEventListenerOptions | undefined
   ): void {
     super.removeEventListener(type, callback, options)
@@ -80,6 +121,12 @@ class FeedsCardsManager extends EventTarget {
       } else {
         const card = await this.parseCard(node)
         this.cards.push(card)
+        this.cards.sort((a, b) => {
+          if (a.id === b.id) {
+            return 0
+          }
+          return a.id > b.id ? -1 : 1
+        })
         const event = new CustomEvent('addCard', { detail: card })
         this.dispatchEvent(event)
       }
@@ -96,7 +143,7 @@ class FeedsCardsManager extends EventTarget {
     }
   }
   async parseCard(element: HTMLElement): Promise<FeedsCard> {
-    const getText = async (selector: string, withRepost = false) => {
+    const getSimpleText = async (selector: string) => {
       const subElement = await SpinQuery.condition(
         () => element.querySelector(selector),
         it => it !== null
@@ -105,70 +152,94 @@ class FeedsCardsManager extends EventTarget {
         console.warn(element, selector)
         return ''
       }
+      // const subElementText = subElement.style.display === 'none' ? '' : subElement.textContent!.trim()
       const subElementText = subElement.innerText.trim()
-      if (withRepost) {
-        const repost = await SpinQuery.condition(
-          () => element.querySelector('.original-card-content .description'),
-          it => {
-            if (it === null) {
-              return false
-            }
-            if (subElementText) {
-              return true
-            }
-            return Boolean(it.innerText)
-          }
-        ) as HTMLElement
-        // console.log(repost, repost.innerText, subElementText)
-        return repost ? (subElement.innerText + '\n' + repost.innerText).trim() : subElementText
-      }
       return subElementText
     }
+    // const getComplexText = async () => {
+    //   // if ([
+    //   //   feedsCardTypes.column,
+    //   // ].some(it => it === type)) {
+    //   //   const text = await getSimpleText(selector)
+    //   //   return text
+    //   // }
+    //   let repostText = ''
+    //   const repost = await SpinQuery.condition(
+    //     () => element.querySelector('.original-card-content'),
+    //     it => {
+    //       if (it === null) {
+    //         return false
+    //       }
+    //       if (getFeedsCardType(it) === feedsCardTypes.column) {
+    //         return true
+    //       }
+    //       const bangumiContent = it.querySelector('.bangumi-container .title') as HTMLElement
+    //       if (bangumiContent) {
+    //         repostText = bangumiContent.innerText
+    //       }
+    //       const repostContent = it.querySelector('.text.description') as HTMLElement
+    //       const videoContent = it.querySelector('.video-container .title') as HTMLElement
+    //       if (repostContent && videoContent) {
+    //         repostText = repostContent.innerText + '\n' + videoContent.innerText
+    //         return Boolean(videoContent.innerText)
+    //       }
+    //       if (repostContent) {
+    //         repostText = repostContent.innerText
+    //       }
+    //       return Boolean(repostText)
+    //     },
+    //   ) as HTMLElement
+    //   const text = await getSimpleText('.video-container .title,.bangumi-container .title,.text.description')
+    //   if (getFeedsCardType(repost) === feedsCardTypes.column) {
+    //     // debugger
+    //     console.log(element, repost, text)
+    //   }
+    //   // console.log(repost, repost && repost.innerText, subElementText)
+    //   return repost ? (text + '\n' + repostText).trim() : text
+    // }
+    const getComplexText = async (type: FeedsCardType) => {
+      if (type === feedsCardTypes.bangumi) {
+        return ''
+      }
+      const el = await SpinQuery.condition(() => element, (it: any) => Boolean(it.__vue__))
+      if (el === null) {
+        console.warn(el)
+        return ''
+      }
+      if (type === feedsCardTypes.repost) {
+        const original = el.__vue__.originCardData.pureText
+        return el.__vue__.card.item.content + '\n' + original || ''
+      }
+      return el.__vue__.originCardData.pureText || ''
+    }
     const getNumber = async (selector: string) => {
-      const result = parseInt(await getText(selector))
+      const result = parseInt(await getSimpleText(selector))
       if (isNaN(result)) {
         return 0
       }
       return result
     }
-    const type: FeedsCardType = (() => {
-      if (element.querySelector('.repost')) {
-        return feedsCardTypes.repost
-      }
-      if (element.querySelector('.imagesbox')) {
-        return feedsCardTypes.textWithImages
-      }
-      if (element.querySelector('.video-container')) {
-        return feedsCardTypes.video
-      }
-      if (element.querySelector('.bangumi-container')) {
-        return feedsCardTypes.bangumi
-      }
-      if (element.querySelector('.article-container')) {
-        return feedsCardTypes.column
-      }
-      if (element.querySelector('.music-container')) {
-        return feedsCardTypes.audio
-      }
-      if (element.querySelector('.h5share-container')) {
-        return feedsCardTypes.share
-      }
-      if (element.querySelector('.vc-ctnr')) {
-        return feedsCardTypes.miniVideo
-      }
-      return feedsCardTypes.text
-    })()
     const card = {
       id: element.getAttribute('data-did') as string,
-      username: await getText('.main-content .user-name'),
-      text: await getText('.card-content .text.description,.video-container .title,.bangumi-container .title', true),
+      username: await getSimpleText('.main-content .user-name'),
+      text: '',
       reposts: await getNumber('.button-bar .single-button:nth-child(1) .text-offset'),
       comments: await getNumber('.button-bar .single-button:nth-child(2) .text-offset'),
       likes: await getNumber('.button-bar .single-button:nth-child(3) .text-offset'),
       element,
-      type,
+      type: getFeedsCardType(element),
+      async getText() {
+        const result = await getComplexText(this.type)
+        this.text = result
+        // console.log(result)
+        return result
+      }
     }
-    element.setAttribute('data-type', type.id.toString())
+    await card.getText()
+    element.setAttribute('data-type', card.type.id.toString())
+    // if (card.text === '') {
+    //   console.warn('card text parsing failed!', card)
+    // }
     return card
   }
   async startWatching() {
@@ -176,6 +247,10 @@ class FeedsCardsManager extends EventTarget {
     if (!cardsList) {
       return false
     }
+    if (this.watching) {
+      return true
+    }
+    this.watching = true
     const cards = [...cardsList.querySelectorAll('.content>.card')]
     cards.forEach(it => this.addCard(it))
     Observer.childList(cardsList, records => {

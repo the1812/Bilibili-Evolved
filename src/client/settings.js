@@ -129,6 +129,7 @@ export const settings = {
     kanban: true,
     userEffect: true,
     eventsBanner: false,
+    rankList: false,
     popup: false,
     skin: false,
   },
@@ -150,7 +151,7 @@ export const settings = {
   videoScreenshot: false,
   hideBangumiReviews: false,
   filenameFormat: '[title][ - ep]',
-  batchFilenameFormat: '[n - ][title]',
+  batchFilenameFormat: '[n - ][ep]',
   sideBarOffset: 0,
   noLiveAutoplay: false,
   hideHomeLive: false,
@@ -173,6 +174,10 @@ export const settings = {
   doubleClickFullscreenPreventSingleClick: false,
   simplifyHome: false,
   simplifyHomeStyle: '清爽',
+  minimalHomeSettings: {
+    showSearch: true,
+    backgroundImage: '',
+  },
   ajaxHook: false,
   scriptLoadingMode: '延后(自动)',
   scriptDownloadMode: 'bundle',
@@ -204,7 +209,13 @@ export const settings = {
   urlParamsClean: true,
   collapseLiveSideBar: true,
   removeGameMatchModule: false,
+  noDarkOnMember: true,
+  feedsTranslate: false,
+  feedsTranslateProvider: 'Bing',
+  feedsTranslateLanguage: '',
   downloadVideoQuality: 120,
+  forceHighQualityLive: false,
+  recordLiveDanmaku: false,
   cache: {},
 }
 const fixedSettings = {
@@ -217,6 +228,7 @@ const fixedSettings = {
   downloadDanmaku: true,
   downloadSubtitle: true,
   downloadAudio: true,
+  downloadLiveRecords: true,
   medalHelper: true,
   about: true,
   playerLayout: false,
@@ -260,6 +272,10 @@ export async function loadSettings () {
   }
   for (const key in settings) {
     let value = await GM.getValue(key)
+    if (key === 'batchFilenameFormat' && value === '[n - ][title]') {
+      value = '[n - ][ep]'
+      GM.setValue(key, value)
+    }
     if (value === undefined) {
       value = settings[key]
       GM.setValue(key, settings[key])

@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.10.0
+// @version      1.10.5
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
-// @copyright    2019, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @run-at       document-start
@@ -24,6 +24,10 @@
 // @grant        GM.xmlHttpRequest
 // @connect      raw.githubusercontent.com
 // @connect      cdn.jsdelivr.net
+// @connect      cn.bing.com
+// @connect      www.bing.com
+// @connect      translate.google.cn
+// @connect      translate.google.com
 // @connect      *
 // @require      https://code.jquery.com/jquery-3.4.0.min.js
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
@@ -173,6 +177,11 @@ import { store } from './store'
     //   })
     // }
     events.styleLoaded.complete()
+
+    const prefetchLink = document.createElement('link')
+    prefetchLink.rel = 'dns-prefetch'
+    prefetchLink.href = 'https://api.bilibili.com'
+    document.head.insertAdjacentElement('afterbegin', prefetchLink)
 
     Object.assign(unsafeWindow.bilibiliEvolved, {
       SpinQuery,

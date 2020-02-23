@@ -397,7 +397,8 @@ li.log-item .user-time,
 .voucher-left-money:before,
 .privacy-panel .tip,
 .song-li .song-right .song-right-bottom .song-num,
-.similar-song-menu .similar-right .song-num
+.similar-song-menu .similar-right .song-num,
+#page-fav .fav-main .filter-item.search ::-webkit-input-placeholder
 {
     color: #aaa !important;
 }
@@ -872,11 +873,13 @@ table.viptable td,
 .cc-article-wrp .article-card .meta-title .typename,
 .text-area-box-v2-container,
 .check-radio-v2-container .check-radio-v2-box,
-#page-fav .fav-main .filter-item.search,
 .voucher-list-wrapper.voucher-ing .voucher-right,
 .voucher-content-outside .voucher-list-wrapper
 {
     border-color: #aaa !important;
+}
+#page-fav .fav-main .filter-item.search {
+    border-color: #666 !important;
 }
 .left-nav-logo,
 .icon-back,

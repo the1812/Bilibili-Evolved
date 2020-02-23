@@ -635,3 +635,185 @@
     @include background-color();
   }
 }
+.imagesbox .boost-slider-wrap .boost-slider-border {
+  @include theme-border-color();
+}
+.superchat-content {
+  @include background-color("4");
+  .home-page {
+    background-image: none !important;
+    .introduction {
+      @include color("e");
+      &:before {
+        @include to-white();
+      }
+    }
+    .close {
+      @include to-white();
+    }
+    .superchat-textarea {
+      .base-info {
+        @include background-color();
+        .duration-tip {
+          @include color("e");
+          .time-icon {
+            @include to-white();
+          }
+        }
+      }
+      .user-info {
+        @include color("e");
+      }
+      .text-ctnr,
+      .textarea,
+      .textarea:hover {
+        @include background-color();
+      }
+    }
+    .trans-btn {
+      @include theme-color();
+      @include theme-border-color();
+    }
+    .price-options {
+      .price-option {
+        @include color("e");
+        &.selected {
+          @include theme-color();
+          @include theme-border-color();
+        }
+      }
+      .other {
+        @include color("e");
+        .input {
+          @include background-color();
+          @include color("e");
+        }
+      }
+    }
+  }
+  .buy-btn {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+  .super-rank {
+    @include background-color("4");
+    .top {
+      .header-title {
+        @include color("e");
+      }
+      .nav {
+        @include background-color("2");
+        .nav-item {
+          &-1,
+          &-2 {
+            @include color("e");
+            &.active {
+              @include theme-background-color();
+              @include foreground-color();
+            }
+          }
+        }
+      }
+    }
+    .list-box {
+      .empty>.box {
+        @include background-color();
+        .h2>.special {
+          @include theme-color();
+        }
+      }
+      .message-item {
+        &-info {
+          .rank-icon>.num {
+            @include background-color("2");
+            @include color("e");
+          }
+          &>.user-info .publish-date,
+          &>.amount {
+            @include color("a");
+          }
+        }
+        &-context {
+          @include color("e");
+        }
+      }
+      .anchor-item {
+        &-info {
+          &>.user-info {
+            .amount,
+            .room,
+            .message-info {
+              @include color("a");
+            }
+            .user-name {
+              @include color("e");
+            }
+          }
+          .rank-icon>.num {
+            @include background-color("2");
+            @include color("e");
+          }
+        }
+        &-assists>.sub-tit {
+          @include color("e");
+        }
+      }
+      .keep-text {
+        @include color("a");
+      }
+    }
+    .on-list-anchor>.right {
+      @include theme-color();
+    }
+    .not-list {
+      &>.left {
+        &>.rank,
+        &>.aside {
+          @include color("a");
+          .special {
+            @include theme-color();
+          }
+        }
+      }
+      &>.right {
+        @include theme-color();
+      }
+    }
+  }
+}
+.rank-item {
+  @include border-color("4");
+  .other {
+    @include border-color("4");
+    span {
+      @include color("a");
+    }
+    .other-link {
+      .title {
+        @include color("e");
+      }
+      &:hover .title {
+        @include theme-color();
+      }
+    }
+  }
+}
+.card-content .tag {
+  @include theme-background-color();
+  @include foreground-color();
+}
+.wide-members .avatar {
+  &-list .van-icon-general {
+    &_back_s:after {
+      background: linear-gradient(-270deg,#444,hsla(0,0%,100%,0)) !important;
+    }
+    &_enter_s:after {
+      background: linear-gradient(270deg,#444,hsla(0,0%,100%,0)) !important;
+    }
+  }
+  .tag {
+    @include background-color("2");
+    @include color("e");
+    @include theme-border-color();
+  }
+}
