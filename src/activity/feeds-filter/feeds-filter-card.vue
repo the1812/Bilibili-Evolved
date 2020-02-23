@@ -62,10 +62,10 @@ const sideCards: { [id: number]: SideCardType } = {
     className: 'live',
     displayName: '正在直播'
   },
-  4: {
-    className: 'trending-tags',
-    displayName: '热门话题'
-  }
+  // 4: {
+  //   className: 'trending-tags',
+  //   displayName: '热门话题'
+  // }
 }
 const sideBlock = 'feeds-filter-side-block-'
 export default {
