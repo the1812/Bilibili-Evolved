@@ -150,7 +150,7 @@ export default {
     --card-count: 2;
     width: calc((var(--card-width) + 16px) * var(--card-count));
     padding-bottom: 16px;
-    scroll-snap-type: x mandatory;
+    // scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
     min-height: calc(var(--card-height) + 16px);
     @media screen and (max-width: 900px) {

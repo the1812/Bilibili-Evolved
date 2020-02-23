@@ -240,7 +240,7 @@ export default {
     overflow: auto;
     @include no-scrollbar();
     scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
+    // scroll-snap-type: x mandatory;
 
     --column-count: 1;
     --column-width: 250px;
