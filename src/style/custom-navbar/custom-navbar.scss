@@ -314,7 +314,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    padding: 0 10px;
     color: var(--navbar-foreground);
     user-select: none;
   }
@@ -938,15 +938,15 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   border-radius: 6px;
 }
 
-@media screen and (max-width: 1400px) {
-  .custom-navbar .main-content {
-    padding: 0 10px;
-  }
-}
+// @media screen and (max-width: 1400px) {
+//   .custom-navbar .main-content {
+//     padding: 0 10px;
+//   }
+// }
 @media screen and (max-width: 1300px) {
-  .custom-navbar .main-content {
-    padding: 0 8px;
-  }
+  // .custom-navbar .main-content {
+  //   padding: 0 8px;
+  // }
   .custom-navbar form input {
     width: 200px;
   }
