@@ -113,7 +113,6 @@ export const settings = {
   i18nLanguage: '日本語',
   playerFocus: false,
   playerFocusOffset: -10,
-  oldTweets: false,
   simplifyLiveroom: false,
   simplifyLiveroomSettings: {
     vip: true,
@@ -239,6 +238,7 @@ const fixedSettings = {
   allNavbarFill: false,
   showDeadVideoTitle: false,
   blurVideoControl: false,
+  oldTweets: false,
   latestVersionLink: 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js',
   currentVersion: GM.info.script.version,
 }
