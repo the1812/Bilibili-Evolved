@@ -64,6 +64,7 @@ export class Resource {
                 //   [key]: this.text
                 // })
                 if (this.alwaysPreview) {
+                  // console.log('Load preview data', key)
                   Ajax.monkey({ url: this.url })
                     .then(text => {
                       // console.log(`load preview data: ${key}`)
@@ -71,12 +72,16 @@ export class Resource {
                       settings.cache = Object.assign(settings.cache, {
                         [key]: text
                       })
+                      // console.log('Preview data loaded', key)
                       // resolve(this.text)
                     })
                     .catch(error => reject(error))
                 }
                 if (text) {
                   // console.log(`load online data: ${key}`)
+                  // if (this.alwaysPreview) {
+                  //   console.log('Get fallback text', key)
+                  // }
                   this.text = text
                   resolve(this.text)
                 }
