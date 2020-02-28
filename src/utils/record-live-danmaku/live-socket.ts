@@ -152,6 +152,7 @@ export class LiveSocket extends EventTarget {
   restart() {
     this.dispatchEvent(new CustomEvent('restart'))
     if (!this.stopRequested && this.autoRetry) {
+      console.log(`Live Socket: unexpected disconnect, retry in ${this.retryInterval}ms`)
       setTimeout(() => this.start(), this.retryInterval)
     }
   }
@@ -235,10 +236,14 @@ export class LiveSocket extends EventTarget {
         default: break
       }
     })
-    this.webSocket.addEventListener('close', () => {
-      this.restart()
+    this.webSocket.addEventListener('close', e => {
+      if (!this.stopRequested) {
+        console.error('Live Socket: close', e)
+        this.restart()
+      }
     })
-    this.webSocket.addEventListener('error', () => {
+    this.webSocket.addEventListener('error', e => {
+      console.error('Live Socket: error', e)
       this.restart()
     })
   }
