@@ -53,6 +53,30 @@ export const feedsCardTypes = {
     id: 2048,
     name: '分享',
   } as FeedsCardType,
+  manga: {
+    id: 2049,
+    name: '漫画',
+  } as FeedsCardType,
+  film: {
+    id: 4098,
+    name: '电影',
+  } as FeedsCardType,
+  tv: {
+    id: 4099,
+    name: 'TV剧',
+  } as FeedsCardType,
+  chinese: {
+    id: 4100,
+    name: '国创',
+  } as FeedsCardType,
+  documentary: {
+    id: 4101,
+    name: '纪录片',
+  } as FeedsCardType,
+  mediaList: {
+    id: 4300,
+    name: '收藏夹',
+  } as FeedsCardType,
 }
 export interface FeedsCard {
   id: string

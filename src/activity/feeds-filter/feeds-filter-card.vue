@@ -175,6 +175,10 @@ export default {
       return
     }
     this.allTypes = Object.entries(feedsCardTypes)
+      .filter(([name, type]) => type.id <= 2048)
+      .map(([name, type]) => {
+        return [name, _.clone(type)]
+      })
     feedsCardsManager.cards.forEach(card => this.updateCard(card))
     feedsCardsManager.addEventListener('addCard', (e) => {
       const card = e.detail
