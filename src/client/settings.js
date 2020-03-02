@@ -192,7 +192,6 @@ export const settings = {
   selectableColumnText: true,
   downloadVideoFormat: 'flv',
   downloadVideoDashCodec: 'AVC/H.264',
-  watchlaterExpireWarnings: true,
   watchlaterExpireWarningDays: 14,
   superchatTranslate: false,
   miniPlayerTouchMove: false,
@@ -239,6 +238,7 @@ const fixedSettings = {
   showDeadVideoTitle: false,
   blurVideoControl: false,
   oldTweets: false,
+  watchlaterExpireWarnings: false,
   latestVersionLink: 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js',
   currentVersion: GM.info.script.version,
 }
