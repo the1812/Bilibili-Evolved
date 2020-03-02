@@ -820,6 +820,12 @@ Resource.manifest = {
     displayNames: {
       recordLiveDanmaku: '直播弹幕记录器',
     },
+  },
+  forceHighQualityLive: {
+    path: 'force-high-quality-live.min.js',
+    displayNames: {
+      forceHighQualityLive: '直播默认原画',
+    },
   }
 }
 export const resourceManifest = Resource.manifest

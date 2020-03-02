@@ -28,5 +28,7 @@
     padding-top: 10px;
     white-space: pre-wrap;
     line-height: 22px;
+    word-break: break-all;
+    overflow-wrap: break-word;
   }
 }
