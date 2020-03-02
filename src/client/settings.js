@@ -214,6 +214,7 @@ export const settings = {
   downloadVideoQuality: 120,
   forceHighQualityLive: false,
   recordLiveDanmaku: false,
+  foregroundColorMode: '自动',
   cache: {},
 }
 const fixedSettings = {

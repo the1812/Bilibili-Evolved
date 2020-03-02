@@ -438,6 +438,7 @@ declare global {
     downloadLiveRecords: boolean
     forceHighQualityLive: boolean
     recordLiveDanmaku: boolean,
+    foregroundColorMode: '自动' | '白色' | '黑色'
     latestVersionLink: string,
     currentVersion: string,
   }
