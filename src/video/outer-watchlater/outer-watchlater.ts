@@ -46,7 +46,7 @@
         }
         this.tipHandle = setTimeout(() => {
           this.tipShowing = false
-        }, 2000);
+        }, 2000)
       },
       async toggle() {
         await this.toggleWatchlater(this.aid)

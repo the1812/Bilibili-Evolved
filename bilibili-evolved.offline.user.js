@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      595.18
+// @version      595.27
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2981,6 +2981,7 @@ const store = (() => {
     },
     mutations: {
       toggleWatchlater (state, { aid, add }) {
+        console.log(state.watchlaterList, aid, add)
         if (typeof aid === 'string') {
           aid = parseInt(aid)
         }
@@ -2993,21 +2994,7 @@ const store = (() => {
           }
         }
       },
-      // addToWatchlater (state, aid) {
-      //   console.log('add', aid)
-      //   if (!state.watchlaterList.includes(aid)) {
-      //     state.watchlaterList.push(aid)
-      //   }
-      // },
-      // removeFromWatchlater (state, aid) {
-      //   console.log('remove', aid)
-      //   const index = state.watchlaterList.indexOf(aid)
-      //   if (index !== -1) {
-      //     state.watchlaterList.splice(index, 1)
-      //   }
-      // },
       updateWatchlaterList (state, list) {
-        // console.log('updateWatchlaterList', list)
         state.watchlaterList = list
         state.watchlaterListCached = true
       }
@@ -3017,7 +3004,7 @@ const store = (() => {
         const list = await getWatchlaterList()
         commit('updateWatchlaterList', list)
       },
-      toggleWatchlater ({ commit, state }, aid) {
+      async toggleWatchlater ({ commit, state }, aid) {
         if (typeof aid === 'string') {
           aid = parseInt(aid)
         }
@@ -3026,28 +3013,14 @@ const store = (() => {
           aid,
           add,
         })
-        toggle(aid, add).catch(error => {
+        await toggle(aid, add).catch(error => {
           logError(error)
           commit('toggleWatchlater', {
             aid,
-            add,
+            add: !add
           })
         })
       }
-      // addToWatchlater ({ commit }, aid) {
-      //   commit('addToWatchlater', aid)
-      //   toggleWatchlater(aid, true).catch(error => {
-      //     logError(error)
-      //     commit('removeFromWatchlater', aid)
-      //   })
-      // },
-      // removeFromWatchlater ({ commit }, aid) {
-      //   commit('removeFromWatchlater', aid)
-      //   toggleWatchlater(aid, false).catch(error => {
-      //     logError(error)
-      //     commit('addToWatchlater', aid)
-      //   })
-      // }
     }
   })
 })()
