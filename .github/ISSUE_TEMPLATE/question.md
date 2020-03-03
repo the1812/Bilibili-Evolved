@@ -1,6 +1,6 @@
 ---
 name: Question
-about: 提问
+about: 提问/答疑
 
 ---
 
