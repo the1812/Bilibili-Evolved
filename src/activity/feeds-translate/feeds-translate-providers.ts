@@ -15,25 +15,31 @@ class BingTranslate extends FeedsTranslateProvider {
     if (targetLanguage.includes('-') && targetLanguage !== defaultLanguage) {
       targetLanguage = targetLanguage.substring(0, targetLanguage.indexOf('-'))
     }
-    const response = await Ajax.monkey({
-      url: 'https://cn.bing.com/ttranslatev3',
-      method: 'POST',
-      data: Object.entries({
-        fromLang: 'auto-detect',
-        to: targetLanguage,
-        text,
-      }).map(([key, value]) => `${key}=${value}`).join('&'),
-      headers: {
-        'User-Agent': UserAgent,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      responseType: 'json',
-    })
-    const [result] = response
-    if (result.translations) {
-      return (result.translations as any[]).map(t => t.text as string).join('\n')
-    } else {
-      throw new Error('调用Bing翻译失败.\n' + JSON.stringify(result))
+    try {
+      const response = await Ajax.monkey({
+        url: 'https://cn.bing.com/ttranslatev3',
+        method: 'POST',
+        data: Object.entries({
+          fromLang: 'auto-detect',
+          to: targetLanguage,
+          text,
+        }).map(([key, value]) => `${key}=${value}`).join('&'),
+        headers: {
+          'User-Agent': UserAgent,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        responseType: 'json',
+      })
+      const [result] = response
+      if (result.translations) {
+        return (result.translations as any[]).map(t => t.text as string).join('\n')
+      } else {
+        console.error('Translator: Bing', result)
+        throw new Error('调用Bing翻译失败.')
+      }
+    } catch (error) {
+      console.error('Translator: Bing', error)
+      throw new Error('调用Bing翻译失败.')
     }
   }
 }
@@ -48,23 +54,28 @@ class GoogleTranslate extends FeedsTranslateProvider {
     if (targetLanguage.includes('-') && targetLanguage !== defaultLanguage) {
       targetLanguage = targetLanguage.substring(0, targetLanguage.indexOf('-'))
     }
-    const response = await Ajax.monkey({
-      url: `${this.apiUrl}?${Object.entries({
-        client: 'gtx',
-        sl: 'auto',
-        tl: targetLanguage,
-        dt: 't',
-        q: encodeURIComponent(text),
-      }).map(([key, value]) => `${key}=${value}`).join('&')}`,
-      method: 'GET',
-      headers: {
-        'User-Agent': UserAgent,
-      },
-      responseType: 'json',
-    })
-    console.log(_.flattenDeep(response), response, response[0].map((it: any) => it[0]).join('\n'))
-    const result = response[0].map((it: any) => it[0]).join('')
-    return result
+    try {
+      const response = await Ajax.monkey({
+        url: `${this.apiUrl}?${Object.entries({
+          client: 'gtx',
+          sl: 'auto',
+          tl: targetLanguage,
+          dt: 't',
+          q: encodeURIComponent(text),
+        }).map(([key, value]) => `${key}=${value}`).join('&')}`,
+        method: 'GET',
+        headers: {
+          'User-Agent': UserAgent,
+        },
+        responseType: 'json',
+      })
+      // console.log(_.flattenDeep(response), response, response[0].map((it: any) => it[0]).join('\n'))
+      const result = response[0].map((it: any) => it[0]).join('')
+      return result
+    } catch (error) {
+      console.error('Translator: Google', error)
+      throw new Error('调用Google翻译失败.')
+    }
   }
 }
 class GoogleCNTranslate extends GoogleTranslate {

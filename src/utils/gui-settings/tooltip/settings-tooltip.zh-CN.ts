@@ -180,6 +180,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <span>n</span>: 数字, 表示第n个视频.`],
   [`removeGameMatchModule`, /*html*/`删除电竞赛事板块.`],
   [`recordLiveDanmaku`, /*html*/`在附加功能中添加直播弹幕记录器, 可以记录直播弹幕并导出XML.`],
+  [`feedsTranslate`, /*html*/`在每条动态下方添加翻译按钮, 可将动态的文字机器翻译为中文. 若开启了界面翻译, 则会翻译成界面翻译里设定的语言.`],
+  [`feedsTranslateProvider`, /*html*/`机器翻译的提供者`],
 ]);
 export default {
   export: { toolTips },

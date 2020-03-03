@@ -30,5 +30,8 @@
     line-height: 22px;
     word-break: break-all;
     overflow-wrap: break-word;
+    body.dark & {
+      color: #eee;
+    }
   }
 }
