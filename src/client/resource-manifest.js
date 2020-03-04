@@ -826,6 +826,12 @@ Resource.manifest = {
     displayNames: {
       forceHighQualityLive: '直播默认原画',
     },
-  }
+  },
+  downloadLiveRecords: {
+    path: 'download-live-records.min.js',
+    displayNames: {
+      downloadLiveRecords: '下载直播录像',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
