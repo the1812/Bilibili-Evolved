@@ -99,7 +99,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       if (video === null) {
         return
       }
-      const playbackRates = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
+      const playbackRates = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0]
       let preventDefault = true
       if (key === '>' || key === 'ArrowUp'.toLowerCase()) { // 天堂制造
         video.playbackRate = playbackRates.find(it => it > video.playbackRate) || playbackRates[playbackRates.length - 1]
