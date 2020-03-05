@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      597.91
+// @version      597.92
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
