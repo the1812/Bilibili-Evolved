@@ -36,7 +36,7 @@ export class SearchBox extends NavbarComponent {
         e.preventDefault()
         return false
       }
-      if (/^av[\d]+$/.test(keywordInput.value)) {
+      if (/^av[\d]+$/i.test(keywordInput.value)) {
         window.open(`https://www.bilibili.com/${keywordInput.value}`)
         e.preventDefault()
         return false
