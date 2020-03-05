@@ -833,7 +833,7 @@ li.danmaku-info-row.bpui-selecting,
 .reply-report .reason-choose .reason-group .list li input[type="radio"]:checked:after,
 .reply-report .submit-btn button,
 .reply-emoji-panel .emoji-list .emoji-pager .pager-dot.on,
-.be-tags-container .tag.coop-tag {
+.be-tags-container .tag {
   background-color: var(--theme-color) !important;
 }
 /* a
