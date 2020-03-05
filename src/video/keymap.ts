@@ -9,11 +9,12 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     t: '.bilibili-player-video-btn-widescreen', // 宽屏
     r: '.bilibili-player-video-btn-repeat', // 切换循环模式
     m: '.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume', // 切换静音
-    l: '.video-toolbar .like', // 点赞
+    // l: '.video-toolbar .like', // 点赞
     c: '.video-toolbar .coin,.tool-bar .coin-info', // 投币
     s: '.video-toolbar .collect', // 收藏
     ' ': '.bilibili-player-video-btn-start', // 砸瓦撸多
   } as { [key: string]: string }
+  let likeClick = true
   let showPlaybackTipOldTimeout: number
   const showPlaybackTip = (speed: number) => {
     let tip = dq('.keymap-playback-tip') as HTMLDivElement
@@ -94,6 +95,23 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       video.currentTime += settings.keymapJumpSeconds
       e.stopPropagation()
       e.preventDefault()
+    } else if (key === 'l' && noModifyKeys) {
+      const likeButton = dq('.video-toolbar .like') as HTMLSpanElement
+      e.preventDefault()
+      const fireEvent = (name: string, args: Event) => {
+        const event = new CustomEvent(name, args)
+        likeButton.dispatchEvent(event)
+      }
+      likeClick = true
+      setTimeout(() => likeClick = false, 200)
+      fireEvent('mousedown', e)
+      document.body.addEventListener('keyup', e => {
+        e.preventDefault()
+        fireEvent('mouseup', e)
+        if (likeClick) {
+          fireEvent('click', e)
+        }
+      }, { once: true })
     } else if (e.shiftKey) {
       const video = dq('.bilibili-player-video video') as HTMLVideoElement
       if (video === null) {
