@@ -817,3 +817,13 @@
     @include theme-border-color();
   }
 }
+.router-view .config {
+  @include background-color("4");
+  @include color("e");
+  .css-o1815x {
+    @include to-theme("blue");
+  }
+  .config-item:not(:first-child)::before {
+    @include background-color("5");
+  }
+}
