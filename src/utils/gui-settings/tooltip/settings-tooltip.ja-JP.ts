@@ -162,6 +162,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <span>n</span>: 番号、n番目の動画を意味します.`],
     [`removeGameMatchModule`, /*html*/`電子スポーツプレート区を削除.`],
     [`recordLiveDanmaku`, /*html*/`追加機能に生放送弾幕レコーダーを追加し、生放送弾幕を記録して「XML」をエクスポートできます.`],
+    [`feedsTranslate`, /*html*/`フィードごとの下に翻訳ボタンを追加して、フィード内容を中国語に翻訳します.「UI 翻訳」がオンになっている場合、「UI 翻訳」で設定された言語に翻訳されます.`],
+    [`feedsTranslateProvider`, /*html*/`機械翻訳の提供者`],
 ]);
 export default {
     export: { toolTips },
