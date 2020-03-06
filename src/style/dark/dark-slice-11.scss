@@ -827,3 +827,7 @@
     @include background-color("5");
   }
 }
+.share-card .footer {
+  @include color("a");
+  @include border-color("4");
+}
