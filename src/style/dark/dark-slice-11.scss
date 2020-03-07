@@ -827,7 +827,15 @@
     @include background-color("5");
   }
 }
-.share-card .footer {
-  @include color("a");
-  @include border-color("4");
+.message-list {
+  .share-card .footer {
+    @include color("a");
+    @include border-color("4");
+  }
+  .msg-push {
+    @include background-color("2");
+    hr {
+      @include background-color("4");
+    }
+  }
 }
