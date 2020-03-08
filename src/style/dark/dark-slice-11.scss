@@ -839,7 +839,8 @@
     }
   }
 }
-.guard-rank-cntr .rank-cntr .btn-box.btn-hundreds
-{
-    display: none !important;
+.live-skin-coloration-area .rank-cntr {
+  .daily-text {
+    @include color("e");
+  }
 }
