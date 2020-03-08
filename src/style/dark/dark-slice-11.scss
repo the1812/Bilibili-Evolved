@@ -817,3 +817,29 @@
     @include theme-border-color();
   }
 }
+.router-view .config {
+  @include background-color("4");
+  @include color("e");
+  .css-o1815x {
+    @include to-theme("blue");
+  }
+  .config-item:not(:first-child)::before {
+    @include background-color("5");
+  }
+}
+.message-list {
+  .share-card .footer {
+    @include color("a");
+    @include border-color("4");
+  }
+  .msg-push {
+    @include background-color("2");
+    hr {
+      @include background-color("4");
+    }
+  }
+}
+.guard-rank-cntr .rank-cntr .btn-box.btn-hundreds
+{
+    display: none !important;
+}
