@@ -275,7 +275,7 @@ export default {
     Title,
   },
   widget: {
-    condition: () => document.domain === "live.bilibili.com",
+    condition: () => document.URL.startsWith('https://live.bilibili.com'),
     content: resources.import('medalHelperHtml'),
     success: async () => {
       document.querySelectorAll(".medal-helper").forEach(it => {

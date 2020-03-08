@@ -1,5 +1,6 @@
 (async () => {
-  if (document.domain !== 't.bilibili.com' && document.domain !== 'space.bilibili.com') {
+  if (!document.URL.startsWith('https://t.bilibili.com') &&
+    !document.URL.startsWith('space.bilibili.com')) {
     return
   }
   const unlock = (container: Element) => {
