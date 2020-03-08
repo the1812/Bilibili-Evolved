@@ -26,10 +26,15 @@
     }
     .chat-history-panel {
       height: calc(100% - 145px) !important;
-      border-radius: 11px 11px 0 0 !important;
       .chat-history-list::-webkit-scrollbar-track {
         background: transparent !important;
       }
+    }
+    .chat-history-panel,
+    #pay-note-panel-vm .pay-note-panel,
+    #pay-note-panel-vm .pay-note-panel .detail-info .mask
+    {
+      border-radius: 11px 11px 0 0 !important;
     }
   }
 }
