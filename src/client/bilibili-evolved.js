@@ -76,6 +76,11 @@ Object.entries({
 })
 // GM4 polyfill end
 
+// Safari EventTarget polyfill
+if (!('EventTarget' in window)) {
+  window.EventTarget = Element
+}
+
 import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename } from './utils'
 import { settings, loadSettings, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
