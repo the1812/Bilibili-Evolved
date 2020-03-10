@@ -860,3 +860,18 @@
     @include color("e");
   }
 }
+.live-record-list {
+  .live-record-list-cntr {
+    @include background-color("4");
+    @include border-color();
+    .record-title {
+      @include color("e");
+    }
+    .pagination {
+      @include background-color();
+      .jumping-ctnr .jumping-input {
+        @include background-color("2");
+      }
+    }
+  }
+}
