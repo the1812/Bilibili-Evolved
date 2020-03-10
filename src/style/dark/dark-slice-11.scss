@@ -839,7 +839,24 @@
     }
   }
 }
-.guard-rank-cntr .rank-cntr .btn-box.btn-hundreds
-{
+.live-skin-coloration-area .rank-cntr {
+  .daily-text {
+    @include color("e");
+  }
+}
+.guard-rank-cntr .rank-cntr .btn-box {
+  &.btn-hundreds {
     display: none !important;
+  }
+  .daily-record-title {
+    @include background-color("2");
+    @include color("e");
+  }
+  .l-line,
+  .r-line {
+    @include border-color();
+  }
+  .guard-daily-record .daily-text {
+    @include color("e");
+  }
 }
