@@ -875,3 +875,6 @@
     }
   }
 }
+.bp-svg-icon.taobao-link {
+  @include to-theme("blue");
+}
