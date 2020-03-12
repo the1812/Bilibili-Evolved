@@ -832,10 +832,15 @@ Resource.manifest = {
       recordLiveDanmaku: '直播弹幕记录器',
     },
   },
-  forceHighQualityLive: {
-    path: 'force-high-quality-live.min.js',
+  useDefaultLiveQuality: {
+    path: 'default-live-quality.min.js',
     displayNames: {
-      forceHighQualityLive: '直播默认原画',
+      useDefaultLiveQuality: '使用默认直播画质',
+      defaultLiveQuality: '默认直播画质',
+    },
+    dropdown: {
+      key: 'defaultLiveQuality',
+      items: ['原画', '蓝光', '超清', '高清', '流畅'],
     },
   },
   downloadLiveRecords: {

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      604.91
+// @version      604.92
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1242,7 +1242,6 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/fix-fullscreen.min.js"] = (()=>{return(e,n)=>{unsafeWindow.Element.ALLOW_KEYBOARD_INPUT={};const t=unsafeWindow.Element.prototype.requestFullscreen;unsafeWindow.Element.prototype.requestFullscreen=function(){t.call(this)}}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/fold-comment.min.css"] = `.panel-area .bb-comment .fold-comment{position:-webkit-sticky;position:sticky;bottom:0;height:40px;width:calc(100% + 48px);font-size:14px;transform:translateX(-24px);display:flex;align-items:center;justify-content:center;background-color:#fff;color:#99a2aa;cursor:pointer;transition:.2s ease-out;z-index:1000;border-radius:4px}.panel-area .bb-comment .fold-comment:hover{color:#000}body.dark .panel-area .bb-comment .fold-comment{background-color:#444;color:#eee}body.dark .panel-area .bb-comment .fold-comment:hover{color:var(--theme-color)}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/fold-comment.min.js"] = (()=>{return(e,t)=>{if(document.URL.replace(window.location.search,"")==="https://t.bilibili.com/"){(async()=>{t.applyImportantStyle("foldCommentStyle");const e=await SpinQuery.select(".card-list .feed-card>.content");const l=e=>{const t=t=>{const l=document.createElement("div");l.classList.add("fold-comment");l.innerHTML="收起评论";const n=t.querySelector(".bb-comment");if(n===null){console.error("未找到评论区");return}else if(n.querySelector(".fold-comment")!==null){return}else{l.addEventListener("click",()=>{const t=e.querySelector(".button-bar").children[1];if(t!==null){t.click();e.scrollIntoView()}});n.insertAdjacentElement("beforeend",l)}};const l=e.querySelector(".panel-area");if(l===null){console.log(e)}if(l.childElementCount===0){const e=Observer.childList(l,n=>{if(n.length>0){t(l);e.forEach(e=>e.stop())}})}else{t(l)}};Observer.childList(e,()=>e.querySelectorAll("div.card").forEach(l))})()}}})();
-offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/force-high-quality-live.min.js"] = (()=>{return(o,e)=>{console.log("TODO:")}})();
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/frame-playback.min.css"] = `.frame-playback{display:none!important;height:100%;align-items:center;padding-left:4px;cursor:pointer;filter:brightness(0) invert(1)!important}.frame-playback.touch{padding-left:8px}.frame-playback.touch span{display:flex;align-items:center}.bilibili-player-video-control-bottom .frame-playback{display:flex!important}.frame-playback i{transition:.4s cubic-bezier(.18,.89,.32,1.28);opacity:.9}.frame-playback:not(.touch) i{margin-top:-2px}.bilibili-player.mode-fullscreen .frame-playback span,.bilibili-player.mode-webfullscreen .frame-playback span{transform:scale(1.2)}.bilibili-player.mode-fullscreen .frame-playback:not(.touch) i,.bilibili-player.mode-webfullscreen .frame-playback:not(.touch) i{margin-top:2px}.bilibili-player.mode-fullscreen .frame-playback,.bilibili-player.mode-webfullscreen .frame-playback{margin-left:0}.bilibili-player.mode-fullscreen .frame-playback.touch,.bilibili-player.mode-webfullscreen .frame-playback.touch{margin-left:6px}.frame-playback.prev-frame i{transform:scale(1.3) rotate(-90deg)}.frame-playback.prev-frame:hover i{transform:scale(1.4) rotate(-90deg);opacity:1}.frame-playback.prev-frame:active i{transform:scale(1.25) rotate(-90deg);opacity:1}.frame-playback.next-frame i{transform:scale(1.3) rotate(90deg)}.frame-playback.next-frame:hover i{transform:scale(1.4) rotate(90deg);opacity:1}.frame-playback.next-frame:active i{transform:scale(1.25) rotate(90deg);opacity:1}`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/frame-playback.min.html"] = `<div class="frame-playback prev-frame icons-enabled"title=上一帧><span><i class=icon-arrow></i></span></div><div class="frame-playback next-frame icons-enabled"title=下一帧><span><i class=icon-arrow></i></span></div>`;
 offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/min/frame-playback.min.js"] = (()=>{return(e,t)=>{const r=t.import("framePlaybackHtml");t.applyStyle("framePlaybackStyle");const a=async()=>{if(e.videoScreenshot){const e=await SpinQuery.select(".video-take-screenshot");if(e===null||document.querySelector(".frame-playback")){return}e.insertAdjacentHTML("afterend",r)}else{const e=await SpinQuery.select(".bilibili-player-video-time");if(e===null||document.querySelector(".frame-playback")){return}e.insertAdjacentHTML("afterend",r)}let t=0;const a=()=>dq("video").currentTime-=t;const i=()=>dq("video").currentTime+=t;Observer.attributesSubtree(".bilibili-player-video-quality-menu ul.bui-select-list",()=>{const e=document.querySelector(".bilibili-player-video-quality-menu .bui-select-item-active");const r=e?parseInt(e.getAttribute("data-value")):0;const a=(()=>{switch(r){case 116:case 74:return 6e4/1001;default:return 3e4/1001}})();t=1/a});document.addEventListener("keydown",e=>{if(e.shiftKey&&!["input","textarea"].includes(document.activeElement.nodeName.toLowerCase())){if(e.key==="ArrowLeft"){e.stopPropagation();e.preventDefault();a()}else if(e.key==="ArrowRight"){e.stopPropagation();e.preventDefault();i()}}});document.querySelector(".prev-frame").addEventListener("click",a);document.querySelector(".next-frame").addEventListener("click",i);if(e.touchVideoPlayer){document.querySelectorAll(".frame-playback").forEach(e=>e.classList.add("touch"))}};Observer.videoChange(a);return{reload:()=>document.querySelectorAll(".bilibili-player-video-control-bottom .frame-playback").forEach(e=>e.setAttribute("style","display: flex !important")),unload:()=>document.querySelectorAll(".bilibili-player-video-control-bottom .frame-playback").forEach(e=>e.setAttribute("style","display: none !important"))}}})();
@@ -2341,10 +2340,15 @@ Resource.manifest = {
       recordLiveDanmaku: '直播弹幕记录器',
     },
   },
-  forceHighQualityLive: {
-    path: 'force-high-quality-live.min.js',
+  useDefaultLiveQuality: {
+    path: 'default-live-quality.min.js',
     displayNames: {
-      forceHighQualityLive: '直播默认原画',
+      useDefaultLiveQuality: '使用默认直播画质',
+      defaultLiveQuality: '默认直播画质',
+    },
+    dropdown: {
+      key: 'defaultLiveQuality',
+      items: ['原画', '蓝光', '超清', '高清', '流畅'],
     },
   },
   downloadLiveRecords: {
