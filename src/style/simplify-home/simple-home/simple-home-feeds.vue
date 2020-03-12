@@ -147,7 +147,7 @@ export default {
 
     --card-width: 200px;
     --card-height: 250px;
-    --card-count: 2;
+    --card-count: 4;
     width: calc((var(--card-width) + 16px) * var(--card-count));
     padding-bottom: 16px;
     // scroll-snap-type: x mandatory;

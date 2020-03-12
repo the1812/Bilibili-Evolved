@@ -14,7 +14,7 @@ export default {
     TrendingVideos: () => import('./trending-videos.vue'),
     InfoRow: () => import('./online-info-row.vue'),
     Feeds: () => import('./simple-home-feeds.vue'),
-    Categories: () => import('./categories/simple-home-categories.vue'),
+    Categories: () => import('./categories/simple-home-categories.vue')
   }
 }
 </script>
@@ -27,7 +27,7 @@ export default {
     'blackboards trendings trendings'
     'feeds feeds info'
     'categories categories categories';
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: auto 1fr auto;
   grid-template-rows: repeat(3, auto);
   column-gap: 32px;
   row-gap: 16px;
@@ -191,14 +191,25 @@ export default {
     grid-area: categories;
     padding-bottom: 32px;
   }
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1100px) {
     & {
       grid-template-areas: 'blackboards' 'trendings' 'info' 'feeds' 'categories';
       grid-template-columns: 1fr;
       grid-template-rows: repeat(5, auto);
-      .blackboards, .trendings, .info-row, .feeds, .categories {
+      .blackboards,
+      .trendings,
+      .info-row,
+      .feeds,
+      .categories {
         justify-self: center;
       }
+    }
+    .info-row {
+      display: none;
+    }
+    .trendings,
+    .feeds {
+      transform: translateX(0);
     }
   }
 }

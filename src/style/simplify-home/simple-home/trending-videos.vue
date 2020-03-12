@@ -106,7 +106,7 @@ export default {
     }
     @media screen and (max-width: 1100px) and (min-width: 900px) {
       & {
-        --card-count: 1;
+        --card-count: 4;
       }
     }
     @media screen and (min-width: 1550px) {
