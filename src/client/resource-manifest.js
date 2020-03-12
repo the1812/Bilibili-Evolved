@@ -95,11 +95,22 @@ Resource.manifest = {
       ajaxHook: '启用 Ajax Hook API',
       scriptLoadingMode: '加载模式',
       guiSettingsDockSide: '设置面板停靠位置',
+      foregroundColorMode: '文本颜色',
     },
-    dropdown: {
-      key: 'guiSettingsDockSide',
-      items: ['左侧', '右侧']
-    },
+    dropdown: [
+      {
+        key: 'guiSettingsDockSide',
+        items: ['左侧', '右侧']
+      },
+      {
+        key: 'foregroundColorMode',
+        items: ['自动', '黑色', '白色'],
+      },
+      {
+        key: 'scriptLoadingMode',
+        items: ['同时', '延后', '同时(自动)', '延后(自动)']
+      },
+    ],
   },
   useDarkStyle: {
     path: 'dark-styles.min.js',

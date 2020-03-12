@@ -40,9 +40,11 @@ export class ThemeColors {
   }
   setupDom () {
     const input = document.querySelector(`input[key='customStyleColor']`)
-    input.addEventListener('change', () => {
-      this.reloadColor(input.value)
-    })
+    // input.addEventListener('change', () => {
+    //   this.reloadColor(input.value)
+    // })
+    addSettingsListener('customStyleColor', value => this.reloadColor(value))
+    addSettingsListener('foregroundColorMode', () => this.reloadColor(settings.customStyleColor))
     const grid = document.querySelector('.predefined-colors-grid')
     for (const color of Object.values(colors)) {
       const block = document.createElement('div')

@@ -436,7 +436,8 @@ declare global {
     feedsTranslateProvider: 'Bing' | 'Google' | 'Baidu' | 'GoogleCN',
     feedsTranslateLanguage: string,
     downloadLiveRecords: boolean
-    forceHighQualityLive: boolean
+    defaultLiveQuality: '原画' | '蓝光' | '超清' | '高清' | '流畅'
+    useDefaultLiveQuality: boolean,
     recordLiveDanmaku: boolean,
     foregroundColorMode: '自动' | '白色' | '黑色'
     latestVersionLink: string,
