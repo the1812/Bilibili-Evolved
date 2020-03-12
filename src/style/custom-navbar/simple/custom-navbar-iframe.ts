@@ -11,6 +11,7 @@ export class Iframe extends NavbarComponent {
   constructor(name: string, link: string, config: IframeConfig) {
     super()
     const { src, width, height, lazy, iframeName } = config
+    this.boundingWidth = parseInt(width)
     this.iframeName = iframeName
     this.html = name
     this.href = link

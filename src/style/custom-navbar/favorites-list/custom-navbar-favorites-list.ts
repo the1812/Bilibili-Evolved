@@ -12,6 +12,7 @@ interface FavoritesItemInfo extends VideoCardInfo {
 export class FavoritesList extends NavbarComponent {
   constructor() {
     super()
+    this.boundingWidth = 380
     this.noPadding = true
     this.href = `https://space.bilibili.com/${getUID()}/favlist`
     this.html = `收藏`

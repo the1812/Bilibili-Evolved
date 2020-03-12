@@ -3,6 +3,7 @@ import { NavbarComponent } from '../custom-navbar-component'
 export class Category extends NavbarComponent {
   constructor() {
     super()
+    this.boundingWidth = 350
     this.html = `主站`
     // this.requestedPopup = true
     this.popupHtml = /*html*/`

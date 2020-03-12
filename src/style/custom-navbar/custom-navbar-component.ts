@@ -1,7 +1,8 @@
-type PopupAction = (() => void) | null
+type PopupAction = (() => void | Promise<void>) | null
 export class NavbarComponent {
   public noPadding = false
   public transparent = false
+  public boundingWidth = 0
   constructor(
     public html = '',
     public popupHtml = '',
@@ -49,26 +50,45 @@ export class NavbarComponent {
     notifyElement.classList.add(styleMap[style])
   }
   async checkPosition() {
-    const element = this.element
-    const popup = element.querySelector('.main-content ~ .popup')
-    if (popup) {
-      console.log(popup, popup.childElementCount)
-    }
-    if (!popup || popup.childElementCount === 0) {
+    if (this.boundingWidth === 0) {
       return
     }
-    const rect = popup.getBoundingClientRect()
-    console.log(this.name, rect)
-    const totalWidth = document.documentElement.clientWidth
-    if (rect.left < 0) {
-      element.classList.remove('right-side')
-      element.classList.add('left-side')
-    } else if (rect.right > totalWidth) {
-      element.classList.remove('left-side')
-      element.classList.add('right-side')
-    } else {
-      element.classList.remove('left-side', 'right-side')
+    const element = this.element
+    const popup = element.querySelector('.main-content ~ .popup-container') as HTMLElement
+    if (!popup) {
+      return
     }
+    const rect = element.getBoundingClientRect()
+    const elementX = rect.left + rect.width / 2
+    const totalWidth = document.documentElement.clientWidth
+    const leftX = elementX - this.boundingWidth / 2
+    const rightX = elementX + this.boundingWidth / 2
+    if (leftX < 0) {
+      popup.style.transform = `translateX(${Math.abs(leftX)}px)`
+    } else if (rightX > totalWidth) {
+      popup.style.transform = `translateX(${-(rightX - totalWidth)}px)`
+    } else {
+      popup.style.transform = ''
+    }
+    // const popup = element.querySelector('.main-content ~ .popup')
+    // // if (popup) {
+    // //   console.log(popup, popup.childElementCount)
+    // // }
+    // if (!popup || popup.childElementCount === 0) {
+    //   return
+    // }
+    // const rect = popup.getBoundingClientRect()
+    // // console.log(this.name, rect)
+    // const totalWidth = document.documentElement.clientWidth
+    // if (rect.left < 0) {
+    //   element.classList.remove('right-side')
+    //   element.classList.add('left-side')
+    // } else if (rect.right > totalWidth) {
+    //   element.classList.remove('left-side')
+    //   element.classList.add('right-side')
+    // } else {
+    //   // element.classList.remove('left-side', 'right-side')
+    // }
   }
 }
 export default {

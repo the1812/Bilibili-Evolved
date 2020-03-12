@@ -139,19 +139,31 @@ export default (() => {
           components,
         },
         methods: {
-          requestPopup(component: NavbarComponent) {
+          async requestPopup(component: NavbarComponent) {
             if (!component.requestedPopup && !component.disabled && !component.active) {
               this.$set(component, `requestedPopup`, true)
-              component.initialPopup && component.initialPopup()
+              // component.initialPopup && component.initialPopup()
+              if (component.initialPopup) {
+                component.initialPopup()
+              }
               // console.log('lazy popup: ', component.name)
-              // component.checkPosition()
             }
-            component.onPopup && component.onPopup()
+            if (component.onPopup) {
+              component.onPopup()
+            }
+            // component.checkPosition()
           }
         },
         mounted() {
           document.body.classList.remove('custom-navbar-loading')
-          // components.forEach(c => c.checkPosition())
+          const checkPositions = () => {
+            // console.log('recalculate positions')
+            components.forEach(c => c.checkPosition())
+          }
+          addSettingsListener('customNavbarOrder', checkPositions, true)
+          addSettingsListener('customNavbarHidden', checkPositions)
+          addSettingsListener('customNavbarBoundsPadding', checkPositions)
+          window.addEventListener('resize', checkPositions)
         },
       })
     })()

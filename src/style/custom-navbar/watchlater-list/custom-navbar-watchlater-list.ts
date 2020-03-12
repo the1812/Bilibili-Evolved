@@ -14,6 +14,7 @@ interface WatchlaterCard {
 export class WatchlaterList extends NavbarComponent {
   constructor() {
     super()
+    this.boundingWidth = 380
     this.noPadding = true
     this.href = 'https://www.bilibili.com/watchlater/#/list'
     this.html = '稍后再看'

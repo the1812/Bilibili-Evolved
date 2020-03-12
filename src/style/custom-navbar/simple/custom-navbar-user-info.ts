@@ -7,6 +7,7 @@ export class UserInfo extends NavbarComponent {
   }
   constructor() {
     super()
+    this.boundingWidth = 240
     this.noPadding = true
     this.href = 'https://space.bilibili.com'
     this.html = /*html*/`

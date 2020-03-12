@@ -345,11 +345,11 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   }
   li.left-side .popup {
     left: 0;
-    transform: translateY(-6px) translateX(0);
+    transform: translateY(-6px) translateX(10%);
   }
   li.right-side .popup {
     left: 100%;
-    transform: translateY(-6px) translateX(-100%);
+    transform: translateY(-6px) translateX(-90%);
   }
   &.dark .popup {
     box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px 0px;
@@ -851,8 +851,12 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 }
 @import "./activities/activities", "./subscriptions/subscriptions", "_round-corner", "./settings/settings",
   "./category/category", "./watchlater-list/watchlater-list", "./favorites-list/favorites-list", "./history-list/history-list";
-
-.custom-navbar > ul > li:not(.disabled):hover > .popup,
+.custom-navbar > ul > li:not(.disabled) .popup-container {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+}
+.custom-navbar > ul > li:not(.disabled):hover .popup-container > .popup,
 #custom-navbar-home-popup .category-item:hover .popup,
 #custom-navbar-search:focus-within ~ .search-list:not(.empty),
 .custom-navbar .search-list:not(.empty):focus-within {
@@ -860,12 +864,12 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   pointer-events: initial;
   opacity: 1;
 }
-.custom-navbar > ul > li:not(.disabled).right-side:hover > .popup {
-  transform: translateY(0) translateX(-100%);
+.custom-navbar > ul > li:not(.disabled).right-side:hover .popup-container > .popup {
+  transform: translateY(0) translateX(-90%);
   left: 100%;
 }
-.custom-navbar > ul > li:not(.disabled).left-side:hover > .popup {
-  transform: translateY(0) translateX(0);
+.custom-navbar > ul > li:not(.disabled).left-side:hover .popup-container > .popup {
+  transform: translateY(0) translateX(10%);
   left: 0;
 }
 #custom-navbar-home-popup .category-item:hover .popup {

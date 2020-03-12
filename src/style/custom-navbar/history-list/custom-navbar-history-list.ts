@@ -164,6 +164,7 @@ const tabs: HistoryTab[] = [
 export class HistoryList extends NavbarComponent {
   constructor() {
     super()
+    this.boundingWidth = 350
     this.noPadding = true
     this.href = `https://www.bilibili.com/account/history`
     this.html = `历史`
