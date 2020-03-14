@@ -375,6 +375,12 @@ $highlight-map: (
 .live-room-app .aside-area .chat-control-panel {
   @include no-image();
 }
+.international-home .contact-help {
+  @include color("9");
+  @include background-color("3");
+  @include border-color();
+  box-shadow: 0 6px 10px 0 #111 !important;
+}
 .bili-header-m,
 .international-header,
 .van-popover {
