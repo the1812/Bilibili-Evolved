@@ -381,7 +381,7 @@ export class DanmakuConverter {
   constructor({ title, font, alpha, duration, blockTypes, resolution, bottomMarginPercent, bold }: DanmakuConverterConfig) {
     this.title = title
     this.font = font
-    this.alpha = Math.round(alpha * 100).toString(16).toUpperCase()
+    this.alpha = Math.round(alpha * 255).toString(16).toUpperCase().padStart(2, '0')
     this.duration = duration
     this.blockTypes = blockTypes
     this.resolution = resolution

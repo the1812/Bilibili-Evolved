@@ -23,7 +23,7 @@ export async function convertToAss(xml: string) {
       return index
     }
     config.font = (dq('.bilibili-player-video-danmaku-setting-right-font .bui-select-result') as HTMLElement).innerText
-    config.alpha = parseFloat((dq('.bilibili-player-setting-opacity .bui-bar') as HTMLElement).style.transform!.replace(/scaleX\(([\d\.]+)\)/, '$1'))
+    config.alpha = 1 - parseFloat((dq('.bilibili-player-setting-opacity .bui-bar') as HTMLElement).style.transform!.replace(/scaleX\(([\d\.]+)\)/, '$1'))
     config.duration = (() => {
       const scrollDuration = 18 - 3 * getSliderFactor('.bilibili-player-setting-speedplus .bui-thumb')
       return (danmaku: { type: number }) => {
@@ -68,7 +68,7 @@ export async function convertToAss(xml: string) {
     // The default config
     config = {
       font: '微软雅黑',
-      alpha: 0.6,
+      alpha: 0.4,
       duration: (danmaku: { type: number }) => {
         switch (danmaku.type) {
           case 4:
