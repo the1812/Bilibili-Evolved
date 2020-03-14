@@ -390,6 +390,32 @@
     justify-content: space-between;
     align-items: center;
   }
+  .manual-input {
+    &-header {
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &-content {
+      display: flex;
+      justify-content: stretch;
+      textarea {
+        margin: 0;
+        height: 180px;
+        resize: none;
+        padding: 8px;
+        border-radius: 4px;
+        flex: 1 0 0;
+        outline: none !important;
+        border-color: #dfdfdf;
+        &:focus,
+        &:focus-within {
+          border-color: var(--theme-color);
+        }
+      }
+    }
+  }
 }
 body.dark .download-video .direct-download .progress .foreground {
   background: linear-gradient(to right, var(--theme-color-70), var(--theme-color));
