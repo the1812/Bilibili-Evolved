@@ -1,8 +1,7 @@
-import { getFriendlyTitle, formatTitle } from '../title'
+import { getFriendlyTitle } from '../title'
 import { VideoInfo, DanmakuInfo } from '../video-info'
 import { VideoDownloaderFragment } from './video-downloader-fragment'
 import { DownloadVideoPackage } from './download-video-package'
-import { VideoDash } from './video-dash'
 import { BatchExtractor, BatchTitleParameter } from './batch-download'
 
 interface PageData {
@@ -785,8 +784,12 @@ async function loadPanel() {
         }
         try {
           this.busy = true
-          if (!this.downloadSingle) {
+          if (this.selectedTab.name === 'batch') {
             await this.exportBatchData(type)
+            return
+          }
+          if (this.selectedTab.name === 'manual') {
+            await this.exportManualData(type)
             return
           }
           const format = this.getFormat() as VideoFormat
@@ -932,6 +935,38 @@ async function loadPanel() {
               break
             default:
               return
+          }
+        } catch (error) {
+          logError(error)
+        } finally {
+          toast.dismiss()
+        }
+      },
+      async exportManualData(type: ExportType) {
+        const toast = Toast.info('获取链接中...', '手动输入')
+        const { ManualInputBatch } = await import('./batch-download')
+        const batch = new ManualInputBatch({
+          api: await (new Video().getApiGenerator(this.dash)),
+          itemFilter: () => true,
+        })
+        batch.items = this.manualInputItems
+        try {
+          switch (type) {
+            default:
+            case 'aria2': {
+              const result = await batch.collectAria2(this.getFormat().quality, false) as string
+              await DownloadVideoPackage.single(
+                'manual-exports.txt',
+                new Blob([result], { type: 'text/plain' }),
+                { ffmpeg: this.ffmpegOption }
+              )
+              break
+            }
+            case 'aria2RPC': {
+              await batch.collectAria2(this.getFormat().quality, true)
+              Toast.success(`成功发送了批量请求.`, 'aria2 RPC', 3000)
+              break
+            }
           }
         } catch (error) {
           logError(error)
