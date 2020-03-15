@@ -37,6 +37,7 @@ declare global {
   type DanmakuOption = '无' | 'XML' | 'ASS'
   type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
   type Pattern = string
+  type Dropdown = { key: string; items: string[] }
   interface RpcOption {
     secretKey: string
     baseDir: string
@@ -202,14 +203,14 @@ declare global {
     dependencies: Array<Resource>
     styles: Array<Resource>
     displayName: string
-    dropdown: object
+    dropdown: Dropdown | Dropdown[]
     downloaded: boolean
     constructor(url: string, styles?: Resource[])
     download(): Promise<string>
     getStyle(id: string): string
     getPriorStyle(): any
     applyStyle(id: string, important: boolean): void
-    static all: object
+    static all: { [key: string]: Resource }
     static displayNames: object
     static manifest: object
     static root: string
