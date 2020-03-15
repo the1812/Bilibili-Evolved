@@ -83,12 +83,10 @@ export class Danmaku {
   }
 }
 export class DanmakuInfo {
-  cid: string
   rawXML: string
   // xml: HTMLElement
   // danmakus: Danmaku[]
-  constructor(cid: string) {
-    this.cid = cid
+  constructor(public cid: string | number) {
   }
   async fetchInfo() {
     const xml = await Ajax.getText(`https://api.bilibili.com/x/v1/dm/list.so?oid=${this.cid}`)

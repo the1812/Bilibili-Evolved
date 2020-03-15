@@ -943,13 +943,39 @@ async function loadPanel() {
         }
       },
       async exportManualData(type: ExportType) {
-        const toast = Toast.info('获取链接中...', '手动输入')
         const { ManualInputBatch } = await import('./batch-download')
         const batch = new ManualInputBatch({
           api: await (new Video().getApiGenerator(this.dash)),
           itemFilter: () => true,
         })
         batch.items = this.manualInputItems
+        if (this.danmakuModel.value !== '无') {
+          const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
+          const pack = new DownloadVideoPackage()
+          try {
+            if (this.danmakuModel.value === 'XML') {
+              for (const item of (await batch.getItemList())) {
+                const danmakuInfo = new DanmakuInfo(item.cid)
+                await danmakuInfo.fetchInfo()
+                pack.add(ManualInputBatch.formatTitle(item.titleParameters) + '.xml', danmakuInfo.rawXML)
+              }
+            } else {
+              const { convertToAss } = await import('../download-danmaku')
+              for (const item of (await batch.getItemList())) {
+                const danmakuInfo = new DanmakuInfo(item.cid)
+                await danmakuInfo.fetchInfo()
+                pack.add(ManualInputBatch.formatTitle(item.titleParameters) + '.ass', await convertToAss(danmakuInfo.rawXML))
+              }
+            }
+            await pack.emit('manual-exports.danmakus.zip')
+          } catch (error) {
+            logError(`弹幕下载失败`)
+            throw error
+          } finally {
+            danmakuToast.dismiss()
+          }
+        }
+        const toast = Toast.info('获取链接中...', '批量导出')
         try {
           switch (type) {
             default:
