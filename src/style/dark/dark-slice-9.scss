@@ -375,6 +375,101 @@ $highlight-map: (
 .live-room-app .aside-area .chat-control-panel {
   @include no-image();
 }
+.charge-container {
+  @include background-color();
+  .charge-header-close {
+    @include to-white();
+  }
+  .charge-header-bg {
+    @include no-image();
+  }
+  .charge-header {
+    .user-link {
+      @include background-color("3");
+      @include border-color();
+      .user-name {
+        @include color("e");
+      }
+      &:hover .user-name {
+        @include theme-color();
+      }
+    }
+  }
+  .battery-item {
+    .battery-bg {
+      @include background-color("3");
+      @include border-color();
+    }
+    .battery-tool input {
+      @include background-color();
+      @include border-color("4");
+      @include color("e");
+    }
+    &.active {
+      .battery-bg {
+        @include background-color("4");
+        @include theme-border-color();
+      }
+      .battery-text {
+        @include theme-color();
+      }
+      .battery-tool input {
+        @include theme-border-color();
+      }
+    }
+  }
+  .charge-info {
+    @include color("e");
+    span {
+      @include theme-color();
+    }
+  }
+  .split-line {
+    @include background-color("4");
+  }
+  .battery-pay-info {
+    @include color("e");
+    span {
+      @include theme-color();
+    }
+    .battery-pay-tips span {
+      @include color("a");
+    }
+  }
+  .battery-tips {
+    @include color("a");
+    a,
+    a:hover {
+      @include theme-color();
+    }
+  }
+  .checkbox-bwxr.active {
+    @include to-theme("blue");
+  }
+  .btn-default {
+    @include theme-background-color("80");
+    @include foreground-color();
+    @include border-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
+  .charge-success-content {
+    > p {
+      @include color("e");
+      span,
+      i {
+        @include theme-color();
+      }
+    }
+    > .charge-success-message {
+      @include theme-border-color();
+      .charge-success-message-tool span {
+        @include color("a");
+      }
+    }
+  }
+}
 .international-home .contact-help {
   @include color("9");
   @include background-color("3");
