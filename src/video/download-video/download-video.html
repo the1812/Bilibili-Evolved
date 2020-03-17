@@ -45,7 +45,9 @@
     </div>
     <div class="option-item">
       清晰度
-      <v-dropdown @change="formatChange(true)" :items="qualityModel.items" :value.sync="qualityModel.value">
+      <v-dropdown v-if="selectedTab.name !== 'manual'" @change="formatChange(true)" :items="qualityModel.items" :value.sync="qualityModel.value">
+      </v-dropdown>
+      <v-dropdown v-else :items="manualQualityModel.items" :value.sync="manualQualityModel.value">
       </v-dropdown>
     </div>
     <div class="option-item">

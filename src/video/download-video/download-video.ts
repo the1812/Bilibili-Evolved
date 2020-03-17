@@ -161,6 +161,16 @@ class VideoFormat {
     return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
   }
 }
+const allFormats: VideoFormat[] = [
+  new VideoFormat(120, '4K', '超清 4K'),
+  new VideoFormat(116, '1080P60', '高清 1080P60'),
+  new VideoFormat(112, '1080P+', '高清 1080P+'),
+  new VideoFormat(80, '1080P', '高清 1080P'),
+  new VideoFormat(74, '720P60', '高清 720P60'),
+  new VideoFormat(64, '720P', '高清 720P'),
+  new VideoFormat(32, '480P', '清晰 480P'),
+  new VideoFormat(15, '320P', '流畅 320P'),
+]
 class VideoDownloader {
   format: VideoFormat
   fragments: VideoDownloaderFragment[]
@@ -661,6 +671,10 @@ async function loadPanel() {
         value: selectedFormat!.displayName,
         items: formats.map(f => f.displayName)
       },
+      manualQualityModel: {
+        value: allFormats[1].displayName,
+        items: allFormats.map(f => f.displayName),
+      },
       danmakuModel: {
         value: settings.downloadVideoDefaultDanmaku as DanmakuOption,
         items: ['无', 'XML', 'ASS'] as DanmakuOption[]
@@ -771,7 +785,12 @@ async function loadPanel() {
         }
       },
       getFormat() {
-        const format = formats.find(f => f.displayName === this.qualityModel.value)
+        let format: VideoFormat | undefined
+        if (this.selectedTab.name === 'manual') {
+          format = allFormats.find(f => f.displayName === this.manualQualityModel.value)
+        } else {
+          format = formats.find(f => f.displayName === this.qualityModel.value)
+        }
         if (!format) {
           console.error(`No format found. model value = ${this.qualityModel.value}`)
           return null
@@ -943,6 +962,10 @@ async function loadPanel() {
         }
       },
       async exportManualData(type: ExportType) {
+        if (this.manualInputItems.length === 0) {
+          Toast.info('请至少输入一个有效的视频链接!', '手动输入', 3000)
+          return
+        }
         const { ManualInputBatch } = await import('./batch-download')
         const batch = new ManualInputBatch({
           api: await (new Video().getApiGenerator(this.dash)),
@@ -950,7 +973,7 @@ async function loadPanel() {
         })
         batch.items = this.manualInputItems
         if (this.danmakuModel.value !== '无') {
-          const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
+          const danmakuToast = Toast.info('下载弹幕中...', '手动输入')
           const pack = new DownloadVideoPackage()
           try {
             if (this.danmakuModel.value === 'XML') {
@@ -975,7 +998,7 @@ async function loadPanel() {
             danmakuToast.dismiss()
           }
         }
-        const toast = Toast.info('获取链接中...', '批量导出')
+        const toast = Toast.info('获取链接中...', '手动输入')
         try {
           switch (type) {
             default:
