@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.10.9
+// @version      1.10.10
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -97,7 +97,7 @@ import { resourceManifest } from './resource-manifest'
 import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
 import { getScriptBlocker } from './script-blocker'
-import { installStyle, uninstallStyle } from './custom-styles'
+import { installStyle, uninstallStyle, toggleStyle } from './custom-styles'
 import { store } from './store'
 
 ;(async () => {
@@ -231,6 +231,7 @@ import { store } from './store'
       escapeFilename,
       installStyle,
       uninstallStyle,
+      toggleStyle,
       store,
       resources,
       theWorld: waitTime => {
