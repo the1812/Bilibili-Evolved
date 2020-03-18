@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      610.95
+// @version      610.97
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -78,9 +78,40 @@ Object.entries({
 // GM4 polyfill end
 
 // Safari EventTarget polyfill
-if (!('EventTarget' in window)) {
-  window.EventTarget = Element
+window.EventTarget = class EventTarget {
+  constructor() {
+    this.listeners = {}
+  }
+  addEventListener(type, callback) {
+    if (!(type in this.listeners)) {
+      this.listeners[type] = []
+    }
+    this.listeners[type].push(callback)
+  }
+  removeEventListener(type, callback) {
+    if (!(type in this.listeners)) {
+      return
+    }
+    let stack = this.listeners[type]
+    for (let i = 0, l = stack.length; i < l; i++) {
+      if (stack[i] === callback) {
+        stack.splice(i, 1)
+        return
+      }
+    }
+  }
+  dispatchEvent(event) {
+    if (!(event.type in this.listeners)) {
+      return true
+    }
+    let stack = this.listeners[event.type].slice()
+    for (let i = 0, l = stack.length; i < l; i++) {
+      stack[i].call(this, event)
+    }
+    return !event.defaultPrevented
+  }
 }
+// Safari EventTarget polyfill end
 
 function logError (error) {
   let finalMessage = error
