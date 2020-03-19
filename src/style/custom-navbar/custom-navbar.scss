@@ -817,11 +817,27 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     font-style: normal;
   }
   .search-list-item {
-    padding: 6px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    &-text {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      flex: 1;
+      padding: 6px 0 6px 6px;
+    }
+    .delete-history {
+      opacity: 0.5;
+      padding: 6px 6px 6px 0;
+      line-height: 1;
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
   .search-list-item:hover,
   .search-list-item:focus-within {
@@ -835,6 +851,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 6px;
   }
   .search-list-item.clear-history .mdi {
     line-height: 1;
@@ -850,7 +867,8 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   }
 }
 @import "./activities/activities", "./subscriptions/subscriptions", "_round-corner", "./settings/settings",
-  "./category/category", "./watchlater-list/watchlater-list", "./favorites-list/favorites-list", "./history-list/history-list";
+  "./category/category", "./watchlater-list/watchlater-list", "./favorites-list/favorites-list",
+  "./history-list/history-list";
 .custom-navbar > ul > li:not(.disabled) .popup-container {
   position: absolute;
   top: 100%;

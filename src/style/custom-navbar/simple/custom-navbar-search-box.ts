@@ -19,8 +19,39 @@ export class SearchBox extends NavbarComponent {
         </button>
       </form>
       <div class="popup search-list" :class="{empty: items.length === 0}">
-        <div class="search-list-item" tabindex="0" v-for="(item, index) of items" v-html="item.html" :title="isHistory ? item.html : ''" @keydown.enter="submit(item.value)" @click.self="submit(item.value)" @keydown.shift.delete="deleteItem(item, index)" @keydown.down.prevent="nextItem(index)" @keydown.up.prevent="previousItem(index)"></div>
-        <div tabindex="0" v-if="items.length > 0 && isHistory" class="search-list-item clear-history" @click="clearSearchHistory()" @keydown.enter="clearSearchHistory()" @keydown.down.prevent="nextItem(items.length)" @keydown.up.prevent="previousItem(items.length)"><i class="mdi mdi-18px mdi-delete-sweep"></i>清除搜索历史</div>
+        <div
+          class="search-list-item"
+          tabindex="0"
+          v-for="(item, index) of items"
+          :title="isHistory ? item.html : ''"
+          @keydown.enter="submit(item.value)"
+          @click.self="submit(item.value)"
+          @keydown.shift.delete="deleteItem(item, index)"
+          @keydown.down.prevent="nextItem(index)"
+          @keydown.up.prevent="previousItem(index)">
+          <div
+            class="search-list-item-text"
+            :title="item.value"
+            v-html="item.html"></div>
+          <div
+            class="delete-history"
+            v-if="isHistory"
+            title="删除此项"
+            @click="deleteItem(item, index)">
+            <i class="mdi mdi-18px mdi-close"></i>
+          </div>
+        </div>
+        <div
+          class="search-list-item clear-history"
+          tabindex="0"
+          v-if="items.length > 0 && isHistory"
+          @click="clearSearchHistory()"
+          @keydown.enter="clearSearchHistory()"
+          @keydown.down.prevent="nextItem(items.length)"
+          @keydown.up.prevent="previousItem(items.length)">
+            <i class="mdi mdi-18px mdi-delete-sweep"></i>
+            清除搜索历史
+          </div>
       </div>
     `
     this.init()
