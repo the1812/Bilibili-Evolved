@@ -3,6 +3,49 @@ interface SuggestItem {
   value: string
   html: string
 }
+const originalHistory = new class {
+  getAll(): SearchHistoryItem[] {
+    const history = localStorage.getItem('search_history')
+    if (!history) {
+      return []
+    }
+    return (JSON.parse(history) as any[]).map(it => {
+      return {
+        keyword: it.value,
+        date: new Date(it.timestamp).toJSON(),
+        count: 1,
+      }
+    })
+  }
+  saveAll(items: SearchHistoryItem[]) {
+    localStorage.setItem('search_history', JSON.stringify(items))
+  }
+  clear() {
+    localStorage.setItem('search_history', '[]')
+  }
+  merge(items: SearchHistoryItem[]) {
+    const originalItems = this.getAll()
+    return _.uniqBy(items.concat(originalItems), it => it.keyword).slice(0, 10)
+  }
+  add(item: SearchHistoryItem) {
+    const items = this.getAll()
+    const existingItem = items.find(it => it.keyword === item.keyword)
+    if (existingItem) {
+      Object.assign(existingItem, item)
+    } else {
+      items.push(item)
+    }
+    this.saveAll(items)
+  }
+  remove(item: SearchHistoryItem) {
+    const items = this.getAll()
+    const index = items.findIndex(it => it.keyword === item.keyword)
+    if (index > -1) {
+      items.splice(index, 1)
+      this.saveAll(items)
+    }
+  }
+}
 export class SearchBox extends NavbarComponent {
   constructor() {
     super()
@@ -68,7 +111,7 @@ export class SearchBox extends NavbarComponent {
         return false
       }
       if (/^av[\d]+$/i.test(keywordInput.value)) {
-        window.open(`https://www.bilibili.com/${keywordInput.value}`)
+        window.open(`https://www.bilibili.com/${keywordInput.value}`, '_blank')
         e.preventDefault()
         return false
       }
@@ -82,18 +125,15 @@ export class SearchBox extends NavbarComponent {
       if (historyItem) {
         historyItem.count++
         historyItem.date = new Date().toJSON()
-        console.log(historyItem)
+        originalHistory.add(historyItem)
       } else {
-        settings.searchHistory.unshift({
+        const newItem = {
           count: 1,
           keyword: keywordInput.value,
           date: new Date().toJSON(),
-        })
-        console.log({
-          count: 1,
-          keyword: keywordInput.value,
-          date: new Date().toJSON(),
-        })
+        }
+        settings.searchHistory.unshift(newItem)
+        originalHistory.add(newItem)
       }
       settings.searchHistory = settings.searchHistory.slice(0, 10) // save history
       return true
@@ -148,11 +188,14 @@ export class SearchBox extends NavbarComponent {
           }
         },
         deleteItem(item: SuggestItem, index: number) {
-          settings.searchHistory.splice(settings.searchHistory.findIndex(it => it.keyword === item.value), 1)
+          const historyIndex = settings.searchHistory.findIndex(it => it.keyword === item.value)
+          const [historyItem] = settings.searchHistory.splice(historyIndex, 1)
+          originalHistory.remove(historyItem)
           settings.searchHistory = settings.searchHistory
           this.items.splice(index, 1)
         },
         clearSearchHistory() {
+          originalHistory.clear()
           settings.searchHistory = []
           this.items = []
         }
@@ -163,7 +206,7 @@ export class SearchBox extends NavbarComponent {
       const text = keywordInput.value
       searchList.isHistory = text === ''
       if (searchList.isHistory) {
-        searchList.items = settings.searchHistory
+        searchList.items = originalHistory.merge(settings.searchHistory)
           .sort((a, b) => {
             const aDate = a.date ? new Date(a.date) : new Date(0)
             const bDate = b.date ? new Date(b.date) : new Date(0)
