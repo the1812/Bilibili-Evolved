@@ -204,7 +204,7 @@ export class HistoryList extends NavbarComponent {
                     <div v-if="h.durationText" class="floating duration">{{h.durationText}}</div>
                   </a>
                   <a class="title" target="_blank" :href="h.href" :title="h.title">
-                    {{h.title}}
+                    {{h.title || h.upName + '的直播间'}}
                   </a>
                   <a class="up" target="_blank" :href="h.isBangumi ? h.href : 'https://space.bilibili.com/' + h.upID" :title="h.upName">
                     <!--<icon type="extended" icon="up"></icon>-->
