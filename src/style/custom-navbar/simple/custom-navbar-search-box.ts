@@ -125,7 +125,7 @@ export class SearchBox extends NavbarComponent {
       if (historyItem) {
         historyItem.count++
         historyItem.date = new Date().toJSON()
-        originalHistory.add(historyItem)
+        // originalHistory.add(historyItem)
       } else {
         const newItem = {
           count: 1,
@@ -133,7 +133,7 @@ export class SearchBox extends NavbarComponent {
           date: new Date().toJSON(),
         }
         settings.searchHistory.unshift(newItem)
-        originalHistory.add(newItem)
+        // originalHistory.add(newItem)
       }
       settings.searchHistory = settings.searchHistory.slice(0, 10) // save history
       return true
@@ -190,12 +190,12 @@ export class SearchBox extends NavbarComponent {
         deleteItem(item: SuggestItem, index: number) {
           const historyIndex = settings.searchHistory.findIndex(it => it.keyword === item.value)
           const [historyItem] = settings.searchHistory.splice(historyIndex, 1)
-          originalHistory.remove(historyItem)
+          // originalHistory.remove(historyItem)
           settings.searchHistory = settings.searchHistory
           this.items.splice(index, 1)
         },
         clearSearchHistory() {
-          originalHistory.clear()
+          // originalHistory.clear()
           settings.searchHistory = []
           this.items = []
         }
@@ -206,7 +206,8 @@ export class SearchBox extends NavbarComponent {
       const text = keywordInput.value
       searchList.isHistory = text === ''
       if (searchList.isHistory) {
-        searchList.items = originalHistory.merge(settings.searchHistory)
+        // searchList.items = originalHistory.merge(settings.searchHistory)
+        searchList.items = settings.searchHistory
           .sort((a, b) => {
             const aDate = a.date ? new Date(a.date) : new Date(0)
             const bDate = b.date ? new Date(b.date) : new Date(0)
