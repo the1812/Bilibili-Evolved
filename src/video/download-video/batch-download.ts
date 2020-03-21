@@ -273,6 +273,29 @@ class BangumiBatch extends Batch {
     return JSON.stringify(result)
   }
 }
+export class ManualInputBatch extends VideoEpisodeBatch {
+  items: string[] = []
+  async getItemList() {
+    const { VideoInfo } = await import('../video-info')
+    const pages = await Promise.all(this.items.map(async aid => {
+      const info = new VideoInfo(aid)
+      await info.fetchInfo()
+      return info.pages.map((p, index) => {
+        return {
+          aid,
+          cid: p.cid,
+          titleParameters: {
+            n: (index + 1).toString(),
+            ep: p.title
+          },
+          title: `P${(index + 1)} ${p.title}`,
+        }
+      })
+    }))
+    return _.flatten(pages)
+  }
+}
+
 const extractors = [BangumiBatch, VideoEpisodeBatch, Bnj2020Batch]
 let ExtractorClass: new (config: BatchExtractorConfig) => Batch
 export class BatchExtractor {
@@ -327,6 +350,7 @@ export class BatchExtractor {
 }
 export default {
   export: {
-    BatchExtractor
+    BatchExtractor,
+    ManualInputBatch,
   }
 }

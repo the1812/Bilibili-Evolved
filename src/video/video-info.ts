@@ -83,22 +83,19 @@ export class Danmaku {
   }
 }
 export class DanmakuInfo {
-  cid: string
   rawXML: string
-  xml: HTMLElement
-  danmakus: Danmaku[]
-  constructor(cid: string) {
-    this.cid = cid
+  // xml: HTMLElement
+  // danmakus: Danmaku[]
+  constructor(public cid: string | number) {
   }
   async fetchInfo() {
     const xml = await Ajax.getText(`https://api.bilibili.com/x/v1/dm/list.so?oid=${this.cid}`)
     this.rawXML = xml
-
-    const dom = new DOMParser().parseFromString(xml, 'application/xml').documentElement
-    this.xml = dom
-    this.danmakus = [...dom.querySelectorAll('d[p]')].map(it => {
-      return new Danmaku(it.innerHTML, it.getAttribute('p')!)
-    })
+    // const dom = new DOMParser().parseFromString(xml, 'application/xml').documentElement
+    // this.xml = dom
+    // this.danmakus = [...dom.querySelectorAll('d[p]')].map(it => {
+    //   return new Danmaku(it.innerHTML, it.getAttribute('p')!)
+    // })
   }
 }
 export class BangumiInfo {
