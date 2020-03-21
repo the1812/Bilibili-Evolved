@@ -163,7 +163,7 @@ class VideoEpisodeBatch extends Batch {
         })
       } else {
         const { getDashInfo, dashToFragments } = await import('./video-dash')
-        const info = await getDashInfo(url, typeof quality === 'string' ? parseInt(quality) : quality)
+        const info = await getDashInfo(url, typeof quality === 'string' ? parseInt(quality) : quality, true)
         fragments = dashToFragments(info)
       }
       result.push({

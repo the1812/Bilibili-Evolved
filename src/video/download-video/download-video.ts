@@ -784,13 +784,18 @@ async function loadPanel() {
           throw error
         }
       },
+      getManualFormat() {
+        let format: VideoFormat | undefined
+        format = allFormats.find(f => f.displayName === this.manualQualityModel.value)
+        if (!format) {
+          console.error(`No format found. model value = ${this.manualQualityModel.value}`)
+          return null
+        }
+        return format
+      },
       getFormat() {
         let format: VideoFormat | undefined
-        if (this.selectedTab.name === 'manual') {
-          format = allFormats.find(f => f.displayName === this.manualQualityModel.value)
-        } else {
-          format = formats.find(f => f.displayName === this.qualityModel.value)
-        }
+        format = formats.find(f => f.displayName === this.qualityModel.value)
         if (!format) {
           console.error(`No format found. model value = ${this.qualityModel.value}`)
           return null
@@ -1003,7 +1008,7 @@ async function loadPanel() {
           switch (type) {
             default:
             case 'aria2': {
-              const result = await batch.collectAria2(this.getFormat().quality, false) as string
+              const result = await batch.collectAria2(this.getManualFormat().quality, false) as string
               await DownloadVideoPackage.single(
                 'manual-exports.txt',
                 new Blob([result], { type: 'text/plain' }),
@@ -1012,7 +1017,7 @@ async function loadPanel() {
               break
             }
             case 'aria2RPC': {
-              await batch.collectAria2(this.getFormat().quality, true)
+              await batch.collectAria2(this.getManualFormat().quality, true)
               Toast.success(`成功发送了批量请求.`, 'aria2 RPC', 3000)
               break
             }
