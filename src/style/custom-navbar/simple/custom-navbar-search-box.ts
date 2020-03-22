@@ -68,11 +68,11 @@ export class SearchBox extends NavbarComponent {
           v-for="(item, index) of items"
           :title="isHistory ? item.html : ''"
           @keydown.enter="submit(item.value)"
-          @click.self="submit(item.value)"
           @keydown.shift.delete="deleteItem(item, index)"
           @keydown.down.prevent="nextItem(index)"
           @keydown.up.prevent="previousItem(index)">
           <div
+            @click.self="submit(item.value)"
             class="search-list-item-text"
             :title="item.value"
             v-html="item.html"></div>
