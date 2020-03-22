@@ -1,6 +1,7 @@
 <template>
   <div class="rank" :class="{bangumi: viewMode === 'bangumi'}">
-    <div class="area-header">排行榜</div>
+    <a v-if="rankLink" target="_blank" :href="rankLink" class="area-header">排行榜</a>
+    <div v-else class="area-header">排行榜</div>
     <a
       class="rank-item"
       :class="{bangumi: viewMode === 'bangumi'}"
@@ -66,7 +67,7 @@
 
 <script lang="ts">
 export default {
-  props: ['videos', 'view-mode'],
+  props: ['videos', 'view-mode', 'rank-link'],
   filters: {
     bigNumber(value: number) {
       return formatCount(value)
@@ -108,8 +109,13 @@ export default {
     top: 0;
     z-index: 1000;
     background-color: #f4f4f4;
+    color: black;
+    &:link {
+      cursor: pointer;
+    }
     body.dark & {
       background-color: #161616;
+      color: #eee;
     }
   }
   @mixin hover-details {

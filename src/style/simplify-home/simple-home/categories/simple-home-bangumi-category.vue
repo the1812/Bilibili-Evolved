@@ -11,7 +11,7 @@
     ></bangumi-timeline>
     <!-- <div class="feeds" v-if="layout === '动态'">
     </div>-->
-    <rank-list :videos="rank.videos" view-mode="bangumi"></rank-list>
+    <rank-list :videos="rank.videos" view-mode="bangumi" :rank-link="rankLink"></rank-list>
     <div class="timeline loading"></div>
     <div class="rank loading"></div>
   </div>
@@ -43,6 +43,9 @@ export default {
     timelineType() {
       // RegionCodes.bangumi === 13
       return this.rid === 13 ? 'global' : 'chinese'
+    },
+    rankLink() {
+      return this.rid === 13 ? 'https://www.bilibili.com/ranking/bangumi/13/0/3' : 'https://www.bilibili.com/ranking/bangumi/167/0/3'
     }
   },
   watch: {
