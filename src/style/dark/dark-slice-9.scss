@@ -470,6 +470,26 @@ $highlight-map: (
     }
   }
 }
+.activity-m {
+  .inside-wrp {
+    @include border-color("4");
+    .right .inside-bg::before {
+      background-image: linear-gradient(90deg, #222, transparent 30%) !important;
+    }
+  }
+  .hinter-msg {
+    @include color("e");
+  }
+  .b-btn-praise {
+    @include theme-background-color();
+    @include foreground-color();
+    &.voted {
+      @include color("a");
+      @include border-color();
+      @include background-color("3");
+    }
+  }
+}
 .international-home .contact-help {
   @include color("9");
   @include background-color("3");

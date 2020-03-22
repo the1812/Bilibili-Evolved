@@ -216,6 +216,7 @@ export const settings = {
   useDefaultLiveQuality: false,
   recordLiveDanmaku: false,
   foregroundColorMode: '自动',
+  preserveEventBanner: false,
   cache: {},
 }
 const fixedSettings = {

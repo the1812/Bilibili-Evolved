@@ -198,6 +198,7 @@ Resource.manifest = {
       removeAds: '删除广告',
       showBlockedAdsTip: '显示占位文本',
       removeGameMatchModule: '删除电竞赛事',
+      preserveEventBanner: '保留活动横幅',
     }
   },
   watchLaterRedirect: {

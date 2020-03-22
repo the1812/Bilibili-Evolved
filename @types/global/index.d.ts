@@ -441,6 +441,7 @@ declare global {
     useDefaultLiveQuality: boolean,
     recordLiveDanmaku: boolean,
     foregroundColorMode: '自动' | '白色' | '黑色'
+    preserveEventBanner: boolean
     latestVersionLink: string,
     currentVersion: string,
   }
