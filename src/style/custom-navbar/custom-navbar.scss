@@ -475,6 +475,11 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     }
     .row {
       margin: 0 10px;
+      // https://www.bilibili.com/audio/au1417415?type=7
+      width: auto !important;
+      &::after {
+        content: none !important;
+      }
     }
     .row.level-info {
       margin-bottom: -5px;

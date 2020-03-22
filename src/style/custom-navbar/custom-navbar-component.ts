@@ -70,25 +70,6 @@ export class NavbarComponent {
     } else {
       popup.style.transform = ''
     }
-    // const popup = element.querySelector('.main-content ~ .popup')
-    // // if (popup) {
-    // //   console.log(popup, popup.childElementCount)
-    // // }
-    // if (!popup || popup.childElementCount === 0) {
-    //   return
-    // }
-    // const rect = popup.getBoundingClientRect()
-    // // console.log(this.name, rect)
-    // const totalWidth = document.documentElement.clientWidth
-    // if (rect.left < 0) {
-    //   element.classList.remove('right-side')
-    //   element.classList.add('left-side')
-    // } else if (rect.right > totalWidth) {
-    //   element.classList.remove('left-side')
-    //   element.classList.add('right-side')
-    // } else {
-    //   // element.classList.remove('left-side', 'right-side')
-    // }
   }
 }
 export default {
