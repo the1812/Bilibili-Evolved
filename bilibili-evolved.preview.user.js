@@ -518,6 +518,7 @@ const settings = {
   recordLiveDanmaku: false,
   foregroundColorMode: '自动',
   preserveEventBanner: false,
+  about: true,
   cache: {},
 }
 const fixedSettings = {
@@ -532,7 +533,6 @@ const fixedSettings = {
   downloadAudio: true,
   downloadLiveRecords: true,
   medalHelper: true,
-  about: true,
   playerLayout: false,
   forceWide: false,
   useNewStyle: false,
