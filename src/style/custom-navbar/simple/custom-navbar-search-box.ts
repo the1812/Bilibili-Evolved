@@ -111,7 +111,7 @@ export class SearchBox extends NavbarComponent {
         return false
       }
       if (/^av[\d]+$/i.test(keywordInput.value)) {
-        window.open(`https://www.bilibili.com/${keywordInput.value}`, '_blank')
+        window.open(`https://www.bilibili.com/${keywordInput.value.toLowerCase()}`, '_blank')
         e.preventDefault()
         return false
       }
