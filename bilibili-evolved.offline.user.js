@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      616.26
+// @version      616.32
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -2758,7 +2758,7 @@ class ResourceManager {
       url,
       responseType: 'blob',
     }))
-    const latestVersion = await Ajax.monkey({ url: Resource.root + 'version.txt' })
+    const latestVersion = await Ajax.monkey({ url: (Resource.cdnRoot || Resource.root) + 'version.txt' })
     isTimeout = false
     if (settings.currentVersion !== latestVersion) {
       console.log(`bundle version not match. current=${settings.currentVersion}, latest=${latestVersion}`)
