@@ -5,8 +5,12 @@ const blockParams = [
   'seid',
   'share_source',
   'share_medium',
+  'share_plat',
+  'share_tag',
   'bbid',
   'ts',
+  'timestamp',
+  'unique_k',
   'rt',
   'tdsourcetag',
 ]
