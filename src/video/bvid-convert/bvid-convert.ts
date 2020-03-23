@@ -14,9 +14,16 @@ export default {
     success: () => {
       resources.applyStyle('bvidConvertStyle')
       const label = dq('.bvid-convert') as HTMLDivElement
+      const bvid = (() => {
+        if (unsafeWindow.bvid) {
+          return unsafeWindow.bvid
+        }
+        const link = dq('.av-link,.bv-link,.bvid-link') as HTMLElement
+        return link.innerHTML || '未找到BV号'
+      })()
       label.innerHTML = /*html*/`
         <div class="bvid-convert-item">av${unsafeWindow.aid}</div>
-        <div class="bvid-convert-item">${unsafeWindow.bvid}</div>
+        <div class="bvid-convert-item">${bvid}</div>
       `
     }
   }
