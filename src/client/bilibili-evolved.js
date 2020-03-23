@@ -327,7 +327,7 @@ import { store } from './store'
       case '同时(自动)':
         {
           const delayLoads = [
-            '//www.bilibili.com/video/av',
+            '//www.bilibili.com/video/',
             '//www.bilibili.com/bangumi/play',
           ]
           if (delayLoads.some(it => document.URL.includes(it))) {

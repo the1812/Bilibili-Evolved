@@ -110,7 +110,7 @@ ${f.url}
 class VideoEpisodeBatch extends Batch {
   aid = unsafeWindow.aid!
   static async test() {
-    if (document.URL.includes('//www.bilibili.com/video/av')) {
+    if (document.URL.startsWith('https://www.bilibili.com/video/')) {
       return await SpinQuery.select('#multi_page') !== null
     }
     return false

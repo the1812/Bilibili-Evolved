@@ -1031,7 +1031,7 @@ async function loadPanel() {
       async checkBatch() {
         const urls = [
           '//www.bilibili.com/bangumi',
-          '//www.bilibili.com/video/av',
+          '//www.bilibili.com/video',
           '//www.bilibili.com/blackboard/bnj2020.html'
         ]
         if (!urls.some(url => document.URL.includes(url))) {

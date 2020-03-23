@@ -1,5 +1,5 @@
 (async () => {
-  if (!document.URL.includes('//www.bilibili.com/video/av')) {
+  if (!document.URL.startsWith('https://www.bilibili.com/video/')) {
     return
   }
   await SpinQuery.condition(() => dq('.video-toolbar .ops .collect'), it => {
