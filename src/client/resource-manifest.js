@@ -850,5 +850,12 @@ Resource.manifest = {
       downloadLiveRecords: '下载直播录像',
     },
   },
+  bvidConvert: {
+    path: 'bvid-convert.min.js',
+    style: true,
+    displayNames: {
+      bvidConvert: 'BV号转换',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

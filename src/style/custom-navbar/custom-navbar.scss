@@ -844,6 +844,22 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     color: var(--theme-color);
     font-style: normal;
   }
+  .copy-tip {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px);
+    border-radius: 4px;
+    background-color: #000a;
+    color: #fff;
+    padding: 6px 8px;
+    &.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  }
   .search-list-item {
     white-space: nowrap;
     text-overflow: ellipsis;

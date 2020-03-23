@@ -165,6 +165,7 @@ declare global {
   interface Window {
     aid: string | undefined
     cid: string | undefined
+    bvid: string | undefined
     pageno: string | number | undefined
     $: JQueryStatic
     [key: string]: any
@@ -442,6 +443,7 @@ declare global {
     recordLiveDanmaku: boolean,
     foregroundColorMode: '自动' | '白色' | '黑色'
     preserveEventBanner: boolean
+    bvidConvert: boolean
     latestVersionLink: string,
     currentVersion: string,
   }

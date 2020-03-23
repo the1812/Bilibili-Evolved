@@ -218,6 +218,7 @@ export const settings = {
   foregroundColorMode: '自动',
   preserveEventBanner: false,
   about: true,
+  bvidConvert: true,
   cache: {},
 }
 const fixedSettings = {

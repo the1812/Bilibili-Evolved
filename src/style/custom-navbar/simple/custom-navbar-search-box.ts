@@ -46,6 +46,35 @@ const originalHistory = new class {
     }
   }
 }
+const getIdJump = (text: string) => {
+  const avMatch = text.match(/^av([\d]+)$/i)
+  if (avMatch) {
+    return {
+      success: true,
+      text,
+      link: `https://www.bilibili.com/av${avMatch[1]}`,
+      aid: avMatch[1],
+      bvid: ''
+    }
+  }
+  const bvidMatch = text.match(/^bv[\da-zA-Z]+$/i)
+  if (bvidMatch) {
+    return {
+      success: true,
+      text,
+      link: `https://www.bilibili.com/${text.replace(/^bv/i, 'BV')}`,
+      aid: '',
+      bvid: text.replace(/^bv/i, 'BV'),
+    }
+  }
+  return {
+    success: false,
+    text,
+    link: '',
+    aid: '',
+    bvid: '',
+  }
+}
 export class SearchBox extends NavbarComponent {
   constructor() {
     super()
@@ -92,9 +121,12 @@ export class SearchBox extends NavbarComponent {
           @keydown.enter="clearSearchHistory()"
           @keydown.down.prevent="nextItem(items.length)"
           @keydown.up.prevent="previousItem(items.length)">
-            <i class="mdi mdi-18px mdi-delete-sweep"></i>
-            清除搜索历史
-          </div>
+          <i class="mdi mdi-18px mdi-delete-sweep"></i>
+          清除搜索历史
+        </div>
+        <div class="copy-tip" :class="{show: showCopyTip}">
+          已复制
+        </div>
       </div>
     `
     this.init()
@@ -110,22 +142,12 @@ export class SearchBox extends NavbarComponent {
         e.preventDefault()
         return false
       }
-      if (/^av[\d]+$/i.test(keywordInput.value)) {
-        window.open(`https://www.bilibili.com/${keywordInput.value.toLowerCase()}`, '_blank')
+      const idJump = getIdJump(keywordInput.value)
+      if (idJump.success) {
+        window.open(idJump.link, '_blank')
         e.preventDefault()
         return false
       }
-      if (/^bv[\da-zA-Z]+$/i.test(keywordInput.value)) {
-        window.open(`https://www.bilibili.com/${keywordInput.value.replace(/^bv/i, 'BV')}`, '_blank')
-        e.preventDefault()
-        return false
-      }
-      // const now = Number(new Date())
-      // if (keywordInput.value === '拜年祭' && Number(new Date('2020-01-17')) < now && now < Number(new Date('2020-02-01'))) {
-      //   window.open(`https://www.bilibili.com/blackboard/xianxing2020bnj.html`)
-      //   e.preventDefault()
-      //   return false
-      // }
       const historyItem = settings.searchHistory.find(item => item.keyword === keywordInput.value)
       if (historyItem) {
         historyItem.count++
@@ -168,14 +190,25 @@ export class SearchBox extends NavbarComponent {
       data: {
         items: [] as SuggestItem[],
         isHistory: true,
+        showCopyTip: false,
       },
       methods: {
+        closeCopyTip: _.debounce(function () { this.showCopyTip = false }, 2000),
+        copy(value: string) {
+          GM.setClipboard(value, 'text')
+          this.showCopyTip = true
+          this.closeCopyTip()
+        },
         submit(value: string) {
-          keywordInput.value = value
-          form.submit()
-          // submit method will not trigger submit event
-          // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit
-          raiseEvent(form, 'submit')
+          if (getIdJump(value).success) {
+            this.copy(value)
+          } else {
+            keywordInput.value = value
+            form.submit()
+            // submit method will not trigger submit event
+            // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit
+            raiseEvent(form, 'submit')
+          }
         },
         nextItem(index: number) {
           const item = dq(`.custom-navbar .search-list-item:nth-child(${index + 2})`) as HTMLElement
@@ -193,6 +226,9 @@ export class SearchBox extends NavbarComponent {
           }
         },
         deleteItem(item: SuggestItem, index: number) {
+          if (keywordInput.value !== '') {
+            return
+          }
           const historyIndex = settings.searchHistory.findIndex(it => it.keyword === item.value)
           const [historyItem] = settings.searchHistory.splice(historyIndex, 1)
           // originalHistory.remove(historyItem)
@@ -210,6 +246,7 @@ export class SearchBox extends NavbarComponent {
     const updateSuggest = async () => {
       const text = keywordInput.value
       searchList.isHistory = text === ''
+      const idJump = getIdJump(text)
       if (searchList.isHistory) {
         // searchList.items = originalHistory.merge(settings.searchHistory)
         searchList.items = settings.searchHistory
@@ -224,6 +261,39 @@ export class SearchBox extends NavbarComponent {
               html: item.keyword,
             }
           }).slice(0, 10)
+      } else if (idJump.success) {
+        searchList.items = []
+        const url = idJump.aid ? `https://api.bilibili.com/x/web-interface/view?aid=${idJump.aid}` : `https://api.bilibili.com/x/web-interface/view?bvid=${idJump.bvid}`
+        const json = await Ajax.getJson(url)
+        if (idJump.aid) {
+          const bvid = _.get(json, 'data.bvid', null)
+          if (bvid !== null) {
+            searchList.items = [
+              {
+                value: bvid,
+                html: `复制BV号: ${bvid}`,
+              },
+              // {
+              //   value: `https://www.bilibili.com/${bvid}`,
+              //   html: `复制BV号链接: https://.../${bvid}`,
+              // }
+            ]
+          }
+        } else if (idJump.bvid) {
+          const aid = _.get(json, 'data.aid', null)
+          if (aid !== null) {
+            searchList.items = [
+              {
+                value: 'av' + aid,
+                html: `复制AV号: av${aid}`,
+              },
+              // {
+              //   value: `https://www.bilibili.com/av${aid}`,
+              //   html: `复制AV号链接: https://.../av${aid}`,
+              // }
+            ]
+          }
+        }
       } else {
         const url = `https://s.search.bilibili.com/main/suggest?func=suggest&suggest_type=accurate&sub_type=tag&main_ver=v1&highlight=&userid=${getUID()}&bangumi_acc_num=1&special_acc_num=1&topic_acc_num=1&upuser_acc_num=3&tag_num=10&special_num=10&bangumi_num=10&upuser_num=3&term=${text}`
         lastQueuedRequest = url
