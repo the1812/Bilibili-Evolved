@@ -5,11 +5,16 @@ const blockParams = [
   'seid',
   'share_source',
   'share_medium',
+  'share_plat',
+  'share_tag',
   'bbid',
   'ts',
+  'timestamp',
+  'unique_k',
   'rt',
   'tdsourcetag',
 ]
+const normalizeURL = (url: string) => url.endsWith('/') ? _.trimEnd(url, '/') : url
 const clean = () => {
   const urlParams = location.search.substring(1).split('&')
   const filteredParams = urlParams.filter(p => {
@@ -18,12 +23,16 @@ const clean = () => {
     }
     return true
   })
-  if (urlParams.length !== filteredParams.length) {
-    const filteredParamsString = filteredParams.join('&')
-    const newUrl = document.URL.replace(location.search, filteredParamsString ? ('?' + filteredParamsString) : '')
+  // if (urlParams.length !== filteredParams.length) {
+  const filteredParamsString = filteredParams.join('&')
+  const url = normalizeURL(document.URL.replace(location.search, ''))
+  const query = filteredParamsString ? ('?' + filteredParamsString) : ''
+  const newUrl = url + query
+  if (newUrl !== document.URL) {
     console.log('[URL params clean]', document.URL, newUrl)
     history.replaceState({}, document.title, newUrl)
   }
+  // }
 }
 clean()
 Observer.videoChange(() => clean())

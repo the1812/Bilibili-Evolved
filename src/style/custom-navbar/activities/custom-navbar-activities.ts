@@ -55,6 +55,7 @@ const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, templat
 export class Activities extends NavbarComponent {
   constructor() {
     super()
+    this.boundingWidth = 380
     this.noPadding = true
     this.href = settings.oldTweets ? 'https://www.bilibili.com/account/dynamic' : 'https://t.bilibili.com/'
     this.html = '动态'

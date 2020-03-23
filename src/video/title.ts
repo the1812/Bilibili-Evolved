@@ -25,10 +25,7 @@ export function formatTitle (format: string, includesPageTitle = true, extraData
   const now = new Date()
   const data: StringMap = {
     title: document.title
-      .replace(/：([^：]+?)_番剧_bilibili_哔哩哔哩/, '')
-      .replace(/：([^：]+?)_国创_bilibili_哔哩哔哩/, '')
-      .replace(/：([^：]+?)_电影_bilibili_哔哩哔哩/, '')
-      .replace(/：([^：]+?)_纪录片_bilibili_哔哩哔哩/, '')
+      .replace(/：([^：]+?)_(番剧|国创|电影|纪录片|电视剧)_bilibili_哔哩哔哩/, '')
       .replace('_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili', '')
       .replace(/(.*?) - (.*?) - 哔哩哔哩直播，二次元弹幕直播平台/, '$1')
       .trim(),

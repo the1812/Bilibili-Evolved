@@ -12,6 +12,7 @@ interface FavoritesItemInfo extends VideoCardInfo {
 export class FavoritesList extends NavbarComponent {
   constructor() {
     super()
+    this.boundingWidth = 380
     this.noPadding = true
     this.href = `https://space.bilibili.com/${getUID()}/favlist`
     this.html = `收藏`
@@ -69,7 +70,7 @@ export class FavoritesList extends NavbarComponent {
       store,
       filters: {
         formatDate(value: Date) {
-          return `${value.getFullYear()}-${(value.getMonth() + 1).toString().padEnd(2, '0')}-${(value.getDate()).toString().padEnd(2, '0')}`
+          return `${value.getFullYear()}-${(value.getMonth() + 1).toString().padStart(2, '0')}-${(value.getDate()).toString().padStart(2, '0')}`
         }
       },
       components: {

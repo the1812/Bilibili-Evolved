@@ -6,10 +6,18 @@
     <div class="grow"></div>
     <i class="mdi mdi-close" @click="close()"></i>
   </div>
-  <div v-if="batch" class="tabs">
-    <div class="tab download-single" :class="{active: downloadSingle}" @click="downloadSingle = true">单个视频
+  <div class="tabs">
+    <!-- <div class="tab download-single" :class="{active: downloadSingle}" @click="downloadSingle = true">单个视频
     </div>
     <div class="tab download-batch" :class="{active: !downloadSingle}" @click="downloadSingle = false">批量导出
+    </div> -->
+    <div
+      class="tab"
+      v-for="t of tabs"
+      :class="{active: selectedTab === t, ['download-' + t.name]: true}"
+      :key="t.name"
+      @click="selectedTab = t">
+      {{t.displayName}}
     </div>
   </div>
   <div v-show="downloadSingle" class="info">
@@ -37,7 +45,9 @@
     </div>
     <div class="option-item">
       清晰度
-      <v-dropdown @change="formatChange(true)" :items="qualityModel.items" :value.sync="qualityModel.value">
+      <v-dropdown v-if="selectedTab.name !== 'manual'" @change="formatChange(true)" :items="qualityModel.items" :value.sync="qualityModel.value">
+      </v-dropdown>
+      <v-dropdown v-else :items="manualQualityModel.items" :value.sync="manualQualityModel.value">
       </v-dropdown>
     </div>
     <div class="option-item">
@@ -71,7 +81,7 @@
       <span class="percent">{{progressPercent}}%</span>
     </div>
   </div>
-  <div v-show="!downloadSingle" class="batch-download">
+  <div v-show="selectedTab.name === 'batch'" class="batch-download">
     <div class="episode-header">
       <h2>选集</h2>
       <button class="list-tool" title="全选" @click="selectAllEpisodes()">
@@ -89,6 +99,15 @@
       <v-checkbox v-for="ep of episodeList" :key="ep.index" :title="ep.title" :checked.sync="ep.checked"></v-checkbox>
     </div>
   </div>
+  <div v-show="selectedTab.name === 'manual'" class="manual-input">
+    <div class="manual-input-header">
+      <h2>链接列表</h2>
+      <div class="items-count">共{{manualInputItems.length}}个视频</div>
+    </div>
+    <div class="manual-input-content">
+      <textarea placeholder="请输入视频链接或av号 (没错, 不能是bv号), 空格/换行分隔" v-model="manualInputText"></textarea>
+    </div>
+  </div>
   <div class="separator"></div>
   <div class="exports">
     <h2>导出</h2>
@@ -98,8 +117,8 @@
         @click="exportData('showLink')">显示链接</button>
       <!-- <button class="idm-export" disabled title="暂不支持导出IDM, 详见 GitHub issue #149">IDM</button> -->
       <button class="aria2-file" @click="exportData('aria2')">aria2</button>
-      <button class="ffmpeg-fragments" v-if="!dash" @click="exportData('ffmpegFragments')">ffmpeg - 分段列表</button>
-      <button class="ffmpeg-episodes" v-if="!dash" :disabled="downloadSingle ? 'disabled' : null"
+      <button class="ffmpeg-fragments" v-if="!dash && selectedTab.name !== 'manual'" @click="exportData('ffmpegFragments')">ffmpeg - 分段列表</button>
+      <button class="ffmpeg-episodes" v-if="!dash && selectedTab.name !== 'manual'" :disabled="downloadSingle ? 'disabled' : null"
         @click="exportData('ffmpegEpisodes')">ffmpeg - 分P列表</button>
       <!-- <button class="vld-copy" @click="exportData('copyVLD')">复制vld数据</button>
       <button class="vld-export" @click="exportData('exportVLD')">导出vld数据</button> -->

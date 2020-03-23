@@ -7,6 +7,7 @@ export class UserInfo extends NavbarComponent {
   }
   constructor() {
     super()
+    this.boundingWidth = 240
     this.noPadding = true
     this.href = 'https://space.bilibili.com'
     this.html = /*html*/`
@@ -61,6 +62,21 @@ export class UserInfo extends NavbarComponent {
             </a>
           </div>
           <div class="separator"></div>
+          <div class="stats">
+            <a class="stats-item" :href="'https://space.bilibili.com/' + mid + '/fans/follow'" target="_blank">
+              <div class="stats-number">{{following | count}}</div>
+              关注
+            </a>
+            <a class="stats-item" :href="'https://space.bilibili.com/' + mid + '/fans/fans'" target="_blank">
+              <div class="stats-number">{{follower | count}}</div>
+              粉丝
+            </a>
+            <a class="stats-item" :href="'https://space.bilibili.com/' + mid + '/dynamic'" target="_blank">
+              <div class="stats-number">{{dynamic_count | count}}</div>
+              动态
+            </a>
+          </div>
+          <div class="separator"></div>
           <a class="operation" target="_blank" href="https://account.bilibili.com/account/home">
             <i class="icon custom-navbar-icon-profile custom-navbar-iconfont-new-home"></i>
             个人中心
@@ -81,10 +97,10 @@ export class UserInfo extends NavbarComponent {
             <i class="icon custom-navbar-icon-order-center custom-navbar-iconfont-new-home"></i>
             订单中心
           </a>
-          <!-- <a class="operation" target="_blank" href="https://www.bilibili.com/v/cheese/mine">
+          <a class="operation" target="_blank" href="https://www.bilibili.com/v/cheese/mine">
             <i class="icon custom-navbar-icon-course custom-navbar-iconfont-new-home"></i>
             我的课程
-          </a> -->
+          </a>
           <a class="logout grey-button" href="https://account.bilibili.com/login?act=exit">
             退出登录
           </a>
@@ -123,6 +139,11 @@ export class UserInfo extends NavbarComponent {
             expire: '',
           },
         },
+      },
+      filters: {
+        count(value: number) {
+          return formatCount(value)
+        }
       },
       computed: {
         userType() {

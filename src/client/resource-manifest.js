@@ -95,11 +95,22 @@ Resource.manifest = {
       ajaxHook: '启用 Ajax Hook API',
       scriptLoadingMode: '加载模式',
       guiSettingsDockSide: '设置面板停靠位置',
+      foregroundColorMode: '文本颜色',
     },
-    dropdown: {
-      key: 'guiSettingsDockSide',
-      items: ['左侧', '右侧']
-    },
+    dropdown: [
+      {
+        key: 'guiSettingsDockSide',
+        items: ['左侧', '右侧']
+      },
+      {
+        key: 'foregroundColorMode',
+        items: ['自动', '黑色', '白色'],
+      },
+      {
+        key: 'scriptLoadingMode',
+        items: ['同时', '延后', '同时(自动)', '延后(自动)']
+      },
+    ],
   },
   useDarkStyle: {
     path: 'dark-styles.min.js',
@@ -187,6 +198,7 @@ Resource.manifest = {
       removeAds: '删除广告',
       showBlockedAdsTip: '显示占位文本',
       removeGameMatchModule: '删除电竞赛事',
+      preserveEventBanner: '保留活动横幅',
     }
   },
   watchLaterRedirect: {
@@ -820,6 +832,30 @@ Resource.manifest = {
     displayNames: {
       recordLiveDanmaku: '直播弹幕记录器',
     },
-  }
+  },
+  useDefaultLiveQuality: {
+    path: 'default-live-quality.min.js',
+    displayNames: {
+      useDefaultLiveQuality: '使用默认直播画质',
+      defaultLiveQuality: '默认直播画质',
+    },
+    dropdown: {
+      key: 'defaultLiveQuality',
+      items: ['原画', '蓝光', '超清', '高清', '流畅'],
+    },
+  },
+  downloadLiveRecords: {
+    path: 'download-live-records.min.js',
+    displayNames: {
+      downloadLiveRecords: '下载直播录像',
+    },
+  },
+  bvidConvert: {
+    path: 'bvid-convert.min.js',
+    style: true,
+    displayNames: {
+      bvidConvert: 'BV号转换',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

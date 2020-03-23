@@ -10,7 +10,7 @@
           :data-key="t.key"
           :style="{order: getOrder(t.key)}"
           :class="{active: selectedTab === t.key}"
-          @click="selectedTab = t.key"
+          @click="selectTab(t)"
         >
           <div class="tab-name">{{t.name}}</div>
         </div>
@@ -54,7 +54,7 @@ export default {
   components: {
     Icon: () => import('../../../icon.vue'),
     NormalCategory: () => import('./simple-home-normal-category.vue'),
-    BangumiCategory: () => import('./simple-home-bangumi-category.vue'),
+    BangumiCategory: () => import('./simple-home-bangumi-category.vue')
   },
   data() {
     return {
@@ -70,12 +70,14 @@ export default {
       reordering: false,
       reorder: null,
       regionCodes: null,
+      regionLinks: null
     }
   },
   async mounted() {
     const container = this.$refs.reorderContainer as HTMLElement
-    const { RegionCodes } = await import('./category-regions')
+    const { RegionCodes, RegionLinks } = await import('./category-regions')
     this.regionCodes = RegionCodes
+    this.regionLinks = RegionLinks
     const { Reorder } = await import('../../../../utils/reorder')
     const reorder = new Reorder(container)
     this.reorder = reorder
@@ -96,6 +98,14 @@ export default {
   methods: {
     getOrder(key: string) {
       return settings.simpleHomeCategoryOrders[key]
+    },
+    selectTab(tab: { key: string; name: string }) {
+      if (this.selectedTab === tab.key && this.regionLinks) {
+        const link = this.regionLinks[tab.key] as string
+        window.open(`https://www.bilibili.com/${link}`, '_blank')
+      } else {
+        this.selectedTab = tab.key
+      }
     }
   },
   computed: {

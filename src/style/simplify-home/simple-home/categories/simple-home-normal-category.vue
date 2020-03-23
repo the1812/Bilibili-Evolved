@@ -19,7 +19,7 @@
       @refresh="loadNewPost()"
       title="最新发布"
     ></slideshow-cards>
-    <rank-list :videos="rank.videos"></rank-list>
+    <rank-list :videos="rank.videos" :rank-link="rankLink"></rank-list>
     <div class="new-activity loading"></div>
     <div class="new-post loading"></div>
     <div class="rank loading"></div>
@@ -65,7 +65,13 @@ export default {
     }
   },
   computed: {
-    ...Vuex.mapState(['watchlaterList'])
+    ...Vuex.mapState(['watchlaterList']),
+    rankLink() {
+      if (this.rid === 165) { // 165: 广告区没有排行榜
+        return null
+      }
+      return `https://www.bilibili.com/ranking/all/${this.rid}/0/3`
+    }
   },
   methods: {
     async loadCards(

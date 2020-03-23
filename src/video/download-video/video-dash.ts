@@ -41,17 +41,17 @@ export const dashToFragments = (dashes: { videoDashes: VideoDash[], audioDashes:
   const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
   return [dashToFragment(video), dashToFragment(audio)]
 }
-export const getDashInfo = async (api: string, quality: number) => {
+export const getDashInfo = async (api: string, quality: number, allowLowerQuality = false) => {
   const json = await Ajax.getJsonWithCredentials(api)
   const data = json.data || json.result || json
   if (json.code !== 0 || !data.dash) {
     throw new Error('DASH api failed')
   }
   const qualities = data.accept_quality as number[]
-  if (!qualities.includes(quality)) {
+  if (!qualities.includes(quality) && !allowLowerQuality) {
     throw new Error('没有找到请求的清晰度')
   }
-  if (data.quality !== quality) {
+  if (data.quality !== quality && !allowLowerQuality) {
     const { throwQualityError } = await import('./quality-errors')
     throwQualityError(quality)
   }
@@ -59,7 +59,7 @@ export const getDashInfo = async (api: string, quality: number) => {
   const qualityText = qualityTexts[qualities.indexOf(quality)]
   const duration = data.dash.duration
   const videoDashes: VideoDash[] = data.dash.video
-    .filter((d: any) => d.id === quality)
+    .filter((d: any) => d.id === (allowLowerQuality ? data.quality : quality))
     .map((d: any) => {
       const videoCodec: DashCodec = (() => {
         switch (d.codecid) {

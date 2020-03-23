@@ -3,19 +3,7 @@ import { VideoCardInfo } from '../style/simplify-home/video-card-info'
 export interface FeedsCardType {
   id: number
   name: string
-  // getText: (element: HTMLElement) => Promise<string>
 }
-// const getOriginalElement = async (element: Element) => {
-//   const originalElement = await SpinQuery.condition(
-//     () => element.querySelector('.card-content > .text.description'),
-//     it => it !== null
-//   ) as HTMLElement
-//   if (originalElement === null) {
-//     return ''
-//   }
-//   const text = originalElement.style.display === 'none' ? '' : originalElement.textContent!.trim()
-//   return text
-// }
 export const feedsCardTypes = {
   repost: {
     id: 1,
@@ -52,6 +40,30 @@ export const feedsCardTypes = {
   share: {
     id: 2048,
     name: '分享',
+  } as FeedsCardType,
+  manga: {
+    id: 2049,
+    name: '漫画',
+  } as FeedsCardType,
+  film: {
+    id: 4098,
+    name: '电影',
+  } as FeedsCardType,
+  tv: {
+    id: 4099,
+    name: 'TV剧',
+  } as FeedsCardType,
+  chinese: {
+    id: 4100,
+    name: '国创',
+  } as FeedsCardType,
+  documentary: {
+    id: 4101,
+    name: '纪录片',
+  } as FeedsCardType,
+  mediaList: {
+    id: 4300,
+    name: '收藏夹',
   } as FeedsCardType,
 }
 export interface FeedsCard {
@@ -152,51 +164,9 @@ class FeedsCardsManager extends EventTarget {
         console.warn(element, selector)
         return ''
       }
-      // const subElementText = subElement.style.display === 'none' ? '' : subElement.textContent!.trim()
       const subElementText = subElement.innerText.trim()
       return subElementText
     }
-    // const getComplexText = async () => {
-    //   // if ([
-    //   //   feedsCardTypes.column,
-    //   // ].some(it => it === type)) {
-    //   //   const text = await getSimpleText(selector)
-    //   //   return text
-    //   // }
-    //   let repostText = ''
-    //   const repost = await SpinQuery.condition(
-    //     () => element.querySelector('.original-card-content'),
-    //     it => {
-    //       if (it === null) {
-    //         return false
-    //       }
-    //       if (getFeedsCardType(it) === feedsCardTypes.column) {
-    //         return true
-    //       }
-    //       const bangumiContent = it.querySelector('.bangumi-container .title') as HTMLElement
-    //       if (bangumiContent) {
-    //         repostText = bangumiContent.innerText
-    //       }
-    //       const repostContent = it.querySelector('.text.description') as HTMLElement
-    //       const videoContent = it.querySelector('.video-container .title') as HTMLElement
-    //       if (repostContent && videoContent) {
-    //         repostText = repostContent.innerText + '\n' + videoContent.innerText
-    //         return Boolean(videoContent.innerText)
-    //       }
-    //       if (repostContent) {
-    //         repostText = repostContent.innerText
-    //       }
-    //       return Boolean(repostText)
-    //     },
-    //   ) as HTMLElement
-    //   const text = await getSimpleText('.video-container .title,.bangumi-container .title,.text.description')
-    //   if (getFeedsCardType(repost) === feedsCardTypes.column) {
-    //     // debugger
-    //     console.log(element, repost, text)
-    //   }
-    //   // console.log(repost, repost && repost.innerText, subElementText)
-    //   return repost ? (text + '\n' + repostText).trim() : text
-    // }
     const getComplexText = async (type: FeedsCardType) => {
       if (type === feedsCardTypes.bangumi) {
         return ''
@@ -275,10 +245,6 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
     throw new Error(json.message)
   }
   if (type === 'video') {
-    // const { getWatchlaterList } = await import(
-    //   '../video/watchlater-api'
-    // )
-    // const watchlaterList = await getWatchlaterList()
     return json.data.cards.filter((c: any) => {
       // 合作视频仅取UP主的
       return c.desc.orig_dy_id === 0

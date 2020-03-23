@@ -1,5 +1,5 @@
 (async () => {
-  if (!document.URL.includes('//www.bilibili.com/video/av')) {
+  if (!document.URL.startsWith('https://www.bilibili.com/video/')) {
     return
   }
   await SpinQuery.condition(() => dq('.video-toolbar .ops .collect'), it => {
@@ -46,7 +46,7 @@
         }
         this.tipHandle = setTimeout(() => {
           this.tipShowing = false
-        }, 2000);
+        }, 2000)
       },
       async toggle() {
         await this.toggleWatchlater(this.aid)

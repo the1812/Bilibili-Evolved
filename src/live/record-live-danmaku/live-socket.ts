@@ -138,6 +138,8 @@ export class LiveSocket extends EventTarget {
   webSocket: WebSocket
   retryInterval = 200
   autoRetry = true
+  servers: string[] = ['broadcastlv.chat.bilibili.com']
+  selectedServer = ''
   private liveTime = new LiveTimeExtractor()
   private bufferHelper = new SocketBufferHelper()
   private stopRequested = false
@@ -147,25 +149,45 @@ export class LiveSocket extends EventTarget {
     window.addEventListener('unload', () => this.stop())
   }
   heartBeat() {
-    this.webSocket.send(this.bufferHelper.encode('', 'heartBeat'))
+    if (this.webSocket.readyState === WebSocket.OPEN) {
+      this.webSocket.send(this.bufferHelper.encode('', 'heartBeat'))
+    } else {
+      this.stop()
+      this.restart()
+    }
   }
   restart() {
     this.dispatchEvent(new CustomEvent('restart'))
     if (!this.stopRequested && this.autoRetry) {
+      console.log(`Live Socket: unexpected disconnect, retry in ${this.retryInterval}ms`)
+      const index = this.servers.indexOf(this.selectedServer)
+      if (index < this.servers.length - 1) { // 尝试下一个服务器
+        this.selectedServer = this.servers[index + 1]
+      } else { // 所有服务器用尽, 从头再来
+        [this.selectedServer] = this.servers
+      }
+      console.log(`Live Socket: server changed to`, this.selectedServer)
       setTimeout(() => this.start(), this.retryInterval)
     }
   }
   async start() {
     const roomConfig = await Ajax.getJson(`https://api.live.bilibili.com/room/v1/Danmu/getConf?room_id=${this.roomID}&platform=pc&player=web`)
-    const hostServers: any[] = _.get(roomConfig, 'data.host_server_list', [])
-    let server = 'broadcastlv.chat.bilibili.com'
-    if (hostServers.length > 0) {
-      server = hostServers[0].host
+    const hostServers: { host: string }[] = _.get(roomConfig, 'data.host_server_list', [])
+    // let server = 'broadcastlv.chat.bilibili.com'
+    // if (hostServers.length > 0) {
+    //   server = hostServers[0].host
+    // }
+    this.servers = [...new Set([...this.servers, ...hostServers.map(it => it.host)])]
+    if (this.selectedServer === '') { // 首次启动
+      [this.selectedServer] = this.servers
+      console.log('Initial server:', this.selectedServer)
     }
+
     if (this.webSocket && (this.webSocket.readyState === WebSocket.CONNECTING || this.webSocket.readyState === WebSocket.OPEN)) {
       this.stop()
     }
-    this.webSocket = new WebSocket(`wss://${server}/sub`)
+    this.webSocket = new WebSocket(`wss://${this.selectedServer}/sub`)
+    this.stopRequested = false
     this.dispatchEvent(new CustomEvent('start', {
       detail: this.webSocket
     }))
@@ -235,10 +257,14 @@ export class LiveSocket extends EventTarget {
         default: break
       }
     })
-    this.webSocket.addEventListener('close', () => {
-      this.restart()
+    this.webSocket.addEventListener('close', e => {
+      if (!this.stopRequested) {
+        console.error('Live Socket: close', e)
+        this.restart()
+      }
     })
-    this.webSocket.addEventListener('error', () => {
+    this.webSocket.addEventListener('error', e => {
+      console.error('Live Socket: error', e)
       this.restart()
     })
   }
@@ -247,7 +273,7 @@ export class LiveSocket extends EventTarget {
     if (this.heartBeatTimer) {
       clearInterval(this.heartBeatTimer)
     }
-    if (this.webSocket) {
+    if (this.webSocket && this.webSocket.readyState === WebSocket.OPEN) {
       this.webSocket.close()
     }
   }

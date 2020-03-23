@@ -3,7 +3,6 @@
 #home_popularize .adpos,
 .gg-floor-module,
 .home-app-download,
-.activity-m,
 .bilibili-player-promote-wrap,
 .bili-header-m .nav-menu .nav-con .nav-item .text-red,
 .mobile-link-l,
@@ -13,6 +12,7 @@
 #reportFirst2 .extension,
 .video-page-special-card,
 .mascot,
+body:not(.preserve-event-banner) .activity-m,
 body.remove-game-match-module .bili-wrapper > .home-match,
 body.remove-game-match-module #reportFirst3 {
   display: none !important;

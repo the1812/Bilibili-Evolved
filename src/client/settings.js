@@ -192,7 +192,6 @@ export const settings = {
   selectableColumnText: true,
   downloadVideoFormat: 'flv',
   downloadVideoDashCodec: 'AVC/H.264',
-  watchlaterExpireWarnings: true,
   watchlaterExpireWarningDays: 14,
   superchatTranslate: false,
   miniPlayerTouchMove: false,
@@ -213,8 +212,13 @@ export const settings = {
   feedsTranslateProvider: 'Bing',
   feedsTranslateLanguage: '',
   downloadVideoQuality: 120,
-  forceHighQualityLive: false,
+  defaultLiveQuality: '原画',
+  useDefaultLiveQuality: false,
   recordLiveDanmaku: false,
+  foregroundColorMode: '自动',
+  preserveEventBanner: false,
+  about: true,
+  bvidConvert: true,
   cache: {},
 }
 const fixedSettings = {
@@ -229,7 +233,6 @@ const fixedSettings = {
   downloadAudio: true,
   downloadLiveRecords: true,
   medalHelper: true,
-  about: true,
   playerLayout: false,
   forceWide: false,
   useNewStyle: false,
@@ -239,6 +242,7 @@ const fixedSettings = {
   showDeadVideoTitle: false,
   blurVideoControl: false,
   oldTweets: false,
+  watchlaterExpireWarnings: false,
   latestVersionLink: 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js',
   currentVersion: GM.info.script.version,
 }

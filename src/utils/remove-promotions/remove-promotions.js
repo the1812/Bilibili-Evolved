@@ -37,3 +37,6 @@ if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.c
       })
   })
 }
+addSettingsListener('preserveEventBanner', value => {
+  document.body.classList.toggle('preserve-event-banner', value)
+}, true)

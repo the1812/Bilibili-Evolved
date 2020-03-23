@@ -3,6 +3,78 @@ interface SuggestItem {
   value: string
   html: string
 }
+const originalHistory = new class {
+  getAll(): SearchHistoryItem[] {
+    const history = localStorage.getItem('search_history')
+    if (!history) {
+      return []
+    }
+    return (JSON.parse(history) as any[]).map(it => {
+      return {
+        keyword: it.value,
+        date: new Date(it.timestamp).toJSON(),
+        count: 1,
+      }
+    })
+  }
+  saveAll(items: SearchHistoryItem[]) {
+    localStorage.setItem('search_history', JSON.stringify(items))
+  }
+  clear() {
+    localStorage.setItem('search_history', '[]')
+  }
+  merge(items: SearchHistoryItem[]) {
+    const originalItems = this.getAll()
+    return _.uniqBy(items.concat(originalItems), it => it.keyword).slice(0, 10)
+  }
+  add(item: SearchHistoryItem) {
+    const items = this.getAll()
+    const existingItem = items.find(it => it.keyword === item.keyword)
+    if (existingItem) {
+      Object.assign(existingItem, item)
+    } else {
+      items.push(item)
+    }
+    this.saveAll(items)
+  }
+  remove(item: SearchHistoryItem) {
+    const items = this.getAll()
+    const index = items.findIndex(it => it.keyword === item.keyword)
+    if (index > -1) {
+      items.splice(index, 1)
+      this.saveAll(items)
+    }
+  }
+}
+const getIdJump = (text: string) => {
+  const avMatch = text.match(/^av([\d]+)$/i)
+  if (avMatch) {
+    return {
+      success: true,
+      text,
+      link: `https://www.bilibili.com/av${avMatch[1]}`,
+      aid: avMatch[1],
+      bvid: ''
+    }
+  }
+  const bvidMatch = text.match(/^bv[\da-zA-Z]+$/i)
+  if (bvidMatch) {
+    return {
+      success: true,
+      text,
+      link: `https://www.bilibili.com/${text.replace(/^bv/i, 'BV')}`,
+      aid: '',
+      bvid: text.replace(/^bv/i, 'BV'),
+    }
+  }
+  return {
+    success: false,
+    text,
+    link: '',
+    aid: '',
+    bvid: '',
+  }
+}
 export class SearchBox extends NavbarComponent {
   constructor() {
     super()
@@ -19,8 +91,42 @@ export class SearchBox extends NavbarComponent {
         </button>
       </form>
       <div class="popup search-list" :class="{empty: items.length === 0}">
-        <div class="search-list-item" tabindex="0" v-for="(item, index) of items" v-html="item.html" :title="isHistory ? item.html : ''" @keydown.enter="submit(item.value)" @click.self="submit(item.value)" @keydown.shift.delete="deleteItem(item, index)" @keydown.down.prevent="nextItem(index)" @keydown.up.prevent="previousItem(index)"></div>
-        <div tabindex="0" v-if="items.length > 0 && isHistory" class="search-list-item clear-history" @click="clearSearchHistory()" @keydown.enter="clearSearchHistory()" @keydown.down.prevent="nextItem(items.length)" @keydown.up.prevent="previousItem(items.length)"><i class="mdi mdi-18px mdi-delete-sweep"></i>清除搜索历史</div>
+        <div
+          class="search-list-item"
+          tabindex="0"
+          v-for="(item, index) of items"
+          :title="isHistory ? item.html : ''"
+          @keydown.enter="submit(item.value)"
+          @keydown.shift.delete="deleteItem(item, index)"
+          @keydown.down.prevent="nextItem(index)"
+          @keydown.up.prevent="previousItem(index)">
+          <div
+            @click.self="submit(item.value)"
+            class="search-list-item-text"
+            :title="item.value"
+            v-html="item.html"></div>
+          <div
+            class="delete-history"
+            v-if="isHistory"
+            title="删除此项"
+            @click="deleteItem(item, index)">
+            <i class="mdi mdi-18px mdi-close"></i>
+          </div>
+        </div>
+        <div
+          class="search-list-item clear-history"
+          tabindex="0"
+          v-if="items.length > 0 && isHistory"
+          @click="clearSearchHistory()"
+          @keydown.enter="clearSearchHistory()"
+          @keydown.down.prevent="nextItem(items.length)"
+          @keydown.up.prevent="previousItem(items.length)">
+          <i class="mdi mdi-18px mdi-delete-sweep"></i>
+          清除搜索历史
+        </div>
+        <div class="copy-tip" :class="{show: showCopyTip}">
+          已复制
+        </div>
       </div>
     `
     this.init()
@@ -36,33 +142,25 @@ export class SearchBox extends NavbarComponent {
         e.preventDefault()
         return false
       }
-      if (/^av[\d]+$/.test(keywordInput.value)) {
-        window.open(`https://www.bilibili.com/${keywordInput.value}`)
+      const idJump = getIdJump(keywordInput.value)
+      if (idJump.success) {
+        window.open(idJump.link, '_blank')
         e.preventDefault()
         return false
       }
-      // const now = Number(new Date())
-      // if (keywordInput.value === '拜年祭' && Number(new Date('2020-01-17')) < now && now < Number(new Date('2020-02-01'))) {
-      //   window.open(`https://www.bilibili.com/blackboard/xianxing2020bnj.html`)
-      //   e.preventDefault()
-      //   return false
-      // }
       const historyItem = settings.searchHistory.find(item => item.keyword === keywordInput.value)
       if (historyItem) {
         historyItem.count++
         historyItem.date = new Date().toJSON()
-        console.log(historyItem)
+        // originalHistory.add(historyItem)
       } else {
-        settings.searchHistory.unshift({
+        const newItem = {
           count: 1,
           keyword: keywordInput.value,
           date: new Date().toJSON(),
-        })
-        console.log({
-          count: 1,
-          keyword: keywordInput.value,
-          date: new Date().toJSON(),
-        })
+        }
+        settings.searchHistory.unshift(newItem)
+        // originalHistory.add(newItem)
       }
       settings.searchHistory = settings.searchHistory.slice(0, 10) // save history
       return true
@@ -92,14 +190,25 @@ export class SearchBox extends NavbarComponent {
       data: {
         items: [] as SuggestItem[],
         isHistory: true,
+        showCopyTip: false,
       },
       methods: {
+        closeCopyTip: _.debounce(function () { this.showCopyTip = false }, 2000),
+        copy(value: string) {
+          GM.setClipboard(value, 'text')
+          this.showCopyTip = true
+          this.closeCopyTip()
+        },
         submit(value: string) {
-          keywordInput.value = value
-          form.submit()
-          // submit method will not trigger submit event
-          // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit
-          raiseEvent(form, 'submit')
+          if (getIdJump(value).success) {
+            this.copy(value)
+          } else {
+            keywordInput.value = value
+            form.submit()
+            // submit method will not trigger submit event
+            // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit
+            raiseEvent(form, 'submit')
+          }
         },
         nextItem(index: number) {
           const item = dq(`.custom-navbar .search-list-item:nth-child(${index + 2})`) as HTMLElement
@@ -117,11 +226,17 @@ export class SearchBox extends NavbarComponent {
           }
         },
         deleteItem(item: SuggestItem, index: number) {
-          settings.searchHistory.splice(settings.searchHistory.findIndex(it => it.keyword === item.value), 1)
+          if (keywordInput.value !== '') {
+            return
+          }
+          const historyIndex = settings.searchHistory.findIndex(it => it.keyword === item.value)
+          const [historyItem] = settings.searchHistory.splice(historyIndex, 1)
+          // originalHistory.remove(historyItem)
           settings.searchHistory = settings.searchHistory
           this.items.splice(index, 1)
         },
         clearSearchHistory() {
+          // originalHistory.clear()
           settings.searchHistory = []
           this.items = []
         }
@@ -131,7 +246,9 @@ export class SearchBox extends NavbarComponent {
     const updateSuggest = async () => {
       const text = keywordInput.value
       searchList.isHistory = text === ''
+      const idJump = getIdJump(text)
       if (searchList.isHistory) {
+        // searchList.items = originalHistory.merge(settings.searchHistory)
         searchList.items = settings.searchHistory
           .sort((a, b) => {
             const aDate = a.date ? new Date(a.date) : new Date(0)
@@ -144,6 +261,39 @@ export class SearchBox extends NavbarComponent {
               html: item.keyword,
             }
           }).slice(0, 10)
+      } else if (idJump.success) {
+        searchList.items = []
+        const url = idJump.aid ? `https://api.bilibili.com/x/web-interface/view?aid=${idJump.aid}` : `https://api.bilibili.com/x/web-interface/view?bvid=${idJump.bvid}`
+        const json = await Ajax.getJson(url)
+        if (idJump.aid) {
+          const bvid = _.get(json, 'data.bvid', null)
+          if (bvid !== null) {
+            searchList.items = [
+              {
+                value: bvid,
+                html: `复制BV号: ${bvid}`,
+              },
+              // {
+              //   value: `https://www.bilibili.com/${bvid}`,
+              //   html: `复制BV号链接: https://.../${bvid}`,
+              // }
+            ]
+          }
+        } else if (idJump.bvid) {
+          const aid = _.get(json, 'data.aid', null)
+          if (aid !== null) {
+            searchList.items = [
+              {
+                value: 'av' + aid,
+                html: `复制AV号: av${aid}`,
+              },
+              // {
+              //   value: `https://www.bilibili.com/av${aid}`,
+              //   html: `复制AV号链接: https://.../av${aid}`,
+              // }
+            ]
+          }
+        }
       } else {
         const url = `https://s.search.bilibili.com/main/suggest?func=suggest&suggest_type=accurate&sub_type=tag&main_ver=v1&highlight=&userid=${getUID()}&bangumi_acc_num=1&special_acc_num=1&topic_acc_num=1&upuser_acc_num=3&tag_num=10&special_num=10&bangumi_num=10&upuser_num=3&term=${text}`
         lastQueuedRequest = url

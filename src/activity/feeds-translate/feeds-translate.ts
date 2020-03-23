@@ -6,12 +6,6 @@ import { FeedsCard } from '../feeds-apis'
   }
   resources.applyStyle('feedsTranslateStyle')
   const { getTranslator } = await import('./feeds-translate-providers')
-  const { feedsCardsManager } = await import('../feeds-apis')
-  const success = await feedsCardsManager.startWatching()
-  if (!success) {
-    console.error('feedsCardsManager.startWatching() failed')
-    return
-  }
   const Translator = Vue.extend({
     template: /*html*/`
       <div class="translate-container">
@@ -79,8 +73,26 @@ import { FeedsCard } from '../feeds-apis'
     }).$mount()
     cardContent.insertAdjacentElement('beforeend', translator.$el)
   }
-  feedsCardsManager.cards.forEach(injectButton)
-  feedsCardsManager.addEventListener('addCard', e => {
-    injectButton(e.detail)
-  })
+
+  const urlWithoutQuery = document.URL.replace(location.search, '')
+  const { feedsCardsManager } = await import('../feeds-apis')
+  // 动态首页
+  if (urlWithoutQuery === 'https://t.bilibili.com/') {
+    const success = await feedsCardsManager.startWatching()
+    if (!success) {
+      console.error('feedsCardsManager.startWatching() failed')
+      return
+    }
+    feedsCardsManager.cards.forEach(injectButton)
+    feedsCardsManager.addEventListener('addCard', e => {
+      injectButton(e.detail)
+    })
+  } else if (urlWithoutQuery.match(/t.bilibili.com\/(\d+)/)) { // 动态详情页
+    const card = await SpinQuery.select('.detail-card .card')
+    if (card !== null && '__vue__' in card) {
+      const feedsCard = await feedsCardsManager.parseCard(card)
+      injectButton(feedsCard)
+    }
+  }
+
 })()

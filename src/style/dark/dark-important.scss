@@ -7,14 +7,6 @@
   }
 }
 
-.live-skin-coloration-area,
-.live-skin-coloration-area {
-  .live-skin-separate-area,
-  .live-skin-separate-area-hover:hover {
-    @include background-color("2");
-  }
-}
-
 .action-row {
   .sch-pub-btn.publishing,
   .sch-pub-btn.disabled,
@@ -90,18 +82,6 @@ blockquote {
     @include color("a");
   }
 }
-.live-skin-coloration-area {
-  .live-skin-normal-a-text {
-    &,
-    &:link,
-    &:visited {
-      @include color("a");
-    }
-  }
-  .live-skin-normal-text {
-    @include color("a");
-  }
-}
 .status_box .status_btn.disabled {
   @include color("a");
 }
@@ -129,8 +109,6 @@ blockquote {
 .score-info .go-movie,
 .invitation-record-warp .invtable .inputdone,
 .bb-comment .no-login .comment-submit,
-.live-skin-coloration-area .live-skin-main-text,
-.live-skin-coloration-area .live-skin-highlight-text,
 #app .sticky-bar .bar-content .message,
 .coupon-content-con .coupon-btn-disable,
 .common .bb-comment .no-login .comment-submit,
@@ -148,8 +126,6 @@ blockquote {
 .tabs-bar,
 .score-info .go-movie,
 .bb-comment .no-login .comment-submit,
-.live-skin-coloration-area .live-skin-highlight-border,
-.live-skin-coloration-area .live-skin-separate-border,
 .select-box-v2-container .select-box-v2-controller-disabled,
 .common .bb-comment .no-login .comment-submit,
 .popup-content-ctnr .bl-button--ghost:hover,
@@ -184,8 +160,6 @@ blockquote {
 .room-introduction .edit-button:hover > .icon-font,
 .room-introduction .edit-button:hover > span,
 .im-popup .bp-popup-panel .title-ctnr .popup-title,
-.live-skin-coloration-area .live-skin-highlight-text,
-.live-skin-coloration-area .live-skin-normal-a-text:hover,
 .live-skin-normal-a-text:active,
 .up-info .u-info .name .username.is-vip:hover,
 #app .sticky-bar .bar-content .message:hover,
@@ -208,7 +182,6 @@ blockquote {
 .tag-list li.tag-item:hover,
 .page-list-box .page-input:focus,
 .page-list-box .page-input:hover,
-.live-skin-coloration-area .room-info-ctnr .info-section .live-skin-highlight-border,
 .popup-content-ctnr .bl-button--ghost,
 .manga-detail .episode-list-component .episode-list .list-data .list-item.last-read {
   @include theme-border-color();
@@ -224,7 +197,6 @@ blockquote {
 .face-g-list#my-g-list .face-g-block .my-mp-block .mp-info .btn-white,
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
 .user-my-btn .el-button--primary,
-.live-skin-coloration-area .live-skin-highlight-bg,
 .popup-content-ctnr .bl-button--primary,
 .popup-content-ctnr .bl-button--ghost:hover,
 .song-info .info-wrap .type-list .item-list .type-item.active {
@@ -243,4 +215,38 @@ blockquote {
 #bilibiliPlayer {
   box-shadow: 0 4px 8px 0 #0004;
   @include background-color("2");
+}
+
+.live-skin-coloration-area {
+  .live-skin-separate-area,
+  .live-skin-separate-area-hover:hover {
+    @include background-color("2");
+  }
+  .live-skin-normal-a-text {
+    &,
+    &:link,
+    &:visited {
+      @include color("a");
+    }
+  }
+  .live-skin-normal-text {
+    @include color("a");
+  }
+  .live-skin-main-text,
+  .live-skin-highlight-text {
+    @include color("e");
+  }
+  .live-skin-highlight-border,
+  .live-skin-separate-border {
+    @include border-color();
+  }
+  .live-skin-normal-a-text:hover {
+    @include theme-color();
+  }
+  .room-info-ctnr .info-section .live-skin-highlight-border {
+    @include theme-border-color();
+  }
+  .live-skin-highlight-bg {
+    @include theme-background-color();
+  }
 }

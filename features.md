@@ -283,30 +283,6 @@
 
 </details>
 <details>
-<summary><strong>简化直播间</strong></summary>
-
-- 隐藏姥爷图标
-- 隐藏粉丝勋章
-- 隐藏活动头衔
-- 隐藏用户等级
-- 隐藏舰长图标
-- 隐藏全区广播
-- 隐藏欢迎信息 (xxx姥爷进入直播间)
-- 隐藏入场特效
-- 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
-- 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
-- 隐藏付费礼物 (播放器下面的各种金瓜子礼物, 以及许愿瓶, 上舰等)
-- 隐藏活动横幅
-- 隐藏排行榜
-- 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
-- 禁用直播间皮肤
-
-每一项都可以在`附加功能`中单独选择是否隐藏. 图片中展示的是全部隐藏时的弹幕区效果对比.
-
-<img height="500" alt="简化直播间" src="images/compressed/simplify-liveroom.jpg">
-
-</details>
-<details>
 <summary><strong>简化首页</strong></summary>
 
 > 此功能需要做一些额外设置, 详见[简化首页注意事项](src/style/simplify-home/simplify-home.md)
@@ -353,24 +329,6 @@
 
 **启用后**
 ![着色](images/compressed/custom-control-background.jpg)
-
-</details>
-<details>
-<summary><strong>缩放直播看板娘</strong></summary>
-
-根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度, DPI缩放为100%的用户不需要此功能.
-
-</details>
-<details>
-<summary><strong>收起直播间侧栏</strong></summary>
-
-自动收起直播间的侧边栏.
-
-</details>
-<details>
-<summary><strong>删除直播水印</strong></summary>
-
-删除观看直播时角落的水印.
 
 </details>
 <details>
@@ -461,6 +419,92 @@
 按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 注意目前仅仅在全部动态里生效, 切换到别的类别时无效.
 
 </details>
+<details>
+<summary><strong>动态翻译</strong></summary>
+
+在动态首页和动态详情页中, 每条动态下方添加翻译按钮, 可将动态的文字机器翻译为中文. 若开启了界面翻译, 则会翻译成界面翻译里设定的语言.
+
+可以使用的翻译器如下:
+- Bing: 必应翻译
+- Google: 谷歌翻译
+- GoogleCN: 谷歌中国翻译(google.cn)
+
+</details>
+
+<h2 align="center">直播</h2>
+<div align="center">各种直播相关功能</div>
+
+
+<details>
+<summary><strong>简化直播间</strong></summary>
+
+- 隐藏姥爷图标
+- 隐藏粉丝勋章
+- 隐藏活动头衔
+- 隐藏用户等级
+- 隐藏舰长图标
+- 隐藏全区广播
+- 隐藏欢迎信息 (xxx姥爷进入直播间)
+- 隐藏入场特效
+- 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
+- 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
+- 隐藏付费礼物 (播放器下面的各种金瓜子礼物, 以及许愿瓶, 上舰等)
+- 隐藏活动横幅
+- 隐藏排行榜
+- 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
+- 禁用直播间皮肤
+
+每一项都可以在`附加功能`中单独选择是否隐藏. 图片中展示的是全部隐藏时的弹幕区效果对比.
+
+<img height="500" alt="简化直播间" src="images/compressed/simplify-liveroom.jpg">
+
+</details>
+<details>
+<summary><strong>缩放直播看板娘</strong></summary>
+
+根据屏幕DPI缩放直播看板娘的大小以提高像素的清晰度, DPI缩放为100%的用户不需要此功能.
+
+</details>
+<details>
+<summary><strong>收起直播间侧栏</strong></summary>
+
+自动收起直播间的侧边栏.
+
+</details>
+<details>
+<summary><strong>删除直播水印</strong></summary>
+
+删除观看直播时角落的水印.
+
+</details>
+<details>
+<summary><strong>禁止直播首页自动播放</strong></summary>
+
+禁止直播首页的推荐直播间自动开始播放, 开启后, 还可以通过`隐藏首页推荐直播`直接隐藏掉这个推荐板块.
+
+![直播首页自动播放](images/compressed/hide-home-live.jpg)
+
+</details>
+<details>
+<summary><strong>直播间自动领奖</strong></summary>
+
+在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速.
+
+</details>
+<details>
+<summary><strong>自动选择当前直播间勋章</strong></summary>
+
+如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.
+
+</details>
+<details>
+<summary><strong>直播弹幕记录器(实验性)</strong></summary>
+
+开启后, 在直播间里可以从附加功能中启动弹幕记录器, 会记录启动后所有收到的弹幕, 并可以导出为XML弹幕文件.
+
+> 弹幕的发送时间是相对于直播开始时间确定的.
+
+</details>
 
 <h2 align="center">工具</h2>
 <div align="center">各式各样的小玩意</div>
@@ -532,23 +576,9 @@
 
 </details>
 <details>
-<summary><strong>禁止直播首页自动播放</strong></summary>
-
-禁止直播首页的推荐直播间自动开始播放, 开启后, 还可以通过`隐藏首页推荐直播`直接隐藏掉这个推荐板块.
-
-![直播首页自动播放](images/compressed/hide-home-live.jpg)
-
-</details>
-<details>
 <summary><strong>瓜子换硬币</strong></summary>
 
 在附加功能中添加`瓜子换硬币`的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.
-
-</details>
-<details>
-<summary><strong>直播间自动领奖</strong></summary>
-
-在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速.
 
 </details>
 <details>
@@ -564,26 +594,11 @@
 
 </details>
 <details>
-<summary><strong>自动选择当前直播间勋章</strong></summary>
-
-如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.
-
-</details>
-<details>
 <summary><strong>网址参数清理</strong></summary>
 
 自动删除链接中的多余跟踪参数, 例如`spm_id_from`, `from_source`, `share_source`等.
 
 </details>
-<details>
-<summary><strong>直播弹幕记录器</strong></summary>
-
-开启后, 在直播间里可以从附加功能中启动弹幕记录器, 会记录启动后所有收到的弹幕, 并可以导出为XML弹幕文件.
-
-> 弹幕的发送时间是相对于直播开始时间确定的.
-
-</details>
-
 
 <h2 align="center">触摸</h2>
 <div align="center">为支持触屏的设备特别设计的功能</div>

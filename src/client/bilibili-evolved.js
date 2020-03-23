@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.10.6
+// @version      1.10.12
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -76,6 +76,42 @@ Object.entries({
 })
 // GM4 polyfill end
 
+// Safari EventTarget polyfill
+window.EventTarget = class EventTarget {
+  constructor() {
+    this.listeners = {}
+  }
+  addEventListener(type, callback) {
+    if (!(type in this.listeners)) {
+      this.listeners[type] = []
+    }
+    this.listeners[type].push(callback)
+  }
+  removeEventListener(type, callback) {
+    if (!(type in this.listeners)) {
+      return
+    }
+    let stack = this.listeners[type]
+    for (let i = 0, l = stack.length; i < l; i++) {
+      if (stack[i] === callback) {
+        stack.splice(i, 1)
+        return
+      }
+    }
+  }
+  dispatchEvent(event) {
+    if (!(event.type in this.listeners)) {
+      return true
+    }
+    let stack = this.listeners[event.type].slice()
+    for (let i = 0, l = stack.length; i < l; i++) {
+      stack[i].call(this, event)
+    }
+    return !event.defaultPrevented
+  }
+}
+// Safari EventTarget polyfill end
+
 import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename } from './utils'
 import { settings, loadSettings, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
@@ -92,7 +128,7 @@ import { resourceManifest } from './resource-manifest'
 import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
 import { getScriptBlocker } from './script-blocker'
-import { installStyle, uninstallStyle } from './custom-styles'
+import { installStyle, uninstallStyle, toggleStyle } from './custom-styles'
 import { store } from './store'
 
 ;(async () => {
@@ -226,6 +262,7 @@ import { store } from './store'
       escapeFilename,
       installStyle,
       uninstallStyle,
+      toggleStyle,
       store,
       resources,
       theWorld: waitTime => {
@@ -290,7 +327,7 @@ import { store } from './store'
       case '同时(自动)':
         {
           const delayLoads = [
-            '//www.bilibili.com/video/av',
+            '//www.bilibili.com/video/',
             '//www.bilibili.com/bangumi/play',
           ]
           if (delayLoads.some(it => document.URL.includes(it))) {

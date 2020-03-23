@@ -1,5 +1,5 @@
 const getRedirectLink = text => {
-  const match = text.match(/(av[\d]+)\/p([\d]+)/)
+  const match = text.match(/(av[\d]+)\/p([\d]+)/i) || text.match(/(BV[\w]+)\/p([\d]+)/i)
   if (match) {
     return `https://www.bilibili.com/video/${match[1]}/?p=${match[2]}`
   } else {
@@ -16,7 +16,7 @@ const redirectLinks = items => {
       if (href.match(/.*watchlater.*|javascript:;/g)) {
         return getRedirectLink(href)
       }
-      if (href.indexOf('video/av') !== -1) {
+      if (href.match(/video\/av|video\/BV/i)) {
         return href
       }
     })
@@ -36,7 +36,7 @@ const redirectSelectors = (...selectors) => {
 SpinQuery.select('.watch-later-list').then(() => {
   Observer.childListSubtree('#viewlater-app', () => {
     SpinQuery.condition(
-      () => document.URL.match(/(av[\d]+)\/p([\d]+)/),
+      () => document.URL.match(/(av[\d]+)\/p([\d]+)/i) || document.URL.match(/(BV[\w]+)\/p([\d]+)/i),
       it => it && document.URL.indexOf('watchlater') !== -1,
       () => {
         const url = getRedirectLink(document.URL)

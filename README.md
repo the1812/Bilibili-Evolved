@@ -106,6 +106,12 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 - [jQuery](http://jquery.com/)
 - [MDI](https://materialdesignicons.com)
 
+# 已知问题
+- 和`解除B站区域限制`一同使用时, 两个脚本功能互相没有任何问题, 但有的人会遇到没弹幕的状况. 单独使用各脚本时正常, 目前未找到原因.
+- 可能无法很好地适应窄屏幕, 请尽量以1400px以上的宽度使用此脚本.
+- ASS弹幕下载不能包含高级弹幕, 字幕弹幕等.
+- `简化首页`可能会有无法加载`活动`栏目的情况, 目前未找到原因.
+
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配并保持无冲突.
 
@@ -118,6 +124,11 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 作者: [indefined](https://github.com/indefined)
 - [GitHub](https://github.com/indefined/UserScripts/tree/master/bilibiliHome)
 - [GreasyFork](https://greasyfork.org/zh-CN/scripts/368446-bilibili%E7%BD%91%E9%A1%B5%E7%AB%AF%E6%B7%BB%E5%8A%A0app%E9%A6%96%E9%A1%B5%E6%8E%A8%E8%8D%90)
+
+## pakku.js 哔哩哔哩弹幕过滤器
+作者: [xmcp](https://github.com/xmcp)
+- [主页](https://s.xmcp.ml/pakkujs/)
+- [GitHub](https://github.com/xmcp/pakku.js)
 
 ----
 

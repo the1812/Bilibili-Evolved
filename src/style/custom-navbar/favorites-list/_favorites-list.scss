@@ -5,6 +5,10 @@
   font-size: 12px;
   @include v-stretch();
   justify-content: center;
+  .dropdown-menu {
+    max-height: 500px;
+    overflow: auto;
+  }
   .empty-tip,
   .loading-tip {
     display: flex;

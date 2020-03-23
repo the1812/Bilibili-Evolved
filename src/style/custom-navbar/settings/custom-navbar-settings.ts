@@ -61,7 +61,6 @@ export const initSettingsPanel = async () => {
           const isHidden = this.hidden()
           if (isHidden === false) {
             settings.customNavbarHidden.push(this.item.name)
-            settings.customNavbarHidden = settings.customNavbarHidden
           }
           else {
             const index = settings.customNavbarHidden.indexOf(this.item.name)
@@ -69,20 +68,20 @@ export const initSettingsPanel = async () => {
               return
             }
             settings.customNavbarHidden.splice(index, 1)
-            settings.customNavbarHidden = settings.customNavbarHidden
           }
           this.$forceUpdate()
           const navbarItem = dq(`.custom-navbar li[data-name='${this.item.name}']`) as HTMLElement
           if (navbarItem !== null) {
             navbarItem.style.display = isHidden ? 'flex' : 'none'
           }
+          settings.customNavbarHidden = settings.customNavbarHidden
         }
       }
     })
 
     const updateBoundsPadding = _.debounce(value => {
-      settings.customNavbarBoundsPadding = value
       document.body.style.setProperty('--navbar-bounds-padding', `0 ${value}%`)
+      settings.customNavbarBoundsPadding = value
     }, 200)
     new Vue({
       el: '.custom-navbar-settings',
@@ -114,8 +113,8 @@ export const initSettingsPanel = async () => {
           settings.customNavbarOrder[names[orderBefore]] = orderAfter
           const oldElement = dq(`.custom-navbar li[data-name='${names[orderBefore]}']`) as HTMLElement
           oldElement.style.order = orderAfter.toString()
-          settings.customNavbarOrder = settings.customNavbarOrder
           list.insertBefore(sourceItem, targetItem)
+          settings.customNavbarOrder = settings.customNavbarOrder
         }
         new Slip(list)
         list.addEventListener('slip:beforewait', e => {

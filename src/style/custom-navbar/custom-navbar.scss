@@ -345,11 +345,11 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   }
   li.left-side .popup {
     left: 0;
-    transform: translateY(-6px) translateX(0);
+    transform: translateY(-6px) translateX(10%);
   }
   li.right-side .popup {
     left: 100%;
-    transform: translateY(-6px) translateX(-100%);
+    transform: translateY(-6px) translateX(-90%);
   }
   &.dark .popup {
     box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px 0px;
@@ -475,6 +475,11 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     }
     .row {
       margin: 0 10px;
+      // https://www.bilibili.com/audio/au1417415?type=7
+      width: auto !important;
+      &::after {
+        content: none !important;
+      }
     }
     .row.level-info {
       margin-bottom: -5px;
@@ -518,15 +523,15 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     }
     .item > i {
       opacity: 0.7;
-      font-size: 16pt;
+      font-size: 14pt;
     }
     .item {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
-      height: 56px;
-      width: 60px;
+      height: 48px;
+      flex: 1;
     }
     .item span {
       font-size: 14px;
@@ -573,6 +578,29 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     }
     .level-progress-label {
       font-size: 11px;
+    }
+    .stats {
+      display: flex;
+      align-items: center;
+      align-self: stretch;
+      margin: 0 10px;
+      &-item {
+        padding: 6px 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: none;
+        &:hover {
+          color: var(--theme-color) !important;
+        }
+        .stats-number {
+          font-weight: bold;
+          margin-bottom: 4px;
+          font-size: 14px;
+          transition: none;
+        }
+      }
     }
   }
 
@@ -816,12 +844,44 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     color: var(--theme-color);
     font-style: normal;
   }
+  .copy-tip {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px);
+    border-radius: 4px;
+    background-color: #000a;
+    color: #fff;
+    padding: 6px 8px;
+    &.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  }
   .search-list-item {
-    padding: 6px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    &-text {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      flex: 1;
+      padding: 6px 0 6px 6px;
+    }
+    .delete-history {
+      opacity: 0.5;
+      padding: 6px 6px 6px 0;
+      line-height: 1;
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
   .search-list-item:hover,
   .search-list-item:focus-within {
@@ -835,6 +895,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 6px;
   }
   .search-list-item.clear-history .mdi {
     line-height: 1;
@@ -850,9 +911,14 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   }
 }
 @import "./activities/activities", "./subscriptions/subscriptions", "_round-corner", "./settings/settings",
-  "./category/category", "./watchlater-list/watchlater-list", "./favorites-list/favorites-list", "./history-list/history-list";
-
-.custom-navbar > ul > li:not(.disabled):hover > .popup,
+  "./category/category", "./watchlater-list/watchlater-list", "./favorites-list/favorites-list",
+  "./history-list/history-list";
+.custom-navbar > ul > li:not(.disabled) .popup-container {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+}
+.custom-navbar > ul > li:not(.disabled):hover .popup-container > .popup,
 #custom-navbar-home-popup .category-item:hover .popup,
 #custom-navbar-search:focus-within ~ .search-list:not(.empty),
 .custom-navbar .search-list:not(.empty):focus-within {
@@ -860,12 +926,12 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   pointer-events: initial;
   opacity: 1;
 }
-.custom-navbar > ul > li:not(.disabled).right-side:hover > .popup {
-  transform: translateY(0) translateX(-100%);
+.custom-navbar > ul > li:not(.disabled).right-side:hover .popup-container > .popup {
+  transform: translateY(0) translateX(-90%);
   left: 100%;
 }
-.custom-navbar > ul > li:not(.disabled).left-side:hover > .popup {
-  transform: translateY(0) translateX(0);
+.custom-navbar > ul > li:not(.disabled).left-side:hover .popup-container > .popup {
+  transform: translateY(0) translateX(10%);
   left: 0;
 }
 #custom-navbar-home-popup .category-item:hover .popup {

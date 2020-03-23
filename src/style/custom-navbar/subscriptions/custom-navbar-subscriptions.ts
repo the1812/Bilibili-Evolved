@@ -2,6 +2,7 @@ import { NavbarComponent } from '../custom-navbar-component'
 export class Subscriptions extends NavbarComponent {
   constructor() {
     super()
+    this.boundingWidth = 380
     this.noPadding = true
     const uid = getUID()
     this.href = `https://space.bilibili.com/${uid}/bangumi`

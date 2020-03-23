@@ -1,8 +1,7 @@
-import { getFriendlyTitle, formatTitle } from '../title'
+import { getFriendlyTitle } from '../title'
 import { VideoInfo, DanmakuInfo } from '../video-info'
 import { VideoDownloaderFragment } from './video-downloader-fragment'
 import { DownloadVideoPackage } from './download-video-package'
-import { VideoDash } from './video-dash'
 import { BatchExtractor, BatchTitleParameter } from './batch-download'
 
 interface PageData {
@@ -162,6 +161,16 @@ class VideoFormat {
     return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
   }
 }
+const allFormats: VideoFormat[] = [
+  new VideoFormat(120, '4K', '超清 4K'),
+  new VideoFormat(116, '1080P60', '高清 1080P60'),
+  new VideoFormat(112, '1080P+', '高清 1080P+'),
+  new VideoFormat(80, '1080P', '高清 1080P'),
+  new VideoFormat(74, '720P60', '高清 720P60'),
+  new VideoFormat(64, '720P', '高清 720P'),
+  new VideoFormat(32, '480P', '清晰 480P'),
+  new VideoFormat(15, '320P', '流畅 320P'),
+]
 class VideoDownloader {
   format: VideoFormat
   fragments: VideoDownloaderFragment[]
@@ -264,13 +273,13 @@ class VideoDownloader {
         xhr.responseType = 'arraybuffer'
         xhr.withCredentials = false
         xhr.addEventListener('progress', (e) => {
-          console.log(`[下载视频] 视频片段${getPartNumber(xhr)}下载进度: ${e.loaded}/${rangeLength} bytes loaded, ${range}`)
+          console.debug(`[下载视频] 视频片段${getPartNumber(xhr)}下载进度: ${e.loaded}/${rangeLength} bytes loaded, ${range}`)
           this.progressMap.set(xhr, e.loaded)
           this.updateProgress()
         })
         xhr.addEventListener('load', () => {
           if (('' + xhr.status)[0] === '2') {
-            console.log(`[下载视频] 视频片段${getPartNumber(xhr)}下载完成`)
+            console.debug(`[下载视频] 视频片段${getPartNumber(xhr)}下载完成`)
             resolve(xhr.response)
           } else {
             reject(`视频片段${getPartNumber(xhr)}请求失败, response = ${xhr.status}`)
@@ -626,6 +635,20 @@ async function loadPanel() {
     cid: string
     aid: string
   }
+  const panelTabs = [
+    {
+      name: 'single',
+      displayName: '单个视频',
+    },
+    {
+      name: 'batch',
+      displayName: '批量导出',
+    },
+    {
+      name: 'manual',
+      displayName: '手动输入',
+    },
+  ]
   const panel = new Vue({
     el: '.download-video',
     components: {
@@ -634,7 +657,9 @@ async function loadPanel() {
       RpcProfiles: () => import('./aria2-rpc-profiles.vue'),
     },
     data: {
-      downloadSingle: true,
+      /** 当前页面是否支持批量导出 */
+      batch: false,
+      selectedTab: panelTabs[0],
       coverUrl: EmptyImageUrl,
       aid: pageData.aid,
       cid: pageData.cid,
@@ -645,6 +670,10 @@ async function loadPanel() {
       qualityModel: {
         value: selectedFormat!.displayName,
         items: formats.map(f => f.displayName)
+      },
+      manualQualityModel: {
+        value: allFormats[1].displayName,
+        items: allFormats.map(f => f.displayName),
       },
       danmakuModel: {
         value: settings.downloadVideoDefaultDanmaku as DanmakuOption,
@@ -665,15 +694,31 @@ async function loadPanel() {
       episodeList: [] as EpisodeItem[],
       downloading: false,
       speed: '',
-      batch: false,
       rpcSettings: settings.aria2RpcOption,
       showRpcSettings: false,
       busy: false,
       saveRpcSettingsText: '保存配置',
       enableDash: settings.enableDashDownload,
       lastDirectDownloadLink: '',
+      manualInputText: '',
     },
     computed: {
+      tabs() {
+        if (this.batch) {
+          return panelTabs
+        }
+        const clone = [...panelTabs]
+        _.remove(clone, it => it.name === 'batch')
+        return clone
+      },
+      manualInputItems() {
+        const itemTexts: string[] = (this.manualInputText as string).split(/\s/g)
+        const items = itemTexts.map(it => it.match(/av(\d+)/i) || it.match(/^(\d+)$/))
+        return _.uniq(items.filter(it => it !== null).map(it => it![1]))
+      },
+      downloadSingle() {
+        return this.selectedTab.name === 'single'
+      },
       displaySize() {
         if (typeof this.size === 'string') {
           return this.size
@@ -708,7 +753,7 @@ async function loadPanel() {
         await this.formatChange()
       },
       async dashChange() {
-        console.log('dash change')
+        // console.log('dash change')
         const format = settings.downloadVideoFormat = this.dashModel.value as typeof settings.downloadVideoFormat
         let updatedFormats = []
         if (format === 'flv') {
@@ -724,7 +769,7 @@ async function loadPanel() {
       },
       // userSelect 用于区分用户操作和自动更新, 只有用户操作才应更新默认选择的画质
       async formatChange(userSelect = false) {
-        console.log('format change')
+        // console.log('format change')
         const format = this.getFormat() as VideoFormat
         if (userSelect) {
           settings.downloadVideoQuality = format.quality
@@ -739,8 +784,18 @@ async function loadPanel() {
           throw error
         }
       },
+      getManualFormat() {
+        let format: VideoFormat | undefined
+        format = allFormats.find(f => f.displayName === this.manualQualityModel.value)
+        if (!format) {
+          console.error(`No format found. model value = ${this.manualQualityModel.value}`)
+          return null
+        }
+        return format
+      },
       getFormat() {
-        const format = formats.find(f => f.displayName === this.qualityModel.value)
+        let format: VideoFormat | undefined
+        format = formats.find(f => f.displayName === this.qualityModel.value)
         if (!format) {
           console.error(`No format found. model value = ${this.qualityModel.value}`)
           return null
@@ -753,8 +808,12 @@ async function loadPanel() {
         }
         try {
           this.busy = true
-          if (!this.downloadSingle) {
+          if (this.selectedTab.name === 'batch') {
             await this.exportBatchData(type)
+            return
+          }
+          if (this.selectedTab.name === 'manual') {
+            await this.exportManualData(type)
             return
           }
           const format = this.getFormat() as VideoFormat
@@ -907,10 +966,72 @@ async function loadPanel() {
           toast.dismiss()
         }
       },
+      async exportManualData(type: ExportType) {
+        if (this.manualInputItems.length === 0) {
+          Toast.info('请至少输入一个有效的视频链接!', '手动输入', 3000)
+          return
+        }
+        const { ManualInputBatch } = await import('./batch-download')
+        const batch = new ManualInputBatch({
+          api: await (new Video().getApiGenerator(this.dash)),
+          itemFilter: () => true,
+        })
+        batch.items = this.manualInputItems
+        if (this.danmakuModel.value !== '无') {
+          const danmakuToast = Toast.info('下载弹幕中...', '手动输入')
+          const pack = new DownloadVideoPackage()
+          try {
+            if (this.danmakuModel.value === 'XML') {
+              for (const item of (await batch.getItemList())) {
+                const danmakuInfo = new DanmakuInfo(item.cid)
+                await danmakuInfo.fetchInfo()
+                pack.add(ManualInputBatch.formatTitle(item.titleParameters) + '.xml', danmakuInfo.rawXML)
+              }
+            } else {
+              const { convertToAss } = await import('../download-danmaku')
+              for (const item of (await batch.getItemList())) {
+                const danmakuInfo = new DanmakuInfo(item.cid)
+                await danmakuInfo.fetchInfo()
+                pack.add(ManualInputBatch.formatTitle(item.titleParameters) + '.ass', await convertToAss(danmakuInfo.rawXML))
+              }
+            }
+            await pack.emit('manual-exports.danmakus.zip')
+          } catch (error) {
+            logError(`弹幕下载失败`)
+            throw error
+          } finally {
+            danmakuToast.dismiss()
+          }
+        }
+        const toast = Toast.info('获取链接中...', '手动输入')
+        try {
+          switch (type) {
+            default:
+            case 'aria2': {
+              const result = await batch.collectAria2(this.getManualFormat().quality, false) as string
+              await DownloadVideoPackage.single(
+                'manual-exports.txt',
+                new Blob([result], { type: 'text/plain' }),
+                { ffmpeg: this.ffmpegOption }
+              )
+              break
+            }
+            case 'aria2RPC': {
+              await batch.collectAria2(this.getManualFormat().quality, true)
+              Toast.success(`成功发送了批量请求.`, 'aria2 RPC', 3000)
+              break
+            }
+          }
+        } catch (error) {
+          logError(error)
+        } finally {
+          toast.dismiss()
+        }
+      },
       async checkBatch() {
         const urls = [
           '//www.bilibili.com/bangumi',
-          '//www.bilibili.com/video/av',
+          '//www.bilibili.com/video',
           '//www.bilibili.com/blackboard/bnj2020.html'
         ]
         if (!urls.some(url => document.URL.includes(url))) {
@@ -1010,7 +1131,7 @@ async function loadPanel() {
   Observer.videoChange(async () => {
     panel.close()
     panel.batch = false
-    panel.downloadSingle = true
+    panel.selectedTab = panelTabs[0]
     const button = dq('#download-video') as HTMLElement
     const canDownload = await loadPageData()
     button.style.display = canDownload ? 'flex' : 'none'

@@ -97,10 +97,17 @@ export class ColorProcessor {
   }
   get foreground () {
     const color = this.rgb
-    if (color && this.grey < 0.35) {
+    const mode = settings.foregroundColorMode
+    if (mode === '自动' || mode === undefined) {
+      if (color && this.grey < 0.35) {
+        return '#000'
+      }
+      return '#fff'
+    } else if (mode === '黑色') {
       return '#000'
+    } else if (mode === '白色') {
+      return '#fff'
     }
-    return '#fff'
   }
   makeImageFilter (originalRgb) {
     const { h, s } = this.rgbToHsb(originalRgb)
