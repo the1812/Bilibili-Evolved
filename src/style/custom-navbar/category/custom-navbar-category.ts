@@ -4,6 +4,7 @@ export class Category extends NavbarComponent {
   constructor() {
     super()
     this.boundingWidth = 366
+    this.href = `https://www.bilibili.com`
     this.html = `主站`
     // this.requestedPopup = true
     this.popupHtml = /*html*/`
