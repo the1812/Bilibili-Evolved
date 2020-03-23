@@ -53,6 +53,7 @@ namespace BilibiliEvolved.Build
             zip.CreateEntryFromFile(url, filename, CompressionLevel.NoCompression);
             hashDict.Add(filename, hash);
           }
+          zip.CreateEntryFromFile("version.txt", "version.txt", CompressionLevel.NoCompression);
         }
         File.WriteAllText("min/bundle.json", JsonConvert.SerializeObject(hashDict, Formatting.Indented));
         WriteSuccess("Bundle build complete.");
