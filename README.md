@@ -1,4 +1,4 @@
-<div align="center"><img id="Bilibili-Evolved" width="500" alt="Bilibili Evolved" src="images\bilibili-evolved-wide-color.svg"></div>
+<div align="center"><img id="Bilibili-Evolved" width="500" alt="Bilibili Evolved" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/bilibili-evolved-wide-color.svg"></div>
 <br>
 <div align="center">
 
@@ -138,10 +138,10 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 
 支付宝
 
-<img alt="支付宝" src="images/compressed/alipay.jpg" height="200">
+<img alt="支付宝" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/alipay.jpg" height="200">
 
 微信
 
-<img alt="微信" src="images/compressed/wechat.jpg" height="200">
+<img alt="微信" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/wechat.jpg" height="200">
 
 ----
