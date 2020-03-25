@@ -884,3 +884,84 @@
     background-image: none !important;
   }
 }
+
+.cinema-movie-wrapper {
+  .banner-wrapper .side-list .side-item.selected:hover .title {
+      @include theme-color();
+    }
+  .filter-wrapper .filter-block {
+    .filter-block-title span {
+      @include color("e");
+    }
+    .filter-list a.filter-item {
+      @include color("a");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .hot-recom-wrapper {
+    .hot-title {
+      @include color("e");
+    }
+    .hot-trailer .player-list {
+      @include background-color("4");
+      .list-count {
+        @include color("a");
+        .num {
+          @include theme-color();
+        }
+      }
+      .list-item-wrap .list-item {
+        .list-desc {
+          @include color("e");
+        }
+        &.selected {
+          @include background-color("2");
+          .list-cover {
+            @include theme-border-color();
+            &:after {
+              @include to-theme("pink");
+            }
+          }
+        }
+      }
+    }
+  }
+  .popup-card .info {
+    @include background-color("4");
+    .title {
+      @include color("e");
+    }
+    .style,
+    .time {
+      @include color("a");
+    }
+  }
+  .activity-wrap .title {
+    @include color("e");
+  }
+  .pindan-wrap,
+  .rank-wrap {
+    .slider-contro span {
+      @include background-color("4");
+    }
+    .head-section .title,
+    .preview-item .text .title {
+      @include color("e");
+    }
+  }
+  .hot-wrapper {
+    .title,
+    .right .recent-item a {
+      @include color("e");
+    }
+  }
+  .rank-wrap .head-section .more span {
+    @include foreground-color();
+    @include border-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
+}
