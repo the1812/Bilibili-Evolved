@@ -986,6 +986,15 @@
     &:hover .name {
       @include theme-color();
     }
+    .section .icon-bg-1 .avatar .red-dot {
+      @include theme-background-color();
+    }
+  }
+  > .icon.active {
+    @include color("a");
+    &:hover {
+      @include to-theme("blue");
+    }
   }
 }
 .new-topic-panel {
@@ -994,7 +1003,10 @@
     @include background-color("3");
     @include color("e");
   }
-  .icon.active:hover {
-    @include to-theme("blue");
+  .more-button .more:hover {
+    @include theme-color();
+    &::after {
+      @include theme-border-color();
+    }
   }
 }
