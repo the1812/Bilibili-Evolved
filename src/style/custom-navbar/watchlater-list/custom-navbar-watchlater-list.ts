@@ -1,4 +1,5 @@
 import { NavbarComponent } from '../custom-navbar-component'
+import { RawWatchlaterItem } from '../../../video/watchlater-api'
 interface WatchlaterCard {
   aid: number
   href: string
@@ -111,18 +112,25 @@ export class WatchlaterList extends NavbarComponent {
             this.cards = []
             return
           }
+          const getLink = (item: RawWatchlaterItem) => {
+            if (settings.watchLaterRedirect) {
+              return `https://www.bilibili.com/video/av${item.aid}`
+            }
+            if (item.bvid) {
+              return `https://www.bilibili.com/watchlater/#/${item.bvid}`
+            }
+            return `https://www.bilibili.com/watchlater/#/av${item.aid}`
+          }
           const cards = rawList.map(item => {
             const href = (() => {
               if (item.pages === undefined) {
-                return settings.watchLaterRedirect ?
-                  `https://www.bilibili.com/video/av${item.aid}` :
-                  `https://www.bilibili.com/watchlater/#/av${item.aid}`
+                return getLink(item)
               }
               const pages = item.pages.map(it => it.cid)
               const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
               return settings.watchLaterRedirect ?
-                `https://www.bilibili.com/video/av${item.aid}?p=${page}` :
-                `https://www.bilibili.com/watchlater/#/av${item.aid}/p${page}`
+                `${getLink(item)}?p=${page}` :
+                `${getLink(item)}/p${page}`
             })()
             const percent = Math.round(1000 * item.progress / item.duration) / 1000
             return {

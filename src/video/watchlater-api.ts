@@ -85,6 +85,7 @@ export interface RawWatchlaterItem {
   cid: number;
   progress: number;
   add_at: number;
+  bvid: string
 }
 export async function getWatchlaterList(): Promise<number[]>
 export async function getWatchlaterList(raw: true): Promise<RawWatchlaterItem[]>

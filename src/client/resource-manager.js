@@ -270,12 +270,14 @@ export class ResourceManager {
     const zipVersion = zip.file('version.txt')
     if (zipVersion) {
       latestVersion = await zipVersion.async('text')
+      console.log('zip version =', latestVersion)
     } else {
       latestVersion = await Ajax.monkey({ url: (Resource.cdnRoot || Resource.root) + 'version.txt' })
+      console.log('txt version =', latestVersion)
     }
     isTimeout = false
     if (settings.currentVersion !== latestVersion) {
-      console.log(`bundle version not match. current=${settings.currentVersion}, latest=${latestVersion}`)
+      console.log(`bundle version not match. current = ${settings.currentVersion}, latest = ${latestVersion}`)
       return
     }
     let cache = {}
