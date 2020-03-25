@@ -878,3 +878,9 @@
 .bp-svg-icon.taobao-link {
   @include to-theme("blue");
 }
+.home-page {
+  .fixed-bg,
+  .fixed-bg-cover {
+    background-image: none !important;
+  }
+}
