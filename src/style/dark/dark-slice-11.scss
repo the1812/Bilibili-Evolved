@@ -965,3 +965,36 @@
     }
   }
 }
+
+.live-up .live-detail {
+  .up-name {
+    @include color("e");
+  }
+  .live-name {
+    @include color("a");
+  }
+}
+.most-viewed-panel {
+  @include background-color("4");
+  .list-content .most-viewed-item {
+    .name {
+      @include color("a");
+      &.active {
+        @include theme-color();
+      }
+    }
+    &:hover .name {
+      @include theme-color();
+    }
+  }
+}
+.new-topic-panel {
+  @include background-color("4");
+  .tag-item .label {
+    @include background-color("3");
+    @include color("e");
+  }
+  .icon.active:hover {
+    @include to-theme("blue");
+  }
+}
