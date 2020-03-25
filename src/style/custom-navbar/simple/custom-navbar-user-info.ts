@@ -16,7 +16,22 @@ export class UserInfo extends NavbarComponent {
         <img src='${EmptyImageUrl}' class="user-pendant"></img>
       </div>
     `
-    this.popupHtml = /*html*/`
+    this.popupHtml = /*html*/`<div class="user-info-panel"></div>`
+    this.requestedPopup = true
+    this.init()
+  }
+  get name(): keyof CustomNavbarOrders {
+    return 'userInfo'
+  }
+  async init() {
+    const panel = await SpinQuery.select('.custom-navbar .user-info-panel') as HTMLElement
+    const face = await SpinQuery.select('.custom-navbar .user-face-container .user-face') as HTMLElement
+    const userInfoJson = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')
+    const userStatJson = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav/stat')
+    Object.assign(this.userInfo, userInfoJson.data)
+    Object.assign(this.userInfo, userStatJson.data)
+    const vm = new Vue({
+      template: /*html*/`
       <div class="user-info-panel">
         <div v-if="isLogin" class="logged-in">
           <a class="name" target="_blank" href="https://space.bilibili.com/">{{uname}}</a>
@@ -111,22 +126,7 @@ export class UserInfo extends NavbarComponent {
           <a href="https://passport.bilibili.com/login" class="login theme-button">登录</a>
         </div>
       </div>
-    `
-    this.requestedPopup = true
-    this.init()
-  }
-  get name(): keyof CustomNavbarOrders {
-    return 'userInfo'
-  }
-  async init() {
-    const panel = await SpinQuery.select('.custom-navbar .user-info-panel') as HTMLElement
-    const face = await SpinQuery.select('.custom-navbar .user-face-container .user-face') as HTMLElement
-    const userInfoJson = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')
-    const userStatJson = await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav/stat')
-    Object.assign(this.userInfo, userInfoJson.data)
-    Object.assign(this.userInfo, userStatJson.data)
-    const vm = new Vue({
-      el: panel,
+      `,
       data: {
         ...this.userInfo,
         privileges: {
@@ -202,6 +202,7 @@ export class UserInfo extends NavbarComponent {
         },
       },
     })
+    vm.$mount(panel)
     if (this.userInfo.isLogin) {
       const faceUrl = this.userInfo.face.replace('http', 'https')
       const noFaceUrl = '//static.hdslb.com/images/member/noface.gif'

@@ -64,9 +64,9 @@ export class NavbarComponent {
     const leftX = elementX - this.boundingWidth / 2
     const rightX = elementX + this.boundingWidth / 2
     if (leftX < 0) {
-      popup.style.transform = `translateX(${Math.abs(leftX)}px)`
+      popup.style.transform = `translateX(${Math.abs(leftX) + 1}px)`
     } else if (rightX > totalWidth) {
-      popup.style.transform = `translateX(${-(rightX - totalWidth)}px)`
+      popup.style.transform = `translateX(${-(rightX - totalWidth) - 1}px)`
     } else {
       popup.style.transform = ''
     }
