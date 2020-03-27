@@ -528,6 +528,7 @@ li.category.folded i.icon-arrow {
   display: none;
   flex-direction: column;
   box-shadow: 4px 0px 16px 0px #0000;
+  user-select: none;
   &.loaded {
     display: flex;
   }
