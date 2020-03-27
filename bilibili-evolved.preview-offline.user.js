@@ -1466,6 +1466,7 @@ class Resource {
     return this.text !== null
   }
   constructor (url, { styles = [], alwaysPreview = false } = {}) {
+    this.relativePath = 'min/' + url
     this.rawUrl = Resource.root + 'min/' + url
     this.dependencies = []
     this.styles = styles
