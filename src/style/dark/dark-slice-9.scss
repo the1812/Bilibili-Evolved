@@ -262,7 +262,8 @@
 .comment-bilibili-fold .comment-list .list-item .blacklist-font-color,
 .list-item .publish-time,
 .share-content .video-card .up-info .name,
-.share-content .video-card .up-info .tip {
+.share-content .video-card .up-info .tip,
+.live-panel .title .count {
   @include color("a");
 }
 #biliAppHomeSetting {
@@ -598,7 +599,8 @@ $highlight-map: (
 #biliAppHomeSetting button,
 .van-popover .btn-box .btn,
 .van-popper-history .view-all:hover,
-.bui-button.bui-button-gray:hover {
+.bui-button.bui-button-gray:hover,
+.live-up .live-up-img-box {
   @include theme-background-color();
 }
 #biliAppHomeSetting h2,
@@ -609,7 +611,8 @@ $highlight-map: (
 .news-ctnr .more-link:hover,
 .van-popover .coins .info a:hover,
 .van-popper-upload .upload-item:hover .bilifont,
-.bilibili-search-suggest .suggest-item .suggest_high_light {
+.bilibili-search-suggest .suggest-item .suggest_high_light,
+.new-topic-panel .tag-item .content:hover {
   @include theme-color();
 }
 .interact-dialog .btn,
