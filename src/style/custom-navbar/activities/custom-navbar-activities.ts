@@ -91,6 +91,9 @@ export class Activities extends NavbarComponent {
     return document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)bp_t_offset_${getUID()}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
   }
   static setLatestID(id: string) {
+    if (id === null || id === undefined) {
+      return
+    }
     const currentID = Activities.getLatestID()
     if (Activities.compareID(id, currentID) < 0) {
       return
@@ -221,7 +224,7 @@ export class Activities extends NavbarComponent {
           handleJson: async function (json) {
             // const { getWatchlaterList } = await import('../../video/watchlater-api')
             // const watchlaterList = await getWatchlaterList()
-            const cards = json.data.cards.filter((c: any) => {
+            const cards = _.get(json, 'data.cards', []).filter((c: any) => {
               // 合作视频仅取UP主的
               return c.desc.orig_dy_id === 0
             }).map((card: any) => {
@@ -315,7 +318,7 @@ export class Activities extends NavbarComponent {
             </div>
           `,
           handleJson: async function (json) {
-            this.cards = json.data.cards.map((card: any) => {
+            this.cards = _.get(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
                 title: cardJson.apiSeasonInfo.title,
@@ -352,7 +355,7 @@ export class Activities extends NavbarComponent {
             </div>
           `,
           handleJson: async function (json) {
-            this.cards = json.data.cards.map((card: any) => {
+            this.cards = _.get(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
                 covers: cardJson.image_urls,
@@ -386,7 +389,7 @@ export class Activities extends NavbarComponent {
             </div>
           `,
           handleJson: async function (json) {
-            this.cards = json.data.list.map((card: any) => {
+            this.cards = _.get(json, 'data.list', []).map((card: any) => {
               return {
                 faceUrl: card.face,
                 title: card.title,
