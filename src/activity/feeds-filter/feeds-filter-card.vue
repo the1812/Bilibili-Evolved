@@ -197,7 +197,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "src/style/common";
+@import 'src/style/common';
 body.enable-feeds-filter:not(.disable-feeds-filter) {
   @each $name,
     $value
@@ -285,6 +285,7 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
   &,
   & * {
     transition: 0.2s ease-out;
+    transition-property: border-color, color, background-color;
   }
   body.dark & {
     color: #eee;
