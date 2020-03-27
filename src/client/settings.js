@@ -221,6 +221,8 @@ export const settings = {
   bvidConvert: true,
   fixedSidebars: false,
   updateCdn: 'jsDelivr',
+  lastNewVersionCheck: 0,
+  newVersionCheckInterval: 1000 * 3600 * 6, // 6 hours
   cache: {},
 }
 const fixedSettings = {

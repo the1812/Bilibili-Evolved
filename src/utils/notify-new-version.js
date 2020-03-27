@@ -46,6 +46,13 @@ async function checkNewVersion () {
   if (typeof offlineData !== 'undefined' || isIframe()) {
     return false
   }
+  if (settings.lastNewVersionCheck !== undefined) {
+    const now = Number(new Date())
+    const interval = now - settings.lastNewVersionCheck
+    if (interval < settings.newVersionCheckInterval) {
+      return false
+    }
+  }
   try {
     const clientTypeMatch = GM.info.script.name.match(/Bilibili Evolved \((.*)\)/)
     const clientType = clientTypeMatch ? '.' + clientTypeMatch[1].replace(/ /g, '-').toLowerCase() : ''
@@ -72,8 +79,11 @@ async function checkNewVersion () {
     return hasNewVersion
   } catch (error) {
     return false
+  } finally {
+    settings.lastNewVersionCheck = Number(new Date())
   }
 }
+const checkingPromise = checkNewVersion()
 export default {
   widget:
   {
@@ -89,7 +99,7 @@ export default {
         <span>查看更新</span>
       </button>
       `,
-    condition: checkNewVersion,
+    condition: () => checkingPromise,
     success: () => {
       document.querySelector('#new-version-update').addEventListener('click',
         e => {

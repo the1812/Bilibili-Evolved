@@ -1,6 +1,6 @@
-export function loadResources () {
+export async function loadResources () {
   Resource.root = 'https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/'
-  switch (settings.updateCdn) {
+  switch (await GM.getValue('updateCdn')) {
     case 'jsDelivr':
     default:
       Resource.cdnRoot = 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/'

@@ -193,7 +193,7 @@ import { store } from './store'
     contentLoaded(() => {
       document.body.classList.add('round-corner')
     })
-    loadResources()
+    await loadResources()
     await loadSettings()
     getScriptBlocker().then(scriptBlocker => {
       scriptBlocker.start()

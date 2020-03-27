@@ -446,6 +446,8 @@ declare global {
     bvidConvert: boolean
     fixedSidebars: boolean
     updateCdn: 'jsDelivr' | 'GitHub',
+    lastNewVersionCheck: number,
+    newVersionCheckInterval: number,
     latestVersionLink: string,
     currentVersion: string,
   }
