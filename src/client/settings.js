@@ -220,6 +220,7 @@ export const settings = {
   about: true,
   bvidConvert: true,
   fixedSidebars: false,
+  updateCdn: 'jsDelivr',
   cache: {},
 }
 const fixedSettings = {

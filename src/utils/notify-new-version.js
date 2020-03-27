@@ -41,15 +41,19 @@ class Version {
     return this.compareTo(other) === CompareResult.equal
   }
 }
+let latestVersionLink
 async function checkNewVersion () {
   if (typeof offlineData !== 'undefined' || isIframe()) {
     return false
   }
   try {
+    const clientTypeMatch = GM.info.script.name.match(/Bilibili Evolved \((.*)\)/)
+    const clientType = clientTypeMatch ? '.' + clientTypeMatch[1].replace(/ /g, '-').toLowerCase() : ''
+    latestVersionLink = `${Resource.cdnRoot || Resource.root}bilibili-evolved${clientType}.user.js`
     let latestVersionText
     try {
       const latestScript = await Ajax.monkey({
-        url: settings.latestVersionLink
+        url: latestVersionLink,
       })
       latestVersionText = latestScript.match(/@version[ ]*([\d\.]+)/)[1]
     } catch (error) {
@@ -59,7 +63,7 @@ async function checkNewVersion () {
     const currentVersion = new Version(settings.currentVersion)
     const hasNewVersion = latestVersion.greaterThan(currentVersion)
     if (hasNewVersion) {
-      const message = /* html */`新版本<span>${latestVersion.versionString}</span>已发布.  <a id="new-version-link" class="link" href="${settings.latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`
+      const message = /* html */`新版本<span>${latestVersion.versionString}</span>已发布.  <a id="new-version-link" class="link" href="${latestVersionLink}">安装</a><a class="link" target="_blank"   href="https://github.com/the1812/Bilibili-Evolved/releases">查看</a>`
       const toast = Toast.info(message, '检查更新')
       SpinQuery.select('#new-version-link').then(a => a.addEventListener('click', () => {
         toast && toast.dismiss()
@@ -75,7 +79,7 @@ export default {
   {
     content: /* html */`
       <button class="gui-settings-flat-button" id="new-version-update">
-        <a href="${settings.latestVersionLink}" style="display:none"></a>
+        <a href="${latestVersionLink}" style="display:none"></a>
         <i class="icon-update"></i>
         <span>安装更新</span>
       </button>

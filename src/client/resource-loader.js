@@ -1,6 +1,14 @@
 export function loadResources () {
   Resource.root = 'https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/'
-  Resource.cdnRoot = 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/'
+  switch (settings.updateCdn) {
+    case 'jsDelivr':
+    default:
+      Resource.cdnRoot = 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/'
+      break
+    case 'GitHub':
+      Resource.cdnRoot = Resource.root
+      break
+  }
   Resource.all = {}
   Resource.displayNames = {}
   Resource.reloadables = []
@@ -21,30 +29,30 @@ export function loadResources () {
       style.key = styleKey
       switch (data.style) {
         case 'instant':
-        {
-          resource.styles.push(styleKey)
-          break
-        }
-        case true:
-        {
-          resource.dependencies.push(style)
-          break
-        }
-        case 'important':
-        {
-          resource.styles.push({
-            key: styleKey,
-            important: true
-          })
-          break
-        }
-        default:
-        {
-          if (typeof data.style === 'object') {
-            resource.styles.push(Object.assign({ key: styleKey }, data.style))
+          {
+            resource.styles.push(styleKey)
+            break
           }
-          break
-        }
+        case true:
+          {
+            resource.dependencies.push(style)
+            break
+          }
+        case 'important':
+          {
+            resource.styles.push({
+              key: styleKey,
+              important: true
+            })
+            break
+          }
+        default:
+          {
+            if (typeof data.style === 'object') {
+              resource.styles.push(Object.assign({ key: styleKey }, data.style))
+            }
+            break
+          }
       }
     }
     if (data.html === true) {

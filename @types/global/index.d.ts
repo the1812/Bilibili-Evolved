@@ -445,6 +445,7 @@ declare global {
     preserveEventBanner: boolean
     bvidConvert: boolean
     fixedSidebars: boolean
+    updateCdn: 'jsDelivr' | 'GitHub',
     latestVersionLink: string,
     currentVersion: string,
   }

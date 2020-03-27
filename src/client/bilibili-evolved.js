@@ -29,11 +29,11 @@
 // @connect      translate.google.cn
 // @connect      translate.google.com
 // @connect      *
-// @require      https://code.jquery.com/jquery-3.4.0.min.js
+// @require      https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
-// @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
+// @require      https://cdn.jsdelivr.net/npm/jszip@3.1.5/dist/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
-// @require      https://unpkg.com/vuex@3.1.2/dist/vuex.js
+// @require      https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.js
 // @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
 // @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
 // ==/UserScript==

@@ -96,6 +96,7 @@ Resource.manifest = {
       scriptLoadingMode: '加载模式',
       guiSettingsDockSide: '设置面板停靠位置',
       foregroundColorMode: '文本颜色',
+      updateCdn: '更新源',
     },
     dropdown: [
       {
@@ -110,6 +111,10 @@ Resource.manifest = {
         key: 'scriptLoadingMode',
         items: ['同时', '延后', '同时(自动)', '延后(自动)']
       },
+      {
+        key: 'updateCdn',
+        items: ['jsDelivr', 'GitHub'],
+      }
     ],
   },
   useDarkStyle: {
