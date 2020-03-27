@@ -219,6 +219,7 @@ export const settings = {
   preserveEventBanner: false,
   about: true,
   bvidConvert: true,
+  fixedSidebars: false,
   cache: {},
 }
 const fixedSettings = {

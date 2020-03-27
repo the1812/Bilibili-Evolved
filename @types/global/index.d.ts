@@ -444,6 +444,7 @@ declare global {
     foregroundColorMode: '自动' | '白色' | '黑色'
     preserveEventBanner: boolean
     bvidConvert: boolean
+    fixedSidebars: boolean
     latestVersionLink: string,
     currentVersion: string,
   }

@@ -857,5 +857,12 @@ Resource.manifest = {
       bvidConvert: 'BV号转换',
     },
   },
+  fixedSidebars: {
+    path: 'fixed-sidebars.min.js',
+    reloadable: true,
+    displayNames: {
+      fixedSidebars: '强制固定顶栏与侧栏',
+    },
+  }
 }
 export const resourceManifest = Resource.manifest
