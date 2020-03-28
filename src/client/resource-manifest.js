@@ -869,6 +869,12 @@ Resource.manifest = {
     displayNames: {
       fixedSidebars: '强制固定顶栏与侧栏',
     },
-  }
+  },
+  livePip: {
+    path: 'live-pip.min.js',
+    displayNames: {
+      livePip: '直播画中画',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
