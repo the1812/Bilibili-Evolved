@@ -13,6 +13,7 @@ namespace BilibiliEvolved.Build.Watcher
   public abstract class PreprocessorWatcher : Watcher
   {
     private Process externalWatcherProcess;
+    private bool exitRequested = false;
     private string originalExtension;
     protected abstract ResourceMinifier Minifier { get; }
     protected abstract NodeInteract WatcherComplier { get; }
@@ -22,10 +23,20 @@ namespace BilibiliEvolved.Build.Watcher
     {
       return Path.ChangeExtension(path, originalExtension).Replace(WatcherPath, "src");
     }
+    public void RestartCompiler() {
+      Console.WriteLine($"Unexpected exit of {Name} watcher, restarting...");
+      externalWatcherProcess.Start();
+      Console.WriteLine($"Restarted {Name} watcher.");
+    }
     public PreprocessorWatcher(string originalExtension, string compliedExtension, string watcherPath) : base(watcherPath)
     {
       this.originalExtension = originalExtension;
       externalWatcherProcess = WatcherComplier.Run();
+      externalWatcherProcess.Exited += (s, e) => {
+        if (!exitRequested) {
+          RestartCompiler();
+        }
+      };
       GenericFilter = $"*{compliedExtension}";
       FileFilter = file =>
       {
@@ -40,6 +51,7 @@ namespace BilibiliEvolved.Build.Watcher
     {
       if (!externalWatcherProcess.HasExited)
       {
+        exitRequested = true;
         externalWatcherProcess.Kill();
       }
     }
