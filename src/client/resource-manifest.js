@@ -141,7 +141,8 @@ Resource.manifest = {
       }
     ],
     displayNames: {
-      useDarkStyle: '夜间模式'
+      useDarkStyle: '夜间模式',
+      useDarkStyleAsUserStyle: 'UserStyle 模式',
     }
   },
   tweetsStyle: {

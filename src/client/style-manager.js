@@ -53,6 +53,9 @@ export class StyleManager {
     if (!resource || !resource.styles) {
       return
     }
+    if (key === 'useDarkStyle' && settings.useDarkStyleAsUserStyle) {
+      return
+    }
     resource.styles
       .filter(it => it.condition !== undefined ? it.condition() : true)
       .forEach(it => {

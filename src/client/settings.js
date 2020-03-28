@@ -222,6 +222,7 @@ export const settings = {
   updateCdn: 'jsDelivr',
   lastNewVersionCheck: 0,
   newVersionCheckInterval: 1000 * 3600 * 6, // 6 hours
+  useDarkStyleAsUserStyle: false,
   cache: {},
 }
 const fixedSettings = {

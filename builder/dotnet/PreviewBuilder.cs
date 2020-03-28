@@ -9,6 +9,7 @@ namespace BilibiliEvolved.Build
 {
   partial class ProjectBuilder
   {
+    private string onlineVersion;
     private string compileOnlineData()
     {
       var onlineRoot = $"https://raw.githubusercontent.com/{config.Owner}/Bilibili-Evolved/preview/";
@@ -36,6 +37,7 @@ namespace BilibiliEvolved.Build
         .Replace(Source, "${1}" + config.Owner + "${3}");
       // File.WriteAllText(SourcePath, Source);
       File.WriteAllText("version.txt", version);
+      onlineVersion = version;
       return this;
     }
     public ProjectBuilder BuildPreviewData()

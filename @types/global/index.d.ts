@@ -448,6 +448,7 @@ declare global {
     updateCdn: 'jsDelivr' | 'GitHub',
     lastNewVersionCheck: number,
     newVersionCheckInterval: number,
+    useDarkStyleAsUserStyle: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
