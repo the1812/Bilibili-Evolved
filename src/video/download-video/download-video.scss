@@ -32,6 +32,9 @@
     pointer-events: initial;
     opacity: 1;
     transform: translateX(-50%) scale(1);
+    .rpc-settings.show {
+      pointer-events: initial;
+    }
   }
   body.dark & {
     --download-video-background: #222;
@@ -296,6 +299,7 @@
   .episode-list {
     overflow: auto;
     max-height: 320px;
+    min-height: 180px;
   }
   button.list-tool {
     padding: 4px;
@@ -348,7 +352,6 @@
     &.show {
       opacity: 1;
       transform: translateX(-50%) scale(1);
-      pointer-events: initial;
     }
     input[type="text"] {
       background: transparent;
