@@ -615,7 +615,8 @@ $highlight-map: (
 .van-popover .coins .info a:hover,
 .van-popper-upload .upload-item:hover .bilifont,
 .bilibili-search-suggest .suggest-item .suggest_high_light,
-.new-topic-panel .tag-item .content:hover {
+.new-topic-panel .tag-item .content:hover,
+.bilibili-player-video-toast-item .video-float-hint-btn.hint-red {
   @include theme-color();
 }
 .interact-dialog .btn,
