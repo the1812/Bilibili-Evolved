@@ -331,7 +331,7 @@ export class ResourceManager {
     let condition = true
     if (typeof info.condition === 'function') {
       condition = info.condition()
-      if (typeof condition === 'object' && 'then' in condition) {
+      if (condition instanceof Promise && 'then' in condition) {
         condition = await condition.catch(() => { return false })
       }
     }
