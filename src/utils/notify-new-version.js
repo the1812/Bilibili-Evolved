@@ -56,7 +56,9 @@ async function checkNewVersion () {
   try {
     const clientTypeMatch = GM.info.script.name.match(/Bilibili Evolved \((.*)\)/)
     const clientType = clientTypeMatch ? '.' + clientTypeMatch[1].replace(/ /g, '-').toLowerCase() : ''
-    latestVersionLink = `${Resource.cdnRoot || Resource.root}bilibili-evolved${clientType}.user.js`
+    const isPreview = clientType === '.preview'
+    // 脚本的更新固定只能为jsDelivr
+    latestVersionLink = `https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@${isPreview ? 'preview' : 'master'}/bilibili-evolved${clientType}.user.js`
     let latestVersionText
     try {
       const latestScript = await Ajax.monkey({
