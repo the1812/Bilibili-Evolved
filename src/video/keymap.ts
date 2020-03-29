@@ -112,6 +112,19 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
           fireEvent('click', e)
         }
       }, { once: true })
+    } else if (key === '`' && noModifyKeys) {
+      // menu size: 386.6 x 311 (2020-03-29)
+      const player = dq('.bilibili-player-video-wrap') as HTMLElement
+      const rect = player.getBoundingClientRect()
+      player.dispatchEvent(new MouseEvent('contextmenu', {
+        bubbles: true,
+        cancelable: false,
+        view: unsafeWindow,
+        button: 2,
+        buttons: 0,
+        clientX: rect.x + rect.width / 2 - 386.6 / 2,
+        clientY: rect.y + rect.height / 2 - 311 / 2
+      }))
     } else if (e.shiftKey) {
       const video = dq('.bilibili-player-video video') as HTMLVideoElement
       if (video === null) {
