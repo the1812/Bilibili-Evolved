@@ -9,6 +9,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     t: '.bilibili-player-video-btn-widescreen', // 宽屏
     r: '.bilibili-player-video-btn-repeat', // 切换循环模式
     m: '.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume', // 切换静音
+    p: '.bilibili-player-video-btn-pip', // 画中画
     // l: '.video-toolbar .like', // 点赞
     c: '.video-toolbar .coin,.tool-bar .coin-info', // 投币
     s: '.video-toolbar .collect', // 收藏
