@@ -157,6 +157,21 @@ namespace BilibiliEvolved.Build
           var source = convertToRuntimeSource(match.Groups[1].Value);
           return $" resources.importAsync({source})";
         });
+        var exportMatches = new Regex(@"export[\s]+[a-zA-Z]+[\s]+([\w]+)").Matches(input);
+        if (exportMatches.Count > 0)
+        {
+          var exports = exportMatches
+            .Select(m => m.Groups[1].Value)
+            .Aggregate((acc, m) => acc + ", " + m);
+
+          if (!input.Contains("export default "))
+          {
+            input += $"return {{ export: {{ {exports} }} }}";
+            // Console.WriteLine("Auto export: " + $"return {{ export: {{ {exports} }} }}");
+          }
+          // TODO: insert exports into existing block
+          // else if (input.Contains("export default ") && input.Contains(""))
+        }
         input = @"(() =>
 {
   return (settings, resources) =>

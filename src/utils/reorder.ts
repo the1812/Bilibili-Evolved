@@ -310,10 +310,3 @@ export class Reorder extends EventTarget {
     this.enabled = false
   }
 }
-
-export default {
-  export: {
-    Reorder,
-    ReorderOrientations,
-  }
-}
