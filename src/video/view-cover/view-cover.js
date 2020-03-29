@@ -15,7 +15,14 @@ class ImageViewer {
   }
   createContainer () {
     document.body.insertAdjacentHTML("beforeend", resources.import("imageViewerHtml"));
-    document.querySelector(".image-viewer-container .close").addEventListener("click", () => this.hide());
+    const container = dq('.image-viewer-container')
+    const viewer = dq('.image-viewer')
+    dq(container, '.close').addEventListener('click', () => this.hide())
+    dq('.image-viewer-container').addEventListener('click', e => {
+      if (e.target === container || e.target === viewer) {
+        this.hide()
+      }
+    })
     resources.applyStyle("imageViewerStyle");
   }
   downloadImage () {
