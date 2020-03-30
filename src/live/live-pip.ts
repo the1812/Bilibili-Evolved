@@ -1,8 +1,8 @@
 export default {
   widget: {
     content: /*html*/`
-      <button class="gui-settings-flat-button" id="live-pip" style="transform: scale(0.9);">
-        <i class="mdi mdi-24px mdi-picture-in-picture-bottom-right"></i>
+      <button class="gui-settings-flat-button" id="live-pip">
+        <i class="mdi mdi-24px mdi-picture-in-picture-bottom-right" style="transform: scale(0.9);"></i>
         <span>画中画</span>
       </button>
     `,
