@@ -55,7 +55,7 @@ const sideCards: { [id: number]: SideCardType } = {
   },
   1: {
     className: 'following-tags',
-    displayName: '关注的话题'
+    displayName: '话题'
   },
   2: {
     className: 'notice',
@@ -64,11 +64,15 @@ const sideCards: { [id: number]: SideCardType } = {
   3: {
     className: 'live',
     displayName: '正在直播'
-  }
+  },
   // 4: {
   //   className: 'trending-tags',
   //   displayName: '热门话题'
   // }
+  5: {
+    className: 'most-viewed',
+    displayName: '关注栏',
+  },
 }
 const sideBlock = 'feeds-filter-side-block-'
 export default {
@@ -249,6 +253,11 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
   }
   &.#{$side-block}-trending-tags {
     .right-panel .tag-panel {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-most-viewed {
+    .card-list .most-viewed-panel {
       display: none !important;
     }
   }
