@@ -345,7 +345,7 @@ $highlight-map: (
   3: #deb29c,
   4: #afb7e8,
   5: #dcbf94,
-  6: #95c5a8
+  6: #95c5a8,
 );
 .highlight-areas-ctnr .highlight-area-item {
   @each $nth, $color in $highlight-map {
@@ -518,6 +518,37 @@ $highlight-map: (
       }
       &:hover .nav-search-submit {
         @include theme-color();
+      }
+    }
+  }
+}
+.most-viewed-panel {
+  > .icon {
+    @include fill("6");
+    &.active {
+      @include fill("a");
+      &:hover {
+        @include theme-fill();
+      }
+    }
+  }
+  .most-viewed-item .icon-bg-1 {
+    .icon-bg-2 {
+      @include theme-background-color("10");
+      @include border-color("4");
+    }
+    .icon {
+      @include theme-fill();
+    }
+    .avatar {
+      @include background-color("2");
+      @include border-color("4");
+    }
+
+    &.active {
+      @include theme-background-color();
+      .icon-bg-2 {
+        background-color: rgba(64, 64, 64, 0.875) !important;
       }
     }
   }
