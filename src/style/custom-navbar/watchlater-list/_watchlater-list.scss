@@ -1,4 +1,5 @@
 @import "../../common";
+@import "../search-box";
 .custom-navbar {
   @mixin button-background {
     background-color: #8882;
@@ -63,39 +64,9 @@
     }
     .header {
       @include h-center();
+      @include search-box();
       justify-content: space-between;
       margin: 16px 12px;
-      .search {
-        position: relative;
-        flex-grow: 1;
-        margin-right: 16px;
-        input {
-          width: 100%;
-          padding: 4px;
-          border: none;
-          outline: none !important;
-          color: inherit;
-          background-color: transparent;
-          border-radius: 4px;
-        }
-        &::after {
-          content: "";
-          position: absolute;
-          top: calc(100%);
-          left: 0;
-          width: 100%;
-          height: 2px;
-          border-radius: 2px;
-          transition: 0.24s ease-out;
-          background-color: #8882;
-        }
-        &.not-empty,
-        &:focus-within {
-          &::after {
-            background-color: var(--theme-color);
-          }
-        }
-      }
       .operations {
         @include h-center();
         .round-button {

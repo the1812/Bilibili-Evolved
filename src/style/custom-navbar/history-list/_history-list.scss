@@ -1,4 +1,5 @@
 @import "../../common";
+@import "../search-box";
 @mixin tabs-animation {
   &-enter-active,
   &-leave-active {
@@ -55,11 +56,12 @@
     overflow: auto;
     .header {
       @include h-center();
+      @include search-box();
       justify-content: space-between;
       margin: 16px 12px;
       .tabs {
-        flex-grow: 1;
-        margin-right: 48px;
+        flex: 0;
+        margin-right: 16px;
         padding: 0 6px;
         @include h-center();
         justify-content: flex-start;
@@ -101,6 +103,7 @@
       .more-info {
         @include h-center();
         @include round-bar(26);
+        flex-shrink: 0;
         padding: 4px 6px 4px 10px;
         background-color: #8882;
         border: none;
