@@ -172,7 +172,7 @@ export class WatchlaterList extends NavbarComponent {
           this.filteredCards = (this.cards as WatchlaterCard[]).filter(card => {
             return card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search)
           })
-        }, 200),
+        }, 100),
       },
       async mounted() {
         try {

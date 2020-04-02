@@ -9,6 +9,24 @@ interface FavoritesItemInfo extends VideoCardInfo {
   favoriteTimestamp: number
   favoriteTime: Date
 }
+const favoriteItemMapper = (item: any) => {
+  return {
+    id: item.id,
+    aid: item.id,
+    coverUrl: item.cover.replace('http:', 'https:'),
+    favoriteTimestamp: item.fav_time * 1000,
+    favoriteTime: new Date(item.fav_time * 1000),
+    title: item.title,
+    description: item.intro,
+    duration: item.duration,
+    durationText: formatDuration(item.duration),
+    playCount: item.cnt_info.play,
+    danmakuCount: item.cnt_info.danmaku,
+    upName: item.upper.name,
+    upFaceUrl: item.upper.face.replace('http:', 'https:'),
+    upID: item.upper.mid,
+  } as FavoritesItemInfo
+}
 export class FavoritesList extends NavbarComponent {
   constructor() {
     super()
@@ -31,16 +49,19 @@ export class FavoritesList extends NavbarComponent {
                 <i class="mdi mdi-play"></i>
               </a>
             </div>
+            <div class="search">
+              <input type="text" placeholder="搜索" v-model="search">
+            </div>
             <a class="more-info" :href="moreLink" title="查看更多" target="_blank">
               查看更多
               <i class="mdi mdi-dots-horizontal"></i>
             </a>
           </div>
           <transition-group name="cards" tag="div" class="cards">
-            <div class="empty-tip" v-if="!cardsLoading && cards.length === 0" key="empty-tip">
+            <div class="empty-tip" v-if="!cardsLoading && filteredCards.length === 0" key="empty-tip">
               空空如也哦 =￣ω￣=
             </div>
-            <div class="favorite-card" v-for="card of cards" :key="card.id">
+            <div class="favorite-card" v-for="card of filteredCards" :key="card.id">
               <a class="cover-container" target="_blank" :href="'https://www.bilibili.com/video/av' + card.aid">
                 <dpi-img class="cover" :src="card.coverUrl" :size="{width: 130, height: 85}"></dpi-img>
                 <div class="floating duration">{{card.durationText}}</div>
@@ -48,7 +69,7 @@ export class FavoritesList extends NavbarComponent {
               </a>
               <a class="title" target="_blank" :href="'https://www.bilibili.com/video/av' + card.aid" :title="card.title">{{card.title}}</a>
               <a class="up" target="_blank" :href="'https://space.bilibili.com/' + card.upID" :title="card.upName">
-                <dpi-img class="face" :src="card.upFaceUrl" :size="20"></dpi-img>
+                <dpi-img placeholder-image class="face" :src="card.upFaceUrl" :size="20"></dpi-img>
                 <div class="name">{{card.upName}}</div>
               </a>
             </div>
@@ -80,9 +101,24 @@ export class FavoritesList extends NavbarComponent {
       data: {
         list: [],
         cards: [],
+        filteredCards: [],
         selectedListName: '',
         cardsLoading: true,
         cardsPage: 1,
+        search: '',
+      },
+      watch: {
+        search(keyword: string) {
+          if (keyword === '') {
+            this.filteredCards = this.cards
+            return
+          }
+          keyword = keyword.toLowerCase()
+          this.filteredCards = (this.cards as FavoritesItemInfo[]).filter(it => {
+            return it.title.toLowerCase().includes(keyword) || it.upName.toLowerCase().includes(keyword)
+          })
+          this.searchAllList()
+        },
       },
       computed: {
         listNames() {
@@ -119,31 +155,16 @@ export class FavoritesList extends NavbarComponent {
           }
           return json.data.medias.filter((item: any) => {
             return item.attr !== 9 // 过滤掉已失效视频
-          }).map((item: any) => {
-            return {
-              id: item.id,
-              aid: item.id,
-              coverUrl: item.cover.replace('http:', 'https:'),
-              favoriteTimestamp: item.fav_time * 1000,
-              favoriteTime: new Date(item.fav_time * 1000),
-              title: item.title,
-              description: item.intro,
-              duration: item.duration,
-              durationText: formatDuration(item.duration),
-              playCount: item.cnt_info.play,
-              danmakuCount: item.cnt_info.danmaku,
-              upName: item.upper.name,
-              upFaceUrl: item.upper.face.replace('http:', 'https:'),
-              upID: item.upper.mid,
-            } as FavoritesItemInfo
-          })
+          }).map(favoriteItemMapper)
         },
         async changeList() {
           try {
+            this.search = ''
             this.cards = []
             this.cardsPage = 1
             this.cardsLoading = true
             this.cards = await this.getCards()
+            this.filteredCards = this.cards
             this.setInfiniteScroll()
           } catch (error) {
             logError(error)
@@ -169,13 +190,32 @@ export class FavoritesList extends NavbarComponent {
         setInfiniteScroll() {
           const cardsContainer = this.$el.querySelector('.cards') as HTMLElement
           const scrollHandler = _.debounce(() => {
-            if (cardsContainer.scrollTop + cardsContainer.clientHeight >= cardsContainer.scrollHeight - 48) {
+            if (this.search === '' && cardsContainer.scrollTop + cardsContainer.clientHeight >= cardsContainer.scrollHeight - 48) {
               cardsContainer.removeEventListener('scroll', scrollHandler)
               this.loadNextPage()
             }
           }, 200)
           cardsContainer.addEventListener('scroll', scrollHandler)
         },
+        /** 搜索当前收藏夹所有的视频 */
+        searchAllList: _.debounce(async function () {
+          if (this.search === '') {
+            return
+          }
+          try {
+            const json = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.selectedListId}&pn=1&ps=20&keyword=${this.search}&order=mtime&type=0&tid=0`)
+            if (json.code !== 0) {
+              return
+            }
+            const items = _.get(json, 'data.medias', []) || []
+            const results = _.uniqBy(this.filteredCards.concat(items.map(favoriteItemMapper)), (card: FavoritesItemInfo) => card.id)
+            console.log(_.cloneDeep(results))
+            this.filteredCards = results
+          } catch (error) {
+            console.error(error)
+            return
+          }
+        }, 200),
       },
       async mounted() {
         try {

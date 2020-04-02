@@ -197,7 +197,7 @@ export class HistoryList extends NavbarComponent {
             </button>
           </div>
           <transition-group name="history-content" tag="div" class="history-content">
-            <div class="empty-tip" v-if="!timelineLoading && timeline.length === 0" key="empty-tip">
+            <div class="empty-tip" v-if="!timelineLoading && filteredTimeline.length === 0" key="empty-tip">
               空空如也哦 =￣ω￣=
             </div>
             <div class="loading-tip" v-if="timelineLoading" key="loading-tip">

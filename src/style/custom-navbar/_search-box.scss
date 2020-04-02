@@ -11,6 +11,10 @@
       color: inherit;
       background-color: transparent;
       border-radius: 4px;
+      &::-webkit-input-placeholder {
+        color: inherit !important;
+        opacity: .3;
+      }
     }
     &::after {
       content: "";

@@ -61,7 +61,7 @@
       margin: 16px 12px;
       .tabs {
         flex: 0;
-        margin-right: 16px;
+        margin: 0 16px 0 0;
         padding: 0 6px;
         @include h-center();
         justify-content: flex-start;
@@ -132,6 +132,9 @@
       @include no-scrollbar();
       padding: 0 12px;
       padding-bottom: 12px;
+      .empty-tip {
+        text-align: center;
+      }
       .time-group {
         padding-bottom: 16px;
         @include items-animation();

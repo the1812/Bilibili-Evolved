@@ -10,8 +10,8 @@ namespace BilibiliEvolved.Build
 {
   partial class ProjectBuilder
   {
-    private string offlineText;
-    private string offlineVersion;
+    private string offlineText = "";
+    private string offlineVersion = "";
 
     private string readAsBase64Image(string path)
     {

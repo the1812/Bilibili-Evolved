@@ -19,6 +19,9 @@ namespace BilibiliEvolved.Build
       var filename = "min/dark.min.css";
       File.WriteAllText(filename, fullStyle);
       var otherStyle = File.ReadAllText("min/dark-important.min.css") + File.ReadAllText("min/dark-navbar.min.css") + File.ReadAllText("min/scrollbar.min.css");
+      if (string.IsNullOrWhiteSpace(offlineVersion)) {
+        generateVersion();
+      }
       File.WriteAllText("min/dark.user.css", $@"
 /* ==UserStyle==
 @name         Bilibili Evolved - 夜间模式
