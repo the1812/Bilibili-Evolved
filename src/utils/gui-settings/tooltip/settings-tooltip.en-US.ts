@@ -152,6 +152,13 @@ Additional variables:
   [`removeGameMatchModule`, `Also remove e-sports module.`],
   [`customNavbarTransparent`, `Use transparent fill when banner exists.`],
   [`recordLiveDanmaku`, `Record and export XML file in live danmaku recorder from add-ons.`],
+  [`feedsTranslate`, `Append translate button to every feeds. Can translate feeds into Chinese or language specified in UI Translation.`],
+  [`feedsTranslateProvider`, `The machine translate provider.`],
+  [`updateCdn`, `Select mirror for hot updates, invalid in offline versions.`],
+  [`preserveEventBanner`, `Preserve event banners in video page.`],
+  [`useDefaultLiveQuality`, `Set the default live quality. Will switch to it automatically when watching live stream.`],
+  [`defaultLiveQuality`, `Select the default live quality.`],
+  [`fixedSidebars`, `Fix position of sidebars and navbar in feeds home.`],
 ]);
 export default {
   export: { toolTips },

@@ -90,7 +90,10 @@ export const map = new Map([
   [`设置`, `Settings`],
   [`频道`, `Channel`],
   [`标签`, `Tag`],
-  [`关注`, `Follow`],
+  [`关注`, [`Follow`, {
+    selector: '.stats-item',
+    text: 'Following',
+  }]],
   [`关注数`, `Following`],
   [`粉丝`, `Follower`],
   [`粉丝数`, `Followers`],
@@ -821,6 +824,17 @@ export const map = new Map([
   [`追番追剧`, `Subscriptions`],
   [`黑色`, `Black`],
   [`白色`, `White`],
+  [`领取B币`, `Collect Bili coins`],
+  [`已领取B币`, `Collected Bili coins`],
+  [`领取优惠券`, `Collect coupon`],
+  [`已领取优惠券`, `Collected Bili coins`],
+  [`我的课程`, `My courses`],
+  [`更新源`, `Hot Update Mirror`],
+  [`强制固定顶栏和侧栏`, `Fix positions of sidebars and navbar`],
+  [`画中画`, `Picture in picture`],
+  [`全部播放`, `Play all`],
+  [`手动输入`, `Manual input`],
+  [`链接列表`, `Video links`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
@@ -883,7 +897,7 @@ export const regex = new Map([
   [/^未通过 \(([\d]+)\)$/, `Rejected ($1)`],
   [/^共([\d]+)P$/, `$1 Episodes`],
   [/^超清 ([\d]+)K$/, `Ultra $1K`],
-  [/^高清 ([\d]+)P([60\+]?)$/, `HD $1P$2`],
+  [/^高清 ([\d]+)P([60\+]*)$/, `HD $1P$2`],
   [/^清晰 ([\d]+)P$/, `$1P`],
   [/^流畅 ([\d]+)P$/, `$1P`],
   [/^兑换成功\n剩余银瓜子:([\d]+)$/, `Exchanged successfully.\nYou have $1 silver seeds left.`],
@@ -892,6 +906,8 @@ export const regex = new Map([
   [/^最高全站日排行(.+)名$/, `Daily Ranking Record: $1`],
   [/^已记录([0-1])条弹幕$/, `$1 danmaku recorded`],
   [/^已记录([\d]+)条弹幕$/, `$1 danmakus recorded`],
+  [/^共([0-1])个视频$/, `$1 video`],
+  [/^共([\d]+)个视频$/, `$1 videos`],
 ]);
 export default {
   export: { map, regex },
