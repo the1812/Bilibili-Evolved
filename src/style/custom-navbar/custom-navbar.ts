@@ -140,7 +140,7 @@ export default (() => {
         },
         methods: {
           async requestPopup(component: NavbarComponent) {
-            if (!component.requestedPopup && !component.disabled && !component.active) {
+            if (!component.requestedPopup && !component.disabled /* && !component.active */) {
               this.$set(component, `requestedPopup`, true)
               // component.initialPopup && component.initialPopup()
               if (component.initialPopup) {
