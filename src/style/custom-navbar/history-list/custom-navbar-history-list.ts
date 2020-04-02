@@ -192,7 +192,6 @@ export class HistoryList extends NavbarComponent {
               <input type="text" placeholder="搜索" v-model="search">
             </div>
             <button class="more-info" :disabled="!selectedTab.moreLink || null" @click="viewMore()" title="查看更多">
-              查看更多
               <i class="mdi mdi-dots-horizontal"></i>
             </button>
           </div>

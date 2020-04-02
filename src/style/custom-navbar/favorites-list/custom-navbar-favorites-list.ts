@@ -53,7 +53,6 @@ export class FavoritesList extends NavbarComponent {
               <input type="text" placeholder="搜索" v-model="search">
             </div>
             <a class="more-info" :href="moreLink" title="查看更多" target="_blank">
-              查看更多
               <i class="mdi mdi-dots-horizontal"></i>
             </a>
           </div>

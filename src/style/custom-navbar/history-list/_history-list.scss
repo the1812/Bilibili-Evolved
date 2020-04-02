@@ -104,7 +104,7 @@
         @include h-center();
         @include round-bar(26);
         flex-shrink: 0;
-        padding: 4px 6px 4px 10px;
+        padding: 4px;
         background-color: #8882;
         border: none;
         cursor: pointer;
@@ -117,9 +117,9 @@
         &:hover:not(:disabled) {
           background-color: #8884;
         }
-        .mdi {
-          margin-left: 8px;
-        }
+        // .mdi {
+        //   margin-left: 8px;
+        // }
       }
     }
     .history-content {
