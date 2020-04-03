@@ -64,6 +64,7 @@ export class Category extends NavbarComponent {
             '国产动画': `https://www.bilibili.com/v/guochuang/chinese/`,
             '国产原创相关': `https://www.bilibili.com/v/guochuang/original/`,
             '布袋戏': `https://www.bilibili.com/v/guochuang/puppetry/`,
+            '动态漫·广播剧': `https://www.bilibili.com/v/guochuang/motioncomic/`,
             '资讯': `https://www.bilibili.com/v/guochuang/information/`,
             '新番时间表': `https://www.bilibili.com/guochuang/timeline/`,
             '国产动画索引': `https://www.bilibili.com/guochuang/index/`,
@@ -86,40 +87,116 @@ export class Category extends NavbarComponent {
         },
         舞蹈: {
           icon: 'dance',
-          count: regionCount[129], link: `https://www.bilibili.com/v/dance/`, subRegions: { '宅舞': 'https://www.bilibili.com/v/dance/otaku/', '三次元舞蹈': 'https://www.bilibili.com/v/dance/three_d/', '舞蹈教程': 'https://www.bilibili.com/v/dance/demo/' },
+          count: regionCount[129], link: `https://www.bilibili.com/v/dance/`, subRegions: {
+            '宅舞': 'https://www.bilibili.com/v/dance/otaku/',
+            '街舞': 'https://www.bilibili.com/v/dance/hiphop/',
+            '明星舞蹈': 'https://www.bilibili.com/v/dance/star/',
+            '中国舞': 'https://www.bilibili.com/v/dance/china/',
+            '舞蹈综合': 'https://www.bilibili.com/v/dance/three_d/',
+            '舞蹈教程': 'https://www.bilibili.com/v/dance/demo/'
+          },
         },
         游戏: {
           icon: 'game',
-          count: regionCount[4], link: `https://www.bilibili.com/v/game/`, subRegions: { '单机游戏': 'https://www.bilibili.com/v/game/stand_alone/', '电子竞技': 'https://www.bilibili.com/v/game/esports/', '手机游戏': 'https://www.bilibili.com/v/game/mobile/', '网络游戏': 'https://www.bilibili.com/v/game/online/', '桌游棋牌': 'https://www.bilibili.com/v/game/board/', 'GMV': 'https://www.bilibili.com/v/game/gmv/', '音游': 'https://www.bilibili.com/v/game/music/', 'Mugen': 'https://www.bilibili.com/v/game/mugen/', '游戏赛事': 'https://www.bilibili.com/v/game/match/' },
+          count: regionCount[4], link: `https://www.bilibili.com/v/game/`, subRegions: {
+            '单机游戏': 'https://www.bilibili.com/v/game/stand_alone/',
+            '电子竞技': 'https://www.bilibili.com/v/game/esports/',
+            '手机游戏': 'https://www.bilibili.com/v/game/mobile/',
+            '网络游戏': 'https://www.bilibili.com/v/game/online/',
+            '桌游棋牌': 'https://www.bilibili.com/v/game/board/',
+            'GMV': 'https://www.bilibili.com/v/game/gmv/',
+            '音游': 'https://www.bilibili.com/v/game/music/',
+            'Mugen': 'https://www.bilibili.com/v/game/mugen/',
+            '游戏赛事': 'https://www.bilibili.com/v/game/match/'
+          },
         },
         科技: {
           icon: 'technology',
-          count: regionCount[36], link: `https://www.bilibili.com/v/technology/`, subRegions: { '趣味科普人文': 'https://www.bilibili.com/v/technology/fun/', '野生技术协会': 'https://www.bilibili.com/v/technology/wild/', '演讲·公开课': 'https://www.bilibili.com/v/technology/speech_course/', '星海': 'https://www.bilibili.com/v/technology/military/', '机械': 'https://www.bilibili.com/v/technology/mechanical/', '汽车': 'https://www.bilibili.com/v/technology/automobile/' },
+          count: regionCount[36], link: `https://www.bilibili.com/v/technology/`, subRegions: {
+            '趣味科普人文': 'https://www.bilibili.com/v/technology/fun/',
+            '野生技术协会': 'https://www.bilibili.com/v/technology/wild/',
+            '演讲·公开课': 'https://www.bilibili.com/v/technology/speech_course/',
+            '星海': 'https://www.bilibili.com/v/technology/military/',
+            '机械': 'https://www.bilibili.com/v/technology/mechanical/',
+            '汽车': 'https://www.bilibili.com/v/technology/automobile/'
+          },
         },
-        数码: { icon: 'digital', count: regionCount[188], link: `https://www.bilibili.com/v/digital/`, subRegions: { '手机平板': 'https://www.bilibili.com/v/digital/mobile/', '电脑装机': 'https://www.bilibili.com/v/digital/pc/', '摄影摄像': 'https://www.bilibili.com/v/digital/photography/', '影音智能': 'https://www.bilibili.com/v/digital/intelligence_av/' }, },
+        数码: {
+          icon: 'digital', count: regionCount[188], link: `https://www.bilibili.com/v/digital/`, subRegions: {
+            '手机平板': 'https://www.bilibili.com/v/digital/mobile/',
+            '电脑装机': 'https://www.bilibili.com/v/digital/pc/',
+            '摄影摄像': 'https://www.bilibili.com/v/digital/photography/',
+            '影音智能': 'https://www.bilibili.com/v/digital/intelligence_av/'
+          },
+        },
         生活: {
           icon: 'life',
-          count: regionCount[160], link: `https://www.bilibili.com/v/life/`, subRegions: { '搞笑': 'https://www.bilibili.com/v/life/funny/', '日常': 'https://www.bilibili.com/v/life/daily/', '美食圈': 'https://www.bilibili.com/v/life/food/', '动物圈': 'https://www.bilibili.com/v/life/animal/', '手工': 'https://www.bilibili.com/v/life/handmake/', '绘画': 'https://www.bilibili.com/v/life/painting/', '运动': 'https://www.bilibili.com/v/life/sports/', '其他': 'https://www.bilibili.com/v/life/other/' },
+          count: regionCount[160], link: `https://www.bilibili.com/v/life/`, subRegions: {
+            '搞笑': 'https://www.bilibili.com/v/life/funny/',
+            '日常': 'https://www.bilibili.com/v/life/daily/',
+            '美食圈': 'https://www.bilibili.com/v/life/food/',
+            '动物圈': 'https://www.bilibili.com/v/life/animal/',
+            '手工': 'https://www.bilibili.com/v/life/handmake/',
+            '绘画': 'https://www.bilibili.com/v/life/painting/',
+            '运动': 'https://www.bilibili.com/v/life/sports/',
+            '其他': 'https://www.bilibili.com/v/life/other/'
+          },
         },
         鬼畜: {
           icon: 'kichiku',
-          count: regionCount[119], link: `https://www.bilibili.com/v/kichiku/`, subRegions: { '鬼畜调教': 'https://www.bilibili.com/v/kichiku/guide/', '音MAD': 'https://www.bilibili.com/v/kichiku/mad/', '人力VOCALOID': 'https://www.bilibili.com/v/kichiku/manual_vocaloid/', '教程演示': 'https://www.bilibili.com/v/kichiku/course/' },
+          count: regionCount[119], link: `https://www.bilibili.com/v/kichiku/`, subRegions: {
+            '鬼畜调教': 'https://www.bilibili.com/v/kichiku/guide/',
+            '音MAD': 'https://www.bilibili.com/v/kichiku/mad/',
+            '人力VOCALOID': 'https://www.bilibili.com/v/kichiku/manual_vocaloid/',
+            '教程演示': 'https://www.bilibili.com/v/kichiku/course/'
+          },
         },
-        时尚: { icon: 'fashion', count: regionCount[155], link: `https://www.bilibili.com/v/fashion/`, subRegions: { '美妆': 'https://www.bilibili.com/v/fashion/makeup/', '服饰': 'https://www.bilibili.com/v/fashion/clothing/', '健身': 'https://www.bilibili.com/v/fashion/aerobics/', 'T台': 'https://www.bilibili.com/v/fashion/catwalk/', '风尚标': 'https://www.bilibili.com/v/fashion/trends/' }, },
+        时尚: {
+          icon: 'fashion', count: regionCount[155], link: `https://www.bilibili.com/v/fashion/`, subRegions: {
+            '美妆': 'https://www.bilibili.com/v/fashion/makeup/',
+            '服饰': 'https://www.bilibili.com/v/fashion/clothing/',
+            '健身': 'https://www.bilibili.com/v/fashion/aerobics/',
+            'T台': 'https://www.bilibili.com/v/fashion/catwalk/',
+            '风尚标': 'https://www.bilibili.com/v/fashion/trends/'
+          },
+        },
         广告: { icon: 'ad', count: regionCount[165], link: `https://www.bilibili.com/v/ad/ad/`, },
         娱乐: {
           icon: 'ent',
-          count: regionCount[5], link: `https://www.bilibili.com/v/ent/`, subRegions: { '综艺': 'https://www.bilibili.com/v/ent/variety/', '明星': 'https://www.bilibili.com/v/ent/star/', 'Korea相关': 'https://www.bilibili.com/v/ent/korea/' },
+          count: regionCount[5], link: `https://www.bilibili.com/v/ent/`, subRegions: {
+            '综艺': 'https://www.bilibili.com/v/ent/variety/',
+            '明星': 'https://www.bilibili.com/v/ent/star/',
+            'Korea相关': 'https://www.bilibili.com/v/ent/korea/'
+          },
         },
         影视: {
           icon: 'cinephile',
-          count: regionCount[181], link: `https://www.bilibili.com/v/cinephile/`, subRegions: { '影视杂谈': 'https://www.bilibili.com/v/cinephile/cinecism/', '影视剪辑': 'https://www.bilibili.com/v/cinephile/montage/', '短片': 'https://www.bilibili.com/v/cinephile/shortfilm/', '预告·资讯': 'https://www.bilibili.com/v/cinephile/trailer_info/', '特摄': 'https://www.bilibili.com/v/cinephile/tokusatsu/' },
+          count: regionCount[181], link: `https://www.bilibili.com/v/cinephile/`, subRegions: {
+            '影视杂谈': 'https://www.bilibili.com/v/cinephile/cinecism/',
+            '影视剪辑': 'https://www.bilibili.com/v/cinephile/montage/',
+            '短片': 'https://www.bilibili.com/v/cinephile/shortfilm/',
+            '预告·资讯': 'https://www.bilibili.com/v/cinephile/trailer_info/',
+            '特摄': 'https://www.bilibili.com/v/cinephile/tokusatsu/'
+          },
         },
-        放映厅: { icon: 'cinema', count: regionCount[177] + regionCount[23] + regionCount[11], link: `https://www.bilibili.com/cinema/`, subRegions: { '纪录片': 'https://www.bilibili.com/documentary/', '电影': 'https://www.bilibili.com/movie/', '电视剧': 'https://www.bilibili.com/tv/' }, },
+        放映厅: {
+          icon: 'cinema', count: regionCount[177] + regionCount[23] + regionCount[11], link: `https://www.bilibili.com/cinema/`, subRegions: {
+            '纪录片': 'https://www.bilibili.com/documentary/',
+            '电影': 'https://www.bilibili.com/movie/',
+            '电视剧': 'https://www.bilibili.com/tv/'
+          },
+        },
         专栏: { icon: 'read', count: ``, link: `https://www.bilibili.com/read/home`, },
         直播: {
           icon: 'zhibo',
-          count: ``, link: `https://live.bilibili.com`, subRegions: { '全部直播': 'https://live.bilibili.com/all?visit_id=5icxsa0kmts0', '游戏直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=2&areaId=0&visit_id=5icxsa0kmts0#/2/0', '手游直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=3&areaId=0&visit_id=5icxsa0kmts0#/3/0', '娱乐直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=1&areaId=0&visit_id=5icxsa0kmts0#/1/0', '电台直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=5&areaId=0&visit_id=5icxsa0kmts0#/5/0', '绘画直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=4&areaId=0&visit_id=5icxsa0kmts0#/4/0' },
+          count: ``, link: `https://live.bilibili.com`, subRegions: {
+            '全部直播': 'https://live.bilibili.com/all?visit_id=5icxsa0kmts0',
+            '游戏直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=2&areaId=0&visit_id=5icxsa0kmts0#/2/0',
+            '手游直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=3&areaId=0&visit_id=5icxsa0kmts0#/3/0',
+            '娱乐直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=1&areaId=0&visit_id=5icxsa0kmts0#/1/0',
+            '电台直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=5&areaId=0&visit_id=5icxsa0kmts0#/5/0',
+            '绘画直播': 'https://live.bilibili.com/p/eden/area-tags?parentAreaId=4&areaId=0&visit_id=5icxsa0kmts0#/4/0'
+          },
         },
         小黑屋: { icon: 'blackroom', count: ``, link: `https://www.bilibili.com/blackroom/`, },
         专题: { icon: 'topic', count: ``, link: `https://www.bilibili.com/blackboard/topic_list.html`, },
