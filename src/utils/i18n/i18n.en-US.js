@@ -816,6 +816,7 @@ export const map = new Map([
   [`蓝光`, `BD`],
   [`超清`, `UHD`],
   [`高清`, `HD`],
+  [`清晰`, `Normal`],
   [`流畅`, `Smooth`],
   [`保留活动横幅`, `Preserve event banners`],
   [`动态翻译`, `Feeds translate`],
