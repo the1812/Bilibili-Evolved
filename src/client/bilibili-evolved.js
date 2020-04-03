@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
 // @namespace    Bilibili-Evolved
-// @version      1.10.13
+// @version      1.10.14
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
