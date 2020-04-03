@@ -96,6 +96,7 @@ Resource.manifest = {
       scriptLoadingMode: '加载模式',
       guiSettingsDockSide: '设置面板停靠位置',
       foregroundColorMode: '文本颜色',
+      updateCdn: '更新源',
     },
     dropdown: [
       {
@@ -110,6 +111,10 @@ Resource.manifest = {
         key: 'scriptLoadingMode',
         items: ['同时', '延后', '同时(自动)', '延后(自动)']
       },
+      {
+        key: 'updateCdn',
+        items: ['jsDelivr', 'GitHub'],
+      }
     ],
   },
   useDarkStyle: {
@@ -136,7 +141,8 @@ Resource.manifest = {
       }
     ],
     displayNames: {
-      useDarkStyle: '夜间模式'
+      useDarkStyle: '夜间模式',
+      useDarkStyleAsUserStyle: 'UserStyle 模式',
     }
   },
   tweetsStyle: {
@@ -855,6 +861,19 @@ Resource.manifest = {
     style: true,
     displayNames: {
       bvidConvert: 'BV号转换',
+    },
+  },
+  fixedSidebars: {
+    path: 'fixed-sidebars.min.js',
+    reloadable: true,
+    displayNames: {
+      fixedSidebars: '强制固定顶栏与侧栏',
+    },
+  },
+  livePip: {
+    path: 'live-pip.min.js',
+    displayNames: {
+      livePip: '直播画中画',
     },
   },
 }

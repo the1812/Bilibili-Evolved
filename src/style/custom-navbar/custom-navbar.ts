@@ -140,7 +140,7 @@ export default (() => {
         },
         methods: {
           async requestPopup(component: NavbarComponent) {
-            if (!component.requestedPopup && !component.disabled && !component.active) {
+            if (!component.requestedPopup && !component.disabled /* && !component.active */) {
               this.$set(component, `requestedPopup`, true)
               // component.initialPopup && component.initialPopup()
               if (component.initialPopup) {
@@ -156,14 +156,21 @@ export default (() => {
         },
         mounted() {
           document.body.classList.remove('custom-navbar-loading')
-          const checkPositions = () => {
-            // console.log('recalculate positions')
-            components.forEach(c => c.checkPosition())
+          const checkPosition = () => {
+            const checkPositions = () => {
+              // console.log('recalculate positions')
+              components.forEach(c => c.checkPosition())
+            }
+            addSettingsListener('customNavbarOrder', checkPositions, true)
+            addSettingsListener('customNavbarHidden', checkPositions)
+            addSettingsListener('customNavbarBoundsPadding', checkPositions)
+            window.addEventListener('resize', checkPositions)
           }
-          addSettingsListener('customNavbarOrder', checkPositions, true)
-          addSettingsListener('customNavbarHidden', checkPositions)
-          addSettingsListener('customNavbarBoundsPadding', checkPositions)
-          window.addEventListener('resize', checkPositions)
+          if ('requestIdleCallback' in unsafeWindow && GM.info.scriptHandler !== 'Violentmonkey') {
+            unsafeWindow.requestIdleCallback(checkPosition)
+          } else {
+            setTimeout(checkPosition)
+          }
         },
       })
     })()

@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.10.12
+// @namespace    Bilibili-Evolved
+// @version      1.10.14
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -29,11 +30,11 @@
 // @connect      translate.google.cn
 // @connect      translate.google.com
 // @connect      *
-// @require      https://code.jquery.com/jquery-3.4.0.min.js
+// @require      https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
-// @require      https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js
+// @require      https://cdn.jsdelivr.net/npm/jszip@3.1.5/dist/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
-// @require      https://unpkg.com/vuex@3.1.2/dist/vuex.js
+// @require      https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.js
 // @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
 // @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
 // ==/UserScript==
@@ -193,7 +194,7 @@ import { store } from './store'
     contentLoaded(() => {
       document.body.classList.add('round-corner')
     })
-    loadResources()
+    await loadResources()
     await loadSettings()
     getScriptBlocker().then(scriptBlocker => {
       scriptBlocker.start()

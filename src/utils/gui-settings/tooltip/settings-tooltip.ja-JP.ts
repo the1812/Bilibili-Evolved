@@ -164,6 +164,11 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`recordLiveDanmaku`, /*html*/`追加機能に生放送弾幕レコーダーを追加し、生放送弾幕を記録して「XML」をエクスポートできます.`],
     [`feedsTranslate`, /*html*/`フィードごとの下に翻訳ボタンを追加して、フィード内容を中国語に翻訳します.「UI 翻訳」がオンになっている場合、「UI 翻訳」で設定された言語に翻訳されます.`],
     [`feedsTranslateProvider`, /*html*/`機械翻訳の提供者`],
+    [`updateCdn`, /*html*/`ホットアップデートのアップデートソース、オフラインバージョンとスクリプト本体アップデートには無効.`],
+    [`preserveEventBanner`, /*html*/`動画ページの活動バナーを保持.`],
+    [`useDefaultLiveQuality`, /*html*/`デフォルトのライブ画質を使用するかどうかを制御します.デフォルトのライブ画質は検出され、配信ルームに入ると設定された画質に自動的に変更されます.`],
+    [`defaultLiveQuality`, /*html*/`デフォルトのライブ画質を選択します.`],
+    [`fixedSidebars`, /*html*/`フィードホームページの頂欄とサイドカードを強制的に固定します.フィードフィルターの固定解除効果よりも優先度が高く、高速プルによるジッターを回避できます.`],
 ]);
 export default {
     export: { toolTips },

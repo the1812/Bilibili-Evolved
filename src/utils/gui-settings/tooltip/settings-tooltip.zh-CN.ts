@@ -181,7 +181,12 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`removeGameMatchModule`, /*html*/`删除电竞赛事板块.`],
   [`recordLiveDanmaku`, /*html*/`在附加功能中添加直播弹幕记录器, 可以记录直播弹幕并导出XML.`],
   [`feedsTranslate`, /*html*/`在每条动态下方添加翻译按钮, 可将动态的文字机器翻译为中文. 若开启了界面翻译, 则会翻译成界面翻译里设定的语言.`],
-  [`feedsTranslateProvider`, /*html*/`机器翻译的提供者`],
+  [`feedsTranslateProvider`, /*html*/`机器翻译的提供者.`],
+  [`updateCdn`, /*html*/`热更新的更新源, 对离线版和脚本本体更新无效.`],
+  [`preserveEventBanner`, /*html*/`保留视频页面的活动横幅.`],
+  [`useDefaultLiveQuality`, /*html*/`控制是否使用默认直播画质, 将会在进入直播后检测并自动更换到设定的画质.`],
+  [`defaultLiveQuality`, /*html*/`选择默认的直播画质.`],
+  [`fixedSidebars`, /*html*/`强制固定动态主页的顶栏和侧栏, 优先级高于动态过滤器的取消固定效果, 可以避免快速下拉产生的抖动.`],
 ]);
 export default {
   export: { toolTips },

@@ -872,3 +872,19 @@
     @include theme-color();
   }
 }
+.tag-content .main-panel .hot-topics {
+  @include background-color("4");
+  .title {
+    @include border-color();
+  }
+  .topic-header .topic-name,
+  .topic-content {
+    @include color("e");
+  }
+  .topic-info {
+    @include color("a");
+  }
+  .topic-list hr {
+    @include background-color("5");
+  }
+}

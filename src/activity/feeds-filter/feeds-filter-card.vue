@@ -1,6 +1,9 @@
 <template>
-  <div class="feeds-filter">
-    <h1>动态过滤</h1>
+  <div class="feeds-filter" :class="{collapse}">
+    <div class="feeds-filter-header" @click="collapse = !collapse">
+      <h1>动态过滤</h1>
+      <icon type="mdi" icon="chevron-up"></icon>
+    </div>
     <h2>类型</h2>
     <div class="filter-types">
       <filter-type-switch v-for="[name, type] of allTypes" :name="name" :type="type" :key="type.id"></filter-type-switch>
@@ -52,7 +55,7 @@ const sideCards: { [id: number]: SideCardType } = {
   },
   1: {
     className: 'following-tags',
-    displayName: '关注的话题'
+    displayName: '话题'
   },
   2: {
     className: 'notice',
@@ -66,12 +69,27 @@ const sideCards: { [id: number]: SideCardType } = {
   //   className: 'trending-tags',
   //   displayName: '热门话题'
   // }
+  5: {
+    className: 'most-viewed',
+    displayName: '关注栏',
+  },
 }
 const sideBlock = 'feeds-filter-side-block-'
 export default {
   components: {
     FilterTypeSwitch: () => import('./filter-type-switch.vue'),
     Icon: () => import('../../style/icon.vue')
+  },
+  data() {
+    return {
+      allTypes: [] as [string, FeedsCardType][],
+      patterns: [...settings.feedsFilterPatterns],
+      newPattern: '',
+      feedsCardsManager: null,
+      allSideCards: sideCards,
+      blockSideCards: [...settings.feedsFilterSideCards],
+      collapse: true
+    }
   },
   methods: {
     updateCard(card: FeedsCard) {
@@ -145,16 +163,6 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      allTypes: [] as [string, FeedsCardType][],
-      patterns: [...settings.feedsFilterPatterns],
-      newPattern: '',
-      feedsCardsManager: null,
-      allSideCards: sideCards,
-      blockSideCards: [...settings.feedsFilterSideCards]
-    }
-  },
   async mounted() {
     this.updateBlockSide()
     const tabBar = await SpinQuery.select('.feed-card .tab-bar')
@@ -166,7 +174,10 @@ export default {
       '.tab:nth-child(1) .tab-text'
     ) as HTMLAnchorElement
     Observer.attributes(tab, () => {
-      document.body.classList.toggle('enable-feeds-filter', tab.classList.contains('selected'))
+      document.body.classList.toggle(
+        'enable-feeds-filter',
+        tab.classList.contains('selected')
+      )
     })
     const { feedsCardsManager, feedsCardTypes } = await import('../feeds-apis')
     const success = await feedsCardsManager.startWatching()
@@ -180,7 +191,7 @@ export default {
         return [name, _.clone(type)]
       })
     feedsCardsManager.cards.forEach(card => this.updateCard(card))
-    feedsCardsManager.addEventListener('addCard', (e) => {
+    feedsCardsManager.addEventListener('addCard', e => {
       const card = e.detail
       this.updateCard(card)
     })
@@ -190,6 +201,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'src/style/common';
 body.enable-feeds-filter:not(.disable-feeds-filter) {
   @each $name,
     $value
@@ -210,10 +222,13 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
     }
   }
   $side-block: 'feeds-filter-side-block';
-  .left-panel > *,
-  .right-panel > * {
+  .left-panel .scroll-content > *,
+  .right-panel .scroll-content > * {
     margin: 0 !important;
     margin-bottom: 8px !important;
+  }
+  .left-panel .user-panel.f-left {
+    float: none !important;
   }
   &.#{$side-block}-profile {
     .left-panel .user-wrapper {
@@ -221,7 +236,8 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
     }
   }
   &.#{$side-block}-following-tags {
-    .left-panel .tag-panel {
+    .left-panel .tag-panel,
+    .right-panel .new-topic-panel {
       display: none !important;
     }
   }
@@ -231,7 +247,7 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
     }
   }
   &.#{$side-block}-live {
-    .right-panel .live-panel {
+    .left-panel .live-panel {
       display: none !important;
     }
   }
@@ -240,19 +256,37 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
       display: none !important;
     }
   }
+  &.#{$side-block}-most-viewed {
+    .card-list .most-viewed-panel {
+      display: none !important;
+    }
+  }
   .feed-card .card.pattern-block {
     display: none !important;
+  }
+}
+.adaptive-scroll {
+  > div:first-child:empty {
+    display: none !important;
+  }
+  .scroll-content {
+    position: static !important;
+    top: unset !important;
+    bottom: unset !important;
   }
 }
 .feeds-filter {
   background-color: white;
   width: 100%;
   padding: 12px 16px;
-  float: left;
+  // float: left;
   border-radius: 4px;
   box-sizing: border-box;
   display: none;
   flex-direction: column;
+  overflow: auto;
+  max-height: 80vh;
+  @include no-scrollbar();
 
   body.enable-feeds-filter:not(.disable-feeds-filter) & {
     display: flex;
@@ -260,16 +294,34 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
   &,
   & * {
     transition: 0.2s ease-out;
+    transition-property: border-color, color, background-color;
   }
   body.dark & {
     color: #eee;
     background-color: #444;
   }
-  h1 {
-    font-weight: normal;
-    font-size: 14px;
-    margin: 0;
+  .feeds-filter-header {
+    cursor: pointer;
     margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h1 {
+      font-weight: normal;
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+  &.collapse {
+    .feeds-filter-header {
+      margin-bottom: 0;
+      .be-icon {
+        transform: rotate(180deg);
+      }
+    }
+    > :not(.feeds-filter-header) {
+      display: none;
+    }
   }
   h2 {
     font-weight: bold;

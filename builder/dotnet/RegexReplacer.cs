@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace BilibiliEvolved.Build
 {
-    static class RegexReplacer
+  static class RegexReplacer
+  {
+    public static string Replace(string text, string regexText, Func<Match, string> func)
     {
-        public static string Replace(string text, string regexText, Func<Match, string> func)
+      var regex = new Regex(regexText, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+      while (true)
+      {
+        var match = regex.Match(text);
+        if (!match.Success)
         {
-            var regex = new Regex(regexText, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            while (true)
-            {
-                var match = regex.Match(text);
-                if (!match.Success)
-                {
-                    break;
-                }
-                text = text.Replace(match.Value, func(match));
-            }
-            return text;
+          break;
         }
+        text = text.Replace(match.Value, func(match));
+      }
+      return text;
     }
+  }
 }

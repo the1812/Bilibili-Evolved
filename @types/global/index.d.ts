@@ -170,6 +170,14 @@ declare global {
     $: JQueryStatic
     [key: string]: any
   }
+  interface Document {
+    pictureInPictureElement: HTMLElement | null
+    exitPictureInPicture: () => void
+  }
+  interface HTMLVideoElement
+  {
+    requestPictureInPicture: () => void
+  }
   class SpinQuery {
     static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void
     static condition<T>(query: () => T, condition: (queryResult: T) => boolean): Promise<T>
@@ -444,6 +452,12 @@ declare global {
     foregroundColorMode: '自动' | '白色' | '黑色'
     preserveEventBanner: boolean
     bvidConvert: boolean
+    fixedSidebars: boolean
+    updateCdn: 'jsDelivr' | 'GitHub',
+    lastNewVersionCheck: number,
+    newVersionCheckInterval: number,
+    useDarkStyleAsUserStyle: boolean,
+    livePip: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

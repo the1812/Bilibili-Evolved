@@ -262,7 +262,8 @@
 .comment-bilibili-fold .comment-list .list-item .blacklist-font-color,
 .list-item .publish-time,
 .share-content .video-card .up-info .name,
-.share-content .video-card .up-info .tip {
+.share-content .video-card .up-info .tip,
+.live-panel .title .count {
   @include color("a");
 }
 #biliAppHomeSetting {
@@ -344,7 +345,7 @@ $highlight-map: (
   3: #deb29c,
   4: #afb7e8,
   5: #dcbf94,
-  6: #95c5a8
+  6: #95c5a8,
 );
 .highlight-areas-ctnr .highlight-area-item {
   @each $nth, $color in $highlight-map {
@@ -521,6 +522,37 @@ $highlight-map: (
     }
   }
 }
+.most-viewed-panel {
+  > .icon {
+    @include fill("6");
+    &.active {
+      @include fill("a");
+      &:hover {
+        @include theme-fill();
+      }
+    }
+  }
+  .most-viewed-item .icon-bg-1 {
+    .icon-bg-2 {
+      @include theme-background-color("10");
+      @include border-color("4");
+    }
+    .icon {
+      @include theme-fill();
+    }
+    .avatar {
+      @include background-color("2");
+      @include border-color("4");
+    }
+
+    &.active {
+      @include theme-background-color();
+      .icon-bg-2 {
+        background-color: rgba(64, 64, 64, 0.875) !important;
+      }
+    }
+  }
+}
 .bilibili-search-suggest,
 .bilibili-search-history {
   @include background-color("3");
@@ -562,6 +594,9 @@ $highlight-map: (
   filter: brightness(0.6) invert(1) hue-rotate(180deg) !important;
   text-shadow: 0 0 0px;
 }
+#link-message-container .config {
+  @include no-shadow();
+}
 .confirmorder-container .confirm-bottom .confirm-paybtn.active,
 .whole-detail-info-wrapper .product-buy-wrapper .unsale-btn {
   box-shadow: 0 3px 4px 0 #6e4752 !important;
@@ -598,7 +633,8 @@ $highlight-map: (
 #biliAppHomeSetting button,
 .van-popover .btn-box .btn,
 .van-popper-history .view-all:hover,
-.bui-button.bui-button-gray:hover {
+.bui-button.bui-button-gray:hover,
+.live-up .live-up-img-box {
   @include theme-background-color();
 }
 #biliAppHomeSetting h2,
@@ -609,7 +645,9 @@ $highlight-map: (
 .news-ctnr .more-link:hover,
 .van-popover .coins .info a:hover,
 .van-popper-upload .upload-item:hover .bilifont,
-.bilibili-search-suggest .suggest-item .suggest_high_light {
+.bilibili-search-suggest .suggest-item .suggest_high_light,
+.new-topic-panel .tag-item .content:hover,
+.bilibili-player-video-toast-item .video-float-hint-btn.hint-red {
   @include theme-color();
 }
 .interact-dialog .btn,

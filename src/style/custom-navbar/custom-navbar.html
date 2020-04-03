@@ -312,7 +312,7 @@
   </div>
   <ul>
     <li v-for="c of components" :key="c.name" :data-name="c.name" v-show="!c.hidden"
-      :class="{disabled: c.disabled || c.active, active: c.active}" :style="{flex: c.flex, order: c.order}"
+      :class="{disabled: c.disabled, active: c.active}" :style="{flex: c.flex, order: c.order}"
       @mouseover="requestPopup(c)">
       <a class="main-content" v-if="c.href" :href="!c.active && !c.touch && c.href" v-html="c.html"></a>
       <div class="main-content" v-else v-html="c.html"></div>

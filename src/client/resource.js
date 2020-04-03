@@ -3,6 +3,7 @@ export class Resource {
     return this.text !== null
   }
   constructor (url, { styles = [], alwaysPreview = false } = {}) {
+    this.relativePath = 'min/' + url
     this.rawUrl = Resource.root + 'min/' + url
     this.dependencies = []
     this.styles = styles
@@ -65,7 +66,7 @@ export class Resource {
                 // })
                 if (this.alwaysPreview) {
                   // console.log('Load preview data', key)
-                  Ajax.monkey({ url: this.url })
+                  Ajax.monkey({ url: `${Resource.cdnRoot || Resource.root}${this.relativePath}` })
                     .then(text => {
                       // console.log(`load preview data: ${key}`)
                       this.text = text
@@ -94,7 +95,7 @@ export class Resource {
                       if (cache === null) {
                         resolve(this.text)
                       }
-                      console.log(`individual cache: ${key}`)
+                      // console.log(`individual cache: ${key}`)
                       settings.cache = Object.assign(settings.cache, {
                         [key]: this.text
                       })

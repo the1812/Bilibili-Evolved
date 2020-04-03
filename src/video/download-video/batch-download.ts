@@ -286,7 +286,8 @@ export class ManualInputBatch extends VideoEpisodeBatch {
           cid: p.cid,
           titleParameters: {
             n: (index + 1).toString(),
-            ep: p.title
+            ep: p.title,
+            title: info.title,
           },
           title: `P${(index + 1)} ${p.title}`,
         }

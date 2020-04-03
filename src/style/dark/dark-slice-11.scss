@@ -878,3 +878,136 @@
 .bp-svg-icon.taobao-link {
   @include to-theme("blue");
 }
+.home-page {
+  .fixed-bg,
+  .fixed-bg-cover {
+    background-image: none !important;
+  }
+}
+
+.cinema-movie-wrapper {
+  .banner-wrapper .side-list .side-item.selected:hover .title {
+      @include theme-color();
+    }
+  .filter-wrapper .filter-block {
+    .filter-block-title span {
+      @include color("e");
+    }
+    .filter-list a.filter-item {
+      @include color("a");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .hot-recom-wrapper {
+    .hot-title {
+      @include color("e");
+    }
+    .hot-trailer .player-list {
+      @include background-color("4");
+      .list-count {
+        @include color("a");
+        .num {
+          @include theme-color();
+        }
+      }
+      .list-item-wrap .list-item {
+        .list-desc {
+          @include color("e");
+        }
+        &.selected {
+          @include background-color("2");
+          .list-cover {
+            @include theme-border-color();
+            &:after {
+              @include to-theme("pink");
+            }
+          }
+        }
+      }
+    }
+  }
+  .popup-card .info {
+    @include background-color("4");
+    .title {
+      @include color("e");
+    }
+    .style,
+    .time {
+      @include color("a");
+    }
+  }
+  .activity-wrap .title {
+    @include color("e");
+  }
+  .pindan-wrap,
+  .rank-wrap {
+    .slider-contro span {
+      @include background-color("4");
+    }
+    .head-section .title,
+    .preview-item .text .title {
+      @include color("e");
+    }
+  }
+  .hot-wrapper {
+    .title,
+    .right .recent-item a {
+      @include color("e");
+    }
+  }
+  .rank-wrap .head-section .more span {
+    @include foreground-color();
+    @include border-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
+}
+
+.live-up .live-detail {
+  .up-name {
+    @include color("e");
+  }
+  .live-name {
+    @include color("a");
+  }
+}
+.most-viewed-panel {
+  @include background-color("4");
+  .list-content .most-viewed-item {
+    .name {
+      @include color("a");
+      &.active {
+        @include theme-color();
+      }
+    }
+    &:hover .name {
+      @include theme-color();
+    }
+    .section .icon-bg-1 .avatar .red-dot {
+      @include theme-background-color();
+      @include border-color("4");
+    }
+  }
+  > .icon.active {
+    @include color("a");
+    &:hover {
+      @include to-theme("blue");
+    }
+  }
+}
+.new-topic-panel {
+  @include background-color("4");
+  .tag-item .label {
+    @include background-color("3");
+    @include color("e");
+  }
+  .more-button .more:hover {
+    @include theme-color();
+    &::after {
+      @include theme-border-color();
+    }
+  }
+}

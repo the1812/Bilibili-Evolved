@@ -136,7 +136,6 @@ export const settings = {
   customNavbarFill: false,
   customNavbarTransparent: true,
   customNavbarShadow: true,
-  customNavbarCompact: false,
   customNavbarBlur: false,
   customNavbarBlurOpacity: 0.7,
   customNavbarOrder: { ...customNavbarDefaultOrders },
@@ -219,6 +218,12 @@ export const settings = {
   preserveEventBanner: false,
   about: true,
   bvidConvert: true,
+  fixedSidebars: false,
+  updateCdn: 'jsDelivr',
+  lastNewVersionCheck: 0,
+  newVersionCheckInterval: 1000 * 3600 * 6, // 6 hours
+  useDarkStyleAsUserStyle: false,
+  livePip: true,
   cache: {},
 }
 const fixedSettings = {
@@ -242,6 +247,7 @@ const fixedSettings = {
   showDeadVideoTitle: false,
   blurVideoControl: false,
   oldTweets: false,
+  customNavbarCompact: false,
   watchlaterExpireWarnings: false,
   latestVersionLink: 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js',
   currentVersion: GM.info.script.version,

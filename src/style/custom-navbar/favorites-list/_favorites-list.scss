@@ -1,4 +1,5 @@
 @import "../../common";
+@import "../search-box";
 .custom-navbar .favorites-list {
   width: 380px;
   height: 600px;
@@ -46,25 +47,29 @@
     }
     .header {
       @include h-center();
+      @include search-box();
       justify-content: space-between;
       margin: 16px 12px;
       .list-select {
+        flex-shrink: 0;
         height: 26px;
       }
       .more-info {
         @include h-center();
         @include round-bar(26);
-        padding: 4px 6px 4px 10px;
+        flex-shrink: 0;
+        padding: 4px;
         background-color: #8882;
         &:hover {
           background-color: #8884;
         }
-        .mdi {
-          margin-left: 8px;
-        }
+        // .mdi {
+        //   margin-left: 8px;
+        // }
       }
       .play-all-container {
-        flex-grow: 1;
+        // flex-grow: 1;
+        flex-shrink: 0;
         padding: 0 6px;
         @include h-center();
         justify-content: flex-start;
@@ -184,6 +189,10 @@
             margin-right: 6px;
             height: 20px;
             width: 20px;
+            object-fit: cover;
+            body.dark &.placeholder {
+              filter: invert(.9);
+            }
           }
           .name {
             overflow: hidden;

@@ -54,7 +54,8 @@
 .video-toolbar-module .btn-item .t,
 .exchange-btn .more,
 .rank-header .more,
-.v-wrap .video-toolbar .ops > span {
+.v-wrap .video-toolbar .ops > span,
+.userinfo-content .btn-box > a {
   @include width-auto();
 }
 .bb-comment .comment-send .comment-emoji,
@@ -82,6 +83,7 @@
 }
 .link-navbar .main-ctnr {
   width: 100% !important;
+  max-width: 1500px !important;
 }
 .bili-search .video.list {
   width: calc(100% - 172px) !important;
@@ -119,7 +121,8 @@
 .article-action .ops .fav-btn,
 .article-action .ops .like-btn,
 .player-auxiliary-area .player-auxiliary-setting-menu-list,
-.bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku {
+.bilibili-player-video-sendbar .bilibili-player-video-danmaku-switch .choose_danmaku,
+.userinfo-content .btn-box > a {
   padding: 0 8px !important;
 }
 .n .n-data {

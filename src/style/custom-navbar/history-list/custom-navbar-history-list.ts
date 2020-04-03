@@ -30,7 +30,7 @@ interface HistoryTab {
   type: string
   api: string
   moreLink: string
-  getTimeline: (json: any) => Timeline
+  getItems: (json: any) => HistoryItem[]
 }
 const getTimeData = () => {
   const now = new Date()
@@ -46,26 +46,38 @@ const getTimeData = () => {
     lastWeek,
   }
 }
-const simpleTimeGrouper = (historyItems: (HistoryItem & TimeData)[]) => {
-  const { today, yesterday, lastWeek } = getTimeData()
-  const groups = _.groupBy(historyItems, h => {
-    if (h.timestamp >= today) {
-      return '今天'
-    }
-    if (h.timestamp >= yesterday) {
-      return '昨天'
-    }
-    if (h.timestamp >= lastWeek) {
-      return '本周'
-    }
-    return '更早'
-  })
-  return Object.entries(groups).map(([key, value]) => {
-    return {
-      name: key,
-      items: value,
-    }
-  })
+const historyTimeGrouper = (historyItems: HistoryItem[]) => {
+  if (historyItems.length === 0) {
+    return []
+  }
+  if ('timestamp' in historyItems[0]) {
+    const { today, yesterday, lastWeek } = getTimeData()
+    const groups = _.groupBy(historyItems as (HistoryItem & TimeData)[], h => {
+      if (h.timestamp >= today) {
+        return '今天'
+      }
+      if (h.timestamp >= yesterday) {
+        return '昨天'
+      }
+      if (h.timestamp >= lastWeek) {
+        return '本周'
+      }
+      return '更早'
+    })
+    return Object.entries(groups).map(([key, value]) => {
+      return {
+        name: key,
+        items: value,
+      }
+    })
+  } else {
+    return [
+      {
+        name: '最近观看',
+        items: historyItems
+      }
+    ]
+  }
 }
 const formatTime = (date: Date) => {
   const { yesterday } = getTimeData()
@@ -81,7 +93,7 @@ const tabs: HistoryTab[] = [
     type: 'video',
     api: 'https://api.bilibili.com/x/web-interface/history/cursor?type=archive&ps=30',
     moreLink: 'https://www.bilibili.com/account/history',
-    getTimeline: json => {
+    getItems: json => {
       const list: any[] = json.data.list
       const historyItems = list.map(item => {
         const timestamp = item.view_at * 1000
@@ -106,7 +118,7 @@ const tabs: HistoryTab[] = [
         historyItem.timeText = formatTime(historyItem.time)
         return historyItem
       })
-      return simpleTimeGrouper(historyItems)
+      return historyItems
     },
   },
   {
@@ -114,7 +126,7 @@ const tabs: HistoryTab[] = [
     type: 'article',
     api: 'https://api.bilibili.com/x/web-interface/history/cursor?type=article&ps=30',
     moreLink: '',
-    getTimeline: json => {
+    getItems: json => {
       const list: any[] = json.data.list
       const historyItems = list.map(item => {
         const timestamp = item.view_at * 1000
@@ -132,7 +144,7 @@ const tabs: HistoryTab[] = [
         historyItem.timeText = formatTime(historyItem.time)
         return historyItem
       })
-      return simpleTimeGrouper(historyItems)
+      return historyItems
     },
   },
   {
@@ -140,7 +152,7 @@ const tabs: HistoryTab[] = [
     type: 'live',
     api: 'https://api.live.bilibili.com/xlive/web-ucenter/v1/history/get_history_by_uid',
     moreLink: 'https://link.bilibili.com/p/center/index#/user-center/view-history/live',
-    getTimeline: json => {
+    getItems: json => {
       const list: any[] = json.data.list
       const historyItems = list.map(item => {
         return {
@@ -152,12 +164,7 @@ const tabs: HistoryTab[] = [
           title: item.title,
         } as HistoryItem
       })
-      return [
-        {
-          name: '最近观看',
-          items: historyItems
-        }
-      ]
+      return historyItems
     }
   },
 ]
@@ -181,19 +188,21 @@ export class HistoryList extends NavbarComponent {
                 <div class="tab-name">{{tab.name}}</div>
               </div>
             </div>
+            <div class="search">
+              <input type="text" placeholder="搜索" v-model="search">
+            </div>
             <button class="more-info" :disabled="!selectedTab.moreLink || null" @click="viewMore()" title="查看更多">
-              查看更多
               <i class="mdi mdi-dots-horizontal"></i>
             </button>
           </div>
           <transition-group name="history-content" tag="div" class="history-content">
-            <div class="empty-tip" v-if="!timelineLoading && timeline.length === 0" key="empty-tip">
+            <div class="empty-tip" v-if="!timelineLoading && filteredTimeline.length === 0" key="empty-tip">
               空空如也哦 =￣ω￣=
             </div>
             <div class="loading-tip" v-if="timelineLoading" key="loading-tip">
               加载中...
             </div>
-            <div class="time-group" v-for="t of timeline" :key="t.name">
+            <div class="time-group" v-for="t of filteredTimeline" :key="t.name">
               <div class="time-group-name">{{t.name}}</div>
               <transition-group name="time-group" tag="div" class="time-group-items">
                 <div class="time-group-item" v-for="h of t.items" :key="h.id">
@@ -236,8 +245,24 @@ export class HistoryList extends NavbarComponent {
       data: {
         tabs,
         selectedTab: tabs[0],
+        /** 全部的历史项目 */
+        items: [],
+        /** 按时间段分组后的历史项目 */
         timeline: [],
         timelineLoading: true,
+        search: '',
+      },
+      computed: {
+        /** 按时间段分组, 关键词过滤后的历史项目 */
+        filteredTimeline(): Timeline {
+          if (!this.search) {
+            return this.timeline
+          }
+          const search: string = this.search.toLowerCase()
+          return historyTimeGrouper((this.items as HistoryItem[]).filter(it => {
+            return it.title.toLowerCase().includes(search) || it.upName.toLowerCase().includes(search)
+          }))
+        }
       },
       methods: {
         async updateTimeline() {
@@ -249,8 +274,8 @@ export class HistoryList extends NavbarComponent {
             if (json.code !== 0) {
               throw new Error(`加载历史记录失败: ${json.message}`)
             }
-            this.timeline = tab.getTimeline(json)
-            // console.log(_.cloneDeep(this.timeline))
+            this.items = tab.getItems(json)
+            this.timeline = historyTimeGrouper(this.items)
           } catch (error) {
             logError(error)
           } finally {
