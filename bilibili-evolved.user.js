@@ -1,6 +1,5 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @namespace    Bilibili-Evolved
 // @version      1.10.14
 // @description  强大的哔哩哔哩增强脚本: 下载视频, 音乐, 封面, 弹幕 / 简化直播间, 评论区, 首页 / 自定义顶栏, 删除广告, 夜间模式 / 触屏设备支持
 // @author       Grant Howard, Coulomb-G
