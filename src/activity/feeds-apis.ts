@@ -262,6 +262,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
         return {
           id: c.desc.dynamic_id_str,
           aid: card.aid,
+          bvid: c.desc.bvid || card.bvid,
           title: card.title,
           upID: c.desc.user_profile.info.uid,
           upName: c.desc.user_profile.info.uname,
@@ -288,6 +289,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
         return {
           id: c.desc.dynamic_id_str,
           aid: card.aid,
+          bvid: c.desc.bvid || card.bvid,
           epID: card.episode_id,
           title: card.new_desc,
           upName: card.apiSeasonInfo.title,
