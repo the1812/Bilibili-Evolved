@@ -553,6 +553,11 @@ $highlight-map: (
     }
   }
 }
+.live-up .live-up-img {
+  box-shadow: 0 0 0 1px var(--theme-color) !important;
+  @include border-color("4");
+  @include background-color("2");
+}
 .bilibili-search-suggest,
 .bilibili-search-history {
   @include background-color("3");
