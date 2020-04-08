@@ -994,7 +994,7 @@
     }
     .section .avatar .red-dot {
       @include theme-background-color();
-      @include border-color();
+      @include border-color("4");
     }
   }
   > .icon.active {

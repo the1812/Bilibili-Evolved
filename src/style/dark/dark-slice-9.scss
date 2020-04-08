@@ -532,23 +532,45 @@ $highlight-map: (
       }
     }
   }
-  .most-viewed-item .icon-bg-1 {
-    .icon-bg-2 {
-      @include theme-background-color("10");
-      @include border-color("4");
+  .most-viewed-item {
+    .section {
+      .avatar {
+        @include border-color("4");
+        box-shadow: 0 0 0 1px transparent !important;
+        &.active {
+          box-shadow: 0 0 0 1px var(--theme-color) !important;
+        }
+      }
+      .icon-all {
+        @include theme-background-color("30");
+        @include border-color("4");
+        box-shadow: 0 0 0 1px transparent !important;
+        &.active {
+          box-shadow: 0 0 0 1px var(--theme-color) !important;
+        }
+        .icon {
+          @include theme-fill();
+        }
+      }
     }
-    .icon {
-      @include theme-fill();
-    }
-    .avatar {
-      @include background-color("2");
-      @include border-color("4");
-    }
-
-    &.active {
-      @include theme-background-color();
+    .icon-bg-1 {
       .icon-bg-2 {
-        background-color: rgba(64, 64, 64, 0.875) !important;
+        @include theme-background-color("10");
+        @include border-color("4");
+      }
+      .icon {
+        @include theme-fill();
+      }
+      .avatar {
+        @include background-color("2");
+        @include border-color("4");
+      }
+
+      &.active {
+        @include theme-background-color();
+        .icon-bg-2 {
+          background-color: rgba(64, 64, 64, 0.875) !important;
+        }
       }
     }
   }
