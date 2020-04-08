@@ -1,6 +1,7 @@
 const blockParams = [
   'spm_id_from',
   'from_source',
+  'from_spmid',
   'from',
   'seid',
   'share_source',
@@ -14,7 +15,12 @@ const blockParams = [
   'rt',
   'tdsourcetag',
 ]
-const normalizeURL = (url: string) => url.endsWith('/') ? _.trimEnd(url, '/') : url
+const noNormalizes = [
+  /game\.bilibili\.com\/fgo/,
+]
+const normalizeURL = (url: string) => {
+  return url.endsWith('/') && (noNormalizes.every(r => !r.test(url))) ? _.trimEnd(url, '/') : url
+}
 const clean = () => {
   const urlParams = location.search.substring(1).split('&')
   const filteredParams = urlParams.filter(p => {
