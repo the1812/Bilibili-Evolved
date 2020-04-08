@@ -1,0 +1,14 @@
+@import "./dark-definitions";
+.new-topic-panel {
+  @include background-color("4");
+  .tag-item .label {
+    @include background-color("3");
+    @include color("e");
+  }
+  .more-button .more:hover {
+    @include theme-color();
+    &::after {
+      @include theme-border-color();
+    }
+  }
+}
