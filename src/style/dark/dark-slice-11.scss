@@ -966,12 +966,18 @@
   }
 }
 
-.live-up .live-detail {
-  .up-name {
-    @include color("e");
+.live-up {
+  .live-detail {
+    .up-name {
+      @include color("e");
+    }
+    .live-name {
+      @include color("a");
+    }
   }
-  .live-name {
-    @include color("a");
+  .live-up-img {
+    @include border-color();
+    box-shadow: 0 0 0 1px var(--theme-color) !important;
   }
 }
 .most-viewed-panel {
@@ -986,9 +992,9 @@
     &:hover .name {
       @include theme-color();
     }
-    .section .icon-bg-1 .avatar .red-dot {
+    .section .avatar .red-dot {
       @include theme-background-color();
-      @include border-color("4");
+      @include border-color();
     }
   }
   > .icon.active {

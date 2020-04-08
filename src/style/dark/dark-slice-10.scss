@@ -888,3 +888,18 @@
     @include background-color("5");
   }
 }
+.international-header .nav-search {
+  #nav_searchform {
+    @include background-color();
+    border-bottom: 1.5px solid!important;
+  }
+  .nav-search-keyword {
+    @include foreground-color();
+  }
+  .nav-search-btn {
+    @include background-color();
+    &:hover .nav-search-submit {
+      @include color("e");
+    }
+  }
+}
