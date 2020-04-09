@@ -22,3 +22,11 @@
     }
   }
 }
+.bilibili-search-history {
+  .history-item:hover {
+    @include background-color("2");
+  }
+  .cancel-icon:hover {
+    @include theme-color();
+  }
+}
