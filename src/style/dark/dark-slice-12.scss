@@ -12,3 +12,13 @@
     }
   }
 }
+.bypb-window .online {
+  @include background-color("4");
+  @include border-color();
+  a {
+    @include color("e");
+    &:hover {
+      @include theme-color();
+    }
+  }
+}
