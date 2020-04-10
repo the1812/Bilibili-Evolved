@@ -12,3 +12,21 @@
     }
   }
 }
+.bypb-window .online {
+  @include background-color("4");
+  @include border-color();
+  a {
+    @include color("e");
+    &:hover {
+      @include theme-color();
+    }
+  }
+}
+.bilibili-search-history {
+  .history-item:hover {
+    @include background-color("2");
+  }
+  .cancel-icon:hover {
+    @include theme-color();
+  }
+}
