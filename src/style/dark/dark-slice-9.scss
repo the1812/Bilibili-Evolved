@@ -61,6 +61,9 @@
 .user-title-using-cntr .user-title-box {
   @include background-color("3");
 }
+.up-info .u-face .fa {
+  @include background-color("4");
+}
 .wide-members .avatar-list i {
   @include background-color("4");
   &:hover {
