@@ -30,6 +30,10 @@
     @include theme-color();
   }
 }
+
+.v-wrap .r-con .notice {
+  @include background-color("4");
+}
 .video-container .text-area .subtitle {
   @include color("a");
 }
