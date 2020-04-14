@@ -37,3 +37,20 @@
 .video-container .text-area .subtitle {
   @include color("a");
 }
+.image-upload-btn:hover {
+  @include to-theme("blue");
+}
+
+.msg-notify {
+  @include background-color("2");
+  hr {
+    @include background-color("4");
+  }
+  .context-menu {
+    @include background-color("4");
+    @include color("e");
+  }
+  .link i {
+    @include to-theme("blue");
+  }
+}
