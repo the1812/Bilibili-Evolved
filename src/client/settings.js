@@ -223,6 +223,7 @@ export const settings = {
   lastNewVersionCheck: 0,
   newVersionCheckInterval: 1000 * 3600 * 6, // 6 hours
   useDarkStyleAsUserStyle: false,
+  autoHideSideBar: false,
   livePip: true,
   cache: {},
 }

@@ -1,0 +1,30 @@
+.gui-settings-auto-hide-side-bar {
+  .gui-settings,
+  .gui-settings-widgets {
+    transform: translateX(-36px);
+  }
+  .gui-settings-icon-panel:hover {
+    .gui-settings,
+    .gui-settings-widgets {
+      transform: translateX(-16px);
+      &:hover {
+        transform: translateX(0);
+      }
+    }
+  }
+  &.gui-settings-dock-right {
+    .gui-settings,
+    .gui-settings-widgets {
+      transform: translateX(36px);
+    }
+    .gui-settings-icon-panel:hover {
+      .gui-settings,
+      .gui-settings-widgets {
+        transform: translateX(16px);
+        &:hover {
+          transform: translateX(0);
+        }
+      }
+    }
+  }
+}

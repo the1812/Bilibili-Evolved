@@ -97,6 +97,7 @@ Resource.manifest = {
       guiSettingsDockSide: '设置面板停靠位置',
       foregroundColorMode: '文本颜色',
       updateCdn: '更新源',
+      autoHideSideBar: '自动隐藏侧栏',
     },
     dropdown: [
       {

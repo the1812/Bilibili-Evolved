@@ -694,4 +694,5 @@ body.round-corner {
     border-radius: var(--corner-radius);
   }
 }
-@import "_gui-settings-dock";
+@import "gui-settings-dock";
+@import "gui-settings-auto-hide";
