@@ -45,7 +45,7 @@ export const getDashInfo = async (api: string, quality: number, allowLowerQualit
   const json = await Ajax.getJsonWithCredentials(api)
   const data = json.data || json.result || json
   if (json.code !== 0 || !data.dash) {
-    throw new Error('DASH api failed')
+    throw new Error('此视频没有DASH格式, 请改用FLV格式')
   }
   const qualities = data.accept_quality as number[]
   if (!qualities.includes(quality) && !allowLowerQuality) {
