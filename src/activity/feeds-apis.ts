@@ -245,10 +245,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
     throw new Error(json.message)
   }
   if (type === 'video') {
-    return json.data.cards.filter((c: any) => {
-      // 合作视频仅取UP主的
-      return c.desc.orig_dy_id === 0
-    }).map(
+    return _.uniqBy(json.data.cards.map(
       (c: any): VideoCardInfo => {
         const card = JSON.parse(c.card)
         const topics = _.get(c, 'display.topic_info.topic_details', []).map(
@@ -281,7 +278,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
           watchlater: store.state.watchlaterList.includes(card.aid)
         }
       }
-    )
+    ), it => it.aid)
   } else if (type === 'bangumi') {
     return json.data.cards.map(
       (c: any): VideoCardInfo => {
