@@ -19,7 +19,8 @@ const noNormalizes = [
   /game\.bilibili\.com\/fgo/,
 ]
 const normalizeURL = (url: string) => {
-  return url.endsWith('/') && (noNormalizes.every(r => !r.test(url))) ? _.trimEnd(url, '/') : url
+  return url
+  // return url.endsWith('/') && (noNormalizes.every(r => !r.test(url))) ? _.trimEnd(url, '/') : url
 }
 const clean = () => {
   const urlParams = location.search.substring(1).split('&')
