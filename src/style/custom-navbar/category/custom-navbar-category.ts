@@ -13,7 +13,7 @@ export class Category extends NavbarComponent {
           加载中...
         </li>
         <li class="category-item" style="display: none" :style="{display: loading ? 'none' : 'list-item'}" v-for="item of info" :class="{ main: item[1].count }">
-          <a :href="item[1].link">
+          <a :href="item[1].link" target="_blank">
             <svg aria-hidden="true">
               <use :href="'#header-icon-' + item[1].icon" :xlink:href="'#header-icon-' + item[1].icon"></use>
             </svg>
@@ -21,7 +21,7 @@ export class Category extends NavbarComponent {
             <span>{{item[1].count}}</span>
           </a>
           <div class="popup" v-if="item[1].subRegions">
-            <a v-for="region of Object.entries(item[1].subRegions)" :href="region[1]">
+            <a v-for="region of Object.entries(item[1].subRegions)" :href="region[1]" target="_blank">
               {{region[0]}}
             </a>
           </div>
