@@ -84,6 +84,7 @@ Resource.manifest = {
         key: 'iconsStyle',
         important: true,
       },
+      'scrollbarStyle',
     ],
     displayNames: {
       guiSettings: '设置',
@@ -124,7 +125,6 @@ Resource.manifest = {
     alwaysPreview: true,
     styles: [
       'darkStyle',
-      'scrollbarStyle',
       {
         key: 'darkStyleNavBar',
         important: true,
