@@ -616,14 +616,15 @@ async function loadWidget() {
     window.scroll(0, 0);
     (dq('.gui-settings-mask') as HTMLDivElement).click()
   })
-  document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
-  loadPanel()
-  // button.addEventListener('mouseover', () => {
-  //   document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
-  //   loadPanel()
-  // }, { once: true })
+  // document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
+  // loadPanel()
+  button.addEventListener('mouseover', () => {
+    // document.body.insertAdjacentHTML('beforeend', resources.import('downloadVideoHtml'))
+    loadPanel()
+  }, { once: true })
 }
 async function loadPanel() {
+  // const start = performance.now()
   let workingDownloader: VideoDownloader
   // const sizeCache = new Map<VideoFormat, number>()
   type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD' | 'ffmpegEpisodes' | 'ffmpegFragments'
@@ -650,7 +651,8 @@ async function loadPanel() {
     },
   ]
   const panel = new Vue({
-    el: '.download-video',
+    // el: '.download-video',
+    template: resources.import('downloadVideoHtml'),
     components: {
       VDropdown: () => import('./v-dropdown.vue'),
       VCheckbox: () => import('./v-checkbox.vue'),
@@ -1127,7 +1129,13 @@ async function loadPanel() {
       // }
     }
   })
-
+  // const vueCreated = performance.now()
+  const el = panel.$mount().$el
+  document.body.insertAdjacentElement('beforeend', el)
+  // const vueMounted = performance.now()
+  // el.classList.add('loaded')
+  // const repainted = performance.now()
+  // console.log(vueCreated - start, vueMounted - vueCreated, repainted - vueMounted)
   Observer.videoChange(async () => {
     panel.close()
     panel.batch = false
