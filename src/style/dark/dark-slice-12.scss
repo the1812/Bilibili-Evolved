@@ -54,3 +54,45 @@
     @include to-theme("blue");
   }
 }
+.popup-bg-cntr .popup-cntr {
+  @include background-color("4");
+  .left-part {
+    @include background-color("2");
+    .round-item {
+      .round-name {
+        @include color("e");
+      }
+      .round-state {
+        @include color("a");
+      }
+      &.active {
+        background-image: none !important;
+        @include background-color("4");
+      }
+    }
+  }
+  .right-part {
+    .activity-name,
+    .not-bingo,
+    .not-join {
+      @include color("e");
+    }
+    .bingo-list {
+      @include background-color("5");
+      .title {
+        @include color("e");
+      }
+      .bingo-group-item-cntr .bingo-group-item .title {
+        @include color("a");
+      }
+    }
+    .award-list-cntr {
+      .title {
+        @include color("e");
+      }
+      .award-list .award-item .desc {
+        @include color("a");
+      }
+    }
+  }
+}
