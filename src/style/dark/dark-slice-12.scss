@@ -68,6 +68,9 @@
       &.active {
         background-image: none !important;
         @include background-color("4");
+        .round-name .progress {
+          @include theme-color();
+        }
       }
     }
   }
@@ -90,8 +93,22 @@
       .title {
         @include color("e");
       }
-      .award-list .award-item .desc {
-        @include color("a");
+      .award-list .award-item {
+        .desc {
+          @include color("a");
+        }
+        img {
+          @include theme-border-color();
+        }
+      }
+    }
+    .right-top-corner .rule {
+      @include theme-color();
+    }
+    .help-cntr {
+      @include background-color("2");
+      .title {
+        @include color("e");
       }
     }
   }
