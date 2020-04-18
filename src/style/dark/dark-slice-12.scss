@@ -113,3 +113,14 @@
     }
   }
 }
+.draw-fold-cntr .sender-info {
+  @include background-color("2");
+  @include color("e");
+  box-shadow: 0 0 0 1px var(--theme-color) !important;
+  .name {
+    @include color("e");
+  }
+  .words {
+    @include color("a");
+  }
+}
