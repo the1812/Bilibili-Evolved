@@ -14,6 +14,13 @@ const blockParams = [
   'unique_k',
   'rt',
   'tdsourcetag',
+  'accept_quality',
+  'broadcast_type',
+  'current_qn',
+  'current_quality',
+  'playurl_h264',
+  'playurl_h265',
+  'quality_description',
 ]
 const noNormalizes = [
   /game\.bilibili\.com\/fgo/,
