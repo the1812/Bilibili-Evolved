@@ -123,9 +123,4 @@
   .words {
     @include color("a");
   }
-  .triagle {
-    @include background-color("2");
-    border-left-color: transparent !important;
-    border-right-color: transparent !important;
-  }
 }
