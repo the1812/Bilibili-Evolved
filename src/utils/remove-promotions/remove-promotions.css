@@ -52,8 +52,14 @@ body.remove-game-match-module #reportFirst3 {
   justify-content: space-evenly;
 }
 .blocked-ads.new {
-  width: 459px;
-  height: 202px;
+  /* width: 459px;
+  height: 202px; */
+  width: 100%;
+  height: 100%;
+  background-color: #eee;
+}
+body.dark .blocked-ads.new {
+  background-color: #333;
 }
 body.compact .blocked-ads {
   width: 480px;
