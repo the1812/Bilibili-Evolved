@@ -84,7 +84,6 @@ Resource.manifest = {
         key: 'iconsStyle',
         important: true,
       },
-      'scrollbarStyle',
     ],
     displayNames: {
       guiSettings: '设置',
@@ -148,24 +147,6 @@ Resource.manifest = {
   },
   tweetsStyle: {
     path: 'tweets.min.css'
-  },
-  useNewStyle: {
-    path: 'new-styles.min.js',
-    dependencies: [
-      'style',
-      'oldStyle'
-    ],
-    styles: [
-      'tweetsStyle',
-      {
-        key: 'scrollbarStyle',
-        condition: () => document.URL !== `https://h.bilibili.com/`
-      }
-    ],
-    displayNames: {
-      useNewStyle: '样式调整',
-      blurBackgroundOpacity: '顶栏(对横幅)透明度'
-    }
   },
   hideBanner: {
     path: 'hide-banner.min.js',

@@ -161,6 +161,7 @@ function setDisplayNames () {
 
 (async () => {
   resources.applyStyle('guiSettingsStyle')
+  // resources.applyStyle('scrollbarStyle')
   resources.applyImportantStyle('iconsStyle')
   document.body.classList.add('round-corner')
 

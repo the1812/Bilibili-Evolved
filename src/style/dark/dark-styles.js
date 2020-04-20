@@ -3,7 +3,6 @@ const removeBadScrollbar = () => {
 }
 const unload = () => {
   document.body.classList.remove('dark')
-  resources.removeStyle('scrollbarStyle')
   resources.removeStyle('darkStyleNavBar')
   resources.removeStyle('darkStyle')
   resources.removeStyle('darkStyleImportant')
@@ -28,14 +27,13 @@ const load = () => {
   document.body.classList.add('dark')
   removeBadScrollbar()
   if (!settings.useDarkStyleAsUserStyle) {
-    resources.applyStyle('scrollbarStyle')
     resources.applyImportantStyle('darkStyleNavBar')
     resources.applyStyle('darkStyle')
     resources.applyImportantStyle('darkStyleImportant')
   }
 }
 load()
-addSettingsListener('useDarkStyleAsUserStyle', value => {
+addSettingsListener('useDarkStyleAsUserStyle', () => {
   unload()
   load()
 })
