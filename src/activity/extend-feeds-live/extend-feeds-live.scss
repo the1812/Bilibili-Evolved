@@ -1,4 +1,8 @@
+@import "../../style/common";
 .live-up-list {
+  max-height: calc(100vh - 320px);
+  overflow: auto;
+  @include no-scrollbar();
   .up-name {
     font-size: 13px !important;
   }
