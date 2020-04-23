@@ -111,6 +111,7 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 - 可能无法很好地适应窄屏幕, 请尽量以1400px以上的宽度使用此脚本.
 - ASS弹幕下载不能包含高级弹幕, 字幕弹幕等.
 - `简化首页`可能会有无法加载`活动`栏目的情况, 目前未找到原因.
+- `简化首页`的`清爽模式`可能无法适配Safari浏览器.
 
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配并保持无冲突.
@@ -143,5 +144,18 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 微信
 
 <img alt="微信" src="images/compressed/wechat.jpg" height="200">
+
+----
+
+# 我写的其他一些玩意
+
+## [Touhou Tagger](https://github.com/the1812/Touhou-Tagger)
+☯ 从 THBWiki 自动填写东方Project同人音乐CD曲目信息
+
+## [Malware Patch](https://github.com/the1812/Malware-Patch)
+阻止中国流氓软件的管理员授权
+
+## [Popcap Patches](https://github.com/the1812/Popcap-Patches)
+Popcap游戏3D加速补丁制作器, 可修复宝石迷阵, 祖玛等游戏
 
 ----
