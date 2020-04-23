@@ -21,6 +21,9 @@ const blockParams = [
   'playurl_h264',
   'playurl_h265',
   'quality_description',
+  'network',
+  'network_status',
+  'platform_network_status',
 ]
 const noNormalizes = [
   /game\.bilibili\.com\/fgo/,
