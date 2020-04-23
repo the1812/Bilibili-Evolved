@@ -458,6 +458,7 @@ declare global {
     newVersionCheckInterval: number,
     useDarkStyleAsUserStyle: boolean,
     livePip: boolean,
+    extendFeedsLive: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

@@ -225,6 +225,7 @@ export const settings = {
   useDarkStyleAsUserStyle: false,
   autoHideSideBar: false,
   livePip: true,
+  extendFeedsLive: true,
   cache: {},
 }
 const fixedSettings = {

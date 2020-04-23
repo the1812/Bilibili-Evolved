@@ -858,5 +858,12 @@ Resource.manifest = {
       livePip: '直播画中画',
     },
   },
+  extendFeedsLive: {
+    path: 'extend-feeds-live.min.js',
+    style: true,
+    displayNames: {
+      extendFeedsLive: '直播信息扩充',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

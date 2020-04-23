@@ -1,0 +1,21 @@
+.live-up-list {
+  .up-name {
+    font-size: 13px !important;
+  }
+  .live-detail {
+    color: black;
+    body.dark & {
+      color: #eee;
+    }
+  }
+  .live-detail[data-live-title]::before {
+    content: attr(data-live-title);
+    color: black;
+    font-weight: bold;
+    line-height: 1.5;
+    display: flex;
+    body.dark & {
+      color: #eee;
+    }
+  }
+}

@@ -1,0 +1,1 @@
+.live-up-list .up-name{font-size:13px!important}.live-up-list .live-detail{color:#000}body.dark .live-up-list .live-detail{color:#eee}.live-up-list .live-detail[data-live-title]::before{content:attr(data-live-title);color:#000;font-weight:700;line-height:1.5;display:flex}body.dark .live-up-list .live-detail[data-live-title]::before{color:#eee}
