@@ -159,6 +159,10 @@ declare global {
     documentary: number
     [key: string]: number
   }
+  interface UserImage {
+    url: string
+    name: string
+  }
   const unsafeWindow: Window
   const UserAgent: string
   const EmptyImageUrl: string
@@ -459,6 +463,7 @@ declare global {
     useDarkStyleAsUserStyle: boolean,
     livePip: boolean,
     extendFeedsLive: boolean,
+    userImages: UserImage[],
     latestVersionLink: string,
     currentVersion: string,
   }

@@ -225,6 +225,7 @@ export const settings = {
   autoHideSideBar: false,
   livePip: true,
   extendFeedsLive: true,
+  userImages: [],
   cache: {},
 }
 const fixedSettings = {
