@@ -365,7 +365,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'defaultVideoQuality',
-      items: ['1080P60', '1080P+', '1080P', '720P60', '720P', '480P', '360P', '自动']
+      items: ['4K', '1080P60', '1080P+', '1080P', '720P60', '720P', '480P', '360P', '自动']
     }
   },
   comboLike: {
