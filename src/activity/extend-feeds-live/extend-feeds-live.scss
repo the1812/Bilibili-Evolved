@@ -17,7 +17,10 @@
     color: black;
     font-weight: bold;
     line-height: 1.5;
-    display: flex;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     body.dark & {
       color: #eee;
     }
