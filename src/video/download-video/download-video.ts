@@ -14,9 +14,9 @@ class Video {
     function api(aid: number | string, cid: number | string, quality?: number) {
       if (dash) {
         if (quality) {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fnver=0&fnval=16`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnver=0&fnval=16`
         } else {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json&fnver=0&fnval=16`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json&fourk=1&fnver=0&fnval=16`
         }
       } else {
         if (quality) {
