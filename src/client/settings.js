@@ -145,7 +145,6 @@ export const settings = {
   narrowDanmaku: true,
   favoritesRedirect: true,
   outerWatchlater: true,
-  hideOldEntry: true,
   videoScreenshot: false,
   hideBangumiReviews: false,
   filenameFormat: '[title][ - ep]',
@@ -229,6 +228,7 @@ export const settings = {
   cache: {},
 }
 const fixedSettings = {
+  hideOldEntry: false,
   guiSettings: true,
   viewCover: true,
   notifyNewVersion: true,
