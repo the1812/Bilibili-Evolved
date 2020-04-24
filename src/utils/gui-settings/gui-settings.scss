@@ -478,6 +478,9 @@ li.category.folded i.icon-arrow {
     transition: all 0.2s;
     font-size: 16px;
     background-color: transparent;
+    &[key="feedsTranslateProvider"] {
+      max-width: 100px;
+    }
     &[key="defaultPlayerMode"] {
       max-width: 120px;
     }

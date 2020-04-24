@@ -39,28 +39,25 @@
 > 某些破坏性的大更新会使旧版脚本**完全**无法运行, 请及时检查更新.
 
 ## 备用安装源
-如果默认的安装链接无法使用, 可以尝试以下的备用安装源(连接速度从高到低), 内容更新与 GitHub 可能稍有延迟.
+如果默认的安装链接无法使用, 可以尝试以下的备用安装源.
 
-|            | 更新延迟 | 正式版                                                                                         | 预览版                                                                                                             | 离线版                                                                                                             | 预览离线版                                                                                                                           |
-| ---------- | ------------ | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
-| jsDelivr   | 24h          | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js)   | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js)              | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js)               | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js)                        |
-| GreasyFork | 12h          | [安装](https://greasyfork.org/scripts/373563-bilibili-evolved/code/Bilibili%20Evolved.user.js) | [安装](https://greasyfork.org/scripts/373564-bilibili-evolved-preview/code/Bilibili%20Evolved%20(Preview).user.js) | [安装](https://greasyfork.org/scripts/373565-bilibili-evolved-offline/code/Bilibili%20Evolved%20(Offline).user.js) | [安装](https://greasyfork.org/scripts/373566-bilibili-evolved-preview-offline/code/Bilibili%20Evolved%20(Preview%20Offline).user.js) |
-| GitHub     | <1h          | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)        | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)                   | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)                    | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)                             |
+|          | 更新延迟 | 下载速度 | 正式版                                                                                       | 预览版                                                                                                | 离线版                                                                                               | 预览离线版                                                                                                    |
+| -------- | -------- | -------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| jsDelivr | 24h      | 极快     | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js) |
+| GitHub   | <1h      | 慢       | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)      |
 
 
 # 设置
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置. 默认只启用了一部分功能, 您可以根据需要自由调整设置.
 
-设置项的说明见[功能](#功能)一节, 在网页中通过鼠标停留在某一项也可以查看简要说明.
+可以在[功能列表](features.md)页中查看每项功能的详细说明, 在网页中通过鼠标停留在某一项也可以查看简要说明.
+
+大部分功能可通过设置面板开启, 有一些功能会以`附加功能`的形式生效, 或者是可以在`附加功能`做进一步设置. `附加功能`可从网页左侧中央的功能按钮进入.
 
 **绝大部分设置保存后, 需要刷新网页才能生效. 仅有一些样式设置可以立即生效.**
 
 <img alt="设置" height="500" src="images/compressed/gui-settings.jpg">
 
-# 功能
-大部分功能可通过设置面板开启, 有一些功能会以`附加功能`的形式生效, 或者是可以在`附加功能`做进一步设置. `附加功能`可从网页左侧中央的功能按钮进入.
-
-可以在[功能列表](features.md)页中查看每项功能的详细说明.
 
 # 兼容性
 

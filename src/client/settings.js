@@ -54,7 +54,6 @@ export const aria2RpcDefaultOption = {
 }
 export const settings = {
   useDarkStyle: false,
-  compactLayout: false,
   // showBanner: true,
   hideBanner: false,
   expandDanmakuList: true,
@@ -143,7 +142,6 @@ export const settings = {
   customNavbarBoundsPadding: 10,
   playerShadow: false,
   narrowDanmaku: true,
-  favoritesRedirect: true,
   outerWatchlater: true,
   videoScreenshot: false,
   hideBangumiReviews: false,
@@ -229,6 +227,8 @@ export const settings = {
   cache: {},
 }
 const fixedSettings = {
+  favoritesRedirect: false,
+  compactLayout: false,
   hideOldEntry: false,
   guiSettings: true,
   viewCover: true,

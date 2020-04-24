@@ -252,20 +252,6 @@
 
 </details>
 <details>
-<summary><strong>首页使用紧凑布局</strong></summary>
-
-设置首页是否使用紧凑布局, 视频的间距会减小, 番剧的图片和排名序号会变成圆形, 分区栏的图标会使用高清重制版.
-
-**启用前**
-
-<img width="500" alt="原版布局" src="images/compressed/compact-layout-disabled.jpg">
-
-**启用后**
-
-<img width="500" alt="紧凑布局" src="images/compressed/compact-layout.jpg">
-
-</details>
-<details>
 <summary><strong>简化评论区</strong></summary>
 
 - 删除热评头像下方的关注按钮
@@ -340,12 +326,6 @@
 
 </details>
 <details>
-<summary><strong>隐藏返回旧版</strong></summary>
-
-隐藏播放页右侧的`返回旧版`入口.
-
-</details>
-<details>
 <summary><strong>隐藏番剧点评</strong></summary>
 
 隐藏番剧播放页面的点评板块, 不会隐藏番剧介绍页那里的点评.
@@ -364,7 +344,7 @@
 
 </details>
 <details>
-<summary><strong>隐藏承包榜</strong></summary>
+<summary><strong>隐藏番剧承包</strong></summary>
 
 隐藏番剧页面下方的承包榜, 以及右边的承包按钮.
 
@@ -408,12 +388,6 @@
 
 </details>
 <details>
-<summary><strong>旧版动态跳转支持</strong></summary>
-
-将新版动态的链接换为旧版动态, 同时可在附加功能中在新旧动态间切换.
-
-</details>
-<details>
 <summary><strong>动态过滤器</strong></summary>
 
 按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 注意目前仅仅在全部动态里生效, 切换到别的类别时无效.
@@ -428,6 +402,22 @@
 - Bing: 必应翻译
 - Google: 谷歌翻译
 - GoogleCN: 谷歌中国翻译(google.cn)
+
+</details>
+<details>
+<summary><strong>强制固定顶栏和侧栏</strong></summary>
+
+动态更新后, 侧栏以一种非常怪异的方法固定在两侧, 快速下拉时会有抖动, 而且无法适应动态过滤器折叠产生的高度变化.
+
+因此, 开启动态过滤器后, 会禁用侧栏固定.
+
+而强制固定顶栏和侧栏可以完美固定侧栏, 避免产生抖动.
+
+</details>
+<details>
+<summary><strong>直播信息扩充</strong></summary>
+
+在动态的正在直播中, 为每一个直播间加上标题, 并且能够显示多达24个直播间.
 
 </details>
 
@@ -498,7 +488,7 @@
 
 </details>
 <details>
-<summary><strong>直播弹幕记录器(实验性)</strong></summary>
+<summary><strong>直播弹幕记录器</strong></summary>
 
 开启后, 在直播间里可以从附加功能中启动弹幕记录器, 会记录启动后所有收到的弹幕, 并可以导出为XML弹幕文件.
 
@@ -585,12 +575,6 @@
 <summary><strong>专栏文字选择</strong></summary>
 
 使专栏的文字可以选择.
-
-</details>
-<details>
-<summary><strong>稍后再看期限提醒</strong></summary>
-
-稍后再看里的视频添加后60天会过期自动删除. 开启此功能可在期限不足14天时在稍后再看列表里显示过期警告.
 
 </details>
 <details>
@@ -702,6 +686,18 @@
 <summary><strong>侧栏垂直偏移量</strong></summary>
 
 设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.
+
+</details>
+<details>
+<summary><strong>自动隐藏侧栏</strong></summary>
+
+是否自动隐藏侧栏, 仅在鼠标经过附近时出现.
+
+</details>
+<details>
+<summary><strong>更新源</strong></summary>
+
+热更新的更新源, 对离线版和脚本本体更新无效.
 
 </details>
 <details>
