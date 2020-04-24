@@ -124,3 +124,6 @@
     @include color("a");
   }
 }
+.article-holder .bangumi-card a .cover {
+  @include border-color("4");
+}
