@@ -92,14 +92,15 @@ async function main () {
         info.action();
       }
     };
-    if (settings.applyPlayerModeOnPlay && !settings.autoPlay) {
+    const autoPlay = _.get(JSON.parse(localStorage.getItem('bilibili_player_settings')), 'video_status.autoplay', false)
+    if (settings.applyPlayerModeOnPlay && !autoPlay) {
       video.addEventListener("play", onplay, { once: true });
     }
     else {
       onplay();
     }
 
-    if (!settings.autoPlay) {
+    if (!autoPlay) {
       video.addEventListener("play", lightOff, { once: true });
     }
     else {

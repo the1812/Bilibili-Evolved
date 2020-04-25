@@ -99,7 +99,6 @@ export const settings = {
   useCache: true,
   autoContinue: false,
   allowJumpContinue: false,
-  autoPlay: false,
   deadVideoTitleProvider: '稍后再看',
   useBiliplusRedirect: false,
   biliplusRedirect: false,
@@ -227,6 +226,7 @@ export const settings = {
   cache: {},
 }
 const fixedSettings = {
+  autoPlay: false,
   favoritesRedirect: false,
   compactLayout: false,
   hideOldEntry: false,
