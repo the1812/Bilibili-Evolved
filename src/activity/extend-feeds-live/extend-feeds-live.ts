@@ -14,12 +14,18 @@ interface LiveInfo {
   }
   const liveList = await SpinQuery.select('.live-up-list') as HTMLElement
   resources.applyStyle('extendFeedsLiveStyle')
-  const fullListJson = await Ajax.getJsonWithCredentials(`https://api.live.bilibili.com/relation/v1/feed/feed_list?page=1&pagesize=24`)
-  if (fullListJson.code !== 0) {
-    logError(`加载直播列表失败: ${fullListJson.message}`)
-    return
-  }
-  const fullList = _.get(fullListJson, 'data.list', []) as LiveInfo[]
+  const pageSize = 24
+  const fullList: LiveInfo[] = await Ajax.getPages({
+    api: page => {
+      return Ajax.getJsonWithCredentials(`https://api.live.bilibili.com/relation/v1/feed/feed_list?page=${page}&pagesize=${pageSize}`)
+    },
+    getList: json => {
+      return _.get(json, 'data.list', [])
+    },
+    getTotal: json => {
+      return _.get(json, 'data.results', 0)
+    },
+  })
   const liveListNames = dqa(liveList, '.up-name')
   const presentedNames = liveListNames.map((it: HTMLElement) => it.innerText.trim())
   const presented = fullList.filter(it => presentedNames.includes(it.uname))
@@ -36,9 +42,12 @@ interface LiveInfo {
   // const extend = [fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo,] as LiveInfo[]
   const extend = fullList.filter(it => !presentedNames.includes(it.uname))
   liveListNames.forEach((it, index) => {
-    it.parentElement!.setAttribute('data-live-title',
-      presented.find(p => p.uname === presentedNames[index])!.title
-    )
+    const liveInfo = presented.find(p => p.uname === presentedNames[index])
+    if (liveInfo === undefined) {
+      console.warn(`live title not found for ${presentedNames[index]}`)
+    } else {
+      it.parentElement!.setAttribute('data-live-title', liveInfo.title)
+    }
   })
   const liveDetailItem = liveList.children[0] as HTMLElement
   extend.forEach(it => {

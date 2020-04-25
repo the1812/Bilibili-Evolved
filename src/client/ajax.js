@@ -97,6 +97,23 @@ export class Ajax {
       GM.xmlHttpRequest(fullDetails)
     })
   }
+  static async getPages({api, getList, getTotal}) {
+    let page = 1
+    let total = Infinity
+    const result = []
+    while (result.length < total) {
+      const json = await api(page)
+      if (json.code !== 0) {
+        console.warn(`api failed in Ajax.getPages. message = ${json.message}, page = ${page}, total = ${total}, api = `, api)
+      }
+      const list = getList(json)
+      result.push(...list)
+      if (total === Infinity) {
+        total = getTotal(json)
+      }
+    }
+    return result
+  }
 }
 // https://github.com/the1812/Bilibili-Evolved/issues/84
 let ajaxHooked = false

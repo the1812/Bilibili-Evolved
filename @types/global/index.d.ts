@@ -261,6 +261,11 @@ declare global {
     static postJson(url: string, json: any): Promise<any>
     static postJsonWithCredentials(url: string, json: any): Promise<any>
     static monkey(details: MonkeyXhrBasicDetails): Promise<any>
+    static getPages<T = any>(config: {
+      api: (page: number) => Promise<any>
+      getList: (json: any) => T[]
+      getTotal: (json: any) => number
+    }): Promise<T[]>
   }
   type Observable = string | Node | Node[] | NodeList
   class Observer {

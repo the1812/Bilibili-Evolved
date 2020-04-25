@@ -3,26 +3,26 @@
   max-height: calc(100vh - 320px);
   overflow: auto;
   @include no-scrollbar();
-  .up-name {
-    font-size: 13px !important;
-  }
-  .live-detail {
+  .live-detail[data-live-title] {
     color: black;
     body.dark & {
       color: #eee;
     }
-  }
-  .live-detail[data-live-title]::before {
-    content: attr(data-live-title);
-    color: black;
-    font-weight: bold;
-    line-height: 1.5;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    body.dark & {
-      color: #eee;
+    .up-name {
+      font-size: 13px !important;
+      opacity: 0.6;
+    }
+    &::before {
+      content: attr(data-live-title);
+      color: black;
+      line-height: 1.5;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      body.dark & {
+        color: #eee;
+      }
     }
   }
 }
