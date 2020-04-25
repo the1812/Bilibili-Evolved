@@ -865,5 +865,12 @@ Resource.manifest = {
       extendFeedsLive: '直播信息扩充',
     },
   },
+  playerOnTop: {
+    path: 'player-on-top.min.js',
+    reloadable: true,
+    displayNames: {
+      playerOnTop: '播放器置顶',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

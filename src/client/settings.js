@@ -223,6 +223,7 @@ export const settings = {
   livePip: true,
   extendFeedsLive: true,
   userImages: [],
+  playerOnTop: false,
   cache: {},
 }
 const fixedSettings = {

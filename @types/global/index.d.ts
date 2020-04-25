@@ -238,7 +238,10 @@ declare global {
     applyStyleFromText(text: string, id: string): void
     applyImportantStyleFromText(text: string, id: string): void
     getStyle(key: string, id?: string): void
-    toggleStyle(content: string, id: string): void
+    toggleStyle(content: string, id: string, urlPattern?: {
+      include?: (string | RegExp)[]
+      exclude?: (string | RegExp)[]
+    }): void
     toggleStyle(key: string): void
     applyDropdownOptions(): Promise<void>
   }
@@ -522,6 +525,7 @@ declare global {
   const dashExtensions: string[]
   const dashFragmentExtension: string
   const videoCondition: () => Promise<boolean>
+  const matchPattern: (str: string, pattern: string | RegExp) => boolean
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const scriptVersion: ScriptVersion
 }

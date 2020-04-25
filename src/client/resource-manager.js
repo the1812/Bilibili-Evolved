@@ -386,7 +386,17 @@ export class ResourceManager {
       })
     await Promise.all(manifests.map(it => applyDropdownOption(it)))
   }
-  toggleStyle (content, id) {
+  toggleStyle (content, id, urlPattern) {
+    if (urlPattern !== undefined) {
+      const { include, exclude } = urlPattern
+      const url = document.URL
+      if (exclude && exclude.some(p => matchPattern(url, p))) {
+        return
+      }
+      if (include && include.every(p => !matchPattern(url, p))) {
+        return
+      }
+    }
     if (id === undefined) { // content is resource name
       this.styleManager.applyStyle(content)
       return {
