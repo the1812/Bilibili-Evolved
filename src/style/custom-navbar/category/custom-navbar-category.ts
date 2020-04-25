@@ -55,6 +55,7 @@ export class Category extends NavbarComponent {
             '资讯': `https://www.bilibili.com/v/anime/information/`,
             '官方延伸': `https://www.bilibili.com/v/anime/offical/`,
             '新番时间表': `https://www.bilibili.com/anime/timeline/`,
+            '番剧索引': `https://www.bilibili.com/anime/index/`,
           },
         },
         国创: {
