@@ -350,9 +350,6 @@
 .international-header .mini-upload:hover {
   @include color("f");
 }
-.editor .placeholder-shown::before {
-  @include color("6");
-}
 
 $highlight-map: (
   1: #a0a7dc,
