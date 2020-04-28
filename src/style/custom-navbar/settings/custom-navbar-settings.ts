@@ -80,7 +80,7 @@ export const initSettingsPanel = async () => {
     })
 
     const updateBoundsPadding = _.debounce(value => {
-      document.body.style.setProperty('--navbar-bounds-padding', `0 ${value}%`)
+      document.documentElement.style.setProperty('--navbar-bounds-padding', `0 ${value}%`)
       settings.customNavbarBoundsPadding = value
     }, 200)
     new Vue({

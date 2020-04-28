@@ -24,10 +24,10 @@ const unsupportedUrls = [
   '//member.bilibili.com/v2',
 ]
 const loadSettings = () => {
-  document.body.style.setProperty('--navbar-bounds-padding', `0 ${settings.customNavbarBoundsPadding}%`)
-  document.body.style.setProperty('--navbar-blur-opacity', (settings.customNavbarBlurOpacity || 0.7).toString())
+  document.documentElement.style.setProperty('--navbar-bounds-padding', `0 ${settings.customNavbarBoundsPadding}%`)
+  document.documentElement.style.setProperty('--navbar-blur-opacity', (settings.customNavbarBlurOpacity || 0.7).toString())
   addSettingsListener('customNavbarBlurOpacity', value => {
-    document.body.style.setProperty('--navbar-blur-opacity', value)
+    document.documentElement.style.setProperty('--navbar-blur-opacity', value)
   })
 }
 const classHandler = (key: string, value: boolean, element: HTMLElement) => {

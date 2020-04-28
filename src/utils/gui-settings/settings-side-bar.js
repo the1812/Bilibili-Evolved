@@ -67,8 +67,6 @@ if (document.querySelector('.gui-settings-icon-panel') === null) {
     }
   })
 }
-const setSideBarOffset = (value = settings.sideBarOffset) => {
-  document.body.style.setProperty("--side-bar-offset", value + "%")
-}
-addSettingsListener("sideBarOffset", setSideBarOffset)
-setSideBarOffset()
+addSettingsListener("sideBarOffset", value => {
+  document.documentElement.style.setProperty("--side-bar-offset", value + "vh")
+}, true)
