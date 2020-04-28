@@ -20,8 +20,8 @@
 <!-- - 使用`复制链接`得到的链接并不是直接就能用的, 因为**下载时的请求Header必须包含`Referer=https://www.bilibili.com`和正确的`User-Agent`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接) -->
 
 <div>
-<img height="500" alt="single" src="images/compressed/download-video-single.jpg">
-<img height="500" alt="batch" src="images/compressed/download-video-batch.jpg">
+<img height="500" alt="single" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/download-video-single.jpg">
+<img height="500" alt="batch" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/download-video-batch.jpg">
 </div>
 
 </details>
@@ -44,7 +44,7 @@
 
 在视频播放页面/直播间中, `查看封面`按钮将在`附加功能`中启用, 点击可以查看或保存封面. (其实还可以看专栏的封面, 不过专栏的封面本来就显示在标题上方了)
 
-<img height="400" alt="查看封面/下载视频/下载弹幕" src="images/compressed/download-video-view-cover.jpg">
+<img height="400" alt="查看封面/下载视频/下载弹幕" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/download-video-view-cover.jpg">
 
 </details>
 
@@ -130,7 +130,7 @@
 - `1080P60`/`720P60`: 1001 / 60000 秒 (59.94006 fps)
 - `其他清晰度`: 1001 / 30000 秒 (29.97003 fps)
 
-<img height="100" alt="时间右边的按钮" src="images/compressed/control-enhance-buttons.jpg">
+<img height="100" alt="时间右边的按钮" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/control-enhance-buttons.jpg">
 
 </details>
 <details>
@@ -140,7 +140,7 @@
 
 如果弹幕渲染类型选择了Canvas, 则可以再按住`Shift`键来截取带弹幕的截图. 也就是鼠标操作为"按住`Shift`点击截图按钮", 键盘操作为"`Ctrl + Shift + Alt + C`".
 
-<img height="100" alt="时间右边的按钮" src="images/compressed/control-enhance-buttons.jpg">
+<img height="100" alt="时间右边的按钮" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/control-enhance-buttons.jpg">
 
 </details>
 <details>
@@ -154,7 +154,7 @@
 
 将视频页面菜单里的`稍后再看`移到外面.
 
-<img height="100" alt="外置稍后再看" src="images/compressed/watchlater.jpg">
+<img height="100" alt="外置稍后再看" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/watchlater.jpg">
 
 </details>
 <details>
@@ -205,7 +205,7 @@
 
 设定顶栏和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(`#rrggbb`或`#rgb`).
 
-<img height="200" alt="颜色设置" src="images/compressed/theme-color.jpg">
+<img height="200" alt="颜色设置" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/theme-color.jpg">
 
 </details>
 <details>
@@ -227,10 +227,10 @@
 前7个是整体的外观设置, 可以在设置里直接开关, 后面2个是对顶栏里面内容的详细布局设定, 可以在`附加功能`里设置.
 
 下图展示了顶栏在不同设置下的整体外观: (从上到下依次为: 不使用主题色填充, 不填充+夜间模式, 填充主题色, 使用不同的主题色)
-![效果图](images/compressed/custom-navbar-effects.jpg)
+![效果图](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/custom-navbar-effects.jpg)
 
 顶栏内容的布局也可以自定义, 可以通过此功能移除顶栏里不需要的组件, 或排列它们的顺序:
-![顶栏顺序自定义](images/compressed/custom-navbar-orders.jpg)
+![顶栏顺序自定义](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/custom-navbar-orders.jpg)
 
 </details>
 <details>
@@ -240,8 +240,8 @@
 
 目前仅支持部分常用页面, 其他页面会陆续添加, 不支持推广板块(会被`删除广告`功能去除的部分).
 
-<img width="500" alt="日间" src="images/compressed/light-style.jpg">
-<img width="500" alt="夜间" src="images/compressed/dark-style.jpg">
+<img width="500" alt="日间" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/light-style.jpg">
+<img width="500" alt="夜间" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/dark-style.jpg">
 
 </details>
 <details>
@@ -265,7 +265,7 @@
 
 > 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看
 
-![简化评论区](images/compressed/comments.jpg)
+![简化评论区](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/comments.jpg)
 
 </details>
 <details>
@@ -301,9 +301,9 @@
 模糊视频控制栏背景, 原有的阴影效果将无效.
 此功能需要浏览器支持背景模糊效果, 详情见[背景模糊兼容性](backdrop-filter.md)一节.
 **启用前**
-![不模糊背景](images/compressed/original-control.jpg)
+![不模糊背景](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/original-control.jpg)
 **启用后**
-![模糊背景](images/compressed/blur-video-control.jpg)
+![模糊背景](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/blur-video-control.jpg)
 </details> -->
 <details>
 <summary><strong>控制栏着色</strong></summary>
@@ -311,10 +311,10 @@
 给视频控制栏附上半透明的黑色, 代替原来的阴影, 黑色的不透明度可在设置中调整.
 
 **启用前**
-![原版](images/compressed/original-control.jpg)
+![原版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/original-control.jpg)
 
 **启用后**
-![着色](images/compressed/custom-control-background.jpg)
+![着色](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/custom-control-background.jpg)
 
 </details>
 <details>
@@ -322,7 +322,7 @@
 
 删除视频里鼠标经过时出现在右上角的标题层.
 
-<img height="400" alt="覆盖层" src="images/compressed/remove-top-mask.jpg">
+<img height="400" alt="覆盖层" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/remove-top-mask.jpg">
 
 </details>
 <details>
@@ -354,7 +354,7 @@
 
 隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.
 
-<img height="300" alt="分区栏" src="images/compressed/hide-category.jpg">
+<img height="300" alt="分区栏" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/hide-category.jpg">
 
 </details>
 
@@ -378,7 +378,7 @@
 
 在顶栏的动态预览框中, 不管名称多长, 总是完全展开视频的标题.
 
-<img height="300" alt="展开动态标题" src="images/compressed/full-tweets-title.jpg">
+<img height="300" alt="展开动态标题" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/full-tweets-title.jpg">
 
 </details>
 <details>
@@ -446,7 +446,7 @@
 
 每一项都可以在`附加功能`中单独选择是否隐藏. 图片中展示的是全部隐藏时的弹幕区效果对比.
 
-<img height="500" alt="简化直播间" src="images/compressed/simplify-liveroom.jpg">
+<img height="500" alt="简化直播间" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/simplify-liveroom.jpg">
 
 </details>
 <details>
@@ -472,7 +472,7 @@
 
 禁止直播首页的推荐直播间自动开始播放, 开启后, 还可以通过`隐藏首页推荐直播`直接隐藏掉这个推荐板块.
 
-![直播首页自动播放](images/compressed/hide-home-live.jpg)
+![直播首页自动播放](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/hide-home-live.jpg)
 
 </details>
 <details>
@@ -503,7 +503,7 @@
 <summary><strong>删除广告</strong></summary>
 
 删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.
-![删除广告](images/compressed/remove-ads.jpg)
+![删除广告](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/remove-ads.jpg)
 
 </details>
 <details>
@@ -524,7 +524,7 @@
 在视频选集列表中, (选集多时)展开整个列表, 当标题超出一行时, 另起一行以显示完整标题.
 > 因为番剧选集用的绝对布局, 所以此功能在番剧区无效.
 
-<img height="600" alt="展开选集标题" src="images/compressed/full-page-title.jpg">
+<img height="600" alt="展开选集标题" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/full-page-title.jpg">
 
 </details>
 <details>
@@ -554,7 +554,7 @@
 根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.
 适用于2K, 4K等的显示屏, DPI缩放为100%的用户不需要此功能.
 
-<img height="600" alt="高分辨率图片" src="images/compressed/image-resolution.jpg">
+<img height="600" alt="高分辨率图片" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/image-resolution.jpg">
 
 </details>
 <details>
@@ -603,16 +603,16 @@
 <summary><strong>播放器触摸支持</strong></summary>
 
 - 增大控制栏的按钮间距, 使触摸操作更准确.
-![放大前](images/compressed/player-buttons-original.jpg)
-![放大后](images/compressed/player-buttons-large.jpg)
+![放大前](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/player-buttons-original.jpg)
+![放大后](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/player-buttons-large.jpg)
 - 启用触摸手势
     - 左右滑动可调整进度, 上下位置不同灵敏度不同
     - 进度调整可在左上角和右上角取消
     - 左侧上下滑动可调整亮度
     - 右侧上下滑动可调整音量
 
-<img width="600" alt="进度调整" src="images/compressed/touch-gestures.jpg">
-<img width="600" alt="亮度和音量调整" src="images/compressed/touch-gestures-vertical.jpg">
+<img width="600" alt="进度调整" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/touch-gestures.jpg">
+<img width="600" alt="亮度和音量调整" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/touch-gestures-vertical.jpg">
 
 </details>
 <details>
@@ -636,7 +636,7 @@
 
 允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.
 
-<img height="200" alt="消息" src="images/compressed/toast.jpg">
+<img height="200" alt="消息" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/toast.jpg">
 
 </details>
 <details>
