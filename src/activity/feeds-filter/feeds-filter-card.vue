@@ -71,8 +71,8 @@ const sideCards: { [id: number]: SideCardType } = {
   // }
   5: {
     className: 'most-viewed',
-    displayName: '关注栏',
-  },
+    displayName: '关注栏'
+  }
 }
 const sideBlock = 'feeds-filter-side-block-'
 export default {
@@ -222,10 +222,18 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
     }
   }
   $side-block: 'feeds-filter-side-block';
-  .left-panel .scroll-content > *,
-  .right-panel .scroll-content > * {
-    margin: 0 !important;
-    margin-bottom: 8px !important;
+  .left-panel,
+  .right-panel {
+    .scroll-content > * {
+      margin: 0 !important;
+      margin-bottom: 8px !important;
+    }
+  }
+  .left-panel {
+    > :not(:last-child) {
+      margin: 0 !important;
+      margin-bottom: 8px !important;
+    }
   }
   .left-panel .user-panel.f-left {
     float: none !important;

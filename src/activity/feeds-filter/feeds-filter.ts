@@ -2,7 +2,8 @@
   if (document.URL.replace(location.search, '') !== 'https://t.bilibili.com/') {
     return
   }
-  const leftPanel = await SpinQuery.select('.home-container .left-panel .scroll-content')
+  const leftPanel = await SpinQuery.select('.home-container .left-panel')
+  // const leftPanel = await SpinQuery.select('.home-container .left-panel .scroll-content')
   if (leftPanel === null) {
     return
   }
