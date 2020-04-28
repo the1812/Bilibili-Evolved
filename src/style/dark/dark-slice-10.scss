@@ -580,7 +580,7 @@
 .home-page {
   .publish-panel {
     .core-style {
-      @include background-color("2");
+      @include background-color();
       @include color("e");
       @include border-color();
       &:hover,
