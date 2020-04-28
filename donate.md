@@ -5,11 +5,11 @@
 
 ## 支付宝
 
-<img alt="支付宝" src="images/compressed/alipay.jpg" height="200">
+<img alt="支付宝" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/alipay.jpg" height="200">
 
 ## 微信
 
-<img alt="微信" src="images/compressed/wechat.jpg" height="200">
+<img alt="微信" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/wechat.jpg" height="200">
 
 # 历史
 
