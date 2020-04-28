@@ -6,6 +6,8 @@
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
+// @exclude      *://api.bilibili.com/*
+// @exclude      *://*.bilibili.com/api/*
 // @run-at       document-start
 // @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js
