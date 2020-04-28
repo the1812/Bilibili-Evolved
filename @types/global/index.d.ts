@@ -472,6 +472,7 @@ declare global {
     livePip: boolean,
     extendFeedsLive: boolean,
     userImages: UserImage[],
+    playerOnTop: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
