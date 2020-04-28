@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: calc(50% + var(--side-bar-offset));
+  top: calc(50vh + var(--side-bar-offset));
   left: 0;
   width: 32px;
   z-index: 99999;
@@ -478,6 +478,9 @@ li.category.folded i.icon-arrow {
     transition: all 0.2s;
     font-size: 16px;
     background-color: transparent;
+    &[key="feedsTranslateProvider"] {
+      max-width: 100px;
+    }
     &[key="defaultPlayerMode"] {
       max-width: 120px;
     }
@@ -694,4 +697,26 @@ body.round-corner {
     border-radius: var(--corner-radius);
   }
 }
-@import "_gui-settings-dock";
+@import "gui-settings-dock";
+@import "gui-settings-auto-hide";
+
+::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+::-webkit-resizer,
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+* {
+  scrollbar-color: #aaa transparent;
+  scrollbar-width: thin !important;
+}

@@ -61,6 +61,21 @@
 .user-title-using-cntr .user-title-box {
   @include background-color("3");
 }
+.up-info .u-face .fa {
+  @include background-color("4");
+}
+.share-step {
+  .core-style {
+    @include color("e");
+    @include border-color("4");
+    @include background-color();
+    &:hover,
+    &:focus-within {
+      @include background-color();
+      @include theme-border-color();
+    }
+  }
+}
 .wide-members .avatar-list i {
   @include background-color("4");
   &:hover {
@@ -261,7 +276,6 @@
 .container .split-line .history-tip,
 .comment-bilibili-fold .comment-list .list-item .blacklist-font-color,
 .list-item .publish-time,
-.share-content .video-card .up-info .name,
 .share-content .video-card .up-info .tip,
 .live-panel .title .count {
   @include color("a");
@@ -328,15 +342,13 @@
 .van-popper-upload .upload-item .bilifont,
 .news-content,
 .bilibili-player-video-danmaku-setting-left-block-word,
+.share-content .video-card .up-info .name,
 .user-title-using-cntr .user-title-box .name {
   @include color("e");
 }
 .van-popover .vip:hover,
 .international-header .mini-upload:hover {
   @include color("f");
-}
-.editor .placeholder-shown::before {
-  @include color("6");
 }
 
 $highlight-map: (
@@ -532,26 +544,53 @@ $highlight-map: (
       }
     }
   }
-  .most-viewed-item .icon-bg-1 {
-    .icon-bg-2 {
-      @include theme-background-color("10");
-      @include border-color("4");
+  .most-viewed-item {
+    .section {
+      .avatar {
+        @include border-color("4");
+        box-shadow: 0 0 0 1px transparent !important;
+        &.active {
+          box-shadow: 0 0 0 1px var(--theme-color) !important;
+        }
+      }
+      .icon-all {
+        @include theme-background-color("30");
+        @include border-color("4");
+        box-shadow: 0 0 0 1px transparent !important;
+        &.active {
+          box-shadow: 0 0 0 1px var(--theme-color) !important;
+        }
+        .icon {
+          @include theme-fill();
+        }
+      }
     }
-    .icon {
-      @include theme-fill();
-    }
-    .avatar {
-      @include background-color("2");
-      @include border-color("4");
-    }
-
-    &.active {
-      @include theme-background-color();
+    .icon-bg-1 {
       .icon-bg-2 {
-        background-color: rgba(64, 64, 64, 0.875) !important;
+        @include theme-background-color("10");
+        @include border-color("4");
+      }
+      .icon {
+        @include theme-fill();
+      }
+      .avatar {
+        @include background-color("2");
+        @include border-color("4");
+      }
+
+      &.active {
+        @include theme-background-color();
+        .icon-bg-2 {
+          background-color: rgba(64, 64, 64, 0.875) !important;
+        }
       }
     }
   }
+}
+.live-up .live-up-img {
+  box-shadow: 0 0 0 1px var(--theme-color) !important;
+  @include border-color("4");
+  @include background-color("2");
 }
 .bilibili-search-suggest,
 .bilibili-search-history {

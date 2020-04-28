@@ -59,12 +59,8 @@ export default {
       if (json.code !== 0) {
         throw new Error(json.message)
       }
-      this.cards = json.data.cards
-        .filter((c: any) => {
-          // 合作视频仅取UP主的
-          return c.desc.orig_dy_id === 0
-        })
-        .map(
+      this.cards = _.uniqBy(
+        json.data.cards.map(
           (c: any): VideoCardInfo => {
             const card = JSON.parse(c.card)
             const topics = _.get(c, 'display.topic_info.topic_details', []).map(
@@ -97,7 +93,9 @@ export default {
               // watchlater: watchlaterList ? watchlaterList.includes(card.aid) : undefined,
             }
           }
-        )
+        ),
+        (it: VideoCardInfo) => it.aid
+      )
     }
   },
   async mounted() {

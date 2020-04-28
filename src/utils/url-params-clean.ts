@@ -1,6 +1,7 @@
 const blockParams = [
   'spm_id_from',
   'from_source',
+  'from_spmid',
   'from',
   'seid',
   'share_source',
@@ -13,8 +14,24 @@ const blockParams = [
   'unique_k',
   'rt',
   'tdsourcetag',
+  'accept_quality',
+  'broadcast_type',
+  'current_qn',
+  'current_quality',
+  'playurl_h264',
+  'playurl_h265',
+  'quality_description',
+  'network',
+  'network_status',
+  'platform_network_status',
 ]
-const normalizeURL = (url: string) => url.endsWith('/') ? _.trimEnd(url, '/') : url
+const noNormalizes = [
+  /game\.bilibili\.com\/fgo/,
+]
+const normalizeURL = (url: string) => {
+  return url
+  // return url.endsWith('/') && (noNormalizes.every(r => !r.test(url))) ? _.trimEnd(url, '/') : url
+}
 const clean = () => {
   const urlParams = location.search.substring(1).split('&')
   const filteredParams = urlParams.filter(p => {

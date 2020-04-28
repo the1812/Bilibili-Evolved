@@ -120,7 +120,7 @@ export class Resource {
   getStyle (id) {
     const style = this.text
     if (style === null) {
-      logError('Attempt to get style which is not downloaded.')
+      console.error(`Attempt to get style which is not downloaded. key = ${this.key}`)
     }
     const styleElement = document.createElement('style')
     styleElement.id = id

@@ -187,6 +187,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`useDefaultLiveQuality`, /*html*/`控制是否使用默认直播画质, 将会在进入直播后检测并自动更换到设定的画质.`],
   [`defaultLiveQuality`, /*html*/`选择默认的直播画质.`],
   [`fixedSidebars`, /*html*/`强制固定动态主页的顶栏和侧栏, 优先级高于动态过滤器的取消固定效果, 可以避免快速下拉产生的抖动.`],
+  [`extendFeedsLive`, /*html*/`在动态的<span>正在直播</span>中, 为每一个直播间加上标题, 并且能够显示超过10个的直播间.`],
+  [`playerOnTop`, /*html*/`使视频页面播放器出现在最上方, 标题/UP主等信息往下移.`],
 ]);
 export default {
   export: { toolTips },

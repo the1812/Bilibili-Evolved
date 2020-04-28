@@ -75,6 +75,7 @@ export interface FeedsCard {
   likes: number
   element: HTMLElement
   type: FeedsCardType
+  presented: boolean
   getText: () => Promise<string>
 }
 const getFeedsCardType = (element: HTMLElement) => {
@@ -131,7 +132,15 @@ class FeedsCardsManager extends EventTarget {
           }
         })
       } else {
+        if (node.parentNode === null) {
+          // console.log('skip parse', node)
+          return
+        }
         const card = await this.parseCard(node)
+        if (!card.presented) {
+          // console.log('skip detached card:', card)
+          return
+        }
         this.cards.push(card)
         this.cards.sort((a, b) => {
           if (a.id === b.id) {
@@ -148,6 +157,9 @@ class FeedsCardsManager extends EventTarget {
     if (node instanceof HTMLElement && node.classList.contains('card')) {
       const id = (await this.parseCard(node)).id
       const index = this.cards.findIndex(c => c.id === id)
+      if (index === -1) {
+        return
+      }
       const card = this.cards[index]
       this.cards.splice(index, 1)
       const event = new CustomEvent('removeCard', { detail: card })
@@ -158,10 +170,14 @@ class FeedsCardsManager extends EventTarget {
     const getSimpleText = async (selector: string) => {
       const subElement = await SpinQuery.condition(
         () => element.querySelector(selector),
-        it => it !== null
+        it => it !== null || element.parentNode === null
       ) as HTMLElement
+      if (element.parentNode === null) {
+        // console.log('skip detached node:', element)
+        return ''
+      }
       if (subElement === null) {
-        console.warn(element, selector)
+        console.warn(element, selector, element.parentNode)
         return ''
       }
       const subElementText = subElement.innerText.trim()
@@ -171,7 +187,11 @@ class FeedsCardsManager extends EventTarget {
       if (type === feedsCardTypes.bangumi) {
         return ''
       }
-      const el = await SpinQuery.condition(() => element, (it: any) => Boolean(it.__vue__))
+      const el = await SpinQuery.condition(() => element, (it: any) => Boolean(it.__vue__ || !element.parentNode))
+      if (element.parentNode === null) {
+        // console.log('skip detached node:', element)
+        return ''
+      }
       if (el === null) {
         console.warn(el)
         return ''
@@ -198,6 +218,7 @@ class FeedsCardsManager extends EventTarget {
       likes: await getNumber('.button-bar .single-button:nth-child(3) .text-offset'),
       element,
       type: getFeedsCardType(element),
+      presented: true,
       async getText() {
         const result = await getComplexText(this.type)
         this.text = result
@@ -206,6 +227,7 @@ class FeedsCardsManager extends EventTarget {
       }
     }
     await card.getText()
+    card.presented = element.parentNode !== null
     element.setAttribute('data-type', card.type.id.toString())
     // if (card.text === '') {
     //   console.warn('card text parsing failed!', card)
@@ -245,10 +267,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
     throw new Error(json.message)
   }
   if (type === 'video') {
-    return json.data.cards.filter((c: any) => {
-      // 合作视频仅取UP主的
-      return c.desc.orig_dy_id === 0
-    }).map(
+    return _.uniqBy(json.data.cards.map(
       (c: any): VideoCardInfo => {
         const card = JSON.parse(c.card)
         const topics = _.get(c, 'display.topic_info.topic_details', []).map(
@@ -262,6 +281,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
         return {
           id: c.desc.dynamic_id_str,
           aid: card.aid,
+          bvid: c.desc.bvid || card.bvid,
           title: card.title,
           upID: c.desc.user_profile.info.uid,
           upName: c.desc.user_profile.info.uname,
@@ -280,7 +300,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
           watchlater: store.state.watchlaterList.includes(card.aid)
         }
       }
-    )
+    ), it => it.aid)
   } else if (type === 'bangumi') {
     return json.data.cards.map(
       (c: any): VideoCardInfo => {
@@ -288,6 +308,7 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
         return {
           id: c.desc.dynamic_id_str,
           aid: card.aid,
+          bvid: c.desc.bvid || card.bvid,
           epID: card.episode_id,
           title: card.new_desc,
           upName: card.apiSeasonInfo.title,

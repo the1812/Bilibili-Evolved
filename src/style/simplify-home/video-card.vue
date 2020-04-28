@@ -255,7 +255,7 @@ export default {
     margin-left: 12px;
     .topic {
       color: inherit;
-      padding: 6px 8px;
+      padding: 4px 8px;
       background-color: #8882;
       margin-right: 8px;
       border-radius: 14px;

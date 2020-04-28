@@ -161,6 +161,7 @@ function setDisplayNames () {
 
 (async () => {
   resources.applyStyle('guiSettingsStyle')
+  // resources.applyStyle('scrollbarStyle')
   resources.applyImportantStyle('iconsStyle')
   document.body.classList.add('round-corner')
 
@@ -170,9 +171,12 @@ function setDisplayNames () {
     // return;
   }
 
-  if (settings.guiSettingsDockSide === '右侧') {
-    document.body.classList.add('gui-settings-dock-right')
-  }
+  addSettingsListener('guiSettingsDockSide', value => {
+    document.body.classList.toggle('gui-settings-dock-right', value === '右侧')
+  }, true)
+  addSettingsListener('autoHideSideBar', value => {
+    document.body.classList.toggle('gui-settings-auto-hide-side-bar', value)
+  }, true)
   const settingsBox = resources.data.guiSettingsHtml.text
   document.body.insertAdjacentHTML('beforeend', settingsBox)
 
@@ -215,9 +219,6 @@ function setDisplayNames () {
     // foldAllCategories();
     checkCompatibility()
     setDisplayNames()
-    addSettingsListener('guiSettingsDockSide', value => {
-      document.body.classList.toggle('gui-settings-dock-right', value === '右侧')
-    })
     new SettingsSearch()
   }, { once: true })
 })()

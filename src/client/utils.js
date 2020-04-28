@@ -184,3 +184,9 @@ export const videoCondition = async () => {
   let cid = await SpinQuery.select(() => (unsafeWindow || window).cid)
   return Boolean(cid)
 }
+export const matchPattern = (str, pattern) => {
+  if (typeof pattern === 'string') {
+    return str.includes(pattern)
+  }
+  return pattern.test(str)
+}

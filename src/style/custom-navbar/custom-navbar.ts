@@ -24,10 +24,10 @@ const unsupportedUrls = [
   '//member.bilibili.com/v2',
 ]
 const loadSettings = () => {
-  document.body.style.setProperty('--navbar-bounds-padding', `0 ${settings.customNavbarBoundsPadding}%`)
-  document.body.style.setProperty('--navbar-blur-opacity', (settings.customNavbarBlurOpacity || 0.7).toString())
+  document.documentElement.style.setProperty('--navbar-bounds-padding', `0 ${settings.customNavbarBoundsPadding}%`)
+  document.documentElement.style.setProperty('--navbar-blur-opacity', (settings.customNavbarBlurOpacity || 0.7).toString())
   addSettingsListener('customNavbarBlurOpacity', value => {
-    document.body.style.setProperty('--navbar-blur-opacity', value)
+    document.documentElement.style.setProperty('--navbar-blur-opacity', value)
   })
 }
 const classHandler = (key: string, value: boolean, element: HTMLElement) => {
@@ -156,10 +156,33 @@ export default (() => {
         },
         mounted() {
           document.body.classList.remove('custom-navbar-loading')
+          const orderedComponents = [...components].sort(ascendingSort(c => c.order))
           const checkPosition = () => {
             const checkPositions = () => {
               // console.log('recalculate positions')
-              components.forEach(c => c.checkPosition())
+              // components.forEach(c => c.checkPosition())
+              let left = 0
+              let leftResult = true
+              let right = orderedComponents.length - 1
+              let rightResult = true
+              while (left < right && (leftResult || rightResult)) {
+                if (leftResult === true) {
+                  leftResult = orderedComponents[left].checkPosition()
+                  if (leftResult === true) {
+                    left++
+                  } else {
+                    // console.log(`Stop left checking at ${left}`, orderedComponents[left].name)
+                  }
+                }
+                if (rightResult === true) {
+                  rightResult = orderedComponents[right].checkPosition()
+                  if (rightResult === true) {
+                    right--
+                  } else {
+                    // console.log(`Stop right checking at ${right}`, orderedComponents[right].name)
+                  }
+                }
+              }
             }
             addSettingsListener('customNavbarOrder', checkPositions, true)
             addSettingsListener('customNavbarHidden', checkPositions)

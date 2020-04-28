@@ -159,6 +159,10 @@ declare global {
     documentary: number
     [key: string]: number
   }
+  interface UserImage {
+    url: string
+    name: string
+  }
   const unsafeWindow: Window
   const UserAgent: string
   const EmptyImageUrl: string
@@ -234,7 +238,10 @@ declare global {
     applyStyleFromText(text: string, id: string): void
     applyImportantStyleFromText(text: string, id: string): void
     getStyle(key: string, id?: string): void
-    toggleStyle(content: string, id: string): void
+    toggleStyle(content: string, id: string, urlPattern?: {
+      include?: (string | RegExp)[]
+      exclude?: (string | RegExp)[]
+    }): void
     toggleStyle(key: string): void
     applyDropdownOptions(): Promise<void>
   }
@@ -257,6 +264,11 @@ declare global {
     static postJson(url: string, json: any): Promise<any>
     static postJsonWithCredentials(url: string, json: any): Promise<any>
     static monkey(details: MonkeyXhrBasicDetails): Promise<any>
+    static getPages<T = any>(config: {
+      api: (page: number) => Promise<any>
+      getList: (json: any) => T[]
+      getTotal: (json: any) => number
+    }): Promise<T[]>
   }
   type Observable = string | Node | Node[] | NodeList
   class Observer {
@@ -458,6 +470,9 @@ declare global {
     newVersionCheckInterval: number,
     useDarkStyleAsUserStyle: boolean,
     livePip: boolean,
+    extendFeedsLive: boolean,
+    userImages: UserImage[],
+    playerOnTop: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
@@ -511,6 +526,7 @@ declare global {
   const dashExtensions: string[]
   const dashFragmentExtension: string
   const videoCondition: () => Promise<boolean>
+  const matchPattern: (str: string, pattern: string | RegExp) => boolean
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const scriptVersion: ScriptVersion
 }

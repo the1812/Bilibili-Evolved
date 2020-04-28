@@ -1,6 +1,6 @@
 <template>
   <div class="minimal-home">
-    <home-search></home-search>
+    <!-- <home-search></home-search> -->
     <div class="minimal-home-header">
       <!-- <img v-if="logoImage" :src="logoImage" width="120" /> -->
       <!-- <icon v-else class="logo" icon="logo" type="main"></icon> -->

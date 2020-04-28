@@ -159,6 +159,8 @@ Additional variables:
   [`useDefaultLiveQuality`, `Set the default live quality. Will switch to it automatically when watching live stream.`],
   [`defaultLiveQuality`, `Select the default live quality.`],
   [`fixedSidebars`, `Fix position of sidebars and navbar in feeds home.`],
+  [`extendFeedsLive`, `Inside <span>Live broadcasting</span> panel, insert titles for every room. Also can display more than 10 rooms.`],
+  [`playerOnTop`, `Show video player on top. Move title and author down.`],
 ]);
 export default {
   export: { toolTips },

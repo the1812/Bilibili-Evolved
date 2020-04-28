@@ -2,6 +2,7 @@
 export interface VideoCardInfo {
   id: string
   aid?: number
+  bvid?: string
   epID?: number
   title: string
   upID?: number

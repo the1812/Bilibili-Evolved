@@ -54,7 +54,6 @@ export const aria2RpcDefaultOption = {
 }
 export const settings = {
   useDarkStyle: false,
-  compactLayout: false,
   // showBanner: true,
   hideBanner: false,
   expandDanmakuList: true,
@@ -100,7 +99,6 @@ export const settings = {
   useCache: true,
   autoContinue: false,
   allowJumpContinue: false,
-  autoPlay: false,
   deadVideoTitleProvider: '稍后再看',
   useBiliplusRedirect: false,
   biliplusRedirect: false,
@@ -143,9 +141,7 @@ export const settings = {
   customNavbarBoundsPadding: 10,
   playerShadow: false,
   narrowDanmaku: true,
-  favoritesRedirect: true,
   outerWatchlater: true,
-  hideOldEntry: true,
   videoScreenshot: false,
   hideBangumiReviews: false,
   filenameFormat: '[title][ - ep]',
@@ -223,10 +219,18 @@ export const settings = {
   lastNewVersionCheck: 0,
   newVersionCheckInterval: 1000 * 3600 * 6, // 6 hours
   useDarkStyleAsUserStyle: false,
+  autoHideSideBar: false,
   livePip: true,
+  extendFeedsLive: true,
+  userImages: [],
+  playerOnTop: false,
   cache: {},
 }
 const fixedSettings = {
+  autoPlay: false,
+  favoritesRedirect: false,
+  compactLayout: false,
+  hideOldEntry: false,
   guiSettings: true,
   viewCover: true,
   notifyNewVersion: true,

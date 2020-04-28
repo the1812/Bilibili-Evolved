@@ -59,12 +59,14 @@
   .gift-control-panel {
     height: 48px !important;
   }
+  .draw-box,
   .anchor-lottery-entry,
   .treasure-box {
     display: flex !important;
     align-items: center !important;
     padding: 10px 0 0 16px !important;
     max-height: 36px !important;
+    .draw-box-pic,
     .anchor-lot-icon,
     .box-icon {
       margin: 0 !important;
@@ -75,6 +77,9 @@
         background-position: 0 -1px !important;
       }
     }
+    .draw-box-pic {
+      transform: scale(1.1);
+    }
     #BLRHH_treasure_div_tip br {
       display: none !important;
     }
@@ -84,6 +89,7 @@
         max-height: 24px !important;
       }
     }
+    .draw-box-text,
     .anchor-lot-text,
     .count-down,
     #BLRHH_treasure_div_tip,
@@ -95,6 +101,9 @@
     .awarding-panel {
       bottom: 42px !important;
     }
+  }
+  .draw-box {
+    padding-top: 11px !important;
   }
   .anchor-lottery-entry {
     padding-top: 12px !important;

@@ -97,6 +97,7 @@ Resource.manifest = {
       guiSettingsDockSide: '设置面板停靠位置',
       foregroundColorMode: '文本颜色',
       updateCdn: '更新源',
+      autoHideSideBar: '自动隐藏侧栏',
     },
     dropdown: [
       {
@@ -123,7 +124,6 @@ Resource.manifest = {
     alwaysPreview: true,
     styles: [
       'darkStyle',
-      'scrollbarStyle',
       {
         key: 'darkStyleNavBar',
         important: true,
@@ -147,24 +147,6 @@ Resource.manifest = {
   },
   tweetsStyle: {
     path: 'tweets.min.css'
-  },
-  useNewStyle: {
-    path: 'new-styles.min.js',
-    dependencies: [
-      'style',
-      'oldStyle'
-    ],
-    styles: [
-      'tweetsStyle',
-      {
-        key: 'scrollbarStyle',
-        condition: () => document.URL !== `https://h.bilibili.com/`
-      }
-    ],
-    displayNames: {
-      useNewStyle: '样式调整',
-      blurBackgroundOpacity: '顶栏(对横幅)透明度'
-    }
   },
   hideBanner: {
     path: 'hide-banner.min.js',
@@ -383,7 +365,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'defaultVideoQuality',
-      items: ['1080P60', '1080P+', '1080P', '720P60', '720P', '480P', '360P', '自动']
+      items: ['4K', '1080P60', '1080P+', '1080P', '720P60', '720P', '480P', '360P', '自动']
     }
   },
   comboLike: {
@@ -874,6 +856,20 @@ Resource.manifest = {
     path: 'live-pip.min.js',
     displayNames: {
       livePip: '直播画中画',
+    },
+  },
+  extendFeedsLive: {
+    path: 'extend-feeds-live.min.js',
+    style: true,
+    displayNames: {
+      extendFeedsLive: '直播信息扩充',
+    },
+  },
+  playerOnTop: {
+    path: 'player-on-top.min.js',
+    reloadable: true,
+    displayNames: {
+      playerOnTop: '播放器置顶',
     },
   },
 }

@@ -580,7 +580,7 @@
 .home-page {
   .publish-panel {
     .core-style {
-      @include background-color("2");
+      @include background-color();
       @include color("e");
       @include border-color();
       &:hover,
@@ -588,6 +588,9 @@
       &:active {
         @include theme-border-color();
       }
+    }
+    .editor .placeholder-shown::before {
+      @include color("8");
     }
     .schedule-bar {
       @include background-color("3");
@@ -886,5 +889,20 @@
   }
   .topic-list hr {
     @include background-color("5");
+  }
+}
+.international-header .nav-search {
+  #nav_searchform {
+    @include background-color();
+    border-bottom: 1.5px solid!important;
+  }
+  .nav-search-keyword {
+    @include foreground-color();
+  }
+  .nav-search-btn {
+    @include background-color();
+    &:hover .nav-search-submit {
+      @include color("e");
+    }
   }
 }

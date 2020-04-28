@@ -286,13 +286,14 @@ export class ManualInputBatch extends VideoEpisodeBatch {
           cid: p.cid,
           titleParameters: {
             n: (index + 1).toString(),
-            ep: p.title,
+            ep: info.pages.length > 1 ? p.title : '',
             title: info.title,
           },
           title: `P${(index + 1)} ${p.title}`,
         }
       })
     }))
+    console.log(_.flatten(_.cloneDeep(pages)))
     return _.flatten(pages)
   }
 }

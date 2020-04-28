@@ -23,11 +23,11 @@ if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.c
       })
     }
   )
-  SpinQuery.select('.gg-carousel.home-slide').then(slide => {
+  SpinQuery.select('.focus-carousel.home-slide').then(slide => {
     if (!slide) {
       return
     }
-    [...slide.querySelectorAll('.gg-icon')]
+    [...slide.querySelectorAll('.gg-icon,.bypb-icon')]
       .map(it => it.parentElement.parentElement)
       .forEach(it => {
         it.style.display = 'none'

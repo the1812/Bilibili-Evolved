@@ -52,6 +52,9 @@ export class Subscriptions extends NavbarComponent {
                 <div class="card-info">
                   <h1 class="title" :title="card.title">{{card.title}}</h1>
                   <div class="progress-row">
+                    <div v-if="card.status" class="status" :class="'status-' + card.status">
+                      {{card.statusText}}
+                    </div>
                     <div v-if="card.progress" class="progress" :title="card.progress + ' | ' + card.latest">{{card.progress}} | {{card.latest}}</div>
                     <div v-else class="progress" :title="card.latest">{{card.latest}}</div>
                     <a class="info" :href="card.mediaUrl" target="_blank" title="详细信息">
@@ -75,16 +78,39 @@ export class Subscriptions extends NavbarComponent {
                 logError(`加载订阅信息失败: ${json.message}`)
                 return
               }
-              this.cards = json.data.list.map((item: any) => {
+              const getStatusText = (status: number) => {
+                switch (status) {
+                  case 1:
+                    return '想看'
+                  case 2:
+                  default:
+                    return '在看'
+                  case 3:
+                    return '看过'
+                }
+              }
+              this.cards = (json.data.list as any[]).map((item) => {
                 return {
                   title: item.title,
                   coverUrl: item.square_cover.replace('http:', 'https:'),
                   latest: item.new_ep.index_show,
                   progress: item.progress,
                   id: item.season_id,
+                  status: item.follow_status,
+                  statusText: getStatusText(item.follow_status),
                   playUrl: `https://www.bilibili.com/bangumi/play/ss${item.season_id}`,
                   mediaUrl: `https://www.bilibili.com/bangumi/media/md${item.media_id}`,
                 }
+              }).sort((a, b) => {
+                let statusA = a.status
+                if (statusA !== 3) {
+                  statusA = 3 - statusA
+                }
+                let statusB = b.status
+                if (statusB !== 3) {
+                  statusB = 3 - statusB
+                }
+                return statusA - statusB
               })
             } finally {
               this.loading = false
