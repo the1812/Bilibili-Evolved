@@ -127,3 +127,12 @@
 .article-holder .bangumi-card a .cover {
   @include border-color("4");
 }
+
+.user-panel .number-part {
+  .numbers {
+    @include color("e");
+  }
+  &:hover .numbers {
+    @include theme-color();
+  }
+}

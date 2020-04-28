@@ -589,6 +589,9 @@
         @include theme-border-color();
       }
     }
+    .editor .placeholder-shown::before {
+      @include color("8");
+    }
     .schedule-bar {
       @include background-color("3");
       .s-label,

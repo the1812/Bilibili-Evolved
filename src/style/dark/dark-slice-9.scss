@@ -343,16 +343,12 @@
 .news-content,
 .bilibili-player-video-danmaku-setting-left-block-word,
 .share-content .video-card .up-info .name,
-.user-title-using-cntr .user-title-box .name,
-.user-panel .number-part .numbers {
+.user-title-using-cntr .user-title-box .name {
   @include color("e");
 }
 .van-popover .vip:hover,
 .international-header .mini-upload:hover {
   @include color("f");
-}
-.editor .placeholder-shown::before {
-  @include color("8");
 }
 
 $highlight-map: (
@@ -690,8 +686,7 @@ $highlight-map: (
 .van-popper-upload .upload-item:hover .bilifont,
 .bilibili-search-suggest .suggest-item .suggest_high_light,
 .new-topic-panel .tag-item .content:hover,
-.bilibili-player-video-toast-item .video-float-hint-btn.hint-red,
-.user-panel .number-part:hover .numbers {
+.bilibili-player-video-toast-item .video-float-hint-btn.hint-red {
   @include theme-color();
 }
 .interact-dialog .btn,
