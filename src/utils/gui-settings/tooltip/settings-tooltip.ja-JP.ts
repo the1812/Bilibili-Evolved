@@ -169,6 +169,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`useDefaultLiveQuality`, /*html*/`デフォルトのライブ画質を使用するかどうかを制御します.デフォルトのライブ画質は検出され、配信ルームに入ると設定された画質に自動的に変更されます.`],
     [`defaultLiveQuality`, /*html*/`デフォルトのライブ画質を選択します.`],
     [`fixedSidebars`, /*html*/`フィードホームページの頂欄とサイドカードを強制的に固定します.フィードフィルターの固定解除効果よりも優先度が高く、高速プルによるジッターを回避できます.`],
+    [`extendFeedsLive`, /*html*/`フィードページの<span>配信中</span>で、生放送情報にタイトルを追加し、10個を超える生放送ルーム情報を表示できます.`],
+    [`playerOnTop`, /*html*/`動画ページのプレーヤーを上に表示すると、タイトル/ UPメッセージなどの情報が下に移動します.`],
 ]);
 export default {
     export: { toolTips },
