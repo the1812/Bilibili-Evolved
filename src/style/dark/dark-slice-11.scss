@@ -825,14 +825,19 @@
     @include theme-border-color();
   }
 }
-.router-view .config {
-  @include background-color("4");
-  @include color("e");
-  .css-o1815x {
-    @include to-theme("blue");
+.router-view {
+  .list .top {
+    @include background-color("3");
   }
-  .config-item:not(:first-child)::before {
-    @include background-color("5");
+  .config {
+    @include background-color("4");
+    @include color("e");
+    .css-o1815x {
+      @include to-theme("blue");
+    }
+    .config-item:not(:first-child)::before {
+      @include background-color("5");
+    }
   }
 }
 .message-list {
