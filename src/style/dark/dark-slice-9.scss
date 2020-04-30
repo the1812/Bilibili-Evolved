@@ -76,12 +76,7 @@
     }
   }
 }
-.wide-members .avatar-list i {
-  @include background-color("4");
-  &:hover {
-    @include theme-color();
-  }
-}
+
 .grid-area-ctnr {
   .hab-ctnr,
   .news-ctnr,
