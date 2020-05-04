@@ -145,3 +145,20 @@
     }
   }
 }
+.gift-item.buy {
+  &.hover,
+  &:hover {
+    @include background-color("2");
+  }
+}
+.cntr {
+  .user-protocol {
+    @include border-color("4");
+  }
+  .silver-seed-store {
+    @include background-color("4");
+    .content {
+      @include background-color("2");
+    }
+  }
+}
