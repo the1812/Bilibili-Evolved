@@ -136,3 +136,12 @@
     @include theme-color();
   }
 }
+.main-container .ep-list-wrapper .list-title {
+  .mode-change i,
+  .ep-list-order {
+    @include to-theme("blue");
+    &:hover {
+      @include to-theme("blue");
+    }
+  }
+}
