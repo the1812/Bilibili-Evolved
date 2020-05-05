@@ -2,6 +2,7 @@ const supportedUrls = [
   'https://www.bilibili.com/bangumi/',
   'https://www.bilibili.com/video/',
 ]
+let enabled = true
 if (supportedUrls.some(url => document.URL.startsWith(url))) {
   const clickableKeymap = {
     f: '.bilibili-player-video-fullscreen', // 全屏
@@ -69,6 +70,9 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     }, 2000)
   }
   document.body.addEventListener('keydown', e => {
+    if (!enabled) {
+      return
+    }
     if (document.activeElement && ["input", "textarea"].includes(document.activeElement.nodeName.toLowerCase())) {
       return
     }
@@ -159,4 +163,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       }
     }
   })
+}
+export default {
+  reload: () => enabled = true,
+  unload: () => enabled = false,
 }

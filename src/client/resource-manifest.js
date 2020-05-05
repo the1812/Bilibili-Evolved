@@ -692,6 +692,7 @@ Resource.manifest = {
   },
   keymap: {
     path: 'keymap.min.js',
+    reloadable: true,
     displayNames: {
       keymap: '快捷键扩展',
     },
