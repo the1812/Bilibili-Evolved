@@ -219,6 +219,7 @@ function setDisplayNames () {
     // foldAllCategories();
     checkCompatibility()
     setDisplayNames()
+    dq('.script-info .version').textContent = scriptVersion + ' v' + GM.info.script.version
     new SettingsSearch()
   }, { once: true })
 })()

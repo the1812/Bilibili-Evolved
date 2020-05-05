@@ -31,9 +31,6 @@
   <div class="gui-settings-content">
     <ul>
       <category icon="video">视频</category>
-      <!-- <checkbox indent="0" key="playerLayout" dependencies=""></checkbox>
-      <dropdown indent="1" key="defaultPlayerLayout" dependencies="playerLayout"></dropdown>
-      <dropdown indent="1" key="defaultBangumiLayout" dependencies="playerLayout"></dropdown> -->
       <checkbox indent="0" key="useDefaultPlayerMode" dependencies=""></checkbox>
       <dropdown indent="1" key="defaultPlayerMode" dependencies="useDefaultPlayerMode"></dropdown>
       <checkbox indent="1" key="applyPlayerModeOnPlay" dependencies="useDefaultPlayerMode"></checkbox>
@@ -50,7 +47,6 @@
       <checkbox indent="0" key="expandDescription" dependencies=""></checkbox>
       <checkbox indent="0" key="autoContinue" dependencies=""></checkbox>
       <checkbox indent="1" key="allowJumpContinue" dependencies="autoContinue"></checkbox>
-      <!-- <checkbox indent="0" key="autoPlay" dependencies=""></checkbox> -->
       <checkbox indent="0" key="skipChargeList" dependencies=""></checkbox>
       <checkbox indent="0" key="framePlayback" dependencies=""></checkbox>
       <checkbox indent="0" key="videoScreenshot" dependencies=""></checkbox>
@@ -72,38 +68,27 @@
         </label>
       </li>
       <dropdown indent="0" key="foregroundColorMode" dependencies=""></dropdown>
-      <!-- <checkbox indent="0" key="useNewStyle" dependencies=""></checkbox> -->
-      <!-- <textbox indent="1" key="blurBackgroundOpacity" dependencies="useNewStyle"></textbox> -->
       <checkbox indent="0" key="customNavbar" dependencies=""></checkbox>
       <checkbox indent="1" key="customNavbarSeasonLogo" dependencies="customNavbar"></checkbox>
       <checkbox indent="1" key="customNavbarFill" dependencies="customNavbar"></checkbox>
       <checkbox indent="1" key="customNavbarTransparent" dependencies="customNavbar"></checkbox>
-      <!-- <checkbox indent="1" key="allNavbarFill" dependencies="customNavbar"></checkbox> -->
       <checkbox indent="1" key="customNavbarShadow" dependencies="customNavbar"></checkbox>
-      <!-- <checkbox indent="1" key="customNavbarCompact" dependencies="customNavbar"></checkbox> -->
       <checkbox indent="1" key="customNavbarBlur" dependencies="customNavbar"></checkbox>
       <textbox indent="2" key="customNavbarBlurOpacity" dependencies="customNavbar customNavbarBlur"></textbox>
       <checkbox indent="0" key="useDarkStyle" dependencies=""></checkbox>
-      <!-- <checkbox indent="1" key="useDarkStyleAsUserStyle" dependencies="useDarkStyle"></checkbox> -->
       <checkbox indent="0" key="darkSchedule" dependencies=""></checkbox>
       <textbox indent="1" key="darkScheduleStart" dependencies="darkSchedule"></textbox>
       <textbox indent="1" key="darkScheduleEnd" dependencies="darkSchedule"></textbox>
-      <!-- <checkbox indent="0" key="compactLayout" dependencies=""></checkbox> -->
       <checkbox indent="0" key="useCommentStyle" dependencies=""></checkbox>
       <checkbox indent="0" key="simplifyHome" dependencies=""></checkbox>
       <dropdown indent="1" key="simplifyHomeStyle" dependencies="simplifyHome"></dropdown>
       <checkbox indent="0" key="hideBanner" dependencies=""></checkbox>
       <checkbox indent="0" key="playerShadow" dependencies=""></checkbox>
       <checkbox indent="0" key="narrowDanmaku" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="overrideNavBar" dependencies=""></checkbox> -->
-      <!-- <checkbox indent="0" key="showBanner" dependencies=""></checkbox> -->
-      <!-- <checkbox indent="1" key="preserveRank" dependencies="overrideNavBar"></checkbox> -->
-      <!-- <checkbox indent="0" key="blurVideoControl" dependencies=""></checkbox> -->
       <checkbox indent="0" key="customControlBackground" dependencies=""></checkbox>
       <textbox indent="1" key="customControlBackgroundOpacity" dependencies="customControlBackground"></textbox>
       <checkbox indent="0" key="removeVideoTopMask" dependencies=""></checkbox>
       <checkbox indent="0" key="playerOnTop" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="hideOldEntry" dependencies=""></checkbox> -->
       <checkbox indent="0" key="hideBangumiReviews" dependencies=""></checkbox>
       <checkbox indent="0" key="hideBangumiSponsors" dependencies=""></checkbox>
       <checkbox indent="0" key="hideRecommendLive" dependencies=""></checkbox>
@@ -114,7 +99,6 @@
       <checkbox indent="0" key="foldComment" dependencies=""></checkbox>
       <checkbox indent="0" key="fullTweetsTitle" dependencies=""></checkbox>
       <checkbox indent="0" key="fullActivityContent" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="oldTweets" dependencies=""></checkbox> -->
       <checkbox indent="0" key="feedsFilter" dependencies=""></checkbox>
       <checkbox indent="0" key="feedsTranslate" dependencies=""></checkbox>
       <dropdown indent="1" key="feedsTranslateProvider" dependencies="feedsTranslate"></dropdown>
@@ -138,21 +122,15 @@
       <checkbox indent="1" key="removeGameMatchModule" dependencies="removeAds"></checkbox>
       <checkbox indent="1" key="preserveEventBanner" dependencies="removeAds"></checkbox>
       <checkbox indent="0" key="watchLaterRedirect" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="favoritesRedirect" dependencies=""></checkbox> -->
       <checkbox indent="0" key="hideTopSearch" dependencies=""></checkbox>
       <checkbox indent="0" key="fullPageTitle" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="showDeadVideoTitle" dependencies=""></checkbox>
-      <checkbox indent="1" key="useBiliplusRedirect" dependencies="showDeadVideoTitle"></checkbox>
-      <dropdown indent="1" key="deadVideoTitleProvider" dependencies="showDeadVideoTitle"></dropdown> -->
       <checkbox indent="0" key="biliplusRedirect" dependencies=""></checkbox>
       <checkbox indent="0" key="imageResolution" dependencies=""></checkbox>
       <checkbox indent="0" key="i18n" dependencies=""></checkbox>
       <dropdown indent="1" key="i18nLanguage" dependencies="i18n"></dropdown>
       <checkbox indent="0" key="seedsToCoins" dependencies=""></checkbox>
       <checkbox indent="0" key="selectableColumnText" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="watchlaterExpireWarnings" dependencies=""></checkbox> -->
       <checkbox indent="0" key="urlParamsClean" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="noMiniVideoAutoplay" dependencies=""></checkbox> -->
       <category icon="touch">触摸</category>
       <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
       <checkbox indent="0" key="comboLike" dependencies=""></checkbox>
@@ -162,7 +140,6 @@
       <category icon="other">其他</category>
       <checkbox indent="0" key="toast" dependencies=""></checkbox>
       <checkbox indent="1" key="toastInternalError" dependencies="toast"></checkbox>
-      <!-- <checkbox indent="0" key="useCache" dependencies=""></checkbox> -->
       <textbox indent="0" key="filenameFormat" dependencies=""></textbox>
       <textbox indent="0" key="batchFilenameFormat" dependencies=""></textbox>
       <dropdown indent="0" key="updateCdn" dependencies=""></dropdown>
@@ -172,6 +149,10 @@
       <checkbox indent="0" key="autoHideSideBar" dependencies=""></checkbox>
       <checkbox indent="0" key="ajaxHook" dependencies=""></checkbox>
     </ul>
+    <div class="script-info">
+      <div class="version"></div>
+      <a class="release-notes" target="_blank" href="https://github.com/the1812/Bilibili-Evolved/releases">查看更新日志</a>
+    </div>
   </div>
   <div class="gui-settings-tooltip"></div>
 </div>

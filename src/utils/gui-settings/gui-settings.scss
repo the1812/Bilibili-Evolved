@@ -120,6 +120,10 @@
   overflow: auto;
   position: relative;
   overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
   ul {
     padding: 0;
     margin: 0;
@@ -170,6 +174,25 @@
       }
       &.category * {
         opacity: 0.8;
+      }
+    }
+  }
+  .script-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    font-size: 12px;
+    .version {
+      opacity: .75;
+    }
+    a {
+      color: inherit !important;
+      opacity: 0.5;
+      &:hover,
+      &:active {
+        opacity: 1;
+        color: var(--theme-color) !important;
       }
     }
   }
