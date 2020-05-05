@@ -31,7 +31,7 @@ export class SettingsSearch {
       if (texts.includes(value)) {
         item.classList.remove('folded')
         const dependencies = item.getAttribute('data-dependencies')
-        if (dependencies !== undefined) {
+        if (dependencies !== undefined && dependencies !== null) {
           dependencies.split(' ').forEach(dependency => {
             const parent = this.items.find(item => item.getAttribute('data-key') === dependency)
             if (parent !== undefined) {
