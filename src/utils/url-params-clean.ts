@@ -51,5 +51,7 @@ const clean = () => {
   }
   // }
 }
-clean()
-Observer.videoChange(() => clean())
+fullyLoaded(() => {
+  clean()
+  Observer.videoChange(() => clean())
+})
