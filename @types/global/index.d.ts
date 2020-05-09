@@ -469,6 +469,7 @@ declare global {
     lastNewVersionCheck: number,
     newVersionCheckInterval: number,
     useDarkStyleAsUserStyle: boolean,
+    darkColorScheme: boolean,
     livePip: boolean,
     extendFeedsLive: boolean,
     userImages: UserImage[],

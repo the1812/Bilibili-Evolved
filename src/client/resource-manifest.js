@@ -873,5 +873,11 @@ Resource.manifest = {
       playerOnTop: '播放器置顶',
     },
   },
+  darkColorScheme: {
+    path: 'dark-color-scheme.min.js',
+    displayNames: {
+      darkColorScheme: '夜间模式跟随系统',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
