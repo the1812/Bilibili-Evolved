@@ -225,6 +225,7 @@ export const settings = {
   extendFeedsLive: true,
   userImages: [],
   playerOnTop: false,
+  restoreFloors: false,
   cache: {},
 }
 const fixedSettings = {

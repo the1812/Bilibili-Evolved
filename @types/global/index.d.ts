@@ -474,6 +474,7 @@ declare global {
     extendFeedsLive: boolean,
     userImages: UserImage[],
     playerOnTop: boolean,
+    restoreFloors: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

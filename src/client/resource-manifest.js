@@ -879,5 +879,11 @@ Resource.manifest = {
       darkColorScheme: '夜间模式跟随系统',
     },
   },
+  restoreFloors: {
+    path: 'restore-floors.min.js',
+    displayNames: {
+      restoreFloors: '评论楼层显示',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

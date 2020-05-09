@@ -1,6 +1,7 @@
 @mixin orders {
   display: flex;
   .floor {
+    opacity: 0.7;
     order: 1;
   }
   .reply {
