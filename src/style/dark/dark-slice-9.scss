@@ -671,7 +671,9 @@ $highlight-map: (
 .van-popover .btn-box .btn,
 .van-popper-history .view-all:hover,
 .bui-button.bui-button-gray:hover,
-.live-up .live-up-img-box {
+.live-up .live-up-img-box,
+.shortcuts-ctnr .hinter,
+.shortcuts-ctnr .num-hinter {
   @include theme-background-color();
 }
 #biliAppHomeSetting h2,
