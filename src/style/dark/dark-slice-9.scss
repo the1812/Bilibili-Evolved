@@ -293,6 +293,9 @@
   }
 }
 
+.reply .divider {
+  @include border-color("5");
+}
 .center-box {
   .line-1 {
     .name-field {
