@@ -293,8 +293,19 @@
   }
 }
 
-.reply .divider {
-  @include border-color("5");
+.reply {
+  .divider {
+    @include border-color("5");
+  }
+  .divider-last {
+    &::before,
+    &::after {
+      @include border-color("5");
+    }
+    span {
+      @include color("a");
+    }
+  }
 }
 .center-box {
   .line-1 {
