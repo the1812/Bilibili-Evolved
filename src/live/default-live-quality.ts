@@ -1,5 +1,5 @@
 (async () => {
-  if (!document.URL.match(/^https:\/\/live.bilibili.com\/(\d+)/)) {
+  if (!document.URL.match(/^https:\/\/live.bilibili.com\/(blanc\/)?(\d+)/)) {
     return
   }
   const dropdown = Resource.all.useDefaultLiveQuality.dropdown as Dropdown
