@@ -180,7 +180,8 @@ class Title extends Badge {
       return true
     }
     return Badge.parseJson(
-      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWearTitle`, ""),
+      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWearTitle`,
+      `csrf=${getCsrf()}&csrf_token=${getCsrf()}`),
       {
         successAction: () => {
           this.isActive = false
