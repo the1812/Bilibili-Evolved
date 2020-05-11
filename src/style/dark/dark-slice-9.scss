@@ -300,7 +300,7 @@
   .divider-last {
     &::before,
     &::after {
-      @include border-color("5");
+      @include background-color("5");
     }
     span {
       @include color("a");
