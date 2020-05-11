@@ -7,12 +7,12 @@ export default {
       </button>
     `,
     condition: () => {
-      return document.URL.match(/https:\/\/live.bilibili.com\/([\d]+)/)
+      return document.URL.match(/https:\/\/live.bilibili.com\/(blanc\/)?([\d]+)/)
         && 'requestPictureInPicture' in HTMLVideoElement.prototype
     },
     success: () => {
       (dq('#live-pip') as HTMLButtonElement).addEventListener('click', () => {
-        if (document.pictureInPictureElement === dq('video')){
+        if (document.pictureInPictureElement === dq('video')) {
           document.exitPictureInPicture()
         } else {
           (dq('video') as HTMLVideoElement).requestPictureInPicture()

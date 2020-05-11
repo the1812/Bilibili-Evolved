@@ -1,5 +1,5 @@
 const condition = () => {
-  return Boolean(document.URL.match(/live\.bilibili\.com\/(\d)+/))
+  return Boolean(document.URL.match(/live\.bilibili\.com\/(blanc\/)?(\d)+/))
 }
 const init = () => {
   const button = dq(`#record-live-danmaku`) as HTMLButtonElement
