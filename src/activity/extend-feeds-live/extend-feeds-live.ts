@@ -47,6 +47,8 @@ interface LiveInfo {
       console.warn(`live title not found for ${presentedNames[index]}`)
     } else {
       it.parentElement!.setAttribute('data-live-title', liveInfo.title)
+      it.parentElement!.setAttribute('title', liveInfo.title)
+      it.setAttribute('title', presentedNames[index])
     }
   })
   const liveDetailItem = liveList.children[0] as HTMLElement
@@ -59,6 +61,7 @@ interface LiveInfo {
     detail.setAttribute('data-live-title', it.title)
     const name = dq(clone, '.up-name') as HTMLElement
     name.innerHTML = it.uname
+    name.title = it.uname
     liveList.insertAdjacentElement('beforeend', clone)
   })
   console.log(presented, extend)
