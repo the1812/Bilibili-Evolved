@@ -1,9 +1,9 @@
 const getRoomID = () => {
-  const match = document.URL.match(/live\.bilibili\.com\/(\d+)/)
+  const match = document.URL.match(/live\.bilibili\.com\/(blanc\/)?(\d+)/)
   if (!match) {
     return
   }
-  const roomID = parseInt(match[1])
+  const roomID = parseInt(match[2])
   if (isNaN(roomID)) {
     console.warn(`roomID not found`)
     return
@@ -99,7 +99,7 @@ class Medal extends Badge {
   }
 }
 class Title extends Badge {
-  static imageMap: {[id: string]: string}
+  static imageMap: { [id: string]: string }
   tid: number
   cid: number
   name: string

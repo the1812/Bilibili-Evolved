@@ -1,5 +1,5 @@
 (async () => {
-  if (!/^https:\/\/live\.bilibili\.com\/[\d]+/.test(document.URL)) {
+  if (!/^https:\/\/live\.bilibili\.com\/(blanc\/)?[\d]+/.test(document.URL)) {
     return
   }
   const popupContainer = await SpinQuery.condition(
