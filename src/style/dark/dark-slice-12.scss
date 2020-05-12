@@ -162,3 +162,38 @@
     }
   }
 }
+.collection-bg .collection-board {
+  @include background-color("2");
+  .collection-submit {
+    @include background-color("4");
+  }
+  .collection-list .collection-li {
+    .collection-attr {
+      @include color("a");
+    }
+    .collection-name,
+    .collection-song-number {
+      @include color("e");
+    }
+  }
+  .collection-submit {
+    @include color("a");
+    &.active {
+      @include theme-background-color();
+      @include color("e");
+    }
+  }
+  .collection-theme {
+    @include color("e");
+  }
+  .collection-list {
+    @include border-color("4");
+    .collection-li {
+      .collection-checkbox .collection-checked,
+      &:hover .collection-checkbox,
+      &:hover .collection-name {
+        @include theme-color();
+      }
+    }
+  }
+}
