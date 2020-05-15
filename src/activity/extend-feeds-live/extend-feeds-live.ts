@@ -13,6 +13,9 @@ interface LiveInfo {
     return
   }
   const liveList = await SpinQuery.select('.live-up-list') as HTMLElement
+  if (liveList === null) {
+    return
+  }
   resources.applyStyle('extendFeedsLiveStyle')
   const pageSize = 24
   const fullList: LiveInfo[] = await Ajax.getPages({
@@ -64,5 +67,7 @@ interface LiveInfo {
     name.title = it.uname
     liveList.insertAdjacentElement('beforeend', clone)
   })
+  const { disableProfilePopup } = await import('../disable-profile-popup')
+  disableProfilePopup()
   console.log(presented, extend)
 })()
