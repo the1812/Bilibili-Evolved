@@ -34,7 +34,7 @@ import { VideoCardInfo } from '../../video-card-info'
 export default {
   components: {
     SlideshowCards: () => import('../slideshow-cards.vue'),
-    RankList: () => import('../rank-list.vue'),
+    RankList: () => import('../rank-list.vue')
   },
   store,
   props: {
@@ -67,10 +67,16 @@ export default {
   computed: {
     ...Vuex.mapState(['watchlaterList']),
     rankLink() {
-      if (this.rid === 165) { // 165: 广告区没有排行榜
+      if (this.rid === 165) {
+        // 165: 广告区没有排行榜
         return null
       }
-      return `https://www.bilibili.com/ranking/all/${this.rid}/0/3`
+      let type = 'all'
+      if (this.rid === 177 || this.rid === 23 || this.rid === 11) {
+        // 纪录片 电影 TV剧 在另一个分类下
+        type = 'cinema'
+      }
+      return `https://www.bilibili.com/ranking/${type}/${this.rid}/0/3`
     }
   },
   methods: {
