@@ -588,7 +588,8 @@ Resource.manifest = {
   },
   outerWatchlater: {
     path: 'outer-watchlater.min.js',
-    style: 'important',
+    reloadable: true,
+    style: true,
     displayNames: {
       outerWatchlater: '外置稍后再看'
     }
@@ -883,6 +884,14 @@ Resource.manifest = {
     path: 'restore-floors.min.js',
     displayNames: {
       restoreFloors: '评论楼层显示',
+    },
+  },
+  quickFavorite: {
+    path: 'quick-favorite.min.js',
+    style: true,
+    reloadable: true,
+    displayNames: {
+      quickFavorite: '启用快速收藏',
     },
   },
 }

@@ -226,6 +226,8 @@ export const settings = {
   userImages: [],
   playerOnTop: false,
   restoreFloors: false,
+  quickFavorite: false,
+  quickFavoriteID: 0,
   cache: {},
 }
 const fixedSettings = {

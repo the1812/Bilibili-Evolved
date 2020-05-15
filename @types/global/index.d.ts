@@ -475,6 +475,8 @@ declare global {
     userImages: UserImage[],
     playerOnTop: boolean,
     restoreFloors: boolean,
+    quickFavorite: boolean,
+    quickFavoriteID: number,
     latestVersionLink: string,
     currentVersion: string,
   }

@@ -21,7 +21,11 @@ const restore = async (commentContainer: HTMLElement) => {
     return
   }
   const mode = dq(commentContainer, '.hot-sort.on') !== null ? CommentSortOrder.ByLikes : CommentSortOrder.ByTime
-  const page = parseInt((dq(commentContainer, '.paging-box .current') as HTMLElement).textContent!)
+  let page = 1
+  const pagesElement = dq(commentContainer, '.paging-box .current')
+  if (pagesElement !== null) {
+    page = parseInt(pagesElement.textContent!)
+  }
   const json = await getComments(oid, mode, page)
   if (json.code !== 0) {
     console.error('Comment API failed: ', json.message)

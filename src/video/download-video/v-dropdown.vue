@@ -52,6 +52,7 @@ export default {
   justify-content: space-between;
   min-width: 100px;
   border-radius: var(--corner-radius);
+  line-height: normal;
 
   body.dark & {
     --background-color: #333;
