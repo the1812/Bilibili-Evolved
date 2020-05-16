@@ -229,6 +229,7 @@ export const settings = {
   restoreFloors: false,
   quickFavorite: false,
   quickFavoriteID: 0,
+  bilibiliSimpleNewHomeCompatible: false,
   cache: {},
 }
 const fixedSettings = {

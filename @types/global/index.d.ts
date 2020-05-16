@@ -478,6 +478,7 @@ declare global {
     restoreFloors: boolean,
     quickFavorite: boolean,
     quickFavoriteID: number,
+    bilibiliSimpleNewHomeCompatible: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

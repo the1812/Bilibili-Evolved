@@ -31,7 +31,8 @@
 .lang-change .lang-intro,
 #gift-package-item-box .panel-wrapper,
 .title-renew-panel .actions,
-.user-title-using-cntr .panel {
+.user-title-using-cntr .panel,
+.international-home {
   @include background-color("2");
 }
 .manga-navbar {

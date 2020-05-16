@@ -7,6 +7,7 @@ export const getScriptBlocker = async () => {
   // 开启简化首页和自定义顶栏时, 阻断所有其他的非内联<script>
   // 内联<script>含有一些页面初始化信息, 正好可以被利用
   if (await GM.getValue('simplifyHome') && await GM.getValue('customNavbar') &&
+    !(await GM.getValue('bilibiliSimpleNewHomeCompatible')) &&
     document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
     blockPatterns = [/^[^<]./]
     // 加个空函数避免一些图片 onload 里调用 reportfs 报错

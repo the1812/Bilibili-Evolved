@@ -38,7 +38,10 @@ const darkHandler = (force: boolean) => {
   (dq('.custom-navbar-settings') as HTMLElement).classList.toggle('dark', force)
 }
 export default (() => {
-  if (isIframe()) {
+  const url = document.URL.replace(location.search, '')
+  const isHome = url === 'https://www.bilibili.com/' || url === 'https://www.bilibili.com/index.html'
+  if (isIframe() || (settings.bilibiliSimpleNewHomeCompatible && isHome)) {
+    resources.removeStyle('customNavbarStyle')
     return
   }
   loadSettings()
