@@ -36,8 +36,8 @@
 // @require      https://cdn.jsdelivr.net/npm/jszip@3.1.5/dist/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
 // @require      https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.js
-// @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
-// @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
+// @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/images/logo-small.png
+// @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/images/logo.png
 // ==/UserScript==
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -800,7 +800,7 @@ async function loadResources () {
   switch (await GM.getValue('updateCdn')) {
     case 'jsDelivr':
     default:
-      Resource.cdnRoot = 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/'
+      Resource.cdnRoot = 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/'
       break
     case 'GitHub':
       Resource.cdnRoot = Resource.root

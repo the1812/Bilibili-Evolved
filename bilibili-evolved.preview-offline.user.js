@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      669.21
+// @version      669.82
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -36,8 +36,8 @@
 // @require      https://cdn.jsdelivr.net/npm/jszip@3.1.5/dist/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
 // @require      https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.js
-// @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
-// @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
+// @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/images/logo-small.png
+// @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/images/logo.png
 // ==/UserScript==
 /* eslint-disable */ /* spell-checker: disable */
 Vue.config.productionTip = false
@@ -801,7 +801,7 @@ async function loadResources () {
   switch (await GM.getValue('updateCdn')) {
     case 'jsDelivr':
     default:
-      Resource.cdnRoot = 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/'
+      Resource.cdnRoot = 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/'
       break
     case 'GitHub':
       Resource.cdnRoot = Resource.root
