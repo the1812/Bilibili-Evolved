@@ -273,7 +273,8 @@
 .comment-bilibili-fold .comment-list .list-item .blacklist-font-color,
 .list-item .publish-time,
 .share-content .video-card .up-info .tip,
-.live-panel .title .count {
+.live-panel .title .count,
+.video-desc .reprint {
   @include color("a");
 }
 #biliAppHomeSetting {
