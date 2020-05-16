@@ -15,7 +15,6 @@
       <i @click.left="toggle()" @click.right.prevent="listShowing = !listShowing"></i>
       <div style="display: inline" @click.left="toggle()" @click.right.prevent="listShowing = !listShowing">快速收藏</div>
       </template>
-      <div class="tip" :class="{ show: tipShowing }">{{tipText}}</div>
       <div class="select-list" ref="selectList" :class="{ show: listShowing }">
         选择快速收藏夹:
         <div v-if="lists.length > 0" class="lists">
@@ -24,6 +23,7 @@
         <div class="lists-loading" v-else>加载中...</div>
       </div>
       <div class="lists-tip" :class="{ show: listShowing }">右键点击快速收藏可再次打开</div>
+      <div class="tip" :class="{ show: tipShowing }">{{tipText}}</div>
     </span>
   `
   if (settings.outerWatchlater) {
@@ -90,9 +90,9 @@
       async listShowing(value: boolean) {
         if (value) {
           document.addEventListener('click', e => {
-            const selectList = this.$refs.selectList as HTMLElement
+            const el = this.$el as HTMLElement
             const target = e.target as HTMLElement
-            if (target !== selectList && !selectList.contains(target)) {
+            if (target !== el && !el.contains(target)) {
               this.listShowing = false
             }
           })

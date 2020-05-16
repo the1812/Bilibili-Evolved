@@ -40,6 +40,9 @@
         pointer-events: initial;
       }
     }
+    .tip {
+      padding: 8px;
+    }
     .lists-tip {
       top: calc(100% + 8px + 42px);
       color: #aaa;
