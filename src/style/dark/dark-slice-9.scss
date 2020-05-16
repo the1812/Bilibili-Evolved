@@ -309,6 +309,19 @@
     }
   }
 }
+.share-success {
+  .success-text {
+    @include color("e");
+  }
+  .success-link {
+    @include theme-color();
+  }
+  .success-btn {
+    @include border-color();
+    @include background-color("4");
+    @include color("e");
+  }
+}
 .center-box {
   .line-1 {
     .name-field {
