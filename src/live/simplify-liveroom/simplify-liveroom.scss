@@ -142,7 +142,7 @@
     }
   }
   .chat-history-panel [class*="guard-level-"] {
-    padding: 0 !important;
+    padding: 4px 5px !important;
     margin: 0 !important;
     &::after {
       display: none !important;
