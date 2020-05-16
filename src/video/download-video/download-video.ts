@@ -126,21 +126,21 @@ class VideoFormat {
     return formats
   }
   static async filterFormats(formats: VideoFormat[]) {
-    // return formats
-    if (userInfo === null) {
-      userInfo = (await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')).data
-    }
-    _.remove(formats, f => {
-      const q = f.quality
-      if (userInfo!.isLogin === false) {
-        return q >= 64
-      }
-      if (userInfo!.vipStatus !== 1) {
-        return q === 116 || q === 112 || q === 74
-      }
-      return false
-    })
     return formats
+    // if (userInfo === null) {
+    //   userInfo = (await Ajax.getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')).data
+    // }
+    // _.remove(formats, f => {
+    //   const q = f.quality
+    //   if (userInfo!.isLogin === false) {
+    //     return q >= 64
+    //   }
+    //   if (userInfo!.vipStatus !== 1) {
+    //     return q === 116 || q === 112 || q === 74
+    //   }
+    //   return false
+    // })
+    // return formats
   }
   static async getAvailableDashFormats(): Promise<VideoFormat[]> {
     const url = await pageData.entity.getDashUrl()
