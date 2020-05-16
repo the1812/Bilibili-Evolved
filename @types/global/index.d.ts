@@ -532,6 +532,6 @@ declare global {
   const videoCondition: () => Promise<boolean>
   const matchPattern: (str: string, pattern: string | RegExp) => boolean
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
-  const scriptVersion: ScriptVersion
+  const getScriptVersion: () => ScriptVersion
 }
 export { }

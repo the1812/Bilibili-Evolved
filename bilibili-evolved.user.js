@@ -269,7 +269,8 @@ const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
 const isOffline = () => typeof offlineData !== 'undefined'
 const getUID = () => document.cookie.replace(/(?:(?:^|.*;\s*)DedeUserID\s*\=\s*([^;]*).*$)|^.*$/, '$1')
 const scriptVersion = (() => {
-  const match = GM.info.script.name.match(/Bilibili Evolved \((.*)\)/)
+  const match = GM.info.script.name.match(/Evolved \((.*)\)/)
+  console.log(GM.info.script.name, match)
   return match ? match[1] : 'Stable'
 })()
 const getCsrf = () => document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
@@ -1290,7 +1291,7 @@ onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/mi
 @namespace    Bilibili-Evolved
 @homepageURL  https://github.com/the1812/Bilibili-Evolved
 @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/min/dark.user.css
-@version      668.79.0
+@version      669.84.0
 @license      MIT
 @author       Grant Howard (https://github.com/the1812), Coulomb-G (https://github.com/Coulomb-G)
 ==/UserStyle== */

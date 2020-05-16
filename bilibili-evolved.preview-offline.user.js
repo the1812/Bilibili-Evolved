@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      669.82
+// @version      669.84
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -270,7 +270,8 @@ const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
 const isOffline = () => typeof offlineData !== 'undefined'
 const getUID = () => document.cookie.replace(/(?:(?:^|.*;\s*)DedeUserID\s*\=\s*([^;]*).*$)|^.*$/, '$1')
 const scriptVersion = (() => {
-  const match = GM.info.script.name.match(/Bilibili Evolved (Preview Offline) \((.*)\)/)
+  const match = GM.info.script.name.match(/Evolved \((.*)\)/)
+  console.log(GM.info.script.name, match)
   return match ? match[1] : 'Stable'
 })()
 const getCsrf = () => document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
@@ -1291,7 +1292,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 @namespace    Bilibili-Evolved
 @homepageURL  https://github.com/the1812/Bilibili-Evolved
 @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/min/dark.user.css
-@version      668.79.0
+@version      669.84.0
 @license      MIT
 @author       Grant Howard (https://github.com/the1812), Coulomb-G (https://github.com/Coulomb-G)
 ==/UserStyle== */
