@@ -20,6 +20,7 @@ export const customNavbarDefaultOrders = {
   favoritesList: 18,
   historyList: 19,
   upload: 20,
+  darkMode: 21,
 }
 export const simpleHomeCategoryDefaultOrders = {
   anime: 0,
@@ -137,7 +138,7 @@ export const settings = {
   customNavbarBlur: false,
   customNavbarBlurOpacity: 0.7,
   customNavbarOrder: { ...customNavbarDefaultOrders },
-  customNavbarHidden: ['blank1', 'drawingLink', 'musicLink', 'gamesIframe'],
+  customNavbarHidden: ['blank1', 'drawingLink', 'musicLink', 'gamesIframe', 'darkMode'],
   customNavbarBoundsPadding: 10,
   playerShadow: false,
   narrowDanmaku: true,

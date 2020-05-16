@@ -135,6 +135,7 @@ declare global {
     historyList: number
     upload: number
     blank3: number
+    darkMode: number
   }
   type CustomNavbarOrders = { [key in keyof CustomNavbarComponents]: number }
   interface SimpleHomeCategoryOrders {

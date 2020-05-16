@@ -32,6 +32,7 @@ export const initSettingsPanel = async () => {
       historyList: '历史',
       upload: '投稿入口',
       blank3: '弹性空白3',
+      darkMode: '夜间模式开关',
     }
     Vue.component('order-item', {
       props: ['item'],

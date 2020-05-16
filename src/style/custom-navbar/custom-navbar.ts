@@ -133,7 +133,8 @@ export default (() => {
         )
       }
       const { Upload } = await import('./simple/custom-navbar-upload')
-      components.push(new Upload(), new Blank(3))
+      const { DarkMode } = await import('./simple/custom-navbar-dark-mode')
+      components.push(new Upload(), new Blank(3), new DarkMode())
       new Vue({
         el: '.custom-navbar',
         data: {
