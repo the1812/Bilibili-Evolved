@@ -35,6 +35,7 @@ declare global {
   }
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu"
   type DanmakuOption = '无' | 'XML' | 'ASS'
+  type SubtitleOption = '无' | 'JSON' | 'ASS'
   type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
   type Pattern = string
   type Dropdown = { key: string; items: string[] }
@@ -403,6 +404,7 @@ declare global {
     hideCategory: boolean,
     foldComment: boolean,
     downloadVideoDefaultDanmaku: DanmakuOption,
+    downloadVideoDefaultSubtitle: SubtitleOption,
     aria2RpcOption: RpcOption,
     aria2RpcOptionSelectedProfile: string,
     aria2RpcOptionProfiles: RpcOptionProfile[],

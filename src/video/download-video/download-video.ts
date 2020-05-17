@@ -4,6 +4,12 @@ import { VideoDownloaderFragment } from './video-downloader-fragment'
 import { DownloadVideoPackage } from './download-video-package'
 import { BatchExtractor, BatchTitleParameter } from './batch-download'
 
+/**
+ * ☢警告☢ ☢CAUTION☢
+ * 可读性/可维护性极差, 祖传代码/重复逻辑
+ * 谨 慎 阅 读
+ */
+
 interface PageData {
   entity: Video
   aid: string
@@ -85,10 +91,10 @@ const pageData: PageData = {
 }
 let formats: VideoFormat[] = []
 let selectedFormat: VideoFormat | null = null
-let userInfo: {
-  isLogin: boolean
-  vipStatus: number
-} | null = null
+// let userInfo: {
+//   isLogin: boolean
+//   vipStatus: number
+// } | null = null
 
 class VideoFormat {
   quality: number
@@ -188,9 +194,9 @@ class VideoDownloader {
   get danmakuOption() {
     return settings.downloadVideoDefaultDanmaku
   }
-  // get ffmpegOption() {
-  //   return settings.downloadVideoFfmpegSupport
-  // }
+  get subtitleOption() {
+    return settings.downloadVideoDefaultSubtitle
+  }
   get isDash() {
     return this.fragments.some(it => it.url.includes('.m4s'))
   }
@@ -246,14 +252,17 @@ class VideoDownloader {
   }
   downloadFragment(fragment: VideoDownloaderFragment) {
     const promises: Promise<ArrayBuffer>[] = []
-    /* 按一定大小分段或许对大视频更好
-    DASH:
-      - 小于等于24MB时, 均分为12段 (this.fragmentSplitFactor = 12)
-      - 大于24MB时, 每4MB为一段
-    FLV:
-      - 小于等于96MB时, 均分为12段
-      - 大于96MB时, 每16MB为一段
-    */
+    /**
+     * 按一定大小分段或许对大视频更好
+     *
+     * DASH:
+     *   - 小于等于24MB时, 均分为12段 (`this.fragmentSplitFactor = 12`)
+     *   - 大于24MB时, 每4MB为一段
+     *
+     * FLV:
+     *   - 小于等于96MB时, 均分为12段
+     *   - 大于96MB时, 每16MB为一段
+     */
     const minimalLength = this.isDash ? 4 * 1024 * 1024 : 16 * 1024 * 1024
     let partialLength: number
     if (fragment.size <= minimalLength * 6) {
@@ -273,13 +282,13 @@ class VideoDownloader {
         xhr.responseType = 'arraybuffer'
         xhr.withCredentials = false
         xhr.addEventListener('progress', (e) => {
-          console.debug(`[下载视频] 视频片段${getPartNumber(xhr)}下载进度: ${e.loaded}/${rangeLength} bytes loaded, ${range}`)
+          console.log(`[下载视频] 视频片段${getPartNumber(xhr)}下载进度: ${e.loaded}/${rangeLength} bytes loaded, ${range}`)
           this.progressMap.set(xhr, e.loaded)
           this.updateProgress()
         })
         xhr.addEventListener('load', () => {
           if (('' + xhr.status)[0] === '2') {
-            console.debug(`[下载视频] 视频片段${getPartNumber(xhr)}下载完成`)
+            console.log(`[下载视频] 视频片段${getPartNumber(xhr)}下载完成`)
             resolve(xhr.response)
           } else {
             reject(`视频片段${getPartNumber(xhr)}请求失败, response = ${xhr.status}`)
@@ -317,21 +326,6 @@ class VideoDownloader {
       await this.copyUrl()
     })
   }
-  // static downloadBlob(blobOrUrl: Blob | string, filename: string) {
-  //   const a = document.createElement('a')
-  //   let url: string
-  //   if (typeof blobOrUrl === 'string') {
-  //     url = blobOrUrl
-  //   } else {
-  //     url = URL.createObjectURL(blobOrUrl)
-  //   }
-  //   a.setAttribute('href', url)
-  //   a.setAttribute('download', filename)
-  //   document.body.appendChild(a)
-  //   a.click()
-  //   a.remove()
-  //   URL.revokeObjectURL(url)
-  // }
   async exportData(copy = false) {
     const data = JSON.stringify([{
       fragments: this.fragments,
@@ -353,10 +347,15 @@ class VideoDownloader {
   async exportAria2(rpc = false) {
     if (rpc) { // https://aria2.github.io/manual/en/html/aria2c.html#json-rpc-using-http-get
       const danmaku = await this.downloadDanmaku()
+      const subtitle = await this.downloadSubtitle()
       const pack = new DownloadVideoPackage()
       pack.add(
         `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
         danmaku
+      )
+      pack.add(
+        `${getFriendlyTitle()}.${this.subtitleOption === 'ASS' ? 'ass' : 'json'}`,
+        subtitle
       )
       await pack.emit()
       const option = settings.aria2RpcOption
@@ -406,9 +405,11 @@ ${it.url}
       `.trim()
       const blob = new Blob([input], { type: 'text/plain' })
       const danmaku = await this.downloadDanmaku()
+      const subtitle = await this.downloadSubtitle()
       const pack = new DownloadVideoPackage()
       pack.add(`${getFriendlyTitle()}.txt`, blob)
       pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
+      pack.add(getFriendlyTitle() + '.' + this.subtitleOption.toLowerCase(), subtitle)
       await pack.emit(`${getFriendlyTitle()}.zip`)
     }
   }
@@ -427,20 +428,6 @@ ${it.url}
       return '.flv'
     }
   }
-  // makeBlob(data: any, fragment?: VideoDownloaderFragment) {
-  //   return new Blob(Array.isArray(data) ? data : [data], {
-  //     type: this.extension(fragment) === '.flv' ? 'video/x-flv' : 'video/mp4'
-  //   })
-  // }
-  // cleanUpOldBlobUrl() {
-  //   const oldBlobUrl = dq('a#video-complete')!.getAttribute('href')
-  //   if (oldBlobUrl && !dq(`.link[href="${oldBlobUrl}"]`)) {
-  //     URL.revokeObjectURL(oldBlobUrl)
-  //   }
-  //   dqa('.toast-card-header')
-  //     .filter((it: HTMLElement) => it.innerText.includes('下载视频'))
-  //     .forEach((it: HTMLElement) => (it.querySelector('.toast-card-dismiss') as HTMLElement).click())
-  // }
   async downloadDanmaku() {
     if (this.danmakuOption !== '无') {
       const danmakuInfo = new DanmakuInfo(pageData.cid)
@@ -455,49 +442,25 @@ ${it.url}
       return null
     }
   }
-  // async downloadSingle(downloadedData: any[]) {
-  //   const danmaku = await this.downloadDanmaku()
-  //   const [data] = downloadedData
-  //   const pack = new DownloadVideoPackage({ ffmpeg: this.ffmpegOption, titleList: [getFriendlyTitle()] })
-  //   pack.add(getFriendlyTitle() + this.extension(), this.makeBlob(data))
-  //   pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
-  //   return {
-  //     blob: await pack.blob(),
-  //     filename: getFriendlyTitle() + '.zip'
-  //   }
-  //   // if (danmaku === null) {
-  //   //   const blob = this.makeBlob(data)
-  //   //   const filename = getFriendlyTitle() + this.extension()
-  //   //   return { blob, filename }
-  //   // } else {
-  //   //   const zip = new JSZip()
-  //   //   zip.file(getFriendlyTitle() + this.extension(), this.makeBlob(data))
-  //   //   zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
-  //   //   const blob = await zip.generateAsync({ type: 'blob' })
-  //   //   const filename = getFriendlyTitle() + '.zip'
-  //   //   return { blob, filename }
-  //   // }
-  // }
-  // async downloadMultiple(downloadedData: any[]) {
-  //   const zip = new JSZip()
-  //   const title = getFriendlyTitle()
-  //   if (downloadedData.length > 1) {
-  //     downloadedData.forEach((data, index) => {
-  //       const fragment = this.fragments[index]
-  //       zip.file(`${title} - ${index + 1}${this.extension(fragment)}`, this.makeBlob(data, fragment))
-  //     })
-  //   } else {
-  //     const [data] = downloadedData
-  //     zip.file(`${title}${this.extension()}`, this.makeBlob(data))
-  //   }
-  //   const danmaku = await this.downloadDanmaku()
-  //   if (danmaku !== null) {
-  //     zip.file(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
-  //   }
-  //   const blob = await zip.generateAsync({ type: 'blob' })
-  //   const filename = title + '.zip'
-  //   return { blob, filename }
-  // }
+  async downloadSubtitle() {
+    if (this.subtitleOption !== '无') {
+      const { getSubtitleConfig, getSubtitleList } = await import('../download-subtitle/download-subtitle')
+      const [config, language] = await getSubtitleConfig()
+      const subtitles = await getSubtitleList(pageData.aid, pageData.cid)
+      const subtitle = subtitles.find(s => s.language === language) || subtitles[0]
+      const json = await Ajax.getJson(subtitle.url)
+      const rawData = json.body
+      if (this.subtitleOption === 'JSON') {
+        return rawData
+      } else {
+        const { SubtitleConverter } = await import('../download-subtitle/subtitle-converter')
+        const converter = new SubtitleConverter(config)
+        const ass = await converter.convertToAss(rawData)
+        return ass
+      }
+    }
+    return null
+  }
   async download() {
     this.workingXhr = []
     this.progressMap = new Map()
@@ -512,15 +475,6 @@ ${it.url}
       throw new Error('下载失败.')
     }
 
-    // let { blob, filename } = await (async () => {
-    //   if (downloadedData.length === 1) {
-    //     return await this.downloadSingle(downloadedData)
-    //   } else {
-    //     return await this.downloadMultiple(downloadedData)
-    //   }
-    // })()
-    // this.cleanUpOldBlobUrl()
-    // const blobUrl = URL.createObjectURL(blob)
     const title = getFriendlyTitle()
     const pack = new DownloadVideoPackage()
     downloadedData.forEach((data, index) => {
@@ -538,13 +492,14 @@ ${it.url}
       `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
       danmaku
     )
+    const subtitle = await this.downloadSubtitle()
+    pack.add(
+      `${getFriendlyTitle()}.${this.subtitleOption === 'ASS' ? 'ass' : 'json'}`,
+      subtitle
+    )
     await pack.emit(title + '.zip')
     this.progress && this.progress(0)
     this.videoSpeed.stopMeasure()
-    // return {
-    //   url: blobUrl,
-    //   filename: filename
-    // }
   }
 }
 class VideoSpeed {
@@ -661,6 +616,8 @@ async function loadPanel() {
     data: {
       /** 当前页面是否支持批量导出 */
       batch: false,
+      /** 当前页面是否含有CC字幕 */
+      subtitle: false,
       selectedTab: panelTabs[0],
       coverUrl: EmptyImageUrl,
       aid: pageData.aid,
@@ -680,6 +637,10 @@ async function loadPanel() {
       danmakuModel: {
         value: settings.downloadVideoDefaultDanmaku as DanmakuOption,
         items: ['无', 'XML', 'ASS'] as DanmakuOption[]
+      },
+      subtitleModel: {
+        value: settings.downloadVideoDefaultSubtitle as SubtitleOption,
+        items: ['无', 'JSON', 'ASS'] as SubtitleOption[]
       },
       codecModel: {
         value: settings.downloadVideoDashCodec,
@@ -746,6 +707,9 @@ async function loadPanel() {
       },
       danmakuOptionChange() {
         settings.downloadVideoDefaultDanmaku = this.danmakuModel.value
+      },
+      subtitleOptionChange() {
+        settings.downloadVideoDefaultSubtitle = this.subtitleModel.value
       },
       // ffmpegChange() {
       //   settings.downloadVideoFfmpegSupport = this.ffmpegModel.value
@@ -901,6 +865,34 @@ async function loadPanel() {
             danmakuToast.dismiss()
           }
         }
+        if (this.subtitleModel.value !== '无') {
+          const subtitleToast = Toast.info('下载字幕中...', '批量导出')
+          const pack = new DownloadVideoPackage()
+          try {
+            const { getSubtitleConfig, getSubtitleList } = await import('../download-subtitle/download-subtitle')
+            const [config, language] = await getSubtitleConfig()
+            for (const item of episodeList.filter(episodeFilter)) {
+              const subtitles = await getSubtitleList(item.aid, item.cid)
+              const subtitle = subtitles.find(s => s.language === language) || subtitles[0]
+              const json = await Ajax.getJson(subtitle.url)
+              const rawData = json.body
+              if (this.subtitleModel.value === 'JSON') {
+                pack.add(batchExtractor.formatTitle(item.titleParameters) + '.json', rawData)
+              } else {
+                const { SubtitleConverter } = await import('../download-subtitle/subtitle-converter')
+                const converter = new SubtitleConverter(config)
+                const ass = await converter.convertToAss(rawData)
+                pack.add(batchExtractor.formatTitle(item.titleParameters) + '.ass', ass)
+              }
+            }
+            await pack.emit(this.cid + '.subtitles.zip')
+          } catch (error) {
+            logError(`字幕下载失败`)
+            throw error
+          } finally {
+            subtitleToast.dismiss()
+          }
+        }
         const toast = Toast.info('获取链接中...', '批量导出')
         batchExtractor.config.itemFilter = episodeFilter
         batchExtractor.config.api = await pageData.entity.getApiGenerator(this.dash)
@@ -1005,6 +997,34 @@ async function loadPanel() {
             danmakuToast.dismiss()
           }
         }
+        if (this.subtitleModel.value !== '无') {
+          const subtitleToast = Toast.info('下载字幕中...', '批量导出')
+          const pack = new DownloadVideoPackage()
+          try {
+            const { getSubtitleConfig, getSubtitleList } = await import('../download-subtitle/download-subtitle')
+            const [config, language] = await getSubtitleConfig()
+            for (const item of (await batch.getItemList())) {
+              const subtitles = await getSubtitleList(item.aid, item.cid)
+              const subtitle = subtitles.find(s => s.language === language) || subtitles[0]
+              const json = await Ajax.getJson(subtitle.url)
+              const rawData = json.body
+              if (this.subtitleModel.value === 'JSON') {
+                pack.add(ManualInputBatch.formatTitle(item.titleParameters) + '.json', rawData)
+              } else {
+                const { SubtitleConverter } = await import('../download-subtitle/subtitle-converter')
+                const converter = new SubtitleConverter(config)
+                const ass = await converter.convertToAss(rawData)
+                pack.add(ManualInputBatch.formatTitle(item.titleParameters) + '.ass', ass)
+              }
+            }
+            await pack.emit('manual-exports.subtitles.zip')
+          } catch (error) {
+            logError(`字幕下载失败`)
+            throw error
+          } finally {
+            subtitleToast.dismiss()
+          }
+        }
         const toast = Toast.info('获取链接中...', '手动输入')
         try {
           switch (type) {
@@ -1059,6 +1079,11 @@ async function loadPanel() {
             checked: true,
           } as EpisodeItem
         })
+      },
+      async checkSubtitle() {
+        const { getSubtitleList } = await import('../download-subtitle/download-subtitle')
+        const subtitles = await getSubtitleList(pageData.aid, pageData.cid)
+        this.subtitle = subtitles.length > 0
       },
       cancelDownload() {
         if (workingDownloader) {
@@ -1157,6 +1182,7 @@ async function loadPanel() {
       panel.coverUrl = EmptyImageUrl
     }
     panel.dashChange()
+    panel.checkSubtitle()
     await panel.checkBatch()
   })
 }

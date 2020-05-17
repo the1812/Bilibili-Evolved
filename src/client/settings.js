@@ -156,6 +156,7 @@ export const settings = {
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
+  downloadVideoDefaultSubtitle: '无',
   aria2RpcOption: { ...aria2RpcDefaultOption },
   aria2RpcOptionSelectedProfile: '',
   aria2RpcOptionProfiles: [],
