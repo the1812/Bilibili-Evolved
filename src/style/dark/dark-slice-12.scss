@@ -197,3 +197,16 @@
     }
   }
 }
+.channel-menu-mini .box a:hover {
+  @include background-color("4");
+}
+.game-item .info .grade-wrap {
+  @include color("a");
+  .other-grades {
+    @include background-color("4");
+    @include border-color();
+    .grade-li {
+      @include color("a");
+    }
+  }
+}
