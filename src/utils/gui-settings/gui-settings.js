@@ -177,6 +177,9 @@ function setDisplayNames () {
   addSettingsListener('autoHideSideBar', value => {
     document.body.classList.toggle('gui-settings-auto-hide-side-bar', value)
   }, true)
+  addSettingsListener('elegantScrollbar', value => {
+    document.documentElement.classList.toggle('elegant-scrollbar', value)
+  }, true)
   const settingsBox = resources.data.guiSettingsHtml.text
   document.body.insertAdjacentHTML('beforeend', settingsBox)
 

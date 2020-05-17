@@ -98,6 +98,7 @@ Resource.manifest = {
       foregroundColorMode: '文本颜色',
       updateCdn: '更新源',
       autoHideSideBar: '自动隐藏侧栏',
+      elegantScrollbar: '使用细滚动条',
     },
     dropdown: [
       {
@@ -845,6 +846,7 @@ Resource.manifest = {
     style: true,
     displayNames: {
       bvidConvert: 'BV号转换',
+      preferAvUrl: '网址AV号转换',
     },
   },
   fixedSidebars: {

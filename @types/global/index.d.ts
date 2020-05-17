@@ -35,6 +35,7 @@ declare global {
   }
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu"
   type DanmakuOption = '无' | 'XML' | 'ASS'
+  type SubtitleOption = '无' | 'JSON' | 'ASS'
   type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
   type Pattern = string
   type Dropdown = { key: string; items: string[] }
@@ -151,7 +152,8 @@ declare global {
     life: number
     kichiku: number
     fashion: number
-    ads: number
+    // ads: number
+    information: number
     entertainment: number
     column: number
     movie: number
@@ -403,6 +405,7 @@ declare global {
     hideCategory: boolean,
     foldComment: boolean,
     downloadVideoDefaultDanmaku: DanmakuOption,
+    downloadVideoDefaultSubtitle: SubtitleOption,
     aria2RpcOption: RpcOption,
     aria2RpcOptionSelectedProfile: string,
     aria2RpcOptionProfiles: RpcOptionProfile[],
@@ -479,6 +482,8 @@ declare global {
     quickFavorite: boolean,
     quickFavoriteID: number,
     bilibiliSimpleNewHomeCompatible: boolean,
+    preferAvUrl: boolean,
+    elegantScrollbar: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

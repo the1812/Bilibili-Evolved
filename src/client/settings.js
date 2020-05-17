@@ -35,7 +35,7 @@ export const simpleHomeCategoryDefaultOrders = {
   life: 9,
   kichiku: 10,
   fashion: 11,
-  ads: 12,
+  information: 12,
   entertainment: 13,
   column: 14,
   movie: 15,
@@ -156,6 +156,7 @@ export const settings = {
   hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
+  downloadVideoDefaultSubtitle: '无',
   aria2RpcOption: { ...aria2RpcDefaultOption },
   aria2RpcOptionSelectedProfile: '',
   aria2RpcOptionProfiles: [],
@@ -230,6 +231,8 @@ export const settings = {
   quickFavorite: false,
   quickFavoriteID: 0,
   bilibiliSimpleNewHomeCompatible: false,
+  preferAvUrl: false,
+  elegantScrollbar: true,
   cache: {},
 }
 const fixedSettings = {
