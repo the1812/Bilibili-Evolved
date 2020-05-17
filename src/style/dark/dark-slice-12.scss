@@ -197,3 +197,6 @@
     }
   }
 }
+.channel-menu-mini .box a:hover {
+  @include background-color("4");
+}
