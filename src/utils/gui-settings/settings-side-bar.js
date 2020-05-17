@@ -1,12 +1,12 @@
 if (document.querySelector('.gui-settings-icon-panel') === null) {
   document.body.insertAdjacentHTML('beforeend', /*html*/`
     <div class='gui-settings-icon-panel icons-enabled'>
-        <div class='gui-settings-widgets' title='附加功能'>
-            <i class="icon-widgets"></i>
-        </div>
-        <div class='gui-settings' title='设置'>
-            <i class="icon-settings"></i>
-        </div>
+      <div class='gui-settings-widgets' title='附加功能'>
+        <i class="icon-widgets"></i>
+      </div>
+      <div class='gui-settings' title='设置'>
+        <i class="icon-settings"></i>
+      </div>
     </div>`)
   dq('.gui-settings').addEventListener('click', e => {
     if (e.shiftKey === false) {
