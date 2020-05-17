@@ -481,6 +481,7 @@ declare global {
     quickFavorite: boolean,
     quickFavoriteID: number,
     bilibiliSimpleNewHomeCompatible: boolean,
+    preferAvUrl: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

@@ -845,6 +845,7 @@ Resource.manifest = {
     style: true,
     displayNames: {
       bvidConvert: 'BV号转换',
+      preferAvUrl: '网址AV号转换',
     },
   },
   fixedSidebars: {

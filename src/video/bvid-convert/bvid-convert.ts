@@ -1,11 +1,27 @@
+const isVideoPage = [
+  'https://www.bilibili.com/video/',
+  'https://www.bilibili.com/bangumi/',
+].some(it => document.URL.startsWith(it))
+
+// bangumi不需要转换URL
+if (settings.preferAvUrl && document.URL.startsWith('https://www.bilibili.com/video/')) {
+  SpinQuery.select(() => unsafeWindow.aid).then(aid => {
+    if (!aid) {
+      return
+    }
+    const newUrl = document.URL.replace(/\/(video|bangumi)\/(BV[\w]+)/, (_, type) => {
+      return `/${type}/av${aid}`
+    })
+    if (document.URL !== newUrl) {
+      history.replaceState({}, document.title, newUrl)
+    }
+  })
+}
 export default {
   widget: {
     content: /*html*/`<div class="bvid-convert"></div>`,
     condition: async () => {
-      if ([
-        'https://www.bilibili.com/video/',
-        'https://www.bilibili.com/bangumi/',
-      ].some(it => document.URL.startsWith(it))) {
+      if (isVideoPage) {
         return Boolean(await SpinQuery.select(() => unsafeWindow.aid || unsafeWindow.bvid))
       } else {
         return false

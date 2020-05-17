@@ -5,7 +5,6 @@ const supportedUrls = [
 ]
 let enabled = true
 if (supportedUrls.some(url => document.URL.startsWith(url))) {
-  console.log('keymap')
   const clickableKeymap = {
     f: '.bilibili-player-video-fullscreen', // 全屏
     w: '.bilibili-player-video-web-fullscreen', // 网页全屏

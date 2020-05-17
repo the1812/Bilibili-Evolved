@@ -231,6 +231,7 @@ export const settings = {
   quickFavorite: false,
   quickFavoriteID: 0,
   bilibiliSimpleNewHomeCompatible: false,
+  preferAvUrl: false,
   cache: {},
 }
 const fixedSettings = {
