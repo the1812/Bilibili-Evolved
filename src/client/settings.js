@@ -35,7 +35,7 @@ export const simpleHomeCategoryDefaultOrders = {
   life: 9,
   kichiku: 10,
   fashion: 11,
-  ads: 12,
+  information: 12,
   entertainment: 13,
   column: 14,
   movie: 15,

@@ -152,7 +152,8 @@ declare global {
     life: number
     kichiku: number
     fashion: number
-    ads: number
+    // ads: number
+    information: number
     entertainment: number
     column: number
     movie: number
