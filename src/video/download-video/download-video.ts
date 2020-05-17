@@ -874,6 +874,9 @@ async function loadPanel() {
             for (const item of episodeList.filter(episodeFilter)) {
               const subtitles = await getSubtitleList(item.aid, item.cid)
               const subtitle = subtitles.find(s => s.language === language) || subtitles[0]
+              if (subtitle === undefined) {
+                continue
+              }
               const json = await Ajax.getJson(subtitle.url)
               const rawData = json.body
               if (this.subtitleModel.value === 'JSON') {
