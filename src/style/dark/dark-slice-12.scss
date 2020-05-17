@@ -210,3 +210,31 @@
     }
   }
 }
+.classroom-wrapper {
+  .nav-wrapper {
+    @include color("e");
+    .rec-title {
+      @include color("e");
+    }
+  }
+  .content .block{
+    &-title,
+    &-page-progress,
+    &-list-item-title {
+      @include color("e");
+    }
+    &-list .slider-contro .slider {
+      &-prev,
+      &-next {
+        @include to-white();
+        &:hover {
+          @include to-theme("white");
+          @include background-color("4");
+        }
+      }
+    }
+  }
+  .rank-title {
+    @include color("e");
+  }
+}
