@@ -232,6 +232,7 @@ export const settings = {
   quickFavoriteID: 0,
   bilibiliSimpleNewHomeCompatible: false,
   preferAvUrl: false,
+  elegantScrollbar: true,
   cache: {},
 }
 const fixedSettings = {
