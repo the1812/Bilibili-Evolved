@@ -8,6 +8,7 @@
 // @match        *://*.bilibili.com/*
 // @exclude      *://api.bilibili.com/*
 // @exclude      *://*.bilibili.com/api/*
+// @exclude      *://member.bilibili.com/studio/bs-editor/*
 // @run-at       document-start
 // @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js
