@@ -51,7 +51,17 @@ const clean = () => {
   }
   // }
 }
+let isJSON = false;
+try {
+  JSON.parse(document.body.innerText);
+  isJSON = true
+} catch (error) {
+  isJSON = false
+}
+
 fullyLoaded(() => {
-  clean()
-  Observer.videoChange(() => clean())
+  if (!isJSON) {
+    clean()
+    Observer.videoChange(() => clean())
+  }
 })
