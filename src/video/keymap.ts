@@ -93,10 +93,14 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     if (isWatchlater && document.URL.endsWith('list')) {
       return
     }
-    if (document.activeElement && ["input", "textarea"].includes(document.activeElement.nodeName.toLowerCase())) {
+    if (document.activeElement && ['input', 'textarea'].includes(document.activeElement.nodeName.toLowerCase())) {
       return
     }
     const key = e.key.toLowerCase()
+    const panoramaControl = dq('.bilibili-player-sphere-control') as HTMLElement
+    if (panoramaControl !== null && panoramaControl.style.display !== 'none' && ['w', 'a', 's', 'd'].includes(key)) {
+      return
+    }
     const noModifyKeys = !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey
     if (key in clickableKeymap && noModifyKeys) {
       const element = dq(clickableKeymap[key]) as HTMLElement
