@@ -7,6 +7,7 @@
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @exclude      *://api.bilibili.com/*
+// @exclude      *://api.*.bilibili.com/*
 // @exclude      *://*.bilibili.com/api/*
 // @exclude      *://member.bilibili.com/studio/bs-editor/*
 // @run-at       document-start
