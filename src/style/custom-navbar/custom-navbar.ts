@@ -37,18 +37,10 @@ const darkHandler = (force: boolean) => {
   (dq('.custom-navbar') as HTMLElement).classList.toggle('dark', force);
   (dq('.custom-navbar-settings') as HTMLElement).classList.toggle('dark', force)
 }
-const isJSON = () => {
-  try {
-    JSON.parse(document.body.innerText);
-    return true
-  } catch (error) {
-    return false
-  }
-}
 export default (() => {
   const url = document.URL.replace(location.search, '')
   const isHome = url === 'https://www.bilibili.com/' || url === 'https://www.bilibili.com/index.html'
-  if (isIframe() || (settings.bilibiliSimpleNewHomeCompatible && isHome) || isJSON()) {
+  if (isIframe() || (settings.bilibiliSimpleNewHomeCompatible && isHome) || document.contentType !== 'text/html') {
     resources.removeStyle('customNavbarStyle')
     return
   }

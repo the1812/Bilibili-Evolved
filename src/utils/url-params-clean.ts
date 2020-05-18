@@ -51,16 +51,8 @@ const clean = () => {
   }
   // }
 }
-let isJSON = false;
-try {
-  JSON.parse(document.body.innerText);
-  isJSON = true
-} catch (error) {
-  isJSON = false
-}
-
 fullyLoaded(() => {
-  if (!isJSON) {
+  if (document.contentType === 'text/html') {
     clean()
     Observer.videoChange(() => clean())
   }
