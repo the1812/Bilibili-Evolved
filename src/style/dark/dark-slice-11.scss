@@ -824,6 +824,9 @@
     @include color("e");
     @include theme-border-color();
   }
+  .up-name {
+    @include color("e");
+  }
 }
 .router-view {
   .list .top {
