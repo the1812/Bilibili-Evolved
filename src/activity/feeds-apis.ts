@@ -243,6 +243,13 @@ class FeedsCardsManager extends EventTarget {
     await card.getText()
     card.presented = element.parentNode !== null
     element.setAttribute('data-type', card.type.id.toString())
+    if (card.type === feedsCardTypes.repost) {
+      const currentUsername = card.username
+      const repostUsername = _.get(card, 'element.__vue__.card.origin_user.info.uname', '')
+      if (currentUsername === repostUsername) {
+        element.setAttribute('data-self-repost', 'true')
+      }
+    }
     // if (card.text === '') {
     //   console.warn('card text parsing failed!', card)
     // }

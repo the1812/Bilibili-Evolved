@@ -6,13 +6,23 @@
     </div>
     <h2>类型</h2>
     <div class="filter-types">
-      <filter-type-switch v-for="[name, type] of allTypes" :name="name" :type="type" :key="type.id"></filter-type-switch>
+      <filter-type-switch
+        v-for="[name, type] of allTypes"
+        :name="name"
+        :type="type"
+        :key="type.id"
+      ></filter-type-switch>
     </div>
     <h2>关键词</h2>
     <div class="filter-patterns">
       <div class="pattern" v-for="p of patterns" :key="p">
         {{p}}
-        <icon title="删除" type="mdi" icon="trash-can-outline" @click.native="deletePattern(p)"></icon>
+        <icon
+          title="删除"
+          type="mdi"
+          icon="trash-can-outline"
+          @click.native="deletePattern(p)"
+        ></icon>
       </div>
     </div>
     <div class="add-pattern">
@@ -22,7 +32,12 @@
         v-model="newPattern"
         @keydown.enter="addPattern(newPattern)"
       />
-      <icon title="添加" type="mdi" icon="plus" @click.native="addPattern(newPattern)"></icon>
+      <icon
+        title="添加"
+        type="mdi"
+        icon="plus"
+        @click.native="addPattern(newPattern)"
+      ></icon>
     </div>
     <h2>侧边栏</h2>
     <div class="filter-side-card">
@@ -33,7 +48,10 @@
         @click="toggleBlockSide(id)"
       >
         <label :class="{disabled: sideDisabled(id)}">
-          <span class="name" :class="{disabled: sideDisabled(id)}">{{type.displayName}}</span>
+          <span
+            class="name"
+            :class="{disabled: sideDisabled(id)}"
+          >{{type.displayName}}</span>
           <icon class="disabled" type="mdi" icon="cancel"></icon>
           <icon type="mdi" icon="check"></icon>
         </label>
@@ -51,19 +69,19 @@ interface SideCardType {
 const sideCards: { [id: number]: SideCardType } = {
   0: {
     className: 'profile',
-    displayName: '个人资料'
+    displayName: '个人资料',
   },
   1: {
     className: 'following-tags',
-    displayName: '话题'
+    displayName: '话题',
   },
   2: {
     className: 'notice',
-    displayName: '公告栏'
+    displayName: '公告栏',
   },
   3: {
     className: 'live',
-    displayName: '正在直播'
+    displayName: '正在直播',
   },
   // 4: {
   //   className: 'trending-tags',
@@ -71,15 +89,15 @@ const sideCards: { [id: number]: SideCardType } = {
   // }
   5: {
     className: 'most-viewed',
-    displayName: '关注栏'
-  }
+    displayName: '关注栏',
+  },
 }
 let cardsManager: typeof feedsCardsManager
 const sideBlock = 'feeds-filter-side-block-'
 export default {
   components: {
     FilterTypeSwitch: () => import('./filter-type-switch.vue'),
-    Icon: () => import('../../style/icon.vue')
+    Icon: () => import('../../style/icon.vue'),
   },
   data() {
     return {
@@ -88,7 +106,7 @@ export default {
       newPattern: '',
       allSideCards: sideCards,
       blockSideCards: [...settings.feedsFilterSideCards],
-      collapse: true
+      collapse: true,
     }
   },
   methods: {
@@ -151,17 +169,15 @@ export default {
     },
     sideDisabled(id: number) {
       return this.blockSideCards.includes(id)
-    }
+    },
   },
   watch: {
     patterns() {
       settings.feedsFilterPatterns = this.patterns
       if (cardsManager) {
-        cardsManager.cards.forEach(card =>
-          this.updateCard(_.clone(card))
-        )
+        cardsManager.cards.forEach(card => this.updateCard(_.clone(card)))
       }
-    }
+    },
   },
   async mounted() {
     this.updateBlockSide()
@@ -171,12 +187,12 @@ export default {
       return
     }
     const tab = tabBar.querySelector(
-      '.tab:nth-child(1) .tab-text'
+      '.tab:nth-child(1) .tab-text',
     ) as HTMLAnchorElement
     Observer.attributes(tab, () => {
       document.body.classList.toggle(
         'enable-feeds-filter',
-        tab.classList.contains('selected')
+        tab.classList.contains('selected'),
       )
     })
     const { feedsCardsManager, feedsCardTypes } = await import('../feeds-apis')
@@ -185,7 +201,14 @@ export default {
       console.error('feedsCardsManager.startWatching() failed')
       return
     }
+    const specialTypes = {
+      'self-repost': {
+        id: -1,
+        name: '自转发',
+      } as FeedsCardType,
+    }
     this.allTypes = Object.entries(feedsCardTypes)
+      .concat(Object.entries(specialTypes))
       .filter(([name, type]) => type.id <= 2048)
       .map(([name, type]) => {
         return [name, _.clone(type)]
@@ -196,7 +219,7 @@ export default {
       this.updateCard(card)
     })
     cardsManager = feedsCardsManager
-  }
+  },
 }
 </script>
 
@@ -218,6 +241,11 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
       )
   {
     &.feeds-filter-block-#{$name} .feed-card .card[data-type='#{$value}'] {
+      display: none !important;
+    }
+  }
+  @each $name in ('self-repost') {
+    &.feeds-filter-block-#{$name} .feed-card .card[data-#{$name}] {
       display: none !important;
     }
   }

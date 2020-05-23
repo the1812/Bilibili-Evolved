@@ -182,6 +182,7 @@ export const settings = {
   feedsFilter: false,
   feedsFilterPatterns: [],
   feedsFilterTypes: [],
+  feedsSpecialFilterTypes: [],
   feedsFilterSideCards: [],
   activityImageSaver: false,
   scriptBlockPatterns: [],

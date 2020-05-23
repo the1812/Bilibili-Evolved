@@ -290,6 +290,7 @@ declare global {
     static videoChange(callback: MutationCallback): Promise<void>
   }
   interface BilibiliEvolvedSettings {
+    [key: string]: any,
     useDarkStyle: boolean,
     useNewStyle: boolean,
     compactLayout: boolean,
@@ -431,6 +432,7 @@ declare global {
     feedsFilter: boolean,
     feedsFilterPatterns: Pattern[],
     feedsFilterTypes: number[],
+    feedsSpecialFilterTypes: number[],
     feedsFilterSideCards: number[],
     activityImageSaver: boolean,
     scriptBlockPatterns: Pattern[],
