@@ -54,6 +54,7 @@ abstract class Batch {
   }
   async collectAria2(quality: number | string, rpc: boolean) {
     const json = await this.getRawItems(quality)
+    const { getNumber } = await import('./get-number')
     if (rpc) {
       const option = settings.aria2RpcOption
       const { sendRpc } = await import('./aria2-rpc')
@@ -61,7 +62,7 @@ abstract class Batch {
         const params = item.fragments.map((fragment: { url: string }, index: number) => {
           let indexNumber = ''
           if (item.fragments.length > 1 && !fragment.url.includes('.m4s')) {
-            indexNumber = ' - ' + (index + 1)
+            indexNumber = ' - ' + getNumber(index + 1, item.fragments.length)
           }
           const params = []
           if (option.secretKey !== '') {
@@ -92,7 +93,7 @@ ${json.map(item => {
         return item.fragments.map((f, index) => {
           let indexNumber = ''
           if (item.fragments.length > 1 && !f.url.includes('.m4s')) {
-            indexNumber = ` - ${index + 1}`
+            indexNumber = ` - ${getNumber(index + 1, item.fragments.length)}`
           }
           return `
 ${f.url}
@@ -130,11 +131,12 @@ class VideoEpisodeBatch extends Batch {
       Toast.error(`获取视频选集列表失败, 没有找到选集信息.`, '批量下载')
       return []
     }
+    const { getNumber } = await import('./get-number')
     this.itemList = pages.map((page: any) => {
       return {
         title: `P${page.page} ${page.part}`,
         titleParameters: {
-          n: page.page,
+          n: getNumber(page.page, this.itemList.length),
           ep: page.part
         },
         cid: page.cid,
@@ -222,6 +224,7 @@ class BangumiBatch extends Batch {
       Toast.error(`获取番剧数据失败: 无法获取番剧集数列表, message=${json.message}`, '批量下载')
       return []
     }
+    const { getNumber } = await import('./get-number')
     this.itemList = json.result.main_section.episodes.map((it: any, index: number) => {
       const n: string = it.long_title ? it.title : (index + 1).toString()
       const title: string = it.long_title ? it.long_title : it.title
@@ -231,7 +234,7 @@ class BangumiBatch extends Batch {
         title: `${n} - ${title}`,
         // title: it.long_title ? `${it.title} - ${it.long_title}` : `${index + 1} - ${it.title}`,
         titleParameters: {
-          n,
+          n: getNumber(parseInt(n), this.itemList.length),
           ep: title,
         },
       } as BatchItem
@@ -277,6 +280,7 @@ export class ManualInputBatch extends VideoEpisodeBatch {
   items: string[] = []
   async getItemList() {
     const { VideoInfo } = await import('../video-info')
+    const { getNumber } = await import('./get-number')
     const pages = await Promise.all(this.items.map(async aid => {
       const info = new VideoInfo(aid)
       await info.fetchInfo()
@@ -285,7 +289,7 @@ export class ManualInputBatch extends VideoEpisodeBatch {
           aid,
           cid: p.cid,
           titleParameters: {
-            n: (index + 1).toString(),
+            n: getNumber(index + 1, info.pages.length),
             ep: info.pages.length > 1 ? p.title : '',
             title: info.title,
           },

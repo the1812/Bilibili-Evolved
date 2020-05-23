@@ -2,7 +2,7 @@ import { getFriendlyTitle } from '../title'
 import { VideoInfo, DanmakuInfo } from '../video-info'
 import { VideoDownloaderFragment } from './video-downloader-fragment'
 import { DownloadVideoPackage } from './download-video-package'
-import { BatchExtractor, BatchTitleParameter } from './batch-download'
+import { BatchTitleParameter, BatchExtractor } from './batch-download'
 
 /**
  * ☢警告☢ ☢CAUTION☢
@@ -345,6 +345,7 @@ class VideoDownloader {
     }
   }
   async exportAria2(rpc = false) {
+    const { getNumber } = await import('./get-number')
     if (rpc) { // https://aria2.github.io/manual/en/html/aria2c.html#json-rpc-using-http-get
       const danmaku = await this.downloadDanmaku()
       const subtitle = await this.downloadSubtitle()
@@ -362,7 +363,7 @@ class VideoDownloader {
       const params = this.fragments.map((fragment, index) => {
         let indexNumber = ''
         if (this.fragments.length > 1 && !this.isDash) {
-          indexNumber = ' - ' + (index + 1)
+          indexNumber = ' - ' + getNumber(index + 1, this.fragments.length)
         }
         const params = []
         if (option.secretKey !== '') {
@@ -392,7 +393,7 @@ class VideoDownloader {
 ${this.fragments.map((it, index) => {
         let indexNumber = ''
         if (this.fragments.length > 1 && !this.isDash) {
-          indexNumber = ' - ' + (index + 1)
+          indexNumber = ' - ' + getNumber(index + 1, this.fragments.length)
         }
         return `
 ${it.url}
@@ -477,11 +478,12 @@ ${it.url}
 
     const title = getFriendlyTitle()
     const pack = new DownloadVideoPackage()
+    const { getNumber } = await import('./get-number')
     downloadedData.forEach((data, index) => {
       let filename: string
       const fragment = this.fragments[index]
       if (downloadedData.length > 1 && !this.isDash) {
-        filename = `${title} - ${index + 1}${this.extension(fragment)}`
+        filename = `${title} - ${getNumber(index + 1, downloadedData.length)}${this.extension(fragment)}`
       } else {
         filename = `${title}${this.extension(fragment)}`
       }
