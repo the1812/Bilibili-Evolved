@@ -189,6 +189,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`fixedSidebars`, /*html*/`强制固定动态主页的顶栏和侧栏, 优先级高于动态过滤器的取消固定效果, 可以避免快速下拉产生的抖动.`],
   [`extendFeedsLive`, /*html*/`在动态的<span>正在直播</span>中, 为每一个直播间加上标题, 并且能够显示超过10个的直播间.`],
   [`playerOnTop`, /*html*/`使视频页面播放器出现在最上方, 标题/UP主等信息往下移.`],
+  [`preferAvUrl`, /*html*/`当视频的链接是BV号时, 自动转换为AV号.`],
+  [`elegantScrollbar`, /*html*/`使用细的滚动条替代系统默认的滚动条. (对夜间模式无效)`],
+  [`quickFavorite`, /*html*/`启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹.`],
+  [`darkColorScheme`, /*html*/`使夜间模式同步系统设置的亮/暗主题.`],
 ]);
 export default {
   export: { toolTips },

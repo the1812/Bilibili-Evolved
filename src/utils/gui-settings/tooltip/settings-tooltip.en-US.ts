@@ -22,7 +22,7 @@ Warning: Some features won't work on old layout.`],
   ["playerFocus", `Auto scroll to the player when you enter the page.`],
   ["playerFocusOffset", `Set the scroll offset. (in px unit)`],
   ["customStyleColor", `Set the theme color for custom navbar, dark mode and more. Click the color circle to choose from 16 predefined colors, or input any valid hex color in textbox. (<span>#rrggbb</span> or <span>#rgb</span>)`],
-  ["useDarkStyle", `Dark style looks much better at night, and will widely apply theme color.`],
+  ["useDarkStyle", `Dark mode looks much better at night, and will widely apply theme color.`],
   ["darkSchedule", `Schedule the dark mode time.`],
   ["compactLayout", `Use compact layout for homepage, reduce margin and remove rounded corner of video cards, use vector icons in categories.`],
   ["useCommentStyle", `- Remove "Follow" button on hot comments
@@ -161,6 +161,10 @@ Additional variables:
   [`fixedSidebars`, `Fix position of sidebars and navbar in feeds home.`],
   [`extendFeedsLive`, `Inside <span>Live broadcasting</span> panel, insert titles for every room. Also can display more than 10 rooms.`],
   [`playerOnTop`, `Show video player on top. Move title and author down.`],
+  [`preferAvUrl`, `Convert BV ID to AV ID for URL of video.`],
+  [`elegantScrollbar`, `Use narrow scrollbar in place of system default. (No effect to dark mode)`],
+  [`quickFavorite`, `Enable quick favorite. Add a video to the selected favorite folder by one click in video page.`],
+  [`darkColorScheme`, `Set dark mode to follow your system theme.`],
 ]);
 export default {
   export: { toolTips },
