@@ -23,6 +23,9 @@ const style = `
   height: 0 !important;
   width: 0 !important;
 }
+.adaptive-scroll {
+  min-height: unset !important;
+}
 `
 const id = 'fixed-sidebars-style'
 const add = () => {
