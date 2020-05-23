@@ -166,6 +166,7 @@
   })
   Observer.videoChange(() => {
     vm.aid = unsafeWindow.aid
+    vm.syncFavoriteState()
   })
 })()
 export default {
