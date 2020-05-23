@@ -42,7 +42,8 @@ const tabNames = {
   life: '生活',
   kichiku: '鬼畜',
   fashion: '时尚',
-  ads: '广告',
+  // ads: '广告',
+  information: '资讯',
   entertainment: '娱乐',
   // column: '专栏',
   movie: '电影',
@@ -74,6 +75,7 @@ export default {
     }
   },
   async mounted() {
+    this.checkAds()
     const container = this.$refs.reorderContainer as HTMLElement
     const { RegionCodes, RegionLinks } = await import('./category-regions')
     this.regionCodes = RegionCodes
@@ -98,6 +100,14 @@ export default {
   methods: {
     getOrder(key: string) {
       return settings.simpleHomeCategoryOrders[key]
+    },
+    checkAds() {
+      if ('ads' in settings.simpleHomeCategoryOrders) {
+        settings.simpleHomeCategoryOrders.information =
+          settings.simpleHomeCategoryOrders.ads
+        delete settings.simpleHomeCategoryOrders.ads
+        settings.simpleHomeCategoryOrders = settings.simpleHomeCategoryOrders
+      }
     },
     selectTab(tab: { key: string; name: string }) {
       if (this.selectedTab === tab.key && this.regionLinks) {

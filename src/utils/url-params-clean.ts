@@ -51,5 +51,9 @@ const clean = () => {
   }
   // }
 }
-clean()
-Observer.videoChange(() => clean())
+fullyLoaded(() => {
+  if (document.contentType === 'text/html') {
+    clean()
+    Observer.videoChange(() => clean())
+  }
+})

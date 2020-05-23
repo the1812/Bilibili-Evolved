@@ -55,6 +55,11 @@
       <v-dropdown @change="danmakuOptionChange()" :items="danmakuModel.items" :value.sync="danmakuModel.value">
       </v-dropdown>
     </div>
+    <div class="option-item" v-if="subtitle">
+      字幕
+      <v-dropdown @change="subtitleOptionChange()" :items="subtitleModel.items" :value.sync="subtitleModel.value">
+      </v-dropdown>
+    </div>
     <div class="option-item" v-if="enableDash && dashModel.value === 'dash'">
       首选编码
       <v-dropdown @change="codecChange()" :items="codecModel.items" :value.sync="codecModel.value">

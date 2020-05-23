@@ -38,13 +38,17 @@ const darkHandler = (force: boolean) => {
   (dq('.custom-navbar-settings') as HTMLElement).classList.toggle('dark', force)
 }
 export default (() => {
-  if (isIframe()) {
+  const url = document.URL.replace(location.search, '')
+  const isHome = url === 'https://www.bilibili.com/' || url === 'https://www.bilibili.com/index.html'
+  if (isIframe() || (settings.bilibiliSimpleNewHomeCompatible && isHome) || document.contentType !== 'text/html') {
+    resources.removeStyle('customNavbarStyle')
     return
   }
   loadSettings()
   const showWidget = !(!supportedUrls.some(it => document.URL.includes(it))
     || unsupportedUrls.some(it => document.URL.includes(it)))
     || document.URL.includes('//www.bilibili.com/blackboard/bnj2020.html') // 拜年祭2020
+    || document.URL.includes('//www.bilibili.com/blackboard/help.html') // 帮助中心
   if (showWidget) {
     document.body.classList.add('custom-navbar-loading');
     (async () => {
@@ -132,7 +136,8 @@ export default (() => {
         )
       }
       const { Upload } = await import('./simple/custom-navbar-upload')
-      components.push(new Upload(), new Blank(3))
+      const { DarkMode } = await import('./simple/custom-navbar-dark-mode')
+      components.push(new Upload(), new Blank(3), new DarkMode())
       new Vue({
         el: '.custom-navbar',
         data: {

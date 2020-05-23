@@ -35,6 +35,7 @@ declare global {
   }
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu"
   type DanmakuOption = '无' | 'XML' | 'ASS'
+  type SubtitleOption = '无' | 'JSON' | 'ASS'
   type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
   type Pattern = string
   type Dropdown = { key: string; items: string[] }
@@ -135,6 +136,7 @@ declare global {
     historyList: number
     upload: number
     blank3: number
+    darkMode: number
   }
   type CustomNavbarOrders = { [key in keyof CustomNavbarComponents]: number }
   interface SimpleHomeCategoryOrders {
@@ -150,7 +152,8 @@ declare global {
     life: number
     kichiku: number
     fashion: number
-    ads: number
+    // ads: number
+    information: number
     entertainment: number
     column: number
     movie: number
@@ -287,6 +290,7 @@ declare global {
     static videoChange(callback: MutationCallback): Promise<void>
   }
   interface BilibiliEvolvedSettings {
+    [key: string]: any,
     useDarkStyle: boolean,
     useNewStyle: boolean,
     compactLayout: boolean,
@@ -402,6 +406,7 @@ declare global {
     hideCategory: boolean,
     foldComment: boolean,
     downloadVideoDefaultDanmaku: DanmakuOption,
+    downloadVideoDefaultSubtitle: SubtitleOption,
     aria2RpcOption: RpcOption,
     aria2RpcOptionSelectedProfile: string,
     aria2RpcOptionProfiles: RpcOptionProfile[],
@@ -427,6 +432,7 @@ declare global {
     feedsFilter: boolean,
     feedsFilterPatterns: Pattern[],
     feedsFilterTypes: number[],
+    feedsSpecialFilterTypes: number[],
     feedsFilterSideCards: number[],
     activityImageSaver: boolean,
     scriptBlockPatterns: Pattern[],
@@ -469,10 +475,17 @@ declare global {
     lastNewVersionCheck: number,
     newVersionCheckInterval: number,
     useDarkStyleAsUserStyle: boolean,
+    darkColorScheme: boolean,
     livePip: boolean,
     extendFeedsLive: boolean,
     userImages: UserImage[],
     playerOnTop: boolean,
+    restoreFloors: boolean,
+    quickFavorite: boolean,
+    quickFavoriteID: number,
+    bilibiliSimpleNewHomeCompatible: boolean,
+    preferAvUrl: boolean,
+    elegantScrollbar: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
@@ -528,6 +541,6 @@ declare global {
   const videoCondition: () => Promise<boolean>
   const matchPattern: (str: string, pattern: string | RegExp) => boolean
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
-  const scriptVersion: ScriptVersion
+  const getScriptVersion: () => ScriptVersion
 }
 export { }

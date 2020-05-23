@@ -23,30 +23,22 @@ const style = `
   height: 0 !important;
   width: 0 !important;
 }
+.adaptive-scroll {
+  min-height: unset !important;
+}
 `
 const id = 'fixed-sidebars-style'
-let disableProfilePopup = true
-if (document.URL.replace(location.search, '') === 'https://t.bilibili.com/') {
-  (async () => {
-    const list = await SpinQuery.select('.live-up-list') as HTMLElement
-    if (list !== null) {
-      list.addEventListener('mouseenter', e => {
-        if (disableProfilePopup) {
-          e.stopImmediatePropagation()
-        }
-      }, { capture: true })
-    }
-  })()
-}
 const add = () => {
   if (document.URL.replace(location.search, '') === 'https://t.bilibili.com/') {
     resources.applyStyleFromText(style, id)
-    disableProfilePopup = true
+    ;(async () => {
+      const { disableProfilePopup } = await import('./disable-profile-popup')
+      disableProfilePopup()
+    })()
   }
 }
 const remove = () => {
   dqa('#' + id).forEach(it => it.remove())
-  disableProfilePopup = false
 }
 add()
 export default {

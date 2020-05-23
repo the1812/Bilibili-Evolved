@@ -803,12 +803,20 @@
   @include foreground-color();
 }
 .wide-members .avatar {
-  &-list .van-icon-general {
-    &_back_s:after {
-      background: linear-gradient(-270deg,#444,hsla(0,0%,100%,0)) !important;
+  &-list {
+    i {
+      @include background-color("2");
+      &:hover {
+        @include theme-color();
+      }
     }
-    &_enter_s:after {
-      background: linear-gradient(270deg,#444,hsla(0,0%,100%,0)) !important;
+    .van-icon-general {
+      &_back_s:after {
+        background: linear-gradient(-270deg,#222,hsla(0,0%,100%,0)) !important;
+      }
+      &_enter_s:after {
+        background: linear-gradient(270deg,#222,hsla(0,0%,100%,0)) !important;
+      }
     }
   }
   .tag {
@@ -816,15 +824,23 @@
     @include color("e");
     @include theme-border-color();
   }
-}
-.router-view .config {
-  @include background-color("4");
-  @include color("e");
-  .css-o1815x {
-    @include to-theme("blue");
+  .up-name {
+    @include color("e");
   }
-  .config-item:not(:first-child)::before {
-    @include background-color("5");
+}
+.router-view {
+  .list .top {
+    @include background-color("3");
+  }
+  .config {
+    @include background-color("4");
+    @include color("e");
+    .css-o1815x {
+      @include to-theme("blue");
+    }
+    .config-item:not(:first-child)::before {
+      @include background-color("5");
+    }
   }
 }
 .message-list {

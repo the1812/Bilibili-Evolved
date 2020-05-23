@@ -1,6 +1,6 @@
-const host = `hd.biliplus.com`
+const host = `www.biliplus.com`
 const supportedUrls = [
-  'bilibili.com/video/av',
+  'bilibili.com/video/',
   'bilibili.com/bangumi/play',
   'bilibili.com/bangumi/media',
   'space.bilibili.com',

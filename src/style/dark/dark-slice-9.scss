@@ -31,7 +31,8 @@
 .lang-change .lang-intro,
 #gift-package-item-box .panel-wrapper,
 .title-renew-panel .actions,
-.user-title-using-cntr .panel {
+.user-title-using-cntr .panel,
+.international-home {
   @include background-color("2");
 }
 .manga-navbar {
@@ -76,12 +77,7 @@
     }
   }
 }
-.wide-members .avatar-list i {
-  @include background-color("4");
-  &:hover {
-    @include theme-color();
-  }
-}
+
 .grid-area-ctnr {
   .hab-ctnr,
   .news-ctnr,
@@ -277,7 +273,8 @@
 .comment-bilibili-fold .comment-list .list-item .blacklist-font-color,
 .list-item .publish-time,
 .share-content .video-card .up-info .tip,
-.live-panel .title .count {
+.live-panel .title .count,
+.video-desc .reprint {
   @include color("a");
 }
 #biliAppHomeSetting {
@@ -298,6 +295,33 @@
   }
 }
 
+.reply {
+  .divider {
+    @include border-color("5");
+  }
+  .divider-last {
+    &::before,
+    &::after {
+      @include background-color("5");
+    }
+    span {
+      @include color("a");
+    }
+  }
+}
+.share-success {
+  .success-text {
+    @include color("e");
+  }
+  .success-link {
+    @include theme-color();
+  }
+  .success-btn {
+    @include border-color();
+    @include background-color("4");
+    @include color("e");
+  }
+}
 .center-box {
   .line-1 {
     .name-field {
@@ -673,7 +697,11 @@ $highlight-map: (
 .van-popover .btn-box .btn,
 .van-popper-history .view-all:hover,
 .bui-button.bui-button-gray:hover,
-.live-up .live-up-img-box {
+.live-up .live-up-img-box,
+.shortcuts-ctnr .hinter,
+.shortcuts-ctnr .num-hinter,
+.user-panel-ctnr .msg-hinter,
+.user-panel-ctnr .msg-count {
   @include theme-background-color();
 }
 #biliAppHomeSetting h2,
@@ -694,6 +722,7 @@ $highlight-map: (
 #biliAppHomeSetting button,
 .van-popover .btn-box .btn,
 .van-popper-history .view-all:hover,
-.bui-button.bui-button-gray:hover {
+.bui-button.bui-button-gray:hover,
+.user-panel-ctnr .msg-count {
   @include foreground-color();
 }

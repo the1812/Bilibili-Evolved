@@ -197,10 +197,24 @@ class FeedsCardsManager extends EventTarget {
         return ''
       }
       if (type === feedsCardTypes.repost) {
-        const original = el.__vue__.originCardData.pureText
-        return el.__vue__.card.item.content + '\n' + original || ''
+        const originalCard = JSON.parse(el.__vue__.card.origin)
+        const originalText = el.__vue__.originCardData.pureText
+        const originalDescription = _.get(originalCard, 'item.description', '')
+        const originalTitle = originalCard.title
+        const currentText = el.__vue__.card.item.content
+        return [
+          currentText,
+          originalText,
+          originalDescription,
+          originalTitle
+        ].filter(it => Boolean(it)).join('\n')
       }
-      return el.__vue__.originCardData.pureText || ''
+      const currentText = el.__vue__.originCardData.pureText
+      const currentTitle = el.__vue__.originCardData.title
+      return [
+        currentText,
+        currentTitle,
+      ].filter(it => Boolean(it)).join('\n')
     }
     const getNumber = async (selector: string) => {
       const result = parseInt(await getSimpleText(selector))
@@ -229,6 +243,13 @@ class FeedsCardsManager extends EventTarget {
     await card.getText()
     card.presented = element.parentNode !== null
     element.setAttribute('data-type', card.type.id.toString())
+    if (card.type === feedsCardTypes.repost) {
+      const currentUsername = card.username
+      const repostUsername = _.get(card, 'element.__vue__.card.origin_user.info.uname', '')
+      if (currentUsername === repostUsername) {
+        element.setAttribute('data-self-repost', 'true')
+      }
+    }
     // if (card.text === '') {
     //   console.warn('card text parsing failed!', card)
     // }

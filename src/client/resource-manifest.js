@@ -98,6 +98,7 @@ Resource.manifest = {
       foregroundColorMode: '文本颜色',
       updateCdn: '更新源',
       autoHideSideBar: '自动隐藏侧栏',
+      elegantScrollbar: '使用细滚动条',
     },
     dropdown: [
       {
@@ -588,7 +589,8 @@ Resource.manifest = {
   },
   outerWatchlater: {
     path: 'outer-watchlater.min.js',
-    style: 'important',
+    reloadable: true,
+    style: true,
     displayNames: {
       outerWatchlater: '外置稍后再看'
     }
@@ -692,6 +694,7 @@ Resource.manifest = {
   },
   keymap: {
     path: 'keymap.min.js',
+    reloadable: true,
     displayNames: {
       keymap: '快捷键扩展',
     },
@@ -843,6 +846,7 @@ Resource.manifest = {
     style: true,
     displayNames: {
       bvidConvert: 'BV号转换',
+      preferAvUrl: '网址AV号转换',
     },
   },
   fixedSidebars: {
@@ -870,6 +874,26 @@ Resource.manifest = {
     reloadable: true,
     displayNames: {
       playerOnTop: '播放器置顶',
+    },
+  },
+  darkColorScheme: {
+    path: 'dark-color-scheme.min.js',
+    displayNames: {
+      darkColorScheme: '夜间模式跟随系统',
+    },
+  },
+  restoreFloors: {
+    path: 'restore-floors.min.js',
+    displayNames: {
+      restoreFloors: '评论楼层显示',
+    },
+  },
+  quickFavorite: {
+    path: 'quick-favorite.min.js',
+    style: true,
+    reloadable: true,
+    displayNames: {
+      quickFavorite: '启用快速收藏',
     },
   },
 }

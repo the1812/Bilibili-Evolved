@@ -1,9 +1,9 @@
 const getRoomID = () => {
-  const match = document.URL.match(/live\.bilibili\.com\/(\d+)/)
+  const match = document.URL.match(/live\.bilibili\.com\/(blanc\/)?(\d+)/)
   if (!match) {
     return
   }
-  const roomID = parseInt(match[1])
+  const roomID = parseInt(match[2])
   if (isNaN(roomID)) {
     console.warn(`roomID not found`)
     return
@@ -99,7 +99,7 @@ class Medal extends Badge {
   }
 }
 class Title extends Badge {
-  static imageMap: {[id: string]: string}
+  static imageMap: { [id: string]: string }
   tid: number
   cid: number
   name: string
@@ -180,7 +180,8 @@ class Title extends Badge {
       return true
     }
     return Badge.parseJson(
-      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWearTitle`, ""),
+      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWearTitle`,
+      `csrf=${getCsrf()}&csrf_token=${getCsrf()}`),
       {
         successAction: () => {
           this.isActive = false
@@ -275,7 +276,7 @@ export default {
     Title,
   },
   widget: {
-    condition: () => document.URL.startsWith('https://live.bilibili.com'),
+    condition: () => document.URL.startsWith('https://live.bilibili.com') && Boolean(getUID()),
     content: resources.import('medalHelperHtml'),
     success: async () => {
       document.querySelectorAll(".medal-helper").forEach(it => {

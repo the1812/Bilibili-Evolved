@@ -17,7 +17,7 @@ namespace BilibiliEvolved.Build
         {
           { @"Bilibili-Evolved/preview", @"Bilibili-Evolved/master" },
           { @"Bilibili-Evolved/raw/preview", @"Bilibili-Evolved/raw/master" },
-          { @"https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js", @"https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.preview.user.js" },
+          { @"Bilibili-Evolved@preview", @"Bilibili-Evolved@master" },
           { SourcePath, OutputPath },
           { @"Bilibili Evolved (Preview)", @"Bilibili Evolved" },
           { Description.Preview, Description.Master },

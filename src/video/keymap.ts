@@ -1,7 +1,9 @@
 const supportedUrls = [
   'https://www.bilibili.com/bangumi/',
   'https://www.bilibili.com/video/',
+  'https://www.bilibili.com/watchlater/',
 ]
+let enabled = true
 if (supportedUrls.some(url => document.URL.startsWith(url))) {
   const clickableKeymap = {
     f: '.bilibili-player-video-fullscreen', // 全屏
@@ -11,12 +13,28 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     m: '.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume', // 切换静音
     p: '.bilibili-player-video-btn-pip', // 画中画
     // l: '.video-toolbar .like', // 点赞
-    c: '.video-toolbar .coin,.tool-bar .coin-info', // 投币
-    s: '.video-toolbar .collect', // 收藏
+    c: '.video-toolbar .coin,.tool-bar .coin-info, .video-toolbar-module .coin-box', // 投币
+    s: '.video-toolbar .collect, .video-toolbar-module .fav-box', // 收藏
     ' ': '.bilibili-player-video-btn-start', // 砸瓦撸多
   } as { [key: string]: string }
+  /** 长按`L`三连使用的记忆变量 */
   let likeClick = true
+  /** 在稍后再看页面里, 记录当前视频是否赞过 */
+  let liked = false
+  const isWatchlater = document.URL.startsWith('https://www.bilibili.com/watchlater/')
+  if (isWatchlater) {
+    Observer.videoChange(() => {
+      Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/archive/has/like?aid=${unsafeWindow.aid}`).then(json => {
+        liked = Boolean(json.data)
+      })
+    })
+  }
+  /** 播放速度提示框用的`setTimeout`句柄 */
   let showPlaybackTipOldTimeout: number
+  /**
+   * 显示播放速度提示框
+   * @param speed 播放速度
+   */
   const showPlaybackTip = (speed: number) => {
     let tip = dq('.keymap-playback-tip') as HTMLDivElement
     if (!tip) {
@@ -69,10 +87,20 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     }, 2000)
   }
   document.body.addEventListener('keydown', e => {
-    if (document.activeElement && ["input", "textarea"].includes(document.activeElement.nodeName.toLowerCase())) {
+    if (!enabled) {
+      return
+    }
+    if (isWatchlater && document.URL.endsWith('list')) {
+      return
+    }
+    if (document.activeElement && ['input', 'textarea'].includes(document.activeElement.nodeName.toLowerCase())) {
       return
     }
     const key = e.key.toLowerCase()
+    const panoramaControl = dq('.bilibili-player-sphere-control') as HTMLElement
+    if (panoramaControl !== null && panoramaControl.style.display !== 'none' && ['w', 'a', 's', 'd'].includes(key)) {
+      return
+    }
     const noModifyKeys = !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey
     if (key in clickableKeymap && noModifyKeys) {
       const element = dq(clickableKeymap[key]) as HTMLElement
@@ -97,22 +125,39 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       e.stopPropagation()
       e.preventDefault()
     } else if (key === 'l' && noModifyKeys) {
-      const likeButton = dq('.video-toolbar .like') as HTMLSpanElement
-      e.preventDefault()
-      const fireEvent = (name: string, args: Event) => {
-        const event = new CustomEvent(name, args)
-        likeButton.dispatchEvent(event)
-      }
-      likeClick = true
-      setTimeout(() => likeClick = false, 200)
-      fireEvent('mousedown', e)
-      document.body.addEventListener('keyup', e => {
-        e.preventDefault()
-        fireEvent('mouseup', e)
-        if (likeClick) {
-          fireEvent('click', e)
+      if (isWatchlater) {
+        const formData = {
+          aid: unsafeWindow.aid,
+          /** `1`点赞; `2`取消赞 */
+          like: liked ? 2 : 1,
+          csrf: getCsrf(),
         }
-      }, { once: true })
+        Ajax.postTextWithCredentials(`https://api.bilibili.com/x/web-interface/archive/like`, Object.entries(formData).map(([k, v]) => `${k}=${v}`).join('&')).then(() => {
+          liked = !liked
+          if (liked) {
+            Toast.success(`已点赞`, `快捷键扩展`, 1000)
+          } else {
+            Toast.success(`已取消点赞`, `快捷键扩展`, 1000)
+          }
+        })
+      } else {
+        const likeButton = dq('.video-toolbar .like') as HTMLSpanElement
+        e.preventDefault()
+        const fireEvent = (name: string, args: Event) => {
+          const event = new CustomEvent(name, args)
+          likeButton.dispatchEvent(event)
+        }
+        likeClick = true
+        setTimeout(() => likeClick = false, 200)
+        fireEvent('mousedown', e)
+        document.body.addEventListener('keyup', e => {
+          e.preventDefault()
+          fireEvent('mouseup', e)
+          if (likeClick) {
+            fireEvent('click', e)
+          }
+        }, { once: true })
+      }
     } else if (key === '`' && noModifyKeys) {
       // menu size: 386.6 x 311 (2020-03-29)
       const player = dq('.bilibili-player-video-wrap') as HTMLElement
@@ -143,7 +188,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
         video.playbackRate = 1
         showPlaybackTip(video.playbackRate)
       } else if (key === 'w') { // 稍后再看
-        const watchlater = dq('.video-toolbar .ops .watchlater,.more-ops-list .ops-watch-later') as HTMLSpanElement
+        const watchlater = dq('.video-toolbar .ops .watchlater, .more-ops-list .ops-watch-later, .video-toolbar-module .see-later-box') as HTMLElement
         if (watchlater !== null) {
           watchlater.click()
         }
@@ -159,4 +204,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       }
     }
   })
+}
+export default {
+  reload: () => enabled = true,
+  unload: () => enabled = false,
 }

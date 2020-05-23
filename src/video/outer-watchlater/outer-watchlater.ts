@@ -1,5 +1,5 @@
 (async () => {
-  if (!document.URL.startsWith('https://www.bilibili.com/video/')) {
+  if (!document.URL.startsWith('https://www.bilibili.com/video/') || !getUID()) {
     return
   }
   await SpinQuery.condition(() => dq('.video-toolbar .ops .collect'), it => {
@@ -9,6 +9,7 @@
   if (!favoriteButton) {
     return
   }
+  resources.applyStyle('outerWatchlaterStyle')
   favoriteButton.insertAdjacentHTML('afterend', /*html*/`
     <span title='稍后再看' class='watchlater' :class="{on: isInWatchlater}" @click="toggle()">
       <i class='mdi mdi-timetable'></i>
@@ -17,8 +18,7 @@
     </span>
   `)
   const watchlaterButton = dq('.ops .watchlater')
-  const tip = dq('.ops .watchlater .tip')
-  if (!watchlaterButton || !tip) {
+  if (!watchlaterButton) {
     return
   }
   const vm = new Vue({
@@ -58,3 +58,11 @@
     vm.aid = unsafeWindow.aid
   })
 })()
+export default {
+  unload: () => {
+    dqa('.ops .watchlater').forEach((it: HTMLElement) => it.style.display = 'none')
+  },
+  reload: () => {
+    dqa('.ops .watchlater').forEach((it: HTMLElement) => it.style.display = 'inline-block')
+  },
+}

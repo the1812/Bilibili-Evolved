@@ -114,7 +114,8 @@ export class Category extends NavbarComponent {
         科技: {
           icon: 'technology',
           count: regionCount[36], link: `https://www.bilibili.com/v/technology/`, subRegions: {
-            '趣味科普人文': 'https://www.bilibili.com/v/technology/fun/',
+            '科学科普': 'https://www.bilibili.com/v/technology/science/',
+            '社科人文': 'https://www.bilibili.com/v/technology/fun/',
             '野生技术协会': 'https://www.bilibili.com/v/technology/wild/',
             '演讲·公开课': 'https://www.bilibili.com/v/technology/speech_course/',
             '星海': 'https://www.bilibili.com/v/technology/military/',
@@ -161,7 +162,16 @@ export class Category extends NavbarComponent {
             '风尚标': 'https://www.bilibili.com/v/fashion/trends/'
           },
         },
-        广告: { icon: 'ad', count: regionCount[165], link: `https://www.bilibili.com/v/ad/ad/`, },
+        // 广告: { icon: 'ad', count: regionCount[165], link: `https://www.bilibili.com/v/ad/ad/`, },
+        资讯: {
+          icon: 'information',
+          count: regionCount[202], link: `https://www.bilibili.com/v/information/`, subRegions: {
+            '热点': 'https://www.bilibili.com/v/information/hotspot/',
+            '环球': 'https://www.bilibili.com/v/information/global/',
+            '社会': 'https://www.bilibili.com/v/information/social/',
+            '综合': 'https://www.bilibili.com/v/information/multiple/'
+          },
+        },
         娱乐: {
           icon: 'ent',
           count: regionCount[5], link: `https://www.bilibili.com/v/ent/`, subRegions: {

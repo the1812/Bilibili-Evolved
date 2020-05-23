@@ -33,6 +33,10 @@
             name: 'Lets-Halloween',
             link: 'https://github.com/Lets-Halloween'
           },
+          {
+            name: 'shugen002',
+            link: 'https://github.com/shugen002'
+          },
         ].sort(userSorter),
         fetching: true,
         participants: [],

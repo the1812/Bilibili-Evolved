@@ -203,8 +203,22 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   path {
     fill: var(--navbar-foreground);
   }
+  svg.stroke {
+    &,
+    path {
+      fill: transparent;
+      stroke: var(--navbar-foreground);
+    }
+  }
   &.fill:not(.transparent) path {
     fill: var(--foreground-color-d);
+    svg.stroke {
+    &,
+    path {
+      fill: transparent;
+      stroke: var(--navbar-foreground-d);
+    }
+  }
   }
   &.shadow:not(.transparent) {
     box-shadow: #0002 0 1px 10px 1px;

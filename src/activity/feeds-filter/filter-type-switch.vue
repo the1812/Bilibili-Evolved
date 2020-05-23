@@ -24,21 +24,23 @@ export default {
         return
       }
       if (disabled) {
-        settings.feedsFilterTypes.push(this.type.id)
+        settings[this.settingsKey].push(this.type.id)
       } else {
-        const index = settings.feedsFilterTypes.indexOf(this.type.id)
+        const index = settings[this.settingsKey].indexOf(this.type.id)
         if (index !== -1) {
-          settings.feedsFilterTypes.splice(index, 1)
+          settings[this.settingsKey].splice(index, 1)
         }
       }
-      settings.feedsFilterTypes = settings.feedsFilterTypes
+      settings[this.settingsKey] = settings[this.settingsKey]
     }
   },
   data() {
-    const disabled = settings.feedsFilterTypes.includes(this.type.id)
+    const settingsKey = this.type.id >= 0 ? 'feedsFilterTypes' : 'feedsSpecialFilterTypes'
+    const disabled = settings[settingsKey].includes(this.type.id)
     this.setFilter(disabled, false)
     return {
       disabled,
+      settingsKey,
     }
   },
   watch: {

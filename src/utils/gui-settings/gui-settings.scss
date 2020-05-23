@@ -120,6 +120,10 @@
   overflow: auto;
   position: relative;
   overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
   ul {
     padding: 0;
     margin: 0;
@@ -170,6 +174,25 @@
       }
       &.category * {
         opacity: 0.8;
+      }
+    }
+  }
+  .script-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    font-size: 12px;
+    .version {
+      opacity: 0.75;
+    }
+    a {
+      color: inherit !important;
+      opacity: 0.5;
+      &:hover,
+      &:active {
+        opacity: 1;
+        color: var(--theme-color) !important;
       }
     }
   }
@@ -700,23 +723,25 @@ body.round-corner {
 @import "gui-settings-dock";
 @import "gui-settings-auto-hide";
 
-::-webkit-scrollbar {
-  width: 5px !important;
-  height: 5px !important;
-}
-::-webkit-scrollbar-corner,
-::-webkit-scrollbar-track {
-  background: transparent !important;
-}
-::-webkit-resizer,
-::-webkit-scrollbar-thumb {
-  background: #aaa;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #888;
-}
-* {
-  scrollbar-color: #aaa transparent;
-  scrollbar-width: thin !important;
+html.elegant-scrollbar {
+  ::-webkit-scrollbar {
+    width: 5px !important;
+    height: 5px !important;
+  }
+  ::-webkit-scrollbar-corner,
+  ::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+  ::-webkit-resizer,
+  ::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
+  * {
+    scrollbar-color: #aaa transparent;
+    scrollbar-width: thin !important;
+  }
 }
