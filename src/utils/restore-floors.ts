@@ -31,22 +31,27 @@ const restore = async (commentContainer: HTMLElement) => {
     console.error('Comment API failed: ', json.message)
     return
   }
-  const replies: { id: string; floor: number }[] = _.flatMap(_.get(json, 'data.replies', []), item => {
+  const getFloorInfo = (item: any) => {
     const result = [{
-      id: item.rpid_str,
-      floor: item.floor,
+      id: item.rpid_str as string,
+      floor: item.floor as number,
     }]
     if (item.replies !== null) {
       result.push(...item.replies.map((it: any) => {
         return {
-          id: it.rpid_str,
-          floor: it.floor,
+          id: it.rpid_str as string,
+          floor: it.floor as number,
         }
       }))
     }
     return result
-  })
-  console.log(replies)
+  }
+  const replies = _.flatMap(_.get(json, 'data.replies', []), getFloorInfo)
+  const top = _.get(json, 'data.top.upper')
+  if (top) {
+    replies.push(...getFloorInfo(top))
+  }
+  // console.log(replies)
   const commentItems = dqa(commentContainer, '.reply-wrap[data-id]')
   const commentInfos = commentItems.map(item => dq(item, '.reply-wrap > .con > .info, .reply-wrap > .info') as HTMLElement)
   commentItems.forEach((item, index) => {
@@ -85,9 +90,14 @@ const prepareRestore = (commentContainer: HTMLElement) => {
     }
   }
 }
-fullyLoaded(() => {
-  if (document.URL.match(/\/\/www\.bilibili\.com\/(video|bangumi)/)) {
+const supportedUrls = [
+  '//www.bilibili.com/video',
+  '//www.bilibili.com/bangumi',
+  // '//t.bilibili.com/',
+]
+if (supportedUrls.some(it => document.URL.includes(it))) {
+  fullyLoaded(() => {
     const callback = _.debounce(() => dqa('.bb-comment').forEach(it => prepareRestore(it as HTMLElement)), 200)
     Observer.childListSubtree(document.body, callback)
-  }
-})
+  })
+}
