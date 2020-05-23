@@ -191,10 +191,12 @@ export default {
     ) as HTMLAnchorElement
     Observer.attributes(tab, () => {
       document.body.classList.toggle(
-        'enable-feeds-filter',
-        tab.classList.contains('selected'),
+        // 'enable-feeds-filter',
+        'by-type',
+        !tab.classList.contains('selected'),
       )
     })
+    document.body.classList.add('enable-feeds-filter')
     const { feedsCardsManager, feedsCardTypes } = await import('../feeds-apis')
     const success = await feedsCardsManager.startWatching()
     if (!success) {
@@ -240,12 +242,16 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
         'share': 2048
       )
   {
-    &.feeds-filter-block-#{$name} .feed-card .card[data-type='#{$value}'] {
+    &:not(.by-type).feeds-filter-block-#{$name}
+      .feed-card
+      .card[data-type='#{$value}'] {
       display: none !important;
     }
   }
   @each $name in ('self-repost') {
-    &.feeds-filter-block-#{$name} .feed-card .card[data-#{$name}] {
+    &:not(.by-type).feeds-filter-block-#{$name}
+      .feed-card
+      .card[data-#{$name}] {
       display: none !important;
     }
   }
@@ -419,6 +425,12 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
     flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 18px;
+  }
+  body.by-type & {
+    h2:nth-of-type(1),
+    .filter-types {
+      display: none;
+    }
   }
   .filter-patterns {
     &:not(:empty) {
