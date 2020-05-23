@@ -197,10 +197,24 @@ class FeedsCardsManager extends EventTarget {
         return ''
       }
       if (type === feedsCardTypes.repost) {
-        const original = el.__vue__.originCardData.pureText
-        return el.__vue__.card.item.content + '\n' + original || ''
+        const originalCard = JSON.parse(el.__vue__.card.origin)
+        const originalText = el.__vue__.originCardData.pureText
+        const originalDescription = _.get(originalCard, 'item.description', '')
+        const originalTitle = originalCard.title
+        const currentText = el.__vue__.card.item.content
+        return [
+          currentText,
+          originalText,
+          originalDescription,
+          originalTitle
+        ].filter(it => Boolean(it)).join('\n')
       }
-      return el.__vue__.originCardData.pureText || ''
+      const currentText = el.__vue__.originCardData.pureText
+      const currentTitle = el.__vue__.originCardData.title
+      return [
+        currentText,
+        currentTitle,
+      ].filter(it => Boolean(it)).join('\n')
     }
     const getNumber = async (selector: string) => {
       const result = parseInt(await getSimpleText(selector))

@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { FeedsCard, FeedsCardType } from '../feeds-apis'
+import { FeedsCard, FeedsCardType, feedsCardsManager } from '../feeds-apis'
 interface SideCardType {
   className: string
   displayName: string
@@ -74,6 +74,7 @@ const sideCards: { [id: number]: SideCardType } = {
     displayName: '关注栏'
   }
 }
+let cardsManager: typeof feedsCardsManager
 const sideBlock = 'feeds-filter-side-block-'
 export default {
   components: {
@@ -85,7 +86,6 @@ export default {
       allTypes: [] as [string, FeedsCardType][],
       patterns: [...settings.feedsFilterPatterns],
       newPattern: '',
-      feedsCardsManager: null,
       allSideCards: sideCards,
       blockSideCards: [...settings.feedsFilterSideCards],
       collapse: true
@@ -156,9 +156,9 @@ export default {
   watch: {
     patterns() {
       settings.feedsFilterPatterns = this.patterns
-      if (this.feedsCardsManager !== null) {
-        this.feedsCardsManager.cards.forEach((card: FeedsCard) =>
-          this.updateCard(card)
+      if (cardsManager) {
+        cardsManager.cards.forEach(card =>
+          this.updateCard(_.clone(card))
         )
       }
     }
@@ -190,12 +190,12 @@ export default {
       .map(([name, type]) => {
         return [name, _.clone(type)]
       })
-    feedsCardsManager.cards.forEach(card => this.updateCard(card))
+    feedsCardsManager.cards.forEach(card => this.updateCard(_.clone(card)))
     feedsCardsManager.addEventListener('addCard', e => {
       const card = e.detail
       this.updateCard(card)
     })
-    this.feedsCardsManager = feedsCardsManager
+    cardsManager = feedsCardsManager
   }
 }
 </script>
