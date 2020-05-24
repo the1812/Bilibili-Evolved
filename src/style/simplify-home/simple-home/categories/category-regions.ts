@@ -15,9 +15,11 @@ export const RegionCodes: { [key in keyof SimpleHomeCategoryOrders]: number } = 
   information: 202,
   entertainment: 5,
   column: -1,
-  movie: 23,
+  // movie: 23,
+  movie: 181,
   tv: 11,
-  film: 181,
+  film: 23,
+  // film: 181,
   documentary: 177,
 }
 export const RegionLinks: { [key in keyof SimpleHomeCategoryOrders]: string } = {
