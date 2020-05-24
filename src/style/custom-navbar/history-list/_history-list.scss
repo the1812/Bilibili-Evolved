@@ -26,6 +26,8 @@
   width: 350px;
   height: 600px;
   font-size: 12px;
+  padding: 0;
+  margin: 0;
   @include v-stretch();
   justify-content: center;
   .loading-tip {
