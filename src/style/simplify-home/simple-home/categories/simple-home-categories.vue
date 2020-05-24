@@ -16,7 +16,10 @@
         </div>
       </div>
       <div class="buttons">
-        <div class="toggle-reorder" @click="reordering = !reordering; reorder.toggle()">
+        <div
+          class="toggle-reorder"
+          @click="reordering = !reordering; reorder.toggle()"
+        >
           <icon type="mdi" :icon="reordering ? 'check' : 'swap-horizontal'"></icon>
           {{reordering ? '完成' : '排序'}}
         </div>
@@ -46,32 +49,32 @@ const tabNames = {
   information: '资讯',
   entertainment: '娱乐',
   // column: '专栏',
-  movie: '电影',
+  movie: '影视',
   tv: 'TV剧',
-  film: '影视',
-  documentary: '纪录片'
+  film: '放映厅',
+  documentary: '纪录片',
 }
 export default {
   components: {
     Icon: () => import('../../../icon.vue'),
     NormalCategory: () => import('./simple-home-normal-category.vue'),
-    BangumiCategory: () => import('./simple-home-bangumi-category.vue')
+    BangumiCategory: () => import('./simple-home-bangumi-category.vue'),
   },
   data() {
     return {
       tabs: Object.entries(tabNames).map(([key, name]) => {
         return {
           key,
-          name
+          name,
         }
       }),
       selectedTab: Object.entries(settings.simpleHomeCategoryOrders).sort(
-        (a, b) => a[1] - b[1]
+        (a, b) => a[1] - b[1],
       )[0][0],
       reordering: false,
       reorder: null,
       regionCodes: null,
-      regionLinks: null
+      regionLinks: null,
     }
   },
   async mounted() {
@@ -116,7 +119,7 @@ export default {
       } else {
         this.selectedTab = tab.key
       }
-    }
+    },
   },
   computed: {
     content() {
@@ -138,8 +141,8 @@ export default {
       } else {
         return this.regionCodes[this.selectedTab]
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
