@@ -61,14 +61,20 @@
       .lists {
         margin-left: 8px;
       }
-      .v-dropdown .mdi-chevron-down {
-        color: inherit !important;
-        margin: 0 !important;
-        transition: 0.2s ease-out;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16pt !important;
+      .v-dropdown {
+        color: black;
+        body.dark & {
+          color: #eee;
+        }
+        .mdi-chevron-down {
+          color: inherit !important;
+          margin: 0 !important;
+          transition: 0.2s ease-out;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 16pt !important;
+        }
       }
     }
   }
