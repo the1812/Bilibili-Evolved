@@ -294,6 +294,11 @@
     @include color("e");
   }
 }
+.medal-ctnr {
+  .fans-medal-item.special-medal .label .content {
+    background-color: inherit !important;
+  }
+}
 
 .reply {
   .divider {
