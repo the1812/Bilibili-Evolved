@@ -238,3 +238,44 @@
     @include color("e");
   }
 }
+.s_tag .tag-area {
+  .channel {
+    &-icon {
+      @include to-white();
+    }
+    &-name {
+      @include color("e");
+    }
+  }
+  .tag-channel-pane {
+    .content {
+      @include background-color("3");
+    }
+    .channel {
+      &-cover {
+        @include border-color("3");
+      }
+      &-title {
+        @include color("e");
+      }
+      &-desc {
+        @include color("a");
+      }
+      &-btns {
+        &__link {
+          @include theme-color();
+          @include theme-border-color();
+          &:hover {
+            @include foreground-color();
+            @include theme-background-color();
+          }
+        }
+        .no-subs {
+          @include foreground-color();
+          @include theme-border-color();
+          @include theme-background-color();
+        }
+      }
+    }
+  }
+}
