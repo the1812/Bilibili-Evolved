@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Offline)
-// @version      682.77
+// @version      683.27
 // @description  Bilibili Evolved 的离线版, 所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -3276,8 +3276,12 @@ fullyLoaded(() => getUID() && store.dispatch('fetchWatchlaterList'))
     'https://message.bilibili.com/pages/nav/index_new_pc_sync',
     'https://t.bilibili.com/h5/dynamic/specification',
   ]
+  const anonymousRedundantFrame = (
+    unsafeWindow.parent.window !== unsafeWindow &&
+    unsafeWindow.parent.window.document.getElementById('mce_0_ifr')
+  )
   if (await GM.getValue('customNavbar') === true
-    && redundantFrames.includes(document.URL)) {
+    && (redundantFrames.includes(document.URL) || anonymousRedundantFrame)) {
     if (await GM.getValue('useDarkStyle') === true) {
       document.documentElement.style.setProperty('--theme-color', await GM.getValue('customStyleColor'))
       if (typeof offlineData === 'undefined') {
