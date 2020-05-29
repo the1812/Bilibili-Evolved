@@ -179,6 +179,7 @@ const allFormats: VideoFormat[] = [
 ]
 class VideoDownloader {
   format: VideoFormat
+  subtitle = false
   fragments: VideoDownloaderFragment[]
   fragmentSplitFactor = 6 * 2
   workingXhr: XMLHttpRequest[] | null = null
@@ -444,7 +445,7 @@ ${it.url}
     }
   }
   async downloadSubtitle() {
-    if (this.subtitleOption !== '无') {
+    if (this.subtitle && this.subtitleOption !== '无') {
       const { getSubtitleConfig, getSubtitleList } = await import('../download-subtitle/download-subtitle')
       const [config, language] = await getSubtitleConfig()
       const subtitles = await getSubtitleList(pageData.aid, pageData.cid)
@@ -786,6 +787,7 @@ async function loadPanel() {
           }
           const format = this.getFormat() as VideoFormat
           const videoDownloader = await format.downloadInfo(this.dash)
+          videoDownloader.subtitle = this.subtitle
           switch (type) {
             case 'copyLink':
               await videoDownloader.copyUrl()
@@ -1100,6 +1102,7 @@ async function loadPanel() {
         try {
           this.downloading = true
           const videoDownloader = await format.downloadInfo(this.dash)
+          videoDownloader.subtitle = this.subtitle
           videoDownloader.videoSpeed.speedUpdate = speed => this.speed = speed
           videoDownloader.progress = percent => {
             this.progressPercent = Math.trunc(percent * 100)
