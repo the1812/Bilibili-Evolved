@@ -75,7 +75,7 @@
       "problemMatcher": []
     },
     {
-      "label": "同步i8n数据 sync i18n",
+      "label": "同步i18n数据 sync i18n",
       "type": "shell",
       "command": "node ./builder/node/i18n-sync/i18n-sync.js",
       "presentation": {

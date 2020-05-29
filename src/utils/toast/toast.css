@@ -151,7 +151,8 @@
 .toast-card .link:active {
   background-color: #8884;
 }
-.toast-card .download-link {
+.toast-card .download-link,
+.toast-card .download-link:hover {
   color: inherit !important;
   text-decoration: underline;
   word-break: break-all;

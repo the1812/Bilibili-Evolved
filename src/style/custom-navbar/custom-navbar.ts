@@ -20,7 +20,7 @@ const unsupportedUrls = [
   '//member.bilibili.com/video/upload',
   '//space.bilibili.com/ajax/',
   '//www.bilibili.com/h5/comment/',
-  '//www.bilibili.com/blackboard/',
+  // '//www.bilibili.com/blackboard/',
   '//member.bilibili.com/v2',
 ]
 const loadSettings = () => {
@@ -47,8 +47,8 @@ export default (() => {
   loadSettings()
   const showWidget = !(!supportedUrls.some(it => document.URL.includes(it))
     || unsupportedUrls.some(it => document.URL.includes(it)))
-    || document.URL.includes('//www.bilibili.com/blackboard/bnj2020.html') // 拜年祭2020
-    || document.URL.includes('//www.bilibili.com/blackboard/help.html') // 帮助中心
+    // || document.URL.includes('//www.bilibili.com/blackboard/bnj2020.html') // 拜年祭2020
+    // || document.URL.includes('//www.bilibili.com/blackboard/help.html') // 帮助中心
   if (showWidget) {
     document.body.classList.add('custom-navbar-loading');
     (async () => {
