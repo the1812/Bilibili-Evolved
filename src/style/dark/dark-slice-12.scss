@@ -279,3 +279,6 @@
     }
   }
 }
+.share-board .song-share .font-blue {
+  @include theme-color();
+}
