@@ -1,13 +1,17 @@
 import { RawItem } from './batch-download'
 
 const dashExtensions = ['.mp4', '.m4a']
+const getNumber = (n: number, count: number) => {
+  const finalCount = Math.max(2, Math.trunc(Math.log10(count) + 1))
+  return n.toString().padStart(finalCount, '0')
+}
 export const getFragmentsList = (count: number, originalTitle: string, extensions: string[]) => {
   if (count < 2) {
     return null
   }
   const names = []
   for (let index = 1; index <= count; index++) {
-    let indexNumber = ` - ${index}`
+    let indexNumber = ` - ${getNumber(index, count)}`
     if (extensions.includes('.m4a')) {
       indexNumber = ''
     }
@@ -25,7 +29,7 @@ export const getBatchFragmentsList = (items: RawItem[], extensionOrDash: string 
   const names = new Map<string, string>()
   fragmentsItems.forEach(item => {
     names.set(escapeFilename(`ffmpeg-files-${item.title}.txt`), item.fragments.map((_, index) => {
-      let indexNumber = ` - ${index + 1}`
+      let indexNumber = ` - ${getNumber(index + 1, fragmentsItems.length)}`
       if (extensionOrDash === true) {
         indexNumber = ''
       }
@@ -41,7 +45,7 @@ export const getBatchEpisodesList = (items: RawItem[], extensionOrDash: string |
     item.fragments.forEach((_, index) => {
       let indexNumber = ''
       if (item.fragments.length > 1 && extensionOrDash !== true) {
-        indexNumber = ` - ${index + 1}`
+        indexNumber = ` - ${getNumber(index + 1, item.fragments.length)}`
       }
       const filename = escapeFilename(`${item.title}${indexNumber}${extensionOrDash === true ? dashExtensions[index] : extensionOrDash}`).replace(/'/g, "'\\''")
       names.push(`file '${filename}'`)
