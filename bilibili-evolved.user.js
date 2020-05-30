@@ -1299,7 +1299,7 @@ onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/mi
 @namespace    Bilibili-Evolved
 @homepageURL  https://github.com/the1812/Bilibili-Evolved
 @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/min/dark.user.css
-@version      683.27.0
+@version      683.83.0
 @license      MIT
 @author       Grant Howard (https://github.com/the1812), Coulomb-G (https://github.com/Coulomb-G)
 ==/UserStyle== */
@@ -3335,12 +3335,12 @@ fullyLoaded(() => getUID() && store.dispatch('fetchWatchlaterList'))
     'https://message.bilibili.com/pages/nav/index_new_pc_sync',
     'https://t.bilibili.com/h5/dynamic/specification',
   ]
-  const anonymousRedundantFrame = (
-    unsafeWindow.parent.window !== unsafeWindow &&
-    unsafeWindow.parent.window.document.getElementById('mce_0_ifr')
-  )
+  // const anonymousRedundantFrame = (
+  //   unsafeWindow.parent.window !== unsafeWindow &&
+  //   unsafeWindow.parent.window.document.getElementById('mce_0_ifr')
+  // )
   if (await GM.getValue('customNavbar') === true
-    && (redundantFrames.includes(document.URL) || anonymousRedundantFrame)) {
+    && (redundantFrames.includes(document.URL))) {
     if (await GM.getValue('useDarkStyle') === true) {
       document.documentElement.style.setProperty('--theme-color', await GM.getValue('customStyleColor'))
       if (typeof offlineData === 'undefined') {
