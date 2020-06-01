@@ -37,6 +37,10 @@
             name: 'shugen002',
             link: 'https://github.com/shugen002'
           },
+          {
+            name: 'Joshuaふみひる',
+            link: ''
+          },
         ].sort(userSorter),
         fetching: true,
         participants: [],

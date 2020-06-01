@@ -90,6 +90,7 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 特别感谢给我们提供了翻译文本的各位:
 - [PleiadeSubaru](https://github.com/Etherrrr)
 - [Lets-Halloween](https://github.com/Lets-Halloween)
+- Joshuaふみひる
 
 也欢迎任何翻译大佬帮助我们改善翻译的内容, 习惯直接改代码可以开 Pull Request, 习惯整理出文本的可以加QQ群963709592讨论.
 
