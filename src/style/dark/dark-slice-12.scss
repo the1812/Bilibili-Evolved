@@ -335,3 +335,59 @@
     @include color("e");
   }
 }
+.crowdfunding-container {
+  .current-num-wrap {
+    .current-num {
+      @include color("e");
+    }
+    .join-status {
+      @include color("a");
+    }
+  }
+  .tips-container .status {
+    @include theme-color();
+    &.fail {
+      @include color("a");
+    }
+    &.nostart {
+      @include color("e");
+    }
+  }
+  .progress-container {
+    @include background-color("2");
+    .progress-fill.highlight {
+      @include theme-background-color();
+    }
+  }
+  .current-pro-num.highlight {
+    @include theme-color();
+  }
+  .goal-container {
+    @include color("a");
+    .goal-num,
+    .goal-time {
+      @include color("e");
+    }
+  }
+  .risk-tip-container .risk-content {
+    @include background-color("2");
+  }
+}
+.ticket-tips-wrapper .merchant-section {
+  @include background-color("4");
+  .merchant-header {
+    @include color("e");
+    span {
+      @include to-theme("pink");
+    }
+  }
+  .baseinfo-wrapper .content-item .title {
+    @include background-color("3");
+    .fold-btn:hover {
+      .open,
+      .close {
+        @include to-theme("pink");
+      }
+    }
+  }
+}
