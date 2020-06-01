@@ -391,3 +391,14 @@
     }
   }
 }
+.searchresult-total-number {
+  .left-line {
+    background-image:linear-gradient(90deg,#444,#aaa) !important;
+  }
+  .right-line {
+    background-image:linear-gradient(90deg,#aaa,#444) !important;
+  }
+  .total-num {
+    @include color("a");
+  }
+}
