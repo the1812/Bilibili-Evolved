@@ -248,9 +248,7 @@
     }
   }
   .tag-channel-pane {
-    .content {
-      @include background-color("3");
-    }
+    @include background-color("3");
     .channel {
       &-cover {
         @include border-color("3");
@@ -270,10 +268,29 @@
             @include theme-background-color();
           }
         }
+        .is-subs {
+          @include background-color("2");
+          @include color("e");
+          @include border-color();
+        }
         .no-subs {
           @include foreground-color();
           @include theme-border-color();
           @include theme-background-color();
+        }
+        .tag-channel-cancel-popup {
+          @include background-color("4");
+          p {
+            @include color("e");
+          }
+          a.btn-ok {
+            @include foreground-color();
+            @include theme-background-color();
+          }
+          a.btn-no {
+            @include color("e");
+            @include background-color("2");
+          }
         }
       }
     }
