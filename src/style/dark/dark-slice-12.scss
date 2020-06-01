@@ -299,3 +299,39 @@
 .share-board .song-share .font-blue {
   @include theme-color();
 }
+.guard-store-box {
+  .buy-detail {
+    @include color("e");
+    .master {
+      @include theme-color();
+    }
+  }
+  .select-month {
+    @include color("e");
+    .month-selector .month-info {
+      @include color("e");
+      @include theme-border-color();
+      .month-list {
+        @include background-color("4");
+        .month-item {
+          @include color("e");
+          &:hover .days {
+            @include theme-color();
+          }
+        }
+      }
+      .triangle:before {
+        @include border-color("4");
+        border-left-color: transparent !important;
+        border-right-color: transparent !important;
+        border-bottom-color: transparent !important;
+      }
+    }
+  }
+  .expired-date {
+    @include color("a");
+  }
+  .btn-box .total-price {
+    @include color("e");
+  }
+}
