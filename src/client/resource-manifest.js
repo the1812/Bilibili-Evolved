@@ -896,5 +896,12 @@ Resource.manifest = {
       quickFavorite: '启用快速收藏',
     },
   },
+  disableFeedsDetails: {
+    path: 'disable-feeds-details.min.js',
+    reloadable: true,
+    displayNames: {
+      disableFeedsDetails: '禁止跳转动态详情',
+    },
+  }
 }
 export const resourceManifest = Resource.manifest

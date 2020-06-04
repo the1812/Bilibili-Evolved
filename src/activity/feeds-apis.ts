@@ -256,7 +256,7 @@ class FeedsCardsManager extends EventTarget {
     return card
   }
   async startWatching() {
-    const cardsList = await SpinQuery.select('.card-list .content') as HTMLDivElement
+    const cardsList = await SpinQuery.select('.feed-card .content') as HTMLDivElement
     if (!cardsList) {
       return false
     }
