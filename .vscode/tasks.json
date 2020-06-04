@@ -1,0 +1,91 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "重新编译 rebuild",
+      "type": "shell",
+      "command": "dotnet builder/dotnet/publish/build.dll",
+      "options": {
+        "cwd": "./"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "监视 watch",
+      "type": "shell",
+      "command": "dotnet builder/dotnet/publish/build.dll watch",
+      "options": {
+        "cwd": "./"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "构建编译器 compile builder",
+      "type": "shell",
+      "command": "dotnet publish -c Release -o publish/",
+      "options": {
+        "cwd": "./builder/dotnet/"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "构建编译器 (Debug模式) compile builder",
+      "type": "shell",
+      "command": "dotnet build",
+      "options": {
+        "cwd": "./builder/dotnet/"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "同步i18n数据 sync i18n",
+      "type": "shell",
+      "command": "node ./builder/node/i18n-sync/i18n-sync.js",
+      "presentation": {
+        "echo": false,
+        "reveal": "silent",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    }
+  ]
+}

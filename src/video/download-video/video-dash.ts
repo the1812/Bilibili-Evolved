@@ -37,9 +37,14 @@ export const dashToFragments = (dashes: { videoDashes: VideoDash[], audioDashes:
       return dashes.videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
     }
   })()
-  // 声音倒序排, 选择最高音质
-  const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
-  return [dashToFragment(video), dashToFragment(audio)]
+  // 居然还有不带音轨的视频 #574 av370857916
+  if (dashes.audioDashes.length > 0) {
+    // 声音倒序排, 选择最高音质
+    const audio = dashes.audioDashes.sort(descendingSort(d => d.bandWidth))[0]
+    return [dashToFragment(video), dashToFragment(audio)]
+  } else {
+    return [dashToFragment(video)]
+  }
 }
 export const getDashInfo = async (api: string, quality: number, allowLowerQuality = false) => {
   const json = await Ajax.getJsonWithCredentials(api)
@@ -86,7 +91,7 @@ export const getDashInfo = async (api: string, quality: number, allowLowerQualit
       }
       return dash
     })
-  const audioDashes: AudioDash[] = data.dash.audio.map((d: any) => {
+  const audioDashes: AudioDash[] = (data.dash.audio || []).map((d: any) => {
     return {
       bandWidth: d.bandwidth,
       codecs: d.codecs,

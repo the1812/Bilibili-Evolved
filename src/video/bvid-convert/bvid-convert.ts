@@ -9,7 +9,7 @@ if (settings.preferAvUrl && document.URL.startsWith('https://www.bilibili.com/vi
     if (!aid) {
       return
     }
-    const newUrl = document.URL.replace(/\/(video|bangumi)\/(BV[\w]+)/, (_, type) => {
+    const newUrl = document.URL.replace(/\/(video|bangumi)\/(BV[\w]+)/i, (_, type) => {
       return `/${type}/av${aid}`
     })
     if (document.URL !== newUrl) {
