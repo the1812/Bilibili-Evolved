@@ -372,7 +372,8 @@
 .news-content,
 .bilibili-player-video-danmaku-setting-left-block-word,
 .share-content .video-card .up-info .name,
-.user-title-using-cntr .user-title-box .name {
+.user-title-using-cntr .user-title-box .name,
+.bilibili-player-video-control .bilibili-player-video-btn-pagelist {
   @include color("e");
 }
 .van-popover .vip:hover,
