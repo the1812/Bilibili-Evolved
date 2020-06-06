@@ -2,7 +2,7 @@
   <div class="trendings">
     <div class="header">
       <div class="title">热门</div>
-      <div class="tabs">
+      <!-- <div class="tabs">
         <div
           class="tab"
           v-for="tab in tabs"
@@ -12,9 +12,17 @@
         >
           <div class="tab-name">{{tab.name}}</div>
         </div>
+      </div>-->
+      <div class="page">
+        <div class="prev-page" @click="scroll(-1)">
+          <icon type="extended" icon="left-arrow"></icon>
+        </div>
+        <div class="next-page" @click="scroll(1)">
+          <icon type="extended" icon="right-arrow"></icon>
+        </div>
       </div>
     </div>
-    <div class="contents">
+    <div class="contents" ref="contents">
       <div class="card-wrapper" v-for="card in trendingCards" :key="card.id">
         <video-card :data="card" orientation="vertical"></video-card>
       </div>
@@ -23,43 +31,68 @@
 </template>
 
 <script lang="ts">
+import { VideoCardInfo } from '../video-card-info'
+
 interface Tab {
   name: string
   day: number
   url: string
 }
-const tabs: Tab[] = [
-  {
-    name: '今日',
-    day: 1,
-    url: 'https://www.bilibili.com/ranking/all/0/0/1'
-  },
-  {
-    name: '三日',
-    day: 3,
-    url: 'https://www.bilibili.com/ranking'
-  },
-  {
-    name: '一周',
-    day: 7,
-    url: 'https://www.bilibili.com/ranking/all/0/0/7'
-  }
-]
+// const tabs: Tab[] = [
+//   {
+//     name: '今日',
+//     day: 1,
+//     url: 'https://www.bilibili.com/ranking/all/0/0/1'
+//   },
+//   {
+//     name: '三日',
+//     day: 3,
+//     url: 'https://www.bilibili.com/ranking'
+//   },
+//   {
+//     name: '一周',
+//     day: 7,
+//     url: 'https://www.bilibili.com/ranking/all/0/0/7'
+//   }
+// ]
 export default {
   components: {
-    VideoCard: () => import('../video-card.vue')
+    VideoCard: () => import('../video-card.vue'),
+    Icon: () => import('../../icon.vue'),
   },
   data() {
     return {
-      tabs,
-      currentTab: tabs[0],
-      trendingCards: []
+      // tabs,
+      // currentTab: tabs[0],
+      trendingCards: unsafeWindow.__INITIAL_STATE__.recommendList.map(
+        (it: any) => {
+          return {
+            id: it.aid,
+            aid: it.aid,
+            bvid: it.bvid,
+            timestamp: it.ctime * 1000,
+            time: new Date(it.ctime * 1000),
+            description: it.desc,
+            duration: it.duration,
+            durationText: formatDuration(it.duration),
+            coverUrl: it.pic.replace('http:', 'https:'),
+            title: it.title,
+            coins: formatCount(it.stat.coin),
+            danmakuCount: formatCount(it.stat.danmaku),
+            // favorites: formatCount(it.stat.favorite),
+            like: formatCount(it.stat.like),
+            playCount: formatCount(it.stat.view),
+            upName: it.owner.name,
+            upFaceUrl: it.owner.face.replace('http:', 'https:'),
+          } as VideoCardInfo
+        },
+      ),
     }
   },
   watch: {
     currentTab(tab: Tab) {
       this.updateTrendingTab(tab)
-    }
+    },
   },
   methods: {
     async updateTrendingTab(tab: Tab) {
@@ -72,11 +105,20 @@ export default {
       } else {
         this.currentTab = tab
       }
+    },
+    scroll(orientation: number) {
+      const contents = this.$refs.contents as HTMLElement
+      const style = getComputedStyle(contents)
+      const count = parseFloat(style.getPropertyValue('--card-count'))
+      const width = parseFloat(style.getPropertyValue('--card-width'))
+      const gap = 16
+      const distance = count * (width + gap)
+      contents.scrollBy(orientation * distance, 0)
     }
   },
   mounted() {
     this.updateTrendingTab(this.currentTab)
-  }
+  },
 }
 </script>
 
@@ -86,6 +128,29 @@ export default {
   flex-direction: column;
   .header {
     padding: 0 8px;
+    .page {
+      display: flex;
+      align-items: center;
+      > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        background-color: #8882;
+        border-radius: 50%;
+        margin-left: 8px;
+        cursor: pointer;
+        &:hover {
+          background-color: #8884;
+        }
+      }
+      .prev-page .be-icon {
+        transform: translateX(-1px);
+      }
+      .next-page .be-icon {
+        transform: translateX(1px);
+      }
+    }
   }
   .contents {
     --card-width: 200px;
