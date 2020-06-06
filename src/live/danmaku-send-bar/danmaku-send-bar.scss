@@ -24,7 +24,7 @@
         align-items: center;
         input {
           border: none;
-          border-bottom: 2px solid #444;
+          border-bottom: 2px solid #fff8;
           background-color: transparent;
           color: #fff;
           padding: 4px;
@@ -35,7 +35,7 @@
             border-color: var(--theme-color);
           }
           &::-webkit-input-placeholder {
-            color: #666 !important;
+            color: #fff8 !important;
           }
         }
       }
