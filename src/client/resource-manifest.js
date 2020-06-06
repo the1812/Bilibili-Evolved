@@ -902,6 +902,14 @@ Resource.manifest = {
     displayNames: {
       disableFeedsDetails: '禁止跳转动态详情',
     },
+  },
+  danmakuSendBar: {
+    path: 'danmaku-send-bar.min.js',
+    reloadable: true,
+    style: true,
+    displayNames: {
+      danmakuSendBar: '直播全屏弹幕栏',
+    }
   }
 }
 export const resourceManifest = Resource.manifest

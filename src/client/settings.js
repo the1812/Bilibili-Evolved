@@ -235,6 +235,7 @@ export const settings = {
   preferAvUrl: false,
   disableFeedsDetails: true,
   elegantScrollbar: true,
+  danmakuSendBar: false,
   cache: {},
 }
 const fixedSettings = {
