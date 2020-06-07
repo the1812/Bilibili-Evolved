@@ -10,7 +10,7 @@ referer: ${referer}
 User-Agent: ${UserAgent}
 >`
     }).join('\n')
-  }).join('\n').replace(/([^\r])\n/g, '$1\r\n')
+  }).concat('').join('\n').replace(/([^\r])\n/g, '$1\r\n')
 }
 export default {
   export: {
