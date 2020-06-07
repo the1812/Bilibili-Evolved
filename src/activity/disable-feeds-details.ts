@@ -27,6 +27,9 @@ const enable = url === 'https://t.bilibili.com/' ||
       }
       const contents = dqa(element, '.content')
       const target = e.target as HTMLElement
+      if (target.hasAttribute('click-title')) {
+        return
+      }
       if (contents.some(c => c === target || c.contains(target))) {
         e.stopImmediatePropagation()
       }
