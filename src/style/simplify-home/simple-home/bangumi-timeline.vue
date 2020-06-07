@@ -420,7 +420,7 @@ export default {
             margin: 0 12px;
             display: flex;
             align-items: center;
-            white-space: no-wrap;
+            white-space: nowrap;
             overflow: hidden;
             .be-icon {
               color: var(--theme-color);

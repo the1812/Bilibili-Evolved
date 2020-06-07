@@ -89,23 +89,23 @@ export default {
       ),
     }
   },
-  watch: {
-    currentTab(tab: Tab) {
-      this.updateTrendingTab(tab)
-    },
-  },
+  // watch: {
+  //   currentTab(tab: Tab) {
+  //     this.updateTrendingTab(tab)
+  //   },
+  // },
   methods: {
-    async updateTrendingTab(tab: Tab) {
-      const { getTrendingVideos } = await import('../trending-videos')
-      this.trendingCards = await getTrendingVideos(tab.day)
-    },
-    changeTab(tab: Tab) {
-      if (this.currentTab === tab) {
-        open(tab.url, '_blank')
-      } else {
-        this.currentTab = tab
-      }
-    },
+    // async updateTrendingTab(tab: Tab) {
+    //   const { getTrendingVideos } = await import('../trending-videos')
+    //   this.trendingCards = await getTrendingVideos(tab.day)
+    // },
+    // changeTab(tab: Tab) {
+    //   if (this.currentTab === tab) {
+    //     open(tab.url, '_blank')
+    //   } else {
+    //     this.currentTab = tab
+    //   }
+    // },
     scroll(orientation: number) {
       const contents = this.$refs.contents as HTMLElement
       const style = getComputedStyle(contents)
@@ -116,9 +116,9 @@ export default {
       contents.scrollBy(orientation * distance, 0)
     }
   },
-  mounted() {
-    this.updateTrendingTab(this.currentTab)
-  },
+  // mounted() {
+  //   this.updateTrendingTab(this.currentTab)
+  // },
 }
 </script>
 
