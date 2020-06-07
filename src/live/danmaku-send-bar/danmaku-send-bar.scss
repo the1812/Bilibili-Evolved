@@ -3,39 +3,42 @@
     display: none;
   }
 }
-.player-full-win,
-.fullscreen-fix {
-  &:not(.danmaku-send-bar-unloaded) {
-    .bilibili-live-player-video-controller-content {
-      // 不准 float 布局
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      &::before,
-      &::after {
-        content: none !important;
-      }
-      .danmaku-send-bar {
+@media screen and (min-width: 1038px) {
+  .player-full-win,
+  .fullscreen-fix {
+    &:not(.danmaku-send-bar-unloaded) {
+      .bilibili-live-player-video-controller-content {
+        // 不准 float 布局
         display: flex;
-        margin: 0 24px;
-        flex: 1 1 0;
-        height: 24px;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        input {
-          border: none;
-          border-bottom: 2px solid #fff8;
-          background-color: transparent;
-          color: #fff;
-          padding: 4px;
-          flex: 1;
-          max-width: 400px;
-          min-width: 100px;
-          &:focus-within {
-            border-color: var(--theme-color);
-          }
-          &::-webkit-input-placeholder {
-            color: #fff8 !important;
+        &::before,
+        &::after {
+          content: none !important;
+        }
+        .danmaku-send-bar {
+          display: flex;
+          margin: 0 24px;
+          flex: 1 1 0;
+          height: 24px;
+          justify-content: center;
+          align-items: center;
+          input {
+            border: none;
+            border-bottom: 2px solid #fff8;
+            background-color: transparent;
+            color: #fff;
+            padding: 4px;
+            flex: 1;
+            width: 0;
+            max-width: 400px;
+            min-width: 70px;
+            &:focus-within {
+              border-color: var(--theme-color);
+            }
+            &::-webkit-input-placeholder {
+              color: #fff8 !important;
+            }
           }
         }
       }

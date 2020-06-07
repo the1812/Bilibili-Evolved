@@ -9,6 +9,7 @@
     return
   }
   resources.applyStyle('danmakuSendBarStyle')
+  let changeEventHook = false
   const DanmakuSendBar = Vue.extend({
     template: /*html*/`
       <div class="danmaku-send-bar">
@@ -30,6 +31,17 @@
     mounted() {
       originalTextArea.addEventListener('input', this.listenChange)
       originalTextArea.addEventListener('change', this.listenChange)
+      if (!changeEventHook) {
+        const original = Object.getOwnPropertyDescriptors(HTMLTextAreaElement.prototype).value
+        Object.defineProperty(originalTextArea, 'value', {
+          ...original,
+          set(value: string) {
+            original.set!.call(this, value)
+            raiseEvent(originalTextArea, 'input')
+          }
+        })
+        changeEventHook = true
+      }
     },
     beforeDestroy() {
       originalTextArea.removeEventListener('input', this.listenChange)
