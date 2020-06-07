@@ -327,6 +327,26 @@ class VideoDownloader {
       await this.copyUrl()
     })
   }
+  async exportIdm() {
+    const { toIdmFormat } = await import('./idm-support')
+    const idm = toIdmFormat([this])
+    const danmaku = await this.downloadDanmaku()
+    const subtitle = await this.downloadSubtitle()
+    const pack = new DownloadVideoPackage()
+    pack.add(
+      `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
+      danmaku
+    )
+    pack.add(
+      `${getFriendlyTitle()}.${this.subtitleOption === 'ASS' ? 'ass' : 'json'}`,
+      subtitle
+    )
+    pack.add(
+      `${getFriendlyTitle()}.ef2`,
+      idm
+    )
+    await pack.emit(`${getFriendlyTitle()}.zip`)
+  }
   async exportData(copy = false) {
     const data = JSON.stringify([{
       fragments: this.fragments,
@@ -585,7 +605,7 @@ async function loadPanel() {
   // const start = performance.now()
   let workingDownloader: VideoDownloader
   // const sizeCache = new Map<VideoFormat, number>()
-  type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD' | 'ffmpegEpisodes' | 'ffmpegFragments'
+  type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD' | 'ffmpegEpisodes' | 'ffmpegFragments' | 'idm'
   interface EpisodeItem {
     title: string
     titleParameters?: BatchTitleParameter
@@ -819,6 +839,9 @@ async function loadPanel() {
                 await pack.emit()
               }
               break
+            case 'idm':
+              await videoDownloader.exportIdm()
+              break
             default:
               break
           }
@@ -906,6 +929,15 @@ async function loadPanel() {
         let result: string
         try {
           switch (type) {
+            case 'idm':
+              const items = await batchExtractor.getRawItems(format)
+              const { toIdmFormat } = await import('./idm-support')
+              result = toIdmFormat(items)
+              await DownloadVideoPackage.single(
+                getFriendlyTitle(false) + '.ef2',
+                new Blob([result], { type: 'text/plain' }),
+              )
+              return
             case 'aria2':
               result = await batchExtractor.collectAria2(format, toast, false)
               await DownloadVideoPackage.single(
@@ -1048,6 +1080,16 @@ async function loadPanel() {
             case 'aria2RPC': {
               await batch.collectAria2(this.getManualFormat().quality, true)
               Toast.success(`成功发送了批量请求.`, 'aria2 RPC', 3000)
+              break
+            }
+            case 'idm': {
+              const items = await batch.getRawItems(this.getManualFormat().quality)
+              const { toIdmFormat } = await import('./idm-support')
+              const result = toIdmFormat(items)
+              await DownloadVideoPackage.single(
+                'manual-exports.ef2',
+                new Blob([result], { type: 'text/plain' }),
+              )
               break
             }
           }

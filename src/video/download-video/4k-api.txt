@@ -1,5 +1,0 @@
-1080P: https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&qn=112&type=&otype=json&ep_id=275925&fourk=1&fnver=0&fnval=16
-
-4K:    https://api.bilibili.com/pgc/player/web/playurl?avid=56995872&cid=99547543&qn=120&type=&otype=json&ep_id=275925&fourk=1&fnver=0&fnval=16
-
-optional: fnver, ep_id, type

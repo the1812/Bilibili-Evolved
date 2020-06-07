@@ -248,11 +248,14 @@
   .actions > * {
     margin: 4px;
     flex-grow: 1;
-    flex-basis: calc(50% - 16px);
+    flex-basis: calc(33.33% - 32px);
     display: flex;
     justify-content: center;
     align-items: center;
     white-space: nowrap;
+    &.aria2-rpc {
+      flex-basis: 100%;
+    }
   }
   i.mdi-alert-circle {
     font-size: 14pt;
