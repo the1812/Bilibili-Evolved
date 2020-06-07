@@ -486,6 +486,9 @@ declare global {
     bilibiliSimpleNewHomeCompatible: boolean,
     preferAvUrl: boolean,
     elegantScrollbar: boolean,
+    danmakuSendBar: boolean,
+    watchLaterRedirectNavbar: boolean,
+    watchLaterRedirectPage: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

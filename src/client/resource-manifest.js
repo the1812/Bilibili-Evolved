@@ -193,7 +193,9 @@ Resource.manifest = {
   watchLaterRedirect: {
     path: 'watchlater.min.js',
     displayNames: {
-      watchLaterRedirect: '稍后再看重定向'
+      watchLaterRedirect: '稍后再看重定向',
+      watchLaterRedirectPage: '重定向稍后再看页面',
+      watchLaterRedirectNavbar: '重定向顶栏',
     }
   },
   hideTopSearch: {

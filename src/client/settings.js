@@ -236,6 +236,8 @@ export const settings = {
   disableFeedsDetails: true,
   elegantScrollbar: true,
   danmakuSendBar: false,
+  watchLaterRedirectNavbar: true,
+  watchLaterRedirectPage: true,
   cache: {},
 }
 const fixedSettings = {

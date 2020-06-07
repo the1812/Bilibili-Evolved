@@ -37,8 +37,10 @@ export class WatchlaterList extends NavbarComponent {
           <div class="search">
             <input type="text" placeholder="搜索" v-model="search">
           </div>
-          <a class="more-info" href="https://www.bilibili.com/watchlater/#/list" title="查看更多" target="_blank">
-            查看更多
+          <a v-if="!redirect" class="round-button" target="_blank" href="https://www.bilibili.com/watchlater/#" title="播放全部">
+            <i class="mdi mdi-play"></i>
+          </a>
+          <a class="round-button" href="https://www.bilibili.com/watchlater/#/list" title="查看更多" target="_blank">
             <i class="mdi mdi-dots-horizontal"></i>
           </a>
         </div>
@@ -82,7 +84,7 @@ export class WatchlaterList extends NavbarComponent {
         filteredCards: [],
         search: '',
         lastRemovedAid: 0,
-        // redirect: settings.watchLaterRedirect,
+        redirect: settings.watchLaterRedirectNavbar,
       },
       computed: {
         ...Vuex.mapState(['watchlaterList']),
@@ -113,7 +115,7 @@ export class WatchlaterList extends NavbarComponent {
             return
           }
           const getLink = (item: RawWatchlaterItem) => {
-            if (settings.watchLaterRedirect) {
+            if (settings.watchLaterRedirectNavbar) {
               return `https://www.bilibili.com/video/av${item.aid}`
             }
             if (item.bvid) {
