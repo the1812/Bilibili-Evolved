@@ -1,5 +1,5 @@
 const getRedirectLink = (text: string) => {
-  const match = text.match(/(av[\d]+)\/p([\d]+)/i) || text.match(/(BV[\w]+)\/p([\d]+)/i)
+  const match = text.match(/(BV[\w]+)\/p([\d]+)/i) || text.match(/(av[\d]+)\/p([\d]+)/i)
   if (match) {
     return `https://www.bilibili.com/video/${match[1]}/?p=${match[2]}`
   } else {
