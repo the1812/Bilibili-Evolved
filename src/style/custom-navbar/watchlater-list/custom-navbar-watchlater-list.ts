@@ -84,7 +84,7 @@ export class WatchlaterList extends NavbarComponent {
         filteredCards: [],
         search: '',
         lastRemovedAid: 0,
-        redirect: settings.watchLaterRedirectNavbar,
+        redirect: settings.watchLaterRedirect && settings.watchLaterRedirectNavbar,
       },
       computed: {
         ...Vuex.mapState(['watchlaterList']),
@@ -115,7 +115,7 @@ export class WatchlaterList extends NavbarComponent {
             return
           }
           const getLink = (item: RawWatchlaterItem) => {
-            if (settings.watchLaterRedirectNavbar) {
+            if (this.redirect) {
               return `https://www.bilibili.com/video/av${item.aid}`
             }
             if (item.bvid) {
@@ -130,7 +130,7 @@ export class WatchlaterList extends NavbarComponent {
               }
               const pages = item.pages.map(it => it.cid)
               const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
-              return settings.watchLaterRedirect ?
+              return this.redirect ?
                 `${getLink(item)}?p=${page}` :
                 `${getLink(item)}/p${page}`
             })()
