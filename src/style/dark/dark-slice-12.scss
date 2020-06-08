@@ -402,3 +402,7 @@
     @include color("a");
   }
 }
+.h #h-sign:focus {
+  @include background-color("4");
+  @include color("e");
+}
