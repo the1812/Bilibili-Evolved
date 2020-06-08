@@ -37,7 +37,7 @@ export class WatchlaterList extends NavbarComponent {
           <div class="search">
             <input type="text" placeholder="搜索" v-model="search">
           </div>
-          <a v-if="!redirect" class="round-button" target="_blank" href="https://www.bilibili.com/watchlater/#" title="播放全部">
+          <a class="round-button" target="_blank" href="https://www.bilibili.com/watchlater/#" title="播放全部">
             <i class="mdi mdi-play"></i>
           </a>
           <a class="round-button" href="https://www.bilibili.com/watchlater/#/list" title="查看更多" target="_blank">
