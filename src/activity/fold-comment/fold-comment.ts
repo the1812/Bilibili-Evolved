@@ -3,12 +3,14 @@
    && !document.URL.startsWith('https://space.bilibili.com')) {
      return
   }
-  const cardList = await SpinQuery.select('.feed-card > .content') as HTMLDivElement
-  if (!cardList) {
+  const { feedsCardsManager } = await import('../feeds-apis')
+  const success = await feedsCardsManager.startWatching()
+  if (!success) {
+    console.error('feedsCardsManager.startWatching() failed')
     return
   }
   resources.applyImportantStyle('foldCommentStyle')
-  const injectButton = (card: HTMLDivElement) => {
+  const injectButton = (card: HTMLElement) => {
     const injectToComment = (panelArea: HTMLDivElement) => {
       const button = document.createElement('div')
       button.classList.add('fold-comment')
@@ -45,5 +47,6 @@
       injectToComment(panelArea)
     }
   }
-  Observer.childList(cardList, () => cardList.querySelectorAll('div.card').forEach(injectButton))
+  feedsCardsManager.cards.forEach(c => injectButton(c.element))
+  feedsCardsManager.addEventListener('addCard', e => injectButton(e.detail.element))
 })()

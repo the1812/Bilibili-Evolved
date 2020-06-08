@@ -256,22 +256,52 @@ class FeedsCardsManager extends EventTarget {
     return card
   }
   async startWatching() {
+    const updateCards = (cardsList: HTMLElement) => {
+      const cards = [...cardsList.querySelectorAll('.content>.card')]
+      cards.forEach(it => this.addCard(it))
+      return Observer.childList(cardsList, records => {
+        records.forEach(record => {
+          record.addedNodes.forEach(node => this.addCard(node))
+          record.removedNodes.forEach(node => this.removeCard(node))
+        })
+      })
+    }
+
+    if (this.watching) {
+      return true
+    }
+    if (document.URL.includes('//space.bilibili.com')) {
+      console.log('space watch')
+      const container = await SpinQuery.select('.s-space') as HTMLDivElement
+      if (!container) {
+        return false
+      }
+      let cardListObserver: Observer | null = null
+      Observer.childList(container, async () => {
+        if (dq('#page-dynamic')) {
+          const cardsList = await SpinQuery.select('.feed-card .content') as HTMLElement
+          console.log('enter feeds tab')
+          if (cardListObserver) {
+            cardListObserver.stop()
+          }
+          cardListObserver = updateCards(cardsList)
+        } else {
+          console.log('leave feeds tab')
+          if (cardListObserver) {
+            cardListObserver.stop()
+            cardListObserver = null
+          }
+        }
+      })
+      this.watching = true
+      return true
+    }
     const cardsList = await SpinQuery.select('.feed-card .content') as HTMLDivElement
     if (!cardsList) {
       return false
     }
-    if (this.watching) {
-      return true
-    }
+    updateCards(cardsList)
     this.watching = true
-    const cards = [...cardsList.querySelectorAll('.content>.card')]
-    cards.forEach(it => this.addCard(it))
-    Observer.childList(cardsList, records => {
-      records.forEach(record => {
-        record.addedNodes.forEach(node => this.addCard(node))
-        record.removedNodes.forEach(node => this.removeCard(node))
-      })
-    })
     return true
   }
 }
