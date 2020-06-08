@@ -65,6 +65,9 @@ import { FeedsCard } from '../feeds-apis'
     if (card.text.replace(/#(.+?)#/g, '') === '') {
       return
     }
+    if (dq(card.element, '.translate-container')) {
+      return
+    }
     const cardContent = card.element.querySelector('.card-content') as HTMLElement
     const translator = new Translator({
       propsData: {
