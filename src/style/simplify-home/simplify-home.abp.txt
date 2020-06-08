@@ -3,7 +3,6 @@
 ! Homepage: https://github.com/the1812/Bilibili-Evolved/
 ! Expires: 1 days (update frequency)
 
-*://s1.hdslb.com/*/sentry/*.js$domain=www.bilibili.com
 *://s1.hdslb.com/*/log/*.js$domain=www.bilibili.com
 *://s1.hdslb.com/*/international-home/*.js$domain=www.bilibili.com
 *://s1.hdslb.com/*/cm-sdk/*.js$domain=www.bilibili.com
