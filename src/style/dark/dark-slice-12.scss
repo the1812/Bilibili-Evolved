@@ -407,3 +407,9 @@
   @include color("e");
   box-shadow: inset 0 2px 4px #0008 !important;
 }
+.bui-switch .bui-switch-input:checked+.bui-switch-label .bui-switch-body {
+  @include theme-background-color();
+  .bui-switch-dot {
+    @include to-theme("blue");
+  }
+}
