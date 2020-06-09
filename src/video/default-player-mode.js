@@ -48,7 +48,8 @@ async function initLights () {
     settingsButton.mouseover().mouseout();
     const setLight = async lightOff => {
       const checkbox = await SpinQuery.select(
-        () => document.querySelector(".bilibili-player-video-btn-setting-panel-others-content-lightoff .bui-checkbox-input"));
+        '.bilibili-player-video-btn-setting-right-others-content-lightoff .bui-checkbox-input'
+      );
       checkbox.checked = lightOff;
       raiseEvent(checkbox, "change");
     };
