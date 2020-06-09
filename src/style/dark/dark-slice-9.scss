@@ -544,7 +544,7 @@ $highlight-map: (
     &:checked + .bui-switch-label .bui-switch-body {
       @include theme-background-color();
       .bui-switch-dot {
-        @include to-theme("blue");
+        @include theme-fill();
       }
     }
   }
