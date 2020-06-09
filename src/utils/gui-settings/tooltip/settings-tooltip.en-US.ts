@@ -114,7 +114,6 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   ['keymap', `Enable more keyboard shortcuts for video player:
 - <kbd>w</kbd> Web fullscreen
 - <kbd>t</kbd> Wide screen / Theater mode
-- <kbd>r</kbd> Toggle repeat
 - <kbd>m</kbd> Toggle mute
 - <kbd>d</kbd> Toggle danmakus
 - <kbd>l</kbd> Like

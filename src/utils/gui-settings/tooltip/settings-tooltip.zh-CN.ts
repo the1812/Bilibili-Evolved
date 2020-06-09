@@ -142,7 +142,6 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['keymap', /*html*/`为视频播放器启用更多的快捷键:
 - <kbd>w</kbd> 网页全屏
 - <kbd>t</kbd> 宽屏
-- <kbd>r</kbd> 循环播放
 - <kbd>m</kbd> 静音
 - <kbd>d</kbd> 弹幕开关
 - <kbd>l</kbd> 点赞

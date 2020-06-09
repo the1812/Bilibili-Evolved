@@ -9,7 +9,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     f: '.bilibili-player-video-fullscreen', // 全屏
     w: '.bilibili-player-video-web-fullscreen', // 网页全屏
     t: '.bilibili-player-video-btn-widescreen', // 宽屏
-    r: '.bilibili-player-video-btn-repeat', // 切换循环模式
+    // r: '.bilibili-player-video-btn-repeat', // 切换循环模式
     m: '.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume', // 切换静音
     p: '.bilibili-player-video-btn-pip', // 画中画
     // l: '.video-toolbar .like', // 点赞
@@ -160,6 +160,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       }
     } else if (key === '`' && noModifyKeys) {
       // menu size: 386.6 x 311 (2020-03-29)
+      // menu size: 176.65 x 194 (2020-06-09)
       const player = dq('.bilibili-player-video-wrap') as HTMLElement
       const rect = player.getBoundingClientRect()
       player.dispatchEvent(new MouseEvent('contextmenu', {
@@ -168,8 +169,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
         view: unsafeWindow,
         button: 2,
         buttons: 0,
-        clientX: rect.x + rect.width / 2 - 386.6 / 2,
-        clientY: rect.y + rect.height / 2 - 311 / 2
+        clientX: rect.x + rect.width / 2 - 176.65 / 2,
+        clientY: rect.y + rect.height / 2 - 194 / 2
       }))
     } else if (e.shiftKey) {
       const video = dq('.bilibili-player-video video') as HTMLVideoElement

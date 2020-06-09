@@ -28,7 +28,6 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ['keymap', /*html*/`動画プレーヤーのためにより多くのショートカットを有効にします:
 - <kbd>w</kbd> ウェブの全画面
 - <kbd>t</kbd> ワイドモード
-- <kbd>r</kbd> サイクル放送
 - <kbd>m</kbd> 消音
 - <kbd>d</kbd> 弾幕スイッチ
 - <kbd>l</kbd> いいね
