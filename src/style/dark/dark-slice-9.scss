@@ -534,6 +534,30 @@ $highlight-map: (
     }
   }
 }
+.bui-switch {
+  .bui-switch-name {
+    .bui-switch-reddot {
+      @include theme-background-color();
+    }
+  }
+  .bui-switch-input {
+    &:checked + .bui-switch-label .bui-switch-body {
+      @include theme-background-color();
+    }
+  }
+  &:hover {
+    .bui-switch-name {
+      @include theme-color();
+    }
+  }
+}
+.bilibili-player-video-control .bilibili-player-video-btn-setting-left-more:hover {
+  &,
+  .bp-svgicon {
+    @include theme-color();
+    @include theme-fill();
+  }
+}
 .channel-sidebar {
   @include background-color("2");
   @include border-color("4");
