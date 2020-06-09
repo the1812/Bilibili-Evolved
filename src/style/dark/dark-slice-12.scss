@@ -405,4 +405,5 @@
 .h #h-sign:focus {
   @include background-color("4");
   @include color("e");
+  box-shadow: inset 0 2px 4px #0008 !important;
 }
