@@ -373,7 +373,8 @@
 .bilibili-player-video-danmaku-setting-left-block-word,
 .share-content .video-card .up-info .name,
 .user-title-using-cntr .user-title-box .name,
-.bilibili-player-video-control .bilibili-player-video-btn-pagelist {
+.bilibili-player-video-control .bilibili-player-video-btn-pagelist,
+.bilibili-player-video-control .bilibili-player-video-btn-speed {
   @include color("e");
 }
 .van-popover .vip:hover,
@@ -972,7 +973,8 @@ $highlight-map: (
 .van-popper-upload .upload-item:hover .bilifont,
 .bilibili-search-suggest .suggest-item .suggest_high_light,
 .new-topic-panel .tag-item .content:hover,
-.bilibili-player-video-toast-item .video-float-hint-btn.hint-red {
+.bilibili-player-video-toast-item .video-float-hint-btn.hint-red,
+.bilibili-player-video-btn-speed-menu-list.bilibili-player-active {
   @include theme-color();
 }
 .interact-dialog .btn,

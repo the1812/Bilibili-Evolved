@@ -37,12 +37,30 @@ div.bilibili-player-video-control {
   display: flex !important;
   transform: translateY(-1px) !important;
 }
+.bilibili-player-video-btn-speed {
+  &-name {
+    display: none !important;
+  }
+  &::before {
+    display: block;
+    font-size: 20px;
+    width: 36px;
+    color: #eee;
+    content: "\F8FE";
+    font: normal normal normal 22px/1 "Material Design Icons";
+    text-rendering: auto;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
 .bilibili-player-video-btn-pagelist {
   .bilibili-player-video-btn-name {
     display: none !important;
   }
   &::before {
     display: block;
+    font-size: 20px;
     width: 36px;
     color: #eee;
     content: "\F279";
