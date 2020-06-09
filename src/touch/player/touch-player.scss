@@ -43,11 +43,10 @@ div.bilibili-player-video-control {
   }
   &::before {
     display: block;
-    font-size: 20px;
     width: 36px;
     color: #eee;
     content: "\F8FE";
-    font: normal normal normal 22px/1 "Material Design Icons";
+    font: normal normal normal 20px/1 "Material Design Icons";
     text-rendering: auto;
     line-height: inherit;
     -webkit-font-smoothing: antialiased;
@@ -60,11 +59,10 @@ div.bilibili-player-video-control {
   }
   &::before {
     display: block;
-    font-size: 20px;
     width: 36px;
     color: #eee;
     content: "\F279";
-    font: normal normal normal 22px/1 "Material Design Icons";
+    font: normal normal normal 20px/1 "Material Design Icons";
     text-rendering: auto;
     line-height: inherit;
     -webkit-font-smoothing: antialiased;
