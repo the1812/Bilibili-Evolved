@@ -61,7 +61,7 @@ class Bangumi extends Video {
     return api.bind(this) as typeof api
   }
 }
-// 课程, 不知道为什么b站给它起名cheese
+// 课程, 不知道为什么b站给它起名cheese, 芝士就是力量?
 class Cheese extends Video {
   constructor(public ep: number | string) { super() }
   async getApiGenerator(dash = false) {

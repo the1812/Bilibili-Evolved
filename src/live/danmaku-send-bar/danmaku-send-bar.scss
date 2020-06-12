@@ -3,6 +3,9 @@
     display: none;
   }
 }
+.bilibili-live-player-video-controller-container {
+  background-image: linear-gradient(to bottom, transparent 20%, rgba(0, 0, 0, 0.9));
+}
 @media screen and (min-width: 1038px) {
   .player-full-win,
   .fullscreen-fix {
