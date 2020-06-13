@@ -561,6 +561,39 @@ $highlight-map: (
     @include theme-fill();
   }
 }
+.june-activity-entry .progress-bar {
+  @include color("a");
+  @include background-color();
+  @include border-color("37a29c");
+}
+.focus-us .text {
+  @include color("6d757a");
+}
+.main-wrap {
+  .container {
+    @include no-shadow();
+  }
+  .bg-circle {
+    @include background-color("4");
+  }
+  .version-date,
+  .text-wrap {
+    @include color("a");
+  }
+  .info-title {
+    @include color("e");
+  }
+  .info-select {
+    @include border-color("5");
+    li {
+      @include color("e");
+      &.active {
+        @include foreground-color();
+        @include theme-background-color();
+      }
+    }
+  }
+}
 .channel-sidebar {
   @include background-color("2");
   @include border-color("4");
