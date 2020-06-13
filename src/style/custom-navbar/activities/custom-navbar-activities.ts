@@ -3,19 +3,22 @@ import { VideoCardInfo } from '../../simplify-home/video-card-info'
 let componentUpdate = async () => { }
 let tabUpdate = async () => { }
 let latestID: string
+// feeds history API https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=${getUID()}&offset_dynamic_id=${lastCardID}&type=${feedsType}
+// live list https://api.live.bilibili.com/relation/v1/feed/feed_list?page=${page}&pagesize=${pageSize}
 interface ActivityTabComponentConfig {
   dataObject: {}
   apiUrl: string
   name: string
-  handleJson: (json: any) => void
+  handleJson: (json: any) => Promise<void>
   template: string
+  nextPage?: () => Promise<boolean>
 }
 interface ActivityTab {
   name: string
   moreUrl: string
 }
-const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, template }: ActivityTabComponentConfig) => {
-  return {
+const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, nextPage, template }: ActivityTabComponentConfig) => {
+  const component = {
     template,
     components: {
       'dpi-img': () => import('../dpi-img.vue'),
@@ -42,16 +45,44 @@ const getActivityTabComponent = ({ dataObject, apiUrl, name, handleJson, templat
     data() {
       return Object.assign({
         loading: true,
+        hasMoreContent: true,
+        scrollObserver: null,
       }, dataObject)
     },
-    mounted() {
-      this.fetchData()
+    async mounted() {
       componentUpdate = async () => await this.fetchData(true)
+      await this.fetchData()
+      if (this.$refs.trigger && typeof this.nextPage === 'function') {
+        console.log('infinite scroll')
+        const trigger = this.$refs.trigger as HTMLElement
+        const observer = new IntersectionObserver(async (entries) => {
+          console.log(entries)
+          if (entries.some(e => e.intersectionRatio > 0)) {
+            const hasMoreContent = await this.nextPage()
+            if (!hasMoreContent) {
+              console.log('disconnect')
+              observer.disconnect()
+              this.hasMoreContent = false
+            }
+          }
+        })
+        this.scrollObserver = observer
+        observer.observe(trigger)
+      }
     },
-    destroyed() {
+    beforeDestroy() {
       componentUpdate = async () => { }
+      if (this.scrollObserver) {
+        console.log('destroy')
+        this.scrollObserver.disconnect()
+        this.scrollObserver = null
+      }
     },
   }
+  if (nextPage) {
+    (component.methods as any).nextPage = nextPage
+  }
+  return component
 }
 export class Activities extends NavbarComponent {
   constructor() {
@@ -80,6 +111,9 @@ export class Activities extends NavbarComponent {
     }
     this.getNotifyCount()
     setInterval(async () => {
+      if (!navigator.onLine) {
+        return
+      }
       await this.getNotifyCount()
       await tabUpdate()
       await componentUpdate()
@@ -214,18 +248,19 @@ export class Activities extends NavbarComponent {
             <div class="video-activity" :class="{center: loading || (leftCards.length + rightCards.length) === 0}">
               <activity-loading :loading="loading"></activity-loading>
               <activity-empty v-if="!loading && leftCards.length + rightCards.length === 0"></activity-empty>
-              <div v-if="!loading" class="video-activity-column">
+              <div v-if="!loading" class="video-activity-column left">
                 <video-card v-for="card of leftCards" :key="card.id" :card="card" :watchlaterInit="card.watchlater"></video-card>
               </div>
-              <div v-if="!loading" class="video-activity-column">
+              <div v-if="!loading" class="video-activity-column right">
                 <video-card v-for="card of rightCards" :key="card.id" :card="card" :watchlaterInit="card.watchlater"></video-card>
               </div>
+              <div v-if="!loading && hasMoreContent" class="trigger" ref="trigger">加载中...</div>
             </div>
           `,
-          handleJson: async function (json) {
+          async handleJson(json) {
             // const { getWatchlaterList } = await import('../../video/watchlater-api')
             // const watchlaterList = await getWatchlaterList()
-            const cards = _.uniqBy(_.get(json, 'data.cards', []).map((card: any) => {
+            const jsonCards = _.get(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
                 coverUrl: cardJson.pic,
@@ -242,14 +277,38 @@ export class Activities extends NavbarComponent {
                 watchlater: true,
                 get new() { return Activities.isNewID(this.id) },
               }
-            }), (it: VideoCardInfo) => it.aid)
+            }) as VideoCardInfo[]
+            const cards = _.uniqBy(jsonCards.concat(this.leftCards, this.rightCards), it => it.id)
+              .sort((a, b) => {
+                return b.id > a.id ? 1 : -1
+              })
+            if (cards.length === 0) {
+              this.hasMoreContent = false
+            }
             this.leftCards = cards.filter((_, index) => index % 2 === 0)
             this.rightCards = cards.filter((_, index) => index % 2 === 1)
-            if (this.leftCards.length !== this.rightCards.length) {
-              this.leftCards.pop()
-            }
+            // if (this.leftCards.length !== this.rightCards.length) {
+            //   this.leftCards.pop()
+            // }
             Activities.updateLatestID(cards)
-          }
+          },
+          async nextPage() {
+            const cards = [...this.leftCards, ...this.rightCards].sort((a, b) => {
+              return b.id > a.id ? 1 : -1
+            }) as VideoCardInfo[]
+            if (cards.length === 0) {
+              return false
+            }
+            let lastCardID = cards.pop()!.id
+            const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=${getUID()}&offset_dynamic_id=${lastCardID}&type=8`
+            const json = await Ajax.getJsonWithCredentials(api)
+            console.log('lastCardID', lastCardID, json)
+            if (json.code !== 0) {
+              return false
+            }
+            await this.handleJson(json)
+            return Boolean(_.get(json, 'data.has_more', true))
+          },
         }), {
           components: {
             'video-card': {
@@ -313,10 +372,11 @@ export class Activities extends NavbarComponent {
                   <div class="title">{{card.title}}</div>
                 </div>
               </a>
+              <div v-if="!loading && hasMoreContent" class="trigger" ref="trigger">加载中...</div>
             </div>
           `,
           handleJson: async function (json) {
-            this.cards = _.get(json, 'data.cards', []).map((card: any) => {
+            const cards = _.get(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
                 title: cardJson.apiSeasonInfo.title,
@@ -327,8 +387,30 @@ export class Activities extends NavbarComponent {
                 id: card.desc.dynamic_id_str,
                 get new() { return Activities.isNewID(this.id) },
               }
-            })
-            Activities.updateLatestID(this.cards)
+            }) as { id: string }[]
+            this.cards = _.uniqBy(cards.concat(this.cards), it => it.id)
+              .sort((a, b) => {
+                return b.id > a.id ? 1 : -1
+              })
+            if (cards.length === 0) {
+              this.hasMoreContent = false
+            }
+            Activities.updateLatestID(cards)
+          },
+          async nextPage() {
+            const cards = [...this.cards] as VideoCardInfo[]
+            if (cards.length === 0) {
+              return false
+            }
+            let lastCardID = cards.pop()!.id
+            const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=${getUID()}&offset_dynamic_id=${lastCardID}&type=512`
+            const json = await Ajax.getJsonWithCredentials(api)
+            console.log('lastCardID', lastCardID, json)
+            if (json.code !== 0) {
+              return false
+            }
+            await this.handleJson(json)
+            return Boolean(_.get(json, 'data.has_more', true))
           },
         }),
         'column-activity': getActivityTabComponent({
@@ -341,19 +423,22 @@ export class Activities extends NavbarComponent {
               <activity-empty v-if="!loading && cards.length === 0"></activity-empty>
               <a v-if="!loading" class="column-card" :class="{new: card.new}" v-for="card of cards" :key="card.id" target="_blank" :href="card.url">
                 <div class="covers">
-                  <dpi-img class="cover" v-for="cover of card.covers" :key="cover" :size="{height: 120}" :src="cover"></dpi-img>
+                  <!--<dpi-img class="cover" v-for="cover of card.covers" :key="cover" :size="{ height: 120, width: 0 }" :src="cover"></dpi-img>-->
+                  <img class="cover" v-for="cover of card.covers" :key="cover" height="120" width="0" :src="cover"/>
                   <a class="up" target="_blank" :href="card.upUrl">
-                    <dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>
+                    <img class="face" height="24" width="24" :src="card.faceUrl"/>
+                    <!--<dpi-img class="face" :size="24" :src="card.faceUrl"></dpi-img>-->
                     <div class="name">{{card.upName}}</div>
                   </a>
                 </div>
                 <h1 class="title" :title="card.title">{{card.title}}</h1>
                 <div class="description" :title="card.description">{{card.description}}</div>
               </a>
+              <div v-if="!loading && hasMoreContent" class="trigger" ref="trigger">加载中...</div>
             </div>
           `,
           handleJson: async function (json) {
-            this.cards = _.get(json, 'data.cards', []).map((card: any) => {
+            const cards = _.get(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
                 covers: cardJson.image_urls,
@@ -367,8 +452,30 @@ export class Activities extends NavbarComponent {
                 id: card.desc.dynamic_id_str,
                 get new() { return Activities.isNewID(this.id) },
               }
-            })
+            }) as { id: string }[]
+            this.cards = _.uniqBy(cards.concat(this.cards), it => it.id)
+              .sort((a, b) => {
+                return b.id > a.id ? 1 : -1
+              })
+            if (cards.length === 0) {
+              this.hasMoreContent = false
+            }
             Activities.updateLatestID(this.cards)
+          },
+          async nextPage() {
+            const cards = [...this.cards] as VideoCardInfo[]
+            if (cards.length === 0) {
+              return false
+            }
+            let lastCardID = cards.pop()!.id
+            const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=${getUID()}&offset_dynamic_id=${lastCardID}&type=64`
+            const json = await Ajax.getJsonWithCredentials(api)
+            console.log('lastCardID', lastCardID, json)
+            if (json.code !== 0) {
+              return false
+            }
+            await this.handleJson(json)
+            return Boolean(_.get(json, 'data.has_more', true))
           },
         }),
         'live-activity': getActivityTabComponent({
@@ -387,7 +494,7 @@ export class Activities extends NavbarComponent {
             </div>
           `,
           handleJson: async function (json) {
-            this.cards = _.get(json, 'data.list', []).map((card: any) => {
+            const parseLiveCard = (card: any) => {
               return {
                 faceUrl: card.face,
                 title: card.title,
@@ -395,7 +502,20 @@ export class Activities extends NavbarComponent {
                 id: card.roomid,
                 url: card.link,
               }
+            }
+            this.cards = _.get(json, 'data.list', []).map(parseLiveCard)
+            const fullList = await Ajax.getPages({
+              api: page => {
+                return Ajax.getJsonWithCredentials(`https://api.live.bilibili.com/relation/v1/feed/feed_list?page=${page}&pagesize=24`)
+              },
+              getList: json => {
+                return _.get(json, 'data.list', [])
+              },
+              getTotal: json => {
+                return _.get(json, 'data.results', 0)
+              },
             })
+            this.cards = fullList.map(parseLiveCard)
           },
         }),
       },
