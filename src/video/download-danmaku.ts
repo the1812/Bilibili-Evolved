@@ -125,35 +125,42 @@ export default {
   },
   widget: {
     content: /* html */`
+      <a id="danmaku-link" style="display:none"></a>
       <button
         class="gui-settings-flat-button"
-        id="download-danmaku">
+        id="download-danmaku-xml">
         <i class="icon-danmaku"></i>
-        <span>下载弹幕</span>
-        <a id="danmaku-link" style="display:none"></a>
-      </button>`,
+        <span>下载弹幕<span>(XML)</span></span>
+      </button>
+      <button
+        class="gui-settings-flat-button"
+        id="download-danmaku-ass">
+        <i class="icon-danmaku"></i>
+        <span>下载弹幕<span>(ASS)</span></span>
+      </button>
+    `,
     condition: async () => {
       let cid = await SpinQuery.select(() => (unsafeWindow || window).cid)
       return Boolean(cid)
     },
     success: () => {
-      const link = dq('#danmaku-link')
-      const button = dq('#download-danmaku') as HTMLButtonElement
-      button.addEventListener('click', (e: MouseEvent) => {
-        if (e.target !== link) {
-          // const timeout = setTimeout(
-          //   () => (dq('#download-danmaku>span') as HTMLElement).innerHTML = '请稍侯...',
-          //   200)
+      const buttonXml = dq('#download-danmaku-xml') as HTMLButtonElement
+      const buttonAss = dq('#download-danmaku-ass') as HTMLButtonElement
+      const allButtons = [buttonXml, buttonAss]
+      const addListener = (button: HTMLButtonElement, ass: boolean) => {
+        button.addEventListener('click', async () => {
           try {
-            button.disabled = true
-            downloadDanmaku(e.shiftKey)
+            allButtons.forEach(b => b.disabled = true)
+            await downloadDanmaku(ass)
           } catch (error) {
             logError(error)
           } finally {
-            button.disabled = false
+            allButtons.forEach(b => b.disabled = false)
           }
-        }
-      })
+        })
+      }
+      addListener(buttonXml, false)
+      addListener(buttonAss, true)
     }
   }
 }
