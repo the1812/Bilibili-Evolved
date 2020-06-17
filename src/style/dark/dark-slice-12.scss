@@ -407,3 +407,9 @@
   @include color("e");
   box-shadow: inset 0 2px 4px #0008 !important;
 }
+.action-button:hover .border, .action-button > .action-icon.active .border {
+  @include theme-fill();
+}
+.history-list .r-info .w-info .device {
+  @include color("a");
+}
