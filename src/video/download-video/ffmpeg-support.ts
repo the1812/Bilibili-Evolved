@@ -5,6 +5,12 @@ const getNumber = (n: number, count: number) => {
   const finalCount = Math.max(2, Math.trunc(Math.log10(count) + 1))
   return n.toString().padStart(finalCount, '0')
 }
+/**
+ * 获取分段列表
+ * @param count 总数量
+ * @param originalTitle 标题
+ * @param extensions 扩展名
+ */
 export const getFragmentsList = (count: number, originalTitle: string, extensions: string[]) => {
   if (count < 2) {
     return null
@@ -20,6 +26,11 @@ export const getFragmentsList = (count: number, originalTitle: string, extension
   }
   return names.join('\n')
 }
+/**
+ * 获取批量分段列表
+ * @param items 批量视频数组
+ * @param extensionOrDash 扩展名, 或传入`true`表示为DASH格式
+ */
 export const getBatchFragmentsList = (items: RawItem[], extensionOrDash: string | boolean) => {
   const multipleFragments = (item: RawItem) => item.fragments.length > 1
   const fragmentsItems = items.filter(multipleFragments)
@@ -39,6 +50,11 @@ export const getBatchFragmentsList = (items: RawItem[], extensionOrDash: string 
   })
   return names
 }
+/**
+ * 获取批量选集列表
+ * @param items 批量视频数组
+ * @param extensionOrDash 扩展名, 或传入`true`表示为DASH格式
+ */
 export const getBatchEpisodesList = (items: RawItem[], extensionOrDash: string | boolean) => {
   const names: string[] = []
   items.forEach(item => {
