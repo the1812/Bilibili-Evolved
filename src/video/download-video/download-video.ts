@@ -831,11 +831,29 @@ async function loadPanel() {
               break
             case 'ffmpegFragments':
               if (videoDownloader.fragments.length < 2) {
-                Toast.info('当前视频没有分段.', '分段列表', 3000)
+                Toast.info('当前视频没有分段.', '分段合并', 3000)
               } else {
                 const { getFragmentsList } = await import('./ffmpeg-support')
+                // const { getFragmentsMergeScript } = await import('./ffmpeg-support')
+
                 const pack = new DownloadVideoPackage()
                 pack.add('ffmpeg-files.txt', getFragmentsList(videoDownloader.fragments.length, getFriendlyTitle(), videoDownloader.fragments.map(f => videoDownloader.extension(f))))
+                // const isWindows = window.navigator.appVersion.includes('Win')
+                // const extension = isWindows ? 'bat' : 'sh'
+                // const script = getFragmentsMergeScript({
+                //   fragments: videoDownloader.fragments,
+                //   title: getFriendlyTitle(),
+                //   totalSize: videoDownloader.totalSize,
+                //   cid: pageData.cid,
+                //   referer: document.URL.replace(window.location.search, ''),
+                // }, this.dash || videoDownloader.extension())
+                // if (isWindows) {
+                //   const { GBK } = await import('./gbk')
+                //   const data = new Blob([new Uint8Array(GBK.encode(script))])
+                //   pack.add(`${getFriendlyTitle()}.${extension}`, data)
+                // } else {
+                //   pack.add(`${getFriendlyTitle()}.${extension}`, script)
+                // }
                 await pack.emit()
               }
               break
@@ -965,18 +983,36 @@ async function loadPanel() {
             case 'ffmpegFragments':
               {
                 const items = await batchExtractor.getRawItems(format)
+                if (items.every(it => it.fragments.length < 2)) {
+                  Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
+                  return
+                }
                 const videoDownloader = new VideoDownloader(format, items[0].fragments)
                 const { getBatchFragmentsList } = await import('./ffmpeg-support')
+                // const pack = new DownloadVideoPackage()
+                // const isWindows = window.navigator.appVersion.includes('Win')
+                // const extension = isWindows ? 'bat' : 'sh'
+                // const script = getBatchMergeScript(items, videoDownloader.extension())
+                // if (isWindows) {
+                //   const { GBK } = await import('./gbk')
+                //   const data = new Blob([new Uint8Array(GBK.encode(script))])
+                //   pack.add(`${getFriendlyTitle()}.${extension}`, data)
+                // } else {
+                //   pack.add(`${getFriendlyTitle()}.${extension}`, script)
+                // }
+                // await pack.emit()
+
                 const map = getBatchFragmentsList(items, this.dash || videoDownloader.extension())
                 if (!map) {
                   Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
-                } else {
-                  const pack = new DownloadVideoPackage()
-                  for (const [filename, content] of map.entries()) {
-                    pack.add(filename, content)
-                  }
-                  await pack.emit(escapeFilename(`${getFriendlyTitle(false)}.zip`))
+                  return
                 }
+                const pack = new DownloadVideoPackage()
+                for (const [filename, content] of map.entries()) {
+                  pack.add(filename, content)
+                }
+                await pack.emit(escapeFilename(`${getFriendlyTitle(false)}.zip`))
+                // }
               }
               break
             case 'ffmpegEpisodes':
