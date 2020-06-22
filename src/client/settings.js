@@ -140,6 +140,7 @@ export const settings = {
   customNavbarOrder: { ...customNavbarDefaultOrders },
   customNavbarHidden: ['blank1', 'drawingLink', 'musicLink', 'gamesIframe', 'darkMode'],
   customNavbarBoundsPadding: 10,
+  customNavbarGlobalFixed: false,
   playerShadow: false,
   narrowDanmaku: true,
   outerWatchlater: true,

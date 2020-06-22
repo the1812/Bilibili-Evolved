@@ -186,6 +186,9 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 }
 .custom-navbar {
   position: absolute;
+  body.fixed-navbar & {
+    position: fixed;
+  }
   top: 0;
   left: 0;
   height: var(--navbar-height);

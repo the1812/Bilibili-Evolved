@@ -29,6 +29,9 @@ const loadSettings = () => {
   addSettingsListener('customNavbarBlurOpacity', value => {
     document.documentElement.style.setProperty('--navbar-blur-opacity', value)
   })
+  addSettingsListener('customNavbarGlobalFixed', value => {
+    document.body.classList.toggle('fixed-navbar', value)
+  })
 }
 const classHandler = (key: string, value: boolean, element: HTMLElement) => {
   element.classList.toggle(key, value)

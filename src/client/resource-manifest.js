@@ -580,6 +580,7 @@ Resource.manifest = {
       customNavbarCompact: '紧凑布局',
       customNavbarBlur: '背景模糊',
       customNavbarBlurOpacity: '模糊层不透明度',
+      customNavbarGlobalFixed: '全局固定',
       allNavbarFill: '填充其他顶栏'
     }
   },

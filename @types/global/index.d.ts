@@ -489,6 +489,8 @@ declare global {
     danmakuSendBar: boolean,
     watchLaterRedirectNavbar: boolean,
     watchLaterRedirectPage: boolean,
+    showCoverBeforePlay: boolean,
+    customNavbarGlobalFixed: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
