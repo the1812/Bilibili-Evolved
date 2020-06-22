@@ -195,6 +195,11 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
         }
       } else if (key === 'j') { // 败者食尘
         video.currentTime -= settings.keymapJumpSeconds
+      } else if (key === 's') { // 快速收藏
+        const quickFavorite = dq('.quick-favorite') as HTMLElement
+        if (quickFavorite) {
+          quickFavorite.click()
+        }
       } else {
         preventDefault = false
       }
