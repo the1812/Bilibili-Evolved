@@ -22,7 +22,7 @@
         <icon type="home" icon="activity"></icon>全部动态
       </a>
     </div>
-    <div class="contents">
+    <div class="contents" ref="contents">
       <div class="card-wrapper" v-for="card in feedCards" :key="card.id">
         <video-card :data="card" orientation="vertical"></video-card>
       </div>
@@ -106,6 +106,9 @@ export default {
     // if (json.code === 0) {
     //   this.online = json.data.web_online
     // }
+    const contents = this.$refs.contents as HTMLElement
+    const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
+    enableHorizontalScroll(contents)
   }
 }
 </script>

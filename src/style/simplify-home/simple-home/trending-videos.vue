@@ -116,9 +116,11 @@ export default {
       contents.scrollBy(orientation * distance, 0)
     }
   },
-  // mounted() {
-  //   this.updateTrendingTab(this.currentTab)
-  // },
+  async mounted() {
+    const contents = this.$refs.contents as HTMLElement
+    const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
+    enableHorizontalScroll(contents)
+  },
 }
 </script>
 
