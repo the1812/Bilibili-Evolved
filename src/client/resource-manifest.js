@@ -912,6 +912,14 @@ Resource.manifest = {
     displayNames: {
       danmakuSendBar: '直播全屏弹幕栏',
     }
-  }
+  },
+  showCoverBeforePlay: {
+    path: 'show-cover-before-play.min.js',
+    reloadable: true,
+    style: true,
+    displayNames: {
+      showCoverBeforePlay: '播放前显示封面',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

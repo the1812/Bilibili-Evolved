@@ -238,6 +238,7 @@ export const settings = {
   danmakuSendBar: false,
   watchLaterRedirectNavbar: true,
   watchLaterRedirectPage: true,
+  showCoverBeforePlay: false,
   cache: {},
 }
 const fixedSettings = {
