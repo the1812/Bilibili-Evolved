@@ -13,6 +13,7 @@
 
 ### 注意事项
 - 请尊重视频原作者的版权, 因下载产生的纠纷本人概不负责.
+- 4K清晰度只能导出下载, 不能直接下载.
 - `DASH`格式下载将得到视频和音频两个文件, 合并请参考[#183](https://github.com/the1812/Bilibili-Evolved/issues/183).
 - `FLV`格式视频如果有分段, 会把所有视频打包成`.zip`格式.
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
@@ -30,15 +31,14 @@
 <details>
 <summary><strong>下载弹幕</strong></summary>
 
-在视频播放页面中, `下载弹幕`按钮将在`附加功能`中启用, 点击可以下载XML格式的弹幕.
-> 点击时若按住`Shift`将下载ASS格式的弹幕, 此功能尚未完善. (不支持高级弹幕, 反向弹幕, 字幕弹幕)
+在视频播放页面中, `下载弹幕`按钮将在`附加功能`中启用, 点击可以下载XML或ASS格式的弹幕.
+> ASS格式不支持高级弹幕, 反向弹幕, 字幕弹幕
 
 </details>
 <details>
 <summary><strong>下载字幕</strong></summary>
 
-在视频播放页面中, `下载字幕`按钮将在`附加功能`中启用, 点击可以下载JSON格式的CC字幕.
-> 点击时若按住`Shift`将下载ASS格式的字幕.
+在视频播放页面中, `下载字幕`按钮将在`附加功能`中启用, 点击可以下载JSON或ASS格式的CC字幕.
 
 </details>
 <details>
@@ -160,6 +160,12 @@
 
 </details>
 <details>
+<summary><strong>启用快速收藏</strong></summary>
+
+启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹.
+
+</details>
+<details>
 <summary><strong>快捷键扩展</strong></summary>
 
 为视频播放器启用更多的快捷键:
@@ -173,6 +179,8 @@
 - `s` 收藏
 - `j` 前进85秒
 - `Shift + j` 倒退85秒
+- `Shift + w` 稍后再看
+- `Shift + s` 快速收藏
 - `Shift + ↑/↓` / `Shift + ,/.` 播放速度调整
 - `Shift + /` 重置播放速度
 
@@ -196,6 +204,12 @@
 <summary><strong>双击全屏</strong></summary>
 
 允许双击播放器切换全屏, 请注意不能与`播放器触摸支持-启用双击控制`一同使用.
+
+</details>
+<details>
+<summary><strong>播放前显示封面</strong></summary>
+
+在视频开始播放前, 在播放器中显示封面.
 
 </details>
 
@@ -422,6 +436,12 @@
 在动态的正在直播中, 为每一个直播间加上标题, 并且能够显示多达24个直播间.
 
 </details>
+<details>
+<summary><strong>禁止跳转动态详情</strong></summary>
+
+禁止动态点击后跳转详情页, 方便选择其中的文字.
+
+</details>
 
 <h2 align="center">直播</h2>
 <div align="center">各种直播相关功能</div>
@@ -497,6 +517,12 @@
 > 弹幕的发送时间是相对于直播开始时间确定的.
 
 </details>
+<details>
+<summary><strong>直板全屏弹幕栏</strong></summary>
+
+在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.
+
+</details>
 
 <h2 align="center">工具</h2>
 <div align="center">各式各样的小玩意</div>
@@ -511,7 +537,7 @@
 <details>
 <summary><strong>稍后再看重定向</strong></summary>
 
-将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.
+将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面. 可以分别选择是否重定向顶栏和稍后再看页面.
 
 </details>
 <details>
@@ -583,6 +609,12 @@
 <summary><strong>网址参数清理</strong></summary>
 
 自动删除链接中的多余跟踪参数, 例如`spm_id_from`, `from_source`, `share_source`等.
+
+</details>
+<details>
+<summary><strong>网址AV号转换</strong></summary>
+
+当视频的链接是BV号时, 自动转换为AV号.
 
 </details>
 
@@ -688,6 +720,12 @@
 <summary><strong>侧栏垂直偏移量</strong></summary>
 
 设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.
+
+</details>
+<details>
+<summary><strong>使用细滚动条</strong></summary>
+
+使用细的滚动条替代系统默认的滚动条. (对夜间模式无效)
 
 </details>
 <details>

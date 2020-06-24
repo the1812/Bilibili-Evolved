@@ -31,7 +31,7 @@ const loadSettings = () => {
   })
   addSettingsListener('customNavbarGlobalFixed', value => {
     document.body.classList.toggle('fixed-navbar', value)
-  })
+  }, true)
 }
 const classHandler = (key: string, value: boolean, element: HTMLElement) => {
   element.classList.toggle(key, value)

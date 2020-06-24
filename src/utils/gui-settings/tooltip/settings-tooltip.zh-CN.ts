@@ -74,7 +74,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["removeVideoTopMask", /*html*/`删除视频里鼠标经过时出现在右上角的覆盖层.`],
   ["removeAds", /*html*/`删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.`],
   ["showBlockedAdsTip", /*html*/`删除首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.`],
-  ["watchLaterRedirect", /*html*/`将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.`],
+  ["watchLaterRedirect", /*html*/`将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面. 可以分别选择是否重定向顶栏和稍后再看页面.`],
   ["favoritesRedirect", /*html*/`将个人空间收藏夹里的视频重定向为直链, 而不是收藏夹播单链接.`],
   ["hideTopSearch", /*html*/`将搜索框的推荐词替换为<span>搜索</span>.`],
   ["fullTweetsTitle", /*html*/`在顶栏的动态预览框中, 总是展开完整的视频标题.`],
@@ -150,6 +150,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>j</kbd> 前进85秒
 - <kbd>Shift + j</kbd> 倒退85秒
 - <kbd>Shift + w</kbd> 稍后再看
+- <kbd>Shift + s</kbd> 快速收藏
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 播放速度调整
 - <kbd>Shift + /</kbd> 重置播放速度`],
   ['doubleClickFullscreen', /*html*/`允许双击播放器切换全屏, 请注意不能与<span>播放器触摸支持-启用双击控制</span>一同使用.`],
@@ -192,6 +193,12 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`elegantScrollbar`, /*html*/`使用细的滚动条替代系统默认的滚动条. (对夜间模式无效)`],
   [`quickFavorite`, /*html*/`启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹.`],
   [`darkColorScheme`, /*html*/`使夜间模式同步系统设置的亮/暗主题.`],
+  [`disableFeedsDetails`, /*html*/`禁止动态点击后跳转详情页, 方便选择其中的文字.`],
+  [`danmakuSendBar`, /*html*/`在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.`],
+  [`watchLaterRedirectNavbar`, /*html*/`重定向顶栏稍后再看中的链接.`],
+  [`watchLaterRedirectPage`, /*html*/`重定向稍后再看页面中的链接.`],
+  [`showCoverBeforePlay`, /*html*/`在视频开始播放前, 在播放器中显示封面.`],
+  [`customNavbarGlobalFixed`, /*html*/`对于所有用到自定义顶栏的页面都固定顶栏, 使其不受滚动影响.`],
 ]);
 export default {
   export: { toolTips },

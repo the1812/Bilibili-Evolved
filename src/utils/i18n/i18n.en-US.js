@@ -920,6 +920,13 @@ export const map = new Map([
   [`社会`, `Social`],
   [`关注栏`, `Follow Bar`],
   [`自转发`, `Self-Repost`],
+  [`已加稍后再看`, `Added`],
+  [`重定向稍后再看页面`, `Watchlater page`],
+  [`重定向顶栏`, `Navbar popup`],
+  [`直播全屏弹幕栏`, `Danmaku input on fullscreen`],
+  [`禁止跳转动态详情`, `Prevent feed details jumping`],
+  [`全局固定`, `Fixed position`],
+  [`播放前显示封面`, `Show cover before play`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
