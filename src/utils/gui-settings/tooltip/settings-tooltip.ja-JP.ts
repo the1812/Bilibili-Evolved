@@ -174,6 +174,12 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`elegantScrollbar`, /*html*/`薄いスクロールバーを使用してシステムのデフォルトのスクロールバーを置き換える. (無効な夜間モード)`],
     [`quickFavorite`, /*html*/`すばやくのお気に入りを有効にし、動画ページで、1つのキーでお気に入りを特定のお気に入りセットに追加できます.`],
     [`darkColorScheme`, /*html*/`夜間モードでシステムが設定した「明るい/暗いテーマ」を同期させる.`],
+    [`disableFeedsDetails`, /*html*/`フィードページをクリックして詳細ページにジャンプすることは禁止されています.これはテキストを選択するのに便利です.`],
+    [`danmakuSendBar`, /*html*/`生放送ページの全画面モードとウェブの全画面モードでは、弾幕欄が下部に表示されます.`],
+    [`watchLaterRedirectNavbar`, /*html*/`頂欄の「後で見る」リンクをリダイレクトします.`],
+    [`watchLaterRedirectPage`, /*html*/`「後で見る」ページのリンクをリダイレクトします.`],
+    [`showCoverBeforePlay`, /*html*/`動画の再生が始まる前に、プレーヤーにサムネイルを表示します.`],
+    [`customNavbarGlobalFixed`, /*html*/`頂欄は、カスタム頂欄を使用するすべてのページで固定されているため、スクロールの影響を受けません.`],
 ]);
 export default {
     export: { toolTips },

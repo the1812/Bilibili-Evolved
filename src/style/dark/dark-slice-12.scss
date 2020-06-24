@@ -410,6 +410,11 @@
 .action-button:hover .border, .action-button > .action-icon.active .border {
   @include theme-fill();
 }
-.history-list .r-info .w-info .device {
-  @include color("a");
+.history-list .r-info .w-info {
+  .device {
+    @include color("a");
+  }
+  .name {
+    @include border-color("4");
+  }
 }
