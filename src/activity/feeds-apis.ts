@@ -257,7 +257,7 @@ class FeedsCardsManager extends EventTarget {
   }
   async startWatching() {
     const updateCards = (cardsList: HTMLElement) => {
-      const cards = [...cardsList.querySelectorAll('.content>.card')]
+      const cards = [...cardsList.querySelectorAll('.card[data-did]')]
       cards.forEach(it => this.addCard(it))
       return Observer.childList(cardsList, records => {
         records.forEach(record => {
@@ -296,7 +296,7 @@ class FeedsCardsManager extends EventTarget {
       this.watching = true
       return true
     }
-    const cardsList = await SpinQuery.select('.feed-card .content') as HTMLDivElement
+    const cardsList = await SpinQuery.select('.feed-card .content, .detail-content .detail-card') as HTMLDivElement
     if (!cardsList) {
       return false
     }
