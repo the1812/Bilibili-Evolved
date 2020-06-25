@@ -117,16 +117,13 @@
   <div class="exports">
     <h2>导出</h2>
     <div class="actions" :class="{busy: busy}">
-      <!-- <button class="copy-link" :disabled="downloadSingle ? null : 'disabled'" @click="exportData('copyLink')">复制链接</button> -->
-      <button class="show-link" :disabled="downloadSingle ? null : 'disabled'"
+      <button class="show-link" v-if="downloadSingle"
         @click="exportData('showLink')">显示链接</button>
-      <!-- <button class="idm-export" disabled title="暂不支持导出IDM, 详见 GitHub issue #149">IDM</button> -->
+      <button class="idm" @click="exportData('idm')">IDM</button>
       <button class="aria2-file" @click="exportData('aria2')">aria2</button>
       <button class="ffmpeg-fragments" v-if="!dash && selectedTab.name !== 'manual'" @click="exportData('ffmpegFragments')">ffmpeg - 分段列表</button>
       <button class="ffmpeg-episodes" v-if="!dash && selectedTab.name !== 'manual'" :disabled="downloadSingle ? 'disabled' : null"
         @click="exportData('ffmpegEpisodes')">ffmpeg - 分P列表</button>
-      <!-- <button class="vld-copy" @click="exportData('copyVLD')">复制vld数据</button>
-      <button class="vld-export" @click="exportData('exportVLD')">导出vld数据</button> -->
       <div class="button aria2-rpc" @click.self="toggleRpcSettings()">
         {{showRpcSettings ? '取消' : 'aria2 RPC'}}
         <i :class="{'mdi-close': showRpcSettings, 'mdi-chevron-right': !showRpcSettings}" class="mdi"

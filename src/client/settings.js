@@ -140,6 +140,7 @@ export const settings = {
   customNavbarOrder: { ...customNavbarDefaultOrders },
   customNavbarHidden: ['blank1', 'drawingLink', 'musicLink', 'gamesIframe', 'darkMode'],
   customNavbarBoundsPadding: 10,
+  customNavbarGlobalFixed: false,
   playerShadow: false,
   narrowDanmaku: true,
   outerWatchlater: true,
@@ -233,7 +234,12 @@ export const settings = {
   quickFavoriteID: 0,
   bilibiliSimpleNewHomeCompatible: false,
   preferAvUrl: false,
+  disableFeedsDetails: true,
   elegantScrollbar: true,
+  danmakuSendBar: false,
+  watchLaterRedirectNavbar: true,
+  watchLaterRedirectPage: true,
+  showCoverBeforePlay: false,
   cache: {},
 }
 const fixedSettings = {

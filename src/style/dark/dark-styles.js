@@ -8,15 +8,16 @@ const unload = () => {
   resources.removeStyle('darkStyleImportant')
 }
 const notSupported = [
-  /^https:\/\/member\.bilibili\.com\/v2/,
-  /^https:\/\/member\.bilibili\.com\/video\/upload.html/,
-  /^https:\/\/member\.bilibili\.com\/article-text\/home[\/]?/,
-  /^https:\/\/www\.bilibili\.com\/audio\/submit[\/]?/,
+  '//member.bilibili.com/v2',
+  '//member.bilibili.com/video/upload.html',
+  '//member.bilibili.com/article-text/home',
+  '//www.bilibili.com/audio/submit/',
+  '//member.bilibili.com/studio/bs-editor/projects',
 ]
 const load = () => {
   if (settings.noDarkOnMember && notSupported.some(it => {
     if (typeof it === 'string') {
-      return document.URL.replace(location.search, '') === it
+      return document.URL.replace(location.search, '').includes(it)
     } else {
       return it.test(document.URL.replace(location.search, ''))
     }

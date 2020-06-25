@@ -13,16 +13,16 @@
           <div class="tab-name">{{tab.name}}</div>
         </div>
       </div>
-      <a
+      <!-- <a
         class="online"
         target="_blank"
         href="https://www.bilibili.com/video/online.html"
-      >在线人数: {{online}}</a>
+      >在线人数: {{online}}</a> -->
       <a class="more" href="//t.bilibili.com/" target="_blank">
         <icon type="home" icon="activity"></icon>全部动态
       </a>
     </div>
-    <div class="contents">
+    <div class="contents" ref="contents">
       <div class="card-wrapper" v-for="card in feedCards" :key="card.id">
         <video-card :data="card" orientation="vertical"></video-card>
       </div>
@@ -100,12 +100,15 @@ export default {
     // const { getVideoFeeds } = await import('../../../activity/feeds-apis')
     // this.videoFeeds = await getVideoFeeds('video')
     // this.bangumiFeeds = await getVideoFeeds('bangumi')
-    const json = await Ajax.getJson(
-      'https://api.bilibili.com/x/web-interface/online'
-    )
-    if (json.code === 0) {
-      this.online = json.data.web_online
-    }
+    // const json = await Ajax.getJson(
+    //   'https://api.bilibili.com/x/web-interface/online'
+    // )
+    // if (json.code === 0) {
+    //   this.online = json.data.web_online
+    // }
+    const contents = this.$refs.contents as HTMLElement
+    const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
+    enableHorizontalScroll(contents)
   }
 }
 </script>

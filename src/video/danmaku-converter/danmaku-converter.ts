@@ -74,7 +74,7 @@ interface Resolution {
   x: number
   y: number
 }
-enum DanmakuType {
+export enum DanmakuType {
   Normal = 1,
   Normal2,
   Normal3,
@@ -358,7 +358,7 @@ export class DanmakuStack {
 }
 type Duration = (danmaku: Danmaku) => number
 type BlockTypes = (DanmakuType | 'color')[]
-interface DanmakuConverterConfig {
+export interface DanmakuConverterConfig {
   title: string
   font: string
   alpha: number
@@ -367,6 +367,7 @@ interface DanmakuConverterConfig {
   blockTypes: BlockTypes
   resolution: Resolution
   bottomMarginPercent: number
+  blockFilter?: (danmaku: XmlDanmaku) => boolean
 }
 export class DanmakuConverter {
   static white = 16777215 // Dec color of white danmaku
@@ -375,15 +376,17 @@ export class DanmakuConverter {
   alpha: string
   duration: Duration
   blockTypes: BlockTypes
+  blockFilter: (danmaku: XmlDanmaku) => boolean
   resolution: Resolution
   bold: boolean
   danmakuStack: DanmakuStack
-  constructor({ title, font, alpha, duration, blockTypes, resolution, bottomMarginPercent, bold }: DanmakuConverterConfig) {
+  constructor({ title, font, alpha, duration, blockTypes, blockFilter, resolution, bottomMarginPercent, bold }: DanmakuConverterConfig) {
     this.title = title
     this.font = font
     this.alpha = Math.round(alpha * 255).toString(16).toUpperCase().padStart(2, '0')
     this.duration = duration
     this.blockTypes = blockTypes
+    this.blockFilter = blockFilter || (() => true)
     this.resolution = resolution
     this.bold = bold
     this.danmakuStack = new DanmakuStack(font, resolution, duration, bottomMarginPercent)
@@ -404,6 +407,10 @@ export class DanmakuConverter {
       // 跳过设置为屏蔽的弹幕类型
       if (this.blockTypes.indexOf(xmlDanmaku.type) !== -1 ||
         this.blockTypes.indexOf('color') !== -1 && xmlDanmaku.color !== DanmakuConverter.white) {
+        continue
+      }
+      // 应用传入的过滤器
+      if (!this.blockFilter(xmlDanmaku)) {
         continue
       }
       const [startTime, endTime] = this.convertTime(xmlDanmaku.startTime, this.duration(xmlDanmaku))
@@ -482,7 +489,8 @@ export default {
     Danmaku,
     DanmakuConverter,
     DanmakuStack,
+    DanmakuType,
     XmlDanmaku,
-    XmlDanmakuDocument
+    XmlDanmakuDocument,
   }
 }

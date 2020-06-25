@@ -43,6 +43,8 @@ export class Category extends NavbarComponent {
             'MAD·AMV': `https://www.bilibili.com/v/douga/mad/`,
             'MMD·3D': `https://www.bilibili.com/v/douga/mmd/`,
             '短片·手书·配音': `https://www.bilibili.com/v/douga/voice/`,
+            '手办·模玩': `https://www.bilibili.com/v/douga/garage_kit/`,
+            '特摄': `https://www.bilibili.com/v/douga/tokusatsu/`,
             '综合': `https://www.bilibili.com/v/douga/other/`,
           },
         },
@@ -111,16 +113,15 @@ export class Category extends NavbarComponent {
             '游戏赛事': 'https://www.bilibili.com/v/game/match/'
           },
         },
-        科技: {
+        知识: {
           icon: 'technology',
           count: regionCount[36], link: `https://www.bilibili.com/v/technology/`, subRegions: {
             '科学科普': 'https://www.bilibili.com/v/technology/science/',
             '社科人文': 'https://www.bilibili.com/v/technology/fun/',
+            '财经': 'https://www.bilibili.com/v/technology/finance/',
+            '校园学习': 'https://www.bilibili.com/v/technology/campus/',
+            '职业职场': 'https://www.bilibili.com/v/technology/career/',
             '野生技术协会': 'https://www.bilibili.com/v/technology/wild/',
-            '演讲·公开课': 'https://www.bilibili.com/v/technology/speech_course/',
-            '星海': 'https://www.bilibili.com/v/technology/military/',
-            '机械': 'https://www.bilibili.com/v/technology/mechanical/',
-            '汽车': 'https://www.bilibili.com/v/technology/automobile/'
           },
         },
         数码: {
@@ -141,6 +142,7 @@ export class Category extends NavbarComponent {
             '手工': 'https://www.bilibili.com/v/life/handmake/',
             '绘画': 'https://www.bilibili.com/v/life/painting/',
             '运动': 'https://www.bilibili.com/v/life/sports/',
+            '汽车': 'https://www.bilibili.com/v/life/automobile/',
             '其他': 'https://www.bilibili.com/v/life/other/'
           },
         },
@@ -187,7 +189,6 @@ export class Category extends NavbarComponent {
             '影视剪辑': 'https://www.bilibili.com/v/cinephile/montage/',
             '短片': 'https://www.bilibili.com/v/cinephile/shortfilm/',
             '预告·资讯': 'https://www.bilibili.com/v/cinephile/trailer_info/',
-            '特摄': 'https://www.bilibili.com/v/cinephile/tokusatsu/'
           },
         },
         放映厅: {

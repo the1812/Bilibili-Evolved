@@ -4,7 +4,7 @@
   }
   const popupContainer = await SpinQuery.condition(
     () => dq('.chat-popups-section'),
-    (it: HTMLElement) => it.querySelector('chat-draw-area') === null
+    (it: HTMLElement) => it !== null && it.querySelector('chat-draw-area') === null
   )
   if (!popupContainer) {
     console.warn('[自动领奖] 未能找到弹窗容器')

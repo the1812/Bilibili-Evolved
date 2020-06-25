@@ -186,6 +186,9 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 }
 .custom-navbar {
   position: absolute;
+  body.fixed-navbar & {
+    position: fixed;
+  }
   top: 0;
   left: 0;
   height: var(--navbar-height);
@@ -331,6 +334,9 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     padding: 0 10px;
     color: var(--navbar-foreground);
     user-select: none;
+    .custom-navbar-season-logo {
+      transform: scale(1.15);
+    }
   }
   .active .main-content {
     font-weight: bold;

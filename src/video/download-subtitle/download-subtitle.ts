@@ -79,44 +79,55 @@ export const getSubtitleList = async (aid: string, cid: string | number) => {
 export default {
   widget: {
     content: /*html*/`
-      <button class="gui-settings-flat-button" id="download-subtitle">
+      <button class="gui-settings-flat-button" id="download-subtitle-json">
         <i class="icon-cc-subtitles"></i>
-        <span>下载字幕</span>
-      </button>`,
+        <span>下载字幕<span>(JSON)</span></span>
+      </button>
+      <button class="gui-settings-flat-button" id="download-subtitle-ass">
+        <i class="icon-cc-subtitles"></i>
+        <span>下载字幕<span>(ASS)</span></span>
+      </button>
+    `,
     condition: videoCondition,
     success: () => {
-      const button = dq('#download-subtitle') as HTMLButtonElement
-      button.addEventListener('click', async e => {
-        try {
-          button.disabled = true
-          const { aid, cid } = unsafeWindow
-          if (!aid || !cid) {
-            logError('未找到视频AID和CID')
-            return
+      const buttonJson = dq('#download-subtitle-json') as HTMLButtonElement
+      const buttonAss = dq('#download-subtitle-ass') as HTMLButtonElement
+      const allButtons = [buttonJson, buttonAss]
+      const addListener = (button: HTMLButtonElement, ass: boolean) => {
+        button.addEventListener('click', async () => {
+          try {
+            allButtons.forEach(b => b.disabled = true)
+            const { aid, cid } = unsafeWindow
+            if (!aid || !cid) {
+              logError('未找到视频AID和CID')
+              return
+            }
+            const subtitles = await getSubtitleList(aid, cid)
+            if (subtitles.length === 0) {
+              Toast.info('当前视频没有字幕.', '下载字幕', 3000)
+              return
+            }
+            const [config, language] = await getSubtitleConfig()
+            const subtitle = subtitles.find(s => s.language === language) || subtitles[0]
+            const json = await Ajax.getJson(subtitle.url)
+            const rawData = json.body
+            if (ass) {
+              const { SubtitleConverter } = await import('./subtitle-converter')
+              const converter = new SubtitleConverter(config)
+              const ass = await converter.convertToAss(rawData)
+              download(ass, config.title + '.ass')
+            } else {
+              download(JSON.stringify(rawData), config.title + '.json')
+            }
+          } catch (error) {
+            logError(error)
+          } finally {
+            allButtons.forEach(b => b.disabled = false)
           }
-          const subtitles = await getSubtitleList(aid, cid)
-          if (subtitles.length === 0) {
-            Toast.info('当前视频没有字幕.', '下载字幕', 3000)
-            return
-          }
-          const [config, language] = await getSubtitleConfig()
-          const subtitle = subtitles.find(s => s.language === language) || subtitles[0]
-          const json = await Ajax.getJson(subtitle.url)
-          const rawData = json.body
-          if (e.shiftKey) {
-            const { SubtitleConverter } = await import('./subtitle-converter')
-            const converter = new SubtitleConverter(config)
-            const ass = await converter.convertToAss(rawData)
-            download(ass, config.title + '.ass')
-          } else {
-            download(JSON.stringify(rawData), config.title + '.json')
-          }
-        } catch (error) {
-          logError(error)
-        } finally {
-          button.disabled = false
-        }
-      })
+        })
+      }
+      addListener(buttonJson, false)
+      addListener(buttonAss, true)
     },
   },
   export: {

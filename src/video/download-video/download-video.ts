@@ -61,7 +61,7 @@ class Bangumi extends Video {
     return api.bind(this) as typeof api
   }
 }
-// 课程, 不知道为什么b站给它起名cheese
+// 课程, 不知道为什么b站给它起名cheese, 芝士就是力量?
 class Cheese extends Video {
   constructor(public ep: number | string) { super() }
   async getApiGenerator(dash = false) {
@@ -327,6 +327,26 @@ class VideoDownloader {
       await this.copyUrl()
     })
   }
+  async exportIdm() {
+    const { toIdmFormat } = await import('./idm-support')
+    const idm = toIdmFormat([this])
+    const danmaku = await this.downloadDanmaku()
+    const subtitle = await this.downloadSubtitle()
+    const pack = new DownloadVideoPackage()
+    pack.add(
+      `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
+      danmaku
+    )
+    pack.add(
+      `${getFriendlyTitle()}.${this.subtitleOption === 'ASS' ? 'ass' : 'json'}`,
+      subtitle
+    )
+    pack.add(
+      `${getFriendlyTitle()}.ef2`,
+      idm
+    )
+    await pack.emit(`${getFriendlyTitle()}.zip`)
+  }
   async exportData(copy = false) {
     const data = JSON.stringify([{
       fragments: this.fragments,
@@ -585,7 +605,7 @@ async function loadPanel() {
   // const start = performance.now()
   let workingDownloader: VideoDownloader
   // const sizeCache = new Map<VideoFormat, number>()
-  type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD' | 'ffmpegEpisodes' | 'ffmpegFragments'
+  type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD' | 'ffmpegEpisodes' | 'ffmpegFragments' | 'idm'
   interface EpisodeItem {
     title: string
     titleParameters?: BatchTitleParameter
@@ -811,13 +831,34 @@ async function loadPanel() {
               break
             case 'ffmpegFragments':
               if (videoDownloader.fragments.length < 2) {
-                Toast.info('当前视频没有分段.', '分段列表', 3000)
+                Toast.info('当前视频没有分段.', '分段合并', 3000)
               } else {
                 const { getFragmentsList } = await import('./ffmpeg-support')
+                // const { getFragmentsMergeScript } = await import('./ffmpeg-support')
+
                 const pack = new DownloadVideoPackage()
                 pack.add('ffmpeg-files.txt', getFragmentsList(videoDownloader.fragments.length, getFriendlyTitle(), videoDownloader.fragments.map(f => videoDownloader.extension(f))))
+                // const isWindows = window.navigator.appVersion.includes('Win')
+                // const extension = isWindows ? 'bat' : 'sh'
+                // const script = getFragmentsMergeScript({
+                //   fragments: videoDownloader.fragments,
+                //   title: getFriendlyTitle(),
+                //   totalSize: videoDownloader.totalSize,
+                //   cid: pageData.cid,
+                //   referer: document.URL.replace(window.location.search, ''),
+                // }, this.dash || videoDownloader.extension())
+                // if (isWindows) {
+                //   const { GBK } = await import('./gbk')
+                //   const data = new Blob([new Uint8Array(GBK.encode(script))])
+                //   pack.add(`${getFriendlyTitle()}.${extension}`, data)
+                // } else {
+                //   pack.add(`${getFriendlyTitle()}.${extension}`, script)
+                // }
                 await pack.emit()
               }
+              break
+            case 'idm':
+              await videoDownloader.exportIdm()
               break
             default:
               break
@@ -906,6 +947,15 @@ async function loadPanel() {
         let result: string
         try {
           switch (type) {
+            case 'idm':
+              const items = await batchExtractor.getRawItems(format)
+              const { toIdmFormat } = await import('./idm-support')
+              result = toIdmFormat(items)
+              await DownloadVideoPackage.single(
+                getFriendlyTitle(false) + '.ef2',
+                new Blob([result], { type: 'text/plain' }),
+              )
+              return
             case 'aria2':
               result = await batchExtractor.collectAria2(format, toast, false)
               await DownloadVideoPackage.single(
@@ -933,18 +983,36 @@ async function loadPanel() {
             case 'ffmpegFragments':
               {
                 const items = await batchExtractor.getRawItems(format)
+                if (items.every(it => it.fragments.length < 2)) {
+                  Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
+                  return
+                }
                 const videoDownloader = new VideoDownloader(format, items[0].fragments)
                 const { getBatchFragmentsList } = await import('./ffmpeg-support')
+                // const pack = new DownloadVideoPackage()
+                // const isWindows = window.navigator.appVersion.includes('Win')
+                // const extension = isWindows ? 'bat' : 'sh'
+                // const script = getBatchMergeScript(items, videoDownloader.extension())
+                // if (isWindows) {
+                //   const { GBK } = await import('./gbk')
+                //   const data = new Blob([new Uint8Array(GBK.encode(script))])
+                //   pack.add(`${getFriendlyTitle()}.${extension}`, data)
+                // } else {
+                //   pack.add(`${getFriendlyTitle()}.${extension}`, script)
+                // }
+                // await pack.emit()
+
                 const map = getBatchFragmentsList(items, this.dash || videoDownloader.extension())
                 if (!map) {
                   Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
-                } else {
-                  const pack = new DownloadVideoPackage()
-                  for (const [filename, content] of map.entries()) {
-                    pack.add(filename, content)
-                  }
-                  await pack.emit(escapeFilename(`${getFriendlyTitle(false)}.zip`))
+                  return
                 }
+                const pack = new DownloadVideoPackage()
+                for (const [filename, content] of map.entries()) {
+                  pack.add(filename, content)
+                }
+                await pack.emit(escapeFilename(`${getFriendlyTitle(false)}.zip`))
+                // }
               }
               break
             case 'ffmpegEpisodes':
@@ -1048,6 +1116,16 @@ async function loadPanel() {
             case 'aria2RPC': {
               await batch.collectAria2(this.getManualFormat().quality, true)
               Toast.success(`成功发送了批量请求.`, 'aria2 RPC', 3000)
+              break
+            }
+            case 'idm': {
+              const items = await batch.getRawItems(this.getManualFormat().quality)
+              const { toIdmFormat } = await import('./idm-support')
+              const result = toIdmFormat(items)
+              await DownloadVideoPackage.single(
+                'manual-exports.ef2',
+                new Blob([result], { type: 'text/plain' }),
+              )
               break
             }
           }

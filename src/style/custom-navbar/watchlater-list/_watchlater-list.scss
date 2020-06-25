@@ -75,6 +75,9 @@
           }
         }
       }
+      .round-button:not(:last-child) {
+        margin-right: 4px;
+      }
       .more-info {
         @include h-center();
         @include round-bar(28);

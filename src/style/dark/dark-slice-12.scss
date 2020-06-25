@@ -248,9 +248,7 @@
     }
   }
   .tag-channel-pane {
-    .content {
-      @include background-color("3");
-    }
+    @include background-color("3");
     .channel {
       &-cover {
         @include border-color("3");
@@ -270,10 +268,29 @@
             @include theme-background-color();
           }
         }
+        .is-subs {
+          @include background-color("2");
+          @include color("e");
+          @include border-color();
+        }
         .no-subs {
           @include foreground-color();
           @include theme-border-color();
           @include theme-background-color();
+        }
+        .tag-channel-cancel-popup {
+          @include background-color("4");
+          p {
+            @include color("e");
+          }
+          a.btn-ok {
+            @include foreground-color();
+            @include theme-background-color();
+          }
+          a.btn-no {
+            @include color("e");
+            @include background-color("2");
+          }
         }
       }
     }
@@ -281,4 +298,123 @@
 }
 .share-board .song-share .font-blue {
   @include theme-color();
+}
+.guard-store-box {
+  .buy-detail {
+    @include color("e");
+    .master {
+      @include theme-color();
+    }
+  }
+  .select-month {
+    @include color("e");
+    .month-selector .month-info {
+      @include color("e");
+      @include theme-border-color();
+      .month-list {
+        @include background-color("4");
+        .month-item {
+          @include color("e");
+          &:hover .days {
+            @include theme-color();
+          }
+        }
+      }
+      .triangle:before {
+        @include border-color("4");
+        border-left-color: transparent !important;
+        border-right-color: transparent !important;
+        border-bottom-color: transparent !important;
+      }
+    }
+  }
+  .expired-date {
+    @include color("a");
+  }
+  .btn-box .total-price {
+    @include color("e");
+  }
+}
+.crowdfunding-container {
+  .current-num-wrap {
+    .current-num {
+      @include color("e");
+    }
+    .join-status {
+      @include color("a");
+    }
+  }
+  .tips-container .status {
+    @include theme-color();
+    &.fail {
+      @include color("a");
+    }
+    &.nostart {
+      @include color("e");
+    }
+  }
+  .progress-container {
+    @include background-color("2");
+    .progress-fill.highlight {
+      @include theme-background-color();
+    }
+  }
+  .current-pro-num.highlight {
+    @include theme-color();
+  }
+  .goal-container {
+    @include color("a");
+    .goal-num,
+    .goal-time {
+      @include color("e");
+    }
+  }
+  .risk-tip-container .risk-content {
+    @include background-color("2");
+  }
+}
+.ticket-tips-wrapper .merchant-section {
+  @include background-color("4");
+  .merchant-header {
+    @include color("e");
+    span {
+      @include to-theme("pink");
+    }
+  }
+  .baseinfo-wrapper .content-item .title {
+    @include background-color("3");
+    .fold-btn:hover {
+      .open,
+      .close {
+        @include to-theme("pink");
+      }
+    }
+  }
+}
+.searchresult-total-number {
+  .left-line {
+    background-image:linear-gradient(90deg,#444,#aaa) !important;
+  }
+  .right-line {
+    background-image:linear-gradient(90deg,#aaa,#444) !important;
+  }
+  .total-num {
+    @include color("a");
+  }
+}
+.h #h-sign:focus {
+  @include background-color("4");
+  @include color("e");
+  box-shadow: inset 0 2px 4px #0008 !important;
+}
+.action-button:hover .border, .action-button > .action-icon.active .border {
+  @include theme-fill();
+}
+.history-list .r-info .w-info {
+  .device {
+    @include color("a");
+  }
+  .name {
+    @include border-color("4");
+  }
 }

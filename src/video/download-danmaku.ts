@@ -1,10 +1,10 @@
 import { getFriendlyTitle } from './title'
 import { DanmakuInfo } from './video-info'
-import { DanmakuConverter } from './danmaku-converter/danmaku-converter'
+import { DanmakuConverter, DanmakuConverterConfig, DanmakuType } from './danmaku-converter/danmaku-converter'
 
 export async function convertToAss(xml: string) {
   const title = getFriendlyTitle()
-  let config: any = { title }
+  let config = { title } as DanmakuConverterConfig
   try {
     await loadDanmakuSettingsPanel()
     const getSliderFactor = (selector: string) => {
@@ -37,7 +37,7 @@ export async function convertToAss(xml: string) {
       }
     })()
     config.blockTypes = (() => {
-      let result: (number | string)[] = []
+      let result: (DanmakuType | 'color')[] = []
       const blockValues = {
         '.bilibili-player-block-filter-type[ftype=scroll]': [1, 2, 3],
         '.bilibili-player-block-filter-type[ftype=top]': [5],
@@ -48,7 +48,7 @@ export async function convertToAss(xml: string) {
 
       for (const [type, value] of Object.entries(blockValues)) {
         if ((dq(type) as HTMLElement).classList.contains('disabled')) {
-          result = result.concat(value)
+          result = result.concat(value as (DanmakuType | 'color')[])
         }
       }
       return result.concat(7, 8)
@@ -64,9 +64,52 @@ export async function convertToAss(xml: string) {
       config.bottomMarginPercent = 0.15
     }
     config.bold = (dq('.bilibili-player-video-danmaku-setting-right-font-bold input') as HTMLInputElement).checked
+    // 用户屏蔽词
+    const playerSettingsJson = localStorage.getItem('bilibili_player_settings')
+    if (playerSettingsJson) {
+      const playerSettings = JSON.parse(playerSettingsJson)
+      const blockSettings = _.get(playerSettings, 'block.list', []) as {
+        /** 类型 */
+        t: 'keyword' | 'regexp' | 'user',
+        /** 内容 */
+        v: string
+        /** 是否开启 */
+        s: boolean
+        id: number
+      }[]
+      config.blockFilter = (danmaku) => {
+        for (const b of blockSettings) {
+          if (!b.s) {
+            continue
+          }
+          switch (b.t) {
+            case 'keyword': {
+              if (danmaku.content.includes(b.v)) {
+                return false
+              }
+              break
+            }
+            case 'regexp': {
+              if (new RegExp(b.v).test(danmaku.content)) {
+                return false
+              }
+              break
+            }
+            case 'user': {
+              if (danmaku.userHash === b.v) {
+                return false
+              }
+              break
+            }
+          }
+        }
+        return true
+      }
+    }
   } catch (error) {
     // The default config
     config = {
+      ...config,
       font: '微软雅黑',
       alpha: 0.4,
       duration: (danmaku: { type: number }) => {
@@ -125,35 +168,42 @@ export default {
   },
   widget: {
     content: /* html */`
+      <a id="danmaku-link" style="display:none"></a>
       <button
         class="gui-settings-flat-button"
-        id="download-danmaku">
+        id="download-danmaku-xml">
         <i class="icon-danmaku"></i>
-        <span>下载弹幕</span>
-        <a id="danmaku-link" style="display:none"></a>
-      </button>`,
+        <span>下载弹幕<span>(XML)</span></span>
+      </button>
+      <button
+        class="gui-settings-flat-button"
+        id="download-danmaku-ass">
+        <i class="icon-danmaku"></i>
+        <span>下载弹幕<span>(ASS)</span></span>
+      </button>
+    `,
     condition: async () => {
       let cid = await SpinQuery.select(() => (unsafeWindow || window).cid)
       return Boolean(cid)
     },
     success: () => {
-      const link = dq('#danmaku-link')
-      const button = dq('#download-danmaku') as HTMLButtonElement
-      button.addEventListener('click', (e: MouseEvent) => {
-        if (e.target !== link) {
-          // const timeout = setTimeout(
-          //   () => (dq('#download-danmaku>span') as HTMLElement).innerHTML = '请稍侯...',
-          //   200)
+      const buttonXml = dq('#download-danmaku-xml') as HTMLButtonElement
+      const buttonAss = dq('#download-danmaku-ass') as HTMLButtonElement
+      const allButtons = [buttonXml, buttonAss]
+      const addListener = (button: HTMLButtonElement, ass: boolean) => {
+        button.addEventListener('click', async () => {
           try {
-            button.disabled = true
-            downloadDanmaku(e.shiftKey)
+            allButtons.forEach(b => b.disabled = true)
+            await downloadDanmaku(ass)
           } catch (error) {
             logError(error)
           } finally {
-            button.disabled = false
+            allButtons.forEach(b => b.disabled = false)
           }
-        }
-      })
+        })
+      }
+      addListener(buttonXml, false)
+      addListener(buttonAss, true)
     }
   }
 }

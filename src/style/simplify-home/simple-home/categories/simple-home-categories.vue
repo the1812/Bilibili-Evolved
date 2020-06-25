@@ -40,7 +40,7 @@ const tabNames = {
   music: '音乐',
   dance: '舞蹈',
   game: '游戏',
-  tech: '科技',
+  tech: '知识',
   digital: '数码',
   life: '生活',
   kichiku: '鬼畜',

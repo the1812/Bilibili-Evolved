@@ -193,7 +193,9 @@ Resource.manifest = {
   watchLaterRedirect: {
     path: 'watchlater.min.js',
     displayNames: {
-      watchLaterRedirect: '稍后再看重定向'
+      watchLaterRedirect: '稍后再看重定向',
+      watchLaterRedirectPage: '重定向稍后再看页面',
+      watchLaterRedirectNavbar: '重定向顶栏',
     }
   },
   hideTopSearch: {
@@ -578,6 +580,7 @@ Resource.manifest = {
       customNavbarCompact: '紧凑布局',
       customNavbarBlur: '背景模糊',
       customNavbarBlurOpacity: '模糊层不透明度',
+      customNavbarGlobalFixed: '全局固定',
       allNavbarFill: '填充其他顶栏'
     }
   },
@@ -894,6 +897,29 @@ Resource.manifest = {
     reloadable: true,
     displayNames: {
       quickFavorite: '启用快速收藏',
+    },
+  },
+  disableFeedsDetails: {
+    path: 'disable-feeds-details.min.js',
+    reloadable: true,
+    displayNames: {
+      disableFeedsDetails: '禁止跳转动态详情',
+    },
+  },
+  danmakuSendBar: {
+    path: 'danmaku-send-bar.min.js',
+    reloadable: true,
+    style: true,
+    displayNames: {
+      danmakuSendBar: '直播全屏弹幕栏',
+    }
+  },
+  showCoverBeforePlay: {
+    path: 'show-cover-before-play.min.js',
+    reloadable: true,
+    style: true,
+    displayNames: {
+      showCoverBeforePlay: '播放前显示封面',
     },
   },
 }

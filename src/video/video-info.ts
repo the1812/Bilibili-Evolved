@@ -42,7 +42,7 @@ export class VideoInfo {
     const data = json.data
     this.cid = data.cid
     this.pageCount = data.videos
-    this.coverUrl = data.pic
+    this.coverUrl = data.pic.replace('http:', 'https:')
     this.tagId = data.tid
     this.tagName = data.tname
     this.title = data.title
@@ -50,7 +50,7 @@ export class VideoInfo {
     this.up = {
       uid: data.owner.mid,
       name: data.owner.name,
-      faceUrl: data.owner.face
+      faceUrl: data.owner.face.replace('http:', 'https:')
     }
     this.pages = data.pages.map((it: any) => {
       return {

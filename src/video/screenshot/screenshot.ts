@@ -15,18 +15,29 @@ class Screenshot {
     this.createUrl()
   }
   async createUrl() {
-    canvas.width = this.video.videoWidth
-    canvas.height = this.video.videoHeight
+    const videoWrapper = dq('.bilibili-player-video-wrap') as HTMLElement
+    const rect = videoWrapper.getBoundingClientRect()
+    const playerRatio = rect.width / rect.height
+    const videoRatio = this.video.videoWidth / this.video.videoHeight
+    if (playerRatio >= videoRatio) { // 竖屏视频(两侧黑边)
+      canvas.height = this.video.videoHeight
+      canvas.width = this.video.videoHeight * playerRatio
+    } else { // 横屏视频(上下黑边)
+      canvas.width = this.video.videoWidth
+      canvas.height = this.video.videoWidth / playerRatio
+    }
     const context = canvas.getContext("2d")
     if (context === null) {
       logError('视频截图失败: canvas 未创建或创建失败.')
       return
     }
-    context.drawImage(this.video, 0, 0)
+    const videoLeft = (canvas.width - this.video.videoWidth) / 2
+    const videoTop = (canvas.height - this.video.videoHeight) / 2
+    context.drawImage(this.video, videoLeft, videoTop)
     if (this.withDanmaku) {
       const danmakuCanvas = dq('canvas.bilibili-player-video-danmaku') as HTMLCanvasElement
       if (danmakuCanvas !== null) {
-        context.drawImage(danmakuCanvas, 0, 0, this.video.videoWidth, this.video.videoHeight)
+        context.drawImage(danmakuCanvas, 0, 0, canvas.width, canvas.height)
       }
     }
     try {

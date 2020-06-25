@@ -372,7 +372,9 @@
 .news-content,
 .bilibili-player-video-danmaku-setting-left-block-word,
 .share-content .video-card .up-info .name,
-.user-title-using-cntr .user-title-box .name {
+.user-title-using-cntr .user-title-box .name,
+.bilibili-player-video-control .bilibili-player-video-btn-pagelist,
+.bilibili-player-video-control .bilibili-player-video-btn-speed {
   @include color("e");
 }
 .van-popover .vip:hover,
@@ -529,6 +531,318 @@ $highlight-map: (
       @include color("a");
       @include border-color();
       @include background-color("3");
+    }
+  }
+}
+.bui-switch {
+  .bui-switch-name {
+    .bui-switch-reddot {
+      @include theme-background-color();
+    }
+  }
+  .bui-switch-input {
+    &:checked + .bui-switch-label .bui-switch-body {
+      @include theme-background-color();
+      .bui-switch-dot {
+        @include theme-fill();
+      }
+    }
+  }
+  &:hover {
+    .bui-switch-name {
+      @include theme-color();
+    }
+  }
+}
+.bilibili-player-video-control .bilibili-player-video-btn-setting-left-more:hover {
+  &,
+  .bp-svgicon {
+    @include theme-color();
+    @include theme-fill();
+  }
+}
+.june-activity-entry .progress-bar {
+  @include color("a");
+  @include background-color();
+  @include border-color("37a29c");
+}
+.focus-us .text {
+  @include color("6d757a");
+}
+.main-wrap {
+  .container {
+    @include no-shadow();
+  }
+  .bg-circle {
+    @include background-color("4");
+  }
+  .version-date,
+  .text-wrap {
+    @include color("a");
+  }
+  .info-title {
+    @include color("e");
+  }
+  .info-select {
+    @include border-color("5");
+    li {
+      @include color("e");
+      &.active {
+        @include foreground-color();
+        @include theme-background-color();
+      }
+    }
+  }
+}
+.channel-sidebar {
+  @include background-color("2");
+  @include border-color("4");
+  .sidebar-search-bar {
+    @include border-color("3");
+    .inner-input {
+      @include color("e");
+      @include background-color();
+    }
+  }
+  .discovery-panel {
+    @include border-color("4");
+    &__title {
+      @include color("e");
+      &.discovery-panel__title--active {
+        @include background-color("3");
+      }
+      &:hover {
+        @include background-color("4");
+      }
+      .iconfont {
+        @include color("e");
+      }
+    }
+    .content-item {
+      &__name {
+        @include color("e");
+      }
+      &__count {
+        @include color("a");
+      }
+      &.content-item--active {
+        @include background-color("3");
+      }
+      &:hover {
+        @include background-color("4");
+      }
+    }
+    &__toggle {
+      @include background-color();
+      @include color("a");
+    }
+  }
+  .subscribe-panel {
+    @include background-color();
+    &__title {
+      .text {
+        @include color("e");
+      }
+      .count,
+      .btn {
+        @include color("a");
+      }
+    }
+    &__login {
+      .hint {
+        @include color("a");
+      }
+      .login-btn {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+    .subscribe-item--active {
+      @include background-color("3");
+    }
+    .subscribe-item {
+      &:hover {
+        @include background-color("4");
+      }
+      .cover {
+        @include background-color("4");
+      }
+      .name {
+        @include color("e");
+      }
+    }
+  }
+  &::-webkit-scrollbar {
+    @include background-color();
+  }
+}
+.discovery-container {
+  .type-header {
+    .header-info {
+      .title {
+        @include color("e");
+      }
+      .count {
+        @include color("a");
+      }
+    }
+  }
+  .slide-channel-panel {
+    .arrow-btn .iconfont {
+      @include color("a");
+    }
+    .slide {
+      .mini-channel-card {
+        @include background-color("3");
+        @include color("e");
+        .cover {
+          @include background-color("28");
+        }
+        .label {
+          @include color("a");
+        }
+      }
+    }
+  }
+  .hot-channel-panel {
+    .change-btn {
+      @include border-color();
+      @include color("e");
+      @include background-color("3");
+      img {
+        @include to-white();
+      }
+    }
+    .list {
+      .card {
+        @include background-color();
+        .title {
+          @include color("e");
+        }
+      }
+    }
+  }
+}
+.detail-page-container {
+  .detail-banner {
+    &:not([style*="background-color"]) {
+      @include background-color("4");
+    }
+    .mini-channel-card .cover {
+      @include background-color();
+    }
+    #app & .relative-panel .header {
+      @include background-color();
+    }
+    &-title {
+      .cover::before {
+        @include background-color();
+      }
+    }
+  }
+  .detail-panels {
+    .van-tabs-bar::after {
+      @include background-color();
+    }
+    .van-tabs-wrap .van-tabs-tab:not(.van-tabs-tab-active) {
+      @include color("e");
+    }
+    .year-selector,
+    .play-selector {
+      &__item {
+        @include background-color();
+        &:not([style*="border"]) {
+          @include color("a");
+          @include border-color("4");
+        }
+      }
+    }
+    .rank-card-panel {
+      .header {
+        .title {
+          @include color("e");
+        }
+        .desc {
+          @include color("a");
+        }
+      }
+      .toggle {
+        > span {
+          @include background-color("2");
+          @include color("a");
+        }
+        &::before {
+          @include background-color("4");
+        }
+      }
+    }
+  }
+}
+.category-container {
+  .inner-container {
+    &__header {
+      .title {
+        @include color("e");
+      }
+      .count {
+        @include color("a");
+      }
+    }
+  }
+}
+.detail-page-container,
+.discovery-container,
+.category-container {
+  @include background-color("2");
+  &::-webkit-scrollbar-track {
+    @include border-color();
+  }
+  .video-card {
+    &__content {
+      .cover-picture {
+        @include background-color("4");
+      }
+    }
+    .video-name {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .up-name {
+      @include color("a");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .channel-list-preview {
+    .header-info {
+      .title {
+        @include color("e");
+      }
+      .header-desc {
+        @include color("a");
+      }
+    }
+    .channel-btns {
+      > [class*="btn"] {
+        @include theme-border-color();
+        @include theme-color();
+      }
+    }
+  }
+  .back-top-btn {
+    @include border-color();
+    @include background-color("3");
+    .arrow-icon {
+      @include color("a");
+    }
+    &:hover {
+      @include theme-background-color();
+      .arrow-icon {
+        @include foreground-color();
+      }
     }
   }
 }
@@ -719,7 +1033,8 @@ $highlight-map: (
 .van-popper-upload .upload-item:hover .bilifont,
 .bilibili-search-suggest .suggest-item .suggest_high_light,
 .new-topic-panel .tag-item .content:hover,
-.bilibili-player-video-toast-item .video-float-hint-btn.hint-red {
+.bilibili-player-video-toast-item .video-float-hint-btn.hint-red,
+.bilibili-player-video-btn-speed-menu-list.bilibili-player-active {
   @include theme-color();
 }
 .interact-dialog .btn,

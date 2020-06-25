@@ -77,7 +77,8 @@
   .nameplate,
   .comment-header .tabs-order li.on::after,
   .true-love,
-  .reply-notice {
+  .reply-notice,
+  .sailing {
     @include hide();
   }
   .comment-send .comment-emoji {

@@ -11,6 +11,7 @@
     padding: 8px 16px;
     cursor: pointer;
     position: relative;
+    box-sizing: border-box;
   }
   .category-item.loading {
     font-size: 10pt;

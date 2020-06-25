@@ -1,7 +1,8 @@
 import { FeedsCard } from '../feeds-apis'
 
 (async () => {
-  if (!document.URL.startsWith('https://t.bilibili.com/')) {
+  if (!document.URL.startsWith('https://t.bilibili.com/')
+    && !document.URL.startsWith('https://space.bilibili.com/')) {
     return
   }
   resources.applyStyle('feedsTranslateStyle')
@@ -65,6 +66,9 @@ import { FeedsCard } from '../feeds-apis'
     if (card.text.replace(/#(.+?)#/g, '') === '') {
       return
     }
+    if (dq(card.element, '.translate-container')) {
+      return
+    }
     const cardContent = card.element.querySelector('.card-content') as HTMLElement
     const translator = new Translator({
       propsData: {
@@ -76,8 +80,13 @@ import { FeedsCard } from '../feeds-apis'
 
   const urlWithoutQuery = document.URL.replace(location.search, '')
   const { feedsCardsManager } = await import('../feeds-apis')
-  // 动态首页
-  if (urlWithoutQuery === 'https://t.bilibili.com/') {
+  if (urlWithoutQuery.match(/t.bilibili.com\/(\d+)/)) { // 动态详情页
+    const card = await SpinQuery.select('.detail-card .card')
+    if (card !== null && '__vue__' in card) {
+      const feedsCard = await feedsCardsManager.parseCard(card)
+      injectButton(feedsCard)
+    }
+  } else { // 动态首页或空间
     const success = await feedsCardsManager.startWatching()
     if (!success) {
       console.error('feedsCardsManager.startWatching() failed')
@@ -87,12 +96,5 @@ import { FeedsCard } from '../feeds-apis'
     feedsCardsManager.addEventListener('addCard', e => {
       injectButton(e.detail)
     })
-  } else if (urlWithoutQuery.match(/t.bilibili.com\/(\d+)/)) { // 动态详情页
-    const card = await SpinQuery.select('.detail-card .card')
-    if (card !== null && '__vue__' in card) {
-      const feedsCard = await feedsCardsManager.parseCard(card)
-      injectButton(feedsCard)
-    }
   }
-
 })()
