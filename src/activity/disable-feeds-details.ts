@@ -25,7 +25,7 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
     return
   }
   addStyle()
-  const { feedsCardsManager } = await import('./feeds-apis')
+  const { feedsCardsManager, feedsCardTypes } = await import('./feeds-apis')
   const success = await feedsCardsManager.startWatching()
   if (!success) {
     console.error('feedsCardsManager.startWatching() failed')
@@ -51,7 +51,13 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
     if (!postContent) {
       return
     }
-    if (postContent.classList.contains('repost') && !dq(postContent, '.details')) {
+    if (dq(postContent, '.video-container') || dq(postContent, '.bangumi-container')) {
+      return
+    }
+    if (dq(postContent, '.details')) {
+      return
+    }
+    if (postContent.classList.contains('repost')) {
       const contents = dq(postContent, '.content') as HTMLElement
       const details = document.createElement('div')
       details.classList.add('details')
