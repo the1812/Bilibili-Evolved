@@ -278,7 +278,7 @@ export class Activities extends NavbarComponent {
                 get new() { return Activities.isNewID(this.id) },
               }
             }) as VideoCardInfo[]
-            const cards = _.uniqBy(jsonCards.concat(this.leftCards, this.rightCards), it => it.id)
+            const cards = _.uniqBy(jsonCards.concat(this.leftCards, this.rightCards), it => it.aid)
               .sort((a, b) => {
                 return b.id > a.id ? 1 : -1
               })

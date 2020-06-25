@@ -241,10 +241,6 @@
         box-sizing: border-box;
         opacity: 0;
       }
-      .time,
-      .watchlater {
-        opacity: 1;
-      }
       .time {
         left: 4px;
       }
@@ -256,6 +252,12 @@
           line-height: 1;
           margin-right: 4px;
           font-size: 16px;
+        }
+      }
+      &:hover {
+        .time,
+        .watchlater {
+          opacity: 1;
         }
       }
     }
