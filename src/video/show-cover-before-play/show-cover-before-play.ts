@@ -6,7 +6,7 @@ const url = {
 }
 const styleID = 'showCoverBeforePlayStyle'
 const entry = () => {
-  Observer.videoChange(async () => {
+  const showCover = async () => {
     if (url.include.every(it => !document.URL.includes(it))) {
       return
     }
@@ -21,6 +21,9 @@ const entry = () => {
       console.warn('[播放前显示封面] 未找到视频')
       return
     }
+    if (!video.paused) {
+      return
+    }
     const { VideoInfo } = await import('../video-info')
     const info = new VideoInfo(aid)
     await info.fetchInfo()
@@ -28,7 +31,9 @@ const entry = () => {
     video.addEventListener('play', () => {
       document.body.style.removeProperty('--cover-url')
     }, { once: true })
-  })
+  }
+  // Observer.videoChange(showCover)
+  showCover()
 }
 entry()
 export default {
