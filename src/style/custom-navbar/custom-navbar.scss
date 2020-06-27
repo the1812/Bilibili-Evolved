@@ -244,6 +244,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
       width: 100%;
       height: calc(2 * var(--navbar-height));
       background-image: linear-gradient(to bottom, #000a 0, #0004 65%, transparent 100%);
+      pointer-events: none;
     }
   }
   .popup {
