@@ -37,20 +37,20 @@ const redirectSelectors = (...selectors: string[]) => {
 if (settings.watchLaterRedirectPage) {
   // 稍后再看列表
   SpinQuery.select('.watch-later-list').then(() => {
-    Observer.childListSubtree('#viewlater-app', () => {
-      SpinQuery.condition(
-        () => document.URL.match(/(av[\d]+)\/p([\d]+)/i) || document.URL.match(/(BV[\w]+)\/p([\d]+)/i),
-        it => it !== null && document.URL.indexOf('watchlater') !== -1,
-        () => {
-          const url = getRedirectLink(document.URL)
-          if (url !== null) {
-            window.location.assign(url)
-          }
-        }
-      )
-      SpinQuery.select("#viewlater-app .s-btn[href='#/']", it => it.remove())
-      redirectSelectors('.av-pic', '.av-about>a')
-    })
+    // Observer.childListSubtree('#viewlater-app', () => {
+    //   SpinQuery.condition(
+    //     () => document.URL.match(/(av[\d]+)\/p([\d]+)/i) || document.URL.match(/(BV[\w]+)\/p([\d]+)/i),
+    //     it => it !== null && document.URL.indexOf('watchlater') !== -1,
+    //     () => {
+    //       const url = getRedirectLink(document.URL)
+    //       if (url !== null) {
+    //         window.location.assign(url)
+    //       }
+    //     }
+    //   )
+    //   SpinQuery.select("#viewlater-app .s-btn[href='#/']", it => it.remove())
+    redirectSelectors('.av-pic', '.av-about>a')
+    // })
   })
 }
 if (settings.watchLaterRedirectNavbar) {
