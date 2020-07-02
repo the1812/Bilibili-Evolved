@@ -418,3 +418,11 @@
     @include border-color("4");
   }
 }
+.loading-card {
+  .cover,
+  .title,
+  .up,
+  .desc {
+    @include background-color("4");
+  }
+}
