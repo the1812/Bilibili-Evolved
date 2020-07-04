@@ -98,9 +98,9 @@ export class WatchlaterList extends NavbarComponent {
         // }
       },
       watch: {
-        watchlaterList() {
-          this.updateList()
-        },
+        // watchlaterList() {
+        //   this.updateList()
+        // },
         search() {
           this.updateFilteredCards()
         },
