@@ -24,8 +24,16 @@ export default {
         url = document.URL.replace('space.bilibili.com/', `${host}/space/`)
       }
       else if (document.URL.includes('/bangumi/')) {
-        const aid = unsafeWindow.aid || document.querySelector('.av-link,.info-sec-av').innerText.replace(/[aAvV]/g, '')
-        url = `https://${host}/video/av${aid}/`
+        Observer.videoChange(() => {
+          const aid = unsafeWindow.aid || document.querySelector('.av-link,.info-sec-av').innerText.replace(/[aAvV]/g, '')
+          const url = `https://${host}/video/av${aid}/`
+          if (document.URL !== url) {
+            button.href = url
+          } else {
+            button.disabled = true
+          }
+        })
+        return
       }
       else {
         url = document.URL.replace(window.location.host, host)
