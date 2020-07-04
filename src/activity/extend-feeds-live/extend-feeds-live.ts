@@ -51,6 +51,9 @@ interface LiveInfo {
     dqa(clone, 'a[href]').forEach(a => a.setAttribute('href', `https://live.bilibili.com/${it.roomid}`))
     const face = dq(clone, '.live-up-img') as HTMLElement
     face.style.backgroundImage = `url(${it.face})`
+    const title = dq(clone, '.live-name') as HTMLElement
+    title.innerHTML = it.title
+    title.title = it.title
     const name = dq(clone, '.up-name') as HTMLElement
     name.innerHTML = it.uname
     name.title = it.uname
