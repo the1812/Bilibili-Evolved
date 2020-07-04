@@ -2,6 +2,7 @@ const supportedUrls = [
   'https://www.bilibili.com/bangumi/',
   'https://www.bilibili.com/video/',
   'https://www.bilibili.com/watchlater/',
+  'https://www.bilibili.com/medialist/play/',
 ]
 let enabled = true
 if (supportedUrls.some(url => document.URL.startsWith(url))) {
@@ -13,8 +14,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     m: '.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume', // 切换静音
     p: '.bilibili-player-video-btn-pip', // 画中画
     // l: '.video-toolbar .like', // 点赞
-    c: '.video-toolbar .coin,.tool-bar .coin-info, .video-toolbar-module .coin-box', // 投币
-    s: '.video-toolbar .collect, .video-toolbar-module .fav-box', // 收藏
+    c: '.video-toolbar .coin,.tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2)', // 投币
+    s: '.video-toolbar .collect, .video-toolbar-module .fav-box, .play-options-ul > li:nth-child(3)', // 收藏
     ' ': '.bilibili-player-video-btn-start', // 砸瓦撸多
   } as { [key: string]: string }
   /** 长按`L`三连使用的记忆变量 */
@@ -22,6 +23,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
   /** 在稍后再看页面里, 记录当前视频是否赞过 */
   let liked = false
   const isWatchlater = document.URL.startsWith('https://www.bilibili.com/watchlater/')
+  const isMediaList = document.URL.startsWith('https://www.bilibili.com/medialist/play/')
   if (isWatchlater) {
     Observer.videoChange(() => {
       Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/archive/has/like?aid=${unsafeWindow.aid}`).then(json => {
@@ -140,6 +142,11 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
             Toast.success(`已取消点赞`, `快捷键扩展`, 1000)
           }
         })
+      } else if (isMediaList) {
+        const likeButton = dq('.play-options-ul > li:first-child') as HTMLLIElement
+        if (likeButton) {
+          likeButton.click()
+        }
       } else {
         const likeButton = dq('.video-toolbar .like') as HTMLSpanElement
         e.preventDefault()
