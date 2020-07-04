@@ -5,9 +5,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  display: block;
+  display: none;
   background: black var(--cover-url) center no-repeat;
   background-size: contain;
   pointer-events: none;
   z-index: 10;
+}
+.bilibili-player-area.video-control-show.video-state-pause {
+  .bilibili-player-video::after {
+    display: block;
+  }
 }
