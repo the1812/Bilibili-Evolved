@@ -240,6 +240,7 @@ export const settings = {
   watchLaterRedirectNavbar: true,
   watchLaterRedirectPage: true,
   showCoverBeforePlay: false,
+  volumeOverdrive: false,
   cache: {},
 }
 const fixedSettings = {

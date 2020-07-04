@@ -922,5 +922,11 @@ Resource.manifest = {
       showCoverBeforePlay: '播放前显示封面',
     },
   },
+  volumeOverdrive: {
+    path: 'volume-overdrive.min.js',
+    displayNames: {
+      volumeOverdrive: '音量增幅',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
