@@ -426,3 +426,13 @@
     @include background-color("4");
   }
 }
+.bili-im {
+  @include background-color("4");
+  @include color("e");
+  .left {
+    @include border-color("5");
+    .title {
+      @include border-color("5");
+    }
+  }
+}
