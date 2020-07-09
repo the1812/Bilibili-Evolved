@@ -429,6 +429,7 @@
 .bili-im {
   @include background-color("4");
   @include color("e");
+  box-shadow: none !important;
   .left {
     @include border-color("5");
     .title {
