@@ -44,24 +44,16 @@ interface LiveInfo {
   // }
   // const extend = [fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo, fakeLiveInfo,] as LiveInfo[]
   const extend = fullList.filter(it => !presentedNames.includes(it.uname))
-  liveListNames.forEach((it, index) => {
-    const liveInfo = presented.find(p => p.uname === presentedNames[index])
-    if (liveInfo === undefined) {
-      console.warn(`live title not found for ${presentedNames[index]}`)
-    } else {
-      it.parentElement!.setAttribute('data-live-title', liveInfo.title)
-      it.parentElement!.setAttribute('title', liveInfo.title)
-      it.setAttribute('title', presentedNames[index])
-    }
-  })
+
   const liveDetailItem = liveList.children[0] as HTMLElement
   extend.forEach(it => {
     const clone = liveDetailItem.cloneNode(true) as HTMLElement
     dqa(clone, 'a[href]').forEach(a => a.setAttribute('href', `https://live.bilibili.com/${it.roomid}`))
     const face = dq(clone, '.live-up-img') as HTMLElement
     face.style.backgroundImage = `url(${it.face})`
-    const detail = dq(clone, '.live-detail') as HTMLElement
-    detail.setAttribute('data-live-title', it.title)
+    const title = dq(clone, '.live-name') as HTMLElement
+    title.innerHTML = it.title
+    title.title = it.title
     const name = dq(clone, '.up-name') as HTMLElement
     name.innerHTML = it.uname
     name.title = it.uname

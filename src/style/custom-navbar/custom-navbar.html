@@ -337,7 +337,8 @@
     <li v-for="c of components" :key="c.name" :data-name="c.name" v-show="!c.hidden"
       :class="{disabled: c.disabled, active: c.active}" :style="{flex: c.flex, order: c.order}"
       @mouseover="requestPopup(c)">
-      <a class="main-content" v-if="c.href" :href="!c.active && !c.touch && c.href" v-html="c.html"></a>
+      <a class="main-content" v-if="typeof c.href === 'string'" :href="!c.active && !c.touch && c.href" v-html="c.html"></a>
+      <div class="main-content" v-else-if="typeof c.href === 'function'" @click="!c.active && !c.touch && c.href($event)" v-html="c.html"></div>
       <div class="main-content" v-else v-html="c.html"></div>
       <div class="notify-count" v-show="!c.active"></div>
       <div class="popup-container">

@@ -7,6 +7,7 @@ const url = {
 const styleID = 'showCoverBeforePlayStyle'
 let lastCid: string
 const entry = () => {
+  resources.applyStyle(styleID)
   const showCover = async () => {
     if (url.include.every(it => !document.URL.includes(it))) {
       return
@@ -17,7 +18,6 @@ const entry = () => {
       removeCover()
       return originalPlay.call(this, ...args)
     }
-    resources.applyStyle(styleID)
     const aid = await SpinQuery.select(() => unsafeWindow.aid)
     if (!aid) {
       console.warn('[播放前显示封面] 未找到av号')

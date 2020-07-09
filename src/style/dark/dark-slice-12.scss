@@ -418,3 +418,22 @@
     @include border-color("4");
   }
 }
+.loading-card {
+  .cover,
+  .title,
+  .up,
+  .desc {
+    @include background-color("4");
+  }
+}
+.bili-im {
+  @include background-color("4");
+  @include color("e");
+  box-shadow: none !important;
+  .left {
+    @include border-color("5");
+    .title {
+      @include border-color("5");
+    }
+  }
+}

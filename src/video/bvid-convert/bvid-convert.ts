@@ -29,18 +29,25 @@ export default {
     },
     success: () => {
       resources.applyStyle('bvidConvertStyle')
-      const label = dq('.bvid-convert') as HTMLDivElement
-      const bvid = (() => {
-        if (unsafeWindow.bvid) {
-          return unsafeWindow.bvid
-        }
-        const link = dq('.av-link,.bv-link,.bvid-link') as HTMLElement
-        return link.innerHTML || '未找到BV号'
-      })()
-      label.innerHTML = /*html*/`
-        <div class="bvid-convert-item">av${unsafeWindow.aid}</div>
-        <div class="bvid-convert-item">${bvid}</div>
-      `
+      const updateID = async () => {
+        const label = dq('.bvid-convert') as HTMLDivElement
+        const bvid = await (async () => {
+          if (unsafeWindow.bvid) {
+            return unsafeWindow.bvid
+          }
+          const link = await SpinQuery.select('.av-link,.bv-link,.bvid-link') as HTMLElement
+          return link ? link.innerHTML : '未找到BV号'
+        })()
+        label.innerHTML = /*html*/`
+          <div class="bvid-convert-item">av${unsafeWindow.aid}</div>
+          <div class="bvid-convert-item">${bvid}</div>
+        `
+      }
+      if (document.URL.startsWith('https://www.bilibili.com/bangumi/')) {
+        Observer.videoChange(updateID)
+      } else {
+        updateID()
+      }
     }
   }
 }

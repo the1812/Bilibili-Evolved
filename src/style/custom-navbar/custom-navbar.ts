@@ -207,6 +207,8 @@ export default (() => {
         },
       })
     })()
+  } else {
+    resources.removeStyle('customNavbarStyle')
   }
   return {
     widget: {

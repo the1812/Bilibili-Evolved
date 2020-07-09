@@ -34,6 +34,10 @@ if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.c
         it.insertAdjacentHTML('afterend', /*html*/`
           <div class="blocked-ads new">${settings.showBlockedAdsTip ? '🚫已屏蔽广告' : ''}</div>
         `)
+        // const index = [...it.parentElement.children].indexOf(it)
+        // it.remove()
+        // const trigger = slide.querySelector('.trigger')
+        // trigger.children[index].remove()
       })
   })
 }

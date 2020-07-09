@@ -111,6 +111,7 @@ export class Ajax {
       if (total === Infinity) {
         total = getTotal(json)
       }
+      page++
     }
     return result
   }

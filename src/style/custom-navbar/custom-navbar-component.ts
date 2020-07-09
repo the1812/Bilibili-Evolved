@@ -13,7 +13,7 @@ export class NavbarComponent {
     public requestedPopup = false,
     public initialPopup: PopupAction = null,
     public onPopup: PopupAction = null,
-    public href: string | null = null,
+    public href: string | ((e: MouseEvent) => void) | null = null,
     public notifyCount = 0,
     public touch = settings.touchNavBar,
     public active = false
