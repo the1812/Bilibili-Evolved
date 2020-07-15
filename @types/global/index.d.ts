@@ -453,6 +453,7 @@ declare global {
     customStyles: CustomStyle[],
     simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
     simpleHomeBangumiLayout: '时间表' | '动态',
+    simpleHomeWheelScroll: boolean,
     keymapJumpSeconds: number,
     urlParamsClean: boolean,
     collapseLiveSideBar: boolean,
@@ -491,6 +492,7 @@ declare global {
     watchLaterRedirectPage: boolean,
     showCoverBeforePlay: boolean,
     customNavbarGlobalFixed: boolean,
+    volumeOverdrive: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

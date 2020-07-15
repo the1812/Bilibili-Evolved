@@ -117,6 +117,9 @@ export default {
     }
   },
   async mounted() {
+    if (!settings.simpleHomeWheelScroll) {
+      return
+    }
     const contents = this.$refs.contents as HTMLElement
     const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
     enableHorizontalScroll(contents)

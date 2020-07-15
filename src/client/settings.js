@@ -202,6 +202,7 @@ export const settings = {
   customStyles: [],
   simpleHomeCategoryOrders: { ...simpleHomeCategoryDefaultOrders },
   simpleHomeBangumiLayout: '时间表',
+  simpleHomeWheelScroll: true,
   keymapJumpSeconds: 85,
   urlParamsClean: true,
   collapseLiveSideBar: true,

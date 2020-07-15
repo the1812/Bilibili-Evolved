@@ -106,6 +106,9 @@ export default {
     // if (json.code === 0) {
     //   this.online = json.data.web_online
     // }
+    if (!settings.simpleHomeWheelScroll) {
+      return
+    }
     const contents = this.$refs.contents as HTMLElement
     const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
     enableHorizontalScroll(contents)
