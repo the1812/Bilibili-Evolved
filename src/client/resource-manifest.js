@@ -928,5 +928,11 @@ Resource.manifest = {
       volumeOverdrive: '音量增幅',
     },
   },
+  seoJump: {
+    path: 'seo-jump.min.js',
+    displayNames: {
+      seoJump: 'SEO页面重定向',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

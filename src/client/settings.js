@@ -242,6 +242,7 @@ export const settings = {
   watchLaterRedirectPage: true,
   showCoverBeforePlay: false,
   volumeOverdrive: false,
+  seoJump: true,
   cache: {},
 }
 const fixedSettings = {

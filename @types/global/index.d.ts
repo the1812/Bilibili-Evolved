@@ -493,6 +493,7 @@ declare global {
     showCoverBeforePlay: boolean,
     customNavbarGlobalFixed: boolean,
     volumeOverdrive: boolean,
+    seoJump: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

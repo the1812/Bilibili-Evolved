@@ -324,6 +324,7 @@ import { store } from './store'
         {
           const quickLoads = [
             '//live.bilibili.com',
+            '//www.bilibili.com/s/video',
           ]
           if (quickLoads.some(it => document.URL.includes(it))) {
             contentLoaded(applyScripts)
