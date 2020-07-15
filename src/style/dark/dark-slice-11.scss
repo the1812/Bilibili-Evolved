@@ -381,6 +381,7 @@
     }
   }
   .page-container {
+    @include background-color();
     .bangumi-spoiler-container {
       @include background-color("4");
       @include color("e");
