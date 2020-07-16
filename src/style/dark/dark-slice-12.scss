@@ -437,3 +437,41 @@
     }
   }
 }
+.chat-control-panel .bottom{
+  .content {
+    @include background-color();
+  }
+  .medal-wear-body {
+    .medal-item {
+      .progress-level-div {
+        .progress-div {
+          @include background-color("4");
+          .progress-num-span {
+            @include theme-color();
+          }
+          &-cover {
+            @include theme-background-color();
+          }
+        }
+        .level-span {
+          @include color("a");
+        }
+      }
+      .limit-progress-div {
+        @include color("a");
+      }
+    }
+  }
+  .footer-line {
+    @include border-color("4");
+  }
+  .medal-wear-footer {
+    @include theme-color();
+    a {
+      @include theme-color();
+    }
+  }
+}
+.join-fans-body .desc-text p {
+  @include color("e");
+}
