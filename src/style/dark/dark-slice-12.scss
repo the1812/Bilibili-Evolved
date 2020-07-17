@@ -440,6 +440,7 @@
 .chat-control-panel .bottom{
   .content {
     @include background-color();
+    @include color("2");
   }
   .medal-wear-body {
     .medal-item {
