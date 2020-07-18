@@ -500,3 +500,7 @@
     @include color("e");
   }
 }
+.bb-comment .comment-list .list-item .info .reply-tags span {
+  @include background-color("3");
+  @include color("a");
+}
