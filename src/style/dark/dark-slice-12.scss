@@ -437,10 +437,22 @@
     }
   }
 }
+.fans-medal-item {
+  .label {
+    .content {
+      @include color("2");
+    }
+  }
+}
 .chat-control-panel .bottom{
   .content {
     @include background-color();
     @include color("2");
+  }
+  .medal-ctnr {
+    .title ~ .qs-icon {
+      @include color("a");
+    }
   }
   .medal-wear-body {
     .medal-item {
