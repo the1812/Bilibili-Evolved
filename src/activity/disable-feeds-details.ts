@@ -59,6 +59,9 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
     }
     if (postContent.classList.contains('repost')) {
       const contents = dq(postContent, '.content') as HTMLElement
+      if (!contents) {
+        return
+      }
       const details = document.createElement('div')
       details.classList.add('details')
       details.setAttribute('click-title', '详情')

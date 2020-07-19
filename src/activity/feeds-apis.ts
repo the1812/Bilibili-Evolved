@@ -196,6 +196,9 @@ class FeedsCardsManager extends EventTarget {
         console.warn(el)
         return ''
       }
+      if (!el.__vue__.card.origin) {
+        return ''
+      }
       if (type === feedsCardTypes.repost) {
         const originalCard = JSON.parse(el.__vue__.card.origin)
         const originalText = el.__vue__.originCardData.pureText
