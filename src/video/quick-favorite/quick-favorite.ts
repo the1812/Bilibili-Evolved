@@ -121,7 +121,11 @@
             throw new Error(`获取收藏状态失败: ${json.message}`)
           }
           const list: { id: number, title: string, fav_state: number }[] = _.get(json, 'data.list', [])
-          const quickList = list.find(it => it.id === settings.quickFavoriteID)!
+          const quickList = list.find(it => it.id === settings.quickFavoriteID)
+          if (quickList === undefined) {
+            settings.quickFavoriteID = 0
+            return
+          }
           this.isFavorite = Boolean(quickList.fav_state)
           this.selectedFavorite = this.favoriteTitle = quickList.title
         } catch (error) {
