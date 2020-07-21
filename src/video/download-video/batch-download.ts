@@ -163,10 +163,12 @@ class VideoEpisodeBatch extends Batch {
             url: it.url
           }
         })
-      } else {
+      } else if (data.dash) {
         const { getDashInfo, dashToFragments } = await import('./video-dash')
         const info = await getDashInfo(url, typeof quality === 'string' ? parseInt(quality) : quality, true)
         fragments = dashToFragments(info)
+      } else {
+        throw new Error(`获取链接失败: ${json.code} ${json.message}`)
       }
       result.push({
         fragments,
