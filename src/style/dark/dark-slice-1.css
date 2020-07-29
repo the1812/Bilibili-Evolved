@@ -1577,10 +1577,10 @@ ul.filter-disable .icon-copy,
 {
     filter: brightness(0.16) blur(10px) !important;
 }
-.bottom-actions .left-action
+/* .bottom-actions .left-action
 {
     filter: brightness(0.8) !important;
-}
+} */
 .user-type-icon .svg-icon.phone-2,
 .user-type-icon .svg-icon.not-member-2,
 .box-slide-item.expired .box-img,
