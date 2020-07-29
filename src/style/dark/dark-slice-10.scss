@@ -90,6 +90,9 @@
     &-favourite-manga .drop-list .more-btn-container {
       @include background-color();
     }
+    .download-app {
+      @include color("e");
+    }
   }
   .ranking-jump,
   .manga-title,
@@ -119,8 +122,13 @@
       }
     }
   }
-  .nav-list .nav-item .item-icon {
-    @include to-theme("blue");
+  .nav-list .nav-item {
+    .item-icon {
+      @include to-theme("blue");
+    }
+    .item-underline {
+      @include theme-background-color();
+    }
   }
   .rank-title,
   .list-item {
@@ -148,6 +156,31 @@
   }
   .section-navigator {
     @include border-color();
+    @include background-color("4");
+    .divider {
+      @include border-color();
+    }
+    .back-to-top:hover .icon {
+      @include to-theme("blue");
+    }
+  }
+  .container {
+    @include background-color();
+    .title {
+      @include color("e");
+    }
+    .tab {
+      @include color("a");
+      &.active {
+        @include theme-color();
+        &:after {
+          @include theme-background-color();
+        }
+      }
+    }
+  }
+  .purchased-comic-item .eq-desc {
+    @include color("a");
   }
 }
 .card-detail .card-item-middle-top {
