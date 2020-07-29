@@ -179,7 +179,9 @@
       }
     }
   }
-  .purchased-comic-item .eq-desc {
+  .purchased-comic-item .eq-desc,
+  .auto-purchase .page-sub-title,
+  .auto-purchase-item .list-content .comic-content .bought-ep-count {
     @include color("a");
   }
 }
