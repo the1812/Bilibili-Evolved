@@ -161,10 +161,12 @@
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
+          -webkit-box-align: start;
           max-height: 3em;
           word-break: break-all;
           line-height: 1.5;
           overflow: hidden;
+          margin: 0;
           margin-top: 8px;
           padding: 0 10px;
           &:hover {
