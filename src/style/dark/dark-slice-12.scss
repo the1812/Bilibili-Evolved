@@ -516,3 +516,9 @@
   @include background-color("3");
   @include color("a");
 }
+.bilibili-player-video-sendbar{
+  &-left,
+  &-right {
+    @include background-color("4");
+  }
+}
