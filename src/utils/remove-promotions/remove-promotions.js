@@ -14,7 +14,7 @@ if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.c
           li.style.display = 'flex'
           const lia = li.querySelector('a:not(.more-text)')
           lia.insertAdjacentHTML('afterend', /*html*/`
-            <div class="blocked-ads">${settings.showBlockedAdsTip ? '🚫已屏蔽广告' : ''}</div>
+            <div class="blocked">${settings.showBlockedAdsTip ? '🚫已屏蔽广告' : ''}</div>
           `)
           lia.style.visibility = 'hidden'
           li.querySelector('a.more-text').style.display = 'none'
@@ -32,7 +32,7 @@ if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.c
       .forEach(it => {
         it.style.display = 'none'
         it.insertAdjacentHTML('afterend', /*html*/`
-          <div class="blocked-ads new">${settings.showBlockedAdsTip ? '🚫已屏蔽广告' : ''}</div>
+          <div class="blocked new">${settings.showBlockedAdsTip ? '🚫已屏蔽广告' : ''}</div>
         `)
         // const index = [...it.parentElement.children].indexOf(it)
         // it.remove()

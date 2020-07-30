@@ -453,6 +453,7 @@ declare global {
     customStyles: CustomStyle[],
     simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
     simpleHomeBangumiLayout: '时间表' | '动态',
+    simpleHomeWheelScroll: boolean,
     keymapJumpSeconds: number,
     urlParamsClean: boolean,
     collapseLiveSideBar: boolean,
@@ -491,6 +492,8 @@ declare global {
     watchLaterRedirectPage: boolean,
     showCoverBeforePlay: boolean,
     customNavbarGlobalFixed: boolean,
+    volumeOverdrive: boolean,
+    seoJump: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
@@ -547,5 +550,6 @@ declare global {
   const matchPattern: (str: string, pattern: string | RegExp) => boolean
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const getScriptVersion: () => ScriptVersion
+  const playerReady: () => Promise<void>
 }
 export { }

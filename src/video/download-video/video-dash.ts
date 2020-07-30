@@ -49,7 +49,10 @@ export const dashToFragments = (dashes: { videoDashes: VideoDash[], audioDashes:
 export const getDashInfo = async (api: string, quality: number, allowLowerQuality = false) => {
   const json = await Ajax.getJsonWithCredentials(api)
   const data = json.data || json.result || json
-  if (json.code !== 0 || !data.dash) {
+  if (json.code !== 0) {
+    throw new Error(`API请求失败: ${json.code} ${json.message}`)
+  }
+  if (!data.dash) {
     throw new Error('此视频没有DASH格式, 请改用FLV格式')
   }
   const qualities = data.accept_quality as number[]

@@ -382,6 +382,30 @@
   @include color("f");
 }
 
+$rankColors: (
+  #61c05a: #44b0a0,
+  #5896de: #74b0f6,
+  #a068f1: #ba94f2,
+  // '#ff86b2': #ff86b2,
+  #ff9f3d: #f6be18,
+  #1a544b: #f6be18,
+  #414967: #f6be18,
+  #2d0855: #f6be18,
+);
+@each $current, $original in $rankColors {
+  $rgb: "rgb(" + red($current) + ", " + green($current) + ", " + blue($current) + ")";
+  .fans-medal-item[style*="border-color: #{$rgb}"],
+  .fans-medal-item[style*="border-color: #{$current}"] {
+    border-color: $original !important;
+    .label {
+      background-color: $original !important;
+    }
+    .level {
+      color: $original !important;
+    }
+  }
+}
+
 $highlight-map: (
   1: #a0a7dc,
   2: #c7aade,

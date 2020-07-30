@@ -2,9 +2,7 @@
   if (!document.URL.startsWith('https://www.bilibili.com/video/') || !getUID()) {
     return
   }
-  await SpinQuery.condition(() => dq('.video-toolbar .ops .collect'), it => {
-    return it !== null && (it as HTMLElement).innerText !== '--'
-  })
+  await playerReady()
   const favoriteButton = dq('.video-toolbar .ops .collect')
   if (!favoriteButton) {
     return
@@ -121,7 +119,11 @@
             throw new Error(`获取收藏状态失败: ${json.message}`)
           }
           const list: { id: number, title: string, fav_state: number }[] = _.get(json, 'data.list', [])
-          const quickList = list.find(it => it.id === settings.quickFavoriteID)!
+          const quickList = list.find(it => it.id === settings.quickFavoriteID)
+          if (quickList === undefined) {
+            settings.quickFavoriteID = 0
+            return
+          }
           this.isFavorite = Boolean(quickList.fav_state)
           this.selectedFavorite = this.favoriteTitle = quickList.title
         } catch (error) {

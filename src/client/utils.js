@@ -190,3 +190,9 @@ export const matchPattern = (str, pattern) => {
   }
   return pattern.test(str)
 }
+export const playerReady = () => {
+  return SpinQuery.condition(
+    () => parseInt(dq('.video-data .dm').textContent),
+    it => !Number.isNaN(it),
+  )
+}

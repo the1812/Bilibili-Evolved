@@ -190,7 +190,7 @@ export class Activities extends NavbarComponent {
           {
             name: '番剧',
             component: 'bangumi-activity',
-            moreUrl: 'https://t.bilibili.com/?tab=512',
+            moreUrl: 'https://t.bilibili.com/?tab=512,4097,4098,4099,4100,4101',
             get notifyApi() {
               return `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${getUID()}&update_num_dy_id=${Activities.getLatestID()}&type_list=512`
             },

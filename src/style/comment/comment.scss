@@ -1,5 +1,6 @@
 @mixin orders {
   display: flex;
+  align-items: center;
   .floor {
     opacity: 0.7;
     order: 1;
@@ -7,8 +8,21 @@
   .reply {
     order: 2;
   }
-  .operation {
+  .reply-tags {
     order: 3;
+    display: flex !important;
+    margin: 0 !important;
+    span {
+      margin: 0 4px 0 0 !important;
+      font-size: 12px !important;
+      line-height: normal !important;
+      display: flex !important;
+      height: auto !important;
+      padding: 2px 6px !important;
+    }
+  }
+  .operation {
+    order: 4;
     flex-grow: 1;
     display: flex !important;
     justify-content: flex-end;

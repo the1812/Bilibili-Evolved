@@ -40,7 +40,7 @@ body.remove-game-match-module #reportFirst3 {
   position: relative;
   margin-bottom: 4px;
 }
-.blocked-ads {
+.blocked {
   width: 440px;
   height: 220px;
   display: flex;
@@ -51,17 +51,17 @@ body.remove-game-match-module #reportFirst3 {
   align-items: center;
   justify-content: space-evenly;
 }
-.blocked-ads.new {
+.blocked.new {
   /* width: 459px;
   height: 202px; */
   width: 100%;
   height: 100%;
   background-color: #eee;
 }
-body.dark .blocked-ads.new {
+body.dark .blocked.new {
   background-color: #333;
 }
-body.compact .blocked-ads {
+body.compact .blocked {
   width: 480px;
   height: 240px;
 }

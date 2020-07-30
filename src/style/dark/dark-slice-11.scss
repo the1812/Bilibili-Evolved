@@ -381,6 +381,7 @@
     }
   }
   .page-container {
+    @include background-color();
     .bangumi-spoiler-container {
       @include background-color("4");
       @include color("e");
@@ -405,7 +406,7 @@
     }
     .publish-panel {
       .core-style {
-        @include background-color("2");
+        @include background-color();
         @include color("e");
         @include border-color();
         &:hover,

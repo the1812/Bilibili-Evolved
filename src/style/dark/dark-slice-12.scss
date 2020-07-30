@@ -437,3 +437,88 @@
     }
   }
 }
+.fans-medal-item {
+  .label {
+    .content {
+      @include color("2");
+    }
+  }
+}
+.chat-control-panel .bottom{
+  .content {
+    @include background-color();
+    @include color("2");
+  }
+  .medal-ctnr {
+    .title ~ .qs-icon {
+      @include color("a");
+    }
+  }
+  .medal-wear-body {
+    .medal-item {
+      .progress-level-div {
+        .progress-div {
+          @include background-color("4");
+          .progress-num-span {
+            @include theme-color();
+          }
+          &-cover {
+            @include theme-background-color();
+          }
+        }
+        .level-span {
+          @include color("a");
+        }
+      }
+      .limit-progress-div {
+        @include color("a");
+      }
+    }
+  }
+  .footer-line {
+    @include border-color("4");
+  }
+  .medal-wear-footer {
+    @include theme-color();
+    a {
+      @include theme-color();
+    }
+  }
+}
+.join-fans-body .desc-text p,
+.main p span,
+.WordSection1 p {
+  @include color("e");
+}
+.content-main {
+  p,
+  h5,
+  h6 {
+    @include color("e");
+  }
+}
+.act-rich-style-init .act-rich-render-content {
+  @include color("e");
+  p span {
+    @include color("a");
+  }
+}
+.long-page .page-content {
+  @include background-color();
+  @include color("e");
+  @include border-color("4");
+  h1,
+  .strong {
+    @include color("e");
+  }
+}
+.bb-comment .comment-list .list-item .info .reply-tags span {
+  @include background-color("3");
+  @include color("a");
+}
+.bilibili-player-video-sendbar {
+  &-left,
+  &-right {
+    @include background-color("4");
+  }
+}

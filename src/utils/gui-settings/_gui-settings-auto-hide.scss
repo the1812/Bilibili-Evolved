@@ -5,7 +5,7 @@
     transform: translateX(-36px);
   }
   .gui-settings-icon-panel {
-    &::after {
+    &::before {
       content: "";
       position: fixed;
       left: 0;
@@ -30,7 +30,7 @@
       transform: translateX(36px);
     }
     .gui-settings-icon-panel {
-      &::after {
+      &::before {
         right: 0;
         left: unset;
       }

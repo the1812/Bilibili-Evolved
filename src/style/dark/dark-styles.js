@@ -13,6 +13,7 @@ const notSupported = [
   '//member.bilibili.com/article-text/home',
   '//www.bilibili.com/audio/submit/',
   '//member.bilibili.com/studio/bs-editor/projects',
+  '//www.bilibili.com/s/video/',
 ]
 const load = () => {
   if (settings.noDarkOnMember && notSupported.some(it => {
@@ -41,4 +42,13 @@ addSettingsListener('useDarkStyleAsUserStyle', () => {
 export default {
   reload: load,
   unload: unload,
+  // widget: {
+  //   content: /*html*/`<div class="gui-settings-flat-button" id="seo-jump"></div>`,
+  //   condition: () => {
+  //     return document.URL.startsWith('https://www.bilibili.com/s/video/')
+  //   },
+  //   success: () => {
+
+  //   },
+  // },
 }

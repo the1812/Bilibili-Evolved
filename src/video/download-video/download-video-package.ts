@@ -23,6 +23,7 @@ export class DownloadVideoPackage {
     if (data === null || data === undefined) {
       return
     }
+    console.log(`add file: ${escapeFilename(name)}`)
     this.entries.push({ name: escapeFilename(name), data })
   }
   // private async preEmit() {
