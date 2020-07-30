@@ -2,9 +2,7 @@
   if (!document.URL.startsWith('https://www.bilibili.com/video/') || !getUID()) {
     return
   }
-  await SpinQuery.condition(() => dq('.video-toolbar .ops .collect'), it => {
-    return it !== null && (it as HTMLElement).innerText !== '--'
-  })
+  await playerReady()
   const favoriteButton = dq('.video-toolbar .ops .collect')
   if (!favoriteButton) {
     return
