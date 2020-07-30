@@ -10,9 +10,10 @@
   }
   .reply-tags {
     order: 3;
+    display: flex !important;
     margin: 0 !important;
     span {
-      margin: 0 !important;
+      margin: 0 4px 0 0 !important;
       font-size: 12px !important;
       line-height: normal !important;
       display: flex !important;
