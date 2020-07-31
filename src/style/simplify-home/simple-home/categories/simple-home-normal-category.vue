@@ -149,7 +149,7 @@ export default {
         `https://api.bilibili.com/x/web-interface/ranking/region?rid=${this.rid}&day=3&original=0`,
         (json: any) => {
           const uid = getUID()
-          const items = json.data as any[]
+          const items = (_.get(json, 'data', []) || []) as any[]
           return items.map(item => {
             return {
               id: item.aid,
