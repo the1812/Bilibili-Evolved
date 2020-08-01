@@ -487,7 +487,8 @@
 }
 .join-fans-body .desc-text p,
 .main p span,
-.WordSection1 p {
+.WordSection1 p,
+.chat-history-panel .brush-prompt .brush-prompt-item {
   @include color("e");
 }
 .content-main {
