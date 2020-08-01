@@ -203,7 +203,8 @@ div.con,
 .app-watch,
 #app .header,
 #app .submit,
-.appeal-box
+.appeal-box,
+.fans-medal-item:not(.medal-guard) .fans-medal-level
 {
     background-color: #222 !important;
 }
@@ -413,8 +414,7 @@ button.submit-button.disabled,
 #app .submit .cancel,
 .home-wrap .home-input .type.selected,
 li.tag,
-.home-wrap .home-input .type:hover,
-.fans-medal-item:not(.medal-guard) .fans-medal-level
+.home-wrap .home-input .type:hover
 {
     background-color: #444 !important;
 }

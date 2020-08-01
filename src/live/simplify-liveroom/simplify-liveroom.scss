@@ -32,16 +32,14 @@
     }
     .chat-history-panel,
     #pay-note-panel-vm .pay-note-panel,
-    #pay-note-panel-vm .pay-note-panel .detail-info .mask
-    {
+    #pay-note-panel-vm .pay-note-panel .detail-info .mask {
       border-radius: 11px 11px 0 0 !important;
     }
   }
   &.player-full-win {
     .chat-history-panel,
     #pay-note-panel-vm .pay-note-panel,
-    #pay-note-panel-vm .pay-note-panel .detail-info .mask
-    {
+    #pay-note-panel-vm .pay-note-panel .detail-info .mask {
       border-radius: 0 !important;
     }
   }
@@ -153,9 +151,9 @@
     display: block !important;
     border-radius: 0 !important;
     background-color: transparent !important;
-    .fans-medal-item.medal-guard {
-      margin-left: 0 !important;
-    }
+  }
+  .fans-medal-item.medal-guard {
+    margin-left: 0 !important;
   }
 }
 .simplify-liveroom-settings > ul > li {

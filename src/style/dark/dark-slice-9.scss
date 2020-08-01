@@ -410,7 +410,7 @@ $rankColors: (
         color: $original !important;
       }
       .fans-medal-level {
-        @include background-color("4");
+        @include background-color("2");
         color: $original !important;
       }
     }
@@ -418,7 +418,7 @@ $rankColors: (
 }
 .fans-medal-item.medal-guard {
   .fans-medal-level {
-    @include background-color("4");
+    @include background-color("2");
     @include color("e");
   }
 }
