@@ -148,6 +148,15 @@
       display: none !important;
     }
   }
+  .chat-history-panel .chat-colorful-bubble {
+    margin: 0 !important;
+    display: block !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+    .fans-medal-item.medal-guard {
+      margin-left: 0 !important;
+    }
+  }
 }
 .simplify-liveroom-settings > ul > li {
   padding: 4px 12px;

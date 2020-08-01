@@ -51,7 +51,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 隐藏粉丝勋章
 - 隐藏活动头衔
 - 隐藏用户等级
-- 隐藏舰长图标
+- 隐藏弹幕特效
 - 隐藏全区广播
 - 隐藏欢迎信息 (xxx老爷进入直播间)
 - 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)

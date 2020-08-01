@@ -413,7 +413,8 @@ button.submit-button.disabled,
 #app .submit .cancel,
 .home-wrap .home-input .type.selected,
 li.tag,
-.home-wrap .home-input .type:hover
+.home-wrap .home-input .type:hover,
+.fans-medal-item:not(.medal-guard) .fans-medal-level
 {
     background-color: #444 !important;
 }
@@ -1101,6 +1102,7 @@ li.tag > a,
     color: #00a1d6 !important
 }
 .fans-medal-item .label,
+.fans-medal-item:not(.medal-guard) .fans-medal-label,
 .calendar .day-item,
 .calendar .day-item.cur-day,
 .content-box .watermark-wrap .watermark

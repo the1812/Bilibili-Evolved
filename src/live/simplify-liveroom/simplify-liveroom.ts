@@ -3,7 +3,7 @@ const displayNames = {
   fansMedal: '粉丝勋章',
   title: '活动头衔',
   userLevel: '用户等级',
-  guard: '舰长图标',
+  guard: '弹幕特效',
   systemMessage: '全区广播',
   welcomeMessage: '欢迎信息',
   giftMessage: '礼物弹幕',

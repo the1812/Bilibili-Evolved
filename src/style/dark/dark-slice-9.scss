@@ -386,7 +386,7 @@ $rankColors: (
   #61c05a: #44b0a0,
   #5896de: #74b0f6,
   #a068f1: #ba94f2,
-  // '#ff86b2': #ff86b2,
+  #ff86b2: #ff86b2,
   #ff9f3d: #f6be18,
   #1a544b: #f6be18,
   #414967: #f6be18,
@@ -394,15 +394,32 @@ $rankColors: (
 );
 @each $current, $original in $rankColors {
   $rgb: "rgb(" + red($current) + ", " + green($current) + ", " + blue($current) + ")";
-  .fans-medal-item[style*="border-color: #{$rgb}"],
-  .fans-medal-item[style*="border-color: #{$current}"] {
-    border-color: $original !important;
-    .label {
-      background-color: $original !important;
+  .fans-medal-item:not(.medal-guard) {
+    &[style*="border-color: #{$rgb}"],
+    &[style*="border-color: #{$current}"] {
+      border-color: $original !important;
+      .label {
+        background-color: $original !important;
+      }
+      .fans-medal-label {
+        @include no-image();
+        @include color("2");
+        background-color: $original !important;
+      }
+      .level {
+        color: $original !important;
+      }
+      .fans-medal-level {
+        @include background-color("4");
+        color: $original !important;
+      }
     }
-    .level {
-      color: $original !important;
-    }
+  }
+}
+.fans-medal-item.medal-guard {
+  .fans-medal-level {
+    @include background-color("4");
+    @include color("e");
   }
 }
 
