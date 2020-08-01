@@ -522,3 +522,6 @@
     @include background-color("4");
   }
 }
+.post-content .bangumi-container {
+  @include border-color();
+}
