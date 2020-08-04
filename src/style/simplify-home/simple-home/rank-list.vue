@@ -119,7 +119,7 @@ export default {
       cursor: pointer;
     }
     body.dark & {
-      background-color: #161616;
+      background-color: #181818;
       color: #eee;
     }
   }
