@@ -494,6 +494,7 @@ declare global {
     customNavbarGlobalFixed: boolean,
     volumeOverdrive: boolean,
     seoJump: boolean,
+    commentsTranslate: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

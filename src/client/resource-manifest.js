@@ -934,5 +934,11 @@ Resource.manifest = {
       seoJump: 'SEO页面重定向',
     },
   },
+  commentsTranslate: {
+    path: 'comments-translate.min.js',
+    displayNames: {
+      commentsTranslate: '评论翻译',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

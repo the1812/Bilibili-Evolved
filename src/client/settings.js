@@ -211,6 +211,7 @@ export const settings = {
   feedsTranslate: false,
   feedsTranslateProvider: 'Bing',
   feedsTranslateLanguage: '',
+  commentsTranslate: false,
   downloadVideoQuality: 120,
   defaultLiveQuality: '原画',
   useDefaultLiveQuality: false,

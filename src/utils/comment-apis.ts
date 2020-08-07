@@ -96,14 +96,18 @@ export const forEachCommentArea = (callback: CommentAreaCallback) => {
   commentAreaCallbacks.push(callback)
 }
 export const forEachCommentItem = (callbacks: {
-  added: CommentItemCallback
-  removed: CommentItemCallback
+  added?: CommentItemCallback
+  removed?: CommentItemCallback
 }) => {
   const { added, removed } = callbacks
   commentAreas.forEach(area => {
-    area.items.forEach(item => added(item))
-    itemAddedCallbacks.push(added)
-    itemRemovedCallbacks.push(removed)
+    if (added) {
+      area.items.forEach(item => added(item))
+      itemAddedCallbacks.push(added)
+    }
+    if (removed) {
+      itemRemovedCallbacks.push(removed)
+    }
   })
 }
 
