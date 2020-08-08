@@ -946,5 +946,11 @@ Resource.manifest = {
       copyFeedsLink: '动态链接复制',
     },
   },
+  copyCommentLink: {
+    path: 'copy-comment-link.min.js',
+    displayNames: {
+      copyCommentLink: '评论链接复制',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

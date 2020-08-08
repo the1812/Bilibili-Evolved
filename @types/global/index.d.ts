@@ -496,6 +496,7 @@ declare global {
     seoJump: boolean,
     commentsTranslate: boolean,
     copyFeedsLink: boolean,
+    copyCommentLink: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

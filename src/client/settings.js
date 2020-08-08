@@ -245,6 +245,7 @@ export const settings = {
   volumeOverdrive: false,
   seoJump: true,
   copyFeedsLink: false,
+  copyCommentLink: false,
   cache: {},
 }
 const fixedSettings = {
