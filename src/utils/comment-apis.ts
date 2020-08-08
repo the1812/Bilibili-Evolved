@@ -100,7 +100,7 @@ export const forEachCommentItem = (callbacks: {
   removed?: CommentItemCallback
 }) => {
   const { added, removed } = callbacks
-  commentAreas.forEach(area => {
+  forEachCommentArea(area => {
     if (added) {
       area.items.forEach(item => added(item))
       itemAddedCallbacks.push(added)
