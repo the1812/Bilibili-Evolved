@@ -105,6 +105,12 @@ const getFeedsCardType = (element: HTMLElement) => {
   }
   return feedsCardTypes.text
 }
+
+export type FeedsCardCallback = {
+  added?: (card: FeedsCard) => void
+  removed?: (card: FeedsCard) => void
+}
+const feedsCardCallbacks: Required<FeedsCardCallback>[] = []
 class FeedsCardsManager extends EventTarget {
   watching = false
   cards: FeedsCard[] = []
@@ -153,6 +159,7 @@ class FeedsCardsManager extends EventTarget {
         })
         const event = new CustomEvent('addCard', { detail: card })
         this.dispatchEvent(event)
+        feedsCardCallbacks.forEach(c => c.added(card))
       }
     }
   }
@@ -167,6 +174,7 @@ class FeedsCardsManager extends EventTarget {
       this.cards.splice(index, 1)
       const event = new CustomEvent('removeCard', { detail: card })
       this.dispatchEvent(event)
+      feedsCardCallbacks.forEach(c => c.removed(card))
     }
   }
   async parseCard(element: HTMLElement): Promise<FeedsCard> {
@@ -276,6 +284,7 @@ class FeedsCardsManager extends EventTarget {
     if (this.watching) {
       return true
     }
+    this.watching = true
     if (document.URL.includes('//space.bilibili.com')) {
       console.log('space watch')
       const container = await SpinQuery.select('.s-space') as HTMLDivElement
@@ -307,7 +316,6 @@ class FeedsCardsManager extends EventTarget {
       return false
     }
     updateCards(cardsList)
-    this.watching = true
     return true
   }
 }
@@ -388,10 +396,28 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
   }
 }
 
+export const forEachFeedsCard = (callback: FeedsCardCallback) => {
+  (async () => {
+    const success = await feedsCardsManager.startWatching()
+    if (!success) {
+      console.error('feedsCardsManager.startWatching() failed')
+      return
+    }
+
+    const { added } = callback
+    if (added) {
+      feedsCardsManager.cards.forEach(c => added(c))
+    }
+    const none = () => {}
+    feedsCardCallbacks.push({ added: none, removed: none, ...callback })
+  })()
+}
+
 export default {
   export: {
     feedsCardsManager,
     feedsCardTypes,
     getVideoFeeds,
+    forEachFeedsCard,
   },
 }

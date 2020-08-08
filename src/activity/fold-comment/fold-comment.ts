@@ -3,12 +3,7 @@
    && !document.URL.startsWith('https://space.bilibili.com')) {
      return
   }
-  const { feedsCardsManager } = await import('../feeds-apis')
-  const success = await feedsCardsManager.startWatching()
-  if (!success) {
-    console.error('feedsCardsManager.startWatching() failed')
-    return
-  }
+  const { forEachFeedsCard } = await import('../feeds-apis')
   resources.applyImportantStyle('foldCommentStyle')
   const injectButton = (card: HTMLElement) => {
     const injectToComment = (panelArea: HTMLDivElement) => {
@@ -47,6 +42,7 @@
       injectToComment(panelArea)
     }
   }
-  feedsCardsManager.cards.forEach(c => injectButton(c.element))
-  feedsCardsManager.addEventListener('addCard', e => injectButton(e.detail.element))
+  forEachFeedsCard({
+    added: c => injectButton(c.element)
+  })
 })()
