@@ -495,6 +495,7 @@ declare global {
     volumeOverdrive: boolean,
     seoJump: boolean,
     commentsTranslate: boolean,
+    copyFeedsLink: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }

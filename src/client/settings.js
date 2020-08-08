@@ -244,6 +244,7 @@ export const settings = {
   showCoverBeforePlay: false,
   volumeOverdrive: false,
   seoJump: true,
+  copyFeedsLink: false,
   cache: {},
 }
 const fixedSettings = {

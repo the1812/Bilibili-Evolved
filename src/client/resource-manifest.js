@@ -940,5 +940,11 @@ Resource.manifest = {
       commentsTranslate: '评论翻译',
     },
   },
+  copyFeedsLink: {
+    path: 'copy-feeds-link.min.js',
+    displayNames: {
+      copyFeedsLink: '动态链接复制',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
