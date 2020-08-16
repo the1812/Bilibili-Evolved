@@ -381,6 +381,12 @@
 .international-header .mini-upload:hover {
   @include color("f");
 }
+.superChat-card-detail {
+  .card-item-middle-top .name,
+  .card-item-top-right {
+    @include color("e");
+  }
+}
 
 $rankColors: (
   #61c05a: #44b0a0,
