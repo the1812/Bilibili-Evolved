@@ -158,13 +158,21 @@ class VideoFormat {
     return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
   }
   static async getAvailableFormats(): Promise<VideoFormat[]> {
-    const url = await pageData.entity.getUrl()
-    const json = await Ajax.getJsonWithCredentials(url)
-    if (json.code !== 0) {
-      throw new Error('获取清晰度信息失败.')
+    const { BannedResponse, throwBannedError } = await import('./batch-warning')
+    try {
+      const url = await pageData.entity.getUrl()
+      const json = await Ajax.getJsonWithCredentials(url)
+      if (json.code !== 0) {
+        throw new Error('获取清晰度信息失败.')
+      }
+      const data = json.data || json.result || json
+      return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
+    } catch (error) {
+      if ((error as Error).message.includes(`status of ${BannedResponse}`)) {
+        throwBannedError()
+      }
+      throw error
     }
-    const data = json.data || json.result || json
-    return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
   }
 }
 const allFormats: VideoFormat[] = [
@@ -806,6 +814,10 @@ async function loadPanel() {
             return
           }
           const format = this.getFormat() as VideoFormat
+          if (format.quality === 120) {
+            Toast.info('4K视频不支持直接下载, 请使用下方的导出选项.', '下载视频', 5000)
+            return
+          }
           const videoDownloader = await format.downloadInfo(this.dash)
           videoDownloader.subtitle = this.subtitle
           switch (type) {
@@ -871,8 +883,13 @@ async function loadPanel() {
       },
       async exportBatchData(type: ExportType) {
         const episodeList = this.episodeList as EpisodeItem[]
+        const { MaxBatchSize, showBatchWarning } = await import('./batch-warning')
         if (episodeList.every(item => item.checked === false)) {
           Toast.info('请至少选择1集或以上的数量!', '批量导出', 3000)
+          return
+        }
+        if (episodeList.length > MaxBatchSize) {
+          showBatchWarning('批量导出')
           return
         }
         const episodeFilter = (item: EpisodeItem) => {
@@ -1036,8 +1053,13 @@ async function loadPanel() {
         }
       },
       async exportManualData(type: ExportType) {
+        const { MaxBatchSize, showBatchWarning } = await import('./batch-warning')
         if (this.manualInputItems.length === 0) {
           Toast.info('请至少输入一个有效的视频链接!', '手动输入', 3000)
+          return
+        }
+        if (this.manualInputItems.length > MaxBatchSize) {
+          showBatchWarning('手动输入')
           return
         }
         const { ManualInputBatch } = await import('./batch-download')
@@ -1147,6 +1169,7 @@ async function loadPanel() {
           return
         }
         const { BatchExtractor } = await import('batch-download')
+        const { MaxBatchSize } = await import('./batch-warning')
         if (await BatchExtractor.test() !== true) {
           this.batch = false
           this.episodeList = []
@@ -1161,7 +1184,7 @@ async function loadPanel() {
             title: item.title,
             titleParameters: item.titleParameters,
             index,
-            checked: true,
+            checked: index < MaxBatchSize,
           } as EpisodeItem
         })
       },
