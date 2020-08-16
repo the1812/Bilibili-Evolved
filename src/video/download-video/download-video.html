@@ -25,12 +25,6 @@
     <div class="title">
       <!-- <span class="bold" :title="'av' + aid + ' / cid' + cid">av{{aid}} / cid{{cid}}</span> -->
       <span class="size">
-        <div v-if="sizeWarning" class="size-warning">
-          <i class="mdi mdi-alert-circle"></i>
-          <div class="size-warning-tip">
-            警告: 过大的视频大小会在直接下载时占用大量内存, 并可能导致浏览器标签页崩溃. 请考虑降低清晰度或使用导出选项.
-          </div>
-        </div>
         预计大小: {{displaySize}}
       </span>
       <!-- <span v-show="!downloadSingle" class="size">共{{episodeList.length}}P</span> -->
@@ -77,8 +71,14 @@
       <h2>直接下载</h2>
       <span class="download-speed">{{speed}}</span>
     </div>
-    <button v-if="!downloading" class="primary start-download" @click="startDownload()">开始</button>
-    <button v-else class="primary cancel-download" @click="cancelDownload()">取消</button>
+    <div v-if="sizeWarning" class="size-warning">
+      <i class="mdi mdi-alert-circle"></i>
+      <div class="size-warning-tip">
+        警告: 过大的视频大小会在直接下载时占用大量内存, 并可能导致浏览器标签页崩溃. 请考虑降低清晰度或使用导出选项.
+      </div>
+    </div>
+    <button v-if="!sizeWarning && !downloading" class="primary start-download" @click="startDownload()">开始</button>
+    <button v-if="downloading" class="primary cancel-download" @click="cancelDownload()">取消</button>
     <div class="progress">
       <div class="background">
         <div class="foreground" :style="{width: progressPercent + '%'}"></div>
