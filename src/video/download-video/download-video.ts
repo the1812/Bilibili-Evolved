@@ -168,7 +168,7 @@ class VideoFormat {
       const data = json.data || json.result || json
       return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
     } catch (error) {
-      if ((error as Error).message.includes(`status of ${BannedResponse}`)) {
+      if ((error as Error).message.includes(BannedResponse.toString())) {
         throwBannedError()
       }
       throw error
