@@ -526,3 +526,6 @@
 .post-content .bangumi-container {
   @include border-color();
 }
+.jumping-ctnr .jumping-input {
+  @include background-color("2");
+}
