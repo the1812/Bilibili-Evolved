@@ -183,7 +183,7 @@ const allFormats: VideoFormat[] = [
   new VideoFormat(74, '720P60', '高清 720P60'),
   new VideoFormat(64, '720P', '高清 720P'),
   new VideoFormat(32, '480P', '清晰 480P'),
-  new VideoFormat(15, '320P', '流畅 320P'),
+  new VideoFormat(16, '360P', '流畅 360P'),
 ]
 class VideoDownloader {
   format: VideoFormat
