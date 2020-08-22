@@ -538,3 +538,23 @@
     @include color("e");
   }
 }
+.b-info .balance {
+  &-top {
+    .button {
+      @include border-color();
+    }
+    &:after {
+      @include background-color("a");
+    }
+  }
+  &-footer .part-balance-name {
+    @include color("e");
+    .unbb-des {
+      @include background-color("3");
+      background-image: none !important;
+      a {
+        @include theme-color();
+      }
+    }
+  }
+}
