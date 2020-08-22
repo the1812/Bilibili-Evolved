@@ -529,3 +529,12 @@
 .jumping-ctnr .jumping-input {
   @include background-color("2");
 }
+.qrpay-group .qrpay-content .more-pay {
+  .more-text {
+    @include color("a");
+  }
+  .more-btn {
+    @include theme-background-color();
+    @include color("e");
+  }
+}
