@@ -32,10 +32,10 @@ export default {
       const updateID = async () => {
         const label = dq('.bvid-convert') as HTMLDivElement
         const bvid = await (async () => {
+          const link = await SpinQuery.select('.av-link,.bv-link,.bvid-link') as HTMLElement
           if (unsafeWindow.bvid) {
             return unsafeWindow.bvid
           }
-          const link = await SpinQuery.select('.av-link,.bv-link,.bvid-link') as HTMLElement
           return link ? link.innerHTML : '未找到BV号'
         })()
         label.innerHTML = /*html*/`
