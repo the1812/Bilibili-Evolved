@@ -565,3 +565,7 @@
 #app-ctnr .label-wrapper .content {
   @include background-color();
 }
+.my-album .link-panigation li.panigation.selected {
+  @include theme-background-color();
+  @include foreground-color();
+}
