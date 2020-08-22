@@ -569,3 +569,33 @@
   @include theme-background-color();
   @include foreground-color();
 }
+.container.similar-songs-content {
+  @include background-color();
+  .similar-title,
+  .similar-songs-title {
+    @include color("e");
+  }
+  .play-songs-btn {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+  .similar-songs-list {
+    @include border-color();
+    .list-item {
+      &.odd {
+        @include background-color("3");
+      }
+      &.even {
+        @include background-color("4");
+      }
+      .song-sort {
+        @include color("e");
+      }
+      .song-title .song-float:hover,
+      .song-title .song-collection.font-blue,
+      .song-uname.font-blue {
+        @include theme-color();
+      }
+    }
+  }
+}
