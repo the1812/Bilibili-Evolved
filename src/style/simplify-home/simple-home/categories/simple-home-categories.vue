@@ -113,6 +113,9 @@ export default {
       }
     },
     selectTab(tab: { key: string; name: string }) {
+      if (this.reordering) {
+        return
+      }
       if (this.selectedTab === tab.key && this.regionLinks) {
         const link = this.regionLinks[tab.key] as string
         window.open(`https://www.bilibili.com/${link}`, '_blank')
