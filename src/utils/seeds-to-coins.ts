@@ -37,6 +37,7 @@ export default {
       <i class="mdi mdi-24px mdi-seed-outline"></i>
       <span>瓜子换硬币</span>
     </button>`,
+    condition: () => Boolean(getUID()),
     success: () => {
       const exchange = async () => {
         const json = await Ajax.getJsonWithCredentials(seedsToCoinsApi) as {
