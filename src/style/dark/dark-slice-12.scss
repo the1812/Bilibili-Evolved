@@ -599,3 +599,8 @@
     }
   }
 }
+.fansmedal-popover {
+  .target-user {
+    @include theme-color();
+  }
+}
