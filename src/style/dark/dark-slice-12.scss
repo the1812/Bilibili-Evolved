@@ -558,3 +558,6 @@
     }
   }
 }
+.spend-recode .title-group .selected-title:after {
+  @include theme-background-color();
+}
