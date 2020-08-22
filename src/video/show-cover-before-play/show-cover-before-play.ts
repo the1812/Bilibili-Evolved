@@ -7,17 +7,17 @@ const url = {
 const styleID = 'showCoverBeforePlayStyle'
 let lastCid: string
 const entry = () => {
+  if (url.include.every(it => !document.URL.includes(it))) {
+    return
+  }
   resources.applyStyle(styleID)
+  const removeCover = () => document.body.style.removeProperty('--cover-url')
+  const originalPlay = HTMLVideoElement.prototype.play
+  HTMLVideoElement.prototype.play = function (...args: any[]) {
+    removeCover()
+    return originalPlay.call(this, ...args)
+  }
   const showCover = async () => {
-    if (url.include.every(it => !document.URL.includes(it))) {
-      return
-    }
-    const removeCover = () => document.body.style.removeProperty('--cover-url')
-    const originalPlay = HTMLVideoElement.prototype.play
-    HTMLVideoElement.prototype.play = function (...args: any[]) {
-      removeCover()
-      return originalPlay.call(this, ...args)
-    }
     const aid = await SpinQuery.select(() => unsafeWindow.aid)
     if (!aid) {
       console.warn('[播放前显示封面] 未找到av号')
@@ -36,9 +36,10 @@ const entry = () => {
     const { VideoInfo } = await import('../video-info')
     const info = new VideoInfo(aid)
     await info.fetchInfo()
-    if (!(dq('video') as HTMLVideoElement).paused) {
-      return
-    }
+    // const video = dq('video') as HTMLVideoElement
+    // if (!video || !video.paused) {
+    //   return
+    // }
     document.body.style.setProperty('--cover-url', `url('${info.coverUrl}')`)
     // video.addEventListener('play', () => {
     //   removeCover()
