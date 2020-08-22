@@ -631,3 +631,13 @@
     @include theme-color();
   }
 }
+.bp-right .des-content {
+  @include background-color("2");
+  .text-content .title {
+    @include color("e");
+  }
+  .button {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
