@@ -1,5 +1,6 @@
 const displayNames = {
   vip: '老爷图标',
+  enterPrompt: '入场通知',
   fansMedal: '粉丝勋章',
   title: '活动头衔',
   userLevel: '用户等级',

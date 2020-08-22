@@ -274,6 +274,8 @@ export class Activities extends NavbarComponent {
                 upName: card.desc.user_profile.info.uname,
                 upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
                 id: card.desc.dynamic_id_str,
+                // pubTimestamp: cardJson.pubdate,
+                // pubTime: format??? cardJson.pubdate,
                 watchlater: true,
                 get new() { return Activities.isNewID(this.id) },
               }
@@ -344,6 +346,7 @@ export class Activities extends NavbarComponent {
                   <div class="cover-container">
                     <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
                     <div class="time">{{card.time}}</div>
+                    <div class="time">{{card.}}</div>
                     <div @click.stop.prevent="toggleWatchlater(card.aid)" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
                   </div>
                   <h1 class="title" :title="card.title">{{card.title}}</h1>

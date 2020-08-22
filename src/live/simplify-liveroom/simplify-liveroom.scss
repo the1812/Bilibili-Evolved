@@ -15,7 +15,9 @@
   &-eventsBanner .z-section-blocks .left-container .flip-view,
   &-eventsBanner .activity-pushing-out,
   &-userEffect .live-room-app .aside-area .activity-welcome-section,
-  &-kanban .live-haruna-ctnr {
+  &-kanban .live-haruna-ctnr,
+  &-enterPrompt .chat-item.important-prompt-item,
+  &-enterPrompt .chat-history-panel .brush-prompt {
     display: none !important;
   }
 }
