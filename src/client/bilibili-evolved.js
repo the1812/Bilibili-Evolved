@@ -280,9 +280,6 @@ import { store } from './store'
           debugger
         }
       },
-      newHomePage: () => {
-        document.cookie = 'INTVER=1; domain=.bilibili.com; path=/; expires=Fri, 21 Aug 2020 02:13:04 GMT'
-      },
       monkeyInfo: GM.info,
       monkeyApis: {
         getValue: GM.getValue,
