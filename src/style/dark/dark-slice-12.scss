@@ -561,6 +561,7 @@
 .spend-recode .title-group .selected-title:after {
   @include theme-background-color();
 }
-#newsList li.tag:hover {
+#newsList li.tag:hover,
+#app-ctnr .label-wrapper .content {
   @include background-color();
 }
