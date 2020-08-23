@@ -21,6 +21,16 @@
     display: none !important;
   }
 }
+.simplify-enterPrompt {
+  .chat-history-list.with-brush-prompt {
+    &:not(.with-penury-gift) {
+      height: calc(100%) !important;
+    }
+    &.with-penury-gift {
+      height: calc(100% - 32px) !important;
+    }
+  }
+}
 .simplify-rankList {
   .live-room-app {
     .rank-list-section {
