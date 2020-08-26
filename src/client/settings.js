@@ -246,6 +246,7 @@ export const settings = {
   seoJump: true,
   copyFeedsLink: false,
   copyCommentLink: false,
+  unfoldFeeds: true,
   cache: {},
 }
 const fixedSettings = {

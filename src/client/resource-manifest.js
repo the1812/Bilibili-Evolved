@@ -952,5 +952,11 @@ Resource.manifest = {
       copyCommentLink: '评论链接复制',
     },
   },
+  unfoldFeeds: {
+    path: 'unfold-feeds.min.js',
+    displayNames: {
+      unfoldFeeds: '动态反折叠',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
