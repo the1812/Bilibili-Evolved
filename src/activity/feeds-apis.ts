@@ -65,6 +65,10 @@ export const feedsCardTypes = {
     id: 4300,
     name: '收藏夹',
   } as FeedsCardType,
+  liveRecord: {
+    id: 2047, // FIXME: 暂时随便写个 id 了, 这个东西目前找不到 type
+    name: '开播记录',
+  },
 }
 export interface FeedsCard {
   id: string
@@ -102,6 +106,9 @@ const getFeedsCardType = (element: HTMLElement) => {
   }
   if (element.querySelector('.vc-ctnr')) {
     return feedsCardTypes.miniVideo
+  }
+  if (element.querySelector('.live-container')) {
+    return feedsCardTypes.liveRecord
   }
   return feedsCardTypes.text
 }

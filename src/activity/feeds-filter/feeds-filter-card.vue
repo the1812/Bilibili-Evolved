@@ -239,6 +239,7 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
         'column': 64,
         'audio': 256,
         'bangumi': 512,
+        'liveRecord': 2047,
         'share': 2048
       )
   {
