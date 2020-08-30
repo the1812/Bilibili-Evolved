@@ -248,7 +248,8 @@
 .title-renew-panel .card,
 .publish-panel .editor:hover,
 .publish-panel .editor:focus,
-.publish-panel .editor:focus-within {
+.publish-panel .editor:focus-within,
+.page-container {
   @include background-color();
 }
 .manga-navbar .search-bar .placeholder-list .placeholder-item {
