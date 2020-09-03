@@ -229,7 +229,7 @@ export const map = new Map([
   [`上一页`, `Previous`],
   [`下一页`, `Next`],
   [`搜索`, `Search`],
-  [`直播中`, `Live boradcasting`],
+  [`直播中`, `LIVE`],
   [`等级`, `Level`],
   [`个人中心`, `Profile`],
   [`创作中心`, `Creations`],
@@ -937,6 +937,7 @@ export const map = new Map([
   [`向左旋转`, `Rotate Left`],
   [`向右旋转`, `Rotate Right`],
   [`翻译`, `Translate`],
+  [`清除搜索历史`, `Clear history`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
