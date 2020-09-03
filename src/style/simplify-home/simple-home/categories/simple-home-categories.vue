@@ -43,6 +43,7 @@ const tabNames = {
   tech: '知识',
   digital: '数码',
   life: '生活',
+  food: '美食',
   kichiku: '鬼畜',
   fashion: '时尚',
   // ads: '广告',
