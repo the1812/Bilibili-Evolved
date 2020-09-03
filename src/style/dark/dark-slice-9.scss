@@ -375,7 +375,9 @@
 .share-content .video-card .up-info .name,
 .user-title-using-cntr .user-title-box .name,
 .bilibili-player-video-control .bilibili-player-video-btn-pagelist,
-.bilibili-player-video-control .bilibili-player-video-btn-speed {
+.bilibili-player-video-control .bilibili-player-video-btn-speed,
+.gridview-content-container .song-intro,
+.song-padding .song-intro {
   @include color("e");
 }
 .van-popover .vip:hover,
