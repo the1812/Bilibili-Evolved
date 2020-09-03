@@ -938,6 +938,8 @@ export const map = new Map([
   [`向右旋转`, `Rotate Right`],
   [`翻译`, `Translate`],
   [`清除搜索历史`, `Clear history`],
+  [`当前在线`, `Online Ranking`],
+  [`知识`, `Knowledge`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

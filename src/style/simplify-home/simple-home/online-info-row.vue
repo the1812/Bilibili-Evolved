@@ -136,7 +136,7 @@ export default {
         grid-area: main;
         background-color: #8882;
         position: relative;
-        width: 370px;
+        width: 350px;
         height: 204px;
         border-radius: 8px;
         overflow: hidden;
