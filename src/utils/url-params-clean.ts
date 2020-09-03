@@ -25,6 +25,7 @@ const blockParams = [
   'network_status',
   'platform_network_status',
   'p2p_type',
+  'referfrom',
 ]
 const noNormalizes = [
   /game\.bilibili\.com\/fgo/,

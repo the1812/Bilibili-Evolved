@@ -229,7 +229,7 @@ export const map = new Map([
   [`上一页`, `Previous`],
   [`下一页`, `Next`],
   [`搜索`, `Search`],
-  [`直播中`, `Live boradcasting`],
+  [`直播中`, `LIVE`],
   [`等级`, `Level`],
   [`个人中心`, `Profile`],
   [`创作中心`, `Creations`],
@@ -399,8 +399,12 @@ export const map = new Map([
   [`娱乐`, [
     `Entertainment`,
     {
+      selector: `.category-item div`,
+      text: 'Entertain',
+    },
+    {
       selector: `.primary-menu .nav-menu li .nav-name, .elevator-module .nav-list .item`,
-      text: `Entmt`
+      text: `Ettmt`
     },
   ]],
   [`自动`, `Auto`],
@@ -937,6 +941,13 @@ export const map = new Map([
   [`向左旋转`, `Rotate Left`],
   [`向右旋转`, `Rotate Right`],
   [`翻译`, `Translate`],
+  [`清除搜索历史`, `Clear history`],
+  [`当前在线`, `Online Ranking`],
+  [`知识`, `Knowledge`],
+  [`说唱`, `Rap`],
+  [`音乐PLUS`, `Music+`],
+  [`课堂`, `Courses`],
+  [`美食`, `Foods`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

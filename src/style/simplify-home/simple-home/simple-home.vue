@@ -39,27 +39,6 @@ export default {
     --title-color: white;
     color: #ddd;
   }
-  .jump-dots {
-    grid-area: dots;
-    align-self: center;
-    justify-self: center;
-    & label {
-      display: block;
-    }
-    & label:not(:last-child) {
-      margin-bottom: 6px;
-    }
-    .jump-dot {
-      background-color: #ddd;
-      width: 8px;
-      height: 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      body.dark & {
-        background-color: #444;
-      }
-    }
-  }
   .hidden-input {
     display: none;
     @for $i from 1 to 16 {

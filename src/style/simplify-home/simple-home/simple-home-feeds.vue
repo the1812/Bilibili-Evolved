@@ -13,11 +13,11 @@
           <div class="tab-name">{{tab.name}}</div>
         </div>
       </div>
-      <!-- <a
+      <a
         class="online"
         target="_blank"
         href="https://www.bilibili.com/video/online.html"
-      >在线人数: {{online}}</a> -->
+      >当前在线</a>
       <a class="more" href="//t.bilibili.com/" target="_blank">
         <icon type="home" icon="activity"></icon>全部动态
       </a>
