@@ -443,6 +443,9 @@
       @include color("2");
     }
   }
+  .fans-medal-level {
+    @include background-color("2");
+  }
 }
 .chat-control-panel .bottom{
   .content {

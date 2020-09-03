@@ -180,6 +180,11 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`watchLaterRedirectPage`, /*html*/`「後で見る」ページのリンクをリダイレクトします.`],
     [`showCoverBeforePlay`, /*html*/`動画の再生が始まる前に、プレーヤーにサムネイルを表示します.`],
     [`customNavbarGlobalFixed`, /*html*/`頂欄は、カスタム頂欄を使用するすべてのページで固定されているため、スクロールの影響を受けません.`],
+    [`seoJump`, /*html*/`SEOページに入ると、自動的に元の動画ページに戻ります.`],
+    [`copyFeedsLink`, /*html*/`フィードメニューにリンクのコピーオプションを追加する.`],
+    [`copyCommentLink`, /*html*/`コメントメニューにリンクのコピーオプションを追加する.`],
+    [`unfoldFeeds`, /*html*/`折りたたまれたフィードを自動的に展開する.`],
+    [`commentsTranslate`, /*html*/`コメントの翻訳ボタンを追加する.`],
 ]);
 export default {
     export: { toolTips },
