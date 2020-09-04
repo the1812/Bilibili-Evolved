@@ -443,6 +443,10 @@
       @include color("2");
     }
   }
+  .fans-medal-level {
+    @include background-color("2");
+    @include foreground-color();
+  }
 }
 .chat-control-panel .bottom{
   .content {
@@ -487,7 +491,8 @@
 }
 .join-fans-body .desc-text p,
 .main p span,
-.WordSection1 p {
+.WordSection1 p,
+.chat-history-panel .brush-prompt .brush-prompt-item {
   @include color("e");
 }
 .content-main {
@@ -520,5 +525,123 @@
   &-left,
   &-right {
     @include background-color("4");
+  }
+}
+.post-content .bangumi-container {
+  @include border-color();
+}
+.jumping-ctnr .jumping-input {
+  @include background-color("2");
+}
+.qrpay-group .qrpay-content .more-pay {
+  .more-text {
+    @include color("a");
+  }
+  .more-btn {
+    @include theme-background-color();
+    @include color("e");
+  }
+}
+.b-info {
+  .balance {
+    &-top {
+      .button {
+        @include border-color();
+      }
+      &:after {
+        @include background-color("a");
+      }
+      .balance-row {
+        .balance-title {
+          @include color("e");
+        }
+        .balance-right .shell-channel .shell-item {
+          @include background-color("3");
+          @include border-color();
+          &-active {
+            @include theme-border-color();
+          }
+          .channel-name {
+            @include color("e");
+          }
+        }
+      }
+    }
+    &-footer .part-balance-name {
+      @include color("e");
+      .unbb-des {
+        @include background-color("3");
+        background-image: none !important;
+        a {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  .warning-group {
+    @include border-color();
+    .warning-title {
+      @include color("e");
+    }
+  }
+  .rule-btn {
+    @include theme-color();
+    @include theme-border-color();
+  }
+}
+.spend-recode .title-group .selected-title:after {
+  @include theme-background-color();
+}
+#newsList li.tag:hover,
+#app-ctnr .label-wrapper .content {
+  @include background-color();
+}
+.my-album .link-panigation li.panigation.selected {
+  @include theme-background-color();
+  @include foreground-color();
+}
+.container.similar-songs-content {
+  @include background-color();
+  .similar-title,
+  .similar-songs-title {
+    @include color("e");
+  }
+  .play-songs-btn {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+  .similar-songs-list {
+    @include border-color();
+    .list-item {
+      &.odd {
+        @include background-color("3");
+      }
+      &.even {
+        @include background-color("4");
+      }
+      .song-sort {
+        @include color("e");
+      }
+      .song-title .song-float:hover,
+      .song-title .song-collection.font-blue,
+      .song-uname.font-blue {
+        @include theme-color();
+      }
+    }
+  }
+}
+.fansmedal-popover {
+  .target-user {
+    @include theme-color();
+  }
+}
+.bp-right .des-content {
+  @include background-color("2");
+  .text-content .title {
+    @include color("e");
+  }
+  .button {
+    @include theme-background-color();
+    @include foreground-color();
   }
 }

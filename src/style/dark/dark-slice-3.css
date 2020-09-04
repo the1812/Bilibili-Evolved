@@ -223,7 +223,6 @@ body>div.to-top.on,
 .area-section .card-ctnr .more:hover,
 .link-panigation-ctnr .pagination,
 .link-progress-tv,
-.jumping-ctnr .jumping-input,
 #song_detail_click_upper~div .pager .pages .page-item.active button,
 #song_detail_click_upper~div .pager .pages .page-item button,
 .filter-wrap .sub-filter,
@@ -254,8 +253,9 @@ body>div.to-top.on,
 {
     background: #fff !important;
 }
-.chat-history-panel .chat-history-list .chat-item.danmaku-item .admin-icon,
-.chat-history-panel .chat-history-list .chat-item.danmaku-item .anchor-icon,
+.bottom-actions .action-item {
+    color: #222 !important;
+}
 .date-input .date-panel .day.disabled
 {
     color: #444 !important;
@@ -342,7 +342,6 @@ body>div.to-top.on,
 .content-panel .title span em,
 .medal-up-trueLove,
 .u-info .u-name,
-.bottom-actions .action-item,
 .el-pagination__editor,
 .el-pagination .btn-next,
 .el-pagination .btn-prev,

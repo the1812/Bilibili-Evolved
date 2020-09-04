@@ -25,12 +25,7 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
     return
   }
   addStyle()
-  const { feedsCardsManager, feedsCardTypes } = await import('./feeds-apis')
-  const success = await feedsCardsManager.startWatching()
-  if (!success) {
-    console.error('feedsCardsManager.startWatching() failed')
-    return
-  }
+  const { forEachFeedsCard } = await import('./feeds-apis')
 
   const disableDetails = (card: FeedsCard) => {
     const element = card.element
@@ -71,11 +66,8 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
       contents.insertAdjacentElement('beforeend', details)
     }
   }
-
-  feedsCardsManager.cards.forEach(disableDetails)
-  feedsCardsManager.addEventListener('addCard', e => {
-    const card = e.detail
-    disableDetails(card)
+  forEachFeedsCard({
+    added: disableDetails
   })
 })()
 

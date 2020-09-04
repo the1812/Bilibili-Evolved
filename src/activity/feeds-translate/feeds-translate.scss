@@ -1,3 +1,4 @@
+.bb-comment .translate-container,
 .card-content .translate-container {
   margin-top: 10px;
   .translated {
@@ -35,4 +36,9 @@
       color: #eee;
     }
   }
+}
+.bb-comment .translate-container {
+  margin-top: 6px;
+  font-weight: normal;
+  font-size: 14px;
 }

@@ -19,6 +19,7 @@
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
 - 如果以您的账号权限无法观看某些视频(地区限制, 大会员专享等), 就算使用了类似[解除B站区域限制](https://greasyfork.org/zh-CN/scripts/25718-%E8%A7%A3%E9%99%A4b%E7%AB%99%E5%8C%BA%E5%9F%9F%E9%99%90%E5%88%B6)的脚本也是无法下载的, 除非您有对应节点的梯子.
 - 直接下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 可以考虑使用`显示链接`转给IDM或浏览器下载, 或使用[导出 aria2](aria2-notice.md)来进行下载.
+- 短时间内大量下载(错误代码为412, 多发于批量导出某某教程/课程的全套视频)会遭到b站的暂时封禁, 需要等待一段时间后才能恢复, 这期间脚本的下载视频功能也会停用.
 
 <!-- - 使用`复制链接`得到的链接并不是直接就能用的, 因为**下载时的请求Header必须包含`Referer=https://www.bilibili.com`和正确的`User-Agent`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接) -->
 
@@ -210,6 +211,14 @@
 <summary><strong>播放前显示封面</strong></summary>
 
 在视频开始播放前, 在播放器中显示封面.
+
+</details>
+<details>
+<summary><strong>SEO页面重定向</strong></summary>
+
+当进入SEO页面时, 自动跳转回原视频页面.
+
+> SEO页面通常是专为搜索引擎优化的页面, 目前通常是谷歌的搜索结果里进b站会遇到.
 
 </details>
 
@@ -419,6 +428,8 @@
 - Google: 谷歌翻译
 - GoogleCN: 谷歌中国翻译(google.cn)
 
+也可以再开启`评论翻译`, 将这一功能带入到评论区中.
+
 </details>
 <details>
 <summary><strong>强制固定顶栏和侧栏</strong></summary>
@@ -443,6 +454,20 @@
 
 </details>
 
+<details>
+<summary><strong>动态链接复制</strong></summary>
+
+在动态的菜单里添加复制链接选项.
+
+</details>
+
+<details>
+<summary><strong>动态反折叠</strong></summary>
+
+自动展开被折叠的动态.
+
+</details>
+
 <h2 align="center">直播</h2>
 <div align="center">各种直播相关功能</div>
 
@@ -452,9 +477,10 @@
 
 - 隐藏姥爷图标
 - 隐藏粉丝勋章
+- 隐藏入场通知 (xxx进入直播间)
 - 隐藏活动头衔
 - 隐藏用户等级
-- 隐藏舰长图标
+- 隐藏弹幕特效
 - 隐藏全区广播
 - 隐藏欢迎信息 (xxx姥爷进入直播间)
 - 隐藏入场特效
@@ -617,6 +643,14 @@
 当视频的链接是BV号时, 自动转换为AV号.
 
 </details>
+
+<details>
+<summary><strong>评论链接复制</strong></summary>
+
+在评论的菜单里添加复制链接选项.
+
+</details>
+
 
 <h2 align="center">触摸</h2>
 <div align="center">为支持触屏的设备特别设计的功能</div>

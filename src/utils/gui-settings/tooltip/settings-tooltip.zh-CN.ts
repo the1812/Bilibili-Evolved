@@ -51,7 +51,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 隐藏粉丝勋章
 - 隐藏活动头衔
 - 隐藏用户等级
-- 隐藏舰长图标
+- 隐藏弹幕特效
 - 隐藏全区广播
 - 隐藏欢迎信息 (xxx老爷进入直播间)
 - 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
@@ -199,6 +199,11 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`watchLaterRedirectPage`, /*html*/`重定向稍后再看页面中的链接.`],
   [`showCoverBeforePlay`, /*html*/`在视频开始播放前, 在播放器中显示封面.`],
   [`customNavbarGlobalFixed`, /*html*/`对于所有用到自定义顶栏的页面都固定顶栏, 使其不受滚动影响.`],
+  [`seoJump`, /*html*/`当进入SEO页面时, 自动跳转回原视频页面.`],
+  [`copyFeedsLink`, /*html*/`在动态的菜单里添加复制链接选项.`],
+  [`copyCommentLink`, /*html*/`在评论的菜单里添加复制链接选项.`],
+  [`unfoldFeeds`, /*html*/`自动展开被折叠的动态.`],
+  [`commentsTranslate`, /*html*/`为评论也添加翻译按钮.`],
 ]);
 export default {
   export: { toolTips },

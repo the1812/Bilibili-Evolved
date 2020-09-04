@@ -37,7 +37,16 @@ abstract class Batch {
     return escapeFilename(title, ' ')
   }
   async getRawItems(quality: number | string): Promise<RawItem[]> {
-    return JSON.parse(await this.collectData(quality))
+    const { BannedResponse, throwBannedError } = await import('./batch-warning')
+    try {
+      const items = await this.collectData(quality)
+      return JSON.parse(items)
+    } catch (error) {
+      if ((error as Error).message.includes(BannedResponse.toString())) {
+        throwBannedError()
+      }
+      throw error
+    }
   }
   extension(url: string, index: number) {
     const match = [

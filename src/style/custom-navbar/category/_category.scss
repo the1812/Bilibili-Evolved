@@ -1,6 +1,6 @@
 
 #custom-navbar-home-popup {
-  max-height: 80vh;
+  max-height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

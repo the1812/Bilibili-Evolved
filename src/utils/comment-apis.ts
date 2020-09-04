@@ -8,6 +8,7 @@ export interface CommentItem {
   timeText: string
   likes: number
   replies: Omit<CommentItem, 'replies'>[]
+  onRepliesUpdate?: (replies: Omit<CommentItem, 'replies'>[]) => void
 }
 export type CommentItemCallback = (item: CommentItem) => void
 export interface CommentArea {
@@ -22,6 +23,19 @@ export type CommentAreaCallback = (area: CommentArea) => void
 const commentAreaCallbacks: CommentAreaCallback[] = []
 const parseCommentItem = (element: HTMLElement) => {
   const user = element.querySelector('.con .user .name') as HTMLElement
+  const parseReplyItem = (replyElement: HTMLElement) => {
+    const replyFace = replyElement.querySelector('.reply-face') as HTMLElement
+    const replyUser = replyElement.querySelector('.reply-con .user .name') as HTMLElement
+    return {
+      id: replyElement.getAttribute('data-id')!,
+      element: replyElement,
+      userID: replyFace.getAttribute('data-usercard-mid')!,
+      userName: replyUser.textContent!,
+      content: replyElement.querySelector('.text-con')!.textContent!,
+      timeText: replyElement.querySelector('.info .time')!.textContent!,
+      likes: parseInt(replyElement.querySelector('.info .like span')!.textContent!),
+    }
+  }
   const item: CommentItem = {
     id: element.getAttribute('data-id')!,
     element,
@@ -30,18 +44,18 @@ const parseCommentItem = (element: HTMLElement) => {
     content: element.querySelector('.con .text')!.textContent!,
     timeText: element.querySelector('.con .info .time')!.textContent!,
     likes: parseInt(element.querySelector('.con .like span')!.textContent!),
-    replies: dqa(element, '.reply-box .reply-item').map((replyElement: HTMLElement) => {
-      const replyUser = replyElement.querySelector('.reply-con .user') as HTMLElement
-      return {
-        id: replyElement.getAttribute('data-id')!,
-        element: replyElement,
-        userID: replyUser.getAttribute('data-usercard-mid')!,
-        userName: replyUser.textContent!,
-        content: replyElement.querySelector('.text-con')!.textContent!,
-        timeText: replyElement.querySelector('.info .time')!.textContent!,
-        likes: parseInt(replyElement.querySelector('.info .like span')!.textContent!),
+    replies: [],
+  }
+  if (dq(element, '.reply-box .view-more')) {
+    const replyBox = dq(element, '.reply-box') as HTMLElement
+    Observer.childList(replyBox, records => {
+      item.replies = dqa(element, '.reply-box .reply-item').map(parseReplyItem)
+      if (records.length !== 0) {
+        item.onRepliesUpdate && item.onRepliesUpdate(item.replies)
       }
     })
+  } else {
+    item.replies = dqa(element, '.reply-box .reply-item').map(parseReplyItem)
   }
   return item
 }
@@ -96,14 +110,18 @@ export const forEachCommentArea = (callback: CommentAreaCallback) => {
   commentAreaCallbacks.push(callback)
 }
 export const forEachCommentItem = (callbacks: {
-  added: CommentItemCallback
-  removed: CommentItemCallback
+  added?: CommentItemCallback
+  removed?: CommentItemCallback
 }) => {
   const { added, removed } = callbacks
-  commentAreas.forEach(area => {
-    area.items.forEach(item => added(item))
-    itemAddedCallbacks.push(added)
-    itemRemovedCallbacks.push(removed)
+  forEachCommentArea(area => {
+    if (added) {
+      area.items.forEach(item => added(item))
+      itemAddedCallbacks.push(added)
+    }
+    if (removed) {
+      itemRemovedCallbacks.push(removed)
+    }
   })
 }
 

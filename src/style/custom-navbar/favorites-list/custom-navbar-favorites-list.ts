@@ -196,19 +196,20 @@ export class FavoritesList extends NavbarComponent {
           }, 200)
           cardsContainer.addEventListener('scroll', scrollHandler)
         },
-        /** 搜索当前收藏夹所有的视频 */
+        /** 搜索收藏夹里的视频 */
         searchAllList: _.debounce(async function () {
           if (this.search === '') {
             return
           }
           try {
-            const json = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.selectedListId}&pn=1&ps=20&keyword=${this.search}&order=mtime&type=0&tid=0`)
-            if (json.code !== 0) {
+            const jsonCurrent = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.selectedListId}&pn=1&ps=20&keyword=${this.search}&order=mtime&type=0&tid=0`)
+            const jsonAll = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.selectedListId}&pn=1&ps=20&keyword=${this.search}&order=mtime&type=1&tid=0`)
+            if (jsonCurrent.code !== 0 && jsonAll.code !== 0) {
               return
             }
-            const items = _.get(json, 'data.medias', []) || []
-            const results = _.uniqBy(this.filteredCards.concat(items.map(favoriteItemMapper)), (card: FavoritesItemInfo) => card.id)
-            console.log(_.cloneDeep(results))
+            const currentItems = _.get(jsonCurrent, 'data.medias', []) || []
+            const allItems = _.get(jsonAll, 'data.medias', []) || []
+            const results = _.uniqBy(this.filteredCards.concat(currentItems.map(favoriteItemMapper), allItems.map(favoriteItemMapper)), (card: FavoritesItemInfo) => card.id)
             this.filteredCards = results
           } catch (error) {
             console.error(error)

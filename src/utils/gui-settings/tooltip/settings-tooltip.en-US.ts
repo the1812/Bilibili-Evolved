@@ -150,7 +150,7 @@ Additional variables:
 - <span>n</span>: The counting number of n-th video in batch downloads`],
   [`removeGameMatchModule`, `Also remove e-sports module.`],
   [`customNavbarTransparent`, `Use transparent fill when banner exists.`],
-  [`recordLiveDanmaku`, `Record and export XML file in live danmaku recorder from add-ons.`],
+  [`recordLiveDanmaku`, `Record and Export XML file in live danmaku recorder from add-ons.`],
   [`feedsTranslate`, `Append translate button to every feeds. Can translate feeds into Chinese or language specified in UI Translation.`],
   [`feedsTranslateProvider`, `The machine translate provider.`],
   [`updateCdn`, `Select mirror for hot updates, invalid in offline versions.`],
@@ -170,6 +170,11 @@ Additional variables:
   [`watchLaterRedirectPage`, `Redirect links on watchlater page.`],
   [`showCoverBeforePlay`, `Show cover image in video player before playing.`],
   [`customNavbarGlobalFixed`, `Fix navbar position on all pages.`],
+  [`seoJump`, `Redirect to the original video page if you open a SEO page.`],
+  [`copyFeedsLink`, `Add copy link option to dot menu of feeds.`],
+  [`copyCommentLink`, `Add copy link option to dot menu of comments.`],
+  [`unfoldFeeds`, `Auto expand collapsed feeds.`],
+  [`commentsTranslate`, `Also applies for comments.`],
 ]);
 export default {
   export: { toolTips },

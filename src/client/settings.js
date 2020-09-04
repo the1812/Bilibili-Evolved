@@ -211,6 +211,7 @@ export const settings = {
   feedsTranslate: false,
   feedsTranslateProvider: 'Bing',
   feedsTranslateLanguage: '',
+  commentsTranslate: false,
   downloadVideoQuality: 120,
   defaultLiveQuality: '原画',
   useDefaultLiveQuality: false,
@@ -243,6 +244,9 @@ export const settings = {
   showCoverBeforePlay: false,
   volumeOverdrive: false,
   seoJump: true,
+  copyFeedsLink: false,
+  copyCommentLink: false,
+  unfoldFeeds: true,
   cache: {},
 }
 const fixedSettings = {

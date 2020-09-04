@@ -68,7 +68,7 @@ export default {
         if (json.code !== 0) {
           throw new Error(json.message)
         }
-        const list: [] = json.result.list.map((item: any) => {
+        const list: [] = _.get(json, 'result.list', []).map((item: any) => {
           return {
             id: item.season_id,
             href: item.url,

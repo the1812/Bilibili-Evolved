@@ -13,6 +13,6 @@
 
 Adblock Plus 用户也可以在设置-高级里添加过滤列表, URL填:
 ```
-https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/src/style/simplify-home/simplify-home.abp.txt
+https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/src/style/simplify-home/simplify-home.abp.txt
 ```
 (也许这个列表也兼容同类的其他反广告插件)

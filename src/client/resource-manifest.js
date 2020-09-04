@@ -934,5 +934,29 @@ Resource.manifest = {
       seoJump: 'SEO页面重定向',
     },
   },
+  commentsTranslate: {
+    path: 'comments-translate.min.js',
+    displayNames: {
+      commentsTranslate: '评论翻译',
+    },
+  },
+  copyFeedsLink: {
+    path: 'copy-feeds-link.min.js',
+    displayNames: {
+      copyFeedsLink: '动态链接复制',
+    },
+  },
+  copyCommentLink: {
+    path: 'copy-comment-link.min.js',
+    displayNames: {
+      copyCommentLink: '评论链接复制',
+    },
+  },
+  unfoldFeeds: {
+    path: 'unfold-feeds.min.js',
+    displayNames: {
+      unfoldFeeds: '动态反折叠',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

@@ -2,6 +2,7 @@
   <div class="rank" :class="{bangumi: viewMode === 'bangumi'}">
     <a v-if="rankLink" target="_blank" :href="rankLink" class="area-header">排行榜</a>
     <div v-else class="area-header">排行榜</div>
+    <div class="empty" v-if="videos.length === 0">空空如也哦 =￣ω￣=</div>
     <a
       class="rank-item"
       :class="{bangumi: viewMode === 'bangumi'}"
@@ -21,7 +22,11 @@
         :title="watchlaterList.includes(c.aid) ? '已添加' : '稍后再看'"
         @click.prevent="toggleWatchlater(c.aid)"
       >
-        <icon v-if="watchlaterList.includes(c.aid)" type="mdi" icon="check-circle"></icon>
+        <icon
+          v-if="watchlaterList.includes(c.aid)"
+          type="mdi"
+          icon="check-circle"
+        ></icon>
         <icon v-else type="mdi" icon="clock-outline"></icon>
       </div>
       <div class="details">
@@ -71,18 +76,18 @@ export default {
   filters: {
     bigNumber(value: number) {
       return formatCount(value)
-    }
+    },
   },
   components: {
     Icon: () => import('../../icon.vue'),
-    DpiImg: () => import('../../dpi-img.vue')
+    DpiImg: () => import('../../dpi-img.vue'),
   },
   computed: {
-    ...Vuex.mapState(['watchlaterList'])
+    ...Vuex.mapState(['watchlaterList']),
   },
   methods: {
-    ...Vuex.mapActions(['toggleWatchlater'])
-  }
+    ...Vuex.mapActions(['toggleWatchlater']),
+  },
 }
 </script>
 
@@ -99,7 +104,7 @@ export default {
     width: 0 !important;
   }
   grid-template:
-    'header header' auto
+    'header header' 32px
     'first second' calc(var(--rank-height) / 2 + 10px)
     'first third' calc(var(--rank-height) / 2 + 10px)
     / calc(var(--rank-width)) calc(10px + var(--rank-width) / 2);
@@ -114,9 +119,15 @@ export default {
       cursor: pointer;
     }
     body.dark & {
-      background-color: #161616;
+      background-color: #181818;
       color: #eee;
     }
+  }
+  .empty {
+    grid-column: 1 / 3;
+    grid-row: 2 / 4;
+    justify-self: center;
+    align-self: center;
   }
   @mixin hover-details {
     .details {
