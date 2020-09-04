@@ -884,11 +884,11 @@ async function loadPanel() {
       async exportBatchData(type: ExportType) {
         const episodeList = this.episodeList as EpisodeItem[]
         const { MaxBatchSize, showBatchWarning } = await import('./batch-warning')
-        if (episodeList.every(item => item.checked === false)) {
+        if (episodeList.every(item => !item.checked)) {
           Toast.info('请至少选择1集或以上的数量!', '批量导出', 3000)
           return
         }
-        if (episodeList.length > MaxBatchSize) {
+        if (episodeList.filter(item => item.checked).length > MaxBatchSize) {
           showBatchWarning('批量导出')
           return
         }
