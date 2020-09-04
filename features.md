@@ -213,6 +213,14 @@
 在视频开始播放前, 在播放器中显示封面.
 
 </details>
+<details>
+<summary><strong>SEO页面重定向</strong></summary>
+
+当进入SEO页面时, 自动跳转回原视频页面.
+
+> SEO页面通常是专为搜索引擎优化的页面, 目前通常是谷歌的搜索结果里进b站会遇到.
+
+</details>
 
 <h2 align="center">样式</h2>
 <div align="center">掌控哔哩哔哩的外观</div>
@@ -420,6 +428,8 @@
 - Google: 谷歌翻译
 - GoogleCN: 谷歌中国翻译(google.cn)
 
+也可以再开启`评论翻译`, 将这一功能带入到评论区中.
+
 </details>
 <details>
 <summary><strong>强制固定顶栏和侧栏</strong></summary>
@@ -444,6 +454,20 @@
 
 </details>
 
+<details>
+<summary><strong>动态链接复制</strong></summary>
+
+在动态的菜单里添加复制链接选项.
+
+</details>
+
+<details>
+<summary><strong>动态反折叠</strong></summary>
+
+自动展开被折叠的动态.
+
+</details>
+
 <h2 align="center">直播</h2>
 <div align="center">各种直播相关功能</div>
 
@@ -453,6 +477,7 @@
 
 - 隐藏姥爷图标
 - 隐藏粉丝勋章
+- 隐藏入场通知 (xxx进入直播间)
 - 隐藏活动头衔
 - 隐藏用户等级
 - 隐藏弹幕特效
@@ -618,6 +643,14 @@
 当视频的链接是BV号时, 自动转换为AV号.
 
 </details>
+
+<details>
+<summary><strong>评论链接复制</strong></summary>
+
+在评论的菜单里添加复制链接选项.
+
+</details>
+
 
 <h2 align="center">触摸</h2>
 <div align="center">为支持触屏的设备特别设计的功能</div>
