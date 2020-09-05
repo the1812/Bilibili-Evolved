@@ -64,29 +64,7 @@ export default {
     return {
       // tabs,
       // currentTab: tabs[0],
-      trendingCards: unsafeWindow.__INITIAL_STATE__.recommendList.map(
-        (it: any) => {
-          return {
-            id: it.aid,
-            aid: it.aid,
-            bvid: it.bvid,
-            timestamp: it.ctime * 1000,
-            time: new Date(it.ctime * 1000),
-            description: it.desc,
-            duration: it.duration,
-            durationText: formatDuration(it.duration),
-            coverUrl: it.pic.replace('http:', 'https:'),
-            title: it.title,
-            coins: formatCount(it.stat.coin),
-            danmakuCount: formatCount(it.stat.danmaku),
-            // favorites: formatCount(it.stat.favorite),
-            like: formatCount(it.stat.like),
-            playCount: formatCount(it.stat.view),
-            upName: it.owner.name,
-            upFaceUrl: it.owner.face.replace('http:', 'https:'),
-          } as VideoCardInfo
-        },
-      ),
+      trendingCards: [],
     }
   },
   // watch: {
@@ -115,6 +93,10 @@ export default {
       const distance = count * (width + gap)
       contents.scrollBy(orientation * distance, 0)
     }
+  },
+  async created() {
+    const { getTrendingVideos } = await import('../trending-videos')
+    this.trendingCards = getTrendingVideos()
   },
   async mounted() {
     if (!settings.simpleHomeWheelScroll) {

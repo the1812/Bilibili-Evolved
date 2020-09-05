@@ -34,6 +34,12 @@
     @include width-auto();
   }
 }
+.bb-comment,
+.comment-bilibili-fold {
+  .comment-list .opera-list li {
+    white-space: nowrap !important;
+  }
+}
 .live-sidebar-ctnr .sidebar-btn,
 .up-info .up-focus-btn,
 .attention-btn-ctnr .left-part,

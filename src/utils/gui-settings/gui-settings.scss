@@ -90,6 +90,7 @@
         background-color: #333;
       }
       .operation {
+        color: inherit;
         display: flex;
         align-items: center;
         padding: 8px 16px;
@@ -99,8 +100,14 @@
         .mdi {
           margin-right: 8px;
         }
+        &.release-notes {
+          .mdi {
+            transform: scale(1.1);
+          }
+        }
         &:hover {
           background-color: #8882;
+          color: inherit !important;
         }
       }
     }
@@ -180,18 +187,31 @@
   .script-info {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 8px;
+    flex-wrap: wrap;
+    padding: 0 8px;
     font-size: 12px;
+    > * {
+      padding: 8px 0;
+      &:not(:last-child) {
+        margin-right: 8px;
+      }
+    }
+    .grow {
+      flex: 1;
+    }
+    .selectable {
+      user-select: text;
+    }
+    .content-hash,
     .version {
       opacity: 0.75;
     }
     a {
       color: inherit !important;
-      opacity: 0.5;
+      // opacity: 0.5;
       &:hover,
       &:active {
-        opacity: 1;
+        // opacity: 1;
         color: var(--theme-color) !important;
       }
     }

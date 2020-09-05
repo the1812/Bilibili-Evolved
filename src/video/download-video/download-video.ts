@@ -814,10 +814,6 @@ async function loadPanel() {
             return
           }
           const format = this.getFormat() as VideoFormat
-          if (format.quality === 120) {
-            Toast.info('4K视频不支持直接下载, 请使用下方的导出选项.', '下载视频', 5000)
-            return
-          }
           const videoDownloader = await format.downloadInfo(this.dash)
           videoDownloader.subtitle = this.subtitle
           switch (type) {
@@ -1200,6 +1196,10 @@ async function loadPanel() {
       },
       async startDownload() {
         const format = this.getFormat() as VideoFormat
+        if (format.quality === 120) {
+          Toast.info('4K视频不支持直接下载, 请使用下方的导出选项.', '下载视频', 5000)
+          return
+        }
         try {
           this.downloading = true
           const videoDownloader = await format.downloadInfo(this.dash)

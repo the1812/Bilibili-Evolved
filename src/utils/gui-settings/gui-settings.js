@@ -230,6 +230,22 @@ function setDisplayNames () {
     checkCompatibility()
     setDisplayNames()
     dq('.script-info .version').textContent = scriptVersion + ' v' + GM.info.script.version
+    ;(async () => {
+      const hashElement = dq('.script-info .content-hash')
+      if (Object.keys(settings.cache).length === 0) {
+        hashElement.remove()
+        return
+      }
+      const digestMessage = async (message) => {
+        const msgUint8 = new TextEncoder().encode(message)
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
+        const hashArray = Array.from(new Uint8Array(hashBuffer))
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+        return hashHex
+      }
+      const hash = await digestMessage(JSON.stringify(settings.cache))
+      hashElement.textContent = `内容包: ${hash.substring(0, 7)}`
+    })()
     new SettingsSearch()
   }, { once: true })
 })()
