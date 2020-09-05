@@ -39,11 +39,12 @@ export default {
       //   )
       //   watchlaterList = await getWatchlaterList()
       // }
-      const getRankListByDays = async (days: number) => {
-        const cards = await getTrendingVideos(days)
-        this.cards.push(...cards)
-      }
-      await Promise.all([1, 3, 7].map(getRankListByDays))
+      // const getRankListByDays = async (days: number) => {
+      //   const cards = await getTrendingVideos(days)
+      //   this.cards.push(...cards)
+      // }
+      // await Promise.all([1].map(getRankListByDays))
+      this.cards = getTrendingVideos()
     },
     async getActivityVideos() {
       const json = await Ajax.getJsonWithCredentials(
@@ -139,29 +140,29 @@ export default {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
-    &.show-rank {
-      .video-card:nth-child(1),
-      .video-card:nth-child(9),
-      .video-card:nth-child(17) {
-        margin-top: 48px;
-        &::before {
-          position: absolute;
-          top: -42px;
-          left: 0;
-          font-size: 14pt;
-          font-weight: bold;
-        }
-      }
-      .video-card:nth-child(1)::before {
-        content: '今日';
-      }
-      .video-card:nth-child(9)::before {
-        content: '三日';
-      }
-      .video-card:nth-child(17)::before {
-        content: '一周';
-      }
-    }
+    // &.show-rank {
+    //   .video-card:nth-child(1),
+    //   .video-card:nth-child(9),
+    //   .video-card:nth-child(17) {
+    //     margin-top: 48px;
+    //     &::before {
+    //       position: absolute;
+    //       top: -42px;
+    //       left: 0;
+    //       font-size: 14pt;
+    //       font-weight: bold;
+    //     }
+    //   }
+    //   .video-card:nth-child(1)::before {
+    //     content: '今日';
+    //   }
+    //   .video-card:nth-child(9)::before {
+    //     content: '三日';
+    //   }
+    //   .video-card:nth-child(17)::before {
+    //     content: '一周';
+    //   }
+    // }
   }
 }
 </style>
