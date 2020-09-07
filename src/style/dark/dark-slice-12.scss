@@ -645,3 +645,6 @@
     @include foreground-color();
   }
 }
+.comment-jump-url img {
+  @include to-theme("blue");
+}
