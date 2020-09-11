@@ -72,7 +72,11 @@ class Medal extends Badge {
       return true
     }
     return Badge.parseJson(
-      await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearFansMedal?medal_id=${this.id}`),
+      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/wear`, formData({
+          medal_id: this.id,
+          csrf_token: getCsrf(),
+          csrf: getCsrf(),
+        })),
       {
         successAction: () => {
           this.isActive = true
@@ -87,7 +91,10 @@ class Medal extends Badge {
       return true
     }
     return Badge.parseJson(
-      await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWear`),
+      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/take_off`, formData({
+        csrf_token: getCsrf(),
+        csrf: getCsrf(),
+      })),
       {
         successAction: () => {
           this.isActive = false

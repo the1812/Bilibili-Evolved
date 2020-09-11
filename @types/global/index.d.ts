@@ -554,5 +554,6 @@ declare global {
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const getScriptVersion: () => ScriptVersion
   const playerReady: () => Promise<void>
+  const formData: (obj: any) => string
 }
 export { }
