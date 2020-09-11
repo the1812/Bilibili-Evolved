@@ -171,7 +171,8 @@ blockquote {
 .live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text:hover,
 .container .video-panel .play-all .bilifont,
 .round-corner .van-popper-favorite .play-all .bilifont,
-.rank-item .content .info:hover .title {
+.rank-item .content .info:hover .title,
+.members-info .avatar-name.is-vip {
   @include theme-color();
 }
 
