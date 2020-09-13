@@ -1,0 +1,40 @@
+@import "./dark-definitions";
+.series {
+  .bt-top .bt {
+    @include color("e");
+  }
+  .van-pagination {
+    @include color("e");
+    &-point {
+      @include background-color("3");
+      .van-pagination-item:hover,
+      .van-pagination-active {
+        @include theme-background-color();
+      }
+    }
+    &-btn-next,
+    &-btn-prev {
+      @include color("e");
+      @include background-color("4");
+      @include border-color();
+    }
+    &-pager {
+      li {
+        @include color("e");
+      }
+    }
+  }
+  .switch-button {
+    @include background-color("3");
+    &.on {
+      @include theme-background-color();
+    }
+    &.on::after,
+    &::after {
+      @include color("e");
+    }
+  }
+  .series-box .video-card-common {
+    @include background-color();
+  }
+}
