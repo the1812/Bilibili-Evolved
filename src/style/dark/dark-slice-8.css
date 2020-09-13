@@ -754,9 +754,6 @@ li.danmaku-info-row.bpui-selecting,
 {
     display: none !important;
 } */
-.members-info .up-card {
-  margin: 16px !important;
-}
 .comic-info-component .page-normal .comic-tab .tab-titles .tab-title.active .tab-btn,
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-head.up-avatar:hover,
 .replies-comment-input-wrapper .replies-upload .comment-input-img:hover,
