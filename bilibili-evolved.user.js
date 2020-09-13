@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.10.36
+// @version      1.10.37
 // @description  强大的哔哩哔哩增强脚本: 下载视频, 音乐, 封面, 弹幕 / 简化直播间, 评论区, 首页 / 自定义顶栏, 删除广告, 夜间模式 / 触屏设备支持
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1328,7 +1328,7 @@ onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/mi
 @namespace    Bilibili-Evolved
 @homepageURL  https://github.com/the1812/Bilibili-Evolved
 @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/min/dark.user.css
-@version      787.33.0
+@version      788.22.0
 @license      MIT
 @author       Grant Howard (https://github.com/the1812), Coulomb-G (https://github.com/Coulomb-G)
 ==/UserStyle== */

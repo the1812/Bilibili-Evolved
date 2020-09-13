@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview Offline)
-// @version      788.22
+// @version      789.80
 // @description  Bilibili Evolved 的预览离线版, 可以抢先体验新功能, 并且所有功能都已内置于脚本中.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1329,7 +1329,7 @@ offlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/m
 @namespace    Bilibili-Evolved
 @homepageURL  https://github.com/the1812/Bilibili-Evolved
 @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/min/dark.user.css
-@version      787.33.0
+@version      788.22.0
 @license      MIT
 @author       Grant Howard (https://github.com/the1812), Coulomb-G (https://github.com/Coulomb-G)
 ==/UserStyle== */

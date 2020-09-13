@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.10.36
+// @version      1.10.37
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -1328,7 +1328,7 @@ onlineData["https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/m
 @namespace    Bilibili-Evolved
 @homepageURL  https://github.com/the1812/Bilibili-Evolved
 @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/min/dark.user.css
-@version      787.33.0
+@version      788.22.0
 @license      MIT
 @author       Grant Howard (https://github.com/the1812), Coulomb-G (https://github.com/Coulomb-G)
 ==/UserStyle== */
