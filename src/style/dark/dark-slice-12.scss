@@ -667,3 +667,9 @@
     }
   }
 }
+#page-video .play-all-btn {
+  @include color("e");
+  &>img {
+    @include to-theme("pink");
+  }
+}
