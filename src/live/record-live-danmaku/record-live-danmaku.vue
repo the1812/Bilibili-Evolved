@@ -66,10 +66,10 @@ export default {
         roomID = _.get(
           json,
           'data.roomid',
-          document.URL.match(/live\.bilibili\.com\/(\d+)/)![1]
+          document.URL.match(/live\.bilibili\.com\/(blanc\/)?(\d+)/)![1]
         )
       } else {
-        roomID = document.URL.match(/live\.bilibili\.com\/(\d+)/)![1]
+        roomID = document.URL.match(/live\.bilibili\.com\/(blanc\/)?(\d+)/)![1]
       }
       const socket = new LiveSocket(parseInt(roomID))
       socket.addEventListener('danmaku', (e: CustomEvent<LiveDanmaku>) => {
