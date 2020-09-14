@@ -445,7 +445,7 @@ Resource.manifest = {
   medalHelper: {
     path: 'medal-helper.min.js',
     html: true,
-    style: 'instant',
+    style: true,
     displayNames: {
       medalHelper: '直播勋章快速更换',
       autoMatchMedal: '自动选择当前直播间勋章',

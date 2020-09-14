@@ -66,7 +66,7 @@ $rankColors: (
   height: 14px;
   line-height: 14px;
   color: #fff;
-  border: 1px solid map-get($rankColors, 0);
+  border: 1px solid map-get($rankColors, 4);
   border-left: 0;
   white-space: nowrap;
   border-radius: 2px;
@@ -77,12 +77,13 @@ $rankColors: (
     text-align: center;
     padding: 0 2px;
     color: #fff;
+    background-color: map-get($rankColors, 4);
   }
   .level {
     width: 16px;
     background-color: #fff;
     text-align: center;
-    color: map-get($rankColors, 0);
+    color: map-get($rankColors, 4);
   }
   .label,
   .level {

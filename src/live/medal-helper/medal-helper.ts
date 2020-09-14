@@ -286,6 +286,7 @@ export default {
     condition: () => document.URL.startsWith('https://live.bilibili.com') && Boolean(getUID()),
     content: resources.import('medalHelperHtml'),
     success: async () => {
+      resources.applyImportantStyle('medalHelperStyle')
       document.querySelectorAll(".medal-helper").forEach(it => {
         const popup = it.querySelector(".medal-popup") as HTMLElement
         it.addEventListener("click", e => {
