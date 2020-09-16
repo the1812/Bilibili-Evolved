@@ -25,10 +25,8 @@ function doAirborne(danmaku)
                 danmaku.style.marginLeft = '-' + (danmaku.offsetWidth - originalWidth).toString() + 'px';
             }
         }
-        // const videoWrap = document.querySelector('.bilibili-player-video-wrap');
         function clickHandler(event)
         {
-            console.log(event);
             // 计算弹幕区域
             var left = danmaku.offsetLeft;
             var top = danmaku.offsetTop;
@@ -41,8 +39,6 @@ function doAirborne(danmaku)
             }
             const right = left + danmaku.offsetWidth;
             const bottom = top + danmaku.offsetHeight;
-            console.log('horizontal:',left,event.screenX,right);
-            console.log('vertical:',top,event.screenY,bottom)
             if (left <= event.clientX &&
                 event.clientX <= right &&
                 top <= event.clientY &&
@@ -53,7 +49,6 @@ function doAirborne(danmaku)
                 document.querySelector('.bilibili-player-video video').play();
             }
         }
-        // videoWrap.addEventListener('click', clickHandler);
         document.querySelector('.bilibili-player-video-wrap').addEventListener('click', clickHandler);
         document.querySelector('.bilibili-player-video video').addEventListener('click', clickHandler);
     }
