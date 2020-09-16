@@ -384,6 +384,12 @@ Resource.manifest = {
       allowJumpContinue: '允许跨集跳转'
     }
   },
+  airborne: {
+    path: 'airborne.min.js',
+    displayNames: {
+      airborne: '启用空降'
+    }
+  },
   expandDescription: {
     path: 'expand-description.min.js',
     style: 'instant',

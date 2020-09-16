@@ -100,6 +100,7 @@ export const settings = {
   useCache: true,
   autoContinue: false,
   allowJumpContinue: false,
+  airborne: true,
   deadVideoTitleProvider: '稍后再看',
   useBiliplusRedirect: false,
   biliplusRedirect: false,

@@ -343,6 +343,7 @@ declare global {
     autoContinue: boolean,
     allowJumpContinue: boolean,
     autoPlay: boolean,
+    airborne: boolean,
     showDeadVideoTitle: boolean,
     deadVideoTitleProvider: '稍后再看' | 'BiliPlus',
     useBiliplusRedirect: boolean,
