@@ -171,8 +171,7 @@ blockquote {
 .live-room-app .guard-rank-cntr.thousand .live-skin-main-a-text:hover,
 .container .video-panel .play-all .bilifont,
 .round-corner .van-popper-favorite .play-all .bilifont,
-.rank-item .content .info:hover .title,
-.members-info .avatar-name.is-vip {
+.rank-item .content .info:hover .title {
   @include theme-color();
 }
 
@@ -271,4 +270,7 @@ blockquote {
 * {
   scrollbar-color: #444 transparent !important;
   scrollbar-width: thin !important;
+}
+.members-info .avatar-name.is-vip {
+  color: #fb7299!important;
 }
