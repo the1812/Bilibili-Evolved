@@ -6,7 +6,6 @@
 
 </div>
 
-
 [📦 安装](#安装) / [Install](install-tutorial.en-US.md) / [インストール](install-tutorial.ja-JP.md)
 
 [⚙ 设置](#设置)
@@ -30,9 +29,6 @@
 | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
 | 正式发布的版本, 最稳定, 更新频率较低.                                                          | 新增内容测试的地方, 更新频率高, 但功能不稳定.                                                           | 内置所有依赖项, 体积较大, 更新频率高于正式版.                                                          | 兼备预览版和离线版的特点.                                                                                           |
 
-<!--
-> **虽然这个脚本只有 1MB 多, 但是 GitHub 的服务器很烂, 可能点了很久都没反应, 或者下载一半失败了, 导致安装了不完整的代码. 请务必检查脚本是否安装完整, 特别是发现安装后网页没有任何变化的时候. 或者可以去 [Greasy Fork](https://greasyfork.org/zh-CN/scripts/373563-bilibili-evolved) 那边下载, 相对稳定一些.**
--->
 
 > 使用过程中脚本管理器可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
 
@@ -46,7 +42,6 @@
 | jsDelivr | 24h      | 极快     | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js) |
 | Fast.io  | <1h      | 快       | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview.user.js)                          | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.offline.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview-offline.user.js)                          |
 | GitHub   | <1h      | 慢       | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)      |
-
 
 # 设置
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置. 默认只启用了一部分功能, 您可以根据需要自由调整设置.
