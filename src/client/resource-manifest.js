@@ -384,6 +384,12 @@ Resource.manifest = {
       allowJumpContinue: '允许跨集跳转'
     }
   },
+  airborne: {
+    path: 'airborne.min.js',
+    displayNames: {
+      airborne: '启用空降'
+    }
+  },
   expandDescription: {
     path: 'expand-description.min.js',
     style: 'instant',
@@ -445,7 +451,7 @@ Resource.manifest = {
   medalHelper: {
     path: 'medal-helper.min.js',
     html: true,
-    style: 'instant',
+    style: true,
     displayNames: {
       medalHelper: '直播勋章快速更换',
       autoMatchMedal: '自动选择当前直播间勋章',

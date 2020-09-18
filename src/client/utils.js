@@ -196,3 +196,4 @@ export const playerReady = () => {
     it => !Number.isNaN(it),
   )
 }
+export const formData = (obj) => Object.entries(obj).map(([k, v]) => `${k}=${v}`).join('&')

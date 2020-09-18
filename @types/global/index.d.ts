@@ -343,6 +343,7 @@ declare global {
     autoContinue: boolean,
     allowJumpContinue: boolean,
     autoPlay: boolean,
+    airborne: boolean,
     showDeadVideoTitle: boolean,
     deadVideoTitleProvider: '稍后再看' | 'BiliPlus',
     useBiliplusRedirect: boolean,
@@ -554,5 +555,6 @@ declare global {
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const getScriptVersion: () => ScriptVersion
   const playerReady: () => Promise<void>
+  const formData: (obj: any) => string
 }
 export { }

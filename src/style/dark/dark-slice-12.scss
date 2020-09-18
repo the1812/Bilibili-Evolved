@@ -645,3 +645,31 @@
     @include foreground-color();
   }
 }
+.comment-jump-url img {
+  @include to-theme("blue");
+}
+.wide-members__title,
+.s_tag .tag-area>li .tag-link {
+  @include color("e");
+}
+.members-info {
+  .avatar-name {
+    @include color("e");
+  }
+  .avatar {
+    .info-tag {
+      @include background-color("3");
+      @include theme-color();
+      @include theme-border-color();
+    }
+    .attention {
+      @include theme-background-color();
+    }
+  }
+}
+#page-video .play-all-btn {
+  @include color("e");
+  &>img {
+    @include to-theme("pink");
+  }
+}

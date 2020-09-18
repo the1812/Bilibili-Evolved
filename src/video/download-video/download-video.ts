@@ -685,6 +685,7 @@ async function loadPanel() {
       progressPercent: 0,
       size: '获取大小中' as number | string,
       blobUrl: '',
+      lastCheckedEpisodeIndex: -1,
       episodeList: [] as EpisodeItem[],
       downloading: false,
       speed: '',
@@ -1231,6 +1232,29 @@ async function loadPanel() {
       },
       inverseAllEpisodes() {
         this.episodeList.forEach((item: EpisodeItem) => item.checked = !item.checked)
+      },
+      shiftToggleEpisodes(e: MouseEvent, index: number) {
+        if (!e.shiftKey || this.lastCheckedEpisodeIndex === -1) {
+          console.log('set lastCheckedEpisodeIndex', index)
+          this.lastCheckedEpisodeIndex = index
+          return
+        }
+        if (e.shiftKey && this.lastCheckedEpisodeIndex !== -1) {
+          (this.episodeList as EpisodeItem[])
+            .slice(
+              Math.min(this.lastCheckedEpisodeIndex, index) + 1,
+              Math.max(this.lastCheckedEpisodeIndex, index),
+            )
+            .forEach(it => {
+              it.checked = !it.checked
+            })
+          console.log('shift toggle',
+            Math.min(this.lastCheckedEpisodeIndex, index) + 1,
+            Math.max(this.lastCheckedEpisodeIndex, index),
+          )
+          this.lastCheckedEpisodeIndex = index
+          e.preventDefault()
+        }
       },
       toggleRpcSettings() {
         this.showRpcSettings = !this.showRpcSettings

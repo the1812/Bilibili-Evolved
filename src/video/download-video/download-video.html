@@ -101,7 +101,7 @@
       <span class="selected-count">{{selectedEpisodeCount}}/{{episodeList.length}}</span>
     </div>
     <div class="episode-list">
-      <v-checkbox v-for="ep of episodeList" :key="ep.index" :title="ep.title" :checked.sync="ep.checked"></v-checkbox>
+      <v-checkbox v-for="ep of episodeList" :key="ep.index" @click="shiftToggleEpisodes($event, ep.index)" :title="ep.title" :checked.sync="ep.checked"></v-checkbox>
     </div>
   </div>
   <div v-show="selectedTab.name === 'manual'" class="manual-input">
