@@ -13,7 +13,7 @@ function danmakuContainerCallback()
     // 当用户点击到视频内部时检查是否点击空降弹幕而非在检测到空降弹幕时就监听弹幕的点击从而改善性能(不然有可能点击时调用一堆函数)
 
     // 获取鼠标位置
-    var mousePosition = document.querySelector(".bilibili-player-video-danmaku").mousePosition;
+    const mousePosition = document.querySelector(".bilibili-player-video-danmaku").mousePosition;
 
     // 依次检测鼠标是否在弹幕区域内以及是否为空降弹幕
     document.querySelector('.bilibili-player-video-danmaku').children.forEach((danmaku) => {
