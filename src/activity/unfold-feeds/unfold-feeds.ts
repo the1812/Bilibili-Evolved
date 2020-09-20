@@ -1,5 +1,6 @@
 (async () => {
-  if (document.URL.replace(window.location.search, '') !== 'https://t.bilibili.com/') {
+  if (document.URL.replace(window.location.search, '') !== 'https://t.bilibili.com/'
+    && !document.URL.startsWith('https://space.bilibili.com')) {
     return
   }
   const { forEachFeedsCard } = await import('../feeds-apis')
