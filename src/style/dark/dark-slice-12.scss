@@ -506,6 +506,9 @@
   @include color("e");
   p span {
     @include color("a");
+    a strong {
+      @include theme-color();
+    }
   }
 }
 .long-page .page-content {
