@@ -706,3 +706,6 @@ a.bp_box_bot_click {
 .list-introText {
   @include theme-color();
 }
+.song-list .song-li .song-shadow {
+  @include theme-background-color(30);
+}
