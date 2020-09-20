@@ -688,3 +688,18 @@
 a.bp_box_bot_click {
   @include theme-border-color();
 }
+.el-date-table td {
+  &.available:hover {
+    @include theme-color();
+  }
+  &.current:not(.disabled) span {
+    @include theme-background-color();
+  }
+  &.today span {
+    @include foreground-color();
+  }
+  &.disabled div {
+    @include background-color("3");
+    @include color("a");
+  }
+}
