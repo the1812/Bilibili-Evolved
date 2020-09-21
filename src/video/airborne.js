@@ -64,7 +64,7 @@ function markAirborne(danmaku)
         airborneDestination = danmaku.innerText.match(/\d{1,}[:：]\d{2}/)[0];
         sep = airborneDestination.includes(':') ? ':' : '：';
         airborneDestination = parseInt(airborneDestination.split(sep)[0]) * 60 + parseInt(airborneDestination.split(sep)[1]);
-        if (0 <= airborneDestination <= document.querySelector('.bilibili-player-video video').duration)
+        if (0 <= airborneDestination && airborneDestination <= document.querySelector('.bilibili-player-video video').duration)
         {
             danmaku.airborneDestination =airborneDestination;
             const originalWidth = danmaku.offsetWidth;
