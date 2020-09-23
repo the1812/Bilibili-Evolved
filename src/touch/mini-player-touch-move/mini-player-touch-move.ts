@@ -5,7 +5,7 @@ const load = async (enable = true) => {
   ].some(it => document.URL.includes(it))) {
     return
   }
-  const player = await SpinQuery.select('#bofqi')
+  const player = await SpinQuery.select('#bilibili-player')
   if (!player) {
     console.warn('mini player touch move: player not found')
     return

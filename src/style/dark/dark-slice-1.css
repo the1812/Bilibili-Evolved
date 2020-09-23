@@ -1687,7 +1687,7 @@ div.drag-bar,
 {
     box-shadow: 0px 1px 10px 0 #0003 !important;
 }
-#bofqi.mini-player::before
+#bilibili-player.mini-player::before
 {
     box-shadow: 0 4px 8px 0 #0004 !important;
 }

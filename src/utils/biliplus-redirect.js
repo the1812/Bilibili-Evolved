@@ -18,31 +18,30 @@ export default {
       </a>`,
     success: () => {
       const button = document.querySelector('#biliplus-redirect')
+      const setUrl = url => {
+        if (document.URL !== url) {
+          button.href = url
+        } else {
+          button.disabled = true
+        }
+      }
 
-      let url
       if (location.host === 'space.bilibili.com') {
-        url = document.URL.replace('space.bilibili.com/', `${host}/space/`)
+        const url = document.URL.replace('space.bilibili.com/', `${host}/space/`)
+        setUrl(url)
       }
       else if (document.URL.includes('/bangumi/')) {
         Observer.videoChange(() => {
           const aid = unsafeWindow.aid || document.querySelector('.av-link,.info-sec-av').innerText.replace(/[aAvV]/g, '')
           const url = `https://${host}/video/av${aid}/`
-          if (document.URL !== url) {
-            button.href = url
-          } else {
-            button.disabled = true
-          }
+          setUrl(url)
         })
-        return
       }
       else {
-        url = document.URL.replace(window.location.host, host)
-      }
-
-      if (document.URL !== url) {
-        button.href = url
-      } else {
-        button.disabled = true
+        Observer.videoChange(() => {
+          const url = document.URL.replace(window.location.host, host)
+          setUrl(url)
+        })
       }
     },
   }

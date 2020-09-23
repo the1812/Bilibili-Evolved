@@ -95,7 +95,7 @@ export class Observer {
       cidHooked = true
     }
     // callback();
-    const videoContainer = await SpinQuery.select('#bofqi video')
+    const videoContainer = await SpinQuery.select('#bilibili-player video')
     if (videoContainer) {
       Observer.childList(videoContainer, callback)
     } else {
