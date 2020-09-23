@@ -41,6 +41,10 @@
             name: 'Joshuaふみひる',
             link: ''
           },
+          {
+            name: 'kdxcxs',
+            link: 'https://github.com/kdxcxs'
+          },
         ].sort(userSorter),
         fetching: true,
         participants: [],
