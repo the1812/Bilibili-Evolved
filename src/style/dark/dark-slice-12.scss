@@ -506,6 +506,9 @@
   @include color("e");
   p span {
     @include color("a");
+    a strong {
+      @include theme-color();
+    }
   }
 }
 .long-page .page-content {
@@ -575,6 +578,9 @@
         a {
           @include theme-color();
         }
+      }
+      .check-detail-btn {
+        @include theme-color();
       }
     }
   }
@@ -672,4 +678,34 @@
   &>img {
     @include to-theme("pink");
   }
+}
+.video-card-common a {
+  @include color("e");
+  &:hover {
+    @include theme-color();
+  }
+}
+a.bp_box_bot_click {
+  @include theme-border-color();
+}
+.el-date-table td {
+  &.available:hover {
+    @include theme-color();
+  }
+  &.current:not(.disabled) span {
+    @include theme-background-color();
+  }
+  &.today span {
+    @include foreground-color();
+  }
+  &.disabled div {
+    @include background-color("3");
+    @include color("a");
+  }
+}
+.list-introText {
+  @include theme-color();
+}
+.song-list .song-li .song-shadow {
+  @include theme-background-color(30);
 }
