@@ -149,6 +149,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>c</kbd> 投币
 - <kbd>s</kbd> 收藏
 - <kbd>j</kbd> 前进85秒
+- <kbd>p</kbd> 切换画中画
+- <kbd>\`</kbd> 打开播放器菜单
 - <kbd>Shift + j</kbd> 倒退85秒
 - <kbd>Shift + w</kbd> 稍后再看
 - <kbd>Shift + s</kbd> 快速收藏

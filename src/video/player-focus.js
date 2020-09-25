@@ -1,4 +1,4 @@
-const target = document.URL.includes('bangumi') ? '#bofqi' : '.video-info .video-title .tit'
+const target = document.URL.includes('bangumi') ? '#bilibili-player' : '.video-info .video-title .tit'
 SpinQuery.select(target).then(async element => {
   await playerReady()
   console.log(element)

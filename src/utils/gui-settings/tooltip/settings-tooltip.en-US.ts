@@ -120,6 +120,8 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - <kbd>c</kbd> Coin
 - <kbd>s</kbd> Favorite
 - <kbd>j</kbd> 85s forward
+- <kbd>p</kbd> Toggle picture-in-picture
+- <kbd>\`</kbd> Toggle player menu
 - <kbd>Shift + j</kbd> 85s backward
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> Playback speed adjust
 - <kbd>Shift + /</kbd> Reset playback speed`],

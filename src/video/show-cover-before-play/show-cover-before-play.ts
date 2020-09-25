@@ -46,12 +46,12 @@ const entry = () => {
     // }, { once: true })
     // unsafeWindow.trackingVideo = video
   }
-  // Observer.videoChange(showCover)
-  if (document.URL.includes('//www.bilibili.com/bangumi/')) {
-    Observer.videoChange(showCover)
-  } else {
-    showCover()
-  }
+  Observer.videoChange(showCover)
+  // if (document.URL.includes('//www.bilibili.com/bangumi/')) {
+  //   Observer.videoChange(showCover)
+  // } else {
+  //   showCover()
+  // }
 }
 entry()
 export default {

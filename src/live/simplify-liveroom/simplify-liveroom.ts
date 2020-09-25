@@ -15,6 +15,7 @@ const displayNames = {
   eventsBanner: '活动横幅',
   rankList: '排行榜',
   popup: '抽奖提示',
+  pk: 'PK浮窗',
   skin: '房间皮肤',
 }
 class SkinManager {

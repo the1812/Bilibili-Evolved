@@ -46,10 +46,9 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
     if (!postContent) {
       return
     }
-    if (dq(postContent, '.video-container') || dq(postContent, '.bangumi-container')) {
-      return
-    }
-    if (dq(postContent, '.details')) {
+    const hasCardContainer = ['.video-container', '.bangumi-container', '.media-list']
+      .some(type => dq(postContent, type))
+    if (hasCardContainer) {
       return
     }
     if (postContent.classList.contains('repost')) {

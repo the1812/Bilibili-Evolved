@@ -43,11 +43,7 @@ export default {
           `
         }
       }
-      if (document.URL.startsWith('https://www.bilibili.com/bangumi/')) {
-        Observer.videoChange(updateID)
-      } else {
-        updateID()
-      }
+      Observer.videoChange(updateID)
     }
   }
 }
