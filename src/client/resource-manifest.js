@@ -386,6 +386,7 @@ Resource.manifest = {
   },
   airborne: {
     path: 'airborne.min.js',
+    style: true,
     displayNames: {
       airborne: '启用空降'
     }
