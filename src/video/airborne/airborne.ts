@@ -1,11 +1,13 @@
 import { DanmakuRecord } from '../video-danmaku'
 
-(async () => {
+let enabled = true
+const airborneStyleKey = 'airborneStyle'
+;(async () => {
   if (!document.URL.match(/\/\/www\.bilibili\.com\/video\//)) {
     return
   }
   const { forEachVideoDanmaku } = await import('../video-danmaku')
-  resources.applyStyle('airborneStyle')
+  resources.applyStyle(airborneStyleKey)
   const getAirborneTime = (text: string | null) => {
     if (!text) {
       return NaN
@@ -28,6 +30,9 @@ import { DanmakuRecord } from '../video-danmaku'
     return minute * 60 + second
   }
   const airborneHandler = (e: MouseEvent) => {
+    if (!enabled) {
+      return
+    }
     const target = e.target as HTMLElement
     if (!target.classList.contains('b-danmaku')) {
       return
@@ -53,3 +58,13 @@ import { DanmakuRecord } from '../video-danmaku'
     wrapper.addEventListener('click', airborneHandler)
   })
 })()
+export default {
+  reload: () => {
+    enabled = true
+    resources.applyStyle(airborneStyleKey)
+  },
+  unload: () => {
+    enabled = false
+    resources.removeStyle(airborneStyleKey)
+  },
+}
