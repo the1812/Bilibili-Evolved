@@ -20,7 +20,7 @@ const startRecording = (container: HTMLElement, callback: DanmakuRecordCallback)
   if (danmakuContainerObserver) {
     danmakuContainerObserver.stop()
   }
-  danmakuContainerObserver = Observer.observe(container, records => {
+  danmakuContainerObserver = Observer.childListSubtree(container, records => {
     records.forEach(record => {
       record.addedNodes.forEach(node => {
         if (node.nodeType === Node.TEXT_NODE) {
@@ -52,7 +52,7 @@ const startRecording = (container: HTMLElement, callback: DanmakuRecordCallback)
         }
       })
     })
-  }, { childList: true, subtree: true })
+  })
 }
 export const forEachVideoDanmaku = async (callback: DanmakuRecordCallback) => {
   const hasVideo = await videoCondition()
