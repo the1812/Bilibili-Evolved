@@ -83,7 +83,6 @@ export const settings = {
   useDefaultPlayerMode: false,
   applyPlayerModeOnPlay: true,
   defaultPlayerMode: '常规',
-  useDefaultVideoQuality: false,
   defaultVideoQuality: '自动',
   useDefaultDanmakuSettings: false,
   enableDanmaku: true,
@@ -251,6 +250,7 @@ export const settings = {
   cache: {},
 }
 const fixedSettings = {
+  useDefaultVideoQuality: false,
   autoPlay: false,
   favoritesRedirect: false,
   compactLayout: false,
