@@ -17,7 +17,7 @@
         class="online"
         target="_blank"
         href="https://www.bilibili.com/video/online.html"
-      >当前在线</a>
+      >在线列表</a>
       <a class="more" href="//t.bilibili.com/" target="_blank">
         <icon type="home" icon="activity"></icon>全部动态
       </a>
