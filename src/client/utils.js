@@ -192,7 +192,13 @@ export const matchPattern = (str, pattern) => {
 }
 export const playerReady = () => {
   return SpinQuery.condition(
-    () => parseInt(dq('.video-data .dm').textContent),
+    () => {
+      const danmakuInfo = dq('.video-data .dm')
+      if (danmakuInfo) {
+        return parseInt(danmakuInfo.textContent)
+      }
+      return NaN
+    },
     it => !Number.isNaN(it),
   )
 }

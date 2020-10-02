@@ -17,11 +17,13 @@ export default {
         <span>转到BiliPlus</span>
       </a>`,
     success: () => {
-      const button = document.querySelector('#biliplus-redirect')
-      const setUrl = url => {
+      const button = document.querySelector('#biliplus-redirect') as HTMLAnchorElement & HTMLButtonElement
+      const videoRegex = /\/video\/(av[\d]+|BV.+)/i
+      const setUrl = (url: string) => {
         if (document.URL !== url) {
           button.href = url
         } else {
+          button.href = ''
           button.disabled = true
         }
       }
@@ -32,10 +34,15 @@ export default {
       }
       else if (document.URL.includes('/bangumi/')) {
         Observer.videoChange(() => {
-          const aid = unsafeWindow.aid || document.querySelector('.av-link,.info-sec-av').innerText.replace(/[aAvV]/g, '')
+          const bangumiAid = document.querySelector('.av-link,.info-sec-av') as HTMLElement
+          const aid = unsafeWindow.aid || bangumiAid.innerText.replace(/[aAvV]/g, '')
           const url = `https://${host}/video/av${aid}/`
           setUrl(url)
         })
+      }
+      else if (videoRegex.test(document.URL)) {
+        const [, id] = document.URL.match(videoRegex)!
+        setUrl(`https://${host}/video/${id}/`)
       }
       else {
         Observer.videoChange(() => {
