@@ -1,3 +1,4 @@
+.DS_Store
 builder/dotnet/Properties
 .node_modules/
 .ts-output/

@@ -20,9 +20,9 @@ class Video {
     function api(aid: number | string, cid: number | string, quality?: number) {
       if (dash) {
         if (quality) {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnver=0&fnval=16`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnver=0&fnval=80`
         } else {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json&fourk=1&fnver=0&fnval=16`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json&fourk=1&fnver=0&fnval=80`
         }
       } else {
         if (quality) {
@@ -176,6 +176,7 @@ class VideoFormat {
   }
 }
 const allFormats: VideoFormat[] = [
+  new VideoFormat(125, 'HDR', '真彩 HDR'),
   new VideoFormat(120, '4K', '超清 4K'),
   new VideoFormat(116, '1080P60', '高清 1080P60'),
   new VideoFormat(112, '1080P+', '高清 1080P+'),
