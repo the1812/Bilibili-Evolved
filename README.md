@@ -43,6 +43,15 @@
 | Fast.io  | <1h      | 快       | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview.user.js)                          | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.offline.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview-offline.user.js)                          |
 | GitHub   | <1h      | 慢       | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)      |
 
+## 推荐配置
+- 操作系统: 64-bit Windows 10 / macOS 10.15
+- 分辨率: 2K
+- 浏览器: Chrome 74+ / Firefox 65+ / Edge 80+ / Safari 14+
+- 处理器: Intel Core i7 / AMD Ryzen 5
+- 内存: 8GB
+- 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
+- 显卡: GeForce GTX 660 / Radeon HD 7870
+
 # 设置
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置. 默认只启用了一部分功能, 您可以根据需要自由调整设置.
 
