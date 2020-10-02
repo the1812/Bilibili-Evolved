@@ -13,11 +13,21 @@
           <div class="tab-name">{{tab.name}}</div>
         </div>
       </div>
+      <div class="grow"></div>
       <a
         class="online"
         target="_blank"
         href="https://www.bilibili.com/video/online.html"
       >在线列表</a>
+      <div class="grow"></div>
+      <div class="page">
+        <div class="prev-page" @click="scroll(-1)">
+          <icon type="extended" icon="left-arrow"></icon>
+        </div>
+        <div class="next-page" @click="scroll(1)">
+          <icon type="extended" icon="right-arrow"></icon>
+        </div>
+      </div>
       <a class="more" href="//t.bilibili.com/" target="_blank">
         <icon type="home" icon="activity"></icon>全部动态
       </a>
@@ -93,6 +103,15 @@ export default {
       } else {
         this.currentTab = tab
       }
+    },
+    scroll(orientation: number) {
+      const contents = this.$refs.contents as HTMLElement
+      const style = getComputedStyle(contents)
+      const count = parseFloat(style.getPropertyValue('--card-count'))
+      const width = parseFloat(style.getPropertyValue('--card-width'))
+      const gap = 16
+      const distance = count * (width + gap)
+      contents.scrollBy(orientation * distance, 0)
     }
   },
   async mounted() {
@@ -106,12 +125,12 @@ export default {
     // if (json.code === 0) {
     //   this.online = json.data.web_online
     // }
-    if (!settings.simpleHomeWheelScroll) {
-      return
-    }
-    const contents = this.$refs.contents as HTMLElement
-    const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
-    enableHorizontalScroll(contents)
+    // if (!settings.simpleHomeWheelScroll) {
+    //   return
+    // }
+    // const contents = this.$refs.contents as HTMLElement
+    // const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
+    // enableHorizontalScroll(contents)
   }
 }
 </script>
@@ -131,8 +150,35 @@ export default {
   .header,
   .sub-header {
     padding: 0 8px;
+    .page {
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        background-color: #8882;
+        border-radius: 50%;
+        margin-left: 8px;
+        cursor: pointer;
+        &:hover {
+          background-color: #8884;
+        }
+      }
+      .prev-page .be-icon {
+        transform: translateX(-1px);
+      }
+      .next-page .be-icon {
+        transform: translateX(1px);
+      }
+    }
     .tab:nth-child(2) {
       margin-left: 32px;
+    }
+    .grow {
+      flex-grow: 1;
     }
     .online {
       padding: 8px 16px;

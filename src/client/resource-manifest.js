@@ -720,6 +720,7 @@ Resource.manifest = {
     displayNames: {
       simplifyHome: '简化首页',
       simplifyHomeStyle: '首页风格',
+      simpleHomeWheelScroll: '允许横向滚动',
     },
     dropdown: {
       key: 'simplifyHomeStyle',

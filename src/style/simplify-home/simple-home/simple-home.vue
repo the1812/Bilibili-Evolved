@@ -63,6 +63,7 @@ export default {
     border-radius: 16px;
     font-size: 13px;
     font-weight: bold;
+    line-height: 24px;
     .be-icon {
       margin-right: 8px;
       transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);

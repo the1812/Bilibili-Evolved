@@ -207,6 +207,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`copyCommentLink`, /*html*/`在评论的菜单里添加复制链接选项.`],
   [`unfoldFeeds`, /*html*/`自动展开被折叠的动态.`],
   [`commentsTranslate`, /*html*/`为评论也添加翻译按钮.`],
+  [`simpleHomeWheelScroll`, /*html*/`在横向的卡片列表中, 允许鼠标滚轮上下滚动时变成对此列表的横向滚动. (因为是模拟的, 可能会有点卡顿)`],
 ]);
 export default {
   export: { toolTips },
