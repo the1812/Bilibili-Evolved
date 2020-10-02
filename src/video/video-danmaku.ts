@@ -22,37 +22,37 @@ const startRecording = (container: HTMLElement, callback: DanmakuRecordCallback)
   }
   danmakuContainerObserver = Observer.observe(container, records => {
     records.forEach(record => {
-      if (record.type === 'childList') {
-        record.addedNodes.forEach(node => {
-          if (!(node instanceof HTMLElement)) {
+      record.addedNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const element = node.parentElement as HTMLElement
+          const danmaku = recordedDanmakus.find(d => d.element === element)
+          if (!danmaku) {
             return
           }
-          const danmaku = parseDanmakuRecord(node)
-          recordedDanmakus.push(danmaku)
+          danmaku.text = node.textContent || ''
+          danmaku.reuse = true
           callback.added && callback.added(danmaku)
-        })
-        record.removedNodes.forEach(node => {
-          if (!(node instanceof HTMLElement)) {
-            return
-          }
-          const index = recordedDanmakus.findIndex(d => d.element === node)
-          if (index !== -1) {
-            const [danmaku] = recordedDanmakus.splice(index, 1)
-            callback.removed && callback.removed(danmaku)
-          }
-        })
-      } else if (record.type === 'characterData') {
-        const element = record.target as HTMLElement
-        const danmaku = recordedDanmakus.find(d => d.element === element)
-        if (!danmaku) {
           return
         }
-        danmaku.text = element.textContent || ''
-        danmaku.reuse = true
+        if (!(node instanceof HTMLElement)) {
+          return
+        }
+        const danmaku = parseDanmakuRecord(node)
+        recordedDanmakus.push(danmaku)
         callback.added && callback.added(danmaku)
-      }
+      })
+      record.removedNodes.forEach(node => {
+        if (!(node instanceof HTMLElement)) {
+          return
+        }
+        const index = recordedDanmakus.findIndex(d => d.element === node)
+        if (index !== -1) {
+          const [danmaku] = recordedDanmakus.splice(index, 1)
+          callback.removed && callback.removed(danmaku)
+        }
+      })
     })
-  }, { childList: true, characterData: true, subtree: true })
+  }, { childList: true, subtree: true })
 }
 export const forEachVideoDanmaku = async (callback: DanmakuRecordCallback) => {
   const hasVideo = await videoCondition()
