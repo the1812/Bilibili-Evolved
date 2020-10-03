@@ -138,17 +138,18 @@ export default {
 <style lang="scss">
 .simple-home .feeds {
   justify-self: start;
-  // display: flex;
-  // align-items: stretch;
-  // flex-direction: column;
-  display: grid;
-  grid-template-areas: 'header header' 'contents contents';
-  grid-template-columns: repeat(2, auto);
-  grid-template-rows: repeat(2, auto);
-  row-gap: 16px;
-  column-gap: 16px;
+  // display: grid;
+  // grid-template-areas: 'header header' 'contents contents';
+  // grid-template-columns: repeat(2, auto);
+  // grid-template-rows: repeat(2, auto);
+  // row-gap: 16px;
+  // column-gap: 16px;
+  display: flex;
+  flex-direction: column;
   .header,
   .sub-header {
+    grid-area: unset;
+    margin-bottom: 16px;
     padding: 0 8px;
     .page {
       margin-right: 8px;
@@ -193,7 +194,7 @@ export default {
     }
   }
   .contents {
-    grid-area: contents;
+    // grid-area: contents;
     display: flex;
     overflow: auto;
 
