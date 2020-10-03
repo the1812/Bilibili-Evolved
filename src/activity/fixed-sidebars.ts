@@ -15,7 +15,7 @@ const style = `
   margin-left: calc(244px + 16px + 632px) !important;
 }
 .live-panel .live-up-list {
-  max-height: calc(100vh - 320px);
+  max-height: calc(100vh - 380px);
   overflow: auto;
   scrollbar-width: none !important;
 }

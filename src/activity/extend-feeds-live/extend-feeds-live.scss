@@ -1,6 +1,6 @@
 @import "../../style/common";
 .live-up-list {
-  max-height: calc(100vh - 320px);
+  max-height: calc(100vh - 380px);
   overflow: auto;
   @include no-scrollbar();
   .live-detail[data-live-title] {
