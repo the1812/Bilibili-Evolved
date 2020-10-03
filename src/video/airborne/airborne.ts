@@ -49,8 +49,8 @@ const airborneStyleKey = 'airborneStyle'
     danmaku.element.classList.toggle('airborne', canAirborne)
   }
   forEachVideoDanmaku({ added: addAirborneStyle })
-  Observer.videoChange(() => {
-    const wrapper = dq('.bilibili-player-video-wrap') as HTMLElement
+  Observer.videoChange(async () => {
+    const wrapper = await SpinQuery.select('.bilibili-player-video-wrap') as HTMLElement
     if (wrapper.classList.contains('airborne-enabled')) {
       return
     }
