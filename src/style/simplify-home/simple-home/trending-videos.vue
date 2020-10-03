@@ -148,7 +148,7 @@ export default {
     overflow: auto;
     height: calc(var(--card-height) + 16px);
     width: calc((var(--card-width) + 16px) * var(--card-count));
-    // scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
 
     @media screen and (max-width: 1300px) and (min-width: 900px) {
