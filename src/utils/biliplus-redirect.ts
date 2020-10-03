@@ -2,7 +2,7 @@ const host = `www.biliplus.com`
 const supportedUrls = [
   'bilibili.com/video/',
   'bilibili.com/bangumi/play',
-  'bilibili.com/bangumi/media',
+  //'bilibili.com/bangumi/media',
   'space.bilibili.com',
   // 'manga.bilibili.com'
 ]
@@ -19,12 +19,15 @@ export default {
     success: () => {
       const button = document.querySelector('#biliplus-redirect') as HTMLAnchorElement & HTMLButtonElement
       const videoRegex = /\/video\/(av[\d]+|BV.+)/i
+      const cancelUrl = () => {
+        button.href = ''
+        button.disabled = true
+      }
       const setUrl = (url: string) => {
         if (document.URL !== url) {
           button.href = url
         } else {
-          button.href = ''
-          button.disabled = true
+          cancelUrl()
         }
       }
 
@@ -32,7 +35,16 @@ export default {
         const url = document.URL.replace('space.bilibili.com/', `${host}/space/`)
         setUrl(url)
       }
-      else if (document.URL.includes('/bangumi/')) {
+      // else if (document.URL.includes('/bangumi/media')) {
+      //   const mediaMatch = document.URL.match(/media\/md(\d+)/)
+      //   if (mediaMatch) {
+      //     const [, mediaID] = mediaMatch
+      //     setUrl(`https://${host}/bangumi/i/${mediaID}`)
+      //   } else {
+      //     cancelUrl()
+      //   }
+      // }
+      else if (document.URL.includes('/bangumi/play')) {
         Observer.videoChange(() => {
           const bangumiAid = document.querySelector('.av-link,.info-sec-av') as HTMLElement
           const aid = unsafeWindow.aid || bangumiAid.innerText.replace(/[aAvV]/g, '')
