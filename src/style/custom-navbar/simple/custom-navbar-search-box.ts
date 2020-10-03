@@ -138,6 +138,8 @@ export class SearchBox extends NavbarComponent {
       if (keywordInput.value === '') {
         if (!settings.hideTopSearch) {
           (form.querySelector('.recommended-target') as HTMLElement).click()
+        } else {
+          window.open('https://search.bilibili.com')
         }
         e.preventDefault()
         return false
