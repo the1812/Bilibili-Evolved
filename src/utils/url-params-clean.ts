@@ -34,8 +34,14 @@ const normalizeURL = (url: string) => {
   return url
   // return url.endsWith('/') && (noNormalizes.every(r => !r.test(url))) ? _.trimEnd(url, '/') : url
 }
+const noClean = [
+  'videocard_series',
+]
 const clean = () => {
   const urlParams = location.search.substring(1).split('&')
+  if (urlParams.some(param => noClean.some(it => param.includes(it)))) {
+    return
+  }
   const filteredParams = urlParams.filter(p => {
     if (blockParams.some(b => p.startsWith(`${b}=`))) {
       return false

@@ -11,6 +11,7 @@ if (settings.preferAvUrl && document.URL.startsWith('https://www.bilibili.com/vi
     }
     if (document.URL.includes('videocard_series')) {
       // 系列视频不能转换, 否则会无限刷新
+      console.log('skip video series')
       return
     }
     const newUrl = document.URL.replace(/\/(video|bangumi)\/(BV[\w]+)/i, (_, type) => {
