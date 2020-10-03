@@ -35,12 +35,10 @@
       }
     }
   }
-  const observer = Observer.childList(qualitySettings, () => {
+  Observer.childList(qualitySettings, () => {
     console.log(qualitySettings.childElementCount)
     if (qualitySettings.childElementCount > 0) {
       setQuality()
-      // 干脆就不stop了, 主播下播再开播可以再来一次setQuality
-      // observer.stop()
     }
   })
 })()

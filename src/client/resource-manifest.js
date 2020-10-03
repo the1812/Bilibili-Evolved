@@ -844,7 +844,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'defaultLiveQuality',
-      items: ['原画', '蓝光', '超清', '高清', '流畅'],
+      items: ['原画', '4K', '蓝光', '超清', '高清', '流畅'],
     },
   },
   downloadLiveRecords: {
