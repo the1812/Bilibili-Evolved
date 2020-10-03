@@ -4,7 +4,27 @@ import { DanmakuConverter, DanmakuConverterConfig, DanmakuType } from './danmaku
 
 export async function convertToAss(xml: string) {
   const title = getFriendlyTitle()
-  let config = { title } as DanmakuConverterConfig
+  const defaultConfig: Omit<DanmakuConverterConfig, 'title'> = {
+    font: '微软雅黑',
+    alpha: 0.4,
+    duration: (danmaku: { type: number }) => {
+      switch (danmaku.type) {
+        case 4:
+        case 5:
+          return 4
+        default:
+          return 6
+      }
+    },
+    blockTypes: [7, 8],
+    resolution: {
+      x: 1920,
+      y: 1080
+    },
+    bottomMarginPercent: 0.15,
+    bold: false
+  }
+  let config = { ...defaultConfig, title } as DanmakuConverterConfig
   try {
     await loadDanmakuSettingsPanel()
     const getSliderFactor = (selector: string) => {
@@ -12,12 +32,12 @@ export async function convertToAss(xml: string) {
       return transform * 4 / 188
     }
     const getSliderIndex = (selector: string) => {
-      const transform = parseFloat((dq(selector) as HTMLElement).style.transform!.replace(/translateX\(([\d\.]+)/, '$1')) as 0 | 44 | 94 | 144 | 188
+      const transform = parseFloat((dq(selector) as HTMLElement).style.transform!.replace(/translateX\(([\d\.]+)/, '$1')) as 0 | 47 | 94 | 141 | 188
       const index = {
         0: 0,
-        44: 1,
+        47: 1,
         94: 2,
-        144: 3,
+        141: 3,
         188: 4
       }[transform]
       return index
@@ -55,8 +75,8 @@ export async function convertToAss(xml: string) {
     })()
     const resolutionFactor = 1.4 - 0.2 * getSliderFactor('.bilibili-player-setting-fontsize .bui-thumb') // 改变分辨率来调整字体大小
     config.resolution = {
-      x: 1920 * resolutionFactor,
-      y: 1080 * resolutionFactor
+      x: Math.round(1920 * resolutionFactor),
+      y: Math.round(1080 * resolutionFactor),
     }
     config.bottomMarginPercent = [0.75, 0.5, 0.25, 0, 0][getSliderIndex('.bilibili-player-setting-area .bui-thumb')]
     if (config.bottomMarginPercent === 0 && (dq('.bilibili-player-video-danmaku-setting-left-preventshade input') as HTMLInputElement).checked) // 无显示区域限制时要检查是否开启防挡字幕
@@ -110,26 +130,16 @@ export async function convertToAss(xml: string) {
     // The default config
     config = {
       ...config,
-      font: '微软雅黑',
-      alpha: 0.4,
-      duration: (danmaku: { type: number }) => {
-        switch (danmaku.type) {
-          case 4:
-          case 5:
-            return 4
-          default:
-            return 6
-        }
-      },
-      blockTypes: [7, 8],
-      resolution: {
-        x: 1920,
-        y: 1080
-      },
-      bottomMarginPercent: 0.15,
-      bold: false
+      ...defaultConfig,
     }
   }
+  for (const [key, value] of Object.entries(config)) {
+    if (value === undefined || value === null) {
+      console.warn('danmaku config invalid for key', key, ', value =', value)
+      config[key] = defaultConfig[value]
+    }
+  }
+  console.log(config)
   const converter = new DanmakuConverter(config)
   const assDocument = converter.convertToAssDocument(xml)
   return assDocument.generateAss()
