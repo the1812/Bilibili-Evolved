@@ -62,6 +62,14 @@ export default {
     BangumiCategory: () => import('./simple-home-bangumi-category.vue'),
   },
   data() {
+    let orders = settings.simpleHomeCategoryOrders
+    const values = Object.values(orders)
+    const isOrderBroken = values.some(o => o === null || o === undefined || Number.isNaN(o))
+    const isOrderDuplicated = _.uniq(values).length !== values.length
+    if (isOrderBroken || isOrderDuplicated) {
+      settings.simpleHomeCategoryOrders = simpleHomeCategoryDefaultOrders
+      orders = simpleHomeCategoryDefaultOrders
+    }
     return {
       tabs: Object.entries(tabNames).map(([key, name]) => {
         return {
@@ -69,7 +77,7 @@ export default {
           name,
         }
       }),
-      selectedTab: Object.entries(settings.simpleHomeCategoryOrders).sort(
+      selectedTab: Object.entries(orders).sort(
         (a, b) => a[1] - b[1],
       )[0][0],
       reordering: false,
@@ -87,13 +95,10 @@ export default {
     const { Reorder } = await import('../../../../utils/reorder')
     const reorder = new Reorder(container)
     this.reorder = reorder
-    reorder.addEventListener('reorder', (e: CustomEvent) => {
+    reorder.addEventListener('reorder', (e: CustomEvent<{ element: HTMLElement, order: number }[]>) => {
       const orders = e.detail
       for (const orderDetail of orders) {
-        const { element, order } = orderDetail as {
-          element: HTMLElement
-          order: number
-        }
+        const { element, order } = orderDetail
         settings.simpleHomeCategoryOrders[
           element.getAttribute('data-key')!
         ] = order

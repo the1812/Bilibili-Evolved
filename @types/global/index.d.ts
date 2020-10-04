@@ -515,6 +515,7 @@ declare global {
   }
   const settings: BilibiliEvolvedSettings
   const customNavbarDefaultOrders: CustomNavbarOrders
+  const simpleHomeCategoryDefaultOrders: SimpleHomeCategoryOrders
   const aria2RpcDefaultOption: RpcOption
   const languageNameToCode: { [key: string]: string }
   const languageCodeToName: { [key: string]: string }
