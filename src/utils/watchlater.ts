@@ -61,7 +61,7 @@ if (settings.watchLaterRedirectPage) {
         return
       }
       const avItems = listBox.querySelectorAll('.av-item')
-      avItems.forEach((item, index) => {
+      const redirect = (item: Element, index: number) => {
         const watchlaterItem = list[index]
         const aid = watchlaterItem.aid
         const cid = watchlaterItem.cid
@@ -74,6 +74,16 @@ if (settings.watchLaterRedirectPage) {
         const title = item.querySelector('.av-about .t') as HTMLAnchorElement
         title.target = '_blank'
         title.href = url
+      }
+      avItems.forEach(redirect)
+      Observer.childList(listBox, records => {
+        records.forEach(record => {
+          record.addedNodes.forEach(n => {
+            if (n instanceof Element) {
+              redirect(n, [...listBox.children].indexOf(n))
+            }
+          })
+        })
       })
     })()
   }
