@@ -134,13 +134,13 @@ function checkCompatibility () {
     settings.harunaScale = false
     settings.imageResolution = false
   }
-  if (settings.watchLaterRedirectPage) {
-    settings.watchLaterRedirectPage = false
-  }
-  const redirectPageInput = inputs.find(it => it.getAttribute('key') === 'watchLaterRedirectPage')
-  if (redirectPageInput) {
-    redirectPageInput.disabled = true
-  }
+  // if (settings.watchLaterRedirectPage) {
+  //   settings.watchLaterRedirectPage = false
+  // }
+  // const redirectPageInput = inputs.find(it => it.getAttribute('key') === 'watchLaterRedirectPage')
+  // if (redirectPageInput) {
+  //   redirectPageInput.disabled = true
+  // }
 }
 function setDisplayNames () {
   for (const [key, name] of Object.entries(Resource.displayNames)) {
