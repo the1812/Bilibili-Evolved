@@ -1,5 +1,5 @@
 <template>
-  <div class="simple-home">
+  <div class="simple-home" :class="{ snap }">
     <blackboards></blackboards>
     <trending-videos></trending-videos>
     <info-row></info-row>
@@ -15,7 +15,17 @@ export default {
     InfoRow: () => import('./online-info-row.vue'),
     Feeds: () => import('./simple-home-feeds.vue'),
     Categories: () => import('./categories/simple-home-categories.vue')
-  }
+  },
+  data() {
+    return {
+      snap: false,
+    }
+  },
+  mounted() {
+    addSettingsListener('simpleHomeWheelScroll', (value: boolean) => {
+      this.snap = !value
+    }, true)
+  },
 }
 </script>
 <style lang="scss">

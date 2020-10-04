@@ -99,17 +99,24 @@ export default {
     this.trendingCards = getTrendingVideos()
   },
   async mounted() {
-    // if (!settings.simpleHomeWheelScroll) {
-    //   return
-    // }
-    // const contents = this.$refs.contents as HTMLElement
-    // const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
-    // enableHorizontalScroll(contents)
+    let cancelHorizontalScroll: () => void
+    addSettingsListener('simpleHomeWheelScroll', async (value: boolean) => {
+      if (value) {
+        const contents = this.$refs.contents as HTMLElement
+        const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
+        cancelHorizontalScroll = enableHorizontalScroll(contents)
+      } else {
+        cancelHorizontalScroll && cancelHorizontalScroll()
+      }
+    }, true)
   },
 }
 </script>
 
 <style lang="scss">
+.simple-home.snap .trendings .contents {
+  scroll-snap-type: x mandatory;
+}
 .simple-home .trendings {
   display: flex;
   flex-direction: column;
@@ -148,7 +155,6 @@ export default {
     overflow: auto;
     height: calc(var(--card-height) + 16px);
     width: calc((var(--card-width) + 16px) * var(--card-count));
-    scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
 
     @media screen and (max-width: 1300px) and (min-width: 900px) {

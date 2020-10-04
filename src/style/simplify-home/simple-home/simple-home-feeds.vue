@@ -125,17 +125,24 @@ export default {
     // if (json.code === 0) {
     //   this.online = json.data.web_online
     // }
-    // if (!settings.simpleHomeWheelScroll) {
-    //   return
-    // }
-    // const contents = this.$refs.contents as HTMLElement
-    // const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
-    // enableHorizontalScroll(contents)
+    let cancelHorizontalScroll: () => void
+    addSettingsListener('simpleHomeWheelScroll', async (value: boolean) => {
+      if (value) {
+        const contents = this.$refs.contents as HTMLElement
+        const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
+        cancelHorizontalScroll = enableHorizontalScroll(contents)
+      } else {
+        cancelHorizontalScroll && cancelHorizontalScroll()
+      }
+    }, true)
   }
 }
 </script>
 
 <style lang="scss">
+.simple-home.snap .feeds .contents {
+  scroll-snap-type: x mandatory;
+}
 .simple-home .feeds {
   justify-self: start;
   // display: grid;
@@ -203,7 +210,6 @@ export default {
     --card-count: 4;
     width: calc((var(--card-width) + 16px) * var(--card-count));
     padding-bottom: 16px;
-    scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
     min-height: calc(var(--card-height) + 16px);
     @media screen and (max-width: 900px) {
