@@ -19,6 +19,9 @@ const style = `
   overflow: auto;
   scrollbar-width: none !important;
 }
+body.feeds-filter-side-block-profile .live-panel .live-up-list {
+  max-height: calc(100vh - 180px);
+}
 .live-panel .live-up-list::-webkit-scrollbar {
   height: 0 !important;
   width: 0 !important;

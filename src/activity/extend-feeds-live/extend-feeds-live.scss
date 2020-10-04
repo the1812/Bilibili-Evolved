@@ -1,6 +1,9 @@
 @import "../../style/common";
 .live-up-list {
   max-height: calc(100vh - 380px);
+  body.feeds-filter-side-block-profile & {
+    max-height: calc(100vh - 180px);
+  }
   overflow: auto;
   @include no-scrollbar();
   .live-detail[data-live-title] {
