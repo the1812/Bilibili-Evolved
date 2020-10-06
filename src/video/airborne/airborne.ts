@@ -12,7 +12,7 @@ const airborneStyleKey = 'airborneStyle'
     if (!text) {
       return NaN
     }
-    const airborneMatch = text.match(/(\d+)[ ]*[:：.][ ]*(\d+)([ ]*[:：][ ]*(\d+))?/)
+    const airborneMatch = text.match(/(\d+)[ ]*[:：][ ]*(\d+)([ ]*[:：][ ]*(\d+))?/)
     if (!airborneMatch) {
       return NaN
     }
