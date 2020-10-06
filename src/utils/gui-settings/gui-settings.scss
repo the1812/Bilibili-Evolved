@@ -32,7 +32,7 @@
   opacity: 1;
   transform-origin: center !important;
   transform: translateX(-16px);
-  background-color: #dddc;
+  background-color: #eeec;
   border-radius: 0 50% 50% 0;
   padding: 6px;
   box-sizing: content-box;
@@ -42,7 +42,7 @@
     transform: rotate(0deg);
   }
   body.dark & {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: #5555;
   }
   &:hover {
     opacity: 1;
@@ -654,17 +654,16 @@ li.category.folded i.icon-arrow {
 .gui-settings-flat-button {
   width: auto;
   white-space: nowrap;
-  padding: 8px 16px;
-  background: #8882;
-  border: none;
-  color: black;
+  border: 2px solid #8882;
+  margin: 4px 0;
+  border-radius: 8px;
+  padding: 8px 12px 8px 8px;
+  color: inherit;
+  background-color: transparent;
   cursor: pointer;
   transition: all 0.2s ease-out;
   font-size: 10pt;
   flex: 0 0 auto;
-  margin: 4px;
-  border-radius: 20px;
-  box-shadow: #0004 0 2px 4px;
   height: 40px;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent !important;
@@ -674,10 +673,11 @@ li.category.folded i.icon-arrow {
     cursor: not-allowed;
   }
   &:hover:not(:disabled) {
-    background: #8884;
+    background: #8882;
+    color: inherit;
   }
   &:active:not(:disabled) {
-    border-bottom-color: var(--theme-color);
+    background: #8883;
   }
   &:focus {
     outline: none;
@@ -686,6 +686,7 @@ li.category.folded i.icon-arrow {
     margin-right: 8px;
     line-height: 24px;
     height: 24px;
+    opacity: .75;
   }
 
   .popup {
