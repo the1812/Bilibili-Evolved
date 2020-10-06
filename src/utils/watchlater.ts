@@ -56,11 +56,10 @@ if (settings.watchLaterRedirectPage) {
     (async () => {
       const { getWatchlaterList } = await import('../video/watchlater-api')
       const list = await getWatchlaterList(true)
-      const listBox = await SpinQuery.select('.watch-later-list .list-box')
+      const listBox = await SpinQuery.select('.watch-later-list .list-box > span')
       if (!listBox) {
         return
       }
-      const avItems = listBox.querySelectorAll('.av-item')
       const redirect = (item: Element, index: number) => {
         const watchlaterItem = list[index]
         const aid = watchlaterItem.aid
@@ -75,14 +74,20 @@ if (settings.watchLaterRedirectPage) {
         title.target = '_blank'
         title.href = url
       }
+      const avItems = listBox.querySelectorAll('.av-item')
       avItems.forEach(redirect)
-      Observer.childList(listBox, records => {
+      Observer.attributesSubtree(listBox, records => {
         records.forEach(record => {
-          record.addedNodes.forEach(n => {
-            if (n instanceof Element) {
-              redirect(n, [...listBox.children].indexOf(n))
+          if (record.target instanceof HTMLAnchorElement && record.attributeName === 'href') {
+            const a = record.target
+            const items = dqa(listBox, '.av-item')
+            if (a.href.includes('/medialist/play/watchlater/')) {
+              const index = items.findIndex(it => it.contains(a))
+              if (index !== -1) {
+                redirect(items[index], index)
+              }
             }
-          })
+          }
         })
       })
     })()
