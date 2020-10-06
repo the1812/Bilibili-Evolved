@@ -300,13 +300,17 @@
       content: "";
       width: 20px;
       height: 20px;
-      background: #c6c6c6;
+      background: #fff;
       position: absolute;
       border-radius: 50%;
       top: -4px;
       left: -4px;
-      box-shadow: 0px 2px 4px 0px #0003;
+      box-shadow: 0 0 0 1px#8884 inset;
       transition: all 0.2s ease-out;
+      body.dark & {
+        background: #666;
+        box-shadow: none;
+      }
     }
   }
   .gui-settings-ok {
@@ -322,7 +326,7 @@
     position: absolute;
 
     &:checked ~ .gui-settings-checkbox {
-      background: var(--theme-color-80);
+      background: var(--theme-color-50);
     }
     &:checked ~ .gui-settings-checkbox::after {
       background: var(--theme-color) !important;
