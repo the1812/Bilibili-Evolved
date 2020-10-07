@@ -261,10 +261,14 @@
     border: none;
     height: 100%;
     max-width: 90px;
-    padding: 4px 8px !important;
-    background: #8884;
+    padding: 6px 8px !important;
+    background: transparent;
+    box-shadow: 0 0 0 1px #8884;
     transition: all 0.2s;
     font-size: 16px;
+    &:focus-within {
+      box-shadow: 0 0 0 1px var(--theme-color);
+    }
   }
   input:disabled,
   &.disabled span,
@@ -403,6 +407,8 @@ button.gui-settings-button {
   left: calc(-84px + 50%);
   transform: scale(0);
   transform-origin: top;
+  padding: 6px;
+  border-radius: 8px;
   z-index: 9;
   &.opened {
     opacity: 1;
@@ -415,10 +421,13 @@ button.gui-settings-button {
   margin: 0;
   flex-grow: 1;
   height: 100%;
+  grid-gap: 6px;
+  gap: 6px;
 }
 .predefined-colors-grid-block {
   width: 100%;
   height: 100%;
+  border-radius: 4px;
   justify-self: center;
   align-self: center;
   cursor: pointer;
@@ -426,7 +435,6 @@ button.gui-settings-button {
   transition: all 0.1s ease-out;
   &:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 8px 1px #0004;
   }
 }
 input[key]:focus {
@@ -478,10 +486,14 @@ li.category.folded i.icon-arrow {
   position: relative;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  background-color: #8884;
+  background-color: transparent;
+  box-shadow: 0 0 0 1px #8884;
   display: inline-flex;
   align-items: center;
   height: 32px;
+  &:focus-within {
+    box-shadow: 0 0 0 1px var(--theme-color);
+  }
   & > i {
     transition: all 0.2s ease-out;
     transform-origin: center;
@@ -489,7 +501,7 @@ li.category.folded i.icon-arrow {
   }
   & > ul {
     position: absolute;
-    top: calc(100%);
+    top: calc(100% + 1px);
     width: 100%;
     cursor: pointer;
     background: white;
@@ -499,8 +511,10 @@ li.category.folded i.icon-arrow {
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.05);
     z-index: 102;
+    border: 1px solid #8882;
+    box-sizing: border-box;
   }
   ul li {
     margin: 0;
@@ -509,7 +523,7 @@ li.category.folded i.icon-arrow {
     width: 100%;
     justify-content: center;
     &:hover {
-      background: rgba(0, 0, 0, 0.16);
+      background: #8882;
     }
   }
   &.opened > ul {
