@@ -8,7 +8,7 @@ const style = `
   font-size: 12px;
   opacity: 0.6;
   cursor: pointer;
-  display: block;
+  display: inline-block;
 }
 `
 resources.applyImportantStyleFromText(
