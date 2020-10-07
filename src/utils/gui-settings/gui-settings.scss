@@ -518,10 +518,12 @@ li.category.folded i.icon-arrow {
   }
   ul li {
     margin: 0;
-    padding: 8px 0;
+    padding: 4px 0;
     height: auto;
     width: 100%;
     justify-content: center;
+    border-radius: 3px;
+    line-height: 1.5;
     &:hover {
       background: #8882;
     }
@@ -755,7 +757,6 @@ body.round-corner {
   --large-corner-radius: 8px;
   .gui-settings-dropdown,
   .gui-settings-textbox-container input,
-  .gui-settings-dropdown ul li,
   .gui-settings-dropdown > ul,
   .gui-settings-flat-button .popup,
   .gui-settings-box li i.downloading {

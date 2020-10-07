@@ -187,20 +187,24 @@
     padding: 6px 16px;
     font-size: 10pt;
     cursor: pointer;
-    background: #8884;
+    background-color: transparent;
     color: var(--download-video-foreground);
-  }
-  button:hover,
-  .button:hover {
-    background: #8886;
+    box-shadow: 0 0 0 1px #8884;
+    &:hover {
+      background-color: #8882;
+    }
+    &:active {
+      background-color: #8884;
+    }
   }
   .primary {
     background: var(--theme-color);
+    box-shadow: 0 0 0 1px var(--theme-color);
     color: var(--foreground-color);
     align-self: center;
-  }
-  .primary:hover {
-    background: var(--theme-color-90);
+    &:hover {
+      background: var(--theme-color-90);
+    }
   }
   button:disabled,
   .busy button,
@@ -230,7 +234,11 @@
         top: 0;
         left: 0;
         height: 4px;
-        background: linear-gradient(to right, var(--theme-color), var(--theme-color-60));
+        background: linear-gradient(
+          to right,
+          var(--theme-color),
+          var(--theme-color-60)
+        );
       }
     }
   }
@@ -426,5 +434,9 @@
   }
 }
 body.dark .download-video .direct-download .progress .foreground {
-  background: linear-gradient(to right, var(--theme-color-70), var(--theme-color));
+  background: linear-gradient(
+    to right,
+    var(--theme-color-70),
+    var(--theme-color)
+  );
 }
