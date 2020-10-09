@@ -491,7 +491,10 @@ li.category.folded i.icon-arrow {
   display: inline-flex;
   align-items: center;
   height: 32px;
-  &:focus-within {
+  transition: .2s ease-out;
+
+  &:focus-within,
+  &:active {
     box-shadow: 0 0 0 1px var(--theme-color);
   }
   & > i {
