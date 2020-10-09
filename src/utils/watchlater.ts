@@ -74,22 +74,36 @@ if (settings.watchLaterRedirectPage) {
         title.target = '_blank'
         title.href = url
       }
-      const avItems = listBox.querySelectorAll('.av-item')
-      avItems.forEach(redirect)
-      Observer.attributesSubtree(listBox, records => {
+      const runRedirect = () => {
+        const avItems = listBox.querySelectorAll('.av-item')
+        avItems.forEach(redirect)
+      }
+      Observer.childList(listBox, records => {
         records.forEach(record => {
-          if (record.target instanceof HTMLAnchorElement && record.attributeName === 'href') {
-            const a = record.target
-            const items = dqa(listBox, '.av-item')
-            if (a.href.includes('/medialist/play/watchlater/')) {
-              const index = items.findIndex(it => it.contains(a))
-              if (index !== -1) {
-                redirect(items[index], index)
-              }
+          record.removedNodes.forEach(node => {
+            if (node instanceof HTMLElement && !node.classList.contains('itemlist-move')) {
+              const index = parseInt(dq(node, '.key')!.textContent!) - 1
+              console.log('remove index', index)
+              list.splice(index, 1)
             }
-          }
+          })
         })
+        runRedirect()
       })
+      // Observer.attributesSubtree(listBox, records => {
+      //   records.forEach(record => {
+      //     if (record.target instanceof HTMLAnchorElement && record.attributeName === 'href') {
+      //       const a = record.target
+      //       const items = dqa(listBox, '.av-item')
+      //       if (a.href.includes('/medialist/play/watchlater/')) {
+      //         const index = items.findIndex(it => it.contains(a))
+      //         if (index !== -1) {
+      //           redirect(items[index], index)
+      //         }
+      //       }
+      //     }
+      //   })
+      // })
     })()
   }
 }
