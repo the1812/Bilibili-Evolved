@@ -709,3 +709,17 @@ a.bp_box_bot_click {
 .song-list .song-li .song-shadow {
   @include theme-background-color(30);
 }
+.recommend-list .rec-title {
+  @include color("e");
+  .next-buttom {
+    @include color("a");
+    .switch-button {
+      @include background-color("4");
+      @include border-color("4");
+      &.on {
+        @include theme-background-color();
+        @include theme-border-color();
+      }
+    }
+  }
+}
