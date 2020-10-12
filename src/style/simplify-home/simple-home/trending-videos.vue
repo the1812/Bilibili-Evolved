@@ -109,14 +109,20 @@ export default {
         cancelHorizontalScroll && cancelHorizontalScroll()
       }
     }, true)
+
+    // 等内容上去了再添加 snap 特性, 不然不知道为啥会错位
+    const contents = this.$refs.contents as HTMLElement
+    await SpinQuery.condition(() => contents, () => contents.childElementCount > 0)
+    resources.applyImportantStyleFromText(`
+      .simple-home.snap .trendings .contents {
+        scroll-snap-type: x mandatory;
+      }
+    `, 'trending-videos-snap-fix')
   },
 }
 </script>
 
 <style lang="scss">
-.simple-home.snap .trendings .contents {
-  scroll-snap-type: x mandatory;
-}
 .simple-home .trendings {
   display: flex;
   flex-direction: column;
