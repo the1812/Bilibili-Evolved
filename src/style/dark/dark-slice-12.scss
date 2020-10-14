@@ -723,3 +723,32 @@ a.bp_box_bot_click {
     }
   }
 }
+
+.nav-tabs {
+  @include border-color("4");
+  .nav-tabs__item {
+    @include border-color("4");
+    &>span {
+      @include color("e");
+    }
+    &:hover span,
+    &--active span {
+      @include theme-color();
+    }
+    &--active {
+      @include theme-border-color();
+    }
+  }
+}
+.rank-container {
+  .rank-tab-wrap .rank-tab {
+    @include color("e");
+    &--active {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+  }
+  .rank-tips {
+    @include color("a");
+  }
+}
