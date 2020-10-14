@@ -748,11 +748,10 @@ a.bp_box_bot_click {
       @include foreground-color();
     }
   }
-  .rank-tips {
-    @include color("a");
-  }
 }
-.popular-list .popular-tips {
+.popular-list .popular-tips,
+.history-list .history-tips,
+.rank-container .rank-tips {
   @include color("a");
 }
 .video-card .video-card__info {
@@ -801,7 +800,12 @@ a.bp_box_bot_click {
     }
   }
 }
-.video-card .weekly-hint {
-  @include background-color("4");
-  @include color("a");
+.video-card {
+  .weekly-hint {
+    @include background-color("4");
+    @include color("a");
+  }
+  .history-hint {
+    @include background-color("4");
+  }
 }
