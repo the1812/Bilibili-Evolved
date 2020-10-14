@@ -727,7 +727,7 @@ a.bp_box_bot_click {
 .nav-tabs {
   @include border-color("4");
   .nav-tabs__item {
-    @include border-color("4");
+    @include border-color();
     &>span {
       @include color("e");
     }
@@ -747,6 +747,9 @@ a.bp_box_bot_click {
       @include theme-background-color();
       @include foreground-color();
     }
+  }
+  .rank-list .rank-item:hover {
+    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
   }
 }
 .popular-list .popular-tips,
