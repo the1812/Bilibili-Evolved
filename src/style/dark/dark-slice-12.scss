@@ -777,3 +777,31 @@ a.bp_box_bot_click {
     @include color("a");
   }
 }
+.weekly-header {
+  .current-tiem {
+    @include color("e");
+  }
+  .panel {
+    @include background-color("3");
+    .item-active {
+      @include theme-background-color();
+      .item-info,
+      .item-title {
+        @include foreground-color();
+      }
+    }
+    .item-title {
+      @include color("e");
+    }
+    .item-info {
+      @include color("a");
+    }
+    .select-item:not(.item-active):hover {
+      @include background-color("4");
+    }
+  }
+}
+.video-card .weekly-hint {
+  @include background-color("4");
+  @include color("a");
+}
