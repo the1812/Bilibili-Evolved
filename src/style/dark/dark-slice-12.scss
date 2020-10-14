@@ -752,3 +752,28 @@ a.bp_box_bot_click {
     @include color("a");
   }
 }
+.popular-list .popular-tips {
+  @include color("a");
+}
+.video-card .video-card__info {
+  .video-name {
+    @include color("e");
+  }
+  &:hover .video-name {
+    @include theme-color();
+  }
+  .rcmd-tag {
+    @include border-color("4");
+  }
+  .strong-tag {
+    @include background-color("4");
+    @include theme-color();
+  }
+  .weak-tag {
+    @include theme-color();
+    @include theme-border-color();
+  }
+  .up-name {
+    @include color("a");
+  }
+}
