@@ -1553,11 +1553,11 @@ ul.up-nav li
 .emoji-btn-box:hover,
 #app .container .options .option img,
 .home-wrap .home-logo,
-.home-wrap .home-tips .tips-link .tip-item>a
+.home-wrap .home-tips .tips-link .tip-item>a,
+.single-button .text-bar.selected
 {
     filter: var(--blue-image-filter) !important;
 }
-.single-button .text-bar.selected,
 .is-max .percentage-bar,
 .calendar .day-item.gift-checked,
 .home-wrap .home-tips .tips-link .tip-item>a:hover
