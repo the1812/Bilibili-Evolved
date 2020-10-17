@@ -203,3 +203,32 @@ export const playerReady = () => {
   )
 }
 export const formData = (obj) => Object.entries(obj).map(([k, v]) => `${k}=${v}`).join('&')
+export const retrieveImageUrl = (element) => {
+  if (!(element instanceof HTMLElement)) {
+    return null
+  }
+  let url
+  if (element.hasAttribute('data-src')) {
+    url = element.getAttribute('data-src')
+  } else if (element instanceof HTMLImageElement) {
+    url = element.src
+  } else {
+    const backgroundImage = element.style.backgroundImage
+    if (!backgroundImage) {
+      return null
+    }
+    const match = backgroundImage.match(/url\("(.+)"\)/)
+    if (!match) {
+      return null
+    }
+    url = match[1]
+  }
+  const thumbMatch = url.match(/^(.+)(\..+?)(@.+)$/)
+  if (!thumbMatch) {
+    return null
+  }
+  return {
+    url: thumbMatch[1] + thumbMatch[2],
+    extension: thumbMatch[2],
+  }
+}

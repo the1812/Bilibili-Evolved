@@ -500,6 +500,7 @@ declare global {
     copyCommentLink: boolean,
     unfoldFeeds: boolean,
     feedsImageExporter: boolean,
+    columnImageExporter: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
@@ -559,5 +560,6 @@ declare global {
   const getScriptVersion: () => ScriptVersion
   const playerReady: () => Promise<void>
   const formData: (obj: any) => string
+  const retrieveImageUrl: (element: Element) => { url: string; extension: string } | null
 }
 export { }

@@ -9,29 +9,15 @@ import { FeedsCard } from './feeds-apis'
       action: async () => {
         const imageUrls: { url: string; extension: string }[] = []
         dqa(card.element, 'img, .img-content').forEach((img: HTMLImageElement | HTMLDivElement) => {
-          let url: string
-          if (img instanceof HTMLImageElement) {
-            url = img.src
-          } else {
-            const backgroundImage = img.style.backgroundImage
-            if (!backgroundImage) {
-              return
-            }
-            const match = backgroundImage.match(/url\("(.+)"\)/)
-            if (!match) {
-              return
-            }
-            url = match[1]
+          const urlData = retrieveImageUrl(img)
+          if (urlData) {
+            imageUrls.push(urlData)
           }
-          const thumbMatch = url.match(/^(.+)(\..+?)(@.+)$/)
-          if (!thumbMatch) {
-            return
-          }
-          imageUrls.push({
-            url: thumbMatch[1] + thumbMatch[2],
-            extension: thumbMatch[2],
-          })
         })
+        if (imageUrls.length === 0) {
+          Toast.info('此条动态没有检测到任何图片.', '动态图片导出')
+          return
+        }
         const { DownloadVideoPackage } = await import('../video/download-video/download-video-package')
         const imageBlobs = await Promise.all(imageUrls.map(({ url }) => Ajax.getBlob(url)))
         const pack = new DownloadVideoPackage()

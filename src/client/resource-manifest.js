@@ -973,5 +973,11 @@ Resource.manifest = {
       feedsImageExporter: '动态图片导出',
     },
   },
+  columnImageExporter: {
+    path: 'column-image-exporter.min.js',
+    displayNames: {
+      columnImageExporter: '专栏图片导出',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

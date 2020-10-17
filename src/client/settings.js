@@ -247,6 +247,7 @@ export const settings = {
   copyCommentLink: false,
   unfoldFeeds: true,
   feedsImageExporter: false,
+  columnImageExporter: false,
   cache: {},
 }
 const fixedSettings = {
