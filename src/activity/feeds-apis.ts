@@ -404,7 +404,16 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
 }
 
 export const forEachFeedsCard = (callback: FeedsCardCallback) => {
-  (async () => {
+  const feedsUrls = [
+    /^https:\/\/t\.bilibili\.com\/$/,
+    /^https:\/\/space\.bilibili\.com\//,
+    /^https:\/\/live\.bilibili\.com\/(blanc\/)?[\d]+/,
+    /^https:\/\/t\.bilibili\.com\//,
+  ]
+  if (feedsUrls.every(url => !url.test(document.URL))) {
+    return
+  }
+  ;(async () => {
     const success = await feedsCardsManager.startWatching()
     if (!success) {
       console.error('feedsCardsManager.startWatching() failed')
@@ -419,6 +428,34 @@ export const forEachFeedsCard = (callback: FeedsCardCallback) => {
     feedsCardCallbacks.push({ added: none, removed: none, ...callback })
   })()
 }
+/**
+ * 向动态卡片的菜单中添加菜单项
+ * @param card 动态卡片
+ * @param config 菜单项配置
+ */
+export const addMenuItem = (card: FeedsCard, config: {
+  className: string
+  text: string
+  action: (e: MouseEvent) => void
+}) => {
+  const morePanel = dq(card.element, '.more-panel') as HTMLElement
+  const { className, text, action } = config
+  if (!morePanel || dq(morePanel, `.${className}`)) {
+    return
+  }
+  const menuItem = document.createElement('p')
+  menuItem.classList.add('child-button', 'c-pointer', className)
+  menuItem.textContent = text
+  const vueScopeAttributes = [...new Set([...morePanel.children].map((element: HTMLElement) => {
+    return element.getAttributeNames().filter(it => it.startsWith('data-v-'))
+  }).flat())]
+  vueScopeAttributes.forEach(attr => menuItem.setAttribute(attr, ''))
+  menuItem.addEventListener('click', e => {
+    action(e)
+    card.element.click()
+  })
+  morePanel.appendChild(menuItem)
+}
 
 export default {
   export: {
@@ -426,5 +463,6 @@ export default {
     feedsCardTypes,
     getVideoFeeds,
     forEachFeedsCard,
+    addMenuItem,
   },
 }

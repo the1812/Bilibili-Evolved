@@ -967,5 +967,11 @@ Resource.manifest = {
       unfoldFeeds: '动态反折叠',
     },
   },
+  feedsImageExporter: {
+    path: 'feeds-image-exporter.min.js',
+    displayNames: {
+      feedsImageExporter: '动态图片导出',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

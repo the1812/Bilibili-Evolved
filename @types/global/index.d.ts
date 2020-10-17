@@ -498,6 +498,8 @@ declare global {
     commentsTranslate: boolean,
     copyFeedsLink: boolean,
     copyCommentLink: boolean,
+    unfoldFeeds: boolean,
+    feedsImageExporter: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
