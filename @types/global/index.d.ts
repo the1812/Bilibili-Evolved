@@ -466,7 +466,7 @@ declare global {
     feedsTranslateProvider: 'Bing' | 'Google' | 'Baidu' | 'GoogleCN',
     feedsTranslateLanguage: string,
     downloadLiveRecords: boolean
-    defaultLiveQuality: '原画' | '蓝光' | '超清' | '高清' | '流畅'
+    defaultLiveQuality: '原画' | '4K' | '蓝光' | '超清' | '高清' | '流畅'
     useDefaultLiveQuality: boolean,
     recordLiveDanmaku: boolean,
     foregroundColorMode: '自动' | '白色' | '黑色'
@@ -498,6 +498,9 @@ declare global {
     commentsTranslate: boolean,
     copyFeedsLink: boolean,
     copyCommentLink: boolean,
+    unfoldFeeds: boolean,
+    feedsImageExporter: boolean,
+    columnImageExporter: boolean,
     latestVersionLink: string,
     currentVersion: string,
   }
@@ -515,6 +518,7 @@ declare global {
   }
   const settings: BilibiliEvolvedSettings
   const customNavbarDefaultOrders: CustomNavbarOrders
+  const simpleHomeCategoryDefaultOrders: SimpleHomeCategoryOrders
   const aria2RpcDefaultOption: RpcOption
   const languageNameToCode: { [key: string]: string }
   const languageCodeToName: { [key: string]: string }
@@ -556,5 +560,6 @@ declare global {
   const getScriptVersion: () => ScriptVersion
   const playerReady: () => Promise<void>
   const formData: (obj: any) => string
+  const retrieveImageUrl: (element: Element) => { url: string; extension: string } | null
 }
 export { }

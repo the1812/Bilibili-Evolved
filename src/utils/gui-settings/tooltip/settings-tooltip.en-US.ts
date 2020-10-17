@@ -177,6 +177,8 @@ Additional variables:
   [`copyCommentLink`, `Add copy link option to dot menu of comments.`],
   [`unfoldFeeds`, `Auto expand collapsed feeds.`],
   [`commentsTranslate`, `Also applies for comments.`],
+  [`simpleHomeWheelScroll`, `Allow scrolling card list horizontally by mouse wheel. (May cause frame drops)`],
+  [`airborne`, `Underline danmakus that contain time, and click it will seek to corresponding video progress.`],
 ]);
 export default {
   export: { toolTips },

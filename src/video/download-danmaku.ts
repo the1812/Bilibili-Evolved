@@ -4,70 +4,90 @@ import { DanmakuConverter, DanmakuConverterConfig, DanmakuType } from './danmaku
 
 export async function convertToAss(xml: string) {
   const title = getFriendlyTitle()
-  let config = { title } as DanmakuConverterConfig
+  const defaultConfig: Omit<DanmakuConverterConfig, 'title'> = {
+    font: '微软雅黑',
+    alpha: 0.4,
+    duration: (danmaku: { type: number }) => {
+      switch (danmaku.type) {
+        case 4:
+        case 5:
+          return 4
+        default:
+          return 6
+      }
+    },
+    blockTypes: [7, 8],
+    resolution: {
+      x: 1920,
+      y: 1080
+    },
+    bottomMarginPercent: 0.15,
+    bold: false
+  }
+  let config = { ...defaultConfig, title } as DanmakuConverterConfig
   try {
     await loadDanmakuSettingsPanel()
-    const getSliderFactor = (selector: string) => {
-      const transform = parseFloat((dq(selector) as HTMLElement).style.transform!.replace(/translateX\(([\d\.]+)/, '$1'))
-      return transform * 4 / 188
-    }
-    const getSliderIndex = (selector: string) => {
-      const transform = parseFloat((dq(selector) as HTMLElement).style.transform!.replace(/translateX\(([\d\.]+)/, '$1')) as 0 | 44 | 94 | 144 | 188
-      const index = {
-        0: 0,
-        44: 1,
-        94: 2,
-        144: 3,
-        188: 4
-      }[transform]
-      return index
-    }
-    config.font = (dq('.bilibili-player-video-danmaku-setting-right-font .bui-select-result') as HTMLElement).innerText
-    config.alpha = (100 - parseFloat((dq('.bilibili-player-setting-opacity .bui-thumb-tooltip') as HTMLElement).innerText)) / 100
-    config.duration = (() => {
-      const scrollDuration = 18 - 3 * getSliderFactor('.bilibili-player-setting-speedplus .bui-thumb')
-      return (danmaku: { type: number }) => {
-        switch (danmaku.type) {
-          case 4:
-          case 5:
-            return 4 // stickyDuration
-          default:
-            return scrollDuration
-        }
-      }
-    })()
-    config.blockTypes = (() => {
-      let result: (DanmakuType | 'color')[] = []
-      const blockValues = {
-        '.bilibili-player-block-filter-type[ftype=scroll]': [1, 2, 3],
-        '.bilibili-player-block-filter-type[ftype=top]': [5],
-        '.bilibili-player-block-filter-type[ftype=bottom]': [4],
-        '.bilibili-player-block-filter-type[ftype=color]': ['color']
-        // ".bilibili-player-block-filter-type[ftype=special]": [7, 8],
-      }
-
-      for (const [type, value] of Object.entries(blockValues)) {
-        if ((dq(type) as HTMLElement).classList.contains('disabled')) {
-          result = result.concat(value as (DanmakuType | 'color')[])
-        }
-      }
-      return result.concat(7, 8)
-    })()
-    const resolutionFactor = 1.4 - 0.2 * getSliderFactor('.bilibili-player-setting-fontsize .bui-thumb') // 改变分辨率来调整字体大小
-    config.resolution = {
-      x: 1920 * resolutionFactor,
-      y: 1080 * resolutionFactor
-    }
-    config.bottomMarginPercent = [0.75, 0.5, 0.25, 0, 0][getSliderIndex('.bilibili-player-setting-area .bui-thumb')]
-    if (config.bottomMarginPercent === 0 && (dq('.bilibili-player-video-danmaku-setting-left-preventshade input') as HTMLInputElement).checked) // 无显示区域限制时要检查是否开启防挡字幕
-    {
-      config.bottomMarginPercent = 0.15
-    }
-    config.bold = (dq('.bilibili-player-video-danmaku-setting-right-font-bold input') as HTMLInputElement).checked
-    // 用户屏蔽词
     const playerSettingsJson = localStorage.getItem('bilibili_player_settings')
+
     if (playerSettingsJson) {
       const playerSettings = JSON.parse(playerSettingsJson)
+      const getConfig = <T>(prop: string, defaultValue?: T): T =>
+        _.get(playerSettings, `setting_config.${prop}`, defaultValue)
+
+      // 屏蔽类型
+      config.blockTypes = (() => {
+        const result: (DanmakuType | 'color')[] = []
+        const blockValues = {
+          scroll: [1, 2, 3],
+          top: [5],
+          bottom: [4],
+          color: ['color']
+        }
+
+        for (const [type, value] of Object.entries(blockValues)) {
+          if (_.get(playerSettings, `block.type_${type}`, true) === false) {
+            result.push(...value as (DanmakuType | 'color')[])
+          }
+        }
+        return result.concat(7, 8) // 高级弹幕不做转换
+      })()
+
+      // 加粗
+      config.bold = getConfig('bold', false)
+
+      // 不透明度
+      config.alpha = parseFloat(getConfig('opacity', '0.4'))
+
+      // 分辨率
+      const resolutionFactor = 1.4 - 0.4 * getConfig('fontsize', 1)
+      config.resolution = {
+        x: Math.round(1920 * resolutionFactor),
+        y: Math.round(1080 * resolutionFactor),
+      }
+
+      // 弹幕持续时长
+      config.duration = (() => {
+        const scrollDuration = 18 - 3 * getConfig('speedplus', 0)
+        return (danmaku: { type: number }) => {
+          switch (danmaku.type) {
+            case 4:
+            case 5:
+              return 4 // stickyDuration
+            default:
+              return scrollDuration
+          }
+        }
+      })()
+
+      // 底部间距
+      const bottomMargin = getConfig('danmakuArea', 0)
+      config.bottomMarginPercent = bottomMargin >= 100 ? 0 : bottomMargin / 100
+      // 无显示区域限制时要检查是否开启防挡字幕
+      if (config.bottomMarginPercent === 0 && getConfig('preventshade', false)) {
+        config.bottomMarginPercent = 0.15
+      }
+
+      // 用户屏蔽词
       const blockSettings = _.get(playerSettings, 'block.list', []) as {
         /** 类型 */
         t: 'keyword' | 'regexp' | 'user',
@@ -105,31 +125,32 @@ export async function convertToAss(xml: string) {
         }
         return true
       }
+    } else {
+      console.warn('[弹幕转换] 未找到播放器设置')
+      config = {
+        ...config,
+        ...defaultConfig
+      }
     }
+
+    // 字体直接从 HTML 里取了, localStorage 里是 font-family 解析更麻烦些
+    config.font = (dq('.bilibili-player-video-danmaku-setting-right-font .bui-select-result') as HTMLElement).innerText
+
   } catch (error) {
     // The default config
+    logError(error)
     config = {
       ...config,
-      font: '微软雅黑',
-      alpha: 0.4,
-      duration: (danmaku: { type: number }) => {
-        switch (danmaku.type) {
-          case 4:
-          case 5:
-            return 4
-          default:
-            return 6
-        }
-      },
-      blockTypes: [7, 8],
-      resolution: {
-        x: 1920,
-        y: 1080
-      },
-      bottomMarginPercent: 0.15,
-      bold: false
+      ...defaultConfig,
     }
   }
+  for (const [key, value] of Object.entries(config)) {
+    if (value === undefined || value === null) {
+      console.warn('danmaku config invalid for key', key, ', value =', value)
+      config[key] = defaultConfig[value]
+    }
+  }
+  console.log(config)
   const converter = new DanmakuConverter(config)
   const assDocument = converter.convertToAssDocument(xml)
   return assDocument.generateAss()

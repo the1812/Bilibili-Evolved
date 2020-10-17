@@ -368,6 +368,7 @@ export interface DanmakuConverterConfig {
   resolution: Resolution
   bottomMarginPercent: number
   blockFilter?: (danmaku: XmlDanmaku) => boolean
+  [key: string]: any
 }
 export class DanmakuConverter {
   static white = 16777215 // Dec color of white danmaku

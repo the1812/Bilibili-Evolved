@@ -43,6 +43,15 @@
 | Fast.io  | <1h      | 快       | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview.user.js)                          | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.offline.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview-offline.user.js)                          |
 | GitHub   | <1h      | 慢       | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)      |
 
+## 推荐配置
+- 操作系统: 64-bit Windows 10 / macOS 10.15
+- 分辨率: 2K
+- 浏览器: Chrome 74+ / Firefox 65+ / Edge 80+ / Safari 14+
+- 处理器: Intel Core i7 / AMD Ryzen 5
+- 内存: 8GB
+- 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
+- 显卡: GeForce GTX 660 / Radeon HD 7870
+
 # 设置
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置. 默认只启用了一部分功能, 您可以根据需要自由调整设置.
 
@@ -105,7 +114,6 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 - 4K视频只能导出下载, 不能直接下载.
 - 可能无法很好地适应窄屏幕, 请尽量以1400px以上的宽度使用此脚本.
 - ASS弹幕下载不能包含高级弹幕, 字幕弹幕等.
-- `简化首页`的`清爽模式`可能无法适配Safari浏览器.
 
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配并保持无冲突.

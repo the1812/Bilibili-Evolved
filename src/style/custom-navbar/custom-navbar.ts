@@ -69,6 +69,23 @@ export default (() => {
           true
         )
       })
+      SpinQuery.select('#banner_link,.international-header .bili-banner').then(banner => {
+        if (banner === null || !(banner instanceof HTMLElement)) {
+          return
+        }
+        if (banner.style.backgroundImage || dq(banner, '.animated-banner')) {
+          addSettingsListener('customNavbarTransparent', value => {
+            if (!settings.hideBanner) {
+              getNavbarElement().classList.toggle('transparent', value)
+            }
+          }, true)
+          addSettingsListener('hideBanner', value => {
+            if (settings.customNavbarTransparent) {
+              getNavbarElement().classList.toggle('transparent', !value)
+            }
+          })
+        }
+      })
       SpinQuery.condition(() => dq('#banner_link,.international-header .bili-banner'),
         banner => banner === null ? false : Boolean((banner as HTMLElement).style.backgroundImage),
         (banner: HTMLElement) => {
@@ -77,16 +94,6 @@ export default (() => {
             blurLayers.forEach(blurLayer => {
               blurLayer.style.backgroundImage = banner.style.backgroundImage
               blurLayer.setAttribute('data-image', banner.style.backgroundImage)
-            })
-            addSettingsListener('customNavbarTransparent', value => {
-              if (!settings.hideBanner) {
-                getNavbarElement().classList.toggle('transparent', value)
-              }
-            }, true)
-            addSettingsListener('hideBanner', value => {
-              if (settings.customNavbarTransparent) {
-                getNavbarElement().classList.toggle('transparent', !value)
-              }
             })
           })
         })

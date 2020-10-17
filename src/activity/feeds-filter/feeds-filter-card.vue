@@ -381,11 +381,11 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
       margin: 0;
       padding: 4px 8px;
       border-radius: 4px;
-      background-color: #0001;
+      background-color: transparent;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid transparent;
+      border: 1px solid #8884;
 
       .name {
         font-size: 12px;
@@ -394,7 +394,7 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
         color: var(--theme-color) !important;
       }
       &:hover {
-        background-color: #0002;
+        background-color: #8882;
       }
       input {
         display: none;
@@ -443,13 +443,14 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
       justify-content: space-between;
       padding: 4px 8px;
       border-radius: 4px;
-      background-color: #0001;
+      background-color: transparent;
       font-size: 12px;
+      border: 1px solid #8884;
       &:not(:last-child) {
         margin-bottom: 4px;
       }
       .be-icon {
-        font-size: 18px;
+        font-size: 16px;
         cursor: pointer;
       }
     }

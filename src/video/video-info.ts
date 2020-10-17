@@ -37,7 +37,7 @@ export class VideoInfo {
     }
     const json = JSON.parse(await Ajax.getText(url))
     if (json.code !== 0) {
-      throw new Error(json.message)
+      throw new Error(`${json.message}: aid = ${this.aid}, cid = ${this.cid}, url = ${document.URL}`)
     }
     const data = json.data
     this.cid = data.cid

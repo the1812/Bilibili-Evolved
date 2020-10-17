@@ -386,6 +386,8 @@ Resource.manifest = {
   },
   airborne: {
     path: 'airborne.min.js',
+    reloadable: true,
+    style: true,
     displayNames: {
       airborne: '启用空降'
     }
@@ -720,6 +722,7 @@ Resource.manifest = {
     displayNames: {
       simplifyHome: '简化首页',
       simplifyHomeStyle: '首页风格',
+      simpleHomeWheelScroll: '允许横向滚动',
     },
     dropdown: {
       key: 'simplifyHomeStyle',
@@ -841,7 +844,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'defaultLiveQuality',
-      items: ['原画', '蓝光', '超清', '高清', '流畅'],
+      items: ['原画', '4K', '蓝光', '超清', '高清', '流畅'],
     },
   },
   downloadLiveRecords: {
@@ -962,6 +965,18 @@ Resource.manifest = {
     path: 'unfold-feeds.min.js',
     displayNames: {
       unfoldFeeds: '动态反折叠',
+    },
+  },
+  feedsImageExporter: {
+    path: 'feeds-image-exporter.min.js',
+    displayNames: {
+      feedsImageExporter: '动态图片导出',
+    },
+  },
+  columnImageExporter: {
+    path: 'column-image-exporter.min.js',
+    displayNames: {
+      columnImageExporter: '专栏图片导出',
     },
   },
 }

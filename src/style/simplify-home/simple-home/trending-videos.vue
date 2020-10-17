@@ -99,12 +99,25 @@ export default {
     this.trendingCards = getTrendingVideos()
   },
   async mounted() {
-    if (!settings.simpleHomeWheelScroll) {
-      return
-    }
+    let cancelHorizontalScroll: () => void
+    addSettingsListener('simpleHomeWheelScroll', async (value: boolean) => {
+      if (value) {
+        const contents = this.$refs.contents as HTMLElement
+        const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
+        cancelHorizontalScroll = enableHorizontalScroll(contents)
+      } else {
+        cancelHorizontalScroll && cancelHorizontalScroll()
+      }
+    }, true)
+
+    // 等内容上去了再添加 snap 特性, 不然不知道为啥会错位
     const contents = this.$refs.contents as HTMLElement
-    const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
-    enableHorizontalScroll(contents)
+    await SpinQuery.condition(() => contents, () => contents.childElementCount > 0)
+    resources.applyImportantStyleFromText(`
+      .simple-home.snap .trendings .contents {
+        scroll-snap-type: x mandatory;
+      }
+    `, 'trending-videos-snap-fix')
   },
 }
 </script>
@@ -148,7 +161,6 @@ export default {
     overflow: auto;
     height: calc(var(--card-height) + 16px);
     width: calc((var(--card-width) + 16px) * var(--card-count));
-    // scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
 
     @media screen and (max-width: 1300px) and (min-width: 900px) {

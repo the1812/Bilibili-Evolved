@@ -138,6 +138,8 @@ export class SearchBox extends NavbarComponent {
       if (keywordInput.value === '') {
         if (!settings.hideTopSearch) {
           (form.querySelector('.recommended-target') as HTMLElement).click()
+        } else {
+          window.open('https://search.bilibili.com')
         }
         e.preventDefault()
         return false
@@ -204,10 +206,7 @@ export class SearchBox extends NavbarComponent {
             this.copy(value)
           } else {
             keywordInput.value = value
-            form.submit()
-            // submit method will not trigger submit event
-            // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit
-            raiseEvent(form, 'submit')
+            form.requestSubmit()
           }
         },
         nextItem(index: number) {
@@ -227,7 +226,7 @@ export class SearchBox extends NavbarComponent {
         },
         deleteItem(item: SuggestItem, index: number) {
           if (keywordInput.value !== '') {
-            return
+            keywordInput.value = ''
           }
           const historyIndex = settings.searchHistory.findIndex(it => it.keyword === item.value)
           const [historyItem] = settings.searchHistory.splice(historyIndex, 1)

@@ -38,3 +38,6 @@
     @include background-color();
   }
 }
+.multi-page .cur-list .list-box li .duration {
+  @include color("a");
+}

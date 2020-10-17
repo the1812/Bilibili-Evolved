@@ -39,7 +39,18 @@ function setupEvents () {
   })
   document.querySelectorAll('.gui-settings-dropdown>input').forEach(it => {
     it.addEventListener('click', e => {
-      e.currentTarget.parentElement.classList.toggle('opened')
+      e.target.parentElement.classList.toggle('opened')
+      const outsideHandler = event => {
+        const target = event.target
+        const container = dq(`li[data-key=${it.getAttribute('key')}]`)
+        console.log(container, it.getAttribute('key'), target)
+        if (container.contains(target) && container !== target) {
+          return
+        }
+        e.target.parentElement.classList.remove('opened')
+        document.body.removeEventListener('click', outsideHandler)
+      }
+      document.body.addEventListener('click', outsideHandler)
     })
   })
   dqa('.gui-settings-header .operation').forEach(it => {
@@ -134,13 +145,13 @@ function checkCompatibility () {
     settings.harunaScale = false
     settings.imageResolution = false
   }
-  if (settings.watchLaterRedirectPage) {
-    settings.watchLaterRedirectPage = false
-  }
-  const redirectPageInput = inputs.find(it => it.getAttribute('key') === 'watchLaterRedirectPage')
-  if (redirectPageInput) {
-    redirectPageInput.disabled = true
-  }
+  // if (settings.watchLaterRedirectPage) {
+  //   settings.watchLaterRedirectPage = false
+  // }
+  // const redirectPageInput = inputs.find(it => it.getAttribute('key') === 'watchLaterRedirectPage')
+  // if (redirectPageInput) {
+  //   redirectPageInput.disabled = true
+  // }
 }
 function setDisplayNames () {
   for (const [key, name] of Object.entries(Resource.displayNames)) {

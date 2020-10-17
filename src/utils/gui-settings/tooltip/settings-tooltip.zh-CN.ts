@@ -18,7 +18,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["expandDescription", /*html*/`长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.`],
   ["autoPlay", /*html*/`进入视频页面时自动开始播放视频.`],
   ["autoContinue", /*html*/`播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`],
-  ["airborne", /*html*/`当弹幕出现视频时间点时用🚁标记，点击即可空降到相应时间点.`],
+  ["airborne", /*html*/`当弹幕出现视频时间点时用下划线标记，点击即可空降到相应时间点.`],
   ["skipChargeList", /*html*/`自动跳过视频结尾的充电鸣谢.`],
   ["framePlayback", /*html*/`在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
   ["playerFocus", /*html*/`进入视频/番剧页面时, 自动定位到播放器.`],
@@ -207,6 +207,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`copyCommentLink`, /*html*/`在评论的菜单里添加复制链接选项.`],
   [`unfoldFeeds`, /*html*/`自动展开被折叠的动态.`],
   [`commentsTranslate`, /*html*/`为评论也添加翻译按钮.`],
+  [`simpleHomeWheelScroll`, /*html*/`在横向的卡片列表中, 允许鼠标滚轮上下滚动时变成对此列表的横向滚动. (因为是模拟的, 可能会有点卡顿)`],
 ]);
 export default {
   export: { toolTips },

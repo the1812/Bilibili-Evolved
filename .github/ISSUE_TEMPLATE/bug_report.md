@@ -6,6 +6,9 @@ about: Bug 反馈
 <!-- 发布后默认您已阅读发贴须知 -->
 <!-- https://github.com/the1812/Bilibili-Evolved/blob/preview/issue-rules.md -->
 
+<!-- 发之前记得看下置顶问题 (Pinned issues)(如果有的话) -->
+<!-- https://github.com/the1812/Bilibili-Evolved/issues -->
+
 **关于哪一项功能**
 
 

@@ -950,6 +950,9 @@ export const map = new Map([
   [`音乐PLUS`, `Music+`],
   [`课堂`, `Courses`],
   [`美食`, `Foods`],
+  [`允许横向滚动`, `Allow horizontal scroll`],
+  [`启用空降`, `Danmaku anchors`],
+  [`真彩 HDR`, `Ultra HDR`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

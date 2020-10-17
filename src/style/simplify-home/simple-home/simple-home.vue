@@ -1,5 +1,5 @@
 <template>
-  <div class="simple-home">
+  <div class="simple-home" :class="{ snap }">
     <blackboards></blackboards>
     <trending-videos></trending-videos>
     <info-row></info-row>
@@ -15,7 +15,17 @@ export default {
     InfoRow: () => import('./online-info-row.vue'),
     Feeds: () => import('./simple-home-feeds.vue'),
     Categories: () => import('./categories/simple-home-categories.vue')
-  }
+  },
+  data() {
+    return {
+      snap: false,
+    }
+  },
+  mounted() {
+    addSettingsListener('simpleHomeWheelScroll', (value: boolean) => {
+      this.snap = !value
+    }, true)
+  },
 }
 </script>
 <style lang="scss">
@@ -63,6 +73,7 @@ export default {
     border-radius: 16px;
     font-size: 13px;
     font-weight: bold;
+    line-height: 24px;
     .be-icon {
       margin-right: 8px;
       transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);

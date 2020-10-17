@@ -13,11 +13,21 @@
           <div class="tab-name">{{tab.name}}</div>
         </div>
       </div>
+      <div class="grow"></div>
       <a
         class="online"
         target="_blank"
         href="https://www.bilibili.com/video/online.html"
-      >当前在线</a>
+      >在线列表</a>
+      <div class="grow"></div>
+      <div class="page">
+        <div class="prev-page" @click="scroll(-1)">
+          <icon type="extended" icon="left-arrow"></icon>
+        </div>
+        <div class="next-page" @click="scroll(1)">
+          <icon type="extended" icon="right-arrow"></icon>
+        </div>
+      </div>
       <a class="more" href="//t.bilibili.com/" target="_blank">
         <icon type="home" icon="activity"></icon>全部动态
       </a>
@@ -93,6 +103,15 @@ export default {
       } else {
         this.currentTab = tab
       }
+    },
+    scroll(orientation: number) {
+      const contents = this.$refs.contents as HTMLElement
+      const style = getComputedStyle(contents)
+      const count = parseFloat(style.getPropertyValue('--card-count'))
+      const width = parseFloat(style.getPropertyValue('--card-width'))
+      const gap = 16
+      const distance = count * (width + gap)
+      contents.scrollBy(orientation * distance, 0)
     }
   },
   async mounted() {
@@ -106,33 +125,68 @@ export default {
     // if (json.code === 0) {
     //   this.online = json.data.web_online
     // }
-    if (!settings.simpleHomeWheelScroll) {
-      return
-    }
-    const contents = this.$refs.contents as HTMLElement
-    const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
-    enableHorizontalScroll(contents)
+    let cancelHorizontalScroll: () => void
+    addSettingsListener('simpleHomeWheelScroll', async (value: boolean) => {
+      if (value) {
+        const contents = this.$refs.contents as HTMLElement
+        const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
+        cancelHorizontalScroll = enableHorizontalScroll(contents)
+      } else {
+        cancelHorizontalScroll && cancelHorizontalScroll()
+      }
+    }, true)
   }
 }
 </script>
 
 <style lang="scss">
+.simple-home.snap .feeds .contents {
+  scroll-snap-type: x mandatory;
+}
 .simple-home .feeds {
   justify-self: start;
-  // display: flex;
-  // align-items: stretch;
-  // flex-direction: column;
-  display: grid;
-  grid-template-areas: 'header header' 'contents contents';
-  grid-template-columns: repeat(2, auto);
-  grid-template-rows: repeat(2, auto);
-  row-gap: 16px;
-  column-gap: 16px;
+  // display: grid;
+  // grid-template-areas: 'header header' 'contents contents';
+  // grid-template-columns: repeat(2, auto);
+  // grid-template-rows: repeat(2, auto);
+  // row-gap: 16px;
+  // column-gap: 16px;
+  display: flex;
+  flex-direction: column;
   .header,
   .sub-header {
+    grid-area: unset;
+    margin-bottom: 16px;
     padding: 0 8px;
+    .page {
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      > * {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        background-color: #8882;
+        border-radius: 50%;
+        margin-left: 8px;
+        cursor: pointer;
+        &:hover {
+          background-color: #8884;
+        }
+      }
+      .prev-page .be-icon {
+        transform: translateX(-1px);
+      }
+      .next-page .be-icon {
+        transform: translateX(1px);
+      }
+    }
     .tab:nth-child(2) {
       margin-left: 32px;
+    }
+    .grow {
+      flex-grow: 1;
     }
     .online {
       padding: 8px 16px;
@@ -147,7 +201,7 @@ export default {
     }
   }
   .contents {
-    grid-area: contents;
+    // grid-area: contents;
     display: flex;
     overflow: auto;
 
@@ -156,7 +210,6 @@ export default {
     --card-count: 4;
     width: calc((var(--card-width) + 16px) * var(--card-count));
     padding-bottom: 16px;
-    // scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
     min-height: calc(var(--card-height) + 16px);
     @media screen and (max-width: 900px) {

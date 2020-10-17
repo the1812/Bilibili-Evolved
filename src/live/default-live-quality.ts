@@ -2,8 +2,9 @@
   if (!document.URL.match(/^https:\/\/live.bilibili.com\/(blanc\/)?(\d+)/)) {
     return
   }
+  type LiveQuality = typeof settings.defaultLiveQuality
   const dropdown = Resource.all.useDefaultLiveQuality.dropdown as Dropdown
-  const qualities = dropdown.items as (typeof settings.defaultLiveQuality)[]
+  const qualities = dropdown.items as LiveQuality[]
   const targetQuality = settings.defaultLiveQuality
 
   const qualitySettings = await SpinQuery.select('.bilibili-live-player-video-controller-switch-quality-btn') as HTMLElement
@@ -12,9 +13,14 @@
     return
   }
   const setQuality = async () => {
-    const currentQuality = qualitySettings.children[0].getAttribute('data-title') as string
+    const currentQuality = qualitySettings.children[0].getAttribute('data-title') as LiveQuality
+    // 特化点: 4K目前比原画还要高画质, 原画遇到4K需要取消执行
+    if (currentQuality === '4K' && targetQuality === '原画') {
+      console.log('stop for 4K')
+      return
+    }
     const qualityButtons = dqa(qualitySettings, '.bilibili-live-player-video-controller-html-tooltip-option .text-btn') as HTMLElement[]
-    const availableQualities = qualityButtons.map(it => it.getAttribute('data-title') as string)
+    const availableQualities = qualityButtons.map(it => it.getAttribute('data-title') as LiveQuality)
     console.log(currentQuality, availableQualities, targetQuality)
     if (currentQuality !== targetQuality) {
       let quality = targetQuality
@@ -35,12 +41,10 @@
       }
     }
   }
-  const observer = Observer.childList(qualitySettings, () => {
+  Observer.childList(qualitySettings, () => {
     console.log(qualitySettings.childElementCount)
     if (qualitySettings.childElementCount > 0) {
       setQuality()
-      // 干脆就不stop了, 主播下播再开播可以再来一次setQuality
-      // observer.stop()
     }
   })
 })()

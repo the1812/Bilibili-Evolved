@@ -32,7 +32,7 @@
   opacity: 1;
   transform-origin: center !important;
   transform: translateX(-16px);
-  background-color: #dddc;
+  background-color: #eeec;
   border-radius: 0 50% 50% 0;
   padding: 6px;
   box-sizing: content-box;
@@ -42,7 +42,7 @@
     transform: rotate(0deg);
   }
   body.dark & {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: #5555;
   }
   &:hover {
     opacity: 1;
@@ -97,6 +97,7 @@
         white-space: nowrap;
         font-size: 14px;
         border-radius: 8px;
+        line-height: normal;
         .mdi {
           margin-right: 8px;
         }
@@ -260,10 +261,14 @@
     border: none;
     height: 100%;
     max-width: 90px;
-    padding: 4px 8px !important;
-    background: #8884;
+    padding: 6px 8px !important;
+    background: transparent;
+    box-shadow: 0 0 0 1px #8884;
     transition: all 0.2s;
     font-size: 16px;
+    &:focus-within {
+      box-shadow: 0 0 0 1px var(--theme-color);
+    }
   }
   input:disabled,
   &.disabled span,
@@ -299,13 +304,17 @@
       content: "";
       width: 20px;
       height: 20px;
-      background: #c6c6c6;
+      background: #fff;
       position: absolute;
       border-radius: 50%;
       top: -4px;
       left: -4px;
-      box-shadow: 0px 2px 4px 0px #0003;
+      box-shadow: 0 0 0 1px#8884 inset;
       transition: all 0.2s ease-out;
+      body.dark & {
+        background: #666;
+        box-shadow: none;
+      }
     }
   }
   .gui-settings-ok {
@@ -321,7 +330,7 @@
     position: absolute;
 
     &:checked ~ .gui-settings-checkbox {
-      background: var(--theme-color-80);
+      background: var(--theme-color-50);
     }
     &:checked ~ .gui-settings-checkbox::after {
       background: var(--theme-color) !important;
@@ -398,6 +407,8 @@ button.gui-settings-button {
   left: calc(-84px + 50%);
   transform: scale(0);
   transform-origin: top;
+  padding: 6px;
+  border-radius: 8px;
   z-index: 9;
   &.opened {
     opacity: 1;
@@ -410,10 +421,13 @@ button.gui-settings-button {
   margin: 0;
   flex-grow: 1;
   height: 100%;
+  grid-gap: 6px;
+  gap: 6px;
 }
 .predefined-colors-grid-block {
   width: 100%;
   height: 100%;
+  border-radius: 4px;
   justify-self: center;
   align-self: center;
   cursor: pointer;
@@ -421,7 +435,6 @@ button.gui-settings-button {
   transition: all 0.1s ease-out;
   &:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 8px 1px #0004;
   }
 }
 input[key]:focus {
@@ -473,10 +486,17 @@ li.category.folded i.icon-arrow {
   position: relative;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  background-color: #8884;
+  background-color: transparent;
+  box-shadow: 0 0 0 1px #8884;
   display: inline-flex;
   align-items: center;
   height: 32px;
+  transition: .2s ease-out;
+
+  &:focus-within,
+  &:active {
+    box-shadow: 0 0 0 1px var(--theme-color);
+  }
   & > i {
     transition: all 0.2s ease-out;
     transform-origin: center;
@@ -484,7 +504,7 @@ li.category.folded i.icon-arrow {
   }
   & > ul {
     position: absolute;
-    top: calc(100%);
+    top: calc(100% + 1px);
     width: 100%;
     cursor: pointer;
     background: white;
@@ -494,17 +514,21 @@ li.category.folded i.icon-arrow {
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.05);
     z-index: 102;
+    border: 1px solid #8882;
+    box-sizing: border-box;
   }
   ul li {
     margin: 0;
-    padding: 8px 0;
+    padding: 4px 0;
     height: auto;
     width: 100%;
     justify-content: center;
+    border-radius: 3px;
+    line-height: 1.5;
     &:hover {
-      background: rgba(0, 0, 0, 0.16);
+      background: #8882;
     }
   }
   &.opened > ul {
@@ -649,17 +673,16 @@ li.category.folded i.icon-arrow {
 .gui-settings-flat-button {
   width: auto;
   white-space: nowrap;
-  padding: 8px 16px;
-  background: #8882;
-  border: none;
-  color: black;
+  border: 2px solid #8882;
+  margin: 4px 0;
+  border-radius: 8px;
+  padding: 8px 12px 8px 8px;
+  color: inherit;
+  background-color: transparent;
   cursor: pointer;
   transition: all 0.2s ease-out;
   font-size: 10pt;
   flex: 0 0 auto;
-  margin: 4px;
-  border-radius: 20px;
-  box-shadow: #0004 0 2px 4px;
   height: 40px;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent !important;
@@ -669,10 +692,11 @@ li.category.folded i.icon-arrow {
     cursor: not-allowed;
   }
   &:hover:not(:disabled) {
-    background: #8884;
+    background: #8882;
+    color: inherit;
   }
   &:active:not(:disabled) {
-    border-bottom-color: var(--theme-color);
+    background: #8883;
   }
   &:focus {
     outline: none;
@@ -681,6 +705,7 @@ li.category.folded i.icon-arrow {
     margin-right: 8px;
     line-height: 24px;
     height: 24px;
+    opacity: .75;
   }
 
   .popup {
@@ -735,7 +760,6 @@ body.round-corner {
   --large-corner-radius: 8px;
   .gui-settings-dropdown,
   .gui-settings-textbox-container input,
-  .gui-settings-dropdown ul li,
   .gui-settings-dropdown > ul,
   .gui-settings-flat-button .popup,
   .gui-settings-box li i.downloading {
@@ -747,12 +771,12 @@ body.round-corner {
 
 html.elegant-scrollbar {
   ::-webkit-scrollbar {
-    width: 5px !important;
-    height: 5px !important;
+    width: 5px;
+    height: 5px;
   }
   ::-webkit-scrollbar-corner,
   ::-webkit-scrollbar-track {
-    background: transparent !important;
+    background: transparent;
   }
   ::-webkit-resizer,
   ::-webkit-scrollbar-thumb {
@@ -764,6 +788,9 @@ html.elegant-scrollbar {
   }
   * {
     scrollbar-color: #aaa transparent;
-    scrollbar-width: thin !important;
+    scrollbar-width: thin;
   }
+}
+.bilibili-player-dm-tip-wrap {
+  pointer-events: none !important;
 }
