@@ -55,8 +55,8 @@ export async function convertToAss(xml: string) {
       // 加粗
       config.bold = getConfig('bold', false)
 
-      // 不透明度
-      config.alpha = parseFloat(getConfig('opacity', '0.4'))
+      // 透明度
+      config.alpha = _.clamp(1 - parseFloat(getConfig('opacity', '0.4')), 0, 1)
 
       // 分辨率
       const resolutionFactor = 1.4 - 0.4 * getConfig('fontsize', 1)
