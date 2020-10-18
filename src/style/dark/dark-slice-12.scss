@@ -812,3 +812,8 @@ a.bp_box_bot_click {
     @include background-color("4");
   }
 }
+.rank-list .rank-item .content .img,
+.rank-list .rank-item .content .img .cover {
+  @include background-color("4");
+  @include border-color();
+}
