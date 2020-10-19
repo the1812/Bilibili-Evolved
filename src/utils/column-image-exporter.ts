@@ -37,9 +37,9 @@ export default {
             Toast.info('此专栏没有检测到任何图片.', '专栏图片导出')
             return
           }
-          const { DownloadVideoPackage } = await import('../video/download-video/download-video-package')
+          const { DownloadPackage } = await import('./download-package')
           const imageBlobs = await Promise.all(images.map(({ url }) => Ajax.getBlob(url)))
-          const pack = new DownloadVideoPackage()
+          const pack = new DownloadPackage()
           imageBlobs.forEach((blob, index) => pack.add(images[index].name, blob))
           await pack.emit(`${title}.zip`)
         } catch (error) {

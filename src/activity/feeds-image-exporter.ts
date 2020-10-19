@@ -18,9 +18,9 @@ import { FeedsCard } from './feeds-apis'
           Toast.info('此条动态没有检测到任何图片.', '动态图片导出')
           return
         }
-        const { DownloadVideoPackage } = await import('../video/download-video/download-video-package')
+        const { DownloadPackage } = await import('../utils/download-package')
         const imageBlobs = await Promise.all(imageUrls.map(({ url }) => Ajax.getBlob(url)))
-        const pack = new DownloadVideoPackage()
+        const pack = new DownloadPackage()
         imageBlobs.forEach((blob, index) => pack.add(`${card.username}-${card.id}-${index}${imageUrls[index].extension}`, blob))
         await pack.emit(`${card.username}-${card.id}.zip`)
       },
