@@ -22,7 +22,6 @@ export class DownloadPackage {
     if (data === null || data === undefined) {
       return
     }
-    console.log(`add file: ${escapeFilename(name)}`)
     this.entries.push({ name: escapeFilename(name), data, options })
   }
   async blob(): Promise<Blob | null> {
@@ -50,6 +49,10 @@ export class DownloadPackage {
       await Promise.all(this.entries.map(e => DownloadPackage.single(e.name, e.data, e.options)))
       return
     }
+    console.log('[DownloadPackage]', {
+      filename,
+      files: this.entries.map(it => it.name),
+    })
     const blob = await this.blob()
     if (!blob) {
       return
