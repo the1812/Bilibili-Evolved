@@ -47,6 +47,10 @@ export class DownloadPackage {
     if (!filename || this.entries.length === 1) {
       filename = this.entries[0].name
     }
+    if (settings.downloadPackageEmitMode === '分别下载' && this.entries.length > 1) {
+      await Promise.all(this.entries.map(e => DownloadPackage.single(e.name, e.data, this.config)))
+      return
+    }
     const blob = await this.blob()
     if (!blob) {
       return

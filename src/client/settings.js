@@ -278,6 +278,7 @@ const fixedSettings = {
   oldTweets: false,
   customNavbarCompact: false,
   watchlaterExpireWarnings: false,
+  downloadPackageEmitMode: '打包下载',
   latestVersionLink: 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js',
   currentVersion: GM.info.script.version,
 }

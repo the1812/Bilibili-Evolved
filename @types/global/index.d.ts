@@ -501,6 +501,7 @@ declare global {
     unfoldFeeds: boolean,
     feedsImageExporter: boolean,
     columnImageExporter: boolean,
+    downloadPackageEmitMode: '打包下载' | '分别下载',
     latestVersionLink: string,
     currentVersion: string,
   }
