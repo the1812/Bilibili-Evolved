@@ -1,11 +1,10 @@
-export interface DownloadPackageConfig {
-}
-type PackageEntry = { name: string; data: Blob | string }
+import { JSZipFileOptions } from '../../@types/jszip/index'
+
+type PackageEntry = { name: string; data: Blob | string, options: JSZipFileOptions }
 export class DownloadPackage {
   static lastPackageUrl: string = ''
   entries: PackageEntry[] = []
-  constructor(private config: DownloadPackageConfig = {}) {
-  }
+
   private download(filename: string, blob: Blob) {
     const a = document.createElement('a')
     const url = URL.createObjectURL(blob)
@@ -19,12 +18,12 @@ export class DownloadPackage {
     a.click()
     a.remove()
   }
-  add(name: string, data: string | Blob | null | undefined) {
+  add(name: string, data: string | Blob | null | undefined, options: JSZipFileOptions = {}) {
     if (data === null || data === undefined) {
       return
     }
     console.log(`add file: ${escapeFilename(name)}`)
-    this.entries.push({ name: escapeFilename(name), data })
+    this.entries.push({ name: escapeFilename(name), data, options })
   }
   async blob(): Promise<Blob | null> {
     if (this.entries.length === 0) {
@@ -48,7 +47,7 @@ export class DownloadPackage {
       filename = this.entries[0].name
     }
     if (settings.downloadPackageEmitMode === '分别下载' && this.entries.length > 1) {
-      await Promise.all(this.entries.map(e => DownloadPackage.single(e.name, e.data, this.config)))
+      await Promise.all(this.entries.map(e => DownloadPackage.single(e.name, e.data, e.options)))
       return
     }
     const blob = await this.blob()
@@ -57,9 +56,9 @@ export class DownloadPackage {
     }
     return this.download(filename, blob)
   }
-  static async single(filename: string, data: string | Blob, config: DownloadPackageConfig = {}) {
-    const pack = new DownloadPackage(config)
-    pack.add(filename, data)
+  static async single(filename: string, data: string | Blob, options: JSZipFileOptions = {}) {
+    const pack = new DownloadPackage()
+    pack.add(filename, data, options)
     return await pack.emit()
   }
 }

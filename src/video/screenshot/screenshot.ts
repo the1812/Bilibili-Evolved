@@ -139,18 +139,14 @@ Observer.videoChange(async () => {
           screenshot.revoke()
         },
         async saveAll() {
-          const zip = new JSZip()
+          const { DownloadPackage } = await import('../../utils/download-package')
+          const pack = new DownloadPackage()
           this.screenshots.forEach((it: Screenshot) => {
-            zip.file(it.filename, it.blob, {
+            pack.add(it.filename, it.blob, {
               date: new Date(it.timeStamp),
             })
           })
-          const blob = await zip.generateAsync({ type: 'blob' })
-          const link = this.$el.querySelector('.batch-link')
-          link.href = URL.createObjectURL(blob)
-          link.click()
-          URL.revokeObjectURL(link.href)
-          link.href = ""
+          await pack.emit()
           this.discardAll()
         },
         discardAll() {
