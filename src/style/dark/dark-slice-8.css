@@ -23,7 +23,8 @@
 .reply-bottom-menu-mask .more-ops,
 .reply-emoji-panel .emoji-cate,
 .reply-emoji-panel .emoji-cate a,
-.reply-emoji-panel .emoji-list {
+.reply-emoji-panel .emoji-list,
+.round-corner .international-footer {
   background-color: #222 !important;
 }
 .at-popup .user-container .item.is-selected,
@@ -191,7 +192,6 @@ li.danmaku-info-row.bpui-selecting,
 .manga-spread-module .label,
 .danmaku-box .bui-radio-input:checked + .bui-radio-label,
 .app-layout .size-ruler,
-.round-corner .international-footer,
 .round-corner .loc-menu-box,
 .mini-header__content .i-frame::before,
 .mini-header__content .i-frame,
