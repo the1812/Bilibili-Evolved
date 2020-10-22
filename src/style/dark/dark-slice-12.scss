@@ -817,3 +817,39 @@ a.bp_box_bot_click {
   @include background-color("4");
   @include border-color();
 }
+.manga-detail {
+  .layout,
+  .section .right-side .recommendation {
+    @include background-color("4");
+  }
+  .episode-list-component .episode-list .list-header .header-item {
+    @include background-color("5");
+  }
+  .section .right-side {
+    .recommendation .header-content .more:hover {
+      @include background-color();
+      @include theme-color();
+    }
+    .recommendation .header-content .more:hover .emmet-right,
+    .ranking-jump:hover .emmet-right {
+      @include to-theme("blue");
+    }
+  }
+  .comic-info-panel .comic-detail {
+    .comic-title {
+      @include color("e");
+    }
+    .comic-info {
+      @include color("a");
+    }
+  }
+  .section .right-side .recommendation .header-content .title {
+    @include theme-color();
+  }
+}
+.container .back-to-content {
+  @include background-color("4");
+  .back-to-top-button:hover .icon-top {
+    @include to-theme("blue");
+  }
+}

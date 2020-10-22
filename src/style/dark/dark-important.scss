@@ -24,6 +24,9 @@
 .home-content .publish-btn.disabled {
   @include background-color("2");
 }
+.manga-detail .episode-list-component .episode-list .list-header .header-item.selected {
+  @include background-color("3");
+}
 .wrapper .elec-btn.disabled,
 .f-list-hover:hover,
 .status_box .status_btn.disabled,
