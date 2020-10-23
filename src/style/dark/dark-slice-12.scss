@@ -853,3 +853,26 @@ a.bp_box_bot_click {
     @include to-theme("blue");
   }
 }
+.classroom-innerWrapper {
+  .classroom-rec {
+    .title {
+      @include color("e");
+    }
+    .rank-index {
+      @include background-color("4");
+    }
+  }
+  .upComming {
+    .block-page-progress {
+      @include color("e");
+    }
+    .block-list .slider-contro .slider-next:hover,
+    .block-list .slider-contro .slider-prev:hover {
+      @include background-color("4");
+    }
+    .tags {
+      @include background-color("2");
+      @include color("a");
+    }
+  }
+}
