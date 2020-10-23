@@ -659,7 +659,7 @@
   @include color("e");
 }
 .members-info {
-  .avatar-name {
+  .avatar-name__container .name-text {
     @include color("e");
   }
   .avatar {
