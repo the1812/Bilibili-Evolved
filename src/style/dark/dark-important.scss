@@ -274,9 +274,8 @@ blockquote {
   scrollbar-color: #444 transparent !important;
   scrollbar-width: thin !important;
 }
-.members-info {
-  .avatar-name__container .is-vip,
-  .wide-members .avatar .is-vip {
+.members-info .avatar-name__container .is-vip,
+.members-info .wide-members .avatar .is-vip,
+.up-info .up-info_right .name .username.is-vip {
     color: #fb7299!important;
-  }
 }

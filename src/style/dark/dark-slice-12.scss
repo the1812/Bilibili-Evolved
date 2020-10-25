@@ -876,3 +876,7 @@ a.bp_box_bot_click {
     }
   }
 }
+.up-info .up-info_right .name .message:hover,
+.up-info .up-info_right .name .message:hover i {
+  @include theme-color();
+}
