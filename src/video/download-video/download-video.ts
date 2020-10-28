@@ -976,7 +976,6 @@ async function loadPanel() {
               await DownloadPackage.single(
                 getFriendlyTitle(false) + '.txt',
                 new Blob([result], { type: 'text/plain' }),
-                { ffmpeg: this.ffmpegOption }
               )
               return
             case 'aria2RPC':
@@ -992,7 +991,6 @@ async function loadPanel() {
               await DownloadPackage.single(
                 getFriendlyTitle(false) + '.json',
                 new Blob([result], { type: 'text/json' }),
-                { ffmpeg: this.ffmpegOption }
               )
               return
             case 'ffmpegFragments':
@@ -1129,7 +1127,6 @@ async function loadPanel() {
               await DownloadPackage.single(
                 'manual-exports.txt',
                 new Blob([result], { type: 'text/plain' }),
-                { ffmpeg: this.ffmpegOption }
               )
               break
             }
