@@ -479,6 +479,7 @@ body,
 font>span,
 .list-item .close .close-icon,
 .bb-comment,
+.bb-comment .comment-list .list-item .info .operation,
 #app,
 .back-top
 {
