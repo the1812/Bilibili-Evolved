@@ -171,13 +171,18 @@
             }
           }
         }
-        .operation .spot {
-          @include transition();
-          @include icon();
-          @include spot-icon();
-          @include invert-on-dark();
-          :hover {
-            opacity: 0.6;
+        .operation{
+          &:hover{
+            background: transparent !important;
+          }
+          .spot {
+            @include transition();
+            @include icon();
+            @include spot-icon();
+            @include invert-on-dark();
+            &:hover {
+              opacity: 0.6;
+            }
           }
         }
       }
