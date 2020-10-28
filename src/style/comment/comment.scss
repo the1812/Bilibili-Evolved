@@ -26,6 +26,8 @@
     flex-grow: 1;
     display: flex !important;
     justify-content: flex-end;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
 @mixin time {
@@ -171,8 +173,8 @@
             }
           }
         }
-        .operation{
-          &:hover{
+        .operation {
+          &:hover {
             background: transparent !important;
           }
           .spot {
