@@ -14,7 +14,7 @@
       稍后再看
       <div class='tip' :class="{show: tipShowing}">{{tipText}}</div>
     </span>
-  `)
+  `.trim())
   const watchlaterButton = dq('.ops .watchlater')
   if (!watchlaterButton) {
     return

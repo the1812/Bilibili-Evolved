@@ -133,25 +133,32 @@ function checkOfflineData () {
     // document.querySelector('input[key=useCache]').disabled = true
   }
 }
+
+// https://github.com/the1812/Bilibili-Evolved/issues/1076
+const issue1076 = ['playerFocus', 'outerWatchlater', 'quickFavorite']
+const preCheckCompatibility = () => {
+  if (issue1076.some(key => settings[key])) {
+    issue1076.forEach(key => {
+      settings[key] = false
+    })
+    Toast.info(/* html */`
+<div>为避免b站播放器改版导致网站无法正常使用, 以下功能已自动关闭并禁用:
+<span>自动定位到播放器</span> <span>外置稍后再看</span> <span>启用快速收藏</span>
+详情见<a target="_blank" href="https://github.com/the1812/Bilibili-Evolved/issues/1076" class="link">讨论区</a>, 这些功能将在恢复后再解除禁用.
+若当前页面是视频页面且出现问题, 刷新即可恢复正常.</div>
+    `.trim(), '通知')
+  }
+}
 function checkCompatibility () {
-  // if (!CSS.supports('backdrop-filter', 'blur(24px)') &&
-  //   !CSS.supports('-webkit-backdrop-filter', 'blur(24px)')) {
-  //   inputs.find(it => it.getAttribute('key') === 'blurVideoControl').disabled = true
-  //   settings.blurVideoControl = false
-  // }
   if (window.devicePixelRatio === 1) {
     inputs.find(it => it.getAttribute('key') === 'harunaScale').disabled = true
     inputs.find(it => it.getAttribute('key') === 'imageResolution').disabled = true
     settings.harunaScale = false
     settings.imageResolution = false
   }
-  // if (settings.watchLaterRedirectPage) {
-  //   settings.watchLaterRedirectPage = false
-  // }
-  // const redirectPageInput = inputs.find(it => it.getAttribute('key') === 'watchLaterRedirectPage')
-  // if (redirectPageInput) {
-  //   redirectPageInput.disabled = true
-  // }
+  checkBoxes
+    .filter(it => issue1076.includes(it.getAttribute('key')))
+    .forEach(checkBox => (checkBox.disabled = true))
 }
 function setDisplayNames () {
   for (const [key, name] of Object.entries(Resource.displayNames)) {
@@ -217,6 +224,7 @@ function setDisplayNames () {
   })
   const boxes = document.querySelectorAll('.gui-settings-widgets-box,.gui-settings-box')
   const iconPanel = document.querySelector('.gui-settings-icon-panel')
+  preCheckCompatibility()
   iconPanel.addEventListener('mouseover', async () => {
     const { loadTooltip } = await import('./tooltip/settings-tooltip.loader')
     await loadTooltip()

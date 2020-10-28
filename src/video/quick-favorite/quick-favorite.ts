@@ -23,7 +23,7 @@
       <div class="lists-tip" :class="{ show: listShowing }">右键点击快速收藏可再次打开</div>
       <div class="tip" :class="{ show: tipShowing }">{{tipText}}</div>
     </span>
-  `
+  `.trim()
   if (settings.outerWatchlater) {
     const watchlaterButton = await SpinQuery.select('.ops .watchlater')
     if (watchlaterButton !== null) {
