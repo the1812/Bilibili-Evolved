@@ -41,3 +41,15 @@
 .multi-page .cur-list .list-box li .duration {
   @include color("a");
 }
+.interact-dialog .con::before {
+  content: "";
+  background: url(https://s1.hdslb.com/bfs/static/jinkela/video/asserts/interact-dialog.png);
+  filter: invert(1);
+  background-size: 242px 198px;
+  width: 242px;
+  height: 198px;
+  display: block;
+  position: absolute;
+  background-repeat: no-repeat;
+  clip-path: inset(60% 35% 0 35%);
+}
