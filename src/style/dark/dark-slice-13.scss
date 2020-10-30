@@ -117,3 +117,54 @@
     }
   }
 }
+.sponsor-mini-rank {
+  .sponsor-rank-container {
+    .sponsor-rank-item:nth-child(n + 4) {
+      .sp-rank {
+        @include color("e");
+      }
+    }
+  }
+}
+.sponsor-rank-dialog {
+  .sponsor-rank-content {
+    @include background-color("4");
+    ::-webkit-resizer,
+    ::-webkit-scrollbar-thumb {
+      @include background-color("3");
+      &:hover {
+        @include background-color("5");
+      }
+    }
+    .sp-rank-header {
+      .sp-list-nav {
+        @include set-color("border-bottom-color", "5");
+      }
+    }
+    .sp-rank-body {
+      .sp-rank-list {
+        .sponsor-rank-item {
+          &:nth-child(n + 4) .sp-rank i {
+            @include background-color("3");
+            @include color("e");
+          }
+          .sp-user:not([class~="vip"]) {
+            @include color("e");
+          }
+          .sp-msg {
+            @include background-color("3");
+            @include border-color();
+            &::before {
+              @include set-color("border-top-color", "3");
+              @include set-color("border-left-color", "3");
+              @include background-color("3");
+            }
+            p {
+              @include color("e");
+            }
+          }
+        }
+      }
+    }
+  }
+}
