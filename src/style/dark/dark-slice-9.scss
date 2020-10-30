@@ -882,19 +882,7 @@ $highlight-map: (
       }
     }
   }
-  .back-top-btn {
-    @include border-color();
-    @include background-color("3");
-    .arrow-icon {
-      @include color("a");
-    }
-    &:hover {
-      @include theme-background-color();
-      .arrow-icon {
-        @include foreground-color();
-      }
-    }
-  }
+  @include back-top-btn();
 }
 .international-home .contact-help {
   @include color("9");

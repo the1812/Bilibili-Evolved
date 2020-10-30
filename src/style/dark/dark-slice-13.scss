@@ -107,13 +107,6 @@
         }
       }
     }
-    .back-top-btn {
-      @include border-color("4");
-      @include background-color("4");
-      &:hover {
-        @include theme-background-color();
-        @include theme-border-color();
-      }
-    }
+    @include back-top-btn();
   }
 }
