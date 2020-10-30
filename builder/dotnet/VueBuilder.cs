@@ -180,7 +180,7 @@ namespace BilibiliEvolved.Build
                 // compiledText.Append($"{script})}}");
                 // File.Delete(tsFile);
                 // File.Delete(jsFile);
-                var tsc = new BabelSingleCompiler();
+                var tsc = new BabelSingleCompiler(file + ".ts");
                 var script = tsc.Run(vueFile.Script).Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
                 compiledText.Append($"{script})}}");
               }

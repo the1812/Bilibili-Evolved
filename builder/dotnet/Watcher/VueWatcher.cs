@@ -137,7 +137,7 @@ namespace BilibiliEvolved.Build.Watcher
           // Console.WriteLine($"writing file {tsFile}");
           // File.WriteAllText(tsFile, vueFile.Script);
           // Console.WriteLine($"waiting for tsc...");
-          var tsc = new BabelSingleCompiler();
+          var tsc = new BabelSingleCompiler(path + ".ts");
           var script = tsc.Run(vueFile.Script).Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
           compiledText.Append($"{script})}}");
         }

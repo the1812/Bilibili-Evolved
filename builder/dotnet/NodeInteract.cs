@@ -91,8 +91,10 @@ namespace BilibiliEvolved.Build
   }
   sealed class BabelSingleCompiler : NodeInteract
   {
+    private string filename;
+    public BabelSingleCompiler(string filename) { this.filename = filename; }
     protected override string ExecutablePath => "@babel/cli/bin/babel.js";
-    protected override string Arguments => "";
+    protected override string Arguments => $"-f {filename}";
   }
   sealed class SassCompiler : NodeInteract
   {

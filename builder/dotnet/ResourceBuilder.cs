@@ -152,7 +152,7 @@ namespace BilibiliEvolved.Build
           var source = convertToRuntimeSource(match.Groups[2].Value);
           return $"const {imported} = resources.import({source})";
         });
-        input = RegexReplacer.Replace(input, @" import\((.*)\)", match =>
+        input = RegexReplacer.Replace(input, @" import\((.+?)\)", match =>
         {
           var source = convertToRuntimeSource(match.Groups[1].Value);
           return $" resources.importAsync({source})";
