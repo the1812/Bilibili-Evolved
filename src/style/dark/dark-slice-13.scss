@@ -168,3 +168,37 @@
     }
   }
 }
+.sponsor-pay-content {
+  .sponsor-pay-header {
+    @include set-color("border-bottom", "5");
+  }
+  .sponsor-pay-body {
+    .sponsor-choice {
+      .active .sponsor-border {
+        @include background-color();
+      }
+      .sponsor-border {
+        @include background-color("3");
+      }
+      .active input[name="custom-amount"] {
+        @include color("e");
+      }
+      input[name="custom-amount"] {
+        @include background-color("3");
+        @include color("6");
+      }
+    }
+    .sponsor-agree {
+      .agree {
+        @include to-theme("blue");
+      }
+    }
+  }
+  .sp-pay-qrcode {
+    .sponsor-qrcode {
+      .step-other {
+        @include to-theme("blue");
+      }
+    }
+  }
+}
