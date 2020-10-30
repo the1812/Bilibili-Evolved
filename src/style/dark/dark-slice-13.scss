@@ -53,3 +53,67 @@
   background-repeat: no-repeat;
   clip-path: inset(60% 35% 0 35%);
 }
+#app {
+  .channel-sidebar {
+    .search-history-panel {
+      @include background-color("3");
+      @include border-color("4");
+      .history-item {
+        &:hover,
+        &.focus {
+          @include background-color("2");
+        }
+        .item-value {
+          @include color("e");
+        }
+        .delete-icon:hover {
+          @include theme-color();
+        }
+      }
+      .clear-btn {
+        @include theme-color();
+      }
+    }
+  }
+  .search-container {
+    @include background-color("2");
+    .header-info {
+      .title {
+        @include color("e");
+      }
+      .count {
+        @include color("a");
+      }
+    }
+    .card-list {
+      .header-info,
+      .channel-info {
+        .title {
+          @include color("e");
+        }
+      }
+      .channel-btns,
+      .channel-btn {
+        @include to-theme("blue");
+      }
+      .list {
+        .video-card {
+          .video-name {
+            @include color("e");
+            &:hover {
+              @include theme-color();
+            }
+          }
+        }
+      }
+    }
+    .back-top-btn {
+      @include border-color("4");
+      @include background-color("4");
+      &:hover {
+        @include theme-background-color();
+        @include theme-border-color();
+      }
+    }
+  }
+}
