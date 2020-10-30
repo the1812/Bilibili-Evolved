@@ -66,8 +66,10 @@ namespace BilibiliEvolved.Build
     {
       lock (this)
       {
+        var lastColor = Console.ForegroundColor;
         Console.ForegroundColor = color;
         Console.WriteLine(message);
+        Console.ForegroundColor = lastColor;
       }
     }
     public void WriteSuccess(string message) => WriteInfo(message, ConsoleColor.Blue);

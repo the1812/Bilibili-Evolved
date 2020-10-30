@@ -1,0 +1,15 @@
+{
+  "presets": [
+    // "@babel/preset-env",
+    [
+      "@babel/preset-typescript",
+      {
+        "allExtensions": true
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "./builder/node/@babel/plugin-top-level-return"
+  ]
+}

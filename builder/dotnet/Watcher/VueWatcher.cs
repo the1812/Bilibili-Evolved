@@ -42,21 +42,21 @@ namespace BilibiliEvolved.Build.Watcher
   }
   public class VueWatcher : Watcher
   {
-    private VueTypeScriptWatcher tsWatcher = new VueTypeScriptWatcher();
+    // private VueTypeScriptWatcher tsWatcher = new VueTypeScriptWatcher();
     public VueWatcher() : base($"src{Path.DirectorySeparatorChar}")
     {
       GenericFilter = "*.vue";
     }
-    public override void Start(ProjectBuilder builder)
-    {
-      tsWatcher.Start(builder);
-      base.Start(builder);
-    }
-    public override void Stop()
-    {
-      base.Stop();
-      tsWatcher.Stop();
-    }
+    // public override void Start(ProjectBuilder builder)
+    // {
+    //   tsWatcher.Start(builder);
+    //   base.Start(builder);
+    // }
+    // public override void Stop()
+    // {
+    //   base.Stop();
+    //   tsWatcher.Stop();
+    // }
     protected override void OnFileChanged(FileSystemEventArgs e)
     {
       builder.WriteInfo($"[Vue] {e.Name} changed.");
@@ -129,15 +129,16 @@ namespace BilibiliEvolved.Build.Watcher
         }
         else if (vueFile.ScriptLang == "ts" || vueFile.ScriptLang == "typescript")
         {
-          var tsFile = path + ".ts";
-          var task = tsWatcher.WaitForBuild(tsFile);
+          // var tsFile = path + ".ts";
+          // var task = tsWatcher.WaitForBuild(tsFile);
           // if (File.Exists(tsFile)) {
           //   File.Delete(tsFile);
           // }
           // Console.WriteLine($"writing file {tsFile}");
-          File.WriteAllText(tsFile, vueFile.Script);
+          // File.WriteAllText(tsFile, vueFile.Script);
           // Console.WriteLine($"waiting for tsc...");
-          var script = task.Result.Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
+          var tsc = new BabelSingleCompiler();
+          var script = tsc.Run(vueFile.Script).Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
           compiledText.Append($"{script})}}");
         }
         else

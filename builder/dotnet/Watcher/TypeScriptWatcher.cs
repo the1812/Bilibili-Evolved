@@ -14,7 +14,7 @@ namespace BilibiliEvolved.Build.Watcher
   {
     public TypeScriptWatcher() : base(".ts", ".js", $".ts-output") { }
     protected override ResourceMinifier Minifier { get; } = new JavascriptMinifier();
-    protected override NodeInteract WatcherComplier { get; } = new TypeScriptWatchCompiler();
+    protected override NodeInteract WatcherComplier { get; } = new BabelWatchCompiler();
     protected override string Name { get; } = "TypeScript";
     protected override string PostBuild(string content) => content;
   }

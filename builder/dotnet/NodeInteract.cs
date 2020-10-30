@@ -56,7 +56,7 @@ namespace BilibiliEvolved.Build
   }
   sealed class UglifyJs : NodeInteract
   {
-    protected override string ExecutablePath => "uglify-es/bin/uglifyjs";
+    protected override string ExecutablePath => "terser/bin/terser";
     protected override string Arguments => "-m";
   }
   sealed class UglifyCss : NodeInteract
@@ -78,6 +78,21 @@ namespace BilibiliEvolved.Build
   {
     protected override string ExecutablePath => "typescript/bin/tsc";
     protected override string Arguments => "--watch";
+  }
+  sealed class BabelCompiler : NodeInteract
+  {
+    protected override string ExecutablePath => "@babel/cli/bin/babel.js";
+    protected override string Arguments => "src --out-dir .ts-output --quiet --extensions .ts";
+  }
+  sealed class BabelWatchCompiler : NodeInteract
+  {
+    protected override string ExecutablePath => "@babel/cli/bin/babel.js";
+    protected override string Arguments => "src --out-dir .ts-output --quiet --extensions .ts --watch";
+  }
+  sealed class BabelSingleCompiler : NodeInteract
+  {
+    protected override string ExecutablePath => "@babel/cli/bin/babel.js";
+    protected override string Arguments => "";
   }
   sealed class SassCompiler : NodeInteract
   {

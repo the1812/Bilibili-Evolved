@@ -174,12 +174,15 @@ namespace BilibiliEvolved.Build
               }
               else if (vueFile.ScriptLang == "ts" || vueFile.ScriptLang == "typescript")
               {
-                var tsFile = file + ".ts";
-                var jsFile = ".ts-output" + Path.DirectorySeparatorChar + file.Replace("src" + Path.DirectorySeparatorChar, "") + ".js";
-                var script = File.ReadAllText(jsFile).Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
-                compiledText.Append($"{script})}}");
-                File.Delete(tsFile);
+                // var tsFile = file + ".ts";
+                // var jsFile = ".ts-output" + Path.DirectorySeparatorChar + file.Replace("src" + Path.DirectorySeparatorChar, "") + ".js";
+                // var script = File.ReadAllText(jsFile).Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
+                // compiledText.Append($"{script})}}");
+                // File.Delete(tsFile);
                 // File.Delete(jsFile);
+                var tsc = new BabelSingleCompiler();
+                var script = tsc.Run(vueFile.Script).Replace("export default ", "return {export:Object.assign({template},").Trim().TrimEnd(';');
+                compiledText.Append($"{script})}}");
               }
               else
               {

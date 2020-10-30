@@ -44,6 +44,9 @@ namespace BilibiliEvolved.Build.Watcher
         if (originalExtension == ".scss") {
           return true;
         }
+        if (originalFile.EndsWith(".d.ts")) {
+          return false;
+        }
         return !cache.Contains(originalFile);
       };
     }
@@ -67,9 +70,9 @@ namespace BilibiliEvolved.Build.Watcher
     }
     protected override sealed void OnFileChanged(FileSystemEventArgs e)
     {
-      if (Path.GetExtension(e.FullPath) == ".js") {
-        Console.WriteLine($"ts watcher changed: {e.FullPath}");
-      }
+      // if (Path.GetExtension(e.FullPath) == ".js") {
+      //   Console.WriteLine($"ts watcher changed: {e.FullPath}");
+      // }
       if (!Path.GetFileNameWithoutExtension(e.FullPath).EndsWith(".vue"))
       {
         var originalFile = GetOriginalFilePath(e.FullPath);

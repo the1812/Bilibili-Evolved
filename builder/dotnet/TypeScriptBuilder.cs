@@ -12,7 +12,7 @@ namespace BilibiliEvolved.Build
   {
     public ProjectBuilder BuildTypeScripts()
     {
-      var tsc = new TypeScriptCompiler();
+      var tsc = new BabelCompiler();
       var uglifyJs = new JavascriptMinifier();
       var files = ResourceMinifier.GetFiles(file =>
         file.Extension == ".ts" &&

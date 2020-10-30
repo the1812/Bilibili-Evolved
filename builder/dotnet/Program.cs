@@ -29,8 +29,10 @@ namespace BilibiliEvolved.Build
       }
       catch (Exception ex)
       {
+        var lastColor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Error.WriteLine($"Unexpected Error: {ex.Message}");
+        Console.ForegroundColor = lastColor;
         throw;
       }
     }

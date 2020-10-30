@@ -4,13 +4,14 @@
   "main": "bilibili-evolved.user.js",
   "private": true,
   "devDependencies": {
-    "@types/jquery": "^3.3.31",
-    "@types/lodash": "^4.14.138",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
     "clean-css-cli": "^4.3.0",
     "html-minifier": "^4.0.0",
     "sass": "^1.22.10",
-    "typescript": "^3.5.3",
-    "uglify-es": "^3.3.9",
+    "terser": "^5.3.8",
     "vue": "^2.6.10",
     "vuex": "^3.1.2"
   },
