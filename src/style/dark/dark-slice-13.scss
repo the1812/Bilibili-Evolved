@@ -126,3 +126,6 @@
     }
   }
 }
+.cinema-home-wrapper .back-top-tools {
+  @include back-top-btn(".backup");
+}

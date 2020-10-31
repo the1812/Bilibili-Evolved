@@ -106,8 +106,8 @@
   }
 }
 
-@mixin back-top-btn {
-  .back-top-btn {
+@mixin back-top-btn($selector: ".back-top-btn") {
+  #{$selector} {
     @include border-color();
     @include background-color("3");
     .arrow-icon {
