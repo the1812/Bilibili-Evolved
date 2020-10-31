@@ -110,3 +110,19 @@
     @include back-top-btn();
   }
 }
+#page-dynamic,
+.detail-card {
+  .bb-comment {
+    .no-login {
+      .textarea-container {
+        .baffle,
+        .comment-submit {
+          @include background-color("666");
+        }
+      }
+      .comment-emoji {
+        @include background-color("666");
+      }
+    }
+  }
+}
