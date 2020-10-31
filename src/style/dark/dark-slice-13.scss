@@ -129,3 +129,24 @@
 .cinema-home-wrapper .back-top-tools {
   @include back-top-btn(".backup");
 }
+.s-space {
+  .follow-main {
+    .follow-header {
+      .follow-tabs {
+        @include color("e");
+        span:hover {
+          @include theme-color();
+        }
+        .active {
+          @include theme-color();
+          &::before {
+            @include set-theme-color("border-bottom-color");
+          }
+          &::after {
+            @include theme-background-color();
+          }
+        }
+      }
+    }
+  }
+}
