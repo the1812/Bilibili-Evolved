@@ -1612,20 +1612,6 @@ ul.filter-disable .icon-copy,
 {
     background-position: -716px -332px !important;
 }
-
-/* .switch-wrap .imgleft:not(.active):hover i
-{
-    background-position: -148px -376px !important;
-    opacity: 0.7;
-    transition: all 0.2s ease-out;
-}
-.switch-wrap .aver:not(.active):hover i
-{
-    background-position: -194px -376px !important;
-    opacity: 0.7;
-    transition: all 0.2s ease-out;
-} */
-
 /* .multi-page .cur-list ul
 {
     max-height: none !important;
