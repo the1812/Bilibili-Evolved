@@ -150,3 +150,31 @@
     }
   }
 }
+.switch-wrap {
+  .type {
+    &.active i,
+    &.active:hover i {
+      @include to-theme("blue");
+    }
+    &.imgleft:not(.active) {
+      &:hover i {
+        background-position: -148px -376px !important;
+        opacity: 1;
+      }
+      i {
+        opacity: 0.7;
+        transition: opacity 0.2s ease-out;
+      }
+    }
+    &.aver:not(.active) {
+      &:hover i {
+        background-position: -194px -376px !important;
+        opacity: 1;
+      }
+      i {
+        opacity: 0.7;
+        transition: opacity 0.2s ease-out;
+      }
+    }
+  }
+}

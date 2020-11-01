@@ -1499,8 +1499,6 @@ ul.up-nav li
     filter: grayscale(1) brightness(1.3) !important;
 }
 .search-wrap .search-logo,
-.type.active .icon-aver,
-.type.active .icon-imgleft,
 .live-wrap .live-room .headline .filter .cover-btn.active .icon-live-face,
 .live-wrap .live-room .headline .filter .cover-btn:hover .icon-live-face,
 .live-wrap .live-room .headline .filter .frame-btn.active .icon-live-frame,
@@ -1565,8 +1563,6 @@ ul.up-nav li
 {
     filter: var(--pink-image-filter) !important;
 }
-.switch-wrap i.icon-aver,
-.switch-wrap i.icon-imgleft,
 .elevator-module .nav-list .customize .icon,
 .spread-module .num .play .icon,
 .spread-module .num .danmu .icon,
@@ -1616,14 +1612,20 @@ ul.filter-disable .icon-copy,
 {
     background-position: -716px -332px !important;
 }
-.switch-wrap .imgleft:hover i
+
+/* .switch-wrap .imgleft:not(.active):hover i
 {
     background-position: -148px -376px !important;
+    opacity: 0.7;
+    transition: all 0.2s ease-out;
 }
-.switch-wrap .aver:hover i
+.switch-wrap .aver:not(.active):hover i
 {
     background-position: -194px -376px !important;
-}
+    opacity: 0.7;
+    transition: all 0.2s ease-out;
+} */
+
 /* .multi-page .cur-list ul
 {
     max-height: none !important;
