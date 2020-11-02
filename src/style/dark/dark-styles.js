@@ -27,6 +27,7 @@ const load = () => {
     return
   }
   document.body.classList.add('dark')
+  window.localStorage.setItem('pbp_theme_v4', 'b')
   removeBadScrollbar()
   if (!settings.useDarkStyleAsUserStyle) {
     resources.applyImportantStyle('darkStyleNavBar')
