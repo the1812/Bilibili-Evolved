@@ -10,11 +10,11 @@ export class Upload extends NavbarComponent {
       <div id="upload-button">投稿</div>`
     this.popupHtml = /*html*/`
       <ul id="upload-actions">
-        <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/text/apply">专栏投稿</a></li>
-        <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/audio/">音频投稿</a></li>
-        <li><a target="_blank" href="https://member.bilibili.com/v2#/upload/video/frame">视频投稿</a></li>
-        <li><a target="_blank" href="https://member.bilibili.com/v2#/upload-manager/article">投稿管理</a></li>
-        <li><a target="_blank" href="https://member.bilibili.com/v2#/home">创作中心</a></li>
+        <li><a target="_blank" href="https://member.bilibili.com/platform/upload/text/apply">专栏投稿</a></li>
+        <li><a target="_blank" href="https://member.bilibili.com/platform/upload/audio/">音频投稿</a></li>
+        <li><a target="_blank" href="https://member.bilibili.com/platform/upload/video/frame">视频投稿</a></li>
+        <li><a target="_blank" href="https://member.bilibili.com/platform/upload-manager/article">投稿管理</a></li>
+        <li><a target="_blank" href="https://member.bilibili.com/platform/home">创作中心</a></li>
       </ul>
     `
   }
