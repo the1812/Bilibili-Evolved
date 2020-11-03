@@ -85,7 +85,7 @@ namespace BilibiliEvolved.Build
           File.WriteAllText(outputPath, result);
           cache.AddCache(path);
 
-          builder.WriteHint($"\t=> {outputPath}");
+          // builder.WriteHint($"\t=> {outputPath}");
             // builder.WriteHint($"\t=> {outputPath.PadRight(48)}{(100.0 * result.Length / text.Length):0.##}%");
           });
         cache.SaveCache();

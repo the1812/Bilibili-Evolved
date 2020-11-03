@@ -12,6 +12,7 @@ namespace BilibiliEvolved.Build
   {
     public ProjectBuilder BuildSass()
     {
+      var sass = new SassCompiler();
       var cleancss = new CssMinifier();
       var files = ResourceMinifier.GetFiles(file =>
         file.Extension == ".scss"
@@ -27,16 +28,20 @@ namespace BilibiliEvolved.Build
               .Replace(".scss", ".css")
               .Replace($"src{Path.DirectorySeparatorChar}", "");
           }
+          changedFiles.ForEach(file => {
+            cache.AddCache(file);
+            WriteInfo($"Sass build: {file}");
+          });
+          WriteInfo(sass.Run("").Trim());
           Parallel.ForEach(changedFiles
             .Where(f => !Path.GetFileName(f).StartsWith("_")),
-            file => {
-              cache.AddCache(file);
-              WriteInfo($"Sass build: {file}");
-              var sass = new SassSingleCompiler();
-              var css = sass.Run(File.ReadAllText(file));
-              File.WriteAllText(getOutputCacheFilename(file), css);
-              var min = cleancss.Minify(css.Replace("@charset \"UTF-8\";", ""));
-              var minFile = ResourceMinifier.GetMinimizedFileName(file.Replace(".scss", ".css"));
+            f => {
+              // var sass = new SassSingleCompiler();
+              // var css = sass.Run(File.ReadAllText(file));
+              // File.WriteAllText(getOutputCacheFilename(file), css);
+              var file = getOutputCacheFilename(f);
+              var min = cleancss.Minify(File.ReadAllText(file).Replace("@charset \"UTF-8\";", ""));
+              var minFile = ResourceMinifier.GetMinimizedFileName(file);
               File.WriteAllText(minFile, min);
               UpdateCachedMinFile(minFile);
               // WriteHint($"\t=> {minFile}");

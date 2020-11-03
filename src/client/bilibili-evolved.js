@@ -41,6 +41,9 @@
 // @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
 // @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
 // ==/UserScript==
+/* eslint-disable */ /* spell-checker: disable */
+// @[ You can find all source codes in GitHub repo ]
+
 Vue.config.productionTip = false
 Vue.config.devtools = false
 // if (unsafeWindow.Vue === undefined) {

@@ -59,6 +59,23 @@ namespace BilibiliEvolved.Build
     protected override string ExecutablePath => "terser/bin/terser";
     protected override string Arguments => "-m";
   }
+  sealed class UserScriptTerser : NodeInteract
+  {
+    public string Filename { get; private set; }
+    public UserScriptTerser(string filename) => Filename = filename;
+    protected override string ExecutablePath => "terser/bin/terser";
+    protected override string Arguments => $"{Filename} -m --comments \"/^[ ]*(==|@)|eslint-|spell-checker:/\"";
+    public static void WaitForExit(string filename) {
+      var process = new UserScriptTerser(filename).Run();
+      var result = "";
+      using (var outputReader = new StreamReader(process.StandardOutput.BaseStream, Encoding.UTF8))
+      using (var errorReader = new StreamReader(process.StandardError.BaseStream, Encoding.UTF8))
+      {
+        result = outputReader.ReadToEnd().Trim() + errorReader.ReadToEnd().Trim();
+      }
+      File.WriteAllText(filename, result);
+    }
+  }
   sealed class UglifyCss : NodeInteract
   {
     protected override string ExecutablePath => "clean-css-cli/bin/cleancss";

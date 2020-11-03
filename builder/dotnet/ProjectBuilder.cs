@@ -31,7 +31,7 @@ namespace BilibiliEvolved.Build
       // Source = File.ReadAllText(SourcePath);
       WriteInfo("[Bilibili Evolved] Project builder started.");
       WriteInfo($"Working directory: {Environment.CurrentDirectory}");
-      WriteInfo();
+      Console.WriteLine();
       var urlList = from file in Directory.GetFiles("min")
                     where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
                     select file.Replace(@"\", "/");
@@ -52,8 +52,13 @@ namespace BilibiliEvolved.Build
     public void BuildFinalOutput()
     {
       // var ratio = 100.0 * MinimizedResourceLength / OriginalResourceLength;
-      File.WriteAllText(OutputPath, Output.Replace(@"// [Offline build placeholder]", compileOnlineData().Replace("Bilibili-Evolved/preview/", "Bilibili-Evolved/master/")));
-      WriteInfo();
+      var masterOutput = Output.Replace(@"// [Offline build placeholder]", compileOnlineData().Replace("Bilibili-Evolved/preview/", "Bilibili-Evolved/master/"));
+      File.WriteAllText(OutputPath, masterOutput);
+      UserScriptTerser.WaitForExit(config.Master);
+      UserScriptTerser.WaitForExit(config.Preview);
+      UserScriptTerser.WaitForExit(config.Offline);
+      UserScriptTerser.WaitForExit(config.PreviewOffline);
+      Console.WriteLine();
       // WriteHint($"External resource size -{(100.0 - ratio):0.##}%");
       var elapsed = DateTime.Now - StartTime;
       WriteInfo($"Build complete in {elapsed:hh\\:mm\\:ss\\.ff}", ConsoleColor.Green);
@@ -67,6 +72,9 @@ namespace BilibiliEvolved.Build
     }
     public void WriteInfo(string message = "", ConsoleColor color = ConsoleColor.Gray)
     {
+      if (string.IsNullOrWhiteSpace(message)) {
+        return;
+      }
       lock (this)
       {
         var lastColor = Console.ForegroundColor;
