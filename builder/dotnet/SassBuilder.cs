@@ -12,7 +12,6 @@ namespace BilibiliEvolved.Build
   {
     public ProjectBuilder BuildSass()
     {
-      var sass = new SassCompiler();
       var cleancss = new CssMinifier();
       var files = ResourceMinifier.GetFiles(file =>
         file.Extension == ".scss"
@@ -22,23 +21,26 @@ namespace BilibiliEvolved.Build
         var changedFiles = files.Where(file => !cache.Contains(file)).ToArray();
         if (changedFiles.Any())
         {
-          changedFiles.ForEach(file =>
+          string getOutputCacheFilename(string f)
           {
-            cache.AddCache(file);
-            WriteInfo($"Sass build: {file}");
-          });
-          Console.Write(sass.Run("").Trim());
-          Parallel.ForEach(changedFiles
-            .Where(f => !Path.GetFileName(f).StartsWith("_"))
-            .Select(f => ".sass-output/" + f
+            return ".sass-output/" + f
               .Replace(".scss", ".css")
-              .Replace($"src{Path.DirectorySeparatorChar}", "")
-            ), file => {
-              var min = cleancss.Minify(File.ReadAllText(file).Replace("@charset \"UTF-8\";", ""));
-              var minFile = ResourceMinifier.GetMinimizedFileName(file);
+              .Replace($"src{Path.DirectorySeparatorChar}", "");
+          }
+          Parallel.ForEach(changedFiles
+            .Where(f => !Path.GetFileName(f).StartsWith("_")),
+            file => {
+              cache.AddCache(file);
+              WriteInfo($"Sass build: {file}");
+              var sass = new SassSingleCompiler();
+              var css = sass.Run(File.ReadAllText(file));
+              File.WriteAllText(getOutputCacheFilename(file), css);
+              var min = cleancss.Minify(css.Replace("@charset \"UTF-8\";", ""));
+              var minFile = ResourceMinifier.GetMinimizedFileName(file.Replace(".scss", ".css"));
               File.WriteAllText(minFile, min);
+              UpdateCachedMinFile(minFile);
               // WriteHint($"\t=> {minFile}");
-          });
+            });
           // var results = ResourceMinifier.GetFiles(f => f.FullName.Contains(".sass-output" + Path.DirectorySeparatorChar));
           // Parallel.ForEach(results, file =>
           // {

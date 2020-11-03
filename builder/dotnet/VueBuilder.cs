@@ -194,7 +194,7 @@ namespace BilibiliEvolved.Build
             var jsc = new JavascriptMinifier();
             File.WriteAllText(minFile, jsc.Minify(compiledText.ToString()));
             UpdateCachedMinFile(minFile);
-            WriteHint($"\t=> {minFile}");
+            // WriteHint($"\t=> {minFile}");
           });
         }
         cache.SaveCache();

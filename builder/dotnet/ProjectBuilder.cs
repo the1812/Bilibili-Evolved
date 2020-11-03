@@ -47,13 +47,16 @@ namespace BilibiliEvolved.Build
     public string Output { get; private set; }
     public string SourcePath { get; private set; }
     public string OutputPath { get; set; } = "bilibili-evolved.user.js";
+    public DateTime StartTime { get; private set; } = DateTime.Now;
+    public void ResetBuildTime() => StartTime = DateTime.Now;
     public void BuildFinalOutput()
     {
       // var ratio = 100.0 * MinimizedResourceLength / OriginalResourceLength;
       File.WriteAllText(OutputPath, Output.Replace(@"// [Offline build placeholder]", compileOnlineData().Replace("Bilibili-Evolved/preview/", "Bilibili-Evolved/master/")));
       WriteInfo();
       // WriteHint($"External resource size -{(100.0 - ratio):0.##}%");
-      WriteInfo("Build complete.", ConsoleColor.Green);
+      var elapsed = DateTime.Now - StartTime;
+      WriteInfo($"Build complete in {elapsed:hh\\:mm\\:ss\\.ff}", ConsoleColor.Green);
 
       if (config.CopyOnBuild)
       {
