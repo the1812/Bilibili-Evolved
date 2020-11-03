@@ -11,6 +11,7 @@ namespace BilibiliEvolved.Build
 {
   public partial class ProjectBuilder
   {
+    public static bool ProductionMode { get; set; }
     public static ProjectBuilder CreateBuilder()
     {
       var configFile = new ConfigurationBuilder()
@@ -52,12 +53,16 @@ namespace BilibiliEvolved.Build
     public void BuildFinalOutput()
     {
       // var ratio = 100.0 * MinimizedResourceLength / OriginalResourceLength;
-      var masterOutput = Output.Replace(@"// [Offline build placeholder]", compileOnlineData().Replace("Bilibili-Evolved/preview/", "Bilibili-Evolved/master/"));
-      File.WriteAllText(OutputPath, masterOutput);
-      UserScriptTerser.WaitForExit(config.Master);
-      UserScriptTerser.WaitForExit(config.Preview);
-      UserScriptTerser.WaitForExit(config.Offline);
-      UserScriptTerser.WaitForExit(config.PreviewOffline);
+      if (ProductionMode) {
+        var masterOutput = Output.Replace(@"// [Offline build placeholder]", compileOnlineData().Replace("Bilibili-Evolved/preview/", "Bilibili-Evolved/master/"));
+        File.WriteAllText(OutputPath, masterOutput);
+        Task.WaitAll(
+          UserScriptTerser.WaitForExit(config.Master),
+          UserScriptTerser.WaitForExit(config.Preview),
+          UserScriptTerser.WaitForExit(config.Offline),
+          UserScriptTerser.WaitForExit(config.PreviewOffline)
+        );
+      }
       Console.WriteLine();
       // WriteHint($"External resource size -{(100.0 - ratio):0.##}%");
       var elapsed = DateTime.Now - StartTime;

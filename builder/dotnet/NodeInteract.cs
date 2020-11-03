@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace BilibiliEvolved.Build
 {
@@ -65,15 +66,17 @@ namespace BilibiliEvolved.Build
     public UserScriptTerser(string filename) => Filename = filename;
     protected override string ExecutablePath => "terser/bin/terser";
     protected override string Arguments => $"{Filename} -m --comments \"/^[ ]*(==|@)|eslint-|spell-checker:/\"";
-    public static void WaitForExit(string filename) {
-      var process = new UserScriptTerser(filename).Run();
-      var result = "";
-      using (var outputReader = new StreamReader(process.StandardOutput.BaseStream, Encoding.UTF8))
-      using (var errorReader = new StreamReader(process.StandardError.BaseStream, Encoding.UTF8))
-      {
-        result = outputReader.ReadToEnd().Trim() + errorReader.ReadToEnd().Trim();
-      }
-      File.WriteAllText(filename, result);
+    public static Task WaitForExit(string filename) {
+      return Task.Run(() => {
+        var process = new UserScriptTerser(filename).Run();
+        var result = "";
+        using (var outputReader = new StreamReader(process.StandardOutput.BaseStream, Encoding.UTF8))
+        using (var errorReader = new StreamReader(process.StandardError.BaseStream, Encoding.UTF8))
+        {
+          result = outputReader.ReadToEnd().Trim() + errorReader.ReadToEnd().Trim();
+        }
+        File.WriteAllText(filename, result);
+      });
     }
   }
   sealed class UglifyCss : NodeInteract

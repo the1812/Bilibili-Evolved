@@ -85,8 +85,12 @@ namespace BilibiliEvolved.Build
       //     return;
       //   }
       // }
-
-      File.WriteAllText(path, offlineText);
+      if (ProductionMode) {
+        File.WriteAllText(path, offlineText);
+      }
+      if (path == config.PreviewOffline && !ProductionMode) {
+        File.WriteAllText(config.Dev, offlineText);
+      }
     }
     private ProjectBuilder build(Dictionary<string, string> replaceMap, string outputPath, string successMessage)
     {
