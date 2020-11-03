@@ -118,6 +118,9 @@ export class FavoritesList extends NavbarComponent {
           })
           this.searchAllList()
         },
+        selectedListName(name: string) {
+          settings.favoritesListCurrentSelect = name
+        },
       },
       computed: {
         listNames() {
@@ -232,7 +235,11 @@ export class FavoritesList extends NavbarComponent {
             } as ListInfo
           })
           if (this.list.length > 0) {
-            this.selectedListName = this.list[0].name
+            if (settings.favoritesListCurrentSelect && this.list.some((item: ListInfo) => item.name === settings.favoritesListCurrentSelect)) {
+              this.selectedListName = settings.favoritesListCurrentSelect
+            } else {
+              this.selectedListName = this.list[0].name
+            }
             this.changeList()
           }
         } catch (error) {

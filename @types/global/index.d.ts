@@ -504,6 +504,7 @@ declare global {
     downloadPackageEmitMode: '打包下载' | '分别下载',
     latestVersionLink: string,
     currentVersion: string,
+    favoritesListCurrentSelect: string,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

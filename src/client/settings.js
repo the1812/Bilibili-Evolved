@@ -250,6 +250,7 @@ export const settings = {
   columnImageExporter: false,
   downloadPackageEmitMode: '打包下载',
   cache: {},
+  favoritesListCurrentSelect: ''
 }
 const fixedSettings = {
   useDefaultVideoQuality: false,
