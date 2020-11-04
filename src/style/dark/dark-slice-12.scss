@@ -751,6 +751,7 @@ a.bp_box_bot_click {
   .rank-list .rank-item:hover {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
   }
+  @include back-top-btn();
 }
 .popular-list .popular-tips,
 .history-list .history-tips,

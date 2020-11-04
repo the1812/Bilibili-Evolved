@@ -882,19 +882,7 @@ $highlight-map: (
       }
     }
   }
-  .back-top-btn {
-    @include border-color();
-    @include background-color("3");
-    .arrow-icon {
-      @include color("a");
-    }
-    &:hover {
-      @include theme-background-color();
-      .arrow-icon {
-        @include foreground-color();
-      }
-    }
-  }
+  @include back-top-btn();
 }
 .international-home .contact-help {
   @include color("9");
@@ -1057,7 +1045,7 @@ $highlight-map: (
 }
 #bilibili_pbp,
 #bilibili_pbp_canvas {
-  @include to-theme("pink");
+  @include to-theme("blue");
 }
 .interact-dialog .btn,
 .rookie-guide .close-button,
