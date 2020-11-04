@@ -107,12 +107,73 @@
         }
       }
     }
-    .back-top-btn {
-      @include border-color("4");
-      @include background-color("4");
-      &:hover {
-        @include theme-background-color();
-        @include theme-border-color();
+    @include back-top-btn();
+  }
+}
+#page-dynamic,
+.detail-card {
+  .bb-comment {
+    .no-login {
+      .textarea-container {
+        .baffle,
+        .comment-submit {
+          @include background-color("666");
+        }
+      }
+      .comment-emoji {
+        @include background-color("666");
+      }
+    }
+  }
+}
+.cinema-home-wrapper .back-top-tools {
+  @include back-top-btn(".backup");
+}
+.s-space {
+  .follow-main {
+    .follow-header {
+      .follow-tabs {
+        @include color("e");
+        span:hover {
+          @include theme-color();
+        }
+        .active {
+          @include theme-color();
+          &::before {
+            @include set-theme-color("border-bottom-color");
+          }
+          &::after {
+            @include theme-background-color();
+          }
+        }
+      }
+    }
+  }
+}
+.switch-wrap {
+  .type {
+    &.active i,
+    &.active:hover i {
+      @include to-theme("blue");
+    }
+    &.imgleft:not(.active) {
+      &:hover i {
+        background-position: -148px -376px !important;
+        opacity: 1;
+      }
+      i {
+        opacity: 0.7;
+        transition: opacity 0.2s ease-out;
+      }
+    }
+    &.aver:not(.active) {
+      &:hover i {
+        background-position: -194px -376px !important;
+        opacity: 1;
+      }
+      i {
+        opacity: 0.7;
+        transition: opacity 0.2s ease-out;
       }
     }
   }
