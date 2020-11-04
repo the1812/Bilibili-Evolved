@@ -58,6 +58,23 @@
       "problemMatcher": []
     },
     {
+      "label": "生产监视 production-watch",
+      "type": "shell",
+      "command": "dotnet builder/dotnet/publish/build.dll watch production",
+      "options": {
+        "cwd": "./"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "构建编译器 compile builder",
       "type": "shell",
       "command": "dotnet publish -c Release -o publish/",
