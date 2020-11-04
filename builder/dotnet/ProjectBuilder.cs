@@ -31,6 +31,7 @@ namespace BilibiliEvolved.Build
       SourcePath = config.Preview;
       // Source = File.ReadAllText(SourcePath);
       WriteInfo("[Bilibili Evolved] Project builder started.");
+      WriteInfo($"Mode = {(ProductionMode ? "Production" : "Development")}");
       WriteInfo($"Working directory: {Environment.CurrentDirectory}");
       Console.WriteLine();
       var urlList = from file in Directory.GetFiles("min")

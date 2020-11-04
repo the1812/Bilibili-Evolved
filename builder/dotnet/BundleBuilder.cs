@@ -13,26 +13,26 @@ namespace BilibiliEvolved.Build
 {
   partial class ProjectBuilder
   {
-    private IEnumerable<string> changedBundleFiles;
+    // private IEnumerable<string> changedBundleFiles;
     public ProjectBuilder GetBundleFiles() {
-      using (var cache = new BuildCache())
-      {
-        var extensions = new string[] {
-          ".ts", ".js", ".css", ".scss", ".sass", ".vue", ".html", ".htm"
-        };
-        var files = ResourceMinifier.GetFiles(file =>
-          extensions.Contains(file.Extension) &&
-          !file.Name.EndsWith(".vue.ts") &&
-          !file.Name.EndsWith(".d.ts") &&
-          !file.FullName.Contains("client" + Path.DirectorySeparatorChar)
-        );
-        changedBundleFiles = files.Where(file => !cache.Contains(file)).ToArray();
-      }
+      // using (var cache = new BuildCache())
+      // {
+      //   var extensions = new string[] {
+      //     ".ts", ".js", ".css", ".scss", ".sass", ".vue", ".html", ".htm"
+      //   };
+      //   var files = ResourceMinifier.GetFiles(file =>
+      //     extensions.Contains(file.Extension) &&
+      //     !file.Name.EndsWith(".vue.ts") &&
+      //     !file.Name.EndsWith(".d.ts") &&
+      //     !file.FullName.Contains("client" + Path.DirectorySeparatorChar)
+      //   );
+      //   changedBundleFiles = files.Where(file => !cache.Contains(file)).ToArray();
+      // }
       return this;
     }
     public ProjectBuilder BuildBundle()
     {
-      if (changedBundleFiles.Any())
+      if (ProductionMode)
       {
         // var urlList = from file in Directory.GetFiles("min")
         //               where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
