@@ -249,11 +249,6 @@
         @include color("6");
       }
     }
-    .sponsor-agree {
-      .agree {
-        @include to-theme("blue");
-      }
-    }
   }
   .sp-pay-qrcode {
     .sponsor-qrcode {
