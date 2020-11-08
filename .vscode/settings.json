@@ -58,6 +58,7 @@
         "medialist",
         "overscroll",
         "pako",
+        "protobuf",
         "qrcode",
         "reloadable",
         "reloadables",
