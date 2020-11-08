@@ -1,12 +1,23 @@
+export class JsonDanmaku {
+  static SegmentSize = 6 * 60
+  constructor(
+    public duration: number,
+    public cid: number,
+  ) {}
+}
 export class VideoInfo {
   aid: string
+  bvid: string
   cid: number
   pageCount: number
+  duration: number
   coverUrl: string
   tagId: number
   tagName: string
   title: string
   description: string
+  createTime: number
+  publishTime: number
   up: {
     uid: number
     name: string
@@ -41,7 +52,11 @@ export class VideoInfo {
     }
     const data = json.data
     this.cid = data.cid
+    this.bvid = data.bvid
     this.pageCount = data.videos
+    this.duration = data.duration
+    this.createTime = data.ctime * 1000
+    this.publishTime = data.pubtime * 1000
     this.coverUrl = data.pic.replace('http:', 'https:')
     this.tagId = data.tid
     this.tagName = data.tname
@@ -82,6 +97,7 @@ export class Danmaku {
     this.p = p
   }
 }
+/** @deprecated use  */
 export class DanmakuInfo {
   rawXML: string
   // xml: HTMLElement
