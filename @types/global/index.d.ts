@@ -34,7 +34,7 @@ declare global {
     onload?: (response: MonkeyXhrResponse) => void
   }
   type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu"
-  type DanmakuOption = '无' | 'XML' | 'ASS'
+  type DanmakuOption = '无' | 'XML' | 'JSON' | 'ASS'
   type SubtitleOption = '无' | 'JSON' | 'ASS'
   type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
   type Pattern = string

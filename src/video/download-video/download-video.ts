@@ -1,5 +1,5 @@
 import { getFriendlyTitle } from '../title'
-import { VideoInfo, DanmakuInfo } from '../video-info'
+import { VideoInfo, DanmakuInfo, JsonDanmaku } from '../video-info'
 import { VideoDownloaderFragment } from './video-downloader-fragment'
 import { DownloadPackage } from '../../utils/download-package'
 import { BatchTitleParameter, BatchExtractor } from './batch-download'
@@ -186,6 +186,25 @@ const allFormats: VideoFormat[] = [
   new VideoFormat(32, '480P', '清晰 480P'),
   new VideoFormat(16, '360P', '流畅 360P'),
 ]
+const getDanmaku = async (value: DanmakuOption, aid: string | number, cid: string | number) => {
+  if (value === '无') {
+    return null
+  }
+  if (value === 'XML') {
+    const danmakuInfo = await new DanmakuInfo(cid).fetchInfo()
+    return danmakuInfo.rawXML
+  }
+  const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
+  if (value === 'JSON') {
+    return JSON.stringify(danmaku.jsonDanmakus)
+  }
+  if (value === 'ASS') {
+    const { convertToAssFromJson } = await import('../download-danmaku')
+    return convertToAssFromJson(danmaku)
+  }
+
+  return null
+}
 class VideoDownloader {
   format: VideoFormat
   subtitle = false
@@ -668,7 +687,7 @@ async function loadPanel() {
       },
       danmakuModel: {
         value: settings.downloadVideoDefaultDanmaku as DanmakuOption,
-        items: ['无', 'XML', 'ASS'] as DanmakuOption[]
+        items: ['无', 'XML', 'JSON', 'ASS'] as DanmakuOption[]
       },
       subtitleModel: {
         value: settings.downloadVideoDefaultSubtitle as SubtitleOption,

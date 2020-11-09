@@ -165,6 +165,7 @@ export class DanmakuInfo {
     // this.danmakus = [...dom.querySelectorAll('d[p]')].map(it => {
     //   return new Danmaku(it.innerHTML, it.getAttribute('p')!)
     // })
+    return this
   }
 }
 export class BangumiInfo {

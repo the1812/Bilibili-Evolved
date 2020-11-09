@@ -1,5 +1,6 @@
 import { getFriendlyTitle } from './title'
 import { DanmakuConverter, DanmakuConverterConfig, DanmakuType, XmlDanmaku } from './danmaku-converter/danmaku-converter'
+import { JsonDanmaku } from './video-info'
 
 export type DanmakuDownloadType = 'json' | 'xml' | 'ass'
 export const getUserDanmakuConfig = async () => {
@@ -158,6 +159,11 @@ export async function convertToAss(xml: string) {
   const assDocument = converter.xmlStringToAssDocument(xml)
   return assDocument.generateAss()
 }
+export const convertToAssFromJson = async (json: JsonDanmaku) => {
+  const converter = new DanmakuConverter(await getUserDanmakuConfig())
+  const assDocument = converter.xmlDanmakuToAssDocument(json.xmlDanmakus.map(x => new XmlDanmaku(x)))
+  return assDocument.generateAss()
+}
 export async function downloadDanmaku(type: DanmakuDownloadType) {
   const title = getFriendlyTitle()
   let blob: Blob
@@ -204,6 +210,7 @@ export default {
   export: {
     downloadDanmaku,
     convertToAss,
+    convertToAssFromJson,
     getUserDanmakuConfig,
   },
   widget: {
