@@ -301,6 +301,7 @@ export default {
     decodeDanmakuSegment,
     decodeDanmakuView,
     test: async (i: number) => {
+      // const url = `https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=157340456`
       const url = `https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=157340456&pid=92150659&segment_index=${i}`
       const blob = await Ajax.getBlob(url)
       const result = await decodeDanmakuSegment(blob)

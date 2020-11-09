@@ -163,7 +163,7 @@ export async function downloadDanmaku(type: DanmakuDownloadType) {
   let blob: Blob
   const aid = (unsafeWindow || window).aid!
   const cid = parseInt((unsafeWindow || window).cid!)
-  const { DanmakuInfo, VideoInfo } = await import('./video-info')
+  const { DanmakuInfo, JsonDanmaku } = await import('./video-info')
   switch (type) {
     case 'xml': {
       const danmaku = new DanmakuInfo(cid)
@@ -174,16 +174,14 @@ export async function downloadDanmaku(type: DanmakuDownloadType) {
       break
     }
     case 'json': {
-      const video = await new VideoInfo(aid).fetchInfo()
-      const danmaku = (await video.fetchDanmaku()).danmaku
+      const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
       blob = new Blob([JSON.stringify(danmaku.jsonDanmakus)], {
         type: 'text/json'
       })
       break
     }
     case 'ass': {
-      const video = await new VideoInfo(aid).fetchInfo()
-      const danmaku = (await video.fetchDanmaku()).danmaku
+      const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
       const converter = new DanmakuConverter(await getUserDanmakuConfig())
       const assDocument = converter.xmlDanmakuToAssDocument(danmaku.xmlDanmakus.map(x => new XmlDanmaku(x)))
       blob = new Blob([assDocument.generateAss()], {

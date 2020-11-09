@@ -1,5 +1,5 @@
 export class JsonDanmaku {
-  static SegmentSize = 6 * 60
+  // static SegmentSize = 6 * 60
   public jsonDanmakus: {
     id: number
     idStr: string
@@ -16,36 +16,43 @@ export class JsonDanmaku {
     attr: number
   }[] = []
   constructor(
-    public duration: number,
-    public cid: number,
+    public aid: number | string,
+    public cid: number | string,
   ) { }
-  get segmentCount() {
-    return Math.ceil(this.duration / JsonDanmaku.SegmentSize)
-  }
+  // get segmentCount() {
+  //   return Math.ceil(this.duration / JsonDanmaku.SegmentSize)
+  // }
   get xmlDanmakus() {
     return this.jsonDanmakus.map(json => {
       return {
         content: json.content,
-        time: json.progress.toString(),
-        type: json.attr.toString(),
-        fontSize: json.fontsize.toString(),
-        color: json.color.toString(),
-        timeStamp: json.ctime.toString(),
-        pool: json.pool.toString(),
-        userHash: json.midHash,
-        rowId: json.idStr,
+        time: json.progress?.toString() ?? '0',
+        type: json.mode?.toString() ?? '1',
+        fontSize: json.fontsize?.toString() ?? '25',
+        color: json.color?.toString() ?? '16777215',
+        timeStamp: json.ctime?.toString() ?? '0',
+        pool: json.pool?.toString() ??'0',
+        userHash: json.midHash ?? '0',
+        rowId: json.idStr ?? '0',
       }
     })
   }
   async fetchInfo() {
-    const { decodeDanmakuSegment } = await import('./danmaku-converter/danmaku-segment')
-    const count = this.segmentCount
-    const segments = await Promise.all(new Array(count).fill(0).map(async (_, index) => {
-      const blob = await Ajax.getBlob(`https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=${this.cid}&segment_index=${index + 1}`)
+    const { decodeDanmakuSegment, decodeDanmakuView } = await import('./danmaku-converter/danmaku-segment')
+    const view = await decodeDanmakuView(
+      await Ajax.getBlob(`https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=${this.cid}&pid=${this.aid}`)
+    )
+    const { total } = view.dmSge
+    if (total === undefined) {
+      throw new Error(`获取弹幕分页数失败: ${JSON.stringify(_.omit(view, 'flag'))}`)
+    }
+    const segments = await Promise.all(new Array(total).fill(0).map(async (_, index) => {
+      const blob = await Ajax.getBlob(`https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=${this.cid}&pid=${this.aid}&segment_index=${index + 1}`)
       const result = await decodeDanmakuSegment(blob)
       return result.elems
     }))
     this.jsonDanmakus = segments.flat().sort(ascendingSort(it => it.progress))
+    return this
   }
 }
 export class VideoInfo {
@@ -129,7 +136,7 @@ export class VideoInfo {
     return this
   }
   async fetchDanmaku() {
-    this.danmaku = new JsonDanmaku(this.duration, this.cid)
+    this.danmaku = new JsonDanmaku(this.aid, this.cid)
     await this.danmaku.fetchInfo()
     return this
   }
