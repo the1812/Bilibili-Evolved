@@ -1,9 +1,52 @@
 export class JsonDanmaku {
   static SegmentSize = 6 * 60
+  public jsonDanmakus: {
+    id: number
+    idStr: string
+    progress: number
+    mode: number
+    fontsize: number
+    color: number
+    midHash: string
+    content: string
+    ctime: number
+    weight: number
+    action: string
+    pool: number
+    attr: number
+  }[] = []
   constructor(
     public duration: number,
     public cid: number,
-  ) {}
+  ) { }
+  get segmentCount() {
+    return Math.ceil(this.duration / JsonDanmaku.SegmentSize)
+  }
+  get xmlDanmakus() {
+    return this.jsonDanmakus.map(json => {
+      return {
+        content: json.content,
+        time: json.progress.toString(),
+        type: json.attr.toString(),
+        fontSize: json.fontsize.toString(),
+        color: json.color.toString(),
+        timeStamp: json.ctime.toString(),
+        pool: json.pool.toString(),
+        userHash: json.midHash,
+        rowId: json.idStr,
+      }
+    })
+  }
+  async fetchInfo() {
+    const { decodeDanmakuSegment } = await import('./danmaku-converter/danmaku-segment')
+    const count = this.segmentCount
+    const segments = await Promise.all(new Array(count).fill(0).map(async (_, index) => {
+      const blob = await Ajax.getBlob(`https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=${this.cid}&segment_index=${index + 1}`)
+      const result = await decodeDanmakuSegment(blob)
+      return result.elems
+    }))
+    this.jsonDanmakus = segments.flat().sort(ascendingSort(it => it.progress))
+  }
 }
 export class VideoInfo {
   aid: string
@@ -28,7 +71,8 @@ export class VideoInfo {
     title: string
     pageNumber: number
   }[]
-  danmaku: DanmakuInfo
+  danmaku: JsonDanmaku
+  // danmaku: DanmakuInfo
   subtitles: {
     id: number
     languageCode: string
@@ -85,8 +129,9 @@ export class VideoInfo {
     return this
   }
   async fetchDanmaku() {
-    this.danmaku = new DanmakuInfo(this.cid.toString())
-    return this.danmaku.fetchInfo()
+    this.danmaku = new JsonDanmaku(this.duration, this.cid)
+    await this.danmaku.fetchInfo()
+    return this
   }
 }
 export class Danmaku {
@@ -97,7 +142,7 @@ export class Danmaku {
     this.p = p
   }
 }
-/** @deprecated use  */
+/** @deprecated use JsonDanmaku instead */
 export class DanmakuInfo {
   rawXML: string
   // xml: HTMLElement
@@ -105,6 +150,7 @@ export class DanmakuInfo {
   constructor(public cid: string | number) {
   }
   async fetchInfo() {
+    console.warn('Deprecated warning: DanmakuInfo is deprecated, use JsonDanmaku instead.')
     const xml = await Ajax.getText(`https://api.bilibili.com/x/v1/dm/list.so?oid=${this.cid}`)
     this.rawXML = xml
     // const dom = new DOMParser().parseFromString(xml, 'application/xml').documentElement
@@ -152,9 +198,10 @@ export class BangumiInfo {
 }
 export default {
   export: {
-    VideoInfo: VideoInfo,
-    BangumiInfo: BangumiInfo,
-    Danmaku: Danmaku,
-    DanmakuInfo: DanmakuInfo
+    VideoInfo,
+    BangumiInfo,
+    Danmaku,
+    DanmakuInfo,
+    JsonDanmaku,
   }
 }
