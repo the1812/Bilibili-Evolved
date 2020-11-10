@@ -55,6 +55,7 @@ export class JsonDanmaku {
         logError(new Error(`弹幕片段${index + 1}下载失败`))
         return []
       }
+      console.log(`received blob for segment ${index + 1}`, blob)
       const result = await decodeDanmakuSegment(blob)
       return result.elems
     }))
