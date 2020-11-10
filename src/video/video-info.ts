@@ -46,8 +46,13 @@ export class JsonDanmaku {
     if (total === undefined) {
       throw new Error(`获取弹幕分页数失败: ${JSON.stringify(_.omit(view, 'flag'))}`)
     }
+    console.log('segment count =', total)
     const segments = await Promise.all(new Array(total).fill(0).map(async (_, index) => {
       const blob = await Ajax.getBlob(`https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=${this.cid}&pid=${this.aid}&segment_index=${index + 1}`)
+      if (!blob) {
+        logError(new Error(`弹幕片段${index + 1}下载失败`))
+        return []
+      }
       const result = await decodeDanmakuSegment(blob)
       return result.elems
     }))
