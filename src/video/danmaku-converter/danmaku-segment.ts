@@ -273,8 +273,8 @@ const decode = _.curry(async (type: string, blob: Blob, toastTitle = '') => {
   const buffer = new Uint8Array(
     'arrayBuffer' in Blob.prototype ? await blob.arrayBuffer() : await new Response(blob).arrayBuffer()
   )
-  if (!unsafeWindow.protobufPromise) {
-    unsafeWindow.protobufPromise = new Promise(async (resolve, reject) => {
+  if (!window.protobufPromise) {
+    window.protobufPromise = new Promise(async (resolve, reject) => {
       const library = await Ajax.monkey({
         url: 'https://cdn.jsdelivr.net/npm/protobufjs@6.10.1/dist/light/protobuf.min.js',
         method: 'GET',
@@ -285,11 +285,10 @@ const decode = _.curry(async (type: string, blob: Blob, toastTitle = '') => {
         reject(message)
       }
       eval(library)
-      unsafeWindow.protobuf = window.protobuf
-      resolve(unsafeWindow.protobuf)
+      resolve(window.protobuf)
     })
   }
-  const protobuf = await unsafeWindow.protobufPromise
+  const protobuf = await window.protobufPromise
   const root = protobuf.Root.fromJSON(proto)
   const reply = root.lookupType(type)
   const message = reply.decode(buffer)
@@ -303,10 +302,16 @@ export default {
     decodeDanmakuSegment,
     decodeDanmakuView,
     test: async (i: number) => {
-      // const url = `https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=157340456`
       const url = `https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=157340456&pid=92150659&segment_index=${i}`
       const blob = await Ajax.getBlob(url)
       const result = await decodeDanmakuSegment(blob)
+      console.log(result)
+      unsafeWindow.testResult = result
+    },
+    testView: async () => {
+      const url = `https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=157340456`
+      const blob = await Ajax.getBlob(url)
+      const result = await decodeDanmakuView(blob)
       console.log(result)
       unsafeWindow.testResult = result
     }
