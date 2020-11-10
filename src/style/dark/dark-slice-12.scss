@@ -878,7 +878,8 @@ a.bp_box_bot_click {
   }
 }
 .up-info .up-info_right .name .message:hover,
-.up-info .up-info_right .name .message:hover i {
+.up-info .up-info_right .name .message:hover i,
+.shop-desc .desc-box .price {
   @include theme-color();
 }
 
