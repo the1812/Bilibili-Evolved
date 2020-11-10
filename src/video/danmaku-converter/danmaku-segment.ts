@@ -270,7 +270,9 @@ export const proto = {
   }
 }
 const decode = _.curry(async (type: string, blob: Blob, toastTitle = '') => {
-  const buffer = new Uint8Array(await blob.arrayBuffer())
+  const buffer = new Uint8Array(
+    'arrayBuffer' in Blob.prototype ? await blob.arrayBuffer() : await new Response(blob).arrayBuffer()
+  )
   if (!unsafeWindow.protobufPromise) {
     unsafeWindow.protobufPromise = new Promise(async (resolve, reject) => {
       const library = await Ajax.monkey({

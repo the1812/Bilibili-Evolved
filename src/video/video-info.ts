@@ -39,9 +39,11 @@ export class JsonDanmaku {
   }
   async fetchInfo() {
     const { decodeDanmakuSegment, decodeDanmakuView } = await import('./danmaku-converter/danmaku-segment')
-    const view = await decodeDanmakuView(
-      await Ajax.getBlob(`https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=${this.cid}&pid=${this.aid}`)
-    )
+    const viewBlob = await Ajax.getBlob(`https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=${this.cid}&pid=${this.aid}`)
+    if (!viewBlob) {
+      throw new Error(`获取弹幕信息失败`)
+    }
+    const view = await decodeDanmakuView(viewBlob)
     const { total } = view.dmSge
     if (total === undefined) {
       throw new Error(`获取弹幕分页数失败: ${JSON.stringify(_.omit(view, 'flag'))}`)
