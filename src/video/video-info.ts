@@ -26,7 +26,7 @@ export class JsonDanmaku {
     return this.jsonDanmakus.map(json => {
       return {
         content: json.content,
-        time: json.progress?.toString() ?? '0',
+        time: json.progress ? (json.progress / 1000).toString() : '0',
         type: json.mode?.toString() ?? '1',
         fontSize: json.fontsize?.toString() ?? '25',
         color: json.color?.toString() ?? '16777215',

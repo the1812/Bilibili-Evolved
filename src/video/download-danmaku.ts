@@ -187,9 +187,15 @@ export async function downloadDanmaku(type: DanmakuDownloadType) {
       break
     }
     case 'ass': {
+      console.log('start ass')
       const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
+      console.log('get json danmaku')
       const converter = new DanmakuConverter(await getUserDanmakuConfig())
-      const assDocument = converter.xmlDanmakuToAssDocument(danmaku.xmlDanmakus.map(x => new XmlDanmaku(x)))
+      console.log('get config')
+      const xmlDanmakus = danmaku.xmlDanmakus.map(x => new XmlDanmaku(x))
+      console.log('map')
+      const assDocument = converter.xmlDanmakuToAssDocument(xmlDanmakus)
+      console.log('convert')
       blob = new Blob([assDocument.generateAss()], {
         type: 'text/ass'
       })
