@@ -258,3 +258,18 @@
     }
   }
 }
+#biliMainHeader .base-mini-header {
+  @include background-color("2");
+  .base-mini-header-logo {
+    @include to-white();
+  }
+  .base-nav-link-main,
+  .base-mini-header-pulldown-icon,
+  .base-nav-link-item {
+    @include color("e");
+  }
+  .base-mini-upload {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
