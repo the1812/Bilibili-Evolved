@@ -563,7 +563,7 @@ class VideoSpeed {
     this.workingDownloader = downloader
   }
   startMeasure() {
-    this.intervalTimer = setInterval(() => {
+    this.intervalTimer = window.setInterval(() => {
       const progress = this.workingDownloader.progressMap
         ? [...this.workingDownloader.progressMap.values()].reduce((a, b) => a + b, 0) : 0
       const loadedBytes = progress - this.lastProgress
@@ -1182,7 +1182,7 @@ async function loadPanel() {
           this.episodeList = []
           return
         }
-        const { BatchExtractor } = await import('batch-download')
+        const { BatchExtractor } = await import('./batch-download')
         const { MaxBatchSize } = await import('./batch-warning')
         if (await BatchExtractor.test() !== true) {
           this.batch = false

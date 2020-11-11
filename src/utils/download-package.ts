@@ -1,4 +1,4 @@
-import { JSZipFileOptions } from '../../@types/jszip/index'
+import { JSZipFileOptions } from 'jszip'
 
 type PackageEntry = { name: string; data: Blob | string, options: JSZipFileOptions }
 export class DownloadPackage {

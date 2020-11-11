@@ -84,7 +84,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       clearTimeout(showPlaybackTipOldTimeout)
     }
     (dq('.keymap-playback-tip-container') as HTMLDivElement).classList.add('show')
-    showPlaybackTipOldTimeout = setTimeout(() => {
+    showPlaybackTipOldTimeout = window.setTimeout(() => {
       (dq('.keymap-playback-tip-container') as HTMLDivElement).classList.remove('show')
     }, 2000)
   }

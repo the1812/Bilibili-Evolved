@@ -96,7 +96,7 @@ const entry = async () => {
       clearTimeout(showVolumeTipOldTimeout)
     }
     (dq('.volume-overdrive-tip-container') as HTMLDivElement).classList.add('show')
-    showVolumeTipOldTimeout = setTimeout(() => {
+    showVolumeTipOldTimeout = window.setTimeout(() => {
       (dq('.volume-overdrive-tip-container') as HTMLDivElement).classList.remove('show')
     }, 2000)
   }
