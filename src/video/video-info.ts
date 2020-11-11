@@ -39,7 +39,12 @@ export class JsonDanmaku {
   }
   async fetchInfo() {
     const { decodeDanmakuSegment, decodeDanmakuView } = await import('./danmaku-converter/danmaku-segment')
-    const viewBlob = await Ajax.getBlob(`https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=${this.cid}&pid=${this.aid}`)
+    // 这里为了兼容 pakku, 只能用 fetch https://github.com/xmcp/pakku.js/issues/153
+    const fetchBlob = async (url: string) => {
+      const response = await fetch(url)
+      return response.blob()
+    }
+    const viewBlob = await fetchBlob(`https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=${this.cid}&pid=${this.aid}`)
     if (!viewBlob) {
       throw new Error(`获取弹幕信息失败`)
     }
@@ -50,7 +55,7 @@ export class JsonDanmaku {
     }
     console.log('segment count =', total)
     const segments = await Promise.all(new Array(total).fill(0).map(async (_, index) => {
-      const blob = await Ajax.getBlob(`https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=${this.cid}&pid=${this.aid}&segment_index=${index + 1}`)
+      const blob = await fetchBlob(`https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=${this.cid}&pid=${this.aid}&segment_index=${index + 1}`)
       if (!blob) {
         logError(new Error(`弹幕片段${index + 1}下载失败`))
         return []
