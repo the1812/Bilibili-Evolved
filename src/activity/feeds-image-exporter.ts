@@ -8,7 +8,7 @@ import { FeedsCard } from './feeds-apis'
       text: '导出图片',
       action: async () => {
         const imageUrls: { url: string; extension: string }[] = []
-        dqa(card.element, 'img, .img-content').forEach((img: HTMLImageElement | HTMLDivElement) => {
+        dqa(card.element, '.main-content img, .main-content .img-content').forEach((img: HTMLImageElement | HTMLDivElement) => {
           const urlData = retrieveImageUrl(img)
           if (urlData) {
             imageUrls.push(urlData)
