@@ -12,6 +12,7 @@ namespace BilibiliEvolved.Build
     {
       var files = new DirectoryInfo("min")
         .EnumerateFiles()
+        .OrderBy(f => f.FullName)
         .Where(f => f.FullName.Contains("dark-slice"));
       var fullStyle = files
         .Select(f => File.ReadAllText(f.FullName))
