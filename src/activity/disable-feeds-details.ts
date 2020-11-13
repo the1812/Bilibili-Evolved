@@ -38,6 +38,10 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
       if (target.hasAttribute('click-title')) {
         return
       }
+      const popups = dqa(element, '.im-popup')
+      if (popups.some(p => p.contains(target))) {
+        return
+      }
       if (contents.some(c => c === target || c.contains(target))) {
         e.stopImmediatePropagation()
       }

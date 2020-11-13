@@ -62,7 +62,7 @@ export const getScriptBlocker = async () => {
       super()
       this.started = false
     }
-    start () {
+    async start () {
       if (this.started) {
         return
       }
@@ -70,12 +70,16 @@ export const getScriptBlocker = async () => {
       const blockEvent = node => this.dispatchEvent(new CustomEvent('block', {
         detail: node
       }))
-      const blocker = Observer.childList(document.head, records => {
+      const head = await SpinQuery.select('head')
+      if (!head) {
+        return
+      }
+      const blocker = Observer.childList(head, records => {
         records.forEach(r => {
           removeNodes(r.addedNodes, blockEvent)
         })
       })
-      removeNodes(document.head.childNodes, blockEvent)
+      removeNodes(head.childNodes, blockEvent)
       const bodyObserver = Observer.childList(document.documentElement, records => {
         records.forEach(r => {
           r.addedNodes.forEach(node => {

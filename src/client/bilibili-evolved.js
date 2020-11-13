@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.11.2
+// @version      1.11.3
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -158,7 +158,7 @@ import { store } from './store'
           const style = document.createElement('style')
           style.innerHTML = cache.darkStyle
           style.id = 'dark-style'
-          document.head.insertAdjacentElement('afterbegin', style)
+          document.documentElement.insertAdjacentElement('afterbegin', style)
         }
       } else {
         const style = document.createElement('style')
@@ -166,7 +166,7 @@ import { store } from './store'
           return key.includes('/dark.min.css')
         })[1]
         style.id = 'dark-style'
-        document.head.insertAdjacentElement('afterbegin', style)
+        document.documentElement.insertAdjacentElement('afterbegin', style)
       }
     }
     console.log(`Skipped <iframe> loading for ${document.URL}`)
@@ -228,7 +228,7 @@ import { store } from './store'
     const prefetchLink = document.createElement('link')
     prefetchLink.rel = 'dns-prefetch'
     prefetchLink.href = 'https://api.bilibili.com'
-    document.head.insertAdjacentElement('afterbegin', prefetchLink)
+    document.documentElement.insertAdjacentElement('afterbegin', prefetchLink)
 
     Object.assign(unsafeWindow.bilibiliEvolved, {
       SpinQuery,
