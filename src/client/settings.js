@@ -83,20 +83,12 @@ export const settings = {
   applyPlayerModeOnPlay: true,
   defaultPlayerMode: '常规',
   defaultVideoQuality: '自动',
-  useDefaultDanmakuSettings: false,
-  enableDanmaku: true,
-  rememberDanmakuSettings: false,
-  danmakuSettings: {
-    subtitlesPreserve: false,
-    smartMask: false,
-  },
   defaultPlayerLayout: '新版',
   defaultBangumiLayout: '新版',
   skipChargeList: false,
   comboLike: false,
   autoLightOff: false,
   useCache: true,
-  autoContinue: false,
   allowJumpContinue: false,
   airborne: true,
   deadVideoTitleProvider: '稍后再看',
@@ -255,6 +247,14 @@ export const settings = {
   favoritesListCurrentSelect: ''
 }
 const fixedSettings = {
+  useDefaultDanmakuSettings: false,
+  enableDanmaku: true,
+  rememberDanmakuSettings: false,
+  danmakuSettings: {
+    subtitlesPreserve: false,
+    smartMask: false,
+  },
+  autoContinue: false,
   useDefaultVideoQuality: false,
   autoPlay: false,
   favoritesRedirect: false,
