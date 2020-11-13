@@ -273,3 +273,6 @@
     @include foreground-color();
   }
 }
+.v-wrap .vcd .cover {
+  @include background-color("4");
+}
