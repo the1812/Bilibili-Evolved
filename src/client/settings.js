@@ -128,6 +128,8 @@ export const settings = {
     eventsBanner: false,
     rankList: false,
     popup: false,
+    pk: false,
+    topRank: true,
     skin: false,
   },
   customNavbar: true,
