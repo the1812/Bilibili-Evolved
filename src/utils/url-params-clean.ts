@@ -27,6 +27,12 @@ const blockParams = [
   'p2p_type',
   'referfrom',
 ]
+const siteSpecifiedParams = [
+  {
+    match: /\/\/www\.bilibili\.com\/audio\/(au[\d]+|mycollection)/,
+    param: 'type',
+  }
+]
 const noNormalizes = [
   /game\.bilibili\.com\/fgo/,
 ]
@@ -44,6 +50,11 @@ const clean = () => {
   }
   const filteredParams = urlParams.filter(p => {
     if (blockParams.some(b => p.startsWith(`${b}=`))) {
+      return false
+    }
+    if (siteSpecifiedParams.some(({ match, param }) => {
+      return document.URL.match(match) && p.startsWith(`${param}=`)
+    })) {
       return false
     }
     return true
