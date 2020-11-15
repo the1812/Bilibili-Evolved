@@ -281,3 +281,19 @@
     @include theme-color();
   }
 }
+body.round-corner.dark {
+  // TODO 修复 html 样式误伤，导致圆角无法呈现的问题
+  #app-container {
+    .share-step {
+      .ogv-card {
+        .name {
+          @include color("e");
+        }
+        @include background-color("3");
+      }
+      .bp-emoji-box {
+        @include color("e");
+      }
+    }
+  }
+}
