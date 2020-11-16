@@ -895,3 +895,40 @@ a.bp_box_bot_click {
     @include foreground-color();
   }
 }
+.my-notebook {
+  .note-header {
+    @include border-color();
+    .note-title {
+      .note-text {
+        @include color("e");
+      }
+      .note-count {
+        @include color("a");
+      }
+    }
+  }
+  .note-single-item {
+    @include border-color("5");
+    &--selected {
+      @include background-color("3");
+    }
+    .note-item__detail {
+      &--title {
+        @include color("e");
+      }
+      &--info {
+        .go-video-btn {
+          @include theme-color();
+          @include theme-border-color();
+          &:hover {
+            @include theme-background-color();
+            @include foreground-color();
+          }
+        }
+        .update-mtime {
+          @include color("a");
+        }
+      }
+    }
+  }
+}
