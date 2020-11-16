@@ -297,3 +297,13 @@ body.round-corner.dark {
     }
   }
 }
+#app-news .link-footer .footer-img-linker li {
+  a:hover .footer-img-item {
+    @include color("e");
+    @include border-color();
+  }
+
+  .footer-img-item {
+    @include border-color("a");
+  }
+}
