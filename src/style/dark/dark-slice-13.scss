@@ -126,7 +126,7 @@
     }
   }
 }
-.cinema-home-wrapper .back-top-tools {
+.back-top-tools {
   @include back-top-btn(".backup");
 }
 .s-space {
@@ -275,4 +275,245 @@
 }
 .v-wrap .vcd .cover {
   @include background-color("4");
+}
+.live-btn-ctnr {
+  .icon-arrow-right {
+    @include theme-color();
+  }
+}
+// TODO 修复 html 样式误伤，导致圆角无法呈现的问题
+#app-container {
+  .share-step {
+    .ogv-card {
+      .name {
+        @include color("e");
+      }
+      @include background-color("3");
+    }
+    .bp-emoji-box {
+      @include color("e");
+    }
+  }
+}
+.link-footer .footer-img-linker li {
+  a:hover .footer-img-item {
+    @include color("e");
+    @include border-color();
+  }
+
+  .footer-img-item {
+    @include border-color("a");
+  }
+}
+div[role="alertdialog"] .link-popup-panel {
+  top: unset !important;
+  .popup-content-ctnr p {
+    @include color("a");
+  }
+}
+.streamer-calendar {
+  @include background-color("2");
+  .subscribe-tips {
+    @include color("e");
+  }
+  .streamer-calendar-nav {
+    @include background-color("4");
+    @include border-color();
+    .tabs-wrapper {
+      .tabs {
+        .tabs-item {
+          &:hover {
+            @include color("e");
+          }
+          &::after {
+            @include theme-background-color();
+          }
+          &.tabs-item-active {
+            @include color("e");
+          }
+        }
+      }
+    }
+    .month-tabs-btn {
+      @include background-color();
+      &:hover,
+      &:focus {
+        @include to-theme("blue");
+      }
+    }
+    .month-tabs-title {
+      @include color("e");
+    }
+    .streamer-calendar-description {
+      @include color("a");
+    }
+    .btn-blue {
+      @include theme-background-color();
+    }
+  }
+  .calendar-watch {
+    // .calendar-recommend{}
+    .calendar-follow {
+      @include border-color();
+      @include background-color("4");
+      .calendar-follow-title {
+        @include color("e");
+        .calendar-follow-description {
+          @include color("a");
+        }
+      }
+      .calendar-follow-empty {
+        .calendar-follow-empty-tips {
+          margin-left: 36px;
+          & p {
+            @include color("e");
+          }
+        }
+      }
+      .calendar-follow-cards-container {
+        .anchor-card {
+          .anchor-card-avatar {
+            @include border-color("6");
+          }
+          .anchor-card-info {
+            .anchor-card-title {
+              @include color("e");
+            }
+            .anchor-card-action {
+              @include theme-background-color();
+            }
+          }
+        }
+      }
+    }
+    .calendar-search {
+      @include border-color();
+      @include background-color("4");
+      .calendar-search-top {
+        .calendar-search-title {
+          @include color("e");
+        }
+        .calendar-search-input-wrapper {
+          @include background-color("3");
+          .calendar-search-input {
+            @include color("e");
+          }
+          .calendar-search-action:hover {
+            @include to-theme("blue");
+          }
+        }
+      }
+      .calendar-search-content {
+        .anchor-card-info {
+          .anchor-card-avatar {
+            @include border-color("6");
+          }
+          .anchor-card-title {
+            @include color("e");
+          }
+        }
+        .calendar-search-message {
+          @include color("a");
+        }
+      }
+    }
+    .basic-calendar {
+      @include border-color();
+      .basic-calendar-thead {
+        .basic-calendar-thead-th {
+          @include color("a");
+          @include border-color("6");
+          @include background-color("4");
+        }
+      }
+      .basic-calendar-tbody {
+        .basic-calendar-item {
+          @include border-color("6");
+          @include background-color("3");
+          .calendar-item-top {
+            .calendar-item-date {
+              .calendar-item-today {
+                @include theme-background-color();
+              }
+              &:not(.calendar-item-today) {
+                filter: invert(1);
+              }
+            }
+            .calendar-item-switch-cards-wrapper {
+              @include background-color();
+              .calendar-item-switch-cards {
+                @include background-color();
+                &:not([disabled="disabled"]):hover {
+                  @include theme-background-color();
+                }
+                @include border-color("6");
+              }
+            }
+          }
+          .calendar-item-card-wrapper {
+            .calendar-card {
+              @include border-color();
+              @include background-color("3");
+              .calendar-card-top {
+                .calendar-card-time {
+                  @include color("e");
+
+                  &.calendar-card-time-end {
+                    @include color("a");
+                  }
+                }
+                .calendar-card-follow {
+                  @include theme-background-color();
+                  &.calendar-card-follow-subscribed {
+                    @include background-color("5");
+                  }
+                }
+              }
+              .calendar-card-info {
+                .calendar-card-anchor {
+                  @include color("e");
+                }
+              }
+              .calendar-card-title {
+                @include color("a");
+              }
+              &.calendar-card-follow-highlight {
+                @include theme-background-color();
+                .calendar-card-top .calendar-card-time {
+                  @include color("e");
+                }
+                .calendar-card-title {
+                  @include color("3");
+                }
+              }
+            }
+          }
+          .calendar-item-cards-wrapper-odd {
+            .calendar-item-card-wrapper:nth-of-type(2n) .calendar-card {
+              @include background-color("4")
+            }
+          }
+          .calendar-item-cards-wrapper-even {
+            .calendar-item-card-wrapper:nth-of-type(odd) .calendar-card {
+              @include background-color("4")
+            }
+          }
+        }
+      }
+    }
+  }
+  .share-panel {
+    @include border-color();
+    @include background-color("4");
+  }
+  .side-bar {
+    .side-bar-btn {
+      @include theme-color();
+      @include border-color();
+      @include background-color("4");
+      .side-bar-btn-icon {
+        @include to-theme("blue");
+      }
+    }
+  }
 }
