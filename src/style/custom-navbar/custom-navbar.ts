@@ -108,7 +108,7 @@ export default (() => {
         new Blank(1),
         new Logo(),
         new Category(),
-        new SimpleLink('排行', 'https://www.bilibili.com/ranking', 'ranking'),
+        new SimpleLink('排行', 'https://www.bilibili.com/v/popular/rank/all', 'ranking'),
         new SimpleLink('相簿', 'https://h.bilibili.com', 'drawing'),
         new SimpleLink('音频', 'https://www.bilibili.com/audio/home/', 'music'),
         new Iframe('游戏中心', 'https://game.bilibili.com/', {
