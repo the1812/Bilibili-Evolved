@@ -520,3 +520,15 @@ div[role="alertdialog"] .link-popup-panel {
     }
   }
 }
+html {
+  &,
+  body {
+    @include background-color();
+  }
+  &:not(.iframe) {
+    &,
+    body {
+      @include background-color("2");
+    }
+  }
+}

@@ -196,6 +196,7 @@ function setDisplayNames () {
     document.querySelector('.gui-settings-icon-panel').style.display = 'none'
     // return;
   }
+  document.documentElement.classList.toggle('iframe', isIframe)
 
   addSettingsListener('guiSettingsDockSide', value => {
     document.body.classList.toggle('gui-settings-dock-right', value === '右侧')
