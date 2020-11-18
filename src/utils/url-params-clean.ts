@@ -26,11 +26,16 @@ const blockParams = [
   'platform_network_status',
   'p2p_type',
   'referfrom',
+  'visit_id',
 ]
 const siteSpecifiedParams = [
   {
     match: /\/\/www\.bilibili\.com\/audio\/(au[\d]+|mycollection)/,
     param: 'type',
+  },
+  {
+    match: /\/\/live\.bilibili\.com\//,
+    param: 'session_id',
   }
 ]
 const noNormalizes = [
