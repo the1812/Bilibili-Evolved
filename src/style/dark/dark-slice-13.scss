@@ -258,19 +258,22 @@
     }
   }
 }
-#biliMainHeader .base-mini-header {
-  @include background-color("2");
-  .base-mini-header-logo {
-    @include to-white();
-  }
-  .base-nav-link-main,
-  .base-mini-header-pulldown-icon,
-  .base-nav-link-item {
-    @include color("e");
-  }
-  .base-mini-upload {
-    @include theme-background-color();
-    @include foreground-color();
+#biliMainHeader {
+  .mini-header,
+  .base-mini-header {
+    @include background-color("2");
+    .base-mini-header-logo {
+      @include to-white();
+    }
+    .base-nav-link-main,
+    .base-mini-header-pulldown-icon,
+    .base-nav-link-item {
+      @include color("e");
+    }
+    .base-mini-upload {
+      @include theme-background-color();
+      @include foreground-color();
+    }
   }
 }
 .v-wrap .vcd .cover {
@@ -490,12 +493,12 @@ div[role="alertdialog"] .link-popup-panel {
           }
           .calendar-item-cards-wrapper-odd {
             .calendar-item-card-wrapper:nth-of-type(2n) .calendar-card {
-              @include background-color("4")
+              @include background-color("4");
             }
           }
           .calendar-item-cards-wrapper-even {
             .calendar-item-card-wrapper:nth-of-type(odd) .calendar-card {
-              @include background-color("4")
+              @include background-color("4");
             }
           }
         }
