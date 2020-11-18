@@ -237,7 +237,7 @@ export class UserInfo extends NavbarComponent {
               biliCSRF: getCsrf(),
             })
           )
-          const url = _.get(response, 'data.redirectUrl', '')
+          const url = _.get(JSON.parse(response), 'data.redirectUrl', '')
           if (url) {
             window.location.assign(url)
           }
