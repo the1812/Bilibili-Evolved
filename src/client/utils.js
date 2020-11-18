@@ -191,16 +191,7 @@ export const matchPattern = (str, pattern) => {
   return pattern.test(str)
 }
 export const playerReady = () => {
-  return SpinQuery.condition(
-    () => {
-      const danmakuInfo = dq('.video-data .dm')
-      if (danmakuInfo) {
-        return parseInt(danmakuInfo.textContent)
-      }
-      return NaN
-    },
-    it => !Number.isNaN(it),
-  )
+  return Promise.reject('此函数已弃用, 请使用 src/utils/player-ready.ts')
 }
 export const formData = (obj) => Object.entries(obj).map(([k, v]) => `${k}=${v}`).join('&')
 export const retrieveImageUrl = (element) => {

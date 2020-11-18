@@ -572,7 +572,7 @@ declare global {
   const matchPattern: (str: string, pattern: string | RegExp) => boolean
   type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
   const getScriptVersion: () => ScriptVersion
-  const playerReady: () => Promise<void>
+  // const playerReady: () => Promise<void>
   const formData: (obj: any) => string
   const retrieveImageUrl: (element: Element) => { url: string; extension: string } | null
 }
