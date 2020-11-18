@@ -81,11 +81,11 @@ export default {
     content: /*html*/`
       <button class="gui-settings-flat-button" id="download-subtitle-json">
         <i class="icon-cc-subtitles"></i>
-        <span>下载字幕<span>(JSON)</span></span>
+        <span><span>下载字幕</span><span>(JSON)</span></span>
       </button>
       <button class="gui-settings-flat-button" id="download-subtitle-ass">
         <i class="icon-cc-subtitles"></i>
-        <span>下载字幕<span>(ASS)</span></span>
+        <span><span>下载字幕</span><span>(ASS)</span></span>
       </button>
     `,
     condition: videoCondition,

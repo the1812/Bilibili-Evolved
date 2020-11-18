@@ -707,6 +707,15 @@ li.category.folded i.icon-arrow {
     height: 24px;
     opacity: .75;
   }
+  span > span {
+    margin: 0 2px;
+    &:last-child {
+      margin-right: 0;
+    }
+    &:first-child {
+      margin-left: 0;
+    }
+  }
 
   .popup {
     position: absolute;

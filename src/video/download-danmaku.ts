@@ -226,19 +226,19 @@ export default {
         class="gui-settings-flat-button"
         id="download-danmaku-xml">
         <i class="icon-danmaku"></i>
-        <span>下载弹幕<span>(XML)</span></span>
+        <span><span>下载弹幕</span><span>(XML)</span></span>
       </button>
       <button
         class="gui-settings-flat-button"
         id="download-danmaku-json">
         <i class="icon-danmaku"></i>
-        <span>下载弹幕<span>(JSON)</span></span>
+        <span><span>下载弹幕</span><span>(JSON)</span></span>
       </button>
       <button
         class="gui-settings-flat-button"
         id="download-danmaku-ass">
         <i class="icon-danmaku"></i>
-        <span>下载弹幕<span>(ASS)</span></span>
+        <span><span>下载弹幕</span><span>(ASS)</span></span>
       </button>
     `,
     condition: async () => {
