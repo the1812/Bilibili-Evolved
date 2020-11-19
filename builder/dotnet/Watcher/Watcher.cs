@@ -25,11 +25,11 @@ namespace BilibiliEvolved.Build.Watcher
     protected abstract void OnFileChanged(FileSystemEventArgs e);
     protected virtual void OnFileDeleted(FileSystemEventArgs e)
     {
-      var minimizedFilename = ResourceMinifier.GetMinimizedFileName(e.FullPath);
-      if (File.Exists(minimizedFilename))
-      {
-        File.Delete(minimizedFilename);
-      }
+      // var minimizedFilename = ResourceMinifier.GetMinimizedFileName(e.FullPath);
+      // if (File.Exists(minimizedFilename))
+      // {
+      //   File.Delete(minimizedFilename);
+      // }
       builder.GetBundleFiles();
       // builder
       //   .GetBundleFiles()
