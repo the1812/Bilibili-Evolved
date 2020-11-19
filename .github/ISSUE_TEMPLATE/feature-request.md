@@ -1,6 +1,5 @@
 ---
-name: Feature request
-about: 功能建议
+name: 功能建议
 
 ---
 <!-- 发布后默认您已阅读发贴须知 -->

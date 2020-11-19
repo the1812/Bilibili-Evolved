@@ -1,6 +1,5 @@
 ---
-name: Bug report
-about: Bug 反馈
+name: Bug 反馈
 
 ---
 <!-- 发布后默认您已阅读发贴须知 -->
