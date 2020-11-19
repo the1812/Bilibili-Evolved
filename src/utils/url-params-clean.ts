@@ -27,6 +27,7 @@ const blockParams = [
   'p2p_type',
   'referfrom',
   'visit_id',
+  'bsource',
 ]
 const siteSpecifiedParams = [
   {
@@ -36,7 +37,11 @@ const siteSpecifiedParams = [
   {
     match: /\/\/live\.bilibili\.com\//,
     param: 'session_id',
-  }
+  },
+  {
+    match: /\/\/www\.bilibili\.com\/bangumi\//,
+    param: 'theme',
+  },
 ]
 const noNormalizes = [
   /game\.bilibili\.com\/fgo/,
