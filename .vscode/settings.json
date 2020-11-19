@@ -25,11 +25,13 @@
         "Swiper",
         "Violentmonkey",
         "Vuex",
+        "Watchlater",
         "afterbegin",
         "afterend",
         "bili",
         "bilibili",
         "bofqi",
+        "btns",
         "bvid",
         "clipboardy",
         "cntr",
@@ -43,9 +45,11 @@
         "dpis",
         "durl",
         "githubusercontent",
+        "gridview",
         "haruna",
         "hdslb",
         "iconfont",
+        "imgleft",
         "jinkela",
         "jsdelivr",
         "kanban",
@@ -54,6 +58,8 @@
         "medialist",
         "overscroll",
         "pako",
+        "protobuf",
+        "qrcode",
         "reloadable",
         "reloadables",
         "repo",
@@ -64,5 +70,8 @@
         "truetype",
         "xmlhttp"
     ],
-    "javascript.validate.enable": true
+    "javascript.validate.enable": true,
+    "files.associations": {
+        "*.user.js": "plain"
+    }
 }

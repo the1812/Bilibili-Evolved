@@ -1,17 +1,5 @@
 # 使用 aria2 下载大文件
-使用 aria2 可以解决 Chrome 无法下载超过 2GB 视频的限制, 以及 Firefox 内存占用过大导致标签页卡顿或崩溃的问题. ~~(顺便还能在PanDownload里用)~~
-<!--
-## 前言: 链接下载器(vld)即将寿终正寝
-> 如果您从未使用过链接下载器, 可以跳过这一节了
-
-我编写链接下载器的目的, 就是希望在我找到稳定的方案前, 能**暂时**地解决大文件的下载问题. 所以随着对 aria2 支持的完善, 链接下载器也将不再更新. 作为过渡, 脚本将延迟几个版本再移除链接下载器的相关按钮.
-
-通过以下命令可以卸载链接下载器:
-```powershell
-npm uninstall -g bilibili-evolved-video-link-downloader
-```
-
-如果您当时只是为了安装链接下载器而安装了 Node.js, 也可以将 Node.js 卸载. -->
+使用 aria2 可以解决 Chrome 无法下载超过 2GB 视频的限制, 以及 Firefox 内存占用过大导致标签页卡顿或崩溃的问题.
 
 ## 下载 aria2
 您可以在 [aria2官网](https://aria2.github.io/) 或 [GitHub Releases页面](https://github.com/aria2/aria2/releases/latest) 下载 aria2. 无需安装, 解压放在一个文件夹里后即可使用.
@@ -81,7 +69,3 @@ aria2c --conf-path=aria2.conf
 
 ## 卸载 aria2
 如需卸载 aria2, 删掉它的文件夹就行了.
-
-<!--
-## 题外话
-如果您知道如何将 HTTP Headers (主要是 Referer 和 User-Agent)和链接(最好还能指定文件名)同时传给 IDM(Internet Download Manager), 请在 [issue #149](https://github.com/the1812/Bilibili-Evolved/issues/149) 中留言, 谢谢~ -->

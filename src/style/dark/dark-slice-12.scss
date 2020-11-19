@@ -598,7 +598,16 @@
 .spend-recode .title-group .selected-title:after {
   @include theme-background-color();
 }
-#newsList li.tag:hover,
+#newsList,
+#newsDetail {
+  li.tag:hover {
+    @include background-color();
+
+    span {
+      @include theme-color();
+    }
+  }
+}
 #app-ctnr .label-wrapper .content {
   @include background-color();
 }
@@ -659,7 +668,7 @@
   @include color("e");
 }
 .members-info {
-  .avatar-name {
+  .avatar-name__container .name-text {
     @include color("e");
   }
   .avatar {
@@ -728,7 +737,8 @@ a.bp_box_bot_click {
   @include border-color("4");
   .nav-tabs__item {
     @include border-color();
-    &>span {
+    &>span,
+    &>div>span {
       @include color("e");
     }
     &:hover span,
@@ -751,6 +761,7 @@ a.bp_box_bot_click {
   .rank-list .rank-item:hover {
     box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
   }
+  @include back-top-btn();
 }
 .popular-list .popular-tips,
 .history-list .history-tips,
@@ -810,5 +821,123 @@ a.bp_box_bot_click {
   }
   .history-hint {
     @include background-color("4");
+  }
+}
+.rank-list .rank-item .content .img,
+.rank-list .rank-item .content .img .cover {
+  @include background-color("4");
+  @include border-color();
+}
+.manga-detail {
+  .layout,
+  .section .right-side .recommendation {
+    @include background-color("4");
+  }
+  .episode-list-component .episode-list .list-header .header-item {
+    @include background-color("5");
+  }
+  .section .right-side {
+    .recommendation .header-content .more:hover {
+      @include background-color();
+      @include theme-color();
+    }
+    .recommendation .header-content .more:hover .emmet-right,
+    .ranking-jump:hover .emmet-right {
+      @include to-theme("blue");
+    }
+  }
+  .comic-info-panel .comic-detail {
+    .comic-title {
+      @include color("e");
+    }
+    .comic-info {
+      @include color("a");
+    }
+  }
+  .section .right-side .recommendation .header-content .title {
+    @include theme-color();
+  }
+}
+.container .back-to-content {
+  @include background-color("4");
+  .back-to-top-button:hover .icon-top {
+    @include to-theme("blue");
+  }
+}
+.classroom-innerWrapper {
+  .classroom-rec {
+    .title {
+      @include color("e");
+    }
+    .rank-index {
+      @include background-color("4");
+    }
+  }
+  .upComming {
+    .block-page-progress {
+      @include color("e");
+    }
+    .block-list .slider-contro .slider-next:hover,
+    .block-list .slider-contro .slider-prev:hover {
+      @include background-color("4");
+    }
+    .tags {
+      @include background-color("2");
+      @include color("a");
+    }
+  }
+}
+.up-info .up-info_right .name .message:hover,
+.up-info .up-info_right .name .message:hover i,
+.shop-desc .desc-box .price {
+  @include theme-color();
+}
+
+.header-video-card:hover {
+  @include background-color("3");
+}
+.video-toolbar .note-btn__pink {
+  @include theme-color();
+  @include theme-border-color();
+  &:hover {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
+.my-notebook {
+  .note-header {
+    @include border-color();
+    .note-title {
+      .note-text {
+        @include color("e");
+      }
+      .note-count {
+        @include color("a");
+      }
+    }
+  }
+  .note-single-item {
+    @include border-color("5");
+    &--selected {
+      @include background-color("3");
+    }
+    .note-item__detail {
+      &--title {
+        @include color("e");
+      }
+      &--info {
+        .go-video-btn {
+          @include theme-color();
+          @include theme-border-color();
+          &:hover {
+            @include theme-background-color();
+            @include foreground-color();
+          }
+        }
+        .update-mtime {
+          @include color("a");
+        }
+      }
+    }
   }
 }

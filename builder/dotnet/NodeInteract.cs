@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace BilibiliEvolved.Build
 {
@@ -56,8 +57,27 @@ namespace BilibiliEvolved.Build
   }
   sealed class UglifyJs : NodeInteract
   {
-    protected override string ExecutablePath => "uglify-es/bin/uglifyjs";
+    protected override string ExecutablePath => "terser/bin/terser";
     protected override string Arguments => "-m";
+  }
+  sealed class UserScriptTerser : NodeInteract
+  {
+    public string Filename { get; private set; }
+    public UserScriptTerser(string filename) => Filename = filename;
+    protected override string ExecutablePath => "terser/bin/terser";
+    protected override string Arguments => $"{Filename} -m --comments \"/^[ ]*(==|@)|eslint-|spell-checker:/\"";
+    public static Task WaitForExit(string filename) {
+      return Task.Run(() => {
+        var process = new UserScriptTerser(filename).Run();
+        var result = "";
+        using (var outputReader = new StreamReader(process.StandardOutput.BaseStream, Encoding.UTF8))
+        using (var errorReader = new StreamReader(process.StandardError.BaseStream, Encoding.UTF8))
+        {
+          result = outputReader.ReadToEnd().Trim() + errorReader.ReadToEnd().Trim();
+        }
+        File.WriteAllText(filename, result);
+      });
+    }
   }
   sealed class UglifyCss : NodeInteract
   {
@@ -78,6 +98,23 @@ namespace BilibiliEvolved.Build
   {
     protected override string ExecutablePath => "typescript/bin/tsc";
     protected override string Arguments => "--watch";
+  }
+  sealed class BabelCompiler : NodeInteract
+  {
+    protected override string ExecutablePath => "@babel/cli/bin/babel.js";
+    protected override string Arguments => "src --out-dir .ts-output --quiet --extensions .ts";
+  }
+  sealed class BabelWatchCompiler : NodeInteract
+  {
+    protected override string ExecutablePath => "@babel/cli/bin/babel.js";
+    protected override string Arguments => "src --out-dir .ts-output --quiet --extensions .ts --watch";
+  }
+  sealed class BabelSingleCompiler : NodeInteract
+  {
+    private string filename;
+    public BabelSingleCompiler(string filename) { this.filename = filename; }
+    protected override string ExecutablePath => "@babel/cli/bin/babel.js";
+    protected override string Arguments => $"-f {filename}";
   }
   sealed class SassCompiler : NodeInteract
   {

@@ -12,11 +12,13 @@ namespace BilibiliEvolved.Build
 {
   class Program
   {
-    public static void Main(string[] args)
+    public static void Main(string[] arguments)
     {
       try
       {
-        if (args.Length > 0 && args[0].ToLowerInvariant() == "watch") {
+        var args = arguments.Select(a => a.ToLowerInvariant());
+        ProjectBuilder.ProductionMode = args.Any(a => a == "production");
+        if (args.Any(a => a == "watch")) {
           if (!File.Exists(BuildCache.CacheFilename)) {
             Console.WriteLine("No build cache found, running full build...");
             RunFullBuild();
@@ -29,8 +31,10 @@ namespace BilibiliEvolved.Build
       }
       catch (Exception ex)
       {
+        var lastColor = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Error.WriteLine($"Unexpected Error: {ex.Message}");
+        Console.ForegroundColor = lastColor;
         throw;
       }
     }

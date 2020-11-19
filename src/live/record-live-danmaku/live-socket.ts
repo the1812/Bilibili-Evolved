@@ -216,7 +216,7 @@ export class LiveSocket extends EventTarget {
           if (this.heartBeatTimer) {
             clearInterval(this.heartBeatTimer)
           }
-          this.heartBeatTimer = setInterval(() => {
+          this.heartBeatTimer = window.setInterval(() => {
             this.heartBeat()
           }, 30 * 1000)
           break

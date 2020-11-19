@@ -150,7 +150,9 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 .international-header .b-logo,
 .bili-banner .taper-line,
 .international-header .mini-header,
-.bili-header-m .head-banner .head-content .head-logo {
+.bili-header-m .head-banner .head-content .head-logo,
+#biliMainHeader .mini-header,
+#biliMainHeader .base-mini-header {
   display: none !important;
 }
 .van-popover {
@@ -587,6 +589,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     }
     .logout {
       margin-top: 5px;
+      cursor: pointer;
     }
     .logout:hover {
       color: inherit !important;

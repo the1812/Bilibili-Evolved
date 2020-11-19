@@ -3,7 +3,6 @@ const displayNames = {
   enterPrompt: '入场通知',
   fansMedal: '粉丝勋章',
   title: '活动头衔',
-  userLevel: '用户等级',
   guard: '弹幕特效',
   systemMessage: '全区广播',
   welcomeMessage: '欢迎信息',
@@ -16,6 +15,7 @@ const displayNames = {
   rankList: '排行榜',
   popup: '抽奖提示',
   pk: 'PK浮窗',
+  topRank: '高能榜提示',
   skin: '房间皮肤',
 }
 class SkinManager {

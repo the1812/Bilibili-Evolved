@@ -302,6 +302,13 @@ html[lang="en-US"] {
     padding: 0 4px;
   }
 }
+.feed-card .card .more-panel {
+  @include width-auto();
+  padding: 0 12px;
+  .child-button {
+    white-space: nowrap;
+  }
+}
 
 @media screen and (max-width: 1400px) {
   .link-navbar .nav-item:not(:first-child) .label {

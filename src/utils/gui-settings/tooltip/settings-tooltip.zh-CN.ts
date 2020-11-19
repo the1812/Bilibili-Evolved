@@ -49,9 +49,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 投票仅显示链接, 隐藏下面的大框.
 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.`],
   ["simplifyLiveroom", /*html*/`- 隐藏老爷图标
+- 隐藏入场通知
 - 隐藏粉丝勋章
 - 隐藏活动头衔
-- 隐藏用户等级
 - 隐藏弹幕特效
 - 隐藏全区广播
 - 隐藏欢迎信息 (xxx老爷进入直播间)
@@ -61,7 +61,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 隐藏入场特效
 - 隐藏看板娘
 - 隐藏活动横幅
+- 隐藏排行榜
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
+- 隐藏PK浮窗
+- 隐藏高能榜提示
 - 禁用直播间皮肤
 每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`],
   //["overrideNavBar", /*html*/`开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`],
@@ -208,6 +211,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`unfoldFeeds`, /*html*/`自动展开被折叠的动态.`],
   [`commentsTranslate`, /*html*/`为评论也添加翻译按钮.`],
   [`simpleHomeWheelScroll`, /*html*/`在横向的卡片列表中, 允许鼠标滚轮上下滚动时变成对此列表的横向滚动. (因为是模拟的, 可能会有点卡顿)`],
+  [`downloadPackageEmitMode`, /*html*/`选择多个文件下载时的行为, 打包会先打成一个 zip 再下载, 分别下载会对每一个文件触发下载.`],
+  [`columnImageExporter`, /*html*/`在专栏页面中可在附加功能中导出所有图片.`],
+  [`feedsImageExporter`, /*html*/`在动态的右上角菜单中可选择导出图片来下载当前动态里的所有图片.`],
 ]);
 export default {
   export: { toolTips },

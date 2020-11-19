@@ -1,5 +1,3 @@
-body,
-html,
 p.num,
 .bili-footer,
 .footer-wrp,
@@ -479,6 +477,7 @@ body,
 font>span,
 .list-item .close .close-icon,
 .bb-comment,
+.bb-comment .comment-list .list-item .info .operation,
 #app,
 .back-top
 {
@@ -510,6 +509,7 @@ a.message,
 div.desc,
 .btn.followed .b-gz,
 span.copyright,
+div.play-up-copyright,
 .danmaku-info-row,
 .bilibili-player-danmaku-btn-time,
 .bilibili-player-danmaku-btn-danmaku,
@@ -1498,8 +1498,6 @@ ul.up-nav li
     filter: grayscale(1) brightness(1.3) !important;
 }
 .search-wrap .search-logo,
-.type.active .icon-aver,
-.type.active .icon-imgleft,
 .live-wrap .live-room .headline .filter .cover-btn.active .icon-live-face,
 .live-wrap .live-room .headline .filter .cover-btn:hover .icon-live-face,
 .live-wrap .live-room .headline .filter .frame-btn.active .icon-live-frame,
@@ -1564,8 +1562,6 @@ ul.up-nav li
 {
     filter: var(--pink-image-filter) !important;
 }
-.switch-wrap i.icon-aver,
-.switch-wrap i.icon-imgleft,
 .elevator-module .nav-list .customize .icon,
 .spread-module .num .play .icon,
 .spread-module .num .danmu .icon,
@@ -1614,14 +1610,6 @@ ul.filter-disable .icon-copy,
 .list-create:hover .icon
 {
     background-position: -716px -332px !important;
-}
-.switch-wrap .imgleft:hover i
-{
-    background-position: -148px -376px !important;
-}
-.switch-wrap .aver:hover i
-{
-    background-position: -194px -376px !important;
 }
 /* .multi-page .cur-list ul
 {

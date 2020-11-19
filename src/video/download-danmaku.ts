@@ -1,8 +1,9 @@
 import { getFriendlyTitle } from './title'
-import { DanmakuInfo } from './video-info'
-import { DanmakuConverter, DanmakuConverterConfig, DanmakuType } from './danmaku-converter/danmaku-converter'
+import { DanmakuConverter, DanmakuConverterConfig, DanmakuType, XmlDanmaku } from './danmaku-converter/danmaku-converter'
+import { JsonDanmaku } from './video-info'
 
-export async function convertToAss(xml: string) {
+export type DanmakuDownloadType = 'json' | 'xml' | 'ass'
+export const getUserDanmakuConfig = async () => {
   const title = getFriendlyTitle()
   const defaultConfig: Omit<DanmakuConverterConfig, 'title'> = {
     font: '微软雅黑',
@@ -151,34 +152,63 @@ export async function convertToAss(xml: string) {
     }
   }
   console.log(config)
-  const converter = new DanmakuConverter(config)
-  const assDocument = converter.convertToAssDocument(xml)
+  return config
+}
+export async function convertToAss(xml: string) {
+  const converter = new DanmakuConverter(await getUserDanmakuConfig())
+  const assDocument = converter.xmlStringToAssDocument(xml)
   return assDocument.generateAss()
 }
-export async function downloadDanmaku(ass: boolean) {
+export const convertToAssFromJson = async (json: JsonDanmaku) => {
+  const converter = new DanmakuConverter(await getUserDanmakuConfig())
+  const assDocument = converter.xmlDanmakuToAssDocument(json.xmlDanmakus.map(x => new XmlDanmaku(x)))
+  return assDocument.generateAss()
+}
+export async function downloadDanmaku(type: DanmakuDownloadType) {
   const title = getFriendlyTitle()
-  const danmaku = new DanmakuInfo((unsafeWindow || window).cid!)
-  await danmaku.fetchInfo()
-  const blob = await (async () => {
-    if (ass === true) {
-      return new Blob([await convertToAss(danmaku.rawXML)], {
-        type: 'text/plain'
+  let blob: Blob
+  const aid = (unsafeWindow || window).aid!
+  const cid = parseInt((unsafeWindow || window).cid!)
+  const { DanmakuInfo, JsonDanmaku } = await import('./video-info')
+  switch (type) {
+    case 'xml': {
+      const danmaku = new DanmakuInfo(cid)
+      await danmaku.fetchInfo()
+      blob = new Blob([danmaku.rawXML], {
+        type: 'text/xml'
       })
-    } else {
-      return new Blob([danmaku.rawXML], {
-        type: 'text/plain'
-      })
+      break
     }
-  })()
+    case 'json': {
+      const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
+      blob = new Blob([JSON.stringify(danmaku.jsonDanmakus)], {
+        type: 'text/json'
+      })
+      break
+    }
+    case 'ass': {
+      console.log('start ass')
+      const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
+      console.log('get json danmaku')
+      const converter = new DanmakuConverter(await getUserDanmakuConfig())
+      console.log('get config')
+      const xmlDanmakus = danmaku.xmlDanmakus.map(x => new XmlDanmaku(x))
+      console.log('map')
+      const assDocument = converter.xmlDanmakuToAssDocument(xmlDanmakus)
+      console.log('convert')
+      blob = new Blob([assDocument.generateAss()], {
+        type: 'text/ass'
+      })
+      break
+    }
+  }
   const url = URL.createObjectURL(blob)
   const link = dq('#danmaku-link') as HTMLAnchorElement
   const oldUrl = link.getAttribute('href')
   if (oldUrl) {
     URL.revokeObjectURL(oldUrl)
   }
-  // clearTimeout(timeout);
-  // (dq('#download-danmaku>span') as HTMLElement).innerHTML = '下载弹幕'
-  link.setAttribute('download', `${title}.${(ass ? 'ass' : 'xml')}`)
+  link.setAttribute('download', `${title}.${type}`)
   link.setAttribute('href', url)
   link.click()
 }
@@ -186,6 +216,8 @@ export default {
   export: {
     downloadDanmaku,
     convertToAss,
+    convertToAssFromJson,
+    getUserDanmakuConfig,
   },
   widget: {
     content: /* html */`
@@ -194,13 +226,19 @@ export default {
         class="gui-settings-flat-button"
         id="download-danmaku-xml">
         <i class="icon-danmaku"></i>
-        <span>下载弹幕<span>(XML)</span></span>
+        <span><span>下载弹幕</span><span>(XML)</span></span>
+      </button>
+      <button
+        class="gui-settings-flat-button"
+        id="download-danmaku-json">
+        <i class="icon-danmaku"></i>
+        <span><span>下载弹幕</span><span>(JSON)</span></span>
       </button>
       <button
         class="gui-settings-flat-button"
         id="download-danmaku-ass">
         <i class="icon-danmaku"></i>
-        <span>下载弹幕<span>(ASS)</span></span>
+        <span><span>下载弹幕</span><span>(ASS)</span></span>
       </button>
     `,
     condition: async () => {
@@ -208,14 +246,13 @@ export default {
       return Boolean(cid)
     },
     success: () => {
-      const buttonXml = dq('#download-danmaku-xml') as HTMLButtonElement
-      const buttonAss = dq('#download-danmaku-ass') as HTMLButtonElement
-      const allButtons = [buttonXml, buttonAss]
-      const addListener = (button: HTMLButtonElement, ass: boolean) => {
+      const allTypes = ['xml', 'json', 'ass']
+      const allButtons = allTypes.map(type => dq(`#download-danmaku-${type}`) as HTMLButtonElement)
+      const addListener = (button: HTMLButtonElement, type: DanmakuDownloadType) => {
         button.addEventListener('click', async () => {
           try {
             allButtons.forEach(b => b.disabled = true)
-            await downloadDanmaku(ass)
+            await downloadDanmaku(type)
           } catch (error) {
             logError(error)
           } finally {
@@ -223,8 +260,9 @@ export default {
           }
         })
       }
-      addListener(buttonXml, false)
-      addListener(buttonAss, true)
+      allTypes.forEach((type, index) => {
+        addListener(allButtons[index], type as DanmakuDownloadType)
+      })
     }
   }
 }

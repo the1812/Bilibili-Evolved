@@ -300,6 +300,8 @@ export class ManualInputBatch extends VideoEpisodeBatch {
           aid,
           cid: p.cid,
           titleParameters: {
+            aid,
+            cid: p.cid.toString(),
             n: getNumber(index + 1, info.pages.length),
             ep: info.pages.length > 1 ? p.title : '',
             title: info.title,

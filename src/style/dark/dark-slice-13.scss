@@ -41,3 +41,494 @@
 .multi-page .cur-list .list-box li .duration {
   @include color("a");
 }
+.interact-dialog .con::before {
+  content: "";
+  background: url(https://s1.hdslb.com/bfs/static/jinkela/video/asserts/interact-dialog.png);
+  filter: invert(1);
+  background-size: 242px 198px;
+  width: 242px;
+  height: 198px;
+  display: block;
+  position: absolute;
+  background-repeat: no-repeat;
+  clip-path: inset(60% 35% 0 35%);
+}
+#app {
+  .channel-sidebar {
+    .search-history-panel {
+      @include background-color("3");
+      @include border-color("4");
+      .history-item {
+        &:hover,
+        &.focus {
+          @include background-color("2");
+        }
+        .item-value {
+          @include color("e");
+        }
+        .delete-icon:hover {
+          @include theme-color();
+        }
+      }
+      .clear-btn {
+        @include theme-color();
+      }
+    }
+  }
+  .search-container {
+    @include background-color("2");
+    .header-info {
+      .title {
+        @include color("e");
+      }
+      .count {
+        @include color("a");
+      }
+    }
+    .card-list {
+      .header-info,
+      .channel-info {
+        .title {
+          @include color("e");
+        }
+      }
+      .channel-btns,
+      .channel-btn {
+        @include to-theme("blue");
+      }
+      .list {
+        .video-card {
+          .video-name {
+            @include color("e");
+            &:hover {
+              @include theme-color();
+            }
+          }
+        }
+      }
+    }
+    @include back-top-btn();
+  }
+}
+#page-dynamic,
+.detail-card {
+  .bb-comment {
+    .no-login {
+      .textarea-container {
+        .baffle,
+        .comment-submit {
+          @include background-color("666");
+        }
+      }
+      .comment-emoji {
+        @include background-color("666");
+      }
+    }
+  }
+}
+.back-top-tools {
+  @include back-top-btn(".backup");
+}
+.s-space {
+  .follow-main {
+    .follow-header {
+      .follow-tabs {
+        @include color("e");
+        span:hover {
+          @include theme-color();
+        }
+        .active {
+          @include theme-color();
+          &::before {
+            @include set-theme-color("border-bottom-color");
+          }
+          &::after {
+            @include theme-background-color();
+          }
+        }
+      }
+    }
+  }
+}
+.switch-wrap {
+  .type {
+    &.active i,
+    &.active:hover i {
+      @include to-theme("blue");
+    }
+    &.imgleft:not(.active) {
+      &:hover i {
+        background-position: -148px -376px !important;
+        opacity: 1;
+      }
+      i {
+        opacity: 0.7;
+        transition: opacity 0.2s ease-out;
+      }
+    }
+    &.aver:not(.active) {
+      &:hover i {
+        background-position: -194px -376px !important;
+        opacity: 1;
+      }
+      i {
+        opacity: 0.7;
+        transition: opacity 0.2s ease-out;
+      }
+    }
+  }
+}
+.sponsor-mini-rank {
+  .sponsor-rank-container {
+    .sponsor-rank-item:nth-child(n + 4) {
+      .sp-rank {
+        @include color("e");
+      }
+    }
+  }
+}
+.sponsor-rank-dialog {
+  .sponsor-rank-content {
+    @include background-color("4");
+    ::-webkit-resizer,
+    ::-webkit-scrollbar-thumb {
+      @include background-color("3");
+      &:hover {
+        @include background-color("5");
+      }
+    }
+    .sp-rank-header {
+      .sp-list-nav {
+        @include set-color("border-bottom-color", "5");
+      }
+    }
+    .sp-rank-body {
+      .sp-rank-list {
+        .sponsor-rank-item {
+          &:nth-child(n + 4) .sp-rank i {
+            @include background-color("3");
+            @include color("e");
+          }
+          .sp-user:not([class~="vip"]) {
+            @include color("e");
+          }
+          .sp-msg {
+            @include background-color("3");
+            @include border-color();
+            &::before {
+              @include set-color("border-top-color", "3");
+              @include set-color("border-left-color", "3");
+              @include background-color("3");
+            }
+            p {
+              @include color("e");
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.sponsor-pay-content {
+  .sponsor-pay-header {
+    @include set-color("border-bottom", "5");
+  }
+  .sponsor-pay-body {
+    .sponsor-choice {
+      .active .sponsor-border {
+        @include background-color();
+      }
+      .sponsor-border {
+        @include background-color("3");
+      }
+      .active input[name="custom-amount"] {
+        @include color("e");
+      }
+      input[name="custom-amount"] {
+        @include background-color("3");
+        @include color("6");
+      }
+    }
+  }
+  .sp-pay-qrcode {
+    .sponsor-qrcode {
+      .step-other {
+        @include to-theme("blue");
+      }
+    }
+  }
+}
+#biliMainHeader {
+  .mini-header,
+  .base-mini-header {
+    @include background-color("2");
+    .base-mini-header-logo {
+      @include to-white();
+    }
+    .base-nav-link-main,
+    .base-mini-header-pulldown-icon,
+    .base-nav-link-item {
+      @include color("e");
+    }
+    .base-mini-upload {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+  }
+}
+.v-wrap .vcd .cover {
+  @include background-color("4");
+}
+.live-btn-ctnr {
+  .icon-arrow-right {
+    @include theme-color();
+  }
+}
+// TODO 修复 html 样式误伤，导致圆角无法呈现的问题
+#app-container {
+  .share-step {
+    .ogv-card {
+      .name {
+        @include color("e");
+      }
+      @include background-color("3");
+    }
+    .bp-emoji-box {
+      @include color("e");
+    }
+  }
+}
+.link-footer .footer-img-linker li {
+  a:hover .footer-img-item {
+    @include color("e");
+    @include border-color();
+  }
+
+  .footer-img-item {
+    @include border-color("a");
+  }
+}
+div[role="alertdialog"] .link-popup-panel {
+  top: unset !important;
+  .popup-content-ctnr p {
+    @include color("a");
+  }
+}
+.streamer-calendar {
+  @include background-color("2");
+  .subscribe-tips {
+    @include color("e");
+  }
+  .streamer-calendar-nav {
+    @include background-color("4");
+    @include border-color();
+    .tabs-wrapper {
+      .tabs {
+        .tabs-item {
+          &:hover {
+            @include color("e");
+          }
+          &::after {
+            @include theme-background-color();
+          }
+          &.tabs-item-active {
+            @include color("e");
+          }
+        }
+      }
+    }
+    .month-tabs-btn {
+      @include background-color();
+      &:hover,
+      &:focus {
+        @include to-theme("blue");
+      }
+    }
+    .month-tabs-title {
+      @include color("e");
+    }
+    .streamer-calendar-description {
+      @include color("a");
+    }
+    .btn-blue {
+      @include theme-background-color();
+    }
+  }
+  .calendar-watch {
+    // .calendar-recommend{}
+    .calendar-follow {
+      @include border-color();
+      @include background-color("4");
+      .calendar-follow-title {
+        @include color("e");
+        .calendar-follow-description {
+          @include color("a");
+        }
+      }
+      .calendar-follow-empty {
+        .calendar-follow-empty-tips {
+          margin-left: 36px;
+          & p {
+            @include color("e");
+          }
+        }
+      }
+      .calendar-follow-cards-container {
+        .anchor-card {
+          .anchor-card-avatar {
+            @include border-color("6");
+          }
+          .anchor-card-info {
+            .anchor-card-title {
+              @include color("e");
+            }
+            .anchor-card-action {
+              @include theme-background-color();
+            }
+          }
+        }
+      }
+    }
+    .calendar-search {
+      @include border-color();
+      @include background-color("4");
+      .calendar-search-top {
+        .calendar-search-title {
+          @include color("e");
+        }
+        .calendar-search-input-wrapper {
+          @include background-color("3");
+          .calendar-search-input {
+            @include color("e");
+          }
+          .calendar-search-action:hover {
+            @include to-theme("blue");
+          }
+        }
+      }
+      .calendar-search-content {
+        .anchor-card-info {
+          .anchor-card-avatar {
+            @include border-color("6");
+          }
+          .anchor-card-title {
+            @include color("e");
+          }
+        }
+        .calendar-search-message {
+          @include color("a");
+        }
+      }
+    }
+    .basic-calendar {
+      @include border-color();
+      .basic-calendar-thead {
+        .basic-calendar-thead-th {
+          @include color("a");
+          @include border-color("6");
+          @include background-color("4");
+        }
+      }
+      .basic-calendar-tbody {
+        .basic-calendar-item {
+          @include border-color("6");
+          @include background-color("3");
+          .calendar-item-top {
+            .calendar-item-date {
+              .calendar-item-today {
+                @include theme-background-color();
+              }
+              &:not(.calendar-item-today) {
+                filter: invert(1);
+              }
+            }
+            .calendar-item-switch-cards-wrapper {
+              @include background-color();
+              .calendar-item-switch-cards {
+                @include background-color();
+                &:not([disabled="disabled"]):hover {
+                  @include theme-background-color();
+                }
+                @include border-color("6");
+              }
+            }
+          }
+          .calendar-item-card-wrapper {
+            .calendar-card {
+              @include border-color();
+              @include background-color("3");
+              .calendar-card-top {
+                .calendar-card-time {
+                  @include color("e");
+
+                  &.calendar-card-time-end {
+                    @include color("a");
+                  }
+                }
+                .calendar-card-follow {
+                  @include theme-background-color();
+                  &.calendar-card-follow-subscribed {
+                    @include background-color("5");
+                  }
+                }
+              }
+              .calendar-card-info {
+                .calendar-card-anchor {
+                  @include color("e");
+                }
+              }
+              .calendar-card-title {
+                @include color("a");
+              }
+              &.calendar-card-follow-highlight {
+                @include theme-background-color();
+                .calendar-card-top .calendar-card-time {
+                  @include color("e");
+                }
+                .calendar-card-title {
+                  @include color("3");
+                }
+              }
+            }
+          }
+          .calendar-item-cards-wrapper-odd {
+            .calendar-item-card-wrapper:nth-of-type(2n) .calendar-card {
+              @include background-color("4");
+            }
+          }
+          .calendar-item-cards-wrapper-even {
+            .calendar-item-card-wrapper:nth-of-type(odd) .calendar-card {
+              @include background-color("4");
+            }
+          }
+        }
+      }
+    }
+  }
+  .share-panel {
+    @include border-color();
+    @include background-color("4");
+  }
+  .side-bar {
+    .side-bar-btn {
+      @include theme-color();
+      @include border-color();
+      @include background-color("4");
+      .side-bar-btn-icon {
+        @include to-theme("blue");
+      }
+    }
+  }
+}
+html {
+  &,
+  body {
+    @include background-color();
+  }
+  &:not(.iframe) {
+    &,
+    body {
+      @include background-color("2");
+    }
+  }
+}

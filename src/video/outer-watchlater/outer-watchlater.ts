@@ -2,6 +2,7 @@
   if (!document.URL.startsWith('https://www.bilibili.com/video/') || !getUID()) {
     return
   }
+  const { playerReady } = await import('../player-ready')
   await playerReady()
   const favoriteButton = dq('.video-toolbar .ops .collect')
   if (!favoriteButton) {

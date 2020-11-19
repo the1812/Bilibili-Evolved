@@ -18,7 +18,9 @@
   &-kanban .live-haruna-ctnr,
   &-enterPrompt .chat-item.important-prompt-item,
   &-enterPrompt .chat-history-panel .brush-prompt,
-  &-pk .chaos-pk {
+  &-pk .chaos-pk,
+  &-topRank .chat-item.top3-notice,
+  &-topRank .chat-item .rank-icon {
     display: none !important;
   }
 }

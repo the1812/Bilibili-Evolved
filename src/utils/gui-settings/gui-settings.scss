@@ -611,8 +611,8 @@ li.category.folded i.icon-arrow {
   kbd {
     padding: 0 4px;
     border-radius: 4px;
-    border: 1px solid #ccc;
-    color: #ccc;
+    border: 1px solid #444;
+    background-color: #222;
     border-bottom-width: 3px;
     margin: 0 4px;
   }
@@ -706,6 +706,15 @@ li.category.folded i.icon-arrow {
     line-height: 24px;
     height: 24px;
     opacity: .75;
+  }
+  span > span {
+    margin: 0 2px;
+    &:last-child {
+      margin-right: 0;
+    }
+    &:first-child {
+      margin-left: 0;
+    }
   }
 
   .popup {

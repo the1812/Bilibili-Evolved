@@ -35,6 +35,7 @@ namespace BilibiliEvolved.Build.Watcher
         {
           lock (builder)
           {
+            builder.ResetBuildTime();
             builder
               .BuildBundle()
               .BuildPreviewOffline()

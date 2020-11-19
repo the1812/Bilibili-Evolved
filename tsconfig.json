@@ -2,13 +2,11 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "sourceMap": false,
-    "typeRoots": [
-      "./@types",
-      "./node_modules/vue/types"
-    ],
     "outDir": ".ts-output/"
   },
   "include": [

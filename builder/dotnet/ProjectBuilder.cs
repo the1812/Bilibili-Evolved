@@ -11,6 +11,7 @@ namespace BilibiliEvolved.Build
 {
   public partial class ProjectBuilder
   {
+    public static bool ProductionMode { get; set; }
     public static ProjectBuilder CreateBuilder()
     {
       var configFile = new ConfigurationBuilder()
@@ -30,8 +31,9 @@ namespace BilibiliEvolved.Build
       SourcePath = config.Preview;
       // Source = File.ReadAllText(SourcePath);
       WriteInfo("[Bilibili Evolved] Project builder started.");
+      WriteInfo($"Mode = {(ProductionMode ? "Production" : "Development")}");
       WriteInfo($"Working directory: {Environment.CurrentDirectory}");
-      WriteInfo();
+      Console.WriteLine();
       var urlList = from file in Directory.GetFiles("min")
                     where !file.Contains("dark-slice") && !Path.GetFileName(file).StartsWith("bundle.")
                     select file.Replace(@"\", "/");
@@ -47,13 +49,25 @@ namespace BilibiliEvolved.Build
     public string Output { get; private set; }
     public string SourcePath { get; private set; }
     public string OutputPath { get; set; } = "bilibili-evolved.user.js";
+    public DateTime StartTime { get; private set; } = DateTime.Now;
+    public void ResetBuildTime() => StartTime = DateTime.Now;
     public void BuildFinalOutput()
     {
       // var ratio = 100.0 * MinimizedResourceLength / OriginalResourceLength;
-      File.WriteAllText(OutputPath, Output.Replace(@"// [Offline build placeholder]", compileOnlineData().Replace("Bilibili-Evolved/preview/", "Bilibili-Evolved/master/")));
-      WriteInfo();
+      if (ProductionMode) {
+        var masterOutput = Output.Replace(@"// [Offline build placeholder]", compileOnlineData().Replace("Bilibili-Evolved/preview/", "Bilibili-Evolved/master/"));
+        File.WriteAllText(OutputPath, masterOutput);
+        Task.WaitAll(
+          UserScriptTerser.WaitForExit(config.Master),
+          UserScriptTerser.WaitForExit(config.Preview),
+          UserScriptTerser.WaitForExit(config.Offline),
+          UserScriptTerser.WaitForExit(config.PreviewOffline)
+        );
+      }
+      Console.WriteLine();
       // WriteHint($"External resource size -{(100.0 - ratio):0.##}%");
-      WriteInfo("Build complete.", ConsoleColor.Green);
+      var elapsed = DateTime.Now - StartTime;
+      WriteInfo($"Build complete in {elapsed:hh\\:mm\\:ss\\.ff}", ConsoleColor.Green);
 
       if (config.CopyOnBuild)
       {
@@ -64,10 +78,15 @@ namespace BilibiliEvolved.Build
     }
     public void WriteInfo(string message = "", ConsoleColor color = ConsoleColor.Gray)
     {
+      if (string.IsNullOrWhiteSpace(message)) {
+        return;
+      }
       lock (this)
       {
+        var lastColor = Console.ForegroundColor;
         Console.ForegroundColor = color;
         Console.WriteLine(message);
+        Console.ForegroundColor = lastColor;
       }
     }
     public void WriteSuccess(string message) => WriteInfo(message, ConsoleColor.Blue);

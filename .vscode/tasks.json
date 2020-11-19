@@ -4,6 +4,23 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "生产编译 production",
+      "type": "shell",
+      "command": "dotnet builder/dotnet/publish/build.dll production",
+      "options": {
+        "cwd": "./"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "重新编译 rebuild",
       "type": "shell",
       "command": "dotnet builder/dotnet/publish/build.dll",
@@ -27,6 +44,23 @@
       "label": "监视 watch",
       "type": "shell",
       "command": "dotnet builder/dotnet/publish/build.dll watch",
+      "options": {
+        "cwd": "./"
+      },
+      "group": "build",
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "生产监视 production-watch",
+      "type": "shell",
+      "command": "dotnet builder/dotnet/publish/build.dll watch production",
       "options": {
         "cwd": "./"
       },

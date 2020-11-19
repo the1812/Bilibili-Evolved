@@ -12,7 +12,7 @@ namespace BilibiliEvolved.Build
   {
     public ProjectBuilder BuildTypeScripts()
     {
-      var tsc = new TypeScriptCompiler();
+      var tsc = new BabelCompiler();
       var uglifyJs = new JavascriptMinifier();
       var files = ResourceMinifier.GetFiles(file =>
         file.Extension == ".ts" &&
@@ -23,26 +23,34 @@ namespace BilibiliEvolved.Build
         var changedFiles = files.Where(file => !cache.Contains(file)).ToArray();
         if (changedFiles.Any())
         {
-          changedFiles.Where(f => !f.EndsWith(".vue.ts")).ForEach(file =>
+          string getOutputCacheFilename(string f)
           {
+            return ".ts-output/" + f
+              .Replace(".ts", ".js")
+              .Replace($"src{Path.DirectorySeparatorChar}", "");
+          }
+          changedFiles.ForEach(file => {
             cache.AddCache(file);
             WriteInfo($"TypeScript build: {file}");
           });
-          Console.Write(tsc.Run("").Trim());
+          WriteInfo(tsc.Run("").Trim());
           Parallel.ForEach(changedFiles
-            .Where(f => !f.EndsWith(".vue.ts"))
-            .Select(f => ".ts-output/" + f
-              .Replace(".ts", ".js")
-              .Replace($"src{Path.DirectorySeparatorChar}", "")
-            ), file => {
-              var text = RegexReplacer.Replace(File.ReadAllText(file), @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match => {
+            .Where(f => !f.EndsWith(".vue.ts")),
+            f => {
+              // var tsc = new BabelSingleCompiler(file);
+              // var js = tsc.Run(File.ReadAllText(file));
+              // File.WriteAllText(getOutputCacheFilename(file), js);
+              var file = getOutputCacheFilename(f);
+              var text = RegexReplacer.Replace(File.ReadAllText(file), @"import\(\(\(\)\s*=>\s*(.*)\)\(\)\)", match =>
+              {
                 return $"import({match.Groups[1].Value})";
               });
               var min = uglifyJs.Minify(text);
               var minFile = ResourceMinifier.GetMinimizedFileName(file);
               File.WriteAllText(minFile, min);
-              WriteHint($"\t=> {minFile}");
-          });
+              UpdateCachedMinFile(minFile);
+              // WriteHint($"\t=> {minFile}");
+            });
         }
         cache.SaveCache();
       }

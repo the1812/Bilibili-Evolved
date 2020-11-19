@@ -47,6 +47,10 @@ interface LiveInfo {
 
   const liveDetailItem = liveList.children[0] as HTMLElement
   extend.forEach(it => {
+    const existingNames = dqa(liveList, '.up-name') as HTMLElement[]
+    if (existingNames.some(n => n.innerText.trim() === it.uname)) {
+      return
+    }
     const clone = liveDetailItem.cloneNode(true) as HTMLElement
     dqa(clone, 'a[href]').forEach(a => a.setAttribute('href', `https://live.bilibili.com/${it.roomid}`))
     const face = dq(clone, '.live-up-img') as HTMLElement

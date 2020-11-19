@@ -45,6 +45,10 @@
             name: 'kdxcxs',
             link: 'https://github.com/kdxcxs'
           },
+          {
+            name: 'JLoeve',
+            link: 'https://github.com/LonelySteve'
+          },
         ].sort(userSorter),
         fetching: true,
         participants: [],

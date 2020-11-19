@@ -20,7 +20,6 @@ yarn
 ```
 
 ## 修改代码
-
 ### 修改现有功能
 - 启动[监视模式](##构建/监视)
 - 确认功能对应的代码文件, 通常根据目录结构就可以找到, 实在找不到可以在设置中可以通过检查元素查看到某项功能对应的 `data-key`, 这个 key 对应的是 `src/client/resource-manifest.js` 中的 key, 从而可以得知相应的代码文件名称 (`path` 属性)
@@ -46,7 +45,7 @@ yarn
 
 ### 添加新功能
 - 在 `src/client/settings.js` 中的 `settings` 对象上添加新的 key, 作为新功能的默认值
-- 在 `@types/global/index.d.ts` 添加对应的类型声明
+- 在 `src/global.d.ts` 添加对应的类型声明
 - 在 `src` 下对应的文件夹分类中创建代码文件, 如果只有一个 `.js` / `.ts` 文件, 可以不建子文件夹, 带有样式等建议放在同名的子文件夹
 > ⚠️ 由于历史原因, 即便是分在不同的文件夹, 这些功能组件的文件名也不能重名
 
@@ -216,8 +215,63 @@ dotnet builder/dotnet/publish/build.dll
 dotnet builder/dotnet/publish/build.dll watch
 ```
 
+### 本地调试方式
+1. 必须使用 Chrome / 基于 Chrome 内核的浏览器
+2. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
+3. 打开`允许访问文件网址`
+4. 新建脚本
+5. 粘贴内容:
+```js
+// ==UserScript==
+// @name         Bilibili Evolved (Local preview offline)
+// @description  Bilibili Evolved 预览离线版 (本地)
+// @version      300.0
+// @author       Grant Howard, Coulomb-G
+// @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @license      MIT
+// @match        *://*.bilibili.com/*
+// @exclude      *://api.bilibili.com/*
+// @exclude      *://api.*.bilibili.com/*
+// @exclude      *://*.bilibili.com/api/*
+// @exclude      *://member.bilibili.com/studio/bs-editor/*
+// @run-at       document-start
+// @grant        unsafeWindow
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_setClipboard
+// @grant        GM_info
+// @grant        GM_xmlhttpRequest
+// @grant        GM.getValue
+// @grant        GM.setValue
+// @grant        GM.setClipboard
+// @grant        GM.info
+// @grant        GM.xmlHttpRequest
+// @connect      raw.githubusercontent.com
+// @connect      cdn.jsdelivr.net
+// @connect      cn.bing.com
+// @connect      www.bing.com
+// @connect      translate.google.cn
+// @connect      translate.google.com
+// @connect      *
+// @require      https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js
+// @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
+// @require      https://cdn.jsdelivr.net/npm/jszip@3.1.5/dist/jszip.min.js
+// @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js
+// @require      https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js
+// @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
+// @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
+// ==/UserScript==
+```
+6. 在那些 `@require` 下面再添加一行 `@require file://{{ bilibili-evolved.dev.js的绝对路径 }}`
+> Windows 例子: `@require file://C:/xxx/Bilibili-Evolved/bilibili-evolved.dev.js`
+
+> macOS 例子: `@require file:///Users/xxx/Documents/Bilibili-Evolved/bilibili-evolved.dev.js`
+7. 保存脚本, 监视模式下保存文件构建完成后, 刷新即可生效
+
+> 上面那些其他的 @require 跟 `src/client/bilibili-evolved.js` 里的保持一致就行, 偶尔这些依赖项会变动导致这个本地调试脚本失效, 到时候照着改一下就行.
+
 ## 提交 commit
-- 调试过程中会产生编译后的文件 (`min` 文件夹里的东西和根目录的4个脚本主文件), 建议提交前放弃这些文件的更改, 只提交对源代码的修改, 以免 PR 的时候冲突
+- 调试过程中会产生编译后的文件 (`min` 文件夹里的东西), 建议提交前放弃这些文件的更改, 只提交对源代码的修改, 以免 PR 的时候冲突
 - commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式
 
 ## 发起 PR (合并请求)

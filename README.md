@@ -43,6 +43,8 @@
 | Fast.io  | <1h      | 快       | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview.user.js)                          | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.offline.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview-offline.user.js)                          |
 | GitHub   | <1h      | 慢       | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)      |
 
+> Fast.io 年底将停止使用, 如果你在 2021 年看到我这里还没把 Fast.io 源删掉, 也请不要用 Fast.io 源进行安装.
+
 ## 推荐配置
 - 操作系统: 64-bit Windows 10 / macOS 10.15
 - 分辨率: 2K
@@ -82,13 +84,10 @@
 支持**最新版** Chrome, Edge (Chromium 内核), Firefox, Safari, 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)或者较长时间没更新的浏览器中完美运行.
 
 UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://www.microsoft.com/en-us/edge).
+> Windows 10 20H2 更新中好像完全替换掉了 UWP 版 Edge (R.I.P.) 自带浏览器变成了 Chromium 内核 Edge.
 
-# 关于源码
-虽然本项目的源代码是公开的, 但是我并不推荐您花太多时间阅读这些代码. 因为这是我的第一个JavaScript项目, 它包含了从我初学JavaScript到如今形成一定风格以来写下的各种代码(各种祖传代码), 不同的几个模块可能风格差异会很大, 像是早期DOM操作经常使用jQuery到后期转向原生API和Vue, 4空格缩进变成2空格缩进等等. 一些比较复杂的模块里也是放飞自我.
-
-所以, 如果您希望通过阅读源码来学习知识的话, 建议去看看那些更专业更成熟的项目.
-
-如果实在希望能贡献一些代码, 也可以参考[代码贡献指南](CONTRIBUTING.md).
+# 参与项目
+欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~ (小心编译器的神秘 bug / 小心被祖传代码闪瞎)
 
 ## 界面翻译
 特别感谢给我们提供了翻译文本的各位:
@@ -132,6 +131,11 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 作者: [xmcp](https://github.com/xmcp)
 - [主页](https://s.xmcp.ml/pakkujs/)
 - [GitHub](https://github.com/xmcp/pakku.js)
+
+## BLTH - Bilibili Live Tasks Helper
+作者: [andywang425](https://github.com/andywang425)
+- [GitHub](https://github.com/andywang425/BLTH)
+- [GreasyFork](https://greasyfork.org/zh-CN/scripts/406048-b%E7%AB%99%E7%9B%B4%E6%92%AD%E9%97%B4%E6%8C%82%E6%9C%BA%E5%8A%A9%E6%89%8B)
 
 ----
 

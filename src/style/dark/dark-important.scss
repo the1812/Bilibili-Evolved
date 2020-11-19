@@ -24,6 +24,9 @@
 .home-content .publish-btn.disabled {
   @include background-color("2");
 }
+.manga-detail .episode-list-component .episode-list .list-header .header-item.selected {
+  @include background-color("3");
+}
 .wrapper .elec-btn.disabled,
 .f-list-hover:hover,
 .status_box .status_btn.disabled,
@@ -172,7 +175,8 @@ blockquote {
 .container .video-panel .play-all .bilifont,
 .round-corner .van-popper-favorite .play-all .bilifont,
 .rank-item .content .info:hover .title,
-.rank-list .rank-item .content .info:hover .title {
+.rank-list .rank-item .content .info:hover .title,
+.rank-list .rank-item .content .info .up-name:hover {
   @include theme-color();
 }
 
@@ -271,6 +275,8 @@ blockquote {
   scrollbar-color: #444 transparent !important;
   scrollbar-width: thin !important;
 }
-.members-info .avatar-name.is-vip {
-  color: #fb7299!important;
+.members-info .avatar-name__container .is-vip,
+.members-info .wide-members .avatar .is-vip,
+.up-info .up-info_right .name .username.is-vip {
+    color: #fb7299!important;
 }

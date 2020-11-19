@@ -136,8 +136,11 @@ function checkOfflineData () {
 
 // https://github.com/the1812/Bilibili-Evolved/issues/1076
 const issue1076 = ['playerFocus', 'outerWatchlater', 'quickFavorite']
+const handleIssue1076 = () => {
+  return scriptVersion === 'Stable' || scriptVersion === 'Offline'
+}
 const preCheckCompatibility = () => {
-  if (issue1076.some(key => settings[key])) {
+  if (handleIssue1076() && issue1076.some(key => settings[key])) {
     issue1076.forEach(key => {
       settings[key] = false
     })
@@ -157,9 +160,11 @@ function checkCompatibility () {
     settings.harunaScale = false
     settings.imageResolution = false
   }
-  checkBoxes
-    .filter(it => issue1076.includes(it.getAttribute('key')))
-    .forEach(checkBox => (checkBox.disabled = true))
+  if (handleIssue1076()) {
+    checkBoxes
+      .filter(it => issue1076.includes(it.getAttribute('key')))
+      .forEach(checkBox => (checkBox.disabled = true))
+  }
 }
 function setDisplayNames () {
   for (const [key, name] of Object.entries(Resource.displayNames)) {
@@ -196,6 +201,7 @@ function setDisplayNames () {
     document.querySelector('.gui-settings-icon-panel').style.display = 'none'
     // return;
   }
+  document.documentElement.classList.toggle('iframe', isIframe)
 
   addSettingsListener('guiSettingsDockSide', value => {
     document.body.classList.toggle('gui-settings-dock-right', value === '右侧')

@@ -55,13 +55,13 @@
       <dropdown indent="1" key="defaultVideoQuality" dependencies="useDefaultVideoQuality"></dropdown> -->
       <checkbox indent="0" key="useDefaultVideoSpeed" dependencies=""></checkbox>
       <dropdown indent="1" key="defaultVideoSpeed" dependencies="useDefaultVideoSpeed"></dropdown>
-      <checkbox indent="0" key="useDefaultDanmakuSettings" dependencies=""></checkbox>
+      <!-- <checkbox indent="0" key="useDefaultDanmakuSettings" dependencies=""></checkbox>
       <checkbox indent="1" key="enableDanmaku" dependencies="useDefaultDanmakuSettings"></checkbox>
       <checkbox indent="1" key="rememberDanmakuSettings" dependencies="useDefaultDanmakuSettings enableDanmaku">
-      </checkbox>
+      </checkbox> -->
       <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDescription" dependencies=""></checkbox>
-      <checkbox indent="0" key="autoContinue" dependencies=""></checkbox>
+      <!-- <checkbox indent="0" key="autoContinue" dependencies=""></checkbox> -->
       <checkbox indent="1" key="allowJumpContinue" dependencies="autoContinue"></checkbox>
       <checkbox indent="0" key="airborne" dependencies=""></checkbox>
       <checkbox indent="0" key="skipChargeList" dependencies=""></checkbox>
@@ -131,7 +131,7 @@
       <checkbox indent="0" key="disableFeedsDetails" dependencies=""></checkbox>
       <checkbox indent="0" key="copyFeedsLink" dependencies=""></checkbox>
       <checkbox indent="0" key="unfoldFeeds" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="feedsImageExporter" dependencies=""></checkbox> -->
+      <checkbox indent="0" key="feedsImageExporter" dependencies=""></checkbox>
       <category icon="video-outline">直播</category>
       <checkbox indent="0" key="useDefaultLiveQuality" dependencies=""></checkbox>
       <dropdown indent="1" key="defaultLiveQuality" dependencies="useDefaultLiveQuality"></dropdown>
@@ -164,7 +164,7 @@
       <checkbox indent="0" key="urlParamsClean" dependencies=""></checkbox>
       <checkbox indent="0" key="preferAvUrl" dependencies=""></checkbox>
       <checkbox indent="0" key="copyCommentLink" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="columnImageExporter" dependencies=""></checkbox> -->
+      <checkbox indent="0" key="columnImageExporter" dependencies=""></checkbox>
       <!-- <checkbox indent="0" key="restoreFloors" dependencies=""></checkbox> -->
       <category icon="touch">触摸</category>
       <checkbox indent="0" key="touchNavBar" dependencies=""></checkbox>
@@ -180,6 +180,7 @@
       <dropdown indent="0" key="updateCdn" dependencies=""></dropdown>
       <dropdown indent="0" key="scriptLoadingMode" dependencies=""></dropdown>
       <dropdown indent="0" key="guiSettingsDockSide" dependencies=""></dropdown>
+      <dropdown indent="0" key="downloadPackageEmitMode" dependencies=""></dropdown>
       <textbox indent="0" key="sideBarOffset" dependencies=""></textbox>
       <checkbox indent="0" key="elegantScrollbar" dependencies=""></checkbox>
       <checkbox indent="0" key="autoHideSideBar" dependencies=""></checkbox>
@@ -193,5 +194,5 @@
       <a class="release-notes" target="_blank" href="https://github.com/the1812/Bilibili-Evolved/releases">更新日志</a>
     </div>
   </div>
-  <div class="gui-settings-tooltip"></div>
+  <div class="gui-settings-tooltip show"></div>
 </div>

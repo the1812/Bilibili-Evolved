@@ -1019,10 +1019,4 @@
       @include border-color("4");
     }
   }
-  > .icon.active {
-    @include color("a");
-    &:hover {
-      @include to-theme("blue");
-    }
-  }
 }

@@ -99,6 +99,7 @@ Resource.manifest = {
       updateCdn: '更新源',
       autoHideSideBar: '自动隐藏侧栏',
       elegantScrollbar: '使用细滚动条',
+      downloadPackageEmitMode: '多文件下载模式',
     },
     dropdown: [
       {
@@ -116,7 +117,11 @@ Resource.manifest = {
       {
         key: 'updateCdn',
         items: ['jsDelivr', 'GitHub'],
-      }
+      },
+      {
+        key:'downloadPackageEmitMode',
+        items: ['打包下载', '分别下载'],
+      },
     ],
   },
   useDarkStyle: {
@@ -291,17 +296,17 @@ Resource.manifest = {
       useCache: '启用缓存'
     }
   },
-  videoDownloadPackage: {
-    path: 'download-video-package.min.js',
+  videoPackage: {
+    path: 'download-package.min.js',
   },
   downloadVideo: {
     path: 'download-video.min.js',
     html: true,
     style: 'instant',
-    dependencies: ['title', 'videoInfo', 'videoDownloadPackage'],
+    dependencies: ['title', 'videoInfo', 'videoPackage'],
     displayNames: {
       'downloadVideo': '下载视频',
-      'videoDownloadPackage': '下载视频打包器',
+      'videoPackage': '下载视频打包器',
       'batchDownload': '批量下载',
       'aria2Rpc': 'aria2 RPC',
     }

@@ -41,7 +41,7 @@ export class Translator {
         }
         else {
           const { text, selector, not } = subTranslation;
-          if (this.getElement(node).matches(selector) !== Boolean(not)) {
+          if (this.getElement(node)?.matches(selector) !== Boolean(not)) {
             finalTranslation = text;
           }
         }
@@ -52,7 +52,7 @@ export class Translator {
     }
     else {
       const { text, selector, not } = translation;
-      if (this.getElement(node).matches(selector) !== Boolean(not)) {
+      if (this.getElement(node)?.matches(selector) !== Boolean(not)) {
         this.setValue(node, text);
       }
     }

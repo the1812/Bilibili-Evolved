@@ -108,10 +108,8 @@ export default {
     },
     async exportXML() {
       const { getFriendlyTitle } = await import('../../video/title')
-      const { DownloadVideoPackage } = await import(
-        '../../video/download-video/download-video-package'
-      )
-      const pack = new DownloadVideoPackage()
+      const { DownloadPackage } = await import('../../utils/download-package')
+      const pack = new DownloadPackage()
       pack.add(getFriendlyTitle() + '.xml', this.getXML())
       await pack.emit()
     },
