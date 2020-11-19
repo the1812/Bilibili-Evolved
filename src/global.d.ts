@@ -239,7 +239,7 @@ declare global {
     getPriorStyle(): any
     applyStyle(id: string, important: boolean): void
     static all: { [key: string]: Resource }
-    static displayNames: object
+    static displayNames: Record<string, string>;
     static manifest: object
     static root: string
     static cdnRoot: string
