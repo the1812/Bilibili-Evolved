@@ -194,6 +194,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`commentsTranslate`, /*html*/`コメントの翻訳ボタンを追加する.`],
     [`simpleHomeWheelScroll`, /*html*/`水平カードリストでは、マウスホイールを上下にスクロールできると、このリストの水平スクロールになります.（シミュレートされているため、少し動かなくなる可能性があります）`],
     ["airborne", /*html*/`動画の時点が弾幕に表示されると、下線が表示されます.クリックして、対応する時点に直接移動します.`],
+    [`downloadPackageEmitMode`, /*html*/`複数のファイルのダウンロードを選択する場合の動作は、パッケージが zip にヒットしてダウンロードされ.個別にダウンロードされると、各ファイルのダウンロードがトリガーされます.`],
+    [`columnImageExporter`, /*html*/`コラムページでは、追加機能ですべての画像をエクスポートできます.`],
+    [`feedsImageExporter`, /*html*/`フィードの右上隅にあるメニューから画像をエクスポートして、このフィード内のすべての画像をダウンロードすることができます.`],
 ]);
 export default {
     export: { toolTips },
