@@ -179,6 +179,9 @@ Additional variables:
   [`commentsTranslate`, `Also applies for comments.`],
   [`simpleHomeWheelScroll`, `Allow scrolling card list horizontally by mouse wheel. (May cause frame drops)`],
   [`airborne`, `Underline danmakus that contain time, and click it will seek to corresponding video progress.`],
+  [`downloadPackageEmitMode`, `Choose the behavior when downloading multiple files: <span>Packed</span> will download a zip file, <span>Individual</span> will trigger download for each file.`],
+  [`columnImageExporter`, `Export all images in column from Add-ons.`],
+  [`feedsImageExporter`, `Export all images in feed from feed menu.`],
 ]);
 export default {
   export: { toolTips },
