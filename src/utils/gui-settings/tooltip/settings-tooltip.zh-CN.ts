@@ -49,9 +49,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 投票仅显示链接, 隐藏下面的大框.
 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.`],
   ["simplifyLiveroom", /*html*/`- 隐藏老爷图标
+- 隐藏入场通知
 - 隐藏粉丝勋章
 - 隐藏活动头衔
-- 隐藏用户等级
 - 隐藏弹幕特效
 - 隐藏全区广播
 - 隐藏欢迎信息 (xxx老爷进入直播间)
@@ -61,7 +61,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 隐藏入场特效
 - 隐藏看板娘
 - 隐藏活动横幅
+- 隐藏排行榜
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
+- 隐藏PK浮窗
+- 隐藏高能榜提示
 - 禁用直播间皮肤
 每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`],
   //["overrideNavBar", /*html*/`开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`],
