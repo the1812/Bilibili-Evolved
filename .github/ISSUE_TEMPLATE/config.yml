@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 查看置顶问题
+    url: https://github.com/the1812/Bilibili-Evolved/issues
+    about: 在 Pinned issues 中会包含一些近期常见问题, 已有的其他问题也会在下面列出, 请务必查看避免重复提问
