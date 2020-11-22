@@ -532,3 +532,6 @@ html {
     }
   }
 }
+.bb-comment .comment-list .list-item .text-con img {
+  @include to-theme("blue");
+}
