@@ -532,6 +532,9 @@ html {
     }
   }
 }
-.bb-comment .comment-list .list-item .text-con img {
-  @include to-theme("blue");
+.bb-comment .comment-list .list-item {
+  .text-con img:not(.small),
+  .text .jump-img {
+    @include to-theme("blue");
+  }
 }
