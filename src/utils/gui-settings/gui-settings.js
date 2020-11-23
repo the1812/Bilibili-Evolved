@@ -201,7 +201,10 @@ function setDisplayNames () {
     document.querySelector('.gui-settings-icon-panel').style.display = 'none'
     // return;
   }
-  document.documentElement.classList.toggle('iframe', isIframe)
+  const transparentFrames = [
+    'https://t.bilibili.com/share/card/index'
+  ]
+  document.documentElement.classList.toggle('iframe', isIframe && transparentFrames.some(f => document.URL.includes(f)))
 
   addSettingsListener('guiSettingsDockSide', value => {
     document.body.classList.toggle('gui-settings-dock-right', value === '右侧')
