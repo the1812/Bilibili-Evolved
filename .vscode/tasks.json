@@ -10,7 +10,10 @@
       "options": {
         "cwd": "./"
       },
-      "group": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
       "presentation": {
         "echo": false,
         "reveal": "always",
@@ -27,10 +30,7 @@
       "options": {
         "cwd": "./"
       },
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
+      "group": "build",
       "presentation": {
         "echo": false,
         "reveal": "always",
