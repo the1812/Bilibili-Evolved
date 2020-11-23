@@ -146,7 +146,7 @@ Observer.videoChange(async () => {
               date: new Date(it.timeStamp),
             })
           })
-          await pack.emit()
+          await pack.emit(this.batchFilename)
           this.discardAll()
         },
         discardAll() {
