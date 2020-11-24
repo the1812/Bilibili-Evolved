@@ -46,9 +46,9 @@
 > Fast.io 年底将停止使用, 如果你在 2021 年看到我这里还没把 Fast.io 源删掉, 也请不要用 Fast.io 源进行安装.
 
 ## 推荐配置
-- 操作系统: 64-bit Windows 10 / macOS 10.15
+- 操作系统: 64-bit Windows 10 / macOS 10.15+
 - 分辨率: 2K
-- 浏览器: Chrome 74+ / Firefox 65+ / Edge 80+ / Safari 14+
+- 浏览器: Chrome 80+ / Firefox 65+ / Edge 80+ / Safari 14+
 - 处理器: Intel Core i7 / AMD Ryzen 5
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
