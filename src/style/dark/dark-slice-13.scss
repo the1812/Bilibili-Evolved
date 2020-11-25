@@ -533,7 +533,8 @@ html {
   }
 }
 .bb-comment .comment-list .list-item {
-  .text .jump-img {
+  .text .jump-img,
+  .text-con .jump-img {
     @include to-theme("blue");
   }
 }
