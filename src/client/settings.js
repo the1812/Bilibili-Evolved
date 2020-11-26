@@ -228,7 +228,6 @@ export const settings = {
   quickFavorite: false,
   quickFavoriteID: 0,
   bilibiliSimpleNewHomeCompatible: false,
-  preferAvUrl: false,
   disableFeedsDetails: true,
   elegantScrollbar: true,
   danmakuSendBar: false,
@@ -247,6 +246,7 @@ export const settings = {
   favoritesListCurrentSelect: ''
 }
 const fixedSettings = {
+  preferAvUrl: false,
   useDefaultDanmakuSettings: false,
   enableDanmaku: true,
   rememberDanmakuSettings: false,
