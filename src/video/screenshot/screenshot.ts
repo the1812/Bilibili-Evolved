@@ -183,7 +183,7 @@ Observer.videoChange(async () => {
     screenShotsList.screenshots.unshift(screenshot)
   })
   document.addEventListener('keydown', e => {
-    if (document.activeElement && ['input', 'textarea'].includes(document.activeElement.nodeName.toLowerCase())) {
+    if (document.activeElement && isTyping()) {
       return
     }
     if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "c") {

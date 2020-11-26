@@ -575,5 +575,6 @@ declare global {
   // const playerReady: () => Promise<void>
   const formData: (obj: any) => string
   const retrieveImageUrl: (element: Element) => { url: string; extension: string } | null
+  const isTyping: () => boolean
 }
 export { }

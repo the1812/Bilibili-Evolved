@@ -95,7 +95,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     if (isWatchlater && document.URL.endsWith('list')) {
       return
     }
-    if (document.activeElement && ['input', 'textarea'].includes(document.activeElement.nodeName.toLowerCase())) {
+    if (document.activeElement && isTyping()) {
       return
     }
     const key = e.key.toLowerCase()

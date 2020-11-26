@@ -223,3 +223,13 @@ export const retrieveImageUrl = (element) => {
     extension: thumbMatch[2],
   }
 }
+export const isTyping = () => {
+  const activeElement = document.activeElement
+  if (!activeElement) {
+    return false
+  }
+  if (activeElement.hasAttribute('contenteditable')) {
+    return true
+  }
+  return ['input', 'textarea'].includes(activeElement.nodeName.toLowerCase())
+}

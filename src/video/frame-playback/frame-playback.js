@@ -1,4 +1,5 @@
 import html from 'framePlaybackHtml'
+
 resources.applyStyle('framePlaybackStyle')
 const main = async () => {
   if (settings.videoScreenshot) {
@@ -36,7 +37,7 @@ const main = async () => {
     // console.log(frameTime);
   })
   document.addEventListener('keydown', e => {
-    if (e.shiftKey && !['input', 'textarea'].includes(document.activeElement.nodeName.toLowerCase())) {
+    if (e.shiftKey && !isTyping()) {
       if (e.key === 'ArrowLeft') {
         e.stopPropagation()
         e.preventDefault()
