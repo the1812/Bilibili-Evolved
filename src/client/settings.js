@@ -242,11 +242,11 @@ export const settings = {
   feedsImageExporter: false,
   columnImageExporter: false,
   downloadPackageEmitMode: '打包下载',
+  preferAvUrl: false,
   cache: {},
   favoritesListCurrentSelect: ''
 }
 const fixedSettings = {
-  preferAvUrl: false,
   useDefaultDanmakuSettings: false,
   enableDanmaku: true,
   rememberDanmakuSettings: false,
