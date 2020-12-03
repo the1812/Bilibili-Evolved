@@ -648,3 +648,21 @@ html {
 .wide-members .avatar-list .van-icon-general_addto_s {
   @include theme-background-color();
 }
+.be-dropdown-item:hover {
+  @include theme-color();
+}
+.fav-main {
+  .album-card {
+    .btn {
+      @include border-color();
+      @include background-color("2");
+    }
+  }
+}
+.pugv-item {
+  .item-infos {
+    .main-title {
+      @include color("e");
+    }
+  }
+}
