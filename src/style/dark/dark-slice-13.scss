@@ -642,3 +642,9 @@ html {
     @include theme-background-color();
   }
 }
+.member-container .up-info .attention {
+  @include theme-background-color();
+}
+.wide-members .avatar-list .van-icon-general_addto_s {
+  @include theme-background-color();
+}
