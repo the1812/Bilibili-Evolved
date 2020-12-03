@@ -630,3 +630,15 @@ html {
     }
   }
 }
+.modalBox {
+  @include color("e");
+  @include background-color("4");
+  .cancel {
+    @include color("e");
+    @include border-color();
+    @include background-color("6");
+  }
+  .sure {
+    @include theme-background-color();
+  }
+}
