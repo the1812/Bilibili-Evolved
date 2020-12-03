@@ -538,3 +538,95 @@ html {
     @include to-theme("blue");
   }
 }
+.resizable-component {
+  .note-drag-bar {
+    @include background-color("6");
+    @include color("a");
+    .btns {
+      .space-btn,
+      .question-btn,
+      .close-btn {
+        @include background-color("8");
+        @include color("5");
+      }
+    }
+  }
+}
+.video-editor {
+  @include background-color("5");
+  .ql-toolbar {
+    @include color("9");
+    @include background-color("5");
+    .readonly-mask {
+      background-color: #000 !important;
+      opacity: 0.4 !important;
+    }
+    .ql-stroke {
+      @include set-color("stroke", "9");
+    }
+    .ql-picker {
+      color: inherit !important;
+    }
+    .ql-picker-label {
+      &:hover,
+      &.ql-active {
+        @include theme-color();
+      }
+      &:hover {
+        .ql-stroke {
+          @include set-theme-color("stroke");
+        }
+        .ql-fill {
+          @include set-theme-color("fill");
+        }
+      }
+    }
+    .ql-picker-options {
+      @include background-color("6");
+      @include color("a");
+    }
+    .ql-picker-item:hover,
+    button.ql-active,
+    button:hover,
+    .ql-picker-item.ql-selected {
+      @include theme-color();
+    }
+    .ql-tag {
+      @include theme-background-color();
+    }
+    .edit-btn {
+      @include theme-border-color();
+      @include theme-color();
+      &.save-edit {
+        @include color("e");
+        @include theme-background-color();
+      }
+    }
+    // 修复 个人空间 - 我的笔记 下按钮颜色使用原生颜色的问题
+    button {
+      @include color("9");
+    }
+  }
+  .editor-innter {
+    @include color("e");
+    @include border-color();
+    @include background-color("4");
+    .ql-tag-blot {
+      .tag-item {
+        @include background-color("5");
+        @include border-color();
+        @include theme-color();
+        .time::before {
+          @include theme-background-color();
+        }
+      }
+    }
+    .ql-image-preview {
+      box-shadow: 0 2px 8px 0 hsl(0deg 0% 15% / 50%) !important;
+      @include border-color();
+      .img-preview {
+        @include border-color("5");
+      }
+    }
+  }
+}
