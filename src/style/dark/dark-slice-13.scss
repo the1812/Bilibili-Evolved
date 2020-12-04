@@ -690,6 +690,20 @@ html {
 .header-video-card .video-info .line-1 {
   @include color("e");
 }
+.van-popper {
+  .level-content {
+    .level-intro {
+      @include color("e");
+      @include background-color("3");
+      &__link {
+        @include theme-color();
+        svg {
+          @include set-theme-color("fill");
+        }
+      }
+    }
+  }
+}
 .list-item {
   &:hover,
   &.active {
