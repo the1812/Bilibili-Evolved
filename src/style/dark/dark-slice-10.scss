@@ -685,9 +685,9 @@
       }
     }
   }
-  .h5share-container:hover .text-area .text {
-    @include theme-color();
-  }
+}
+.h5share-container:hover .text-area .text {
+  @include theme-color();
 }
 .up-info .u-info .name .live-status {
   @include theme-color();
