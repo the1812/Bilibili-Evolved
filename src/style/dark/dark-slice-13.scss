@@ -681,3 +681,6 @@ html {
 .is-max .percentage-bar {
   @include theme-background-color("40");
 }
+.vote-options .checked {
+  @include to-theme("pink");
+}
