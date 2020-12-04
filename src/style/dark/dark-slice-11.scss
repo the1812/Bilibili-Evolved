@@ -317,7 +317,7 @@
       .count-item .item {
         &-key,
         &-value {
-          @include color("e");
+          color: inherit !important;
         }
       }
       .links {
