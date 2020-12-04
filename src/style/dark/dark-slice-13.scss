@@ -703,6 +703,12 @@ html {
       }
     }
   }
+  .logout span {
+    @include color("e");
+    &:hover {
+      @include background-color("3");
+    }
+  }
 }
 .list-item {
   &:hover,
