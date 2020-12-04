@@ -721,3 +721,18 @@ html {
     @include set-theme-color("fill");
   }
 }
+.gift-panel-box {
+  @include border-color();
+  .gift-tab {
+    &.active .name {
+      @include set-theme-color("border-bottom-color");
+      @include theme-color();
+    }
+    .name {
+      @include set-color("border-bottom-color", "a");
+    }
+  }
+  .gift-reveal-header {
+    @include set-color("border-bottom-color", "6");
+  }
+}
