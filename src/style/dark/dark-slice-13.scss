@@ -716,3 +716,8 @@ html {
     @include background-color("3");
   }
 }
+#bili-icon_dingdao_yingbi {
+  path {
+    @include set-theme-color("fill");
+  }
+}

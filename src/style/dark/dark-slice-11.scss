@@ -314,6 +314,14 @@
       .counts {
         @include border-color("4");
       }
+      .coins .contact {
+        .email,
+        .phone {
+          &-icon--bind {
+            @include theme-color();
+          }
+        }
+      }
       .count-item .item {
         &-key,
         &-value {
