@@ -687,3 +687,9 @@ html {
 .article-tab .article-list .list-item .fold-box:hover {
   @include theme-color();
 }
+.list-item {
+  &:hover,
+  &.active {
+    @include background-color("3");
+  }
+}
