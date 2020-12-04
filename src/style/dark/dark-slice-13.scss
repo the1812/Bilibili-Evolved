@@ -666,3 +666,15 @@ html {
     }
   }
 }
+.bilibili-player-popup-area {
+  .bilibili-player-video-popup-item {
+    .bilibili-player-video-popup-follow:not(.bilibili-player-video-popup-followed) {
+      @include theme-background-color();
+    }
+    .bilibili-player-video-popup-three {
+      .bilibili-player-video-popup-active svg {
+        @include set-theme-color("fill");
+      }
+    }
+  }
+}
