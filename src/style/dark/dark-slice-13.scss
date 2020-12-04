@@ -684,3 +684,6 @@ html {
 .vote-options .checked {
   @include to-theme("pink");
 }
+.article-tab .article-list .list-item .fold-box:hover {
+  @include theme-color();
+}
