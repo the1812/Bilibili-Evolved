@@ -721,6 +721,9 @@ html {
     @include set-theme-color("fill");
   }
 }
+.player-auxiliary-playlist-item:hover .player-auxiliary-playlist-item-title {
+  @include theme-color();
+}
 .gift-panel-box {
   @include border-color();
   .gift-tab {
