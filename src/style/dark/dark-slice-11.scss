@@ -307,6 +307,7 @@
   }
   .van-popper {
     &-avatar {
+      .nickname:not([style*="rgb(251, 114, 153)"]),
       .level-info .grade {
         @include color("e");
       }
