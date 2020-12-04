@@ -736,3 +736,6 @@ html {
     @include set-color("border-bottom-color", "6");
   }
 }
+#app .container .question {
+  @include color("e");
+}
