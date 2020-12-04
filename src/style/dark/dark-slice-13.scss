@@ -678,3 +678,6 @@ html {
     }
   }
 }
+.is-max .percentage-bar {
+  @include theme-background-color("40");
+}

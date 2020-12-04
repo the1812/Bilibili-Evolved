@@ -1509,7 +1509,6 @@ ul.up-nav li
 .dynamic-hated:hover i,
 .dynamic-hate:hover i,
 .is-web .checked,
-.is-web .is-max .percentage-bar,
 .video-container .image-area .see-later.done,
 .watch-later-trigger.added,
 .group-list li input[type=checkbox]:hover+i,
@@ -1556,7 +1555,6 @@ ul.up-nav li
 {
     filter: var(--blue-image-filter) !important;
 }
-.is-max .percentage-bar,
 .calendar .day-item.gift-checked,
 .home-wrap .home-tips .tips-link .tip-item>a:hover
 {
