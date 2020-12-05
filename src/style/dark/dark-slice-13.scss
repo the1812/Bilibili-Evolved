@@ -742,3 +742,71 @@ html {
 #app .container .question {
   @include color("e");
 }
+@each $module in home, video, article, search {
+  .music-#{$module} {
+    .tabs {
+      @include set-color("border-bottom-color", "6");
+      a.active {
+        @if $module == search {
+          .name {
+            @include theme-color();
+            @include set-theme-color("border-bottom-color");
+          }
+        } @else {
+          @include theme-color();
+          @include set-theme-color("border-bottom-color");
+        }
+      }
+      @if $module == search {
+        a:hover .name {
+          @include theme-color();
+        }
+      }
+    }
+    .search-bar {
+      @include border-color("6");
+      input {
+        @include color("e");
+      }
+    }
+    .select-type {
+      @include color("e");
+      li {
+        @include background-color("3");
+        &.on {
+          @include theme-background-color();
+        }
+      }
+      .toggle {
+        @include border-color();
+        @include background-color("3");
+      }
+    }
+    @if $module != home {
+      .music-pagination {
+        a,
+        span {
+          @include color("e");
+          @include border-color();
+          @include background-color("3");
+          &:hover {
+            @include theme-background-color();
+          }
+        }
+      }
+    }
+    @if $module == article {
+      .article-card {
+        @include set-color("border-bottom-color", "6");
+        .l-con:hover h2 {
+          @include theme-color();
+        }
+      }
+    }
+    @if index(home search, $module) {
+      .exchange-btn i {
+        @include color("e");
+      }
+    }
+  }
+}
