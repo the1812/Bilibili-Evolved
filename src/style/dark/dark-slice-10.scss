@@ -47,11 +47,7 @@
 .notice-info-wrapper .notice-info-title,
 .ep-item.v4.cursor .ep-pub,
 .chasing-frame-cntr .chasing,
-.chat-history-panel
-  .chat-history-list
-  .chat-item.superChat-card-detail
-  .card-item-middle-top
-  .card-item-middle-top-right {
+.chat-history-panel .chat-item.superChat-card-detail .card-item-middle-top-right {
   @include color("e");
 }
 
@@ -788,11 +784,7 @@
   background-image: none !important;
 }
 
-.danmaku-wrap
-  .player-auxiliary-area
-  .player-auxiliary-danmaku-wrap
-  .player-auxiliary-danmaku-list
-  .danmaku-info-row-code {
+.danmaku-wrap .danmaku-info-row-code {
   background: #ffa20011 !important;
 }
 
