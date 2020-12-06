@@ -116,8 +116,6 @@ div.con,
 .bottom .content,
 .action-menu .menu-list,
 .action-menu .menu-list:before,
-.list-item:hover,
-.list-item.active,
 .emoji-box:after,
 .emotion-box,
 .emotion-box:after,
@@ -829,7 +827,7 @@ span.key,
 .history-btn>.btn,
 .history-list .r-info .title,
 .history-list .r-info .w-info .username,
-.user-name a,
+.user-name:not(.big-vip) a,
 .content,
 .video-container .text-area .title,
 .sticky-bar .bar-content .title,
@@ -1509,7 +1507,6 @@ ul.up-nav li
 .dynamic-hated:hover i,
 .dynamic-hate:hover i,
 .is-web .checked,
-.is-web .is-max .percentage-bar,
 .video-container .image-area .see-later.done,
 .watch-later-trigger.added,
 .group-list li input[type=checkbox]:hover+i,
@@ -1556,7 +1553,6 @@ ul.up-nav li
 {
     filter: var(--blue-image-filter) !important;
 }
-.is-max .percentage-bar,
 .calendar .day-item.gift-checked,
 .home-wrap .home-tips .tips-link .tip-item>a:hover
 {

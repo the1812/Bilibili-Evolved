@@ -47,7 +47,11 @@
 .notice-info-wrapper .notice-info-title,
 .ep-item.v4.cursor .ep-pub,
 .chasing-frame-cntr .chasing,
-.chat-history-panel .chat-history-list .chat-item.superChat-card-detail .card-item-middle-top .card-item-middle-top-right {
+.chat-history-panel
+  .chat-history-list
+  .chat-item.superChat-card-detail
+  .card-item-middle-top
+  .card-item-middle-top-right {
   @include color("e");
 }
 
@@ -589,25 +593,25 @@
         &:before {
           @include to-theme("blue");
         }
-      &.bilibili-player-blink {
-        @include theme-color();
+        &.bilibili-player-blink {
+          @include theme-color();
+        }
+      }
+      &-blink {
+        @include color("e");
+        .bilibili-player-tips {
+          @include theme-background-color();
+        }
+        &:hover,
+        &:active {
+          @include theme-color();
+        }
       }
     }
-    &-blink {
-      @include color("e");
-      .bilibili-player-tips {
-        @include theme-background-color();
-      }
-      &:hover,
-      &:active {
-        @include theme-color();
-      }
+    .bilibili-player-tips {
+      @include foreground-color();
     }
   }
-  .bilibili-player-tips {
-    @include foreground-color();
-  }
-}
   .bilibili-player-video-quality-menu .bilibili-player-bigvip {
     @include foreground-color();
   }
@@ -685,9 +689,9 @@
       }
     }
   }
-  .h5share-container:hover .text-area .text {
-    @include theme-color();
-  }
+}
+.h5share-container:hover .text-area .text {
+  @include theme-color();
 }
 .up-info .u-info .name .live-status {
   @include theme-color();
@@ -784,7 +788,11 @@
   background-image: none !important;
 }
 
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .player-auxiliary-danmaku-list .danmaku-info-row-code {
+.danmaku-wrap
+  .player-auxiliary-area
+  .player-auxiliary-danmaku-wrap
+  .player-auxiliary-danmaku-list
+  .danmaku-info-row-code {
   background: #ffa20011 !important;
 }
 
@@ -890,7 +898,7 @@
         }
       }
     }
-    .bili-checkbox:checked+span:before {
+    .bili-checkbox:checked + span:before {
       @include theme-background-color();
       @include foreground-color();
       @include border-color();
@@ -928,14 +936,16 @@
 }
 .international-header .nav-search {
   #nav_searchform {
-    @include background-color();
-    border-bottom: 1.5px solid!important;
+    @include background-color("2");
   }
   .nav-search-keyword {
     @include foreground-color();
   }
   .nav-search-btn {
-    @include background-color();
+    @include background-color("3");
+    .nav-search-submit {
+      @include color("a");
+    }
     &:hover .nav-search-submit {
       @include color("e");
     }

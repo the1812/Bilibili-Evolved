@@ -307,6 +307,7 @@
   }
   .van-popper {
     &-avatar {
+      .nickname:not([style*="rgb(251, 114, 153)"]),
       .level-info .grade {
         @include color("e");
       }
@@ -314,10 +315,18 @@
       .counts {
         @include border-color("4");
       }
+      .coins .contact {
+        .email,
+        .phone {
+          &-icon--bind {
+            @include theme-color();
+          }
+        }
+      }
       .count-item .item {
         &-key,
         &-value {
-          @include color("e");
+          color: inherit !important;
         }
       }
       .links {
