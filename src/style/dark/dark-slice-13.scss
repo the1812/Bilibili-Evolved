@@ -668,15 +668,18 @@ html {
   }
 }
 .bilibili-player-popup-area {
-  .bilibili-player-video-popup-item {
-    .bilibili-player-video-popup-follow:not(.bilibili-player-video-popup-followed) {
+  .bilibili-player-video-popup-follow {
+    @include background-color("4");
+    &:not(.bilibili-player-video-popup-followed) {
       @include theme-background-color();
     }
-    .bilibili-player-video-popup-three {
-      .bilibili-player-video-popup-active svg {
-        @include set-theme-color("fill");
-      }
-    }
+  }
+  .bilibili-player-video-popup-active svg,
+  path[fill] {
+    @include set-theme-color("fill");
+  }
+  path[stroke] {
+    @include set-theme-color("stroke");
   }
 }
 .is-max .percentage-bar {
