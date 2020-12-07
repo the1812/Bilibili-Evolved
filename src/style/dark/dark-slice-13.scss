@@ -794,6 +794,9 @@ html {
             @include theme-background-color();
           }
         }
+        .current {
+          @include theme-background-color();
+        }
       }
     }
     @if $module == article {
