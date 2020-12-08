@@ -244,6 +244,8 @@ export const settings = {
   columnImageExporter: false,
   downloadPackageEmitMode: '打包下载',
   preferAvUrl: false,
+  homeHidden: false,
+  homeHiddenItems: [],
   cache: {},
   favoritesListCurrentSelect: ''
 }

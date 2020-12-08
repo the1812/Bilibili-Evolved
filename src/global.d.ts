@@ -518,6 +518,8 @@ declare global {
     latestVersionLink: string,
     currentVersion: string,
     favoritesListCurrentSelect: string,
+    homeHidden: boolean,
+    homeHiddenItems: string[],
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

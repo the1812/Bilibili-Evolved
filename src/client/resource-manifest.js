@@ -984,5 +984,12 @@ Resource.manifest = {
       columnImageExporter: '专栏图片导出',
     },
   },
+  homeHidden: {
+    path: 'home-hidden.min.js',
+    style: true,
+    displayNames: {
+      homeHidden: '首页过滤',
+    }
+  }
 }
 export const resourceManifest = Resource.manifest
