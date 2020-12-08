@@ -21,18 +21,20 @@ export class NavbarComponent {
   get name(): keyof CustomNavbarOrders {
     return 'blank1'
   }
-  static insertOrder(newName: string, newOrder: number) {
+  static cleanUpOrders() {
     if ((settings.customNavbarOrder as any).bangumiLink) {
       settings.customNavbarOrder = _.omit(settings.customNavbarOrder, 'bangumiLink')
     }
-    const sortByOrder = _.sortBy(Object.entries(settings.customNavbarOrder).concat([[newName, newOrder]]), ([, order]) => order)
+    const sortByOrder = _.sortBy(Object.entries(settings.customNavbarOrder), ([, order]) => order)
+    console.log(sortByOrder)
     settings.customNavbarOrder = _.fromPairs(sortByOrder.map(([name], index) => [name, index])) as CustomNavbarOrders
   }
   get order() {
     const order = settings.customNavbarOrder[this.name]
-    if (!order) {
-      const defaultOrder = customNavbarDefaultOrders[this.name]
-      NavbarComponent.insertOrder(this.name, defaultOrder)
+    const hasDuplicateOrder =
+      Object.values(_.groupBy(Object.values(settings.customNavbarOrder), o => o)).some(group => group.length > 1)
+    if (order === undefined || hasDuplicateOrder) {
+      NavbarComponent.cleanUpOrders()
       return settings.customNavbarOrder[this.name]
     }
     return order

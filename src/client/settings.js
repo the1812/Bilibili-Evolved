@@ -132,7 +132,7 @@ export const settings = {
   customNavbarBlur: false,
   customNavbarBlurOpacity: 0.7,
   customNavbarOrder: { ...customNavbarDefaultOrders },
-  customNavbarHidden: ['blank1', 'drawingLink', 'musicLink', 'gamesIframe', 'darkMode'],
+  customNavbarHidden: ['blank1', 'drawingLink', 'musicLink', 'gamesIframe', 'match', 'darkMode'],
   customNavbarBoundsPadding: 10,
   customNavbarGlobalFixed: false,
   playerShadow: false,

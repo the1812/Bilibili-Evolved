@@ -19,6 +19,7 @@ export const initSettingsPanel = async () => {
       musicLink: '音频',
       gamesIframe: '游戏中心',
       livesIframe: '直播',
+      matchLink: '赛事',
       shopLink: '会员购',
       mangaLink: '漫画',
       blank2: '弹性空白2',
