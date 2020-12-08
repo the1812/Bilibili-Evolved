@@ -30,6 +30,7 @@ $items: (
   }
 }
 .home-hidden-settings {
+  align-items: stretch;
   &-item {
     padding: 4px 12px;
     display: flex;
