@@ -136,6 +136,7 @@ declare global {
     musicLink: number
     gamesIframe: number
     livesIframe: number
+    matchLink: number
     shopLink: number
     mangaLink: number
     blank2: number

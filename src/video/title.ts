@@ -60,11 +60,11 @@ export function formatTitle (format: string, includesPageTitle = true, extraData
   }, format)
   return filename.replace(/[\/\\:\*\?"<>\|]/g, ' ')
 }
-export function getFriendlyTitle (includesPageTitle = true) {
+export function getFriendlyTitle (includesPageTitle = true, extraData: StringMap = {}) {
   if (settings.filenameFormat === undefined) {
     return oldGetFriendlyTitle(includesPageTitle)
   }
-  return formatTitle(settings.filenameFormat, includesPageTitle)
+  return formatTitle(settings.filenameFormat, includesPageTitle, extraData)
 }
 export default {
   export: {

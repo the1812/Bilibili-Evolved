@@ -125,6 +125,7 @@ export default (() => {
           lazy: true,
           iframeName: 'lives',
         }),
+        new SimpleLink('赛事', 'https://www.bilibili.com/v/game/match/', 'match'),
         new SimpleLink('会员购', 'https://show.bilibili.com', 'shop'),
         new SimpleLink('漫画', 'https://manga.bilibili.com', 'manga'),
         new Blank(2),

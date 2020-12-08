@@ -21,8 +21,21 @@ export class NavbarComponent {
   get name(): keyof CustomNavbarOrders {
     return 'blank1'
   }
+  static insertOrder(newName: string, newOrder: number) {
+    if ((settings.customNavbarOrder as any).bangumiLink) {
+      settings.customNavbarOrder = _.omit(settings.customNavbarOrder, 'bangumiLink')
+    }
+    const sortByOrder = _.sortBy(Object.entries(settings.customNavbarOrder).concat([[newName, newOrder]]), ([, order]) => order)
+    settings.customNavbarOrder = _.fromPairs(sortByOrder.map(([name], index) => [name, index])) as CustomNavbarOrders
+  }
   get order() {
-    return settings.customNavbarOrder[this.name]
+    const order = settings.customNavbarOrder[this.name]
+    if (!order) {
+      const defaultOrder = customNavbarDefaultOrders[this.name]
+      NavbarComponent.insertOrder(this.name, defaultOrder)
+      return settings.customNavbarOrder[this.name]
+    }
+    return order
   }
   get hidden() {
     return settings.customNavbarHidden.includes(this.name)
