@@ -29,8 +29,11 @@ $items: (
     }
   }
 }
+
 .home-hidden-settings {
-  align-items: stretch;
+  .gui-settings-flat-button &.popup {
+    align-items: stretch;
+  }
   &-item {
     padding: 4px 12px;
     display: flex;
