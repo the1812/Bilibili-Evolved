@@ -54,7 +54,8 @@ export default {
           }
           const link = target.previousSibling as Node
           if (link) {
-            GM_setClipboard(`https://www.bilibili.com/video/${link.textContent}?${window.location.search}`, { mimetype: 'text/plain' })
+            const params = window.location.search ? `?${window.location.search}` : ''
+            GM_setClipboard(`https://www.bilibili.com/video/${link.textContent}${params}`, { mimetype: 'text/plain' })
             list.remove('mdi-link')
             list.add('mdi-check')
             setTimeout(() => {
