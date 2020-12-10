@@ -3,7 +3,7 @@ name: Bug 反馈
 about: 功能运行不正常 / 失效
 
 ---
-<!-- 发布后默认您已阅读发贴须知 -->
+<!-- 发布后默认您已阅读 Issues 须知 -->
 <!-- https://github.com/the1812/Bilibili-Evolved/blob/preview/issue-rules.md -->
 
 <!-- 发之前记得看下置顶问题 (Pinned issues)(如果有的话) -->
