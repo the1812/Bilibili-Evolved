@@ -822,3 +822,6 @@ html {
     @include back-top-btn(".back-top", null);
   }
 }
+.vp-container {
+  @include set-color("border-bottom-color", "4");
+}
