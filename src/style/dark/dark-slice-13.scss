@@ -825,3 +825,6 @@ html {
 .vp-container {
   @include set-color("border-bottom-color", "4");
 }
+.bb-comment .reply-notice .notice-item {
+  @include theme-background-color();
+}
