@@ -127,7 +127,7 @@
   }
 }
 .back-top-tools {
-  @include back-top-btn(".backup");
+  @include back-top-btn(".backup", "&");
 }
 .s-space {
   .follow-main {
