@@ -817,3 +817,8 @@ html {
     }
   }
 }
+@each $module in topic, active {
+  .#{$module}-list {
+    @include back-top-btn(".back-top", null);
+  }
+}

@@ -106,17 +106,24 @@
   }
 }
 
-@mixin back-top-btn($selector: ".back-top-btn") {
-  #{$selector} {
+@mixin back-top-btn(
+  $btn-selector: ".back-top-btn",
+  $arrow-selector: ".arrow-icon"
+) {
+  #{$btn-selector} {
     @include border-color();
     @include background-color("3");
-    .arrow-icon {
-      @include color("a");
+    @if $arrow-selector {
+      #{$arrow-selector} {
+        @include color("a");
+      }
     }
     &:hover {
       @include theme-background-color();
-      .arrow-icon {
-        @include foreground-color();
+      @if $arrow-selector {
+        #{$arrow-selector} {
+          @include foreground-color();
+        }
       }
     }
   }
