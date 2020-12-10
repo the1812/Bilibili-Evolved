@@ -3,26 +3,26 @@ const isVideoPage = [
   'https://www.bilibili.com/bangumi/',
 ].some(it => document.URL.startsWith(it))
 
-// 已取消网址 av 号转换
+// 已取消网址 av 号转换的开关
 // https://github.com/the1812/Bilibili-Evolved/issues/1243
-// if (settings.preferAvUrl && document.URL.startsWith('https://www.bilibili.com/video/')) {
-//   SpinQuery.select(() => unsafeWindow.aid).then(aid => {
-//     if (!aid) {
-//       return
-//     }
-//     if (document.URL.includes('videocard_series')) {
-//       // 系列视频不能转换, 否则会无限刷新
-//       console.log('skip video series')
-//       return
-//     }
-//     const newUrl = document.URL.replace(/\/(video|bangumi)\/(BV[\w]+)/i, (_, type) => {
-//       return `/${type}/av${aid}`
-//     })
-//     if (document.URL !== newUrl) {
-//       history.replaceState({}, document.title, newUrl)
-//     }
-//   })
-// }
+if (settings.preferAvUrl && document.URL.startsWith('https://www.bilibili.com/video/')) {
+  SpinQuery.select(() => unsafeWindow.aid).then(aid => {
+    if (!aid) {
+      return
+    }
+    if (document.URL.includes('videocard_series')) {
+      // 系列视频不能转换, 否则会无限刷新
+      console.log('skip video series')
+      return
+    }
+    const newUrl = document.URL.replace(/\/(video|bangumi)\/(BV[\w]+)/i, (_, type) => {
+      return `/${type}/av${aid}`
+    })
+    if (document.URL !== newUrl) {
+      history.replaceState({}, document.title, newUrl)
+    }
+  })
+}
 export default {
   widget: {
     content: /*html*/`<div class="bvid-convert"></div>`,
