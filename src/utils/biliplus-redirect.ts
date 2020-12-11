@@ -45,6 +45,7 @@ export default {
       //   }
       // }
       else if (document.URL.includes('/bangumi/play')) {
+        setUrl(`https://${host}${window.location.pathname}${window.location.search}`)
         Observer.videoChange(() => {
           const bangumiAid = document.querySelector('.av-link,.info-sec-av') as HTMLElement
           const aid = unsafeWindow.aid || bangumiAid.innerText.replace(/[aAvV]/g, '')
