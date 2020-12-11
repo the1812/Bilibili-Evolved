@@ -5,6 +5,6 @@ const check = (isSystemDark: boolean) => {
   }
 }
 check(matchList.matches)
-matchList.addListener(e => {
+matchList.addEventListener('change', e => {
   check(e.matches)
 })
