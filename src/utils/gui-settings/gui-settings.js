@@ -202,7 +202,10 @@ function setDisplayNames () {
     // return;
   }
   const transparentFrames = [
-    'https://t.bilibili.com/share/card/index'
+    'https://t.bilibili.com/share/card/index',
+    'https://manga.bilibili.com/eden/bilibili-nav-panel.html',
+    'https://live.bilibili.com/blackboard/dropdown-menu.html',
+    'https://www.bilibili.com/page-proxy/game-nav.html',
   ]
   document.documentElement.classList.toggle('iframe', isIframe && transparentFrames.some(f => document.URL.includes(f)))
 
