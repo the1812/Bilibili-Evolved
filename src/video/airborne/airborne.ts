@@ -12,13 +12,16 @@ const airborneStyleKey = 'airborneStyle'
     if (!text) {
       return NaN
     }
-    const airborneMatch = text.match(/(\d+)[ ]*[:：][ ]*(\d+)([ ]*[:：][ ]*(\d+))?/)
+    const airborneMatch = text.match(/(\d+)[ ]*[:：时分][ ]*(\d+)([ ]*[:：分][ ]*(\d+))?/)
     if (!airborneMatch) {
       return NaN
     }
     if (airborneMatch[3]) { // 含有小时
       const [, hour, minute, , second] = airborneMatch.map(r => parseInt(r))
       if ([hour, minute, second].some(v => Number.isNaN(v))) {
+        return NaN
+      }
+      if (text.includes('分') && !text.includes('时')) {
         return NaN
       }
       return hour * 3600 + minute * 60 + second
