@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved
-// @version      1.10.12
+// @version      1.10.13
 // @description  强大的哔哩哔哩增强脚本: 下载视频, 音乐, 封面, 弹幕 / 简化直播间, 评论区, 首页 / 自定义顶栏, 删除广告, 夜间模式 / 触屏设备支持
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -36,5 +36,5 @@ const manager = [undefined, {
 }]
 document.addEventListener('DOMContentLoaded', () => {
   const { export: Toast } = ToastModule(...manager)
-  Toast.info(`当前安装版本过低, 请更新后使用. <a class="link" href="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js">更新</a>`, 'Bilibili Evolved')
+  Toast.info(`当前安装版本过低, 请删除当前安装的这个脚本, <a class="link" href="https://github.com/the1812/Bilibili-Evolved/">并到 GitHub 了解并安装最新版本</a>`, 'Bilibili Evolved')
 })
