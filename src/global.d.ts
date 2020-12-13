@@ -523,7 +523,7 @@ declare global {
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
-  function GM_setClipboard(data: any, info: string | { type?: string, mimetype?: string }): void
+  function GM_setClipboard(data: any, info?: string | { type?: string, mimetype?: string }): void
   function GM_setValue(name: keyof BilibiliEvolvedSettings, value: any): void
   function GM_getValue<T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T): T
   const GM: {
