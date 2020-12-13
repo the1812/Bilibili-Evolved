@@ -1,5 +1,6 @@
 import { NavbarComponent } from '../custom-navbar-component'
 export class Messages extends NavbarComponent {
+  totalCount: number
   constructor() {
     super()
     this.href = 'https://message.bilibili.com/'
@@ -17,7 +18,9 @@ export class Messages extends NavbarComponent {
     this.active = document.URL.startsWith('https://message.bilibili.com/')
     this.fetchSettings().then(notify => {
       if (notify) {
-        this.init()
+        this.updateCount()
+        this.setupEvents()
+        this.onPopup = () => this.updateCount()
       }
     })
   }
@@ -32,7 +35,23 @@ export class Messages extends NavbarComponent {
     await this.setNotifyStyle(json.data.msg_notify)
     return json.data.msg_notify !== 3
   }
-  async init() {
+  async setupEvents() {
+    const list = await SpinQuery.select('#message-list') as HTMLElement
+    const items = [...list.querySelectorAll('a[data-name]')]
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const attr = item.getAttribute('data-count')
+        if (!attr) {
+          return
+        }
+        const count = parseInt(attr)
+        item.removeAttribute('data-count')
+        this.totalCount -= count
+        this.setNotifyCount(this.totalCount)
+      })
+    })
+  }
+  async updateCount() {
     const mainJson = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/msgfeed/unread`)
     const messageJson = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/session_svr/v1/session_svr/single_unread`)
     const list = await SpinQuery.select('#message-list') as HTMLElement
@@ -43,11 +62,11 @@ export class Messages extends NavbarComponent {
       return
     }
     mainJson.data['user_msg'] = messageJson.data.unfollow_unread + messageJson.data.follow_unread
-    let totalCount: number = names.reduce((acc, it) => acc + mainJson.data[it], 0)
-    if (!totalCount) {
+    this.totalCount = names.reduce((acc, it) => acc + mainJson.data[it], 0)
+    if (!this.totalCount) {
       return
     }
-    await this.setNotifyCount(totalCount)
+    await this.setNotifyCount(this.totalCount)
     names.forEach((name, index) => {
       const count = mainJson.data[name] as number
       if (count > 0) {
@@ -56,14 +75,6 @@ export class Messages extends NavbarComponent {
       else {
         items[index].removeAttribute('data-count')
       }
-    })
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        const count = parseInt(item.getAttribute('data-count')!!)
-        item.removeAttribute('data-count')
-        totalCount -= count
-        this.setNotifyCount(totalCount)
-      })
     })
   }
 }

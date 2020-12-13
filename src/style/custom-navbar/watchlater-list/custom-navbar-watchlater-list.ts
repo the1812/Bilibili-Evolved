@@ -1,5 +1,7 @@
 import { NavbarComponent } from '../custom-navbar-component'
 import { RawWatchlaterItem } from '../../../video/watchlater-api'
+import * as VueTypes from 'vue'
+
 interface WatchlaterCard {
   aid: number
   href: string
@@ -13,6 +15,7 @@ interface WatchlaterCard {
   upID: number
 }
 export class WatchlaterList extends NavbarComponent {
+  vm: VueTypes.default & { updateList: () => void }
   constructor() {
     super()
     this.boundingWidth = 380
@@ -70,10 +73,13 @@ export class WatchlaterList extends NavbarComponent {
     this.initialPopup = () => {
       this.init()
     }
+    this.onPopup = () => {
+      this.vm?.updateList()
+    }
   }
   async init() {
     // console.log(await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .watchlater-list`))
-    new Vue({
+    this.vm = new Vue({
       el: await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .watchlater-list`) as HTMLElement,
       store,
       components: {

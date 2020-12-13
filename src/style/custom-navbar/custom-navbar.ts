@@ -160,16 +160,14 @@ export default (() => {
           async requestPopup(component: NavbarComponent) {
             if (!component.requestedPopup && !component.disabled /* && !component.active */) {
               this.$set(component, `requestedPopup`, true)
-              // component.initialPopup && component.initialPopup()
               if (component.initialPopup) {
                 component.initialPopup()
               }
-              // console.log('lazy popup: ', component.name)
+              return
             }
             if (component.onPopup) {
               component.onPopup()
             }
-            // component.checkPosition()
           }
         },
         mounted() {
