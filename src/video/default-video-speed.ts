@@ -1,29 +1,15 @@
-const inBlacklist = () => settings.defaultVideoSpeedBlacklist.some(val => val === unsafeWindow.aid)
+const indexOfCurrentAid = () => settings.defaultVideoSpeedBlacklist.indexOf(unsafeWindow.aid as string)
 
-const changeState = (button: HTMLButtonElement, icon: HTMLElement, label: HTMLSpanElement, state: boolean) => {
-  if (state) {
-    icon.className = "icon-play"
-  } else {
-    const defaultVideoSpeed = parseFloat(settings.defaultVideoSpeed)
-    if (defaultVideoSpeed < 1) {
-      icon.className = "icon-speed-down"
-    } else if (defaultVideoSpeed > 1) {
-      icon.className = "icon-speed-up"
-    } else {
-      icon.className = "icon-play"
-    }
-  }
-  if (state) {
-    label.innerText = "使用"
-    button.title = "标记当前视频使用默认播放速度（适用于实况类、学习类等视频），刷新后生效。"
-  } else {
-    label.innerText = "排除"
-    button.title = "标记当前视频不使用默认播放速度（适用于音乐类、鬼畜类等视频），刷新后生效。"
+const getNativeDefaultPlaySpeed = () => {
+  try {
+    return parseFloat(JSON.parse(sessionStorage.getItem("bilibili_player_settings") as string).video_status.videospeed || 1)
+  } catch {
+    return 1
   }
 }
 
-const setPlaybackRate = (video: HTMLVideoElement) => {
-  const speed = parseFloat(settings.defaultVideoSpeed)
+const setPlaybackRate = async (speed: number) => {
+  const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
   video.playbackRate = speed
   SpinQuery.condition(
     () => video,
@@ -32,12 +18,31 @@ const setPlaybackRate = (video: HTMLVideoElement) => {
   )
 }
 
-Observer.videoChange(async () => {
-  if (inBlacklist()) {
-    return
+const updateWidget = (button: HTMLButtonElement, icon: HTMLElement, label: HTMLSpanElement, state: boolean) => {
+  if (state) {
+    icon.className = "icon-play"
+    label.innerText = "原生"
+    button.title = "当前视频使用 B 站原生默认播放速度（适用于音乐类、鬼畜类等视频）"
+  } else {
+    label.innerText = "自定义"
+    button.title = "当前视频使用脚本自定义的默认播放速度（适用于实况类、学习类等视频）"
+
+    const defaultVideoSpeed = parseFloat(settings.defaultVideoSpeed)
+
+    if (defaultVideoSpeed < 1) {
+      icon.className = "icon-speed-down"
+    } else if (defaultVideoSpeed > 1) {
+      icon.className = "icon-speed-up"
+    } else {
+      icon.className = "icon-play"
+    }
   }
-  const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
-  setPlaybackRate(video)
+}
+
+Observer.videoChange(async () => {
+  if (indexOfCurrentAid() === -1) {
+    await setPlaybackRate(parseFloat(settings.defaultVideoSpeed))
+  }
 })
 
 export default {
@@ -51,12 +56,12 @@ export default {
     condition: async () => {
       return await videoCondition() && settings.useDefaultVideoSpeed
     },
-    success: () => {
+    success: async () => {
       const button = dq('#toggle-default-video-speed') as HTMLButtonElement
       const icon = dq("#toggle-default-video-speed i") as HTMLElement
       const label = dq("#toggle-default-video-speed .toggle-text") as HTMLSpanElement
 
-      changeState(button, icon, label, inBlacklist())
+      updateWidget(button, icon, label, indexOfCurrentAid() !== -1)
 
       button.addEventListener('click', async () => {
         try {
@@ -64,15 +69,17 @@ export default {
           if (!unsafeWindow.aid) {
             throw "aid is undefined"
           }
-          let state = inBlacklist()
+          const index = indexOfCurrentAid()
+          const state = index !== -1
           if (state) {
-            settings.defaultVideoSpeedBlacklist.splice(settings.defaultVideoSpeedBlacklist.indexOf(unsafeWindow.aid), 1)
+            settings.defaultVideoSpeedBlacklist.splice(index, 1)
+            await setPlaybackRate(parseFloat(settings.defaultVideoSpeed))
           } else {
             settings.defaultVideoSpeedBlacklist.push(unsafeWindow.aid)
+            await setPlaybackRate(getNativeDefaultPlaySpeed())
           }
           settings.defaultVideoSpeedBlacklist = settings.defaultVideoSpeedBlacklist
-          state = !state
-          changeState(button, icon, label, state)
+          updateWidget(button, icon, label, !state)
         } catch (error) {
           logError(error)
         } finally {
