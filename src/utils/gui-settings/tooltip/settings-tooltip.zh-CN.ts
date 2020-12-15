@@ -174,7 +174,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`feedsFilter`, /*html*/`按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 注意目前仅仅在全部动态里生效, 切换到别的类别时无效.`],
   [`hideBangumiSponsors`, /*html*/`隐藏番剧页面下方的承包榜, 以及右边的承包按钮.`],
   [`hideRecommendLive`, /*html*/`隐藏视频页面右侧下方的推荐直播.`],
-  [`hideRelatedVideos`, /*html*/`隐藏番剧和视频页面右侧的推荐视频列表.`],
+  [`hideRelatedVideos`, /*html*/`隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏推荐视频才能看到开关.`],
   [`simplifyHome`, /*html*/`替换原本的首页, 有两种样式可用:
 - 清爽: 布局与原主页类似, 多一个动态栏目.
 - 极简: 去除其他所有栏目, 只保留视频动态和热门视频两个功能.`],
@@ -205,7 +205,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`watchLaterRedirectPage`, /*html*/`重定向稍后再看页面中的链接.`],
   [`showCoverBeforePlay`, /*html*/`在视频开始播放前, 在播放器中显示封面.`],
   [`customNavbarGlobalFixed`, /*html*/`对于所有用到自定义顶栏的页面都固定顶栏, 使其不受滚动影响.`],
-  [`seoJump`, /*html*/`当进入SEO页面时, 自动跳转回原视频页面.`],
+  [`seoJump`, /*html*/`当进入SEO页面时, 自动跳转回原视频页面. SEO页面是为搜索引擎优化的特殊页面, 脚本在那上面的功能是不完整的, 可以通过此功能跳转回正常的视频页面.`],
   [`copyFeedsLink`, /*html*/`在动态的菜单里添加复制链接选项.`],
   [`copyCommentLink`, /*html*/`在评论的菜单里添加复制链接选项.`],
   [`unfoldFeeds`, /*html*/`自动展开被折叠的动态.`],
