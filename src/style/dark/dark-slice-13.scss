@@ -828,3 +828,6 @@ html {
 .bb-comment .reply-notice .notice-item {
   @include theme-background-color();
 }
+.video-page-card .card-box .info .title:hover {
+  @include theme-color();
+}
