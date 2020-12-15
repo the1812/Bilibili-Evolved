@@ -247,7 +247,8 @@ export const settings = {
   homeHidden: false,
   homeHiddenItems: [],
   cache: {},
-  favoritesListCurrentSelect: ''
+  favoritesListCurrentSelect: '',
+  defaultVideoSpeedBlacklist: [],
 }
 const fixedSettings = {
   useDefaultDanmakuSettings: false,
