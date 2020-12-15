@@ -21,8 +21,6 @@
 - 直接下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 可以考虑使用`显示链接`转给IDM或浏览器下载, 或使用[导出 aria2](aria2-notice.md)来进行下载.
 - 短时间内大量下载(错误代码为412, 多发于批量导出某某教程/课程的全套视频)会遭到b站的暂时封禁, 需要等待一段时间后才能恢复, 这期间脚本的下载视频功能也会停用.
 
-<!-- - 使用`复制链接`得到的链接并不是直接就能用的, 因为**下载时的请求Header必须包含`Referer=https://www.bilibili.com`和正确的`User-Agent`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接) -->
-
 <div>
 <img height="500" alt="single" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/download-video-single.jpg">
 <img height="500" alt="batch" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/download-video-batch.jpg">
