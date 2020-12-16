@@ -1,21 +1,15 @@
 const indexOfCurrentAid = () => settings.defaultVideoSpeedBlacklist.indexOf(unsafeWindow.aid as string)
 
-const getNativeDefaultPlaySpeed = () => {
+const nativeDefaultPlaySpeed = (() => {
   try {
     return parseFloat(JSON.parse(sessionStorage.getItem("bilibili_player_settings") as string).video_status.videospeed || 1)
   } catch {
     return 1
   }
-}
+})()
 
 const setPlaybackRate = async (speed: number) => {
-  const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
-  video.playbackRate = speed
-  SpinQuery.condition(
-    () => video,
-    () => video.playbackRate !== speed,
-    () => video.playbackRate = speed
-  )
+  (await SpinQuery.select(`.bilibili-player-video-btn-speed-menu .bilibili-player-video-btn-speed-menu-list[data-value="${speed}"]`))?.click()
 }
 
 const updateWidget = (button: HTMLButtonElement, icon: HTMLElement, label: HTMLSpanElement, state: boolean) => {
@@ -76,7 +70,7 @@ export default {
             await setPlaybackRate(parseFloat(settings.defaultVideoSpeed))
           } else {
             settings.defaultVideoSpeedBlacklist.push(unsafeWindow.aid)
-            await setPlaybackRate(getNativeDefaultPlaySpeed())
+            await setPlaybackRate(nativeDefaultPlaySpeed)
           }
           settings.defaultVideoSpeedBlacklist = settings.defaultVideoSpeedBlacklist
           updateWidget(button, icon, label, !state)
