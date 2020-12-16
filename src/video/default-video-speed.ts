@@ -38,22 +38,19 @@ const addSpeedToSetting = (speed: supportedVideoPlayRates, aid: string, force = 
   settings.defaultVideoSpeedList = settings.defaultVideoSpeedList
 }
 
-Observer.videoChange(async () => {
-  if (settings.useDefaultVideoSpeed) {
-    await setVideoSpeed((getSpeedFromSetting() || getDefaultVideoSpeed()) as supportedVideoPlayRates)
-  }
-})
+const setup = _.once(async () => {
+  const menu = await SpinQuery.select(".bilibili-player-video-btn-speed-menu")
 
-SpinQuery.select(".bilibili-player-video-btn-speed-menu").then(value => {
-  if (!value) {
+  if (!menu) {
     throw "speed menu not found!"
   }
-  Observer.all(value, (mutations) => {
+
+  Observer.all(menu, (mutations) => {
     if (!settings.useDefaultVideoSpeed) {
       return
     }
     mutations.forEach(mutation => {
-      const selectedSpeedOption = mutation.target as HTMLLIElement;
+      const selectedSpeedOption = mutation.target as HTMLLIElement
       if (selectedSpeedOption.classList.contains("bilibili-player-active")) {
         const currentSpeed = parseFloat(selectedSpeedOption.dataset.value || '1')
         if (!unsafeWindow.aid) {
@@ -63,4 +60,11 @@ SpinQuery.select(".bilibili-player-video-btn-speed-menu").then(value => {
       }
     })
   })
+})
+
+Observer.videoChange(async () => {
+  await setup()
+  if (settings.useDefaultVideoSpeed) {
+    await setVideoSpeed((getSpeedFromSetting() || getDefaultVideoSpeed()) as supportedVideoPlayRates)
+  }
 })
