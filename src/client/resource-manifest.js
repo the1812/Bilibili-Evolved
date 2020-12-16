@@ -681,7 +681,7 @@ Resource.manifest = {
   useDefaultVideoSpeed: {
     path: 'default-video-speed.min.js',
     displayNames: {
-      useDefaultVideoSpeed: '使用默认播放速度',
+      useDefaultVideoSpeed: '记忆播放速度',
       defaultVideoSpeed: '默认播放速度',
     },
     dropdown: {

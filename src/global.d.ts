@@ -520,6 +520,16 @@ declare global {
     favoritesListCurrentSelect: string,
     homeHidden: boolean,
     homeHiddenItems: string[],
+    defaultVideoSpeedList: {
+      [0.5]: string[],
+      [0.75]: string[],
+      [1.0]: string[],
+      [1.25]: string[],
+      [1.5]: string[],
+      [2.0]: string[],
+      [2.5]: string[],
+      [3.0]: string[],
+    },
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
