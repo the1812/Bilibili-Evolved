@@ -1,8 +1,6 @@
-type supportedVideoPlayRates = keyof typeof settings.defaultVideoSpeedList
-
 const getDefaultVideoSpeed = () => parseFloat(settings.defaultVideoSpeed)
 
-const setVideoSpeed = async (speed: supportedVideoPlayRates) => {
+const setVideoSpeed = async (speed: number) => {
   (await SpinQuery.select(`.bilibili-player-video-btn-speed-menu .bilibili-player-video-btn-speed-menu-list[data-value="${speed}"]`))?.click()
 }
 
@@ -14,7 +12,7 @@ const getSpeedFromSetting = () => {
   }
 }
 
-const addSpeedToSetting = (speed: supportedVideoPlayRates, aid: string, force = false) => {
+const addSpeedToSetting = (speed: number, aid: string, force = false) => {
   let aidOldIndex = -1;
   // 如果原来设置中记忆了有关的 aid，就需要先移除它
   for (const aids of Object.values(settings.defaultVideoSpeedList)) {
@@ -28,7 +26,7 @@ const addSpeedToSetting = (speed: supportedVideoPlayRates, aid: string, force = 
   if (aidOldIndex === -1 && !force) {
     return
   }
-  // 防止以后 B 站自己加上了别的倍数，有必要的话就重新初始化个数组
+  // 为新的速度值初始化相应的 aid 数组
   if (!settings.defaultVideoSpeedList[speed]) {
     settings.defaultVideoSpeedList[speed] = []
   }
@@ -56,7 +54,7 @@ const setup = _.once(async () => {
         if (!unsafeWindow.aid) {
           throw "aid is undefined"
         }
-        addSpeedToSetting(currentSpeed as supportedVideoPlayRates, unsafeWindow.aid, currentSpeed !== getDefaultVideoSpeed())
+        addSpeedToSetting(currentSpeed, unsafeWindow.aid, currentSpeed !== getDefaultVideoSpeed())
       }
     })
   })
@@ -65,6 +63,6 @@ const setup = _.once(async () => {
 Observer.videoChange(async () => {
   await setup()
   if (settings.useDefaultVideoSpeed) {
-    await setVideoSpeed((getSpeedFromSetting() || getDefaultVideoSpeed()) as supportedVideoPlayRates)
+    await setVideoSpeed((getSpeedFromSetting() || getDefaultVideoSpeed()))
   }
 })
