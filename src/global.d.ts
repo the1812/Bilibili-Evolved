@@ -523,6 +523,8 @@ declare global {
     defaultVideoSpeedList: {
       [index: string]: string[]
     },
+    rememberVideoSpeed: boolean,
+    latestVideoSpeed: number,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

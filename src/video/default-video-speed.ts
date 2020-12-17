@@ -44,9 +44,6 @@ const setup = _.once(async () => {
   }
 
   Observer.all(menu, (mutations) => {
-    if (!settings.useDefaultVideoSpeed) {
-      return
-    }
     mutations.forEach(mutation => {
       const selectedSpeedOption = mutation.target as HTMLLIElement
       if (selectedSpeedOption.classList.contains("bilibili-player-active")) {
@@ -54,15 +51,24 @@ const setup = _.once(async () => {
         if (!unsafeWindow.aid) {
           throw "aid is undefined"
         }
-        addSpeedToSetting(currentSpeed, unsafeWindow.aid, currentSpeed !== getDefaultVideoSpeed())
+        if (settings.rememberVideoSpeed) {
+          addSpeedToSetting(currentSpeed, unsafeWindow.aid, currentSpeed !== getDefaultVideoSpeed())
+        } else {
+          settings.latestVideoSpeed = currentSpeed
+        }
       }
     })
   })
 })
 
 Observer.videoChange(async () => {
+  if (!settings.useDefaultVideoSpeed) {
+    return
+  }
   await setup()
-  if (settings.useDefaultVideoSpeed) {
+  if (settings.rememberVideoSpeed) {
     await setVideoSpeed((getSpeedFromSetting() || getDefaultVideoSpeed()))
+  } else {
+    await setVideoSpeed(settings.latestVideoSpeed)
   }
 })

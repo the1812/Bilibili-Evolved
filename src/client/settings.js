@@ -249,6 +249,8 @@ export const settings = {
   cache: {},
   favoritesListCurrentSelect: '',
   defaultVideoSpeedList: {},
+  rememberVideoSpeed: false,
+  latestVideoSpeed: 1,
 }
 const fixedSettings = {
   useDefaultDanmakuSettings: false,
