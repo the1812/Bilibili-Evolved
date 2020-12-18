@@ -828,16 +828,22 @@ html {
 .bb-comment .reply-notice .notice-item {
   @include theme-background-color();
 }
-.chat-input-ctnr {
-  @include border-color("3");
-  @include background-color("2");
-  &.chat-input-focus {
-    @include theme-border-color();
-  }
-  .medal-section {
+.control-panel-ctnr {
+  @include background-color("4");
+  .chat-input-ctnr {
     @include border-color("3");
-    &.focus-textarea {
+    @include background-color("2");
+    &.chat-input-focus {
       @include theme-border-color();
     }
+    .medal-section {
+      @include border-color("3");
+      &.focus-textarea {
+        @include theme-border-color();
+      }
+    }
   }
+}
+#control-panel-ctnr-box {
+  @include no-image
 }
