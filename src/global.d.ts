@@ -525,6 +525,7 @@ declare global {
     },
     rememberVideoSpeed: boolean,
     latestVideoSpeed: number,
+    extendVideoSpeed: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

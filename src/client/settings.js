@@ -251,6 +251,7 @@ export const settings = {
   defaultVideoSpeedList: {},
   rememberVideoSpeed: false,
   latestVideoSpeed: 1,
+  extendVideoSpeed: false,
 }
 const fixedSettings = {
   useDefaultDanmakuSettings: false,
