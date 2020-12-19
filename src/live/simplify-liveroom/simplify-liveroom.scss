@@ -138,8 +138,20 @@
 .simplify-skin {
   #head-info-vm,
   #gift-control-vm,
+  .control-panel-ctnr,
   #rank-list-ctnr-box {
     background-image: none !important;
+  }
+  .player-ctnr {
+    #head-info-vm,
+    #gift-control-vm {
+      border: 1px solid #e9eaec !important;
+      box-sizing: content-box !important;
+    }
+  }
+  .player-and-aside-area #aside-area-vm {
+    border: 1px solid #e9eaec !important;
+    width: 302px !important;
   }
 }
 .simplify-guard {

@@ -20,30 +20,31 @@ const displayNames = {
 }
 class SkinManager {
   skinDisabled = settings.simplifyLiveroomSettings.skin
-  skinSelectors: string[]
-  skinClass: string
-  constructor(skinSelectors: string[], skinClass: string) {
-    this.skinSelectors = skinSelectors
-    this.skinClass = skinClass
-    skinSelectors.forEach(selector => {
-      SpinQuery.select(
-        selector,
-        skin => {
-          Observer.attributes(selector, records => {
-            records.forEach(record => {
-              if (record.attributeName === 'class') {
-                if (this.skinDisabled && skin.classList.contains(skinClass)) {
-                  skin.classList.remove(skinClass)
-                }
-                else if (!this.skinDisabled && !skin.classList.contains(skinClass)) {
-                  skin.classList.add(skinClass)
-                }
-              }
-            })
-          })
+  constructor(
+    public skinSelectors: string[],
+    public skinClass: string
+  ) { }
+  start() {
+    this.skinSelectors.forEach(async selector => {
+      const skin = await SpinQuery.select(selector)
+      if (!skin) {
+        return
+      }
+      Observer.attributes(skin, records => {
+        records.forEach(record => {
+          if (record.attributeName === 'class') {
+            if (this.skinDisabled && skin.classList.contains(this.skinClass)) {
+              skin.classList.remove(this.skinClass)
+            }
+            else if (!this.skinDisabled && !skin.classList.contains(this.skinClass)) {
+              skin.classList.add(this.skinClass)
+            }
+          }
         })
+      })
     })
   }
+
   setSkin(enable: boolean) {
     this.skinDisabled = !enable
     this.skinSelectors.forEach(selector => {
@@ -65,7 +66,8 @@ const skins = [
     '.seeds-wrap>div:first-child',
     '.gift-section>div:last-child',
     '.z-gift-package>div>div',
-    '.right-action'
+    '.right-action',
+    '.control-panel-ctnr',
   ], 'live-skin-coloration-area'),
   new SkinManager([
     '.rank-list-ctnr .tabs'
@@ -85,6 +87,27 @@ if (isLiveroom()) {
   Object.keys(displayNames).forEach(key => {
     const checked = settings.simplifyLiveroomSettings[key]
     setBodyClass(checked, key)
+  })
+  skins.forEach(s => s.start())
+  SpinQuery.select('.rank-list-ctnr .tab-content').then(tabs => {
+    if (!tabs) {
+      return
+    }
+    Observer.childList(tabs, async (rec) => {
+      console.table(rec)
+      const content = dq(tabs, '.rank-list-content') as HTMLElement
+      if (!content) {
+        return
+      }
+      if (content.classList.contains('disable-skin')) {
+        return
+      }
+      content.classList.add('disable-skin')
+      new SkinManager(
+        ['.rank-list-ctnr .tab-content .rank-list-content'],
+        'live-skin-coloration-area'
+      ).start()
+    })
   })
 }
 export default {
