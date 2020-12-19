@@ -524,7 +524,6 @@ declare global {
       [index: string]: string[]
     },
     rememberVideoSpeed: boolean,
-    latestVideoSpeed: number,
     extendVideoSpeed: boolean,
   }
   const GM_info: MonkeyInfo

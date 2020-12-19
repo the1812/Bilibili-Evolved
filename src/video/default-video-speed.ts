@@ -119,7 +119,7 @@ export class VideoSpeedController {
           if (settings.rememberVideoSpeed) {
             VideoSpeedController.rememberSpeed(currentSpeed, unsafeWindow.aid, currentSpeed !== VideoSpeedController.getDefaultVideoSpeed())
           } else {
-            settings.latestVideoSpeed = currentSpeed
+            settings.defaultVideoSpeed = currentSpeed.toString()
           }
         }
       })
@@ -208,7 +208,7 @@ if (settings.useDefaultVideoSpeed || settings.extendVideoSpeed) {
     // 首次加载可能会遇到意外情况，导致内部强制更新失效，因此延时 100 ms 再触发速度设置
     setTimeout(() => {
       settings.useDefaultVideoSpeed &&
-        controller.setVideoSpeed(settings.rememberVideoSpeed ? (VideoSpeedController.getSpeedFromSetting() || VideoSpeedController.getDefaultVideoSpeed()) : settings.latestVideoSpeed)
+        controller.setVideoSpeed((settings.rememberVideoSpeed && VideoSpeedController.getSpeedFromSetting()) || VideoSpeedController.getDefaultVideoSpeed())
     }, 100)
   })
 }

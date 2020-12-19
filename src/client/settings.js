@@ -250,7 +250,6 @@ export const settings = {
   favoritesListCurrentSelect: '',
   defaultVideoSpeedList: {},
   rememberVideoSpeed: false,
-  latestVideoSpeed: 1,
   extendVideoSpeed: false,
 }
 const fixedSettings = {
