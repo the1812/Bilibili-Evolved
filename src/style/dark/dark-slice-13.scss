@@ -831,3 +831,8 @@ html {
 .video-page-card .card-box .info .title:hover {
   @include theme-color();
 }
+.bilibili-player-video-interactive-list {
+  .small.hover circle {
+    @include set-theme-color("fill");
+  }
+}
