@@ -520,7 +520,7 @@ declare global {
     favoritesListCurrentSelect: string,
     homeHidden: boolean,
     homeHiddenItems: string[],
-    defaultVideoSpeedList: {
+    rememberVideoSpeedList: {
       [index: string]: string[]
     },
     rememberVideoSpeed: boolean,

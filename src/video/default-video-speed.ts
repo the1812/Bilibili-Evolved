@@ -25,7 +25,7 @@ export class VideoSpeedController {
   }
 
   static getSpeedFromSetting() {
-    for (const [level, aids] of Object.entries(settings.defaultVideoSpeedList)) {
+    for (const [level, aids] of Object.entries(settings.rememberVideoSpeedList)) {
       if (aids.some(aid => aid === unsafeWindow.aid)) {
         return parseFloat(level)
       }
@@ -35,7 +35,7 @@ export class VideoSpeedController {
   static rememberSpeed(speed: number, aid: string, force = false) {
     let aidOldIndex = -1;
     // 如果原来设置中记忆了有关的 aid，就需要先移除它
-    for (const aids of Object.values(settings.defaultVideoSpeedList)) {
+    for (const aids of Object.values(settings.rememberVideoSpeedList)) {
       aidOldIndex = aids.indexOf(aid)
       if (aidOldIndex !== -1) {
         aids.splice(aidOldIndex, 1)
@@ -47,13 +47,13 @@ export class VideoSpeedController {
       return
     }
     // 为新的速度值初始化相应的 aid 数组
-    if (!settings.defaultVideoSpeedList[speed]) {
-      settings.defaultVideoSpeedList[speed] = []
+    if (!settings.rememberVideoSpeedList[speed]) {
+      settings.rememberVideoSpeedList[speed] = []
     }
     // 追加记忆值
-    settings.defaultVideoSpeedList[speed].push(aid)
+    settings.rememberVideoSpeedList[speed].push(aid)
     // 持久化
-    settings.defaultVideoSpeedList = settings.defaultVideoSpeedList
+    settings.rememberVideoSpeedList = settings.rememberVideoSpeedList
   }
 
   private _containerElement: HTMLElement

@@ -248,7 +248,7 @@ export const settings = {
   homeHiddenItems: [],
   cache: {},
   favoritesListCurrentSelect: '',
-  defaultVideoSpeedList: {},
+  rememberVideoSpeedList: {},
   rememberVideoSpeed: false,
   extendVideoSpeed: false,
 }
