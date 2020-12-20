@@ -167,6 +167,36 @@
       }
     }
   }
+  .album-content {
+    .album-list {
+      &__title {
+        @include color("e");
+      }
+      &__tabs {
+        @include background-color("5");
+        .album-list__tab {
+          &-name {
+            @include color("e");
+          }
+        }
+        .album-list__tab--active {
+          .album-list__tab-name {
+            @include theme-color();
+          }
+        }
+      }
+      &__content {
+        .album-card {
+          &__title {
+            @include color("e");
+            &:hover {
+              @include theme-color();
+            }
+          }
+        }
+      }
+    }
+  }
 }
 .switch-wrap {
   .type {
