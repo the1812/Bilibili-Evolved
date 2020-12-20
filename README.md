@@ -86,7 +86,10 @@
 UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://www.microsoft.com/en-us/edge).
 > Windows 10 20H2 更新中好像完全替换掉了 UWP 版 Edge (R.I.P.) 自带浏览器变成了 Chromium 内核 Edge.
 
-# 参与项目
+# 开发者
+[![开发者](https://badges.pufler.dev/contributors/the1812/Bilibili-Evolved?size=32&padding=12&bots=false)](https://github.com/the1812/Bilibili-Evolved/graphs/contributors)
+
+## 参与项目
 欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~ (小心编译器的神秘 bug / 小心被祖传代码闪瞎)
 
 ## 界面翻译
