@@ -147,6 +147,24 @@
           }
         }
       }
+      .search-component {
+        &:hover {
+          @include theme-border-color();
+        }
+        &.search-component-focus {
+          @include border-color("a");
+        }
+        .search-component-input input {
+          @include background-color();
+          @include color("e");
+        }
+        .icon-follow-search:hover {
+          @include to-theme("blue");
+        }
+      }
+      .follow-search-result {
+        @include color("a");
+      }
     }
   }
 }
