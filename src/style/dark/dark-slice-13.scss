@@ -843,7 +843,35 @@ html {
       }
     }
   }
+  .control-panel-icon-row .icon-item {
+    &.danmu-block-icon {
+      @include fill("e");
+    }
+    &.active,
+    &:hover {
+      @include theme-fill();
+    }
+  }
 }
 #control-panel-ctnr-box {
   @include no-image
+}
+.live-web-player-controller {
+  .vertical-slider-wrap,
+  .horizontal-slider-wrap {
+    .slider-handle,
+    .slider-track {
+      @include theme-background-color();
+    }
+  }
+  .danmaku .handle {
+    @include theme-background-color();
+  }
+  .quality-wrap .quality-it.selected {
+    @include theme-color();
+  }
+  input[type='radio']:checked+label::before {
+    @include theme-background-color();
+    @include theme-border-color();
+  }
 }
