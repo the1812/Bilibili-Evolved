@@ -836,3 +836,50 @@ html {
     @include set-theme-color("fill");
   }
 }
+.control-panel-ctnr {
+  @include background-color("4");
+  .chat-input-ctnr {
+    @include border-color("3");
+    @include background-color("2");
+    &.chat-input-focus {
+      @include theme-border-color();
+    }
+    .medal-section {
+      @include border-color("3");
+      &.focus-textarea {
+        @include theme-border-color();
+      }
+    }
+  }
+  .control-panel-icon-row .icon-item {
+    &.danmu-block-icon {
+      @include fill("e");
+    }
+    &.active,
+    &:hover {
+      @include theme-fill();
+    }
+  }
+}
+#control-panel-ctnr-box {
+  @include no-image
+}
+.live-web-player-controller {
+  .vertical-slider-wrap,
+  .horizontal-slider-wrap {
+    .slider-handle,
+    .slider-track {
+      @include theme-background-color();
+    }
+  }
+  .danmaku .handle {
+    @include theme-background-color();
+  }
+  .quality-wrap .quality-it.selected {
+    @include theme-color();
+  }
+  input[type='radio']:checked+label::before {
+    @include theme-background-color();
+    @include theme-border-color();
+  }
+}

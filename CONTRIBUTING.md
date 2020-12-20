@@ -192,9 +192,10 @@ disableFeedsDetails: {
 
 更进一步, 如果你的功能只是简单切换一下样式, 还可以这么写:
 ```ts
-// 样式内容, 样式 id, (可选)
+// 样式内容, 样式 id, 网址匹配模式(可选, 填入字符串或正则表达式)
 export default resources.toggleStyle('a { color: red }', 'my-style', {
-
+  include: [ 'https://www.bilibili.com/video/xxxxx' ],
+  exclude: [ /\/abcd$/ ],
 })
 ```
 关于例子可查看 `src/style/player-on-top.js`
@@ -203,9 +204,9 @@ export default resources.toggleStyle('a { color: red }', 'my-style', {
 ## 编译
 编译代码 (有时候要跑两次才能真正编译完成, 玄学bug)
 
-(VSCode 对应任务: `重新编译 rebuild`)
+(VSCode 对应任务: `生产编译 production`)
 ```powershell
-dotnet builder/dotnet/publish/build.dll
+dotnet builder/dotnet/publish/build.dll production
 ```
 
 监视代码改动 (Vue构建偶尔会出bug假死, 关掉重启下就行)

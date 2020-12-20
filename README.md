@@ -16,7 +16,7 @@
 
 [🐛 版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
 
-[📖 相关文档](https://github.com/the1812/Bilibili-Evolved/wiki)
+[📖 参与开发](CONTRIBUTING.md)
 
 [❤ 捐助](donate.md)
 

@@ -145,7 +145,7 @@
 支付宝显示的是带*号的名字, 并没有昵称哦. 所以我只好写匿名了.
 
 ## [2019.03.18][2298]
-参见[使用复制连接](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接).
+参见[#1161](https://github.com/the1812/Bilibili-Evolved/issues/1161).
 
 ## [2019.08.07][2174]
 参见[关于浏览器插件](browser-extensions.md).
