@@ -246,8 +246,11 @@ export const settings = {
   preferAvUrl: false,
   homeHidden: false,
   homeHiddenItems: [],
+  favoritesListCurrentSelect: '',
+  rememberVideoSpeedList: {},
+  rememberVideoSpeed: false,
+  extendVideoSpeed: true,
   cache: {},
-  favoritesListCurrentSelect: ''
 }
 const fixedSettings = {
   useDefaultDanmakuSettings: false,

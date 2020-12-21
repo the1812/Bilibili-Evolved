@@ -6,11 +6,11 @@
 
 </div>
 
-[📦 安装](#安装) / [Install](install-tutorial.en-US.md) / [インストール](install-tutorial.ja-JP.md)
+[📦 安装](#安装) / [Install](doc/install-tutorial.en-US.md) / [インストール](doc/install-tutorial.ja-JP.md)
 
 [⚙ 设置](#设置)
 
-[📚 功能](features.md)
+[📚 功能](doc/features.md)
 
 [👻 兼容性](#兼容性)
 
@@ -18,7 +18,7 @@
 
 [📖 参与开发](CONTRIBUTING.md)
 
-[❤ 捐助](donate.md)
+[❤ 捐助](doc/donate.md)
 
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
@@ -57,7 +57,7 @@
 # 设置
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置. 默认只启用了一部分功能, 您可以根据需要自由调整设置.
 
-可以在[功能列表](features.md)页中查看每项功能的详细说明, 在网页中通过鼠标停留在某一项也可以查看简要说明.
+可以在[功能列表](doc/features.md)页中查看每项功能的详细说明, 在网页中通过鼠标停留在某一项也可以查看简要说明.
 
 大部分功能可通过设置面板开启, 有一些功能会以`附加功能`的形式生效, 或者是可以在`附加功能`做进一步设置. `附加功能`可从网页左侧中央的功能按钮进入.
 
@@ -141,7 +141,7 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 
-**或者也可以考虑[捐助](donate.md)支持一下哦(｀・ω・´)**
+**或者也可以考虑[捐助](doc/donate.md)支持一下哦(｀・ω・´)**
 
 支付宝
 

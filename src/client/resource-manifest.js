@@ -681,12 +681,7 @@ Resource.manifest = {
   useDefaultVideoSpeed: {
     path: 'default-video-speed.min.js',
     displayNames: {
-      useDefaultVideoSpeed: '使用默认播放速度',
-      defaultVideoSpeed: '默认播放速度',
-    },
-    dropdown: {
-      key: 'defaultVideoSpeed',
-      items: ['0.5', '0.75', '1.0', '1.25', '1.5', '2.0'],
+      useDefaultVideoSpeed: '记忆上次播放速度',
     }
   },
   seedsToCoins: {
