@@ -118,12 +118,7 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 - ASS弹幕下载不能包含高级弹幕, 字幕弹幕等.
 
 # 相关推荐
-这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配并保持无冲突.
-
-## 解除B站区域限制
-作者: [ipcjs](https://github.com/ipcjs)
-- [GitHub](https://github.com/ipcjs/bilibili-helper/blob/user.js/bilibili_bangumi_area_limit_hack.md)
-- [GreasyFork](https://greasyfork.org/zh-CN/scripts/25718-%E8%A7%A3%E9%99%A4b%E7%AB%99%E5%8C%BA%E5%9F%9F%E9%99%90%E5%88%B6)
+这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配
 
 ## bilibili网页端添加APP首页推荐
 作者: [indefined](https://github.com/indefined)
