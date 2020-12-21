@@ -147,6 +147,54 @@
           }
         }
       }
+      .search-component {
+        &:hover {
+          @include theme-border-color();
+        }
+        &.search-component-focus {
+          @include border-color("a");
+        }
+        .search-component-input input {
+          @include background-color();
+          @include color("e");
+        }
+        .icon-follow-search:hover {
+          @include to-theme("blue");
+        }
+      }
+      .follow-search-result {
+        @include color("a");
+      }
+    }
+  }
+  .album-content {
+    .album-list {
+      &__title {
+        @include color("e");
+      }
+      &__tabs {
+        @include background-color("5");
+        .album-list__tab {
+          &-name {
+            @include color("e");
+          }
+        }
+        .album-list__tab--active {
+          .album-list__tab-name {
+            @include theme-color();
+          }
+        }
+      }
+      &__content {
+        .album-card {
+          &__title {
+            @include color("e");
+            &:hover {
+              @include theme-color();
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -827,6 +875,14 @@ html {
 }
 .bb-comment .reply-notice .notice-item {
   @include theme-background-color();
+}
+.video-page-card .card-box .info .title:hover {
+  @include theme-color();
+}
+.bilibili-player-video-interactive-list {
+  .small.hover circle {
+    @include set-theme-color("fill");
+  }
 }
 .control-panel-ctnr {
   @include background-color("4");
