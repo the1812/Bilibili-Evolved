@@ -525,6 +525,7 @@ declare global {
     },
     rememberVideoSpeed: boolean,
     extendVideoSpeed: boolean,
+    customKeyBindings: { [actionName: string]: string }
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
