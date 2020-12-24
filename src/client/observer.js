@@ -79,15 +79,15 @@ export class Observer {
       if (unsafeWindow.cid) {
         return unsafeWindow.cid
       }
-      if (unsafeWindow.player?.getVideoMessage) {
+      if (unsafeWindow.player && unsafeWindow.player.getVideoMessage) {
         const info = unsafeWindow.player.getVideoMessage()
         if (Number.isNaN(info.cid)) {
           return null
         }
-        if (!unsafeWindow.aid) {
-          unsafeWindow.aid = info?.aid?.toString()
+        if (!unsafeWindow.aid && info.aid) {
+          unsafeWindow.aid = info.aid.toString()
         }
-        return info?.cid?.toString()
+        return info.cid.toString()
       }
     })
     if (cid === null) {
