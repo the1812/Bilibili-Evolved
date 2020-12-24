@@ -931,3 +931,6 @@ html {
     @include theme-border-color();
   }
 }
+.bilibili-player-drag-mask-progress .bilibili-player-drag-mask-progress-tempo {
+  @include theme-background-color();
+}
