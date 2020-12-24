@@ -182,16 +182,16 @@ Observer.videoChange(async () => {
     const screenshot = takeScreenshot(video, e.shiftKey)
     screenShotsList.screenshots.unshift(screenshot)
   })
-  document.addEventListener('keydown', e => {
-    if (document.activeElement && isTyping()) {
-      return
-    }
-    if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "c") {
-      e.stopPropagation()
-      e.preventDefault()
-      screenshotButton.click()
-    }
-  })
+  // document.addEventListener('keydown', e => {
+  //   if (document.activeElement && isTyping()) {
+  //     return
+  //   }
+  //   if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "c") {
+  //     e.stopPropagation()
+  //     e.preventDefault()
+  //     screenshotButton.click()
+  //   }
+  // })
   if (settings.touchVideoPlayer) {
     document.querySelectorAll('.video-take-screenshot').forEach(it => it.classList.add('touch'))
   }

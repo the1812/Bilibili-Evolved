@@ -42,6 +42,9 @@ export const loadKeyBindings = _.once((bindings: KeyBinding[]) => {
     }
 
     bindings.forEach(binding => {
+      if (binding.keys.length === 0) {
+        return
+      }
       const modifyKeyNotMatch = modifyKeys.some(m => {
         const needModifyKey = binding.keys.includes(m)
         const isModifyKeyPressed = e[m + 'Key']

@@ -78,8 +78,6 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
   }
   const videoSpeed = (controllerAction: (controller: VideoSpeedController, rates: number[]) => void) => {
     return async () => {
-      const attr = await import('../default-video-speed')
-      console.log(attr)
       const { VideoSpeedController } = await import('../default-video-speed')
       const containerElement = dq(`.${VideoSpeedController.classNameMap.speedContainer}`) as HTMLElement
       const videoElement = dq(`.${VideoSpeedController.classNameMap.video} video`) as HTMLVideoElement
@@ -197,9 +195,12 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedDecrease: videoSpeed((controller, rates) => {
       controller.setVideoSpeed([...rates].reverse().find(it => it < controller.playbackRate) || rates[0])
     }),
-    videoSpeedReset: videoSpeed((controller, rates) => {
+    videoSpeedReset: videoSpeed((controller) => {
       controller.reset()
     }),
+    takeScreenshot: clickElement('.video-take-screenshot'),
+    previousFrame: clickElement('.prev-frame'),
+    nextFrame: clickElement('.next-frame'),
   }
   const defaultBindings: { [action in keyof typeof actions]: string } = {
     fullscreen: 'f',
@@ -217,9 +218,12 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     watchlater: 'shift w',
     quickFavorite: 'shift s',
     danmaku: 'd',
-    videoSpeedIncrease: 'shift > ArrowUp',
-    videoSpeedDecrease: 'shift < ArrowDown',
-    videoSpeedReset: 'shift ?',
+    videoSpeedIncrease: 'shift > 》arrowUp',
+    videoSpeedDecrease: 'shift < 《 arrowDown',
+    videoSpeedReset: 'shift ? ？',
+    takeScreenshot: 'ctrl alt c',
+    previousFrame: 'shift arrowLeft',
+    nextFrame: 'shift arrowRight',
   }
   const parseBindings = (bindings: { [action: string]: string }) => {
     return Object.entries(bindings).map(([actionName, keyString]) => {
