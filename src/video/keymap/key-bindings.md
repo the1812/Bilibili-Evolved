@@ -2,7 +2,7 @@
 
 打开浏览器控制台 (`Ctrl+Shift+I`, 切到里面的 Console / 控制台 标签), 修改并运行以下代码:
 ```js
-bilibiliEvolved.customKeyBindings = {
+bilibiliEvolved.settings.customKeyBindings = {
   // 每一行写下要修改的功能, 后面是希望的按键
   // 比如下面这行是将静音的快捷键修改为 Shift + M
   mute: 'shift m',
@@ -20,7 +20,7 @@ bilibiliEvolved.customKeyBindings = {
 
 注意以上的写法是覆盖之前配置的自定义快捷键, 如果希望在之前的基础上添加, 可以写成这样:
 ```js
-bilibiliEvolved.customKeyBindings = {
+bilibiliEvolved.settings.customKeyBindings = {
   ...bilibiliEvolved.customKeyBindings,
   // 每一行写下要修改的功能, 后面是希望的按键
   // 比如下面这行是将静音的快捷键修改为 Shift + M
@@ -30,7 +30,7 @@ bilibiliEvolved.customKeyBindings = {
 如果要删除一个自定义的快捷键配置:
 ```js
 // 删除静音的自定义快捷键, 删除后将恢复到默认的 M 键
-delete bilibiliEvolved.customKeyBindings.mute
+delete bilibiliEvolved.settings.customKeyBindings.mute
 // 保存一下
-bilibiliEvolved.customKeyBindings = bilibiliEvolved.customKeyBindings
+bilibiliEvolved.settings.customKeyBindings = bilibiliEvolved.settings.customKeyBindings
 ```
