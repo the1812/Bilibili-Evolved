@@ -234,6 +234,7 @@ dotnet builder/dotnet/publish/build.dll watch
 // @exclude      *://api.bilibili.com/*
 // @exclude      *://api.*.bilibili.com/*
 // @exclude      *://*.bilibili.com/api/*
+// @exclude      *://*.bilibili.com/h5/*
 // @exclude      *://member.bilibili.com/studio/bs-editor/*
 // @run-at       document-start
 // @grant        unsafeWindow

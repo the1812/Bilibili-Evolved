@@ -9,6 +9,7 @@
 // @exclude      *://api.bilibili.com/*
 // @exclude      *://api.*.bilibili.com/*
 // @exclude      *://*.bilibili.com/api/*
+// @exclude      *://*.bilibili.com/h5/*
 // @exclude      *://member.bilibili.com/studio/bs-editor/*
 // @run-at       document-start
 // @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js
