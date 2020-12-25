@@ -218,7 +218,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     watchlater: 'shift w',
     quickFavorite: 'shift s',
     danmaku: 'd',
-    videoSpeedIncrease: 'shift > 》arrowUp',
+    videoSpeedIncrease: 'shift > 》 arrowUp',
     videoSpeedDecrease: 'shift < 《 arrowDown',
     videoSpeedReset: 'shift ? ？',
     takeScreenshot: 'ctrl alt c',
