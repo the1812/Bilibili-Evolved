@@ -1020,8 +1020,6 @@ input[type="radio"]:checked + .custom-radio,
 {
     border: 1px solid var(--theme-color) !important;
 } */
-.ep-list-wrapper .ep-item .badge.pink,
-.section-ep-wrapper .ep-item .badge.pink,
 .main-container .media-info .media-right .media-tool-bar .btn-rating:hover,
 .short-review-masker .short-review-content .review-body-wrap .mr-btn.active,
 .short-review-masker .short-review-content .review-body-wrap .mr-btn.active:hover,
