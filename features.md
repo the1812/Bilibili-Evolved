@@ -82,9 +82,30 @@
 
 </details>
 <details>
-<summary><strong>默认视频速度</strong></summary>
+<summary><strong>记忆上次播放速度</strong></summary>
 
-进入视频时自动选择指定的视频倍速.
+进入视频时自动选择最后记忆的视频倍速.
+
+- `defaultVideoSpeed` 设置项记录了用户通过原生倍数菜单（或快捷键扩展）最后选择的视频倍数.
+- 支持细化到视频级别，可以通过以下代码来开启：
+
+    ```javascript
+    bilibiliEvolved.settings.rememberVideoSpeed = true
+    ```
+
+    在这种情况下，`defaultVideoSpeed` 设置项提供的值将用于缺省情况下视频的倍数值，而用户再通过原生倍数菜单（或快捷键扩展）切换到其它倍数时，不会改变 `defaultVideoSpeed` 的值.
+    
+    针对当前视频倍数的记忆值将存放在 `rememberVideoSpeedList` 设置项中：
+
+    ```javascript
+    bilibiliEvolved.settings.rememberVideoSpeedList = {
+        // ...
+        "1": ["123456"],
+        "1.5": [],
+        "2":[],
+        // ... 依次类推，在启用了`extendVideoSpeed`（默认已启用）的情况下，还支持 "2.5"， "3"
+    }
+    ```
 
 </details>
 
@@ -105,13 +126,6 @@
 <summary><strong>自动展开视频简介</strong></summary>
 
 长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.
-
-</details>
-<details>
-<summary><strong>自动从历史记录点播放</strong></summary>
-
-播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.
-> 如果还开启了`允许跨集跳转`, 即使当前集数跟历史记录不同也会跳转.
 
 </details>
 <details>
