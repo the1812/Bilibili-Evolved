@@ -31,9 +31,7 @@
 .bangumi-options .opt-list,
 .player-auxiliary-danmaku-function [class*="player-auxiliary-danmaku-btn-"],
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap,
-.bui-button.bui-button-gray2,
 .player-auxiliary-danmaku-function,
-.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap-child .player-auxiliary-panel-title,
 .bpui-selected,
 .bpui-selected span,
@@ -59,6 +57,7 @@
 .bui-swiper-wrap .bui-swiper-item .bui-swiper-text {
   background-color: #333 !important;
 }
+.bui-button.bui-button-gray2,
 .mession-box .content .list-wrap .item-index,
 .news-dialog-Wrapper,
 .box .record-wrap,
@@ -158,6 +157,8 @@ li.danmaku-info-row.bpui-selecting,
 .guard-rank-cntr .rank-cntr .rank-list-box .url-back {
   background-image: none !important;
 }
+.player-auxiliary-area .player-auxiliary-collapse .bui-collapse-body,
+.danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-btn-footer,
 .elevator .bg23,
 .player-auxiliary-area .danmaku-info-row-special,
 .rank-list-ctnr .normal-list .item.self,
