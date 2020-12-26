@@ -945,3 +945,12 @@ html {
     @include color("a");
   }
 }
+.bp-popup-panel {
+  #editor {
+    @include background-color("3");
+    @include color("e");
+  }
+  .publish-btn {
+    @include theme-background-color();
+  }
+}
