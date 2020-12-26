@@ -297,7 +297,7 @@ a.bp_box_bot_click,
 {
     background: transparent !important;
 }
-
+.bui-button.bui-button-gray2,
 .introduction-text,
 .vote-percentage,
 .bread-crumb ul li a,
@@ -602,7 +602,7 @@ button.button.more,
 .bangumi-review-item .review-content,
 .sponsor-rank-item.special .sp-right .sp-user:not(.vip) .sp-name,
 .player-auxiliary-auxiliary-area .player-auxiliary-filter-title,
-.bui-button.bui-button-gray2,
+.bui-button.bui-button-gray2:hover,
 .player-auxiliary-setting-menu-wrap .player-auxiliary-setting-menu-list,
 .player-auxiliary-block-tabpanel-row.special-title .player-auxiliary-block-label,
 .player-auxiliary-block-string,
