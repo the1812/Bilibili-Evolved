@@ -934,3 +934,14 @@ html {
 .bilibili-player-drag-mask-progress .bilibili-player-drag-mask-progress-tempo {
   @include theme-background-color();
 }
+.list-wrapper {
+  @at-root #eplist_module &.detail .ep-item {
+    @include background-color();
+    &:hover .ep-title {
+      @include theme-color();
+    }
+  }
+  .ep-item.visited:not(.cursor) {
+    @include color("a");
+  }
+}
