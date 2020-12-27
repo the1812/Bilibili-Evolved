@@ -931,3 +931,6 @@ html {
     @include theme-border-color();
   }
 }
+.bilibili-player-context-menu-container ul>li a {
+  @include color("e");
+}
