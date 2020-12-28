@@ -6,11 +6,17 @@
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
+// @exclude      *://*.bilibili.com/*/mobile.html
+// @exclude      *://*.bilibili.com/api/*
 // @exclude      *://api.bilibili.com/*
 // @exclude      *://api.*.bilibili.com/*
-// @exclude      *://*.bilibili.com/api/*
-// @exclude      *://*.bilibili.com/h5/*
+// @exclude      *://live.bilibili.com/h5/*
+// @exclude      *://live.bilibili.com/*/h5/*
+// @exclude      *://m.bilibili.com/*
+// @exclude      *://mall.bilibili.com/*
 // @exclude      *://member.bilibili.com/studio/bs-editor/*
+// @exclude      *://www.bilibili.com/h5/*
+// @exclude      *://www.bilibili.com/*/h5/*
 // @run-at       document-start
 // @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js
