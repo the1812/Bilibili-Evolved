@@ -954,3 +954,6 @@ html {
     @include theme-background-color();
   }
 }
+.error-body .error-msg .error-img {
+  @include to-theme("blue");
+}

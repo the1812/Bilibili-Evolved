@@ -4,8 +4,6 @@
 .tab-selector-wrap .selector-wrap ul>li:hover,
 .article-info-module,
 .result.is-web .vote-result-comment,
-.error-body .error-container .error-panel .audio-split,
-.error-body .error-container .song-wrap .image-split,
 .error-body .error-container .song-wrap .change-song,
 .share-board .song-share .song-share-ul li:hover,
 .normal-v2-container .normal-title-wrp>.template-op>.template-op-divide,
@@ -67,6 +65,8 @@
 {
     background-color: #333 !important;
 }
+.error-body .error-container .error-panel .audio-split,
+.error-body .error-container .song-wrap .image-split,
 .up-info .btn-panel .charge-btn,
 .content .rank-list,
 .link-tag-box .selector-wrap,
