@@ -960,3 +960,6 @@ html {
 .article-action .more .more-ops-list ul li:hover{
   @include theme-color();
 }
+.bilibili-player-context-menu-container ul>li a {
+  @include color("e");
+}
