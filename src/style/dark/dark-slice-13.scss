@@ -963,3 +963,9 @@ html {
 .bilibili-player-context-menu-container ul > li a {
   @include color("e");
 }
+.coin-dialog-mask .like-checkbox {
+  @include color("e");
+  i {
+    @include to-theme("blue");
+  }
+}

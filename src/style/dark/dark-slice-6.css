@@ -826,6 +826,7 @@ th.list-head-text,
 .item-footer .button-line .button-wrapper .button-item {
   border-color: #aaa !important;
 }
+.coin-dialog-mask .coin-operated .mc .mc-box,
 .main-container .media-info,
 .main-container .review-module,
 .main-container .plp-l .comment-wrapper,
@@ -993,7 +994,8 @@ th.list-head-text,
 .video-list .vl-hd .float_window .selet-datebox .sse a,
 .video-list .vl-hd .float_window .selet-datebox .sse,
 .video-list .vl-hd .vl-hd-sub .selector-block .date-select:hover,
-.coin-dialog-mask .coin-operated .mc .mc-box,
+.coin-dialog-mask .coin-operated .mc .mc-box.on,
+.coin-dialog-mask .coin-operated .mc .mc-box:hover,
 .score-progress-bar.dp-i-block.v-middle.p-relative .progress-bar-core.p-absolute,
 input[type="radio"]:checked + .custom-radio,
 .live-item .live-item-link .live-img-box .hover-panel .live-bg-merge .live-item-mark,
