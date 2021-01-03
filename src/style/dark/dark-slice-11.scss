@@ -917,6 +917,57 @@
 }
 
 .cinema-movie-wrapper {
+  .title {
+    @include color("e");
+  }
+  .preview-item {
+    .title:hover {
+      @include theme-color();
+    }
+    .cover {
+      @include background();
+    }
+  }
+  div[name="web_tag"] {
+    a {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  div[name="web_rank"] {
+    .more {
+      @at-root #icon_操作_前往 {
+        @include fill("e");
+      }
+    }
+  }
+  div[name="web_index"] {
+    .card {
+      z-index: 0;
+    }
+  }
+  .coming-soon-wrapper .mine {
+    @include color("e");
+    @include background-color("4");
+    @include border-color();
+    &:hover {
+      @include background-color("3");
+    }
+  }
+  .card-wrapper .card-item {
+    .time-line-wrapper.empty .date {
+      @include color("a");
+    }
+    .follow-btn.followed {
+      @include background-color("3");
+      @include color("a");
+    }
+    .title:hover {
+      @include theme-color();
+    }
+  }
   .banner-wrapper .side-list .side-item.selected:hover .title {
       @include theme-color();
     }
@@ -959,16 +1010,6 @@
       }
     }
   }
-  .popup-card .info {
-    @include background-color("4");
-    .title {
-      @include color("e");
-    }
-    .style,
-    .time {
-      @include color("a");
-    }
-  }
   .activity-wrap .title {
     @include color("e");
   }
@@ -996,7 +1037,42 @@
     }
   }
 }
-
+.popup-card {
+  @include background();
+  .info {
+    @include background-color("4");
+    .title {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .style .style-item {
+      @include background-color("2");
+      @include color("a");
+    }
+    .time {
+      @include color("a");
+      .split-line {
+        @include background-color("a");
+      }
+    }
+    .desc {
+      @include color("a");
+    }
+    .action-group .follow-btn {
+      @include theme-border-color();
+      .follow-icon g#方案1 {
+        @include fill("e");
+      }
+      &.followed {
+        @include background-color("3");
+        @include border-color("3");
+        @include color("a");
+      }
+    }
+  }
+}
 .live-up {
   .live-detail {
     .up-name {
