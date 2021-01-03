@@ -76,7 +76,7 @@
     }
   }
   .search-container {
-    @include background-color("2");
+    @include background-color();
     .header-info {
       .title {
         @include color("e");
