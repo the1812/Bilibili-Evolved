@@ -88,25 +88,31 @@ if (isLiveroom()) {
     const checked = settings.simplifyLiveroomSettings[key]
     setBodyClass(checked, key)
   })
-  skins.forEach(s => s.start())
-  SpinQuery.select('.rank-list-ctnr .tab-content').then(tabs => {
-    if (!tabs) {
-      return
+  SpinQuery.select(() => document.head).then(head => {
+    let skinStyle: HTMLStyleElement | null = null
+    const toggleSkinStyle = () => {
+      const blockSkin = settings.simplifyLiveroomSettings.skin
+      if (blockSkin) {
+        skinStyle?.remove()
+      } else {
+        if (skinStyle && !document.head.contains(skinStyle)) {
+          document.head.appendChild(skinStyle)
+        }
+      }
     }
-    Observer.childList(tabs, async (rec) => {
-      console.table(rec)
-      const content = dq(tabs, '.rank-list-content') as HTMLElement
-      if (!content) {
-        return
-      }
-      if (content.classList.contains('disable-skin')) {
-        return
-      }
-      content.classList.add('disable-skin')
-      new SkinManager(
-        ['.rank-list-ctnr .tab-content .rank-list-content'],
-        'live-skin-coloration-area'
-      ).start()
+    addSettingsListener('simplifyLiveroomSettings', toggleSkinStyle)
+    Observer.childList(head, records => {
+      records.forEach(r => {
+        r.addedNodes.forEach(node => {
+          if (!(node instanceof HTMLElement)) {
+            return
+          }
+          if (node.tagName.toLowerCase() === 'style' && node.id.startsWith('skin-css-')) {
+            skinStyle = node as HTMLStyleElement
+            toggleSkinStyle()
+          }
+        })
+      })
     })
   })
 }
