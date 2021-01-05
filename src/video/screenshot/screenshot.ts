@@ -162,7 +162,7 @@ Observer.videoChange(async () => {
     })
   }
 
-  const video = await SpinQuery.select('#bilibili-player video') as HTMLVideoElement
+  const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
   if (video === null) {
     return
   }
@@ -178,20 +178,20 @@ Observer.videoChange(async () => {
   time.insertAdjacentHTML('afterend', buttonHtml)
   const screenshotButton = document.querySelector('.video-take-screenshot') as HTMLElement
   screenshotButton.addEventListener('click', async e => {
-    const video = await SpinQuery.select('#bilibili-player video') as HTMLVideoElement
+    const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
     const screenshot = takeScreenshot(video, e.shiftKey)
     screenShotsList.screenshots.unshift(screenshot)
   })
-  document.addEventListener('keydown', e => {
-    if (document.activeElement && isTyping()) {
-      return
-    }
-    if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "c") {
-      e.stopPropagation()
-      e.preventDefault()
-      screenshotButton.click()
-    }
-  })
+  // document.addEventListener('keydown', e => {
+  //   if (document.activeElement && isTyping()) {
+  //     return
+  //   }
+  //   if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "c") {
+  //     e.stopPropagation()
+  //     e.preventDefault()
+  //     screenshotButton.click()
+  //   }
+  // })
   if (settings.touchVideoPlayer) {
     document.querySelectorAll('.video-take-screenshot').forEach(it => it.classList.add('touch'))
   }

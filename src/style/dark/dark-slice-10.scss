@@ -675,12 +675,20 @@
           }
         }
       }
-      .publish-btn {
-        @include theme-background-color();
-        @include foreground-color();
-        &.disabled {
-          @include background-color("2");
-          @include color("e");
+      .publish-launcher {
+        .indicator {
+          @include color("a");
+          &::after {
+            @include color("a");
+          }
+        }
+        .publish-btn {
+          @include theme-background-color();
+          @include foreground-color();
+          &.disabled {
+            @include background-color("2");
+            @include color("e");
+          }
         }
       }
     }

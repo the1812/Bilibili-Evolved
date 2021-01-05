@@ -1,15 +1,22 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.11.8
+// @version      1.11.9
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
+// @exclude      *://*.bilibili.com/*/mobile.html
+// @exclude      *://*.bilibili.com/api/*
 // @exclude      *://api.bilibili.com/*
 // @exclude      *://api.*.bilibili.com/*
-// @exclude      *://*.bilibili.com/api/*
+// @exclude      *://live.bilibili.com/h5/*
+// @exclude      *://live.bilibili.com/*/h5/*
+// @exclude      *://m.bilibili.com/*
+// @exclude      *://mall.bilibili.com/*
 // @exclude      *://member.bilibili.com/studio/bs-editor/*
+// @exclude      *://www.bilibili.com/h5/*
+// @exclude      *://www.bilibili.com/*/h5/*
 // @run-at       document-start
 // @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js

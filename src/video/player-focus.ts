@@ -2,7 +2,7 @@
   if (!document.URL.startsWith('https://www.bilibili.com/video/')) {
     return
   }
-  const target = document.URL.includes('bangumi') ? '#bilibili-player' : '.video-info .video-title .tit'
+  const target = document.URL.includes('bangumi') ? '.bilibili-player' : '.video-info .video-title .tit'
   const element = await SpinQuery.select(target)
   const { playerReady } = await import('./player-ready')
   await playerReady()

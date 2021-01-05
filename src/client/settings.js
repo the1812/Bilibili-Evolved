@@ -250,6 +250,7 @@ export const settings = {
   rememberVideoSpeedList: {},
   rememberVideoSpeed: false,
   extendVideoSpeed: true,
+  customKeyBindings: {},
   cache: {},
 }
 const fixedSettings = {
