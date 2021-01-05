@@ -201,6 +201,12 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     takeScreenshot: clickElement('.video-take-screenshot'),
     previousFrame: clickElement('.prev-frame'),
     nextFrame: clickElement('.next-frame'),
+    returnBegin: () => {
+      if (unsafeWindow.player) {
+        unsafeWindow.player.play()
+        setTimeout(() => unsafeWindow.player.seek(0))
+      }
+    },
   }
   const defaultBindings: { [action in keyof typeof actions]: string } = {
     fullscreen: 'f',
@@ -224,6 +230,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     takeScreenshot: 'ctrl alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
+    returnBegin: '0'
   }
   const parseBindings = (bindings: { [action: string]: string }) => {
     return Object.entries(bindings).map(([actionName, keyString]) => {
