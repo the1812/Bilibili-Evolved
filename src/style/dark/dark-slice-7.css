@@ -4,8 +4,6 @@
 .tab-selector-wrap .selector-wrap ul>li:hover,
 .article-info-module,
 .result.is-web .vote-result-comment,
-.error-body .error-container .error-panel .audio-split,
-.error-body .error-container .song-wrap .image-split,
 .error-body .error-container .song-wrap .change-song,
 .share-board .song-share .song-share-ul li:hover,
 .normal-v2-container .normal-title-wrp>.template-op>.template-op-divide,
@@ -67,6 +65,8 @@
 {
     background-color: #333 !important;
 }
+.error-body .error-container .error-panel .audio-split,
+.error-body .error-container .song-wrap .image-split,
 .up-info .btn-panel .charge-btn,
 .content .rank-list,
 .link-tag-box .selector-wrap,
@@ -422,7 +422,7 @@
 .pgc-list .pgc-item .right-info .headline .pgc-label,
 #pgc-navigate-wrap .play-btn,
 #pgc-navigate-wrap .play-btn:hover,
-.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-user:not(.vip) .sp-name,
 .tabs .customize-tab .tab-title,
 .customize-wrp .steps-title,
 .steps .step-operate .step-bread .step-index,
@@ -941,7 +941,7 @@
 .steps .step-operate .step-bread .step-title.selected,
 .steps .step-operate .dropdown-btn .icon-text,
 .card-warpper .card-warpper-outside .card-item .learn.unlearn,
-.sponsor-rank-item.pos-rank-module .sp-right .sp-user .sp-name:hover,
+.sponsor-rank-item.pos-rank-module .sp-right .sp-user:not(.vip) .sp-name:hover,
 .home-pc .application .application-body .fjw-tip li:first-child,
 .song-info .info-wrap .choose-type .selected,
 .song-info .info-wrap .type-list .item-list .type-item:hover,
