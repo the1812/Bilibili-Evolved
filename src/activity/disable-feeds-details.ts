@@ -50,7 +50,7 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
     if (!postContent) {
       return
     }
-    const hasCardContainer = ['.video-container', '.bangumi-container', '.media-list']
+    const hasCardContainer = ['.video-container', '.bangumi-container', '.media-list', '.article-container']
       .some(type => dq(postContent, type))
     if (hasCardContainer) {
       return
