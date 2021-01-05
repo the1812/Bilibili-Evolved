@@ -208,7 +208,6 @@ export const settings = {
   commentsTranslate: false,
   downloadVideoQuality: 120,
   defaultLiveQuality: '原画',
-  useDefaultLiveQuality: false,
   foregroundColorMode: '自动',
   preserveEventBanner: false,
   about: true,
@@ -253,6 +252,7 @@ export const settings = {
   cache: {},
 }
 const fixedSettings = {
+  useDefaultLiveQuality: false,
   recordLiveDanmaku: false,
   useDefaultDanmakuSettings: false,
   enableDanmaku: true,
