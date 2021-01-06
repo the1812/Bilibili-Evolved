@@ -117,6 +117,11 @@ export type FeedsCardCallback = {
   added?: (card: FeedsCard) => void
   removed?: (card: FeedsCard) => void
 }
+export const supportedUrls = [
+  '//t.bilibili.com',
+  '//space.bilibili.com',
+  '//live.bilibili.com',
+]
 const feedsCardCallbacks: Required<FeedsCardCallback>[] = []
 class FeedsCardsManager extends EventTarget {
   watching = false
@@ -172,7 +177,7 @@ class FeedsCardsManager extends EventTarget {
   }
   async removeCard(node: Node) {
     if (node instanceof HTMLElement && node.classList.contains('card')) {
-      const id = (await this.parseCard(node)).id
+      const id = node.getAttribute('data-did') as string
       const index = this.cards.findIndex(c => c.id === id)
       if (index === -1) {
         return
@@ -280,6 +285,7 @@ class FeedsCardsManager extends EventTarget {
     const updateCards = (cardsList: HTMLElement) => {
       const cards = [...cardsList.querySelectorAll('.card[data-did]')]
       cards.forEach(it => this.addCard(it))
+      console.log(cards)
       return Observer.childList(cardsList, records => {
         records.forEach(record => {
           record.addedNodes.forEach(node => this.addCard(node))
@@ -313,9 +319,36 @@ class FeedsCardsManager extends EventTarget {
             cardListObserver.stop()
             cardListObserver = null
           }
+          await Promise.all(this.cards.map(c => c.element).map(e => this.removeCard(e)))
         }
       })
       this.watching = true
+      return true
+    }
+    if (document.URL.includes('//live.bilibili.com')) {
+      console.log('live watch')
+      const feedsContainer = await SpinQuery.select('.room-feed') as HTMLElement
+      if (!feedsContainer) {
+        return false
+      }
+      let cardListObserver: Observer | null = null
+      Observer.childList(feedsContainer, async () => {
+        if (dq('.room-feed-content')) {
+          const cardsList = await SpinQuery.select('.room-feed-content .content') as HTMLElement
+          console.log('enter feeds tab')
+          if (cardListObserver) {
+            cardListObserver.stop()
+          }
+          cardListObserver = updateCards(cardsList)
+        } else {
+          console.log('leave feeds tab')
+          if (cardListObserver) {
+            cardListObserver.stop()
+            cardListObserver = null
+          }
+          await Promise.all(this.cards.map(c => c.element).map(e => this.removeCard(e)))
+        }
+      })
       return true
     }
     const cardsList = await SpinQuery.select('.feed-card .content, .detail-content .detail-card') as HTMLDivElement
@@ -461,6 +494,7 @@ export default {
   export: {
     feedsCardsManager,
     feedsCardTypes,
+    supportedUrls,
     getVideoFeeds,
     forEachFeedsCard,
     addMenuItem,

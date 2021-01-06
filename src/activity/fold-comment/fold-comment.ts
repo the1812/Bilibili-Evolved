@@ -1,11 +1,16 @@
 (async () => {
-  if (document.URL.replace(window.location.search, '') !== 'https://t.bilibili.com/'
-   && !document.URL.startsWith('https://space.bilibili.com')) {
-     return
+  // 动态详情页不需要开启
+  const isNotFeedsHome = document.URL.includes('//t.bilibili.com') && document.URL.replace(window.location.search, '') !== 'https://t.bilibili.com/'
+  if (isNotFeedsHome) {
+    return
   }
-  const { forEachFeedsCard } = await import('../feeds-apis')
+  const { forEachFeedsCard, supportedUrls } = await import('../feeds-apis')
+  if (supportedUrls.every(url => !document.URL.includes(url))) {
+    return
+  }
   resources.applyImportantStyle('foldCommentStyle')
   const injectButton = (card: HTMLElement) => {
+    console.log('inject', card)
     const injectToComment = (panelArea: HTMLDivElement) => {
       const button = document.createElement('div')
       button.classList.add('fold-comment')
