@@ -249,6 +249,7 @@ export const settings = {
   rememberVideoSpeed: false,
   extendVideoSpeed: true,
   customKeyBindings: {},
+  alwaysShowDuration: false,
   cache: {},
 }
 const fixedSettings = {

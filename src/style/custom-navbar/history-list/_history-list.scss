@@ -199,6 +199,9 @@
                 left: $padding;
                 bottom: $padding;
                 padding: 0 6px;
+                body.always-show-duration & {
+                  opacity: 1;
+                }
               }
               .progress-number {
                 left: $padding;

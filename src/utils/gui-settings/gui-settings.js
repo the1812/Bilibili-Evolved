@@ -218,6 +218,9 @@ function setDisplayNames () {
   addSettingsListener('elegantScrollbar', value => {
     document.documentElement.classList.toggle('elegant-scrollbar', value)
   }, true)
+  addSettingsListener('alwaysShowDuration', value => {
+    document.body.classList.toggle('always-show-duration', value)
+  }, true)
   const settingsBox = resources.data.guiSettingsHtml.text
   document.body.insertAdjacentHTML('beforeend', settingsBox)
 
