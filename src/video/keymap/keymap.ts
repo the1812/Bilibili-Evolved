@@ -4,6 +4,7 @@ import { KeyBinding, KeyBindingAction } from './key-bindings'
 const supportedUrls = [
   'https://www.bilibili.com/bangumi/',
   'https://www.bilibili.com/video/',
+  'https://www.bilibili.com/cheese/',
   'https://www.bilibili.com/watchlater/',
   'https://www.bilibili.com/medialist/play/',
 ]

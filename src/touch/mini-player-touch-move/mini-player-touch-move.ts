@@ -1,7 +1,8 @@
 const load = async (enable = true) => {
   if (![
-    '//www.bilibili.com/bangumi/play/',
-    '//www.bilibili.com/video/'
+    '//www.bilibili.com/bangumi/',
+    '//www.bilibili.com/video/',
+    '//www.bilibili.com/cheese/',
   ].some(it => document.URL.includes(it))) {
     return
   }
