@@ -23,6 +23,10 @@ const homeHiddenOptions: HomeHiddenOption[] = [
   {
     name: 'trends', displayName: '活动/热门视频', style: `
       .first-screen #reportFirst1 { display: none !important; }
+      .first-screen .space-between {
+        margin-bottom: 0 !important;
+      }
+      .rcmd-box-wrap { display: none !important; }
     `,
   },
   {
