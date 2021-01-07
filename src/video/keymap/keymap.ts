@@ -35,7 +35,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
    * @param text 文字 (可以 HTML)
    * @param icon MDI 图标 class
    */
-  const showPlaybackTip = (text: string, icon: string) => {
+  const showTip = (text: string, icon: string) => {
     let tip = dq('.keymap-tip') as HTMLDivElement
     if (!tip) {
       const player = dq('.bilibili-player-video-wrap')
@@ -100,20 +100,35 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       }
       const controller = new VideoSpeedController(containerElement, videoElement, 1)
       controllerAction(controller, VideoSpeedController.supportedRates)
-      showPlaybackTip(`${controller.playbackRate}x`, 'mdi-fast-forward')
+      showTip(`${controller.playbackRate}x`, 'mdi-fast-forward')
     }
   }
   const actions = {
     fullscreen: clickElement('.bilibili-player-video-btn-fullscreen'),
     webFullscreen: clickElement('.bilibili-player-video-web-fullscreen'),
     wideScreen: clickElement('.bilibili-player-video-btn-widescreen'),
+    volumeUp: () => {
+      const current = unsafeWindow.player.volume()
+      unsafeWindow.player.volume(current + 0.1)
+      showTip(`${Math.round(unsafeWindow.player.volume() * 100)}%`, 'mdi-volume-high')
+    },
+    volumeDown: () => {
+      const current = unsafeWindow.player.volume()
+      unsafeWindow.player.volume(current - 0.1)
+      const after = Math.round(unsafeWindow.player.volume() * 100)
+      if (after === 0) {
+        showTip('静音', 'mdi-volume-off')
+      } else {
+        showTip(`${after}%`, 'mdi-volume-high')
+      }
+    },
     mute: () => {
       clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume')()
       const isMute = unsafeWindow.player.isMute()
       if (isMute) {
-        showPlaybackTip('已静音', 'mdi-volume-off')
+        showTip('已静音', 'mdi-volume-off')
       } else {
-        showPlaybackTip('已取消静音', 'mdi-volume-high')
+        showTip('已取消静音', 'mdi-volume-high')
       }
     },
     pictureInPicture: clickElement('.bilibili-player-video-btn-pip'),
@@ -224,6 +239,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     fullscreen: 'f',
     webFullscreen: 'w',
     wideScreen: 't',
+    volumeUp: 'arrowUp',
+    volumeDown: 'arrowDown',
     mute: 'm',
     pictureInPicture: 'p',
     coin: 'c',
