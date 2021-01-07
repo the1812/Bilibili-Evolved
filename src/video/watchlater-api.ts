@@ -9,7 +9,8 @@ export const toggleWatchlater = async (aid: string | number, add: boolean) => {
     message: string
   }
   if (response.code !== 0) {
-    throw new Error(`稍后再看操作失败: ${response.message}`)
+    // throw new Error(`稍后再看操作失败: ${response.message}`)
+    Toast.error(response.message, '稍后再看操作失败', 3000)
   }
 }
 export interface Rights {
