@@ -172,8 +172,11 @@ Observer.videoChange(async () => {
   }
 
   const buttonHtml = /*html*/`
-    <div class="video-take-screenshot" title="截图">
+    <div class="video-take-screenshot">
       <span><i class="mdi mdi-camera"></i></span>
+      <div class="player-tooltips tip top-center animation active">
+        <div class="tooltip">截图</div>
+      </div>
     </div>`
   time.insertAdjacentHTML('afterend', buttonHtml)
   const screenshotButton = document.querySelector('.video-take-screenshot') as HTMLElement
