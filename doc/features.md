@@ -381,14 +381,6 @@
 隐藏番剧页面下方的承包榜, 以及右边的承包按钮.
 
 </details>
-<details>
-<summary><strong>隐藏分区栏</strong></summary>
-
-隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.
-
-<img height="300" alt="分区栏" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/hide-category.jpg">
-
-</details>
 
 <h2 align="center">动态</h2>
 <div align="center">改善动态体验</div>

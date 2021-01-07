@@ -663,14 +663,6 @@ Resource.manifest = {
       noMiniVideoAutoplay: '禁止小视频自动播放',
     }
   },
-  hideCategory: {
-    path: 'hide-category.min.js',
-    reloadable: true,
-    style: 'instant',
-    displayNames: {
-      hideCategory: '隐藏分区栏',
-    },
-  },
   foldComment: {
     path: 'fold-comment.min.js',
     style: true,

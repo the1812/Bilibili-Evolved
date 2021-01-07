@@ -148,7 +148,6 @@ export const settings = {
   noMiniVideoAutoplay: false,
   useDefaultVideoSpeed: false,
   defaultVideoSpeed: '1.0',
-  hideCategory: false,
   foldComment: true,
   downloadVideoDefaultDanmaku: '无',
   downloadVideoDefaultSubtitle: '无',
@@ -253,6 +252,7 @@ export const settings = {
   cache: {},
 }
 const fixedSettings = {
+  hideCategory: false,
   useDefaultLiveQuality: false,
   recordLiveDanmaku: false,
   useDefaultDanmakuSettings: false,

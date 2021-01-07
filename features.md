@@ -92,7 +92,7 @@
     ```
 
     在这种情况下，`defaultVideoSpeed` 设置项提供的值将用于缺省情况下视频的倍数值，而用户再通过原生倍数菜单（或快捷键扩展）切换到其它倍数时，不会改变 `defaultVideoSpeed` 的值.
-    
+
     针对当前视频倍数的记忆值将存放在 `rememberVideoSpeedList` 设置项中：
 
     ```javascript
@@ -393,14 +393,6 @@
 <summary><strong>隐藏番剧承包</strong></summary>
 
 隐藏番剧页面下方的承包榜, 以及右边的承包按钮.
-
-</details>
-<details>
-<summary><strong>隐藏分区栏</strong></summary>
-
-隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.
-
-<img height="300" alt="分区栏" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/hide-category.jpg">
 
 </details>
 
