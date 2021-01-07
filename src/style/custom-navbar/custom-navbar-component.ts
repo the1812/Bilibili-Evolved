@@ -47,7 +47,7 @@ export class NavbarComponent {
   }
   async setNotifyCount(count: number) {
     const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`) as HTMLElement
-    if (!notifyElement || !count) {
+    if (!notifyElement || count <= 0) {
       notifyElement.innerHTML = ''
       return
     }

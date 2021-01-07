@@ -47,6 +47,9 @@ export class Messages extends NavbarComponent {
         const count = parseInt(attr)
         item.removeAttribute('data-count')
         this.totalCount -= count
+        if (this.totalCount < 0) {
+          this.totalCount = 0
+        }
         this.setNotifyCount(this.totalCount)
       })
     })
@@ -71,8 +74,7 @@ export class Messages extends NavbarComponent {
       const count = mainJson.data[name] as number
       if (count > 0) {
         items[index].setAttribute('data-count', count.toString())
-      }
-      else {
+      } else {
         items[index].removeAttribute('data-count')
       }
     })
