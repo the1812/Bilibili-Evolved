@@ -19,27 +19,37 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       }
     }
   }
-  /** 播放速度提示框用的`setTimeout`句柄 */
-  let showPlaybackTipOldTimeout: number
+  const changeVideoTime = (delta: number) => {
+    return () => {
+      const video = dq('.bilibili-player-video video') as HTMLVideoElement
+      if (!video) {
+        return
+      }
+      video.currentTime += delta
+    }
+  }
+  /** 提示框用的`setTimeout`句柄 */
+  let tipTimeoutHandle: number
   /**
-   * 显示播放速度提示框
-   * @param speed 播放速度
+   * 显示提示框
+   * @param text 文字 (可以 HTML)
+   * @param icon MDI 图标 class
    */
-  const showPlaybackTip = (speed: number) => {
-    let tip = dq('.keymap-playback-tip') as HTMLDivElement
+  const showPlaybackTip = (text: string, icon: string) => {
+    let tip = dq('.keymap-tip') as HTMLDivElement
     if (!tip) {
       const player = dq('.bilibili-player-video-wrap')
       if (!player) {
         return
       }
       player.insertAdjacentHTML('afterbegin', /*html*/`
-        <div class="keymap-playback-tip-container">
-          <i class="mdi mdi-fast-forward"></i>
-          <div class="keymap-playback-tip"></div>x
+        <div class="keymap-tip-container">
+          <i class="keymap-tip-icon mdi ${icon}"></i>
+          <div class="keymap-tip">${text}</div>
         </div>
       `)
       resources.applyStyleFromText(`
-        .keymap-playback-tip-container {
+        .keymap-tip-container {
           position: absolute;
           left: 50%;
           top: 50%;
@@ -56,24 +66,28 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
           border-radius: 4px;
           transition: .2s ease-out;
         }
-        .keymap-playback-tip-container.show {
+        .keymap-tip-container.show {
           opacity: 1;
         }
-        .keymap-playback-tip-container i {
+        .keymap-tip-container i {
           line-height: 1;
           margin-right: 8px;
           font-size: 18pt;
         }
       `, 'keymapStyle')
-      tip = dq('.keymap-playback-tip') as HTMLDivElement
+      tip = dq('.keymap-tip') as HTMLDivElement
     }
-    tip.innerHTML = speed.toString()
-    if (showPlaybackTipOldTimeout) {
-      clearTimeout(showPlaybackTipOldTimeout)
+    tip.innerHTML = text
+    const container = dq('.keymap-tip-container') as HTMLDivElement
+    const iconElement = dq(container, '.mdi') as HTMLElement
+    iconElement.classList.remove(...iconElement.classList.values())
+    iconElement.classList.add('mdi', icon)
+    if (tipTimeoutHandle) {
+      clearTimeout(tipTimeoutHandle)
     }
-    (dq('.keymap-playback-tip-container') as HTMLDivElement).classList.add('show')
-    showPlaybackTipOldTimeout = window.setTimeout(() => {
-      (dq('.keymap-playback-tip-container') as HTMLDivElement).classList.remove('show')
+    container.classList.add('show')
+    tipTimeoutHandle = window.setTimeout(() => {
+      container.classList.remove('show')
     }, 2000)
   }
   const videoSpeed = (controllerAction: (controller: VideoSpeedController, rates: number[]) => void) => {
@@ -86,14 +100,22 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       }
       const controller = new VideoSpeedController(containerElement, videoElement, 1)
       controllerAction(controller, VideoSpeedController.supportedRates)
-      showPlaybackTip(controller.playbackRate)
+      showPlaybackTip(`${controller.playbackRate}x`, 'mdi-fast-forward')
     }
   }
   const actions = {
     fullscreen: clickElement('.bilibili-player-video-btn-fullscreen'),
     webFullscreen: clickElement('.bilibili-player-video-web-fullscreen'),
     wideScreen: clickElement('.bilibili-player-video-btn-widescreen'),
-    mute: clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume'),
+    mute: () => {
+      clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume')()
+      const isMute = unsafeWindow.player.isMute()
+      if (isMute) {
+        showPlaybackTip('已静音', 'mdi-volume-off')
+      } else {
+        showPlaybackTip('已取消静音', 'mdi-volume-high')
+      }
+    },
     pictureInPicture: clickElement('.bilibili-player-video-btn-pip'),
     coin: clickElement('.video-toolbar .coin,.tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2)'),
     favorite: clickElement('.video-toolbar .collect, .video-toolbar-module .fav-box, .play-options-ul > li:nth-child(3)'),
@@ -161,14 +183,10 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       checkbox.checked = !checkbox.checked
       raiseEvent(checkbox, 'change')
     },
-    longJumpBackward: () => {
-      const video = dq('.bilibili-player-video video') as HTMLVideoElement
-      video.currentTime -= settings.keymapJumpSeconds
-    },
-    longJumpForward: () => {
-      const video = dq('.bilibili-player-video video') as HTMLVideoElement
-      video.currentTime += settings.keymapJumpSeconds
-    },
+    longJumpBackward: changeVideoTime(-settings.keymapJumpSeconds),
+    longJumpForward: changeVideoTime(settings.keymapJumpSeconds),
+    jumpBackward: changeVideoTime(-5),
+    jumpForward: changeVideoTime(5),
     playerMenu: () => {
       // menu size: 386.6 x 311 (2020-03-29)
       // menu size: 176.65 x 194 (2020-06-09)
@@ -215,6 +233,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     playerMenu: '`',
     longJumpForward: 'j',
     longJumpBackward: 'shift j',
+    jumpBackward: 'arrowLeft',
+    jumpForward: 'arrowRight',
     watchlater: 'shift w',
     quickFavorite: 'shift s',
     danmaku: 'd',
