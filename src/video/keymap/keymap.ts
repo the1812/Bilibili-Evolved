@@ -201,7 +201,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     takeScreenshot: clickElement('.video-take-screenshot'),
     previousFrame: clickElement('.prev-frame'),
     nextFrame: clickElement('.next-frame'),
-    returnBegin: () => {
+    seekBegin: () => {
       if (!unsafeWindow.player) {
         return
       }
@@ -237,7 +237,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     takeScreenshot: 'ctrl alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
-    returnBegin: '0'
+    seekBegin: '0'
   }
   const parseBindings = (bindings: { [action: string]: string }) => {
     return Object.entries(bindings).map(([actionName, keyString]) => {
