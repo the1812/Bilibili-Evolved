@@ -202,10 +202,17 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     previousFrame: clickElement('.prev-frame'),
     nextFrame: clickElement('.next-frame'),
     returnBegin: () => {
-      if (unsafeWindow.player) {
-        unsafeWindow.player.play()
-        setTimeout(() => unsafeWindow.player.seek(0))
+      if (!unsafeWindow.player) {
+        return
       }
+      unsafeWindow.player.play()
+      setTimeout(() => {
+        unsafeWindow.player.seek(0)
+        const toastText = dq(".bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)")
+        if (toastText) {
+          toastText.textContent = " 00:00"
+        }
+      })
     },
   }
   const defaultBindings: { [action in keyof typeof actions]: string } = {
@@ -243,11 +250,11 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
   }
 
   ;(async () => {
-    const { loadKeyBindings } = await import('./key-bindings')
-    config = loadKeyBindings(parseBindings(
-      { ...defaultBindings, ...settings.customKeyBindings }
-    ))
-  })()
+      const { loadKeyBindings } = await import('./key-bindings')
+      config = loadKeyBindings(parseBindings(
+        { ...defaultBindings, ...settings.customKeyBindings }
+      ))
+    })()
 }
 
 export default {
