@@ -237,7 +237,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     takeScreenshot: 'ctrl alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
-    seekBegin: '0'
+    seekBegin: '0',
   }
   const parseBindings = (bindings: { [action: string]: string }) => {
     return Object.entries(bindings).map(([actionName, keyString]) => {
@@ -250,11 +250,11 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
   }
 
   ;(async () => {
-      const { loadKeyBindings } = await import('./key-bindings')
-      config = loadKeyBindings(parseBindings(
-        { ...defaultBindings, ...settings.customKeyBindings }
-      ))
-    })()
+    const { loadKeyBindings } = await import('./key-bindings')
+    config = loadKeyBindings(parseBindings(
+      { ...defaultBindings, ...settings.customKeyBindings }
+    ))
+  })()
 }
 
 export default {
