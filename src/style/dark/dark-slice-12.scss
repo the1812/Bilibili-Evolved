@@ -941,3 +941,10 @@ a.bp_box_bot_click {
     }
   }
 }
+.van-popover {
+  &.popover-live,
+  &.popover-manga,
+  &.popover-game {
+    @include background-color();
+  }
+}

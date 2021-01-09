@@ -254,6 +254,9 @@
           font-size: 16px;
         }
       }
+      body.always-show-duration & .time {
+        opacity: 1;
+      }
       &:hover {
         .time,
         .watchlater {

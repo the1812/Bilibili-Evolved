@@ -9,5 +9,18 @@
   user-select: text;
   &-item {
     font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  .mdi {
+    font-size: 15px;
+    padding: 1px;
+    margin-left: 4px;
+    cursor: pointer;
+    line-height: 1;
+    display: inline-flex;
+    &.mdi-link::before {
+      transform: rotate(135deg);
+    }
   }
 }

@@ -963,6 +963,13 @@ export const map = new Map([
   [`获赞数`, `Likes`],
   [`记笔记`, `Notes`],
   [`夜间模式开关`, `Dark mode`],
+  [`记忆上次播放速度`, `Remember last playback speed`],
+  [`首页过滤`, `Home filter`],
+  [`联系方式`, `Contact Info`],
+  [`右侧分区导航`, `Category anchors`],
+  [`分区栏`, `Categories`],
+  [`活动/热门视频`, `Trending`],
+  [`在线列表`, `Online Ranking`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

@@ -6,11 +6,11 @@
 
 </div>
 
-[📦 安装](#安装) / [Install](install-tutorial.en-US.md) / [インストール](install-tutorial.ja-JP.md)
+[📦 安装](#安装) / [Install](doc/install-tutorial.en-US.md) / [インストール](doc/install-tutorial.ja-JP.md)
 
 [⚙ 设置](#设置)
 
-[📚 功能](features.md)
+[📚 功能](doc/features.md)
 
 [👻 兼容性](#兼容性)
 
@@ -18,7 +18,7 @@
 
 [📖 参与开发](CONTRIBUTING.md)
 
-[❤ 捐助](donate.md)
+[❤ 捐助](doc/donate.md)
 
 # 安装
 需要浏览器拥有[Tampermonkey](https://tampermonkey.net/)插件.
@@ -45,17 +45,18 @@
 
 ## 推荐配置
 - 操作系统: 64-bit Windows 10 / macOS 10.15+
-- 分辨率: 2K
+- 分辨率: 2K+ / 192ppi
 - 浏览器: Chrome 80+ / Firefox 65+ / Edge 80+ / Safari 14+
 - 处理器: Intel Core i7 / AMD Ryzen 5
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
 - 显卡: GeForce GTX 660 / Radeon HD 7870
+- 网络: 10MB/s
 
 # 设置
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置. 默认只启用了一部分功能, 您可以根据需要自由调整设置.
 
-可以在[功能列表](features.md)页中查看每项功能的详细说明, 在网页中通过鼠标停留在某一项也可以查看简要说明.
+可以在[功能列表](doc/features.md)页中查看每项功能的详细说明, 在网页中通过鼠标停留在某一项也可以查看简要说明.
 
 大部分功能可通过设置面板开启, 有一些功能会以`附加功能`的形式生效, 或者是可以在`附加功能`做进一步设置. `附加功能`可从网页左侧中央的功能按钮进入.
 
@@ -87,16 +88,13 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 # 开发者
 [![开发者](https://badges.pufler.dev/contributors/the1812/Bilibili-Evolved?size=32&padding=12&bots=false)](https://github.com/the1812/Bilibili-Evolved/graphs/contributors)
 
-## 参与项目
-欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~ (小心编译器的神秘 bug / 小心被祖传代码闪瞎)
-
-## 界面翻译
-特别感谢给我们提供了翻译文本的各位:
+## 文案翻译贡献者
 - [PleiadeSubaru](https://github.com/Etherrrr)
 - [Lets-Halloween](https://github.com/Lets-Halloween)
 - Joshuaふみひる
 
-也欢迎任何翻译大佬帮助我们改善翻译的内容, 习惯直接改代码可以开 Pull Request, 习惯整理出文本的可以加QQ群963709592讨论.
+## 参与项目
+欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~ (小心编译器的神秘 bug / 小心被祖传代码闪瞎)
 
 # 第三方开源组件
 👍感谢这些组件帮助我们极大地提升了开发效率.
@@ -137,7 +135,7 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 
-**或者也可以考虑[捐助](donate.md)支持一下哦(｀・ω・´)**
+**或者也可以考虑[捐助](doc/donate.md)支持一下哦(｀・ω・´)**
 
 支付宝
 

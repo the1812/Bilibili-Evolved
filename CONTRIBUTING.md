@@ -228,13 +228,20 @@ dotnet builder/dotnet/publish/build.dll watch
 // @description  Bilibili Evolved 预览离线版 (本地)
 // @version      300.0
 // @author       Grant Howard, Coulomb-G
-// @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2021, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
+// @exclude      *://*.bilibili.com/*/mobile.html
+// @exclude      *://*.bilibili.com/api/*
 // @exclude      *://api.bilibili.com/*
 // @exclude      *://api.*.bilibili.com/*
-// @exclude      *://*.bilibili.com/api/*
+// @exclude      *://live.bilibili.com/h5/*
+// @exclude      *://live.bilibili.com/*/h5/*
+// @exclude      *://m.bilibili.com/*
+// @exclude      *://mall.bilibili.com/*
 // @exclude      *://member.bilibili.com/studio/bs-editor/*
+// @exclude      *://www.bilibili.com/h5/*
+// @exclude      *://www.bilibili.com/*/h5/*
 // @run-at       document-start
 // @grant        unsafeWindow
 // @grant        GM_getValue

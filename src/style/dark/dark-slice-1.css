@@ -116,8 +116,6 @@ div.con,
 .bottom .content,
 .action-menu .menu-list,
 .action-menu .menu-list:before,
-.list-item:hover,
-.list-item.active,
 .emoji-box:after,
 .emotion-box,
 .emotion-box:after,
@@ -146,6 +144,7 @@ div.con,
 .home-wrap .home-input .list li:hover,
 .suggest-wrap .horizontal .hz-text,
 .suggest-wrap .vt-text:hover,
+.suggest-wrap .vt-text.focus,
 .home-wrap .home-suggest .hotlist .num,
 .fixed-top,
 .page-wrap .pager,
@@ -268,6 +267,7 @@ div.drag-bar,
 .bilibili-player-modal-btns .bpm-btn,
 .bilibili-player-adv-danmaku,
 .multi-page,
+.video-page-operator-card .card-box .pic-box,
 .video-page-card .card-box .pic-box,
 .add-btn,
 .collection-m .bottom .btn.disable,
@@ -829,7 +829,7 @@ span.key,
 .history-btn>.btn,
 .history-list .r-info .title,
 .history-list .r-info .w-info .username,
-.user-name a,
+.user-name:not(.big-vip) a,
 .content,
 .video-container .text-area .title,
 .sticky-bar .bar-content .title,
@@ -1509,7 +1509,6 @@ ul.up-nav li
 .dynamic-hated:hover i,
 .dynamic-hate:hover i,
 .is-web .checked,
-.is-web .is-max .percentage-bar,
 .video-container .image-area .see-later.done,
 .watch-later-trigger.added,
 .group-list li input[type=checkbox]:hover+i,
@@ -1556,7 +1555,6 @@ ul.up-nav li
 {
     filter: var(--blue-image-filter) !important;
 }
-.is-max .percentage-bar,
 .calendar .day-item.gift-checked,
 .home-wrap .home-tips .tips-link .tip-item>a:hover
 {
@@ -1675,7 +1673,7 @@ div.drag-bar,
 {
     box-shadow: 0px 1px 10px 0 #0003 !important;
 }
-#bilibili-player.mini-player::before
+.bilibili-player.mini-player::before
 {
     box-shadow: 0 4px 8px 0 #0004 !important;
 }

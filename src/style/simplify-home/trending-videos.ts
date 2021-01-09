@@ -32,6 +32,31 @@ export const getTrendingVideos = (): VideoCardInfo[] => {
   if (!unsafeWindow.__INITIAL_STATE__) {
     throw new Error('unsafeWindow.__INITIAL_STATE__ not available')
   }
+  if (unsafeWindow.__INITIAL_STATE__.recommendData) {
+    return unsafeWindow.__INITIAL_STATE__.recommendData.item.map(
+      (it: any) => {
+        return {
+          id: it.id,
+          aid: it.id,
+          bvid: it.bvid,
+          // timestamp: it.ctime * 1000,
+          // time: new Date(it.ctime * 1000),
+          description: it.desc,
+          duration: it.duration,
+          durationText: formatDuration(it.duration),
+          coverUrl: it.pic.replace('http:', 'https:'),
+          title: it.title,
+          // coins: formatCount(it.stat.coin),
+          // danmakuCount: formatCount(it.stat.danmaku),
+          // favorites: formatCount(it.stat.favorite),
+          // like: formatCount(it.stat.like),
+          playCount: formatCount(it.stat.view),
+          upName: it.owner.name,
+          upFaceUrl: it.owner.face.replace('http:', 'https:'),
+        } as VideoCardInfo
+      },
+    )
+  }
   return unsafeWindow.__INITIAL_STATE__.recommendList.map(
     (it: any) => {
       return {

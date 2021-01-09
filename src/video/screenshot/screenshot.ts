@@ -146,7 +146,7 @@ Observer.videoChange(async () => {
               date: new Date(it.timeStamp),
             })
           })
-          await pack.emit()
+          await pack.emit(this.batchFilename)
           this.discardAll()
         },
         discardAll() {
@@ -162,7 +162,7 @@ Observer.videoChange(async () => {
     })
   }
 
-  const video = await SpinQuery.select('#bilibili-player video') as HTMLVideoElement
+  const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
   if (video === null) {
     return
   }
@@ -172,26 +172,29 @@ Observer.videoChange(async () => {
   }
 
   const buttonHtml = /*html*/`
-    <div class="video-take-screenshot" title="截图">
+    <div class="video-take-screenshot">
       <span><i class="mdi mdi-camera"></i></span>
+      <div class="player-tooltips tip top-center animation active">
+        <div class="tooltip">截图</div>
+      </div>
     </div>`
   time.insertAdjacentHTML('afterend', buttonHtml)
   const screenshotButton = document.querySelector('.video-take-screenshot') as HTMLElement
   screenshotButton.addEventListener('click', async e => {
-    const video = await SpinQuery.select('#bilibili-player video') as HTMLVideoElement
+    const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
     const screenshot = takeScreenshot(video, e.shiftKey)
     screenShotsList.screenshots.unshift(screenshot)
   })
-  document.addEventListener('keydown', e => {
-    if (document.activeElement && ['input', 'textarea'].includes(document.activeElement.nodeName.toLowerCase())) {
-      return
-    }
-    if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "c") {
-      e.stopPropagation()
-      e.preventDefault()
-      screenshotButton.click()
-    }
-  })
+  // document.addEventListener('keydown', e => {
+  //   if (document.activeElement && isTyping()) {
+  //     return
+  //   }
+  //   if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "c") {
+  //     e.stopPropagation()
+  //     e.preventDefault()
+  //     screenshotButton.click()
+  //   }
+  // })
   if (settings.touchVideoPlayer) {
     document.querySelectorAll('.video-take-screenshot').forEach(it => it.classList.add('touch'))
   }

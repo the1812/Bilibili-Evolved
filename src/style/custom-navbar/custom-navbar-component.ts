@@ -21,8 +21,23 @@ export class NavbarComponent {
   get name(): keyof CustomNavbarOrders {
     return 'blank1'
   }
+  static cleanUpOrders() {
+    if ((settings.customNavbarOrder as any).bangumiLink) {
+      settings.customNavbarOrder = _.omit(settings.customNavbarOrder, 'bangumiLink')
+    }
+    const sortByOrder = _.sortBy(Object.entries(settings.customNavbarOrder), ([, order]) => order)
+    console.log(sortByOrder)
+    settings.customNavbarOrder = _.fromPairs(sortByOrder.map(([name], index) => [name, index])) as CustomNavbarOrders
+  }
   get order() {
-    return settings.customNavbarOrder[this.name]
+    const order = settings.customNavbarOrder[this.name]
+    const hasDuplicateOrder =
+      Object.values(_.groupBy(Object.values(settings.customNavbarOrder), o => o)).some(group => group.length > 1)
+    if (order === undefined || hasDuplicateOrder) {
+      NavbarComponent.cleanUpOrders()
+      return settings.customNavbarOrder[this.name]
+    }
+    return order
   }
   get hidden() {
     return settings.customNavbarHidden.includes(this.name)
@@ -32,7 +47,7 @@ export class NavbarComponent {
   }
   async setNotifyCount(count: number) {
     const notifyElement = await SpinQuery.select(`.custom-navbar li[data-name='${this.name}'] .notify-count`) as HTMLElement
-    if (!notifyElement || !count) {
+    if (!notifyElement || count <= 0) {
       notifyElement.innerHTML = ''
       return
     }

@@ -1,5 +1,7 @@
 import { NavbarComponent } from '../custom-navbar-component'
 import { VideoCardInfo } from '../../simplify-home/video-card-info'
+import * as VueTypes from 'vue'
+
 interface ListInfo {
   id: number
   name: string
@@ -28,6 +30,7 @@ const favoriteItemMapper = (item: any) => {
   } as FavoritesItemInfo
 }
 export class FavoritesList extends NavbarComponent {
+  vm: VueTypes.default & { changeList: () => void; selectedListId: number }
   constructor() {
     super()
     this.boundingWidth = 380
@@ -80,12 +83,17 @@ export class FavoritesList extends NavbarComponent {
       </div>
     `
     this.initialPopup = () => this.init()
+    this.onPopup = () => {
+      if (this.vm?.selectedListId !== 0) {
+        this.vm?.changeList()
+      }
+    }
   }
   get name(): keyof CustomNavbarOrders {
     return 'favoritesList'
   }
   async init() {
-    new Vue({
+    this.vm = new Vue({
       el: await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .favorites-list`) as HTMLElement,
       store,
       filters: {

@@ -138,7 +138,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 
 例えば、タイトル＋AV番号＋時間の命名形式が欲しい、<span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>に設定することができます. <span>xxxx AV23333 2019-06-1 22-22-22</span>ような名前をつけることができます.`],
     ['sideBarOffset', /*html*/`設定ボタンの垂直オフセット、単位はパーセント、許容範囲は-40％〜40％です.`],
-    ['useDefaultVideoSpeed', /*html*/`デフォルトの再生速度を使用するかどうかを設定します.`],
+    ['useDefaultVideoSpeed', /*html*/`最後に選択した動画再生速度を記憶するかどうかを設定します.`],
     ['defaultVideoSpeed', /*html*/`デフォルトの動画再生速度を設定する.`],
     ['autoDraw', /*html*/`ライブルームに抽選活動がある場合は、「受け取り」ボタンを自動的にクリックします.
     注意:少量の抽選にしか適用されますので、「99＋限定抽選」は他の人のスピードに追いつけないかもしれません.`],
@@ -156,7 +156,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`feedsFilter`, /*html*/`タイプまたはキーワードでフィードホームページの内容をフィルタリングするか、フィードページのいくつかのサイドカードを削除します. ご注意ください：今、「すべてのフィード」でのみ有効にする、別のカテゴリに切り替える場合は無効.`],
     [`hideBangumiSponsors`, /*html*/`番組ページの下のスポンサーランクと右側のスポンサーボタンを隠す.`],
     [`hideRecommendLive`, /*html*/`動画ページ右側のおすすめ生放送を隠す.`],
-    [`hideRelatedVideos`, /*html*/`番組と動画ページ右側のおすすめ動画を隠す.`],
+    [`hideRelatedVideos`, /*html*/`番組と動画ページ右側のおすすめ動画を隠す.注：ビリビリの自動連続放送（次のおすすめ動画を自動的に再生する）機能をオフにする場合は、おすすめ動画を再表示してスイッチを表示する必要があります.`],
     [`simplifyHome`, /*html*/`ホームページを置き換えます.2つのスタイルがあります:
 - さわやか: レイアウトは元のホームページに似ており、フィードセクションが追加されています.
 - ミニマル: 他のすべてのセクションを削除し、動画フィードと人気動画のみを残します.`],
@@ -187,7 +187,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`watchLaterRedirectPage`, /*html*/`「後で見る」ページのリンクをリダイレクトします.`],
     [`showCoverBeforePlay`, /*html*/`動画の再生が始まる前に、プレーヤーにサムネイルを表示します.`],
     [`customNavbarGlobalFixed`, /*html*/`頂欄は、カスタム頂欄を使用するすべてのページで固定されているため、スクロールの影響を受けません.`],
-    [`seoJump`, /*html*/`SEOページに入ると、自動的に元の動画ページに戻ります.`],
+    [`seoJump`, /*html*/`SEOページに入ると、自動的に元の動画ページに戻ります.SEOページは検索エンジン用に最適化された特別なページであり、スクリプトの機能は不完全です.この機能を使用して通常の動画ページに戻ることができます.`],
     [`copyFeedsLink`, /*html*/`フィードメニューにリンクのコピーオプションを追加する.`],
     [`copyCommentLink`, /*html*/`コメントメニューにリンクのコピーオプションを追加する.`],
     [`unfoldFeeds`, /*html*/`折りたたまれたフィードを自動的に展開する.`],
@@ -197,6 +197,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`downloadPackageEmitMode`, /*html*/`複数のファイルのダウンロードを選択する場合の動作は、パッケージが zip にヒットしてダウンロードされ.個別にダウンロードされると、各ファイルのダウンロードがトリガーされます.`],
     [`columnImageExporter`, /*html*/`コラムページでは、追加機能ですべての画像をエクスポートできます.`],
     [`feedsImageExporter`, /*html*/`フィードの右上隅にあるメニューから画像をエクスポートして、このフィード内のすべての画像をダウンロードすることができます.`],
+    [`homeHidden`, /*html*/`ホームページの欲しくない要素 / エリアを非表示にする.追加機能で非表示にする要素を構成できます.`],
 ]);
 export default {
     export: { toolTips },

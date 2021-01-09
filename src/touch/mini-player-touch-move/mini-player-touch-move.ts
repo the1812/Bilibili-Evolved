@@ -1,11 +1,12 @@
 const load = async (enable = true) => {
   if (![
-    '//www.bilibili.com/bangumi/play/',
-    '//www.bilibili.com/video/'
+    '//www.bilibili.com/bangumi/',
+    '//www.bilibili.com/video/',
+    '//www.bilibili.com/cheese/',
   ].some(it => document.URL.includes(it))) {
     return
   }
-  const player = await SpinQuery.select('#bilibili-player')
+  const player = await SpinQuery.select('.bilibili-player')
   if (!player) {
     console.warn('mini player touch move: player not found')
     return

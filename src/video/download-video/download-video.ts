@@ -26,9 +26,9 @@ class Video {
         }
       } else {
         if (quality) {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnver=0&fnval=0`
         } else {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json&fourk=1&fnver=0&fnval=0`
         }
       }
     }
@@ -52,9 +52,9 @@ class Bangumi extends Video {
         }
       } else {
         if (quality) {
-          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json`
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnver=0&fnval=0`
         } else {
-          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=&otype=json`
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=&otype=json&fourk=1&fnver=0&fnval=0`
         }
       }
     }

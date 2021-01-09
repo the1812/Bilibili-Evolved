@@ -10,7 +10,7 @@
   }
   resources.applyStyle('quickFavoriteStyle')
   const html = /*html*/`
-    <span @click.left.self="toggle()" @click.right.prevent.self="listShowing = !listShowing" class="quick-favorite" :class="{ on: isFavorite }">
+    <span title="快速收藏" @click.left.self="toggle()" @click.right.prevent.self="listShowing = !listShowing" class="quick-favorite" :class="{ on: isFavorite }">
       <i @click.left="toggle()" @click.right.prevent="listShowing = !listShowing"></i>
       <div style="display: inline" @click.left="toggle()" @click.right.prevent="listShowing = !listShowing">快速收藏</div>
       </template>

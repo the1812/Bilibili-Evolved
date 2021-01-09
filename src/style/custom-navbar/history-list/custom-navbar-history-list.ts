@@ -1,4 +1,5 @@
 import { NavbarComponent } from '../custom-navbar-component'
+import * as VueTypes from 'vue'
 
 interface HistoryItem {
   id: number
@@ -169,6 +170,7 @@ const tabs: HistoryTab[] = [
   },
 ]
 export class HistoryList extends NavbarComponent {
+  vm: VueTypes.default & { updateTimeline: (clear?: boolean) => Promise<void> }
   constructor() {
     super()
     this.boundingWidth = 350
@@ -230,12 +232,13 @@ export class HistoryList extends NavbarComponent {
       </div>
     `
     this.initialPopup = () => this.init()
+    this.onPopup = () => this.vm?.updateTimeline(false)
   }
   get name(): keyof CustomNavbarOrders {
     return 'historyList'
   }
   async init() {
-    new Vue({
+    this.vm = new Vue({
       el: await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .history-list`) as HTMLElement,
       store,
       components: {
@@ -265,10 +268,12 @@ export class HistoryList extends NavbarComponent {
         }
       },
       methods: {
-        async updateTimeline() {
+        async updateTimeline(clear = true) {
           try {
-            this.timelineLoading = true
-            this.timeline = []
+            if (clear) {
+              this.timelineLoading = true
+              this.timeline = []
+            }
             const tab = this.selectedTab as HistoryTab
             const json = await Ajax.getJsonWithCredentials(tab.api)
             if (json.code !== 0) {

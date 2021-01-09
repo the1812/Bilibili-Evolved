@@ -663,14 +663,6 @@ Resource.manifest = {
       noMiniVideoAutoplay: '禁止小视频自动播放',
     }
   },
-  hideCategory: {
-    path: 'hide-category.min.js',
-    reloadable: true,
-    style: 'instant',
-    displayNames: {
-      hideCategory: '隐藏分区栏',
-    },
-  },
   foldComment: {
     path: 'fold-comment.min.js',
     style: true,
@@ -681,12 +673,7 @@ Resource.manifest = {
   useDefaultVideoSpeed: {
     path: 'default-video-speed.min.js',
     displayNames: {
-      useDefaultVideoSpeed: '使用默认播放速度',
-      defaultVideoSpeed: '默认播放速度',
-    },
-    dropdown: {
-      key: 'defaultVideoSpeed',
-      items: ['0.5', '0.75', '1.0', '1.25', '1.5', '2.0'],
+      useDefaultVideoSpeed: '记忆上次播放速度',
     }
   },
   seedsToCoins: {
@@ -984,5 +971,12 @@ Resource.manifest = {
       columnImageExporter: '专栏图片导出',
     },
   },
+  homeHidden: {
+    path: 'home-hidden.min.js',
+    style: true,
+    displayNames: {
+      homeHidden: '首页过滤',
+    }
+  }
 }
 export const resourceManifest = Resource.manifest

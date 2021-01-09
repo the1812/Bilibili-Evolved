@@ -1,24 +1,16 @@
-.bilibili-live-player-video-controller-content {
+.live-web-player-controller {
   .danmaku-send-bar {
     display: none;
   }
 }
-.bilibili-live-player-video-controller-container {
+.live-web-player-controller {
   background-image: linear-gradient(to bottom, transparent 20%, rgba(0, 0, 0, 0.9));
 }
 @media screen and (min-width: 1038px) {
   .player-full-win,
   .fullscreen-fix {
     &:not(.danmaku-send-bar-unloaded) {
-      .bilibili-live-player-video-controller-content {
-        // 不准 float 布局
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        &::before,
-        &::after {
-          content: none !important;
-        }
+      .live-web-player-controller .control-area {
         .danmaku-send-bar {
           display: flex;
           margin: 0 24px;
@@ -32,6 +24,7 @@
             background-color: transparent;
             color: #fff;
             padding: 4px;
+            line-height: normal;
             flex: 1;
             width: 0;
             max-width: 400px;
@@ -43,6 +36,9 @@
               color: #fff8 !important;
             }
           }
+        }
+        .right-area {
+          flex: 0 0 auto !important;
         }
       }
     }

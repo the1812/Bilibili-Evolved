@@ -7,7 +7,7 @@ import { FeedsCard } from '../feeds-apis'
       className: 'copy-link',
       text: '复制链接',
       action: () => {
-        GM_setClipboard(`https://t.bilibili.com/${card.id}`, { mimetype: 'text/plain' })
+        GM.setClipboard(`https://t.bilibili.com/${card.id}`, 'text')
       }
     })
   }

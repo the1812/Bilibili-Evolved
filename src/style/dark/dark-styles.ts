@@ -7,7 +7,7 @@ const unload = () => {
   resources.removeStyle('darkStyle')
   resources.removeStyle('darkStyleImportant')
 }
-const notSupported = [
+const notSupported: (string | RegExp)[] = [
   '//member.bilibili.com/v2',
   '//member.bilibili.com/video/upload.html',
   '//member.bilibili.com/article-text/home',
@@ -15,6 +15,7 @@ const notSupported = [
   '//member.bilibili.com/studio/bs-editor/projects',
   '//www.bilibili.com/s/video/',
   '//member.bilibili.com/platform',
+  '//live.bilibili.com/p/html/live-lottery/anchor-join.html',
 ]
 const load = () => {
   if (settings.noDarkOnMember && notSupported.some(it => {
@@ -44,13 +45,4 @@ addSettingsListener('useDarkStyleAsUserStyle', () => {
 export default {
   reload: load,
   unload: unload,
-  // widget: {
-  //   content: /*html*/`<div class="gui-settings-flat-button" id="seo-jump"></div>`,
-  //   condition: () => {
-  //     return document.URL.startsWith('https://www.bilibili.com/s/video/')
-  //   },
-  //   success: () => {
-
-  //   },
-  // },
 }

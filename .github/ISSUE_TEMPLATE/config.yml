@@ -10,7 +10,7 @@ contact_links:
     url: https://github.com/the1812/Bilibili-Evolved/discussions
     about: Issues 用于反馈 Bug, 新的功能建议和提问答疑请到讨论区查看
   - name: 查看 Issues 须知
-    url: https://github.com/the1812/Bilibili-Evolved/blob/preview/issue-rules.md
+    url: https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/issue-rules.md
     about: 默认所有 Issues 发起者均已了解此处的内容
   - name: 查看置顶问题
     url: https://github.com/the1812/Bilibili-Evolved/issues

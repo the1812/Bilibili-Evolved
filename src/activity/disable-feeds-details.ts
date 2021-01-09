@@ -16,16 +16,15 @@ resources.applyImportantStyleFromText(
   'disable-feeds-details-init-style'
 )
 const addStyle = () => resources.applyImportantStyleFromText(style, id)
-const url = document.URL.replace(location.search, '')
-const enable = url.startsWith('https://t.bilibili.com/') ||
-  url.startsWith('https://space.bilibili.com/')
+let enable = false
 
 ;(async () => {
+  const { forEachFeedsCard, supportedUrls } = await import('./feeds-apis')
+  enable = supportedUrls.some(url => document.URL.includes(url))
   if (!enable) {
     return
   }
   addStyle()
-  const { forEachFeedsCard } = await import('./feeds-apis')
 
   const disableDetails = (card: FeedsCard) => {
     const element = card.element
@@ -50,7 +49,7 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
     if (!postContent) {
       return
     }
-    const hasCardContainer = ['.video-container', '.bangumi-container', '.media-list']
+    const hasCardContainer = ['.video-container', '.bangumi-container', '.media-list', '.article-container']
       .some(type => dq(postContent, type))
     if (hasCardContainer) {
       return

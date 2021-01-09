@@ -36,7 +36,7 @@ import { CommentItem } from '../comment-apis'
         copyLinkButton.textContent = '复制链接'
         copyLinkButton.addEventListener('click', () => {
           const url = findParentFeedsUrl(item.element) || document.URL.replace(/#.+$/, '')
-          GM_setClipboard(`${url}#reply${item.id}`, { mimetype: 'text/plain' })
+          GM.setClipboard(`${url}#reply${item.id}`, 'text')
           console.log('[Copy Comment Link]',`${url}#reply${item.id}`)
         })
         operationList.appendChild(copyLinkButton)

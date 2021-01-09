@@ -201,7 +201,13 @@ function setDisplayNames () {
     document.querySelector('.gui-settings-icon-panel').style.display = 'none'
     // return;
   }
-  document.documentElement.classList.toggle('iframe', isIframe)
+  const transparentFrames = [
+    'https://t.bilibili.com/share/card/index',
+    'https://manga.bilibili.com/eden/bilibili-nav-panel.html',
+    'https://live.bilibili.com/blackboard/dropdown-menu.html',
+    'https://www.bilibili.com/page-proxy/game-nav.html',
+  ]
+  document.documentElement.classList.toggle('iframe', isIframe && transparentFrames.some(f => document.URL.includes(f)))
 
   addSettingsListener('guiSettingsDockSide', value => {
     document.body.classList.toggle('gui-settings-dock-right', value === '右侧')
@@ -211,6 +217,9 @@ function setDisplayNames () {
   }, true)
   addSettingsListener('elegantScrollbar', value => {
     document.documentElement.classList.toggle('elegant-scrollbar', value)
+  }, true)
+  addSettingsListener('alwaysShowDuration', value => {
+    document.body.classList.toggle('always-show-duration', value)
   }, true)
   const settingsBox = resources.data.guiSettingsHtml.text
   document.body.insertAdjacentHTML('beforeend', settingsBox)

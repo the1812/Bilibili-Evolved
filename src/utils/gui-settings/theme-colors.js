@@ -60,7 +60,19 @@ export class ThemeColors {
       })
     }
     const box = document.querySelector('.predefined-colors')
-    document.querySelector('div.custom-color-preview').addEventListener('click', () => {
+    const toggleButton = document.querySelector('div.custom-color-preview')
+    const outsideHandler = e => {
+      if (e.target !== toggleButton && !toggleButton.contains(e.target) && e.target !== input) {
+        box.classList.remove('opened')
+        document.removeEventListener('click', outsideHandler)
+      }
+    }
+    toggleButton.addEventListener('click', () => {
+      if (!box.classList.contains('opened')) {
+        document.addEventListener('click', outsideHandler)
+      } else {
+        document.removeEventListener('click', outsideHandler)
+      }
       box.classList.toggle('opened')
     })
   }

@@ -136,6 +136,7 @@ declare global {
     musicLink: number
     gamesIframe: number
     livesIframe: number
+    matchLink: number
     shopLink: number
     mangaLink: number
     blank2: number
@@ -517,10 +518,19 @@ declare global {
     latestVersionLink: string,
     currentVersion: string,
     favoritesListCurrentSelect: string,
+    homeHidden: boolean,
+    homeHiddenItems: string[],
+    rememberVideoSpeedList: {
+      [index: string]: string[]
+    },
+    rememberVideoSpeed: boolean,
+    extendVideoSpeed: boolean,
+    customKeyBindings: { [actionName: string]: string },
+    alwaysShowDuration: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
-  function GM_setClipboard(data: any, info: string | { type?: string, mimetype?: string }): void
+  function GM_setClipboard(data: any, info?: string | { type?: string, mimetype?: string }): void
   function GM_setValue(name: keyof BilibiliEvolvedSettings, value: any): void
   function GM_getValue<T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T): T
   const GM: {
@@ -575,5 +585,6 @@ declare global {
   // const playerReady: () => Promise<void>
   const formData: (obj: any) => string
   const retrieveImageUrl: (element: Element) => { url: string; extension: string } | null
+  const isTyping: () => boolean
 }
 export { }
