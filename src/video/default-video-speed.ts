@@ -9,9 +9,14 @@ export class VideoSpeedController {
     video: "bilibili-player-video"
   }
   static readonly nativeSupportedRates = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
-  static readonly extendedSupportedRates = [2.5, 3]
+  static get extendedSupportedRates() {
+    if (typeof settings.extendVideoSpeed === "boolean") {
+      return settings.extendVideoSpeed ? [2.5, 3.0] : []
+    }
+    return settings.extendVideoSpeed
+  }
   // 扩展倍数不支持热重载
-  static readonly supportedRates = (settings.extendVideoSpeed) ? [...VideoSpeedController.nativeSupportedRates, ...VideoSpeedController.extendedSupportedRates] : VideoSpeedController.nativeSupportedRates
+  static readonly supportedRates = [...VideoSpeedController.nativeSupportedRates, ...VideoSpeedController.extendedSupportedRates]
 
   /**
    * 获取后备默认速度
