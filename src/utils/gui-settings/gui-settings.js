@@ -134,24 +134,8 @@ function checkOfflineData () {
   }
 }
 
-// https://github.com/the1812/Bilibili-Evolved/issues/1076
-const issue1076 = ['playerFocus', 'outerWatchlater', 'quickFavorite']
-const handleIssue1076 = () => {
-  return scriptVersion === 'Stable' || scriptVersion === 'Offline'
-}
 const preCheckCompatibility = () => {
-  if (handleIssue1076() && issue1076.some(key => settings[key])) {
-    issue1076.forEach(key => {
-      settings[key] = false
-    })
-    Toast.info(/* html */`
-<div>为避免b站播放器改版导致网站无法正常使用, 以下功能已自动关闭并禁用:
-<span>自动定位到播放器</span> <span>外置稍后再看</span> <span>启用快速收藏</span>
-
-详情见<a target="_blank" href="https://github.com/the1812/Bilibili-Evolved/issues/1076" class="link">讨论区</a>, 这些功能将在恢复后再解除禁用.
-若当前页面是视频页面且出现问题, 刷新即可恢复正常.</div>
-    `.trim(), '通知')
-  }
+  // empty
 }
 function checkCompatibility () {
   if (window.devicePixelRatio === 1) {
@@ -159,11 +143,6 @@ function checkCompatibility () {
     inputs.find(it => it.getAttribute('key') === 'imageResolution').disabled = true
     settings.harunaScale = false
     settings.imageResolution = false
-  }
-  if (handleIssue1076()) {
-    checkBoxes
-      .filter(it => issue1076.includes(it.getAttribute('key')))
-      .forEach(checkBox => (checkBox.disabled = true))
   }
 }
 function setDisplayNames () {
