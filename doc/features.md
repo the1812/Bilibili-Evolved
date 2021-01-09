@@ -80,9 +80,9 @@
 
 </details>
 <details>
-<summary><strong>默认视频速度</strong></summary>
+<summary><strong>记忆上次播放速度</strong></summary>
 
-进入视频时自动选择指定的视频倍速.
+记忆上次选择的视频播放速度.
 
 </details>
 
@@ -196,7 +196,8 @@
 - `]` 多P 下一个
 - `enter` 发弹幕
 
-> ⚠ 此功能与原生快捷键有一点差异: 在网页任何地方点下快捷键都会生效, 除非正在打字. (原生快捷键需要聚焦到播放器才能用, 除了`f`和`space`快捷键会被额外再扩展到全网页范围)
+> ⚠ 此功能与原生快捷键有一点差异: 在网页任何地方点下快捷键都会生效, 除非正在打字. (原生快捷键需要聚焦到播放器才能用, 除了 `f`, `space`和方向键的快捷键会被脚本额外再扩展到全网页范围)
+> 支持用户自定义快捷键: https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md
 
 </details>
 <details>
@@ -216,7 +217,7 @@
 
 当进入SEO页面时, 自动跳转回原视频页面.
 
-> SEO页面通常是专为搜索引擎优化的页面, 目前通常是谷歌的搜索结果里进b站会遇到.
+> SEO页面是为搜索引擎优化的特殊页面, 脚本在那上面的功能是不完整的, 可以通过此功能跳转回正常的视频页面.
 
 </details>
 
@@ -282,6 +283,8 @@
 - Windows: 设置 - 个性化 - 颜色 - 选择颜色
 - macOS: 系统偏好设置 - 通用 - 外观
 
+> 有的浏览器如 Edge 允许再另外设置一套亮暗主题, 这时脚本会跟随浏览器的设置.
+
 </details>
 <details>
 <summary><strong>简化评论区</strong></summary>
@@ -298,6 +301,12 @@
 > 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看
 
 ![简化评论区](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/comments.jpg)
+
+</details>
+<details>
+<summary><strong>首页过滤</strong></summary>
+
+隐藏原版首页不需要的元素/分区. 你可以在附加功能中详细配置隐藏哪些元素.
 
 </details>
 <details>
@@ -367,6 +376,8 @@
 <summary><strong>隐藏推荐视频</strong></summary>
 
 隐藏番剧和视频页面右侧的推荐视频列表.
+
+注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏推荐视频才能看到开关.
 
 </details>
 <details>
@@ -542,14 +553,14 @@
 如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.
 
 </details>
-<details>
+<!-- <details>
 <summary><strong>直播弹幕记录器</strong></summary>
 
 开启后, 在直播间里可以从附加功能中启动弹幕记录器, 会记录启动后所有收到的弹幕, 并可以导出为XML弹幕文件.
 
 > 弹幕的发送时间是相对于直播开始时间确定的.
 
-</details>
+</details> -->
 <details>
 <summary><strong>直板全屏弹幕栏</strong></summary>
 
