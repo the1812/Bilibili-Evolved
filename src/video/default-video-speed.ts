@@ -1,3 +1,5 @@
+const instanceMap = new Map<HTMLElement, VideoSpeedController>()
+
 export class VideoSpeedController {
   static readonly classNameMap = {
     speedMenuList: "bilibili-player-video-btn-speed-menu",
@@ -57,6 +59,9 @@ export class VideoSpeedController {
         break
       }
     }
+    // 持久化
+    settings.rememberVideoSpeedList = settings.rememberVideoSpeedList
+
     return aidOldIndex !== -1
   }
 
@@ -90,13 +95,21 @@ export class VideoSpeedController {
   private _videoElement: HTMLVideoElement
   // 这个值模拟原生内部记录的速度倍数，它不应该被赋值成扩展倍数的值
   private _nativeSpeedVal: number
+  private _previousSpeedVal: number
 
   constructor(containerElement: HTMLElement, videoElement: HTMLVideoElement, nativeSpeedVal: number = 1) {
+    const controller = instanceMap.get(containerElement)
+    if (controller) {
+      return controller
+    }
+
     this._containerElement = containerElement
     this._videoElement = videoElement
-    this._nativeSpeedVal = nativeSpeedVal
+    this._previousSpeedVal = this._nativeSpeedVal = nativeSpeedVal
     this._nameBtn = this._containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedNameBtn}`) as HTMLButtonElement
     this._menuListElement = this._containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedMenuList}`) as HTMLElement
+
+    instanceMap.set(containerElement, this)
   }
 
   get playbackRate() {
@@ -118,20 +131,23 @@ export class VideoSpeedController {
   // 观察倍数菜单，用于触发事件，记忆选定的倍数
   observe() {
     Observer.all(this._menuListElement, (mutations) => {
+      let [previousSpeed, currentSpeed] = [1, 1]
+      // 遍历所有的 mutations，获取上一个倍数值和当前倍数值（真正意义上的）
       mutations.forEach(mutation => {
         const selectedSpeedOption = mutation.target as HTMLLIElement
-        // 不需要处理被移除 active 类的变化
+
         if (!selectedSpeedOption.classList.contains(VideoSpeedController.classNameMap.active)) {
+          previousSpeed = parseFloat(selectedSpeedOption.dataset.value ?? '1')
           return
         }
 
-        const currentSpeed = parseFloat(selectedSpeedOption.dataset.value || '1')
+        currentSpeed = parseFloat(selectedSpeedOption.dataset.value ?? '1')
 
-        this._containerElement.dispatchEvent(new CustomEvent("changed", { detail: { speed: currentSpeed } }))
+        this._containerElement.dispatchEvent(new CustomEvent("changed", { detail: { speed: currentSpeed, previousSpeed: this._previousSpeedVal } }))
 
         if (VideoSpeedController.nativeSupportedRates.includes(currentSpeed)) {
           this._nativeSpeedVal = currentSpeed
-          this._containerElement.dispatchEvent(new CustomEvent("native-speed-changed", { detail: { speed: this._nativeSpeedVal } }))
+          this._containerElement.dispatchEvent(new CustomEvent("native-speed-changed", { detail: { speed: this._nativeSpeedVal, previousSpeed: this._previousSpeedVal } }))
         }
         // 原生支持倍数的应用后，有必要清除扩展倍数选项上的样式
         if (settings.extendVideoSpeed && VideoSpeedController.nativeSupportedRates.includes(currentSpeed)) {
@@ -148,6 +164,13 @@ export class VideoSpeedController {
           }
         }
       })
+      // 刷新 this._previousSpeedVal
+      // 用户可以通过倍数菜单或者重置倍数快捷键造成类似 2.0x 1.0x 1.0x ... 这样的倍数设定序列
+      // 我们不希望在第二个 1.0x 的时候刷新 this._previousSpeedVal，这样会比较死板
+      // 判定依据在于 previousSpeed !== currentSpeed
+      if (previousSpeed !== currentSpeed) {
+        this._previousSpeedVal = previousSpeed
+      }
     })
   }
 
@@ -178,14 +201,16 @@ export class VideoSpeedController {
     }
   }
 
+  toggleVideoSpeed() {
+    this.setVideoSpeed(this._previousSpeedVal)
+  }
+
   reset() {
-    this.setUnsafeVideoSpeed(1)
+    this.setVideoSpeed(1)
   }
 
   setVideoSpeed(speed: number) {
-    if (VideoSpeedController.supportedRates.includes(speed)) {
-      this.getSpeedMenuItem(speed).click()
-    }
+    this.getSpeedMenuItem(speed).click()
   }
 
   private setExtendedVideoSpeed(speed: number) {

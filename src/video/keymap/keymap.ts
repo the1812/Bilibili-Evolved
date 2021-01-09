@@ -232,6 +232,9 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedReset: videoSpeed((controller) => {
       controller.reset()
     }),
+    videoSpeedToggle: videoSpeed((controller) => {
+      controller.toggleVideoSpeed()
+    }),
     takeScreenshot: clickElement('.video-take-screenshot'),
     previousFrame: clickElement('.prev-frame'),
     nextFrame: clickElement('.next-frame'),
@@ -259,6 +262,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedIncrease: 'shift > 》 arrowUp',
     videoSpeedDecrease: 'shift < 《 arrowDown',
     videoSpeedReset: 'shift ? ？',
+    videoSpeedToggle: 'ctrl shift ?',
     takeScreenshot: 'ctrl alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
