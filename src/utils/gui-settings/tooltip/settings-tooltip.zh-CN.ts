@@ -157,7 +157,12 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>Shift + w</kbd> 稍后再看
 - <kbd>Shift + s</kbd> 快速收藏
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 播放速度调整
-- <kbd>Shift + /</kbd> 重置播放速度`],
+- <kbd>Shift + /</kbd> 重置播放速度（将播放速度设为 1.0x）
+- <kbd>Ctrl + Shift + /</kbd> 切换到上次所选播放速度
+- <kbd>Ctrl + Shift + Alt + /</kbd> 清除对当前视频的倍数记忆
+
+如果觉得默认的键位不合适，或者发现与其他插件/脚本的快捷键相冲突，可以参考<a href="https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md" target="__blank">修改默认键位</a>的方法自行修改.
+`],
   ['doubleClickFullscreen', /*html*/`允许双击播放器切换全屏, 请注意不能与<span>播放器触摸支持-启用双击控制</span>一同使用.`],
   ['ajaxHook', /*html*/`是否启用 Ajax Hook API, 其他插件或附加功能能够通过此 API 获取 Ajax 请求的信息.`],
   ['scriptLoadingMode', /*html*/`脚本功能的加载模式:
