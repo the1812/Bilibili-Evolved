@@ -197,6 +197,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`downloadPackageEmitMode`, /*html*/`複数のファイルのダウンロードを選択する場合の動作は、パッケージが zip にヒットしてダウンロードされ.個別にダウンロードされると、各ファイルのダウンロードがトリガーされます.`],
     [`columnImageExporter`, /*html*/`コラムページでは、追加機能ですべての画像をエクスポートできます.`],
     [`feedsImageExporter`, /*html*/`フィードの右上隅にあるメニューから画像をエクスポートして、このフィード内のすべての画像をダウンロードすることができます.`],
+    [`homeHidden`, /*html*/`ホームページの欲しくない要素 / エリアを非表示にする.追加機能で非表示にする要素を構成できます.`],
 ]);
 export default {
     export: { toolTips },
