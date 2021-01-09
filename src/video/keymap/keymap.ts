@@ -232,6 +232,9 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedReset: videoSpeed((controller) => {
       controller.reset()
     }),
+    videoSpeedForget: videoSpeed((controller) => {
+      controller.reset(true)
+    }),
     videoSpeedToggle: videoSpeed((controller) => {
       controller.toggleVideoSpeed()
     }),
@@ -262,6 +265,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedIncrease: 'shift > 》 arrowUp',
     videoSpeedDecrease: 'shift < 《 arrowDown',
     videoSpeedReset: 'shift ? ？',
+    videoSpeedForget: 'ctrl shift alt ?',
     videoSpeedToggle: 'ctrl shift ?',
     takeScreenshot: 'ctrl alt c',
     previousFrame: 'shift arrowLeft',

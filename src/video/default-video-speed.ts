@@ -205,8 +205,13 @@ export class VideoSpeedController {
     this.setVideoSpeed(this._previousSpeedVal)
   }
 
-  reset() {
-    this.setVideoSpeed(1)
+  reset(forget = false) {
+    if (forget) {
+      this.setVideoSpeed(VideoSpeedController.fallbackVideoSpeed)
+      VideoSpeedController.forgetSpeed()
+    } else {
+      this.setVideoSpeed(1)
+    }
   }
 
   setVideoSpeed(speed: number) {
