@@ -13,7 +13,11 @@ export class VideoSpeedController {
   // 扩展倍数不支持热重载
   static readonly supportedRates = (settings.extendVideoSpeed) ? [...VideoSpeedController.nativeSupportedRates, ...VideoSpeedController.extendedSupportedRates] : VideoSpeedController.nativeSupportedRates
 
-  static getDefaultVideoSpeed() {
+  /**
+   * 获取后备默认速度
+   */
+  static get fallbackVideoSpeed() {
+    // 向下兼容，原本 settings.defaultVideoSpeed 被设计为 string 类型，用于存储全局倍数
     return parseFloat(settings.defaultVideoSpeed)
   }
 
@@ -24,17 +28,23 @@ export class VideoSpeedController {
     return Math.trunc(speed) === speed ? `${speed}.0x` : `${speed}x`
   }
 
-  static getSpeedFromSetting() {
+  static getRememberSpeed(aid?: string) {
     for (const [level, aids] of Object.entries(settings.rememberVideoSpeedList)) {
-      if (aids.some(aid => aid === unsafeWindow.aid)) {
+      if (aids.some(aid_ => aid_ === getAid(aid))) {
         return parseFloat(level)
       }
     }
   }
 
-  static rememberSpeed(speed: number, aid: string, force = false) {
-    let aidOldIndex = -1;
-    // 如果原来设置中记忆了有关的 aid，就需要先移除它
+  /**
+   * 忘记对指定 aid 记忆的倍速，返回值表示指定的 aid 之前是否被记忆
+   * 
+   * @param aid 要忘记的 aid，若不指定则从页面中自动获取
+   */
+  static forgetSpeed(aid?: string) {
+    aid = getAid(aid)
+
+    let aidOldIndex = -1
     for (const aids of Object.values(settings.rememberVideoSpeedList)) {
       aidOldIndex = aids.indexOf(aid)
       if (aidOldIndex !== -1) {
@@ -42,8 +52,21 @@ export class VideoSpeedController {
         break
       }
     }
+    return aidOldIndex !== -1
+  }
+
+  /**
+   * 为指定 aid 记忆指定倍数
+   * 
+   * @param speed 要记忆的倍数
+   * @param force 对于之前没有被记忆的 aid，**如果不将此参数设置为 `true`，调用完成也不会将相应的倍数记忆到设置中的**
+   * @param aid 要记忆的 aid，若不指定则从页面中自动获取
+   */
+  static rememberSpeed(speed: number, force = false, aid?: string) {
+    aid = getAid(aid)
+    const remembered = VideoSpeedController.forgetSpeed(aid)
     // 对于没有被记忆的 aid，并且 force 参数为假就直接返回
-    if (aidOldIndex === -1 && !force) {
+    if (!remembered && !force) {
       return
     }
     // 为新的速度值初始化相应的 aid 数组
@@ -61,9 +84,9 @@ export class VideoSpeedController {
   private _nameBtn: HTMLButtonElement
   private _videoElement: HTMLVideoElement
   // 这个值模拟原生内部记录的速度倍数，它不应该被赋值成扩展倍数的值
-  private _nativeSpeedVal = 1
+  private _nativeSpeedVal: number
 
-  constructor(containerElement: HTMLElement, videoElement: HTMLVideoElement, nativeSpeedVal: number) {
+  constructor(containerElement: HTMLElement, videoElement: HTMLVideoElement, nativeSpeedVal: number = 1) {
     this._containerElement = containerElement
     this._videoElement = videoElement
     this._nativeSpeedVal = nativeSpeedVal
@@ -109,15 +132,12 @@ export class VideoSpeedController {
         if (settings.extendVideoSpeed && VideoSpeedController.nativeSupportedRates.includes(currentSpeed)) {
           this._menuListElement.querySelector(`.${VideoSpeedController.classNameMap.speedMenuItem}.extended.${VideoSpeedController.classNameMap.active}`)?.classList.remove(VideoSpeedController.classNameMap.active)
         }
-        if (!unsafeWindow.aid) {
-          throw "aid is undefined"
-        }
         // 记忆
         // - `useDefaultVideoSpeed` 表示是否启用记忆
         // - `rememberVideoSpeed` 表示是否启用细化到视频级别的记忆
         if (settings.useDefaultVideoSpeed) {
           if (settings.rememberVideoSpeed) {
-            VideoSpeedController.rememberSpeed(currentSpeed, unsafeWindow.aid, currentSpeed !== VideoSpeedController.getDefaultVideoSpeed())
+            VideoSpeedController.rememberSpeed(currentSpeed, currentSpeed !== VideoSpeedController.fallbackVideoSpeed)
           } else {
             settings.defaultVideoSpeed = currentSpeed.toString()
           }
@@ -131,12 +151,12 @@ export class VideoSpeedController {
     //   1. 用户从原生支持的倍数切换到扩展倍数
     //   2. 用户从扩展倍数切换到之前选中的原生倍数
     // 这是因为播放器内部实现维护了一个速度值，但是在切换到扩展倍数时没法更新，因此切换回来的时候被判定没有发生变化
-    // 为了解决这个问题，需要替官方更新元素，并为视频设置正确的倍数，并关闭菜单
+    // 为了解决这个问题，需要通过 forceUpdate 方法替官方更新元素，并为视频设置正确的倍数，并关闭菜单
     this._menuListElement.addEventListener("click", (ev) => {
       const option = (ev.target as HTMLElement)
       const value = parseFloat(option.dataset.value as string)
       if ((ev.target as HTMLElement).classList.contains("extended")) {
-        this.setUnsafeVideoSpeed(value)
+        this.setExtendedVideoSpeed(value)
       }
       // 从扩展倍数切换到之前选中的原生倍数
       if (VideoSpeedController.extendedSupportedRates.includes(this.playbackRate) && this._nativeSpeedVal === value) {
@@ -163,7 +183,7 @@ export class VideoSpeedController {
     }
   }
 
-  private setUnsafeVideoSpeed(speed: number) {
+  private setExtendedVideoSpeed(speed: number) {
     if (VideoSpeedController.nativeSupportedRates.includes(speed)) {
       this.getSpeedMenuItem(speed).click()
     } else {
@@ -208,7 +228,7 @@ if (settings.useDefaultVideoSpeed || settings.extendVideoSpeed) {
     // 首次加载可能会遇到意外情况，导致内部强制更新失效，因此延时 100 ms 再触发速度设置
     setTimeout(() => {
       settings.useDefaultVideoSpeed &&
-        controller.setVideoSpeed((settings.rememberVideoSpeed && VideoSpeedController.getSpeedFromSetting()) || VideoSpeedController.getDefaultVideoSpeed())
+        controller.setVideoSpeed((settings.rememberVideoSpeed && VideoSpeedController.getRememberSpeed()) || VideoSpeedController.fallbackVideoSpeed)
     }, 100)
   })
 }

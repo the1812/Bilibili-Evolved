@@ -586,5 +586,6 @@ declare global {
   const formData: (obj: any) => string
   const retrieveImageUrl: (element: Element) => { url: string; extension: string } | null
   const isTyping: () => boolean
+  const getAid: (aid?: string) => string
 }
 export { }
