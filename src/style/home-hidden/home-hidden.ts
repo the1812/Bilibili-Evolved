@@ -4,7 +4,7 @@ type HomeHiddenOption = Readonly<{
   style?: string
 }>
 const isHome = () => {
-  return !settings.simplifyHome && document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/'
+  return !settings.simplifyHome && document.URL.includes('https://www.bilibili.com/')
 }
 const homeHiddenOptions: HomeHiddenOption[] = [
   {
