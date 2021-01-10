@@ -954,9 +954,6 @@ html {
     @include theme-background-color();
   }
 }
-.error-body .error-msg .error-img {
-  @include to-theme("blue");
-}
 .article-action .more .more-ops-list ul li:hover {
   @include theme-color();
 }
