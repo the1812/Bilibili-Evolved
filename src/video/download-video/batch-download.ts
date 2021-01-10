@@ -31,6 +31,13 @@ abstract class Batch {
   itemList: BatchItem[] = []
   abstract async getItemList(): Promise<BatchItem[]>
   abstract async collectData(quality: number | string): Promise<string>
+  /**
+   * Returns formated Title.
+   * 
+   * @param parameters - TYPE: BatchTitleParameter
+   * @returns escapeFilename
+   *
+   */
   static formatTitle(parameters: BatchTitleParameter | undefined) {
     const format = settings.batchFilenameFormat
     const title = formatTitle(format, true, parameters)
@@ -207,6 +214,12 @@ class BangumiBatch extends Batch {
   static async test() {
     return document.URL.includes('/www.bilibili.com/bangumi')
   }
+  /**
+   * Get bangumi from api
+   * 
+   * @returns a json list of multiple part bangumi
+   * 
+   */
   async getItemList() {
     if (this.itemList.length > 0) {
       return this.itemList
@@ -236,7 +249,7 @@ class BangumiBatch extends Batch {
         title: `${n} - ${title}`,
         // title: it.long_title ? `${it.title} - ${it.long_title}` : `${index + 1} - ${it.title}`,
         titleParameters: {
-          n: getNumber(parseInt(n), this.itemList.length),
+          n: getNumber(parseFloat(n), this.itemList.length, it.title),
           ep: title,
         },
       } as BatchItem
