@@ -3,18 +3,20 @@
     return
   }
   const controllerContainer = await SpinQuery.select('.bilibili-live-player-video-controller') as HTMLDivElement
-  console.log('DSB', controllerContainer)
   if (!controllerContainer) {
     return
   }
 
   resources.applyStyle('danmakuSendBarStyle')
   let changeEventHook = false
+  const danmakuSendBarClass = 'danmaku-send-bar'
   Observer.childList(controllerContainer, async () => {
     if (!dq(controllerContainer, '.control-area')) {
       return
     }
-
+    if (dq(controllerContainer, `.${danmakuSendBarClass}`)) {
+      return
+    }
 
     const leftController = dq(controllerContainer, '.left-area') as HTMLDivElement
     const originalTextArea = await SpinQuery.select('.chat-input-ctnr .chat-input') as HTMLTextAreaElement
@@ -26,7 +28,7 @@
 
     const DanmakuSendBar = Vue.extend({
       template: /*html*/`
-      <div class="danmaku-send-bar">
+      <div class="${danmakuSendBarClass}">
         <input
           type="text"
           placeholder="发个弹幕呗~"
