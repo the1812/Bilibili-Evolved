@@ -79,6 +79,7 @@ export const commentsTranslate = async () => {
   forEachCommentItem({
     added: (item) => {
       const { element } = item
+      item.onRepliesUpdate = replies => replies.forEach(r => injectButton(r.element))
       injectButton(element)
     },
   })

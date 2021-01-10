@@ -26,7 +26,6 @@ interface XmlDanmakuData extends BasicDanmakuData {
   pool: string
   userHash: string
   rowId: string
-  time: string
 }
 export class XmlDanmaku extends Danmaku {
   timeStamp: number
@@ -368,6 +367,7 @@ export interface DanmakuConverterConfig {
   resolution: Resolution
   bottomMarginPercent: number
   blockFilter?: (danmaku: XmlDanmaku) => boolean
+  [key: string]: any
 }
 export class DanmakuConverter {
   static white = 16777215 // Dec color of white danmaku
@@ -400,10 +400,9 @@ export class DanmakuConverter {
       45: `Style: ExtraLarge,${this.font},90,&H${this.alpha}FFFFFF,&H${this.alpha}FFFFFF,&H${this.alpha}000000,&H${this.alpha}000000,${this.bold ? '1' : '0'},0,0,0,100,100,0,0,1,1.2,0,5,0,0,0,0`,
     }
   }
-  convertToAssDocument(xml: string) {
-    const xmlDanmakuDocument = new XmlDanmakuDocument(xml)
+  xmlDanmakuToAssDocument(xmlDanmakus: XmlDanmaku[]) {
     const assDanmakus = []
-    for (const xmlDanmaku of xmlDanmakuDocument.danmakus.sort((a, b) => a.startTime - b.startTime)) {
+    for (const xmlDanmaku of xmlDanmakus) {
       // 跳过设置为屏蔽的弹幕类型
       if (this.blockTypes.indexOf(xmlDanmaku.type) !== -1 ||
         this.blockTypes.indexOf('color') !== -1 && xmlDanmaku.color !== DanmakuConverter.white) {
@@ -432,6 +431,10 @@ export class DanmakuConverter {
       this.blockTypes,
       this.resolution
     )
+  }
+  xmlStringToAssDocument(xml: string) {
+    const xmlDanmakuDocument = new XmlDanmakuDocument(xml)
+    return this.xmlDanmakuToAssDocument(xmlDanmakuDocument.danmakus.sort((a, b) => a.startTime - b.startTime))
   }
   convertText(text: string) {
     const map = {

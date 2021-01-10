@@ -1,15 +1,22 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.10.34
+// @version      1.11.12
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
-// @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2021, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
+// @exclude      *://*.bilibili.com/*/mobile.html
+// @exclude      *://*.bilibili.com/api/*
 // @exclude      *://api.bilibili.com/*
 // @exclude      *://api.*.bilibili.com/*
-// @exclude      *://*.bilibili.com/api/*
+// @exclude      *://live.bilibili.com/h5/*
+// @exclude      *://live.bilibili.com/*/h5/*
+// @exclude      *://m.bilibili.com/*
+// @exclude      *://mall.bilibili.com/*
 // @exclude      *://member.bilibili.com/studio/bs-editor/*
+// @exclude      *://www.bilibili.com/h5/*
+// @exclude      *://www.bilibili.com/*/h5/*
 // @run-at       document-start
 // @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js
@@ -41,6 +48,9 @@
 // @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
 // @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
 // ==/UserScript==
+/* eslint-disable */ /* spell-checker: disable */
+// @[ You can find all source codes in GitHub repo ]
+
 Vue.config.productionTip = false
 Vue.config.devtools = false
 // if (unsafeWindow.Vue === undefined) {
@@ -155,7 +165,7 @@ import { store } from './store'
           const style = document.createElement('style')
           style.innerHTML = cache.darkStyle
           style.id = 'dark-style'
-          document.head.insertAdjacentElement('afterbegin', style)
+          document.documentElement.insertAdjacentElement('afterbegin', style)
         }
       } else {
         const style = document.createElement('style')
@@ -163,7 +173,7 @@ import { store } from './store'
           return key.includes('/dark.min.css')
         })[1]
         style.id = 'dark-style'
-        document.head.insertAdjacentElement('afterbegin', style)
+        document.documentElement.insertAdjacentElement('afterbegin', style)
       }
     }
     console.log(`Skipped <iframe> loading for ${document.URL}`)
@@ -225,7 +235,7 @@ import { store } from './store'
     const prefetchLink = document.createElement('link')
     prefetchLink.rel = 'dns-prefetch'
     prefetchLink.href = 'https://api.bilibili.com'
-    document.head.insertAdjacentElement('afterbegin', prefetchLink)
+    document.documentElement.insertAdjacentElement('afterbegin', prefetchLink)
 
     Object.assign(unsafeWindow.bilibiliEvolved, {
       SpinQuery,
@@ -279,9 +289,6 @@ import { store } from './store'
         } else {
           debugger
         }
-      },
-      newHomePage: () => {
-        document.cookie = 'INTVER=1; domain=.bilibili.com; path=/; expires=Fri, 21 Aug 2020 02:13:04 GMT'
       },
       monkeyInfo: GM.info,
       monkeyApis: {

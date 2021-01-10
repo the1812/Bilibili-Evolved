@@ -1,3 +1,5 @@
+bilibili-evolved.dev.js
+.DS_Store
 builder/dotnet/Properties
 .node_modules/
 .ts-output/
@@ -8,6 +10,7 @@ dark-template.css
 _dark-template.scss
 min/dark-slice-*.min.scss
 min/dark-slice-*.min.css
+doc/roadmap.*
 *.csx
 *.backup.*
 *.vue.ts

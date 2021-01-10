@@ -1,8 +1,8 @@
 const displayNames = {
   vip: '老爷图标',
+  enterPrompt: '入场通知',
   fansMedal: '粉丝勋章',
   title: '活动头衔',
-  userLevel: '用户等级',
   guard: '弹幕特效',
   systemMessage: '全区广播',
   welcomeMessage: '欢迎信息',
@@ -14,34 +14,37 @@ const displayNames = {
   eventsBanner: '活动横幅',
   rankList: '排行榜',
   popup: '抽奖提示',
+  pk: 'PK浮窗',
+  topRank: '高能榜提示',
   skin: '房间皮肤',
 }
 class SkinManager {
   skinDisabled = settings.simplifyLiveroomSettings.skin
-  skinSelectors: string[]
-  skinClass: string
-  constructor(skinSelectors: string[], skinClass: string) {
-    this.skinSelectors = skinSelectors
-    this.skinClass = skinClass
-    skinSelectors.forEach(selector => {
-      SpinQuery.select(
-        selector,
-        skin => {
-          Observer.attributes(selector, records => {
-            records.forEach(record => {
-              if (record.attributeName === 'class') {
-                if (this.skinDisabled && skin.classList.contains(skinClass)) {
-                  skin.classList.remove(skinClass)
-                }
-                else if (!this.skinDisabled && !skin.classList.contains(skinClass)) {
-                  skin.classList.add(skinClass)
-                }
-              }
-            })
-          })
+  constructor(
+    public skinSelectors: string[],
+    public skinClass: string
+  ) { }
+  start() {
+    this.skinSelectors.forEach(async selector => {
+      const skin = await SpinQuery.select(selector)
+      if (!skin) {
+        return
+      }
+      Observer.attributes(skin, records => {
+        records.forEach(record => {
+          if (record.attributeName === 'class') {
+            if (this.skinDisabled && skin.classList.contains(this.skinClass)) {
+              skin.classList.remove(this.skinClass)
+            }
+            else if (!this.skinDisabled && !skin.classList.contains(this.skinClass)) {
+              skin.classList.add(this.skinClass)
+            }
+          }
         })
+      })
     })
   }
+
   setSkin(enable: boolean) {
     this.skinDisabled = !enable
     this.skinSelectors.forEach(selector => {
@@ -63,7 +66,8 @@ const skins = [
     '.seeds-wrap>div:first-child',
     '.gift-section>div:last-child',
     '.z-gift-package>div>div',
-    '.right-action'
+    '.right-action',
+    '.control-panel-ctnr',
   ], 'live-skin-coloration-area'),
   new SkinManager([
     '.rank-list-ctnr .tabs'
@@ -83,6 +87,33 @@ if (isLiveroom()) {
   Object.keys(displayNames).forEach(key => {
     const checked = settings.simplifyLiveroomSettings[key]
     setBodyClass(checked, key)
+  })
+  SpinQuery.select(() => document.head).then(head => {
+    let skinStyle: HTMLStyleElement | null = null
+    const toggleSkinStyle = () => {
+      const blockSkin = settings.simplifyLiveroomSettings.skin
+      if (blockSkin) {
+        skinStyle?.remove()
+      } else {
+        if (skinStyle && !document.head.contains(skinStyle)) {
+          document.head.appendChild(skinStyle)
+        }
+      }
+    }
+    addSettingsListener('simplifyLiveroomSettings', toggleSkinStyle)
+    Observer.childList(head, records => {
+      records.forEach(r => {
+        r.addedNodes.forEach(node => {
+          if (!(node instanceof HTMLElement)) {
+            return
+          }
+          if (node.tagName.toLowerCase() === 'style' && node.id.startsWith('skin-css-')) {
+            skinStyle = node as HTMLStyleElement
+            toggleSkinStyle()
+          }
+        })
+      })
+    })
   })
 }
 export default {

@@ -116,9 +116,9 @@ export class UserInfo extends NavbarComponent {
             <i class="icon custom-navbar-icon-course custom-navbar-iconfont-new-home"></i>
             我的课程
           </a>
-          <a class="logout grey-button" href="https://account.bilibili.com/login?act=exit">
+          <div class="logout grey-button" @click="logout()">
             退出登录
-          </a>
+          </div>
         </div>
         <div v-else class="not-logged-in">
           <h1 class="welcome">欢迎来到 bilibili</h1>
@@ -200,6 +200,48 @@ export class UserInfo extends NavbarComponent {
             logError(result.message)
           }
         },
+        async logout() {
+          /** b 站 源 码
+           *
+           * ```js
+           * export const postLogout = () => {
+           *   const Cookie = require('js-cookie')
+           *   const qs = require('qs')
+           *   return axios({
+           *     method: 'post',
+           *     url: '//passport.bilibili.com/login/exit/v2',
+           *     withCredentials: true,
+           *     headers: {
+           *       'Content-type': 'application/x-www-form-urlencoded',
+           *     },
+           *     data: qs.stringify({
+           *       biliCSRF: Cookie.get('bili_jct')
+           *     }),
+           *   })
+           * }
+           * // ...
+           * async logout() {
+           *   try {
+           *     const { data } = await postLogout()
+           *     if(data && data.data.redirectUrl) {
+           *       window.location = data.data.redirectUrl
+           *     }
+           *   } catch (_) {
+           *   }
+           * }
+           * ```
+           */
+          const response = await Ajax.postTextWithCredentials(
+            'https://passport.bilibili.com/login/exit/v2',
+            formData({
+              biliCSRF: getCsrf(),
+            })
+          )
+          const url = _.get(JSON.parse(response), 'data.redirectUrl', '')
+          if (url) {
+            window.location.assign(url)
+          }
+        }
       },
     })
     vm.$mount(panel)

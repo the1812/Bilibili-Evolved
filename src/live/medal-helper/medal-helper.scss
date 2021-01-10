@@ -8,17 +8,19 @@
     padding: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    > li {
+      display: flex;
+      align-items: center;
+      border-radius: var(--corner-radius);
+      &.active {
+        box-shadow: 0 0 0px 1px var(--theme-color);
+      }
+      &:hover {
+        background-color: #8882;
+      }
+    }
   }
 
-  .round-corner & ul > li {
-    border-radius: var(--corner-radius);
-  }
-  ul > li.active {
-    box-shadow: 0 0 0px 1px var(--theme-color);
-  }
-  ul > li:hover {
-    background-color: rgba(0, 0, 0, 0.16);
-  }
   label {
     display: flex;
     align-items: center;
@@ -51,7 +53,7 @@
 .title-image {
   display: inline-block;
   vertical-align: middle;
-  height: 20px;
+  width: 60px;
 }
 
 $rankColors: (
@@ -59,14 +61,14 @@ $rankColors: (
   1: #5896de,
   2: #a068f1,
   3: #ff86b2,
-  4: #f6be18
+  4: #f6be18,
 );
 .fans-medal-item {
   display: inline-block;
   height: 14px;
   line-height: 14px;
   color: #fff;
-  border: 1px solid map-get($rankColors, 0);
+  border: 1px solid map-get($rankColors, 4);
   border-left: 0;
   white-space: nowrap;
   border-radius: 2px;
@@ -77,12 +79,13 @@ $rankColors: (
     text-align: center;
     padding: 0 2px;
     color: #fff;
+    background-color: map-get($rankColors, 4);
   }
   .level {
     width: 16px;
     background-color: #fff;
     text-align: center;
-    color: map-get($rankColors, 0);
+    color: map-get($rankColors, 4);
   }
   .label,
   .level {

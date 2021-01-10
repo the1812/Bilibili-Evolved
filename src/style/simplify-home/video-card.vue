@@ -196,6 +196,9 @@ export default {
   .watchlater {
     opacity: 0;
   }
+  body.always-show-duration & .duration {
+    opacity: 1;
+  }
 
   .cover-container {
     grid-area: cover;

@@ -1,33 +1,39 @@
 function extractKey(listItem: Element) {
-  const input = listItem.querySelector("input");
+  const input = listItem.querySelector("input")
   if (input) {
-    return input.getAttribute("key");
+    return input.getAttribute("key")
   }
-  return null;
+  return null
 }
 export const loadTooltip = async () => {
-  resources.applyStyle("settingsTooltipStyle");
-  const { toolTips } = await import(`settings-tooltip.${getI18nKey()}`);
-  const tooltip = await SpinQuery.select(".gui-settings-tooltip");
+  resources.applyStyle("settingsTooltipStyle")
+  const { toolTips } = await import(`settings-tooltip.${getI18nKey()}`)
+  const tooltip = await SpinQuery.select(".gui-settings-tooltip")
   if (!tooltip) {
-    return;
+    return
   }
   document.querySelectorAll(".gui-settings-content>ul>li").forEach(element => {
+    let timeout: number
     element.addEventListener("mouseover", () => {
-      const key = extractKey(element);
+      const key = extractKey(element)
       if (key === null || toolTips === null) {
-        return;
+        return
       }
-      const tipText = toolTips.get(key);
-      if (tipText !== undefined) {
-        tooltip.innerHTML = tipText;
-        tooltip.classList.add("show");
-      }
-    });
+      const tipText = toolTips.get(key)
+      const title = Resource.displayNames[key]
+      const tip = title ? /* html */`
+        <div class="tooltip-title">${title}</div><div class="tooltip-content">${tipText}</div>
+      `.trim() : tipText
+      timeout = window.setTimeout(() => tooltip.innerHTML = tipText ? tip : '', 300)
+      // if (tipText !== undefined) {
+        // tooltip.classList.add("show")
+      // }
+    })
     element.addEventListener("mouseout", () => {
-      tooltip.classList.remove("show");
-    });
-  });
+      clearTimeout(timeout)
+      // tooltip.classList.remove("show")
+    })
+  })
 }
 export default {
   export: {

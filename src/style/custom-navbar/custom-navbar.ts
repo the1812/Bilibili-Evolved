@@ -69,6 +69,23 @@ export default (() => {
           true
         )
       })
+      SpinQuery.select('#banner_link,.international-header .bili-banner').then(banner => {
+        if (banner === null || !(banner instanceof HTMLElement)) {
+          return
+        }
+        if (banner.style.backgroundImage || dq(banner, '.animated-banner')) {
+          addSettingsListener('customNavbarTransparent', value => {
+            if (!settings.hideBanner) {
+              getNavbarElement().classList.toggle('transparent', value)
+            }
+          }, true)
+          addSettingsListener('hideBanner', value => {
+            if (settings.customNavbarTransparent) {
+              getNavbarElement().classList.toggle('transparent', !value)
+            }
+          })
+        }
+      })
       SpinQuery.condition(() => dq('#banner_link,.international-header .bili-banner'),
         banner => banner === null ? false : Boolean((banner as HTMLElement).style.backgroundImage),
         (banner: HTMLElement) => {
@@ -77,16 +94,6 @@ export default (() => {
             blurLayers.forEach(blurLayer => {
               blurLayer.style.backgroundImage = banner.style.backgroundImage
               blurLayer.setAttribute('data-image', banner.style.backgroundImage)
-            })
-            addSettingsListener('customNavbarTransparent', value => {
-              if (!settings.hideBanner) {
-                getNavbarElement().classList.toggle('transparent', value)
-              }
-            }, true)
-            addSettingsListener('hideBanner', value => {
-              if (settings.customNavbarTransparent) {
-                getNavbarElement().classList.toggle('transparent', !value)
-              }
             })
           })
         })
@@ -101,7 +108,7 @@ export default (() => {
         new Blank(1),
         new Logo(),
         new Category(),
-        new SimpleLink('排行', 'https://www.bilibili.com/ranking', 'ranking'),
+        new SimpleLink('排行', 'https://www.bilibili.com/v/popular/rank/all', 'ranking'),
         new SimpleLink('相簿', 'https://h.bilibili.com', 'drawing'),
         new SimpleLink('音频', 'https://www.bilibili.com/audio/home/', 'music'),
         new Iframe('游戏中心', 'https://game.bilibili.com/', {
@@ -118,6 +125,7 @@ export default (() => {
           lazy: true,
           iframeName: 'lives',
         }),
+        new SimpleLink('赛事', 'https://www.bilibili.com/v/game/match/', 'match'),
         new SimpleLink('会员购', 'https://show.bilibili.com', 'shop'),
         new SimpleLink('漫画', 'https://manga.bilibili.com', 'manga'),
         new Blank(2),
@@ -152,16 +160,14 @@ export default (() => {
           async requestPopup(component: NavbarComponent) {
             if (!component.requestedPopup && !component.disabled /* && !component.active */) {
               this.$set(component, `requestedPopup`, true)
-              // component.initialPopup && component.initialPopup()
               if (component.initialPopup) {
                 component.initialPopup()
               }
-              // console.log('lazy popup: ', component.name)
+              return
             }
             if (component.onPopup) {
               component.onPopup()
             }
-            // component.checkPosition()
           }
         },
         mounted() {

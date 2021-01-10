@@ -1,7 +1,7 @@
 import { getFriendlyTitle } from '../title'
-import { VideoInfo, DanmakuInfo } from '../video-info'
+import { VideoInfo, DanmakuInfo, JsonDanmaku } from '../video-info'
 import { VideoDownloaderFragment } from './video-downloader-fragment'
-import { DownloadVideoPackage } from './download-video-package'
+import { DownloadPackage } from '../../utils/download-package'
 import { BatchTitleParameter, BatchExtractor } from './batch-download'
 
 /**
@@ -20,15 +20,15 @@ class Video {
     function api(aid: number | string, cid: number | string, quality?: number) {
       if (dash) {
         if (quality) {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnver=0&fnval=16`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnver=0&fnval=80`
         } else {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json&fourk=1&fnver=0&fnval=16`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json&fourk=1&fnver=0&fnval=80`
         }
       } else {
         if (quality) {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnver=0&fnval=0`
         } else {
-          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json`
+          return `https://api.bilibili.com/x/player/playurl?avid=${aid}&cid=${cid}&otype=json&fourk=1&fnver=0&fnval=0`
         }
       }
     }
@@ -52,9 +52,9 @@ class Bangumi extends Video {
         }
       } else {
         if (quality) {
-          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json`
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=${quality}&otype=json&fourk=1&fnver=0&fnval=0`
         } else {
-          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=&otype=json`
+          return `https://api.bilibili.com/pgc/player/web/playurl?avid=${aid}&cid=${cid}&qn=&otype=json&fourk=1&fnver=0&fnval=0`
         }
       }
     }
@@ -158,16 +158,25 @@ class VideoFormat {
     return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
   }
   static async getAvailableFormats(): Promise<VideoFormat[]> {
-    const url = await pageData.entity.getUrl()
-    const json = await Ajax.getJsonWithCredentials(url)
-    if (json.code !== 0) {
-      throw new Error('获取清晰度信息失败.')
+    const { BannedResponse, throwBannedError } = await import('./batch-warning')
+    try {
+      const url = await pageData.entity.getUrl()
+      const json = await Ajax.getJsonWithCredentials(url)
+      if (json.code !== 0) {
+        throw new Error('获取清晰度信息失败.')
+      }
+      const data = json.data || json.result || json
+      return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
+    } catch (error) {
+      if ((error as Error).message.includes(BannedResponse.toString())) {
+        throwBannedError()
+      }
+      throw error
     }
-    const data = json.data || json.result || json
-    return await VideoFormat.filterFormats(VideoFormat.parseFormats(data))
   }
 }
 const allFormats: VideoFormat[] = [
+  new VideoFormat(125, 'HDR', '真彩 HDR'),
   new VideoFormat(120, '4K', '超清 4K'),
   new VideoFormat(116, '1080P60', '高清 1080P60'),
   new VideoFormat(112, '1080P+', '高清 1080P+'),
@@ -175,8 +184,27 @@ const allFormats: VideoFormat[] = [
   new VideoFormat(74, '720P60', '高清 720P60'),
   new VideoFormat(64, '720P', '高清 720P'),
   new VideoFormat(32, '480P', '清晰 480P'),
-  new VideoFormat(15, '320P', '流畅 320P'),
+  new VideoFormat(16, '360P', '流畅 360P'),
 ]
+const getDanmaku = async (value: DanmakuOption, aid: string | number, cid: string | number) => {
+  if (value === '无') {
+    return null
+  }
+  if (value === 'XML') {
+    const danmakuInfo = await new DanmakuInfo(cid).fetchInfo()
+    return danmakuInfo.rawXML
+  }
+  const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
+  if (value === 'JSON') {
+    return JSON.stringify(danmaku.jsonDanmakus)
+  }
+  if (value === 'ASS') {
+    const { convertToAssFromJson } = await import('../download-danmaku')
+    return convertToAssFromJson(danmaku)
+  }
+
+  return null
+}
 class VideoDownloader {
   format: VideoFormat
   subtitle = false
@@ -332,7 +360,7 @@ class VideoDownloader {
     const idm = toIdmFormat([this])
     const danmaku = await this.downloadDanmaku()
     const subtitle = await this.downloadSubtitle()
-    const pack = new DownloadVideoPackage()
+    const pack = new DownloadPackage()
     pack.add(
       `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
       danmaku
@@ -359,7 +387,7 @@ class VideoDownloader {
     } else {
       const blob = new Blob([data], { type: 'text/json' })
       const danmaku = await this.downloadDanmaku()
-      const pack = new DownloadVideoPackage()
+      const pack = new DownloadPackage()
       pack.add(`${getFriendlyTitle()}.json`, blob)
       pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
       await pack.emit(`${getFriendlyTitle()}.zip`)
@@ -370,7 +398,7 @@ class VideoDownloader {
     if (rpc) { // https://aria2.github.io/manual/en/html/aria2c.html#json-rpc-using-http-get
       const danmaku = await this.downloadDanmaku()
       const subtitle = await this.downloadSubtitle()
-      const pack = new DownloadVideoPackage()
+      const pack = new DownloadPackage()
       pack.add(
         `${getFriendlyTitle()}.${this.danmakuOption === 'ASS' ? 'ass' : 'xml'}`,
         danmaku
@@ -428,7 +456,7 @@ ${it.url}
       const blob = new Blob([input], { type: 'text/plain' })
       const danmaku = await this.downloadDanmaku()
       const subtitle = await this.downloadSubtitle()
-      const pack = new DownloadVideoPackage()
+      const pack = new DownloadPackage()
       pack.add(`${getFriendlyTitle()}.txt`, blob)
       pack.add(getFriendlyTitle() + '.' + this.danmakuOption.toLowerCase(), danmaku)
       pack.add(getFriendlyTitle() + '.' + this.subtitleOption.toLowerCase(), subtitle)
@@ -498,7 +526,7 @@ ${it.url}
     }
 
     const title = getFriendlyTitle()
-    const pack = new DownloadVideoPackage()
+    const pack = new DownloadPackage()
     const { getNumber } = await import('./get-number')
     downloadedData.forEach((data, index) => {
       let filename: string
@@ -535,7 +563,7 @@ class VideoSpeed {
     this.workingDownloader = downloader
   }
   startMeasure() {
-    this.intervalTimer = setInterval(() => {
+    this.intervalTimer = window.setInterval(() => {
       const progress = this.workingDownloader.progressMap
         ? [...this.workingDownloader.progressMap.values()].reduce((a, b) => a + b, 0) : 0
       const loadedBytes = progress - this.lastProgress
@@ -659,7 +687,7 @@ async function loadPanel() {
       },
       danmakuModel: {
         value: settings.downloadVideoDefaultDanmaku as DanmakuOption,
-        items: ['无', 'XML', 'ASS'] as DanmakuOption[]
+        items: ['无', 'XML', 'JSON', 'ASS'] as DanmakuOption[]
       },
       subtitleModel: {
         value: settings.downloadVideoDefaultSubtitle as SubtitleOption,
@@ -677,6 +705,7 @@ async function loadPanel() {
       progressPercent: 0,
       size: '获取大小中' as number | string,
       blobUrl: '',
+      lastCheckedEpisodeIndex: -1,
       episodeList: [] as EpisodeItem[],
       downloading: false,
       speed: '',
@@ -836,7 +865,7 @@ async function loadPanel() {
                 const { getFragmentsList } = await import('./ffmpeg-support')
                 // const { getFragmentsMergeScript } = await import('./ffmpeg-support')
 
-                const pack = new DownloadVideoPackage()
+                const pack = new DownloadPackage()
                 pack.add('ffmpeg-files.txt', getFragmentsList(videoDownloader.fragments.length, getFriendlyTitle(), videoDownloader.fragments.map(f => videoDownloader.extension(f))))
                 // const isWindows = window.navigator.appVersion.includes('Win')
                 // const extension = isWindows ? 'bat' : 'sh'
@@ -871,8 +900,13 @@ async function loadPanel() {
       },
       async exportBatchData(type: ExportType) {
         const episodeList = this.episodeList as EpisodeItem[]
-        if (episodeList.every(item => item.checked === false)) {
+        const { MaxBatchSize, showBatchWarning } = await import('./batch-warning')
+        if (episodeList.every(item => !item.checked)) {
           Toast.info('请至少选择1集或以上的数量!', '批量导出', 3000)
+          return
+        }
+        if (episodeList.filter(item => item.checked).length > MaxBatchSize) {
+          showBatchWarning('批量导出')
           return
         }
         const episodeFilter = (item: EpisodeItem) => {
@@ -886,7 +920,7 @@ async function loadPanel() {
         const format: VideoFormat = this.getFormat()
         if (this.danmakuModel.value !== '无') {
           const danmakuToast = Toast.info('下载弹幕中...', '批量导出')
-          const pack = new DownloadVideoPackage()
+          const pack = new DownloadPackage()
           try {
             if (this.danmakuModel.value === 'XML') {
               for (const item of episodeList.filter(episodeFilter)) {
@@ -912,7 +946,7 @@ async function loadPanel() {
         }
         if (this.subtitleModel.value !== '无') {
           const subtitleToast = Toast.info('下载字幕中...', '批量导出')
-          const pack = new DownloadVideoPackage()
+          const pack = new DownloadPackage()
           try {
             const { getSubtitleConfig, getSubtitleList } = await import('../download-subtitle/download-subtitle')
             const [config, language] = await getSubtitleConfig()
@@ -951,17 +985,16 @@ async function loadPanel() {
               const items = await batchExtractor.getRawItems(format)
               const { toIdmFormat } = await import('./idm-support')
               result = toIdmFormat(items)
-              await DownloadVideoPackage.single(
+              await DownloadPackage.single(
                 getFriendlyTitle(false) + '.ef2',
                 new Blob([result], { type: 'text/plain' }),
               )
               return
             case 'aria2':
               result = await batchExtractor.collectAria2(format, toast, false)
-              await DownloadVideoPackage.single(
+              await DownloadPackage.single(
                 getFriendlyTitle(false) + '.txt',
                 new Blob([result], { type: 'text/plain' }),
-                { ffmpeg: this.ffmpegOption }
               )
               return
             case 'aria2RPC':
@@ -974,10 +1007,9 @@ async function loadPanel() {
               return
             case 'exportVLD':
               result = await batchExtractor.collectData(format, toast)
-              await DownloadVideoPackage.single(
+              await DownloadPackage.single(
                 getFriendlyTitle(false) + '.json',
                 new Blob([result], { type: 'text/json' }),
-                { ffmpeg: this.ffmpegOption }
               )
               return
             case 'ffmpegFragments':
@@ -989,7 +1021,7 @@ async function loadPanel() {
                 }
                 const videoDownloader = new VideoDownloader(format, items[0].fragments)
                 const { getBatchFragmentsList } = await import('./ffmpeg-support')
-                // const pack = new DownloadVideoPackage()
+                // const pack = new DownloadPackage()
                 // const isWindows = window.navigator.appVersion.includes('Win')
                 // const extension = isWindows ? 'bat' : 'sh'
                 // const script = getBatchMergeScript(items, videoDownloader.extension())
@@ -1007,7 +1039,7 @@ async function loadPanel() {
                   Toast.info('所有选择的分P都没有分段.', '分段列表', 3000)
                   return
                 }
-                const pack = new DownloadVideoPackage()
+                const pack = new DownloadPackage()
                 for (const [filename, content] of map.entries()) {
                   pack.add(filename, content)
                 }
@@ -1021,7 +1053,7 @@ async function loadPanel() {
                 const videoDownloader = new VideoDownloader(format, items[0].fragments)
                 const { getBatchEpisodesList } = await import('./ffmpeg-support')
                 const content = getBatchEpisodesList(items, this.dash || videoDownloader.extension())
-                const pack = new DownloadVideoPackage()
+                const pack = new DownloadPackage()
                 pack.add('ffmpeg-files.txt', content)
                 await pack.emit()
               }
@@ -1036,8 +1068,13 @@ async function loadPanel() {
         }
       },
       async exportManualData(type: ExportType) {
+        const { MaxBatchSize, showBatchWarning } = await import('./batch-warning')
         if (this.manualInputItems.length === 0) {
           Toast.info('请至少输入一个有效的视频链接!', '手动输入', 3000)
+          return
+        }
+        if (this.manualInputItems.length > MaxBatchSize) {
+          showBatchWarning('手动输入')
           return
         }
         const { ManualInputBatch } = await import('./batch-download')
@@ -1048,7 +1085,7 @@ async function loadPanel() {
         batch.items = this.manualInputItems
         if (this.danmakuModel.value !== '无') {
           const danmakuToast = Toast.info('下载弹幕中...', '手动输入')
-          const pack = new DownloadVideoPackage()
+          const pack = new DownloadPackage()
           try {
             if (this.danmakuModel.value === 'XML') {
               for (const item of (await batch.getItemList())) {
@@ -1074,7 +1111,7 @@ async function loadPanel() {
         }
         if (this.subtitleModel.value !== '无') {
           const subtitleToast = Toast.info('下载字幕中...', '批量导出')
-          const pack = new DownloadVideoPackage()
+          const pack = new DownloadPackage()
           try {
             const { getSubtitleConfig, getSubtitleList } = await import('../download-subtitle/download-subtitle')
             const [config, language] = await getSubtitleConfig()
@@ -1106,10 +1143,9 @@ async function loadPanel() {
             default:
             case 'aria2': {
               const result = await batch.collectAria2(this.getManualFormat().quality, false) as string
-              await DownloadVideoPackage.single(
+              await DownloadPackage.single(
                 'manual-exports.txt',
                 new Blob([result], { type: 'text/plain' }),
-                { ffmpeg: this.ffmpegOption }
               )
               break
             }
@@ -1122,7 +1158,7 @@ async function loadPanel() {
               const items = await batch.getRawItems(this.getManualFormat().quality)
               const { toIdmFormat } = await import('./idm-support')
               const result = toIdmFormat(items)
-              await DownloadVideoPackage.single(
+              await DownloadPackage.single(
                 'manual-exports.ef2',
                 new Blob([result], { type: 'text/plain' }),
               )
@@ -1146,7 +1182,8 @@ async function loadPanel() {
           this.episodeList = []
           return
         }
-        const { BatchExtractor } = await import('batch-download')
+        const { BatchExtractor } = await import('./batch-download')
+        const { MaxBatchSize } = await import('./batch-warning')
         if (await BatchExtractor.test() !== true) {
           this.batch = false
           this.episodeList = []
@@ -1161,7 +1198,7 @@ async function loadPanel() {
             title: item.title,
             titleParameters: item.titleParameters,
             index,
-            checked: true,
+            checked: index < MaxBatchSize,
           } as EpisodeItem
         })
       },
@@ -1177,6 +1214,10 @@ async function loadPanel() {
       },
       async startDownload() {
         const format = this.getFormat() as VideoFormat
+        if (format.quality === 120) {
+          Toast.info('4K视频不支持直接下载, 请使用下方的导出选项.', '下载视频', 5000)
+          return
+        }
         try {
           this.downloading = true
           const videoDownloader = await format.downloadInfo(this.dash)
@@ -1187,7 +1228,7 @@ async function loadPanel() {
           }
           workingDownloader = videoDownloader
           await videoDownloader.download()
-          this.lastDirectDownloadLink = DownloadVideoPackage.lastPackageUrl
+          this.lastDirectDownloadLink = DownloadPackage.lastPackageUrl
         }
         catch (error) {
           if (error !== 'canceled') {
@@ -1208,6 +1249,29 @@ async function loadPanel() {
       },
       inverseAllEpisodes() {
         this.episodeList.forEach((item: EpisodeItem) => item.checked = !item.checked)
+      },
+      shiftToggleEpisodes(e: MouseEvent, index: number) {
+        if (!e.shiftKey || this.lastCheckedEpisodeIndex === -1) {
+          console.log('set lastCheckedEpisodeIndex', index)
+          this.lastCheckedEpisodeIndex = index
+          return
+        }
+        if (e.shiftKey && this.lastCheckedEpisodeIndex !== -1) {
+          (this.episodeList as EpisodeItem[])
+            .slice(
+              Math.min(this.lastCheckedEpisodeIndex, index) + 1,
+              Math.max(this.lastCheckedEpisodeIndex, index),
+            )
+            .forEach(it => {
+              it.checked = !it.checked
+            })
+          console.log('shift toggle',
+            Math.min(this.lastCheckedEpisodeIndex, index) + 1,
+            Math.max(this.lastCheckedEpisodeIndex, index),
+          )
+          this.lastCheckedEpisodeIndex = index
+          e.preventDefault()
+        }
       },
       toggleRpcSettings() {
         this.showRpcSettings = !this.showRpcSettings

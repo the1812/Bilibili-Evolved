@@ -8,7 +8,7 @@ const style = `
   font-size: 12px;
   opacity: 0.6;
   cursor: pointer;
-  display: block;
+  display: inline-block;
 }
 `
 resources.applyImportantStyleFromText(
@@ -16,16 +16,15 @@ resources.applyImportantStyleFromText(
   'disable-feeds-details-init-style'
 )
 const addStyle = () => resources.applyImportantStyleFromText(style, id)
-const url = document.URL.replace(location.search, '')
-const enable = url.startsWith('https://t.bilibili.com/') ||
-  url.startsWith('https://space.bilibili.com/')
+let enable = false
 
 ;(async () => {
+  const { forEachFeedsCard, supportedUrls } = await import('./feeds-apis')
+  enable = supportedUrls.some(url => document.URL.includes(url))
   if (!enable) {
     return
   }
   addStyle()
-  const { forEachFeedsCard } = await import('./feeds-apis')
 
   const disableDetails = (card: FeedsCard) => {
     const element = card.element
@@ -38,6 +37,10 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
       if (target.hasAttribute('click-title')) {
         return
       }
+      const popups = dqa(element, '.im-popup')
+      if (popups.some(p => p.contains(target))) {
+        return
+      }
       if (contents.some(c => c === target || c.contains(target))) {
         e.stopImmediatePropagation()
       }
@@ -46,10 +49,9 @@ const enable = url.startsWith('https://t.bilibili.com/') ||
     if (!postContent) {
       return
     }
-    if (dq(postContent, '.video-container') || dq(postContent, '.bangumi-container')) {
-      return
-    }
-    if (dq(postContent, '.details')) {
+    const hasCardContainer = ['.video-container', '.bangumi-container', '.media-list', '.article-container']
+      .some(type => dq(postContent, type))
+    if (hasCardContainer) {
       return
     }
     if (postContent.classList.contains('repost')) {

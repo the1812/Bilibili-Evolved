@@ -34,6 +34,12 @@
     @include width-auto();
   }
 }
+.bb-comment,
+.comment-bilibili-fold {
+  .comment-list .opera-list li {
+    white-space: nowrap !important;
+  }
+}
 .live-sidebar-ctnr .sidebar-btn,
 .up-info .up-focus-btn,
 .attention-btn-ctnr .left-part,
@@ -294,6 +300,13 @@ html[lang="en-US"] {
     border-radius: 2px;
     position: absolute;
     padding: 0 4px;
+  }
+}
+.feed-card .card .more-panel {
+  @include width-auto();
+  padding: 0 12px;
+  .child-button {
+    white-space: nowrap;
   }
 }
 

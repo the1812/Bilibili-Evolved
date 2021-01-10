@@ -10,7 +10,7 @@ const playerModes = [
     name: '宽屏',
     action: () => {
       document.querySelector('.bilibili-player-video-btn-widescreen').click()
-      // document.querySelector("#bofqi").scrollIntoView({ behavior: "smooth" });
+      // document.querySelector("#bilibili-player").scrollIntoView({ behavior: "smooth" });
     }
   },
   {

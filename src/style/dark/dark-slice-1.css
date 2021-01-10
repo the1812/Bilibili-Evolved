@@ -1,5 +1,3 @@
-body,
-html,
 p.num,
 .bili-footer,
 .footer-wrp,
@@ -118,8 +116,6 @@ div.con,
 .bottom .content,
 .action-menu .menu-list,
 .action-menu .menu-list:before,
-.list-item:hover,
-.list-item.active,
 .emoji-box:after,
 .emotion-box,
 .emotion-box:after,
@@ -148,6 +144,7 @@ div.con,
 .home-wrap .home-input .list li:hover,
 .suggest-wrap .horizontal .hz-text,
 .suggest-wrap .vt-text:hover,
+.suggest-wrap .vt-text.focus,
 .home-wrap .home-suggest .hotlist .num,
 .fixed-top,
 .page-wrap .pager,
@@ -270,6 +267,7 @@ div.drag-bar,
 .bilibili-player-modal-btns .bpm-btn,
 .bilibili-player-adv-danmaku,
 .multi-page,
+.video-page-operator-card .card-box .pic-box,
 .video-page-card .card-box .pic-box,
 .add-btn,
 .collection-m .bottom .btn.disable,
@@ -479,6 +477,7 @@ body,
 font>span,
 .list-item .close .close-icon,
 .bb-comment,
+.bb-comment .comment-list .list-item .info .operation,
 #app,
 .back-top
 {
@@ -510,6 +509,7 @@ a.message,
 div.desc,
 .btn.followed .b-gz,
 span.copyright,
+div.play-up-copyright,
 .danmaku-info-row,
 .bilibili-player-danmaku-btn-time,
 .bilibili-player-danmaku-btn-danmaku,
@@ -829,7 +829,7 @@ span.key,
 .history-btn>.btn,
 .history-list .r-info .title,
 .history-list .r-info .w-info .username,
-.user-name a,
+.user-name:not(.big-vip) a,
 .content,
 .video-container .text-area .title,
 .sticky-bar .bar-content .title,
@@ -1498,8 +1498,6 @@ ul.up-nav li
     filter: grayscale(1) brightness(1.3) !important;
 }
 .search-wrap .search-logo,
-.type.active .icon-aver,
-.type.active .icon-imgleft,
 .live-wrap .live-room .headline .filter .cover-btn.active .icon-live-face,
 .live-wrap .live-room .headline .filter .cover-btn:hover .icon-live-face,
 .live-wrap .live-room .headline .filter .frame-btn.active .icon-live-frame,
@@ -1511,7 +1509,6 @@ ul.up-nav li
 .dynamic-hated:hover i,
 .dynamic-hate:hover i,
 .is-web .checked,
-.is-web .is-max .percentage-bar,
 .video-container .image-area .see-later.done,
 .watch-later-trigger.added,
 .group-list li input[type=checkbox]:hover+i,
@@ -1553,19 +1550,16 @@ ul.up-nav li
 .emoji-btn-box:hover,
 #app .container .options .option img,
 .home-wrap .home-logo,
-.home-wrap .home-tips .tips-link .tip-item>a
+.home-wrap .home-tips .tips-link .tip-item>a,
+.single-button .text-bar.selected
 {
     filter: var(--blue-image-filter) !important;
 }
-.single-button .text-bar.selected,
-.is-max .percentage-bar,
 .calendar .day-item.gift-checked,
 .home-wrap .home-tips .tips-link .tip-item>a:hover
 {
     filter: var(--pink-image-filter) !important;
 }
-.switch-wrap i.icon-aver,
-.switch-wrap i.icon-imgleft,
 .elevator-module .nav-list .customize .icon,
 .spread-module .num .play .icon,
 .spread-module .num .danmu .icon,
@@ -1614,14 +1608,6 @@ ul.filter-disable .icon-copy,
 .list-create:hover .icon
 {
     background-position: -716px -332px !important;
-}
-.switch-wrap .imgleft:hover i
-{
-    background-position: -148px -376px !important;
-}
-.switch-wrap .aver:hover i
-{
-    background-position: -194px -376px !important;
 }
 /* .multi-page .cur-list ul
 {
@@ -1687,7 +1673,7 @@ div.drag-bar,
 {
     box-shadow: 0px 1px 10px 0 #0003 !important;
 }
-#bofqi.mini-player::before
+.bilibili-player.mini-player::before
 {
     box-shadow: 0 4px 8px 0 #0004 !important;
 }

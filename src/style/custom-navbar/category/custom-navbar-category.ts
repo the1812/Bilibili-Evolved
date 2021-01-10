@@ -86,6 +86,7 @@ export class Category extends NavbarComponent {
             '音乐现场': 'https://www.bilibili.com/v/music/live/',
             '音乐综合': 'https://www.bilibili.com/v/music/other/',
             '音频': 'https://www.bilibili.com/audio/home?musicType=music',
+            '说唱': 'https://www.bilibili.com/v/rap',
           },
         },
         舞蹈: {
@@ -137,13 +138,24 @@ export class Category extends NavbarComponent {
           count: regionCount[160], link: `https://www.bilibili.com/v/life/`, subRegions: {
             '搞笑': 'https://www.bilibili.com/v/life/funny/',
             '日常': 'https://www.bilibili.com/v/life/daily/',
-            '美食圈': 'https://www.bilibili.com/v/life/food/',
             '动物圈': 'https://www.bilibili.com/v/life/animal/',
             '手工': 'https://www.bilibili.com/v/life/handmake/',
             '绘画': 'https://www.bilibili.com/v/life/painting/',
             '运动': 'https://www.bilibili.com/v/life/sports/',
             '汽车': 'https://www.bilibili.com/v/life/automobile/',
             '其他': 'https://www.bilibili.com/v/life/other/'
+          },
+        },
+        美食: {
+          icon: 'food',
+          count: regionCount[211],
+          link: 'https://www.bilibili.com/v/food/',
+          subRegions: {
+            美食制作: 'https://www.bilibili.com/v/food/make/',
+            美食侦探: 'https://www.bilibili.com/v/food/detective/',
+            美食测评: 'https://www.bilibili.com/v/food/measurement/',
+            田园美食: 'https://www.bilibili.com/v/food/rural/',
+            美食记录: 'https://www.bilibili.com/v/food/record/',
           },
         },
         鬼畜: {
@@ -179,7 +191,6 @@ export class Category extends NavbarComponent {
           count: regionCount[5], link: `https://www.bilibili.com/v/ent/`, subRegions: {
             '综艺': 'https://www.bilibili.com/v/ent/variety/',
             '明星': 'https://www.bilibili.com/v/ent/star/',
-            'Korea相关': 'https://www.bilibili.com/v/ent/korea/'
           },
         },
         影视: {
@@ -211,6 +222,8 @@ export class Category extends NavbarComponent {
           },
         },
         小黑屋: { icon: 'blackroom', count: ``, link: `https://www.bilibili.com/blackroom/`, },
+        课堂: { icon: 'zhishi', count: ``, link: `https://www.bilibili.com/cheese/`, },
+        音乐PLUS: { icon: 'musicplus', count: ``, link: `https://www.bilibili.com/v/musicplus/`, },
         专题: { icon: 'topic', count: ``, link: `https://www.bilibili.com/blackboard/topic_list.html`, },
         活动: { icon: 'activit', count: ``, link: `https://www.bilibili.com/blackboard/x/act_list`, },
       }

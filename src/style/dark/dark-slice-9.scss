@@ -248,7 +248,8 @@
 .title-renew-panel .card,
 .publish-panel .editor:hover,
 .publish-panel .editor:focus,
-.publish-panel .editor:focus-within {
+.publish-panel .editor:focus-within,
+.page-container {
   @include background-color();
 }
 .manga-navbar .search-bar .placeholder-list .placeholder-item {
@@ -374,12 +375,20 @@
 .share-content .video-card .up-info .name,
 .user-title-using-cntr .user-title-box .name,
 .bilibili-player-video-control .bilibili-player-video-btn-pagelist,
-.bilibili-player-video-control .bilibili-player-video-btn-speed {
+.bilibili-player-video-control .bilibili-player-video-btn-speed,
+.gridview-content-container .song-intro,
+.song-padding .song-intro {
   @include color("e");
 }
 .van-popover .vip:hover,
 .international-header .mini-upload:hover {
   @include color("f");
+}
+.superChat-card-detail {
+  .card-item-middle-top .name,
+  .card-item-top-right {
+    @include color("e");
+  }
 }
 
 $rankColors: (
@@ -873,19 +882,7 @@ $highlight-map: (
       }
     }
   }
-  .back-top-btn {
-    @include border-color();
-    @include background-color("3");
-    .arrow-icon {
-      @include color("a");
-    }
-    &:hover {
-      @include theme-background-color();
-      .arrow-icon {
-        @include foreground-color();
-      }
-    }
-  }
+  @include back-top-btn();
 }
 .international-home .contact-help {
   @include color("9");
@@ -994,7 +991,7 @@ $highlight-map: (
 .hover-panel-wrap,
 .recommend-area-ctnr .rec-area-item,
 .hover-panel-wrapper,
-.van-popover .btn-box .btn.reg-btn,
+.van-popper-login .btn-box .btn,
 .van-popper-history .view-all,
 .at-popup,
 .chat-popups-section .draw-full-ctnr,
@@ -1048,11 +1045,10 @@ $highlight-map: (
 }
 #bilibili_pbp,
 #bilibili_pbp_canvas {
-  @include to-theme("pink");
+  @include to-theme("blue");
 }
 .interact-dialog .btn,
 .rookie-guide .close-button,
-.video-control-show .bilibili-player-video-interactive-list .check:hover .big-round,
 #biliAppHomeSetting button,
 .van-popover .btn-box .btn,
 .van-popper-history .view-all:hover,

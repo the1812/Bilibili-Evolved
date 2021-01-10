@@ -138,6 +138,11 @@
           border-radius: 8px 0 0 8px;
           position: relative;
           $padding: 6px;
+          .floating {
+            position: absolute;
+            opacity: 0;
+            font-size: 11px;
+          }
           .remove {
             top: $padding;
             left: $padding;
@@ -150,17 +155,15 @@
             left: $padding;
             bottom: $padding;
             padding: 0 6px;
+            body.always-show-duration & {
+              opacity: 1;
+            }
           }
           .viewed {
             white-space: nowrap;
             right: $padding;
             top: $padding;
             padding: 0 6px;
-          }
-          .floating {
-            position: absolute;
-            opacity: 0;
-            font-size: 11px;
           }
           .cover {
             object-fit: cover;

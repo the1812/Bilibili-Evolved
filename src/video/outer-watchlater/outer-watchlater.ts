@@ -2,6 +2,7 @@
   if (!document.URL.startsWith('https://www.bilibili.com/video/') || !getUID()) {
     return
   }
+  const { playerReady } = await import('../player-ready')
   await playerReady()
   const favoriteButton = dq('.video-toolbar .ops .collect')
   if (!favoriteButton) {
@@ -14,7 +15,7 @@
       稍后再看
       <div class='tip' :class="{show: tipShowing}">{{tipText}}</div>
     </span>
-  `)
+  `.trim())
   const watchlaterButton = dq('.ops .watchlater')
   if (!watchlaterButton) {
     return

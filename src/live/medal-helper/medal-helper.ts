@@ -72,7 +72,11 @@ class Medal extends Badge {
       return true
     }
     return Badge.parseJson(
-      await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxWearFansMedal?medal_id=${this.id}`),
+      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/wear`, formData({
+          medal_id: this.id,
+          csrf_token: getCsrf(),
+          csrf: getCsrf(),
+        })),
       {
         successAction: () => {
           this.isActive = true
@@ -87,7 +91,10 @@ class Medal extends Badge {
       return true
     }
     return Badge.parseJson(
-      await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/i/ajaxCancelWear`),
+      await Ajax.postTextWithCredentials(`https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/take_off`, formData({
+        csrf_token: getCsrf(),
+        csrf: getCsrf(),
+      })),
       {
         successAction: () => {
           this.isActive = false
@@ -279,6 +286,7 @@ export default {
     condition: () => document.URL.startsWith('https://live.bilibili.com') && Boolean(getUID()),
     content: resources.import('medalHelperHtml'),
     success: async () => {
+      resources.applyImportantStyle('medalHelperStyle')
       document.querySelectorAll(".medal-helper").forEach(it => {
         const popup = it.querySelector(".medal-popup") as HTMLElement
         it.addEventListener("click", e => {

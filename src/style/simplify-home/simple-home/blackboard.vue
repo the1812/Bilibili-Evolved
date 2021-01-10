@@ -16,11 +16,6 @@
       :data-index="i"
       :key="i"
     />
-    <div class="jump-dots">
-      <label v-for="(b, i) of blackboards" :for="'blackboard' + i" :key="i">
-        <div class="jump-dot"></div>
-      </label>
-    </div>
     <div class="blackboard-cards">
       <a
         class="blackboard-card"
@@ -33,6 +28,11 @@
         <dpi-img :src="b.imageUrl" :alt="b.title" :size="{width: 500, height: 250}" :root="cardsContainer"></dpi-img>
         <div class="title">{{b.title}}</div>
       </a>
+    </div>
+    <div class="jump-dots">
+      <label v-for="(b, i) of blackboards" :for="'blackboard' + i" :key="i">
+        <div class="jump-dot"></div>
+      </label>
     </div>
   </div>
 </template>
@@ -88,14 +88,39 @@ export default {
 <style lang="scss">
 $first-row-height: 250px;
 .simple-home .blackboards {
+  position: relative;
   display: grid;
-  grid-template-areas: 'header header' 'dots cards';
+  grid-template-areas: 'header header' 'cards cards';
   grid-template-columns: 8px 1fr;
   grid-template-rows: 1fr $first-row-height;
   row-gap: 16px;
   column-gap: 16px;
   align-self: start;
 
+  .jump-dots {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+    grid-area: cards;
+    align-self: center;
+    justify-self: center;
+    & label {
+      display: block;
+    }
+    & label:not(:last-child) {
+      margin-bottom: 6px;
+    }
+    .jump-dot {
+      background-color: #8884;
+      border: 1px solid #8888;
+      box-sizing: border-box;
+      width: 8px;
+      height: 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  }
   .blackboard-cards {
     grid-area: cards;
     --blackboard-width: 568.5px;

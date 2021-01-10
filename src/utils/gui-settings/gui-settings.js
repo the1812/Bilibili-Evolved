@@ -39,7 +39,18 @@ function setupEvents () {
   })
   document.querySelectorAll('.gui-settings-dropdown>input').forEach(it => {
     it.addEventListener('click', e => {
-      e.currentTarget.parentElement.classList.toggle('opened')
+      e.target.parentElement.classList.toggle('opened')
+      const outsideHandler = event => {
+        const target = event.target
+        const container = dq(`li[data-key=${it.getAttribute('key')}]`)
+        console.log(container, it.getAttribute('key'), target)
+        if (container.contains(target) && container !== target) {
+          return
+        }
+        e.target.parentElement.classList.remove('opened')
+        document.body.removeEventListener('click', outsideHandler)
+      }
+      document.body.addEventListener('click', outsideHandler)
     })
   })
   dqa('.gui-settings-header .operation').forEach(it => {
@@ -122,12 +133,11 @@ function checkOfflineData () {
     // document.querySelector('input[key=useCache]').disabled = true
   }
 }
+
+const preCheckCompatibility = () => {
+  // empty
+}
 function checkCompatibility () {
-  // if (!CSS.supports('backdrop-filter', 'blur(24px)') &&
-  //   !CSS.supports('-webkit-backdrop-filter', 'blur(24px)')) {
-  //   inputs.find(it => it.getAttribute('key') === 'blurVideoControl').disabled = true
-  //   settings.blurVideoControl = false
-  // }
   if (window.devicePixelRatio === 1) {
     inputs.find(it => it.getAttribute('key') === 'harunaScale').disabled = true
     inputs.find(it => it.getAttribute('key') === 'imageResolution').disabled = true
@@ -170,6 +180,13 @@ function setDisplayNames () {
     document.querySelector('.gui-settings-icon-panel').style.display = 'none'
     // return;
   }
+  const transparentFrames = [
+    'https://t.bilibili.com/share/card/index',
+    'https://manga.bilibili.com/eden/bilibili-nav-panel.html',
+    'https://live.bilibili.com/blackboard/dropdown-menu.html',
+    'https://www.bilibili.com/page-proxy/game-nav.html',
+  ]
+  document.documentElement.classList.toggle('iframe', isIframe && transparentFrames.some(f => document.URL.includes(f)))
 
   addSettingsListener('guiSettingsDockSide', value => {
     document.body.classList.toggle('gui-settings-dock-right', value === '右侧')
@@ -179,6 +196,9 @@ function setDisplayNames () {
   }, true)
   addSettingsListener('elegantScrollbar', value => {
     document.documentElement.classList.toggle('elegant-scrollbar', value)
+  }, true)
+  addSettingsListener('alwaysShowDuration', value => {
+    document.body.classList.toggle('always-show-duration', value)
   }, true)
   const settingsBox = resources.data.guiSettingsHtml.text
   document.body.insertAdjacentHTML('beforeend', settingsBox)
@@ -199,6 +219,7 @@ function setDisplayNames () {
   })
   const boxes = document.querySelectorAll('.gui-settings-widgets-box,.gui-settings-box')
   const iconPanel = document.querySelector('.gui-settings-icon-panel')
+  preCheckCompatibility()
   iconPanel.addEventListener('mouseover', async () => {
     const { loadTooltip } = await import('./tooltip/settings-tooltip.loader')
     await loadTooltip()
@@ -223,6 +244,22 @@ function setDisplayNames () {
     checkCompatibility()
     setDisplayNames()
     dq('.script-info .version').textContent = scriptVersion + ' v' + GM.info.script.version
+    ;(async () => {
+      const hashElement = dq('.script-info .content-hash')
+      if (Object.keys(settings.cache).length === 0) {
+        hashElement.remove()
+        return
+      }
+      const digestMessage = async (message) => {
+        const msgUint8 = new TextEncoder().encode(message)
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8)
+        const hashArray = Array.from(new Uint8Array(hashBuffer))
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+        return hashHex
+      }
+      const hash = await digestMessage(JSON.stringify(settings.cache))
+      hashElement.textContent = `内容包: ${hash.substring(0, 7)}`
+    })()
     new SettingsSearch()
   }, { once: true })
 })()

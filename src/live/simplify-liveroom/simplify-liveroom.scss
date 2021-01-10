@@ -15,8 +15,23 @@
   &-eventsBanner .z-section-blocks .left-container .flip-view,
   &-eventsBanner .activity-pushing-out,
   &-userEffect .live-room-app .aside-area .activity-welcome-section,
-  &-kanban .live-haruna-ctnr {
+  &-kanban .live-haruna-ctnr,
+  &-enterPrompt .chat-item.important-prompt-item,
+  &-enterPrompt .chat-history-panel .brush-prompt,
+  &-pk .chaos-pk,
+  &-topRank .chat-item.top3-notice,
+  &-topRank .chat-item .rank-icon {
     display: none !important;
+  }
+}
+.simplify-enterPrompt {
+  .chat-history-list.with-brush-prompt {
+    &:not(.with-penury-gift) {
+      height: calc(100%) !important;
+    }
+    &.with-penury-gift {
+      height: calc(100% - 32px) !important;
+    }
   }
 }
 .simplify-rankList {
@@ -121,8 +136,22 @@
   }
 }
 .simplify-skin {
+  &:not(.dark) {
+    .player-ctnr {
+      #head-info-vm,
+      #gift-control-vm {
+        box-sizing: content-box !important;
+        border: 1px solid #e9eaec !important;
+      }
+    }
+    .player-and-aside-area #aside-area-vm {
+      border: 1px solid #e9eaec !important;
+      width: 302px !important;
+    }
+  }
   #head-info-vm,
   #gift-control-vm,
+  .control-panel-ctnr,
   #rank-list-ctnr-box {
     background-image: none !important;
   }

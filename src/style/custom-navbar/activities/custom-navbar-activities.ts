@@ -274,6 +274,8 @@ export class Activities extends NavbarComponent {
                 upName: card.desc.user_profile.info.uname,
                 upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
                 id: card.desc.dynamic_id_str,
+                // pubTimestamp: cardJson.pubdate,
+                // pubTime: format??? cardJson.pubdate,
                 watchlater: true,
                 get new() { return Activities.isNewID(this.id) },
               }

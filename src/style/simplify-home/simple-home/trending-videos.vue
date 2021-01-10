@@ -64,29 +64,7 @@ export default {
     return {
       // tabs,
       // currentTab: tabs[0],
-      trendingCards: unsafeWindow.__INITIAL_STATE__.recommendList.map(
-        (it: any) => {
-          return {
-            id: it.aid,
-            aid: it.aid,
-            bvid: it.bvid,
-            timestamp: it.ctime * 1000,
-            time: new Date(it.ctime * 1000),
-            description: it.desc,
-            duration: it.duration,
-            durationText: formatDuration(it.duration),
-            coverUrl: it.pic.replace('http:', 'https:'),
-            title: it.title,
-            coins: formatCount(it.stat.coin),
-            danmakuCount: formatCount(it.stat.danmaku),
-            // favorites: formatCount(it.stat.favorite),
-            like: formatCount(it.stat.like),
-            playCount: formatCount(it.stat.view),
-            upName: it.owner.name,
-            upFaceUrl: it.owner.face.replace('http:', 'https:'),
-          } as VideoCardInfo
-        },
-      ),
+      trendingCards: [],
     }
   },
   // watch: {
@@ -116,13 +94,30 @@ export default {
       contents.scrollBy(orientation * distance, 0)
     }
   },
+  async created() {
+    const { getTrendingVideos } = await import('../trending-videos')
+    this.trendingCards = getTrendingVideos()
+  },
   async mounted() {
-    if (!settings.simpleHomeWheelScroll) {
-      return
-    }
+    let cancelHorizontalScroll: () => void
+    addSettingsListener('simpleHomeWheelScroll', async (value: boolean) => {
+      if (value) {
+        const contents = this.$refs.contents as HTMLElement
+        const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
+        cancelHorizontalScroll = enableHorizontalScroll(contents)
+      } else {
+        cancelHorizontalScroll && cancelHorizontalScroll()
+      }
+    }, true)
+
+    // 等内容上去了再添加 snap 特性, 不然不知道为啥会错位
     const contents = this.$refs.contents as HTMLElement
-    const { enableHorizontalScroll } = await import('../../../utils/horizontal-scroll')
-    enableHorizontalScroll(contents)
+    await SpinQuery.condition(() => contents, () => contents.childElementCount > 0)
+    resources.applyImportantStyleFromText(`
+      .simple-home.snap .trendings .contents {
+        scroll-snap-type: x mandatory;
+      }
+    `, 'trending-videos-snap-fix')
   },
 }
 </script>
@@ -166,7 +161,6 @@ export default {
     overflow: auto;
     height: calc(var(--card-height) + 16px);
     width: calc((var(--card-width) + 16px) * var(--card-count));
-    // scroll-snap-type: x mandatory;
     scrollbar-width: none !important;
 
     @media screen and (max-width: 1300px) and (min-width: 900px) {
@@ -184,11 +178,11 @@ export default {
         --card-count: 4;
       }
     }
-    // @media screen and (min-width: 1850px) {
-    //   & {
-    //     --card-count: 5;
-    //   }
-    // }
+    @media screen and (min-width: 1850px) {
+      & {
+        --card-count: 5;
+      }
+    }
     &::-webkit-scrollbar {
       width: 0 !important;
       height: 0 !important;

@@ -1,5 +1,7 @@
 import { NavbarComponent } from '../custom-navbar-component'
 import { RawWatchlaterItem } from '../../../video/watchlater-api'
+import * as VueTypes from 'vue'
+
 interface WatchlaterCard {
   aid: number
   href: string
@@ -13,6 +15,7 @@ interface WatchlaterCard {
   upID: number
 }
 export class WatchlaterList extends NavbarComponent {
+  vm: VueTypes.default & { updateList: () => void }
   constructor() {
     super()
     this.boundingWidth = 380
@@ -37,7 +40,7 @@ export class WatchlaterList extends NavbarComponent {
           <div class="search">
             <input type="text" placeholder="搜索" v-model="search">
           </div>
-          <a class="round-button" target="_blank" href="https://www.bilibili.com/watchlater/#" title="播放全部">
+          <a class="round-button" target="_blank" href="https://www.bilibili.com/medialist/play/watchlater" title="播放全部">
             <i class="mdi mdi-play"></i>
           </a>
           <a class="round-button" href="https://www.bilibili.com/watchlater/#/list" title="查看更多" target="_blank">
@@ -70,10 +73,13 @@ export class WatchlaterList extends NavbarComponent {
     this.initialPopup = () => {
       this.init()
     }
+    this.onPopup = () => {
+      this.vm?.updateList()
+    }
   }
   async init() {
     // console.log(await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .watchlater-list`))
-    new Vue({
+    this.vm = new Vue({
       el: await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .watchlater-list`) as HTMLElement,
       store,
       components: {

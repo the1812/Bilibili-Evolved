@@ -25,20 +25,25 @@ import { CommentItem } from '../comment-apis'
     return ''
   }
   const addCopyLinkButton = (comment: CommentItem) => {
-    [comment, ...comment.replies].forEach(item => {
-      const operationList = dq(item.element, '.opera-list ul') as HTMLUListElement
-      if (!operationList || dq(operationList, '.copy-link')) {
-        return
-      }
-      const copyLinkButton = document.createElement('li')
-      copyLinkButton.classList.add('copy-link')
-      copyLinkButton.textContent = '复制链接'
-      copyLinkButton.addEventListener('click', () => {
-        const url = findParentFeedsUrl(item.element) || document.URL
-        GM_setClipboard(`${url}#reply${item.id}`, { mimetype: 'text/plain' })
+    const processItems = (items: Omit<CommentItem, 'replies'>[]) => {
+      items.forEach(item => {
+        const operationList = dq(item.element, '.opera-list ul') as HTMLUListElement
+        if (!operationList || dq(operationList, '.copy-link')) {
+          return
+        }
+        const copyLinkButton = document.createElement('li')
+        copyLinkButton.classList.add('copy-link')
+        copyLinkButton.textContent = '复制链接'
+        copyLinkButton.addEventListener('click', () => {
+          const url = findParentFeedsUrl(item.element) || document.URL.replace(/#.+$/, '')
+          GM.setClipboard(`${url}#reply${item.id}`, 'text')
+          console.log('[Copy Comment Link]',`${url}#reply${item.id}`)
+        })
+        operationList.appendChild(copyLinkButton)
       })
-      operationList.appendChild(copyLinkButton)
-    })
+    }
+    processItems([comment, ...comment.replies])
+    comment.onRepliesUpdate = replies => processItems(replies)
   }
   forEachCommentItem({
     added: addCopyLinkButton

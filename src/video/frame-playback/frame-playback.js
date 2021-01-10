@@ -1,4 +1,5 @@
 import html from 'framePlaybackHtml'
+
 resources.applyStyle('framePlaybackStyle')
 const main = async () => {
   if (settings.videoScreenshot) {
@@ -35,19 +36,19 @@ const main = async () => {
     frameTime = 1 / fps
     // console.log(frameTime);
   })
-  document.addEventListener('keydown', e => {
-    if (e.shiftKey && !['input', 'textarea'].includes(document.activeElement.nodeName.toLowerCase())) {
-      if (e.key === 'ArrowLeft') {
-        e.stopPropagation()
-        e.preventDefault()
-        prevFrame()
-      } else if (e.key === 'ArrowRight') {
-        e.stopPropagation()
-        e.preventDefault()
-        nextFrame()
-      }
-    }
-  })
+  // document.addEventListener('keydown', e => {
+  //   if (e.shiftKey && !isTyping()) {
+  //     if (e.key === 'ArrowLeft') {
+  //       e.stopPropagation()
+  //       e.preventDefault()
+  //       prevFrame()
+  //     } else if (e.key === 'ArrowRight') {
+  //       e.stopPropagation()
+  //       e.preventDefault()
+  //       nextFrame()
+  //     }
+  //   }
+  // })
   document.querySelector('.prev-frame').addEventListener('click', prevFrame)
   document.querySelector('.next-frame').addEventListener('click', nextFrame)
   if (settings.touchVideoPlayer) {

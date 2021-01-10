@@ -1,5 +1,5 @@
 <template>
-  <div class="v-dropdown" @click="toggleDropdown()" :class="{round}">
+  <div class="v-dropdown" @click="toggleDropdown()" :class="{round}" tabindex="0">
     <span class="selected">{{ value }}</span>
     <ul class="dropdown-menu" :class="{ opened: dropdownOpen }">
       <li v-for="item in items" :key="item" :data-value="item" @click="select(item)">{{ item }}</li>
@@ -43,7 +43,7 @@ export default {
 </script>
 <style lang="scss">
 .v-dropdown {
-  --background-color: #eee;
+  --background-color: #fff;
   position: relative;
   background-color: var(--background-color);
   cursor: pointer;
@@ -52,10 +52,17 @@ export default {
   justify-content: space-between;
   min-width: 100px;
   border-radius: var(--corner-radius);
-  line-height: normal;
+  line-height: 1.5;
+  box-shadow: 0 0 0 1px #8884;
 
+  &:focus {
+    outline: none !important;
+  }
+  &:focus-within {
+    box-shadow: 0 0 0 1px var(--theme-color);
+  }
   body.dark & {
-    --background-color: #333;
+    --background-color: #222;
   }
   &.round {
     border-radius: 14px;
@@ -67,12 +74,13 @@ export default {
     pointer-events: none;
     opacity: 0;
     position: absolute;
-    top: calc(100% + 2px);
+    top: calc(100% + 1px);
     left: 50%;
     background-color: var(--background-color);
     z-index: 1;
     transition: 0.2s ease-out;
-    box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.05);
+    border: 1px solid #8882;
     border-radius: var(--corner-radius);
     &.opened {
       transform: translateY(0) translateX(-50%);
@@ -88,12 +96,9 @@ export default {
       cursor: pointer;
       color: inherit;
       background-color: transparent;
-      border-radius: var(--corner-radius);
+      border-radius: 3px;
       &:hover {
-        background-color: rgba(0, 0, 0, 0.08);
-      }
-      body.dark &:hover {
-        background-color: rgba(0, 0, 0, 0.16);
+        background-color: #8882;
       }
     }
   }

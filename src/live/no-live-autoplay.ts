@@ -7,8 +7,8 @@
     () => document.querySelector('.component-ctnr video,.bilibili-live-player-video video'),
     (video: HTMLVideoElement) => video && !video.paused,
     () => {
-      const button = document.querySelector('.bilibili-live-player-video-controller-start-btn>button') as HTMLButtonElement
-      button.click()
+      const button = dq('.live-web-player-controller .left-area > :first-child') as HTMLElement
+      button?.click()
     }
   )
   const styleID = 'hide-home-live-style'

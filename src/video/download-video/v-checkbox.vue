@@ -1,5 +1,5 @@
 <template>
-  <div class="v-checkbox" v-on:click="toggleCheck()" v-bind:class="{checked: checked}">
+  <div class="v-checkbox" v-on="$listeners" v-on:click="toggleCheck()" v-bind:class="{checked: checked}">
     <i class="mdi mdi-checkbox-blank-circle-outline">
       <i class="mdi mdi-checkbox-marked-circle"></i>
     </i>

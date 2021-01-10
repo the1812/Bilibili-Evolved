@@ -65,6 +65,10 @@ export const feedsCardTypes = {
     id: 4300,
     name: '收藏夹',
   } as FeedsCardType,
+  liveRecord: {
+    id: 2047, // FIXME: 暂时随便写个 id 了, 这个东西目前找不到 type
+    name: '开播记录',
+  },
 }
 export interface FeedsCard {
   id: string
@@ -103,6 +107,9 @@ const getFeedsCardType = (element: HTMLElement) => {
   if (element.querySelector('.vc-ctnr')) {
     return feedsCardTypes.miniVideo
   }
+  if (element.querySelector('.live-container')) {
+    return feedsCardTypes.liveRecord
+  }
   return feedsCardTypes.text
 }
 
@@ -110,6 +117,11 @@ export type FeedsCardCallback = {
   added?: (card: FeedsCard) => void
   removed?: (card: FeedsCard) => void
 }
+export const supportedUrls = [
+  '//t.bilibili.com',
+  '//space.bilibili.com',
+  '//live.bilibili.com',
+]
 const feedsCardCallbacks: Required<FeedsCardCallback>[] = []
 class FeedsCardsManager extends EventTarget {
   watching = false
@@ -165,7 +177,7 @@ class FeedsCardsManager extends EventTarget {
   }
   async removeCard(node: Node) {
     if (node instanceof HTMLElement && node.classList.contains('card')) {
-      const id = (await this.parseCard(node)).id
+      const id = node.getAttribute('data-did') as string
       const index = this.cards.findIndex(c => c.id === id)
       if (index === -1) {
         return
@@ -273,6 +285,7 @@ class FeedsCardsManager extends EventTarget {
     const updateCards = (cardsList: HTMLElement) => {
       const cards = [...cardsList.querySelectorAll('.card[data-did]')]
       cards.forEach(it => this.addCard(it))
+      console.log(cards)
       return Observer.childList(cardsList, records => {
         records.forEach(record => {
           record.addedNodes.forEach(node => this.addCard(node))
@@ -306,9 +319,36 @@ class FeedsCardsManager extends EventTarget {
             cardListObserver.stop()
             cardListObserver = null
           }
+          await Promise.all(this.cards.map(c => c.element).map(e => this.removeCard(e)))
         }
       })
       this.watching = true
+      return true
+    }
+    if (document.URL.includes('//live.bilibili.com')) {
+      console.log('live watch')
+      const feedsContainer = await SpinQuery.select('.room-feed') as HTMLElement
+      if (!feedsContainer) {
+        return false
+      }
+      let cardListObserver: Observer | null = null
+      Observer.childList(feedsContainer, async () => {
+        if (dq('.room-feed-content')) {
+          const cardsList = await SpinQuery.select('.room-feed-content .content') as HTMLElement
+          console.log('enter feeds tab')
+          if (cardListObserver) {
+            cardListObserver.stop()
+          }
+          cardListObserver = updateCards(cardsList)
+        } else {
+          console.log('leave feeds tab')
+          if (cardListObserver) {
+            cardListObserver.stop()
+            cardListObserver = null
+          }
+          await Promise.all(this.cards.map(c => c.element).map(e => this.removeCard(e)))
+        }
+      })
       return true
     }
     const cardsList = await SpinQuery.select('.feed-card .content, .detail-content .detail-card') as HTMLDivElement
@@ -397,7 +437,16 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
 }
 
 export const forEachFeedsCard = (callback: FeedsCardCallback) => {
-  (async () => {
+  const feedsUrls = [
+    /^https:\/\/t\.bilibili\.com\/$/,
+    /^https:\/\/space\.bilibili\.com\//,
+    /^https:\/\/live\.bilibili\.com\/(blanc\/)?[\d]+/,
+    /^https:\/\/t\.bilibili\.com\//,
+  ]
+  if (feedsUrls.every(url => !url.test(document.URL))) {
+    return
+  }
+  ;(async () => {
     const success = await feedsCardsManager.startWatching()
     if (!success) {
       console.error('feedsCardsManager.startWatching() failed')
@@ -412,12 +461,42 @@ export const forEachFeedsCard = (callback: FeedsCardCallback) => {
     feedsCardCallbacks.push({ added: none, removed: none, ...callback })
   })()
 }
+/**
+ * 向动态卡片的菜单中添加菜单项
+ * @param card 动态卡片
+ * @param config 菜单项配置
+ */
+export const addMenuItem = (card: FeedsCard, config: {
+  className: string
+  text: string
+  action: (e: MouseEvent) => void
+}) => {
+  const morePanel = dq(card.element, '.more-panel') as HTMLElement
+  const { className, text, action } = config
+  if (!morePanel || dq(morePanel, `.${className}`)) {
+    return
+  }
+  const menuItem = document.createElement('p')
+  menuItem.classList.add('child-button', 'c-pointer', className)
+  menuItem.textContent = text
+  const vueScopeAttributes = [...new Set([...morePanel.children].map((element: HTMLElement) => {
+    return element.getAttributeNames().filter(it => it.startsWith('data-v-'))
+  }).flat())]
+  vueScopeAttributes.forEach(attr => menuItem.setAttribute(attr, ''))
+  menuItem.addEventListener('click', e => {
+    action(e)
+    card.element.click()
+  })
+  morePanel.appendChild(menuItem)
+}
 
 export default {
   export: {
     feedsCardsManager,
     feedsCardTypes,
+    supportedUrls,
     getVideoFeeds,
     forEachFeedsCard,
+    addMenuItem,
   },
 }

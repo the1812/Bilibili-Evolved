@@ -104,7 +104,7 @@ export const dqa = (selector, scopedSelector) => {
   }
   return [...selector.querySelectorAll(scopedSelector)]
 }
-export const UserAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0`
+export const UserAgent = `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101 Firefox/78.0`
 export const EmptyImageUrl = 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"></svg>'
 export const ascendingSort = (itemProp) => {
   return (a, b) => itemProp(a) - itemProp(b)
@@ -191,8 +191,45 @@ export const matchPattern = (str, pattern) => {
   return pattern.test(str)
 }
 export const playerReady = () => {
-  return SpinQuery.condition(
-    () => parseInt(dq('.video-data .dm').textContent),
-    it => !Number.isNaN(it),
-  )
+  return Promise.reject('此函数已弃用, 请使用 src/utils/player-ready.ts')
+}
+export const formData = (obj) => Object.entries(obj).map(([k, v]) => `${k}=${v}`).join('&')
+export const retrieveImageUrl = (element) => {
+  if (!(element instanceof HTMLElement)) {
+    return null
+  }
+  let url
+  if (element.hasAttribute('data-src')) {
+    url = element.getAttribute('data-src')
+  } else if (element instanceof HTMLImageElement) {
+    url = element.src
+  } else {
+    const backgroundImage = element.style.backgroundImage
+    if (!backgroundImage) {
+      return null
+    }
+    const match = backgroundImage.match(/url\("(.+)"\)/)
+    if (!match) {
+      return null
+    }
+    url = match[1]
+  }
+  const thumbMatch = url.match(/^(.+)(\..+?)(@.+)$/)
+  if (!thumbMatch) {
+    return null
+  }
+  return {
+    url: thumbMatch[1] + thumbMatch[2],
+    extension: thumbMatch[2],
+  }
+}
+export const isTyping = () => {
+  const activeElement = document.activeElement
+  if (!activeElement) {
+    return false
+  }
+  if (activeElement.hasAttribute('contenteditable')) {
+    return true
+  }
+  return ['input', 'textarea'].includes(activeElement.nodeName.toLowerCase())
 }

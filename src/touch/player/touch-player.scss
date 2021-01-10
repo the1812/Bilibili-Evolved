@@ -201,7 +201,7 @@ div.bilibili-player-video-control {
   }
 }
 
-#bofqi * {
+.bilibili-player * {
   -webkit-tap-highlight-color: transparent !important;
 }
 
@@ -216,6 +216,7 @@ div.bilibili-player-video-control {
 @media screen and (min-width: 750px) {
   .bilibili-player.mode-fullscreen,
   .bilibili-player.mode-webfullscreen {
+    .bilibili-player-video-btn-speed::before,
     .bilibili-player-video-btn-pagelist::before {
       font-size: 26px;
     }

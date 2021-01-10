@@ -105,3 +105,26 @@
     visibility: hidden !important;
   }
 }
+
+@mixin back-top-btn(
+  $btn-selector: ".back-top-btn",
+  $arrow-selector: ".arrow-icon"
+) {
+  #{$btn-selector} {
+    @include border-color();
+    @include background-color("3");
+    @if $arrow-selector {
+      #{$arrow-selector} {
+        @include color("a");
+      }
+    }
+    &:hover {
+      @include theme-background-color();
+      @if $arrow-selector {
+        #{$arrow-selector} {
+          @include foreground-color();
+        }
+      }
+    }
+  }
+}

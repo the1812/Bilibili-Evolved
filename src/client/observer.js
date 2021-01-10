@@ -75,7 +75,21 @@ export class Observer {
     })
   }
   static async videoChange (callback) {
-    const cid = await SpinQuery.select(() => unsafeWindow.cid)
+    const cid = await SpinQuery.select(() => {
+      if (unsafeWindow.cid) {
+        return unsafeWindow.cid
+      }
+      if (unsafeWindow.player && unsafeWindow.player.getVideoMessage) {
+        const info = unsafeWindow.player.getVideoMessage()
+        if (Number.isNaN(info.cid)) {
+          return null
+        }
+        if (!unsafeWindow.aid && info.aid) {
+          unsafeWindow.aid = info.aid.toString()
+        }
+        return info.cid.toString()
+      }
+    })
     if (cid === null) {
       return
     }
@@ -95,7 +109,7 @@ export class Observer {
       cidHooked = true
     }
     // callback();
-    const videoContainer = await SpinQuery.select('#bofqi video')
+    const videoContainer = await SpinQuery.select('.bilibili-player-video video')
     if (videoContainer) {
       Observer.childList(videoContainer, callback)
     } else {

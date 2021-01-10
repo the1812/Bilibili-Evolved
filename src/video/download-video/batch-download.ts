@@ -44,7 +44,16 @@ abstract class Batch {
     return escapeFilename(title, ' ')
   }
   async getRawItems(quality: number | string): Promise<RawItem[]> {
-    return JSON.parse(await this.collectData(quality))
+    const { BannedResponse, throwBannedError } = await import('./batch-warning')
+    try {
+      const items = await this.collectData(quality)
+      return JSON.parse(items)
+    } catch (error) {
+      if ((error as Error).message.includes(BannedResponse.toString())) {
+        throwBannedError()
+      }
+      throw error
+    }
   }
   extension(url: string, index: number) {
     const match = [
@@ -304,6 +313,8 @@ export class ManualInputBatch extends VideoEpisodeBatch {
           aid,
           cid: p.cid,
           titleParameters: {
+            aid,
+            cid: p.cid.toString(),
             n: getNumber(index + 1, info.pages.length),
             ep: info.pages.length > 1 ? p.title : '',
             title: info.title,

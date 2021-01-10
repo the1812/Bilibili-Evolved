@@ -10,7 +10,7 @@ namespace BilibiliEvolved.Build
 {
   public class BuildCache : IDisposable
   {
-    public static string CacheFilename => "build.cache";
+    public static string CacheFilename => ProjectBuilder.ProductionMode ? "build.cache" : "dev.cache";
     private readonly string fileName;
     private readonly ConcurrentDictionary<string, string> sha1Cache = new ConcurrentDictionary<string, string>();
     private readonly DirectoryInfo cacheDirectory;

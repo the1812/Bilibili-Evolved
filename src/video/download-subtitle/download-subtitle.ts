@@ -81,11 +81,11 @@ export default {
     content: /*html*/`
       <button class="gui-settings-flat-button" id="download-subtitle-json">
         <i class="icon-cc-subtitles"></i>
-        <span>下载字幕<span>(JSON)</span></span>
+        <span><span>下载字幕</span><span>(JSON)</span></span>
       </button>
       <button class="gui-settings-flat-button" id="download-subtitle-ass">
         <i class="icon-cc-subtitles"></i>
-        <span>下载字幕<span>(ASS)</span></span>
+        <span><span>下载字幕</span><span>(ASS)</span></span>
       </button>
     `,
     condition: videoCondition,
@@ -120,7 +120,11 @@ export default {
               download(JSON.stringify(rawData), config.title + '.json')
             }
           } catch (error) {
-            logError(error)
+            if (typeof error.message === 'string' && error.message.includes('啥都木有')) {
+              logError(new Error(`未能获取字幕文件, 请确保当前视频是正常可播放的视频, 而非通过破解/换源等手段达成播放.\n${error.message}`))
+            } else {
+              logError(error)
+            }
           } finally {
             allButtons.forEach(b => b.disabled = false)
           }

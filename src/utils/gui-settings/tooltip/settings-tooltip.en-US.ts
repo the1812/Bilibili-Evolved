@@ -107,7 +107,7 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   ['showDeadVideoTitle', `Retrieve title and cover of dead videos in your space`],
   ['useBiliplusRedirect', `Jump to BiliPlus for dead videos.`],
   ['deadVideoTitleProvider', `Select dead video info provider: Watchlater is stable but takes some time, BiliPlus runs fast but it's not implemented yet.`],
-  ['useDefaultVideoSpeed', `Set the default video playback rate.`],
+  ['useDefaultVideoSpeed', `Remember last video playback rate.`],
   ['defaultVideoSpeed', `Select the default playback rate.`],
   ['seedsToCoins', `Append a <span>Seeds to coins</span> button, click to convert 700 silver seeds to 1 coin, up to one time per day.`],
   ['autoDraw', `Auto click draw button when there're drawing events in live room.`],
@@ -120,6 +120,8 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
 - <kbd>c</kbd> Coin
 - <kbd>s</kbd> Favorite
 - <kbd>j</kbd> 85s forward
+- <kbd>p</kbd> Toggle picture-in-picture
+- <kbd>\`</kbd> Toggle player menu
 - <kbd>Shift + j</kbd> 85s backward
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> Playback speed adjust
 - <kbd>Shift + /</kbd> Reset playback speed`],
@@ -138,7 +140,7 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   [`feedsFilter`, `Filter out unwanted feeds by type or keywords, and remove side cards in your feeds homepage.`],
   [`hideBangumiSponsors`, `Hide bangumi sponsors sections and buttons.`],
   [`hideRecommendLive`, `Hide recommended live broadcasts in video pages.`],
-  [`hideRelatedVideos`, `Hide related videos in video and bangumi pages.`],
+  [`hideRelatedVideos`, `Hide related videos in video and bangumi pages. WARNING: If you want to change auto-play settings, you need to turn off this to show the switch.`],
   [`simplifyHome`, `Replace the original homepage by one of these style:
 - Simple: A clean design with additional feeds section.
 - Minimal: Only video feeds and trending videos, no other sections.`],
@@ -150,7 +152,7 @@ Additional variables:
 - <span>n</span>: The counting number of n-th video in batch downloads`],
   [`removeGameMatchModule`, `Also remove e-sports module.`],
   [`customNavbarTransparent`, `Use transparent fill when banner exists.`],
-  [`recordLiveDanmaku`, `Record and export XML file in live danmaku recorder from add-ons.`],
+  [`recordLiveDanmaku`, `Record and Export XML file in live danmaku recorder from add-ons.`],
   [`feedsTranslate`, `Append translate button to every feeds. Can translate feeds into Chinese or language specified in UI Translation.`],
   [`feedsTranslateProvider`, `The machine translate provider.`],
   [`updateCdn`, `Select mirror for hot updates, invalid in offline versions.`],
@@ -170,6 +172,17 @@ Additional variables:
   [`watchLaterRedirectPage`, `Redirect links on watchlater page.`],
   [`showCoverBeforePlay`, `Show cover image in video player before playing.`],
   [`customNavbarGlobalFixed`, `Fix navbar position on all pages.`],
+  [`seoJump`, `Redirect to the original video page if you open a SEO page. SEO page is made for search engines and our features are not available on these pages.`],
+  [`copyFeedsLink`, `Add copy link option to dot menu of feeds.`],
+  [`copyCommentLink`, `Add copy link option to dot menu of comments.`],
+  [`unfoldFeeds`, `Auto expand collapsed feeds.`],
+  [`commentsTranslate`, `Also applies for comments.`],
+  [`simpleHomeWheelScroll`, `Allow scrolling card list horizontally by mouse wheel. (May cause frame drops)`],
+  [`airborne`, `Underline danmakus that contain time, and click it will seek to corresponding video progress.`],
+  [`downloadPackageEmitMode`, `Choose the behavior when downloading multiple files: <span>Packed</span> will download a zip file, <span>Individual</span> will trigger download for each file.`],
+  [`columnImageExporter`, `Export all images in column from Add-ons.`],
+  [`feedsImageExporter`, `Export all images in feed from feed menu.`],
+  [`homeHidden`, `Removed unwanted components on homepage. You can choose what to hide on Add-ons.`],
 ]);
 export default {
   export: { toolTips },

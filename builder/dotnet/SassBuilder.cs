@@ -22,23 +22,30 @@ namespace BilibiliEvolved.Build
         var changedFiles = files.Where(file => !cache.Contains(file)).ToArray();
         if (changedFiles.Any())
         {
-          changedFiles.ForEach(file =>
+          string getOutputCacheFilename(string f)
           {
+            return ".sass-output/" + f
+              .Replace(".scss", ".css")
+              .Replace($"src{Path.DirectorySeparatorChar}", "");
+          }
+          changedFiles.ForEach(file => {
             cache.AddCache(file);
             WriteInfo($"Sass build: {file}");
           });
-          Console.Write(sass.Run("").Trim());
+          WriteInfo(sass.Run("").Trim());
           Parallel.ForEach(changedFiles
-            .Where(f => !Path.GetFileName(f).StartsWith("_"))
-            .Select(f => ".sass-output/" + f
-              .Replace(".scss", ".css")
-              .Replace($"src{Path.DirectorySeparatorChar}", "")
-            ), file => {
+            .Where(f => !Path.GetFileName(f).StartsWith("_")),
+            f => {
+              // var sass = new SassSingleCompiler();
+              // var css = sass.Run(File.ReadAllText(file));
+              // File.WriteAllText(getOutputCacheFilename(file), css);
+              var file = getOutputCacheFilename(f);
               var min = cleancss.Minify(File.ReadAllText(file).Replace("@charset \"UTF-8\";", ""));
               var minFile = ResourceMinifier.GetMinimizedFileName(file);
               File.WriteAllText(minFile, min);
+              UpdateCachedMinFile(minFile);
               // WriteHint($"\t=> {minFile}");
-          });
+            });
           // var results = ResourceMinifier.GetFiles(f => f.FullName.Contains(".sass-output" + Path.DirectorySeparatorChar));
           // Parallel.ForEach(results, file =>
           // {

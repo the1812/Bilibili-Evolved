@@ -1,5 +1,7 @@
 import { NavbarComponent } from '../custom-navbar-component'
 import { VideoCardInfo } from '../../simplify-home/video-card-info'
+import * as VueTypes from 'vue'
+
 interface ListInfo {
   id: number
   name: string
@@ -28,6 +30,7 @@ const favoriteItemMapper = (item: any) => {
   } as FavoritesItemInfo
 }
 export class FavoritesList extends NavbarComponent {
+  vm: VueTypes.default & { changeList: () => void; selectedListId: number }
   constructor() {
     super()
     this.boundingWidth = 380
@@ -80,12 +83,17 @@ export class FavoritesList extends NavbarComponent {
       </div>
     `
     this.initialPopup = () => this.init()
+    this.onPopup = () => {
+      if (this.vm?.selectedListId !== 0) {
+        this.vm?.changeList()
+      }
+    }
   }
   get name(): keyof CustomNavbarOrders {
     return 'favoritesList'
   }
   async init() {
-    new Vue({
+    this.vm = new Vue({
       el: await SpinQuery.select(`.custom-navbar [data-name="${this.name}"] .favorites-list`) as HTMLElement,
       store,
       filters: {
@@ -117,6 +125,9 @@ export class FavoritesList extends NavbarComponent {
             return it.title.toLowerCase().includes(keyword) || it.upName.toLowerCase().includes(keyword)
           })
           this.searchAllList()
+        },
+        selectedListName(name: string) {
+          settings.favoritesListCurrentSelect = name
         },
       },
       computed: {
@@ -196,19 +207,20 @@ export class FavoritesList extends NavbarComponent {
           }, 200)
           cardsContainer.addEventListener('scroll', scrollHandler)
         },
-        /** 搜索当前收藏夹所有的视频 */
+        /** 搜索收藏夹里的视频 */
         searchAllList: _.debounce(async function () {
           if (this.search === '') {
             return
           }
           try {
-            const json = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.selectedListId}&pn=1&ps=20&keyword=${this.search}&order=mtime&type=0&tid=0`)
-            if (json.code !== 0) {
+            const jsonCurrent = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.selectedListId}&pn=1&ps=20&keyword=${this.search}&order=mtime&type=0&tid=0`)
+            const jsonAll = await Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.selectedListId}&pn=1&ps=20&keyword=${this.search}&order=mtime&type=1&tid=0`)
+            if (jsonCurrent.code !== 0 && jsonAll.code !== 0) {
               return
             }
-            const items = _.get(json, 'data.medias', []) || []
-            const results = _.uniqBy(this.filteredCards.concat(items.map(favoriteItemMapper)), (card: FavoritesItemInfo) => card.id)
-            console.log(_.cloneDeep(results))
+            const currentItems = _.get(jsonCurrent, 'data.medias', []) || []
+            const allItems = _.get(jsonAll, 'data.medias', []) || []
+            const results = _.uniqBy(this.filteredCards.concat(currentItems.map(favoriteItemMapper), allItems.map(favoriteItemMapper)), (card: FavoritesItemInfo) => card.id)
             this.filteredCards = results
           } catch (error) {
             console.error(error)
@@ -231,7 +243,11 @@ export class FavoritesList extends NavbarComponent {
             } as ListInfo
           })
           if (this.list.length > 0) {
-            this.selectedListName = this.list[0].name
+            if (settings.favoritesListCurrentSelect && this.list.some((item: ListInfo) => item.name === settings.favoritesListCurrentSelect)) {
+              this.selectedListName = settings.favoritesListCurrentSelect
+            } else {
+              this.selectedListName = this.list[0].name
+            }
             this.changeList()
           }
         } catch (error) {

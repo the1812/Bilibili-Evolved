@@ -42,7 +42,9 @@ namespace BilibiliEvolved.Build
     }
     public ProjectBuilder BuildPreviewData()
     {
-      File.WriteAllText(SourcePath, Source.Replace(@"// [Offline build placeholder]", compileOnlineData()));
+      if (ProductionMode) {
+        File.WriteAllText(SourcePath, Source.Replace(@"// [Offline build placeholder]", compileOnlineData()));
+      }
       return this;
     }
   }

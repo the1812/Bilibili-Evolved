@@ -12,7 +12,7 @@
   }
   Observer.childListSubtree(popupContainer, () => {
     let draw: HTMLSpanElement | null
-    console.log('draw button = ', dq('.chat-popups-section .draw>span:nth-child(3)'))
+    console.log('draw button =', dq('.chat-popups-section .draw>span:nth-child(3)'))
     draw = dq('.chat-popups-section .draw>span:nth-child(3)') as HTMLSpanElement | null
     if (draw === null) {
       const drawWaiting = dq('.chat-popups-section .function-bar>span:nth-child(3)') as HTMLSpanElement | null

@@ -19,8 +19,7 @@
 - 能够下载的清晰度取决于当前登录的账号, 例如`高清 1080P60`需要已登录大会员账号.
 - 如果以您的账号权限无法观看某些视频(地区限制, 大会员专享等), 就算使用了类似[解除B站区域限制](https://greasyfork.org/zh-CN/scripts/25718-%E8%A7%A3%E9%99%A4b%E7%AB%99%E5%8C%BA%E5%9F%9F%E9%99%90%E5%88%B6)的脚本也是无法下载的, 除非您有对应节点的梯子.
 - 直接下载过程中所有数据都存在内存里, 内存占用很大的话会导致系统卡顿. 可以考虑使用`显示链接`转给IDM或浏览器下载, 或使用[导出 aria2](aria2-notice.md)来进行下载.
-
-<!-- - 使用`复制链接`得到的链接并不是直接就能用的, 因为**下载时的请求Header必须包含`Referer=https://www.bilibili.com`和正确的`User-Agent`**, 直接粘贴在浏览器里是打不开的. [详细信息](https://github.com/the1812/Bilibili-Evolved/wiki/使用下载视频的复制链接) -->
+- 短时间内大量下载(错误代码为412, 多发于批量导出某某教程/课程的全套视频)会遭到b站的暂时封禁, 需要等待一段时间后才能恢复, 这期间脚本的下载视频功能也会停用.
 
 <div>
 <img height="500" alt="single" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/download-video-single.jpg">
@@ -75,21 +74,46 @@
 
 进入视频时自动选择指定的画质, 若视频最高画质低于所选画质, 则使用视频的最高画质.
 
+> 此功能将于2020.10.02下架, 届时请使用官方的视频画质记忆
+
 > 官方于2018.12.27已正式支持记忆画质
 
 </details>
 <details>
-<summary><strong>默认视频速度</strong></summary>
+<summary><strong>记忆上次播放速度</strong></summary>
 
-进入视频时自动选择指定的视频倍速.
+进入视频时自动选择最后记忆的视频倍速.
+
+- `defaultVideoSpeed` 设置项记录了用户通过原生倍数菜单（或快捷键扩展）最后选择的视频倍数.
+- 支持细化到视频级别，可以通过以下代码来开启：
+
+    ```javascript
+    bilibiliEvolved.settings.rememberVideoSpeed = true
+    ```
+
+    在这种情况下，`defaultVideoSpeed` 设置项提供的值将用于缺省情况下视频的倍数值，而用户再通过原生倍数菜单（或快捷键扩展）切换到其它倍数时，不会改变 `defaultVideoSpeed` 的值.
+
+    针对当前视频倍数的记忆值将存放在 `rememberVideoSpeedList` 设置项中：
+
+    ```javascript
+    bilibiliEvolved.settings.rememberVideoSpeedList = {
+        // ...
+        "1": ["123456"],
+        "1.5": [],
+        "2":[],
+        // ... 依次类推，在启用了`extendVideoSpeed`（默认已启用）的情况下，还支持 "2.5"， "3"
+    }
+    ```
 
 </details>
-<details>
+
+<!-- <details>
 <summary><strong>默认弹幕设置</strong></summary>
 
 设置默认是否开启弹幕, 以及是否记住防挡字幕和智能防挡弹幕.
 
-</details>
+</details> -->
+
 <details>
 <summary><strong>自动展开弹幕列表</strong></summary>
 
@@ -100,19 +124,6 @@
 <summary><strong>自动展开视频简介</strong></summary>
 
 长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.
-
-</details>
-<details>
-<summary><strong>自动从历史记录点播放</strong></summary>
-
-播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.
-> 如果还开启了`允许跨集跳转`, 即使当前集数跟历史记录不同也会跳转.
-
-</details>
-<details>
-<summary><strong>自动播放视频</strong></summary>
-
-进入视频页面时自动开始播放视频.
 
 </details>
 <details>
@@ -178,6 +189,8 @@
 - `c` 投币
 - `s` 收藏
 - `j` 前进85秒
+- `p` 切换画中画
+- `` ` `` 打开播放器菜单
 - `Shift + j` 倒退85秒
 - `Shift + w` 稍后再看
 - `Shift + s` 快速收藏
@@ -210,6 +223,14 @@
 <summary><strong>播放前显示封面</strong></summary>
 
 在视频开始播放前, 在播放器中显示封面.
+
+</details>
+<details>
+<summary><strong>SEO页面重定向</strong></summary>
+
+当进入SEO页面时, 自动跳转回原视频页面.
+
+> SEO页面通常是专为搜索引擎优化的页面, 目前通常是谷歌的搜索结果里进b站会遇到.
 
 </details>
 
@@ -265,6 +286,15 @@
 
 设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式.
 > 结束时间小于起始时间时将视为次日, 如`18:00`至`6:00`表示晚上18:00到次日6:00.
+
+</details>
+<details>
+<summary><strong>夜间模式跟随系统</strong></summary>
+
+使夜间模式同步系统设置的亮/暗主题.
+
+- Windows: 设置 - 个性化 - 颜色 - 选择颜色
+- macOS: 系统偏好设置 - 通用 - 外观
 
 </details>
 <details>
@@ -365,14 +395,6 @@
 隐藏番剧页面下方的承包榜, 以及右边的承包按钮.
 
 </details>
-<details>
-<summary><strong>隐藏分区栏</strong></summary>
-
-隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.
-
-<img height="300" alt="分区栏" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/hide-category.jpg">
-
-</details>
 
 <h2 align="center">动态</h2>
 <div align="center">改善动态体验</div>
@@ -419,6 +441,8 @@
 - Google: 谷歌翻译
 - GoogleCN: 谷歌中国翻译(google.cn)
 
+也可以再开启`评论翻译`, 将这一功能带入到评论区中.
+
 </details>
 <details>
 <summary><strong>强制固定顶栏和侧栏</strong></summary>
@@ -443,6 +467,26 @@
 
 </details>
 
+<details>
+<summary><strong>动态链接复制</strong></summary>
+
+在动态的菜单里添加复制链接选项.
+
+</details>
+
+<details>
+<summary><strong>动态反折叠</strong></summary>
+
+自动展开被折叠的动态.
+
+</details>
+<details>
+<summary><strong>动态图片导出</strong></summary>
+
+在动态的右上角菜单中可选择导出图片来下载当前动态里的所有图片.
+
+</details>
+
 <h2 align="center">直播</h2>
 <div align="center">各种直播相关功能</div>
 
@@ -451,19 +495,22 @@
 <summary><strong>简化直播间</strong></summary>
 
 - 隐藏姥爷图标
+- 隐藏入场通知
 - 隐藏粉丝勋章
 - 隐藏活动头衔
-- 隐藏用户等级
 - 隐藏弹幕特效
 - 隐藏全区广播
-- 隐藏欢迎信息 (xxx姥爷进入直播间)
-- 隐藏入场特效
+- 隐藏欢迎信息 (xxx老爷进入直播间)
 - 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
 - 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
 - 隐藏付费礼物 (播放器下面的各种金瓜子礼物, 以及许愿瓶, 上舰等)
+- 隐藏入场特效
+- 隐藏看板娘
 - 隐藏活动横幅
 - 隐藏排行榜
 - 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
+- 隐藏PK浮窗
+- 隐藏高能榜提示
 - 禁用直播间皮肤
 
 每一项都可以在`附加功能`中单独选择是否隐藏. 图片中展示的是全部隐藏时的弹幕区效果对比.
@@ -618,6 +665,21 @@
 
 </details>
 
+<details>
+<summary><strong>评论链接复制</strong></summary>
+
+在评论的菜单里添加复制链接选项.
+
+</details>
+
+<details>
+<summary><strong>专栏图片导出</strong></summary>
+
+在专栏页面中可在附加功能中导出所有图片.
+
+</details>
+
+
 <h2 align="center">触摸</h2>
 <div align="center">为支持触屏的设备特别设计的功能</div>
 
@@ -659,106 +721,5 @@
 <summary><strong>迷你播放器触摸拖动</strong></summary>
 
 使迷你播放器的拖动条可以触摸拖动.
-
-</details>
-
-<h2 align="center">其他</h2>
-<div align="center">关于脚本自身的一些设定</div>
-
-<details>
-<summary><strong>显示消息</strong></summary>
-
-允许在网页左下角显示来自本脚本的消息, 如更新提醒, 错误提示等.
-
-<img height="200" alt="消息" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/toast.jpg">
-
-</details>
-<details>
-<summary><strong>显示内部错误消息</strong></summary>
-
-开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.
-
-</details>
-
-<!-- <details>
-<summary><strong>启用缓存</strong></summary>
-
-使用缓存以提高脚本的加载速度, 此选项只对非离线版有效, 可在`附加功能`中清除脚本的缓存.
-
-</details> -->
-
-<details>
-<summary><strong>文件命名格式</strong></summary>
-
-自定义文件命名格式, 作用于`下载弹幕`, `下载视频`, `视频截图`, `查看封面`.
-可以使用的变量有:
-- `title`: 视频标题/直播间标题
-- `ep`: 选集标题
-- `aid`: AV号
-- `cid`: CID (每个视频的唯一编号, AV号对应的视频可能有多集)
-- `lid`: 直播间号
-- `y`/`M`/`d`: 年/月/日
-- `h`/`m`/`s`/`ms`: 时/分/秒/毫秒
-
-默认的格式是`[title][ - ep]`, 标题+选集标题, 当没有选集标题时则只有标题.
-
-变量要放在方括号里, 而方括号里的其他内容会在变量有效时出现. 比如格式如果写成`[title] - [ep]`, 那么即使没有选集标题, 中间那个` - `也会出现在文件名里. 如果像默认那样放在方括号里, 没有选集标题时, ` - `也不会出现.
-
-例如, 想要标题+AV号+时间的格式, 可以设定为`[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]`, 能够得到类似`xxxx AV23333 2019-05-29 19-59-44`的名字.
-
-</details>
-<details>
-<summary><strong>批量命名格式</strong></summary>
-
-自定义批量下载的文件命名格式, 规则同单个的<span>文件命名格式</span>.
-
-新增的变量:
-- <span>n</span>: 数字, 表示第n个视频.
-
-</details>
-<details>
-<summary><strong>侧栏垂直偏移量</strong></summary>
-
-设定侧栏的垂直偏移量, 单位为百分比, 允许的范围为 -40% ~ 40%.
-
-</details>
-<details>
-<summary><strong>使用细滚动条</strong></summary>
-
-使用细的滚动条替代系统默认的滚动条. (对夜间模式无效)
-
-</details>
-<details>
-<summary><strong>自动隐藏侧栏</strong></summary>
-
-是否自动隐藏侧栏, 仅在鼠标经过附近时出现.
-
-</details>
-<details>
-<summary><strong>更新源</strong></summary>
-
-热更新的更新源, 对离线版和脚本本体更新无效.
-
-</details>
-<details>
-<summary><strong>Ajax Hook API</strong></summary>
-
-是否启用 Ajax Hook API, 其他插件或附加功能能够通过此 API 获取 Ajax 请求的信息.
-
-</details>
-<details>
-<summary><strong>加载模式</strong></summary>
-
-脚本功能的加载模式:
-- 同时: 与b站页面同时加载
-- 延后: 优先加载b站页面, 在b站页面加载完成后再开始加载脚本功能
-- 同时(自动): 根据页面自动选择加载模式, 默认采用同时模式
-- 延后(自动): 根据页面自动选择加载模式, 默认采用延后模式
-
-</details>
-<details>
-<summary><strong>设置面板停靠位置</strong></summary>
-
-可以把左侧那栏图标放在右边.
 
 </details>

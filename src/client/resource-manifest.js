@@ -99,6 +99,7 @@ Resource.manifest = {
       updateCdn: '更新源',
       autoHideSideBar: '自动隐藏侧栏',
       elegantScrollbar: '使用细滚动条',
+      downloadPackageEmitMode: '多文件下载模式',
     },
     dropdown: [
       {
@@ -116,7 +117,11 @@ Resource.manifest = {
       {
         key: 'updateCdn',
         items: ['jsDelivr', 'GitHub'],
-      }
+      },
+      {
+        key:'downloadPackageEmitMode',
+        items: ['打包下载', '分别下载'],
+      },
     ],
   },
   useDarkStyle: {
@@ -291,17 +296,17 @@ Resource.manifest = {
       useCache: '启用缓存'
     }
   },
-  videoDownloadPackage: {
-    path: 'download-video-package.min.js',
+  videoPackage: {
+    path: 'download-package.min.js',
   },
   downloadVideo: {
     path: 'download-video.min.js',
     html: true,
     style: 'instant',
-    dependencies: ['title', 'videoInfo', 'videoDownloadPackage'],
+    dependencies: ['title', 'videoInfo', 'videoPackage'],
     displayNames: {
       'downloadVideo': '下载视频',
-      'videoDownloadPackage': '下载视频打包器',
+      'videoPackage': '下载视频打包器',
       'batchDownload': '批量下载',
       'aria2Rpc': 'aria2 RPC',
     }
@@ -384,6 +389,14 @@ Resource.manifest = {
       allowJumpContinue: '允许跨集跳转'
     }
   },
+  airborne: {
+    path: 'airborne.min.js',
+    reloadable: true,
+    style: true,
+    displayNames: {
+      airborne: '启用空降'
+    }
+  },
   expandDescription: {
     path: 'expand-description.min.js',
     style: 'instant',
@@ -445,7 +458,7 @@ Resource.manifest = {
   medalHelper: {
     path: 'medal-helper.min.js',
     html: true,
-    style: 'instant',
+    style: true,
     displayNames: {
       medalHelper: '直播勋章快速更换',
       autoMatchMedal: '自动选择当前直播间勋章',
@@ -650,14 +663,6 @@ Resource.manifest = {
       noMiniVideoAutoplay: '禁止小视频自动播放',
     }
   },
-  hideCategory: {
-    path: 'hide-category.min.js',
-    reloadable: true,
-    style: 'instant',
-    displayNames: {
-      hideCategory: '隐藏分区栏',
-    },
-  },
   foldComment: {
     path: 'fold-comment.min.js',
     style: true,
@@ -668,12 +673,7 @@ Resource.manifest = {
   useDefaultVideoSpeed: {
     path: 'default-video-speed.min.js',
     displayNames: {
-      useDefaultVideoSpeed: '使用默认播放速度',
-      defaultVideoSpeed: '默认播放速度',
-    },
-    dropdown: {
-      key: 'defaultVideoSpeed',
-      items: ['0.5', '0.75', '1.0', '1.25', '1.5', '2.0'],
+      useDefaultVideoSpeed: '记忆上次播放速度',
     }
   },
   seedsToCoins: {
@@ -714,6 +714,7 @@ Resource.manifest = {
     displayNames: {
       simplifyHome: '简化首页',
       simplifyHomeStyle: '首页风格',
+      simpleHomeWheelScroll: '允许横向滚动',
     },
     dropdown: {
       key: 'simplifyHomeStyle',
@@ -835,7 +836,7 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'defaultLiveQuality',
-      items: ['原画', '蓝光', '超清', '高清', '流畅'],
+      items: ['原画', '4K', '蓝光', '超清', '高清', '流畅'],
     },
   },
   downloadLiveRecords: {
@@ -952,5 +953,30 @@ Resource.manifest = {
       copyCommentLink: '评论链接复制',
     },
   },
+  unfoldFeeds: {
+    path: 'unfold-feeds.min.js',
+    displayNames: {
+      unfoldFeeds: '动态反折叠',
+    },
+  },
+  feedsImageExporter: {
+    path: 'feeds-image-exporter.min.js',
+    displayNames: {
+      feedsImageExporter: '动态图片导出',
+    },
+  },
+  columnImageExporter: {
+    path: 'column-image-exporter.min.js',
+    displayNames: {
+      columnImageExporter: '专栏图片导出',
+    },
+  },
+  homeHidden: {
+    path: 'home-hidden.min.js',
+    style: true,
+    displayNames: {
+      homeHidden: '首页过滤',
+    }
+  }
 }
 export const resourceManifest = Resource.manifest

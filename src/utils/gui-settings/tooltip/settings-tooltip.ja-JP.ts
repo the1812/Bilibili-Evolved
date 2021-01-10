@@ -33,6 +33,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>l</kbd> いいね
 - <kbd>c</kbd> コインを投げる
 - <kbd>s</kbd> お気に入り
+- <kbd>j</kbd> 85秒進みます
+- <kbd>p</kbd> 画中画を切り替えます
+- <kbd>\`</kbd> プレーヤーメニューを開きます
+- <kbd>Shift + j</kbd> 85秒後退する
 - <kbd>Shift + w</kbd> 後で見る
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 再生速度を調整する
 - <kbd>Shift + /</kbd> 再生速度をリセットする`],
@@ -58,10 +62,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - ビットアイコンはすべてベクトルアイコンを入れ替えており、高解像度の画面はぼやけません．
 注釈:「フォロー」と「レベル」アイコンはマウスでアバタ上に置くことで，ポップアップした資料カードに表示することができる.`],
     ["simplifyLiveroom", /*html*/`- 「老爷」アイコンを隠す
+- 「入場通知」を隠す
 - 「ファン勲章」アイコンを隠す
 - 「活動肩書き」アイコンを隠す
-- 「レベル」アイコンを隠す
-- 「艦長」アイコンを隠す
+- 「弾幕特殊効果」を隠す
 - 「全域放送」を隠す
 - 「ウェルカムメッセージ」を隠す (例えば、「xxx老爷进入直播间」)
 - 「ギフト弾幕」を隠す (弾幕リストのみ. 例えば「节奏风暴」など特殊効果は影響を受けません)
@@ -70,7 +74,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - 「入場特殊効果」を隠す
 - 「看板娘」を隠す
 - 「イベント横断幕」を隠す
+- 「ランキング」を隠す
 - 「抽選のヒント」を隠す (例えば、「艦長」を購入する時、「小飞船」を購入する時、ギフトを抽選のヒント)
+- 「PKウィンドウ」を隠す
+- 「高エネルギーリストのヒント」を隠す
 - 配信ルームの「特殊な背景」を無効にする（ダークテーマでは、デフォルトでは「特殊な背景」も無効になっています）
 各項目は、非表示にするかどうかを<span>附加功能</span>の中で個別に選択することができる.`],
     ["hideBanner", /*html*/`トップページの横断幕を非表示.`],
@@ -86,7 +93,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["hideBangumiReviews", /*html*/`番組ページの採点区を隠す.`],
     ['hideCategory', /*html*/`ホームページのエリア欄を隠す、それでもエリア欄は頂欄のホームメニューからアクセスできます.`],
     ["removeAds", /*html*/`ビリビリのさまざまな広告を削除する.ホームページのプロモーションモジュール、モバイルアプリのおすすめ、動画ページの右側にある広告などが含まれます.`],
-    ["watchLaterRedirect", /*html*/`「後で見る」のリンクを通常の再生ページに変更して、新版レイアウトの再生ページを使用する.`],
+    ["watchLaterRedirect", /*html*/`「後で見る」のリンクを通常の再生ページに変更して、新版レイアウトの再生ページを使用する.可以分别选择是否重定向顶栏和稍后再看页面.`],
     ["favoritesRedirect", /*html*/`個人センターの「お気に入り」の動画を通常の再生ページに変更して、「お気に入り」再生の放送ページではなく.`],
     ["hideTopSearch", /*html*/`検索欄の推薦語を<span>搜索</span>に置き換える.`],
     ["fullTweetsTitle", /*html*/`頂欄のフィードプレビューページでは、常に完全なタイトルが展開されます.`],
@@ -131,7 +138,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 
 例えば、タイトル＋AV番号＋時間の命名形式が欲しい、<span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>に設定することができます. <span>xxxx AV23333 2019-06-1 22-22-22</span>ような名前をつけることができます.`],
     ['sideBarOffset', /*html*/`設定ボタンの垂直オフセット、単位はパーセント、許容範囲は-40％〜40％です.`],
-    ['useDefaultVideoSpeed', /*html*/`デフォルトの再生速度を使用するかどうかを設定します.`],
+    ['useDefaultVideoSpeed', /*html*/`最後に選択した動画再生速度を記憶するかどうかを設定します.`],
     ['defaultVideoSpeed', /*html*/`デフォルトの動画再生速度を設定する.`],
     ['autoDraw', /*html*/`ライブルームに抽選活動がある場合は、「受け取り」ボタンを自動的にクリックします.
     注意:少量の抽選にしか適用されますので、「99＋限定抽選」は他の人のスピードに追いつけないかもしれません.`],
@@ -149,7 +156,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`feedsFilter`, /*html*/`タイプまたはキーワードでフィードホームページの内容をフィルタリングするか、フィードページのいくつかのサイドカードを削除します. ご注意ください：今、「すべてのフィード」でのみ有効にする、別のカテゴリに切り替える場合は無効.`],
     [`hideBangumiSponsors`, /*html*/`番組ページの下のスポンサーランクと右側のスポンサーボタンを隠す.`],
     [`hideRecommendLive`, /*html*/`動画ページ右側のおすすめ生放送を隠す.`],
-    [`hideRelatedVideos`, /*html*/`番組と動画ページ右側のおすすめ動画を隠す.`],
+    [`hideRelatedVideos`, /*html*/`番組と動画ページ右側のおすすめ動画を隠す.注：ビリビリの自動連続放送（次のおすすめ動画を自動的に再生する）機能をオフにする場合は、おすすめ動画を再表示してスイッチを表示する必要があります.`],
     [`simplifyHome`, /*html*/`ホームページを置き換えます.2つのスタイルがあります:
 - さわやか: レイアウトは元のホームページに似ており、フィードセクションが追加されています.
 - ミニマル: 他のすべてのセクションを削除し、動画フィードと人気動画のみを残します.`],
@@ -180,6 +187,17 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`watchLaterRedirectPage`, /*html*/`「後で見る」ページのリンクをリダイレクトします.`],
     [`showCoverBeforePlay`, /*html*/`動画の再生が始まる前に、プレーヤーにサムネイルを表示します.`],
     [`customNavbarGlobalFixed`, /*html*/`頂欄は、カスタム頂欄を使用するすべてのページで固定されているため、スクロールの影響を受けません.`],
+    [`seoJump`, /*html*/`SEOページに入ると、自動的に元の動画ページに戻ります.SEOページは検索エンジン用に最適化された特別なページであり、スクリプトの機能は不完全です.この機能を使用して通常の動画ページに戻ることができます.`],
+    [`copyFeedsLink`, /*html*/`フィードメニューにリンクのコピーオプションを追加する.`],
+    [`copyCommentLink`, /*html*/`コメントメニューにリンクのコピーオプションを追加する.`],
+    [`unfoldFeeds`, /*html*/`折りたたまれたフィードを自動的に展開する.`],
+    [`commentsTranslate`, /*html*/`コメントの翻訳ボタンを追加する.`],
+    [`simpleHomeWheelScroll`, /*html*/`水平カードリストでは、マウスホイールを上下にスクロールできると、このリストの水平スクロールになります.（シミュレートされているため、少し動かなくなる可能性があります）`],
+    ["airborne", /*html*/`動画の時点が弾幕に表示されると、下線が表示されます.クリックして、対応する時点に直接移動します.`],
+    [`downloadPackageEmitMode`, /*html*/`複数のファイルのダウンロードを選択する場合の動作は、パッケージが zip にヒットしてダウンロードされ.個別にダウンロードされると、各ファイルのダウンロードがトリガーされます.`],
+    [`columnImageExporter`, /*html*/`コラムページでは、追加機能ですべての画像をエクスポートできます.`],
+    [`feedsImageExporter`, /*html*/`フィードの右上隅にあるメニューから画像をエクスポートして、このフィード内のすべての画像をダウンロードすることができます.`],
+    [`homeHidden`, /*html*/`ホームページの欲しくない要素 / エリアを非表示にする.追加機能で非表示にする要素を構成できます.`],
 ]);
 export default {
     export: { toolTips },

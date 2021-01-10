@@ -2,6 +2,7 @@
   if (!document.URL.startsWith('https://www.bilibili.com/video/') || !getUID()) {
     return
   }
+  const { playerReady } = await import('../player-ready')
   await playerReady()
   const favoriteButton = dq('.video-toolbar .ops .collect')
   if (!favoriteButton) {
@@ -9,7 +10,7 @@
   }
   resources.applyStyle('quickFavoriteStyle')
   const html = /*html*/`
-    <span @click.left.self="toggle()" @click.right.prevent.self="listShowing = !listShowing" class="quick-favorite" :class="{ on: isFavorite }">
+    <span title="快速收藏" @click.left.self="toggle()" @click.right.prevent.self="listShowing = !listShowing" class="quick-favorite" :class="{ on: isFavorite }">
       <i @click.left="toggle()" @click.right.prevent="listShowing = !listShowing"></i>
       <div style="display: inline" @click.left="toggle()" @click.right.prevent="listShowing = !listShowing">快速收藏</div>
       </template>
@@ -23,7 +24,7 @@
       <div class="lists-tip" :class="{ show: listShowing }">右键点击快速收藏可再次打开</div>
       <div class="tip" :class="{ show: tipShowing }">{{tipText}}</div>
     </span>
-  `
+  `.trim()
   if (settings.outerWatchlater) {
     const watchlaterButton = await SpinQuery.select('.ops .watchlater')
     if (watchlaterButton !== null) {

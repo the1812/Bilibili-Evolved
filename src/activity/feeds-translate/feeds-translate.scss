@@ -1,6 +1,7 @@
 .bb-comment .translate-container,
 .card-content .translate-container {
   margin-top: 10px;
+  display: inline-block;
   .translated {
     font-size: 12px;
     color: #aaa;
@@ -41,4 +42,7 @@
   margin-top: 6px;
   font-weight: normal;
   font-size: 14px;
+}
+.bb-comment .reply-con .text-con {
+  display: block;
 }

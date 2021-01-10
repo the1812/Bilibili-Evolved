@@ -57,15 +57,20 @@ export default {
       const user = (await SpinQuery.select(
         '.header-info-ctnr .room-cover'
       )) as HTMLAnchorElement
-      const uid = user.href.match(/space\.bilibili\.com\/(\d+)/)![1]
-      const json = await Ajax.getJson(
-        `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`
-      )
-      const roomID = _.get(
-        json,
-        'data.roomid',
-        document.URL.match(/live\.bilibili\.com\/(\d+)/)![1]
-      )
+      let roomID: string
+      if (user !== null) {
+        const uid = user.href.match(/space\.bilibili\.com\/(\d+)/)![1]
+        const json = await Ajax.getJson(
+          `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`
+        )
+        roomID = _.get(
+          json,
+          'data.roomid',
+          document.URL.match(/live\.bilibili\.com\/(blanc\/)?(\d+)/)![1]
+        )
+      } else {
+        roomID = document.URL.match(/live\.bilibili\.com\/(blanc\/)?(\d+)/)![1]
+      }
       const socket = new LiveSocket(parseInt(roomID))
       socket.addEventListener('danmaku', (e: CustomEvent<LiveDanmaku>) => {
         if (this.isRecording) {
@@ -103,10 +108,8 @@ export default {
     },
     async exportXML() {
       const { getFriendlyTitle } = await import('../../video/title')
-      const { DownloadVideoPackage } = await import(
-        '../../video/download-video/download-video-package'
-      )
-      const pack = new DownloadVideoPackage()
+      const { DownloadPackage } = await import('../../utils/download-package')
+      const pack = new DownloadPackage()
       pack.add(getFriendlyTitle() + '.xml', this.getXML())
       await pack.emit()
     },
