@@ -910,7 +910,7 @@ html {
   }
 }
 #control-panel-ctnr-box {
-  @include no-image
+  @include no-image;
 }
 .live-web-player-controller {
   .vertical-slider-wrap,
@@ -926,7 +926,7 @@ html {
   .quality-wrap .quality-it.selected {
     @include theme-color();
   }
-  input[type='radio']:checked+label::before {
+  input[type="radio"]:checked + label::before {
     @include theme-background-color();
     @include theme-border-color();
   }
@@ -972,5 +972,17 @@ html {
   @include background-color("4");
   &:hover {
     @include theme-background-color();
+  }
+}
+.bangumi-options .opt-list li {
+  @include background-color("3");
+  @include color("e");
+  &:hover {
+    @include theme-color();
+    @include background-color("4");
+  }
+  &.disabled {
+    @include color("a");
+    @include background-color();
   }
 }
