@@ -977,6 +977,12 @@ Resource.manifest = {
     displayNames: {
       homeHidden: '首页过滤',
     }
+  },
+  extendVideoSpeed: {
+    path: 'extend-video-speed.min.js',
+    displayNames: {
+      extendVideoSpeed: '扩展视频倍数菜单'
+    }
   }
 }
 export const resourceManifest = Resource.manifest

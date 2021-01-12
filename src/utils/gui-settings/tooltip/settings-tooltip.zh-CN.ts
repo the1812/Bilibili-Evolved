@@ -140,6 +140,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['hideCategory', /*html*/`隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.`],
   ['foldComment', /*html*/`动态里查看评论区时, 在底部添加一个<span>收起评论</span>按钮, 这样就不用再回到上面收起了.`],
   ['useDefaultVideoSpeed', /*html*/`设置是否记忆上次选择的视频播放速度.`],
+  ['extendVideoSpeed', /*html*/`设置是否扩展原生倍速菜单.`],
   ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`],
   ['autoDraw', /*html*/`在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(`],
   ['keymap', /*html*/`为视频播放器启用更多的快捷键:

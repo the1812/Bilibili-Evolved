@@ -525,6 +525,7 @@ declare global {
     },
     rememberVideoSpeed: boolean,
     extendVideoSpeed: boolean,
+    extendVideoSpeedList: number[],
     customKeyBindings: { [actionName: string]: string },
     alwaysShowDuration: boolean,
   }

@@ -12,13 +12,11 @@ export class VideoSpeedController {
   }
   static readonly nativeSupportedRates = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
   static get extendedSupportedRates() {
-    if (typeof settings.extendVideoSpeed === "boolean") {
-      return settings.extendVideoSpeed ? [2.5, 3.0] : []
-    }
-    return settings.extendVideoSpeed
+    return settings.extendVideoSpeedList
   }
   // 扩展倍数不支持热重载
   static readonly supportedRates = [...VideoSpeedController.nativeSupportedRates, ...VideoSpeedController.extendedSupportedRates]
+  private static _init_flag = false
 
   /**
    * 获取后备默认速度
@@ -87,6 +85,49 @@ export class VideoSpeedController {
     settings.rememberVideoSpeedList[speed].push(aid)
     // 持久化
     settings.rememberVideoSpeedList = settings.rememberVideoSpeedList
+  }
+
+  static init() {
+    // 不要重复初始化
+    if (this._init_flag) {
+      return
+    }
+    // 分 P 切换时共享同一个倍数
+    let innerNativeSpeedVal = 1
+
+    Observer.videoChange(async () => {
+      const containerElement = await SpinQuery.select(`.${VideoSpeedController.classNameMap.speedContainer}`)
+      const videoElement = await SpinQuery.select(`.${VideoSpeedController.classNameMap.video} video`)
+
+      if (!containerElement) {
+        throw "speed container element not found!"
+      }
+      if (!videoElement) {
+        throw "video element not found!"
+      }
+      // 如果 containerElement 有相应的 controller 缓存，则直接
+      if (instanceMap.has(containerElement)) {
+        return
+      }
+      // 有必要传递之前的 nativeSpeedVal，跨分 P 时原生倍数将保持一样
+      const controller = new VideoSpeedController(containerElement, videoElement as HTMLVideoElement, innerNativeSpeedVal)
+
+      controller.observe()
+
+      if (settings.extendVideoSpeed) {
+        controller.extendMenuItem()
+        containerElement.addEventListener("native-speed-changed", (ev: CustomEvent) => {
+          innerNativeSpeedVal = ev.detail.speed
+        })
+      }
+      // 首次加载可能会遇到意外情况，导致内部强制更新失效，因此延时 100 ms 再触发速度设置
+      setTimeout(() => {
+        settings.useDefaultVideoSpeed &&
+          controller.setVideoSpeed((settings.rememberVideoSpeed && VideoSpeedController.getRememberSpeed()) || VideoSpeedController.fallbackVideoSpeed)
+      }, 100)
+    })
+
+    this._init_flag = true
   }
 
   private _containerElement: HTMLElement
@@ -235,35 +276,4 @@ export class VideoSpeedController {
   }
 }
 
-if (settings.useDefaultVideoSpeed || settings.extendVideoSpeed) {
-  // 分 P 切换时共享同一个倍数
-  let nativeSpeedVal = 1
-
-  Observer.videoChange(async () => {
-    const containerElement = await SpinQuery.select(`.${VideoSpeedController.classNameMap.speedContainer}`)
-    const videoElement = await SpinQuery.select(`.${VideoSpeedController.classNameMap.video} video`)
-
-    if (!containerElement) {
-      throw "speed container element not found!"
-    }
-    if (!videoElement) {
-      throw "video element not found!"
-    }
-    // 有必要传递之前的 nativeSpeedVal，跨分 P 时原生倍数将保持一样
-    const controller = new VideoSpeedController(containerElement, videoElement as HTMLVideoElement, nativeSpeedVal)
-
-    controller.observe()
-
-    if (settings.extendVideoSpeed) {
-      controller.extendMenuItem()
-      containerElement.addEventListener("native-speed-changed", (ev: CustomEvent) => {
-        nativeSpeedVal = ev.detail.speed
-      })
-    }
-    // 首次加载可能会遇到意外情况，导致内部强制更新失效，因此延时 100 ms 再触发速度设置
-    setTimeout(() => {
-      settings.useDefaultVideoSpeed &&
-        controller.setVideoSpeed((settings.rememberVideoSpeed && VideoSpeedController.getRememberSpeed()) || VideoSpeedController.fallbackVideoSpeed)
-    }, 100)
-  })
-}
+VideoSpeedController.init()
