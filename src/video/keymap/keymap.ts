@@ -1,4 +1,4 @@
-import { VideoSpeedController } from '../default-video-speed'
+import { VideoSpeedController } from '../video-speed/video-speed-controller'
 import { KeyBinding, KeyBindingAction } from './key-bindings'
 
 const supportedUrls = [
@@ -93,13 +93,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
   }
   const videoSpeed = (controllerAction: (controller: VideoSpeedController, rates: number[]) => void) => {
     return async () => {
-      const { VideoSpeedController } = await import('../default-video-speed')
-      const containerElement = dq(`.${VideoSpeedController.classNameMap.speedContainer}`) as HTMLElement
-      const videoElement = dq(`.${VideoSpeedController.classNameMap.video} video`) as HTMLVideoElement
-      if (!containerElement || !videoElement) {
-        return
-      }
-      const controller = new VideoSpeedController(containerElement, videoElement, 1)
+      const { VideoSpeedController } = await import('../video-speed/video-speed-controller')
+      const controller = await VideoSpeedController.getInstance()
       controllerAction(controller, VideoSpeedController.supportedRates)
       showTip(`${controller.playbackRate}x`, 'mdi-fast-forward')
     }

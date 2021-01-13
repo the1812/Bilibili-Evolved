@@ -671,7 +671,7 @@ Resource.manifest = {
     },
   },
   useDefaultVideoSpeed: {
-    path: 'default-video-speed.min.js',
+    path: 'remember-video-speed.min.js',
     displayNames: {
       useDefaultVideoSpeed: '记忆上次播放速度',
     }
