@@ -310,6 +310,7 @@ declare global {
     hideBanner: boolean,
     overrideNavBar: boolean,
     expandDanmakuList: boolean,
+    expandDanmakuListIgnoreMediaList: boolean,
     expandDescription: boolean,
     watchLaterRedirect: boolean,
     touchNavBar: boolean,

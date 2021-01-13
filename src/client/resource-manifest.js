@@ -182,7 +182,8 @@ Resource.manifest = {
   expandDanmakuList: {
     path: 'expand-danmaku.min.js',
     displayNames: {
-      expandDanmakuList: '自动展开弹幕列表'
+      expandDanmakuList: '自动展开弹幕列表',
+      expandDanmakuListIgnoreMediaList: '合集类页面不展开',
     }
   },
   removeAds: {

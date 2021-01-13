@@ -58,6 +58,7 @@ export const settings = {
   // showBanner: true,
   hideBanner: false,
   expandDanmakuList: true,
+  expandDanmakuListIgnoreMediaList: true,
   expandDescription: true,
   watchLaterRedirect: true,
   touchNavBar: false,
