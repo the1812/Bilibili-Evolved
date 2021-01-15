@@ -173,7 +173,7 @@
         @include color("e");
       }
       &__tabs {
-        @include background-color("5");
+        @include background-color("2");
         .album-list__tab {
           &-name {
             @include color("e");
