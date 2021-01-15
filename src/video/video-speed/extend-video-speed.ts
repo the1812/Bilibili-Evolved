@@ -1,7 +1,11 @@
 export const getExtraSpeedMenuItemElements = async () => {
   const { VideoSpeedController } = await import("./video-speed-controller")
 
-  const getRecommandedValue = () => VideoSpeedController.supportedRates.slice(-1)[0] + 0.5
+  const stepValue = 0.5
+  const minValue = 0.0625
+  const maxValue = 16
+
+  const getRecommandedValue = () => VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
 
   const createExtendedSpeedMenuItemElement = (rate: number) => {
     const li = document.createElement("li")
@@ -36,12 +40,28 @@ export const getExtraSpeedMenuItemElements = async () => {
 
     const input = document.createElement("input")
     input.setAttribute("type", "number")
-    input.setAttribute("max", "16")  // 这是 Chrome 内核的最大倍数限制，不同浏览器的限制和控制表现可能不一样
-    input.setAttribute("step", "0.5")
+    input.setAttribute("max", maxValue.toString())
+    input.setAttribute("step", stepValue.toString())
     updateInput(input)
     input.addEventListener("keydown", (ev) => {
       if (ev.key === "Enter") {
         const value = parseFloat(input.value)
+        if (!isFinite(value)) {
+          logError("无效的倍数值")
+          return false
+        }
+        if (value < minValue) {
+          logError("倍数值太小了")
+          return false
+        }
+        if (value > maxValue) {
+          logError("倍数值太大了")
+          return false
+        }
+        if (VideoSpeedController.supportedRates.includes(value)) {
+          logError("不能重复添加已有的倍数值")
+          return false
+        }
         settings.extendVideoSpeedList.push(value)
         settings.extendVideoSpeedList = VideoSpeedController.extendedSupportedRates
         li.after(createExtendedSpeedMenuItemElement(value))
