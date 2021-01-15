@@ -64,7 +64,17 @@ export const getExtraSpeedMenuItemElements = async () => {
         }
         settings.extendVideoSpeedList.push(value)
         settings.extendVideoSpeedList = VideoSpeedController.extendedSupportedRates
-        li.after(createExtendedSpeedMenuItemElement(value))
+
+        let afterElement = li.nextElementSibling as HTMLLIElement
+        while (
+          !afterElement.dataset.value ||
+          (parseFloat(afterElement.dataset.value) >
+            VideoSpeedController.nativeSupportedRates.slice(-1)[0] &&
+            value < parseFloat(afterElement.dataset.value))
+        ) {
+          afterElement = afterElement.nextElementSibling as HTMLLIElement;
+        }
+        afterElement.before(createExtendedSpeedMenuItemElement(value))
       }
     })
 
