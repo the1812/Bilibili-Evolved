@@ -50,7 +50,6 @@ export const getExtraSpeedMenuItemElements = async () => {
 
     li.prepend(iconElement, input)
 
-    // 默认情况下隐藏 inputAreaElement
     input.style.display = "none";
     li.addEventListener("mouseenter", () => {
       updateInput(input)
