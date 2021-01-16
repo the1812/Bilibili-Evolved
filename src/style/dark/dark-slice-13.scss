@@ -986,3 +986,9 @@ html {
     @include background-color();
   }
 }
+.emoji-tab-slider {
+  .prev,
+  .next {
+    filter: invert(1);
+  }
+}
