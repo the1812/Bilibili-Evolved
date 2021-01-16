@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Bilibili Evolved
+// @name         Bilibili Evolved (GreasyFork)
 // @version      1.10.13
 // @description  强大的哔哩哔哩增强脚本: 下载视频, 音乐, 封面, 弹幕 / 简化直播间, 评论区, 首页 / 自定义顶栏, 删除广告, 夜间模式 / 触屏设备支持
 // @author       Grant Howard, Coulomb-G
@@ -18,14 +18,12 @@
 // @exclude      *://www.bilibili.com/h5/*
 // @exclude      *://www.bilibili.com/*/h5/*
 // @run-at       document-start
-// @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js
-// @downloadURL  https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js
 // @supportURL   https://github.com/the1812/Bilibili-Evolved/issues
 // @homepage     https://github.com/the1812/Bilibili-Evolved
 // @grant        unsafeWindow
 // @connect      raw.githubusercontent.com
 // @connect      cdn.jsdelivr.net
-// @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js
+// @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js
 // @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/images/logo-small.png
 // @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/images/logo.png
 // ==/UserScript==

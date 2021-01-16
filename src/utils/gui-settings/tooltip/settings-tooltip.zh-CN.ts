@@ -220,7 +220,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`downloadPackageEmitMode`, /*html*/`选择多个文件下载时的行为, 打包会先打成一个 zip 再下载, 分别下载会对每一个文件触发下载.`],
   [`columnImageExporter`, /*html*/`在专栏页面中可在附加功能中导出所有图片.`],
   [`feedsImageExporter`, /*html*/`在动态的右上角菜单中可选择导出图片来下载当前动态里的所有图片.`],
-  [`homeHidden`, /*html*/`隐藏首页不需要的元素/分区. 你可以在附加功能中详细配置隐藏哪些元素.`],
+  [`homeHidden`, /*html*/`隐藏原版首页不需要的元素/分区. 你可以在附加功能中详细配置隐藏哪些元素.`],
 ]);
 export default {
   export: { toolTips },

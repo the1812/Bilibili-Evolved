@@ -228,7 +228,7 @@ dotnet builder/dotnet/publish/build.dll watch
 // @description  Bilibili Evolved 预览离线版 (本地)
 // @version      300.0
 // @author       Grant Howard, Coulomb-G
-// @copyright    2020, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2021, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @exclude      *://*.bilibili.com/*/mobile.html

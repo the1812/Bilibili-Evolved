@@ -40,19 +40,18 @@
 |          | 更新延迟 | 下载速度 | 正式版                                                                                       | 预览版                                                                                                | 离线版                                                                                               | 预览离线版                                                                                                    |
 | -------- | -------- | -------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | jsDelivr | 24h      | 极快     | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js) |
-| Fast.io  | <1h      | 快       | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview.user.js)                          | [安装](https://lunatic-kingdom.imfast.io/bilibili-evolved.offline.user.js)                           | [安装](https://subterranean-rose.imfast.io/bilibili-evolved.preview-offline.user.js)                          |
 | GitHub   | <1h      | 慢       | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)      |
 
-> Fast.io 年底将停止使用, 如果你在 2021 年看到我这里还没把 Fast.io 源删掉, 也请不要用 Fast.io 源进行安装.
 
 ## 推荐配置
 - 操作系统: 64-bit Windows 10 / macOS 10.15+
-- 分辨率: 2K
+- 分辨率: 2K+ / 192ppi
 - 浏览器: Chrome 80+ / Firefox 65+ / Edge 80+ / Safari 14+
 - 处理器: Intel Core i7 / AMD Ryzen 5
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
 - 显卡: GeForce GTX 660 / Radeon HD 7870
+- 网络: 10MB/s
 
 # 设置
 脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置. 默认只启用了一部分功能, 您可以根据需要自由调整设置.
@@ -86,16 +85,16 @@
 UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://www.microsoft.com/en-us/edge).
 > Windows 10 20H2 更新中好像完全替换掉了 UWP 版 Edge (R.I.P.) 自带浏览器变成了 Chromium 内核 Edge.
 
-# 参与项目
-欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~ (小心编译器的神秘 bug / 小心被祖传代码闪瞎)
+# 开发者
+[![开发者](https://badges.pufler.dev/contributors/the1812/Bilibili-Evolved?size=32&padding=12&bots=false)](https://github.com/the1812/Bilibili-Evolved/graphs/contributors)
 
-## 界面翻译
-特别感谢给我们提供了翻译文本的各位:
+## 文案翻译贡献者
 - [PleiadeSubaru](https://github.com/Etherrrr)
 - [Lets-Halloween](https://github.com/Lets-Halloween)
 - Joshuaふみひる
 
-也欢迎任何翻译大佬帮助我们改善翻译的内容, 习惯直接改代码可以开 Pull Request, 习惯整理出文本的可以加QQ群963709592讨论.
+## 参与项目
+欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~ (小心编译器的神秘 bug / 小心被祖传代码闪瞎)
 
 # 第三方开源组件
 👍感谢这些组件帮助我们极大地提升了开发效率.
@@ -115,12 +114,7 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 - ASS弹幕下载不能包含高级弹幕, 字幕弹幕等.
 
 # 相关推荐
-这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配并保持无冲突.
-
-## 解除B站区域限制
-作者: [ipcjs](https://github.com/ipcjs)
-- [GitHub](https://github.com/ipcjs/bilibili-helper/blob/user.js/bilibili_bangumi_area_limit_hack.md)
-- [GreasyFork](https://greasyfork.org/zh-CN/scripts/25718-%E8%A7%A3%E9%99%A4b%E7%AB%99%E5%8C%BA%E5%9F%9F%E9%99%90%E5%88%B6)
+这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配
 
 ## bilibili网页端添加APP首页推荐
 作者: [indefined](https://github.com/indefined)
