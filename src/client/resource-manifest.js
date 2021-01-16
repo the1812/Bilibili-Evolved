@@ -100,6 +100,7 @@ Resource.manifest = {
       autoHideSideBar: '自动隐藏侧栏',
       elegantScrollbar: '使用细滚动条',
       downloadPackageEmitMode: '多文件下载模式',
+      alwaysShowDuration: '总是显示视频时长',
     },
     dropdown: [
       {
