@@ -236,6 +236,19 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     takeScreenshot: clickElement('.video-take-screenshot'),
     previousFrame: clickElement('.prev-frame'),
     nextFrame: clickElement('.next-frame'),
+    seekBegin: () => {
+      if (!unsafeWindow.player) {
+        return
+      }
+      unsafeWindow.player.play()
+      setTimeout(() => {
+        unsafeWindow.player.seek(0)
+        const toastText = dq(".bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)")
+        if (toastText) {
+          toastText.textContent = " 00:00"
+        }
+      })
+    },
   }
   const defaultBindings: { [action in keyof typeof actions]: string } = {
     fullscreen: 'f',
@@ -265,6 +278,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     takeScreenshot: 'ctrl alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
+    seekBegin: '0',
   }
   const parseBindings = (bindings: { [action: string]: string }) => {
     return Object.entries(bindings).map(([actionName, keyString]) => {
