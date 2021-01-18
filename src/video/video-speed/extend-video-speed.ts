@@ -39,9 +39,11 @@ export const getExtraSpeedMenuItemElements = async () => {
     iconElement.classList.add("mdi", "mdi-playlist-plus")
 
     const input = document.createElement("input")
+    input.classList.add("add-speed-entry")
     input.setAttribute("type", "number")
     input.setAttribute("max", maxValue.toString())
     input.setAttribute("step", stepValue.toString())
+    input.setAttribute("title", "使用上下方向键步进倍数值，回车确认")
     updateInput(input)
     input.addEventListener("keydown", (ev) => {
       if (ev.key === "Enter") {
@@ -119,7 +121,18 @@ export const getExtraSpeedMenuItemElements = async () => {
     color: var(--theme-color);
     transition: color .3s;
   }
-  `, "extendVideoSpeedStyle")
+  /* https://stackoverflow.com/a/4298216 */
+  /* Chrome */
+  .add-speed-entry::-webkit-outer-spin-button,
+  .add-speed-entry::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Firefox */
+  .add-speed-entry[type=number] {
+    -moz-appearance:textfield; 
+  }
+  `, "extend-video-speed-style")
 
   const elements = VideoSpeedController.extendedSupportedRates
     .map(rate => createExtendedSpeedMenuItemElement(rate))
