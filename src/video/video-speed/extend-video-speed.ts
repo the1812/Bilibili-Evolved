@@ -109,16 +109,16 @@ export const getExtraSpeedMenuItemElements = async () => {
     text-align: center;
   }
   .${VideoSpeedController.classNameMap.speedMenuItem} .mdi-close-circle {
-    color: hsla(0,0%,100%,.8);
+    color: hsla(0,0%,100%,.5);
     display: none;
     position: absolute;
-    right: 2px;
+    right: 4px;
   }
   .${VideoSpeedController.classNameMap.speedMenuItem}:not(.${VideoSpeedController.classNameMap.active}):hover .mdi-close-circle {
     display: inline;
   }
   .${VideoSpeedController.classNameMap.speedMenuItem} .mdi-close-circle:hover {
-    color: var(--theme-color);
+    color: hsla(0,0%,100%,.8);
     transition: color .3s;
   }
   /* https://stackoverflow.com/a/4298216 */
