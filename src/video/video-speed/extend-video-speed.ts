@@ -112,7 +112,7 @@ export const getExtraSpeedMenuItemElements = async () => {
     position: absolute;
     right: 2px;
   }
-  .${VideoSpeedController.classNameMap.speedMenuItem}:hover .mdi-close-circle {
+  .${VideoSpeedController.classNameMap.speedMenuItem}:not(.${VideoSpeedController.classNameMap.active}):hover .mdi-close-circle {
     display: inline;
   }
   .${VideoSpeedController.classNameMap.speedMenuItem} .mdi-close-circle:hover {
