@@ -5,7 +5,7 @@ export const getExtraSpeedMenuItemElements = async () => {
   const minValue = 0.0625
   const maxValue = 16
 
-  const getRecommandedValue = () => VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
+  const getRecommendedValue = () => VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
 
   const createExtendedSpeedMenuItemElement = (rate: number) => {
     const li = document.createElement("li")
@@ -27,7 +27,7 @@ export const getExtraSpeedMenuItemElements = async () => {
 
   const createAddEntryElement = () => {
     const updateInput = (elem: HTMLInputElement) => {
-      const value = getRecommandedValue().toString()
+      const value = getRecommendedValue().toString()
       elem.setAttribute("min", value)
       elem.value = value
     }
