@@ -102,6 +102,7 @@ export const getExtraSpeedMenuItemElements = async () => {
     font-size: 1.5em;
   }
   .${VideoSpeedController.classNameMap.speedContainer} .${VideoSpeedController.classNameMap.speedMenuItem}:first-child input {
+    color: #fff;
     background: transparent;
     outline: none;
     width: 100%;
@@ -118,7 +119,7 @@ export const getExtraSpeedMenuItemElements = async () => {
     display: inline;
   }
   .${VideoSpeedController.classNameMap.speedMenuItem} .mdi-close-circle:hover {
-    color: hsla(0,0%,100%,.8);
+    color: #fff;
     transition: color .3s;
   }
   /* https://stackoverflow.com/a/4298216 */
