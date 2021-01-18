@@ -102,7 +102,9 @@ export const getExtraSpeedMenuItemElements = async () => {
     font-size: 1.5em;
   }
   .${VideoSpeedController.classNameMap.speedContainer} .${VideoSpeedController.classNameMap.speedMenuItem}:first-child input {
-    color: #fff;
+    font-size: inherit;
+    color: inherit;
+    line-height: inherit;
     background: transparent;
     outline: none;
     width: 100%;
@@ -110,7 +112,8 @@ export const getExtraSpeedMenuItemElements = async () => {
     text-align: center;
   }
   .${VideoSpeedController.classNameMap.speedMenuItem} .mdi-close-circle {
-    color: hsla(0,0%,100%,.5);
+    color: inherit;
+    opacity: 0.5;
     display: none;
     position: absolute;
     right: 4px;
@@ -119,8 +122,8 @@ export const getExtraSpeedMenuItemElements = async () => {
     display: inline;
   }
   .${VideoSpeedController.classNameMap.speedMenuItem} .mdi-close-circle:hover {
-    color: #fff;
-    transition: color .3s;
+    opacity: 1;
+    transition: all .3s;
   }
   /* https://stackoverflow.com/a/4298216 */
   /* Chrome */
