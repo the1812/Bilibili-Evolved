@@ -43,7 +43,7 @@ export const getExtraSpeedMenuItemElements = async () => {
     input.setAttribute("type", "number")
     input.setAttribute("max", maxValue.toString())
     input.setAttribute("step", stepValue.toString())
-    input.setAttribute("title", "使用上下方向键步进倍数值，回车确认")
+    input.setAttribute("title", "增加新的倍数值")
     updateInput(input)
     input.addEventListener("keydown", (ev) => {
       if (ev.key === "Enter") {
