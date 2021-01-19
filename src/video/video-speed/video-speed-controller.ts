@@ -48,7 +48,7 @@ export class VideoSpeedController {
 
   /**
    * 忘记对指定 aid 记忆的倍速，返回值表示指定的 aid 之前是否被记忆
-   * 
+   *
    * @param aid 要忘记的 aid，若不指定则从页面中自动获取
    */
   static forgetSpeed(aid?: string) {
@@ -70,7 +70,7 @@ export class VideoSpeedController {
 
   /**
    * 为指定 aid 记忆指定倍数
-   * 
+   *
    * @param speed 要记忆的倍数
    * @param force 对于之前没有被记忆的 aid，**如果不将此参数设置为 `true`，调用完成也不会将相应的倍数记忆到设置中的**
    * @param aid 要记忆的 aid，若不指定则从页面中自动获取

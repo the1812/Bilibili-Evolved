@@ -134,7 +134,7 @@ export const getExtraSpeedMenuItemElements = async () => {
   }
   /* Firefox */
   .add-speed-entry[type=number] {
-    -moz-appearance:textfield; 
+    -moz-appearance:textfield;
   }
   `, "extend-video-speed-style")
 
