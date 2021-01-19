@@ -548,7 +548,7 @@ declare global {
   const aria2RpcDefaultOption: RpcOption
   const languageNameToCode: { [key: string]: string }
   const languageCodeToName: { [key: string]: string }
-  function logError(message: Error | string): void
+  function logError(message: Error | string, duration?: number): void
   function loadSettings(): void
   function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void, initCall?: boolean): void
   function removeSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void

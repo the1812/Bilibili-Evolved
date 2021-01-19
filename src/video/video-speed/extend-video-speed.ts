@@ -4,6 +4,7 @@ export const getExtraSpeedMenuItemElements = async () => {
   const stepValue = 0.5
   const minValue = 0.0625
   const maxValue = 16
+  const errorMessageDuration = 2000
 
   const getRecommendedValue = () => VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
 
@@ -49,19 +50,19 @@ export const getExtraSpeedMenuItemElements = async () => {
       if (ev.key === "Enter") {
         const value = parseFloat(input.value)
         if (!isFinite(value)) {
-          logError("无效的倍数值")
+          logError("无效的倍数值", errorMessageDuration)
           return false
         }
         if (value < minValue) {
-          logError("倍数值太小了")
+          logError("倍数值太小了", errorMessageDuration)
           return false
         }
         if (value > maxValue) {
-          logError("倍数值太大了")
+          logError("倍数值太大了", errorMessageDuration)
           return false
         }
         if (VideoSpeedController.supportedRates.includes(value)) {
-          logError("不能重复添加已有的倍数值")
+          logError("不能重复添加已有的倍数值", errorMessageDuration)
           return false
         }
         settings.extendVideoSpeedList.push(value)
