@@ -47,7 +47,9 @@
     border: 1px solid #333;
     border-radius: 4px;
   }
-  a {
+  a,
+  a:hover,
+  a:active {
     color: var(--theme-color);
   }
 }
