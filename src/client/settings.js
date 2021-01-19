@@ -248,6 +248,7 @@ export const settings = {
   rememberVideoSpeedList: {},
   rememberVideoSpeed: false,
   extendVideoSpeed: true,
+  extendVideoSpeedList: [2.5, 3],
   customKeyBindings: {},
   alwaysShowDuration: false,
   cache: {},

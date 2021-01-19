@@ -140,6 +140,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['hideCategory', /*html*/`隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.`],
   ['foldComment', /*html*/`动态里查看评论区时, 在底部添加一个<span>收起评论</span>按钮, 这样就不用再回到上面收起了.`],
   ['useDefaultVideoSpeed', /*html*/`设置是否记忆上次选择的视频播放速度.`],
+  ['extendVideoSpeed', /*html*/`设置是否扩展原生倍速菜单.`],
   ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`],
   ['autoDraw', /*html*/`在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(`],
   ['keymap', /*html*/`为视频播放器启用更多的快捷键:
@@ -157,8 +158,13 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>Shift + w</kbd> 稍后再看
 - <kbd>Shift + s</kbd> 快速收藏
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 播放速度调整
-- <kbd>Shift + /</kbd> 重置播放速度
-- <kbd>0</kbd> 返回开头播放`],
+- <kbd>Shift + /</kbd> 重置播放速度（将播放速度设为 1.0x）
+- <kbd>Ctrl + Shift + /</kbd> 切换到上次所选播放速度
+- <kbd>Ctrl + Shift + Alt + /</kbd> 清除对当前视频的倍数记忆
+- <kbd>0</kbd> 返回开头播放
+
+如果觉得默认的键位不合适，或者发现与其他插件/脚本的快捷键相冲突，可以参考<a href="https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md" target="__blank">修改默认键位</a>的方法自行修改.
+`],
   ['doubleClickFullscreen', /*html*/`允许双击播放器切换全屏, 请注意不能与<span>播放器触摸支持-启用双击控制</span>一同使用.`],
   ['ajaxHook', /*html*/`是否启用 Ajax Hook API, 其他插件或附加功能能够通过此 API 获取 Ajax 请求的信息.`],
   ['scriptLoadingMode', /*html*/`脚本功能的加载模式:

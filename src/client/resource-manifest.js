@@ -673,7 +673,7 @@ Resource.manifest = {
     },
   },
   useDefaultVideoSpeed: {
-    path: 'default-video-speed.min.js',
+    path: 'remember-video-speed.min.js',
     displayNames: {
       useDefaultVideoSpeed: '记忆上次播放速度',
     }
@@ -978,6 +978,12 @@ Resource.manifest = {
     style: true,
     displayNames: {
       homeHidden: '首页过滤',
+    }
+  },
+  extendVideoSpeed: {
+    path: 'extend-video-speed.min.js',
+    displayNames: {
+      extendVideoSpeed: '扩展视频倍数菜单'
     }
   }
 }
