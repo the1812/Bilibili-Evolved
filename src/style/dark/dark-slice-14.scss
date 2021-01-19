@@ -1,0 +1,5 @@
+@import "./dark-definitions";
+
+.van-popper-login .container {
+  @include border-color("4");
+}
