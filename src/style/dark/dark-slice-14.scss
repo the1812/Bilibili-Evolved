@@ -3,3 +3,6 @@
 .van-popper-login .container {
   @include border-color("4");
 }
+.dynamic-link-hover-bg .bp-img-icon {
+  @include to-theme("blue");
+}
