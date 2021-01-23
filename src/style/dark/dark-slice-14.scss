@@ -50,3 +50,7 @@
     @include color("e");
   }
 }
+.bilibili-player .bui-button.bui-button-border:hover {
+  @include theme-color();
+  @include theme-border-color();
+}
