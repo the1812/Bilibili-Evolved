@@ -42,3 +42,11 @@
     }
   }
 }
+.rcmd-list {
+  .rcmd-list-title {
+    @include color("e");
+  }
+  .remd-video-card .title {
+    @include color("e");
+  }
+}
