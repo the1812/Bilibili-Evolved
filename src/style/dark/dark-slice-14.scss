@@ -6,3 +6,39 @@
 .dynamic-link-hover-bg .bp-img-icon {
   @include to-theme("blue");
 }
+.bp-right {
+  .confirm-container {
+    @include background-color("4");
+    .content-text {
+      @include color("e");
+    }
+    .msg-group {
+      @include border-color("a");
+      .msg-input {
+        @include color("e");
+        &::placeholder {
+          @include color("a");
+        }
+      }
+      .msg-btn {
+        @include color("e");
+        &::before {
+          @include background-color("a");
+        }
+        &.msg-btn-unable {
+          @include color("a");
+        }
+      }
+    }
+    .btn-group {
+      .btn-common {
+        @include theme-border-color();
+        @include theme-color();
+        @include background-color("4");
+      }
+      .btn-active {
+        @include theme-background-color();
+      }
+    }
+  }
+}
