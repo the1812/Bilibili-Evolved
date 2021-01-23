@@ -3,3 +3,10 @@
 .van-popper-login .container {
   @include border-color("4");
 }
+.van-popover.van-followed .follow_dropdown li {
+  @include color("e");
+  &:hover {
+    @include theme-color();
+    @include background-color("4");
+  }
+}
