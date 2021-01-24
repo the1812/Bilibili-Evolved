@@ -126,7 +126,7 @@ window.EventTarget = class EventTarget {
 }
 // Safari EventTarget polyfill end
 
-import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename } from './utils'
+import { logError, raiseEvent, loadLazyPanel, loadDanmakuSettingsPanel, loadLazyPlayerSettingsPanel, loadSubtitleSettingsPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename } from './utils'
 import { settings, loadSettings, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
 import { loadResources } from './resource-loader'
@@ -253,6 +253,9 @@ import { store } from './store'
       logError,
       raiseEvent,
       loadLazyPanel,
+      loadLazyPlayerSettingsPanel,
+      loadDanmakuSettingsPanel,
+      loadSubtitleSettingsPanel,
       contentLoaded,
       fixed,
       settings,

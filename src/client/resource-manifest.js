@@ -985,6 +985,12 @@ Resource.manifest = {
     displayNames: {
       extendVideoSpeed: '扩展视频倍数菜单'
     }
-  }
+  },
+  menuRepeatVideo: {
+    path: 'menu-repeat-video.min.js',
+    displayNames: {
+      menuRepeatVideo: '视频右键菜单循环播放',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest
