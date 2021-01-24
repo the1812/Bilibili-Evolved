@@ -8,7 +8,7 @@ interface HistoryItem {
   isHistory: number
   timestamp: number
 }
-const SearchHistoryKey = 'search_history'
+const SearchHistoryKey = 'be_search_history'
 const SearchHistoryMaxItems = 10
 const getHistoryItems = () => {
   const historyText = localStorage.getItem(SearchHistoryKey)
