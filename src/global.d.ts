@@ -529,6 +529,8 @@ declare global {
     extendVideoSpeedList: number[],
     customKeyBindings: { [actionName: string]: string },
     alwaysShowDuration: boolean,
+    menuRepeatVideo: boolean,
+    removeGuidePopup: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
