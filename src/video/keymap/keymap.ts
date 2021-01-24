@@ -134,40 +134,14 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     like: (() => {
       /** 长按`L`三连使用的记忆变量 */
       let likeClick = true
-      /** 在稍后再看页面里, 记录当前视频是否赞过 */
-      let liked = false
-
-      const listenWatchlaterVideoChange = _.once(() => {
-        Observer.videoChange(() => {
-          Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/archive/has/like?aid=${unsafeWindow.aid}`).then(json => {
-            liked = Boolean(json.data)
-          })
-        })
-      })
       return (({ isWatchlater, isMediaList, event }) => {
-        if (isWatchlater) {
-          listenWatchlaterVideoChange()
-          const formData = {
-            aid: unsafeWindow.aid,
-            /** `1`点赞; `2`取消赞 */
-            like: liked ? 2 : 1,
-            csrf: getCsrf(),
-          }
-          Ajax.postTextWithCredentials(`https://api.bilibili.com/x/web-interface/archive/like`, Object.entries(formData).map(([k, v]) => `${k}=${v}`).join('&')).then(() => {
-            liked = !liked
-            if (liked) {
-              Toast.success(`已点赞`, `快捷键扩展`, 1000)
-            } else {
-              Toast.success(`已取消点赞`, `快捷键扩展`, 1000)
-            }
-          })
-        } else if (isMediaList) {
+        if (isMediaList || isWatchlater) {
           const likeButton = dq('.play-options-ul > li:first-child') as HTMLLIElement
           if (likeButton) {
             likeButton.click()
           }
         } else {
-          const likeButton = dq('.video-toolbar .like') as HTMLSpanElement
+          const likeButton = dq('.video-toolbar .like, .tool-bar .like-info') as HTMLSpanElement
           event.preventDefault()
           const fireEvent = (name: string, args: Event) => {
             const event = new CustomEvent(name, args)
