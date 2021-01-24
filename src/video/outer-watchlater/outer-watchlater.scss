@@ -1,10 +1,14 @@
-.ops .watchlater
-{
-    margin-right: 28px !important;
-    position: relative;
-}
-.ops .watchlater .tip
-{
+.ops .watchlater {
+  margin-right: 28px !important;
+  position: relative;
+  width: auto !important;
+  @media screen and (max-width: 1320px), (max-height: 750px) {
+    margin-right: max(calc(11 * 1vw - 117.2px), 6px) !important;
+    .text {
+      display: none;
+    }
+  }
+  .tip {
     position: absolute;
     top: calc(100% + 8px);
     left: 50%;
@@ -14,17 +18,15 @@
     padding: 4px 8px;
     border-radius: 4px;
     color: #eee;
-    transition: all .2s ease-out;
+    transition: all 0.2s ease-out;
     opacity: 0;
     pointer-events: none;
-}
-.watchlater .tip.show
-{
-    opacity: 1;
-    pointer-events: initial;
-}
-.ops .watchlater>i
-{
+    &.show {
+      opacity: 1;
+      pointer-events: initial;
+    }
+  }
+  > i {
     display: inline-block;
     font-style: normal;
     vertical-align: baseline;
@@ -33,8 +35,8 @@
     line-height: 1;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+  }
 }
-.more-ops-list>ul>li:nth-child(2)
-{
-    display: none !important;
+.more-ops-list > ul > li:nth-child(2) {
+  display: none !important;
 }
