@@ -54,3 +54,10 @@
   @include theme-color();
   @include theme-border-color();
 }
+.van-popover.van-followed .follow_dropdown li {
+  @include color("e");
+  &:hover {
+    @include theme-color();
+    @include background-color("4");
+  }
+}
