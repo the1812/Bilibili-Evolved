@@ -957,8 +957,13 @@ html {
 .article-action .more .more-ops-list ul li:hover {
   @include theme-color();
 }
-.bilibili-player-context-menu-container ul > li a {
-  @include color("e");
+.bilibili-player-context-menu-container ul > li {
+  a {
+    @include color("e");
+    &:hover {
+      @include background-color();
+    }
+  }
 }
 .coin-dialog-mask .like-checkbox {
   @include color("e");
