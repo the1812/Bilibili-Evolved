@@ -29,7 +29,11 @@ const loadSettings = () => {
   addSettingsListener('customNavbarBlurOpacity', value => {
     document.documentElement.style.setProperty('--navbar-blur-opacity', value)
   })
-  if (!document.URL.startsWith('https://space.bilibili.com')) {
+  const fixedNotSupported = [
+    // 'https://search.bilibili.com/all',
+    'https://space.bilibili.com',
+  ]
+  if (!fixedNotSupported.some(url => document.URL.startsWith(url))) {
     addSettingsListener('customNavbarGlobalFixed', value => {
       document.body.classList.toggle('fixed-navbar', value)
     }, true)

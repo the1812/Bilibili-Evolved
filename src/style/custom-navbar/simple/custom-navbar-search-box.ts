@@ -141,6 +141,9 @@ export class SearchBox extends NavbarComponent {
     const form = await SpinQuery.select('#custom-navbar-search') as HTMLFormElement
     const keywordInput = form.querySelector("input[name='keyword']") as HTMLInputElement
     migrateOldHistory()
+    if (document.URL.startsWith('https://search.bilibili.com/all')) {
+      keywordInput.value = window.location.search.match(/keyword=([^&]+)/)?.[1] || ''
+    }
     form.addEventListener('submit', e => {
       if (keywordInput.value === '') {
         if (!settings.hideTopSearch) {
