@@ -252,6 +252,7 @@ export const settings = {
   customKeyBindings: {},
   alwaysShowDuration: false,
   menuRepeatVideo: false,
+  removeGuidePopup: true,
   cache: {},
 }
 const fixedSettings = {

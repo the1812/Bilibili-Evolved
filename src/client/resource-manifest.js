@@ -992,5 +992,12 @@ Resource.manifest = {
       menuRepeatVideo: '视频右键菜单循环播放',
     },
   },
+  removeGuidePopup: {
+    path: 'remove-guide-popup.min.js',
+    displayNames: {
+      removeGuidePopup: '删除视频弹窗',
+    },
+    reloadable: true,
+  },
 }
 export const resourceManifest = Resource.manifest
