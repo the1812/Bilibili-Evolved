@@ -142,7 +142,8 @@ export class SearchBox extends NavbarComponent {
     const keywordInput = form.querySelector("input[name='keyword']") as HTMLInputElement
     migrateOldHistory()
     if (document.URL.startsWith('https://search.bilibili.com/all')) {
-      keywordInput.value = window.location.search.match(/keyword=([^&]+)/)?.[1] || ''
+      const keyword = window.location.search.match(/keyword=([^&]+)/)?.[1] || ''
+      keywordInput.value = decodeURIComponent(keyword)
     }
     form.addEventListener('submit', e => {
       if (keywordInput.value === '') {
@@ -291,6 +292,10 @@ export class SearchBox extends NavbarComponent {
           }
         }
       } else {
+        if (location.host === 'search.bilibili.com') {
+          // s.search.bilibili.com 禁止 search.bilibili.com 访问, 迷惑
+          return
+        }
         const url = `https://s.search.bilibili.com/main/suggest?func=suggest&suggest_type=accurate&sub_type=tag&main_ver=v1&highlight=&userid=${getUID()}&bangumi_acc_num=1&special_acc_num=1&topic_acc_num=1&upuser_acc_num=3&tag_num=10&special_num=10&bangumi_num=10&upuser_num=3&term=${text}`
         lastQueuedRequest = url
         const json = await Ajax.getJson(url)
