@@ -92,7 +92,7 @@ export class VideoSpeedController {
     settings.rememberVideoSpeedList = settings.rememberVideoSpeedList
   }
 
-  static async getInstance(previousSpeed?: number, previousNativeSpeed?: number) {
+  static async getInstance(previousSpeed?: number, nativeSpeed?: number) {
     const containerElement = await SpinQuery.select(`.${VideoSpeedController.classNameMap.speedContainer}`)
     const videoElement = await SpinQuery.select(`.${VideoSpeedController.classNameMap.video} video`) as HTMLVideoElement
 
@@ -103,7 +103,7 @@ export class VideoSpeedController {
       throw "video element not found!"
     }
 
-    return new VideoSpeedController(containerElement, videoElement, previousSpeed, previousNativeSpeed)
+    return new VideoSpeedController(containerElement, videoElement, previousSpeed, nativeSpeed)
   }
 
   static init = _.once(() => {
