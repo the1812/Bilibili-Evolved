@@ -107,8 +107,9 @@ export class VideoSpeedController {
   }
 
   static init = _.once(() => {
-    // 分 P 切换时共享同一个倍数
-    let sharedSpeed = 1
+    // 分 P 切换时共享同一个倍数，这里指定初始倍数可以是 undefined，不需要是 1
+    let sharedSpeed: number | undefined = undefined
+    // 分 P 切换时共享同一个原生倍速值，初始值设置为 1
     let sharedNativeSpeed = 1
     // 持有菜单容器元素的引用，videoChange 时更换（以前缓存的 VideoController 就没有意义了）
     let containerElement: HTMLElement
@@ -158,7 +159,8 @@ export class VideoSpeedController {
   private _videoElement: HTMLVideoElement
   // 这个值模拟原生内部记录的速度倍数，它不应该被赋值成扩展倍数的值
   private _nativeSpeedVal: number
-  private _previousSpeedVal: number
+  // 这个值用于表示上一次（上一P）的倍数值，如果是首次播放第一P，则为 undefined
+  private _previousSpeedVal?: number
 
   constructor(containerElement: HTMLElement, videoElement: HTMLVideoElement, previousSpeed?: number, nativeSpeed?: number) {
     const controller = VideoSpeedController.instanceMap.get(containerElement)
@@ -167,12 +169,9 @@ export class VideoSpeedController {
     }
 
     this._videoElement = videoElement
-
-    previousSpeed = previousSpeed ?? this.playbackRate
-
     this._containerElement = containerElement
     this._previousSpeedVal = previousSpeed
-    this._nativeSpeedVal = nativeSpeed ? nativeSpeed : (VideoSpeedController.nativeSupportedRates.includes(previousSpeed) ? previousSpeed : 1)
+    this._nativeSpeedVal = nativeSpeed ?? (previousSpeed && VideoSpeedController.nativeSupportedRates.includes(previousSpeed) ? previousSpeed : 1)
     this._nameBtn = this._containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedNameBtn}`) as HTMLButtonElement
     this._menuListElement = this._containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedMenuList}`) as HTMLElement
 
@@ -255,15 +254,22 @@ export class VideoSpeedController {
 
   reset(forget = false) {
     if (forget) {
+      const fallbackVideoSpeed = VideoSpeedController.fallbackVideoSpeed
+      // 如果 fallbackVideoSpeed 是 undefined，那么意味着没有开启记忆倍数功能
+      // 考虑到与清除视频级别的倍数记忆功能的相关性，这里会忽略设定
+      // 简单地说，如果没有开启记忆倍数的功能，就无法清除视频级别的倍数记忆
+      if (!fallbackVideoSpeed) {
+        return
+      }
       VideoSpeedController.forgetSpeed()
-      this.setVideoSpeed(VideoSpeedController.fallbackVideoSpeed || 1)
+      this.setVideoSpeed(VideoSpeedController.fallbackVideoSpeed)
     } else {
       this.setVideoSpeed(1)
     }
   }
 
-  setVideoSpeed(speed: number) {
-    this.getSpeedMenuItem(speed).click()
+  setVideoSpeed(speed?: number) {
+    speed && this.getSpeedMenuItem(speed).click()
   }
 
   private setExtendedVideoSpeed(speed: number) {
