@@ -138,7 +138,6 @@ export class Category extends NavbarComponent {
           count: regionCount[160], link: `https://www.bilibili.com/v/life/`, subRegions: {
             '搞笑': 'https://www.bilibili.com/v/life/funny/',
             '日常': 'https://www.bilibili.com/v/life/daily/',
-            '动物圈': 'https://www.bilibili.com/v/life/animal/',
             '手工': 'https://www.bilibili.com/v/life/handmake/',
             '绘画': 'https://www.bilibili.com/v/life/painting/',
             '运动': 'https://www.bilibili.com/v/life/sports/',
@@ -156,6 +155,19 @@ export class Category extends NavbarComponent {
             美食测评: 'https://www.bilibili.com/v/food/measurement/',
             田园美食: 'https://www.bilibili.com/v/food/rural/',
             美食记录: 'https://www.bilibili.com/v/food/record/',
+          },
+        },
+        动物圈: {
+          icon: 'animal',
+          count: regionCount[217],
+          link: 'https://www.bilibili.com/v/animal',
+          subRegions: {
+            喵星人: 'https://www.bilibili.com/v/animal/cat/',
+            汪星人: 'https://www.bilibili.com/v/animal/dog/',
+            大熊猫: 'https://www.bilibili.com/v/animal/panda/',
+            野生动物: 'https://www.bilibili.com/v/animal/wild_animal/',
+            爬宠: 'https://www.bilibili.com/v/animal/reptiles/',
+            动物综合: 'https://www.bilibili.com/v/animal/animal_composite/',
           },
         },
         鬼畜: {
