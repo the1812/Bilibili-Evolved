@@ -76,7 +76,6 @@ export class NavbarComponent {
     if (!popup) {
       return true
     }
-    console.log('check', this.name, skip)
     popup.style.transform = ''
     if (skip) {
       return true
