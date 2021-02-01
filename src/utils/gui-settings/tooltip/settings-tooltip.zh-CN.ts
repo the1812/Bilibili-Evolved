@@ -165,9 +165,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>Shift + w</kbd> 稍后再看
 - <kbd>Shift + s</kbd> 快速收藏 (需开启快速收藏功能)
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 播放速度调整
-- <kbd>Shift + /</kbd> 重置播放速度（将播放速度设为 1.0x）
-- <kbd>Ctrl + Shift + /</kbd> 切换到上次所选播放速度
-- <kbd>Ctrl + Shift + Alt + /</kbd> 清除对当前视频的倍数记忆
+- <kbd>Shift + /</kbd> 重置播放速度，再按一次回到之前的速度
+- <kbd>Shift + :</kbd> 清除对当前视频的倍数记忆
 - <kbd>0</kbd> 返回开头播放
 - <kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd> 逐帧调整进度 (需开启逐帧调整功能)
 - <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> 视频快速截图 (需开启视频快速截图功能)

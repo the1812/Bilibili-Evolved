@@ -105,7 +105,7 @@
     }
     ```
 
-    可以通过 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>?</kbd> 快捷键清除当前视频的倍数记忆状态.
+    可以通过 <kbd>Shift</kbd> + <kbd>:</kbd> 快捷键清除当前视频的倍数记忆状态.
 
 </details>
 

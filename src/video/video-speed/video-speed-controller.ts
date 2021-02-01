@@ -234,19 +234,45 @@ export class VideoSpeedController {
         }
       })
       // 刷新 this._previousSpeedVal
-      // 用户可以通过倍数菜单或者重置倍数快捷键造成类似 2.0x 1.0x 1.0x ... 这样的倍数设定序列
-      // 我们不希望在第二个 1.0x 的时候刷新 this._previousSpeedVal，这样会比较死板
-      // 判定依据在于 previousSpeed !== currentSpeed
+      // - 用户可以通过倍数菜单或者倍数快捷键造成类似 1.5x 2.0x 2.0x... 这样的倍数设定序列
+      //   我们不希望在第二个 2.0x 的时候刷新 this._previousSpeedVal，这样会比较死板
+      //   判定依据在于 previousSpeed !== currentSpeed
       if (previousSpeed && previousSpeed !== currentSpeed) {
         this._previousSpeedVal = previousSpeed
       }
     })
   }
 
-  toggleVideoSpeed() {
-    this.setVideoSpeed(this._previousSpeedVal)
+  /**
+   * 切换当前倍数
+   * 
+   * 根据`mode`参数的不同有着不同的行为：
+   * 
+   * - `mode === "smart"`（默认）：当前倍数等于 1.0x 时，切换到上次不同的视频倍数，否则重置倍数为 1.0x
+   * - `mode === "classic"`：无论当前倍数如何，均切换到上次不同的视频倍数
+   * 
+   * 重置倍数的行为可由 `reset()` 方法同款参数 `forget` 来控制
+   * 
+   * @param forget 指示是否为清除视频记忆的重置倍数操作
+   */
+  toggleVideoSpeed(mode: "smart" | "classic" = "smart", forget = false) {
+    switch (mode) {
+      case "smart":
+        this.playbackRate === 1 ? this.setVideoSpeed(this._previousSpeedVal) : this.reset(forget)
+        break
+      case "classic":
+        this.setVideoSpeed(this._previousSpeedVal)
+        break
+      default:
+        break
+    }
   }
 
+  /**
+   * 重置视频倍数
+   * 
+   * @param forget 指示是否为清除视频记忆的重置倍数操作
+   */
   reset(forget = false) {
     if (forget) {
       VideoSpeedController.forgetSpeed()
