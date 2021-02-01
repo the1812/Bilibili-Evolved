@@ -244,7 +244,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedIncrease: 'shift > 》 arrowUp',
     videoSpeedDecrease: 'shift < 《 arrowDown',
     videoSpeedReset: 'shift ? ？',
-    videoSpeedForget: 'shift :',
+    videoSpeedForget: 'shift : ：',
     takeScreenshot: 'ctrl alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
