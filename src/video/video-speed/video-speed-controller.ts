@@ -250,14 +250,14 @@ export class VideoSpeedController {
 
   /**
    * 切换当前倍数
-   * 
+   *
    * 根据`mode`参数的不同有着不同的行为：
-   * 
+   *
    * - `mode === "smart"`（默认）：当前倍数等于 1.0x 时，切换到上次不同的视频倍数，否则重置倍数为 1.0x
    * - `mode === "classic"`：无论当前倍数如何，均切换到上次不同的视频倍数
-   * 
+   *
    * 重置倍数的行为可由 `reset()` 方法同款参数 `forget` 来控制
-   * 
+   *
    * @param forget 指示是否为清除视频记忆的重置倍数操作
    */
   toggleVideoSpeed(mode: "smart" | "classic" = "smart", forget = false) {
@@ -275,7 +275,7 @@ export class VideoSpeedController {
 
   /**
    * 重置视频倍数
-   * 
+   *
    * @param forget 指示是否为清除视频记忆的重置倍数操作
    */
   reset(forget = false) {
