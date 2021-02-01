@@ -351,6 +351,32 @@ class FeedsCardsManager extends EventTarget {
       })
       return true
     }
+    if (document.URL.startsWith('https://t.bilibili.com/topic')) {
+      console.log('topic watch')
+      const feedsContainer = await SpinQuery.select('.page-container') as HTMLElement
+      if (!feedsContainer) {
+        return false
+      }
+      let cardListObserver: Observer | null = null
+      Observer.childList(feedsContainer, async () => {
+        if (dq('.page-container .feed')) {
+          const cardsList = await SpinQuery.select('.feed .feed-topic') as HTMLElement
+          console.log('enter feeds tab')
+          if (cardListObserver) {
+            cardListObserver.stop()
+          }
+          cardListObserver = updateCards(cardsList)
+        } else {
+          console.log('leave feeds tab')
+          if (cardListObserver) {
+            cardListObserver.stop()
+            cardListObserver = null
+          }
+          await Promise.all(this.cards.map(c => c.element).map(e => this.removeCard(e)))
+        }
+      })
+      return true
+    }
     const cardsList = await SpinQuery.select('.feed-card .content, .detail-content .detail-card') as HTMLDivElement
     if (!cardsList) {
       return false
