@@ -136,6 +136,7 @@ export const settings = {
   customNavbarHidden: ['blank1', 'drawingLink', 'musicLink', 'gamesIframe', 'match', 'darkMode'],
   customNavbarBoundsPadding: 10,
   customNavbarGlobalFixed: false,
+  customNavbarShowDeadVideos: false,
   playerShadow: false,
   narrowDanmaku: true,
   outerWatchlater: true,

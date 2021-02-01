@@ -402,6 +402,7 @@ declare global {
     customNavbarOrder: CustomNavbarOrders,
     customNavbarHidden: Array<keyof CustomNavbarComponents>,
     customNavbarBoundsPadding: number,
+    customNavbarShowDeadVideos: boolean,
     playerShadow: boolean,
     narrowDanmaku: boolean,
     favoritesRedirect: boolean,
