@@ -20,7 +20,13 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["autoContinue", /*html*/`播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`],
   ["airborne", /*html*/`当弹幕出现视频时间点时用下划线标记，点击即可空降到相应时间点.`],
   ["skipChargeList", /*html*/`自动跳过视频结尾的充电鸣谢.`],
-  ["framePlayback", /*html*/`在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
+  ["framePlayback", /*html*/`在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间.
+注: 视频的实际播放帧率跟视频本身的帧率和显示器的刷新率有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.
+
+逐帧调整的精确度固定为:
+- <span>1080P60</span>/<span>720P60</span>: 1001 / 60000 秒 (59.94006 fps)
+- <span>其他清晰度</span>: 1001 / 30000 秒 (29.97003 fps)
+  `],
   ["playerFocus", /*html*/`进入视频/番剧页面时, 自动定位到播放器.`],
   ["playerFocusOffset", /*html*/`定位时的竖直偏移量, 单位为像素(px).`],
   ["customStyleColor", /*html*/`设定顶栏(自定义顶栏启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],
@@ -117,8 +123,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["hideBanner", /*html*/`隐藏首页顶部横幅.`],
   ["allowJumpContinue", /*html*/`当历史记录的集数与当前打开的不一致时, 仍然自动跳转.`],
   ["hideBangumiReviews", /*html*/`隐藏番剧播放页面里的点评板块.`],
-  ["videoScreenshot", /*html*/`启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)
-如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为"按住<kbd>Shift</kbd>点击截图按钮", 键盘操作为"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>".`],
+  ["videoScreenshot", /*html*/`在播放器的时间右边增加截图按钮, 点击可以截取视频画面, 不会包含暂停标志和弹幕. 截取的图片将在网页右侧显示(非全屏或网页全屏模式), 可以单独保存或丢弃, 也可以截取一定数量后一次性保存.
+
+如果弹幕渲染类型选择了Canvas, 则可以再按住 <kbd>Shift</kbd> 键点击按钮来截取带弹幕的截图.`],
   ["filenameFormat", /*html*/`自定义文件命名格式, 作用于<span>下载弹幕</span>, <span>下载视频</span>, <span>视频截图</span>, <span>查看封面</span>.
 可以使用的变量有:
 - <span>title</span>: 视频标题/直播间标题
@@ -156,12 +163,14 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>\`</kbd> 打开播放器菜单
 - <kbd>Shift + j</kbd> 倒退85秒
 - <kbd>Shift + w</kbd> 稍后再看
-- <kbd>Shift + s</kbd> 快速收藏
+- <kbd>Shift + s</kbd> 快速收藏 (需开启快速收藏功能)
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 播放速度调整
-- <kbd>Shift + /</kbd> 重置播放速度（将播放速度设为 1.0x）
-- <kbd>Ctrl + Shift + /</kbd> 切换到上次所选播放速度
-- <kbd>Ctrl + Shift + Alt + /</kbd> 清除对当前视频的倍数记忆
+- <kbd>Shift + /</kbd> 重置播放速度，再按一次回到之前的速度
+- <kbd>Shift + :</kbd> 清除对当前视频的倍数记忆
 - <kbd>0</kbd> 返回开头播放
+- <kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd> 逐帧调整进度 (需开启逐帧调整功能)
+- <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> 视频快速截图 (需开启视频快速截图功能)
+如果弹幕渲染类型选择了Canvas, 则可以按 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> 来截取带弹幕的截图.
 
 如果觉得默认的键位不合适，或者发现与其他插件/脚本的快捷键相冲突，可以参考<a href="https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md" target="__blank">修改默认键位</a>的方法自行修改.
 `],

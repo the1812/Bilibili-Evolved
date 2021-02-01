@@ -10,10 +10,10 @@
   }
   resources.applyStyle('outerWatchlaterStyle')
   favoriteButton.insertAdjacentHTML('afterend', /*html*/`
-    <span title='稍后再看' class='watchlater' :class="{on: isInWatchlater}" @click="toggle()">
+    <span title='稍后再看' class='watchlater' :class="{ on: isInWatchlater }" @click="toggle()">
       <i class='mdi mdi-timetable'></i>
-      稍后再看
-      <div class='tip' :class="{show: tipShowing}">{{tipText}}</div>
+      <span class="text">稍后再看</span>
+      <div class='tip' :class="{ show: tipShowing }">{{ tipText }}</div>
     </span>
   `.trim())
   const watchlaterButton = dq('.ops .watchlater')

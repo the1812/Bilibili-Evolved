@@ -28,6 +28,8 @@ const blockParams = [
   'referfrom',
   'visit_id',
   'bsource',
+  'spm',
+  'hotRank',
 ]
 const siteSpecifiedParams = [
   {
@@ -41,6 +43,10 @@ const siteSpecifiedParams = [
   {
     match: /\/\/www\.bilibili\.com\/bangumi\//,
     param: 'theme',
+  },
+  {
+    match: /\/\/t\.bilibili\.com\/[\d]+/,
+    param: 'type',
   },
 ]
 const noNormalizes = [

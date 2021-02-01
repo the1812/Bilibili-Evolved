@@ -985,6 +985,19 @@ Resource.manifest = {
     displayNames: {
       extendVideoSpeed: '扩展视频倍数菜单'
     }
-  }
+  },
+  menuRepeatVideo: {
+    path: 'menu-repeat-video.min.js',
+    displayNames: {
+      menuRepeatVideo: '视频右键菜单循环播放',
+    },
+  },
+  removeGuidePopup: {
+    path: 'remove-guide-popup.min.js',
+    displayNames: {
+      removeGuidePopup: '删除视频弹窗',
+    },
+    reloadable: true,
+  },
 }
 export const resourceManifest = Resource.manifest

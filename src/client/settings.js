@@ -251,6 +251,8 @@ export const settings = {
   extendVideoSpeedList: [2.5, 3],
   customKeyBindings: {},
   alwaysShowDuration: false,
+  menuRepeatVideo: false,
+  removeGuidePopup: true,
   cache: {},
 }
 const fixedSettings = {
