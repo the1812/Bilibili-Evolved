@@ -61,6 +61,7 @@
     @include background-color("4");
   }
 }
-.filter-wrap .filter-wrap_bottom {
+.filter-wrap .filter-wrap_bottom,
+.grid-left .comment-wrapper .comment-m {
   @include background-color("4");
 }
