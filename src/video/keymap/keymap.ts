@@ -49,33 +49,6 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
           <div class="keymap-tip">${text}</div>
         </div>
       `)
-      resources.applyStyleFromText(`
-        .keymap-tip-container {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          padding: 8px 16px;
-          background-color: #000A;
-          color: white;
-          pointer-events: none;
-          opacity: 0;
-          z-index: 100;
-          display: flex;
-          align-items: center;
-          font-size: 14pt;
-          border-radius: 4px;
-          transition: .2s ease-out;
-        }
-        .keymap-tip-container.show {
-          opacity: 1;
-        }
-        .keymap-tip-container i {
-          line-height: 1;
-          margin-right: 8px;
-          font-size: 18pt;
-        }
-      `, 'keymapStyle')
       tip = dq('.keymap-tip') as HTMLDivElement
     }
     tip.innerHTML = text
@@ -265,6 +238,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     config = loadKeyBindings(parseBindings(
       { ...defaultBindings, ...settings.customKeyBindings }
     ))
+    resources.applyImportantStyle('keymapStyle')
   })()
 }
 
