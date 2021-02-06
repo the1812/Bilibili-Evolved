@@ -255,6 +255,7 @@ export const settings = {
   removeGuidePopup: true,
   liveSpeedBoost: false,
   checkInCenter: false,
+  fullscreenGiftBox: false,
   cache: {},
 }
 const fixedSettings = {

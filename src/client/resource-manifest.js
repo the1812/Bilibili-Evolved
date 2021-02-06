@@ -788,5 +788,12 @@ Resource.manifest = {
       checkInCenter: '签到助手',
     },
   },
+  fullscreenGiftBox: {
+    reloadable: true,
+    style: true,
+    displayNames: {
+      fullscreenGiftBox: '直播全屏包裹',
+    },
+  },
 }
 export const resourceManifest = Resource.manifest

@@ -515,6 +515,7 @@ declare global {
     removeGuidePopup: boolean,
     liveSpeedBoost: boolean,
     checkInCenter: boolean,
+    fullscreenGiftBox: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
