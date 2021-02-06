@@ -1,0 +1,36 @@
+@import "./dark-definitions";
+
+.festival-main-panel ~ {
+  .video-toolbar {
+    color: #ffd886 !important;
+    .share-box {
+      .title {
+        @include color("e");
+      }
+      .name,
+      .box-b-title {
+        @include color("a");
+      }
+    }
+    .more-list {
+      @include border-color();
+      @include background-color("2");
+      @include color("e");
+      li:hover {
+        @include theme-color();
+        @include background-color("4");
+      }
+    }
+  }
+  .comment-wrapper .comment-m {
+    @include background-color("2");
+  }
+}
+.festival-video-player
+  .bilibili-player.bilibili-player-theme-red
+  .bui-slider
+  .bui-track
+  .bui-bar-wrap
+  .bui-bar.bui-bar-normal {
+  @include theme-background-color();
+}
