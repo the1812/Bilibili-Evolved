@@ -34,3 +34,20 @@
   .bui-bar.bui-bar-normal {
   @include theme-background-color();
 }
+#danmukuBox[style*="background:#B22D43" i] {
+  .bui-collapse-header {
+    background-color: #b22d43 !important;
+  }
+  .player-auxiliary-filter-title,
+  .player-auxiliary-filter-menu {
+    color: #ffd886 !important;
+  }
+}
+.app-section .game-box ~ {
+  .videos-box .video-title {
+    color: #872339 !important;
+  }
+  .footer-box .comment-container {
+    @include background-color();
+  }
+}
