@@ -513,6 +513,8 @@ declare global {
     alwaysShowDuration: boolean,
     menuRepeatVideo: boolean,
     removeGuidePopup: boolean,
+    liveSpeedBoost: boolean,
+    checkInCenter: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

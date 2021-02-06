@@ -13,6 +13,9 @@ export async function loadResources () {
   Resource.displayNames = {}
   Resource.reloadables = []
   for (const [key, data] of Object.entries(Resource.manifest)) {
+    if (!data.path) {
+      data.path = `${_.kebabCase(key)}.min.js`
+    }
     const resource = new Resource(data.path, { styles: data.styles, alwaysPreview: data.alwaysPreview })
     resource.key = key
     resource.dropdown = data.dropdown

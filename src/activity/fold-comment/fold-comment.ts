@@ -12,7 +12,6 @@
   }
   resources.applyImportantStyle('foldCommentStyle')
   const injectButton = (card: HTMLElement) => {
-    console.log('inject', card)
     const injectToComment = (panelArea: HTMLDivElement) => {
       const button = document.createElement('div')
       button.classList.add('fold-comment')

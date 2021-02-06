@@ -253,6 +253,8 @@ export const settings = {
   alwaysShowDuration: false,
   menuRepeatVideo: false,
   removeGuidePopup: true,
+  liveSpeedBoost: false,
+  checkInCenter: false,
   cache: {},
 }
 const fixedSettings = {
