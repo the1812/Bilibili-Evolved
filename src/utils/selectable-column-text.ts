@@ -17,6 +17,6 @@ load()
 export default {
   reload: load,
   unload: () => {
-    document.getElementById(id).remove()
+    document.getElementById(id)?.remove()
   },
 }

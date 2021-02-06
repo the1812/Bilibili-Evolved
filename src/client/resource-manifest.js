@@ -5,9 +5,6 @@ Resource.manifest = {
   oldStyle: {
     path: 'old.min.css'
   },
-  scrollbarStyle: {
-    path: 'scrollbar.min.css'
-  },
   darkStyle: {
     path: 'dark.min.css',
     alwaysPreview: true
@@ -22,9 +19,6 @@ Resource.manifest = {
   },
   touchPlayerStyle: {
     path: 'touch-player.min.css'
-  },
-  navbarOverrideStyle: {
-    path: 'override-navbar.min.css'
   },
   noBannerStyle: {
     path: 'no-banner.min.css'
@@ -134,26 +128,17 @@ Resource.manifest = {
       {
         key: 'darkStyleNavBar',
         important: true,
-        condition () {
-          return !settings.useNewStyle && ($('#banner_link').length === 0 ||
-            $('#banner_link').length > 0 &&
-            settings.overrideNavBar &&
-            !settings.showBanner)
-        }
+        condition: () => Boolean(document.querySelector('#banner_link')),
       },
       {
         key: 'darkStyleImportant',
         important: true,
-        condition: () => true
       }
     ],
     displayNames: {
       useDarkStyle: '夜间模式',
       useDarkStyleAsUserStyle: 'UserStyle 模式',
     }
-  },
-  tweetsStyle: {
-    path: 'tweets.min.css'
   },
   hideBanner: {
     path: 'hide-banner.min.js',
@@ -176,7 +161,6 @@ Resource.manifest = {
     ],
     displayNames: {
       touchVideoPlayer: '播放器触摸支持',
-      touchVideoPlayerAnimation: '启用实验性动画效果',
       touchVideoPlayerDoubleTapControl: '启用双击控制'
     }
   },
@@ -274,14 +258,6 @@ Resource.manifest = {
     reloadable: true,
     displayNames: {
       removeVideoTopMask: '删除视频标题层'
-    }
-  },
-  blurVideoControl: {
-    path: 'blur-video-control.min.js',
-    reloadable: true,
-    style: 'instant',
-    displayNames: {
-      blurVideoControl: '模糊视频控制栏背景'
     }
   },
   darkSchedule: {
@@ -406,55 +382,11 @@ Resource.manifest = {
       expandDescription: '自动展开视频简介'
     }
   },
-  defaultDanmakuSettingsStyle: {
-    path: 'default-danmaku-settings.min.css'
-  },
-  useDefaultDanmakuSettings: {
-    path: 'default-danmaku-settings.min.js',
-    styles: [
-      {
-        key: 'defaultDanmakuSettingsStyle',
-        condition: () => settings.rememberDanmakuSettings
-      }
-    ],
-    displayNames: {
-      useDefaultDanmakuSettings: '使用默认弹幕设置',
-      enableDanmaku: '开启弹幕',
-      rememberDanmakuSettings: '记住弹幕设置'
-    }
-  },
   skipChargeList: {
     path: 'skip-charge-list.min.js',
     style: 'instant',
     displayNames: {
       skipChargeList: '跳过充电鸣谢'
-    }
-  },
-  playerLayout: {
-    path: 'default-player-layout.min.js',
-    displayNames: {
-      playerLayout: '指定播放器布局',
-      useDefaultPlayerLayout: '指定播放器布局',
-      defaultPlayerLayout: '视频区布局',
-      defaultBangumiLayout: '番剧区布局'
-    },
-    dropdown: [
-      {
-        key: 'defaultPlayerLayout',
-        items: ['旧版', '新版']
-      },
-      {
-        key: 'defaultBangumiLayout',
-        items: ['旧版', '新版']
-      }
-    ]
-  },
-  compactLayout: {
-    path: 'compact-layout.min.js',
-    reloadable: true,
-    style: true,
-    displayNames: {
-      compactLayout: '首页使用紧凑布局'
     }
   },
   medalHelper: {
@@ -570,12 +502,6 @@ Resource.manifest = {
       simplifyLiveroom: '简化直播间'
     }
   },
-  oldTweets: {
-    path: 'old-tweets.min.js',
-    displayNames: {
-      oldTweets: '旧版动态跳转支持'
-    }
-  },
   customNavbarComponent: {
     path: 'custom-navbar-component.min.js',
   },
@@ -596,13 +522,6 @@ Resource.manifest = {
       customNavbarBlur: '背景模糊',
       customNavbarBlurOpacity: '模糊层不透明度',
       customNavbarGlobalFixed: '全局固定',
-      allNavbarFill: '填充其他顶栏'
-    }
-  },
-  favoritesRedirect: {
-    path: 'favorites-redirect.min.js',
-    displayNames: {
-      favoritesRedirect: '收藏夹视频重定向'
     }
   },
   outerWatchlater: {
@@ -625,13 +544,6 @@ Resource.manifest = {
     reloadable: true,
     displayNames: {
       narrowDanmaku: '强制保留弹幕栏'
-    }
-  },
-  hideOldEntry: {
-    path: 'hide-old-entry.min.js',
-    reloadable: true,
-    displayNames: {
-      hideOldEntry: '隐藏返回旧版'
     }
   },
   videoScreenshot: {
@@ -685,12 +597,6 @@ Resource.manifest = {
       autoSeedsToCoins: '自动运行',
     },
   },
-  magicGrid: {
-    path: 'magic-grid.min.js',
-    displayNames: {
-      magicGrid: 'Magic Grid',
-    },
-  },
   autoDraw: {
     path: 'auto-draw.min.js',
     displayNames: {
@@ -742,19 +648,6 @@ Resource.manifest = {
     reloadable: true,
     displayNames: {
       selectableColumnText: '专栏文字选择',
-    },
-  },
-  watchlaterExpireWarnings: {
-    path: 'watchlater-expire-warnings.min.js',
-    displayNames: {
-      watchlaterExpireWarnings: '稍后再看期限提醒',
-    },
-  },
-  superchatTranslate: {
-    path: 'superchat-translate.min.js',
-    style: true,
-    displayNames: {
-      superchatTranslate: '醒目留言翻译',
     },
   },
   miniPlayerTouchMove: {
