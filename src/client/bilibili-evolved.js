@@ -126,6 +126,7 @@ window.EventTarget = class EventTarget {
 }
 // Safari EventTarget polyfill end
 
+import { headLoaded } from './head'
 import { logError, raiseEvent, loadLazyPanel, loadDanmakuSettingsPanel, loadLazyPlayerSettingsPanel, loadSubtitleSettingsPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename, fullyLoaded, formatDuration, formatFileSize, getDpiSourceSet, videoCondition, matchPattern, formData, retrieveImageUrl, isTyping, getAid } from './utils'
 import { settings, loadSettings, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
@@ -165,7 +166,8 @@ import { store } from './store'
           const style = document.createElement('style')
           style.innerHTML = cache.darkStyle
           style.id = 'dark-style'
-          document.documentElement.insertAdjacentElement('afterbegin', style)
+          await headLoaded()
+          document.head.insertAdjacentElement('afterbegin', style)
         }
       } else {
         const style = document.createElement('style')
@@ -173,7 +175,8 @@ import { store } from './store'
           return key.includes('/dark.min.css')
         })[1]
         style.id = 'dark-style'
-        document.documentElement.insertAdjacentElement('afterbegin', style)
+        await headLoaded()
+        document.head.insertAdjacentElement('afterbegin', style)
       }
     }
     console.log(`Skipped <iframe> loading for ${document.URL}`)
@@ -231,11 +234,6 @@ import { store } from './store'
     //   })
     // }
     events.styleLoaded.complete()
-
-    const prefetchLink = document.createElement('link')
-    prefetchLink.rel = 'dns-prefetch'
-    prefetchLink.href = 'https://api.bilibili.com'
-    document.documentElement.insertAdjacentElement('afterbegin', prefetchLink)
 
     Object.assign(unsafeWindow.bilibiliEvolved, {
       SpinQuery,
