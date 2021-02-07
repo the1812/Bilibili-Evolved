@@ -146,9 +146,13 @@ export class SearchBox extends NavbarComponent {
     const form = await SpinQuery.select('#custom-navbar-search') as HTMLFormElement
     const keywordInput = form.querySelector("input[name='keyword']") as HTMLInputElement
     migrateOldHistory()
-    if (document.URL.startsWith('https://search.bilibili.com/all')) {
+    if (document.URL.startsWith('https://search.bilibili.com')) {
       const keyword = window.location.search.match(/keyword=([^&]+)/)?.[1] || ''
       keywordInput.value = decodeURIComponent(keyword)
+      const input = dq('#search-keyword') as HTMLInputElement
+      if (input) {
+        input.addEventListener('change', () => keywordInput.value = input.value)
+      }
     }
     form.addEventListener('submit', e => {
       if (keywordInput.value === '') {
