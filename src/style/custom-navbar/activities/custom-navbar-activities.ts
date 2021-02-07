@@ -260,6 +260,19 @@ export class Activities extends NavbarComponent {
           async handleJson(json) {
             // const { getWatchlaterList } = await import('../../video/watchlater-api')
             // const watchlaterList = await getWatchlaterList()
+            const now = Number(new Date())
+            const oneDayBefore = now - 1000 * 3600 * 24
+            const formatPubTime = (pubTime: number) => {
+              if (oneDayBefore < pubTime) {
+                const diffHours = Math.round((now - pubTime) / 1000 / 3600)
+                return `${diffHours}小时前`
+              }
+              const pubDate = new Date(pubTime)
+              if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
+                return `${pubDate.getFullYear()}-${pubDate.getMonth() + 1}-${pubDate.getDate()}`
+              }
+              return `${pubDate.getMonth() + 1}-${pubDate.getDate()}`
+            }
             const jsonCards = _.get(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
@@ -274,8 +287,8 @@ export class Activities extends NavbarComponent {
                 upName: card.desc.user_profile.info.uname,
                 upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
                 id: card.desc.dynamic_id_str,
-                // pubTimestamp: cardJson.pubdate,
-                // pubTime: format??? cardJson.pubdate,
+                pubTime: new Date(cardJson.pubdate * 1000).toLocaleString(),
+                pubTimeText: formatPubTime(cardJson.pubdate * 1000),
                 watchlater: true,
                 get new() { return Activities.isNewID(this.id) },
               }
@@ -346,6 +359,8 @@ export class Activities extends NavbarComponent {
                   <div class="cover-container">
                     <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
                     <div class="time">{{card.time}}</div>
+                    <div class="pub-time-text">{{card.pubTimeText}}</div>
+                    <div class="pub-time">{{card.pubTime}}</div>
                     <div @click.stop.prevent="toggleWatchlater(card.aid)" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
                   </div>
                   <h1 class="title" :title="card.title">{{card.title}}</h1>
