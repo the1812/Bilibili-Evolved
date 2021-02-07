@@ -44,10 +44,6 @@ const siteSpecifiedParams = [
     match: /\/\/www\.bilibili\.com\/bangumi\//,
     param: 'theme',
   },
-  {
-    match: /\/\/t\.bilibili\.com\/[\d]+/,
-    param: 'type',
-  },
 ]
 const noNormalizes = [
   /game\.bilibili\.com\/fgo/,
