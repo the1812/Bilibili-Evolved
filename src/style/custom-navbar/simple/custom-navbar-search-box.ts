@@ -8,27 +8,28 @@ interface HistoryItem {
   isHistory: number
   timestamp: number
 }
-const SearchHistoryKey = 'be_search_history'
+const PrivateSearchHistoryKey = 'be_search_history'
+const SearchHistoryKey = 'search_history'
 const SearchHistoryMaxItems = 10
-const getHistoryItems = () => {
-  const historyText = localStorage.getItem(SearchHistoryKey)
+const getHistoryItems = (key = SearchHistoryKey) => {
+  const historyText = localStorage.getItem(key)
   const historyItems: HistoryItem[] = historyText ? JSON.parse(historyText) : []
   return historyItems
 }
-const clearHistoryItems = () => localStorage.setItem(SearchHistoryKey, '[]')
-const addHistoryItem = (item: HistoryItem) => {
-  localStorage.setItem(SearchHistoryKey, JSON.stringify(
+const clearHistoryItems = (key = SearchHistoryKey) => localStorage.setItem(key, '[]')
+const addHistoryItem = (item: HistoryItem, key = SearchHistoryKey) => {
+  localStorage.setItem(key, JSON.stringify(
     _.sortBy(_.uniqBy(getHistoryItems().concat(item), h => h.value), h => h.timestamp)
       .reverse()
       .slice(0, SearchHistoryMaxItems)
   ))
 }
-const deleteHistoryItem = (keyword: string) => {
+const deleteHistoryItem = (keyword: string, key = SearchHistoryKey) => {
   const items = getHistoryItems()
   const index = items.findIndex(it => it.value === keyword)
   if (index !== -1) {
     items.splice(index, 1)
-    localStorage.setItem(SearchHistoryKey, JSON.stringify(items))
+    localStorage.setItem(key, JSON.stringify(items))
   }
 }
 const migrateOldHistory = () => {
@@ -50,6 +51,10 @@ const migrateOldHistory = () => {
     } catch (error) {
       console.error(error)
     }
+  }
+  if (getHistoryItems(PrivateSearchHistoryKey).length > 0) {
+    getHistoryItems(PrivateSearchHistoryKey).forEach(item => addHistoryItem(item))
+    clearHistoryItems(PrivateSearchHistoryKey)
   }
 }
 const getIdJump = (text: string) => {
