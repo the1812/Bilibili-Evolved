@@ -25,6 +25,7 @@ const favoriteItemMapper = (item: any) => {
   return {
     id: item.id,
     aid: item.id,
+    bvid: item.bvid,
     playLink: getPlayLink(),
     coverUrl: item.cover.replace('http:', 'https:'),
     favoriteTimestamp: item.fav_time * 1000,

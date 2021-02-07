@@ -110,12 +110,12 @@ const tabs: HistoryTab[] = [
         const progress = item.progress === -1 ? 1 : item.progress / item.duration
         const historyItem = {
           isBangumi,
-          id: item.kid,
+          id: item.history.bvid,
           title: item.title,
           coverUrl: item.cover,
           upName: item.author_name || item.show_title,
           upID: item.author_mid || item.kid,
-          href: isBangumi ? item.uri + `?${progressParam}` : `https://www.bilibili.com/video/av${item.kid}?p=${item.history.page}&${progressParam}`,
+          href: isBangumi ? item.uri + `?${progressParam}` : `https://www.bilibili.com/video/${item.history.bvid}?p=${item.history.page}&${progressParam}`,
           duration: item.duration,
           durationText: formatDuration(item.duration),
           progress,

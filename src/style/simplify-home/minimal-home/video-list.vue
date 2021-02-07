@@ -87,6 +87,7 @@ export default {
             return {
               id: c.desc.dynamic_id_str,
               aid: card.aid,
+              bvid: c.desc.bvid,
               title: card.title,
               upID: c.desc.user_profile.info.uid,
               upName: c.desc.user_profile.info.uname,

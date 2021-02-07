@@ -89,6 +89,7 @@ There are a few variables:
 - <span>title</span>: Video title / Live room title
 - <span>ep</span>: Episode title
 - <span>aid</span>: AV ID
+- <span>bvid</span>: BV ID
 - <span>cid</span>: CID (The unique ID of video, as AV ID may contains multiple episodes)
 - <span>lid</span>: Live room ID
 - <span>y</span>/<span>M</span>/<span>d</span>: Year / Month / Day of month

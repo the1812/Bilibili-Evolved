@@ -131,6 +131,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <span>title</span>: 视频标题/直播间标题
 - <span>ep</span>: 选集标题
 - <span>aid</span>: AV号
+- <span>bvid</span>: BV号
 - <span>cid</span>: CID (每个视频的唯一编号, AV号对应的视频可能有多集)
 - <span>lid</span>: 直播间号
 - <span>y</span>/<span>M</span>/<span>d</span>: 年/月/日

@@ -7,7 +7,7 @@
         target="_blank"
         v-for="card of cardQueue"
         :key="card.id"
-        :href="'https://www.bilibili.com/av' + card.aid"
+        :href="'https://www.bilibili.com/' + card.bvid"
         :title="card.title"
       >
         <dpi-img :src="card.coverUrl" :alt="card.title" :size="{ height: 300 }"></dpi-img>
@@ -17,7 +17,7 @@
           class="play"
           title="播放"
           target="_blank"
-          :href="'https://www.bilibili.com/av' + currentCard.aid"
+          :href="'https://www.bilibili.com/' + currentCard.bvid"
         >
           <icon type="home" icon="play-triangle"></icon>
         </a>
@@ -36,7 +36,7 @@
           class="title"
           target="_blank"
           :title="currentCard.title"
-          :href="'https://www.bilibili.com/av' + currentCard.aid"
+          :href="'https://www.bilibili.com/' + currentCard.bvid"
         >{{currentCard.title}}</a>
         <a
           class="up"
