@@ -278,6 +278,13 @@ export class Activities extends NavbarComponent {
             const formatPubTimeText = (pubTime: number) => {
               if (oneDayBefore < pubTime) {
                 const diffHours = Math.round((now - pubTime) / 1000 / 3600)
+                if (diffHours === 0) {
+                  const diffMinutes = Math.round((now - pubTime) / 1000 / 60)
+                  if (diffMinutes === 0) {
+                    return '刚刚'
+                  }
+                  return `${diffMinutes}分钟前`
+                }
                 return `${diffHours}小时前`
               }
               const pubDate = new Date(pubTime)
