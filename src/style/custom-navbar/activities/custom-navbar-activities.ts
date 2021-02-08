@@ -263,15 +263,31 @@ export class Activities extends NavbarComponent {
             const now = Number(new Date())
             const oneDayBefore = now - 1000 * 3600 * 24
             const formatPubTime = (pubTime: number) => {
+              const pubDate = new Date(pubTime)
+              const time = [pubDate.getHours(), pubDate.getMinutes(), pubDate.getSeconds()]
+                .map(it => it.toString().padStart(2, '0'))
+                .join(':')
+              let date: number[]
+              if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
+                date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
+              } else {
+                date = [pubDate.getMonth() + 1, pubDate.getDate()]
+              }
+              return `${date.map(it => it.toString().padStart(2, '0')).join('-')} ${time}`
+            }
+            const formatPubTimeText = (pubTime: number) => {
               if (oneDayBefore < pubTime) {
                 const diffHours = Math.round((now - pubTime) / 1000 / 3600)
                 return `${diffHours}小时前`
               }
               const pubDate = new Date(pubTime)
+              let date: number[]
               if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
-                return `${pubDate.getFullYear()}-${pubDate.getMonth() + 1}-${pubDate.getDate()}`
+                date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
+              } else {
+                date = [pubDate.getMonth() + 1, pubDate.getDate()]
               }
-              return `${pubDate.getMonth() + 1}-${pubDate.getDate()}`
+              return `${date.map(it => it.toString().padStart(2, '0')).join('-')}`
             }
             const jsonCards = _.get(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
@@ -288,8 +304,8 @@ export class Activities extends NavbarComponent {
                 upName: card.desc.user_profile.info.uname,
                 upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
                 id: card.desc.dynamic_id_str,
-                pubTime: new Date(cardJson.pubdate * 1000).toLocaleString(),
-                pubTimeText: formatPubTime(cardJson.pubdate * 1000),
+                pubTime: formatPubTime(cardJson.pubdate * 1000),
+                pubTimeText: formatPubTimeText(cardJson.pubdate * 1000),
                 watchlater: true,
                 get new() { return Activities.isNewID(this.id) },
               }
