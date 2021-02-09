@@ -24,8 +24,7 @@
   }
 }
 @media screen and (min-width: 1038px) {
-  .player-full-win,
-  .fullscreen-fix {
+  .player-full-win {
     &:not(.fullscreen-gift-box-unloaded) {
       .live-web-player-controller .control-area {
         .fullscreen-gift-box {
