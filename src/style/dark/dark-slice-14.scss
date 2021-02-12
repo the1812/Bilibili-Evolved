@@ -68,3 +68,6 @@
   @include theme-background-color("20");
   border-left-color: var(--theme-color) !important;
 }
+.b-info .balance-name {
+  @include theme-color();
+}
