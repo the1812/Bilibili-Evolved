@@ -71,3 +71,11 @@
 .b-info .balance-name {
   @include theme-color();
 }
+.bilibili-player-video-state-buff-icon {
+  path[fill="rgb(0,161,214)"] {
+    @include theme-fill();
+  }
+  path[stroke="rgb(0,161,214)"] {
+    @include theme-stroke();
+  }
+}
