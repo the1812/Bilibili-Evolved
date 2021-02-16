@@ -7,6 +7,7 @@ const supportedUrls = [
   'https://www.bilibili.com/cheese/',
   'https://www.bilibili.com/watchlater/',
   'https://www.bilibili.com/medialist/play/',
+  'https://www.bilibili.com/festival/2021bnj',
 ]
 
 let config: { enable: boolean }
