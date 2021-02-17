@@ -62,7 +62,7 @@ export class JsonDanmaku {
       }
       console.log(`received blob for segment ${index + 1}`, blob)
       const result = await decodeDanmakuSegment(blob)
-      return result.elems
+      return result.elems ?? []
     }))
     this.jsonDanmakus = segments.flat().sort(ascendingSort(it => it.progress))
     return this

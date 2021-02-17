@@ -89,6 +89,7 @@ There are a few variables:
 - <span>title</span>: Video title / Live room title
 - <span>ep</span>: Episode title
 - <span>aid</span>: AV ID
+- <span>bvid</span>: BV ID
 - <span>cid</span>: CID (The unique ID of video, as AV ID may contains multiple episodes)
 - <span>lid</span>: Live room ID
 - <span>y</span>/<span>M</span>/<span>d</span>: Year / Month / Day of month
@@ -183,6 +184,10 @@ Additional variables:
   [`columnImageExporter`, `Export all images in column from Add-ons.`],
   [`feedsImageExporter`, `Export all images in feed from feed menu.`],
   [`homeHidden`, `Removed unwanted components on homepage. You can choose what to hide on Add-ons.`],
+  [`alwaysShowDuration`, `Always show duration in video cards.`],
+  [`expandDanmakuListIgnoreMediaList`, `Don't expand danmaku list in playlist pages. (For viewing playlist)`],
+  [`removeGuidePopup`, `Remove irrelevant popups on videos.`],
+  [`fullscreenGiftBox`, `Open gift box quickly when using web fullscreen mode.`],
 ]);
 export default {
   export: { toolTips },

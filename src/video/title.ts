@@ -43,6 +43,7 @@ export function formatTitle (format: string, includesPageTitle = true, extraData
       }
     })(),
     aid: unsafeWindow.aid,
+    bvid: unsafeWindow.bvid,
     cid: unsafeWindow.cid,
     lid: document.URL.replace(/https:\/\/live\.bilibili\.com\/(\d+).*/, '$1'),
     // 年月日这方法名真够乱的

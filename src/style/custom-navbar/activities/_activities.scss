@@ -227,6 +227,8 @@
       .cover-container {
         position: relative;
       }
+      .pub-time,
+      .pub-time-text,
       .time,
       .watchlater {
         position: absolute;
@@ -240,9 +242,18 @@
         border-radius: 10px;
         box-sizing: border-box;
         opacity: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: calc(100% - 8px);
       }
       .time {
         left: 4px;
+      }
+      .pub-time,
+      .pub-time-text {
+        right: 4px;
+        top: 4px;
+        bottom: unset;
       }
       .watchlater {
         padding: 0 8px 0 3px;
@@ -258,9 +269,19 @@
         opacity: 1;
       }
       &:hover {
+        .pub-time-text:not(:hover),
         .time,
         .watchlater {
           opacity: 1;
+        }
+      }
+      .pub-time-text {
+        z-index: 1;
+        &:hover {
+          opacity: 0;
+          ~ .pub-time {
+            opacity: 1;
+          }
         }
       }
     }

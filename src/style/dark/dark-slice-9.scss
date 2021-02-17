@@ -1002,9 +1002,6 @@ $highlight-map: (
 .wide-members .avatar {
   @include border-color("3");
 }
-.van-popper-login .container {
-  @include border-color("4");
-}
 .manga-navbar .search-bar .confirm-btn .search-icon,
 .container .level-intro .svg-icon,
 #page-fav .fav-sidenav .icon:not(.icon-cursor) {

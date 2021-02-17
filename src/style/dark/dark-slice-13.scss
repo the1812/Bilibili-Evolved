@@ -173,7 +173,7 @@
         @include color("e");
       }
       &__tabs {
-        @include background-color("5");
+        @include background-color("2");
         .album-list__tab {
           &-name {
             @include color("e");
@@ -910,7 +910,7 @@ html {
   }
 }
 #control-panel-ctnr-box {
-  @include no-image
+  @include no-image;
 }
 .live-web-player-controller {
   .vertical-slider-wrap,
@@ -926,7 +926,7 @@ html {
   .quality-wrap .quality-it.selected {
     @include theme-color();
   }
-  input[type='radio']:checked+label::before {
+  input[type="radio"]:checked + label::before {
     @include theme-background-color();
     @include theme-border-color();
   }
@@ -954,18 +954,46 @@ html {
     @include theme-background-color();
   }
 }
-.error-body .error-msg .error-img {
-  @include to-theme("blue");
-}
 .article-action .more .more-ops-list ul li:hover {
   @include theme-color();
 }
-.bilibili-player-context-menu-container ul > li a {
-  @include color("e");
+.bilibili-player-context-menu-container ul > li {
+  a {
+    @include color("e");
+    &:hover {
+      @include background-color();
+    }
+  }
 }
 .coin-dialog-mask .like-checkbox {
   @include color("e");
   i {
     @include to-theme("blue");
+  }
+}
+.international-home .rcmd-box-wrap .change-btn {
+  @include border-color();
+  @include color("e");
+  @include background-color("4");
+  &:hover {
+    @include theme-background-color();
+  }
+}
+.bangumi-options .opt-list li {
+  @include background-color("3");
+  @include color("e");
+  &:hover {
+    @include theme-color();
+    @include background-color("4");
+  }
+  &.disabled {
+    @include color("a");
+    @include background-color();
+  }
+}
+.emoji-tab-slider {
+  .prev,
+  .next {
+    filter: invert(1);
   }
 }

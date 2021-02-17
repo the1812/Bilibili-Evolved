@@ -1,4 +1,4 @@
-export function logError (error) {
+export function logError (error, duration) {
   let finalMessage = error
   if (typeof error === 'object' && 'stack' in error) {
     if (settings.toastInternalError) {
@@ -7,7 +7,7 @@ export function logError (error) {
       finalMessage = error.message
     }
   }
-  Toast.error(finalMessage, '错误')
+  Toast.error(finalMessage, '错误', duration)
   console.error(error)
 }
 export function raiseEvent (element, eventName) {
@@ -232,4 +232,11 @@ export const isTyping = () => {
     return true
   }
   return ['input', 'textarea'].includes(activeElement.nodeName.toLowerCase())
+}
+export const getAid = (aid) => {
+  aid = aid ?? unsafeWindow.aid
+  if (!aid) {
+    throw "aid is unknown"
+  }
+  return aid
 }

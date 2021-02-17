@@ -20,7 +20,13 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["autoContinue", /*html*/`播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`],
   ["airborne", /*html*/`当弹幕出现视频时间点时用下划线标记，点击即可空降到相应时间点.`],
   ["skipChargeList", /*html*/`自动跳过视频结尾的充电鸣谢.`],
-  ["framePlayback", /*html*/`在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)`],
+  ["framePlayback", /*html*/`在播放器的时间右边增加两个按钮, 用于<span>较</span>精细调整视频时间.
+注: 视频的实际播放帧率跟视频本身的帧率和显示器的刷新率有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.
+
+逐帧调整的精确度固定为:
+- <span>1080P60</span>/<span>720P60</span>: 1001 / 60000 秒 (59.94006 fps)
+- <span>其他清晰度</span>: 1001 / 30000 秒 (29.97003 fps)
+  `],
   ["playerFocus", /*html*/`进入视频/番剧页面时, 自动定位到播放器.`],
   ["playerFocusOffset", /*html*/`定位时的竖直偏移量, 单位为像素(px).`],
   ["customStyleColor", /*html*/`设定顶栏(自定义顶栏启用时)和夜间模式使用的主题色, 可以点击颜色预览的圆圈打开色板, 其中含有预定义的16种主题色, 也可以在右侧的文本框直接输入任何有效的16进制颜色值(<span>#rrggbb</span>或<span>#rgb</span>).`],
@@ -117,13 +123,15 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["hideBanner", /*html*/`隐藏首页顶部横幅.`],
   ["allowJumpContinue", /*html*/`当历史记录的集数与当前打开的不一致时, 仍然自动跳转.`],
   ["hideBangumiReviews", /*html*/`隐藏番剧播放页面里的点评板块.`],
-  ["videoScreenshot", /*html*/`启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (旧版播放器只能用键盘快捷键, 不会显示按钮)
-如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为"按住<kbd>Shift</kbd>点击截图按钮", 键盘操作为"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>".`],
+  ["videoScreenshot", /*html*/`在播放器的时间右边增加截图按钮, 点击可以截取视频画面, 不会包含暂停标志和弹幕. 截取的图片将在网页右侧显示(非全屏或网页全屏模式), 可以单独保存或丢弃, 也可以截取一定数量后一次性保存.
+
+如果弹幕渲染类型选择了Canvas, 则可以再按住 <kbd>Shift</kbd> 键点击按钮来截取带弹幕的截图.`],
   ["filenameFormat", /*html*/`自定义文件命名格式, 作用于<span>下载弹幕</span>, <span>下载视频</span>, <span>视频截图</span>, <span>查看封面</span>.
 可以使用的变量有:
 - <span>title</span>: 视频标题/直播间标题
 - <span>ep</span>: 选集标题
 - <span>aid</span>: AV号
+- <span>bvid</span>: BV号
 - <span>cid</span>: CID (每个视频的唯一编号, AV号对应的视频可能有多集)
 - <span>lid</span>: 直播间号
 - <span>y</span>/<span>M</span>/<span>d</span>: 年/月/日
@@ -140,6 +148,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ['hideCategory', /*html*/`隐藏主站的分区栏, 分区仍然可以从顶栏的主站菜单中进入.`],
   ['foldComment', /*html*/`动态里查看评论区时, 在底部添加一个<span>收起评论</span>按钮, 这样就不用再回到上面收起了.`],
   ['useDefaultVideoSpeed', /*html*/`设置是否记忆上次选择的视频播放速度.`],
+  ['extendVideoSpeed', /*html*/`设置是否扩展原生倍速菜单.`],
   ['seedsToCoins', /*html*/`在附加功能中添加<span>瓜子换硬币</span>的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.`],
   ['autoDraw', /*html*/`在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(`],
   ['keymap', /*html*/`为视频播放器启用更多的快捷键:
@@ -155,9 +164,17 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>\`</kbd> 打开播放器菜单
 - <kbd>Shift + j</kbd> 倒退85秒
 - <kbd>Shift + w</kbd> 稍后再看
-- <kbd>Shift + s</kbd> 快速收藏
+- <kbd>Shift + s</kbd> 快速收藏 (需开启快速收藏功能)
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 播放速度调整
-- <kbd>Shift + /</kbd> 重置播放速度`],
+- <kbd>Shift + /</kbd> 重置播放速度，再按一次回到之前的速度
+- <kbd>Shift + ;</kbd> 清除对当前视频的倍数记忆
+- <kbd>0</kbd> 返回开头播放
+- <kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd> 逐帧调整进度 (需开启逐帧调整功能)
+- <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> 视频快速截图 (需开启视频快速截图功能)
+如果弹幕渲染类型选择了Canvas, 则可以按 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> 来截取带弹幕的截图.
+
+如果觉得默认的键位不合适，或者发现与其他插件/脚本的快捷键相冲突，可以参考<a href="https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md" target="__blank">修改默认键位</a>的方法自行修改.
+`],
   ['doubleClickFullscreen', /*html*/`允许双击播放器切换全屏, 请注意不能与<span>播放器触摸支持-启用双击控制</span>一同使用.`],
   ['ajaxHook', /*html*/`是否启用 Ajax Hook API, 其他插件或附加功能能够通过此 API 获取 Ajax 请求的信息.`],
   ['scriptLoadingMode', /*html*/`脚本功能的加载模式:
@@ -214,6 +231,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`columnImageExporter`, /*html*/`在专栏页面中可在附加功能中导出所有图片.`],
   [`feedsImageExporter`, /*html*/`在动态的右上角菜单中可选择导出图片来下载当前动态里的所有图片.`],
   [`homeHidden`, /*html*/`隐藏原版首页不需要的元素/分区. 你可以在附加功能中详细配置隐藏哪些元素.`],
+  [`alwaysShowDuration`, /*html*/`在脚本展示的视频卡片里, 例如简化首页和自定义顶栏的各种弹窗里, 不需要鼠标经过也能一直显示视频时长.`],
+  [`expandDanmakuListIgnoreMediaList`, /*html*/`合集类页面(收藏夹/稍后再看等)中不展开弹幕列表, 方便浏览视频列表.`],
+  [`removeGuidePopup`, /*html*/`删除视频内弹出的三连提示框.`],
+  [`fullscreenGiftBox`, /*html*/`在网页全屏状态下, 可以直接点开礼物包裹, 方便送辣条和小心心.`],
 ]);
 export default {
   export: { toolTips },

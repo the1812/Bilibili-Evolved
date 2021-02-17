@@ -53,6 +53,9 @@
 @mixin theme-fill($level: "") {
   @include set-theme-color("fill", $level);
 }
+@mixin theme-stroke($level: "") {
+  @include set-theme-color("stroke", $level);
+}
 
 @mixin foreground-background-color($level: "") {
   @include set-foreground-color("background-color", $level);

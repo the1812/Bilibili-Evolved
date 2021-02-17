@@ -28,6 +28,8 @@ const blockParams = [
   'referfrom',
   'visit_id',
   'bsource',
+  'spm',
+  'hotRank',
 ]
 const siteSpecifiedParams = [
   {

@@ -260,6 +260,42 @@ export class Activities extends NavbarComponent {
           async handleJson(json) {
             // const { getWatchlaterList } = await import('../../video/watchlater-api')
             // const watchlaterList = await getWatchlaterList()
+            const now = Number(new Date())
+            const oneDayBefore = now - 1000 * 3600 * 24
+            const formatPubTime = (pubTime: number) => {
+              const pubDate = new Date(pubTime)
+              const time = [pubDate.getHours(), pubDate.getMinutes(), pubDate.getSeconds()]
+                .map(it => it.toString().padStart(2, '0'))
+                .join(':')
+              let date: number[]
+              if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
+                date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
+              } else {
+                date = [pubDate.getMonth() + 1, pubDate.getDate()]
+              }
+              return `${date.map(it => it.toString().padStart(2, '0')).join('-')} ${time}`
+            }
+            const formatPubTimeText = (pubTime: number) => {
+              if (oneDayBefore < pubTime) {
+                const diffHours = Math.round((now - pubTime) / 1000 / 3600)
+                if (diffHours === 0) {
+                  const diffMinutes = Math.round((now - pubTime) / 1000 / 60)
+                  if (diffMinutes === 0) {
+                    return '刚刚'
+                  }
+                  return `${diffMinutes}分钟前`
+                }
+                return `${diffHours}小时前`
+              }
+              const pubDate = new Date(pubTime)
+              let date: number[]
+              if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
+                date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
+              } else {
+                date = [pubDate.getMonth() + 1, pubDate.getDate()]
+              }
+              return `${date.map(it => it.toString().padStart(2, '0')).join('-')}`
+            }
             const jsonCards = _.get(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
@@ -269,13 +305,14 @@ export class Activities extends NavbarComponent {
                 time: formatDuration(cardJson.duration),
                 description: cardJson.desc,
                 aid: cardJson.aid,
-                videoUrl: `https://www.bilibili.com/av${cardJson.aid}`,
+                bvid: card.desc.bvid,
+                videoUrl: `https://www.bilibili.com/${card.desc.bvid}`,
                 faceUrl: card.desc.user_profile.info.face,
                 upName: card.desc.user_profile.info.uname,
                 upUrl: `https://space.bilibili.com/${card.desc.user_profile.info.uid}`,
                 id: card.desc.dynamic_id_str,
-                // pubTimestamp: cardJson.pubdate,
-                // pubTime: format??? cardJson.pubdate,
+                pubTime: formatPubTime(cardJson.pubdate * 1000),
+                pubTimeText: formatPubTimeText(cardJson.pubdate * 1000),
                 watchlater: true,
                 get new() { return Activities.isNewID(this.id) },
               }
@@ -346,6 +383,8 @@ export class Activities extends NavbarComponent {
                   <div class="cover-container">
                     <dpi-img class="cover" :size="{width: 172}" :src="card.coverUrl"></dpi-img>
                     <div class="time">{{card.time}}</div>
+                    <div class="pub-time-text">{{card.pubTimeText}}</div>
+                    <div class="pub-time">{{card.pubTime}}</div>
                     <div @click.stop.prevent="toggleWatchlater(card.aid)" class="watchlater"><i class="mdi" :class="{'mdi-clock-outline': !watchlater, 'mdi-check-circle': watchlater}"></i>{{watchlater ? '已添加' : '稍后再看'}}</div>
                   </div>
                   <h1 class="title" :title="card.title">{{card.title}}</h1>

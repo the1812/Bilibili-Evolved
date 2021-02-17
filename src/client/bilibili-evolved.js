@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.11.12
+// @version      1.12.0
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2021, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -126,7 +126,8 @@ window.EventTarget = class EventTarget {
 }
 // Safari EventTarget polyfill end
 
-import { logError, raiseEvent, loadLazyPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename } from './utils'
+import { headLoaded } from './head'
+import { logError, raiseEvent, loadLazyPanel, loadDanmakuSettingsPanel, loadLazyPlayerSettingsPanel, loadSubtitleSettingsPanel, contentLoaded, fixed, isOffline, getUID, scriptVersion, getCsrf, formatCount, escapeFilename, fullyLoaded, formatDuration, formatFileSize, getDpiSourceSet, videoCondition, matchPattern, formData, retrieveImageUrl, isTyping, getAid } from './utils'
 import { settings, loadSettings, settingsChangeHandlers } from './settings'
 import { Ajax, setupAjaxHook } from './ajax'
 import { loadResources } from './resource-loader'
@@ -165,7 +166,8 @@ import { store } from './store'
           const style = document.createElement('style')
           style.innerHTML = cache.darkStyle
           style.id = 'dark-style'
-          document.documentElement.insertAdjacentElement('afterbegin', style)
+          await headLoaded()
+          document.head.insertAdjacentElement('afterbegin', style)
         }
       } else {
         const style = document.createElement('style')
@@ -173,7 +175,8 @@ import { store } from './store'
           return key.includes('/dark.min.css')
         })[1]
         style.id = 'dark-style'
-        document.documentElement.insertAdjacentElement('afterbegin', style)
+        await headLoaded()
+        document.head.insertAdjacentElement('afterbegin', style)
       }
     }
     console.log(`Skipped <iframe> loading for ${document.URL}`)
@@ -232,11 +235,6 @@ import { store } from './store'
     // }
     events.styleLoaded.complete()
 
-    const prefetchLink = document.createElement('link')
-    prefetchLink.rel = 'dns-prefetch'
-    prefetchLink.href = 'https://api.bilibili.com'
-    document.documentElement.insertAdjacentElement('afterbegin', prefetchLink)
-
     Object.assign(unsafeWindow.bilibiliEvolved, {
       SpinQuery,
       Toast,
@@ -253,7 +251,11 @@ import { store } from './store'
       logError,
       raiseEvent,
       loadLazyPanel,
+      loadLazyPlayerSettingsPanel,
+      loadDanmakuSettingsPanel,
+      loadSubtitleSettingsPanel,
       contentLoaded,
+      fullyLoaded,
       fixed,
       settings,
       settingsChangeHandlers,
@@ -278,6 +280,12 @@ import { store } from './store'
       getCsrf,
       formatCount,
       escapeFilename,
+      videoCondition,
+      matchPattern,
+      formData,
+      retrieveImageUrl,
+      isTyping,
+      getAid,
       installStyle,
       uninstallStyle,
       toggleStyle,

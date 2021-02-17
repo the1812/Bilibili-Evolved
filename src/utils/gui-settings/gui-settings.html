@@ -51,17 +51,13 @@
       <dropdown indent="1" key="defaultPlayerMode" dependencies="useDefaultPlayerMode"></dropdown>
       <checkbox indent="1" key="applyPlayerModeOnPlay" dependencies="useDefaultPlayerMode"></checkbox>
       <checkbox indent="1" key="autoLightOff" dependencies="useDefaultPlayerMode"></checkbox>
-      <!-- <checkbox indent="0" key="useDefaultVideoQuality" dependencies=""></checkbox>
-      <dropdown indent="1" key="defaultVideoQuality" dependencies="useDefaultVideoQuality"></dropdown> -->
       <checkbox indent="0" key="useDefaultVideoSpeed" dependencies=""></checkbox>
-      <!-- <checkbox indent="0" key="useDefaultDanmakuSettings" dependencies=""></checkbox>
-      <checkbox indent="1" key="enableDanmaku" dependencies="useDefaultDanmakuSettings"></checkbox>
-      <checkbox indent="1" key="rememberDanmakuSettings" dependencies="useDefaultDanmakuSettings enableDanmaku">
-      </checkbox> -->
+      <checkbox indent="0" key="extendVideoSpeed" dependencies=""></checkbox>
       <checkbox indent="0" key="expandDanmakuList" dependencies=""></checkbox>
+      <checkbox indent="1" key="expandDanmakuListIgnoreMediaList" dependencies="expandDanmakuList"></checkbox>
       <checkbox indent="0" key="expandDescription" dependencies=""></checkbox>
       <!-- <checkbox indent="0" key="autoContinue" dependencies=""></checkbox> -->
-      <checkbox indent="1" key="allowJumpContinue" dependencies="autoContinue"></checkbox>
+      <!-- <checkbox indent="1" key="allowJumpContinue" dependencies="autoContinue"></checkbox> -->
       <checkbox indent="0" key="airborne" dependencies=""></checkbox>
       <checkbox indent="0" key="skipChargeList" dependencies=""></checkbox>
       <checkbox indent="0" key="framePlayback" dependencies=""></checkbox>
@@ -74,6 +70,7 @@
       <checkbox indent="0" key="doubleClickFullscreen" dependencies=""></checkbox>
       <checkbox indent="0" key="showCoverBeforePlay" dependencies=""></checkbox>
       <checkbox indent="0" key="seoJump" dependencies=""></checkbox>
+      <checkbox indent="0" key="removeGuidePopup" dependencies=""></checkbox>
       <category icon="style">样式</category>
       <li class="indent-0 folded">
         <label class="gui-settings-textbox-container">
@@ -144,6 +141,7 @@
       <checkbox indent="0" key="autoMatchMedal" dependencies=""></checkbox>
       <!-- <checkbox indent="0" key="recordLiveDanmaku" dependencies=""></checkbox> -->
       <checkbox indent="0" key="danmakuSendBar" dependencies=""></checkbox>
+      <checkbox indent="0" key="fullscreenGiftBox" dependencies=""></checkbox>
       <category icon="tool">工具</category>
       <checkbox indent="0" key="removeAds" dependencies=""></checkbox>
       <checkbox indent="1" key="showBlockedAdsTip" dependencies="removeAds"></checkbox>
@@ -174,6 +172,7 @@
       <category icon="other">其他</category>
       <checkbox indent="0" key="toast" dependencies=""></checkbox>
       <checkbox indent="1" key="toastInternalError" dependencies="toast"></checkbox>
+      <checkbox indent="0" key="alwaysShowDuration" dependencies=""></checkbox>
       <textbox indent="0" key="filenameFormat" dependencies=""></textbox>
       <textbox indent="0" key="batchFilenameFormat" dependencies=""></textbox>
       <dropdown indent="0" key="updateCdn" dependencies=""></dropdown>
@@ -193,5 +192,5 @@
       <a class="release-notes" target="_blank" href="https://github.com/the1812/Bilibili-Evolved/releases">更新日志</a>
     </div>
   </div>
-  <div class="gui-settings-tooltip show"></div>
+  <div class="gui-settings-tooltip"></div>
 </div>

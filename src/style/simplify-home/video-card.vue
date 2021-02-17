@@ -2,7 +2,7 @@
   <a
     class="video-card"
     target="_blank"
-    :href="epID ? ('https://www.bilibili.com/bangumi/play/ep' + epID) : ('https://www.bilibili.com/av' + aid)"
+    :href="epID ? ('https://www.bilibili.com/bangumi/play/ep' + epID) : ('https://www.bilibili.com/' + bvid)"
     :class="{vertical: orientation === 'vertical'}"
   >
     <div class="cover-container">

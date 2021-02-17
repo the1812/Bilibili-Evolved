@@ -258,10 +258,14 @@
                 text-overflow: ellipsis;
               }
             }
+            .live-status,
             .time {
               font-size: 11px;
               grid-area: time;
               padding-right: 6px;
+              &.live {
+                color: var(--theme-color);
+              }
             }
           }
         }

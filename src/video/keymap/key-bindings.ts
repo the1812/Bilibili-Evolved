@@ -35,7 +35,7 @@ export const loadKeyBindings = _.once((bindings: KeyBinding[]) => {
     }
     const key = e.key.toLowerCase()
 
-    // 全景视频禁用 WASD 无视快捷键
+    // 全景视频禁用 WASD 快捷键
     const panoramaControl = dq('.bilibili-player-sphere-control') as HTMLElement
     if (panoramaControl !== null && panoramaControl.style.display !== 'none' && ['w', 'a', 's', 'd'].includes(key)) {
       return

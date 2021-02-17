@@ -181,6 +181,8 @@ declare global {
     name: string
   }
   const unsafeWindow: Window
+  const offlineData: Record<string, string> | undefined
+  const onlineData: Record<string, string> | undefined
   const UserAgent: string
   const EmptyImageUrl: string
   interface Window {
@@ -305,11 +307,9 @@ declare global {
   interface BilibiliEvolvedSettings {
     [key: string]: any,
     useDarkStyle: boolean,
-    useNewStyle: boolean,
-    compactLayout: boolean,
     hideBanner: boolean,
-    overrideNavBar: boolean,
     expandDanmakuList: boolean,
+    expandDanmakuListIgnoreMediaList: boolean,
     expandDescription: boolean,
     watchLaterRedirect: boolean,
     touchNavBar: boolean,
@@ -319,7 +319,6 @@ declare global {
     darkScheduleStart: string,
     darkScheduleEnd: string,
     darkSchedule: boolean,
-    blurVideoControl: boolean,
     toast: boolean,
     fullTweetsTitle: boolean,
     fullPageTitle: boolean,
@@ -330,7 +329,6 @@ declare global {
     showBlockedAdsTip: boolean,
     hideTopSearch: boolean,
     touchVideoPlayerDoubleTapControl: boolean,
-    touchVideoPlayerAnimation: boolean,
     customStyleColor: string,
     preserveRank: boolean,
     blurBackgroundOpacity: number,
@@ -339,14 +337,6 @@ declare global {
     defaultPlayerMode: string,
     useDefaultVideoQuality: boolean,
     defaultVideoQuality: string,
-    useDefaultDanmakuSettings: boolean,
-    enableDanmaku: boolean,
-    rememberDanmakuSettings: boolean,
-    danmakuSettings: {
-      subtitlesPreserve: boolean,
-      smartMask: boolean,
-    },
-    defaultPlayerLayout: string,
     defaultBangumiLayout: string,
     useDefaultPlayerLayout: boolean,
     skipChargeList: boolean,
@@ -355,9 +345,7 @@ declare global {
     useCache: boolean,
     autoContinue: boolean,
     allowJumpContinue: boolean,
-    autoPlay: boolean,
     airborne: boolean,
-    showDeadVideoTitle: boolean,
     deadVideoTitleProvider: '稍后再看' | 'BiliPlus',
     useBiliplusRedirect: boolean,
     biliplusRedirect: boolean,
@@ -370,7 +358,6 @@ declare global {
     i18nLanguage: string,
     playerFocus: boolean,
     playerFocusOffset: number,
-    oldTweets: boolean,
     simplifyLiveroom: boolean,
     simplifyLiveroomSettings: {
       vip: boolean,
@@ -401,11 +388,10 @@ declare global {
     customNavbarOrder: CustomNavbarOrders,
     customNavbarHidden: Array<keyof CustomNavbarComponents>,
     customNavbarBoundsPadding: number,
+    customNavbarShowDeadVideos: boolean,
     playerShadow: boolean,
     narrowDanmaku: boolean,
-    favoritesRedirect: boolean,
     outerWatchlater: boolean,
-    hideOldEntry: boolean,
     hideBangumiReviews: boolean,
     videoScreenshot: boolean,
     cache: {} | { version: string } | undefined,
@@ -417,7 +403,6 @@ declare global {
     noMiniVideoAutoplay: boolean,
     useDefaultVideoSpeed: boolean,
     defaultVideoSpeed: string,
-    hideCategory: boolean,
     foldComment: boolean,
     downloadVideoDefaultDanmaku: DanmakuOption,
     downloadVideoDefaultSubtitle: SubtitleOption,
@@ -455,8 +440,6 @@ declare global {
     downloadVideoFormat: 'flv' | 'dash',
     downloadVideoDashCodec: DashCodec,
     enableDashDownload: boolean,
-    watchlaterExpireWarnings: boolean,
-    watchlaterExpireWarningDays: number,
     superchatTranslate: boolean,
     miniPlayerTouchMove: boolean,
     hideBangumiSponsors: boolean,
@@ -525,8 +508,14 @@ declare global {
     },
     rememberVideoSpeed: boolean,
     extendVideoSpeed: boolean,
+    extendVideoSpeedList: number[],
     customKeyBindings: { [actionName: string]: string },
     alwaysShowDuration: boolean,
+    menuRepeatVideo: boolean,
+    removeGuidePopup: boolean,
+    liveSpeedBoost: boolean,
+    checkInCenter: boolean,
+    fullscreenGiftBox: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
@@ -546,7 +535,7 @@ declare global {
   const aria2RpcDefaultOption: RpcOption
   const languageNameToCode: { [key: string]: string }
   const languageCodeToName: { [key: string]: string }
-  function logError(message: Error | string): void
+  function logError(message: Error | string, duration?: number): void
   function loadSettings(): void
   function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void, initCall?: boolean): void
   function removeSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void
@@ -586,5 +575,6 @@ declare global {
   const formData: (obj: any) => string
   const retrieveImageUrl: (element: Element) => { url: string; extension: string } | null
   const isTyping: () => boolean
+  const getAid: (aid?: string) => string
 }
 export { }

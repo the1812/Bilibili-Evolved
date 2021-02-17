@@ -66,15 +66,18 @@ export class NavbarComponent {
     notifyElement.classList.remove(...Object.values(styleMap))
     notifyElement.classList.add(styleMap[style])
   }
-  // 返回值表示是否应该继续检测
   // 从两侧向中心检测, x到两侧距离大于MaxBoundWidth / 2时, 就可以停止检测了
-  checkPosition() {
+  checkPosition(skip = false) {
     if (this.boundingWidth === 0 || this.hidden) {
       return true
     }
     const element = this.element
     const popup = element.querySelector('.main-content ~ .popup-container') as HTMLElement
     if (!popup) {
+      return true
+    }
+    popup.style.transform = ''
+    if (skip) {
       return true
     }
     const rect = element.getBoundingClientRect()
@@ -86,10 +89,7 @@ export class NavbarComponent {
       popup.style.transform = `translateX(${Math.abs(leftX) + 1}px)`
     } else if (rightX > totalWidth) {
       popup.style.transform = `translateX(${-(rightX - totalWidth) - 1}px)`
-    } else {
-      popup.style.transform = ''
     }
-    // console.log('Checked component position', this.name)
     return elementX <= MaxBoundingWidth / 2 || totalWidth - elementX <= MaxBoundingWidth / 2
   }
 }

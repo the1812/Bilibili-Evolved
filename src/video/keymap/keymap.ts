@@ -1,4 +1,4 @@
-import { VideoSpeedController } from '../default-video-speed'
+import { VideoSpeedController } from '../video-speed/video-speed-controller'
 import { KeyBinding, KeyBindingAction } from './key-bindings'
 
 const supportedUrls = [
@@ -7,6 +7,7 @@ const supportedUrls = [
   'https://www.bilibili.com/cheese/',
   'https://www.bilibili.com/watchlater/',
   'https://www.bilibili.com/medialist/play/',
+  'https://www.bilibili.com/festival/2021bnj',
 ]
 
 let config: { enable: boolean }
@@ -49,33 +50,6 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
           <div class="keymap-tip">${text}</div>
         </div>
       `)
-      resources.applyStyleFromText(`
-        .keymap-tip-container {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          padding: 8px 16px;
-          background-color: #000A;
-          color: white;
-          pointer-events: none;
-          opacity: 0;
-          z-index: 100;
-          display: flex;
-          align-items: center;
-          font-size: 14pt;
-          border-radius: 4px;
-          transition: .2s ease-out;
-        }
-        .keymap-tip-container.show {
-          opacity: 1;
-        }
-        .keymap-tip-container i {
-          line-height: 1;
-          margin-right: 8px;
-          font-size: 18pt;
-        }
-      `, 'keymapStyle')
       tip = dq('.keymap-tip') as HTMLDivElement
     }
     tip.innerHTML = text
@@ -93,13 +67,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
   }
   const videoSpeed = (controllerAction: (controller: VideoSpeedController, rates: number[]) => void) => {
     return async () => {
-      const { VideoSpeedController } = await import('../default-video-speed')
-      const containerElement = dq(`.${VideoSpeedController.classNameMap.speedContainer}`) as HTMLElement
-      const videoElement = dq(`.${VideoSpeedController.classNameMap.video} video`) as HTMLVideoElement
-      if (!containerElement || !videoElement) {
-        return
-      }
-      const controller = new VideoSpeedController(containerElement, videoElement, 1)
+      const { VideoSpeedController } = await import('../video-speed/video-speed-controller')
+      const controller = await VideoSpeedController.getInstance()
       controllerAction(controller, VideoSpeedController.supportedRates)
       showTip(`${controller.playbackRate}x`, 'mdi-fast-forward')
     }
@@ -139,40 +108,14 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     like: (() => {
       /** 长按`L`三连使用的记忆变量 */
       let likeClick = true
-      /** 在稍后再看页面里, 记录当前视频是否赞过 */
-      let liked = false
-
-      const listenWatchlaterVideoChange = _.once(() => {
-        Observer.videoChange(() => {
-          Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/archive/has/like?aid=${unsafeWindow.aid}`).then(json => {
-            liked = Boolean(json.data)
-          })
-        })
-      })
       return (({ isWatchlater, isMediaList, event }) => {
-        if (isWatchlater) {
-          listenWatchlaterVideoChange()
-          const formData = {
-            aid: unsafeWindow.aid,
-            /** `1`点赞; `2`取消赞 */
-            like: liked ? 2 : 1,
-            csrf: getCsrf(),
-          }
-          Ajax.postTextWithCredentials(`https://api.bilibili.com/x/web-interface/archive/like`, Object.entries(formData).map(([k, v]) => `${k}=${v}`).join('&')).then(() => {
-            liked = !liked
-            if (liked) {
-              Toast.success(`已点赞`, `快捷键扩展`, 1000)
-            } else {
-              Toast.success(`已取消点赞`, `快捷键扩展`, 1000)
-            }
-          })
-        } else if (isMediaList) {
+        if (isMediaList || isWatchlater) {
           const likeButton = dq('.play-options-ul > li:first-child') as HTMLLIElement
           if (likeButton) {
             likeButton.click()
           }
         } else {
-          const likeButton = dq('.video-toolbar .like') as HTMLSpanElement
+          const likeButton = dq('.video-toolbar .like, .tool-bar .like-info') as HTMLSpanElement
           event.preventDefault()
           const fireEvent = (name: string, args: Event) => {
             const event = new CustomEvent(name, args)
@@ -230,11 +173,27 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       controller.setVideoSpeed([...rates].reverse().find(it => it < controller.playbackRate) || rates[0])
     }),
     videoSpeedReset: videoSpeed((controller) => {
-      controller.reset()
+      controller.toggleVideoSpeed()
+    }),
+    videoSpeedForget: videoSpeed((controller) => {
+      controller.reset(true)
     }),
     takeScreenshot: clickElement('.video-take-screenshot'),
     previousFrame: clickElement('.prev-frame'),
     nextFrame: clickElement('.next-frame'),
+    seekBegin: () => {
+      if (!unsafeWindow.player) {
+        return
+      }
+      unsafeWindow.player.play()
+      setTimeout(() => {
+        unsafeWindow.player.seek(0)
+        const toastText = dq(".bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)")
+        if (toastText) {
+          toastText.textContent = " 00:00"
+        }
+      })
+    },
   }
   const defaultBindings: { [action in keyof typeof actions]: string } = {
     fullscreen: 'f',
@@ -259,9 +218,11 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedIncrease: 'shift > 》 arrowUp',
     videoSpeedDecrease: 'shift < 《 arrowDown',
     videoSpeedReset: 'shift ? ？',
+    videoSpeedForget: 'shift : ：',
     takeScreenshot: 'ctrl alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
+    seekBegin: '0',
   }
   const parseBindings = (bindings: { [action: string]: string }) => {
     return Object.entries(bindings).map(([actionName, keyString]) => {
@@ -278,6 +239,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     config = loadKeyBindings(parseBindings(
       { ...defaultBindings, ...settings.customKeyBindings }
     ))
+    resources.applyImportantStyle('keymapStyle')
   })()
 }
 

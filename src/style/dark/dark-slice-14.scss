@@ -1,0 +1,81 @@
+@import "./dark-definitions";
+
+.van-popper-login .container {
+  @include border-color("4");
+}
+.dynamic-link-hover-bg .bp-img-icon {
+  @include to-theme("blue");
+}
+.bp-right {
+  .confirm-container {
+    @include background-color("4");
+    .content-text {
+      @include color("e");
+    }
+    .msg-group {
+      @include border-color("a");
+      .msg-input {
+        @include color("e");
+        &::placeholder {
+          @include color("a");
+        }
+      }
+      .msg-btn {
+        @include color("e");
+        &::before {
+          @include background-color("a");
+        }
+        &.msg-btn-unable {
+          @include color("a");
+        }
+      }
+    }
+    .btn-group {
+      .btn-common {
+        @include theme-border-color();
+        @include theme-color();
+        @include background-color("4");
+      }
+      .btn-active {
+        @include theme-background-color();
+      }
+    }
+  }
+}
+.rcmd-list {
+  .rcmd-list-title {
+    @include color("e");
+  }
+  .remd-video-card .title {
+    @include color("e");
+  }
+}
+.bilibili-player .bui-button.bui-button-border:hover {
+  @include theme-color();
+  @include theme-border-color();
+}
+.van-popover.van-followed .follow_dropdown li {
+  @include color("e");
+  &:hover {
+    @include theme-color();
+    @include background-color("4");
+  }
+}
+.filter-wrap .filter-wrap_bottom {
+  @include background-color("4");
+}
+#app .collection-m .add-group .input-group .submit {
+  @include theme-background-color("20");
+  border-left-color: var(--theme-color) !important;
+}
+.b-info .balance-name {
+  @include theme-color();
+}
+.bilibili-player-video-state-buff-icon {
+  path[fill="rgb(0,161,214)"] {
+    @include theme-fill();
+  }
+  path[stroke="rgb(0,161,214)"] {
+    @include theme-stroke();
+  }
+}

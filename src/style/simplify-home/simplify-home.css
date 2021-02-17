@@ -5,5 +5,11 @@
 #app > .elevator-module,
 #app > .bili-header-m.stardust-common > .bili-wrapper,
 .bili-header-m .head-banner .head-content .head-logo {
-  display: none !important;
+  position: fixed;
+  visibility: hidden;
+  top: 100vh;
+  left: 0;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }

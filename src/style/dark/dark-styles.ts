@@ -16,6 +16,7 @@ const notSupported: (string | RegExp)[] = [
   '//www.bilibili.com/s/video/',
   '//member.bilibili.com/platform',
   '//live.bilibili.com/p/html/live-lottery/anchor-join.html',
+  '//account.bilibili.com/subtitle/edit/#/editor',
 ]
 const load = () => {
   if (settings.noDarkOnMember && notSupported.some(it => {

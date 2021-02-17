@@ -55,10 +55,15 @@ yarn
 // 早期组件可能还会有一些这里没列出来的已弃用属性, 不建议使用
 interface ResourceDefinition {
   [key: string]: {
-    /** 代码文件的 js 文件名, 中间要插入一个 `.min.` 例如 abc.ts -> abc.min.js */
-    path: string
-    /** 在设置面板中的展示名称, 包括子选项 */
-    displayNames: {
+    /** 代码文件的 js 文件名, 中间要插入一个 `.min.` 例如 abc.ts -> abc.min.js
+     * v1.11.17 的版本后, 如果功能 key 转为短横线分割正好就是文件名, 则可以省略这一项
+     * 比如 fooBar 功能使用 foo-bar.ts 作为文件名就不需要填写 path 了
+     */
+    path?: string
+    /** 在设置面板中的展示名称, 包括子选项
+     * 如果不需要在设置面板中展示可以省略 (就变成隐藏的功能了, 只能浏览器 Console 里开启)
+     */
+    displayNames?: {
       [key: string]: string
     },
     /** 样式定义

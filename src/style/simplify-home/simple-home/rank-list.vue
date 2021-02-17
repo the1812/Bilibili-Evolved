@@ -9,7 +9,7 @@
       v-for="(c, index) of videos"
       :key="c.id"
       target="_blank"
-      :href="c.href || ('https://www.bilibili.com/av' + c.aid)"
+      :href="c.href || ('https://www.bilibili.com/' + c.bvid)"
     >
       <div class="cover">
         <dpi-img :src="c.coverUrl" :size="{ width: 370 }"></dpi-img>
