@@ -1,18 +1,18 @@
 export const getExtraSpeedMenuItemElements = async () => {
   const { VideoSpeedController } = await import("./video-speed-controller")
+  const { calcOrder, minValue, maxValue, stepValue, errorMessageDuration } = await import("./common")
 
-  const stepValue = 0.5
-  const minValue = 0.0625
-  const maxValue = 16
-  const errorMessageDuration = 2000
-
-  const getRecommendedValue = () => VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
+  const getRecommendedValue = () => {
+    const val = VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
+    return val > maxValue ? null : val
+  }
 
   const createExtendedSpeedMenuItemElement = (rate: number) => {
     const li = document.createElement("li")
     li.innerText = VideoSpeedController.formatSpeedText(rate)
     li.classList.add(VideoSpeedController.classNameMap.speedMenuItem, "extended")
     li.dataset.value = rate.toString()
+    li.style.order = calcOrder(rate)
 
     const i = document.createElement("i")
     i.classList.add("mdi", "mdi-close-circle")
@@ -28,9 +28,8 @@ export const getExtraSpeedMenuItemElements = async () => {
 
   const createAddEntryElement = () => {
     const updateInput = (elem: HTMLInputElement) => {
-      const value = getRecommendedValue().toString()
-      elem.setAttribute("min", value)
-      elem.value = value
+      const value = getRecommendedValue()
+      elem.setAttribute("min", value ? (elem.value = value.toString()) : (elem.value = "", minValue.toString()))
     }
 
     const li = document.createElement("li")
@@ -88,6 +87,7 @@ export const getExtraSpeedMenuItemElements = async () => {
       updateInput(input)
       input.style.display = "inline"
       iconElement.style.display = "none"
+      input.focus()
     })
     li.addEventListener("mouseleave", () => {
       iconElement.style.display = "inline"
@@ -136,6 +136,10 @@ export const getExtraSpeedMenuItemElements = async () => {
   /* Firefox */
   .add-speed-entry[type=number] {
     -moz-appearance:textfield;
+  }
+  .${VideoSpeedController.classNameMap.speedMenuList} {
+    display: flex;
+    flex-direction: column;
   }
   `, "extend-video-speed-style")
 
