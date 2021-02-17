@@ -135,6 +135,7 @@
 <summary><strong>自动展开弹幕列表</strong></summary>
 
 新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.
+开启`合集类页面不展开`后, 合集类页面(收藏夹/稍后再看等)中不会展开弹幕列表, 方便浏览视频列表.
 
 </details>
 <details>
@@ -210,9 +211,16 @@
 - `` ` `` 打开播放器菜单
 - `Shift + j` 倒退85秒
 - `Shift + w` 稍后再看
-- `Shift + s` 快速收藏
+- `Shift + s` 快速收藏 (需开启快速收藏功能)
 - `Shift + ↑/↓` / `Shift + ,/.` 播放速度调整
-- `Shift + /` 重置播放速度
+- `Shift + /` 重置播放速度，再按一次回到之前的速度
+- `Shift + ;` 清除对当前视频的倍数记忆
+- `0` 返回开头播放
+- `Shift+←/→` 逐帧调整进度 (需开启逐帧调整功能)
+- `Ctrl+Alt+C` 视频快速截图 (需开启视频快速截图功能)
+如果弹幕渲染类型选择了Canvas, 则可以按 `Ctrl+Shift+Alt+C` 来截取带弹幕的截图.
+
+如果觉得默认的键位不合适，或者发现与其他插件/脚本的快捷键相冲突，可以参考[修改默认键位](https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md的方法自行修改.
 
 附: b站原生快捷键列表:
 - `f` 全屏/退出全屏
@@ -248,6 +256,12 @@
 当进入SEO页面时, 自动跳转回原视频页面.
 
 > SEO页面通常是专为搜索引擎优化的页面, 目前通常是谷歌的搜索结果里进b站会遇到.
+
+</details>
+<details>
+<summary><strong>删除视频弹窗</strong></summary>
+
+删除视频内弹出的三连提示框.
 
 </details>
 
@@ -582,9 +596,15 @@
 
 </details>
 <details>
-<summary><strong>直板全屏弹幕栏</strong></summary>
+<summary><strong>直播全屏弹幕栏</strong></summary>
 
 在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.
+
+</details>
+<details>
+<summary><strong>直播全屏包裹</strong></summary>
+
+在网页全屏状态下, 可以直接点开礼物包裹, 方便送辣条和小心心.
 
 </details>
 
