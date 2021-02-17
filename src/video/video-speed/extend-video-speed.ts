@@ -87,6 +87,7 @@ export const getExtraSpeedMenuItemElements = async () => {
       updateInput(input)
       input.style.display = "inline"
       iconElement.style.display = "none"
+      input.focus()
     })
     li.addEventListener("mouseleave", () => {
       iconElement.style.display = "inline"
