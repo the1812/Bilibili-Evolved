@@ -82,7 +82,43 @@
 <details>
 <summary><strong>记忆上次播放速度</strong></summary>
 
-记忆上次选择的视频播放速度.
+进入视频时自动选择最后记忆的视频倍速.
+
+- 默认情况下，`defaultVideoSpeed` 设置项记录了用户通过原生倍数菜单（或快捷键扩展）最后选择的视频倍数.
+- 支持细化到视频级别，可以通过以下代码来开启：
+
+    ```javascript
+    bilibiliEvolved.settings.rememberVideoSpeed = true
+    ```
+
+    在这种情况下，`defaultVideoSpeed` 设置项提供的值将用于缺省情况下视频的倍数值，而用户再通过原生倍数菜单（或快捷键扩展）切换到其它倍数时，不会改变 `defaultVideoSpeed` 的值.
+
+    针对当前视频倍数的记忆值将存放在 `rememberVideoSpeedList` 设置项中：
+
+    ```javascript
+    bilibiliEvolved.settings.rememberVideoSpeedList = {
+        // ...
+        "1": ["123456"],
+        "1.5": [],
+        "2":[],
+        // ... 依次类推，在启用了`扩展视频倍数菜单`功能的情况下，还支持 "2.5"， "3" 以及更多的自定义扩展倍速
+    }
+    ```
+
+    可以通过 <kbd>Shift</kbd> + <kbd>:</kbd> 快捷键清除当前视频的倍数记忆状态.
+
+</details>
+
+<details>
+<summary><strong>扩展视频倍数菜单</strong></summary>
+
+可以用于突破原生播放器的倍数限制.
+
+开启此功能之后，可以通过原生倍速菜单修改可用的扩展倍速，默认情况下扩展增加了 `2.5x`，`3.0x` 的倍数项：
+
+<img alt="可自定义扩展倍速的倍数菜单" src="https://user-images.githubusercontent.com/34429322/104888984-79562a80-59a8-11eb-87bd-e6cfd9dc7ffe.gif" height="500"></img>
+
+如果通过上下方向键来步进倍数值，最低值会被限制在当前最高倍数+0.5，最高值会被限制在 16，期间的步进值是 0.5，如果手动输入则没有这样的限制，但输入的倍数值仍然必须在 0.0625 到 16 之间.
 
 </details>
 
@@ -97,19 +133,13 @@
 <summary><strong>自动展开弹幕列表</strong></summary>
 
 新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.
+开启`合集类页面不展开`后, 合集类页面(收藏夹/稍后再看等)中不会展开弹幕列表, 方便浏览视频列表.
 
 </details>
 <details>
 <summary><strong>自动展开视频简介</strong></summary>
 
 长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.
-
-</details>
-<details>
-<summary><strong>自动从历史记录点播放</strong></summary>
-
-播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.
-> 如果还开启了`允许跨集跳转`, 即使当前集数跟历史记录不同也会跳转.
 
 </details>
 <details>
@@ -121,7 +151,7 @@
 <details>
 <summary><strong>启用逐帧调整</strong></summary>
 
-在播放器的时间右边增加两个按钮, 用于**较**精细调整视频时间. 支持键盘快捷键`Shift + 左/右方向键`. (旧版播放器只能用键盘快捷键, 不会显示按钮)
+在播放器的时间右边增加两个按钮, 用于**较**精细调整视频时间.
 
 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.
 
@@ -135,9 +165,9 @@
 <details>
 <summary><strong>启用视频截图</strong></summary>
 
-在播放器的时间右边增加截图按钮, 点击可以截取视频画面, 不会包含暂停标志和弹幕. 截取的图片将在网页右侧显示(非全屏或网页全屏模式), 可以单独保存或丢弃, 也可以截取一定数量后一次性保存. 支持键盘快捷键`Ctrl + Alt + C`. (旧版播放器只能用键盘快捷键, 不会显示按钮)
+在播放器的时间右边增加截图按钮, 点击可以截取视频画面, 不会包含暂停标志和弹幕. 截取的图片将在网页右侧显示(非全屏或网页全屏模式), 可以单独保存或丢弃, 也可以截取一定数量后一次性保存.
 
-如果弹幕渲染类型选择了Canvas, 则可以再按住`Shift`键来截取带弹幕的截图. 也就是鼠标操作为"按住`Shift`点击截图按钮", 键盘操作为"`Ctrl + Shift + Alt + C`".
+如果弹幕渲染类型选择了Canvas, 则可以再按住`Shift`键来截取带弹幕的截图.
 
 <img height="100" alt="时间右边的按钮" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/control-enhance-buttons.jpg">
 
@@ -179,9 +209,16 @@
 - `` ` `` 打开播放器菜单
 - `Shift + j` 倒退85秒
 - `Shift + w` 稍后再看
-- `Shift + s` 快速收藏
+- `Shift + s` 快速收藏 (需开启快速收藏功能)
 - `Shift + ↑/↓` / `Shift + ,/.` 播放速度调整
-- `Shift + /` 重置播放速度
+- `Shift + /` 重置播放速度，再按一次回到之前的速度
+- `Shift + ;` 清除对当前视频的倍数记忆
+- `0` 返回开头播放
+- `Shift+←/→` 逐帧调整进度 (需开启逐帧调整功能)
+- `Ctrl+Alt+C` 视频快速截图 (需开启视频快速截图功能)
+如果弹幕渲染类型选择了Canvas, 则可以按 `Ctrl+Shift+Alt+C` 来截取带弹幕的截图.
+
+如果觉得默认的键位不合适，或者发现与其他插件/脚本的快捷键相冲突，可以参考[修改默认键位](https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md的方法自行修改.
 
 附: b站原生快捷键列表:
 - `f` 全屏/退出全屏
@@ -196,8 +233,7 @@
 - `]` 多P 下一个
 - `enter` 发弹幕
 
-> ⚠ 此功能与原生快捷键有一点差异: 在网页任何地方点下快捷键都会生效, 除非正在打字. (原生快捷键需要聚焦到播放器才能用, 除了 `f`, `space`和方向键的快捷键会被脚本额外再扩展到全网页范围)
-> 支持用户自定义快捷键: https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md
+> ⚠ 此功能与原生快捷键有一点差异: 在网页任何地方点下快捷键都会生效, 除非正在打字. (原生快捷键需要聚焦到播放器才能用, 除了`f`和`space`快捷键会被额外再扩展到全网页范围)
 
 </details>
 <details>
@@ -217,7 +253,13 @@
 
 当进入SEO页面时, 自动跳转回原视频页面.
 
-> SEO页面是为搜索引擎优化的特殊页面, 脚本在那上面的功能是不完整的, 可以通过此功能跳转回正常的视频页面.
+> SEO页面通常是专为搜索引擎优化的页面, 目前通常是谷歌的搜索结果里进b站会遇到.
+
+</details>
+<details>
+<summary><strong>删除视频弹窗</strong></summary>
+
+删除视频内弹出的三连提示框.
 
 </details>
 
@@ -562,9 +604,15 @@
 
 </details> -->
 <details>
-<summary><strong>直板全屏弹幕栏</strong></summary>
+<summary><strong>直播全屏弹幕栏</strong></summary>
 
 在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.
+
+</details>
+<details>
+<summary><strong>直播全屏包裹</strong></summary>
+
+在网页全屏状态下, 可以直接点开礼物包裹, 方便送辣条和小心心.
 
 </details>
 

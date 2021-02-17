@@ -120,8 +120,6 @@
 
 如果通过上下方向键来步进倍数值，最低值会被限制在当前最高倍数+0.5，最高值会被限制在 16，期间的步进值是 0.5，如果手动输入则没有这样的限制，但输入的倍数值仍然必须在 0.0625 到 16 之间.
 
-> 尽管可以通过手动设置倍数值，来添加位于原生支持倍数之间的倍数，但由于技术原因的限制，并不能做到正确排序，所有自定义的扩展倍速均位于原生倍速项之上. 举个例子来说，你可以添加 0.0625 这样小的倍数，但它一定会位于 2.0x 之上显示.
-
 </details>
 
 <!-- <details>
@@ -327,6 +325,8 @@
 - Windows: 设置 - 个性化 - 颜色 - 选择颜色
 - macOS: 系统偏好设置 - 通用 - 外观
 
+> 有的浏览器如 Edge 允许再另外设置一套亮暗主题, 这时脚本会跟随浏览器的设置.
+
 </details>
 <details>
 <summary><strong>简化评论区</strong></summary>
@@ -343,6 +343,12 @@
 > 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看
 
 ![简化评论区](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/comments.jpg)
+
+</details>
+<details>
+<summary><strong>首页过滤</strong></summary>
+
+隐藏原版首页不需要的元素/分区. 你可以在附加功能中详细配置隐藏哪些元素.
 
 </details>
 <details>
@@ -412,6 +418,8 @@
 <summary><strong>隐藏推荐视频</strong></summary>
 
 隐藏番剧和视频页面右侧的推荐视频列表.
+
+注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏推荐视频才能看到开关.
 
 </details>
 <details>
@@ -587,14 +595,14 @@
 如果拥有当前直播间的勋章, 则自动佩戴, 否则佩戴上次手动选择的勋章.
 
 </details>
-<details>
+<!-- <details>
 <summary><strong>直播弹幕记录器</strong></summary>
 
 开启后, 在直播间里可以从附加功能中启动弹幕记录器, 会记录启动后所有收到的弹幕, 并可以导出为XML弹幕文件.
 
 > 弹幕的发送时间是相对于直播开始时间确定的.
 
-</details>
+</details> -->
 <details>
 <summary><strong>直播全屏弹幕栏</strong></summary>
 
