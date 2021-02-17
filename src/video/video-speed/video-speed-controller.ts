@@ -123,7 +123,7 @@ export class VideoSpeedController {
       if (settings.extendVideoSpeed) {
         controller._menuListElement.prepend(...await getExtraSpeedMenuItemElements())
         // 为所有原生倍速菜单项设置 Order
-        dqa(`.${VideoSpeedController.classNameMap.speedMenuItem}[data-value]:not(.extended)`).forEach(
+        controller._menuListElement.querySelectorAll(`.${VideoSpeedController.classNameMap.speedMenuItem}[data-value]:not(.extended)`).forEach(
           (it: HTMLLIElement) => { it.style.order = calcOrder(parseFloat(it.getAttribute("data-value")!)) }
         );
         // 如果开启了扩展倍数，存在一种场景使倍数设置会失效：
