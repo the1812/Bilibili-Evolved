@@ -6,6 +6,16 @@
   .quick-favorite {
     margin-right: 28px !important;
     position: relative;
+    width: auto !important;
+    .text {
+      display: inline;
+    }
+    @media screen and (max-width: 1320px), (max-height: 750px) {
+      margin-right: max(calc(11 * 1vw - 117.2px), 6px) !important;
+      .text {
+        display: none;
+      }
+    }
     > i {
       font-family: "quick-favorite" !important;
       display: inline-block;

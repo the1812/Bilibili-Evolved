@@ -150,7 +150,7 @@ export class Resource {
       if (important) {
         document.body.insertAdjacentElement('beforeend', style)
       } else {
-        document.documentElement.insertAdjacentElement('afterbegin', style)
+        headLoaded(() => document.head.insertAdjacentElement('afterbegin', style))
       }
     }
   }

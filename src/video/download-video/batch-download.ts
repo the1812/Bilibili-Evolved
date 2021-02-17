@@ -29,11 +29,11 @@ export interface RawItem {
 abstract class Batch {
   constructor(public config: BatchExtractorConfig) { }
   itemList: BatchItem[] = []
-  abstract async getItemList(): Promise<BatchItem[]>
-  abstract async collectData(quality: number | string): Promise<string>
+  abstract getItemList(): Promise<BatchItem[]>
+  abstract collectData(quality: number | string): Promise<string>
   /**
    * Returns formated Title.
-   * 
+   *
    * @param parameters - TYPE: BatchTitleParameter
    * @returns escapeFilename
    *
@@ -219,15 +219,44 @@ class Bnj2020Batch extends Batch {
     return (await this.mainVideo.collectData(quality)).concat(await this.spVideo.collectData(quality))
   }
 }
+class Bnj2021Batch extends VideoEpisodeBatch {
+  videos = _.get(unsafeWindow, '__INITIAL_STATE__.videoSections', [])
+    .map((it: any) => it.episodes)
+    .flat() as {
+      aid: number
+      cid: number
+      title: string
+    }[]
+  constructor(public config: BatchExtractorConfig) {
+    super(config)
+  }
+  static async test() {
+    return document.URL.includes('//www.bilibili.com/festival/2021bnj')
+  }
+  async getItemList() {
+    const { getNumber } = await import('./get-number')
+    return this.videos.map(({ aid, cid, title }, index) => {
+      return {
+        title: `P${index + 1} ${title}`,
+        titleParameters: {
+          n: getNumber(index + 1, this.videos.length),
+          ep: title,
+        },
+        aid,
+        cid,
+      } as BatchItem
+    })
+  }
+}
 class BangumiBatch extends Batch {
   static async test() {
     return document.URL.includes('/www.bilibili.com/bangumi')
   }
   /**
    * Get bangumi from api
-   * 
+   *
    * @returns a json list of multiple part bangumi
-   * 
+   *
    */
   async getItemList() {
     if (this.itemList.length > 0) {
@@ -328,7 +357,7 @@ export class ManualInputBatch extends VideoEpisodeBatch {
   }
 }
 
-const extractors = [BangumiBatch, VideoEpisodeBatch, Bnj2020Batch]
+const extractors = [BangumiBatch, VideoEpisodeBatch, Bnj2020Batch, Bnj2021Batch]
 let ExtractorClass: new (config: BatchExtractorConfig) => Batch
 export class BatchExtractor {
   config: BatchExtractorConfig

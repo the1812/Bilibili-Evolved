@@ -1,7 +1,9 @@
 (async () => {
   // 动态详情页不需要开启
   const isNotFeedsHome = document.URL.includes('//t.bilibili.com') && document.URL.replace(window.location.search, '') !== 'https://t.bilibili.com/'
-  if (isNotFeedsHome) {
+  // 动态话题页需要
+  const isTopicPage = document.URL.startsWith('https://t.bilibili.com/topic/')
+  if (isNotFeedsHome && !isTopicPage) {
     return
   }
   const { forEachFeedsCard, supportedUrls } = await import('../feeds-apis')
@@ -10,7 +12,6 @@
   }
   resources.applyImportantStyle('foldCommentStyle')
   const injectButton = (card: HTMLElement) => {
-    console.log('inject', card)
     const injectToComment = (panelArea: HTMLDivElement) => {
       const button = document.createElement('div')
       button.classList.add('fold-comment')

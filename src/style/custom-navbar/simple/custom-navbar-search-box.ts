@@ -3,47 +3,58 @@ interface SuggestItem {
   value: string
   html: string
 }
-const originalHistory = new class {
-  getAll(): SearchHistoryItem[] {
-    const history = localStorage.getItem('search_history')
-    if (!history) {
-      return []
+interface HistoryItem {
+  value: string
+  isHistory: number
+  timestamp: number
+}
+const PrivateSearchHistoryKey = 'be_search_history'
+const SearchHistoryKey = 'search_history'
+const SearchHistoryMaxItems = 10
+const getHistoryItems = (key = SearchHistoryKey) => {
+  const historyText = localStorage.getItem(key)
+  const historyItems: HistoryItem[] = historyText ? JSON.parse(historyText) : []
+  return historyItems
+}
+const clearHistoryItems = (key = SearchHistoryKey) => localStorage.setItem(key, '[]')
+const addHistoryItem = (item: HistoryItem, key = SearchHistoryKey) => {
+  localStorage.setItem(key, JSON.stringify(
+    _.sortBy(_.uniqBy(getHistoryItems().concat(item), h => h.value), h => h.timestamp)
+      .reverse()
+      .slice(0, SearchHistoryMaxItems)
+  ))
+}
+const deleteHistoryItem = (keyword: string, key = SearchHistoryKey) => {
+  const items = getHistoryItems()
+  const index = items.findIndex(it => it.value === keyword)
+  if (index !== -1) {
+    items.splice(index, 1)
+    localStorage.setItem(key, JSON.stringify(items))
+  }
+}
+const migrateOldHistory = () => {
+  if (settings.searchHistory.length > 0) {
+    try {
+      const currentHistory = getHistoryItems()
+      const oldHistory: HistoryItem[] = settings.searchHistory.map(it => {
+        return {
+          value: it.keyword,
+          isHistory: 1,
+          timestamp: Number(new Date(it.date)),
+        }
+      })
+      const newHistory = _.sortBy(_.uniqBy(oldHistory.concat(currentHistory), h => h.value), h => h.timestamp)
+        .reverse()
+        .slice(0, SearchHistoryMaxItems)
+      localStorage.setItem(SearchHistoryKey, JSON.stringify(newHistory))
+      settings.searchHistory = []
+    } catch (error) {
+      console.error(error)
     }
-    return (JSON.parse(history) as any[]).map(it => {
-      return {
-        keyword: it.value,
-        date: new Date(it.timestamp).toJSON(),
-        count: 1,
-      }
-    })
   }
-  saveAll(items: SearchHistoryItem[]) {
-    localStorage.setItem('search_history', JSON.stringify(items))
-  }
-  clear() {
-    localStorage.setItem('search_history', '[]')
-  }
-  merge(items: SearchHistoryItem[]) {
-    const originalItems = this.getAll()
-    return _.uniqBy(items.concat(originalItems), it => it.keyword).slice(0, 10)
-  }
-  add(item: SearchHistoryItem) {
-    const items = this.getAll()
-    const existingItem = items.find(it => it.keyword === item.keyword)
-    if (existingItem) {
-      Object.assign(existingItem, item)
-    } else {
-      items.push(item)
-    }
-    this.saveAll(items)
-  }
-  remove(item: SearchHistoryItem) {
-    const items = this.getAll()
-    const index = items.findIndex(it => it.keyword === item.keyword)
-    if (index > -1) {
-      items.splice(index, 1)
-      this.saveAll(items)
-    }
+  if (getHistoryItems(PrivateSearchHistoryKey).length > 0) {
+    getHistoryItems(PrivateSearchHistoryKey).forEach(item => addHistoryItem(item))
+    clearHistoryItems(PrivateSearchHistoryKey)
   }
 }
 const getIdJump = (text: string) => {
@@ -134,6 +145,15 @@ export class SearchBox extends NavbarComponent {
   async init() {
     const form = await SpinQuery.select('#custom-navbar-search') as HTMLFormElement
     const keywordInput = form.querySelector("input[name='keyword']") as HTMLInputElement
+    migrateOldHistory()
+    if (document.URL.startsWith('https://search.bilibili.com')) {
+      const keyword = window.location.search.match(/keyword=([^&]+)/)?.[1] || ''
+      keywordInput.value = decodeURIComponent(keyword)
+      const input = dq('#search-keyword') as HTMLInputElement
+      if (input) {
+        input.addEventListener('change', () => keywordInput.value = input.value)
+      }
+    }
     form.addEventListener('submit', e => {
       if (keywordInput.value === '') {
         if (!settings.hideTopSearch) {
@@ -150,21 +170,17 @@ export class SearchBox extends NavbarComponent {
         e.preventDefault()
         return false
       }
-      const historyItem = settings.searchHistory.find(item => item.keyword === keywordInput.value)
+      const historyItem = getHistoryItems().find(item => item.value === keywordInput.value)
       if (historyItem) {
-        historyItem.count++
-        historyItem.date = new Date().toJSON()
-        // originalHistory.add(historyItem)
+        historyItem.timestamp = Number(new Date())
       } else {
-        const newItem = {
-          count: 1,
-          keyword: keywordInput.value,
-          date: new Date().toJSON(),
+        const newItem: HistoryItem = {
+          value: keywordInput.value,
+          isHistory: 1,
+          timestamp: Number(new Date()),
         }
-        settings.searchHistory.unshift(newItem)
-        // originalHistory.add(newItem)
+        addHistoryItem(newItem)
       }
-      settings.searchHistory = settings.searchHistory.slice(0, 10) // save history
       return true
     })
     if (!settings.hideTopSearch) {
@@ -228,15 +244,11 @@ export class SearchBox extends NavbarComponent {
           if (keywordInput.value !== '') {
             keywordInput.value = ''
           }
-          const historyIndex = settings.searchHistory.findIndex(it => it.keyword === item.value)
-          const [historyItem] = settings.searchHistory.splice(historyIndex, 1)
-          // originalHistory.remove(historyItem)
-          settings.searchHistory = settings.searchHistory
+          deleteHistoryItem(item.value)
           this.items.splice(index, 1)
         },
         clearSearchHistory() {
-          // originalHistory.clear()
-          settings.searchHistory = []
+          clearHistoryItems()
           this.items = []
         }
       },
@@ -247,19 +259,14 @@ export class SearchBox extends NavbarComponent {
       searchList.isHistory = text === ''
       const idJump = getIdJump(text)
       if (searchList.isHistory) {
-        // searchList.items = originalHistory.merge(settings.searchHistory)
-        searchList.items = settings.searchHistory
-          .sort((a, b) => {
-            const aDate = a.date ? new Date(a.date) : new Date(0)
-            const bDate = b.date ? new Date(b.date) : new Date(0)
-            return Number(bDate) - Number(aDate)
-          })
+        searchList.items = getHistoryItems()
+          .sort((a, b) => b.timestamp - a.timestamp)
           .map(item => {
             return {
-              value: item.keyword,
-              html: item.keyword,
+              value: item.value,
+              html: item.value,
             }
-          }).slice(0, 10)
+          }).slice(0, SearchHistoryMaxItems)
       } else if (idJump.success) {
         searchList.items = []
         const url = idJump.aid ? `https://api.bilibili.com/x/web-interface/view?aid=${idJump.aid}` : `https://api.bilibili.com/x/web-interface/view?bvid=${idJump.bvid}`

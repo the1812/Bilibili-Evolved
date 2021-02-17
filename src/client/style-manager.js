@@ -24,12 +24,12 @@ export class StyleManager {
   }
   applyStyleFromText (text, id) {
     if (!id) {
-      document.documentElement.insertAdjacentHTML('afterbegin', text)
+      headLoaded(() => document.head.insertAdjacentHTML('afterbegin', text))
     } else {
       const style = document.createElement('style')
       style.id = id
       style.innerHTML = text
-      document.documentElement.insertAdjacentElement('afterbegin', style)
+      headLoaded(() => document.head.insertAdjacentElement('afterbegin', style))
     }
   }
   applyImportantStyleFromText (text, id) {

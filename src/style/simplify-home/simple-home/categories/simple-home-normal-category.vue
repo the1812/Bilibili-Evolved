@@ -94,6 +94,7 @@ export default {
             return {
               id: item.aid,
               aid: item.aid,
+              bvid: item.bvid,
               coverUrl: item.pic.replace('http:', 'https:'),
               title: item.title,
               upName: item.owner.name,
@@ -154,6 +155,7 @@ export default {
             return {
               id: item.aid,
               aid: parseInt(item.aid),
+              bvid: item.bvid,
               title: item.title,
               playCount: item.play,
               favorites: item.favorites,

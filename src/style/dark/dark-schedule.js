@@ -100,7 +100,7 @@ function checkTime () {
     }
   }
 }
-fullyLoaded(() => checkTime())
+setTimeout(() => fullyLoaded(() => checkTime()))
 
 export default {
   export: { ScheduleTime }

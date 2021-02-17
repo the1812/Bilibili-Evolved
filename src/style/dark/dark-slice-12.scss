@@ -558,14 +558,33 @@
         .balance-title {
           @include color("e");
         }
-        .balance-right .shell-channel .shell-item {
-          @include background-color("3");
-          @include border-color();
-          &-active {
-            @include theme-border-color();
+        .balance-right {
+          .balance-price,
+          .balance-name {
+            @include theme-color();
           }
-          .channel-name {
+          .shell-channel .shell-item {
+            @include background-color("3");
+            @include border-color();
+            &-active {
+              @include theme-border-color();
+            }
+            .channel-name {
+              @include color("e");
+            }
+          }
+          input {
+            @include background-color("4");
             @include color("e");
+            &::placeholder {
+              @include color("a");
+            }
+          }
+          .all-btn {
+            @include theme-color();
+          }
+          .withdraw-btn {
+            @include theme-background-color();
           }
         }
       }

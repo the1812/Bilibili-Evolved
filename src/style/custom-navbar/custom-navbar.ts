@@ -29,7 +29,11 @@ const loadSettings = () => {
   addSettingsListener('customNavbarBlurOpacity', value => {
     document.documentElement.style.setProperty('--navbar-blur-opacity', value)
   })
-  if (!document.URL.startsWith('https://space.bilibili.com')) {
+  const fixedNotSupported = [
+    // 'https://search.bilibili.com/all',
+    'https://space.bilibili.com',
+  ]
+  if (!fixedNotSupported.some(url => document.URL.startsWith(url))) {
     addSettingsListener('customNavbarGlobalFixed', value => {
       document.body.classList.toggle('fixed-navbar', value)
     }, true)
@@ -181,23 +185,11 @@ export default (() => {
               let leftResult = true
               let right = orderedComponents.length - 1
               let rightResult = true
-              while (left < right && (leftResult || rightResult)) {
-                if (leftResult === true) {
-                  leftResult = orderedComponents[left].checkPosition()
-                  if (leftResult === true) {
-                    left++
-                  } else {
-                    // console.log(`Stop left checking at ${left}`, orderedComponents[left].name)
-                  }
-                }
-                if (rightResult === true) {
-                  rightResult = orderedComponents[right].checkPosition()
-                  if (rightResult === true) {
-                    right--
-                  } else {
-                    // console.log(`Stop right checking at ${right}`, orderedComponents[right].name)
-                  }
-                }
+              while (left < right) {
+                leftResult = orderedComponents[left].checkPosition(!leftResult)
+                left++
+                rightResult = orderedComponents[right].checkPosition(!rightResult)
+                right--
               }
             }
             addSettingsListener('customNavbarOrder', checkPositions, true)

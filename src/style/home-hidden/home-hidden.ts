@@ -102,6 +102,10 @@ const homeHiddenOptions: HomeHiddenOption[] = [
     displayName: "美食"
   },
   {
+    name: 'animal',
+    displayName: '动物圈',
+  },
+  {
     name: "kichiku",
     displayName: "鬼畜"
   },

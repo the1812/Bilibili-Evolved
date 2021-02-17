@@ -232,6 +232,13 @@ class VideoDownloader {
   get totalSize() {
     return this.fragments.map(it => it.size).reduce((acc, it) => acc + it)
   }
+  async getTotalSize(url: string) {
+    const response = await fetch(url, {
+      method: 'HEAD',
+      credentials: 'omit',
+    })
+    return parseInt(response.headers.get('Content-Length') ?? '0')
+  }
   async fetchVideoInfo(dash = false): Promise<VideoDownloaderFragment[]> {
     if (!dash) {
       const url = await pageData.entity.getUrl(this.format.quality)
@@ -279,7 +286,7 @@ class VideoDownloader {
       logError('Cancel Download Failed: forEach in this.workingXhr not found.')
     }
   }
-  downloadFragment(fragment: VideoDownloaderFragment) {
+  async downloadFragment(fragment: VideoDownloaderFragment) {
     const promises: Promise<ArrayBuffer>[] = []
     /**
      * 按一定大小分段或许对大视频更好
@@ -294,15 +301,16 @@ class VideoDownloader {
      */
     const minimalLength = this.isDash ? 4 * 1024 * 1024 : 16 * 1024 * 1024
     let partialLength: number
-    if (fragment.size <= minimalLength * 6) {
-      partialLength = fragment.size / this.fragmentSplitFactor
+    const totalSize = await this.getTotalSize(fragment.url) || fragment.size
+    if (totalSize <= minimalLength * 6) {
+      partialLength = totalSize / this.fragmentSplitFactor
     } else {
       partialLength = minimalLength
     }
     let startByte = 0
     const getPartNumber = (xhr: XMLHttpRequest) => [...this.progressMap.keys()].indexOf(xhr) + 1
-    while (startByte < fragment.size) {
-      const endByte = Math.min(fragment.size - 1, Math.round(startByte + partialLength))
+    while (startByte < totalSize) {
+      const endByte = Math.min(totalSize - 1, Math.round(startByte + partialLength))
       const range = `bytes=${startByte}-${endByte}`
       const rangeLength = endByte - startByte + 1
       promises.push(new Promise((resolve, reject) => {
@@ -1175,7 +1183,8 @@ async function loadPanel() {
         const urls = [
           '//www.bilibili.com/bangumi',
           '//www.bilibili.com/video',
-          '//www.bilibili.com/blackboard/bnj2020.html'
+          '//www.bilibili.com/blackboard/bnj2020.html',
+          '//www.bilibili.com/festival/2021bnj',
         ]
         if (!urls.some(url => document.URL.includes(url))) {
           this.batch = false

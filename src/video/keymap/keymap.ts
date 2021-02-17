@@ -50,33 +50,6 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
           <div class="keymap-tip">${text}</div>
         </div>
       `)
-      resources.applyStyleFromText(`
-        .keymap-tip-container {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          padding: 8px 16px;
-          background-color: #000A;
-          color: white;
-          pointer-events: none;
-          opacity: 0;
-          z-index: 100;
-          display: flex;
-          align-items: center;
-          font-size: 14pt;
-          border-radius: 4px;
-          transition: .2s ease-out;
-        }
-        .keymap-tip-container.show {
-          opacity: 1;
-        }
-        .keymap-tip-container i {
-          line-height: 1;
-          margin-right: 8px;
-          font-size: 18pt;
-        }
-      `, 'keymapStyle')
       tip = dq('.keymap-tip') as HTMLDivElement
     }
     tip.innerHTML = text
@@ -135,40 +108,14 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     like: (() => {
       /** 长按`L`三连使用的记忆变量 */
       let likeClick = true
-      /** 在稍后再看页面里, 记录当前视频是否赞过 */
-      let liked = false
-
-      const listenWatchlaterVideoChange = _.once(() => {
-        Observer.videoChange(() => {
-          Ajax.getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/archive/has/like?aid=${unsafeWindow.aid}`).then(json => {
-            liked = Boolean(json.data)
-          })
-        })
-      })
       return (({ isWatchlater, isMediaList, event }) => {
-        if (isWatchlater) {
-          listenWatchlaterVideoChange()
-          const formData = {
-            aid: unsafeWindow.aid,
-            /** `1`点赞; `2`取消赞 */
-            like: liked ? 2 : 1,
-            csrf: getCsrf(),
-          }
-          Ajax.postTextWithCredentials(`https://api.bilibili.com/x/web-interface/archive/like`, Object.entries(formData).map(([k, v]) => `${k}=${v}`).join('&')).then(() => {
-            liked = !liked
-            if (liked) {
-              Toast.success(`已点赞`, `快捷键扩展`, 1000)
-            } else {
-              Toast.success(`已取消点赞`, `快捷键扩展`, 1000)
-            }
-          })
-        } else if (isMediaList) {
+        if (isMediaList || isWatchlater) {
           const likeButton = dq('.play-options-ul > li:first-child') as HTMLLIElement
           if (likeButton) {
             likeButton.click()
           }
         } else {
-          const likeButton = dq('.video-toolbar .like') as HTMLSpanElement
+          const likeButton = dq('.video-toolbar .like, .tool-bar .like-info') as HTMLSpanElement
           event.preventDefault()
           const fireEvent = (name: string, args: Event) => {
             const event = new CustomEvent(name, args)
@@ -271,7 +218,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedIncrease: 'shift > 》 arrowUp',
     videoSpeedDecrease: 'shift < 《 arrowDown',
     videoSpeedReset: 'shift ? ？',
-    videoSpeedForget: 'shift :',
+    videoSpeedForget: 'shift : ：',
     takeScreenshot: 'ctrl alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
@@ -292,6 +239,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     config = loadKeyBindings(parseBindings(
       { ...defaultBindings, ...settings.customKeyBindings }
     ))
+    resources.applyImportantStyle('keymapStyle')
   })()
 }
 

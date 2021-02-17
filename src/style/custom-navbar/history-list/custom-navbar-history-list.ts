@@ -9,6 +9,10 @@ interface HistoryItem {
   upID: number
   href: string
 }
+interface LiveData {
+  liveStatus: number
+  liveStatusText: string
+}
 interface TimeData {
   timestamp: number
   time: Date
@@ -81,10 +85,13 @@ const historyTimeGrouper = (historyItems: HistoryItem[]) => {
   }
 }
 const formatTime = (date: Date) => {
-  const { yesterday } = getTimeData()
+  const { yesterday, today } = getTimeData()
   const timestamp = Number(date)
-  if (timestamp >= yesterday) {
+  if (timestamp >= today) {
     return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+  }
+  if (timestamp >= yesterday) {
+    return `昨天 ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
   }
   return `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
 }
@@ -103,12 +110,12 @@ const tabs: HistoryTab[] = [
         const progress = item.progress === -1 ? 1 : item.progress / item.duration
         const historyItem = {
           isBangumi,
-          id: item.kid,
+          id: item.history.bvid,
           title: item.title,
           coverUrl: item.cover,
           upName: item.author_name || item.show_title,
           upID: item.author_mid || item.kid,
-          href: isBangumi ? item.uri + `?${progressParam}` : `https://www.bilibili.com/video/av${item.kid}?p=${item.history.page}&${progressParam}`,
+          href: isBangumi ? item.uri + `?${progressParam}` : `https://www.bilibili.com/video/${item.history.bvid}?p=${item.history.page}&${progressParam}`,
           duration: item.duration,
           durationText: formatDuration(item.duration),
           progress,
@@ -163,7 +170,13 @@ const tabs: HistoryTab[] = [
           upName: item.uname,
           coverUrl: item.user_cover,
           title: item.title,
-        } as HistoryItem
+          liveStatus: item.live_status,
+          liveStatusText: ({
+            0: '未开播',
+            1: '直播中',
+            2: '轮播中',
+          } as Record<number, string>)[item.live_status],
+        } as HistoryItem & LiveData
       })
       return historyItems
     }
@@ -223,6 +236,9 @@ export class HistoryList extends NavbarComponent {
                   </a>
                   <div v-if="h.timeText" class="time" :title="h.time.toLocaleString()">
                     {{h.timeText}}
+                  </div>
+                  <div v-if="h.liveStatus !== undefined" class="live-status" :class="{ live: h.liveStatus === 1 }">
+                    {{h.liveStatusText}}
                   </div>
                 </div>
               </transition-group>

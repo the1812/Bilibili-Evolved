@@ -226,47 +226,46 @@ class VideoShot {
     this.cidData = null
     this.supportWebp = VideoShot.supportWebp
   }
-  getVideoshot (currentTime, done) {
+  async getStyle(currentTime) {
+    const data = await this.cidData
+    const indexData = data.index
+    let shotIndex = 0
+    for (let index = 0; index < indexData.length - 2; index++) {
+      if (currentTime >= indexData[index] &&
+        currentTime < indexData[index + 1]) {
+        shotIndex = index
+        break
+      }
+    }
+
+    let imageData = data.image
+    if (!imageData) {
+      return {}
+    }
+    if (this.supportWebp) {
+      imageData = imageData.map(url => url.replace('.jpg', '.jpg@.webp'))
+    }
+    const xLength = parseInt(data.pv_x_len) || 10
+    const yLength = parseInt(data.pv_y_len) || 10
+    const xSize = parseInt(data.pv_x_size) || 160
+    const ySize = parseInt(data.pv_y_size) || 90
+    const x = -(shotIndex % 100 % xLength) * xSize
+    const y = -Math.floor(shotIndex % 100 / yLength) * ySize
+    return {
+      width: xSize,
+      height: ySize,
+      backgroundImage: `url(${imageData[Math.floor(shotIndex / 100)]})`,
+      backgroundPosition: `${x}px ${y}px`
+    }
+  }
+  async getVideoshot (currentTime) {
     if (!(this.aid && this.cid)) {
-      return
+      return {}
     }
     if (!this.cidData) {
-      Ajax.getText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`).then(response => {
-        this.cidData = JSON.parse(response).data
-        this.getVideoshot(currentTime, done)
-      })
-    } else {
-      const data = this.cidData
-      const indexData = data.index
-      let shotIndex = 0
-      for (let index = 0; index < indexData.length - 2; index++) {
-        if (currentTime >= indexData[index] &&
-          currentTime < indexData[index + 1]) {
-          shotIndex = index
-          break
-        }
-      }
-
-      let imageData = data.image
-      if (imageData === null) {
-        return
-      }
-      if (this.supportWebp) {
-        imageData = imageData.map(url => url.replace('.jpg', '.jpg@.webp'))
-      }
-      const xLength = parseInt(data.pv_x_len) || 10
-      const yLength = parseInt(data.pv_y_len) || 10
-      const xSize = parseInt(data.pv_x_size) || 160
-      const ySize = parseInt(data.pv_y_size) || 90
-      const x = -(shotIndex % 100 % xLength) * xSize
-      const y = -Math.floor(shotIndex % 100 / yLength) * ySize
-      done({
-        width: xSize,
-        height: ySize,
-        backgroundImage: `url(${imageData[Math.floor(shotIndex / 100)]})`,
-        backgroundPosition: `${x}px ${y}px`
-      })
+      this.cidData = Ajax.getText(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`).then(response => JSON.parse(response).data)
     }
+    return this.getStyle(currentTime)
   }
   static get supportWebp () {
     try {
@@ -381,7 +380,7 @@ function setupTouchPlayer (player) {
       text.querySelector('.touch-speed').innerHTML = `${speed}速`
       text.querySelector('.touch-info').innerHTML = `进度: ${sec > 0 ? '+' : '-'}${secondsToTime(change)}`
       text.querySelector('.touch-result').innerHTML = result
-      videoshot.getVideoshot(finalTime, style => $('.videoshot').css(style))
+      videoshot.getVideoshot(finalTime).then(style => $('.videoshot').css(style))
       $('.touch-progress').css('width', `${finalPercent}%`)
     }
   }

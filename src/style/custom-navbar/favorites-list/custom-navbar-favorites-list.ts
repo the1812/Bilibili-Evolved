@@ -10,11 +10,23 @@ interface ListInfo {
 interface FavoritesItemInfo extends VideoCardInfo {
   favoriteTimestamp: number
   favoriteTime: Date
+  playLink: string
 }
 const favoriteItemMapper = (item: any) => {
+  const getPlayLink = () => {
+    switch (item.type) {
+      default:
+      case 2:
+        return `https://www.bilibili.com/video/${item.bvid}`
+      case 12:
+        return `https://www.bilibili.com/audio/au${item.id}`
+    }
+  }
   return {
     id: item.id,
     aid: item.id,
+    bvid: item.bvid,
+    playLink: getPlayLink(),
     coverUrl: item.cover.replace('http:', 'https:'),
     favoriteTimestamp: item.fav_time * 1000,
     favoriteTime: new Date(item.fav_time * 1000),
@@ -64,12 +76,12 @@ export class FavoritesList extends NavbarComponent {
               空空如也哦 =￣ω￣=
             </div>
             <div class="favorite-card" v-for="card of filteredCards" :key="card.id">
-              <a class="cover-container" target="_blank" :href="'https://www.bilibili.com/video/av' + card.aid">
+              <a class="cover-container" target="_blank" :href="card.playLink">
                 <dpi-img class="cover" :src="card.coverUrl" :size="{width: 130, height: 85}"></dpi-img>
                 <div class="floating duration">{{card.durationText}}</div>
                 <div class="floating favorite-time">{{card.favoriteTime | formatDate}}</div>
               </a>
-              <a class="title" target="_blank" :href="'https://www.bilibili.com/video/av' + card.aid" :title="card.title">{{card.title}}</a>
+              <a class="title" target="_blank" :href="card.playLink" :title="card.title">{{card.title}}</a>
               <a class="up" target="_blank" :href="'https://space.bilibili.com/' + card.upID" :title="card.upName">
                 <dpi-img placeholder-image class="face" :src="card.upFaceUrl" :size="20"></dpi-img>
                 <div class="name">{{card.upName}}</div>
@@ -164,7 +176,10 @@ export class FavoritesList extends NavbarComponent {
             return []
           }
           return json.data.medias.filter((item: any) => {
-            return item.attr !== 9 // 过滤掉已失效视频
+            if (settings.customNavbarShowDeadVideos) {
+              return true
+            }
+            return item.attr !== 9 && item.attr !== 1 // 过滤掉已失效视频
           }).map(favoriteItemMapper)
         },
         async changeList() {

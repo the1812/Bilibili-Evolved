@@ -122,12 +122,9 @@ export class WatchlaterList extends NavbarComponent {
           }
           const getLink = (item: RawWatchlaterItem) => {
             if (this.redirect) {
-              return `https://www.bilibili.com/video/av${item.aid}`
+              return `https://www.bilibili.com/video/${item.bvid}`
             }
-            if (item.bvid) {
-              return `https://www.bilibili.com/watchlater/#/${item.bvid}`
-            }
-            return `https://www.bilibili.com/watchlater/#/av${item.aid}`
+            return `https://www.bilibili.com/watchlater/#/${item.bvid}`
           }
           const cards = rawList.map(item => {
             const href = (() => {
@@ -143,6 +140,7 @@ export class WatchlaterList extends NavbarComponent {
             const percent = Math.round(1000 * item.progress / item.duration) / 1000
             return {
               aid: item.aid,
+              bvid: item.bvid,
               href,
               coverUrl: item.pic.replace('http:', 'https:'),
               durationText: formatDuration(item.duration),

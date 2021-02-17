@@ -92,7 +92,7 @@ export class VideoSpeedController {
     settings.rememberVideoSpeedList = settings.rememberVideoSpeedList
   }
 
-  static async getInstance(previousSpeed?: number) {
+  static async getInstance(previousSpeed?: number, nativeSpeed?: number) {
     const containerElement = await SpinQuery.select(`.${VideoSpeedController.classNameMap.speedContainer}`)
     const videoElement = await SpinQuery.select(`.${VideoSpeedController.classNameMap.video} video`) as HTMLVideoElement
 
@@ -103,12 +103,14 @@ export class VideoSpeedController {
       throw "video element not found!"
     }
 
-    return new VideoSpeedController(containerElement, videoElement, previousSpeed)
+    return new VideoSpeedController(containerElement, videoElement, previousSpeed, nativeSpeed)
   }
 
   static init = _.once(() => {
-    // 分 P 切换时共享同一个倍数
-    let sharedSpeed = 1
+    // 分 P 切换时共享同一个倍数，这里指定初始倍数可以是 undefined，不需要是 1
+    let sharedSpeed: number | undefined = undefined
+    // 分 P 切换时共享同一个原生倍速值，初始值设置为 1
+    let sharedNativeSpeed = 1
     // 持有菜单容器元素的引用，videoChange 时更换（以前缓存的 VideoController 就没有意义了）
     let containerElement: HTMLElement
 
@@ -141,10 +143,13 @@ export class VideoSpeedController {
           }
         })
       }
-      // 理论上这里的 controller 一定是非缓存的，因此不用太担心事件监听注册重复
+      // 理论上这里的 controller 一定是非缓存的（换 P 的时候 containerElement 是会发生改变的），因此不用担心重复注册事件监听
       ({ containerElement } = controller)
-      containerElement.addEventListener("changed", ({ detail: { speed } }: CustomEvent) => {
+      containerElement.addEventListener("changed", ({ detail: { speed, isNativeSpeed } }: CustomEvent) => {
         sharedSpeed = speed
+        if (isNativeSpeed) {
+          sharedNativeSpeed = speed
+        }
       })
       // 首次加载可能会遇到意外情况，导致内部强制更新失效，因此延时 100 ms 再触发速度设置
       setTimeout(() => {
@@ -159,21 +164,19 @@ export class VideoSpeedController {
   private _videoElement: HTMLVideoElement
   // 这个值模拟原生内部记录的速度倍数，它不应该被赋值成扩展倍数的值
   private _nativeSpeedVal: number
-  private _previousSpeedVal: number
+  // 这个值用于表示上一次（上一P）的倍数值，如果是首次播放第一P，则为 undefined
+  private _previousSpeedVal?: number
 
-  constructor(containerElement: HTMLElement, videoElement: HTMLVideoElement, previousSpeed?: number) {
+  constructor(containerElement: HTMLElement, videoElement: HTMLVideoElement, previousSpeed?: number, nativeSpeed?: number) {
     const controller = VideoSpeedController.instanceMap.get(containerElement)
-    if (controller && (!previousSpeed || controller.playbackRate === previousSpeed)) {
+    if (controller && (!previousSpeed || controller._previousSpeedVal === previousSpeed) && (!nativeSpeed || controller._nativeSpeedVal === nativeSpeed)) {
       return controller
     }
 
     this._videoElement = videoElement
-
-    previousSpeed = previousSpeed ?? this.playbackRate
-
     this._containerElement = containerElement
     this._previousSpeedVal = previousSpeed
-    this._nativeSpeedVal = VideoSpeedController.nativeSupportedRates.includes(previousSpeed) ? previousSpeed : 1
+    this._nativeSpeedVal = nativeSpeed ?? (previousSpeed && VideoSpeedController.nativeSupportedRates.includes(previousSpeed) ? previousSpeed : 1)
     this._nameBtn = this._containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedNameBtn}`) as HTMLButtonElement
     this._menuListElement = this._containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedMenuList}`) as HTMLElement
 
@@ -218,11 +221,13 @@ export class VideoSpeedController {
 
         currentSpeed = parseFloat(selectedSpeedOption.dataset.value ?? '1')
 
-        this._containerElement.dispatchEvent(new CustomEvent("changed", { detail: { speed: currentSpeed, previousSpeed: this._previousSpeedVal } }))
-
+        let isNativeSpeed = false
         if (VideoSpeedController.nativeSupportedRates.includes(currentSpeed)) {
           this._nativeSpeedVal = currentSpeed
+          isNativeSpeed = true
         }
+
+        this._containerElement.dispatchEvent(new CustomEvent("changed", { detail: { speed: currentSpeed, isNativeSpeed, previousSpeed: this._previousSpeedVal } }))
         // 原生支持倍数的应用后，有必要清除扩展倍数选项上的样式
         if (settings.extendVideoSpeed && VideoSpeedController.nativeSupportedRates.includes(currentSpeed)) {
           this._menuListElement.querySelector(`.${VideoSpeedController.classNameMap.speedMenuItem}.extended.${VideoSpeedController.classNameMap.active}`)?.classList.remove(VideoSpeedController.classNameMap.active)
@@ -250,14 +255,14 @@ export class VideoSpeedController {
 
   /**
    * 切换当前倍数
-   * 
+   *
    * 根据`mode`参数的不同有着不同的行为：
-   * 
+   *
    * - `mode === "smart"`（默认）：当前倍数等于 1.0x 时，切换到上次不同的视频倍数，否则重置倍数为 1.0x
    * - `mode === "classic"`：无论当前倍数如何，均切换到上次不同的视频倍数
-   * 
+   *
    * 重置倍数的行为可由 `reset()` 方法同款参数 `forget` 来控制
-   * 
+   *
    * @param forget 指示是否为清除视频记忆的重置倍数操作
    */
   toggleVideoSpeed(mode: "smart" | "classic" = "smart", forget = false) {
@@ -275,20 +280,27 @@ export class VideoSpeedController {
 
   /**
    * 重置视频倍数
-   * 
+   *
    * @param forget 指示是否为清除视频记忆的重置倍数操作
    */
   reset(forget = false) {
     if (forget) {
+      const fallbackVideoSpeed = VideoSpeedController.fallbackVideoSpeed
+      // 如果 fallbackVideoSpeed 是 undefined，那么意味着没有开启记忆倍数功能
+      // 考虑到与清除视频级别的倍数记忆功能的相关性，这里会忽略设定
+      // 简单地说，如果没有开启记忆倍数的功能，就无法清除视频级别的倍数记忆
+      if (!fallbackVideoSpeed) {
+        return
+      }
       VideoSpeedController.forgetSpeed()
-      this.setVideoSpeed(VideoSpeedController.fallbackVideoSpeed || 1)
+      this.setVideoSpeed(VideoSpeedController.fallbackVideoSpeed)
     } else {
       this.setVideoSpeed(1)
     }
   }
 
-  setVideoSpeed(speed: number) {
-    this.getSpeedMenuItem(speed).click()
+  setVideoSpeed(speed?: number) {
+    speed && this.getSpeedMenuItem(speed).click()
   }
 
   private setExtendedVideoSpeed(speed: number) {
