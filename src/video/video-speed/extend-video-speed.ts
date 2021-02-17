@@ -1,6 +1,6 @@
 export const getExtraSpeedMenuItemElements = async () => {
   const { VideoSpeedController } = await import("./video-speed-controller")
-  const { calcOrder, minValue, maxValue, stepValue, errorMessageDuration } = await import("./common")
+  const { calcOrder, minValue, maxValue, stepValue, errorMessageDuration } = await import("./video-speed-common")
 
   const getRecommendedValue = () => {
     const val = VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
