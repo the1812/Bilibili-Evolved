@@ -119,6 +119,10 @@ export class VideoSpeedController {
       const { calcOrder } = await import("./video-speed-common")
       // 有必要传递之前的 nativeSpeedVal，跨分 P 时原生倍数将保持一样
       const controller = await VideoSpeedController.getInstance(sharedSpeed)
+      containerElement = controller.containerElement
+      if (containerElement.classList.contains("extended")) {
+        return
+      }
       if (settings.extendVideoSpeed) {
         controller._menuListElement.prepend(...await getExtraSpeedMenuItemElements())
         // 为所有原生倍速菜单项设置 Order
@@ -143,8 +147,6 @@ export class VideoSpeedController {
         })
       }
       controller.observe();
-      // 理论上这里的 controller 一定是非缓存的（换 P 的时候 containerElement 是会发生改变的），因此不用担心重复注册事件监听
-      ({ containerElement } = controller)
       containerElement.addEventListener("changed", ({ detail: { speed, isNativeSpeed } }: CustomEvent) => {
         sharedSpeed = speed
         if (isNativeSpeed) {
@@ -155,6 +157,7 @@ export class VideoSpeedController {
       setTimeout(() => {
         controller.setVideoSpeed((settings.useDefaultVideoSpeed && settings.rememberVideoSpeed && VideoSpeedController.getRememberSpeed()) || VideoSpeedController.fallbackVideoSpeed || sharedSpeed)
       }, 100)
+      containerElement.classList.add("extended")
     })
   })
 
