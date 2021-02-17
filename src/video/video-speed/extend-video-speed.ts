@@ -1,10 +1,6 @@
 export const getExtraSpeedMenuItemElements = async () => {
   const { VideoSpeedController } = await import("./video-speed-controller")
-
-  const stepValue = 0.5
-  const minValue = 0.0625
-  const maxValue = 16
-  const errorMessageDuration = 2000
+  const { calcOrder, minValue, maxValue, stepValue, errorMessageDuration } = await import("./common")
 
   const getRecommendedValue = () => VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
 
@@ -13,6 +9,7 @@ export const getExtraSpeedMenuItemElements = async () => {
     li.innerText = VideoSpeedController.formatSpeedText(rate)
     li.classList.add(VideoSpeedController.classNameMap.speedMenuItem, "extended")
     li.dataset.value = rate.toString()
+    li.style.order = calcOrder(rate)
 
     const i = document.createElement("i")
     i.classList.add("mdi", "mdi-close-circle")
@@ -136,6 +133,10 @@ export const getExtraSpeedMenuItemElements = async () => {
   /* Firefox */
   .add-speed-entry[type=number] {
     -moz-appearance:textfield;
+  }
+  .${VideoSpeedController.classNameMap.speedMenuList} {
+    display: flex;
+    flex-direction: column;
   }
   `, "extend-video-speed-style")
 
