@@ -184,6 +184,10 @@ Additional variables:
   [`columnImageExporter`, `Export all images in column from Add-ons.`],
   [`feedsImageExporter`, `Export all images in feed from feed menu.`],
   [`homeHidden`, `Removed unwanted components on homepage. You can choose what to hide on Add-ons.`],
+  [`alwaysShowDuration`, `Always show duration in video cards.`],
+  [`expandDanmakuListIgnoreMediaList`, `Don't expand danmaku list in playlist pages. (For viewing playlist)`],
+  [`removeGuidePopup`, `Remove irrelevant popups on videos.`],
+  [`fullscreenGiftBox`, `Open gift box quickly when using web fullscreen mode.`],
 ]);
 export default {
   export: { toolTips },

@@ -232,6 +232,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`feedsImageExporter`, /*html*/`在动态的右上角菜单中可选择导出图片来下载当前动态里的所有图片.`],
   [`homeHidden`, /*html*/`隐藏原版首页不需要的元素/分区. 你可以在附加功能中详细配置隐藏哪些元素.`],
   [`alwaysShowDuration`, /*html*/`在脚本展示的视频卡片里, 例如简化首页和自定义顶栏的各种弹窗里, 不需要鼠标经过也能一直显示视频时长.`],
+  [`expandDanmakuListIgnoreMediaList`, /*html*/`合集类页面(收藏夹/稍后再看等)中不展开弹幕列表, 方便浏览视频列表.`],
+  [`removeGuidePopup`, /*html*/`删除视频内弹出的三连提示框.`],
+  [`fullscreenGiftBox`, /*html*/`在网页全屏状态下, 可以直接点开礼物包裹, 方便送辣条和小心心.`],
 ]);
 export default {
   export: { toolTips },

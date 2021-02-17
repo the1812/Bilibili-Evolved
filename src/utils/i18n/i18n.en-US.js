@@ -144,7 +144,7 @@ export const map = new Map([
   [`动态首页`, `Feeds Home`],
   [`历史动态`, `Feeds History`],
   [`活动作品`, `Event`],
-  [`未经作者授权，禁止转载`, `Please do not repost or reproduce without prior permission`],
+  [`未经作者授权，禁止转载`, `Please do not repost to other site or reproduce without prior permission`],
   [`上一帧`, `Previous Frame`],
   [`下一帧`, `Next Frame`],
   [`人正在看`, `watching`],
@@ -970,6 +970,12 @@ export const map = new Map([
   [`分区栏`, `Categories`],
   [`活动/热门视频`, `Trending`],
   [`在线列表`, `Online Ranking`],
+  [`扩展视频倍数菜单`, `Extend video speed menu`],
+  [`合集类页面不展开`, `Ignore in playlist`],
+  [`视频选集`, `Pages`],
+  [`直播全屏包裹`, `Web fullscreen gift box`],
+  [`总是显示视频时长`, `Always show duration`],
+  [`删除视频弹窗`, `Remove video popups`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
