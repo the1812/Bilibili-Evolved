@@ -234,9 +234,9 @@ export const isTyping = () => {
   return ['input', 'textarea'].includes(activeElement.nodeName.toLowerCase())
 }
 export const getAid = (aid) => {
-  aid = aid ?? unsafeWindow.aid
+  aid = aid || unsafeWindow.aid
   if (!aid) {
-    throw "aid is unknown"
+    throw new Error('aid is unknown')
   }
   return aid
 }
