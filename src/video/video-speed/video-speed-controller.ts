@@ -118,7 +118,7 @@ export class VideoSpeedController {
       const { getExtraSpeedMenuItemElements } = await import("./extend-video-speed")
       const { calcOrder } = await import("./video-speed-common")
       // 有必要传递之前的 nativeSpeedVal，跨分 P 时原生倍数将保持一样
-      const controller = await VideoSpeedController.getInstance(sharedSpeed)
+      const controller = await VideoSpeedController.getInstance(sharedSpeed, sharedNativeSpeed)
       containerElement = controller.containerElement
       if (containerElement.classList.contains("extended")) {
         return
