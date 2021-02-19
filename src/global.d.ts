@@ -509,6 +509,7 @@ declare global {
     rememberVideoSpeed: boolean,
     extendVideoSpeed: boolean,
     extendVideoSpeedList: number[],
+    extendVideoSpeedMenuVisibleItemMaxCount: number,
     customKeyBindings: { [actionName: string]: string },
     alwaysShowDuration: boolean,
     menuRepeatVideo: boolean,
@@ -578,3 +579,4 @@ declare global {
   const getAid: (aid?: string) => string
 }
 export { }
+

@@ -1,6 +1,8 @@
-export const getExtraSpeedMenuItemElements = async () => {
+import { VideoSpeedController } from "./video-speed-controller"
+
+export const getExtraSpeedMenuItemElements = async (controller: VideoSpeedController) => {
   const { VideoSpeedController } = await import("./video-speed-controller")
-  const { calcOrder, minValue, maxValue, stepValue, errorMessageDuration } = await import("./video-speed-common")
+  const { calcOrder, calcMenuHeight, minValue, maxValue, stepValue, errorMessageDuration } = await import("./video-speed-common")
 
   const getRecommendedValue = () => {
     const val = VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
@@ -19,6 +21,7 @@ export const getExtraSpeedMenuItemElements = async () => {
     i.addEventListener("click", () => {
       settings.extendVideoSpeedList = _.pull(settings.extendVideoSpeedList, rate)
       li.remove()
+      controller.menuListElement.style.height = calcMenuHeight(VideoSpeedController)
     })
 
     li.append(i)
@@ -77,6 +80,8 @@ export const getExtraSpeedMenuItemElements = async () => {
           afterElement = afterElement.nextElementSibling as HTMLLIElement;
         }
         afterElement.before(createExtendedSpeedMenuItemElement(value))
+        updateInput(input)
+        controller.menuListElement.style.height = calcMenuHeight(VideoSpeedController)
       }
     })
 
@@ -140,6 +145,7 @@ export const getExtraSpeedMenuItemElements = async () => {
   .${VideoSpeedController.classNameMap.speedMenuList} {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
   }
   `, "extend-video-speed-style")
 
