@@ -249,7 +249,6 @@ export const settings = {
   rememberVideoSpeed: false,
   extendVideoSpeed: true,
   extendVideoSpeedList: [2.5, 3],
-  extendVideoSpeedMenuVisibleItemMaxCount: 9,
   customKeyBindings: {},
   alwaysShowDuration: false,
   menuRepeatVideo: false,
