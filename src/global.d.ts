@@ -578,4 +578,3 @@ declare global {
   const getAid: (aid?: string) => string
 }
 export { }
-
