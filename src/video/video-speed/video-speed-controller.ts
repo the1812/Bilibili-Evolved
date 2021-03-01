@@ -298,7 +298,7 @@ export class VideoSpeedController {
         return
       }
       VideoSpeedController.forgetSpeed()
-      this.setVideoSpeed(VideoSpeedController.fallbackVideoSpeed)
+      this.setVideoSpeed(fallbackVideoSpeed)
     } else {
       this.setVideoSpeed(1)
     }
