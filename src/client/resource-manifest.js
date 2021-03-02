@@ -333,6 +333,7 @@ Resource.manifest = {
   },
   expandDescription: {
     style: 'instant',
+    reloadable: true,
     displayNames: {
       expandDescription: '自动展开视频简介',
     },
