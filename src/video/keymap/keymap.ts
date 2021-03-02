@@ -24,10 +24,10 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
   const changeVideoTime = (delta: number) => {
     return () => {
       const video = dq('.bilibili-player-video video') as HTMLVideoElement
-      if (!video) {
+      if (!video || !unsafeWindow.player) {
         return
       }
-      video.currentTime += delta
+      unsafeWindow.player.seek(video.currentTime + delta, video.paused)
     }
   }
   /** 提示框用的`setTimeout`句柄 */
