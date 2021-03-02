@@ -10,7 +10,7 @@ const supportedUrls = [
   'https://www.bilibili.com/festival/2021bnj',
 ]
 
-let config: { enable: boolean }
+let config: { enable: boolean, bindings: KeyBinding[] } | undefined = undefined
 if (supportedUrls.some(url => document.URL.startsWith(url))) {
   const clickElement = (target: string | HTMLElement) => {
     return () => {
@@ -236,9 +236,19 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
 
   ;(async () => {
     const { loadKeyBindings } = await import('./key-bindings')
-    config = loadKeyBindings(parseBindings(
-      { ...defaultBindings, ...settings.customKeyBindings }
-    ))
+    const { presets } = await import('./key-binding-presets')
+    addSettingsListener('keymapPreset', () => {
+      const preset = presets[settings.keymapPreset] || {}
+      const bindings = parseBindings(
+        { ...defaultBindings, ...preset, ...settings.customKeyBindings }
+      )
+      if (config) {
+        console.log('load preset', settings.keymapPreset)
+        config.bindings = bindings
+      } else {
+        config = loadKeyBindings(bindings)
+      }
+    }, true)
     resources.applyImportantStyle('keymapStyle')
   })()
 }

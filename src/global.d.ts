@@ -415,6 +415,7 @@ declare global {
     lastSeedsToCoinsDate: number,
     autoDraw: boolean,
     keymap: boolean,
+    keymapPreset: 'Default' | 'YouTube' | 'HTML5Player' | 'PotPlayer',
     doubleClickFullscreen: boolean,
     doubleClickFullscreenPreventSingleClick: boolean
     simplifyHome: boolean,

@@ -1,0 +1,46 @@
+export const presets: Record<typeof settings['keymapPreset'], Record<string, string>> = {
+  Default: {},
+  YouTube: {
+    like: '',
+    longJumpForward: 'j',
+    longJumpBackward: 'l',
+    videoSpeedIncrease: 'shift > 》',
+    videoSpeedDecrease: 'shift < 《',
+    previousFrame: ', ，',
+    nextFrame: '. 。',
+    seekBegin: '0 Home',
+  },
+  HTML5Player: {
+    coin: '',
+    danmaku: '',
+    fullscreen: 'enter',
+    webFullscreen: 'shift enter',
+    pictureInPicture: 'shift p',
+    longJumpForward: 'ctrl arrowLeft',
+    longJumpBackward: 'ctrl arrowRight',
+    videoSpeedIncrease: 'c',
+    videoSpeedDecrease: 'x',
+    videoSpeedReset: 'z',
+    previousFrame: 'd',
+    nextFrame: 'f',
+    takeScreenshot: 'shift s',
+  },
+  PotPlayer: {
+    coin: '',
+    danmaku: '',
+    fullscreen: 'enter',
+    webFullscreen: '6',
+    longJumpForward: 'ctrl arrowLeft',
+    longJumpBackward: 'ctrl arrowRight',
+    videoSpeedIncrease: 'c',
+    videoSpeedDecrease: 'x',
+    videoSpeedReset: 'z',
+    previousFrame: 'd',
+    nextFrame: 'f',
+    seekBegin: 'backspace',
+  },
+}
+
+export default {
+  export: { presets },
+}

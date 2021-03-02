@@ -43,7 +43,6 @@ function setupEvents () {
       const outsideHandler = event => {
         const target = event.target
         const container = dq(`li[data-key=${it.getAttribute('key')}]`)
-        console.log(container, it.getAttribute('key'), target)
         if (container.contains(target) && container !== target) {
           return
         }

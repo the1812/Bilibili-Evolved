@@ -534,7 +534,12 @@ Resource.manifest = {
     style: true,
     displayNames: {
       keymap: '快捷键扩展',
+      keymapPreset: '快捷键预设',
     },
+    dropdown: {
+      key: 'keymapPreset',
+      items: ['Default', 'YouTube', 'HTML5Player', 'PotPlayer'],
+    }
   },
   doubleClickFullscreen: {
     displayNames: {

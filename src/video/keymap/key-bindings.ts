@@ -19,7 +19,8 @@ export const loadKeyBindings = _.once((bindings: KeyBinding[]) => {
   const isWatchlater = document.URL.startsWith('https://www.bilibili.com/watchlater/')
   const isMediaList = document.URL.startsWith('https://www.bilibili.com/medialist/play/')
   const config = {
-    enable: true
+    enable: true,
+    bindings,
   }
   document.body.addEventListener('keydown', (e: KeyboardEvent & { [key: string]: boolean }) => {
     if (!config.enable) {
@@ -41,12 +42,16 @@ export const loadKeyBindings = _.once((bindings: KeyBinding[]) => {
       return
     }
 
-    bindings.forEach(binding => {
+    config.bindings.forEach(binding => {
       if (binding.keys.length === 0) {
         return
       }
       const modifyKeyNotMatch = modifyKeys.some(m => {
         const needModifyKey = binding.keys.includes(m)
+        const optionalModifyKey = binding.keys.includes(`[${m}]`)
+        if (optionalModifyKey) {
+          return false
+        }
         const isModifyKeyPressed = e[m + 'Key']
         return needModifyKey !== isModifyKeyPressed
       })

@@ -163,6 +163,7 @@ export const settings = {
   lastSeedsToCoinsDate: 0,
   autoDraw: false,
   keymap: false,
+  keymapPreset: 'Default',
   doubleClickFullscreen: false,
   doubleClickFullscreenPreventSingleClick: false,
   simplifyHome: false,
