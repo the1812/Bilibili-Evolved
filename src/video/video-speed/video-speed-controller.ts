@@ -118,7 +118,7 @@ export class VideoSpeedController {
       const { getExtraSpeedMenuItemElements } = await import("./extend-video-speed")
       const { calcOrder } = await import("./video-speed-common")
       // 有必要传递之前的 nativeSpeedVal，跨分 P 时原生倍数将保持一样
-      const controller = await VideoSpeedController.getInstance(sharedSpeed)
+      const controller = await VideoSpeedController.getInstance(sharedSpeed, sharedNativeSpeed)
       containerElement = controller.containerElement
       if (containerElement.classList.contains("extended")) {
         return
@@ -128,7 +128,7 @@ export class VideoSpeedController {
         // 为所有原生倍速菜单项设置 Order
         controller._menuListElement.querySelectorAll(`.${VideoSpeedController.classNameMap.speedMenuItem}[data-value]:not(.extended)`).forEach(
           (it: HTMLLIElement) => { it.style.order = calcOrder(parseFloat(it.getAttribute("data-value")!)) }
-        );
+        )
         // 如果开启了扩展倍数，存在一种场景使倍数设置会失效：
         //   1. 用户从原生支持的倍数切换到扩展倍数
         //   2. 用户从扩展倍数切换到之前选中的原生倍数
@@ -296,7 +296,7 @@ export class VideoSpeedController {
         return
       }
       VideoSpeedController.forgetSpeed()
-      this.setVideoSpeed(VideoSpeedController.fallbackVideoSpeed)
+      this.setVideoSpeed(fallbackVideoSpeed)
     } else {
       this.setVideoSpeed(1)
     }
