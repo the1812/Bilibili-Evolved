@@ -95,11 +95,11 @@ export class FavoritesList extends NavbarComponent {
       </div>
     `
     this.initialPopup = () => this.init()
-    this.onPopup = () => {
-      if (this.vm?.selectedListId !== 0) {
-        this.vm?.changeList()
-      }
-    }
+    // this.onPopup = () => {
+    //   if (this.vm?.selectedListId !== 0) {
+    //     this.vm?.changeList()
+    //   }
+    // }
   }
   get name(): keyof CustomNavbarOrders {
     return 'favoritesList'
