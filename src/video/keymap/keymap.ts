@@ -1,5 +1,5 @@
 import { VideoSpeedController } from '../video-speed/video-speed-controller'
-import { KeyBinding, KeyBindingAction } from './key-bindings'
+import { KeyBinding, KeyBindingAction, KeyBindingActionContext } from './key-bindings'
 
 const supportedUrls = [
   'https://www.bilibili.com/bangumi/',
@@ -13,11 +13,14 @@ const supportedUrls = [
 let config: { enable: boolean, bindings: KeyBinding[] } | undefined = undefined
 if (supportedUrls.some(url => document.URL.startsWith(url))) {
   const clickElement = (target: string | HTMLElement) => {
-    return () => {
+    return ({ event }: KeyBindingActionContext) => {
+      const mouseEvent = new MouseEvent('click', {
+        ..._.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey')
+      })
       if (typeof target === 'string') {
-        (dq(target) as HTMLElement)?.click()
+        (dq(target) as HTMLElement)?.dispatchEvent(mouseEvent)
       } else {
-        target.click()
+        target.dispatchEvent(mouseEvent)
       }
     }
   }
@@ -92,8 +95,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
         showTip(`${after}%`, 'mdi-volume-high')
       }
     },
-    mute: () => {
-      clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume')()
+    mute: (context: KeyBindingActionContext) => {
+      clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume')(context)
       const isMute = unsafeWindow.player.isMute()
       if (isMute) {
         showTip('已静音', 'mdi-volume-off')
@@ -219,7 +222,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedDecrease: 'shift < 《 arrowDown',
     videoSpeedReset: 'shift ? ？',
     videoSpeedForget: 'shift : ：',
-    takeScreenshot: 'ctrl alt c',
+    takeScreenshot: 'ctrl [shift] alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
     seekBegin: '0',

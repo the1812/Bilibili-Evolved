@@ -1,9 +1,10 @@
-export type KeyBindingAction = (context: {
+export interface KeyBindingActionContext {
   binding: KeyBinding
   event: KeyboardEvent
   isWatchlater: boolean
   isMediaList: boolean
-}) => void
+}
+export type KeyBindingAction = (context: KeyBindingActionContext) => void
 export interface KeyBinding {
   keys: string[]
   action: KeyBindingAction
