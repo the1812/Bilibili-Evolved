@@ -79,3 +79,17 @@
     @include theme-stroke();
   }
 }
+.b-head-search {
+  @include border-color("4");
+  &.input-active {
+    @include theme-border-color();
+  }
+  .b-head-search_input {
+    @include background-color();
+    @include color("e");
+  }
+  .search-icon,
+  .show-icon {
+    @include to-theme("blue");
+  }
+}
