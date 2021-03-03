@@ -1,3 +1,5 @@
+@import "../../style/common";
+
 .video-take-screenshot {
   position: relative;
   padding: 0 6px;
@@ -63,7 +65,7 @@
   --screenshot-width-negative: calc(0px - var(--screenshot-width));
   --screenshot-height: 135px;
   --thumbnail-margin-vertical: 12px;
-  --thumbnail-margin-horizontal: 24px;
+  --thumbnail-margin-horizontal: 12px;
   --screenshot-list-width: calc(2 * var(--thumbnail-margin-horizontal) + var(--screenshot-width));
 
   &,
@@ -73,7 +75,7 @@
 }
 .video-screenshot-batch {
   position: fixed;
-  bottom: 0;
+  bottom: var(--thumbnail-margin-vertical);
   right: 0;
   z-index: 20000;
   display: flex;
@@ -84,7 +86,7 @@
     background: #000c;
     color: #fff;
     border: none;
-    border-radius: 10px 10px 0 0;
+    border-radius: 8px;
     font-size: 11pt;
     cursor: pointer;
     outline: 0 !important;
@@ -92,6 +94,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-grow: 1;
+    &:not(:last-child) {
+      margin-right: 16px;
+    }
     i {
       font-size: 14pt;
       margin-right: 4px;
@@ -103,11 +109,14 @@
   top: 0;
   right: 0;
   z-index: 20000;
-  padding: var(--thumbnail-margin-vertical) 0;
-  pointer-events: none;
-  height: calc(100% - 2 * var(--thumbnail-margin-vertical) - 48px);
+  margin: var(--thumbnail-margin-vertical) 0;
+  max-height: calc(100% - 2 * var(--thumbnail-margin-vertical) - 58px);
   width: var(--screenshot-list-width);
+  background-color: #000c;
+  border-radius: 8px;
   overflow: auto;
+  @include no-scrollbar();
+
   * {
     pointer-events: initial;
   }
