@@ -61,7 +61,8 @@
     @include background-color("4");
   }
 }
-.filter-wrap .filter-wrap_bottom {
+.filter-wrap .filter-wrap_bottom,
+.recommend-list .split-line {
   @include background-color("4");
 }
 #app .collection-m .add-group .input-group .submit {
