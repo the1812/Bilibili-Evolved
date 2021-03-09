@@ -93,3 +93,10 @@
     @include to-theme("blue");
   }
 }
+.multi-page .cur-list .list-box li .link-content img{
+  @include to-theme("blue");
+}
+.next-button .switch-button.on {
+  @include theme-background-color();
+  @include theme-border-color();
+}
