@@ -101,3 +101,63 @@
   @include theme-background-color();
   @include theme-border-color();
 }
+.video-sections {
+  @include background-color("4");
+  &-head {
+    &_first-line {
+      .first-line {
+        &-left {
+          span:not(.cur-page) {
+            @include color("e");
+          }
+        }
+      }
+    }
+    &_second-line {
+      .second-line_right {
+        @include theme-border-color();
+        @include background-color("4");
+        @include theme-color();
+        &.already-fav {
+          @include background-color("6");
+          @include color("9");
+        }
+      }
+    }
+    &_desc {
+      @include background-color("6");
+      @include color("e");
+    }
+    .border-bottom-line {
+      @include background-color("6");
+    }
+  }
+  &-content-list {
+    .video-sections-item {
+      @include set-color("border-bottom-color", "6");
+    }
+    .video-section {
+      &-title {
+        @include background-color("4");
+        span {
+          @include color("e");
+        }
+      }
+      &-list {
+        .video-episode-card {
+          &__info {
+            &-title {
+              @include color("e");
+            }
+            &-title-playing {
+              @include theme-color();
+              .cur-play-icon {
+                @include to-theme("blue");
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
