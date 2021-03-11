@@ -61,7 +61,8 @@
     @include background-color("4");
   }
 }
-.filter-wrap .filter-wrap_bottom {
+.filter-wrap .filter-wrap_bottom,
+.recommend-list .split-line {
   @include background-color("4");
 }
 #app .collection-m .add-group .input-group .submit {
@@ -92,4 +93,11 @@
   .show-icon {
     @include to-theme("blue");
   }
+}
+.multi-page .cur-list .list-box li .link-content img{
+  @include to-theme("blue");
+}
+.next-button .switch-button.on {
+  @include theme-background-color();
+  @include theme-border-color();
 }
