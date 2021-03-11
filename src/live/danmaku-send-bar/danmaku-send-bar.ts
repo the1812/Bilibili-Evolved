@@ -15,6 +15,9 @@
       if ([leftController, originalTextArea, sendButton].some(it => it === null)) {
         return
       }
+      if (dq(controlBar, `.${danmakuSendBarClass}`)) {
+        return
+      }
 
       const DanmakuSendBar = Vue.extend({
         template: /*html*/`
