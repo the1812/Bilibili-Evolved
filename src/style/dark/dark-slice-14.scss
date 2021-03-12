@@ -101,3 +101,26 @@
   @include theme-background-color();
   @include theme-border-color();
 }
+.container .left-container .play-up-info {
+  .play-up-intro {
+    .play-up-cover-loading,
+    .play-up-introduction-loading p {
+      @include background-color("4");
+    }
+  }
+  .play-up-self .play-up-self-content a {
+    @include theme-color();
+  }
+}
+.player-auxiliary {
+  &-btn-playlist-order:hover path {
+    @include theme-stroke();
+  }
+  &-playlist-item-img {
+    background-image: none !important;
+    @include background-color("4");
+  }
+}
+.remd-video-card .card-box .pic-box {
+  @include background-color("4");
+}
