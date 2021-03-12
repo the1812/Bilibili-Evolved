@@ -210,8 +210,7 @@
     @include theme-stroke();
   }
   &-playlist-item-img {
-    background-image: none !important;
-    @include background-color("4");
+    @include no-image
   }
 }
 .remd-video-card .card-box .pic-box {
