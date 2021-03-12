@@ -94,7 +94,7 @@
     @include to-theme("blue");
   }
 }
-.multi-page .cur-list .list-box li .link-content img{
+.multi-page .cur-list .list-box li .link-content img {
   @include to-theme("blue");
 }
 .next-button .switch-button.on {
@@ -157,6 +157,25 @@
             }
           }
         }
+      }
+    }
+  }
+}
+#page-fav {
+  .favList-info {
+    .shadow-first {
+      @include background-color("2");
+    }
+    .shadow-second {
+      @include background-color("3");
+    }
+    .collection-details {
+      .title .iconfont {
+        @include color("a");
+      }
+      .collection-btn {
+        @include theme-background-color();
+        @include color("e");
       }
     }
   }
