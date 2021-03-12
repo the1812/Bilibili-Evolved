@@ -180,3 +180,17 @@
     }
   }
 }
+.international-header .user-con.signin .item .notify-float {
+  &::before {
+    @include background-color("4");
+  }
+  .float_msg {
+    @include background-color("4");
+    div {
+      @include color("e");
+      span {
+        @include theme-color();
+      }
+    }
+  }
+}
