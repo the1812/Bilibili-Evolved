@@ -94,10 +94,103 @@
     @include to-theme("blue");
   }
 }
-.multi-page .cur-list .list-box li .link-content img{
+.multi-page .cur-list .list-box li .link-content img {
   @include to-theme("blue");
 }
 .next-button .switch-button.on {
   @include theme-background-color();
   @include theme-border-color();
+}
+.video-sections {
+  @include background-color("4");
+  &-head {
+    &_first-line {
+      .first-line {
+        &-left {
+          span:not(.cur-page) {
+            @include color("e");
+          }
+        }
+      }
+    }
+    &_second-line {
+      .second-line_right {
+        @include theme-border-color();
+        @include background-color("4");
+        @include theme-color();
+        &.already-fav {
+          @include background-color("6");
+          @include color("9");
+        }
+      }
+    }
+    &_desc {
+      @include background-color("6");
+      @include color("e");
+    }
+    .border-bottom-line {
+      @include background-color("6");
+    }
+  }
+  &-content-list {
+    .video-sections-item {
+      @include set-color("border-bottom-color", "6");
+    }
+    .video-section {
+      &-title {
+        @include background-color("4");
+        span {
+          @include color("e");
+        }
+      }
+      &-list {
+        .video-episode-card {
+          &__info {
+            &-title {
+              @include color("e");
+            }
+            &-title-playing {
+              @include theme-color();
+              .cur-play-icon {
+                @include to-theme("blue");
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#page-fav {
+  .favList-info {
+    .shadow-first {
+      @include background-color("2");
+    }
+    .shadow-second {
+      @include background-color("3");
+    }
+    .collection-details {
+      .title .iconfont {
+        @include color("a");
+      }
+      .collection-btn {
+        @include theme-background-color();
+        @include color("e");
+      }
+    }
+  }
+}
+.international-header .user-con.signin .item .notify-float {
+  &::before {
+    @include background-color("4");
+  }
+  .float_msg {
+    @include background-color("4");
+    div {
+      @include color("e");
+      span {
+        @include theme-color();
+      }
+    }
+  }
 }

@@ -17,6 +17,10 @@ const notSupported: (string | RegExp)[] = [
   '//member.bilibili.com/platform',
   '//live.bilibili.com/p/html/live-lottery/anchor-join.html',
   '//account.bilibili.com/subtitle/edit/#/editor',
+  // 创作中心-收益管理-充电计划
+  "/york/allowance-charge",
+  // 创作中心-收益管理-悬赏计划
+  "//cm.bilibili.com/quests/#/task",
 ]
 const load = () => {
   if (settings.noDarkOnMember && notSupported.some(it => {
