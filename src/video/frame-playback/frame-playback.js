@@ -17,8 +17,12 @@ const main = async () => {
   }
 
   let frameTime = 0
-  const prevFrame = () => dq('video').currentTime -= frameTime
-  const nextFrame = () => dq('video').currentTime += frameTime
+  const seek = (forward) => () => {
+    const video = dq('video')
+    unsafeWindow.player.seek(video.currentTime + (forward ? 1 : -1) * frameTime, video.paused)
+  }
+  const prevFrame = seek(false)
+  const nextFrame = seek(true)
   Observer.attributesSubtree('.bilibili-player-video-quality-menu ul.bui-select-list', () => {
     const selectedQuality = document.querySelector('.bilibili-player-video-quality-menu .bui-select-item-active')
     const quality = selectedQuality ? parseInt(selectedQuality.getAttribute('data-value')) : 0
