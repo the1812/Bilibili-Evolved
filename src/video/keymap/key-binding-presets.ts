@@ -3,8 +3,8 @@ export const presets: Record<typeof settings['keymapPreset'], Record<string, str
   YouTube: {
     like: 'shift l',
     pause: 'space k',
-    longJumpForward: 'j',
-    longJumpBackward: 'l',
+    longJumpForward: 'l',
+    longJumpBackward: 'j',
     videoSpeedIncrease: 'shift > 》',
     videoSpeedDecrease: 'shift < 《',
     previousFrame: ', ，',
