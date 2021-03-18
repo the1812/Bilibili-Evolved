@@ -111,30 +111,23 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     like: (() => {
       /** 长按`L`三连使用的记忆变量 */
       let likeClick = true
-      return (({ isWatchlater, isMediaList, event }) => {
-        if (isMediaList || isWatchlater) {
-          const likeButton = dq('.play-options-ul > li:first-child') as HTMLLIElement
-          if (likeButton) {
-            likeButton.click()
-          }
-        } else {
-          const likeButton = dq('.video-toolbar .like, .tool-bar .like-info') as HTMLSpanElement
-          event.preventDefault()
-          const fireEvent = (name: string, args: Event) => {
-            const event = new CustomEvent(name, args)
-            likeButton.dispatchEvent(event)
-          }
-          likeClick = true
-          setTimeout(() => likeClick = false, 200)
-          fireEvent('mousedown', event)
-          document.body.addEventListener('keyup', e => {
-            e.preventDefault()
-            fireEvent('mouseup', e)
-            if (likeClick) {
-              fireEvent('click', e)
-            }
-          }, { once: true })
+      return (({ event }) => {
+        const likeButton = dq('.video-toolbar .like, .tool-bar .like-info') as HTMLSpanElement
+        event.preventDefault()
+        const fireEvent = (name: string, args: Event) => {
+          const event = new CustomEvent(name, args)
+          likeButton.dispatchEvent(event)
         }
+        likeClick = true
+        setTimeout(() => likeClick = false, 200)
+        fireEvent('mousedown', event)
+        document.body.addEventListener('keyup', e => {
+          e.preventDefault()
+          fireEvent('mouseup', e)
+          if (likeClick) {
+            fireEvent('click', e)
+          }
+        }, { once: true })
       }) as KeyBindingAction
     })(),
     danmaku: () => {
