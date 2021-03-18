@@ -518,12 +518,6 @@ Resource.manifest = {
       useDefaultVideoSpeed: '记忆上次播放速度',
     },
   },
-  seedsToCoins: {
-    displayNames: {
-      seedsToCoins: '瓜子换硬币',
-      autoSeedsToCoins: '自动运行',
-    },
-  },
   autoDraw: {
     displayNames: {
       autoDraw: '直播间自动领奖',

@@ -158,9 +158,6 @@ export const settings = {
   aria2RpcOptionSelectedProfile: '',
   aria2RpcOptionProfiles: [],
   searchHistory: [],
-  seedsToCoins: true,
-  autoSeedsToCoins: true,
-  lastSeedsToCoinsDate: 0,
   autoDraw: false,
   keymap: false,
   keymapPreset: 'Default',
@@ -260,6 +257,9 @@ export const settings = {
   cache: {},
 }
 const fixedSettings = {
+  seedsToCoins: false,
+  autoSeedsToCoins: false,
+  lastSeedsToCoinsDate: 0,
   useDefaultLiveQuality: false,
   recordLiveDanmaku: false,
   autoContinue: false,
