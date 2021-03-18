@@ -65,8 +65,7 @@ export default {
         this.actualSrc = src
         return
       }
-      const extension = src.substring(src.lastIndexOf('.') + 1)
-      this.srcset = getDpiSourceSet(src, this.size, extension)
+      this.srcset = getDpiSourceSet(src, this.size)
       this.actualSrc = src
     }
   },

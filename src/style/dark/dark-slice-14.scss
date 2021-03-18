@@ -222,7 +222,4 @@
 }
 .video-info .video-title .tit {
   @include color("e");
-  &:hover {
-    @include theme-color();
-  }
 }
