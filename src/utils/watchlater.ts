@@ -62,11 +62,11 @@ if (settings.watchLaterRedirectPage) {
       }
       const redirect = (item: Element, index: number) => {
         const watchlaterItem = list[index]
-        const aid = watchlaterItem.aid
+        const bvid = watchlaterItem.bvid
         const cid = watchlaterItem.cid
         const pages = watchlaterItem.pages
         const page = cid === 0 ? 1 : pages.find(p => p.cid === cid)!.page
-        const url = page > 1 ? `https://www.bilibili.com/video/av${aid}?p=${page}` : `https://www.bilibili.com/video/av${aid}`
+        const url = page > 1 ? `https://www.bilibili.com/video/${bvid}?p=${page}` : `https://www.bilibili.com/video/${bvid}`
         const pic = item.querySelector('.av-pic') as HTMLAnchorElement
         pic.target = '_blank'
         pic.href = url
