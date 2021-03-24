@@ -27,10 +27,6 @@ export const loadKeyBindings = _.once((bindings: KeyBinding[]) => {
     if (!config.enable) {
       return
     }
-    // 稍后再看页面无视快捷键
-    if (isWatchlater && document.URL.endsWith('list')) {
-      return
-    }
     // 打字时无视快捷键
     if (document.activeElement && isTyping()) {
       return

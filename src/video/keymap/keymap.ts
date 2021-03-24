@@ -222,7 +222,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
   }
   const parseBindings = (bindings: { [action: string]: string }) => {
     return Object.entries(bindings).map(([actionName, keyString]) => {
-      const keys = keyString.split(' ')
+      const keys = keyString.split(' ').filter(it => it !== '')
       return {
         keys,
         action: (actions as any)[actionName] || (() => {}),
