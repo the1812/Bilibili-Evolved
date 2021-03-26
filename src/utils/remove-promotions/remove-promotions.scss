@@ -18,7 +18,8 @@
 .rank-container .cm-module,
 body:not(.preserve-event-banner) .activity-m,
 body.remove-game-match-module .bili-wrapper > .home-match,
-body.remove-game-match-module #reportFirst3 {
+body.remove-game-match-module #reportFirst3,
+.home-content .ad-panel {
   display: none !important;
 }
 /* .carousel-module .panel .pic li[data-id='0']
