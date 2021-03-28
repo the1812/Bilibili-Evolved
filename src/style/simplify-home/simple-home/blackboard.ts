@@ -7,9 +7,8 @@ export interface Blackboard {
 export const getBlackboards = async (): Promise<Blackboard[]> => {
   if (dq('.international-home')) {
     const initData = await SpinQuery.condition(() => unsafeWindow['__INITIAL_STATE__'], it => it !== undefined)
-    let half = dqa('.home-slide .item').length / 2
-    return dqa('.home-slide .item')
-      .slice(0, half)
+    return dqa('.first-screen .home-slide .item')
+      .slice(0, 5)
       .map((it, index) => {
         const locID = it.querySelector('a')!.getAttribute('data-loc-id')!
         return {
