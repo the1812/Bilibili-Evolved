@@ -387,6 +387,34 @@ class FeedsCardsManager extends EventTarget {
 }
 export const feedsCardsManager = new FeedsCardsManager()
 
+export const isCardBlocked = (card: Pick<FeedsCard, 'text' | 'username'>) => {
+  if (!settings.feedsFilter) {
+    return false
+  }
+  const testPattern = (pattern: Pattern, text: string) => {
+    if (pattern.startsWith('/') && pattern.endsWith('/')) {
+      return new RegExp(pattern.slice(1, pattern.length - 1)).test(text)
+    }
+    return text.includes(pattern)
+  }
+  return settings.feedsFilterPatterns.some(pattern => {
+    const upNameMatch = pattern.match(/(.+) up:([^ ]+)/)
+    if (upNameMatch) {
+      return (
+        testPattern(upNameMatch[1], card.text) &&
+        testPattern(upNameMatch[2], card.username)
+      )
+    }
+    return testPattern(pattern, card.text)
+  })
+}
+export const isVideoCardBlocked = (card: Pick<VideoCardInfo, 'title' | 'dynamic' | 'upName'>) => {
+  return isCardBlocked({
+    text: card.title + (card.dynamic ?? ''),
+    username: card.upName,
+  })
+}
+
 export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promise<VideoCardInfo[]> => {
   if (!getUID()) {
     return []
@@ -397,69 +425,72 @@ export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promis
   if (json.code !== 0) {
     throw new Error(json.message)
   }
-  if (type === 'video') {
-    return _.uniqBy(json.data.cards.map(
-      (c: any): VideoCardInfo => {
-        const card = JSON.parse(c.card)
-        const topics = _.get(c, 'display.topic_info.topic_details', []).map(
-          (it: any) => {
-            return {
-              id: it.topic_id,
-              name: it.topic_name
+  const cards = (() => {
+    const jsonCards = json.data.cards as any[]
+    if (type === 'video') {
+      return _.uniqBy(jsonCards.map(
+        (c: any): VideoCardInfo => {
+          const card = JSON.parse(c.card)
+          const topics = _.get(c, 'display.topic_info.topic_details', []).map(
+            (it: any) => {
+              return {
+                id: it.topic_id,
+                name: it.topic_name
+              }
             }
-          }
-        )
-        return {
-          id: c.desc.dynamic_id_str,
-          aid: card.aid,
-          bvid: c.desc.bvid || card.bvid,
-          title: card.title,
-          upID: c.desc.user_profile.info.uid,
-          upName: c.desc.user_profile.info.uname,
-          upFaceUrl: c.desc.user_profile.info.face,
-          coverUrl: card.pic,
-          description: card.desc,
-          timestamp: c.timestamp,
-          time: new Date(c.timestamp * 1000),
-          topics,
-          dynamic: card.dynamic,
-          like: formatCount(c.desc.like),
-          duration: card.duration,
-          durationText: formatDuration(card.duration, 0),
-          playCount: formatCount(card.stat.view),
-          danmakuCount: formatCount(card.stat.danmaku),
-          watchlater: store.state.watchlaterList.includes(card.aid)
+          )
+          return {
+            id: c.desc.dynamic_id_str,
+            aid: card.aid,
+            bvid: c.desc.bvid || card.bvid,
+            title: card.title,
+            upID: c.desc.user_profile.info.uid,
+            upName: c.desc.user_profile.info.uname,
+            upFaceUrl: c.desc.user_profile.info.face,
+            coverUrl: card.pic,
+            description: card.desc,
+            timestamp: c.timestamp,
+            time: new Date(c.timestamp * 1000),
+            topics,
+            dynamic: card.dynamic,
+            like: formatCount(c.desc.like),
+            duration: card.duration,
+            durationText: formatDuration(card.duration, 0),
+            playCount: formatCount(card.stat.view),
+            danmakuCount: formatCount(card.stat.danmaku),
+            watchlater: store.state.watchlaterList.includes(card.aid)
+          } as VideoCardInfo
         }
-      }
-    ), it => it.aid)
-  } else if (type === 'bangumi') {
-    return json.data.cards.map(
-      (c: any): VideoCardInfo => {
-        const card = JSON.parse(c.card)
-        return {
-          id: c.desc.dynamic_id_str,
-          aid: card.aid,
-          bvid: c.desc.bvid || card.bvid,
-          epID: card.episode_id,
-          title: card.new_desc,
-          upName: card.apiSeasonInfo.title,
-          upFaceUrl: card.apiSeasonInfo.cover,
-          coverUrl: card.cover,
-          description: '',
-          timestamp: c.timestamp,
-          time: new Date(c.timestamp * 1000),
-          like: formatCount(c.desc.like),
-          durationText: '',
-          playCount: formatCount(card.play_count),
-          danmakuCount: formatCount(card.bullet_count),
-          watchlater: false,
+      ), it => it.aid)
+    } else if (type === 'bangumi') {
+      return jsonCards.map(
+        (c: any): VideoCardInfo => {
+          const card = JSON.parse(c.card)
+          return {
+            id: c.desc.dynamic_id_str,
+            aid: card.aid,
+            bvid: c.desc.bvid || card.bvid,
+            epID: card.episode_id,
+            title: card.new_desc,
+            upName: card.apiSeasonInfo.title,
+            upFaceUrl: card.apiSeasonInfo.cover,
+            coverUrl: card.cover,
+            description: '',
+            timestamp: c.timestamp,
+            time: new Date(c.timestamp * 1000),
+            like: formatCount(c.desc.like),
+            durationText: '',
+            playCount: formatCount(card.play_count),
+            danmakuCount: formatCount(card.bullet_count),
+            watchlater: false,
+          } as VideoCardInfo
         }
-      }
-    )
-
-  } else {
-    return []
-  }
+      )
+    } else {
+      return []
+    }
+  })()
+  return cards.filter(c => !isVideoCardBlocked(c))
 }
 
 export const forEachFeedsCard = (callback: FeedsCardCallback) => {
@@ -524,5 +555,7 @@ export default {
     getVideoFeeds,
     forEachFeedsCard,
     addMenuItem,
+    isCardBlocked,
+    isVideoCardBlocked,
   },
 }
