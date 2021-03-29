@@ -142,19 +142,14 @@
             密钥<input type="text" v-model="rpcSettings.secretKey">
           </div>
           <div class="rpc-settings-item">
-            限速<input type="text" v-model="rpcSettings.maxDownloadLimit" placeholder="无">
-          </div>
-          <div class="rpc-settings-item">
-            默认路径<input type="text" v-model="rpcSettings.baseDir">
-          </div>
-          <div class="rpc-settings-item">
             路径<input type="text" v-model="rpcSettings.dir">
-          </div>
-          <div class="final-dir">
-            最终路径: {{rpcSettings.baseDir + rpcSettings.dir}}
           </div>
           <div class="rpc-settings-item">
             方法<v-dropdown style="text-transform: uppercase;" :items="['get', 'post']" :value.sync="rpcSettings.method">
+          </div>
+          <div class="rpc-settings-item align-top">
+            其他配置
+            <textarea placeholder="some-key=value" v-model="rpcSettings.other">
           </div>
           <div class="operations">
             <div class="primary button" @click="saveRpcSettings();toggleRpcSettings();exportData('aria2RPC')">开始下载</div>

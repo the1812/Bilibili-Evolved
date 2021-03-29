@@ -416,6 +416,7 @@ class VideoDownloader {
         subtitle
       )
       await pack.emit()
+      const { sendRpc, parseRpcOptions } = await import('./aria2-rpc')
       const option = settings.aria2RpcOption
       const params = this.fragments.map((fragment, index) => {
         let indexNumber = ''
@@ -432,8 +433,8 @@ class VideoDownloader {
           'user-agent': UserAgent,
           out: `${getFriendlyTitle()}${indexNumber}${this.extension(fragment)}`,
           split: this.fragmentSplitFactor,
-          dir: (option.baseDir + option.dir) || undefined,
-          'max-download-limit': option.maxDownloadLimit || undefined,
+          dir: option.dir || undefined,
+          ...parseRpcOptions(option.other),
         })
         const id = encodeURIComponent(`${getFriendlyTitle()}${indexNumber}`)
         return {
@@ -441,7 +442,6 @@ class VideoDownloader {
           id,
         }
       })
-      const { sendRpc } = await import('./aria2-rpc')
       await sendRpc(params)
     } else { // https://aria2.github.io/manual/en/html/aria2c.html#input-file
       const input = `

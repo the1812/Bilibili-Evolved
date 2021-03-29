@@ -34,13 +34,56 @@ const defaultProfile: RpcOptionProfile = {
   name: '未命名',
   ...settings.aria2RpcOption
 }
+const migrateOldProfiles = () => {
+  const deprecatedProperties = [
+    'baseDir',
+    'maxDownloadLimit',
+    'skipByDefault',
+  ]
+  if (deprecatedProperties.some(p => (p in settings.aria2RpcOption))) {
+    settings.aria2RpcOption = _.omit(settings.aria2RpcOption, ...deprecatedProperties) as RpcOption
+  }
+  const properties = Object.getOwnPropertyNames(
+    settings.aria2RpcOption
+  ).filter(it => !it.startsWith('_'))
+  let migrated = false
+  settings.aria2RpcOptionProfiles.forEach(profile => {
+    properties
+      .filter(p => !(p in profile) && p !== 'name')
+      .forEach(p => {
+        if (p === 'name') {
+          return
+        }
+        // 在当前 option 里的但不在 profile 里的属性, 要给 profile 加上
+        if (!(p in profile)) {
+          profile[p] = settings.aria2RpcOption[p]
+          console.log(`[Add] migrated profile property '${p}'`)
+          migrated = true
+        }
+      })
+    Object.keys(profile).forEach(p => {
+      if (p === 'name') {
+        return
+      }
+      // 在当前 profile 里的但不在 option 里的属性, 要从 profile 删除
+      if (!properties.includes(p)) {
+        delete profile[p]
+        console.log(`[Delete] migrated profile property '${p}'`)
+        migrated = true
+      }
+    })
+  })
+  if (migrated) {
+    settings.aria2RpcOptionProfiles = settings.aria2RpcOptionProfiles
+  }
+}
 export default {
   components: {
     ProfileItem: () => import('./aria2-rpc-profile-item.vue'),
     Icon: () => import('../../style/icon.vue')
   },
   data() {
-    this.migrateOldProfiles()
+    migrateOldProfiles()
     const profiles = [...settings.aria2RpcOptionProfiles]
     if (profiles.length === 0) {
       profiles.push(defaultProfile)
@@ -60,25 +103,6 @@ export default {
     }
   },
   methods: {
-    migrateOldProfiles() {
-      const properties = Object.getOwnPropertyNames(
-        settings.aria2RpcOption
-      ).filter(it => !it.startsWith('_'))
-      properties.push('name')
-      let migrated = false
-      for (const profile of settings.aria2RpcOptionProfiles) {
-        properties
-          .filter(p => !(p in profile))
-          .forEach(p => {
-            profile[p] = settings.aria2RpcOption[p]
-            console.log(`migrated profile property '${p}'`)
-            migrated = true
-          })
-      }
-      if (migrated) {
-        settings.aria2RpcOptionProfiles = settings.aria2RpcOptionProfiles
-      }
-    },
     profileUpdate() {
       settings.aria2RpcOptionProfiles = this.profiles
       this.selectedProfile = settings.aria2RpcOptionSelectedProfile

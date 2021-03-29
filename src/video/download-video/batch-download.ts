@@ -73,7 +73,7 @@ abstract class Batch {
     const { getNumber } = await import('./get-number')
     if (rpc) {
       const option = settings.aria2RpcOption
-      const { sendRpc } = await import('./aria2-rpc')
+      const { sendRpc, parseRpcOptions } = await import('./aria2-rpc')
       for (const item of json) {
         const params = item.fragments.map((fragment: { url: string }, index: number) => {
           let indexNumber = ''
@@ -90,8 +90,8 @@ abstract class Batch {
             'user-agent': UserAgent,
             out: `${item.title}${indexNumber}${this.extension(fragment.url, index)}`,
             split: fragmentSplitFactor,
-            dir: (option.baseDir + option.dir) || undefined,
-            'max-download-limit': option.maxDownloadLimit || undefined,
+            dir: option.dir || undefined,
+            ...parseRpcOptions(option.other),
           })
           const id = encodeURIComponent(`${item.title}${indexNumber}`)
           return {

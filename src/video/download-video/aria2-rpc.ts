@@ -1,4 +1,4 @@
-function getOption() {
+const getOption = () => {
   const option = settings.aria2RpcOption
   const host = option.host.match(/^http[s]?:\/\//) ? option.host : 'http://' + option.host
   const methodName = 'aria2.addUri'
@@ -12,7 +12,7 @@ interface RpcParam {
   id: string
   params: any[]
 }
-async function rpc(getResponse: () => Promise<any>, batch = false) {
+const rpc = async (getResponse: () => Promise<any>, batch = false) => {
   try {
     let response = await getResponse()
     if (typeof response === 'string') {
@@ -35,7 +35,7 @@ async function rpc(getResponse: () => Promise<any>, batch = false) {
     return false
   }
 }
-async function getRpc(rpcParam: RpcParam, batch = false) {
+const getRpc = async (rpcParam: RpcParam, batch = false) => {
   const { option, host, methodName } = getOption()
   return await rpc(async () => {
     const base64Params = window.btoa(unescape(encodeURIComponent(JSON.stringify(rpcParam.params))))
@@ -56,7 +56,7 @@ async function getRpc(rpcParam: RpcParam, batch = false) {
     }
   }, batch)
 }
-async function postRpc(rpcParam: RpcParam, batch = false) {
+const postRpc = async (rpcParam: RpcParam, batch = false) => {
   const { option, host, methodName } = getOption()
   return await rpc(async () => {
     const url = `${host}:${option.port}/jsonrpc`
@@ -81,7 +81,7 @@ async function postRpc(rpcParam: RpcParam, batch = false) {
     }
   }, batch)
 }
-export async function sendRpc(params: RpcParam[], batch = false) {
+export const sendRpc = async (params: RpcParam[], batch = false) => {
   const option = settings.aria2RpcOption
   for (const param of params) {
     let result: boolean
@@ -95,8 +95,25 @@ export async function sendRpc(params: RpcParam[], batch = false) {
     }
   }
 }
+export const parseRpcOptions = (option: string): Record<string, string> => {
+  if (!option) {
+    return {}
+  }
+  const pairs = option
+    .split('\n')
+    .map(line => {
+      // 实际上就是按第一个 = 号分割出 key / value, 其他后面的 = 还是算进 value 里
+      const [key, ...values] = line
+        .trim()
+        .split('=')
+      return [key.trim(), values.join('=').trim()]
+    })
+    .filter(it => Boolean(it[1])) // 过滤掉没有 = 的行 (value 为空)
+  return Object.fromEntries(pairs)
+}
 export default {
   export: {
     sendRpc,
+    parseRpcOptions,
   },
 }

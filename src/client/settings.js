@@ -50,9 +50,7 @@ export const aria2RpcDefaultOption = {
   host: '127.0.0.1',
   port: '6800',
   method: 'get',
-  skipByDefault: false,
-  maxDownloadLimit: '',
-  baseDir: '',
+  other: '',
 }
 export const settings = {
   useDarkStyle: false,
