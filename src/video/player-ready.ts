@@ -22,15 +22,12 @@ export const aidReady = async () => {
   if (unsafeWindow.aid) {
     return unsafeWindow.aid
   }
-  if (_.has(unsafeWindow, 'player.getVideoMessage')) {
-    const info = await SpinQuery.condition(
-      () => unsafeWindow.player.getVideoMessage() as { aid?: string },
-      it => it.aid !== undefined,
-    )
-    unsafeWindow.aid = info.aid
-    return info.aid as string
-  }
-  throw new Error('Cannot find aid')
+  const info = await SpinQuery.condition(
+    () => unsafeWindow?.player?.getVideoMessage?.() as { aid?: string },
+    it => it?.aid !== undefined,
+  ).catch(() => { throw new Error('Cannot find aid') })
+  unsafeWindow.aid = info.aid
+  return info.aid as string
 }
 export default {
   export: {
