@@ -20,8 +20,16 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ["allowJumpContinue", /*html*/`履歴のセット数が現在開いているページと矛盾している場合でも、自動的にジャンプします.`],
     ["autoPlay", /*html*/`動画ページに入ると、自動的に動画の再生が開始されます.`],
     ["skipChargeList", /*html*/`エンディングの「充电鸣谢」を自動スキップ.`],
-    ["framePlayback", /*html*/`プレーヤーの時間に右側に2つのボタンが追加されました.動画の時間を細かく調整するために使用される. キーボードショートカットに対応します<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (伝統的なレイアウトでキーボードショートカットのみ使用でき、ボタンは表示されません)`],
-    ["videoScreenshot", /*html*/`プレーヤーの時間に右側に1つのボタンが追加されました.動画スクリーンショットを使用されます. キーボードショートカットに対応します<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (伝統的なレイアウトでキーボードショートカットのみ使用でき、ボタンは表示されません)`],
+    ["framePlayback", /*html*/`プレーヤーの時間に右側に2つのボタンが追加されました.動画の時間を細かく調整するために使用される.
+注意: 動画の実際の再生フレームレートは、動画自体のフレームレートとディスプレイのリフレッシュレートに関連しています.正確な値を計算することは困難です.一部の動画では、「速すぎる画像を一時停止できません」という状況がまだあります.
+
+フレームごとの調整の精度はに固定されています:
+- <span>1080P60</span>/<span>720P60</span>: 1001 / 60000 秒 (59.94006 fps)
+- <span>他の解像度</span>: 1001 / 30000 秒 (29.97003 fps)
+    `],
+    ["videoScreenshot", /*html*/`プレーヤーの時間に右側に1つのボタンが追加されました.タップして動画のスクリーンショットをキャプチャします. 一時停止の標識や弾幕は含まれません.インターセプトされた画像は、Webページの右側 (非全画面モードとウェブの全画面モード) に表示され、個別に保存または削除できますことも、特定の量をキャプチャして一度に保存することもできます.
+
+弾幕レンダリングタイプとしてCanvasが選択されている場合、 もう一度<kbd>Shift</kbd> キーを押し続けると、弾幕付きの画像をキャプチャことができます.`],
     ["playerFocus", /*html*/`動画/番組の放送ページに入る時、プレーヤーに自動的に移動する.`],
     ["playerFocusOffset", /*html*/`移動時の垂直オフセット、単位はピクセル(px).`],
     ["outerWatchlater", /*html*/`動画放送ページの<span>稍后再看</span>を外に移動します.`],
@@ -38,8 +46,16 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <kbd>\`</kbd> プレーヤーメニューを開きます
 - <kbd>Shift + j</kbd> 85秒後退する
 - <kbd>Shift + w</kbd> 後で見る
+- <kbd>Shift + s</kbd> すばやくのお気に入り (すばやくのお気に入りをオンにする必要があります)
 - <kbd>Shift + ↑/↓</kbd> / <kbd>Shift + ,/.</kbd> 再生速度を調整する
-- <kbd>Shift + /</kbd> 再生速度をリセットする`],
+- <kbd>Shift + /</kbd> 再生速度をリセットする、もう一度押すと前の速度に戻ります
+- <kbd>Shift + ;</kbd> 今の動画の速度をクリアします
+- <kbd>0</kbd> 再生の最初に戻る
+- <kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd> フレーム毎に調整 (フレーム毎に調整をオンにする必要があります)
+- <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> スクリーンショット (スクリーンショットをオンにする必要があります)
+弾幕レンダリングタイプとしてCanvasが選択されている場合、 <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd> キーを押し続けると、弾幕付きの画像をキャプチャことができます.
+
+デフォルトのキーが適切でないと感じた場合、または他のプラグイン/スクリプトショートカットと競合していることがわかった場合、この<a href="https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md" target="__blank">修改默认键位</a>を参照して、自分で変更することができます.`],
     ['doubleClickFullscreen', /*html*/`ダブルクリックして全画面に切り替えることができます.ご注意ください<span>播放器触摸支持</span> - <span>启用双击控制</span>と共に使用できない.`],
     ["customStyleColor", /*html*/`頂欄(スタイルの調整が有効な場合）と夜間モードのテーマ色で埋める、カラープレビューサークルをクリックして、设定の16種類のテーマカラーにできるの、右側のテキストボックスに任意の有効な16進数のカラー値を直接入力することもできます.(<span>#rrggbb</span>或<span>#rgb</span>).`],
     ["blurBackgroundOpacity", `设置顶栏对横幅的透明度(0~1), 数值越高顶栏越淡, 当横幅关闭时此选项无效.`],
@@ -109,7 +125,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     ['noLiveAutoplay', /*html*/`生放送のホームページのおすすめライブルームで自動的に再生を開始することは禁止されています.`],
     ['hideHomeLive', /*html*/`生放送のホームページのおすすめライブルームを隠す.`],
     ['foldComment', /*html*/`フィードページにコメントを表示しているときに下部に「コメントを閉じる」ボタンを追加します.`],
-    ['seedsToCoins', /*html*/`追加機能に<span>瓜子换硬币</span>ボタンを追加し、クリックして1日に1回に制限されて、1コインに700銀ヒマワリの種を交換してください.`],
+    ['extendVideoSpeed', /*html*/`ネイティブスピードメニューを展開するかどうかを設定します.`],
+    ['checkInCenter', /*html*/`追加機能にいくつかの毎日のチェックインボタンを追加します.たとえば、ひまわりの銀の種はコインと交換され、ライブルームはサインインします.`],
     ["touchNavBar", /*html*/`頂欄の右側の1級リンクを削除します(<span>大会員</span>から<span>履歴</span>まで).タッチスクリーンデバイスですばやく情報を便利にします.削除されたリンクページはそれぞれのプレビューの中から<span>查看更多</span>に入ることができます.`],
     ["comboLike", /*html*/`「おすすめ三連」（「いいね」を長押した）のタッチサポートを有効にする.`],
     ["touchVideoPlayer", /*html*/`制御欄のボタン間隔を大きくして、タッチ操作をより正確にする.プレーヤーのタッチサポートを有効にする:
@@ -127,6 +144,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 - <span>title</span>: 動画のタイトル/配信ルームのタイトル
 - <span>ep</span>: エピソードタイトル
 - <span>aid</span>: AV番号 (動画アドレス番号)
+- <span>bvid</span>: BV番号
 - <span>cid</span>: CID (動画の唯一の番号、動画アドレス番号に対応するの動画アドレスは複数の動画を含み得る)
 - <span>lid</span>: 配信ルーム番号
 - <span>y</span>/<span>M</span>/<span>d</span>: 年/月/日
@@ -197,7 +215,11 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`downloadPackageEmitMode`, /*html*/`複数のファイルのダウンロードを選択する場合の動作は、パッケージが zip にヒットしてダウンロードされ.個別にダウンロードされると、各ファイルのダウンロードがトリガーされます.`],
     [`columnImageExporter`, /*html*/`コラムページでは、追加機能ですべての画像をエクスポートできます.`],
     [`feedsImageExporter`, /*html*/`フィードの右上隅にあるメニューから画像をエクスポートして、このフィード内のすべての画像をダウンロードすることができます.`],
-    [`homeHidden`, /*html*/`ホームページの欲しくない要素 / エリアを非表示にする.追加機能で非表示にする要素を構成できます.`],
+    [`homeHidden`, /*html*/`元のホームページの欲しくない要素 / エリアを非表示にする.追加機能で非表示にする要素を構成できます.`],
+    [`alwaysShowDuration`, /*html*/`スクリプトによって表示される動画カードで、 たとえば、「ホームページを簡素化」や「カスタム頂欄を使用」のさまざまなポップアップウィンドウでは、マウスを通過せずに動画の長さを表示できます.`],
+    [`expandDanmakuListIgnoreMediaList`, /*html*/`弾幕リストはコレクションページ(お気に入り/後で見る)で展開されていないので、動画リストを閲覧するのに便利です.`],
+    [`removeGuidePopup`, /*html*/`動画に表示される三連プロンプトボックスを削除します.`],
+    [`fullscreenGiftBox`, /*html*/`ウェブページの全画面モードで、ギフトパッケージを直接クリックできます.これはギフトを贈るのに便利です.`],
 ]);
 export default {
     export: { toolTips },
