@@ -219,7 +219,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`alwaysShowDuration`, /*html*/`スクリプトによって表示される動画カードで、 たとえば、「ホームページを簡素化」や「カスタム頂欄を使用」のさまざまなポップアップウィンドウでは、マウスを通過せずに動画の長さを表示できます.`],
     [`expandDanmakuListIgnoreMediaList`, /*html*/`弾幕リストはコレクションページ(お気に入り/後で見る)で展開されていないので、動画リストを閲覧するのに便利です.`],
     [`removeGuidePopup`, /*html*/`動画に表示される三連プロンプトボックスを削除します.`],
-    [`fullscreenGiftBox`, /*html*/`ウェブページの全画面モードで、ギフトパッケージを直接クリックできます.これはギフトを贈るのに便利です.`],
+    [`fullscreenGiftBox`, /*html*/`ウェブページの全画面モードで、ギフトボックスを直接クリックできます.これはギフトを贈るのに便利です.`],
 ]);
 export default {
     export: { toolTips },
