@@ -818,6 +818,9 @@
       .btn-box .jump-btn {
         @include theme-background-color();
         @include foreground-color();
+        &.checked {
+          @include background-color("4");
+        }
       }
     }
   }
