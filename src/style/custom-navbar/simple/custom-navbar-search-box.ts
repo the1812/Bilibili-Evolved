@@ -107,10 +107,10 @@ export class SearchBox extends NavbarComponent {
           tabindex="0"
           v-for="(item, index) of items"
           :title="isHistory ? item.html : ''"
-          @keydown.enter="submit(item.value)"
-          @keydown.shift.delete="deleteItem(item, index)"
-          @keydown.down.prevent="nextItem(index)"
-          @keydown.up.prevent="previousItem(index)">
+          @keydown.enter.stop.prevent="submit(item.value)"
+          @keydown.shift.delete.stop.prevent="deleteItem(item, index)"
+          @keydown.down.stop.prevent="nextItem(index)"
+          @keydown.up.stop.prevent="previousItem(index)">
           <div
             @click.self="submit(item.value)"
             class="search-list-item-text"
@@ -129,9 +129,9 @@ export class SearchBox extends NavbarComponent {
           tabindex="0"
           v-if="items.length > 0 && isHistory"
           @click="clearSearchHistory()"
-          @keydown.enter="clearSearchHistory()"
-          @keydown.down.prevent="nextItem(items.length)"
-          @keydown.up.prevent="previousItem(items.length)">
+          @keydown.enter.stop.prevent="clearSearchHistory()"
+          @keydown.down.stop.prevent="nextItem(items.length)"
+          @keydown.up.stop.prevent="previousItem(items.length)">
           <i class="mdi mdi-18px mdi-delete-sweep"></i>
           清除搜索历史
         </div>
@@ -336,6 +336,7 @@ export class SearchBox extends NavbarComponent {
     keywordInput.addEventListener('keydown', e => {
       if (e.key === 'ArrowDown' && searchList.items.length > 0) {
         e.preventDefault();
+        e.stopImmediatePropagation();
         (dq('.custom-navbar .search-list-item:first-child') as HTMLElement).focus()
       }
     })

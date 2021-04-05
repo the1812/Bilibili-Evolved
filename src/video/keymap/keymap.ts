@@ -1,5 +1,5 @@
 import { VideoSpeedController } from '../video-speed/video-speed-controller'
-import { KeyBinding, KeyBindingAction } from './key-bindings'
+import { KeyBinding, KeyBindingAction, KeyBindingActionContext } from './key-bindings'
 
 const supportedUrls = [
   'https://www.bilibili.com/bangumi/',
@@ -10,24 +10,27 @@ const supportedUrls = [
   'https://www.bilibili.com/festival/2021bnj',
 ]
 
-let config: { enable: boolean }
+let config: { enable: boolean, bindings: KeyBinding[] } | undefined = undefined
 if (supportedUrls.some(url => document.URL.startsWith(url))) {
   const clickElement = (target: string | HTMLElement) => {
-    return () => {
+    return ({ event }: KeyBindingActionContext) => {
+      const mouseEvent = new MouseEvent('click', {
+        ..._.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey')
+      })
       if (typeof target === 'string') {
-        (dq(target) as HTMLElement)?.click()
+        (dq(target) as HTMLElement)?.dispatchEvent(mouseEvent)
       } else {
-        target.click()
+        target.dispatchEvent(mouseEvent)
       }
     }
   }
   const changeVideoTime = (delta: number) => {
     return () => {
       const video = dq('.bilibili-player-video video') as HTMLVideoElement
-      if (!video) {
+      if (!video || !unsafeWindow.player) {
         return
       }
-      video.currentTime += delta
+      unsafeWindow.player.seek(video.currentTime + delta, video.paused)
     }
   }
   /** 提示框用的`setTimeout`句柄 */
@@ -92,8 +95,8 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
         showTip(`${after}%`, 'mdi-volume-high')
       }
     },
-    mute: () => {
-      clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume')()
+    mute: (context: KeyBindingActionContext) => {
+      clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume')(context)
       const isMute = unsafeWindow.player.isMute()
       if (isMute) {
         showTip('已静音', 'mdi-volume-off')
@@ -108,30 +111,23 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     like: (() => {
       /** 长按`L`三连使用的记忆变量 */
       let likeClick = true
-      return (({ isWatchlater, isMediaList, event }) => {
-        if (isMediaList || isWatchlater) {
-          const likeButton = dq('.play-options-ul > li:first-child') as HTMLLIElement
-          if (likeButton) {
-            likeButton.click()
-          }
-        } else {
-          const likeButton = dq('.video-toolbar .like, .tool-bar .like-info') as HTMLSpanElement
-          event.preventDefault()
-          const fireEvent = (name: string, args: Event) => {
-            const event = new CustomEvent(name, args)
-            likeButton.dispatchEvent(event)
-          }
-          likeClick = true
-          setTimeout(() => likeClick = false, 200)
-          fireEvent('mousedown', event)
-          document.body.addEventListener('keyup', e => {
-            e.preventDefault()
-            fireEvent('mouseup', e)
-            if (likeClick) {
-              fireEvent('click', e)
-            }
-          }, { once: true })
+      return (({ event }) => {
+        const likeButton = dq('.video-toolbar .like, .tool-bar .like-info') as HTMLSpanElement
+        event.preventDefault()
+        const fireEvent = (name: string, args: Event) => {
+          const event = new CustomEvent(name, args)
+          likeButton.dispatchEvent(event)
         }
+        likeClick = true
+        setTimeout(() => likeClick = false, 200)
+        fireEvent('mousedown', event)
+        document.body.addEventListener('keyup', e => {
+          e.preventDefault()
+          fireEvent('mouseup', e)
+          if (likeClick) {
+            fireEvent('click', e)
+          }
+        }, { once: true })
       }) as KeyBindingAction
     })(),
     danmaku: () => {
@@ -219,14 +215,14 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     videoSpeedDecrease: 'shift < 《 arrowDown',
     videoSpeedReset: 'shift ? ？',
     videoSpeedForget: 'shift : ：',
-    takeScreenshot: 'ctrl alt c',
+    takeScreenshot: 'ctrl [shift] alt c',
     previousFrame: 'shift arrowLeft',
     nextFrame: 'shift arrowRight',
     seekBegin: '0',
   }
   const parseBindings = (bindings: { [action: string]: string }) => {
     return Object.entries(bindings).map(([actionName, keyString]) => {
-      const keys = keyString.split(' ')
+      const keys = keyString.split(' ').filter(it => it !== '')
       return {
         keys,
         action: (actions as any)[actionName] || (() => {}),
@@ -236,9 +232,19 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
 
   ;(async () => {
     const { loadKeyBindings } = await import('./key-bindings')
-    config = loadKeyBindings(parseBindings(
-      { ...defaultBindings, ...settings.customKeyBindings }
-    ))
+    const { presets } = await import('./key-binding-presets')
+    addSettingsListener('keymapPreset', () => {
+      const preset = presets[settings.keymapPreset] || {}
+      const bindings = parseBindings(
+        { ...defaultBindings, ...preset, ...settings.customKeyBindings }
+      )
+      if (config) {
+        console.log('load preset', settings.keymapPreset)
+        config.bindings = bindings
+      } else {
+        config = loadKeyBindings(bindings)
+      }
+    }, true)
     resources.applyImportantStyle('keymapStyle')
   })()
 }

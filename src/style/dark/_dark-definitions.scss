@@ -6,6 +6,8 @@
     #{$name}: #{"#" + $level} !important;
   } @else if $length == 0 {
     #{$name}: transparent !important;
+  } @else {
+    #{$name}: #{"#" + $level} !important;
   }
 }
 @mixin set-theme-color($name, $level: "") {

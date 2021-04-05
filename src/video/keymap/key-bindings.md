@@ -17,6 +17,7 @@ bilibiliEvolved.settings.customKeyBindings = {
   - 可以有一些组合键: `shift` / `ctrl` / `alt` / `meta`, `meta` 在 Windows 上是 Win 键, 在 macOS 上是 Command 键
   - 如果希望映射到多种按键, 可以继续用空格隔开, 但注意组合键是固定的, 例如: 配置 `a b` 表示 `A` 或 `B` 键, 而配置 `shift a b` 就表示 `Shift + A` / `Shift + B`
   - 组合键是精确匹配的, 按下 `Ctrl + Shift + A` 不能触发配置为 `shift a` 的快捷键
+  - 如果希望组合键可按可不按, 可以给它套上一个 `[]`, 例如 `[ctrl] shift a` 表示 `Ctrl + Shift +A` / `Shift + A`
 
 注意以上的写法是覆盖之前配置的自定义快捷键, 如果希望在之前的基础上添加, 可以写成这样:
 ```js

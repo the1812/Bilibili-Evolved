@@ -19,9 +19,13 @@ function syncGui () {
   checkBoxes.forEach(it => it.checked = settings[it.getAttribute('key')])
 }
 function setupEvents () {
-  document.querySelector('.gui-settings-mask').addEventListener('click', () => {
-    document.querySelectorAll('.gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask,.bilibili-evolved-about')
+  dq('.gui-settings-mask').addEventListener('click', () => {
+    dqa('.gui-settings-widgets-box,.gui-settings-box,.gui-settings-mask,.bilibili-evolved-about')
       .forEach(it => it.classList.remove('opened'))
+    const tooltip = dq('.gui-settings-tooltip')
+    if (tooltip) {
+      tooltip.innerHTML = ''
+    }
   })
   textBoxes.forEach(element => {
     element.setAttribute('placeholder', settings[element.getAttribute('key')])
@@ -43,7 +47,6 @@ function setupEvents () {
       const outsideHandler = event => {
         const target = event.target
         const container = dq(`li[data-key=${it.getAttribute('key')}]`)
-        console.log(container, it.getAttribute('key'), target)
         if (container.contains(target) && container !== target) {
           return
         }

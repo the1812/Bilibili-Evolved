@@ -23,6 +23,11 @@
 # 安装
 需要浏览器拥有 [Tampermonkey](https://tampermonkey.net/) 插件.
 
+**注意事项**
+- 做好觉悟, 脚本开启后不能使用弹幕点赞和举报, 对性能也有较大影响.
+- 某些破坏性的大更新会使旧版脚本**完全**无法运行, 请及时检查更新.
+- 使用 aria2 RPC 时脚本管理器可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
+
 点击名称即可安装👇
 
 | [正式版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [预览版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js) | [离线版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) | [预览离线版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js) |

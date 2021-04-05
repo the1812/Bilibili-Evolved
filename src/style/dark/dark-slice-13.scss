@@ -586,25 +586,35 @@ html {
     @include to-theme("blue");
   }
 }
+// 进度条 viewport
+.bilibili-player-view-points[data-type="-1"] > span {
+  @include background-color("aaaa");
+}
 .resizable-component {
   .note-drag-bar {
-    @include background-color("6");
+    @include background-color("4");
     @include color("a");
-    .btns {
+    .status-bar {
+      @include color("a");
+    }
+    .operation-btns {
       .space-btn,
       .question-btn,
       .close-btn {
-        @include background-color("8");
-        @include color("5");
+        @include background-color("5");
+        @include color("d");
+        &:hover {
+          @include theme-color();
+        }
       }
     }
   }
 }
-.video-editor {
-  @include background-color("5");
+.bili-note {
+  @include background-color("3");
   .ql-toolbar {
     @include color("9");
-    @include background-color("5");
+    @include background-color();
     .readonly-mask {
       background-color: #000 !important;
       opacity: 0.4 !important;
@@ -630,7 +640,7 @@ html {
       }
     }
     .ql-picker-options {
-      @include background-color("6");
+      @include background-color();
       @include color("a");
     }
     .ql-picker-item:hover,
@@ -658,13 +668,13 @@ html {
   .editor-innter {
     @include color("e");
     @include border-color();
-    @include background-color("4");
+    @include background-color("2");
     .ql-tag-blot {
-      .tag-item {
-        @include background-color("5");
+      .time-tag-item {
+        @include background-color("3");
         @include border-color();
         @include theme-color();
-        .time::before {
+        .time-tag-item__text::before {
           @include theme-background-color();
         }
       }
@@ -673,7 +683,7 @@ html {
       box-shadow: 0 2px 8px 0 hsl(0deg 0% 15% / 50%) !important;
       @include border-color();
       .img-preview {
-        @include border-color("5");
+        @include border-color("3");
       }
     }
   }

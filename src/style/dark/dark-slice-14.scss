@@ -61,7 +61,8 @@
     @include background-color("4");
   }
 }
-.filter-wrap .filter-wrap_bottom {
+.filter-wrap .filter-wrap_bottom,
+.recommend-list .split-line {
   @include background-color("4");
 }
 #app .collection-m .add-group .input-group .submit {
@@ -78,4 +79,147 @@
   path[stroke="rgb(0,161,214)"] {
     @include theme-stroke();
   }
+}
+.b-head-search {
+  @include border-color("4");
+  &.input-active {
+    @include theme-border-color();
+  }
+  .b-head-search_input {
+    @include background-color();
+    @include color("e");
+  }
+  .search-icon,
+  .show-icon {
+    @include to-theme("blue");
+  }
+}
+.multi-page .cur-list .list-box li .link-content img {
+  @include to-theme("blue");
+}
+.next-button .switch-button.on {
+  @include theme-background-color();
+  @include theme-border-color();
+}
+.video-sections {
+  @include background-color("4");
+  &-head {
+    &_first-line {
+      .first-line {
+        &-left {
+          span:not(.cur-page) {
+            @include color("e");
+          }
+        }
+      }
+    }
+    &_second-line {
+      .second-line_right {
+        @include theme-border-color();
+        @include background-color("4");
+        @include theme-color();
+        &.already-fav {
+          @include background-color("6");
+          @include color("9");
+        }
+      }
+    }
+    &_desc {
+      @include background-color("6");
+      @include color("e");
+    }
+    .border-bottom-line {
+      @include background-color("6");
+    }
+  }
+  &-content-list {
+    .video-sections-item {
+      @include set-color("border-bottom-color", "6");
+    }
+    .video-section {
+      &-title {
+        @include background-color("4");
+        span {
+          @include color("e");
+        }
+      }
+      &-list {
+        .video-episode-card {
+          &__info {
+            &-title {
+              @include color("e");
+            }
+            &-title-playing {
+              @include theme-color();
+              .cur-play-icon {
+                @include to-theme("blue");
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#page-fav {
+  .favList-info {
+    .shadow-first {
+      @include background-color("2");
+    }
+    .shadow-second {
+      @include background-color("3");
+    }
+    .collection-details {
+      .title .iconfont {
+        @include color("a");
+      }
+      .collection-btn {
+        @include theme-background-color();
+        @include color("e");
+      }
+    }
+  }
+}
+.international-header .user-con.signin .item .notify-float {
+  &::before {
+    @include background-color("4");
+  }
+  .float_msg {
+    @include background-color("4");
+    div {
+      @include color("e");
+      span {
+        @include theme-color();
+      }
+    }
+  }
+}
+.container .left-container .play-up-info {
+  .play-up-intro {
+    .play-up-cover-loading,
+    .play-up-introduction-loading p {
+      @include background-color("4");
+    }
+  }
+  .play-up-self .play-up-self-content a {
+    @include theme-color();
+  }
+}
+.player-auxiliary {
+  &-btn-playlist-order:hover path {
+    @include theme-stroke();
+  }
+  &-playlist-item-img {
+    @include no-image
+  }
+}
+.remd-video-card .card-box .pic-box {
+  @include background-color("4");
+}
+.next-button .switch-button {
+  @include border-color("6");
+  @include background-color("6");
+}
+.video-info .video-title .tit {
+  @include color("e");
 }

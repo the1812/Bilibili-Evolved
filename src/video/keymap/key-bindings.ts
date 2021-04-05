@@ -1,9 +1,10 @@
-export type KeyBindingAction = (context: {
+export interface KeyBindingActionContext {
   binding: KeyBinding
   event: KeyboardEvent
   isWatchlater: boolean
   isMediaList: boolean
-}) => void
+}
+export type KeyBindingAction = (context: KeyBindingActionContext) => void
 export interface KeyBinding {
   keys: string[]
   action: KeyBindingAction
@@ -19,14 +20,11 @@ export const loadKeyBindings = _.once((bindings: KeyBinding[]) => {
   const isWatchlater = document.URL.startsWith('https://www.bilibili.com/watchlater/')
   const isMediaList = document.URL.startsWith('https://www.bilibili.com/medialist/play/')
   const config = {
-    enable: true
+    enable: true,
+    bindings,
   }
   document.body.addEventListener('keydown', (e: KeyboardEvent & { [key: string]: boolean }) => {
     if (!config.enable) {
-      return
-    }
-    // 稍后再看页面无视快捷键
-    if (isWatchlater && document.URL.endsWith('list')) {
       return
     }
     // 打字时无视快捷键
@@ -41,12 +39,16 @@ export const loadKeyBindings = _.once((bindings: KeyBinding[]) => {
       return
     }
 
-    bindings.forEach(binding => {
+    config.bindings.forEach(binding => {
       if (binding.keys.length === 0) {
         return
       }
       const modifyKeyNotMatch = modifyKeys.some(m => {
         const needModifyKey = binding.keys.includes(m)
+        const optionalModifyKey = binding.keys.includes(`[${m}]`)
+        if (optionalModifyKey) {
+          return false
+        }
         const isModifyKeyPressed = e[m + 'Key']
         return needModifyKey !== isModifyKeyPressed
       })

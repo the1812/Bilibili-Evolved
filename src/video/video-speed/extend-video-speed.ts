@@ -77,6 +77,7 @@ export const getExtraSpeedMenuItemElements = async () => {
           afterElement = afterElement.nextElementSibling as HTMLLIElement;
         }
         afterElement.before(createExtendedSpeedMenuItemElement(value))
+        updateInput(input)
       }
     })
 
@@ -140,6 +141,8 @@ export const getExtraSpeedMenuItemElements = async () => {
   .${VideoSpeedController.classNameMap.speedMenuList} {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    max-height: 360px;
   }
   `, "extend-video-speed-style")
 

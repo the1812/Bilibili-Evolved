@@ -691,6 +691,7 @@
     @include color("e");
   }
   .avatar {
+    @include background-color("4");
     .info-tag {
       @include background-color("3");
       @include theme-color();

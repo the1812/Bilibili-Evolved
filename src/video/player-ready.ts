@@ -18,6 +18,20 @@ export const playerReady = () => {
     }
   })
 }
+export const aidReady = async () => {
+  if (unsafeWindow.aid) {
+    return unsafeWindow.aid
+  }
+  const info = await SpinQuery.condition(
+    () => unsafeWindow?.player?.getVideoMessage?.() as { aid?: string },
+    it => it?.aid !== undefined,
+  ).catch(() => { throw new Error('Cannot find aid') })
+  unsafeWindow.aid = info.aid
+  return info.aid as string
+}
 export default {
-  export: { playerReady },
+  export: {
+    playerReady,
+    aidReady,
+  },
 }

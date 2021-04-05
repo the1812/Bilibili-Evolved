@@ -163,6 +163,7 @@ export class Activities extends NavbarComponent {
     this.setNotifyCount(json.data.update_num)
   }
   async init() {
+    const { isVideoCardBlocked, isCardBlocked } = await import('../../../activity/feeds-apis')
     Vue.component('activity-loading', {
       template: /*html*/`
         <div v-if="loading" class="loading">
@@ -321,6 +322,7 @@ export class Activities extends NavbarComponent {
               .sort((a, b) => {
                 return b.id > a.id ? 1 : -1
               })
+              .filter(c => !isVideoCardBlocked(c))
             if (cards.length === 0) {
               this.hasMoreContent = false
             }
@@ -417,7 +419,7 @@ export class Activities extends NavbarComponent {
             </div>
           `,
           handleJson: async function (json) {
-            const cards = _.get(json, 'data.cards', []).map((card: any) => {
+            const cards = _.get<any[]>(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
                 title: cardJson.apiSeasonInfo.title,
@@ -428,11 +430,12 @@ export class Activities extends NavbarComponent {
                 id: card.desc.dynamic_id_str,
                 get new() { return Activities.isNewID(this.id) },
               }
-            }) as { id: string }[]
+            })
             this.cards = _.uniqBy(cards.concat(this.cards), it => it.id)
               .sort((a, b) => {
                 return b.id > a.id ? 1 : -1
               })
+              .filter(c => !isCardBlocked({ text: c.epTitle, username: c.title }))
             if (cards.length === 0) {
               this.hasMoreContent = false
             }
@@ -479,7 +482,7 @@ export class Activities extends NavbarComponent {
             </div>
           `,
           handleJson: async function (json) {
-            const cards = _.get(json, 'data.cards', []).map((card: any) => {
+            const cards = _.get<any[]>(json, 'data.cards', []).map((card: any) => {
               const cardJson = JSON.parse(card.card)
               return {
                 covers: cardJson.image_urls,
@@ -493,11 +496,12 @@ export class Activities extends NavbarComponent {
                 id: card.desc.dynamic_id_str,
                 get new() { return Activities.isNewID(this.id) },
               }
-            }) as { id: string }[]
+            })
             this.cards = _.uniqBy(cards.concat(this.cards), it => it.id)
               .sort((a, b) => {
                 return b.id > a.id ? 1 : -1
               })
+              .filter(c => !isVideoCardBlocked(c))
             if (cards.length === 0) {
               this.hasMoreContent = false
             }

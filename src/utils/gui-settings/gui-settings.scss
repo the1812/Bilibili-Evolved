@@ -644,11 +644,6 @@ li.category.folded i.icon-arrow {
     overscroll-behavior: contain;
     overflow: auto;
     height: 100%;
-    scrollbar-width: none !important;
-    &::-webkit-scrollbar {
-      height: 0 !important;
-      width: 0 !important;
-    }
   }
   & > .widgets-container .empty-tip {
     font-size: 10pt;
@@ -796,6 +791,7 @@ html.elegant-scrollbar {
   ::-webkit-scrollbar-thumb:hover {
     background: #888;
   }
+  &,
   * {
     scrollbar-color: #aaa transparent;
     scrollbar-width: thin;

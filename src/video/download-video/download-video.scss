@@ -193,6 +193,7 @@
     &:hover {
       background-color: #8882;
     }
+    &:focus-within,
     &:active {
       background-color: #8884;
     }
@@ -234,11 +235,7 @@
         top: 0;
         left: 0;
         height: 4px;
-        background: linear-gradient(
-          to right,
-          var(--theme-color),
-          var(--theme-color-60)
-        );
+        background: linear-gradient(to right, var(--theme-color), var(--theme-color-60));
       }
     }
   }
@@ -392,9 +389,27 @@
     align-items: center;
     justify-content: space-between;
     white-space: nowrap;
+    &.align-top {
+      align-items: flex-start;
+    }
     input[type="text"] {
       flex-grow: 1;
       margin-left: 24px;
+    }
+    textarea {
+      outline: none !important;
+      border: 1px solid #8884;
+      background-color: transparent;
+      flex: 1 0 auto;
+      border-radius: 4px;
+      padding: 4px;
+      margin-left: 24px;
+      line-height: 1.2;
+      height: 7.2em;
+      resize: none;
+      &:focus-within {
+        border-color: var(--theme-color);
+      }
     }
   }
   button.start-download,
@@ -436,9 +451,5 @@
   }
 }
 body.dark .download-video .direct-download .progress .foreground {
-  background: linear-gradient(
-    to right,
-    var(--theme-color-70),
-    var(--theme-color)
-  );
+  background: linear-gradient(to right, var(--theme-color-70), var(--theme-color));
 }

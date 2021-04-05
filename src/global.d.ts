@@ -54,14 +54,12 @@ declare global {
   type Dropdown = { key: string; items: string[] }
   interface RpcOption {
     secretKey: string
-    baseDir: string
     dir: string
     host: string
     port: string
     method: 'get' | 'post'
-    skipByDefault: boolean
-    maxDownloadLimit: string
-    [key: string]: any
+    other: string
+    [key: string]: string
   }
   interface RpcOptionProfile extends RpcOption {
     name: string
@@ -415,6 +413,7 @@ declare global {
     lastSeedsToCoinsDate: number,
     autoDraw: boolean,
     keymap: boolean,
+    keymapPreset: 'Default' | 'YouTube' | 'HTML5Player' | 'PotPlayer',
     doubleClickFullscreen: boolean,
     doubleClickFullscreenPreventSingleClick: boolean
     simplifyHome: boolean,

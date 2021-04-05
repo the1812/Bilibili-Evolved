@@ -124,7 +124,7 @@ export class WatchlaterList extends NavbarComponent {
             if (this.redirect) {
               return `https://www.bilibili.com/video/${item.bvid}`
             }
-            return `https://www.bilibili.com/watchlater/#/${item.bvid}`
+            return `https://www.bilibili.com/medialist/play/watchlater/${item.bvid}`
           }
           const cards = rawList.map(item => {
             const href = (() => {
@@ -133,9 +133,8 @@ export class WatchlaterList extends NavbarComponent {
               }
               const pages = item.pages.map(it => it.cid)
               const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
-              return this.redirect ?
-                `${getLink(item)}?p=${page}` :
-                `${getLink(item)}/p${page}`
+              // 新的稍后再看列表不接受 p 参数, 估计是会根据历史记录来跳分 P ?
+              return this.redirect ? `${getLink(item)}?p=${page}` : getLink(item)
             })()
             const percent = Math.round(1000 * item.progress / item.duration) / 1000
             return {

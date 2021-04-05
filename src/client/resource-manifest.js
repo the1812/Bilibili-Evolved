@@ -333,6 +333,7 @@ Resource.manifest = {
   },
   expandDescription: {
     style: 'instant',
+    reloadable: true,
     displayNames: {
       expandDescription: '自动展开视频简介',
     },
@@ -517,12 +518,6 @@ Resource.manifest = {
       useDefaultVideoSpeed: '记忆上次播放速度',
     },
   },
-  seedsToCoins: {
-    displayNames: {
-      seedsToCoins: '瓜子换硬币',
-      autoSeedsToCoins: '自动运行',
-    },
-  },
   autoDraw: {
     displayNames: {
       autoDraw: '直播间自动领奖',
@@ -533,7 +528,12 @@ Resource.manifest = {
     style: true,
     displayNames: {
       keymap: '快捷键扩展',
+      keymapPreset: '快捷键预设',
     },
+    dropdown: {
+      key: 'keymapPreset',
+      items: ['Default', 'YouTube', 'HTML5Player', 'PotPlayer'],
+    }
   },
   doubleClickFullscreen: {
     displayNames: {

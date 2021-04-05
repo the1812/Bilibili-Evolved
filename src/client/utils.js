@@ -131,8 +131,9 @@ export const formatDuration = (time, fixed = 0) => {
   }
   return `${hour}:${minute.padStart(2, '0')}:${second.padStart(2, '0')}`
 }
-export const getDpiSourceSet = (src, baseSize, extension = 'jpg') => {
+export const getDpiSourceSet = (src, baseSize, forceExtension = '') => {
   const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4]
+  let extension = forceExtension || src.substring(src.lastIndexOf('.') + 1)
   if (extension.startsWith('.')) {
     extension = extension.substring(1)
   }
@@ -233,8 +234,7 @@ export const isTyping = () => {
   }
   return ['input', 'textarea'].includes(activeElement.nodeName.toLowerCase())
 }
-export const getAid = (aid) => {
-  aid = aid || unsafeWindow.aid
+export const getAid = (aid = unsafeWindow.aid) => {
   if (!aid) {
     throw new Error('aid is unknown')
   }

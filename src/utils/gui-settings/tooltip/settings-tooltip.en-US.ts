@@ -110,7 +110,7 @@ A more specific example: To use a "video title + AV ID + time" format, we can us
   ['deadVideoTitleProvider', `Select dead video info provider: Watchlater is stable but takes some time, BiliPlus runs fast but it's not implemented yet.`],
   ['useDefaultVideoSpeed', `Remember last video playback rate.`],
   ['defaultVideoSpeed', `Select the default playback rate.`],
-  ['seedsToCoins', `Append a <span>Seeds to coins</span> button, click to convert 700 silver seeds to 1 coin, up to one time per day.`],
+  ['checkInCenter', `Add daily actions to add-ons, like <span>Seeds to coins</span> and <span>Live check in</span>`],
   ['autoDraw', `Auto click draw button when there're drawing events in live room.`],
   ['keymap', `Enable more keyboard shortcuts for video player:
 - <kbd>w</kbd> Web fullscreen
@@ -188,6 +188,7 @@ Additional variables:
   [`expandDanmakuListIgnoreMediaList`, `Don't expand danmaku list in playlist pages. (For viewing playlist)`],
   [`removeGuidePopup`, `Remove irrelevant popups on videos.`],
   [`fullscreenGiftBox`, `Open gift box quickly when using web fullscreen mode.`],
+  [`keymapPreset`, `Select preferred preset for keymap.`],
 ]);
 export default {
   export: { toolTips },

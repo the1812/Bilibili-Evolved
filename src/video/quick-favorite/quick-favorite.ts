@@ -1,9 +1,10 @@
 (async () => {
-  if (!document.URL.startsWith('https://www.bilibili.com/video/') || !getUID()) {
+  if (!document.URL.match(/^https:\/\/www\.bilibili\.com\/(video|medialist)\//) || !getUID()) {
     return
   }
-  const { playerReady } = await import('../player-ready')
+  const { playerReady, aidReady } = await import('../player-ready')
   await playerReady()
+  await aidReady()
   const favoriteButton = dq('.video-toolbar .ops .collect')
   if (!favoriteButton) {
     return
@@ -25,7 +26,7 @@
       <div class="tip" :class="{ show: tipShowing }">{{tipText}}</div>
     </span>
   `.trim()
-  if (settings.outerWatchlater) {
+  if (settings.outerWatchlater && !document.URL.includes('medialist')) {
     const watchlaterButton = await SpinQuery.select('.ops .watchlater')
     if (watchlaterButton !== null) {
       watchlaterButton.insertAdjacentHTML('beforebegin', html)

@@ -50,9 +50,7 @@ export const aria2RpcDefaultOption = {
   host: '127.0.0.1',
   port: '6800',
   method: 'get',
-  skipByDefault: false,
-  maxDownloadLimit: '',
-  baseDir: '',
+  other: '',
 }
 export const settings = {
   useDarkStyle: false,
@@ -158,11 +156,9 @@ export const settings = {
   aria2RpcOptionSelectedProfile: '',
   aria2RpcOptionProfiles: [],
   searchHistory: [],
-  seedsToCoins: true,
-  autoSeedsToCoins: true,
-  lastSeedsToCoinsDate: 0,
   autoDraw: false,
   keymap: false,
+  keymapPreset: 'Default',
   doubleClickFullscreen: false,
   doubleClickFullscreenPreventSingleClick: false,
   simplifyHome: false,
@@ -259,6 +255,9 @@ export const settings = {
   cache: {},
 }
 const fixedSettings = {
+  seedsToCoins: false,
+  autoSeedsToCoins: false,
+  lastSeedsToCoinsDate: 0,
   useDefaultLiveQuality: false,
   recordLiveDanmaku: false,
   autoContinue: false,
