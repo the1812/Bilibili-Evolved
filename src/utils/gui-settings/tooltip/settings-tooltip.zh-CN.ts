@@ -235,6 +235,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`expandDanmakuListIgnoreMediaList`, /*html*/`合集类页面(收藏夹/稍后再看等)中不展开弹幕列表, 方便浏览视频列表.`],
   [`removeGuidePopup`, /*html*/`删除视频内弹出的三连提示框.`],
   [`fullscreenGiftBox`, /*html*/`在网页全屏状态下, 可以直接点开礼物包裹, 方便送辣条和小心心.`],
+  [`keymapPreset`, /*html*/`更换快捷键的预设.`],
 ]);
 export default {
   export: { toolTips },
