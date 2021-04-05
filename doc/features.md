@@ -218,7 +218,7 @@
 - `Ctrl+Alt+C` 视频快速截图 (需开启视频快速截图功能)
 如果弹幕渲染类型选择了Canvas, 则可以按 `Ctrl+Shift+Alt+C` 来截取带弹幕的截图.
 
-如果觉得默认的键位不合适，或者发现与其他插件/脚本的快捷键相冲突，可以参考[修改默认键位](https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md的方法自行修改.
+开启后还可以选择不同的预设, 每套预设都内置了一套键位. 如果觉得默认的键位不合适，或者发现与其他插件/脚本的快捷键相冲突，可以参考[修改默认键位](https://github.com/the1812/Bilibili-Evolved/blob/preview/src/video/keymap/key-bindings.md的方法自行修改.
 
 附: b站原生快捷键列表:
 - `f` 全屏/退出全屏
@@ -686,9 +686,9 @@
 
 </details>
 <details>
-<summary><strong>瓜子换硬币</strong></summary>
+<summary><strong>签到助手</strong></summary>
 
-在附加功能中添加`瓜子换硬币`的按钮, 点击可以将700银瓜子换成1个硬币, 每天限1次.
+在附加功能中添加一些每日签到类的按钮, 例如银瓜子换硬币, 直播间签到.
 
 </details>
 <details>
