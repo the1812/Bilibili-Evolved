@@ -188,6 +188,7 @@ Additional variables:
   [`expandDanmakuListIgnoreMediaList`, `Don't expand danmaku list in playlist pages. (For viewing playlist)`],
   [`removeGuidePopup`, `Remove irrelevant popups on videos.`],
   [`fullscreenGiftBox`, `Open gift box quickly when using web fullscreen mode.`],
+  [`keymapPreset`, `Select preferred preset for keymap.`],
 ]);
 export default {
   export: { toolTips },

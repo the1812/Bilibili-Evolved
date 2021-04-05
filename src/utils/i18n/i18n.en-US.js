@@ -976,6 +976,9 @@ export const map = new Map([
   [`直播全屏包裹`, `Web fullscreen gift box`],
   [`总是显示视频时长`, `Always show duration`],
   [`删除视频弹窗`, `Remove video popups`],
+  [`快捷键预设`, `Preset`],
+  [`签到助手`, `Check-in helper`],
+  [`直播间签到`, `Live check in`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
