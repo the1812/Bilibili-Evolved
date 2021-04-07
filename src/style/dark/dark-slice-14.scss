@@ -291,3 +291,8 @@ a {
     @include theme-color();
   }
 }
+.follow-btn.followed {
+  @include border-color("");
+  @include background-color("4");
+  @include color("a");
+}
