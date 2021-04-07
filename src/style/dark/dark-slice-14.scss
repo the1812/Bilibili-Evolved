@@ -253,3 +253,29 @@ a {
     }
   }
 }
+.main-container .tool-bar {
+  .watch-info {
+    > span {
+      @include color("a");
+    }
+    #watch-together-icon-1 {
+      @include fill("a");
+    }
+    &:hover {
+      > span {
+        @include theme-color();
+      }
+      #watch-together-icon-1 {
+        @include theme-fill();
+      }
+    }
+    .watch-more {
+      @include no-shadow();
+      @include background-color("4");
+      @include border-color();
+      .title {
+        @include color("e");
+      }
+    }
+  }
+}
