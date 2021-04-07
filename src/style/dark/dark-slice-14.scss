@@ -210,7 +210,7 @@
     @include theme-stroke();
   }
   &-playlist-item-img {
-    @include no-image
+    @include no-image;
   }
 }
 .remd-video-card .card-box .pic-box {
@@ -222,4 +222,13 @@
 }
 .video-info .video-title .tit {
   @include color("e");
+}
+a {
+  &.name[style*="color:#FB7299"],
+  &.name[style*="color: #FB7299"],
+  &.name[style*="color: rgb(251, 114, 153)"],
+  &.username.is_vip[style*="color:#FB7299"],
+  &.c-pointer[style*="color: rgb(251, 114, 153)"] {
+    color: rgb(251, 114, 153) !important;
+  }
 }
