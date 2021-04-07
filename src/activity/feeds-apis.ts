@@ -414,6 +414,9 @@ export const isVideoCardBlocked = (card: Pick<VideoCardInfo, 'title' | 'dynamic'
     username: card.upName,
   })
 }
+export const isPreOrderedVideo = (card: any) => {
+  return _.get(card, 'extra.is_reserve_recall', 0) === 1
+}
 
 export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promise<VideoCardInfo[]> => {
   if (!getUID()) {
@@ -557,5 +560,6 @@ export default {
     addMenuItem,
     isCardBlocked,
     isVideoCardBlocked,
+    isPreOrderedVideo,
   },
 }
