@@ -279,3 +279,6 @@ a {
     }
   }
 }
+.error-container .error-404 img {
+  @include to-theme("blue");
+}
