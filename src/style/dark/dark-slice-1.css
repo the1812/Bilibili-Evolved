@@ -886,7 +886,6 @@ div.con header,
 .wrapper .modal-body .choice-wrp .battery-desp input,
 .wrapper .elec-main-title,
 .wrapper .elec-sub-title,
-.paging-box .current,
 .paging-box .dian,
 .paging-box .next,
 .paging-box .prev,
@@ -1994,6 +1993,7 @@ li.tag:hover,
 {
     background-color: var(--theme-color) !important;
 }
+.paging-box .current,
 p.t:hover,
 p.ri-title:hover,
 div.r-text>.t:hover,
