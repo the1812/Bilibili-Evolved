@@ -285,3 +285,9 @@ a {
 .popular-video-container {
   @include back-top-btn();
 }
+.m-layer .b-btn-cancel {
+  @include color("e");
+  &:hover {
+    @include theme-color();
+  }
+}
