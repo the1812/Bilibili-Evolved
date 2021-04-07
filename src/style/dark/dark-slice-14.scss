@@ -232,3 +232,24 @@ a {
     color: rgb(251, 114, 153) !important;
   }
 }
+.bili-search {
+  .video-item.list {
+    @include set-color("border-bottom-color", "4");
+    .headline {
+      .type {
+        @include border-color();
+        @include background-color("4");
+        @include color("e");
+      }
+      .title {
+        @include color("e");
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+    .des {
+      @include color("a");
+    }
+  }
+}
