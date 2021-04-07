@@ -282,3 +282,6 @@ a {
 .error-container .error-404 img {
   @include to-theme("blue");
 }
+.popular-video-container {
+  @include back-top-btn();
+}
