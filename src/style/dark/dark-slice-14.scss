@@ -296,3 +296,18 @@ a {
   @include background-color("4");
   @include color("a");
 }
+#article-list-index .index-holder {
+  .article-item:not(.on) {
+    .point {
+      @include background-color("6");
+    }
+  }
+  .article-item {
+    .title {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+}
