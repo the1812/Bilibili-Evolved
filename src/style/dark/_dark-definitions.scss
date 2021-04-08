@@ -62,10 +62,10 @@
 $vip-color: "FB7299";
 
 @mixin vip-color() {
-  @include set-color("color", $vip-color)
+  @include set-color("color", $vip-color);
 }
 @mixin vip-background-color() {
-  @include set-color("background-color", $vip-color)
+  @include set-color("background-color", $vip-color);
 }
 
 @mixin foreground-background-color($level: "") {
