@@ -311,3 +311,161 @@ a {
     }
   }
 }
+.main-container .bottom-brief-introduction {
+  @include background-color("2");
+}
+.fullscreen-loading .tv-bg + .container {
+  @include background-color();
+  .retry-btn {
+    @include theme-background-color();
+  }
+}
+[style*="color: #00A1D6"] {
+  @include theme-color();
+}
+.main-show-c {
+  .film-change-page {
+    .search {
+      .append {
+        @include theme-background-color();
+      }
+    }
+    .list-container {
+      .season-item {
+        .change-btn {
+          @include theme-border-color();
+          @include theme-color();
+          &:hover {
+            @include theme-background-color();
+            @include color("f");
+          }
+        }
+      }
+    }
+  }
+  .plp-r {
+    .tab {
+      .title-active {
+        @include theme-color();
+      }
+    }
+    .chat-container {
+      .user-guide {
+        .top-c {
+          .l .switch-c.checked {
+            @include theme-background-color();
+          }
+          .r:hover {
+            @include theme-color();
+            svg g g {
+              @include theme-fill();
+            }
+          }
+        }
+        .user-share {
+          @include background-color("2");
+          .share-content {
+            @include background-color("2");
+            .left {
+              .share-btn {
+                &:hover {
+                  span,
+                  i {
+                    @include theme-color();
+                  }
+                }
+                span,
+                i {
+                  @include color("a");
+                }
+              }
+              .copy-action {
+                .copy-title {
+                  @include color("a");
+                }
+                input[type="text"] {
+                  @include background-color();
+                  @include color("e");
+                  @include border-color("4");
+                }
+                .copy-btn {
+                  @include theme-background-color();
+                }
+              }
+            }
+            .right {
+              ::after {
+                @include background-color("6");
+              }
+            }
+          }
+        }
+      }
+      .input-area {
+        .text-c {
+          @include set-theme-color("caret-color");
+        }
+        .input-c.border {
+          @include theme-border-color();
+        }
+      }
+      .static-popup {
+        @include border-color();
+        @include background-color("4");
+        .emoji {
+          @include background-color("4");
+          &:hover {
+            @include background-color("2");
+          }
+        }
+      }
+    }
+    .play-list {
+      .header {
+        .change-film {
+          @include theme-background-color();
+        }
+      }
+      .other-item {
+        .current-play {
+          @include to-theme("blue");
+        }
+      }
+    }
+  }
+}
+#user-card-container {
+  @include theme-border-color();
+  @include background-color("4");
+  .face-cc {
+    @include border-color("4");
+  }
+  .info .name.vip-red-name {
+    color: rgb(251, 114, 153) !important;
+  }
+}
+.dialog-base-wrapper .popup-content .ogv-dialog-confirm {
+  @include background-color("4");
+  .close .icon:hover {
+    @include theme-color();
+    svg path {
+      @include theme-fill();
+    }
+  }
+  .title {
+    @include set-color("border-bottom-color", "6");
+  }
+  .short-msg .content {
+    @include color("a");
+  }
+  .bottom-oper {
+    .btn.cancel {
+      @include border-color();
+      @include background-color("6");
+      @include color("e");
+    }
+    .btn.submit {
+      @include theme-background-color();
+    }
+  }
+}
