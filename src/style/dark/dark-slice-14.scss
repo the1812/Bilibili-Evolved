@@ -229,7 +229,7 @@ a {
   &.name[style*="color: rgb(251, 114, 153)"],
   &.username.is_vip[style*="color:#FB7299"],
   &.c-pointer[style*="color: rgb(251, 114, 153)"] {
-    color: rgb(251, 114, 153) !important;
+    @include vip-color();
   }
 }
 .bili-search {
@@ -441,7 +441,7 @@ a {
     @include border-color("4");
   }
   .info .name.vip-red-name {
-    color: rgb(251, 114, 153) !important;
+    @include vip-color();
   }
 }
 .dialog-base-wrapper .popup-content .ogv-dialog-confirm {
