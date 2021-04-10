@@ -19,13 +19,13 @@
 body:not(.preserve-event-banner) .activity-m,
 body.remove-game-match-module .bili-wrapper > .home-match,
 body.remove-game-match-module #reportFirst3,
-.home-content .ad-panel {
+.home-content .ad-panel,
+.recommend-list .rec-list > :not(.video-page-card) {
   display: none !important;
 }
-/* .carousel-module .panel .pic li[data-id='0']
-{
-    visibility: hidden !important;
-} */
+.recommend-list .rec-list > :not(.video-page-card):first-child + .video-page-card {
+  padding-top: 0 !important;
+}
 #home_popularize {
   position: relative !important;
 }
