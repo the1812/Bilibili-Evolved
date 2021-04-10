@@ -474,10 +474,10 @@ a {
   }
 }
 .bb-comment {
-  .comment-send .comment-emoji {
-    box-shadow: none !important;
+  .comment-emoji {
+    @include no-shadow();
   }
-  .comment-send-lite.comment-send-lite {
+  .comment-send-lite {
     @include background-color("4");
   }
   .loading-state {
