@@ -469,3 +469,31 @@ a {
     }
   }
 }
+.bb-comment {
+  .comment-send .comment-emoji {
+    box-shadow: none !important;
+  }
+  .comment-send-lite.comment-send-lite {
+    @include background-color("4");
+  }
+  .loading-state {
+    @include color("a");
+  }
+}
+.toolbar-box {
+  .emoji-btn.active,
+  .emoji-btn:hover,
+  .pic-box.active,
+  .pic-box:hover,
+  .at-icon:hover,
+  .icon-topic:hover,
+  .icon-vote.active,
+  .icon-vote:hover,
+  .icon-schedule.active,
+  .icon-schedule:hover {
+    @include to-theme("blue");
+  }
+  .static-popup .bp-arrow {
+    background: none !important;
+  }
+}
