@@ -205,12 +205,16 @@
     @include theme-color();
   }
 }
+
 .player-auxiliary {
   &-btn-playlist-order:hover path {
     @include theme-stroke();
   }
   &-playlist-item-img {
     @include no-image;
+  }
+  &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix {
+    @include to-theme("blue");
   }
 }
 .remd-video-card .card-box .pic-box {
@@ -467,5 +471,33 @@ a {
     .btn.submit {
       @include theme-background-color();
     }
+  }
+}
+.bb-comment {
+  .comment-send .comment-emoji {
+    box-shadow: none !important;
+  }
+  .comment-send-lite.comment-send-lite {
+    @include background-color("4");
+  }
+  .loading-state {
+    @include color("a");
+  }
+}
+.toolbar-box {
+  .emoji-btn.active,
+  .emoji-btn:hover,
+  .pic-box.active,
+  .pic-box:hover,
+  .at-icon:hover,
+  .icon-topic:hover,
+  .icon-vote.active,
+  .icon-vote:hover,
+  .icon-schedule.active,
+  .icon-schedule:hover {
+    @include to-theme("blue");
+  }
+  .static-popup .bp-arrow {
+    background: none !important;
   }
 }
