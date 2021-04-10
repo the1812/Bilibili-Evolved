@@ -140,7 +140,10 @@ class FeedsCardsManager extends EventTarget {
   ): void {
     super.removeEventListener(type, callback, options)
   }
-  async addCard(node: Node) {
+  async addCard(node?: Node) {
+    if (node === undefined) {
+      return
+    }
     if (node instanceof HTMLElement && node.classList.contains('card')) {
       if (node.querySelector('.skeleton') !== null) {
         const obs = Observer.childList(node, () => {
@@ -175,7 +178,10 @@ class FeedsCardsManager extends EventTarget {
       }
     }
   }
-  async removeCard(node: Node) {
+  async removeCard(node?: Node) {
+    if (node === undefined) {
+      return
+    }
     if (node instanceof HTMLElement && node.classList.contains('card')) {
       const id = node.getAttribute('data-did') as string
       const index = this.cards.findIndex(c => c.id === id)
@@ -290,13 +296,26 @@ class FeedsCardsManager extends EventTarget {
   }
   async startWatching() {
     const updateCards = (cardsList: HTMLElement) => {
-      const cards = [...cardsList.querySelectorAll('.card[data-did]')]
+      const selector = '.card[data-did]'
+      const findCardNode = (node: Node): Node | undefined => {
+        if (node instanceof HTMLElement) {
+          if (node.matches(selector)) {
+            return node
+          }
+          const child = node.querySelector(selector)
+          if (child) {
+            return child
+          }
+        }
+        return undefined
+      }
+      const cards = [...cardsList.querySelectorAll(selector)]
       cards.forEach(it => this.addCard(it))
       console.log(cards)
       return Observer.childList(cardsList, records => {
         records.forEach(record => {
-          record.addedNodes.forEach(node => this.addCard(node))
-          record.removedNodes.forEach(node => this.removeCard(node))
+          record.addedNodes.forEach(node => this.addCard(findCardNode(node)))
+          record.removedNodes.forEach(node => this.removeCard(findCardNode(node)))
         })
       })
     }
