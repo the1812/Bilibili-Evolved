@@ -205,12 +205,16 @@
     @include theme-color();
   }
 }
+
 .player-auxiliary {
   &-btn-playlist-order:hover path {
     @include theme-stroke();
   }
   &-playlist-item-img {
     @include no-image;
+  }
+  &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix {
+    @include to-theme("blue");
   }
 }
 .remd-video-card .card-box .pic-box {
