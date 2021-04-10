@@ -1,28 +1,45 @@
-.panel-area .bb-comment .fold-comment {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  height: 40px;
-  width: calc(100% + 48px);
-  font-size: 14px;
-  transform: translateX(-24px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  color: #99a2aa;
-  cursor: pointer;
-  transition: all 0.2s ease-out;
-  z-index: 110;
-  border-radius: 4px;
-  &:hover {
-    color: black;
-  }
-  body.dark & {
-    background-color: #444;
-    color: #eee;
+.panel-area .bb-comment {
+  .fold-comment {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    height: 40px;
+    width: calc(100% + 48px);
+    font-size: 14px;
+    transform: translateX(-24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #99a2aa;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    z-index: 110;
+    border-radius: 4px;
     &:hover {
-      color: var(--theme-color);
+      color: black;
     }
+    body.dark & {
+      background-color: #444;
+      color: #eee;
+      &:hover {
+        color: var(--theme-color);
+      }
+    }
+  }
+
+  // 兼容 b 站的 lite 版发评论, 吸附做的是真烂
+  .comment-send-lite {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    bottom: 40px !important;
+  }
+  .loading-state {
+    height: auto !important;
+    line-height: normal !important;
+    margin-bottom: 10px !important;
+  }
+  .loading-state + .bottom-page {
+    margin: 0 !important;
   }
 }
