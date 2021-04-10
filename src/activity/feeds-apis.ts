@@ -190,6 +190,7 @@ class FeedsCardsManager extends EventTarget {
     }
   }
   async parseCard(element: HTMLElement): Promise<FeedsCard> {
+    const getVueData = (el: any) => el.parentElement.__vue__
     const getSimpleText = async (selector: string) => {
       const subElement = await SpinQuery.condition(
         () => element.querySelector(selector),
@@ -210,24 +211,29 @@ class FeedsCardsManager extends EventTarget {
       if (type === feedsCardTypes.bangumi) {
         return ''
       }
-      const el = await SpinQuery.condition(() => element, (it: any) => Boolean(it.__vue__ || !element.parentNode))
+      const el = await SpinQuery.condition(() => element, it => Boolean(getVueData(it) || !element.parentNode))
       if (element.parentNode === null) {
         // console.log('skip detached node:', element)
         return ''
       }
       if (el === null) {
-        console.warn(el)
+        console.warn(el, element, getVueData(el), element.parentNode)
         return ''
       }
       // if (!el.__vue__.card.origin) {
       //   return ''
       // }
+      const vueData = getVueData(el)
       if (type === feedsCardTypes.repost) {
-        const originalCard = JSON.parse(el.__vue__.card.origin)
-        const originalText = el.__vue__.originCardData.pureText
+        const currentText = vueData.card.item.content
+        // 被转发动态已失效
+        if (vueData.card.origin === undefined) {
+          return currentText
+        }
+        const originalCard = JSON.parse(vueData.card.origin)
+        const originalText = vueData.originCardData.pureText
         const originalDescription = _.get(originalCard, 'item.description', '')
         const originalTitle = originalCard.title
-        const currentText = el.__vue__.card.item.content
         return [
           currentText,
           originalText,
@@ -235,8 +241,8 @@ class FeedsCardsManager extends EventTarget {
           originalTitle
         ].filter(it => Boolean(it)).join('\n')
       }
-      const currentText = el.__vue__.originCardData.pureText
-      const currentTitle = el.__vue__.originCardData.title
+      const currentText = vueData.originCardData.pureText
+      const currentTitle = vueData.originCardData.title
       return [
         currentText,
         currentTitle,
@@ -271,7 +277,8 @@ class FeedsCardsManager extends EventTarget {
     element.setAttribute('data-type', card.type.id.toString())
     if (card.type === feedsCardTypes.repost) {
       const currentUsername = card.username
-      const repostUsername = _.get(card, 'element.__vue__.card.origin_user.info.uname', '')
+      const vueData = getVueData(card.element)
+      const repostUsername = _.get(vueData, 'card.origin_user.info.uname', '')
       if (currentUsername === repostUsername) {
         element.setAttribute('data-self-repost', 'true')
       }
