@@ -140,7 +140,10 @@ class FeedsCardsManager extends EventTarget {
   ): void {
     super.removeEventListener(type, callback, options)
   }
-  async addCard(node: Node) {
+  async addCard(node?: Node) {
+    if (node === undefined) {
+      return
+    }
     if (node instanceof HTMLElement && node.classList.contains('card')) {
       if (node.querySelector('.skeleton') !== null) {
         const obs = Observer.childList(node, () => {
@@ -175,7 +178,10 @@ class FeedsCardsManager extends EventTarget {
       }
     }
   }
-  async removeCard(node: Node) {
+  async removeCard(node?: Node) {
+    if (node === undefined) {
+      return
+    }
     if (node instanceof HTMLElement && node.classList.contains('card')) {
       const id = node.getAttribute('data-did') as string
       const index = this.cards.findIndex(c => c.id === id)
@@ -190,6 +196,7 @@ class FeedsCardsManager extends EventTarget {
     }
   }
   async parseCard(element: HTMLElement): Promise<FeedsCard> {
+    const getVueData = (el: any) => el.parentElement.__vue__
     const getSimpleText = async (selector: string) => {
       const subElement = await SpinQuery.condition(
         () => element.querySelector(selector),
@@ -210,24 +217,29 @@ class FeedsCardsManager extends EventTarget {
       if (type === feedsCardTypes.bangumi) {
         return ''
       }
-      const el = await SpinQuery.condition(() => element, (it: any) => Boolean(it.__vue__ || !element.parentNode))
+      const el = await SpinQuery.condition(() => element, it => Boolean(getVueData(it) || !element.parentNode))
       if (element.parentNode === null) {
         // console.log('skip detached node:', element)
         return ''
       }
       if (el === null) {
-        console.warn(el)
+        console.warn(el, element, getVueData(el), element.parentNode)
         return ''
       }
       // if (!el.__vue__.card.origin) {
       //   return ''
       // }
+      const vueData = getVueData(el)
       if (type === feedsCardTypes.repost) {
-        const originalCard = JSON.parse(el.__vue__.card.origin)
-        const originalText = el.__vue__.originCardData.pureText
+        const currentText = vueData.card.item.content
+        // 被转发动态已失效
+        if (vueData.card.origin === undefined) {
+          return currentText
+        }
+        const originalCard = JSON.parse(vueData.card.origin)
+        const originalText = vueData.originCardData.pureText
         const originalDescription = _.get(originalCard, 'item.description', '')
         const originalTitle = originalCard.title
-        const currentText = el.__vue__.card.item.content
         return [
           currentText,
           originalText,
@@ -235,8 +247,8 @@ class FeedsCardsManager extends EventTarget {
           originalTitle
         ].filter(it => Boolean(it)).join('\n')
       }
-      const currentText = el.__vue__.originCardData.pureText
-      const currentTitle = el.__vue__.originCardData.title
+      const currentText = vueData.originCardData.pureText
+      const currentTitle = vueData.originCardData.title
       return [
         currentText,
         currentTitle,
@@ -271,7 +283,8 @@ class FeedsCardsManager extends EventTarget {
     element.setAttribute('data-type', card.type.id.toString())
     if (card.type === feedsCardTypes.repost) {
       const currentUsername = card.username
-      const repostUsername = _.get(card, 'element.__vue__.card.origin_user.info.uname', '')
+      const vueData = getVueData(card.element)
+      const repostUsername = _.get(vueData, 'card.origin_user.info.uname', '')
       if (currentUsername === repostUsername) {
         element.setAttribute('data-self-repost', 'true')
       }
@@ -283,13 +296,26 @@ class FeedsCardsManager extends EventTarget {
   }
   async startWatching() {
     const updateCards = (cardsList: HTMLElement) => {
-      const cards = [...cardsList.querySelectorAll('.card[data-did]')]
+      const selector = '.card[data-did]'
+      const findCardNode = (node: Node): Node | undefined => {
+        if (node instanceof HTMLElement) {
+          if (node.matches(selector)) {
+            return node
+          }
+          const child = node.querySelector(selector)
+          if (child) {
+            return child
+          }
+        }
+        return undefined
+      }
+      const cards = [...cardsList.querySelectorAll(selector)]
       cards.forEach(it => this.addCard(it))
       console.log(cards)
       return Observer.childList(cardsList, records => {
         records.forEach(record => {
-          record.addedNodes.forEach(node => this.addCard(node))
-          record.removedNodes.forEach(node => this.removeCard(node))
+          record.addedNodes.forEach(node => this.addCard(findCardNode(node)))
+          record.removedNodes.forEach(node => this.removeCard(findCardNode(node)))
         })
       })
     }
@@ -413,6 +439,9 @@ export const isVideoCardBlocked = (card: Pick<VideoCardInfo, 'title' | 'dynamic'
     text: card.title + (card.dynamic ?? ''),
     username: card.upName,
   })
+}
+export const isPreOrderedVideo = (card: any) => {
+  return _.get(card, 'extra.is_reserve_recall', 0) === 1
 }
 
 export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promise<VideoCardInfo[]> => {
@@ -557,5 +586,6 @@ export default {
     addMenuItem,
     isCardBlocked,
     isVideoCardBlocked,
+    isPreOrderedVideo,
   },
 }

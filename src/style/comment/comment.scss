@@ -97,6 +97,7 @@
   .sailing {
     @include hide();
   }
+  .comment-send-lite .comment-emoji,
   .comment-send .comment-emoji {
     span {
       opacity: 0.5;
