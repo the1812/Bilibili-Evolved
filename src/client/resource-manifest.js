@@ -772,9 +772,21 @@ Resource.manifest = {
       menuRepeatVideo: '视频右键菜单循环播放',
     },
   },
+  removeVideoPopup: {
+    displayNames: {
+      removeVideoPopup: '删除关联视频弹窗',
+    },
+    reloadable: true,
+  },
   removeGuidePopup: {
     displayNames: {
-      removeGuidePopup: '删除视频弹窗',
+      removeGuidePopup: '删除关注弹窗',
+    },
+    reloadable: true,
+  },
+  removeVotePopup: {
+    displayNames: {
+      removeVotePopup: '删除投票弹窗',
     },
     reloadable: true,
   },

@@ -1,6 +1,5 @@
 export default resources.toggleStyle(`
-  #recom_module,#reco_list,.bilibili-player-ending-panel-box-videos,
-  .bilibili-player-video-link {
+  #recom_module,#reco_list,.bilibili-player-ending-panel-box-videos {
     display: none !important;
   }
   .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-spans {

@@ -234,6 +234,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`alwaysShowDuration`, /*html*/`在脚本展示的视频卡片里, 例如简化首页和自定义顶栏的各种弹窗里, 不需要鼠标经过也能一直显示视频时长.`],
   [`expandDanmakuListIgnoreMediaList`, /*html*/`合集类页面(收藏夹/稍后再看等)中不展开弹幕列表, 方便浏览视频列表.`],
   [`removeGuidePopup`, /*html*/`删除视频内弹出的三连提示框.`],
+  [`removeVideoPopup`, /*html*/`删除视频内弹出的关联视频推荐.`],
+  [`removeVotePopup`, /*html*/`删除视频内弹出的投票框.`],
   [`fullscreenGiftBox`, /*html*/`在网页全屏状态下, 可以直接点开礼物包裹, 方便送辣条和小心心.`],
   [`keymapPreset`, /*html*/`更换快捷键的预设.`],
 ]);
