@@ -86,7 +86,7 @@
 
 ### [AdGuard](https://adguard.com/zh_cn/adguard-windows/overview.html)
 ~~不兼容~~
-部分兼容，加载模式仅可为 延迟(自动) 且无法更改. 经测试，Adguard 在最新7.5.3版本中已支持复杂数据储存.
+部分兼容, 加载模式仅可为`延迟(自动)`且无法更改. 经测试, Adguard 在最新7.5.3版本中已支持复杂数据储存.
 
 ## 浏览器
 
@@ -160,10 +160,16 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 # 我写的其他一些玩意
 
 ## [Touhou Tagger](https://github.com/the1812/Touhou-Tagger)
-☯ 从 THBWiki 自动填写东方Project同人音乐CD曲目信息
+☯ 从 [THBWiki](https://thwiki.cc/) 自动填写东方Project同人音乐CD曲目信息
 
 ## [Malware Patch](https://github.com/the1812/Malware-Patch)
 阻止中国流氓软件的管理员授权
+
+## [dizzylab auto theme](https://github.com/the1812/dizzylab-auto-theme)
+[dizzylab](https://www.dizzylab.net/) 自适应 Stylus 主题, 跟随系统亮/暗设定
+
+## [Steam CSS](https://github.com/the1812/SteamCSS)
+为 [Steam](https://store.steampowered.com/) 的库和内置浏览器插入一段自定义的 CSS, 用于更换字体等
 
 ## [Popcap Patches](https://github.com/the1812/Popcap-Patches)
 Popcap游戏3D加速补丁制作器, 可修复宝石迷阵, 祖玛等游戏
