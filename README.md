@@ -49,6 +49,8 @@
 | jsDelivr | 24h      | 快             | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview-offline.user.js) |
 | GitHub   | <1h      | 需要梯子       | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js)      | [安装](https://github.com/the1812/Bilibili-Evolved/raw/preview/bilibili-evolved.preview-offline.user.js)      |
 
+### 关于换源
+上面的更换安装源能够以不同的来源安装脚本**本体**, 但脚本还有个热更新机制, 会自动下载脚本**功能**的更新. 如果你想完全更换为 GitHub 源 (例如希望尽快得到刚发布的更新), 除了从上面的 GitHub 安装源安装脚本以外, 安装完还需要在脚本的设置里将 `其他 - 更新源` 从默认的 `jsDelivr` 更换为 `GitHub`.
 
 ## 推荐配置
 - 操作系统: 64-bit Windows 10 / macOS 10.15+
