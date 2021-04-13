@@ -478,7 +478,7 @@ a {
     @include no-shadow();
   }
   .comment-send-lite {
-    @include background-color("4");
+    @include background-color("2");
   }
   .loading-state {
     @include color("a");
