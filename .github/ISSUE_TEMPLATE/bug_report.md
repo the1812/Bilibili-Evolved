@@ -8,6 +8,7 @@ about: 功能运行不正常 / 失效
 
 <!-- 发之前记得看下置顶问题 (Pinned issues)(如果有的话) -->
 <!-- https://github.com/the1812/Bilibili-Evolved/issues -->
+<!-- 还有各种常见的问题解答: https://github.com/the1812/Bilibili-Evolved/discussions/1301 -->
 
 **关于哪一项功能**
 
