@@ -11,7 +11,9 @@ export const waitForControlBar = async (config: {
   if (!document.URL.match(/^https:\/\/live.bilibili.com\/(blanc\/)?(\d+)/)) {
     return
   }
-  const controllerContainer = await SpinQuery.select('.bilibili-live-player-video-controller') as HTMLDivElement
+  const controllerContainer = (await SpinQuery.select(
+    '.bilibili-live-player-video-controller, .web-player-controller-wrap'
+  )) as HTMLDivElement
   if (!controllerContainer) {
     return
   }
