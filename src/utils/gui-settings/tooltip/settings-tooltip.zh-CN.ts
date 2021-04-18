@@ -238,6 +238,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`removeVotePopup`, /*html*/`删除视频内弹出的投票框.`],
   [`fullscreenGiftBox`, /*html*/`在网页全屏状态下, 可以直接点开礼物包裹, 方便送辣条和小心心.`],
   [`keymapPreset`, /*html*/`更换快捷键的预设.`],
+  [`autoPlayControl`, /*html*/`使用传统的连播模式, 视频有多P时 / 在收藏夹或稍后再看列表里时自动开启连播, 单P视频自动关闭连播防止播放推荐视频.`],
 ]);
 export default {
   export: { toolTips },

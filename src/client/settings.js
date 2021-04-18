@@ -254,6 +254,7 @@ export const settings = {
   liveSpeedBoost: false,
   checkInCenter: false,
   fullscreenGiftBox: false,
+  autoPlayControl: true,
   cache: {},
 }
 const fixedSettings = {

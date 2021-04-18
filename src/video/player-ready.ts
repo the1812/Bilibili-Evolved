@@ -4,7 +4,7 @@
  * https://github.com/the1812/Bilibili-Evolved/issues/770
  */
 export const playerReady = () => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise<void>(async (resolve, reject) => {
     await SpinQuery.condition(
       () => unsafeWindow,
       () => unsafeWindow.onLoginInfoLoaded !== undefined,

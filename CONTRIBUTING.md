@@ -61,7 +61,8 @@ interface ResourceDefinition {
      */
     path?: string
     /** 在设置面板中的展示名称, 包括子选项
-     * 如果不需要在设置面板中展示可以省略 (就变成隐藏的功能了, 只能浏览器 Console 里开启)
+     * 如果不需要在设置面板中展示可以省略
+     * 如果当前功能的 path 可以省略, displayNames 里也只有对应其本身 key 的一条, 则可以把整个 ResourceDefinition 定义省略为这一条展示名称的字符串, 可以在 resource-manifest.js 找到不少这样的例子
      */
     displayNames?: {
       [key: string]: string
