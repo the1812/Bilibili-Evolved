@@ -8,11 +8,11 @@
     return
   }
   const autoPlayControls = {
-    enable: ['.multi-page .next-button', '.player-auxiliary .player-auxiliary-autoplay-switch:not(:empty)'],
+    enable: ['.multi-page .next-button', '.player-auxiliary-autoplay-switch input'],
     disable: ['.recommend-list .next-button'],
   }
   const isChecked = (container: HTMLElement) => {
-    return Boolean(container.querySelector('.switch-button.on, input:checked'))
+    return Boolean(container.querySelector('.switch-button.on, :checked'))
   }
   const { playerReady } = await import('./player-ready')
   await playerReady()
