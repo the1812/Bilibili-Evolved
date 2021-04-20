@@ -818,7 +818,7 @@
       .btn-box .jump-btn {
         @include theme-background-color();
         @include foreground-color();
-        &.checked {
+        &.checked, &.disabled {
           @include background-color("4");
         }
       }
