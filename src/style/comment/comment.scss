@@ -90,6 +90,22 @@
 }
 
 .bb-comment {
+  // 兼容 b 站的 lite 版发评论(2021-04-20全量), 细节做的是真烂
+  .comment-send-lite {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    bottom: 0px !important;
+  }
+  .loading-state {
+    font-size: 14px !important;
+    height: auto !important;
+    line-height: normal !important;
+    margin-bottom: 12px !important;
+  }
+  .loading-state + .bottom-page {
+    margin: 0 !important;
+  }
+
   .nameplate,
   .comment-header .tabs-order li.on::after,
   .true-love,
