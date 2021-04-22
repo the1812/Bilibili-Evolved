@@ -971,6 +971,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 }
 #custom-navbar-home-popup .category-item .popup a,
 #upload-actions a,
+#ranking-list a,
 #message-list a {
   position: relative;
   padding: 8px;
@@ -997,6 +998,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 }
 #custom-navbar-home-popup .category-item .popup,
 #upload-actions,
+#ranking-list,
 #message-list {
   a:hover::before {
     transform: scaleX(1);
@@ -1011,6 +1013,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   font-weight: bold;
 }
 #upload-actions,
+#ranking-list,
 #message-list {
   width: max-content;
 }
