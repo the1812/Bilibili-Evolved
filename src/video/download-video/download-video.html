@@ -116,7 +116,8 @@
   <div class="separator"></div>
   <div class="exports">
     <h2>导出</h2>
-    <div class="actions" :class="{busy: busy}">
+    <div class="actions" :class="{ busy }">
+      <button v-for="ex of extensionButtons" :key="ex.name" @click="runExtension(ex)">{{ ex.displayName }}</button>
       <button class="show-link" v-if="downloadSingle"
         @click="exportData('showLink')">显示链接</button>
       <button class="idm" @click="exportData('idm')">IDM</button>

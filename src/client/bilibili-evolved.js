@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.12.5
+// @version      1.12.6
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2021, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -195,9 +195,10 @@ import { store } from './store'
       }
     }
     if (unsafeWindow.bilibiliEvolved === undefined) {
-      unsafeWindow.bilibiliEvolved = { addons: [] }
+      unsafeWindow.bilibiliEvolved = {}
     }
     Object.assign(unsafeWindow.bilibiliEvolved, {
+      addons: [],
       subscribe (type, callback) {
         const event = events[type]
         if (callback) {

@@ -561,6 +561,12 @@ ${it.url}
     this.videoSpeed.stopMeasure()
   }
 }
+interface ExtensionButton {
+  name: string
+  displayName: string
+  batch: boolean
+  action: (video: VideoDownloader) => void
+}
 class VideoSpeed {
   workingDownloader: VideoDownloader
   lastProgress = 0
@@ -641,7 +647,17 @@ async function loadPanel() {
   // const start = performance.now()
   let workingDownloader: VideoDownloader
   // const sizeCache = new Map<VideoFormat, number>()
-  type ExportType = 'copyLink' | 'showLink' | 'aria2' | 'aria2RPC' | 'copyVLD' | 'exportVLD' | 'ffmpegEpisodes' | 'ffmpegFragments' | 'idm'
+  type ExportType =
+    | 'copyLink'
+    | 'showLink'
+    | 'aria2'
+    | 'aria2RPC'
+    | 'copyVLD'
+    | 'exportVLD'
+    | 'ffmpegEpisodes'
+    | 'ffmpegFragments'
+    | 'idm'
+    | 'extension'
   interface EpisodeItem {
     title: string
     titleParameters?: BatchTitleParameter
@@ -664,6 +680,11 @@ async function loadPanel() {
       displayName: '手动输入',
     },
   ]
+  const extensionButtons: ExtensionButton[] = []
+  const addons: ExtensionButton[] = unsafeWindow.bilibiliEvolved.downloadVideoExtensionButtons
+  if (addons) {
+    extensionButtons.push(...addons)
+  }
   const panel = new Vue({
     // el: '.download-video',
     template: resources.import('downloadVideoHtml'),
@@ -724,6 +745,8 @@ async function loadPanel() {
       enableDash: settings.enableDashDownload,
       lastDirectDownloadLink: '',
       manualInputText: '',
+      extensionButtons,
+      activeExtensionButton: null,
     },
     computed: {
       tabs() {
@@ -828,6 +851,10 @@ async function loadPanel() {
         }
         return format
       },
+      async runExtension(extension: ExtensionButton) {
+        this.activeExtensionButton = extension
+        await this.exportData('extension')
+      },
       async exportData(type: ExportType) {
         if (this.busy === true) {
           return
@@ -846,6 +873,9 @@ async function loadPanel() {
           const videoDownloader = await format.downloadInfo(this.dash)
           videoDownloader.subtitle = this.subtitle
           switch (type) {
+            case 'extension':
+              this.activeExtensionButton?.action(videoDownloader)
+              break
             case 'copyLink':
               await videoDownloader.copyUrl()
               Toast.success('已复制链接到剪贴板.', '下载视频', 3000)
