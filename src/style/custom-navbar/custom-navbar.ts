@@ -108,11 +108,12 @@ export default (() => {
       const { UserInfo } = await import('./simple/custom-navbar-user-info')
       const { SearchBox } = await import('./simple/custom-navbar-search-box')
       const { Iframe } = await import('./simple/custom-navbar-iframe')
+      const { Rank } = await import('./simple/custom-navbar-rank')
       const components = [
         new Blank(1),
         new Logo(),
         new Category(),
-        new SimpleLink('排行', 'https://www.bilibili.com/v/popular/rank/all', 'ranking'),
+        new Rank(),
         new SimpleLink('相簿', 'https://h.bilibili.com', 'drawing'),
         new SimpleLink('音频', 'https://www.bilibili.com/audio/home/', 'music'),
         new Iframe('游戏中心', 'https://game.bilibili.com/', {

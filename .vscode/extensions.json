@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "ms-dotnettools.csharp",
+    "octref.vetur",
+    "editorconfig.editorconfig"
+  ]
+}
