@@ -94,13 +94,32 @@
   .comment-send-lite {
     position: -webkit-sticky !important;
     position: sticky !important;
-    bottom: 0px !important;
+    bottom: 0 !important;
+    background: linear-gradient(to top, #fff 30%, transparent) !important;
+    pointer-events: none;
+    body.dark & {
+      background: linear-gradient(to top, #222 30%, transparent) !important;
+    }
+    .comment-emoji-lite {
+      background-color: #fff;
+      box-shadow: none !important;
+    }
+    .comment-submit {
+      padding: 4px 15px !important;
+    }
+    .comment-submit,
+    .textarea-container .ipt-txt {
+      height: 64px !important;
+    }
+    > * {
+      pointer-events: initial;
+    }
   }
   .loading-state {
     font-size: 14px !important;
     height: auto !important;
     line-height: normal !important;
-    margin-bottom: 12px !important;
+    margin: 12px 0 !important;
   }
   .loading-state + .bottom-page {
     margin: 0 !important;
@@ -300,6 +319,11 @@
       background-position: center !important;
       opacity: 0.6;
     }
+  }
+}
+.panel-area .bb-comment {
+  .comment-send-lite {
+    background: linear-gradient(to top, #444 30%, transparent) !important;
   }
 }
 .dynamic-list-item-wrap {

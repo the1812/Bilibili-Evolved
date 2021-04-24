@@ -484,6 +484,18 @@ a {
     @include color("a");
   }
 }
+
+body:not(.simplify-comment) .bb-comment {
+  .comment-send-lite {
+    @include background-color("2");
+  }
+}
+body:not(.simplify-comment) .panel-area .bb-comment {
+  .comment-send-lite {
+    @include background-color("4");
+  }
+}
+
 .toolbar-box {
   .emoji-btn.active,
   .emoji-btn:hover,
