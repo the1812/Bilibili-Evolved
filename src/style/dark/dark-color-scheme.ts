@@ -1,14 +1,16 @@
 const matchList = matchMedia('(prefers-color-scheme: dark)')
-const check = (isSystemDark: boolean) => {
+const check = async (isSystemDark: boolean) => {
   if (isSystemDark !== settings.useDarkStyle) {
     settings.useDarkStyle = isSystemDark
+    if (isSystemDark) {
+      await resources.fetchByKey('useDarkStyle')
+    } else {
+      const darkStyles = await import('./dark-styles')
+      darkStyles?.unload()
+    }
   }
-  return isSystemDark
 }
-(async()=>{
-  const { load:loadDarkMod, unload:unloadDarkMod } = await import('./dark-styles')
-  check(matchList.matches) ? loadDarkMod() : unloadDarkMod()
-})()
+check(matchList.matches)
 matchList.addEventListener('change', e => {
   check(e.matches)
 })
