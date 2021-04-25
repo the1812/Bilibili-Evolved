@@ -484,6 +484,9 @@ a {
     @include color("a");
   }
 }
+.emoji-box.top:after {
+  @include no-image();
+}
 
 body:not(.simplify-comment) .bb-comment {
   .comment-send-lite {

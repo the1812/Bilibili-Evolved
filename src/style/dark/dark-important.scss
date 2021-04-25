@@ -40,10 +40,8 @@
 .main-container .media-info .media-right .media-tool-bar .btn-follow.active,
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled,
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled:hover,
-.bb-comment .no-login .comment-submit,
 .main-container .media-info .media-right .media-tool-bar .btn-follow.active,
 .coupon-content-con .coupon-btn-disable,
-.common .bb-comment .no-login .comment-submit,
 .customize-wrp .select {
   @include background-color("4");
 }
@@ -68,7 +66,8 @@
 }
 
 blockquote {
-  &, * {
+  &,
+  * {
     @include color("a");
   }
   @each $color in "blue", "gray", "green", "lblue", "pink", "purple", "yellow" {
@@ -101,6 +100,15 @@ blockquote {
     }
   }
 }
+.bb-comment .no-login .comment-submit {
+  .common &,
+  & {
+    @include color("9");
+    @include background-color("4");
+    @include border-color();
+  }
+}
+
 .home-page .sticky-bar .bar-content .message,
 .cover .disabled-cover,
 .el-input__inner,
@@ -111,10 +119,8 @@ blockquote {
 .s-paging > ul > span.current,
 .score-info .go-movie,
 .invitation-record-warp .invtable .inputdone,
-.bb-comment .no-login .comment-submit,
 #app .sticky-bar .bar-content .message,
 .coupon-content-con .coupon-btn-disable,
-.common .bb-comment .no-login .comment-submit,
 .customize-wrp .select,
 .manga-detail .episode-list-component .episode-list .list-data .list-item.last-read,
 .popup-content-ctnr .bl-button--ghost {
@@ -128,9 +134,7 @@ blockquote {
 .user-setting-warp .el-radio-button__orig-radio:checked + .el-radio-button__inner,
 .tabs-bar,
 .score-info .go-movie,
-.bb-comment .no-login .comment-submit,
 .select-box-v2-container .select-box-v2-controller-disabled,
-.common .bb-comment .no-login .comment-submit,
 .popup-content-ctnr .bl-button--ghost:hover,
 .song-info .info-wrap .type-list .item-list .type-item.active,
 .enter-failure .password-input .pink-border,
@@ -278,5 +282,5 @@ blockquote {
 .members-info .avatar-name__container .is-vip,
 .members-info .wide-members .avatar .is-vip,
 .up-info .up-info_right .name .username.is-vip {
-    color: #fb7299!important;
+  color: #fb7299 !important;
 }

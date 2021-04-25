@@ -88,6 +88,42 @@
     color: #eee !important;
   }
 }
+@mixin emoji-position-fix {
+  .comment-send-lite:not(.no-login),
+  .comment-send:not(.no-login) {
+    position: relative;
+    .dynamic-repost {
+      margin-left: 85px !important;
+      margin-top: 4px;
+    }
+    .comment-emoji {
+      position: absolute !important;
+      right: 0;
+      top: 51px;
+      width: 68px !important;
+      background: #fff;
+    }
+    .comment-submit {
+      height: 34px !important;
+      font-size: 0;
+      body.dark {
+        color: var(--theme-color) !important;
+      }
+      &::after {
+        content: "发表";
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        body.dark & {
+          color: var(--foreground-color);
+        }
+      }
+    }
+  }
+}
 
 .bb-comment {
   // 兼容 b 站的 lite 版发评论(2021-04-20全量), 细节做的是真烂
@@ -97,19 +133,25 @@
     bottom: 0 !important;
     background: linear-gradient(to top, #fff, transparent) !important;
     pointer-events: none;
+    width: 100% !important;
+    margin: 0 !important;
+    padding-left: 85px !important;
     body.dark & {
       background: linear-gradient(to top, #222, transparent) !important;
     }
     .comment-emoji-lite {
       background-color: #fff;
-      box-shadow: none !important;
     }
     .comment-submit {
       padding: 4px 15px !important;
+      position: relative !important;
+      right: 0 !important;
+      margin-left: 10px !important;
     }
-    .comment-submit,
+    // .comment-submit,
     .textarea-container .ipt-txt {
-      height: 64px !important;
+      height: 65px !important;
+      width: calc(100% - 80px) !important;
     }
     > * {
       pointer-events: initial;
@@ -134,6 +176,7 @@
   }
   .comment-send-lite .comment-emoji,
   .comment-send .comment-emoji {
+    box-shadow: none !important;
     span {
       opacity: 0.5;
       color: black;
@@ -320,8 +363,10 @@
       opacity: 0.6;
     }
   }
+
+  @include emoji-position-fix();
 }
-.panel-area .bb-comment {
+body.dark .panel-area .bb-comment {
   .comment-send-lite {
     background: linear-gradient(to top, #444 30%, transparent) !important;
   }
@@ -413,4 +458,7 @@
 .comment-list .opera-list {
   right: 20px !important;
   top: -72px !important;
+}
+.v-wrap #comment {
+  z-index: 1 !important;
 }
