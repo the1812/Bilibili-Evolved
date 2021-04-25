@@ -95,10 +95,10 @@
     position: -webkit-sticky !important;
     position: sticky !important;
     bottom: 0 !important;
-    background: linear-gradient(to top, #fff 30%, transparent) !important;
+    background: linear-gradient(to top, #fff, transparent) !important;
     pointer-events: none;
     body.dark & {
-      background: linear-gradient(to top, #222 30%, transparent) !important;
+      background: linear-gradient(to top, #222, transparent) !important;
     }
     .comment-emoji-lite {
       background-color: #fff;
