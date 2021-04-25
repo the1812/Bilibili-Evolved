@@ -492,6 +492,22 @@ body:not(.simplify-comment) .bb-comment {
   .comment-send-lite {
     @include background-color("2");
   }
+  .comment-list .list-item .info {
+    .like {
+      &:hover i,
+      &.liked i,
+      &.liked:hover i {
+        @include to-theme("blue");
+      }
+    }
+    .hate {
+      &:hover i,
+      &.hated i,
+      &.hated:hover i {
+        @include to-theme("blue");
+      }
+    }
+  }
 }
 body:not(.simplify-comment) .panel-area .bb-comment {
   .comment-send-lite {
