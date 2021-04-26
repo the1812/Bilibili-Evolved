@@ -74,7 +74,7 @@
   width: 16px !important;
   background-position: center !important;
   opacity: 0.4;
-  display: inline-flex;
+  display: inline-flex !important;
 }
 @mixin like-icon {
   @include mdi("\F514");
@@ -118,7 +118,8 @@
 @mixin emoji-position-fix {
   .comment-send-lite:not(.no-login),
   .comment-send:not(.no-login) {
-    position: relative;
+    position: relative !important;
+    padding-top: 15px !important;
     .dynamic-repost {
       margin-left: 85px !important;
       margin-top: 4px;
