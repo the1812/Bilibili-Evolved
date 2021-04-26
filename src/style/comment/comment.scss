@@ -116,9 +116,11 @@
   }
 }
 @mixin emoji-position-fix {
-  .comment-send-lite:not(.no-login),
   .comment-send:not(.no-login) {
     position: relative !important;
+  }
+  .comment-send-lite:not(.no-login),
+  .comment-send:not(.no-login) {
     padding-top: 15px !important;
     .dynamic-repost {
       margin-left: 85px !important;
