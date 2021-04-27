@@ -27,7 +27,7 @@ function handlePlayerOut(_mode: string, callback?: () => void) {
     let toTop = getToTop(_mode, videoClient);
     if (toTop <= 0) {
       callback ? callback() : '';
-      // get ready to check when the videoEl el came back.
+      // get ready to check when the video el came back.
       window.addEventListener('scroll', onPlayerBackEvent, {
         passive: true,
       });

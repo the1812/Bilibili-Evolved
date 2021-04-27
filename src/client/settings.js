@@ -258,7 +258,6 @@ export const settings = {
   cache: {},
   scrollOutPlayer: true,
   triggerPlayerOutPlace: '视频中间',
-  lightOOVideoOut: true,
   autoPause: true,
   autoLightOn: true,
 }
