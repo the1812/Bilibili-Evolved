@@ -256,8 +256,11 @@ export const settings = {
   fullscreenGiftBox: false,
   autoPlayControl: true,
   cache: {},
-  autoPauseVideo: true,
-  triggerPausePlace: '视频中间',
+  scrollOutPlayer: true,
+  triggerPlayerOutPlace: '视频中间',
+  lightOOVideoOut: true,
+  autoPause: true,
+  autoLightOn: true,
 }
 const fixedSettings = {
   seedsToCoins: false,

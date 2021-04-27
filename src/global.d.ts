@@ -518,8 +518,10 @@ declare global {
     liveSpeedBoost: boolean,
     checkInCenter: boolean,
     fullscreenGiftBox: boolean,
-    autoPauseVideo: boolean,
-    triggerPausePlace: string[],
+    scrollOutPlayer: boolean,
+    triggerPlayerOutPlace: string[],
+    autoPause: boolean,
+    autoLightOn: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

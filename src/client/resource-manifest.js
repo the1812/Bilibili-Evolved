@@ -678,13 +678,16 @@ Resource.manifest = {
     },
   },
   autoPlayControl: '传统连播模式',
-  autoPauseVideo: {
+  scrollOutPlayer: {
     displayNames: {
-      autoPauseVideo: '自动暂停视频',
-      triggerPausePlace: '触发暂停位置'
+      scrollOutPlayer: '当播放器退出页面时',
+      triggerPlayerOutPlace: '选定触发位置',
+      autoPause: '自动暂停',
+      autoLightOn: '自动开灯'
     },
+    reloadable: true,
     dropdown:{
-      key: 'triggerPausePlace',
+      key: 'triggerPlayerOutPlace',
       items: ['视频顶部' ,'视频中间', '视频底部']
     }
   }

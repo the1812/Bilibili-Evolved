@@ -239,6 +239,10 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`fullscreenGiftBox`, /*html*/`在网页全屏状态下, 可以直接点开礼物包裹, 方便送辣条和小心心.`],
   [`keymapPreset`, /*html*/`更换快捷键的预设.`],
   [`autoPlayControl`, /*html*/`使用传统的连播模式, 视频有多P时 / 在收藏夹或稍后再看列表里时自动开启连播, 单P视频自动关闭连播防止播放推荐视频.`],
+  [`scrollOutPlayer`, /*html*/`当播放器被移出页面时触发动作.`],
+  [`autoPause`, /*html*/`当播放器的<span>选定触发位置</span>被移出页面时自动暂停播放, 且当播放器回来时恢复播放.`],
+  [`autoLightOn`, /*html*/`在没有开启自动暂停, 且开启了播放时自动关灯, 那么该功能会在播放器的<span>选定触发位置</span>被移出页面时自动开灯, 当播放器回来时自动关灯.
+  <b>注: 在自动暂停开启时, 该功能会被忽略</b>`]
 ]);
 export default {
   export: { toolTips },
