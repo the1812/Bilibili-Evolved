@@ -519,9 +519,9 @@ declare global {
     checkInCenter: boolean,
     fullscreenGiftBox: boolean,
     scrollOutPlayer: boolean,
-    triggerPlayerOutPlace: string[],
-    autoPause: boolean,
-    autoLightOn: boolean,
+    scrollOutPlayerTriggerPlace: string[],
+    scrollOutPlayerAutoPause: boolean,
+    scrollOutPlayerAutoLightOn: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

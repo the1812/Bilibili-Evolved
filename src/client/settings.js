@@ -257,9 +257,9 @@ export const settings = {
   autoPlayControl: true,
   cache: {},
   scrollOutPlayer: true,
-  triggerPlayerOutPlace: '视频中间',
-  autoPause: true,
-  autoLightOn: true,
+  scrollOutPlayerTriggerPlace: '视频中间',
+  scrollOutPlayerAutoPause: true,
+  scrollOutPlayerAutoLightOn: true,
 }
 const fixedSettings = {
   seedsToCoins: false,
