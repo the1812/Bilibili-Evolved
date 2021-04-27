@@ -256,6 +256,8 @@ export const settings = {
   fullscreenGiftBox: false,
   autoPlayControl: true,
   cache: {},
+  autoPauseVideo: true,
+  triggerPausePlace: '视频中间',
 }
 const fixedSettings = {
   seedsToCoins: false,

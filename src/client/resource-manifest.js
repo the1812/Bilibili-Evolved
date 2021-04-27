@@ -678,5 +678,15 @@ Resource.manifest = {
     },
   },
   autoPlayControl: '传统连播模式',
+  autoPauseVideo: {
+    displayNames: {
+      autoPauseVideo: '自动暂停视频',
+      triggerPausePlace: '触发暂停位置'
+    },
+    dropdown:{
+      key: 'triggerPausePlace',
+      items: ['视频顶部' ,'视频中间', '视频底部']
+    }
+  }
 }
 export const resourceManifest = Resource.manifest
