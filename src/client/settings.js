@@ -256,7 +256,7 @@ export const settings = {
   fullscreenGiftBox: false,
   autoPlayControl: true,
   cache: {},
-  scrollOutPlayer: true,
+  scrollOutPlayer: false,
   scrollOutPlayerTriggerPlace: '视频中间',
   scrollOutPlayerAutoPause: true,
   scrollOutPlayerAutoLightOn: true,
