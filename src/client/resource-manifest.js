@@ -678,5 +678,18 @@ Resource.manifest = {
     },
   },
   autoPlayControl: '传统连播模式',
+  scrollOutPlayer: {
+    displayNames: {
+      scrollOutPlayer: '当播放器退出页面时',
+      scrollOutPlayerTriggerPlace: '选定触发位置',
+      scrollOutPlayerAutoPause: '自动暂停',
+      scrollOutPlayerAutoLightOn: '自动开灯'
+    },
+    reloadable: true,
+    dropdown:{
+      key: 'scrollOutPlayerTriggerPlace',
+      items: ['视频顶部' ,'视频中间', '视频底部']
+    }
+  }
 }
 export const resourceManifest = Resource.manifest
