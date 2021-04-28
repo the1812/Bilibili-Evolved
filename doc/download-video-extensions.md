@@ -26,7 +26,7 @@
     // 按钮唯一名称 (key)
     name: 'consoleLog',
     // 按钮显示的名称
-    displayName: '打印链接',
+    displayName: '示例',
     // [暂未实现, 先都写 false 就行] 是否能处理批量的链接
     batch: false,
     // 点击按钮执行此函数
@@ -40,4 +40,5 @@
 })()
 ```
 效果如图所示:
+
 ![image](https://user-images.githubusercontent.com/26504152/116360436-7fbf3280-a832-11eb-8ae8-11c7cebaceee.png)
