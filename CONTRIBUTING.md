@@ -45,6 +45,8 @@ yarn
 
 ### 添加新功能
 - 在 `src/client/settings.js` 中的 `settings` 对象上添加新的 key, 作为新功能的默认值
+> key 的名称尽量具体, 避免撞车, 因为所有选项都是平铺的, 如果是作为子选项, 也建议添加固定的前缀. 找参考的话别看文件里太上面的 key (都是些老功能), 命名不少都有问题, 为了兼容性就不改了.
+
 - 在 `src/global.d.ts` 添加对应的类型声明
 - 在 `src` 下对应的文件夹分类中创建代码文件, 如果只有一个 `.js` / `.ts` 文件, 可以不建子文件夹, 带有样式等建议放在同名的子文件夹
 > ⚠️ 由于历史原因, 即便是分在不同的文件夹, 这些功能组件的文件名也不能重名
@@ -166,7 +168,7 @@ interface Widget {
 ### 可重载功能
 如果你设计的功能不需要刷新页面也能切换开启/关闭状态, 可以将其写为可重载功能:
 ```ts
-// 初次运行功能时, 直接执行文件内容, setup 将会调用
+// 初次运行功能时, 直接执行文件内容, setup 将会调用, 当然用其他名字也行
 const setup = () => {
   // ...
 }
@@ -187,7 +189,6 @@ export default {
 然后在 `src/client/resource-manifest.js` 中添加 `reloadable: true`, 例如:
 ```ts
 disableFeedsDetails: {
-  path: 'disable-feeds-details.min.js',
   reloadable: true,
   displayNames: {
     disableFeedsDetails: '禁止跳转动态详情',
@@ -221,6 +222,8 @@ dotnet builder/dotnet/publish/build.dll production
 ```powershell
 dotnet builder/dotnet/publish/build.dll watch
 ```
+
+如果需要清理编译器的缓存, 强制 clean build, 删除目录下的 `dev.cache`即可.
 
 ### 本地调试方式
 1. 必须使用 Chrome / 基于 Chrome 内核的浏览器
