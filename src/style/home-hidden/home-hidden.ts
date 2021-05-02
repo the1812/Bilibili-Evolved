@@ -35,6 +35,9 @@ const homeHiddenOptions: HomeHiddenOption[] = [
     `,
   },
   {
+    name: 'ext-box', displayName: '电竞赛事', style: `
+      .first-screen #reportFirst3 { display: none !important; } `, },
+  {
     name: 'special', displayName: '特别推荐', style: `
       #bili_report_spe_rec { display: none !important; }
     `,
@@ -92,6 +95,10 @@ const homeHiddenOptions: HomeHiddenOption[] = [
   {
     name: "digital",
     displayName: "数码"
+  },
+  {
+    name: "car",
+    displayName: "汽车"
   },
   {
     name: "life",
