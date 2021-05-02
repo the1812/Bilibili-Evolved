@@ -126,7 +126,7 @@ async function setup() {
   await initLights();
   addSettingsListener('triggerPlayerOutPlace', (value) => (mode = value));
   videoEl = dq('.bilibili-player-video video') as HTMLVideoElement;
-  playerWrap = dq('.player-wrap') as HTMLElement;
+  playerWrap = (dq('.player-wrap') || dq('.player-module')) as HTMLElement;
   mountListener();
 }
 setup();
