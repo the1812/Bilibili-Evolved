@@ -352,7 +352,7 @@ export class ManualInputBatch extends VideoEpisodeBatch {
         }
       })
     }))
-    console.log(_.flatten(_.cloneDeep(pages)))
+    console.log("%cClass ManualInputBatch%c, data: ","color:yellow;", _.flatten(_.cloneDeep(pages)))
     return _.flatten(pages)
   }
 }

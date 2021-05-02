@@ -1,4 +1,5 @@
 let videoEl: HTMLVideoElement;
+let playerWrap: HTMLElement;
 let mode = '视频中间';
 
 enum MODE {
@@ -22,7 +23,7 @@ function getToTop(_mode: string, client: DOMRect): number {
 
 // run callback when video el scroll out.
 let handlePlayerOut = function (_mode: string, callback?: () => void) {
-  const videoClient = videoEl?.getBoundingClientRect();
+  const videoClient = playerWrap?.getBoundingClientRect();
   if (videoClient?.top && videoClient.height) {
     let toTop = getToTop(_mode, videoClient);
     if (toTop <= 0) {
@@ -39,7 +40,7 @@ let handlePlayerOut = function (_mode: string, callback?: () => void) {
 
 // run callback when video el scroll back.
 let handlePlayerBack = function (_mode: string, callback?: () => void) {
-  const videoClient = videoEl?.getBoundingClientRect();
+  const videoClient = playerWrap?.getBoundingClientRect();
   if (videoClient?.top && videoClient.height) {
     let toTop = getToTop(_mode, videoClient);
     if (toTop >= 0) {
@@ -125,6 +126,7 @@ async function setup() {
   await initLights();
   addSettingsListener('triggerPlayerOutPlace', (value) => (mode = value));
   videoEl = dq('.bilibili-player-video video') as HTMLVideoElement;
+  playerWrap = dq('.player-wrap') as HTMLElement;
   mountListener();
 }
 setup();
