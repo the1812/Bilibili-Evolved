@@ -214,7 +214,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`preferAvUrl`, /*html*/`当视频的链接是BV号时, 自动转换为AV号.`],
   [`elegantScrollbar`, /*html*/`使用细的滚动条替代系统默认的滚动条. (对夜间模式无效)`],
   [`quickFavorite`, /*html*/`启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹.`],
-  [`darkColorScheme`, /*html*/`使夜间模式同步系统设置的亮/暗主题.`],
+  [`darkColorScheme`, /*html*/`使夜间模式同步系统设置的亮/暗主题.
+注意：在某些浏览器(如<span>Microsoft Edge</span>)中，夜间模式会跟随浏览器而<b>非</b>系统的亮/暗主题.`],
   [`disableFeedsDetails`, /*html*/`禁止动态点击后跳转详情页, 方便选择其中的文字.`],
   [`danmakuSendBar`, /*html*/`在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.`],
   [`watchLaterRedirectNavbar`, /*html*/`重定向顶栏稍后再看中的链接.`],
