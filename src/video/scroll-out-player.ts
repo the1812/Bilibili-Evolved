@@ -1,6 +1,7 @@
 let videoEl: HTMLVideoElement;
 let playerWrap: HTMLElement;
 let observer: IntersectionObserver;
+let intersectionLock = true; // Lock intersection action
 
 enum MODE {
   TOP = '视频顶部',
@@ -54,6 +55,8 @@ function removePlayerOutEvent() {
 }
 
 let intersectingCall = () => {
+  if (intersectionLock) return;
+  intersectionLock = true; // relock
   if (settings.scrollOutPlayerAutoPause && videoEl.paused) videoEl.play();
   if (
     settings.scrollOutPlayerAutoLightOn &&
@@ -65,6 +68,8 @@ let intersectingCall = () => {
 };
 
 let disIntersectingCall = () => {
+  // if video is playing, unlock intersecting action
+  !videoEl.paused ? (intersectionLock = false) : '';
   if (settings.scrollOutPlayerAutoPause && !videoEl.paused) videoEl.pause();
   if (
     settings.scrollOutPlayerAutoLightOn &&
@@ -88,7 +93,6 @@ let createObserver = (mode?: string) =>
 function mountPlayListener() {
   Observer.videoChange(async () => {
     videoEl.addEventListener('play', addPlayerOutEvent);
-    // onPlayerOutEvent 不会在我们手动暂停视频时移除, 所以需要监听暂停.
     // videoEl.addEventListener('pause', removePlayerOutEvent);
     videoEl.addEventListener('ended', removePlayerOutEvent);
   });
@@ -100,7 +104,6 @@ function mountPlayListener() {
     removePlayerOutEvent();
     observer = createObserver(value);
     addPlayerOutEvent();
-    console.log(observer);
   });
   videoEl = dq('.bilibili-player-video video') as HTMLVideoElement;
   playerWrap = (dq('.player-wrap') || dq('.player-module')) as HTMLElement;
@@ -115,8 +118,9 @@ export default {
   },
   unload: () => {
     // umount player listener
-    Observer.videoChange(async () => { videoEl.removeEventListener('play', addPlayerOutEvent);
-      videoEl.removeEventListener('pause', removePlayerOutEvent);
+    Observer.videoChange(async () => {
+      videoEl.removeEventListener('play', addPlayerOutEvent);
+      // videoEl.removeEventListener('pause', removePlayerOutEvent);
       videoEl.removeEventListener('ended', removePlayerOutEvent);
     });
     removePlayerOutEvent();
