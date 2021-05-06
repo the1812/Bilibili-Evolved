@@ -3,14 +3,15 @@
   if (url !== 'https://live.bilibili.com/' && url !== 'https://live.bilibili.com/index.html') {
     return
   }
-  SpinQuery.condition(
-    () => document.querySelector('.component-ctnr video,.bilibili-live-player-video video'),
-    (video: HTMLVideoElement) => video && !video.paused,
-    () => {
-      const button = dq('.live-web-player-controller .left-area > :first-child') as HTMLElement
-      button?.click()
-    }
-  )
+  // SpinQuery.condition(
+  //   () => document.querySelector('.component-ctnr video,.bilibili-live-player-video video'),
+  //   (video: HTMLVideoElement) => video && !video.paused,
+  //   () => {
+  //     const button = dq('.live-web-player-controller .left-area > :first-child') as HTMLElement
+  //     button?.click()
+  //   }
+  // )
+  SpinQuery.select('video').then((video: HTMLVideoElement) => video.pause())
   const styleID = 'hide-home-live-style'
   addSettingsListener('hideHomeLive', value => {
     if (value === true) {
