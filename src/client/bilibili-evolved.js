@@ -142,7 +142,6 @@ import { Resource } from './resource'
 import { resourceManifest } from './resource-manifest'
 import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
-import { getScriptBlocker } from './script-blocker'
 import { installStyle, uninstallStyle, toggleStyle } from './custom-styles'
 import { store } from './store'
 
@@ -217,9 +216,9 @@ import { store } from './store'
     })
     await loadResources()
     await loadSettings()
-    getScriptBlocker().then(scriptBlocker => {
-      scriptBlocker.start()
-    })
+    // getScriptBlocker().then(scriptBlocker => {
+    //   scriptBlocker.start()
+    // })
     if (settings.ajaxHook) {
       setupAjaxHook()
     }
@@ -274,7 +273,6 @@ import { store } from './store'
       formatFileSize,
       formatDuration,
       getDpiSourceSet,
-      getScriptBlocker,
       isOffline,
       getUID,
       scriptVersion,
