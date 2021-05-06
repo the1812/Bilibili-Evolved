@@ -192,9 +192,10 @@
     height: auto !important;
     line-height: normal !important;
     margin: 12px 0 !important;
-    &:empty {
-      margin: 0 !important;
-    }
+    // #1789
+    // &:empty {
+    //   margin: 0 !important;
+    // }
   }
   .loading-state + .bottom-page {
     margin: 0 !important;
