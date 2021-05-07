@@ -519,7 +519,7 @@ declare global {
     checkInCenter: boolean,
     fullscreenGiftBox: boolean,
     scrollOutPlayer: boolean,
-    scrollOutPlayerTriggerPlace: string[],
+    scrollOutPlayerTriggerPlace: string,
     scrollOutPlayerAutoPause: boolean,
     scrollOutPlayerAutoLightOn: boolean,
   }
