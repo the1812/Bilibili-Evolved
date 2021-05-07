@@ -337,7 +337,6 @@ Resource.manifest = {
       deadVideoTitleProvider: '信息来源',
     },
   },
-  autoPlay: '自动播放视频',
   useCommentStyle: {
     path: 'comment.min.js',
     reloadable: true,
@@ -459,8 +458,8 @@ Resource.manifest = {
   },
   noLiveAutoplay: {
     displayNames: {
-      noLiveAutoplay: '禁止直播首页自动播放',
-      hideHomeLive: '隐藏首页推荐直播',
+      noLiveAutoplay: '直播首页静音',
+      hideHomeLive: '隐藏推荐直播',
     },
   },
   noMiniVideoAutoplay: '禁止小视频自动播放',
