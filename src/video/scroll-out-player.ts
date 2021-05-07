@@ -108,6 +108,7 @@ function mountPlayListener() {
   videoEl = dq('.bilibili-player-video video') as HTMLVideoElement;
   playerWrap = (dq('.player-wrap') || dq('.player-module')) as HTMLElement;
   observer = createObserver();
+  addPlayerOutEvent();
   mountPlayListener();
 })();
 
