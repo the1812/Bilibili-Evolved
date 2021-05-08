@@ -166,7 +166,7 @@ Additional variables:
   [`preferAvUrl`, `Convert BV ID to AV ID for URL of video.`],
   [`elegantScrollbar`, `Use narrow scrollbar in place of system default. (No effect to dark mode)`],
   [`quickFavorite`, `Enable quick favorite. Add a video to the selected favorite folder by one click in video page.`],
-  [`darkColorScheme`, `Set dark mode to follow your system theme.`],
+  [`darkColorScheme`, `Set dark mode to follow your system theme. (or browser theme in some supported browsers like Edge)`],
   [`disableFeedsDetails`, `Don't open feed details page after click, useful for selecting texts.`],
   [`danmakuSendBar`, `Show danmaku bar on bottom when fullscreen or web fullscreen.`],
   [`watchLaterRedirectNavbar`, `Redirect links on navbar.`],
