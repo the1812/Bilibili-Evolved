@@ -134,12 +134,13 @@ $first-row-height: 250px;
       height: 100%;
       position: relative;
       display: block;
-      transition: 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+      transition: 0.8s cubic-bezier(0.44, 0.29, 0.13, 1);
       img {
         width: 100%;
         height: 100%;
         object-fit: fill;
         display: block;
+        border-radius: 12px;
       }
       .title {
         position: absolute;
