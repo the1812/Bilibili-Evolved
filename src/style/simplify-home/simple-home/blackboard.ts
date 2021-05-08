@@ -11,7 +11,6 @@ export const getBlackboards = async (): Promise<Blackboard[]> => {
       .slice(0, 5)
       .map((it, index) => {
         const locID = it.querySelector('a')!.getAttribute('data-loc-id')!
-        console.log(it.outerHTML)
         return {
           url: initData.locsData[locID][index].url,
           title: (it.querySelector('.title') as HTMLElement).textContent!.trim(),
