@@ -4,11 +4,15 @@ export interface FeedsCardType {
   id: number
   name: string
 }
+export interface RepostFeedsCardType extends FeedsCardType {
+  id: 1
+  name: '转发'
+}
 export const feedsCardTypes = {
   repost: {
     id: 1,
     name: '转发',
-  } as FeedsCardType,
+  } as RepostFeedsCardType,
   textWithImages: {
     id: 2,
     name: '图文'
@@ -68,7 +72,7 @@ export const feedsCardTypes = {
   liveRecord: {
     id: 2047, // FIXME: 暂时随便写个 id 了, 这个东西目前找不到 type
     name: '开播记录',
-  },
+  } as FeedsCardType,
 }
 export interface FeedsCard {
   id: string
@@ -81,6 +85,11 @@ export interface FeedsCard {
   type: FeedsCardType
   presented: boolean
   getText: () => Promise<string>
+}
+export interface RepostFeedsCard extends FeedsCard {
+  repostUsername: string
+  repostText: string
+  type: RepostFeedsCardType
 }
 const getFeedsCardType = (element: HTMLElement) => {
   if (element.querySelector('.repost')) {
@@ -112,7 +121,9 @@ const getFeedsCardType = (element: HTMLElement) => {
   }
   return feedsCardTypes.text
 }
-
+const isRepostType = (card: FeedsCard): card is RepostFeedsCard => {
+  return card.type === feedsCardTypes.repost
+}
 export type FeedsCardCallback = {
   added?: (card: FeedsCard) => void
   removed?: (card: FeedsCard) => void
@@ -213,6 +224,25 @@ class FeedsCardsManager extends EventTarget {
       const subElementText = subElement.innerText.trim()
       return subElementText
     }
+    const getRepostData = (vueData: any) => {
+      // 被转发动态已失效
+      if (vueData.card.origin === undefined) {
+        return {
+          originalText: '',
+          originalDescription: '',
+          originalTitle: '',
+        }
+      }
+      const originalCard = JSON.parse(vueData.card.origin)
+      const originalText: string = vueData.originCardData.pureText
+      const originalDescription: string = _.get(originalCard, 'item.description', '')
+      const originalTitle: string = originalCard.title
+      return {
+        originalText,
+        originalDescription,
+        originalTitle,
+      }
+    }
     const getComplexText = async (type: FeedsCardType) => {
       if (type === feedsCardTypes.bangumi) {
         return ''
@@ -232,19 +262,10 @@ class FeedsCardsManager extends EventTarget {
       const vueData = getVueData(el)
       if (type === feedsCardTypes.repost) {
         const currentText = vueData.card.item.content
-        // 被转发动态已失效
-        if (vueData.card.origin === undefined) {
-          return currentText
-        }
-        const originalCard = JSON.parse(vueData.card.origin)
-        const originalText = vueData.originCardData.pureText
-        const originalDescription = _.get(originalCard, 'item.description', '')
-        const originalTitle = originalCard.title
+        const repostData = getRepostData(vueData)
         return [
           currentText,
-          originalText,
-          originalDescription,
-          originalTitle
+          ...Object.values(repostData).filter(it => it !== ''),
         ].filter(it => Boolean(it)).join('\n')
       }
       const currentText = vueData.originCardData.pureText
@@ -281,13 +302,15 @@ class FeedsCardsManager extends EventTarget {
     await card.getText()
     card.presented = element.parentNode !== null
     element.setAttribute('data-type', card.type.id.toString())
-    if (card.type === feedsCardTypes.repost) {
+    if (isRepostType(card)) {
       const currentUsername = card.username
       const vueData = getVueData(card.element)
       const repostUsername = _.get(vueData, 'card.origin_user.info.uname', '')
       if (currentUsername === repostUsername) {
         element.setAttribute('data-self-repost', 'true')
       }
+      card.repostUsername = repostUsername
+      card.repostText = getRepostData(vueData).originalText
     }
     // if (card.text === '') {
     //   console.warn('card text parsing failed!', card)
