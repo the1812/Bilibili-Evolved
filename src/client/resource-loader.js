@@ -12,7 +12,16 @@ export async function loadResources () {
   Resource.all = {}
   Resource.displayNames = {}
   Resource.reloadables = []
-  for (const [key, data] of Object.entries(Resource.manifest)) {
+  for (let [key, data] of Object.entries(Resource.manifest)) {
+    if (typeof data === 'string') {
+      const generatedData = {
+        displayNames: {
+          [key]: data,
+        },
+      }
+      Resource.manifest[key] = generatedData
+      data = generatedData
+    }
     if (!data.path) {
       data.path = `${_.kebabCase(key)}.min.js`
     }

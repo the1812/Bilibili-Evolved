@@ -26,6 +26,12 @@
 @media screen and (min-width: 1038px) {
   .player-full-win {
     &:not(.fullscreen-gift-box-unloaded) {
+      .gift-control-panel .z-gift-package .arrow-bottom.popup {
+        &::before,
+        &::after {
+          left: 50% !important;
+        }
+      }
       .live-web-player-controller .control-area {
         .fullscreen-gift-box {
           display: flex;

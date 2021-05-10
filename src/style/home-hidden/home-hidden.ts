@@ -6,6 +6,11 @@ type HomeHiddenOption = Readonly<{
 const isHome = () => {
   return !settings.simplifyHome && document.URL.includes('https://www.bilibili.com/')
 }
+const generatedOptions: HomeHiddenOption[] = dqa('.proxy-box > div')
+  .map(it => ({
+    name: it.id.replace(/^bili_/, ''),
+    displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
+  }))
 const homeHiddenOptions: HomeHiddenOption[] = [
   {
     name: 'categories', displayName: '分区栏', style: `
@@ -35,6 +40,9 @@ const homeHiddenOptions: HomeHiddenOption[] = [
     `,
   },
   {
+    name: 'ext-box', displayName: '电竞赛事', style: `
+      .first-screen #reportFirst3 { display: none !important; } `, },
+  {
     name: 'special', displayName: '特别推荐', style: `
       #bili_report_spe_rec { display: none !important; }
     `,
@@ -49,98 +57,7 @@ const homeHiddenOptions: HomeHiddenOption[] = [
       .storey-box .elevator { display: none !important; }
     `,
   },
-  {
-    name: "live",
-    displayName: "直播"
-  },
-  {
-    name: "douga",
-    displayName: "动画"
-  },
-  {
-    name: "anime",
-    displayName: "番剧"
-  },
-  {
-    name: "guochuang",
-    displayName: "国创"
-  },
-  {
-    name: "manga",
-    displayName: "漫画"
-  },
-  {
-    name: "music",
-    displayName: "音乐"
-  },
-  {
-    name: "dance",
-    displayName: "舞蹈"
-  },
-  {
-    name: "game",
-    displayName: "游戏"
-  },
-  {
-    name: "technology",
-    displayName: "知识"
-  },
-  {
-    name: "cheese",
-    displayName: "课堂"
-  },
-  {
-    name: "digital",
-    displayName: "数码"
-  },
-  {
-    name: "life",
-    displayName: "生活"
-  },
-  {
-    name: "food",
-    displayName: "美食"
-  },
-  {
-    name: 'animal',
-    displayName: '动物圈',
-  },
-  {
-    name: "kichiku",
-    displayName: "鬼畜"
-  },
-  {
-    name: "fashion",
-    displayName: "时尚"
-  },
-  {
-    name: "information",
-    displayName: "资讯"
-  },
-  {
-    name: "ent",
-    displayName: "娱乐"
-  },
-  {
-    name: "read",
-    displayName: "专栏"
-  },
-  {
-    name: "movie",
-    displayName: "电影"
-  },
-  {
-    name: "teleplay",
-    displayName: "电视剧"
-  },
-  {
-    name: "cinephile",
-    displayName: "影视"
-  },
-  {
-    name: "documentary",
-    displayName: "纪录片"
-  }
+  ...generatedOptions,
 ]
 const syncState = (item: HomeHiddenOption) => {
   if (!settings.homeHiddenItems.includes(item.name)) {
@@ -159,7 +76,15 @@ const syncState = (item: HomeHiddenOption) => {
 }
 if (isHome()) {
   homeHiddenOptions.forEach(syncState)
-  resources.applyImportantStyle('homeHiddenStyle')
+  const generatedStyles = generatedOptions.map(({ name }) => {
+    return `
+body.home-hidden-${name} .storey-box .proxy-box #bili_${name} {
+  display: none !important;
+}
+`.trim()
+  }).join('\n')
+  const fixedStyles: string = resources.import('homeHiddenStyle')
+  resources.applyImportantStyleFromText(generatedStyles + fixedStyles, 'home-hidden-style')
 }
 
 export default {

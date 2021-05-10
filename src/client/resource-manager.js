@@ -108,7 +108,10 @@ export class ResourceManager {
   async fetchByKey (key) {
     const resource = Resource.all[key]
     if (!resource) {
-      return null
+      return
+    }
+    if (this.attributes[key] !== undefined) {
+      return
     }
     const text = await resource.download().catch(reason => {
       console.error(`Download error, XHR status: ${reason}`)

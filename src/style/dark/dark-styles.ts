@@ -1,7 +1,7 @@
 const removeBadScrollbar = () => {
   SpinQuery.select('.custom-scrollbar').then(it => it && it.classList.remove('custom-scrollbar'))
 }
-const unload = () => {
+export const unload = () => {
   document.body.classList.remove('dark')
   resources.removeStyle('darkStyleNavBar')
   resources.removeStyle('darkStyle')
@@ -22,7 +22,7 @@ const notSupported: (string | RegExp)[] = [
   // 创作中心-收益管理-悬赏计划
   "//cm.bilibili.com/quests/#/task",
 ]
-const load = () => {
+export const load = () => {
   if (settings.noDarkOnMember && notSupported.some(it => {
     if (typeof it === 'string') {
       return document.URL.replace(location.search, '').includes(it)
@@ -50,4 +50,8 @@ addSettingsListener('useDarkStyleAsUserStyle', () => {
 export default {
   reload: load,
   unload: unload,
+  export: {
+    load,
+    unload
+  }
 }

@@ -3,14 +3,15 @@
   if (url !== 'https://live.bilibili.com/' && url !== 'https://live.bilibili.com/index.html') {
     return
   }
-  SpinQuery.condition(
-    () => document.querySelector('.component-ctnr video,.bilibili-live-player-video video'),
-    (video: HTMLVideoElement) => video && !video.paused,
-    () => {
-      const button = dq('.live-web-player-controller .left-area > :first-child') as HTMLElement
-      button?.click()
-    }
-  )
+  // 不知道该怎么阻止自动播放了... (#1813)
+  // 先屏蔽声音吧
+  // SpinQuery.select('video').then((video: HTMLVideoElement) => {
+  //   video.autoplay = false
+  //   video.pause()
+  // })
+  SpinQuery.select('video').then((video: HTMLVideoElement) => {
+    video.muted = true
+  })
   const styleID = 'hide-home-live-style'
   addSettingsListener('hideHomeLive', value => {
     if (value === true) {

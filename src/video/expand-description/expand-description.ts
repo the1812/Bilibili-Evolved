@@ -10,7 +10,7 @@ const load = () => {
     // if (!subtitle) {
     //   return
     // }
-    const expandButton = await SpinQuery.select('.video-desc .btn[report-id="abstract_spread"]') as HTMLElement
+    const expandButton = await SpinQuery.select('.video-desc .btn[report-id="abstract_spread"], .video-desc .toggle-btn') as HTMLElement
     expandButton?.click()
   })
 }

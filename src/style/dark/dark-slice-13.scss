@@ -120,11 +120,11 @@
       .textarea-container {
         .baffle,
         .comment-submit {
-          @include background-color("666");
+          @include background-color("6");
         }
       }
       .comment-emoji {
-        @include background-color("666");
+        @include background-color("6");
       }
     }
   }

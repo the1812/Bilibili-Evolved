@@ -69,6 +69,10 @@ resources.applyStyleFromText(`
 .bili-avatar-img {
   width: 100% !important;
 }
+.bb-comment .sailing .sailing-img,
+.comment-bilibili-fold .sailing .sailing-img {
+  width: 288px;
+}
 `, 'image-resolution-fix')
 export default {
   export: { imageResolution }

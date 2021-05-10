@@ -60,7 +60,13 @@ export default {
         height: 40px;
       }
       &:checked:nth-of-type(#{$i}) ~ .blackboard-cards .blackboard-card {
-        transform: translateY(calc(-1 * #{$i - 1} * var(--blackboard-height)));
+        transform: translateY(calc(-1 * #{$i - 1} * var(--blackboard-height))) scale(0.95);
+        &:nth-of-type(#{$i}) {
+          transform: translateY(calc(-1 * #{$i - 1} * var(--blackboard-height)));
+          img {
+            border-radius: 16px;
+          }
+        }
       }
     }
   }

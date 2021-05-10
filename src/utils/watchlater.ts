@@ -61,18 +61,22 @@ if (settings.watchLaterRedirectPage) {
         return
       }
       const redirect = (item: Element, index: number) => {
-        const watchlaterItem = list[index]
-        const bvid = watchlaterItem.bvid
-        const cid = watchlaterItem.cid
-        const pages = watchlaterItem.pages
-        const page = cid === 0 ? 1 : pages.find(p => p.cid === cid)!.page
-        const url = page > 1 ? `https://www.bilibili.com/video/${bvid}?p=${page}` : `https://www.bilibili.com/video/${bvid}`
-        const pic = item.querySelector('.av-pic') as HTMLAnchorElement
-        pic.target = '_blank'
-        pic.href = url
-        const title = item.querySelector('.av-about .t') as HTMLAnchorElement
-        title.target = '_blank'
-        title.href = url
+        try {
+          const watchlaterItem = list[index]
+          const bvid = watchlaterItem.bvid
+          const cid = watchlaterItem.cid
+          const pages = watchlaterItem.pages
+          const page = pages.find(p => p.cid === cid)?.page ?? 1
+          const url = page > 1 ? `https://www.bilibili.com/video/${bvid}?p=${page}` : `https://www.bilibili.com/video/${bvid}`
+          const pic = item.querySelector('.av-pic') as HTMLAnchorElement
+          pic.target = '_blank'
+          pic.href = url
+          const title = item.querySelector('.av-about .t') as HTMLAnchorElement
+          title.target = '_blank'
+          title.href = url
+        } catch (error) {
+          console.error(`[watchlater redirect] error at index ${index}`, item, error)
+        }
       }
       const runRedirect = () => {
         const avItems = listBox.querySelectorAll('.av-item')

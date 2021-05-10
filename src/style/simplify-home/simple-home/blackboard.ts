@@ -13,7 +13,7 @@ export const getBlackboards = async (): Promise<Blackboard[]> => {
         const locID = it.querySelector('a')!.getAttribute('data-loc-id')!
         return {
           url: initData.locsData[locID][index].url,
-          title: (it.querySelector('.title') as HTMLElement).innerText!.trim(),
+          title: (it.querySelector('.title') as HTMLElement).textContent!.trim(),
           isAd: Boolean(it.querySelector('.gg-icon,.bypb-icon')),
           imageUrl: it.querySelector('img')!.getAttribute('src')!.replace(/@.+$/, ''),
         } as Blackboard

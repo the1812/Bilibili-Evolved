@@ -1,42 +1,15 @@
-$items: (
-  live,
-  douga,
-  anime,
-  guochuang,
-  manga,
-  music,
-  dance,
-  game,
-  technology,
-  cheese,
-  digital,
-  life,
-  food,
-  animal,
-  kichiku,
-  fashion,
-  information,
-  ent,
-  read,
-  movie,
-  teleplay,
-  cinephile,
-  documentary
-);
-@each $item in $items {
-  body.home-hidden-#{$item} {
-    .storey-box .proxy-box #bili_#{$item} {
-      display: none !important;
-    }
-  }
-}
-
 .home-hidden-settings {
   .gui-settings-flat-button &.popup {
-    align-items: stretch;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 180px;
+    left: -24px;
+    transform: none;
   }
   &-item {
     padding: 4px 12px;
+    flex-grow: 1;
     display: flex;
     align-items: center;
     border-radius: 8px;

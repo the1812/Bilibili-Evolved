@@ -1,15 +1,3 @@
-const getRoomID = () => {
-  const match = document.URL.match(/live\.bilibili\.com\/(blanc\/)?(\d+)/)
-  if (!match) {
-    return
-  }
-  const roomID = parseInt(match[2])
-  if (isNaN(roomID)) {
-    console.warn(`roomID not found`)
-    return
-  }
-  return roomID
-}
 abstract class Badge {
   constructor(public isActive: boolean = false, public id: number = 0) {
   }
@@ -21,10 +9,8 @@ abstract class Badge {
     }
     return actions.successAction(json)
   }
-  // abstract async getList(): Promise<this[]>
-  // abstract getContainer(): HTMLElement
-  abstract async activate(): Promise<boolean>
-  abstract async deactivate(): Promise<boolean>
+  abstract activate(): Promise<boolean>
+  abstract deactivate(): Promise<boolean>
   abstract getItemTemplate(): string
 }
 class Medal extends Badge {
@@ -32,13 +18,15 @@ class Medal extends Badge {
   name: string
   upName: string
   roomID: number
+  isLighted: boolean
   constructor(json: any) {
-    const { medal_id, status, level, medalName, uname, roomid } = json
+    const { medal_id, status, level, medalName, uname, roomid, is_lighted } = json
     super(status === 1, medal_id)
     this.level = level
     this.name = medalName
     this.upName = uname
     this.roomID = roomid
+    this.isLighted = is_lighted
   }
   static async getList(): Promise<Medal[]> {
     return Badge.parseJson(
@@ -56,8 +44,13 @@ class Medal extends Badge {
     if (!medal) {
       medal = this
     }
+    const classes = {
+      active: medal.isActive,
+      gray: !medal.isLighted,
+    }
+    const className = Object.entries(classes).map(([name, enable]) => enable ? name : '').join(' ').trim()
     return /*html*/`
-      <li data-id='${medal.id}' ${medal.isActive ? "class='active'" : ""}>
+      <li data-id='${medal.id}' class='${className}'>
         <label title='${medal.upName}'>
           <input name='medal' type='radio' ${medal.isActive ? "checked" : ""}>
           <div class='fans-medal-item level-${medal.level}'>

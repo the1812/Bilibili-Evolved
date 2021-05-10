@@ -156,7 +156,6 @@ Resource.manifest = {
     displayNames: {
       removeAds: '删除广告',
       showBlockedAdsTip: '显示占位文本',
-      removeGameMatchModule: '删除电竞赛事',
       preserveEventBanner: '保留活动横幅',
     },
   },
@@ -168,11 +167,7 @@ Resource.manifest = {
       watchLaterRedirectNavbar: '重定向顶栏',
     },
   },
-  hideTopSearch: {
-    displayNames: {
-      hideTopSearch: '隐藏搜索推荐',
-    },
-  },
+  hideTopSearch: '隐藏搜索推荐',
   harunaScale: {
     reloadable: true,
     displayNames: {
@@ -207,11 +202,7 @@ Resource.manifest = {
       viewCover: '查看封面',
     },
   },
-  notifyNewVersion: {
-    displayNames: {
-      notifyNewVersion: '检查更新',
-    },
-  },
+  notifyNewVersion: '检查更新',
   toast: {
     style: 'instant',
     displayNames: {
@@ -300,24 +291,10 @@ Resource.manifest = {
     },
     dropdown: {
       key: 'defaultVideoQuality',
-      items: [
-        '4K',
-        '1080P60',
-        '1080P+',
-        '1080P',
-        '720P60',
-        '720P',
-        '480P',
-        '360P',
-        '自动',
-      ],
+      items: ['4K', '1080P60', '1080P+', '1080P', '720P60', '720P', '480P', '360P', '自动'],
     },
   },
-  comboLike: {
-    displayNames: {
-      comboLike: '素质三连触摸支持',
-    },
-  },
+  comboLike: '素质三连触摸支持',
   autoContinue: {
     displayNames: {
       autoContinue: '自动从历史记录点播放',
@@ -359,11 +336,6 @@ Resource.manifest = {
       deadVideoTitleProvider: '信息来源',
     },
   },
-  autoPlay: {
-    displayNames: {
-      autoPlay: '自动播放视频',
-    },
-  },
   useCommentStyle: {
     path: 'comment.min.js',
     reloadable: true,
@@ -378,16 +350,8 @@ Resource.manifest = {
       batchFilenameFormat: '批量命名格式',
     },
   },
-  imageResolution: {
-    displayNames: {
-      imageResolution: '高分辨率图片',
-    },
-  },
-  biliplusRedirect: {
-    displayNames: {
-      biliplusRedirect: 'BiliPlus跳转支持',
-    },
-  },
+  imageResolution: '高分辨率图片',
+  biliplusRedirect: 'BiliPlus跳转支持',
   framePlayback: {
     reloadable: true,
     style: 'instant',
@@ -396,11 +360,7 @@ Resource.manifest = {
       framePlayback: '启用逐帧调整',
     },
   },
-  downloadAudio: {
-    displayNames: {
-      downloadAudio: '下载音频',
-    },
-  },
+  downloadAudio: '下载音频',
   i18n: {
     path: 'i18n.min.js',
     alwaysPreview: true,
@@ -497,15 +457,11 @@ Resource.manifest = {
   },
   noLiveAutoplay: {
     displayNames: {
-      noLiveAutoplay: '禁止直播首页自动播放',
-      hideHomeLive: '隐藏首页推荐直播',
+      noLiveAutoplay: '直播首页静音',
+      hideHomeLive: '隐藏推荐直播',
     },
   },
-  noMiniVideoAutoplay: {
-    displayNames: {
-      noMiniVideoAutoplay: '禁止小视频自动播放',
-    },
-  },
+  noMiniVideoAutoplay: '禁止小视频自动播放',
   foldComment: {
     style: true,
     displayNames: {
@@ -518,11 +474,7 @@ Resource.manifest = {
       useDefaultVideoSpeed: '记忆上次播放速度',
     },
   },
-  autoDraw: {
-    displayNames: {
-      autoDraw: '直播间自动领奖',
-    },
-  },
+  autoDraw: '直播间自动领奖',
   keymap: {
     reloadable: true,
     style: true,
@@ -533,13 +485,9 @@ Resource.manifest = {
     dropdown: {
       key: 'keymapPreset',
       items: ['Default', 'YouTube', 'HTML5Player', 'PotPlayer'],
-    }
-  },
-  doubleClickFullscreen: {
-    displayNames: {
-      doubleClickFullscreen: '双击全屏',
     },
   },
+  doubleClickFullscreen: '双击全屏',
   simplifyHome: {
     style: 'instant',
     displayNames: {
@@ -558,11 +506,7 @@ Resource.manifest = {
       fullActivityContent: '展开动态内容',
     },
   },
-  activityImageSaver: {
-    displayNames: {
-      activityImageSaver: '解除动态存图限制',
-    },
-  },
+  activityImageSaver: '解除动态存图限制',
   selectableColumnText: {
     reloadable: true,
     displayNames: {
@@ -600,11 +544,7 @@ Resource.manifest = {
       hideRelatedVideos: '隐藏视频推荐',
     },
   },
-  urlParamsClean: {
-    displayNames: {
-      urlParamsClean: '网址参数清理',
-    },
-  },
+  urlParamsClean: '网址参数清理',
   collapseLiveSideBar: {
     style: 'instant',
     reloadable: true,
@@ -612,11 +552,7 @@ Resource.manifest = {
       collapseLiveSideBar: '收起直播间侧栏',
     },
   },
-  downloadSubtitle: {
-    displayNames: {
-      downloadSubtitle: '下载字幕',
-    },
-  },
+  downloadSubtitle: '下载字幕',
   feedsTranslate: {
     style: true,
     displayNames: {
@@ -628,11 +564,7 @@ Resource.manifest = {
       items: ['Bing', 'Google', 'GoogleCN'],
     },
   },
-  recordLiveDanmaku: {
-    displayNames: {
-      recordLiveDanmaku: '直播弹幕记录器',
-    },
-  },
+  recordLiveDanmaku: '直播弹幕记录器',
   useDefaultLiveQuality: {
     path: 'default-live-quality.min.js',
     displayNames: {
@@ -644,11 +576,7 @@ Resource.manifest = {
       items: ['原画', '4K', '蓝光', '超清', '高清', '流畅'],
     },
   },
-  downloadLiveRecords: {
-    displayNames: {
-      downloadLiveRecords: '下载直播录像',
-    },
-  },
+  downloadLiveRecords: '下载直播录像',
   bvidConvert: {
     style: true,
     displayNames: {
@@ -662,11 +590,7 @@ Resource.manifest = {
       fixedSidebars: '强制固定顶栏与侧栏',
     },
   },
-  livePip: {
-    displayNames: {
-      livePip: '直播画中画',
-    },
-  },
+  livePip: '直播画中画',
   extendFeedsLive: {
     style: true,
     displayNames: {
@@ -679,16 +603,8 @@ Resource.manifest = {
       playerOnTop: '播放器置顶',
     },
   },
-  darkColorScheme: {
-    displayNames: {
-      darkColorScheme: '夜间模式跟随系统',
-    },
-  },
-  restoreFloors: {
-    displayNames: {
-      restoreFloors: '评论楼层显示',
-    },
-  },
+  darkColorScheme: '夜间模式跟随系统',
+  restoreFloors: '评论楼层显示',
   quickFavorite: {
     style: true,
     reloadable: true,
@@ -716,78 +632,42 @@ Resource.manifest = {
       showCoverBeforePlay: '播放前显示封面',
     },
   },
-  volumeOverdrive: {
-    displayNames: {
-      volumeOverdrive: '音量增幅',
-    },
-  },
-  seoJump: {
-    displayNames: {
-      seoJump: 'SEO页面重定向',
-    },
-  },
-  commentsTranslate: {
-    displayNames: {
-      commentsTranslate: '评论翻译',
-    },
-  },
-  copyFeedsLink: {
-    displayNames: {
-      copyFeedsLink: '动态链接复制',
-    },
-  },
-  copyCommentLink: {
-    displayNames: {
-      copyCommentLink: '评论链接复制',
-    },
-  },
-  unfoldFeeds: {
-    displayNames: {
-      unfoldFeeds: '动态反折叠',
-    },
-  },
-  feedsImageExporter: {
-    displayNames: {
-      feedsImageExporter: '动态图片导出',
-    },
-  },
-  columnImageExporter: {
-    displayNames: {
-      columnImageExporter: '专栏图片导出',
-    },
-  },
+  volumeOverdrive: '音量增幅',
+  seoJump: 'SEO页面重定向',
+  commentsTranslate: '评论翻译',
+  copyFeedsLink: '动态链接复制',
+  copyCommentLink: '评论链接复制',
+  unfoldFeeds: '动态反折叠',
+  feedsImageExporter: '动态图片导出',
+  columnImageExporter: '专栏图片导出',
   homeHidden: {
     style: true,
     displayNames: {
       homeHidden: '首页过滤',
     },
   },
-  extendVideoSpeed: {
+  extendVideoSpeed: '扩展视频倍数菜单',
+  menuRepeatVideo: '视频右键菜单循环播放',
+  removeVideoPopup: {
     displayNames: {
-      extendVideoSpeed: '扩展视频倍数菜单',
-    },
-  },
-  menuRepeatVideo: {
-    displayNames: {
-      menuRepeatVideo: '视频右键菜单循环播放',
-    },
-  },
-  removeGuidePopup: {
-    displayNames: {
-      removeGuidePopup: '删除视频弹窗',
+      removeVideoPopup: '删除关联视频弹窗',
     },
     reloadable: true,
   },
-  liveSpeedBoost: {
+  removeGuidePopup: {
     displayNames: {
-      liveSpeedBoost: '直播自动追帧',
+      removeGuidePopup: '删除关注弹窗',
     },
+    reloadable: true,
   },
-  checkInCenter: {
+  removeVotePopup: {
     displayNames: {
-      checkInCenter: '签到助手',
+      removeVotePopup: '删除投票弹窗',
     },
+    reloadable: true,
   },
+  liveSpeedBoost: '直播自动追帧',
+  checkInCenter: '签到助手',
   fullscreenGiftBox: {
     reloadable: true,
     style: true,
@@ -795,5 +675,19 @@ Resource.manifest = {
       fullscreenGiftBox: '直播全屏包裹',
     },
   },
+  autoPlayControl: '传统连播模式',
+  scrollOutPlayer: {
+    displayNames: {
+      scrollOutPlayer: '当播放器退出页面时',
+      scrollOutPlayerTriggerPlace: '选定触发位置',
+      scrollOutPlayerAutoPause: '自动暂停',
+      scrollOutPlayerAutoLightOn: '自动开灯'
+    },
+    reloadable: true,
+    dropdown:{
+      key: 'scrollOutPlayerTriggerPlace',
+      items: ['视频顶部' ,'视频中间', '视频底部']
+    }
+  }
 }
 export const resourceManifest = Resource.manifest

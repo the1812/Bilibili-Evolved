@@ -2,7 +2,10 @@ New Issue / Issues 须知
 
 ## 默认所有 Issues 发起者均已了解此处的内容
 Issues 用于记录 Bug 等发生异常问题的情况, 如果您希望讨论新功能或是提问 / 答疑, 请到[讨论区](https://github.com/the1812/Bilibili-Evolved/discussions)进行.
+> 请注意 Issues 和 Discussions (讨论区) 是两个独立板块, 搜索结果是相互独立的, Issues 搜索不到的内容可能能在 Discussions 里搜到.
+>
 > 讨论区于 2020-12-10 启用, 在此之前的新功能建议 / 提问 / 答疑的讨论仍然可以在 Issues 这边搜索到.
+> 
 > 讨论区使用指南见 https://github.com/the1812/Bilibili-Evolved/discussions/1297
 
 发之前记得看下置顶 (Pinned) 的 issue (如果有的话), 当遇到一些我认为会影响绝大部分用户的情况时, 我就会把这个 issue 置顶.

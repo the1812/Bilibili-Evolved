@@ -257,9 +257,37 @@
 
 </details>
 <details>
-<summary><strong>删除视频弹窗</strong></summary>
+<summary><strong>删除关注弹窗</strong></summary>
 
 删除视频内弹出的三连提示框.
+
+</details>
+<details>
+<summary><strong>删除关联视频弹窗</strong></summary>
+
+删除视频内弹出的关联视频推荐.
+
+</details>
+<details>
+<summary><strong>删除投票弹窗</strong></summary>
+
+删除视频内弹出的投票框.
+
+</details>
+<details>
+<summary><strong>传统连播模式</strong></summary>
+
+使用传统的连播模式, 视频有多P时 / 在收藏夹或稍后再看列表里时自动开启连播, 单P视频自动关闭连播防止播放推荐视频.
+
+</details>
+<details>
+<summary><strong>当播放器退出页面时</strong></summary>
+
+当播放器被移出页面时触发动作, 可以选择触发的位置, 支持的动作有:
+
+- 自动暂停: 自动暂停播放, 且当播放器回来时恢复播放.
+- 自动开灯: 在没有开启自动暂停, 且开启了播放时自动关灯, 那么播放器移出页面时将自动开灯, 播放器回来时自动关灯.
+> 注: 在自动暂停开启时, 该功能会被忽略
 
 </details>
 
@@ -576,9 +604,11 @@
 
 </details>
 <details>
-<summary><strong>禁止直播首页自动播放</strong></summary>
+<summary><strong>直播首页静音</strong></summary>
 
-禁止直播首页的推荐直播间自动开始播放, 开启后, 还可以通过`隐藏首页推荐直播`直接隐藏掉这个推荐板块.
+禁止直播首页的推荐直播间自动开始播放.
+
+还可以打开`隐藏推荐直播`来隐藏掉推荐直播间.
 
 ![直播首页自动播放](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/hide-home-live.jpg)
 

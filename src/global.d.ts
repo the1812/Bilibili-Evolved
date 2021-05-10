@@ -240,12 +240,14 @@ declare global {
     getPriorStyle(): any
     applyStyle(id: string, important: boolean): void
     static all: { [key: string]: Resource }
-    static displayNames: Record<string, string>;
+    static displayNames: Record<string, string>
     static manifest: object
     static root: string
     static cdnRoot: string
+    static reloadables: string[]
   }
   class ResourceManager {
+    attributes: Record<string, any>
     import(componentName: string): any
     getDefaultStyleId(key: string): string
     applyStyle(key: string, id?: string): void
@@ -260,6 +262,7 @@ declare global {
     }): void
     toggleStyle(key: string): void
     applyDropdownOptions(): Promise<void>
+    fetchByKey(key: string): Promise<void>
   }
   const resources: ResourceManager
   class DoubleClickEvent {
@@ -515,6 +518,10 @@ declare global {
     liveSpeedBoost: boolean,
     checkInCenter: boolean,
     fullscreenGiftBox: boolean,
+    scrollOutPlayer: boolean,
+    scrollOutPlayerTriggerPlace: string,
+    scrollOutPlayerAutoPause: boolean,
+    scrollOutPlayerAutoLightOn: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

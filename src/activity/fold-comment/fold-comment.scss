@@ -27,19 +27,4 @@
       }
     }
   }
-
-  // 兼容 b 站的 lite 版发评论, 吸附做的是真烂
-  .comment-send-lite {
-    position: -webkit-sticky !important;
-    position: sticky !important;
-    bottom: 40px !important;
-  }
-  .loading-state {
-    height: auto !important;
-    line-height: normal !important;
-    margin-bottom: 10px !important;
-  }
-  .loading-state + .bottom-page {
-    margin: 0 !important;
-  }
 }

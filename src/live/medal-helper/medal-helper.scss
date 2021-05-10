@@ -18,6 +18,9 @@
       &:hover {
         background-color: #8882;
       }
+      &.gray:not(:hover) {
+        filter: grayscale(1);
+      }
     }
   }
 
@@ -57,7 +60,7 @@
 }
 
 $rankColors: (
-  0: #61decb,
+  0: #48b6a5,
   1: #5896de,
   2: #a068f1,
   3: #ff86b2,

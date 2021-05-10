@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Bilibili Evolved (Preview)
-// @version      1.12.4
+// @version      1.12.8
 // @description  Bilibili Evolved 的预览版, 可以抢先体验新功能.
 // @author       Grant Howard, Coulomb-G
 // @copyright    2021, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
@@ -142,7 +142,6 @@ import { Resource } from './resource'
 import { resourceManifest } from './resource-manifest'
 import { StyleManager } from './style-manager'
 import { ResourceManager } from './resource-manager'
-import { getScriptBlocker } from './script-blocker'
 import { installStyle, uninstallStyle, toggleStyle } from './custom-styles'
 import { store } from './store'
 
@@ -195,9 +194,10 @@ import { store } from './store'
       }
     }
     if (unsafeWindow.bilibiliEvolved === undefined) {
-      unsafeWindow.bilibiliEvolved = { addons: [] }
+      unsafeWindow.bilibiliEvolved = {}
     }
     Object.assign(unsafeWindow.bilibiliEvolved, {
+      addons: [],
       subscribe (type, callback) {
         const event = events[type]
         if (callback) {
@@ -216,9 +216,9 @@ import { store } from './store'
     })
     await loadResources()
     await loadSettings()
-    getScriptBlocker().then(scriptBlocker => {
-      scriptBlocker.start()
-    })
+    // getScriptBlocker().then(scriptBlocker => {
+    //   scriptBlocker.start()
+    // })
     if (settings.ajaxHook) {
       setupAjaxHook()
     }
@@ -273,7 +273,6 @@ import { store } from './store'
       formatFileSize,
       formatDuration,
       getDpiSourceSet,
-      getScriptBlocker,
       isOffline,
       getUID,
       scriptVersion,

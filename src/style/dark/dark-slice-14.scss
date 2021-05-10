@@ -478,12 +478,52 @@ a {
     @include no-shadow();
   }
   .comment-send-lite {
-    @include background-color("4");
+    @include background-color("2");
   }
   .loading-state {
     @include color("a");
   }
 }
+.emoji-box.top:after {
+  @include no-image();
+}
+.video-desc .desc-info {
+  @include color("e");
+  & + .toggle-btn {
+    @include color("a");
+    &:hover {
+      @include theme-color();
+    }
+  }
+}
+
+body:not(.simplify-comment) .bb-comment {
+  .comment-send-lite {
+    @include background-color("2");
+  }
+  .comment-list .list-item .info {
+    .like {
+      &:hover i,
+      &.liked i,
+      &.liked:hover i {
+        @include to-theme("blue");
+      }
+    }
+    .hate {
+      &:hover i,
+      &.hated i,
+      &.hated:hover i {
+        @include to-theme("blue");
+      }
+    }
+  }
+}
+body:not(.simplify-comment) .panel-area .bb-comment {
+  .comment-send-lite {
+    @include background-color("4");
+  }
+}
+
 .toolbar-box {
   .emoji-btn.active,
   .emoji-btn:hover,
