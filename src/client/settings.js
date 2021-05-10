@@ -253,7 +253,7 @@ export const settings = {
   liveSpeedBoost: false,
   checkInCenter: false,
   fullscreenGiftBox: false,
-  autoPlayControl: false,
+  autoPlayControl: true,
   scrollOutPlayer: false,
   scrollOutPlayerTriggerPlace: '视频中间',
   scrollOutPlayerAutoPause: true,
