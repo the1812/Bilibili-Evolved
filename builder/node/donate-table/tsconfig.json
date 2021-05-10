@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "strict": true,
+    "sourceMap": false,
+  },
+  "include": [
+    "index.ts"
+  ]
+}
