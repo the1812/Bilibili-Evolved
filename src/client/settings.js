@@ -197,7 +197,6 @@ export const settings = {
   keymapJumpSeconds: 85,
   urlParamsClean: true,
   collapseLiveSideBar: true,
-  removeGameMatchModule: false,
   noDarkOnMember: true,
   feedsTranslate: false,
   feedsTranslateProvider: 'Bing',

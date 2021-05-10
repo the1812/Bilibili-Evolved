@@ -1,7 +1,7 @@
 if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
-  addSettingsListener('removeGameMatchModule', value => {
-    document.body.classList.toggle('remove-game-match-module', value)
-  }, true)
+  // addSettingsListener('removeGameMatchModule', value => {
+  //   document.body.classList.toggle('remove-game-match-module', value)
+  // }, true)
   SpinQuery.any(
     () => dqa('.gg-pic'),
     it => {
