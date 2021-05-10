@@ -15,7 +15,6 @@ Warning: Some features won't work on old layout.`],
   ["enableDanmaku", `Disable this if you want to turn off danmakus by default.`],
   ["rememberDanmakuSettings", `Remember the "Prevent blocking subtitles" and "Smart danmaku mask" settings. If you change these settings on player, every video will apply these settings by default.`],
   ["expandDanmakuList", `Auto expand the danmaku list.`],
-  ["autoPlay", `Auto start playing video on page load.`],
   ["autoContinue", `If playback history exists, auto continue from it.`],
   ["skipChargeList", `Skip charge acknowledgements on the end of some videos.`],
   ["framePlayback", `Append 2 buttons to the right of video time to seek video by frame. Support keyboard shortcut <kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>. (Old layout can only use keyboard shortcut)`],
@@ -100,7 +99,7 @@ The default format is <span>[title][ - ep]</span>, representing video title and 
 Put your variables inside square brackets, other contents inside brackets (like "<span> - </span>" in "<span>[ - ep]</span>") will only appear when the variable exists. For instance, if the format is <span>[title] - [ep]</span>. Even there's no episode title, that "<span> - </span>" will still appear in filename (which is meaningless). So in default format, when episode title not exists, "<span> - </span>" will also disappear.
 
 A more specific example: To use a "video title + AV ID + time" format, we can use <span>[title][ AVaid] [y]-[M]-[d] [h]-[m]-[s]</span>. And get filenames like "<span>xxxx AV23333 2019-05-29 19-59-44</span>".`],
-  ['noLiveAutoplay', `Disable autoplay on live homepage.`],
+  ['noLiveAutoplay', `Auto mute on live homepage.`],
   ['hideHomeLive', `Hide recommended live rooms on live homepage.`],
   ['sideBarOffset', `Set vertical offset of side bar (in percent). Valid range: -40% ~ 40%.`],
   ['hideCategory', `Hide category bar on main site, you can select category from Home in navbar.`],
@@ -189,6 +188,12 @@ Additional variables:
   [`removeGuidePopup`, `Remove irrelevant popups on videos.`],
   [`fullscreenGiftBox`, `Open gift box quickly when using web fullscreen mode.`],
   [`keymapPreset`, `Select preferred preset for keymap.`],
+  [`removeVideoPopup`, `Remove "related video" popup when playing videos.`],
+  [`removeGuidePopup`, `Remove "ask to follow" popup when playing videos.`],
+  [`removeVotePopup`, `Remove "danmaku vote" popup when playing videos.`],
+  [`autoPlayControl`, `Auto play episodes of current video / videos of current playlist, but stop playing related videos.`],
+  [`scrollOutPlayer`, `Run actions when player goes out of view.`],
+  [`scrollOutPlayerAutoLightOn`, `Auto turn on light, only works when <span>Auto pause</span> is turned off and <span>Default player mode - Turn off light when playing</span> is turned on.`],
 ]);
 export default {
   export: { toolTips },

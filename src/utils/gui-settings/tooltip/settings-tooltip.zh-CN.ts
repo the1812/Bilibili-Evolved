@@ -16,7 +16,6 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["rememberDanmakuSettings", /*html*/`控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`],
   ["expandDanmakuList", /*html*/`新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.`],
   ["expandDescription", /*html*/`长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.`],
-  ["autoPlay", /*html*/`进入视频页面时自动开始播放视频.`],
   ["autoContinue", /*html*/`播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`],
   ["airborne", /*html*/`当弹幕出现视频时间点时用下划线标记，点击即可空降到相应时间点.`],
   ["skipChargeList", /*html*/`自动跳过视频结尾的充电鸣谢.`],

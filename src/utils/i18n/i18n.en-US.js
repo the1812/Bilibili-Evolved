@@ -979,6 +979,23 @@ export const map = new Map([
   [`快捷键预设`, `Preset`],
   [`签到助手`, `Check-in helper`],
   [`直播间签到`, `Live check in`],
+  [`直播首页静音`, `Mute on live home`],
+  [`删除关注弹窗`, `Remove follow popup`],
+  [`删除关联视频弹窗`, `Remove related videos popup`],
+  [`删除投票弹窗`, `Remove vote popup`],
+  [`传统连播模式`, `Legacy playlist`],
+  [`当播放器退出页面时`, `Player out-of-view actions`],
+  [`选定触发位置`, `Trigger at`],
+  [`视频顶部`, `Top`],
+  [`视频中间`, `Center`],
+  [`视频底部`, `Bottom`],
+  [`自动暂停`, `Auto pause`],
+  [`自动开灯`, `Auto turn on light`],
+  [`详情`, `Details`],
+  [`的图片`, ``], // 直接去掉感觉还好些(
+  [`的文章`, ``],
+  [`的投稿视频`, ``],
+  [`赞了`, `Liked`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
