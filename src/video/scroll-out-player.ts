@@ -85,7 +85,6 @@ let createObserver = (mode?: string) =>
       e.isIntersecting ? intersectingCall() : disIntersectingCall();
     },
     {
-      root: document,
       threshold: getToTop(mode ? mode : settings.scrollOutPlayerTriggerPlace),
     }
   );
