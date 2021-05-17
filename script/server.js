@@ -9,5 +9,5 @@ app.use((ctx) => {
     'utf-8'
   );
 });
-
-app.listen(3000);
+console.log('Serve running at - Local: http://localhost:3050');
+app.listen(3050);

@@ -25,7 +25,7 @@
   },
   "scripts": {
     "postinstall": "node postinstall.js",
-    "dev": "node script/server.js"
+    "serve": "node script/server.js"
   },
   "repository": {
     "type": "git",
