@@ -222,7 +222,12 @@ export class SearchBox extends NavbarComponent {
             this.copy(value)
           } else {
             keywordInput.value = value
-            form.requestSubmit()
+            try {
+              form.requestSubmit()
+            } catch (error) {
+              console.warn("%csearchbar","color:yellow",error);
+              form.submit()
+            }
           }
         },
         nextItem(index: number) {
