@@ -6,8 +6,6 @@
   const element = await SpinQuery.select(target)
   const { playerReady } = await import('./player-ready')
   await playerReady()
-  const { playerScrollPatch } = await import('./player-scroll-patch')
-  await playerScrollPatch()
   console.log(element)
   if (element === null) {
     return

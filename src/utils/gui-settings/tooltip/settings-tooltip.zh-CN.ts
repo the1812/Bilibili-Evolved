@@ -16,7 +16,6 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["rememberDanmakuSettings", /*html*/`控制是否记住弹幕设置, 包括防挡字幕和智能防挡弹幕. 在播放器中改动这些设置后, 每个视频都会默认使用这些设置.`],
   ["expandDanmakuList", /*html*/`新版播放页面中, 弹幕列表默认收起以显示推荐的其他视频. 启用此功能可在每次加载视频时自动展开弹幕列表.`],
   ["expandDescription", /*html*/`长的视频简介默认会被折叠, 启用此功能可以强制展开完整的视频简介.`],
-  ["autoPlay", /*html*/`进入视频页面时自动开始播放视频.`],
   ["autoContinue", /*html*/`播放视频时如果检测到历史记录信息(<span>上次看到...</span>消息), 则自动跳转到相应的时间播放.`],
   ["airborne", /*html*/`当弹幕出现视频时间点时用下划线标记，点击即可空降到相应时间点.`],
   ["skipChargeList", /*html*/`自动跳过视频结尾的充电鸣谢.`],
@@ -214,7 +213,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`preferAvUrl`, /*html*/`当视频的链接是BV号时, 自动转换为AV号.`],
   [`elegantScrollbar`, /*html*/`使用细的滚动条替代系统默认的滚动条. (对夜间模式无效)`],
   [`quickFavorite`, /*html*/`启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹.`],
-  [`darkColorScheme`, /*html*/`使夜间模式同步系统设置的亮/暗主题.`],
+  [`darkColorScheme`, /*html*/`使夜间模式同步系统设置的亮/暗主题.
+注意：在某些浏览器(如<span>Microsoft Edge</span>)中，夜间模式会跟随浏览器而<b>非</b>系统的亮/暗主题.`],
   [`disableFeedsDetails`, /*html*/`禁止动态点击后跳转详情页, 方便选择其中的文字.`],
   [`danmakuSendBar`, /*html*/`在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.`],
   [`watchLaterRedirectNavbar`, /*html*/`重定向顶栏稍后再看中的链接.`],
@@ -239,9 +239,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`fullscreenGiftBox`, /*html*/`在网页全屏状态下, 可以直接点开礼物包裹, 方便送辣条和小心心.`],
   [`keymapPreset`, /*html*/`更换快捷键的预设.`],
   [`autoPlayControl`, /*html*/`使用传统的连播模式, 视频有多P时 / 在收藏夹或稍后再看列表里时自动开启连播, 单P视频自动关闭连播防止播放推荐视频.`],
-  [`scrollOutPlayer`, /*html*/`当播放器被移出页面时触发动作.`],
-  [`scrollOutPlayerAutoPause`, /*html*/`当播放器的<span>选定触发位置</span>被移出页面时自动暂停播放, 且当播放器回来时恢复播放.`],
-  [`scrollOutPlayerAutoLightOn`, /*html*/`在没有开启自动暂停, 且开启了播放时自动关灯, 那么该功能会在播放器的<span>选定触发位置</span>被移出页面时自动开灯, 当播放器回来时自动关灯.
+  [`scrollOutPlayer`, /*html*/`当播放器被移出页面时触发动作.`],
+  [`scrollOutPlayerAutoPause`, /*html*/`当播放器的<span>选定触发位置</span>被移出页面时自动暂停播放, 且当播放器回来时恢复播放.`],
+  [`scrollOutPlayerAutoLightOn`, /*html*/`在没有开启自动暂停, 且开启了播放时自动关灯, 那么该功能会在播放器的<span>选定触发位置</span>被移出页面时自动开灯, 当播放器回来时自动关灯.
   <b>注: 在自动暂停开启时, 该功能会被忽略</b>`]
 ]);
 export default {

@@ -1,7 +1,7 @@
-let videoEl: HTMLVideoElement;
-let playerWrap: HTMLElement;
-let observer: IntersectionObserver;
-let intersectionLock = true; // Lock intersection action
+let videoEl: HTMLVideoElement
+let playerWrap: HTMLElement
+let observer: IntersectionObserver
+let intersectionLock = true // Lock intersection action
 
 enum MODE {
   TOP = '视频顶部',
@@ -12,117 +12,127 @@ enum MODE {
 function getToTop(_mode: string): number {
   switch (_mode) {
     case MODE.TOP:
-      return 1;
+      return 1
     case MODE.MID:
-      return 0.5;
+      return 0.5
     case MODE.BOT:
-      return 0;
+      return 0
     default:
-      return 0.5;
+      return 0.5
   }
 }
 
-let lightOff = () => {};
-let lightOn = () => {};
+// TODO: refactor to light API
+let lightOff = () => { }
+let lightOn = () => { }
 async function initLights() {
-  await SpinQuery.unsafeJquery();
+  await SpinQuery.unsafeJquery()
   const settingsButton = await SpinQuery.any(() =>
     unsafeWindow.$('.bilibili-player-video-btn-setting')
-  );
+  )
   if (!settingsButton) {
-    return;
+    return
   }
-  settingsButton.mouseover().mouseout();
+  settingsButton.mouseover().mouseout()
   const setLight = async (state: boolean) => {
     const checkbox = (await SpinQuery.select(
       '.bilibili-player-video-btn-setting-right-others-content-lightoff .bui-checkbox-input'
-    )) as HTMLInputElement;
-    checkbox.checked = state;
-    raiseEvent(checkbox, 'change');
-  };
-  lightOff = () => setLight(true);
-  lightOn = () => setLight(false);
+    )) as HTMLInputElement
+    checkbox.checked = state
+    raiseEvent(checkbox, 'change')
+  }
+  lightOff = () => setLight(true)
+  lightOn = () => setLight(false)
 }
 
 function addPlayerOutEvent() {
   // window.addEventListener('scroll', onPlayerOutEvent, { passive: true });
-  observer.observe(playerWrap);
+  observer.observe(playerWrap)
 }
 
 function removePlayerOutEvent() {
   // window.removeEventListener('scroll', onPlayerOutEvent);
-  observer.unobserve(playerWrap);
+  observer.unobserve(playerWrap)
 }
 
 let intersectingCall = () => {
-  if (intersectionLock) return;
-  intersectionLock = true; // relock
-  if (settings.scrollOutPlayerAutoPause && videoEl.paused) videoEl.play();
+  if (intersectionLock) return
+  intersectionLock = true // relock
+  if (settings.scrollOutPlayerAutoPause && videoEl.paused) {
+    videoEl.play()
+  }
   if (
     settings.scrollOutPlayerAutoLightOn &&
+    settings.useDefaultPlayerMode &&
     settings.autoLightOff &&
     !settings.scrollOutPlayerAutoPause &&
     !videoEl.paused
-  )
-    lightOff();
-};
+  ) {
+    lightOff()
+  }
+}
 
 let disIntersectingCall = () => {
   // if video is playing, unlock intersecting action
-  !videoEl.paused ? (intersectionLock = false) : '';
-  if (settings.scrollOutPlayerAutoPause && !videoEl.paused) videoEl.pause();
+  if (!videoEl.paused) {
+    intersectionLock = false
+  }
+  if (settings.scrollOutPlayerAutoPause && !videoEl.paused) {
+    videoEl.pause()
+  }
   if (
     settings.scrollOutPlayerAutoLightOn &&
+    settings.useDefaultPlayerMode &&
     settings.autoLightOff &&
     !settings.scrollOutPlayerAutoPause
-  )
-    lightOn();
-};
+  ) {
+    lightOn()
+  }
+}
 
 let createObserver = (mode?: string) =>
   new IntersectionObserver(
     ([e]) => {
-      e.isIntersecting ? intersectingCall() : disIntersectingCall();
+      e.isIntersecting ? intersectingCall() : disIntersectingCall()
     },
     {
       threshold: getToTop(mode ? mode : settings.scrollOutPlayerTriggerPlace),
     }
-  );
+  )
 
 function mountPlayListener() {
   Observer.videoChange(async () => {
-    videoEl.addEventListener('play', addPlayerOutEvent);
+    videoEl.addEventListener('play', addPlayerOutEvent)
     // videoEl.addEventListener('pause', removePlayerOutEvent);
-    videoEl.addEventListener('ended', removePlayerOutEvent);
-  });
+    videoEl.addEventListener('ended', removePlayerOutEvent)
+  })
 }
 
 (async function setup() {
-  await initLights();
+  await initLights()
   addSettingsListener('scrollOutPlayerTriggerPlace', (value) => {
-    removePlayerOutEvent();
-    observer = createObserver(value);
-    addPlayerOutEvent();
-  });
-  videoEl = dq('.bilibili-player-video video') as HTMLVideoElement;
-  playerWrap = (dq('.player-wrap') || dq('.player-module')) as HTMLElement;
-  observer = createObserver();
-  addPlayerOutEvent();
-  mountPlayListener();
-})();
+    removePlayerOutEvent()
+    observer = createObserver(value)
+    addPlayerOutEvent()
+  })
+  videoEl = dq('.bilibili-player-video video') as HTMLVideoElement
+  playerWrap = (dq('.player-wrap') || dq('.player-module')) as HTMLElement
+  observer = createObserver()
+  mountPlayListener()
+})()
 
 export default {
   reload: () => {
-    addPlayerOutEvent();
-    mountPlayListener();
+    addPlayerOutEvent()
+    mountPlayListener()
   },
   unload: () => {
     // umount player listener
     Observer.videoChange(async () => {
-      videoEl.removeEventListener('play', addPlayerOutEvent);
+      videoEl.removeEventListener('play', addPlayerOutEvent)
       // videoEl.removeEventListener('pause', removePlayerOutEvent);
-      videoEl.removeEventListener('ended', removePlayerOutEvent);
-    });
-    removePlayerOutEvent();
+      videoEl.removeEventListener('ended', removePlayerOutEvent)
+    })
+    removePlayerOutEvent()
   },
-};
+}

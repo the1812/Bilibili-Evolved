@@ -27,6 +27,7 @@ export default {
   justify-content: center;
   min-height: 100vh;
   background-color: #f4f4f4;
+  font-size: 12px;
 
   body.dark & {
     background-color: #181818;

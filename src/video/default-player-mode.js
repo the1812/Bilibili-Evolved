@@ -9,8 +9,6 @@ const playerModes = [
   {
     name: '宽屏',
     action: async () => {
-      const { playerScrollPatch } = await import('./player-scroll-patch')
-      await playerScrollPatch()
       document.querySelector('.bilibili-player-video-btn-widescreen').click()
       // document.querySelector("#bilibili-player").scrollIntoView({ behavior: "smooth" });
     }

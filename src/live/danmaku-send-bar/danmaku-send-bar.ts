@@ -2,6 +2,7 @@
   const { waitForControlBar } = await import('../live-control-bar')
 
   let changeEventHook = false
+  let danmakuSendBarElement: Element
   const danmakuSendBarClass = 'danmaku-send-bar'
   waitForControlBar({
     init: () => {
@@ -13,14 +14,15 @@
       const sendButton = await SpinQuery.select('.chat-input-ctnr ~ .bottom-actions .bl-button--primary') as HTMLButtonElement
 
       if ([leftController, originalTextArea, sendButton].some(it => it === null)) {
+        console.warn('[danmakuSendBar] ref elements not found', leftController === null, originalTextArea === null, sendButton === null)
         return
       }
       if (dq(controlBar, `.${danmakuSendBarClass}`)) {
         return
       }
-
-      const DanmakuSendBar = Vue.extend({
-        template: /*html*/`
+      if (!danmakuSendBarElement) {
+        const DanmakuSendBar = Vue.extend({
+          template: /*html*/`
           <div class="${danmakuSendBarClass}">
             <input
               type="text"
@@ -32,48 +34,49 @@
             />
           </div>
         `,
-        data() {
-          return {
-            value: originalTextArea.value
-          }
-        },
-        mounted() {
-          originalTextArea.addEventListener('input', this.listenChange)
-          originalTextArea.addEventListener('change', this.listenChange)
-          if (!changeEventHook) {
-            const original = Object.getOwnPropertyDescriptors(HTMLTextAreaElement.prototype).value
-            Object.defineProperty(originalTextArea, 'value', {
-              ...original,
-              set(value: string) {
-                original.set!.call(this, value)
-                raiseEvent(originalTextArea, 'input')
-              }
-            })
-            changeEventHook = true
-          }
-        },
-        beforeDestroy() {
-          originalTextArea.removeEventListener('input', this.listenChange)
-          originalTextArea.removeEventListener('change', this.listenChange)
-        },
-        methods: {
-          updateValue(newValue: string) {
-            originalTextArea.value = newValue
-            raiseEvent(originalTextArea, 'input')
-          },
-          send() {
-            if (!sendButton.disabled) {
-              this.value = ''
-              sendButton.click()
+          data() {
+            return {
+              value: originalTextArea.value
             }
           },
-          listenChange(e: InputEvent) {
-            this.value = (e.target as HTMLTextAreaElement).value
+          mounted() {
+            originalTextArea.addEventListener('input', this.listenChange)
+            originalTextArea.addEventListener('change', this.listenChange)
+            if (!changeEventHook) {
+              const original = Object.getOwnPropertyDescriptors(HTMLTextAreaElement.prototype).value
+              Object.defineProperty(originalTextArea, 'value', {
+                ...original,
+                set(value: string) {
+                  original.set!.call(this, value)
+                  raiseEvent(originalTextArea, 'input')
+                }
+              })
+              changeEventHook = true
+            }
+          },
+          beforeDestroy() {
+            originalTextArea.removeEventListener('input', this.listenChange)
+            originalTextArea.removeEventListener('change', this.listenChange)
+          },
+          methods: {
+            updateValue(newValue: string) {
+              originalTextArea.value = newValue
+              raiseEvent(originalTextArea, 'input')
+            },
+            send() {
+              if (!sendButton.disabled) {
+                this.value = ''
+                sendButton.click()
+              }
+            },
+            listenChange(e: InputEvent) {
+              this.value = (e.target as HTMLTextAreaElement).value
+            }
           }
-        }
-      })
-      const sendBar = new DanmakuSendBar().$mount().$el
-      leftController.insertAdjacentElement('afterend', sendBar)
+        })
+        danmakuSendBarElement = new DanmakuSendBar().$mount().$el
+      }
+      leftController.insertAdjacentElement('afterend', danmakuSendBarElement)
     },
   })
 })()

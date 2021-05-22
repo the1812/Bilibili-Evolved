@@ -198,7 +198,8 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`preferAvUrl`, /*html*/`動画のリンクがBV番号の場合、自動的にAV番号に変換されます.`],
     [`elegantScrollbar`, /*html*/`薄いスクロールバーを使用してシステムのデフォルトのスクロールバーを置き換える. (無効な夜間モード)`],
     [`quickFavorite`, /*html*/`すばやくのお気に入りを有効にし、動画ページで、1つのキーでお気に入りを特定のお気に入りセットに追加できます.`],
-    [`darkColorScheme`, /*html*/`夜間モードでシステムが設定した「明るい/暗いテーマ」を同期させる.`],
+    [`darkColorScheme`, /*html*/`夜間モードでシステムが設定した「明るい/暗いテーマ」を同期させる.
+注意：いくつかのブラウザ(例えば<span>Microsoft Edge</span>)では、夜間モードはシステムの代わりにブラウザに従います。.`],
     [`disableFeedsDetails`, /*html*/`フィードページをクリックして詳細ページにジャンプすることは禁止されています.これはテキストを選択するのに便利です.`],
     [`danmakuSendBar`, /*html*/`生放送ページの全画面モードとウェブの全画面モードでは、弾幕欄が下部に表示されます.`],
     [`watchLaterRedirectNavbar`, /*html*/`頂欄の「後で見る」リンクをリダイレクトします.`],
@@ -219,7 +220,15 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`alwaysShowDuration`, /*html*/`スクリプトによって表示される動画カードで、 たとえば、「ホームページを簡素化」や「カスタム頂欄を使用」のさまざまなポップアップウィンドウでは、マウスを通過せずに動画の長さを表示できます.`],
     [`expandDanmakuListIgnoreMediaList`, /*html*/`弾幕リストはコレクションページ(お気に入り/後で見る)で展開されていないので、動画リストを閲覧するのに便利です.`],
     [`removeGuidePopup`, /*html*/`動画に表示される三連プロンプトボックスを削除します.`],
+    [`removeVideoPopup`, /*html*/`動画に表示されるおすすめ動画ボックスを削除します.`],
+    [`removeVotePopup`, /*html*/`動画に表示される投票ボックスを削除します.`],
     [`fullscreenGiftBox`, /*html*/`ウェブページの全画面モードで、ギフトボックスを直接クリックできます.これはギフトを贈るのに便利です.`],
+    [`keymapPreset`, /*html*/`予約設定のショートカットを交換します.`],
+    [`autoPlayControl`, /*html*/`伝統的な放送モードを使用して、複数のP/お気に入りや後で見るリストがあるときにAUTO放送モードを自動的にオンにします.単一のP動画が自動的にAUTO放送モードをオフにすると、おすすめ動画の再生を防ぐ.`],
+    [`scrollOutPlayer`, /*html*/`プレーヤーがページから削除されたときのアクションをトリガーする.`],
+    [`scrollOutPlayerAutoPause`, /*html*/`プレイヤーの<span>选定触发位置</span>がページにない場合は、再生が自動的に一時停止され、プレーヤーが戻ってきたときに再生を復元する.`],
+    [`scrollOutPlayerAutoLightOn`, /*html*/`自動一時停止がオンになっていないし、再生中に自動的にライトがオフになっている場合、この機能は、プレーヤーがページにないときに自動的に点灯し、プレーヤーが戻ってきたときに自動的にオフになります.
+  <b>注: この機能は自動的に一時停止されると無視されます</b>`]
 ]);
 export default {
     export: { toolTips },

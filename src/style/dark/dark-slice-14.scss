@@ -487,6 +487,15 @@ a {
 .emoji-box.top:after {
   @include no-image();
 }
+.video-desc .desc-info {
+  @include color("e");
+  & + .toggle-btn {
+    @include color("a");
+    &:hover {
+      @include theme-color();
+    }
+  }
+}
 
 body:not(.simplify-comment) .bb-comment {
   .comment-send-lite {

@@ -197,7 +197,6 @@ export const settings = {
   keymapJumpSeconds: 85,
   urlParamsClean: true,
   collapseLiveSideBar: true,
-  removeGameMatchModule: false,
   noDarkOnMember: true,
   feedsTranslate: false,
   feedsTranslateProvider: 'Bing',
@@ -255,11 +254,11 @@ export const settings = {
   checkInCenter: false,
   fullscreenGiftBox: false,
   autoPlayControl: true,
-  cache: {},
-  scrollOutPlayer: true,
+  scrollOutPlayer: false,
   scrollOutPlayerTriggerPlace: '视频中间',
   scrollOutPlayerAutoPause: true,
   scrollOutPlayerAutoLightOn: true,
+  cache: {},
 }
 const fixedSettings = {
   seedsToCoins: false,

@@ -12,7 +12,7 @@ export const waitForControlBar = async (config: {
     return
   }
   const controllerContainer = (await SpinQuery.select(
-    '.bilibili-live-player-video-controller, .web-player-controller-wrap'
+    '.bilibili-live-player-video-controller, .web-player-controller-wrap:not(.web-player-controller-bg)'
   )) as HTMLDivElement
   if (!controllerContainer) {
     return
@@ -22,11 +22,11 @@ export const waitForControlBar = async (config: {
   init(controllerContainer)
 
   Observer.childList(controllerContainer, async () => {
-    const controlBar = dq(controllerContainer, '.control-area') as HTMLElement
+    const controlBar = dq(controllerContainer, '.control-area')
     if (!controlBar) {
       return
     }
-    callback(controlBar)
+    callback(controlBar as HTMLElement)
   })
 }
 export default {

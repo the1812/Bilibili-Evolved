@@ -1,6 +1,7 @@
 bilibili-evolved.dev.js
 .DS_Store
 builder/dotnet/Properties
+dist/
 .node_modules/
 .ts-output/
 .sass-output/

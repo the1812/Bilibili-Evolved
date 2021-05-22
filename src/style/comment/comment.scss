@@ -189,12 +189,13 @@
   }
   .loading-state {
     font-size: 14px !important;
-    height: auto !important;
-    line-height: normal !important;
+    height: 1.4em !important;
+    line-height: 1.4 !important;
     margin: 12px 0 !important;
-    &:empty {
-      margin: 0 !important;
-    }
+    // #1789
+    // &:empty {
+    //   margin: 0 !important;
+    // }
   }
   .loading-state + .bottom-page {
     margin: 0 !important;
