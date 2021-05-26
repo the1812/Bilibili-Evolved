@@ -222,8 +222,7 @@ export class SearchBox extends NavbarComponent {
             this.copy(value)
           } else {
             keywordInput.value = value
-            if(form?.requestSubmit) form.requestSubmit()
-            else form.submit()
+            form.requestSubmit?.() ?? form.submit()
           }
         },
         nextItem(index: number) {
