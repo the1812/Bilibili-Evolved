@@ -521,6 +521,8 @@ declare global {
     scrollOutPlayerTriggerPlace: string,
     scrollOutPlayerAutoPause: boolean,
     scrollOutPlayerAutoLightOn: boolean,
+    disableDanmakuHighlights: boolean,
+    disableUpDanmakuStyle: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

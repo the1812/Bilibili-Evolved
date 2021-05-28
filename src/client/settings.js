@@ -258,6 +258,8 @@ export const settings = {
   scrollOutPlayerTriggerPlace: '视频中间',
   scrollOutPlayerAutoPause: true,
   scrollOutPlayerAutoLightOn: true,
+  disableDanmakuHighlights: false,
+  disableUpDanmakuStyle: false,
   cache: {},
 }
 const fixedSettings = {
