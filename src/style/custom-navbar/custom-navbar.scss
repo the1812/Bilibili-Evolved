@@ -191,13 +191,16 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   body.fixed-navbar & {
     position: fixed;
   }
+  body.player-mode-blackmask & {
+    visibility: hidden;
+  }
   top: 0;
   left: 0;
   height: var(--navbar-height);
   width: 100%;
   background-color: var(--navbar-background);
   color: var(--navbar-foreground);
-  z-index: 10017;
+  z-index: 10001;
   /* z-index: 1999; */
   display: flex;
   justify-content: center;
