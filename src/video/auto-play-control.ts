@@ -14,9 +14,12 @@
   const disableConditions = [
     // 最后 1P 时不能开启连播
     () => Boolean(dq('.multi-page .list-box li.on:last-child')),
+    // TODO: 合计列表如何确定是最后 1P?
   ]
   const isChecked = (container: HTMLElement) => {
-    return Boolean(container.querySelector('.switch-button.on, :checked'))
+    return Boolean(
+      container.querySelector('.switch-button.on') || container.matches(':checked')
+    )
   }
   const { playerReady } = await import('./player-ready')
   await playerReady()
@@ -34,9 +37,9 @@
       element.click()
     }
   }
-  Observer.videoChange(() => {
-    const video = dq('.bilibili-player-video video') as HTMLVideoElement
+  Observer.videoChange(async () => {
     checkPlayMode()
-    video?.addEventListener('ended', checkPlayMode)
+    const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
+    video?.addEventListener('play', checkPlayMode, { once: true })
   })
 })()
