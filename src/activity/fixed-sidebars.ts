@@ -8,11 +8,27 @@ const style = `
 .left-panel, .right-panel {
   position: fixed !important;
 }
+.home-container {
+  --left-width: 244px;
+  --center-width: 632px;
+}
+@media screen and (min-width: 1921px) {
+  .home-container {
+    --left-width: 12.71vw;
+    --center-width: 32.92vw;
+  }
+}
+@media screen and (min-width: 2497px) {
+  .home-container {
+    --left-width: 317px;
+    --center-width: 822px;
+  }
+}
 .center-panel {
-  margin-left: calc(244px + 8px) !important;
+  margin-left: calc(var(--left-width) + 8px) !important;
 }
 .right-panel {
-  margin-left: calc(244px + 16px + 632px) !important;
+  margin-left: calc(var(--left-width) + 16px + var(--center-width)) !important;
 }
 .live-panel .live-up-list {
   max-height: calc(100vh - 380px);
