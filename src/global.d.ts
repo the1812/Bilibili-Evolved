@@ -1,10 +1,9 @@
 import { LoDashStatic } from 'lodash'
-import { VueConstructor } from 'vue'
 import { Store } from 'vuex'
 
 declare global {
   const _: LoDashStatic
-  const Vue: VueConstructor
+  const Vue: typeof import('vue/types/umd')
   const Vuex: typeof import('vuex')
   const JSZip: typeof import('jszip')
   const store: Store<{
