@@ -474,6 +474,10 @@ a {
   }
 }
 .bb-comment {
+  .stick.up {
+    @include theme-background-color();
+    @include foreground-color();
+  }
   .comment-emoji {
     @include no-shadow();
   }
